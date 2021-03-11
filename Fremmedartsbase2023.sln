@@ -1,0 +1,64 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31019.35
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Prod.Api", "Prod.Api\Prod.Api.csproj", "{2D4381EF-9825-42CA-A57F-5ECC4D994132}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Prod.Data.EFCore", "Prod.Data.EFCore\Prod.Data.EFCore.csproj", "{0F19E784-4875-4409-A250-A83C3C06DAA8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prod.Domain", "Prod.Domain\Prod.Domain.csproj", "{46ADB3D5-27DC-46D8-8AD3-6639300C6264}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{06277FB9-B177-4A66-8816-6861EE099AC6}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		DebugRelease|Any CPU = DebugRelease|Any CPU
+		DebugRemote|Any CPU = DebugRemote|Any CPU
+		Release|Any CPU = Release|Any CPU
+		ReleaseDrift|Any CPU = ReleaseDrift|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2D4381EF-9825-42CA-A57F-5ECC4D994132}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D4381EF-9825-42CA-A57F-5ECC4D994132}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D4381EF-9825-42CA-A57F-5ECC4D994132}.DebugRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{2D4381EF-9825-42CA-A57F-5ECC4D994132}.DebugRelease|Any CPU.Build.0 = Release|Any CPU
+		{2D4381EF-9825-42CA-A57F-5ECC4D994132}.DebugRemote|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D4381EF-9825-42CA-A57F-5ECC4D994132}.DebugRemote|Any CPU.Build.0 = Debug|Any CPU
+		{2D4381EF-9825-42CA-A57F-5ECC4D994132}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D4381EF-9825-42CA-A57F-5ECC4D994132}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D4381EF-9825-42CA-A57F-5ECC4D994132}.ReleaseDrift|Any CPU.ActiveCfg = Release|Any CPU
+		{2D4381EF-9825-42CA-A57F-5ECC4D994132}.ReleaseDrift|Any CPU.Build.0 = Release|Any CPU
+		{0F19E784-4875-4409-A250-A83C3C06DAA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F19E784-4875-4409-A250-A83C3C06DAA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F19E784-4875-4409-A250-A83C3C06DAA8}.DebugRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{0F19E784-4875-4409-A250-A83C3C06DAA8}.DebugRelease|Any CPU.Build.0 = Release|Any CPU
+		{0F19E784-4875-4409-A250-A83C3C06DAA8}.DebugRemote|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F19E784-4875-4409-A250-A83C3C06DAA8}.DebugRemote|Any CPU.Build.0 = Debug|Any CPU
+		{0F19E784-4875-4409-A250-A83C3C06DAA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F19E784-4875-4409-A250-A83C3C06DAA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F19E784-4875-4409-A250-A83C3C06DAA8}.ReleaseDrift|Any CPU.ActiveCfg = Release|Any CPU
+		{0F19E784-4875-4409-A250-A83C3C06DAA8}.ReleaseDrift|Any CPU.Build.0 = Release|Any CPU
+		{46ADB3D5-27DC-46D8-8AD3-6639300C6264}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46ADB3D5-27DC-46D8-8AD3-6639300C6264}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46ADB3D5-27DC-46D8-8AD3-6639300C6264}.DebugRelease|Any CPU.ActiveCfg = DebugRelease|Any CPU
+		{46ADB3D5-27DC-46D8-8AD3-6639300C6264}.DebugRelease|Any CPU.Build.0 = DebugRelease|Any CPU
+		{46ADB3D5-27DC-46D8-8AD3-6639300C6264}.DebugRemote|Any CPU.ActiveCfg = DebugRemote|Any CPU
+		{46ADB3D5-27DC-46D8-8AD3-6639300C6264}.DebugRemote|Any CPU.Build.0 = DebugRemote|Any CPU
+		{46ADB3D5-27DC-46D8-8AD3-6639300C6264}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46ADB3D5-27DC-46D8-8AD3-6639300C6264}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46ADB3D5-27DC-46D8-8AD3-6639300C6264}.ReleaseDrift|Any CPU.ActiveCfg = ReleaseDrift|Any CPU
+		{46ADB3D5-27DC-46D8-8AD3-6639300C6264}.ReleaseDrift|Any CPU.Build.0 = ReleaseDrift|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6CB06CFE-4343-4B45-8172-367E4AD024D8}
+	EndGlobalSection
+EndGlobal
