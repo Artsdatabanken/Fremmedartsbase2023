@@ -107,16 +107,16 @@ namespace Prod.Api.Controllers
             //var csvConfiguration = new CsvConfiguration(new CultureInfo("nb-NO"));
             var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
             var config = csv.Configuration;
-            config.Delimiter = "\t";
-            config.TypeConverterCache.RemoveConverter<string>();
-            config.TypeConverterCache.AddConverter<string>(new CsvHelpers.CustomStringConverter());
-            config.TypeConverterOptionsCache.GetOptions<string>().NullValues.Add(string.Empty);
-            config.TypeConverterCache.AddConverter<string[]>(new CsvHelpers.CustomStringArrayConverter());
-            config.TypeConverterCache.AddConverter<List<string>>(new CsvHelpers.CustomStringListConverter());
-            //config.TypeConverterCache.AddConverter<List<Rodliste2019.Pavirkningsfaktor>>(new CsvHelpers.CustomPavirkningsfaktorListConverter());
-            //config.TypeConverterCache.AddConverter<Rodliste2019.MinMaxProbable>(new CustomMinMaxProbableConverter());
-            //config.TypeConverterCache.AddConverter<Rodliste2019.MinMaxProbableIntervall>(new CsvHelpers.CustomMinMaxProbableIntervallConverter());
-            config.RegisterClassMap<CsvHelpers.RodlisteToCsvMap>();
+            //config.Delimiter = "\t";
+            //config.TypeConverterCache.RemoveConverter<string>();
+            //config.TypeConverterCache.AddConverter<string>(new CsvHelpers.CustomStringConverter());
+            //config.TypeConverterOptionsCache.GetOptions<string>().NullValues.Add(string.Empty);
+            //config.TypeConverterCache.AddConverter<string[]>(new CsvHelpers.CustomStringArrayConverter());
+            //config.TypeConverterCache.AddConverter<List<string>>(new CsvHelpers.CustomStringListConverter());
+            ////config.TypeConverterCache.AddConverter<List<Rodliste2019.Pavirkningsfaktor>>(new CsvHelpers.CustomPavirkningsfaktorListConverter());
+            ////config.TypeConverterCache.AddConverter<Rodliste2019.MinMaxProbable>(new CustomMinMaxProbableConverter());
+            ////config.TypeConverterCache.AddConverter<Rodliste2019.MinMaxProbableIntervall>(new CsvHelpers.CustomMinMaxProbableIntervallConverter());
+            //config.RegisterClassMap<CsvHelpers.RodlisteToCsvMap>();
 
             csv.WriteRecords(result);
             csv.Flush();
