@@ -72,13 +72,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assessment.cs" />
+    <Compile Include="AssessmentListItem.cs" />
     <Compile Include="Attachment.cs" />
     <Compile Include="Bruker.cs" />
+    <Compile Include="Code.cs" />
+    <Compile Include="CodeRow.cs" />
     <Compile Include="Ekspertgruppe.cs" />
     <Compile Include="FA3Vurdering.cs" />
     <Compile Include="Datasett.cs" />
     <Compile Include="Files.cs" />
     <Compile Include="Kode.cs" />
+    <Compile Include="Legacy\FA3Vurdering.cs" />
     <Compile Include="LogEntry.cs" />
     <Compile Include="NiN10Livsmedium.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -88,9 +92,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Legacy\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

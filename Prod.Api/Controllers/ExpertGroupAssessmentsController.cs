@@ -113,7 +113,7 @@ namespace Prod.Api.Controllers
             config.TypeConverterOptionsCache.GetOptions<string>().NullValues.Add(string.Empty);
             config.TypeConverterCache.AddConverter<string[]>(new CsvHelpers.CustomStringArrayConverter());
             config.TypeConverterCache.AddConverter<List<string>>(new CsvHelpers.CustomStringListConverter());
-            config.TypeConverterCache.AddConverter<List<Rodliste2019.Pavirkningsfaktor>>(new CsvHelpers.CustomPavirkningsfaktorListConverter());
+            //config.TypeConverterCache.AddConverter<List<Rodliste2019.Pavirkningsfaktor>>(new CsvHelpers.CustomPavirkningsfaktorListConverter());
             //config.TypeConverterCache.AddConverter<Rodliste2019.MinMaxProbable>(new CustomMinMaxProbableConverter());
             //config.TypeConverterCache.AddConverter<Rodliste2019.MinMaxProbableIntervall>(new CsvHelpers.CustomMinMaxProbableIntervallConverter());
             config.RegisterClassMap<CsvHelpers.RodlisteToCsvMap>();

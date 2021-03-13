@@ -310,76 +310,76 @@ namespace Prod.Api.Helpers
             }
         }
 
-        private static string GetFylkesStatus(object rl, string item)
-        {
-            FA3 o = (Rodliste2019WithComments) rl;
-            var fylkesforekomsts = o.Fylkesforekomster.FirstOrDefault(x => x.Fylke == item);
-            if (fylkesforekomsts == null)
-            {
-                return string.Empty;
-            }
+        //private static string GetFylkesStatus(object rl, string item)
+        //{
+        //    FA3 o = (Rodliste2019WithComments) rl;
+        //    var fylkesforekomsts = o.Fylkesforekomster.FirstOrDefault(x => x.Fylke == item);
+        //    if (fylkesforekomsts == null)
+        //    {
+        //        return string.Empty;
+        //    }
 
-            switch (fylkesforekomsts.State)
-            {
-                case 0: return "kjent";
-                case 1: return "antatt";
-                case 2: return "ikkeKjent";
-                case 3: return "antatt utdødd";
-                case 4: return "utdødd";
-            }
+        //    switch (fylkesforekomsts.State)
+        //    {
+        //        case 0: return "kjent";
+        //        case 1: return "antatt";
+        //        case 2: return "ikkeKjent";
+        //        case 3: return "antatt utdødd";
+        //        case 4: return "utdødd";
+        //    }
 
-            return "feil";
-        }
+        //    return "feil";
+        //}
 
-        private static string GetAarsakTilNedgraderingAvKategoritekst(object rl)
-        {
-            var o = (Rodliste2019WithComments)rl;
-            return o.UtdøingSterktPåvirket == "Ja" ? o.ÅrsakTilNedgraderingAvKategori ?? "" : "";
-        }
+        //private static string GetAarsakTilNedgraderingAvKategoritekst(object rl)
+        //{
+        //    var o = (Rodliste2019WithComments)rl;
+        //    return o.UtdøingSterktPåvirket == "Ja" ? o.ÅrsakTilNedgraderingAvKategori ?? "" : "";
+        //}
 
-        internal class CustomMinMaxProbableIntervallConverter : ITypeConverter
-        {
-            public string ConvertToString(object value, IWriterRow row, MemberMapData memberMapData)
-            {
-                var thing = (Rodliste2019.MinMaxProbableIntervall) value;
-                if (thing == null || (string.IsNullOrWhiteSpace(thing.Min)) &&
-                    string.IsNullOrWhiteSpace(thing.Max) && string.IsNullOrWhiteSpace(thing.Probable) &&
-                    string.IsNullOrWhiteSpace(thing.Quantile) && string.IsNullOrWhiteSpace(thing.Maxintervall) &&
-                    string.IsNullOrWhiteSpace(thing.Minintervall))
-                {
-                    return string.Empty;
-                }
+        //internal class CustomMinMaxProbableIntervallConverter : ITypeConverter
+        //{
+        //    public string ConvertToString(object value, IWriterRow row, MemberMapData memberMapData)
+        //    {
+        //        var thing = (Rodliste2019.MinMaxProbableIntervall) value;
+        //        if (thing == null || (string.IsNullOrWhiteSpace(thing.Min)) &&
+        //            string.IsNullOrWhiteSpace(thing.Max) && string.IsNullOrWhiteSpace(thing.Probable) &&
+        //            string.IsNullOrWhiteSpace(thing.Quantile) && string.IsNullOrWhiteSpace(thing.Maxintervall) &&
+        //            string.IsNullOrWhiteSpace(thing.Minintervall))
+        //        {
+        //            return string.Empty;
+        //        }
 
-                return
-                    $"min: {thing.Min} max: {thing.Max} probable:{thing.Probable} quantile:{thing.Quantile} minintervall:{thing.Minintervall} maxintervall:{thing.Maxintervall} punktestimat:{thing.Punktestimat}";
-            }
+        //        return
+        //            $"min: {thing.Min} max: {thing.Max} probable:{thing.Probable} quantile:{thing.Quantile} minintervall:{thing.Minintervall} maxintervall:{thing.Maxintervall} punktestimat:{thing.Punktestimat}";
+        //    }
 
-            public object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
-            {
-                throw new NotImplementedException();
-            }
-        }
+        //    public object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+        //}
 
-        internal class CustomMinMaxProbableConverter : ITypeConverter
-        {
-            public string ConvertToString(object value, IWriterRow row, MemberMapData memberMapData)
-            {
-                var thing = (Rodliste2019.MinMaxProbable) value;
-                if (thing == null || (string.IsNullOrWhiteSpace(thing.Min)) &&
-                    string.IsNullOrWhiteSpace(thing.Max) && string.IsNullOrWhiteSpace(thing.Probable) &&
-                    string.IsNullOrWhiteSpace(thing.Quantile))
-                {
-                    return string.Empty;
-                }
+        //internal class CustomMinMaxProbableConverter : ITypeConverter
+        //{
+        //    public string ConvertToString(object value, IWriterRow row, MemberMapData memberMapData)
+        //    {
+        //        var thing = (Rodliste2019.MinMaxProbable) value;
+        //        if (thing == null || (string.IsNullOrWhiteSpace(thing.Min)) &&
+        //            string.IsNullOrWhiteSpace(thing.Max) && string.IsNullOrWhiteSpace(thing.Probable) &&
+        //            string.IsNullOrWhiteSpace(thing.Quantile))
+        //        {
+        //            return string.Empty;
+        //        }
 
-                return $"min: {thing.Min} max: {thing.Max} probable:{thing.Probable} quantile:{thing.Quantile}";
-            }
+        //        return $"min: {thing.Min} max: {thing.Max} probable:{thing.Probable} quantile:{thing.Quantile}";
+        //    }
 
-            public object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
-            {
-                throw new NotImplementedException();
-            }
-        }
+        //    public object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+        //}
 
         internal class CustomStringListConverter : ITypeConverter
         {
@@ -486,42 +486,42 @@ namespace Prod.Api.Helpers
             }
         }
 
-        public class CustomPavirkningsfaktorListConverter : ITypeConverter
-        {
-            public string ConvertToString(object value, IWriterRow row, MemberMapData memberMapData)
-            {
-                var thing = (List<Rodliste2019.Pavirkningsfaktor>)value;
-                if (thing == null || thing.Count == 0)
-                {
-                    return string.Empty;
-                }
+        //public class CustomPavirkningsfaktorListConverter : ITypeConverter
+        //{
+        //    public string ConvertToString(object value, IWriterRow row, MemberMapData memberMapData)
+        //    {
+        //        var thing = (List<Rodliste2019.Pavirkningsfaktor>)value;
+        //        if (thing == null || thing.Count == 0)
+        //        {
+        //            return string.Empty;
+        //        }
 
-                var simpleList = thing.Select(pavirkningsfaktor => $"{pavirkningsfaktor.OverordnetTittel}").ToList();
+        //        var simpleList = thing.Select(pavirkningsfaktor => $"{pavirkningsfaktor.OverordnetTittel}").ToList();
 
-                return string.Join(", ", simpleList);
-            }
+        //        return string.Join(", ", simpleList);
+        //    }
 
-            public object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
-            {
-                throw new NotImplementedException();
-            }
-        }
+        //    public object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
+        //    {
+        //        throw new NotImplementedException();
+        //    }
+        //}
 
-        public static string PavirkningsfaktorListConverter(object rl)
-        {
-            Rodliste2019 o = (Rodliste2019WithComments) rl;
+        //public static string PavirkningsfaktorListConverter(object rl)
+        //{
+        //    Rodliste2019 o = (Rodliste2019WithComments) rl;
 
-            var thing = o.Påvirkningsfaktorer;
-                if (thing == null || thing.Count == 0)
-            {
-                return string.Empty;
-            }
+        //    var thing = o.Påvirkningsfaktorer;
+        //        if (thing == null || thing.Count == 0)
+        //    {
+        //        return string.Empty;
+        //    }
 
-            var simpleList = thing.Select(pavirkningsfaktor => $"{pavirkningsfaktor.OverordnetTittel} > {pavirkningsfaktor.Beskrivelse}_{pavirkningsfaktor.Tidspunkt}_{pavirkningsfaktor.Omfang}_{pavirkningsfaktor.Alvorlighetsgrad}").ToList();
+        //    var simpleList = thing.Select(pavirkningsfaktor => $"{pavirkningsfaktor.OverordnetTittel} > {pavirkningsfaktor.Beskrivelse}_{pavirkningsfaktor.Tidspunkt}_{pavirkningsfaktor.Omfang}_{pavirkningsfaktor.Alvorlighetsgrad}").ToList();
 
-                return string.Join(";", simpleList);
+        //        return string.Join(";", simpleList);
 
-        }
+        //}
 
         public class CustomDateTimeConverter : ITypeConverter
         {
