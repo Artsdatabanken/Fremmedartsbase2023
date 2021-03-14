@@ -19,6 +19,24 @@ Run 'SwissKnife [command] -?|-h|--help' for more information about a command.
 ```
 
 
+Info / statistics from old db
+```
+dotnet run -- olddb info --url http://localhost:8080 --db fab3 --fs fab3fs
+Livsmedium:
+Found 1 item of Livsmedium
+Koder:
+Found 1 item of Koder
+KodeGrupper:
+Found 1 item of KodeGrupper
+MigrationPathwayCode:
+Found 1 item of MigrationPathwayCode
+RedlistedNaturetypeGroup:
+Found 1 item of RedlistedNaturetypeGroup
+Fab2018:
+Found 3204 item of Fab2018
+Fab2018Files:
+Found 2537 item of Fab2018Files
+```
 
 
 Dump content from 2018 Database into folder for data exchange in json format:

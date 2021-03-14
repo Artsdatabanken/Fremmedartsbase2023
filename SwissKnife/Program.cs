@@ -46,10 +46,13 @@ namespace SwissKnife
             [Command("info", Description = "show some statistics from db")]
             internal class Info : OldDbBase
             {
+                [Option("--verbose", Description = "verbose show content")]
+                public bool Verbose { get; }
+
                 private void OnExecute(IConsole console)
                 {
                     var oldDbService = new Fab2018.Fab2018(RavenDbUrl, Fab2018Db, Fab2018Dfs);
-                    oldDbService.Info(console);
+                    oldDbService.Info(console, Verbose);
                 }
             }
 
