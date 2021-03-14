@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace Databank.Domain
+namespace Prod.Domain
 {
     public class Code
     {

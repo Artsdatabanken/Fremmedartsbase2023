@@ -3,6 +3,8 @@ Arbeidsområde for produksjonsdatabase for Fremmedartsvurderinger frem mot 2023
 
 Testmiljø: url kommer
 
+[Projektstruktur](ProjectStructure.md)
+
 Todo: 
 
 * Kompilerer ikke ennå

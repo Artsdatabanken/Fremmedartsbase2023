@@ -12,8 +12,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{06277FB9-B177-4A66-8816-6861EE099AC6}"
 	ProjectSection(SolutionItems) = preProject
 		LICENSE = LICENSE
+		ProjectStructure.md = ProjectStructure.md
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwissKnife", "SwissKnife\SwissKnife.csproj", "{344F13F5-5A73-4B6C-A5AC-6A35CCE32D6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,6 +57,16 @@ Global
 		{46ADB3D5-27DC-46D8-8AD3-6639300C6264}.Release|Any CPU.Build.0 = Release|Any CPU
 		{46ADB3D5-27DC-46D8-8AD3-6639300C6264}.ReleaseDrift|Any CPU.ActiveCfg = ReleaseDrift|Any CPU
 		{46ADB3D5-27DC-46D8-8AD3-6639300C6264}.ReleaseDrift|Any CPU.Build.0 = ReleaseDrift|Any CPU
+		{344F13F5-5A73-4B6C-A5AC-6A35CCE32D6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{344F13F5-5A73-4B6C-A5AC-6A35CCE32D6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{344F13F5-5A73-4B6C-A5AC-6A35CCE32D6E}.DebugRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{344F13F5-5A73-4B6C-A5AC-6A35CCE32D6E}.DebugRelease|Any CPU.Build.0 = Release|Any CPU
+		{344F13F5-5A73-4B6C-A5AC-6A35CCE32D6E}.DebugRemote|Any CPU.ActiveCfg = Debug|Any CPU
+		{344F13F5-5A73-4B6C-A5AC-6A35CCE32D6E}.DebugRemote|Any CPU.Build.0 = Debug|Any CPU
+		{344F13F5-5A73-4B6C-A5AC-6A35CCE32D6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{344F13F5-5A73-4B6C-A5AC-6A35CCE32D6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{344F13F5-5A73-4B6C-A5AC-6A35CCE32D6E}.ReleaseDrift|Any CPU.ActiveCfg = Release|Any CPU
+		{344F13F5-5A73-4B6C-A5AC-6A35CCE32D6E}.ReleaseDrift|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

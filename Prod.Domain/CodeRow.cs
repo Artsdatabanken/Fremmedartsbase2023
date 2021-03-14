@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Databank.Domain
+﻿namespace Prod.Domain
 {
     public class CodeRow
     {
