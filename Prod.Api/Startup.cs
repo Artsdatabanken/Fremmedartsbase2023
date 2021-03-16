@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using Prod.Api.Controllers;
 using Prod.Data.EFCore;
 
@@ -25,17 +26,25 @@ namespace Prod.Api
 
     public class Startup
     {
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
             // The following line enables Application Insights telemetry collection.
-            services.AddApplicationInsightsTelemetry();// "023396f1-285d-45cc-920c-eb957cdd6c01");
+            //services.AddApplicationInsightsTelemetry();// "023396f1-285d-45cc-920c-eb957cdd6c01");
             StartupAddDependencies(services);
-            services.AddControllers().AddNewtonsoftJson();
-            services.AddMvc();
+            services.AddControllers(); //.AddNewtonsoftJson();
+            //services.AddMvc();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApplication4", Version = "v1" });
+            });
 
-            
             services.AddCors();
 
             services.AddSignalR(hubOptions =>
@@ -44,6 +53,7 @@ namespace Prod.Api
                 hubOptions.KeepAliveInterval = TimeSpan.FromMinutes(1);
             });
             services.AddResponseCompression();
+            services.AddApplicationInsightsTelemetry();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,7 +69,13 @@ namespace Prod.Api
                 //builder.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod()
                 builder.WithOrigins(new []{"https://rl2021.test.artsdatabanken.no", "https://rl2021.artsdatabanken.no", "http://localhost:1234"}).AllowAnyHeader().AllowAnyMethod().AllowCredentials()
             );
+
             app.UseStaticFiles();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApplication4 v1"));
+
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
             app.UseAuthentication();
@@ -81,16 +97,12 @@ namespace Prod.Api
             });
         }
 
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
 
         public IConfiguration Configuration { get; }
 
         private void StartupAddDependencies(IServiceCollection services)
         {
-            services.AddDbContext<ProdDbContext>(opt => opt.UseSqlServer(Configuration.GetValue<string>("Redlist2019Database")));
+            services.AddDbContext<ProdDbContext>(opt => opt.UseSqlServer(Configuration.GetValue<string>("FabDatabase")));
             var options = new ReferenceServiceOptions()
             {
                 AuthAuthority = Configuration.GetValue("AuthAuthority", "https://demo.identityserver.io"),
