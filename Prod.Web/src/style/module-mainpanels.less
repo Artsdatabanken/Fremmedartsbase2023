@@ -1,0 +1,152 @@
+﻿//todo: constants to config.less file
+@screen-width-small: 480px;
+@screen-width-medium: 1280px;
+@header-height: 150px;
+@header-height-small: 100px;
+@footer-height: 150px;
+@footer-height-small: 60px;
+@leftpanel1-width: 400px;
+@leftpanel1-width-small: 320px;
+@leftpanel1-collapsed-width: 30px;
+@leftpanel2-width: 400px;
+@leftpanel2-width-small: 320px;
+@leftpanel2-collapsed-width: 30px;
+@rightpanel-width: 0;
+@rightpanel-width-small: 0;
+@rightpanel-collapsed-width: 0;
+
+
+
+/*** basic application panel layout ***/
+#content > .panel {
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+}
+#header, #content, #footer {
+    position: absolute;
+    left: 0;
+    width: 100%
+}
+#header {
+    top: 0;
+    height: @header-height;
+}
+#content {
+    top: @header-height;
+    bottom: @footer-height;
+    /*overflow-y: auto */
+}
+#footer {
+    bottom: 0;
+    height: @footer-height;
+}
+#leftpanel1,#leftpanel2, #rightpanel, #main {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+}
+#leftpanel1 {
+  left: 0;
+  width: @leftpanel1-width;
+}
+#leftpanel2 {
+  left: @leftpanel1-width;
+  width: @leftpanel2-width;
+}
+#rightpanel {
+  right: 0;
+  width: @rightpanel-width;
+}
+#main {
+  left: (@leftpanel1-width + @leftpanel2-width);
+  right: (@rightpanel-width);
+}
+@media screen and (max-width: @screen-width-medium) {
+  #header {
+      height: @header-height-small;
+  }
+  #content {
+      top: @header-height-small;
+      bottom: @footer-height-small;
+  }
+  #footer {
+      bottom: 0;
+      height: @footer-height-small;
+  }
+  #leftpanel1 {
+    width: @leftpanel1-width-small;
+  }
+  #leftpanel2 {
+    left: @leftpanel1-width-small;
+    width: @leftpanel2-width-small;
+  }
+  #rightpanel {
+    width: @rightpanel-width-small;
+  }
+  #main {
+    left: (@leftpanel1-width-small + @leftpanel2-width-small);
+    right: (@rightpanel-width-small);
+  }
+}
+
+/*****************************/
+/*** fullscreen map layout ***/
+.l-mainfullscreen > #header,
+.l-mainfullscreen > #footer,
+.l-mainfullscreen > #content > #leftpanel1,
+.l-mainfullscreen > #content > #leftpanel2,
+.l-mainfullscreen > #content > #rightpanel {
+  display: none;
+}
+.l-mainfullscreen > #content > #main {
+  left: 0 !important;
+  right: 0 !important;
+}
+.l-mainfullscreen > #content  {
+  top: 0 !important;
+  bottom: 0 !important;
+}
+/*****************************/
+
+/*** panel collapse layout ***/
+#leftpanel1.l-collapsed {
+  width: @leftpanel1-collapsed-width;
+}
+#leftpanel2.l-collapsed {
+  width: @leftpanel2-collapsed-width;
+}
+#rightpanel.l-collapsed {
+  width: @rightpanel-collapsed-width;
+}
+#content.leftpanel1panelcollapsed > #leftpanel2,  /* for IE8 */
+#leftpanel1.l-collapsed ~ #leftpanel2 {
+  left: @leftpanel1-collapsed-width;
+}
+#content.leftpanel1panelcollapsed > #main,  /* for IE8 */
+#leftpanel1.l-collapsed ~ #main {
+  left: (@leftpanel1-collapsed-width + @leftpanel2-width);
+}
+#content.leftpanel2panelcollapsed > #main,  /* for IE8 */
+#leftpanel2.l-collapsed ~ #main {
+  left: (@leftpanel1-width + @leftpanel2-collapsed-width);
+}
+#content.leftpanel1panelcollapsed.leftpanel2panelcollapsed > #main,  /* for IE8 */
+#leftpanel1.l-collapsed ~ #leftpanel2.l-collapsed ~ #main {
+  left: (@leftpanel1-collapsed-width + @leftpanel2-collapsed-width);
+}
+#content.rightpanelpanelcollapsed > #main,  /* for IE8 */
+#rightpanel.l-collapsed ~ #main {
+  right: @rightpanel-collapsed-width;
+}
+@media screen and (max-width: @screen-width-medium) {
+  #leftpanel1.l-collapsed ~ #main {
+    left: (@leftpanel1-collapsed-width + @leftpanel2-width-small);
+  }
+  #leftpanel2.l-collapsed ~ #main {
+    left: (@leftpanel1-width-small + @leftpanel2-collapsed-width);
+  }
+}
+
+/*****************************/

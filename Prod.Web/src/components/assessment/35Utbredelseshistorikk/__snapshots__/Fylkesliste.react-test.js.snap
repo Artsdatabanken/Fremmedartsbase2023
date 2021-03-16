@@ -1,0 +1,88 @@
+exports[`test Fylkesliste 1`] = `
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <table
+          className="table-striped">
+          <thead>
+            <tr>
+              <th>
+                Fylke
+              </th>
+              <th
+                style={Object {}}>
+                kjent
+              </th>
+              <th
+                style={Object {}}>
+                antatt
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                Oslo
+              </td>
+              <td
+                style={
+                  Object {
+                    "textAlign": "center",
+                  }
+                }>
+                <input
+                  checked={true}
+                  disabled={undefined}
+                  onChange={[Function]}
+                  type="checkbox" />
+              </td>
+              <td
+                style={
+                  Object {
+                    "textAlign": "center",
+                  }
+                }>
+                <input
+                  checked={false}
+                  disabled={undefined}
+                  onChange={[Function]}
+                  type="checkbox" />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Hedmark
+              </td>
+              <td
+                style={
+                  Object {
+                    "textAlign": "center",
+                  }
+                }>
+                <input
+                  checked={false}
+                  disabled={undefined}
+                  onChange={[Function]}
+                  type="checkbox" />
+              </td>
+              <td
+                style={
+                  Object {
+                    "textAlign": "center",
+                  }
+                }>
+                <input
+                  checked={true}
+                  disabled={undefined}
+                  onChange={[Function]}
+                  type="checkbox" />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;

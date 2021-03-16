@@ -1,0 +1,1365 @@
+﻿@charset "UTF-8";
+
+/**************************************************************************************************************
+
+      * Styleinfo.less * 
+
+                 (\_/)
+         .-""-.-.-' a\
+        /  \      _.--'
+       (\  /_---\\_\_
+        `'-.
+         ,__)
+
+  
+This LESS document will (and shall) not generate any real CSS tags.
+It contain style info that is used in other LESS files that DO generate concrete css.
+
+It contains such as:
+
+Colors (the standard pallette used for the site)
+Font information
+Standard dimensions (Most importantly Line height, grid widths and related dimensions)
+Mix-in helper methods
+
+
+This file will be imported into all other LESS files that uses this values
+
+
+***************************************************************************************************************/
+
+/*-- n�ytral --*
+@colorLightBoxBackground: #DDD;
+@color: #333;
+@colorHeader: #333;
+@colorThinLine: #333;
+@colorHrLine: #333;
+@colorFacetFilter: #DDD;
+/* */
+
+@colorLightBoxBackground: #ECECE2;
+@colorVeryLightBoxBackground: #F9F7F3;
+@color: #685C53;
+@colorH: #E86C19;
+@colorThinLine: #DFDFCD;
+@colorHrLine: #C7C2BC;
+@colorFacetFilter: #A3A496; /* #685C53; #4f453e */
+@colorDarkBackground: #4f453e;
+@colorPageBackground: #fff;
+@colorHeader: #fff;
+@colorFooter: #fff; 
+@colorVeryBrightText: #A0948B;
+@colorBrightText: #90847B;
+@colorBrightBlue: #09f;
+
+/*
+--m�rkebrune bakgrunnsfarger fra mobilmenyen
+---m�rkest > lysest
+#1F1C19  (hover)
+#3A332F
+#49413B
+#746B63
+#9B9087
+
+*/
+
+// media min-width constants:
+@width-580: 580px;
+@width-690: 690px;
+@width-800: 800px;
+@width-960: 960px;
+@width-1200: 1200px;
+
+/* ----- */
+/*@font-face {
+	font-family: 'DroidSerifRegular';
+	src: url('./fonts/droidserif-regular-webfont.eot');
+	src: url('./fonts/droidserif-regular-webfont.eot?#iefix') format('embedded-opentype'), url('./fonts/droidserif-regular-webfont.woff') format('woff'), url('./fonts/droidserif-regular-webfont.ttf') format('truetype'), url('./fonts/droidserif-regular-webfont.svg#DroidSerifRegular') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'DroidSerifBold';
+	src: url('./fonts/droidserif-bold-webfont.eot');
+	src: url('./fonts/droidserif-bold-webfont.eot?#iefix') format('embedded-opentype'), url('./fonts/droidserif-bold-webfont.woff') format('woff'), url('./fonts/droidserif-bold-webfont.ttf') format('truetype'), url('./fonts/droidserif-bold-webfont.svg#DroidSerifBold') format('svg');
+	font-weight: bold;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'DroidSerifItalic';
+	src: url('./fonts/droidserif-italic-webfont.eot');
+	src: url('./fonts/droidserif-italic-webfont.eot?#iefix') format('embedded-opentype'), url('./fonts/droidserif-italic-webfont.woff') format('woff'), url('./fonts/droidserif-italic-webfont.ttf') format('truetype'), url('./fonts/droidserif-italic-webfont.svg#DroidSerifItalic') format('svg');
+	font-weight: normal;
+	font-style: italic;
+}
+@font-face {
+	font-family: 'DroidSerifBoldItalic';
+	src: url('./fonts/droidserif-bolditalic-webfont.eot');
+	src: url('./fonts/droidserif-bolditalic-webfont.eot?#iefix') format('embedded-opentype'), url('./fonts/droidserif-bolditalic-webfont.woff') format('woff'), url('./fonts/droidserif-bolditalic-webfont.ttf') format('truetype'), url('./fonts/droidserif-bolditalic-webfont.svg#DroidSerifBoldItalic') format('svg');
+	font-weight: bold;
+	font-style: italic;
+}
+*/
+
+
+@fontfamilyAdb: Arial,Helvetica,sans-serif;
+@fontfamilyAdbNarrow: Arial Narrow;
+@fontfamilyH: 'DroidSerifRegular',Georgia,'Times New Roman',Times,serif;
+@fontfamilySmallH: @fontfamilyAdb;
+
+@fontfamilyHeader: Arial,Helvetica,sans-serif;
+@fontfamilyFooter: Arial,Helvetica,sans-serif;
+
+
+/* ----- */
+
+
+
+
+@BFS: 1.6;   /* basic font size = 1.4rem = 14px */
+@ReducedFS: 1.4;
+@TinyFS: 1.2;
+@BLH: 2; /* Basic Line Height */
+@ThinLine: 0.1;        /* One px in rem */	
+@HalfLH: @BLH / 2;
+@ReducedLH: @BLH - @ThinLine;              
+@ReducedHalfLH: @HalfLH - @ThinLine;              
+	
+
+//-----------------------
+
+.font-size(@value){
+  @pxValue: (@value * 10);
+  font-size: @pxValue*1px;
+  font-size: @value*1rem;
+}
+
+.line-height(@value){
+  @pxValue: (@value * 10);
+  line-height: @pxValue*1px;
+  line-height: @value*1rem;
+}
+
+.height(@value){
+  @pxValue: (@value * 10);
+  height: @pxValue*1px;
+  height: @value*1rem;
+}
+
+.margin(@value){
+  @pxValue: (@value * 10);
+  margin: @pxValue*1px;
+  margin: @value*1rem;
+}
+
+.margin-top(@value){
+  @pxValue: (@value * 10);
+  margin-top: @pxValue*1px;
+  margin-top: @value*1rem;
+}
+
+.margin-right(@value){
+  @pxValue: (@value * 10);
+  margin-right: @pxValue*1px;
+  margin-right: @value*1rem;
+}
+
+.margin-bottom(@value){
+  @pxValue: (@value * 10);
+  margin-bottom: @pxValue*1px;
+  margin-bottom: @value*1rem;
+}
+
+.margin-left(@value){
+  @pxValue: (@value * 10);
+  margin-left: @pxValue*1px;
+  margin-left: @value*1rem;
+}
+
+.padding(@value){
+  @pxValue: (@value * 10);
+  padding: @pxValue*1px;
+  padding: @value*1rem;
+}
+
+.padding-top(@value){
+  @pxValue: (@value * 10);
+  padding-top: @pxValue*1px;
+  padding-top: @value*1rem;
+}
+
+.padding-right(@value){
+  @pxValue: (@value * 10);
+  padding-right: @pxValue*1px;
+  padding-right: @value*1rem;
+}
+
+.padding-bottom(@value){
+  @pxValue: (@value * 10);
+  padding-bottom: @pxValue*1px;
+  padding-bottom: @value*1rem;
+}
+
+.padding-left(@value){
+  @pxValue: (@value * 10);
+  padding-left: @pxValue*1px;
+  padding-left: @value*1rem;
+}
+
+
+.border(@value: @ThinLine, @colorvalue: @colorThinLine){
+  border: @value*10px solid @colorvalue;
+  border: @value*1rem solid @colorvalue;
+}
+
+.border-top(@value: @ThinLine, @colorvalue: @colorThinLine){
+  border-top: @value*10px solid @colorvalue;
+  border-top: @value*1rem solid @colorvalue;
+}
+
+.border-right(@value: @ThinLine, @colorvalue: @colorThinLine){
+  border-right: @value*10px solid @colorvalue;
+  border-right: @value*1rem solid @colorvalue;
+}
+
+.border-bottom(@value: @ThinLine, @colorvalue: @colorThinLine){
+  border-bottom: @value*10px solid @colorvalue;
+  border-bottom: @value*1rem solid @colorvalue;
+}
+
+.border-left(@value: @ThinLine, @colorvalue: @colorThinLine){
+  border-left: @value*10px solid @colorvalue;
+  border-left: @value*1rem solid @colorvalue;
+}
+
+.border-radius(@radius) {
+    -webkit-border-radius: @radius;
+    -moz-border-radius: @radius;
+    border-radius: @radius;
+}
+
+/*.line-height(@value){
+  line-height: @value*10px;
+  line-height: @value*1rem;
+}
+
+.font-size(@value){
+  font-size: @value*10px;
+  font-size: @value*1rem;
+}*/
+
+.page_container > h1,
+.main div h1,
+.page_wrapper h2 {
+  text-align: center;
+  padding: 5px;
+}
+
+.border-box() {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+// ------------------------------
+.show-grid {
+      margin-left: 40px;
+}
+
+/*table {
+  margin-bottom: 7px;
+  margin-left: 10px;
+}*/
+
+td {
+  padding-right: 4px;
+  padding-left: 5px;
+}
+.table-impact > thead > tr > th{
+  text-align: left;
+}
+
+.form_item .form-control{
+  max-width: 350px;
+  width: 55%;
+}
+
+.intervall .form-control {
+  width: 100%;
+}
+
+.form_item > .impact > tbody > tr > td > div > .form-control {  
+  min-width: 550px;
+  width: 80%;
+}
+
+.form_item > .choice > tbody > tr > td.kraftig > div > {   
+  width: 60%;
+}
+
+
+//.intervall div,
+//.intervall .row,
+.form_item table div,
+.row > div > div {
+  padding-bottom: 5px;
+}
+
+table.choice div {
+  padding-bottom: 0;
+}
+.table-impact > tbody > tr > td {
+  text-align: left;
+  vertical-align: middle;
+  width: 20%;
+  padding-right: 15px;
+}
+
+table.choice tbody tr td {
+  text-align: center;
+  padding: 5px;
+}
+
+table.choice .form-control {
+  width: 85%;
+}
+
+table.formtable {
+        tr {
+            td, th {
+                padding-top: 4px;
+                padding-bottom: 4px;
+                padding-left: 10px;
+                div.form-group {
+                    margin-bottom: 0;
+
+                }
+            }
+            td:first-child, th:first-child {
+              padding-left: 0;
+            }
+        }
+}
+
+// Make the text not be smoshed outside the page
+.row{
+  margin-left:10px;
+  max-width:calc(100% - 10px);
+}
+
+
+// Shrinking input fields to make it easier to use
+
+.form-horizontal .form-group,
+form.minMax .form-group div {
+  margin-left:0px;
+}
+
+//-----------------------------
+
+.clearAfter {
+  clear: both;
+  content: ".";
+  display: block;
+  height: 0;
+  line-height: 0;
+  visibility: hidden;
+}
+
+// Materialize.css things.....(?)
+.waves-effect {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    vertical-align: middle;
+    z-index: 1;
+    will-change: opacity, transform;
+    transition: all .3s ease-out;
+}
+
+.btn:active {
+  background-color: rgba(0,0,0,0.1);
+  box-shadow: none;
+}
+
+
+.btn-flat {
+    border: none;
+    border-radius: 2px;
+    display: inline-block;
+    // height: 36px;
+    // line-height: 36px;
+    outline: 0;
+    padding: 1px 5px;
+    // text-transform: uppercase;
+    vertical-align: middle;
+    -webkit-tap-highlight-color: transparent;
+
+    box-shadow: none;
+    background-color: transparent;
+    color: #343434;
+    cursor: pointer;
+    transition: background-color .2s;
+}
+
+a.btn-flat {
+    color: #039be5;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent
+  }
+
+a:active, a:hover {
+    outline: 0;
+}
+
+button a:hover {
+  text-decoration: none;
+}
+
+.header_padding button {
+  margin: 5px;
+}
+
+.btn-flat.btn-flat-list {
+  display: block;    
+}
+
+.panel-heading.compact {
+  padding: 5px 15px;
+  background-color: transparent;
+}
+
+.panel.compact {
+  margin-bottom: 10px;
+}
+
+.well.sheet {
+  background-color: #FDFCFC; 
+  padding-top: 3px;
+  padding-bottom: 3px; 
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-top: 15px; 
+}
+
+.hasLabel > label > * {
+  padding-left: 15px;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.radio label input[type="radio"] {
+  margin-top: 5px;
+}
+
+label{
+  font-weight: 500;
+}
+
+.search label {  
+  margin-top: 5px;
+}
+
+
+div.uncertainty {
+  display: inline !important;
+  input {
+    margin-right: 7px;
+  }
+}
+
+.newRow {
+  background-color: #D8D8D8;
+}
+
+.disabled {
+  color: #BBB;  
+}
+
+.col-md-6 > div > .speciesSearchList {
+  z-index: 3001;
+  width: 100%;
+}
+.speciesSearchList > .panel {
+  border-width: 2px;
+  border-color: #666;  
+  background: #ddd;
+  border-radius: 20px;
+}
+
+.speciesItem, .speciesNewItem {
+  line-height: 1.15;  
+}
+.speciesSearchItem {
+  padding: 10px;  
+}
+.speciesSearchItem:hover, .speciesSearchItem:focus, .speciesSearchItem:active {
+    background: white;
+    color: black;
+    cursor: pointer;
+    border-radius: 20px;
+}
+
+.speciesNewItem:hover {
+    background-color: #2098d1;
+    color: white;
+    cursor: text;
+    padding: 10px;
+}
+
+.rlCategory {
+  font-size: 110%;
+  float: right;
+  font-weight: bold;
+}
+.scientificName {
+  // font-family: "Open Sans", "Times New Roman";
+  font-size: 87%;
+  font-style: italic;
+  display: inline-block;
+  padding-right: 13px;
+}
+.author {
+  font-size: 80%;
+  display: inline-block;
+}
+.vernacularName {
+  font-size: 110%;
+}
+
+.groupHeading {
+  font-weight: 600;
+}
+
+// <div className="speciesSearchItem">
+//                                         <div className="vernacularName">{item.popularName}</div>
+//                                         <div className="scientificName">{item.scientificName}</div>
+//                                         <div className="author">{"(" + item.author + ")"}</div>
+//                                         <div className={"rlCategory " + item.rlCategory}>{item.rlCategory}</div>
+//                                     </div>
+
+.three-bounce > div {
+  width: 18px;
+  height: 18px;
+  background-color: #333;
+
+  border-radius: 100%;
+  display: inline-block;
+  -webkit-animation: bouncedelay 1.4s infinite ease-in-out;
+  animation: bouncedelay 1.4s infinite ease-in-out;
+  /* Prevent first frame from flickering when animation starts */
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.three-bounce .bounce1 {
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+
+.three-bounce .bounce2 {
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+
+@-webkit-keyframes bouncedelay {
+  0%, 80%, 100% { -webkit-transform: scale(0.0) }
+  40% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes bouncedelay {
+  0%, 80%, 100% {
+    transform: scale(0.0);
+    -webkit-transform: scale(0.0);
+  } 40% {
+    transform: scale(1.0);
+    -webkit-transform: scale(1.0);
+  }
+}
+
+
+.nav-labels-justified {
+  margin-bottom: 3px;
+  > li {
+    > a {
+      margin-right: 0;
+      border-radius: 0;
+      margin-bottom: -2px;
+    }
+  }
+
+  > .active > a,
+  > .active > a:hover,
+  > .active > a:focus {
+    border: none;
+    border-bottom: 4px solid @link-color;
+  }
+}
+
+.nav-labels {
+  border-bottom: 1px solid @nav-tabs-border-color;
+  margin-bottom: 3px;
+  > li {
+    float: left;
+    margin-bottom: -2px; 
+    > a {
+      margin-right: 2px;
+      line-height: @line-height-base;
+      white-space: nowrap;
+      border: none;
+      border-radius: 0;
+      &:hover {
+        border-color: @nav-tabs-link-hover-border-color @nav-tabs-link-hover-border-color @nav-tabs-border-color;
+        border-bottom: 4px solid fade(@link-color, 35%);
+      }
+    }
+    &.active > a {
+      &,
+      &:hover,
+      &:focus {
+        color: @nav-tabs-active-link-hover-color;
+        background-color: @nav-tabs-active-link-hover-bg;
+        border: none;
+        border-bottom: 4px solid @link-color;
+        text-transform: uppercase;
+        font-weight: 600;
+        white-space: nowrap;
+        cursor: default;
+      }
+    }
+    &.notrequired > a {
+      color: #777
+    }
+  }
+  &.nav-justified {
+    .nav-justified();
+    .nav-labels-justified();
+  }
+}
+
+.tree-view-arrow {
+    -moz-transition: all 0.1s;
+    -o-transition: all 0.1s;
+    -ms-transition: all 0.1s;
+    -webkit-transition: all 0.1s;
+    transition: all 0.1s;
+
+    cursor: pointer;
+    margin-right: 6px;
+    display: inline-block;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.tree-view-arrow-collapsed {
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
+.tree-view-label {
+    padding: 2px 10px 2px 5px;
+    // font: 14px Helvetica, Arial, sans-serif;
+    display: inline-block;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -moz-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    -ms-transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+    border-radius: 3px;
+}
+
+.tree-view-children {
+    margin-left: 25px;
+}
+
+.hovedtypegruppe {
+    cursor: default;
+    font-size: 120%;
+    font-weight: 600;
+}
+.hovedtype {
+    font-size: 120%;
+    cursor: pointer;
+}
+.grunntype {
+    // font-size: large;
+    cursor: pointer;
+}
+.naturtype-kode {
+  font-weight: 600;
+  display: inline-block;
+  width: 70px;
+}
+
+.fabfooter {
+  margin-top: 30px;
+  margin-bottom: 24px;
+}
+
+
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+}
+
+.missingInfo {
+  color: red;
+}
+
+.intent15 {
+  margin-left: 15px
+}
+
+.intent30,
+.form_category > .btn-primary {
+  margin-left: 30px;
+  margin-right: 10px
+}
+.intent30 > p,
+.form_item > p{
+  margin-left: 10px;
+}
+
+.form_item > .checkbox {
+  padding-left: 20px;
+}
+
+.form_category > h3 {
+  margin-left: 30px;
+  font-size: 16pt;
+}
+
+.form_item > h4 {
+  margin-left: 5px;
+}
+
+.form_category > h4 {
+  padding-top: 10px;
+  margin-left: 30px;
+}
+
+.criteriaCheck {
+  display: inline-block;
+  width: 15px;
+  margin-right: 5px;
+}
+
+.vurderinger  tbody tr:hover td {
+  background-color: #d6cfca;
+  transition: all 0.2s ease-in-out;
+}
+
+li.checkbox > label {
+      white-space: nowrap; 
+}
+.checkbox input[type="checkbox"] {
+  margin-top: 5px;
+}
+
+.selectAssessment {
+  display: flex;
+}
+
+.selectAssessment > div {
+   display: inline-block;
+   padding: 2%;
+   margin: 5px;
+   padding-left: 0;
+}
+
+.selectAssessment > div > div > div {
+  width: 65%;
+}
+
+.selectAssessment > div.stat > div > div,
+.selectAssessment > div > div.dropdown-menu > div {
+  width: 100%;
+}
+
+.selectAssessment .checkbox {
+  padding-left: 40px;
+}
+
+.input_container {
+  height: auto;
+  margin-bottom: 10px;
+  padding-bottom: 2%;
+}
+
+.form_labels {
+  width: 20%;
+  float: left;  
+}
+
+.form_item > .table-hover {
+  width: auto;
+}
+
+.container_description {
+  margin: auto;
+}
+
+.input_container > .inputValues {
+  width: 15%;
+  float: left;
+  margin: 0;
+}
+
+.input_container > .form_labels > p {
+
+  margin-top: 10px;
+  margin-left: 20px;
+  padding-top: 11px;
+}
+
+.container_description > .form_labels {
+  width: 40%;
+  padding-top: 15px; 
+  margin-left: 30px;
+}
+
+.container_description > .inputValues {
+  width: 40%;
+}
+
+.container_description > .form_labels > p,
+.container_description > .inputValues > div {
+  padding: 10 0 0;
+}
+
+ .inputValues {
+  width: 40%;
+  display: inline-block;
+  margin: 0 auto;
+  padding-bottom: 5px;
+  padding-left: 10px;
+}
+
+.form_item > .input_values_d,
+.criteria_list > .input_values_d {
+  width: 10%;
+  margin-right: auto;
+}
+
+.criteria_list > li {
+  padding: 5px;
+}
+
+.input_container > div {
+  margin-right: 0;
+}
+
+.form_category > .form_item > table > tr > td > .radiohorizontal,
+.form_category > .form_item > table > tbody > tr > td > .radiohorizontal  {
+    margin: 0;  
+    padding: 0;  
+    width: 40%;
+}
+
+.form_category > .form_item > table.c > tbody > tr > td > .radiohorizontal  {  
+  width: 80%;
+}
+.form_category > .form_item > table > tbody > tr > td > .radio > label {
+ margin: 0;
+ padding: 0;
+}
+
+.form_category > .form_item > .table-hover > tbody > tr > td:first-child,
+.form_category > .form_item > div > .table-hover > tbody > tr > td:first-child {
+  width: 25%;    
+ }
+
+ .form_category > .form_item > table.c > tbody > tr > td:first-child {
+  width: 50%;    
+ }
+ .form_category > .form_item > .table-hover > tbody > tr > td:last-child,
+ .form_category > .form_item > div > .table-hover > tbody > tr > td:last-child {
+  width: 65%;    
+ }
+
+ .form_category > .form_item > .table-impact > tbody > tr > td:last-child,
+ .form_category > .form_item > table.c > tbody > tr > td:last-child {
+  width: 35%;    
+ }
+
+td > .radiohorizontal > .radio {
+  width: 15%;
+  margin: 5%;
+  margin-left: 0;
+  margin-right: 15%;
+}
+
+.form_item > table > tbody > tr > td > div {
+  width: auto;
+  max-width: 80%;
+}
+
+.radiohorizontal > .radio > label,
+.form_category > .form_item >  table > tbody > tr
+{
+  margin-left: 0;
+}
+
+.populasjonsstørrelse > .radiohorizontal {
+  width: 80%;
+}
+
+.populasjonsstørrelse > .radiohorizontal > .radio {
+  width: 35%;
+}
+.form_item > .radio {
+  width: auto;
+  margin-top: 0;
+}
+
+.form_item > div > strong {
+  margin: 0;
+  padding: 0;
+}
+
+.interval {
+  margin-top: 20px;
+}
+
+.toolbar_styling > .show {
+  display: inline-block !important;
+}
+
+.dropdown-menu {
+  min-width: 30px;
+}
+
+.dropdown-menu > li,
+.dropdown-menu > li > a {
+  text-align: center;
+  border-radius: 24px;
+}
+
+.page_wrapper > span {
+  margin-bottom: 20px;
+}
+
+.input_field > div {
+  max-width: 900px;
+  margin-top: 0;
+  padding-top: 15px;
+}
+
+.container_description > p,
+.form-group > b
+ {
+  margin-left: 20px;
+}
+
+ul > table > tr,
+.form_item > table > tr,
+.form_item > table > thead > tr,
+.form_item > table > tbody > tr,
+.form_item > div > table > tbody > tr,
+.container_description > table > tr   {
+  background-color: transparent;
+  padding-left: 20px;
+}
+
+.table > thead:first-child > tr:first-child > td {
+  width: 60%;
+}
+
+.table-striped > tbody > tr > td,
+.table > tr > td,
+.table > tbody > tr > td,
+.table-hover > tr > td {
+  vertical-align: middle;
+}
+
+.table-hover > tr {  
+  background-color: transparent;
+}
+
+.form_item > .table-striped > tbody > tr:nth-child(odd) {
+  background-color: #f5f5f5;
+}
+
+.form_item > .table-striped > tbody > tr:nth-child(odd) > td   {
+  background-color: #f5f5f5;
+  width: 80%;
+}
+
+ul > table {
+  margin-left: 30px;
+}
+
+.påvirkningsfaktorer > .påvirkningsfaktorer > .påvirkningsfaktorer {
+  margin-left: 40px;
+}
+
+.påvirkningsfaktorer > .påvirkningsfaktorer > .påvirkningsfaktorer > .påvirkningsfaktorer > button {
+  min-width: 3%;
+  max-width: 90%;
+}
+
+.påvirkningsfaktorer > button,
+.btn-secondary,
+.btn-primary {
+  color: #212529;
+  font-weight: normal;
+}
+
+.upper_description > div > p {
+  margin: 0 20px 10px;
+}
+
+.labels > label,
+.form_item > span,
+.form_labels > span {
+  font-size: 10pt;
+}
+
+.container > form {
+  margin-left: 10px;
+}
+
+select.form-control {
+  float: left;
+  margin-right: 10px;
+}
+
+.dd {
+  padding:10px;
+  float: right;
+  border: 2px solid black;
+  border-radius: 10px;
+  //flex: 0 0 50%;
+}
+
+.genTime {
+  display: flex;
+  vertical-align: middle;
+}
+
+form.minMax div,
+table.table-hover,
+.form_item ul,
+.form_item button {
+  margin-bottom: 0;
+  margin-left: 50px;
+}
+
+.form_item p {
+  margin-bottom: 0;
+  margin-left: 10;
+}
+
+.table-striped tbody tr td p {
+  margin-left: 0;
+}
+
+.form_item table button,
+.form_item p button {
+  margin-left: 0;
+}
+
+.units ul,
+.info p {
+  margin-left: 0;
+}
+.responsive p {
+  margin-left: 35px;
+  margin-bottom: 10px;
+}
+
+.form_item ul.criteria_list {
+  padding: 0;
+}
+
+.form_item > .criteria_list span {
+  margin-left: 0;
+}
+
+.criteria_list > .table-striped > tbody > tr > td {
+  margin-left: 0;
+  padding-left: 0;
+  background-color: #f5f5f5;
+}
+
+.criteria_list > .choice {
+  width: 80%;
+  margin-bottom: 15px;
+ // margin-left: 30px;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+.filter > div {
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  padding: 15px;
+}
+
+.filter div li:hover {
+  background-color: transparent;
+}
+
+.filter div li span {
+  margin-left: 10px;
+  margin-right: 10px;
+  font-size: medium;
+}
+
+.usedFilters button {  
+  border: 1px solid #000;
+  //border-radius: 20px;
+  color: #000;
+  margin-left: 20px;
+}
+
+.usedFilters button:disabled {
+  background-color: #ddd;
+  color: #888;
+}
+
+.usedFilters a {
+  margin-left: 10px;
+  color: #000;
+  font-weight: bold;
+}
+
+.usedFilters {
+  display: block;
+  margin-top: 5px;
+  padding: 5px;
+  position: sticky;
+  top: 35px;
+  background-color: #4c4a48;  
+  color: #fff;
+}
+
+.loader {
+  border: 16px solid #666; /* Grey */
+  border-top: 16px solid #bae2dd; /* Blue-green */
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  animation: spin 2s linear infinite;
+  z-index: 100;
+  position: absolute;
+  top: 900px;
+  left: 50%;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.filters {
+  width: auto;
+  padding: 5px;
+  border: 1px solid #ddd;
+  margin-right: 80px;
+}
+
+.filters .checkbox {
+  margin: 0;
+}
+
+.selectFilter .btn-primary {
+  margin-left: 180px;
+  margin-top: 20px;
+} 
+
+.filters > div > div,
+.filters > div > div > div {
+  border: none;
+}
+
+.filters > div > div > ul > li {  
+  display: block;
+}
+.selectFilter span {
+  margin-left: 10px;
+}
+
+.filters span {
+  font-weight: bold;
+}
+
+.filters label {
+  font-weight: normal;
+  cursor: pointer;
+}
+.filters input {
+  margin-top: 160px;
+  margin-left: 60px;
+}
+
+.filters .taxon
+ {
+  display: flex;
+  width: 25%;
+  border: none;
+  margin-right: 10px;
+}
+
+.taxon div {
+  display: flex;
+  width: 20%;
+  border: none;
+  margin-right: 10px;
+}
+.taxon li {
+  display: flex;
+}
+.taxon span {
+  margin-bottom: 0;
+}
+
+.comment span {
+  margin-right: 20px; 
+}
+
+.comment .checkbox {
+  margin-bottom: 0;
+  margin-left: 10px;
+}
+
+.comment .checkbox input {
+  margin-left: -20px;
+}
+
+.taxon input,
+.comment input {
+  margin-top: 0;
+  margin-left: 0;
+}
+
+.vurderinger > tbody > tr > td.sciName {
+  min-width: 200px;
+}
+.form_category > .form_item > .table-striped > tbody > tr > td{
+  vertical-align: top;
+}
+
+.form_item > .table-striped > tbody > tr > td > div {
+  //margin-top: 10px;
+  max-width: 100%;
+}
+
+.form_category > .form_item > .table-striped > tbody > tr > td > div,
+.form_category > .form_item > .table-striped > tbody > tr > td > div > div,
+.form_category > .form_item > .table-striped > tbody > tr > td > div > div > div,
+.form_category > .form_item > .table-striped > tbody > tr > td > div > div > div > div {
+  margin-left: 0;
+  height: auto;
+  padding-bottom: 0;
+  width: 100%;
+}
+
+.form_category > .form_item > .table-striped > tbody > tr > td > p > span > b {
+  font-weight: 400;
+}
+
+/*.form_category > .form_item > .table-striped > tbody > tr > td > div:first-child {
+  height: auto;
+  width: 100%;
+}*/
+
+.form_item > .table-striped > tbody > tr > td > div > div > p > sup {
+  line-height: 1.42857143;
+}
+
+.table-striped > tbody > tr > td > h1 {
+  margin-top: 0; 
+}
+
+.table-striped > tbody > tr > td > p > *,
+.table-striped > tbody > tr > td > p > span,
+.table-striped > tbody > tr > td > p > span > font,
+.table-striped > tbody > tr > td > p > i,
+.table-striped > tbody > tr > td > p > font,
+.table-striped > tbody > tr > td > h1 > p > font,
+.table-striped > tbody > tr > td > h1 > font,
+.table-striped > tbody > tr > td > h1 > span,
+.table-striped > tbody > tr > td > h1 > i > font,
+.table-striped > tbody > tr > td > h1 > b > font,
+.table-striped > tbody > tr > td > font,
+.table-striped > tbody > tr > td > h1 {
+  font-size: medium;
+  font-weight: 400;
+  text-align: left;
+  font-family: Arial;
+}
+
+/*.dropdown-check-list {
+  display: inline-block;
+}
+
+.dropdown-check-list:focus {
+  outline: none;
+}
+
+.dropdown-check-list .anchor {
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  padding: 5px 50px 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 24px;
+  width: 200px;
+}
+.dropdown-check-list .anchor:after {
+  position: absolute;
+  content: "";
+  border-left: 2px solid black;
+  border-top: 2px solid black;
+  padding: 5px;
+  right: 10px;
+  top: 20%;
+  -moz-transform: rotate(-135deg);
+  -ms-transform: rotate(-135deg);
+  -o-transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+  transform: rotate(-135deg);
+}
+.dropdown-check-list .anchor:active:after {
+  right: 8px;
+  top: 21%;
+}
+.dropdown-check-list ul.items {
+  padding: 2px;
+  display: none;  
+  margin: 0;
+  border: 1px solid #ccc;
+  border-top: none;
+  border-radius: 24px;
+  
+}
+.dropdown-check-list ul.items li {
+  list-style: none;
+}
+.dropdown-check-list.visible .anchor {
+  color: inherit;
+}
+.dropdown-check-list.visible .items {
+  display: block;
+  width: 200px;
+}
+
+.dropdown-check-list.visible .items li label input {
+  margin-left: -15px;
+}*/

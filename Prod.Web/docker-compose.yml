@@ -1,0 +1,15 @@
+version: '3'
+services:
+  referenceapi:
+    image: artsdatabanken/nbicreferences
+    ports:
+    - "5000:8000"
+    volumes:
+    # - .:/code
+     - refdata:/app/Data
+    # links:
+    # - redis
+#   redis:
+#     image: redis
+volumes:
+  refdata: {}

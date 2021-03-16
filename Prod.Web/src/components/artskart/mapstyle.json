@@ -1,0 +1,41 @@
+{
+  "inside": {
+    "radius": 5,
+    "fillColor": "rgba(255,0,0,0.5)",
+    "color": "rgba(0,0,0,0.63)",
+    "weight": 1,
+    "opacity": 1,
+    "fillOpacity": 1
+  },
+  "outside": {
+    "radius": 4,
+    "fillColor": "rgba(200,150,150,0.4)",
+    "color": "rgba(0,0,0,0.63)",
+    "weight": 1,
+    "opacity": 1,
+    "fillOpacity": 0.5
+  },
+  "add": {
+    "radius": 5,
+    "fillColor": "#cc40ff",
+    "color": "rgba(0,0,0,0.63)",
+    "weight": 1,
+    "opacity": 1,
+    "fillOpacity": 0.5
+  },
+  "remove": {
+    "radius": 4,
+    "fillColor": "rgba(200,200,200,0.3)",
+    "color": "rgba(0,0,0,0.63)",
+    "weight": 1,
+    "opacity": 1,
+    "fillOpacity": 0.5
+  },
+  "utbredelsesomraade": {
+    "fillColor": "rgba(200,200,200,0.7)",
+    "color": "rgba(0,0,0,0.63)",
+    "weight": 1,
+    "opacity": 0.7,
+    "fillOpacity": 0.4
+  }
+}

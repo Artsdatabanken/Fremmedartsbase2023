@@ -1,0 +1,657 @@
+﻿@charset "UTF-8";
+@import "./graphic-profile.less";
+@import "./bootstrap-build.less";
+
+/******************************/
+
+
+// **************************
+// Helene's work starts here. 
+// Bjørn's work starts here.
+
+// Make it all a tad readable, as text kept disappearing
+body{
+  box-sizing: border-box;
+}
+h2, h3, h4{
+  _margin-left: 30px;
+}
+// Placement of items on the page
+.header_padding,
+.page_padding{
+  max-width:@width;
+  box-sizing:border-box;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+@media only screen and (min-width: @max-width) {
+  .header_padding,
+  .page_padding{
+    width:@width;
+    max-width:calc(@max-width);
+  } 
+}
+
+.page_padding{
+  margin-top: calc(@paddingBetweenObjects * 2);
+}
+
+// The top bar
+.header_background{
+  background:@colorTextPrimaryRGB;
+  position: fixed;
+  top:0px;
+  left:0px;
+  width:100%;
+  box-sizing:border-box;
+  z-index: 10;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3)
+}
+
+.header_background h1{
+  color:@colorWhite;
+  font-family:@fontPrimary;
+  font-size:@fontSizeSecondary;
+  margin:0px;
+  padding-bottom:@paddingInsideObjects;
+  padding-top:@paddingInsideObjects;
+  margin-left:calc(@logoSize + @paddingBetweenObjects);
+}
+
+.top_image{
+  top: 0px;
+  position: fixed;
+  z-index: 2000;
+  width:@logoSize;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3)
+}
+
+.species_header{
+  font-family: @fontHeadings;
+  font-style: italic;
+  color: @colorRLRedPrimary;
+}
+
+// Contains everything, sets background etc. 
+.page_container{
+  max-width:100%;
+  font-size:@fontSizePrimary;
+  font-family: @fontSecondary;
+}
+
+// Wraps the content. May be used for overall padding. Don't do this on container level.
+
+@media only screen and (max-width: 600px) {
+  .form_category,
+  .form_cat_map,
+  .upper_description,
+  .page_wrapper h2,
+  .page_wrapper h1{
+    padding:@paddingSmallScreens;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    border: 1px solid #e3e3e3;
+    border-radius: 4px;
+    background-color: #f7f7f7;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.35);
+  }
+}
+
+// Overall page layout
+
+.upper_description, // First item below header - a description if existing
+.form_cat_map,
+.form_category{  // A group of items in the form
+  padding:@paddingBetweenObjects;
+  border: 1px solid #e3e3e3;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  background-color: #f5f5f5;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+// An item (combo of text and corresponding input fields) in the form
+.form_item, .form_item_search {
+  display:block;
+  padding: 2px;
+  margin-left: 20px;
+  padding-top: 10px;
+  margin-right: 10px;
+}
+
+// The text part of an item, or sometimes an input field. The lowest level.
+.form_item div{
+  display: inline-block;  
+  vertical-align: middle;
+  //vertical-align: baseline; // Text placed in baseline vs the input fields
+  box-sizing: border-box;
+  width: 100%;
+  margin-left: 5px;
+ // margin-bottom:@paddingInsideObjects; // avoid smosh
+  padding-right:@paddingInsideObjects; // to avoid smoshing the 2nd item
+}
+
+.form_item_search div{ // search fields in the reference area
+  display: flex;
+  vertical-align: baseline; // Text placed in baseline vs the input fields
+  box-sizing: border-box;
+  margin-left: 20px;
+  margin-bottom:@paddingInsideObjects; // avoid smosh
+  padding-right:@paddingInsideObjects; // to avoid smoshing the 2nd item
+}
+
+.row div {
+  width: auto;
+  min-width:70px;
+  margin-left: 1%;
+ // margin-right: 5%;
+}
+
+.form_item > form > .intervall,
+.form_category > .intervall {
+  display: flex;
+  margin-bottom: 0;
+}
+
+.intervall > div > .row > label,
+.intervall > div > .row > div > label,
+.intervall > div > .row > div > .row > label,
+.intervall > label,
+.row > label,
+.row > div > label,
+.intervall > div > .row  {
+  margin: 0;  
+  padding: 10px 0 0;
+  font-weight: normal;
+}
+
+/*.form_item > p {
+  margin-bottom: 20px;
+}*/
+
+.row div select {
+  min-width: 300px;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.search {
+  width: 100%;
+}
+.form_item > .choice {
+  width: 95%;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+// navigation menu. 
+// Removed bootstrap, as it required too many overrides.
+// Mooched the best parts
+
+.nav_menu, .faner{
+  list-style: none;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  justify-content:space-between;
+  padding:0px;
+}
+
+.faner {
+    background-color: #f5f5f5;
+    _border: 1px solid #e3e3e3;
+    border-radius: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3)
+}
+
+.nav_menu li {
+  padding:0px;
+  text-align:center;
+  padding:@paddingInsideObjects;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+//.nav_menu li,
+.nav_menu  > li:hover,
+.nav_menu  > li.active:hover, 
+.nav_menu  > li.active:focus,
+.nav_menu  > li.active 
+{
+  //color: @colorRLOrangePrimary;
+  color: @colorRLOrangeLogo;
+  background-color: transparent;
+  border-bottom: 3px solid @colorRLOrangeLogo;
+  background-color: #bae2dd;
+ 
+  text-transform: none;
+  font-weight: 500;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+/*.nav_menu  > li.active {
+  color: @colorRLRedSecondary;
+  border-bottom: 4px solid @colorRLRedPrimary;
+}*/
+
+.nav_menu li {
+  color: @colorRLPrimary;
+  background-color: transparent;
+  border-bottom: 4px solid transparent;
+  border-radius: 20px;
+}
+
+.dropdown-menu li:hover,
+.choice {
+  background-color:@colorRLBlue;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+.dropdown-menu li a{
+  //font-weight: bold;
+  padding-left: 5px;
+  padding-right: 5px;
+  text-decoration: none;
+  text-align: left;
+  }
+.dropdown-menu li a:hover{
+  background-color: @colorRLBlue;
+}
+
+.nav_menu .wrap_enditem{
+  max-width:0px;
+  padding:0px;
+}
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  // IE fallback, as text-wrap doesn't always work properly.
+  .nav_menu{
+    display:block;
+  }
+  
+  .nav_menu li {
+    flex:1;
+    display:inline-block;
+  }
+}
+
+// Temporary while we wait for proper elements 
+// Used only in Oppsumering, fase 2
+.check_box_container span{
+  margin-left:25px; // dont overlap
+  float:left;
+}
+
+// HTML EDITOR
+
+// On write your own comment-input fields
+.form_item .toolbar_styling,
+.toolbar_styling{
+  width:100%;
+}
+
+.button_html_editor  {
+  width:auto;
+  height:30px;
+  padding:5px;
+  display:inline-block;
+  box-sizing: border-box;
+  vertical-align: top;
+  background:none;
+  border:none;
+  padding-right:10px;
+  padding-left:10px;
+  border-right:1px solid @colorRLWhiteRGBA;
+}
+
+.form_item .toolbar_styling button {
+  height:100px;
+  max-width:100%;
+  overflow:scroll;
+  border-radius: 0px;
+}
+
+.button_html_editor:active,
+.button_html_editor:hover{
+  background:@colorRLWhiteRGBA;
+}
+
+// BOOTSTRAP OVERRIDES:
+
+.intent30 > ul > li {
+  padding: 5px;
+}
+
+.form_item ul {
+  padding-left: 20px;
+  //margin-left: 10px;
+}
+
+/*.radio label {
+  margin-left: 20px;
+}*/
+
+.intent30 div .radio label {
+  margin-left: 0;
+}
+
+.box_c > .radio label {
+  margin: 0;
+}
+
+div strong {
+  margin-left: 20px;
+}
+
+//.btn-group > .btn,
+.btn-default {
+  float:none;
+  height:auto;
+  white-space: normal;
+  margin: 2px;
+}
+
+.btn-group{
+  margin:0px;
+}
+
+form > .btn-default {
+  height: auto;
+}
+.toolbar_styling > .btn-group {
+  margin-left: 0;
+  padding-right: 5px;
+  height: 30px;
+}
+
+.toolbar_styling > .btn-group > .btn,
+.btn-group > .btn-default,
+.toolbar_styling > button {
+  height: 30px;
+}
+
+.btn-group > .btn-default {
+  margin: 0;
+}
+
+.btn-primary {
+ // margin-top: 10px;
+  margin-right: 10px;
+}
+.btn-primary:focus,
+.btn-default:focus,
+.btn-primary:active,
+.btn-default:active {  
+  outline: thin dotted;
+}
+tr, button, .btn, .btn.focus, .btn[focus], .btn.active, .btn[active] {
+  /*background:@colorRLWhiteRGBA;*/
+  background:@colorRLBlue;
+}
+
+.btn.disabled, .btn[disabled] {
+  background: #ddd;
+  color: #888;
+}
+
+button:focus, button:active {
+  //margin: 10px;
+  outline: thin dotted;
+}
+
+.btn {
+  border: 1px solid #aaa;
+  font-weight: 500;
+  color: rgba(0,0,0,0.67);
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.btn:hover { 
+  border: 1px outset #aaa;
+    background-color: saturate(@colorRLBlue, 25%);
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+.btn:active,
+.btn:focus { 
+    border: 2px inset #aaa;
+    background-color: saturate(@colorRLBlue, 25%);
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.35);
+    outline: thin dotted;
+}
+
+.upper_description div,
+.form_category div {
+  margin-left: 10px;
+ // padding: 5px;
+}
+
+.form_item .criteria_list {
+  margin-left: 45px;
+}
+
+.form-control div {
+  margin-left: 0;
+}
+
+.form_category .påvirkningsfaktorer {
+  padding: 0;
+}
+
+/* .form_category > .form_item > div.radio {
+  margin-left: 55px;
+}
+
+.form_category span {
+  margin-left: 10px;
+}*/
+
+// ANYTHING TABLE RELATED
+
+.compare_table{
+  font-size:9pt;
+  width:100%;
+}
+tr {
+  border: none;
+  border-top-color: transparent;
+}
+
+pre{
+  padding:0px;
+  margin:0px;
+  height:auto;
+  font-size: inherit;
+  color:inherit;
+  border:none;
+  display: inline-block; 
+  white-space: pre-wrap;
+  background:transparent;
+}
+
+.hide_object pre{
+  display:none;
+}
+
+.old_object{
+  color:@colorRLRedPrimary;
+}
+
+.new_object{
+  color:@colorRLOrangeSecondary;
+}
+
+tr:nth-child(2n){
+  background:transparent;
+}
+
+.table > tbody > tr > td {
+  padding: 12px;
+}
+
+.table_info > tbody > tr > td:last-child > div {
+  min-width: 180px;
+}
+
+.table-striped > tbody > tr > td:last-child > div {
+  min-width: 300px;
+}
+.table-striped > tbody > tr > td {
+  //padding-top: 5px;
+ // padding-bottom: 10px;
+  border-top: 0;
+  padding: 2px;
+  width: auto;
+}
+
+.table-hover > tbody > tr > td,
+.table_info > tbody > tr > td{
+  padding: 0;
+  border-top: 0;
+}
+
+
+.table-hover tbody tr td div {
+  margin-bottom: 5px;
+}
+
+table.c tbody tr td div {
+  margin-bottom: 5px;
+}
+
+.line_nr pre{
+  min-width:25px;
+}
+
+#map {
+  height: 1100px;
+}
+
+b,
+thead th {
+  font-weight: 500;
+  //padding-left: 5px;
+}
+
+.form-control > * > b,
+.form-control > * > * > b,
+.form-control > b, 
+td > b {
+  font-weight: bold;
+}
+
+.form_item table th,
+.form_item table td {
+  padding-left: 15px;
+  padding-top: 5px;
+  padding-right: 0;
+}
+.table-impact tbody tr td button {
+  margin-left: 0;
+  margin-bottom: 5px;
+}
+
+.vurderinger tbody {
+  cursor: pointer;
+}
+
+ul table {
+  margin-left: 0;
+}
+// override nav menu bootstrap
+.table-striped tbody tr td .ref,
+.table .form-control{
+  max-width:300px;
+  width: 135px;
+ // margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.table-striped tbody tr td .longRef {
+  max-width: 800px;
+  width: 550px;
+ // margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.table_info tbody tr td div .form-control {
+  width: 100%;
+}
+
+.table-hover tbody tr td div .form-control {
+  width: 85%;
+  margin-bottom: 0;
+  margin-top: 5px;
+}
+
+table.c tbody tr td div .form-control {
+  margin-top: 0;
+}
+
+.table-striped tbody tr td .ref .form-control {
+  width: 45%;
+  background-color: #fff;
+}
+
+.table-striped tbody tr td .longRef .form-control {
+  width: 90%;
+  background-color: #fff;
+}
+
+table.ref > tbody > tr:nth-child(odd) > td,
+//td.ref,
+table.ref > tbody > tr > td {
+  width: 200px;
+  background-color: #f5f5f5;
+  padding-bottom: 0;
+}
+
+td > .ref,
+td > .longRef {
+  margin-left: 10px;
+}
+
+.leaflet-container {
+  cursor: crosshair !important;
+}
+
+.artskartmodal {
+	position: fixed;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	top: 40px;
+	background-color: #eee;
+  z-index: 5;
+}
+
+.leaflet-bar 
+{
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3) !important;
+}
+
+.elevated {
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.leaflet-control-container { position: absolute; right: 56px } 
+
+.faner {
+  padding-top: 5px;
+  padding-bottom: 8px;
+  position: sticky;
+  top: 44px;
+  z-index: 1;
+}
+
+.col-md-3 div {
+  margin-top: 5px;
+}
+
+.row .col-md-2 .form-control {
+  width: 100%;
+}

@@ -1,0 +1,112 @@
+import React from 'react';
+import {autorun, extendObservable, toJS} from 'mobx';
+import {observer} from 'mobx-react';
+import RedlistedNaturetypeSelector from './redlistedNaturetypeSelector';
+import * as Xcomp from '../observableComponents';
+import BsModal from '../../bootstrapModal'
+import {StringEnum2} from './naturetypeModal'
+
+@observer
+export default class NewRedlistedNaturetype extends React.Component {
+    constructor(props) {
+        super()
+        const {fabModel, addNaturtype} = props;
+        extendObservable(this, {
+            showModal: false,
+            hasStateChange: false,
+            naturtypeLabel: null,
+            nyNaturtype: {
+                RedlistedNatureTypeName: null,
+                Category: null,
+                TimeHorizon: null,
+                ColonizedArea: null,
+                StateChange: [],
+                AffectedArea: null
+            }
+        })
+        this.setSelectedNaturtype = (naturtypekode) => {
+            const nnt = this.nyNaturtype
+                nnt.RedlistedNatureTypeName = naturtypekode.name,
+                nnt.Category = naturtypekode.category,
+                nnt.TimeHorizon = null
+                nnt.ColonizedArea = null
+                nnt
+                    .StateChange
+                    .clear()
+                nnt.AffectedArea = null
+
+                this.showModal = true
+            }
+
+            this.hideModal = () => this.showModal = false
+            this.onOk = () => {
+                this.hideModal()
+                const clone = toJS(this.nyNaturtype)
+                addNaturtype(clone)
+            }
+            autorun(() => {
+                if (fabModel.naturtypeLabels && this.nyNaturtype && this.nyNaturtype.NiNCode) {
+                    this.naturtypeLabel = fabModel.naturtypeLabels[this.nyNaturtype.NiNCode]
+                }
+            })
+            autorun(() => {
+                const hasSC = this.nyNaturtype.StateChange.length > 0
+                this.hasStateChange = hasSC
+                if (!hasSC) {
+                    this.nyNaturtype.AffectedArea = "0"
+                }
+            })
+        }
+
+        render() {
+            const {fabModel, addNaturtype, labels} = this.props;
+            const koder = fabModel.koder
+            const ntLabels = labels.NatureTypes
+
+            return <div>
+                {/* {fabModel.language === "SV"
+                ? <h3>Här kommer hotade/sällsynta naturtyper</h3> */}
+                <div>
+                    <h4>{ntLabels.chooseRedlistedNT}:</h4>
+                    {fabModel.redlistedNaturetypeCodes && <RedlistedNaturetypeSelector
+                        naturtyper={fabModel.redlistedNaturetypeCodes}
+                        setSelected={this.setSelectedNaturtype}/>
+                    }
+                </div>
+                {this.showModal && <BsModal
+                    heading={
+                        <div>
+                            <h4>{this.nyNaturtype.RedlistedNatureTypeName}</h4> 
+                            <b> {this.nyNaturtype.Category} </b>
+                        </div >}
+                    onCancel={this.hideModal}
+                    onOk={this.onOk}
+                    labels={labels.General}>
+                    <Xcomp.StringEnum
+                        label={ntLabels.timeHorizon}
+                        observableValue={[this.nyNaturtype, 'TimeHorizon']}
+                        codes={koder.timeHorizon}
+                        forceSync/>
+                    <Xcomp.StringEnum
+                        label={ntLabels.colonizedArea}
+                        observableValue={[this.nyNaturtype, 'ColonizedArea']}
+                        codes={koder.colonizedArea}
+                        forceSync/>
+                    <Xcomp.MultiselectArray
+                        label={ntLabels.stateChange}
+                        labels={labels.General}
+                        observableValue={[this.nyNaturtype, 'StateChange']}
+                        codes={koder.tilstandsendringer}
+                        forceSync
+                        formlayout/>
+                    <StringEnum2
+                        label={ntLabels.affectedArea}
+                        observableValue={[this.nyNaturtype, 'AffectedArea']}
+                        codes={koder.affectedArea}
+                        forceSync
+                        observableDisabled={[this, "hasStateChange"]}/>
+                </BsModal>
+}
+            </div>
+        }
+    }

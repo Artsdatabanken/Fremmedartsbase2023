@@ -1,0 +1,144 @@
+﻿dl.theme-adb {
+  dt {
+    position: relative;
+    width: 32%;
+    font-style: italic;
+    font-weight: bold;
+    .padding-top(@BLH);
+  }
+
+  dd {
+    border-left:  @ThinLine*1rem solid @colorThinLine;
+    margin: 0;
+    .margin-top(0-@BLH);
+    margin-left: 34%;
+    .padding-left(@HalfLH);
+  }
+
+  .roundedborder, 
+  .openleftborder {
+    margin: 0;
+  }
+  
+  li:last-child {
+    border-bottom: 0;
+    .padding-bottom(@BLH);
+  }
+}
+
+
+dl.unbold > dt {
+    font-weight: normal;
+}
+
+
+// -------- dl.responsive ---------------------
+@media screen and (min-width: 600px) {
+
+    dl.responsive > dt {
+        position: relative;
+        width: 32%;
+        /*font-style: italic;*/
+        /*font-weight: bold;*/
+        padding-top: 20px;
+        padding-top: 2rem;
+    }
+
+    dl.responsive dd {
+        border-left: 0.1rem solid #dfdfcd;
+        margin: 0;
+        margin-top: -20px;
+        margin-top: -2rem;
+        margin-left: 34%;
+        padding-left: 10px;
+        padding-left: 1rem;
+    }
+
+    dl.responsive .roundedborder,
+    dl.responsive .openleftborder {
+        margin: 0;
+    }
+
+    dl.responsive li:last-child {
+        border-bottom: 0;
+        padding-bottom: 20px;
+        padding-bottom: 2rem;
+    }
+
+    dl.responsive.condenced dt {
+        padding-top: 0px;
+    }
+
+    dl.responsive.condenced dd + dd {
+        margin-top: 0px;
+    }
+
+    dl.responsive.width40 > dt {
+        width: 38px;
+    }
+
+    dl.responsive.width40 > dd {
+        margin-left: 40px;
+    }
+
+    dl.responsive.width80 > dt {
+        width: 78px;
+    }
+
+    dl.responsive.width80 > dd {
+        margin-left: 80px;
+    }
+
+    dl.responsive.width120 > dt {
+        width: 118px;
+    }
+
+    dl.responsive.width120 > dd {
+        margin-left: 120px;
+    }
+
+    dl.responsive.width160 > dt {
+        width: 158px;
+    }
+
+    dl.responsive.width160 > dd {
+        margin-left: 160px;
+    }
+
+    dl.responsive.width200 > dt {
+        width: 198px;
+    }
+
+    dl.responsive.width200 > dd {
+        margin-left: 200px;
+    }
+
+    dl.responsive.width240 > dt {
+        width: 238px;
+    }
+
+    dl.responsive.width240 > dd {
+        margin-left: 240px;
+    }
+
+    dl.responsive.width280 > dt {
+        width: 278px;
+    }
+
+    dl.responsive.width280 > dd {
+        margin-left: 280px;
+    }
+
+    dl.responsive.width320 > dt {
+        width: 318px;
+    }
+
+    dl.responsive.width320 > dd {
+        margin-left: 320px;
+    }
+
+}
+
+dl.responsive dd {
+    margin-left: 15px;
+}
