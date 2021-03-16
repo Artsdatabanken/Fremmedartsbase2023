@@ -21,7 +21,7 @@ namespace Prod.Api.Controllers
         public JsonResult Get(int id)
         {
 
-            var datastring = _dbContext.Koder.First(x => x.Id == id).JsonData;
+            var datastring = _dbContext.Codes.First(x => x.Id == id).JsonData;
             //return !string.IsNullOrWhiteSpace(data) ? Json(data) : null;
             var data = Newtonsoft.Json.Linq.JObject.Parse(datastring);
             return Json(data);

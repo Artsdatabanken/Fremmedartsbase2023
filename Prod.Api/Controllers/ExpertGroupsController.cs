@@ -46,7 +46,7 @@ namespace Prod.Api.Controllers
         {
             var user = await base.GetUser();
             if (user == null || !user.ErAdministrator) throw new HttpRequestException("Not admin");
-            var members = await _dbContext.Brukere.Where(x => x.EkspertgruppeRoller.Any(y => y.EkspertgruppeId == id))
+            var members = await _dbContext.Users.Where(x => x.EkspertgruppeRoller.Any(y => y.EkspertgruppeId == id))
                 .Select(x => new Tilgang
                 {
                     Id = x.Id, Navn = x.Navn + " <" + x.Email + ">", Leder = x.EkspertgruppeRoller.First(y => y.EkspertgruppeId == id).Leder,
@@ -73,7 +73,7 @@ namespace Prod.Api.Controllers
         {
             var user = await base.GetUser();
             if (user == null || !user.ErAdministrator) throw new HttpRequestException("Not admin");
-            var bruker = await _dbContext.Brukere.Include(y => y.EkspertgruppeRoller).Where(x => x.Id == value.Id)
+            var bruker = await _dbContext.Users.Include(y => y.EkspertgruppeRoller).Where(x => x.Id == value.Id)
                 .FirstOrDefaultAsync();
             if (bruker == null)
             {
@@ -105,7 +105,7 @@ namespace Prod.Api.Controllers
         {
             var user = await base.GetUser();
             if (user == null || !user.ErAdministrator) throw new HttpRequestException("Not admin");
-            var bruker = await _dbContext.Brukere.Include(y => y.EkspertgruppeRoller).Where(x => x.Id == bid)
+            var bruker = await _dbContext.Users.Include(y => y.EkspertgruppeRoller).Where(x => x.Id == bid)
                 .FirstOrDefaultAsync();
             if (bruker == null)
             {

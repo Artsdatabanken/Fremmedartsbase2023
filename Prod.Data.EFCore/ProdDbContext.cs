@@ -15,10 +15,10 @@ namespace Prod.Data.EFCore
         {
         }
 
-        public virtual DbSet<Bruker> Brukere { get; set; }
+        public virtual DbSet<Bruker> Users { get; set; }
         public virtual DbSet<Assessment> Assessments { get; set; }
         public virtual DbSet<AssessmentHistory> AssessmentHistories { get; set; }
-        public virtual DbSet<Kode> Koder { get; set; }
+        public virtual DbSet<Kode> Codes { get; set; }
 
         public virtual DbSet<AssessmentComment> Comments { get; set; }
         public virtual DbSet<Attachment> Attachments { get; set; }

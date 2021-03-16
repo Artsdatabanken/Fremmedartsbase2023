@@ -48,7 +48,7 @@ namespace Prod.Api.Controllers
             var name = infuser.Claims.FirstOrDefault(x => x.Type == "name")?.Value;
             var email = infuser.Claims.FirstOrDefault(x => x.Type == "email")?.Value;
 
-            var user = _dbContext.Brukere.Include(x=>x.EkspertgruppeRoller).FirstOrDefault(x => x.Id == infuserId) ?? new Bruker
+            var user = _dbContext.Users.Include(x=>x.EkspertgruppeRoller).FirstOrDefault(x => x.Id == infuserId) ?? new Bruker
             {
                 Id = infuserId, ErAdministrator = isAdmin, HarSoktOmTilgang = false, HarTilgang = false,
                 Brukernavn = userName, Navn = name, Email = email, DatoOpprettet = DateTime.Now

@@ -46,7 +46,7 @@ namespace Prod.Api.Controllers
             var user = await base.GetUser();
             if (user == null || !user.ErAdministrator) throw new HttpRequestException("Not admin");
 
-            var apps = await _dbContext.Brukere.Where(x => x.HarTilgang || x.ErAdministrator)
+            var apps = await _dbContext.Users.Where(x => x.HarTilgang || x.ErAdministrator)
                 .Select(x => new SelectList {Id = x.Id, Value = x.Navn + " <" + x.Email + ">"}).ToArrayAsync();
             return apps.OrderBy(x=>x.Value).ToArray();
 
@@ -66,7 +66,7 @@ namespace Prod.Api.Controllers
         {
             var user = await base.GetUser();
             if (user == null || !user.ErAdministrator) throw new HttpRequestException("Not admin");
-            var apps = await _dbContext.Brukere.Where(x => x.HarSoktOmTilgang && x.HarTilgang == false).ToArrayAsync();
+            var apps = await _dbContext.Users.Where(x => x.HarSoktOmTilgang && x.HarTilgang == false).ToArrayAsync();
             return apps;
 
         }
@@ -76,7 +76,7 @@ namespace Prod.Api.Controllers
         {
             var user = await base.GetUser();
             if (user == null || !user.ErAdministrator) throw new HttpRequestException("Not admin");
-            var dbUser = await _dbContext.Brukere.Where(x => x.Id == id && x.HarSoktOmTilgang && x.HarTilgang == false)
+            var dbUser = await _dbContext.Users.Where(x => x.Id == id && x.HarSoktOmTilgang && x.HarTilgang == false)
                 .SingleOrDefaultAsync();
             if (dbUser == null) return false;
             
@@ -92,7 +92,7 @@ namespace Prod.Api.Controllers
         {
             var user = await base.GetUser();
             if (user == null || !user.ErAdministrator) throw new HttpRequestException("Not admin");
-            var dbUser = await _dbContext.Brukere.Where(x => x.Id == id && x.HarSoktOmTilgang && x.HarTilgang == false)
+            var dbUser = await _dbContext.Users.Where(x => x.Id == id && x.HarSoktOmTilgang && x.HarTilgang == false)
                 .SingleOrDefaultAsync();
             if (dbUser == null) return false;
 
@@ -105,11 +105,11 @@ namespace Prod.Api.Controllers
 
         private async Task<Bruker> StoreUserInfo(Bruker user)
         {
-            var dbUser = await _dbContext.Brukere.FirstOrDefaultAsync(x => x.Id == user.Id);
+            var dbUser = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == user.Id);
             if (dbUser == null)
             {
                 dbUser = user;
-                _dbContext.Brukere.Add(dbUser);
+                _dbContext.Users.Add(dbUser);
             }
             else
             {

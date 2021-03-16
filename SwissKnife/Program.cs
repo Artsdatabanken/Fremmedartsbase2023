@@ -20,7 +20,7 @@ namespace SwissKnife
         }
 
         [Command("oldDb", Description = "Interact with old 2018 RavenDb instance")]
-        [Subcommand(typeof(Info), typeof(Dump))]
+        [Subcommand(typeof(Info), typeof(Dump), typeof(Import))]
         internal class OldDb
         {
             private int OnExecute(IConsole console)
@@ -69,6 +69,22 @@ namespace SwissKnife
                 {
                     var oldDbService = new Fab2018.Fab2018(RavenDbUrl, Fab2018Db, Fab2018Dfs);
                     oldDbService.Dump(console, OutputFolder);
+                }
+            }
+            internal class Import
+            {
+                [Option("--connectionstring", Description = "connectionstring to database to establish and load data into")]
+                [Required]
+                public string ConnectionString { get; }
+
+                [Option("--inputfolder", Description = "folder to read json file source and files from")]
+                [Required]
+                public string InputFolder { get; }
+
+                private void OnExecute(IConsole console)
+                {
+                    var maintenance = new Database.Maintenance(ConnectionString);
+                    maintenance.Import(console, InputFolder);
                 }
             }
         }

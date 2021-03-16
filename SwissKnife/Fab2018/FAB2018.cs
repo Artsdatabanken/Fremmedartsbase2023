@@ -11,6 +11,8 @@ using Raven.Client;
 using Raven.Client.Connection;
 using Raven.Client.Document;
 using Raven.Client.FileSystem;
+using Code = Prod.Domain.Legacy.Code;
+using KodeGrupper = Prod.Domain.Legacy.KodeGrupper;
 using MigrationPathwayCode = Prod.Domain.MigrationPathwayCode;
 
 namespace SwissKnife.Fab2018
@@ -191,7 +193,7 @@ namespace SwissKnife.Fab2018
         private IEnumerable<KodeGrupper> GetKodeGrupper()
         {
             using var session = _store.OpenSession();
-            return session.Query<KodeGrupper>().AsEnumerable();
+            return session.Query<KodeGrupper>().ProjectFromIndexFieldsInto<KodeGrupper>().AsEnumerable();
         }
 
         private IEnumerable<MigrationPathwayCode> GetMigrationPathwayCode()
