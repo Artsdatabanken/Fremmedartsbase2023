@@ -1,0 +1,59 @@
+exports[`test Progress bar 0% 1`] = `
+<svg
+  className="rc-progress-line "
+  preserveAspectRatio="none"
+  style={undefined}
+  viewBox="0 0 100 1">
+  <path
+    className="rc-progress-line-trail"
+    d="M 0.5,0.5 L 99.5,0.5"
+    fillOpacity="0"
+    stroke="#D9D9D9"
+    strokeLinecap="round"
+    strokeWidth={1} />
+  <path
+    className="rc-progress-line-path"
+    d="M 0.5,0.5 L 99.5,0.5"
+    fillOpacity="0"
+    stroke="#039be5"
+    strokeLinecap="round"
+    strokeWidth={1}
+    style={
+      Object {
+        "strokeDasharray": "100px, 100px",
+        "strokeDashoffset": "100px",
+        "transition": "stroke-dashoffset 0.6s ease 0s, stroke 0.6s linear",
+      }
+    } />
+</svg>
+`;
+
+exports[`test Progress bar 100% 1`] = `
+<svg
+  className="rc-progress-line "
+  preserveAspectRatio="none"
+  style={undefined}
+  viewBox="0 0 100 1">
+  <path
+    className="rc-progress-line-trail"
+    d="M 0.5,0.5 L 99.5,0.5"
+    fillOpacity="0"
+    stroke="#D9D9D9"
+    strokeLinecap="round"
+    strokeWidth={1} />
+  <path
+    className="rc-progress-line-path"
+    d="M 0.5,0.5 L 99.5,0.5"
+    fillOpacity="0"
+    stroke="#039be5"
+    strokeLinecap="round"
+    strokeWidth={1}
+    style={
+      Object {
+        "strokeDasharray": "100px, 100px",
+        "strokeDashoffset": "0px",
+        "transition": "stroke-dashoffset 0.6s ease 0s, stroke 0.6s linear",
+      }
+    } />
+</svg>
+`;

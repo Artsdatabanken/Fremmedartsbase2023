@@ -1,0 +1,409 @@
+exports[`test Filliste med fil 1`] = `
+<div>
+  <table
+    className="table table-striped table-hover"
+    style={
+      Object {
+        "border": 1,
+        "width": "100%",
+      }
+    }>
+    <thead>
+      <tr>
+        <th />
+        <th
+          style={
+            Object {
+              "width": "50%",
+            }
+          } />
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td
+          className="text-nowrap">
+          <a
+            href="/fab/master_api/dokument//FA3_732/readme.txt"
+            target="#top">
+            <i
+              className="fa fa-file-text"
+              style={
+                Object {
+                  "fontSize": 20,
+                }
+              } />
+              
+            readme.txt
+          </a>
+           (
+          1
+           kB)
+        </td>
+        <td
+          onClick={[Function]}>
+          <div>
+            <i
+              className="fa fa-pencil" />
+             
+            <span
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": undefined,
+                }
+              } />
+          </div>
+        </td>
+        <td
+          style={
+            Object {
+              "cursor": "pointer",
+            }
+          }>
+          <span
+            className="glyphicon glyphicon-trash"
+            onClick={[Function]} />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div>
+    Last opp:
+    <input
+      multiple={true}
+      onChange={[Function]}
+      type="file" />
+  </div>
+</div>
+`;
+
+exports[`test Filliste med valgt fil 1`] = `
+<div>
+  <table
+    className="table table-striped table-hover"
+    style={
+      Object {
+        "border": 1,
+        "width": "100%",
+      }
+    }>
+    <thead>
+      <tr>
+        <th />
+        <th
+          style={
+            Object {
+              "width": "50%",
+            }
+          } />
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td
+          className="text-nowrap">
+          <a
+            href="/fab/master_api/dokument//FA3_381/peregrine.pdf"
+            target="#top">
+            <i
+              className="fa file-zip-o"
+              style={
+                Object {
+                  "fontSize": 20,
+                }
+              } />
+              
+            peregrine.pdf
+          </a>
+           (
+          32
+           kB)
+        </td>
+        <td
+          onClick={[Function]}>
+          <div>
+            <i
+              className="fa fa-pencil" />
+             
+            <span
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": undefined,
+                }
+              } />
+          </div>
+        </td>
+        <td
+          style={
+            Object {
+              "cursor": "pointer",
+            }
+          }>
+          <span
+            className="glyphicon glyphicon-trash"
+            onClick={[Function]} />
+        </td>
+      </tr>
+      <tr>
+        <td
+          className="text-nowrap">
+          <a
+            href="/fab/master_api/dokument//FA3_732/readme.txt"
+            target="#top">
+            <i
+              className="fa fa-file-text"
+              style={
+                Object {
+                  "fontSize": 20,
+                }
+              } />
+              
+            readme.txt
+          </a>
+           (
+          1
+           kB)
+        </td>
+        <td
+          onClick={[Function]}>
+          <div>
+            <i
+              className="fa fa-pencil" />
+             
+            <span
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": undefined,
+                }
+              } />
+          </div>
+        </td>
+        <td
+          style={
+            Object {
+              "cursor": "pointer",
+            }
+          }>
+          <span
+            className="glyphicon glyphicon-trash"
+            onClick={[Function]} />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div>
+    Last opp:
+    <input
+      multiple={true}
+      onChange={[Function]}
+      type="file" />
+  </div>
+</div>
+`;
+
+exports[`test Opplasting 1`] = `
+<div>
+  <table
+    className="table table-striped table-hover"
+    style={
+      Object {
+        "border": 1,
+        "width": "100%",
+      }
+    }>
+    <thead>
+      <tr>
+        <th />
+        <th
+          style={
+            Object {
+              "width": "50%",
+            }
+          } />
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td
+          className="text-nowrap">
+          <a
+            href="/fab/master_api/dokument//FA3_732/readme.txt"
+            target="#top">
+            <i
+              className="fa fa-file-text"
+              style={
+                Object {
+                  "fontSize": 20,
+                }
+              } />
+              
+            readme.txt
+          </a>
+           (
+          1
+           kB)
+        </td>
+        <td
+          onClick={[Function]}>
+          <div>
+            <i
+              className="fa fa-pencil" />
+             
+            <span
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": undefined,
+                }
+              } />
+          </div>
+        </td>
+        <td
+          style={
+            Object {
+              "cursor": "pointer",
+            }
+          }>
+          <span
+            className="glyphicon glyphicon-trash"
+            onClick={[Function]} />
+        </td>
+      </tr>
+      <tr>
+        <td
+          className="text-nowrap">
+          peregrine.pdf
+           (
+          32
+          kB)
+        </td>
+        <td />
+      </tr>
+    </tbody>
+  </table>
+  <div>
+    Last opp:
+    <input
+      multiple={true}
+      onChange={[Function]}
+      type="file" />
+  </div>
+</div>
+`;
+
+exports[`test Opplasting 2`] = `
+<div>
+  <table
+    className="table table-striped table-hover"
+    style={
+      Object {
+        "border": 1,
+        "width": "100%",
+      }
+    }>
+    <thead>
+      <tr>
+        <th />
+        <th
+          style={
+            Object {
+              "width": "50%",
+            }
+          } />
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td
+          className="text-nowrap">
+          <a
+            href="/fab/master_api/dokument//FA3_732/readme.txt"
+            target="#top">
+            <i
+              className="fa fa-file-text"
+              style={
+                Object {
+                  "fontSize": 20,
+                }
+              } />
+              
+            readme.txt
+          </a>
+           (
+          1
+           kB)
+        </td>
+        <td
+          onClick={[Function]}>
+          <div>
+            <i
+              className="fa fa-pencil" />
+             
+            <span
+              dangerouslySetInnerHTML={
+                Object {
+                  "__html": undefined,
+                }
+              } />
+          </div>
+        </td>
+        <td
+          style={
+            Object {
+              "cursor": "pointer",
+            }
+          }>
+          <span
+            className="glyphicon glyphicon-trash"
+            onClick={[Function]} />
+        </td>
+      </tr>
+      <tr>
+        <td
+          className="text-nowrap">
+          peregrine.pdf
+           (
+          32
+          kB)
+        </td>
+        <td />
+      </tr>
+    </tbody>
+  </table>
+  <div>
+    Last opp:
+    <input
+      multiple={true}
+      onChange={[Function]}
+      type="file" />
+  </div>
+</div>
+`;
+
+exports[`test Tom filliste 1`] = `
+<div>
+  <table
+    className="table table-striped table-hover"
+    style={
+      Object {
+        "border": 1,
+        "width": "100%",
+      }
+    }>
+    <thead>
+      <tr>
+        <td>
+          .
+        </td>
+      </tr>
+    </thead>
+    <tbody />
+  </table>
+  <div>
+    Last opp:
+    <input
+      multiple={true}
+      onChange={[Function]}
+      type="file" />
+  </div>
+</div>
+`;

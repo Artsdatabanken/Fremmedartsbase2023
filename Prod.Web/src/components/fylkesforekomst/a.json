@@ -1,0 +1,12 @@
+{
+  "artskartModel": {
+    "observationFromYear": 1950,
+    "observationToYear": 2022,
+    "fromMonth": 1,
+    "toMonth": 12,
+    "includeObjects": true,
+    "includeObservations": true,
+    "includeNorge": true,
+    "includeSvalbard": true
+  }
+}

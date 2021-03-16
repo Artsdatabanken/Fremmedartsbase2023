@@ -1,0 +1,38 @@
+﻿
+// extensions to the bootstrap .table
+
+.table.table-keyvalue {
+  > tbody {
+    > tr {
+      > th,
+      > td {
+        border-top: none;
+      }
+      > td:first-child {
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.table td > ul > li,
+.table td > ol > li {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+th.date,
+td.date {
+    max-width: 85px;
+}
+
+th.institution,
+td.institution {
+    min-width: 150px;
+}
+
+th.evaluationstatus,
+td.evaluationstatus {
+    min-width: 150px;
+}
+

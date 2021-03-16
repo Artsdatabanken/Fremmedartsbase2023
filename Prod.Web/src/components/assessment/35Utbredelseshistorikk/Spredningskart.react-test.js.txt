@@ -1,0 +1,23 @@
+
+import React from 'react'
+//import renderer from 'react-test-renderer'
+import {mount} from 'enzyme'
+
+import Spredningskart from './Spredningskart'
+//import Enzyme from 'enzyme'
+//import Adapter from 'enzyme-adapter-react-16';
+
+//Enzyme.configure({ adapter: new Adapter() })
+
+const context = { language: 'NB' }
+const wrapper = mount(<Spredningskart />, { context })
+
+//const tree = wrapper.toJSON()
+//expect(tree).toMatchSnapshot()
+
+
+expect(wrapper.text()).to.equal('foo')
+wrapper.setContext({ name: 'bar' })
+expect(wrapper.text()).to.equal('bar')
+wrapper.setContext({ name: 'baz' })
+expect(wrapper.text()).to.equal('baz')
