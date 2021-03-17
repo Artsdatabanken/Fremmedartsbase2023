@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 using IdentityModel.Client;
 using IdentityServer4.AccessTokenValidation;
@@ -38,11 +39,12 @@ namespace Prod.Api
             // The following line enables Application Insights telemetry collection.
             //services.AddApplicationInsightsTelemetry();// "023396f1-285d-45cc-920c-eb957cdd6c01");
             StartupAddDependencies(services);
-            services.AddControllers(); //.AddNewtonsoftJson();
+            services.AddControllers().AddJsonOptions(x=>x.JsonSerializerOptions.PropertyNamingPolicy = null); //.AddNewtonsoftJson(); For å unngå camelcase - frem til klienten er camelcase.....
+
             //services.AddMvc();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApplication4", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Prod.Api", Version = "v1" });
             });
 
             services.AddCors();
@@ -73,7 +75,7 @@ namespace Prod.Api
             app.UseStaticFiles();
 
             app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApplication4 v1"));
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Prod.Api v1"));
 
             //app.UseHttpsRedirection();
 

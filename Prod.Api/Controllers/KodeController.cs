@@ -5,8 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Cors;
+using Newtonsoft.Json;
 using Prod.Api.Services;
 using Prod.Data.EFCore;
+using Prod.Domain;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Prod.Api.Controllers
 {
@@ -36,26 +39,26 @@ namespace Prod.Api.Controllers
         //    //return Json(data);
         //}
         [HttpGet("kode")]
-        public async System.Threading.Tasks.Task<string> GetKode()
+        public async Task<Prod.Domain.Code> GetKode()
         {
-            return await ReadResource("Codes");
+            return JsonSerializer.Deserialize<Prod.Domain.Code>(await ReadResource("Codes"));
+            //await ReadResource("Codes");
         }
 
         [HttpGet("RedlistedNaturetype")]
-        public async System.Threading.Tasks.Task<string> RedlistedNaturetype()
+        public async Task<RedlistedNaturetypeGroups> RedlistedNaturetype()
         {
-            return await ReadResource("RedlistedNaturetypeGroups");
+            return JsonSerializer.Deserialize<Prod.Domain.RedlistedNaturetypeGroups>(await ReadResource("RedlistedNaturetypeGroups"));
         }
         [HttpGet("NiN10Livsmedium")]
-        public async System.Threading.Tasks.Task<string> NiN10Livsmedium()
+        public async Task<Livsmedium?> NiN10Livsmedium()
         {
-            return await ReadResource("Livsmedium");
+            return JsonSerializer.Deserialize<Prod.Domain.Livsmedium>(await ReadResource("Livsmedium"));
         }
 
         private static async Task<string> ReadResource(string codes)
         {
             var assembly = Assembly.GetEntryAssembly();
-
             var resourceStream = assembly.GetManifestResourceStream("Prod.Api.Resources." + codes + ".json");
             using var reader = new StreamReader(resourceStream, Encoding.UTF8);
             return await reader.ReadToEndAsync();
