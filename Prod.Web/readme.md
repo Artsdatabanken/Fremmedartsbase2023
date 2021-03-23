@@ -3,7 +3,7 @@
 ### This project is created to facilitate easy editing of the RL2019 project, with no external dependencies
 
 ## Requirements: 
-    Node>=10
+    Node>=12
     NPM >=6
 
 ## Running the project
