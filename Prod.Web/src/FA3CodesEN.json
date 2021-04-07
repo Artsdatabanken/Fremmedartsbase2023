@@ -1,0 +1,4168 @@
+﻿{
+    "Value": null,
+    "Text": null,
+    "Info": null,
+    "Children": {
+        "ArrivedCountryFrom": [
+            {
+                "Id": "ArrivedCountryFrom",
+                "Value": "origin",
+                "Text": "Area(s) of origin",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ArrivedCountryFrom",
+                "Value": "otherRegion",
+                "Text": "From Norway",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ArrivedCountryFrom",
+                "Value": "other",
+                "Text": "Via another place",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ArrivedCountryFrom",
+                "Value": "unknown",
+                "Text": "Unknown",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "AlienSpeciesCategory": [
+            {
+                "Id": "AlienSpeciesCategory",
+                "Value": "AlienSpecie",
+                "Text": "Alien species within the delimitations that is observed and established in Norway",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "AlienSpeciesCategory",
+                "Value": "DoorKnocker",
+                "Text": "Door knocker",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "AlienSpeciesCategory",
+                "Value": "RegionallyAlien",
+                "Text": "Regionally alien species",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "AlienSpeciesCategory",
+                "Value": "NotApplicable",
+                "Text": "Species that does not fulfil (a) the definition or the (b) historical, (c/d) ecological or (e) taxonomical delimitation",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "AlienSpeciesCategory",
+                "Value": "EcoEffectWithoutEstablishment",
+                "Text": "Alien species that is documented to have an ecological effect in Norway, yet is not established",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "DoorKnocker": [
+            {
+                "Id": "DoorKnocker",
+                "Value": "doRiskAssessment",
+                "Text": "To be risk-assesed",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "DoorKnocker",
+                "Value": "noRiskAssessment",
+                "Text": "Not to be risk-assessed",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "RegionallyAlien": [
+            {
+                "Id": "RegionallyAlien",
+                "Value": "doRiskAssessment",
+                "Text": "To be risk-assesed",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "RegionallyAlien",
+                "Value": "noRiskAssessment",
+                "Text": "Not to be risk-assessed",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "NotApplicable": [
+            {
+                "Id": "NotApplicable",
+                "Value": "notAlienSpecie",
+                "Text": "(a) The species is not alien",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "NotApplicable",
+                "Value": "establishedBefore1800",
+                "Text": "(b) The species has been established with a stably reproducing population in Norway as of 1800",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "NotApplicable",
+                "Value": "traditionalProductionSpecie",
+                "Text": "(c) The species is a traditional production species",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "NotApplicable",
+                "Value": "canNotEstablishWithin50years",
+                "Text": "(d) The species is unlikely to become established in Norway within 50 years",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "NotApplicable",
+                "Value": "taxonIsEvaluatedInHigherRank",
+                "Text": "(e) The taxon is ranked below the species level and shares the status of its ‘mother species’",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "migrationPathwayIntroductionSpread": [
+            {
+                "Id": "migrationPathwayIntroductionSpread",
+                "Value": "introduction",
+                "Text": "Introduced to",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "migrationPathwayIntroductionSpread",
+                "Value": "spread",
+                "Text": "Spread within ",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "migrationPathwayTime": [
+            {
+                "Id": "migrationPathwayTime",
+                "Value": "historic",
+                "Text": "Only historical",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "migrationPathwayTime",
+                "Value": "ceased",
+                "Text": "Discontinued, but may start again",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "migrationPathwayTime",
+                "Value": "ongoing",
+                "Text": "Current",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "migrationPathwayTime",
+                "Value": "future",
+                "Text": "Only in the future",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "migrationPathwayTime",
+                "Value": "unknown",
+                "Text": "Unknown",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "migrationPathwayFrequency": [
+            {
+                "Id": "migrationPathwayFrequency",
+                "Value": "numerousYearly",
+                "Text": "Several times per year",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "migrationPathwayFrequency",
+                "Value": "yearly",
+                "Text": "c. once per year",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "migrationPathwayFrequency",
+                "Value": "severalPr10years",
+                "Text": "One to several (c. 8) times per decade",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "migrationPathwayFrequency",
+                "Value": "rarerThan10years",
+                "Text": "Less than once per decade",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "migrationPathwayFrequency",
+                "Value": "unknown",
+                "Text": "Impossible to estimate",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "migrationPathwayAbundance": [
+            {
+                "Id": "migrationPathwayAbundance",
+                "Value": "unknown",
+                "Text": "Impossible to estimate",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "migrationPathwayAbundance",
+                "Value": "1",
+                "Text": "1",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "migrationPathwayAbundance",
+                "Value": "2-10",
+                "Text": "2 - 10",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "migrationPathwayAbundance",
+                "Value": "11-100",
+                "Text": "11 - 100",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "migrationPathwayAbundance",
+                "Value": "101-1000",
+                "Text": "101 - 1000",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "migrationPathwayAbundance",
+                "Value": "moreThan1000",
+                "Text": "> 1000",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "limnicTerrestrialMarine": [
+            {
+                "Id": "limnicTerrestrialMarine",
+                "Value": "limnic",
+                "Text": "Freshwater species",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "limnicTerrestrialMarine",
+                "Value": "terrestrial",
+                "Text": "Terrestrial species",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "limnicTerrestrialMarine",
+                "Value": "marine",
+                "Text": "Marine species",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "limnicTerrestrialMarine",
+                "Value": "brackishWater",
+                "Text": "Brackish water species",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "naturalOriginMarine": [
+            {
+                "Id": "naturalOriginMarine",
+                "Value": "Nordis",
+                "Text": "Arctic Ocean",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginMarine",
+                "Value": "AtlantNordVest",
+                "Text": "Atlantic Ocean, northwest",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginMarine",
+                "Value": "AtlantNordOst",
+                "Text": "Atlantic Ocean, northeast",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginMarine",
+                "Value": "AtlantTropic",
+                "Text": "Atlantic Ocean, tropical",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginMarine",
+                "Value": "AtlantSor",
+                "Text": "Atlantic Ocean, south",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginMarine",
+                "Value": "Osters",
+                "Text": "Baltic Sea",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginMarine",
+                "Value": "Middel",
+                "Text": "Mediterranean",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginMarine",
+                "Value": "BlackSea",
+                "Text": "Black Sea",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginMarine",
+                "Value": "CaspianSea",
+                "Text": "The Caspian Sea",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginMarine",
+                "Value": "StilleNord",
+                "Text": "Pacific Ocean, north",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginMarine",
+                "Value": "StilleTropic",
+                "Text": "Pacific Ocean, tropical",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginMarine",
+                "Value": "StilleSor",
+                "Text": "Pasific Ocean, south",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginMarine",
+                "Value": "IndianOTropic",
+                "Text": "The Indian Ocean, tropical",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginMarine",
+                "Value": "IndianOSouth",
+                "Text": "The Indian Ocean, south",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginMarine",
+                "Value": "Sorish",
+                "Text": "Southern Ocean",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginMarine",
+                "Value": "Ukjent",
+                "Text": "Unknown",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "countyListLand": [
+            {
+                "Id": "countyListLand",
+                "Value": "Øs",
+                "Text": "Østfold",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "countyListLand",
+                "Value": "OsA",
+                "Text": "Oslo og Akershus",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "countyListLand",
+                "Value": "He",
+                "Text": "Hedmark",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "countyListLand",
+                "Value": "Op",
+                "Text": "Oppland",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "countyListLand",
+                "Value": "Bu",
+                "Text": "Buskerud",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "countyListLand",
+                "Value": "Ve",
+                "Text": "Vestfold",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "countyListLand",
+                "Value": "Te",
+                "Text": "Telemark",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "countyListLand",
+                "Value": "Aa",
+                "Text": "Aust-Agder",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "countyListLand",
+                "Value": "Va",
+                "Text": "Vest-Agder",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "countyListLand",
+                "Value": "Ro",
+                "Text": "Rogaland",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "countyListLand",
+                "Value": "Ho",
+                "Text": "Hordaland",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "countyListLand",
+                "Value": "Sf",
+                "Text": "Sogn og Fjordane",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "countyListLand",
+                "Value": "Mr",
+                "Text": "Møre og Romsdal",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "countyListLand",
+                "Value": "St",
+                "Text": "Sør-Trøndelag",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "countyListLand",
+                "Value": "Nt",
+                "Text": "Nord-Trøndelag",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "countyListLand",
+                "Value": "No",
+                "Text": "Nordland",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "countyListLand",
+                "Value": "Tr",
+                "Text": "Troms",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "countyListLand",
+                "Value": "Fi",
+                "Text": "Finnmark",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "countyListLand",
+                "Value": "Sv",
+                "Text": "Svalbard with sea areas",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "countyListLand",
+                "Value": "Jm",
+                "Text": "Jan Mayen",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "speciesSpeciesInteractionType": [
+            {
+                "Id": "speciesSpeciesInteractionType",
+                "Value": "Predation",
+                "Text": "Predation",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "speciesSpeciesInteractionType",
+                "Value": "Parasitizing",
+                "Text": "Parasitism",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "speciesSpeciesInteractionType",
+                "Value": "CompetitionSpace",
+                "Text": "Competition for space",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "speciesSpeciesInteractionType",
+                "Value": "CompetitionFood",
+                "Text": "Competition for food",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "speciesSpeciesInteractionType",
+                "Value": "Allelopathy",
+                "Text": "Allelopathy",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "speciesSpeciesInteractionType",
+                "Value": "Phytophagy",
+                "Text": "Phytophagy",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "speciesSpeciesInteractionType",
+                "Value": "Other",
+                "Text": "Others",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "speciesSpeciesEffectType": [
+            {
+                "Id": "speciesSpeciesEffectType",
+                "Value": "Weak",
+                "Text": "Weak",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "speciesSpeciesEffectType",
+                "Value": "Moderate",
+                "Text": "Moderate",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "speciesSpeciesEffectType",
+                "Value": "Displacement",
+                "Text": "Displacement",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "ParasiteEcoEffectCodes": [
+            {
+                "Id": "ParasiteEcoEffectCodes",
+                "Value": "1",
+                "Text": "1",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ParasiteEcoEffectCodes",
+                "Value": "2",
+                "Text": "2",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ParasiteEcoEffectCodes",
+                "Value": "3",
+                "Text": "3",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ParasiteEcoEffectCodes",
+                "Value": "4",
+                "Text": "4",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "ecosystemServiceEffectsBasicLifeProcesses": [
+            {
+                "Id": "ecosystemServiceEffectsBasicLifeProcesses",
+                "Value": "a",
+                "Text": "Photosynthesis",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ecosystemServiceEffectsBasicLifeProcesses",
+                "Value": "b",
+                "Text": "Primary production",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ecosystemServiceEffectsBasicLifeProcesses",
+                "Value": "c",
+                "Text": "Soil- and sedimenet formation",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ecosystemServiceEffectsBasicLifeProcesses",
+                "Value": "d",
+                "Text": "Nutrient cycle",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ecosystemServiceEffectsBasicLifeProcesses",
+                "Value": "e",
+                "Text": "Water cycle",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ecosystemServiceEffectsBasicLifeProcesses",
+                "Value": "f",
+                "Text": "Evolutionary processes and ecological interactions",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "ecosystemServiceEffectsSupportingServices": [
+            {
+                "Id": "ecosystemServiceEffectsSupportingServices",
+                "Value": "a",
+                "Text": "Food",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ecosystemServiceEffectsSupportingServices",
+                "Value": "b",
+                "Text": "Freshwater",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ecosystemServiceEffectsSupportingServices",
+                "Value": "c",
+                "Text": "Fibres",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ecosystemServiceEffectsSupportingServices",
+                "Value": "d",
+                "Text": "Bioenergi",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ecosystemServiceEffectsSupportingServices",
+                "Value": "f",
+                "Text": "Genetic resources",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ecosystemServiceEffectsSupportingServices",
+                "Value": "g",
+                "Text": "Biochemical and medical resourcesr",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ecosystemServiceEffectsSupportingServices",
+                "Value": "h",
+                "Text": "Ornamental resources",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "ecosystemServiceEffectsRegulatingServices": [
+            {
+                "Id": "ecosystemServiceEffectsRegulatingServices",
+                "Value": "a",
+                "Text": "Air quality regulation",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ecosystemServiceEffectsRegulatingServices",
+                "Value": "b",
+                "Text": "Climate regulation",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ecosystemServiceEffectsRegulatingServices",
+                "Value": "c",
+                "Text": "Water flow regulation",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ecosystemServiceEffectsRegulatingServices",
+                "Value": "d",
+                "Text": "Erosion prevention",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ecosystemServiceEffectsRegulatingServices",
+                "Value": "e",
+                "Text": "Moderation of extreme event",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ecosystemServiceEffectsRegulatingServices",
+                "Value": "f",
+                "Text": "Water purification, waste decomposition and detoxification",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ecosystemServiceEffectsRegulatingServices",
+                "Value": "g",
+                "Text": "Disease control",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ecosystemServiceEffectsRegulatingServices",
+                "Value": "h",
+                "Text": "Pest control",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ecosystemServiceEffectsRegulatingServices",
+                "Value": "i",
+                "Text": "Pollination",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ecosystemServiceEffectsRegulatingServices",
+                "Value": "j",
+                "Text": "Maintenance of soil fertility",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "ecosystemServiceEffectsHumanMindServices": [
+            {
+                "Id": "ecosystemServiceEffectsHumanMindServices",
+                "Value": "a",
+                "Text": "Recreation, outdoor sports and ecotourism",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ecosystemServiceEffectsHumanMindServices",
+                "Value": "c",
+                "Text": "Well-being and aesthetic values",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ecosystemServiceEffectsHumanMindServices",
+                "Value": "d",
+                "Text": "Local identity building",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ecosystemServiceEffectsHumanMindServices",
+                "Value": "e",
+                "Text": "Spiritual experience",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ecosystemServiceEffectsHumanMindServices",
+                "Value": "f",
+                "Text": "Religious values",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ecosystemServiceEffectsHumanMindServices",
+                "Value": "h",
+                "Text": "Inspiration and symbolic perspective",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ecosystemServiceEffectsHumanMindServices",
+                "Value": "i",
+                "Text": "Knowledge and education",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ecosystemServiceEffectsHumanMindServices",
+                "Value": "j",
+                "Text": "Natural heritage",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "geographicalVariation": [
+            {
+                "Id": "geographicalVariation",
+                "Value": "reproduksjonLimitedToCertainClimaticZones",
+                "Text": "The species ability to reproduce or disperse is restricted to certain climatic zones or sections",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "geographicalVariation",
+                "Value": "ecologicalEffectLimitedToCertainClimaticZones",
+                "Text": "The species ecological effects are restricted to certain climatic zones or sections",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "geographicalVariation",
+                "Value": "ecologicalEffectLimitedToCertainNatureTypes",
+                "Text": "The species ecological effects are restricted to some specific nature type(s)",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "geographicalVariation",
+                "Value": "ecologicalEffectLimitedToIndigenousSpecies",
+                "Text": "The only ecological effect of the species is its interaction with a native species that has a very restricted distribution",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "climateEffects": [
+            {
+                "Id": "climateEffects",
+                "Value": "climateChangeAffectsInvationPotential",
+                "Text": "Is the score for invasion potential affected by climatic changes?",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "climateEffects",
+                "Value": "climateChangeAffectsEcoeffect",
+                "Text": "Is the score for ecological effect affected by climatic changes?",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "climateEffects",
+                "Value": "climateChangeEffectsUnclear",
+                "Text": "It is uncertain whether climate change will affect ecological risk",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "climateEffects",
+                "Value": "climateEffectsDocumentation",
+                "Text": "Describe the significance of climate change",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "yesNoUnknown": [
+            {
+                "Id": "yesNoUnknown",
+                "Value": "yes",
+                "Text": "Yes",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "yesNoUnknown",
+                "Value": "no",
+                "Text": "No",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "yesNoUnknown",
+                "Value": "unknown",
+                "Text": "Unknown",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "firstObservationIndividualCount": [
+            {
+                "Id": "firstObservationIndividualCount",
+                "Value": "zero",
+                "Text": "0",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "firstObservationIndividualCount",
+                "Value": "moreThan0lessThan1000",
+                "Text": "1-999",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "firstObservationIndividualCount",
+                "Value": "moreThan1000",
+                "Text": "≥ 1000",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "naturalOriginClimateZone": [
+            {
+                "Id": "naturalOriginClimateZone",
+                "Value": "polar;",
+                "Text": "Polar",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginClimateZone",
+                "Value": "temperate;boreal",
+                "Text": "Temperate",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginClimateZone",
+                "Value": "temperate;nemoral",
+                "Text": "Temperate",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginClimateZone",
+                "Value": "temperate;dry",
+                "Text": "Temperate",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginClimateZone",
+                "Value": "subtropic;unspecified",
+                "Text": "Subtropical",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginClimateZone",
+                "Value": "subtropic;mediterranean",
+                "Text": "Subtropical",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginClimateZone",
+                "Value": "subtropic;humid",
+                "Text": "Subtropical",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginClimateZone",
+                "Value": "subtropic;dry",
+                "Text": "Subtropical",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginClimateZone",
+                "Value": "subtropic;highlands",
+                "Text": "Subtropical/Tropical",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginClimateZone",
+                "Value": "subtropic;caperegion",
+                "Text": "Subtropcal",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginClimateZone",
+                "Value": "tropic;",
+                "Text": "Tropical",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginClimateZone",
+                "Value": "unknown;",
+                "Text": "Unknown",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "naturalOriginSubClimateZone": [
+            {
+                "Id": "naturalOriginSubClimateZone",
+                "Value": "polar;",
+                "Text": "",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginSubClimateZone",
+                "Value": "temperate;boreal",
+                "Text": "Boreal",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginSubClimateZone",
+                "Value": "temperate;nemoral",
+                "Text": "Nemoral",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginSubClimateZone",
+                "Value": "temperate;dry",
+                "Text": "Arid",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginSubClimateZone",
+                "Value": "subtropic;unspecified",
+                "Text": "Unspecified",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginSubClimateZone",
+                "Value": "subtropic;mediterranean",
+                "Text": "Medditerranean",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginSubClimateZone",
+                "Value": "subtropic;humid",
+                "Text": "Humid",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginSubClimateZone",
+                "Value": "subtropic;dry",
+                "Text": "Arid",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginSubClimateZone",
+                "Value": "subtropic;highlands",
+                "Text": "Mountainous",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginSubClimateZone",
+                "Value": "subtropic;caperegion",
+                "Text": "Cape",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginSubClimateZone",
+                "Value": "tropic;",
+                "Text": "",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginSubClimateZone",
+                "Value": "unknown;",
+                "Text": "",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "naturalOriginDisabled": [
+            {
+                "Id": "naturalOriginDisabled",
+                "Value": "polar;",
+                "Text": "Africa, Oceania",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginDisabled",
+                "Value": "temperate;boreal",
+                "Text": "Africa, Oceania, South America",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginDisabled",
+                "Value": "temperate;nemoral",
+                "Text": "",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginDisabled",
+                "Value": "temperate;dry",
+                "Text": "Africa, Oceania",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginDisabled",
+                "Value": "subtropic;unspecified",
+                "Text": "",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginDisabled",
+                "Value": "subtropic;mediterranean",
+                "Text": "",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginDisabled",
+                "Value": "subtropic;humid",
+                "Text": "",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginDisabled",
+                "Value": "subtropic;dry",
+                "Text": "Europe",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginDisabled",
+                "Value": "subtropic;highlands",
+                "Text": "Europe, Oceania, North and Central America",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginDisabled",
+                "Value": "subtropic;caperegion",
+                "Text": "Europe, Asia, Oceania, North and Central America, South America",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginDisabled",
+                "Value": "tropic;",
+                "Text": "Europe",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "naturalOriginDisabled",
+                "Value": "unknown;",
+                "Text": "",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "tilstandsendringer": [
+            {
+                "Id": "tilstandsendringer",
+                "Value": "ER",
+                "Text": "Exposure to erosion",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "tilstandsendringer",
+                "Value": "OM",
+                "Text": "Lack of oxygen",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "tilstandsendringer",
+                "Value": "SS",
+                "Text": "Sand development",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "tilstandsendringer",
+                "Value": "VM",
+                "Text": "Water saturation",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "tilstandsendringer",
+                "Value": "1AE",
+                "Text": "Single species composition",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "tilstandsendringer",
+                "Value": "1AG",
+                "Text": "Species group composition",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "tilstandsendringer",
+                "Value": "1AR",
+                "Text": "Relative partial species group composition",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "tilstandsendringer",
+                "Value": "7EU",
+                "Text": "Eutrophication",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "tilstandsendringer",
+                "Value": "7RA",
+                "Text": "Regrowth succession",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "tilstandsendringer",
+                "Value": "7SN",
+                "Text": "Natural tree-density reduction",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "tilstandsendringer",
+                "Value": "7UB",
+                "Text": "Imbalance between trophic levels",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "tilstandsendringer",
+                "Value": "9TS",
+                "Text": "Tree-layer stratification",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "tilstandsendringer",
+                "Value": "other",
+                "Text": "Other state changes",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "affectedArea": [
+            {
+                "Id": "affectedArea",
+                "Value": "0",
+                "Text": "0.0",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "affectedArea",
+                "Value": "0–2",
+                "Text": "0.1-1.9",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "affectedArea",
+                "Value": "2-5",
+                "Text": "2.0-4.9",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "affectedArea",
+                "Value": "5-10",
+                "Text": "5.0-9.9",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "affectedArea",
+                "Value": "10-20",
+                "Text": "10.0-19.9",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "affectedArea",
+                "Value": "20-50",
+                "Text": "20.0-49.9",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "affectedArea",
+                "Value": "50-100",
+                "Text": "50.0-100.0",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "colonizedArea": [
+            {
+                "Id": "colonizedArea",
+                "Value": "0–2",
+                "Text": "0.0-1.9",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "colonizedArea",
+                "Value": "2-5",
+                "Text": "2.0-4.9",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "colonizedArea",
+                "Value": "5-10",
+                "Text": "5.0-9.9",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "colonizedArea",
+                "Value": "10-20",
+                "Text": "10.0-19.9",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "colonizedArea",
+                "Value": "20-50",
+                "Text": "20.0-49.9",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "colonizedArea",
+                "Value": "50-100",
+                "Text": "50.0-100.0",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "timeHorizon": [
+            {
+                "Id": "timeHorizon",
+                "Value": "now",
+                "Text": "now",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "timeHorizon",
+                "Value": "future",
+                "Text": "future",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "redlistedNaturetypes": [
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Kalkrike dammer og tjern",
+                "Text": "Freshwater:  'LD-2; 4 + VU-2;<0,025km2' Lime-rich ponds and tarns",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Kalksjø",
+                "Text": "Freshwater:  'LD-2; 4 + VU-2;>0,025km2' Lime-rich lake",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Klar intermediær innsjø",
+                "Text": "Freshwater:  'LD-2; 3 + VU-2;>0,025km2' Low-turbidity intermediate lake",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Klar kalkfattig innsjø",
+                "Text": "Freshwater:  'LD-2; 1 + VU-2;>0,025km2' Low-turbidity lime-poor lake",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Kroksjøer, meandere og flomløp",
+                "Text": "Freshwater:  'LD-1 + EL-2, 3' Oxbow lakes, meanders and flood channels",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Fuglefjell",
+                "Text": "Bedrock, bare rock, mass-movement slopes and other shallow-soil systems:  'LD-8 + BS-A1-5,B1' Bird cliff",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Grotte",
+                "Text": "Bedrock, bare rock, mass-movement slopes and other shallow-soil systems:  'NA-T19 + BS-A1-6,B1,B2' Cave",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Jordpyramide",
+                "Text": "Bedrock, bare rock, mass-movement slopes and other shallow-soil systems:  'NA-T18 + BS-A1-4; ER-7' Earth pyramid",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Ravinedal",
+                "Text": "Bedrock, bare rock, mass-movement slopes and other shallow-soil systems:  'LD-10 + BS-A1-4,B1,B2' Ravine",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Åpen grunnlendt kalkmark i boreonemoral sone",
+                "Text": "Bedrock, bare rock, mass-movement slopes and other shallow-soil systems:  'NA-T25; 5,6 + BS-A1' Open lime-rich shallow-soil lowland system in boreonemoral zone",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Aktivt marint delta",
+                "Text": "Tidal zone:  'LD-7; 2 + BS-A,B1,B2' Active marine delta",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Sanddynemark",
+                "Text": "Tidal zone:  'NA-T13' Sand-dune system",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Sørlig etablert sanddynemark",
+                "Text": "Tidal zone:  'NA-T13; 3 + BS-A1' Southern fixed dunes",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Sørlig strandeng",
+                "Text": "Tidal zone:  'NA-S7;1-8 + BS-A1' Southern tidal meadow",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Avblåst normal arktisk steppe",
+                "Text": "High Arctic terrestrial areas:  'NA-T27; 1' Wind-exposed arctic steppe",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Varm kilde",
+                "Text": "High Arctic terrestrial areas:  'NA-V5' Thermal spring",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Kulturmarkseng",
+                "Text": "Semi-natural sites and boreal heath:  'NA-T4' Semi-natural grassland",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Kystlynghei",
+                "Text": "Semi-natural sites and boreal heath:  'NA-T5' Coastal heath",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Slåtteeng",
+                "Text": "Semi-natural sites and boreal heath:  'NA-T4; 2.1,3.1,4.1,6.1,7.1,8.1,9.1' Hay meadow",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Grisehalekorallbunn",
+                "Text": "Marine shallow waters:  'NA-M7; 1 + MT-Y4' Radicipes coral garden",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Korallrev",
+                "Text": "Marine shallow waters:  'LD-6' Coral reef",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Muddervulkan-bunn",
+                "Text": "Marine shallow waters:  'NA-M2; 2' Mud volcano",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Sukkertareskog Nordsjøen",
+                "Text": "Marine shallow waters:  'NA-M10; 1 + MS-2' North Sea sugar kelp forest",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Sukkertareskog Skagerrak",
+                "Text": "Marine shallow waters:  'NA-M10; 1 + MS-1' Skagerrak sugar kelp forest",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Kalklindeskog",
+                "Text": "Woodland:  'NA-T23; 13 + DO-A2-7,5' Lime-rich small-leaved lime woodland",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Kalkrik bøkeskog",
+                "Text": "Woodland:  'NA-T23; 4,9 + DO-A2-3' Lime-rich beech woodland",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Kystgranskog",
+                "Text": "Woodland:  'NA-T23 + BH-1,2; DO-A1-2; LF-3,4' Coastal Norway spruce forest",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Lågurt-grankalkskog",
+                "Text": "Woodland:  'NA-T23; 5 + DO-A1-2' Lime-rich low-herb Norway spruce forest",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Olivinskog",
+                "Text": "Woodland:  'NA-T23; 14,15,19,20' Ultramafic woodland",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Temperert kystfuruskog",
+                "Text": "Woodland:  'NA-T23, 1,2,6,7 + BS-A1; BH-1; DO-A1; LF-3' Coastal thermophilous Scots pine woodland",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Grankildeskog",
+                "Text": "Wetland:  'NA-V3 + DO-A1-2' Norway spruce spring woodland",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Kystnedbørsmyr",
+                "Text": "Wetland:  'LD-12; 5 + TM-4-6' Coastal bog",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Palsmyr",
+                "Text": "Wetland:  'LD-12; 7 + BS-A4,A5,B1,B2' Palsa mire",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Rikere myrflate i låglandet",
+                "Text": "Wetland:  'NA-V6; 7-15 + BS-A1,A2' Lime-rich lowland mire expanse",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Rikere myrkantmark i låglandet",
+                "Text": "Wetland:  'NA-V7; 3-7 + BS-A1,A2' Lime-rich lowland mire margin",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Sentrisk høgmyr",
+                "Text": "Wetland:  'LD-12; 5 + TM-1-3' Centric raised bog",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Slåttemyrflate",
+                "Text": "Wetland:  'NA-V6; 4-15 + HF-Y1; HI-3' Mowable mire expanse",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Slåttemyrkant",
+                "Text": "Wetland:  'NA-V7;2-5 + HF-Y1; HI-3' Mowable mire margin",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Varmekjær kildelauvskog",
+                "Text": "Wetland:  'NA-V3 + BS-A1; DO-A2-2,9' Thermophilous spring woodland",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Åpen låglandskildemyr",
+                "Text": "Wetland:  'NA-V3 + BS-A1,A2' Lowland spring fen expanse",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Leirskredgrop",
+                "Text": "Bedrock, bare rock, mass-movement slopes and other shallow-soil systems:  'LD-9 + BS-A,B1,B2; ML-5' Clayslide",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Fattigmyr",
+                "Text": "High Arctic terrestrial areas:  'NA-V6; 4-6 + BS-B3-5' Lime-poor mire",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "redlistedNaturetypes",
+                "Value": "Varm havkildebunn",
+                "Text": "Marine deep sea:  'NA-M3' Hydrothermal vent",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "ReferenceSort": [
+            {
+                "Text": "Title",
+                "Value": "Title;asc"
+            },
+            {
+                "Text": "Title - reverse order",
+                "Value": "Title;desc"
+            },
+            {
+                "Text": "Author",
+                "Value": "Author;asc"
+            },
+            {
+                "Text": "Author - reverse order",
+                "Value": "Author;desc"
+            },
+            {
+                "Text": "Year",
+                "Value": "Year;asc"
+            },
+            {
+                "Text": "Year - reverse order",
+                "Value": "Year;desc"
+            }
+        ],
+        "ReferenceContext": [
+            {
+                "Text": "All references",
+                "Value": "None"
+            },
+            {
+                "Text": "References related to FAB 3",
+                "Value": "Local"
+            },
+            {
+                "Text": "Own registered references",
+                "Value": "Personal"
+            }
+        ],
+        "ReferenceType": [
+            {
+                "Text": "All",
+                "Value": "All",
+                "Children": {
+                    "Fields": []
+                }
+            },
+            {
+                "Text": "Publications",
+                "Value": "Publication",
+                "Children": {
+                    "Fields": [
+                        {
+                            "Text": "Author",
+                            "Value": "author"
+                        },
+                        {
+                            "Text": "Year",
+                            "Value": "year"
+                        },
+                        {
+                            "Text": "Title",
+                            "Value": "title"
+                        },
+                        {
+                            "Text": "Summary",
+                            "Value": "summary"
+                        },
+                        {
+                            "Text": "Journal",
+                            "Value": "journal"
+                        },
+                        {
+                            "Text": "Volume",
+                            "Value": "volume"
+                        },
+                        {
+                            "Text": "Pages",
+                            "Value": "pages"
+                        },
+                        {
+                            "Text": "Bibliography",
+                            "Value": "bibliography"
+                        },
+                        {
+                            "Text": "Keywords",
+                            "Value": "keywords"
+                        }
+                    ]
+                }
+            },
+            {
+                "Text": "Person",
+                "Value": "Person",
+                "Children": {
+                    "Fields": [
+                        {
+                            "Text": "Surname",
+                            "Value": "lastname"
+                        },
+                        {
+                            "Text": "Middle name",
+                            "Value": "middlename"
+                        },
+                        {
+                            "Text": "First name",
+                            "Value": "firstname"
+                        }
+                    ]
+                }
+            },
+            {
+                "Text": "Url",
+                "Value": "Url",
+                "Children": {
+                    "Fields": [
+                        {
+                            "Text": "Title",
+                            "Value": "title"
+                        },
+                        {
+                            "Text": "Url",
+                            "Value": "url"
+                        }
+                    ]
+                }
+            }
+        ],
+        "Criterion": [
+            {
+                "Id": "Criterion",
+                "Value": "A",
+                "Text": "Criterion A: Median population lifetime",
+                "Info": "The species estimated population life time in Norway, with uncertainty",
+                "Children": {
+                    "CritA": [
+                        {
+                            "Id": "CritA",
+                            "Value": "0",
+                            "Text": "< 10 year",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": "CritA",
+                            "Value": "1",
+                            "Text": "10 - 59 years",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": "CritA",
+                            "Value": "2",
+                            "Text": "60 - 649 years",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": "CritA",
+                            "Value": "3",
+                            "Text": ">= 650 years",
+                            "Info": null,
+                            "Children": null
+                        }
+                    ]
+                }
+            },
+            {
+                "Id": "Criterion",
+                "Value": "B",
+                "Text": "Criterion B: Expansion speed",
+                "Info": "The species mean expansion speed, with uncertainty",
+                "Children": {
+                    "CritB": [
+                        {
+                            "Id": "CritB",
+                            "Value": "0",
+                            "Text": "< 50 metres per year",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": "CritB",
+                            "Value": "1",
+                            "Text": "50 - 159  metres per year",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": "CritB",
+                            "Value": "2",
+                            "Text": "160 - 499 metres per year",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": "CritB",
+                            "Value": "3",
+                            "Text": ">= 500 metres per year",
+                            "Info": null,
+                            "Children": null
+                        }
+                    ]
+                }
+            },
+            {
+                "Id": "Criterion",
+                "Value": "C",
+                "Text": "Criterion C: Colonisation of nature types",
+                "Info": "The proportion of the area of occupancy (AOO) of at least one nature type that will be colonized within 50 years, with uncertainty",
+                "Children": {
+                    "CritC": [
+                        {
+                            "Id": "CritC",
+                            "Value": "0",
+                            "Text": "< 5%",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": "CritC",
+                            "Value": "1",
+                            "Text": ">= 5%",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": "CritC",
+                            "Value": "2",
+                            "Text": ">= 10%",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": "CritC",
+                            "Value": "3",
+                            "Text": ">= 20%",
+                            "Info": null,
+                            "Children": null
+                        }
+                    ]
+                }
+            },
+            {
+                "Id": "Criterion",
+                "Value": "D",
+                "Text": "Criterion D: Threathened species or keystone species, with uncertainty",
+                "Info": "Could the species affect threatened species, or key species, within 50 years",
+                "Children": {
+                    "CritD": [
+                        {
+                            "Id": "CritD",
+                            "Value": "0",
+                            "Text": "No known effect",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": "CritD",
+                            "Value": "1",
+                            "Text": "Minor effect",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": "CritD",
+                            "Value": "2",
+                            "Text": "Medium effect",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": "CritD",
+                            "Value": "3",
+                            "Text": "Major effect",
+                            "Info": null,
+                            "Children": null
+                        }
+                    ]
+                }
+            },
+            {
+                "Id": "Criterion",
+                "Value": "E",
+                "Text": "Criterion E: Other native species, with uncertainty",
+                "Info": "Could the species affect other native species, within 50 years",
+                "Children": {
+                    "CritE": [
+                        {
+                            "Id": "CritE",
+                            "Value": "0",
+                            "Text": "No known effect",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": "CritE",
+                            "Value": "1",
+                            "Text": "Minor effect",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": "CritE",
+                            "Value": "2",
+                            "Text": "Medium effect",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": "CritE",
+                            "Value": "3",
+                            "Text": "Major effect",
+                            "Info": null,
+                            "Children": null
+                        }
+                    ]
+                }
+            },
+            {
+                "Id": "Criterion",
+                "Value": "F",
+                "Text": "Criterion F: Effects on threathened or rare nature types",
+                "Info": "The proportion of the area of the nature type that will undergo substantial state changes within 50 years, with uncertainty",
+                "Children": {
+                    "CritF": [
+                        {
+                            "Id": "CritF",
+                            "Value": "0",
+                            "Text": "= 0%",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": "CritF",
+                            "Value": "1",
+                            "Text": "> 0%",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": "CritF",
+                            "Value": "2",
+                            "Text": "≥ 2%",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": "CritF",
+                            "Value": "3",
+                            "Text": "≥ 5%",
+                            "Info": null,
+                            "Children": null
+                        }
+                    ]
+                }
+            },
+            {
+                "Id": "Criterion",
+                "Value": "G",
+                "Text": "Criterion G: Effects on other nature types",
+                "Info": "The proportion of the area of the nature type that will undergo substantial state changes within 50 years, with uncertainty",
+                "Children": {
+                    "CritG": [
+                        {
+                            "Id": "CritG",
+                            "Value": "0",
+                            "Text": "< 5%",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": "CritG",
+                            "Value": "1",
+                            "Text": "≥ 5%",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": "CritG",
+                            "Value": "2",
+                            "Text": "≥ 10%",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": "CritG",
+                            "Value": "3",
+                            "Text": "≥ 20%",
+                            "Info": null,
+                            "Children": null
+                        }
+                    ]
+                }
+            },
+            {
+                "Id": "Criterion",
+                "Value": "H",
+                "Text": "Criterion H: Transfer of genetic material",
+                "Info": "Could the species transfer genetic material to native species, with uncertainty",
+                "Children": {
+                    "CritH": [
+                        {
+                            "Id": "CritH",
+                            "Value": "0",
+                            "Text": "No known effect",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": "CritH",
+                            "Value": "1",
+                            "Text": "Minor effect",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": "CritH",
+                            "Value": "2",
+                            "Text": "Medium effect",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": "CritH",
+                            "Value": "3",
+                            "Text": "Major effect",
+                            "Info": null,
+                            "Children": null
+                        }
+                    ]
+                }
+            },
+            {
+                "Id": "Criterion",
+                "Value": "I",
+                "Text": "Criterion I: Transmission of parasites and pathogens",
+                "Info": "Could the species transfer parasites or pathogenes to native species, with uncertainty",
+                "Children": {
+                    "CritI": [
+                        {
+                            "Id": "CritI",
+                            "Value": "0",
+                            "Text": "No known effect",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": "CritI",
+                            "Value": "1",
+                            "Text": "Minor effect",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": "CritI",
+                            "Value": "2",
+                            "Text": "Medium effect",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": "CritI",
+                            "Value": "3",
+                            "Text": "Major effect",
+                            "Info": null,
+                            "Children": null
+                        }
+                    ]
+                }
+            }
+        ],
+        "migrationPathways": [
+            {
+                "Text": "Pathways of spread",
+                "Children": {
+                    "mp": [
+                        {
+                            "Text": "Introduction",
+                            "Children": {
+                                "mpimportation": [
+                                    {
+                                        "Text": "Release in nature, intentional",
+                                        "Children": {
+                                            "mpimportationrelease": [
+                                                {
+                                                    "Text": "for commercial use (e.g. production species)",
+                                                    "Value": "releaseForUseOther"
+                                                },
+                                                {
+                                                    "Text": "for biological control",
+                                                    "Value": "biologicalControl"
+                                                },
+                                                {
+                                                    "Text": "for hunting",
+                                                    "Value": "hunting"
+                                                },
+                                                {
+                                                    "Text": "for fishary in the wild",
+                                                    "Value": "fishery"
+                                                },
+                                                {
+                                                    "Text": "for landscape/flora/fauna improvement in the wild",
+                                                    "Value": "landscapeFloraFaunaImprovement"
+                                                },
+                                                {
+                                                    "Text": "for erosion control/dune stabilisation",
+                                                    "Value": "erosionControl"
+                                                },
+                                                {
+                                                    "Text": "for conservation purposes or wildlife management",
+                                                    "Value": "wildlifeManagement"
+                                                },
+                                                {
+                                                    "Text": "other intentional release",
+                                                    "Value": "otherIntentionalRelease"
+                                                },
+                                                {
+                                                    "Text": "other unknown release",
+                                                    "Value": "otherUnknownRelease"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "Text": "Escape from confinement",
+                                        "Children": {
+                                            "mpimportationescape": [
+                                                {
+                                                    "Text": "from agriculture",
+                                                    "Value": "agriculture"
+                                                },
+                                                {
+                                                    "Text": "from forestry",
+                                                    "Value": "forestry"
+                                                },
+                                                {
+                                                    "Text": "from horticulture",
+                                                    "Value": "horticulture"
+                                                },
+                                                {
+                                                    "Text": "from ornamental purpose other than horticulture",
+                                                    "Value": "ornamentalPurposeOther"
+                                                },
+                                                {
+                                                    "Text": "of farmed animals",
+                                                    "Value": "farmedAnimals"
+                                                },
+                                                {
+                                                    "Text": "from fur farms",
+                                                    "Value": "furFarms"
+                                                },
+                                                {
+                                                    "Text": "from aquaculture/mariculture",
+                                                    "Value": "aquaculture"
+                                                },
+                                                {
+                                                    "Text": "of live food or live bait",
+                                                    "Value": "liveFoodLiveBait"
+                                                },
+                                                {
+                                                    "Text": "of pet/aquarium/terrarium species, private included",
+                                                    "Value": "petAquariumTerrariumSpecies"
+                                                },
+                                                {
+                                                    "Text": "from botanical gardens/zoos/aquaria, public",
+                                                    "Value": "botanicalGardenZooAquarium"
+                                                },
+                                                {
+                                                    "Text": "from research",
+                                                    "Value": "research"
+                                                },
+                                                {
+                                                    "Text": "other escape from confinement",
+                                                    "Value": "otherEscape"
+                                                },
+                                                {
+                                                    "Text": "other unknown escape from conefinment",
+                                                    "Value": "otherUnknownEscape"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "Text": "Transport/contaminant",
+                                        "Children": {
+                                            "mpimportationpolution": [
+                                                {
+                                                    "Text": "as parasites on animals (hosts/vectors)",
+                                                    "Value": "parasitesOnAnimals"
+                                                },
+                                                {
+                                                    "Text": "as contaminants on animals (except parasites)",
+                                                    "Value": "contaminantOnAnimals"
+                                                },
+                                                {
+                                                    "Text": "as parasites on plants (hosts/vectors)",
+                                                    "Value": "parasitesOnPlants"
+                                                },
+                                                {
+                                                    "Text": "as contaminants on plants (except parasites)",
+                                                    "Value": "contaminantOnPlants"
+                                                },
+                                                {
+                                                    "Text": "of seed",
+                                                    "Value": "seedContaminant"
+                                                },
+                                                {
+                                                    "Text": "of food (including live food)",
+                                                    "Value": "foodContaminant"
+                                                },
+                                                {
+                                                    "Text": "of bait",
+                                                    "Value": "contaminatedBait"
+                                                },
+                                                {
+                                                    "Text": "of timber",
+                                                    "Value": "timberTrade"
+                                                },
+                                                {
+                                                    "Text": "of habitat material (soil, vegetation, ...)",
+                                                    "Value": "transportationOfHabitatMaterial"
+                                                },
+                                                {
+                                                    "Text": "of nursery material",
+                                                    "Value": "contaminantNurseryMaterial"
+                                                },
+                                                {
+                                                    "Text": "other/unknown contaminant",
+                                                    "Value": "otherUnknownContaminant"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "Text": "Transport/stowaway",
+                                        "Children": {
+                                            "mpimportationstowaway": [
+                                                {
+                                                    "Text": "with people and their luggage/equipment",
+                                                    "Value": "peopleAndLuggage"
+                                                },
+                                                {
+                                                    "Text": "in or on vehicles (car, train, ...)",
+                                                    "Value": "vehicles"
+                                                },
+                                                {
+                                                    "Text": "in or on airplanes",
+                                                    "Value": "hitchhikersPlane"
+                                                },
+                                                {
+                                                    "Text": "in or on ships/boats",
+                                                    "Value": "hitchhikersShip"
+                                                },
+                                                {
+                                                    "Text": "with ballast water or ballast sand",
+                                                    "Value": "ballastWater"
+                                                },
+                                                {
+                                                    "Text": "as hull fouling",
+                                                    "Value": "hullFouling"
+                                                },
+                                                {
+                                                    "Text": "with machinery/equipment",
+                                                    "Value": "machinery"
+                                                },
+                                                {
+                                                    "Text": "with containers/bulk",
+                                                    "Value": "containerBulk"
+                                                },
+                                                {
+                                                    "Text": "with organic packing material",
+                                                    "Value": "organicPackagingMaterial"
+                                                },
+                                                {
+                                                    "Text": "with angling/fishing equipment",
+                                                    "Value": "fishingEquipment"
+                                                },
+                                                {
+                                                    "Text": "with other means of transport",
+                                                    "Value": "otherMeansOfTransport"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "Text": "Spred",
+                            "Children": {
+                                "mpspread": [
+                                    {
+                                        "Text": "Corridor",
+                                        "Children": {
+                                            "mpspreadcorridor": [
+                                                {
+                                                    "Text": "interconnected waterways/basins/seas",
+                                                    "Value": "interconnectedWaterways"
+                                                },
+                                                {
+                                                    "Text": "tunnels and land bridges",
+                                                    "Value": "tunnelsAndLandBridges"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "Text": "Unaided",
+                                        "Children": {
+                                            "mpspreadnatural": [
+                                                {
+                                                    "Text": "natural dispersal across borders",
+                                                    "Value": "naturalDispersalAcrossBorders"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "Text": "Import",
+                            "Children": {
+                                "mpimport": [
+                                    {
+                                        "Text": "Direct import",
+                                        "Children": {
+                                            "mpimportdirect": [
+                                                {
+                                                    "Text": "to agriculture (of plants)",
+                                                    "Value": "importAgriculture"
+                                                },
+                                                {
+                                                    "Text": "to forestry (of trees)",
+                                                    "Value": "importForestry"
+                                                },
+                                                {
+                                                    "Text": "to plant sale (plant shops, flower shops, garden centres, nurseries etc.)",
+                                                    "Value": "importHorticulture"
+                                                },
+                                                {
+                                                    "Text": "to parks and green spaces (of ornamental plants)",
+                                                    "Value": "importOrnamentalPurposeOther"
+                                                },
+                                                {
+                                                    "Text": "to farms (of farm animals)",
+                                                    "Value": "importFarmedAnimals"
+                                                },
+                                                {
+                                                    "Text": "to fur farms",
+                                                    "Value": "importFurFarms"
+                                                },
+                                                {
+                                                    "Text": "to aquaculture/mariculture",
+                                                    "Value": "importAquaculture"
+                                                },
+                                                {
+                                                    "Text": "to sale of live food or live bait",
+                                                    "Value": "importLiveFoodLiveBait"
+                                                },
+                                                {
+                                                    "Text": "to animal sale (of pet/aquarium/terrarium species etc.)",
+                                                    "Value": "importPetShops"
+                                                },
+                                                {
+                                                    "Text": "directly to user by mail",
+                                                    "Value": "directlyToEndUserByMail"
+                                                },
+                                                {
+                                                    "Text": "private self-import",
+                                                    "Value": "privateImportation"
+                                                },
+                                                {
+                                                    "Text": "to botanical gardens/zoos/aquaria (not private)",
+                                                    "Value": "importBotanicalGardenZooAquarium"
+                                                },
+                                                {
+                                                    "Text": "to research",
+                                                    "Value": "importResearch"
+                                                },
+                                                {
+                                                    "Text": "to other or unknown goals",
+                                                    "Value": "importOtherEscape"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "Text": "Transport/contaminant",
+                                        "Children": {
+                                            "mpimportpolution": [
+                                                {
+                                                    "Text": "as parasites on animals (hosts/vectors)",
+                                                    "Value": "importParasitesOnAnimals"
+                                                },
+                                                {
+                                                    "Text": "as contaminants on animals (except parasites)",
+                                                    "Value": "importContaminantOnAnimals"
+                                                },
+                                                {
+                                                    "Text": "as parasites on plants (hosts/vectors)",
+                                                    "Value": "importParasitesOnPlants"
+                                                },
+                                                {
+                                                    "Text": "as contaminants on plants (except parasites)",
+                                                    "Value": "importContaminantOnPlants"
+                                                },
+                                                {
+                                                    "Text": "of seed",
+                                                    "Value": "importSeedContaminant"
+                                                },
+                                                {
+                                                    "Text": "of food (including life food)",
+                                                    "Value": "importFoodContaminant"
+                                                },
+                                                {
+                                                    "Text": "of bait",
+                                                    "Value": "importContaminatedBait"
+                                                },
+                                                {
+                                                    "Text": "of timber",
+                                                    "Value": "importTimberTrade"
+                                                },
+                                                {
+                                                    "Text": "of habitat material (soil, vegetation, ...)",
+                                                    "Value": "importTransportationOfHabitatMaterial"
+                                                },
+                                                {
+                                                    "Text": "of nursery material",
+                                                    "Value": "importContaminantNurseryMaterial"
+                                                },
+                                                {
+                                                    "Text": "other/unknown contaminant",
+                                                    "Value": "importOtherUnknownContaminant"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "Text": "Transport/stowaway",
+                                        "Children": {
+                                            "mpimportpolution": [
+                                                {
+                                                    "Text": "with people and their luggage/equipment",
+                                                    "Value": "importPeopleAndLuggage"
+                                                },
+                                                {
+                                                    "Text": "in or on vehicles (car, train, ...)",
+                                                    "Value": "importVehicles"
+                                                },
+                                                {
+                                                    "Text": "in or on airplanes",
+                                                    "Value": "importHitchhikersPlane"
+                                                },
+                                                {
+                                                    "Text": "in or on ships/boats",
+                                                    "Value": "importHitchhikersShip"
+                                                },
+                                                {
+                                                    "Text": "with ballast water or ballast sand",
+                                                    "Value": "importBallastWater"
+                                                },
+                                                {
+                                                    "Text": "as hull fouling",
+                                                    "Value": "importHullFouling"
+                                                },
+                                                {
+                                                    "Text": "with machinery/equipment",
+                                                    "Value": "importMachinery"
+                                                },
+                                                {
+                                                    "Text": "with containers/bulk",
+                                                    "Value": "importContainerBulk"
+                                                },
+                                                {
+                                                    "Text": "with organic packing material",
+                                                    "Value": "importOrganicPackagingMaterial"
+                                                },
+                                                {
+                                                    "Text": "with angling/fishing equipment",
+                                                    "Value": "importFishingEquipment"
+                                                },
+                                                {
+                                                    "Text": "with other means of transport",
+                                                    "Value": "importOtherMeansOfTransport"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        "labels": [
+            {
+                "Id": "labels",
+                "Value": null,
+                "Text": "zero",
+                "Info": null,
+              "Children": {
+                "General": [
+                  {
+                    "Value": "yes",
+                    "Text": "yes"
+                  },
+                  {
+                    "Value": "no",
+                    "Text": "no"
+                  },
+                  {
+                    "Value": "unknown",
+                    "Text": "unknown"
+                  },
+                  {
+                    "Value": "ok",
+                    "Text": "Ok"
+                  },
+                  {
+                    "Value": "cancel",
+                    "Text": "Avbryt"
+                  },
+                  {
+                    "Value": "add",
+                    "Text": "add"
+                  },
+                  {
+                    "Value": "remove",
+                    "Text": "remove"
+                  },
+                  {
+                    "Value": "delete",
+                    "Text": "delete"
+                  },
+                  {
+                    "Value": "edit",
+                    "Text": "edit"
+                  },
+                  {
+                    "Value": "search",
+                    "Text": "Search"
+                  },
+                  {
+                    "Value": "searchSpecies",
+                    "Text": "Search species"
+                  },
+                  {
+                    "Value": "nextPage",
+                    "Text": "next page"
+                  },
+                  {
+                    "Value": "previousPage",
+                    "Text": "previous page"
+                  },
+                  {
+                    "Value": "showDetails",
+                    "Text": "show details"
+                  },
+                  {
+                    "Value": "noneSelected",
+                    "Text": "None selected"
+                  },
+                  {
+                    "Value": "multipleSelected",
+                    "Text": "Multiple selected"
+                  }
+                ],
+                "AcritSelect": [
+                  {
+                    "Value": "a",
+                    "Text": "a) Population viability analysis"
+                  },
+                  {
+                    "Value": "b",
+                    "Text": "b) Numerical estimation"
+                  },
+                  {
+                    "Value": "c",
+                    "Text": "c) Red List criteria"
+                  }
+                ],
+                "BcritSelect": [
+                  {
+                    "Value": "a",
+                    "Text": "a) Spatio-temporal datasets of observations"
+                  },
+                  {
+                    "Value": "b",
+                    "Text": "gamle 'b' skal ikke vises!!! - b) Time series for AAO"
+                  },
+                  {
+                    "Value": "c",
+                    "Text": "b) Published data on dispersal rate"
+                  },
+                  {
+                    "Value": "d",
+                    "Text": "c) Estimated increase in AOO during the latest year"
+                  }
+                ],
+                "AlienSpecie": [
+                  {
+                    "Value": "UncertainIfEstablishedBefore1800",
+                    "Text": "Uncertain whether the species is established in Norway before 1800"
+                  },
+                  {
+                    "Value": "UncertainAntropochor",
+                    "Text": "Uncertain whether the species came to Norway with or without human help"
+                  },
+                  {
+                    "Value": "UncertainDescription",
+                    "Text": "Describe the uncertainty"
+                  }
+                ],
+                "NatureType": [
+                  {
+                    "Value": "code",
+                    "Text": "Code"
+                  },
+                  {
+                    "Value": "name",
+                    "Text": "Name"
+                  },
+                  {
+                    "Value": "dominanceForrest",
+                    "Text": "Dominance forest"
+                  },
+                  {
+                    "Value": "timeHorizon",
+                    "Text": "Time horizone"
+                  },
+                  {
+                    "Value": "colonizedArea",
+                    "Text": "Colonized area (%)"
+                  },
+                  {
+                    "Value": "stateChange",
+                    "Text": "Substantial state changes"
+                  },
+                  {
+                    "Value": "affectedArea",
+                    "Text": "Substantially affected area (%)"
+                  },
+                  {
+                    "Value": "redlisteName",
+                    "Text": "Name"
+                  },
+                  {
+                    "Value": "category",
+                    "Text": "Category"
+                  }
+                ],
+                "ObservedEstablished": [
+                  {
+                    "Value": "nonReproductive",
+                    "Text": "Non-reproductive individuals"
+                  },
+                  {
+                    "Value": "reproduktive",
+                    "Text": "Reproductive individuals"
+                  },
+                  {
+                    "Value": "viableOffspring",
+                    "Text": "Viable offspring"
+                  },
+                  {
+                    "Value": "population",
+                    "Text": "Population"
+                  },
+                  {
+                    "Value": "year",
+                    "Text": "Year"
+                  },
+                  {
+                    "Value": "place",
+                    "Text": "Place"
+                  },
+                  {
+                    "Value": "individualCount",
+                    "Text": "Number of individuals"
+                  },
+                  {
+                    "Value": "indoor",
+                    "Text": "Indoors"
+                  },
+                  {
+                    "Value": "outdoor",
+                    "Text": "Produktion area (outdoors)"
+                  },
+                  {
+                    "Value": "domesticNature",
+                    "Text": "Norwegian natur"
+                  }
+                ],
+                "Reproduction": [
+                  {
+                    "Value": "reproduction",
+                    "Text": "Reproduction"
+                  },
+                  {
+                    "Value": "sexual",
+                    "Text": "Sexual reproduktion"
+                  },
+                  {
+                    "Value": "asexual",
+                    "Text": "Asexual reproduktion"
+                  },
+                  {
+                    "Value": "generationTime",
+                    "Text": "Generation time (year)"
+                  }
+                ],
+                "SelectAssessment": [
+                  {
+                    "Value": "assessedBy",
+                    "Text": "Assessed by"
+                  },
+                  {
+                    "Value": "startAssessment",
+                    "Text": "Start assessment"
+                  },
+                  {
+                    "Value": "assessmentClosed",
+                    "Text": "Assessment closed"
+                  },
+                  {
+                    "Value": "releaseAssessment",
+                    "Text": "Release assessment"
+                  },
+                  {
+                    "Value": "scientificName",
+                    "Text": "Scientific name"
+                  },
+                  {
+                    "Value": "duration",
+                    "Text": "Duration"
+                  },
+                  {
+                    "Value": "lastSaved",
+                    "Text": "Last saved"
+                  },
+                  {
+                    "Value": "expertgroup",
+                    "Text": "Species group"
+                  },
+                  {
+                    "Value": "filter",
+                    "Text": "Filter"
+                  },
+                  {
+                    "Value": "createAssessment",
+                    "Text": "Create assessment"
+                  },
+                  {
+                    "Value": "count",
+                    "Text": "Count"
+                  },
+                  {
+                    "Value": "percent",
+                    "Text": "Percent"
+                  },
+                  {
+                    "Value": "table",
+                    "Text": "Table"
+                  },
+                  {
+                    "Value": "notStarted",
+                    "Text": "Not started"
+                  },
+                  {
+                    "Value": "started",
+                    "Text": "Started"
+                  },
+                  {
+                    "Value": "underWork",
+                    "Text": "currently being modified"
+                  },
+                  {
+                    "Value": "completed",
+                    "Text": "Completed"
+                  },
+                  {
+                    "Value": "total",
+                    "Text": "Total"
+                  },
+                  {
+                    "Value": "statistics",
+                    "Text": "Statistics"
+                  },
+                  {
+                    "Value": "isCompletedWarning",
+                    "Text": "The assessment is completed and can not be edited"
+                  },
+                  {
+                    "Value": "isReadOnlyWarning",
+                    "Text": "If You want to edit the assessment, go to 'Choose species' and 'Start assessment' to enter edit mode."
+                  }
+                ],
+                "Timing": [
+                  {
+                    "Value": "justNow",
+                    "Text": "Just now"
+                  },
+                  {
+                    "Value": "secondsago",
+                    "Text": "Seconds ago"
+                  },
+                  {
+                    "Value": "minutesago",
+                    "Text": "Minutes ago"
+                  },
+                  {
+                    "Value": "hoursago",
+                    "Text": "Hours ago"
+                  },
+                  {
+                    "Value": "daysago",
+                    "Text": "Days ago"
+                  },
+                  {
+                    "Value": "weeksago",
+                    "Text": "Weeks ago"
+                  },
+                  {
+                    "Value": "monthsago",
+                    "Text": "Months ago"
+                  },
+                  {
+                    "Value": "yearsago",
+                    "Text": "Years ago"
+                  }
+                ],
+                "Tabs": [
+                  {
+                    "Value": "main30",
+                    "Text": "3 Secies information"
+                  },
+                  {
+                    "Value": "main31",
+                    "Text": "3.1 Species status"
+                  },
+                  {
+                    "Value": "main32",
+                    "Text": "3.2 Species characteristics"
+                  },
+                  {
+                    "Value": "main33",
+                    "Text": "3.3 Entry"
+                  },
+                  {
+                    "Value": "main34",
+                    "Text": "3.4 Pathways"
+                  },
+                  {
+                    "Value": "main35",
+                    "Text": "3.5 Distribution history"
+                  },
+                  {
+                    "Value": "main40",
+                    "Text": "4 Nature types"
+                  },
+                  {
+                    "Value": "main50",
+                    "Text": "5 Risk assessment"
+                  },
+                  {
+                    "Value": "main51",
+                    "Text": "5.1 Invasion potential"
+                  },
+                  {
+                    "Value": "main52",
+                    "Text": "5.2 Ecological effect"
+                  },
+                  {
+                    "Value": "main53",
+                    "Text": "5.3 Geographical variation"
+                  },
+                  {
+                    "Value": "main54",
+                    "Text": "5.4 Climate effects"
+                  },
+                  {
+                    "Value": "main55",
+                    "Text": "5.5 Documentation"
+                  },
+                  {
+                    "Value": "mainReferences",
+                    "Text": "References"
+                  },
+                  {
+                    "Value": "mainSelectAssessment",
+                    "Text": "Select assessment"
+                  },
+                  {
+                    "Value": "mainCreateAssessment",
+                    "Text": "Create new assessment"
+                  },
+                  {
+                    "Value": "mainStatistics",
+                    "Text": "Statistics"
+                  }
+                ],
+                "FirstObservation": [
+                  {
+                    "Value": "firstobservation",
+                    "Text": "First observation"
+                  },
+                  {
+                    "Value": "firstregionalobservation",
+                    "Text": "First observation outside natural range"
+                  },
+                  {
+                    "Value": "dontknow",
+                    "Text": "Dont know"
+                  },
+                  {
+                    "Value": "nonReproductive",
+                    "Text": "Non-reproductive individuals"
+                  },
+                  {
+                    "Value": "reproduktive",
+                    "Text": "Reproductive individuals"
+                  },
+                  {
+                    "Value": "viableOffspring",
+                    "Text": "Viable Offspring"
+                  },
+                  {
+                    "Value": "population",
+                    "Text": "Population"
+                  },
+                  {
+                    "Value": "year",
+                    "Text": "Year"
+                  },
+                  {
+                    "Value": "place",
+                    "Text": "Place"
+                  },
+                  {
+                    "Value": "individualCount",
+                    "Text": "Number of individuals"
+                  },
+                  {
+                    "Value": "indoor",
+                    "Text": "Indoor"
+                  },
+                  {
+                    "Value": "outdoor",
+                    "Text": "Produktion area (outdoor)"
+                  },
+                  {
+                    "Value": "domesticNature",
+                    "Text": "Norwegian nature"
+                  }
+                ],
+                "PreviousAssessment": [
+                  {
+                    "Value": "previousassessment",
+                    "Text": "Previous ecological risk assessment"
+                  },
+                  {
+                    "Value": "domestic",
+                    "Text": "In Norway"
+                  },
+                  {
+                    "Value": "abroad",
+                    "Text": "In another country"
+                  }
+                ],
+                "StatusUncertainty": [
+                  {
+                    "Value": "uncertainIfEstablishedBefore1800",
+                    "Text": "Uncertain whether the species is established in Norway before 1800"
+                  },
+                  {
+                    "Value": "uncertainAntropochor",
+                    "Text": "Uncertain whether the species came to Norway with or without human help"
+                  },
+                  {
+                    "Value": "uncertainDescription",
+                    "Text": "Describe the uncertainty"
+                  },
+                  {
+                    "Value": "furtherSpecification",
+                    "Text": "Further specification"
+                  }
+                ],
+                "NaturalOrigin": [
+                  {
+                    "Value": "europe",
+                    "Text": "Europe"
+                  },
+                  {
+                    "Value": "asia",
+                    "Text": "Asia"
+                  },
+                  {
+                    "Value": "africa",
+                    "Text": "Africa"
+                  },
+                  {
+                    "Value": "oseania",
+                    "Text": "Oceania"
+                  },
+                  {
+                    "Value": "northAndCentralAmerica",
+                    "Text": "North- and Central America"
+                  },
+                  {
+                    "Value": "southAmerica",
+                    "Text": "South-America"
+                  },
+                  {
+                    "Value": "noKnown",
+                    "Text": "Unknown distribution"
+                  },
+                  {
+                    "Value": "transfer",
+                    "Text": "Transfer to Current distribution"
+                  },
+                  {
+                    "Value": "describe",
+                    "Text": "Provide a more detailed description as needed (required for \"unknown\" )"
+                  },
+                  {
+                    "Value": "naturalOrigin",
+                    "Text": "Original distribution"
+                  },
+                  {
+                    "Value": "currentExistenceAria",
+                    "Text": "Current distribution"
+                  },
+                  {
+                    "Value": "survivalBelow5c",
+                    "Text": "The species survives at temperatures <5° C"
+                  },
+                  {
+                    "Value": "describeMarine",
+                    "Text": "Provide a more detailed description as needed"
+                  },
+                  {
+                    "Value": "arrivedCountryFrom",
+                    "Text": "Arrived the country from"
+                  },
+                  {
+                    "Value": "arrivedCountryFromDetails",
+                    "Text": "Further specification"
+                  }
+                ],
+                "OtherEffects": [
+                  {
+                    "Value": "otherEffects",
+                    "Text": "Other effects"
+                  },
+                  {
+                    "Value": "fillNoKnown",
+                    "Text": "Fill in"
+                  },
+                  {
+                    "Value": "noKnownValue",
+                    "Text": "No known effects"
+                  },
+                  {
+                    "Value": "healthEffects",
+                    "Text": "Health effects"
+                  },
+                  {
+                    "Value": "economicEffects",
+                    "Text": "Economic effects"
+                  },
+                  {
+                    "Value": "ecosystemEffects",
+                    "Text": "Effects on ecosystem services"
+                  },
+                  {
+                    "Value": "ecoBasic",
+                    "Text": "Supporting services"
+                  },
+                  {
+                    "Value": "ecoSupport",
+                    "Text": "Provisioning services"
+                  },
+                  {
+                    "Value": "ecoRegulating",
+                    "Text": "Regulating services"
+                  },
+                  {
+                    "Value": "ecoKnowledge",
+                    "Text": "Cultural services (experience and knowledge services)"
+                  },
+                  {
+                    "Value": "positiveEffects",
+                    "Text": "Positive ecological effects"
+                  },
+                  {
+                    "Value": "effectsOnPopulationOfOrigin",
+                    "Text": "Effects of the source population"
+                  }
+                ],
+                "Import": [
+                  {
+                    "Value": "importIndoor",
+                    "Text": "Import to 'indoors Norway' or to the production area of the species"
+                  },
+                  {
+                    "Value": "importAdd",
+                    "Text": "Add pathways of entry"
+                  },
+                  {
+                    "Value": "____exportCountry",
+                    "Text": "Exportation country"
+                  },
+                  {
+                    "Value": "____migrationPathway",
+                    "Text": "Migration pathway"
+                  },
+                  {
+                    "Value": "____timeOfIncident",
+                    "Text": "Period"
+                  },
+                  {
+                    "Value": "____frequency",
+                    "Text": "Frequency"
+                  },
+                  {
+                    "Value": "____abundance",
+                    "Text": "Abundance"
+                  }
+                ],
+                "MigrationPathway": [
+                  {
+                    "Value": "category",
+                    "Text": "Category"
+                  },
+                  {
+                    "Value": "codeItem",
+                    "Text": "Subcategory"
+                  },
+                  {
+                    "Value": "influenceFactor",
+                    "Text": "Frequency"
+                  },
+                  {
+                    "Value": "magnitude",
+                    "Text": "Abundance"
+                  },
+                  {
+                    "Value": "timeOfIncident",
+                    "Text": "Period"
+                  },
+                  {
+                    "Value": "introductionSpread",
+                    "Text": "Introduction to, or spread within, nature"
+                  },
+                  {
+                    "Value": "elaborateInformation",
+                    "Text": "Elaborate infomation"
+                  }
+                ],
+                "Acrit": [
+                  {
+                    "Value": "PVAAnalysis",
+                    "Text": "Description of PVA-analysis"
+                  },
+                  {
+                    "Value": "data",
+                    "Text": "Dataset"
+                  },
+                  {
+                    "Value": "median",
+                    "Text": "Medium lifetime"
+                  },
+                  {
+                    "Value": "lower",
+                    "Text": "Lower quartile"
+                  },
+                  {
+                    "Value": "upper",
+                    "Text": "Upper quartile"
+                  },
+                  {
+                    "Value": "speciesCount",
+                    "Text": "Current population size"
+                  },
+                  {
+                    "Value": "populationGrowth",
+                    "Text": "Growth rate"
+                  },
+                  {
+                    "Value": "environmantVariance",
+                    "Text": "Environmental variance"
+                  },
+                  {
+                    "Value": "demographicVariance",
+                    "Text": "Demographic variance"
+                  },
+                  {
+                    "Value": "sustainability",
+                    "Text": "Carrying capacity"
+                  },
+                  {
+                    "Value": "extinctionThreshold",
+                    "Text": "Extinction threshold"
+                  },
+                  {
+                    "Value": "rScriptLongevity",
+                    "Text": "R-script for estimating expected population lifetime"
+                  },
+                  {
+                    "Value": "overview",
+                    "Text": "Overview of Red List criteria, categories and treshold values is available"
+                  },
+                  {
+                    "Value": "overviewHere",
+                    "Text": "here"
+                  },
+                  {
+                    "Value": "dataDescription",
+                    "Text": "Description of data"
+                  },
+                  {
+                    "Value": "redlistCrit",
+                    "Text": "Red List criterion applied"
+                  },
+                  {
+                    "Value": "redlistCategory",
+                    "Text": "Red List category"
+                  }
+                ],
+                "Bcrit": [
+                  {
+                    "Value": "rScriptExpansion",
+                    "Text": "R-script for estimating expansion speed"
+                  },
+                  {
+                    "Value": "expansion",
+                    "Text": "Mean expansion speed (m/år)"
+                  },
+                  {
+                    "Value": "lower",
+                    "Text": "Lower quartile"
+                  },
+                  {
+                    "Value": "higher",
+                    "Text": "Upper quartile"
+                  },
+                  {
+                    "Value": "data",
+                    "Text": "Dataset"
+                  },
+                  {
+                    "Value": "literatureDataExpansionSpeed",
+                    "Text": "Litteraturverdi på spredningshastighet (m/year)"
+                  },
+                  {
+                    "Value": "uncertainty",
+                    "Text": "Uncertainty"
+                  },
+                  {
+                    "Value": "introductionSources",
+                    "Text": "Number of source populations"
+                  },
+                  {
+                    "Value": "expansionSpeed",
+                    "Text": "Expansion speed i m/year"
+                  },
+                  {
+                    "Value": "literatureDataAssumptions",
+                    "Text": "Reference to the publication and description of its assumptions"
+                  },
+                  {
+                    "Value": "existenceArea",
+                    "Text": "Current area of occupancy (with dark fugures)"
+                  },
+                  {
+                    "Value": "existenceAreaRef35",
+                    "Text": "Enter area of occupancy under 3.5 \"Distribution history\""
+                  },
+                  {
+                    "Value": "yearlyIncrease",
+                    "Text": "Estimated increase in area of occupancy during the last year (km²)"
+                  },
+                  {
+                    "Value": "estimateDescription",
+                    "Text": "Describe the underlaying assumptions and data"
+                  },
+                  {
+                    "Value": "expansionSpeed",
+                    "Text": "Expansion speed m/year"
+                  }
+                ],
+                "Ccrit": [
+                  {
+                    "Value": "transferedFrom4",
+                    "Text": "(Transfered from 4 \"Nature types\")"
+                  }
+                ],
+                "DEcrit": [
+                  {
+                    "Value": "heading",
+                    "Text": "D- og E-kriteriet: Effects on native species"
+                  },
+                  {
+                    "Value": "localSpecies",
+                    "Text": "Native species"
+                  },
+                  {
+                    "Value": "keystoneSpecies",
+                    "Text": "Keystone species"
+                  },
+                  {
+                    "Value": "effect",
+                    "Text": "Effect"
+                  },
+                  {
+                    "Value": "localScale",
+                    "Text": "Local scale"
+                  },
+                  {
+                    "Value": "interactionType",
+                    "Text": "Type inter&shy;action"
+                  },
+                  {
+                    "Value": "longDistanceEffect",
+                    "Text": "Dist&shy;ance effect"
+                  },
+                  {
+                    "Value": "documented",
+                    "Text": "Docu&shy;mented"
+                  },
+                  {
+                    "Value": "domesticOrAbroad",
+                    "Text": "The documen&shy;tation applies to Norway"
+                  },
+                  {
+                    "Value": "speciesInNaturetype",
+                    "Text": "Nature type affected (if entire societies affected)"
+                  },
+                  {
+                    "Value": "naturetypeContains",
+                    "Text": "The nature type contains threat&shy;ened or keystone species"
+                  },
+                  {
+                    "Value": "localSpecie",
+                    "Text": "Native species"
+                  },
+                  {
+                    "Value": "parasiteScientificname",
+                    "Text": "Scientific name of the parasite"
+                  },
+                  {
+                    "Value": "parasiteEcoEffect",
+                    "Text": "Ecological effect of the parasite"
+                  },
+                  {
+                    "Value": "parasiteNew",
+                    "Text": "The para&shy;site is novel to the native host species"
+                  },
+                  {
+                    "Value": "parasiteAlien",
+                    "Text": "The parasite is alien to Norway"
+                  },
+                  {
+                    "Value": "diseaseDocumented",
+                    "Text": "Disease is documented"
+                  },
+                  {
+                    "Value": "diseaseConfirmed",
+                    "Text": "Documented"
+                  },
+                  {
+                    "Value": "diseaseAsumed",
+                    "Text": "Assumed"
+                  },
+                  {
+                    "Value": "domesticCountry",
+                    "Text": "Norway"
+                  },
+                  {
+                    "Value": "abroad",
+                    "Text": "Abroad"
+                  },
+                  {
+                    "Value": "searchSpecies",
+                    "Text": "Search species"
+                  }
+                ],
+                "critDocumentation": [
+                  {
+                    "Value": "decisiveCriteria",
+                    "Text": "Decisive criteria"
+                  },
+                  {
+                    "Value": "notEvaluated",
+                    "Text": "Risk assessment not done"
+                  },
+                  {
+                    "Value": "notEvaluated3",
+                    "Text": "Documentation will not be presentet in \"Alien species in Norway\", - the species will be presented as \"not assessed\"."
+                  },
+                  {
+                    "Value": "notEvaluated3",
+                    "Text": "All information not used in \"Alien species in Norway\" will be stored and transferred to future alien species assessment."
+                  },
+                  {
+                    "Value": "speciesDescription",
+                    "Text": "Species description"
+                  },
+                  {
+                    "Value": "status",
+                    "Text": "Status of the species"
+                  },
+                  {
+                    "Value": "ecology",
+                    "Text": "Ecology of the species"
+                  },
+                  {
+                    "Value": "missingEcology",
+                    "Text": "Lifestyle is not entered in tab 3.2 Species characteristics"
+                  },
+                  {
+                    "Value": "distribution",
+                    "Text": "Distribution"
+                  },
+                  {
+                    "Value": "domesticSpread",
+                    "Text": "Pathways"
+                  },
+                  {
+                    "Value": "see33And34",
+                    "Text": "See tabs 3.3 og 3.4 for relevant information"
+                  },
+                  {
+                    "Value": "invationPotential",
+                    "Text": "Invasion potential"
+                  },
+                  {
+                    "Value": "ecologicalEffect",
+                    "Text": "Ecological effect"
+                  },
+                  {
+                    "Value": "conclusion",
+                    "Text": "Conclusion"
+                  },
+                  {
+                    "Value": "showSummary",
+                    "Text": "Show summary"
+                  },
+                  {
+                    "Value": "setComplete",
+                    "Text": "Complete"
+                  },
+                  {
+                    "Value": "resetComplete",
+                    "Text": "Continue assessmant"
+                  },
+                  {
+                    "Value": "criteriaDocumentation",
+                    "Text": "Documentation"
+                  },
+                  {
+                    "Value": "assessmentCompleted",
+                    "Text": "The assessment is Completed"
+                  },
+                  {
+                    "Value": "assessmentUnderWork",
+                    "Text": "The assessment is in progress"
+                  }
+                ],
+                "geographicVariation": [
+                  {
+                    "Value": "heading",
+                    "Text": "Geographical Variation"
+                  },
+                  {
+                    "Value": "extendedInformation",
+                    "Text": "Further information should be provided"
+                  }
+                ],
+                "NatureTypes": [
+                  {
+                    "Value": "colonizedAreaHeading",
+                    "Text": "Colonisation of nature types and effects on nature types that are not threatened, rare or heavily modified"
+                  },
+                  {
+                    "Value": "code",
+                    "Text": "Code"
+                  },
+                  {
+                    "Value": "name",
+                    "Text": "Name"
+                  },
+                  {
+                    "Value": "dominanceForrest",
+                    "Text": "Dominance forest"
+                  },
+                  {
+                    "Value": "timeHorizon",
+                    "Text": "Time frame"
+                  },
+                  {
+                    "Value": "colonizedArea",
+                    "Text": "Area colonised (%)"
+                  },
+                  {
+                    "Value": "stateChange",
+                    "Text": "Substential state change"
+                  },
+                  {
+                    "Value": "affectedArea",
+                    "Text": "Substential affected area (%)"
+                  },
+                  {
+                    "Value": "redlistName",
+                    "Text": "Name"
+                  },
+                  {
+                    "Value": "category",
+                    "Text": "Category"
+                  },
+                  {
+                    "Value": "chooseNT",
+                    "Text": "Choose from the following nature types (NiN 2.0)"
+                  },
+                  {
+                    "Value": "chooseLM",
+                    "Text": "Choose from the following micro habitat types (NiN 1.0)"
+                  },
+                  {
+                    "Value": "critCHeading",
+                    "Text": "Area of naturtype colonized (transfered to criterion C)"
+                  },
+                  {
+                    "Value": "critGHeading",
+                    "Text": "Effects on natur types that are neither threatened nor rare or heavily modified (transfered to criterion G)"
+                  },
+                  {
+                    "Value": "commonNatureTypesAffectedDomestic",
+                    "Text": "Give a description of any state of changes"
+                  },
+                  {
+                    "Value": "abroad",
+                    "Text": "Abroad"
+                  },
+                  {
+                    "Value": "commonNatureTypesAffectedAbroad",
+                    "Text": "Give a description of any state of changes abroad"
+                  },
+                  {
+                    "Value": "effectOnThreatenedNatureTypes",
+                    "Text": "Effects on threatened/rare nature types"
+                  },
+                  {
+                    "Value": "critFHeading",
+                    "Text": "Effects on threatened/rare natur types (tranfered til criterion F)"
+                  },
+                  {
+                    "Value": "threatenedNatureTypesChangeDomestic",
+                    "Text": "Give a description of any state of changes"
+                  },
+                  {
+                    "Value": "threatenedNatureTypesChangeAbroad",
+                    "Text": "Give a description of any state of changes abroad"
+                  },
+                  {
+                    "Value": "parasiteHabitat",
+                    "Text": "Microhabitat for parasites"
+                  },
+                  {
+                    "Value": "chooseRedlistedNT",
+                    "Text": "Choose from the following nature types (NiN 1.0)"
+                  },
+                  {
+                    "Value": "commonNatureTypesForeignDocumented",
+                    "Text": "Documented effects on other nature types"
+                  },
+                  {
+                    "Value": "threatenedNatureTypesForeignDocumented",
+                    "Text": "Documented effects on threatened/rare nature types"
+                  },
+                  {
+                    "Value": "usesLivingSpeciesAsHabitat",
+                    "Text": "Uses living organsims as microhabitat"
+                  },
+                  {
+                    "Value": "usesLivingSpeciesAsHabitatScientificName",
+                    "Text": "The hosts scientific name"
+                  }
+                ],
+                "Reference": [
+                  {
+                    "Value": "hasReferences",
+                    "Text": "References related to the assessment"
+                  },
+                  {
+                    "Value": "noReferences",
+                    "Text": "No references related to the assessment..."
+                  },
+                  {
+                    "Value": "reference",
+                    "Text": "Reference"
+                  },
+                  {
+                    "Value": "referenceType",
+                    "Text": "Type"
+                  },
+                  {
+                    "Value": "searchHeading",
+                    "Text": "Search references"
+                  },
+                  {
+                    "Value": "search",
+                    "Text": "Search field"
+                  },
+                  {
+                    "Value": "sort",
+                    "Text": "Sort"
+                  },
+                  {
+                    "Value": "referenceTypes",
+                    "Text": "Types"
+                  },
+                  {
+                    "Value": "referenceChoose",
+                    "Text": "Choose"
+                  },
+                  {
+                    "Value": "referenceDetails",
+                    "Text": "Show/edit"
+                  },
+                  {
+                    "Value": "editPaneHeading",
+                    "Text": "Edit/New reference"
+                  },
+                  {
+                    "Value": "referenceNew",
+                    "Text": "New reference"
+                  },
+                  {
+                    "Value": "referenceDelete",
+                    "Text": "Delete reference"
+                  },
+                  {
+                    "Value": "canNotEdit",
+                    "Text": "Can not edit"
+                  }
+                ],
+                "DistributionHistory": [
+                  {
+                    "Value": "heading",
+                    "Text": "Distribution history"
+                  },
+                  {
+                    "Value": "distributionHistory",
+                    "Text": "Distribution history"
+                  },
+                  {
+                    "Value": "domesticDescribe",
+                    "Text": "Describe distribution history in Norway"
+                  },
+                  {
+                    "Value": "domesticAddHistory",
+                    "Text": "Add history"
+                  },
+                  {
+                    "Value": "domesticDataset",
+                    "Text": "Dataset"
+                  },
+                  {
+                    "Value": "previousInfo",
+                    "Text": "Previously entered information"
+                  },
+                  {
+                    "Value": "mustTransfer",
+                    "Text": "Must be transferred"
+                  },
+                  {
+                    "Value": "transfer",
+                    "Text": "Transfer"
+                  },
+                  {
+                    "Value": "distributionHistoryAbroad",
+                    "Text": "Distribution history in other countries"
+                  },
+                  {
+                    "Value": "noDocuments",
+                    "Text": "No documents"
+                  },
+                  {
+                    "Value": "filename",
+                    "Text": "Filename"
+                  },
+                  {
+                    "Value": "fileDescription",
+                    "Text": "Description"
+                  },
+                  {
+                    "Value": "historyFrom",
+                    "Text": "From"
+                  },
+                  {
+                    "Value": "historyTo",
+                    "Text": "Including"
+                  },
+                  {
+                    "Value": "historyLocation",
+                    "Text": "Locality"
+                  },
+                  {
+                    "Value": "historyCount",
+                    "Text": "Population size"
+                  },
+                  {
+                    "Value": "historyAreaOccupancy",
+                    "Text": "Area of occupancy"
+                  },
+                  {
+                    "Value": "historyExtentOfOccurrence",
+                    "Text": "Extent of occurrence"
+                  },
+                  {
+                    "Value": "historyComment",
+                    "Text": "Comments"
+                  },
+                  {
+                    "Value": "historyCounty",
+                    "Text": "County"
+                  },
+                  {
+                    "Value": "expandShowMap",
+                    "Text": "Show Species Map Service"
+                  },
+                  {
+                    "Value": "expandValue",
+                    "Text": "Value"
+                  },
+                  {
+                    "Value": "expandDarkFigure",
+                    "Text": "Dark figures"
+                  },
+                  {
+                    "Value": "expandOccurrence",
+                    "Text": "County-wise occurrences"
+                  },
+                  {
+                    "Value": "expandCopyTo",
+                    "Text": "Copy to current/potential distributione"
+                  },
+                  {
+                    "Value": "currentAndFutureSpreadSituation",
+                    "Text": "Current and potential distribution (in 50 år)"
+                  },
+                  {
+                    "Value": "currentKnown",
+                    "Text": "Known"
+                  },
+                  {
+                    "Value": "currentDarkFigure",
+                    "Text": "Dark figures"
+                  },
+                  {
+                    "Value": "currentTotal",
+                    "Text": "Estimated total figures (known * dark figures)"
+                  },
+                  {
+                    "Value": "currentLow",
+                    "Text": "Low estimate"
+                  },
+                  {
+                    "Value": "currentBest",
+                    "Text": "Best estimate"
+                  },
+                  {
+                    "Value": "currentHigh",
+                    "Text": "High estimate"
+                  },
+                  {
+                    "Value": "currentPopulationCount",
+                    "Text": "Population size"
+                  },
+                  {
+                    "Value": "futureAarea",
+                    "Text": "Area in 50 years"
+                  },
+                  {
+                    "Value": "futureAreaOccupancy",
+                    "Text": "Potential area of occupancy"
+                  },
+                  {
+                    "Value": "currentDistribution",
+                    "Text": "The current known and assumed distribution"
+                  },
+                  {
+                    "Value": "futureDistribution",
+                    "Text": "Potential distribution within 50 year"
+                  },
+                  {
+                    "Value": "describeAsumption",
+                    "Text": "Describe the basis for or/and the assumptions behind the estimates"
+                  },
+                  {
+                    "Value": "currentPropotionMajorChangedNaturetypes",
+                    "Text": "Proportion within highly modified nature"
+                  },
+                  {
+                    "Value": "distributionCounty",
+                    "Text": "county"
+                  },
+                  {
+                    "Value": "distributionNone",
+                    "Text": "none"
+                  },
+                  {
+                    "Value": "distributionKnown",
+                    "Text": "known"
+                  },
+                  {
+                    "Value": "distributionAssumed",
+                    "Text": "assumed"
+                  },
+                  {
+                    "Value": "distributionPotential",
+                    "Text": "potential"
+                  }
+                ],
+                "AppHeader": [
+                  {
+                    "Value": "appName",
+                    "Text": "Alien species 3"
+                  },
+                  {
+                    "Value": "information",
+                    "Text": "Information"
+                  },
+                  {
+                    "Value": "chooseSpecies",
+                    "Text": "Choose species"
+                  },
+                  {
+                    "Value": "assessmentSave",
+                    "Text": "Save"
+                  },
+                  {
+                    "Value": "assessmentSaveOk",
+                    "Text": "Data saved"
+                  },
+                  {
+                    "Value": "assessmentSaveFail",
+                    "Text": "Not saved"
+                  },
+                  {
+                    "Value": "assessmentSaveFailTryAgain",
+                    "Text": "Retry in a minute"
+                  },
+                  {
+                    "Value": "administration",
+                    "Text": "Administration"
+                  },
+                  {
+                    "Value": "logout",
+                    "Text": "Log out"
+                  },
+                  {
+                    "Value": "guidelines",
+                    "Text": "Guidelines 2017"
+                  },
+                  {
+                    "Value": "oldAssessmets",
+                    "Text": "Assessments 2012"
+                  },
+                  {
+                    "Value": "inquiry",
+                    "Text": "Inquiry"
+                  },
+                  {
+                    "Value": "developedBy",
+                    "Text": "Developed by"
+                  },
+                  {
+                    "Value": "nbic",
+                    "Text": "NBIC"
+                  }
+                ],
+                "TaxonInfo": [
+                  {
+                    "Value": "updateTaxonInfo",
+                    "Text": "Change scientific name"
+                  },
+                  {
+                    "Value": "existingTaxonInfo",
+                    "Text": "Existing scientific name"
+                  },
+                  {
+                    "Value": "newTaxonInfo",
+                    "Text": "New scientific name"
+                  },
+                  {
+                    "Value": "searchSpecies",
+                    "Text": "Search species"
+                  },
+                  {
+                    "Value": "confirmChange",
+                    "Text": "Do You really want to updated scientific name for the assessment"
+                  }
+                ],
+                "Login": [
+                  {
+                    "Value": "login",
+                    "Text": "Log in"
+                  },
+                  {
+                    "Value": "loginUserName",
+                    "Text": "User name"
+                  },
+                  {
+                    "Value": "loginPassword",
+                    "Text": "Password"
+                  },
+                  {
+                    "Value": "loginResetPassword",
+                    "Text": "forgot password / create user account..."
+                  }
+                ],
+                "RiskLevelCode": [
+                  {
+                    "Id": null,
+                    "Value": "0",
+                    "Text": "NK",
+                    "Info": null,
+                    "Children": null
+                  },
+                  {
+                    "Id": null,
+                    "Value": "1",
+                    "Text": "LO",
+                    "Info": null,
+                    "Children": null
+                  },
+                  {
+                    "Id": null,
+                    "Value": "2",
+                    "Text": "PH",
+                    "Info": null,
+                    "Children": null
+                  },
+                  {
+                    "Id": null,
+                    "Value": "3",
+                    "Text": "HI",
+                    "Info": null,
+                    "Children": null
+                  },
+                  {
+                    "Id": null,
+                    "Value": "4",
+                    "Text": "SE",
+                    "Info": null,
+                    "Children": null
+                  }
+                ],
+                "RiskLevelText": [
+                  {
+                    "Id": null,
+                    "Value": "0",
+                    "Text": "Ingen kjent risiko",
+                    "Info": null,
+                    "Children": null
+                  },
+                  {
+                    "Id": null,
+                    "Value": "1",
+                    "Text": "Lav risiko",
+                    "Info": null,
+                    "Children": null
+                  },
+                  {
+                    "Id": null,
+                    "Value": "2",
+                    "Text": "Potensielt høy risiko",
+                    "Info": null,
+                    "Children": null
+                  },
+                  {
+                    "Id": null,
+                    "Value": "3",
+                    "Text": "Høy risiko",
+                    "Info": null,
+                    "Children": null
+                  },
+                  {
+                    "Id": null,
+                    "Value": "4",
+                    "Text": "Svært høy risiko",
+                    "Info": null,
+                    "Children": null
+                  }
+                ]
+
+              }
+            }
+        ]
+    }
+}
