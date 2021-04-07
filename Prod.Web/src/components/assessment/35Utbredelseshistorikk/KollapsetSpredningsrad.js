@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {observer} from 'mobx-react'
 import {toJS} from "mobx"
 import Spredningskart from './Spredningskart'
@@ -152,5 +153,5 @@ export default class KollapsetSpredningsrad extends React.Component {
     }
 }
 KollapsetSpredningsrad.contextTypes = {
-    readonly: React.PropTypes.bool
+    readonly: PropTypes.bool
 }

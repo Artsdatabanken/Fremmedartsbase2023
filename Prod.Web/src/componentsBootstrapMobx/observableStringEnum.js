@@ -98,7 +98,7 @@ const ObservableStringEnum = (props) => <Observer>{() => {
 
 ObservableStringEnum.propTypes = {
     observableValue: PropTypes.array.isRequired, // [obj, propname]
-    //codes: React.PropTypes.array.isRequired,
+    //codes: PropTypes.array.isRequired,
 }
 
 export default ObservableStringEnum

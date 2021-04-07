@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+
 
 const ProgressBar = ({
         prefixCls, strokeWidth, trailWidth, strokeColor,
@@ -52,14 +54,14 @@ ProgressBar.defaultProps = {
 }
 
 ProgressBar.propTypes = {
-    prefixCls: React.PropTypes.string,
-    strokeWidth: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.string]),
-    strokeColor: React.PropTypes.string,
-    trailWidth: React.PropTypes.oneOfType([React.PropTypes.number, React.PropTypes.string]),
-    trailColor: React.PropTypes.string,
-    strokeLinecap: React.PropTypes.oneOf(['round', 'square']),
-    style: React.PropTypes.object,
-    className: React.PropTypes.string,
+    prefixCls: PropTypes.string,
+    strokeWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    strokeColor: PropTypes.string,
+    trailWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    trailColor: PropTypes.string,
+    strokeLinecap: PropTypes.oneOf(['round', 'square']),
+    style: PropTypes.object,
+    className: PropTypes.string,
 }
 
 export default ProgressBar

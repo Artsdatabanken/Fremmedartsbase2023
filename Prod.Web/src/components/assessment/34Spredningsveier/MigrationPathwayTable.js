@@ -1,5 +1,6 @@
 import config from '../../../config';
 import React from 'react';
+import PropTypes from 'prop-types'
 import {observer} from 'mobx-react';
 import {action, extendObservable, observable} from 'mobx';
 import * as Xcomp from '../observableComponents';
@@ -53,7 +54,7 @@ export default class MigrationPathwayTable extends React.Component {
 }
 
 MigrationPathwayTable.contextTypes = {
-    readonly: React.PropTypes.bool
+    readonly: PropTypes.bool
 }
 
 

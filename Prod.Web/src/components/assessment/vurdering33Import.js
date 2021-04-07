@@ -1,5 +1,6 @@
 import config from '../../config';
 import React from 'react';
+import PropTypes from 'prop-types'
 import {observer} from 'mobx-react';
 import {action, autorun, computed, extendObservable, observable, toJS} from 'mobx';
 import * as Xcomp from './observableComponents';
@@ -62,6 +63,6 @@ export default class Vurdering33Import extends React.Component {
 
 
 Vurdering33Import.propTypes = {
-	viewModel: React.PropTypes.object.isRequired,
-	vurdering: React.PropTypes.object.isRequired
+	viewModel: PropTypes.object.isRequired,
+	vurdering: PropTypes.object.isRequired
 }

@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {observer} from 'mobx-react'
 import {Button} from 'react-bootstrap'
 import HistorikkTabell from './Historikktabell'
@@ -44,5 +45,5 @@ export default class UtbredelseshistorikkInnenlands extends React.Component {
     }
 }
 UtbredelseshistorikkInnenlands.contextTypes = {
-    readonly: React.PropTypes.bool
+    readonly: PropTypes.bool
 }

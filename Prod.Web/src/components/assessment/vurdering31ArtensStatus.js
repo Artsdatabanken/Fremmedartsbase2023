@@ -1,5 +1,6 @@
 ﻿import React from 'react';
 import {observer} from 'mobx-react';
+import PropTypes from 'prop-types';
 import config from '../../config';
 // import RadioGroup from './radioGroup'
 import * as Xcomp from './observableComponents';
@@ -231,6 +232,6 @@ export default class vurdering31ArtensStatus extends React.Component {
 }
 
 vurdering31ArtensStatus.propTypes = {
-    viewModel: React.PropTypes.object.isRequired,
-    vurdering: React.PropTypes.object.isRequired
+    viewModel: PropTypes.object.isRequired,
+    vurdering: PropTypes.object.isRequired
 }

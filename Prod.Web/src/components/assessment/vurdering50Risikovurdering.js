@@ -1,4 +1,5 @@
 ﻿import React from 'react';
+import PropTypes from 'prop-types'
 import {observer} from 'mobx-react';
 import {computed, observable, autorun} from 'mobx';
 import Tabs from '../tabs';
@@ -52,6 +53,6 @@ export default class Vurdering extends React.Component {
 }
 
 Vurdering.propTypes = {
-	viewModel: React.PropTypes.object.isRequired,
-	fabModel: React.PropTypes.object.isRequired
+	viewModel: PropTypes.object.isRequired,
+	fabModel: PropTypes.object.isRequired
 }

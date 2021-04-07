@@ -1,5 +1,6 @@
 // import config from '../../../config';
 import React from 'react';
+import PropTypes from 'prop-types'
 import {observer} from 'mobx-react';
 import {action, computed, extendObservable, observable} from 'mobx';
 // import * as Xcomp from '../observableComponents';
@@ -52,5 +53,5 @@ export default class NewMigrationPathwayGroup extends React.Component {
 }
 
 NewMigrationPathwayGroup.contextTypes = {
-    readonly: React.PropTypes.bool
+    readonly: PropTypes.bool
 }

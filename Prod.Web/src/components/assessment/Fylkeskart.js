@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import boundarySE from './boundary/sweden'
 import boundaryNO from './boundary/norway'
 
@@ -86,13 +87,13 @@ const Region = ({
 }
 
 Fylkeskart.propTypes = {
-    width: React.PropTypes.string,
-    height: React.PropTypes.string,
-    styles: React.PropTypes.object,
-    fylker: React.PropTypes.object
+    width: PropTypes.string,
+    height: PropTypes.string,
+    styles: PropTypes.object,
+    fylker: PropTypes.object
 }
 
 Fylkeskart.contextTypes = {
-    readonly: React.PropTypes.bool,
-    language: React.PropTypes.string
+    readonly: PropTypes.bool,
+    language: PropTypes.string
 }

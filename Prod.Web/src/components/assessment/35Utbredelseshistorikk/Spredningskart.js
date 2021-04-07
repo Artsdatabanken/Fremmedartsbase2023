@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Fylkeskart from '../Fylkeskart'
 import {observer} from 'mobx-react'
 
@@ -139,8 +140,8 @@ export default class Spredningskart extends React.Component {
 }
 
 Spredningskart.contextTypes = {
-    language: React.PropTypes.string,
-    readonly: React.PropTypes.bool
+    language: PropTypes.string,
+    readonly: PropTypes.bool
 }
 
 const Legend = ({states, styles})=>

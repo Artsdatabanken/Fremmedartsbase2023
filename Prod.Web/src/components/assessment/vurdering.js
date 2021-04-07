@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {observer} from 'mobx-react'
 import {observable} from 'mobx'
 import Tabs from '../tabs'
@@ -97,12 +98,12 @@ export default class Vurdering extends React.Component {
     }
 
     static propTypes = {
-        viewModel: React.PropTypes.object.isRequired,
-        fabModel: React.PropTypes.object.isRequired
+        viewModel: PropTypes.object.isRequired,
+        fabModel: PropTypes.object.isRequired
     }
 
     static childContextTypes = {
-        readonly: React.PropTypes.bool,
-        language: React.PropTypes.string
+        readonly: PropTypes.bool,
+        language: PropTypes.string
     }
 }

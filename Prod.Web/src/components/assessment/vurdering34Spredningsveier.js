@@ -1,6 +1,7 @@
 // import config from '../../config';
 import config from '../../config';
 import React from 'react';
+import PropTypes from 'prop-types'
 import {observer} from 'mobx-react';
 import {action, autorun, computed, extendObservable, observable, toJS} from 'mobx';
 import NewMigrationPathwaySelector from './34Spredningsveier/NewMigrationPathwaySelector'
@@ -65,6 +66,6 @@ export default class Vurdering34Spredningsveier extends React.Component {
 
 
 Vurdering34Spredningsveier.propTypes = {
-	viewModel: React.PropTypes.object.isRequired,
-	vurdering: React.PropTypes.object.isRequired
+	viewModel: PropTypes.object.isRequired,
+	vurdering: PropTypes.object.isRequired
 }

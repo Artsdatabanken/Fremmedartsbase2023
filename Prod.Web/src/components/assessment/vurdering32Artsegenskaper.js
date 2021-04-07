@@ -1,5 +1,6 @@
 ﻿import React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types'
 import {observer} from 'mobx-react';
 import {observable, autorun} from 'mobx';
 // import RadioGroup from './radioGroup'
@@ -201,6 +202,6 @@ export default class Vurdering32Artsegenskaper extends React.Component {
 
 
 Vurdering32Artsegenskaper.propTypes = {
-	viewModel: React.PropTypes.object.isRequired,
-	vurdering: React.PropTypes.object.isRequired
+	viewModel: PropTypes.object.isRequired,
+	vurdering: PropTypes.object.isRequired
 }

@@ -1,4 +1,5 @@
 ﻿import React from 'react';
+import PropTypes from 'prop-types'
 import {observer} from 'mobx-react';
 import {autorun , observable} from 'mobx';
 
@@ -91,11 +92,11 @@ export default class Criterion extends React.Component {
 }
 
 Criterion.propTypes = {
-    criterion: React.PropTypes.object,
+    criterion: PropTypes.object,
 }
 
 
 Criterion.contextTypes = {
-    readonly: React.PropTypes.bool
+    readonly: PropTypes.bool
 }
 

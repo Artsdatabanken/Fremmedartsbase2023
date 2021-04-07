@@ -1,5 +1,6 @@
 ﻿import config from '../../config';
 import React from 'react';
+import PropTypes from 'prop-types'
 import {observer} from 'mobx-react';
 import {observable, autorun} from 'mobx';
 import * as Xcomp from './observableComponents';
@@ -25,6 +26,6 @@ export default class Vurdering54Klimaeffekter extends React.Component {
 }
 
 Vurdering54Klimaeffekter.propTypes = {
-    viewModel: React.PropTypes.object.isRequired,
-    riskAssessment: React.PropTypes.object.isRequired
+    viewModel: PropTypes.object.isRequired,
+    riskAssessment: PropTypes.object.isRequired
 }

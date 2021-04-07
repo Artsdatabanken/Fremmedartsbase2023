@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {observer} from 'mobx-react'
 import {toJS, observable} from 'mobx'
 import Kart from './kart'
@@ -190,5 +191,5 @@ export default class Artskart extends React.Component {
     }
 }
 Artskart.contextTypes = {
-    readonly: React.PropTypes.bool
+    readonly: PropTypes.bool
 }

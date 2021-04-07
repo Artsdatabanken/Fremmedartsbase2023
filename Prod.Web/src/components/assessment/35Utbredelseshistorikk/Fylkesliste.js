@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {observer} from 'mobx-react'
 import * as Xcomp from '../observableComponents'
 
@@ -43,13 +44,11 @@ export default class Fylkesliste extends React.Component {
 }
 
 Fylkesliste.propTypes = {
-    columns: React
-        .PropTypes
-        .arrayOf(React.PropTypes.shape({title: React.PropTypes.string, values: React.PropTypes.object.isRequired}))
+    columns: PropTypes
+        .arrayOf(PropTypes.shape({title: PropTypes.string, values: PropTypes.object.isRequired}))
         .isRequired,
-    rows: React
-        .PropTypes
-        .arrayOf(React.PropTypes.shape({key: React.PropTypes.string, title: React.PropTypes.string}))
+    rows: PropTypes
+        .arrayOf(PropTypes.shape({key: PropTypes.string, title: PropTypes.string}))
         .isRequired
 }
 

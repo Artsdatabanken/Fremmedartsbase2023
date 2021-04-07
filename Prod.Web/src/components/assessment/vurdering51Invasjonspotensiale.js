@@ -1,4 +1,5 @@
 ﻿import React from 'react';
+import PropTypes from 'prop-types'
 import {observer} from 'mobx-react';
 import * as Xcomp from './observableComponents';
 import Criterion from './criterion'
@@ -40,7 +41,7 @@ class SelectableRadio extends React.Component {
 }
 
 SelectableRadio.contextTypes = {
-    readonly: React.PropTypes.bool
+    readonly: PropTypes.bool
 }
 
 // return <Xcomp.Radio         label={this.props.label + (obj[val] ? "  (" +
@@ -551,6 +552,6 @@ export default class Vurdering51Invasjonspotensiale extends React.Component {
 
 
 Vurdering51Invasjonspotensiale.propTypes = {
-    viewModel: React.PropTypes.object.isRequired,
-    riskAssessment: React.PropTypes.object.isRequired
+    viewModel: PropTypes.object.isRequired,
+    riskAssessment: PropTypes.object.isRequired
 }

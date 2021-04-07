@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {observer} from 'mobx-react'
 // import {upload} from '../../stores/apiService'
 
@@ -58,5 +59,5 @@ export default class Opplasting extends React.Component {
 }
 
 Opplasting.contextTypes = {
-    readonly: React.PropTypes.bool
+    readonly: PropTypes.bool
 }

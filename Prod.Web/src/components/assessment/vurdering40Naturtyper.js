@@ -1,5 +1,6 @@
 import config from '../../config';
 import React from 'react';
+import PropTypes from 'prop-types'
 import {observer} from 'mobx-react';
 import {autorun, extendObservable, observable} from 'mobx';
 import * as Xcomp from './observableComponents';
@@ -174,7 +175,7 @@ export default class Vurdering40Naturtyper extends React.Component {
 }
 
 Vurdering40Naturtyper.propTypes = {
-    fabModel: React.PropTypes.object.isRequired,
-    viewModel: React.PropTypes.object.isRequired,
-    vurdering: React.PropTypes.object.isRequired
+    fabModel: PropTypes.object.isRequired,
+    viewModel: PropTypes.object.isRequired,
+    vurdering: PropTypes.object.isRequired
 }

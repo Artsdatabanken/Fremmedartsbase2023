@@ -1,4 +1,5 @@
 ﻿import React from 'react';
+import PropTypes from 'prop-types'
 import {observer} from 'mobx-react';
 import {action, autorun, autorunAsync, extendObservable, observable, toJS} from 'mobx';
 
@@ -287,8 +288,8 @@ export default class Vurdering52Okologiskeffekt extends React.Component {
                 }
 
                 Vurdering52Okologiskeffekt.propTypes = {
-                    viewModel: React.PropTypes.object.isRequired,
-                    riskAssessment: React.PropTypes.object.isRequired
+                    viewModel: PropTypes.object.isRequired,
+                    riskAssessment: PropTypes.object.isRequired
                 }
 
 
