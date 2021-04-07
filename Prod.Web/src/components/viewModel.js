@@ -134,8 +134,13 @@ class ViewModel {
         this.initializeServices()
         // ---------------
 
-        const labels = {} // require('../../public/Labels.json')    //todo: get from server
-        const clabels = codes2labels(labels.labels[0].Children)
+        const labels = require('../FA3CodesNB.json') 
+        console.log("labels:" + typeof(labels))
+        // const clabels =  codes2labels(labels.labels[0].Children)
+        const clabels =  codes2labels(labels.Children.labels[0].Children)
+        console.log("clabels:", clabels)
+
+
         this.theUserContext = createContext(this.userContext)   
 
 		let savetimer = null
