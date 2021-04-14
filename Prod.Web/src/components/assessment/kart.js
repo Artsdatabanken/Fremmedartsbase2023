@@ -2,7 +2,7 @@ import {observer} from 'mobx-react';
 import React from 'react'
 import * as RL from 'react-leaflet'
 import * as L from 'leaflet'
-import {EditControl} from "react-leaflet-draw"
+// import {EditControl} from "react-leaflet-draw"
 import '../../../node_modules/leaflet/dist/leaflet.css'
 import '../../../node_modules/leaflet-draw/dist/leaflet.draw.css'
 import config from '../../config'
@@ -58,9 +58,9 @@ export default class Kart extends React.Component {
                             }}
                 />
                 <RL.FeatureGroup>
-                    <EditControl
+                    {/* <EditControl
                         onCreated={(e) => this.handlePolygonDrawn(e)}
-                        draw={selectionDrawingOptions} />
+                        draw={selectionDrawingOptions} /> */}
                 </RL.FeatureGroup>
             </RL.Map>
         )
