@@ -9,9 +9,9 @@ import Filliste from './35Utbredelseshistorikk/Filliste'
 
 @observer
 class SelectableRadio extends React.Component {
-    shouldComponentUpdate() {
-        return true
-    }
+    // shouldComponentUpdate() {
+    //     return true
+    // }
     render() {
         const [obj,
             prop] = this.props.observableValue
