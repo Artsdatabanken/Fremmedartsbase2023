@@ -1,0 +1,1120 @@
+{
+    "RegionalPresenceKnown": "Øs,OsA,He,Op,Bu,Ve,Te,Aa,Va,Ro,Ho,Sf,Mr,St,Nt",
+    "RegionalPresenceAssumed": "",
+    "RegionalPresencePotential": "Øs,OsA,He,Op,Bu,Ve,Te,Aa,Va,Ro,Ho,Sf,Mr,St,Nt",
+    "VurderingId2012": 2007,
+    "RiskLevel2012": 5,
+    "SpreadRiskLevel2012": 4,
+    "EcologicalRiskLevel2012": 3,
+    "EvaluationContext": "N",
+    "ExpertGroupId": "ExpertGroups/Karplanter/N",
+    "TaxonId": 137217,
+    "ExpertGroup": "Karplanter",
+    "Citation": "Elven R, Hegre H, Solstad H, Pedersen O, Pedersen PA, Åsen PA og Vandvik V (2018). Salix ×fragilis, vurdering av økologisk risiko. Fremmedartslista 2018. Artsdatabanken. Hentet (dato) fra https://artsdatabanken.no/Fab2018/N/2007",
+    "AlienSpeciesCategory": "AlienSpecie",
+    "VurderingsStatus": "finnished",
+    "SistOppdatert": "2018-04-12T10:09:43.2825978",
+    "SistOppdatertAv": "Reidar Elven",
+    "IsEvaluated": true,
+    "EvaluatedScientificNameId": 129589,
+    "EvaluatedScientificName": "Salix ×fragilis",
+    "EvaluatedScientificNameAuthor": null,
+    "EvaluatedVernacularName": "grønnpil",
+    "Datasett": {
+        "Files": [
+            {
+                "Filename": "Salix x fragilis.xlsx",
+                "Size": 194534,
+                "LastModified": "0001-01-01T00:00:00.0000000",
+                "Description": null,
+                "Url": "FA3_N_2007/SpreadHistory/Salix x fragilis.xlsx"
+            },
+            {
+                "Filename": "Salix x fragilis.csv",
+                "Size": 49461,
+                "LastModified": "0001-01-01T00:00:00.0000000",
+                "Description": "Analyse med mørketallsintervall 3-10. Analyse uten mørketall gir noe høgere estimater.",
+                "Url": "FA3_N_2007/SpreadYearlyIncrease/Salix x fragilis.csv"
+            }
+        ]
+    },
+    "AlienSpeciesCategory2012": "AlienSpecie",
+    "DoorKnockerDescription": null,
+    "NotReproductiveDescription2012": null,
+    "NotReproductiveFutureDescription2012": null,
+    "AssesmentNotApplicableDescription": null,
+    "AlienSpecieUncertainIfEstablishedBefore1800": false,
+    "AlienSpecieUncertainAntropochor": false,
+    "AlienSpecieUncertainDescription": null,
+    "DoorKnockerCategory": null,
+    "RegionallyAlienCategory": "doRiskAssessment",
+    "NotApplicableCategory": "notAlienSpecie",
+    "ObservedAndEstablishedStatusInCountry": {
+        "Indoor": {
+            "ObservedInCountry": {
+                "Place": null,
+                "Time": null
+            },
+            "FertileSpecimenObserved": {
+                "Place": null,
+                "Time": null
+            },
+            "Established": {
+                "Place": null,
+                "Time": null
+            },
+            "Population": {
+                "Place": null,
+                "Time": null
+            },
+            "SpecimenCount": null
+        },
+        "ProductionArea": {
+            "ObservedInCountry": {
+                "Place": null,
+                "Time": null
+            },
+            "FertileSpecimenObserved": {
+                "Place": null,
+                "Time": null
+            },
+            "Established": {
+                "Place": null,
+                "Time": null
+            },
+            "Population": {
+                "Place": null,
+                "Time": null
+            },
+            "SpecimenCount": null
+        },
+        "NorwegianNature": {
+            "ObservedInCountry": {
+                "Place": null,
+                "Time": null
+            },
+            "FertileSpecimenObserved": {
+                "Place": null,
+                "Time": null
+            },
+            "Established": {
+                "Place": null,
+                "Time": null
+            },
+            "Population": {
+                "Place": "Bu Hole: Storøya",
+                "Time": "1834"
+            },
+            "SpecimenCount": null
+        }
+    },
+    "Limnic": false,
+    "Terrestrial": true,
+    "Marine": false,
+    "BrackishWater": false,
+    "FirstDomesticObservation": "1834",
+    "FirstDomesticObservationLocation": "Bu Hole: Storøya",
+    "FirstDomesticEstablishmentObserved": "1834-1840",
+    "FirstDomesticEstablishmentObservedLocation": "flere steder",
+    "ArrivedCountryFrom": [
+        "unknown"
+    ],
+    "ArrivedCountryFromDetails": "Innført hageplante, uvisst hvorfra.",
+    "NaturalOrigins": [
+        {
+            "ClimateZone": "polar;",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "temperate;boreal",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "temperate;nemoral",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "temperate;dry",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;unspecified",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;mediterranean",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;humid",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;dry",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;caperegion",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;highlands",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "tropic;",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "unknown;",
+            "Europe": true,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        }
+    ],
+    "NaturalOriginUnknownDocumentation": "Hybridart mellom to europeiske foreldrearter: kvitpil <i>Salix alba</i>&nbsp;og skjørpil <i>S. euxina</i>.",
+    "CurrentInternationalExistenceAreas": [
+        {
+            "ClimateZone": "polar;",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "temperate;boreal",
+            "Europe": true,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "temperate;nemoral",
+            "Europe": true,
+            "Asia": true,
+            "Africa": false,
+            "Oceania": true,
+            "NorthAndCentralAmerica": true,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "temperate;dry",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;unspecified",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;mediterranean",
+            "Europe": true,
+            "Asia": true,
+            "Africa": false,
+            "Oceania": true,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;humid",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;dry",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;caperegion",
+            "Europe": false,
+            "Asia": false,
+            "Africa": true,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;highlands",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "tropic;",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "unknown;",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        }
+    ],
+    "CurrentInternationalExistenceAreasUnknownDocumentation": null,
+    "NaturalOriginMarine": [],
+    "NaturalOriginMarineDetails": null,
+    "CurrentInternationalExistenceMarineAreas": [],
+    "CurrentInternationalExistenceMarineAreasDetails": null,
+    "SurvivalBelow5c": false,
+    "IntroductionCourse": [
+        "BRomtEllerForvil"
+    ],
+    "DomesticRiskEvaluationExists": true,
+    "DomesticRiskEvaluationExists2007": false,
+    "ForeignRiskEvaluationExists": null,
+    "ForeignRiskEvaluationComment": null,
+    "Regeneration": null,
+    "RegenerationYears": null,
+    "Reproduction": null,
+    "ReproductionAsexual": true,
+    "ReproductionGenerationTime": 20,
+    "ReproductionSexual": false,
+    "SimilarDemographicComparison": null,
+    "HealthEffects": "Ingen kjent effekt",
+    "EconomicEffects": "Ingen kjent effekt",
+    "EcosystemServiceEffectsBasicLifeProcesses": [],
+    "EcosystemServiceEffectsProvisioningServices": [],
+    "EcosystemServiceEffectsRegulatingServices": [],
+    "EcosystemServiceEffectsHumanSpiritualServices": [],
+    "PositiveEcologicalEffects": "Ingen kjent effekt",
+    "EffectsOnPopulationOfOrigin": "Ingen kjent effekt",
+    "ImportPathways": [
+        {
+            "CodeItem": "importHorticulture",
+            "IntroductionSpread": null,
+            "InfluenceFactor": "numerousYearly",
+            "Magnitude": "unknown",
+            "TimeOfIncident": "ongoing",
+            "ElaborateInformation": "",
+            "Category": null
+        },
+        {
+            "CodeItem": "privateImportation",
+            "IntroductionSpread": null,
+            "InfluenceFactor": "severalPr10years",
+            "Magnitude": "unknown",
+            "TimeOfIncident": "ceased",
+            "ElaborateInformation": "",
+            "Category": null
+        }
+    ],
+    "ImportedToIndoorOrProductionArea": true,
+    "AssesmentVectors": [
+        {
+            "CodeItem": "horticulture",
+            "IntroductionSpread": "introduction",
+            "InfluenceFactor": "numerousYearly",
+            "Magnitude": "unknown",
+            "TimeOfIncident": "ongoing",
+            "ElaborateInformation": "Med avbrukne kvister som rotslår.&nbsp; &nbsp;&nbsp;",
+            "Category": null
+        },
+        {
+            "CodeItem": "ornamentalPurposeOther",
+            "IntroductionSpread": "introduction",
+            "InfluenceFactor": "numerousYearly",
+            "Magnitude": "unknown",
+            "TimeOfIncident": "ongoing",
+            "ElaborateInformation": "Med avbrukne kvister som rotslår.&nbsp; &nbsp;&nbsp;",
+            "Category": null
+        },
+        {
+            "CodeItem": "naturalDispersalAcrossBorders",
+            "IntroductionSpread": "spread",
+            "InfluenceFactor": "numerousYearly",
+            "Magnitude": "unknown",
+            "TimeOfIncident": "ongoing",
+            "ElaborateInformation": "Med avbrukne kvister som rotslår.",
+            "Category": null
+        },
+        {
+            "CodeItem": "otherEscape",
+            "IntroductionSpread": "introduction",
+            "InfluenceFactor": "numerousYearly",
+            "Magnitude": "unknown",
+            "TimeOfIncident": "ongoing",
+            "ElaborateInformation": "Utkast fra hager.",
+            "Category": null
+        }
+    ],
+    "Vector": null,
+    "SpreadHistory": [
+        {
+            "Id": "902d55ed-158b-4644-28d4-d6c7a4d4225d",
+            "Location": "Bu Hole fra 1834",
+            "Comment": "",
+            "Regions": "Bu",
+            "RegionsAssumed": "",
+            "ObservationYear": 1840,
+            "ObservationFromYear": 1821,
+            "ObservationMonth": 0,
+            "ObservationFromMonth": 0,
+            "SpeciesCount": 0,
+            "ExistenceArea": 4,
+            "ExistenceAreaCount": 0,
+            "SpreadArea": 0,
+            "SpeciesCountDarkFigure": 1,
+            "ExistenceAreaDarkFigure": 1,
+            "ExistenceAreaCountDarkFigure": 1,
+            "SpreadAreaDarkFigure": 1,
+            "SpeciesCountCalculated": null,
+            "ExistenceAreaCalculated": 4,
+            "ExistenceAreaCountCalculated": 4,
+            "SpreadAreaCalculated": null,
+            "SelectionGeometry": ""
+        },
+        {
+            "Id": "37ac2f48-d977-4f6a-c1f7-939228c1a843",
+            "Location": "",
+            "Comment": "",
+            "Regions": "OsA,Op,Bu",
+            "RegionsAssumed": "",
+            "ObservationYear": 1860,
+            "ObservationFromYear": 1841,
+            "ObservationMonth": 0,
+            "ObservationFromMonth": 0,
+            "SpeciesCount": 0,
+            "ExistenceArea": 60,
+            "ExistenceAreaCount": 0,
+            "SpreadArea": 0,
+            "SpeciesCountDarkFigure": 1,
+            "ExistenceAreaDarkFigure": 1,
+            "ExistenceAreaCountDarkFigure": 1,
+            "SpreadAreaDarkFigure": 1,
+            "SpeciesCountCalculated": null,
+            "ExistenceAreaCalculated": 60,
+            "ExistenceAreaCountCalculated": 60,
+            "SpreadAreaCalculated": null,
+            "SelectionGeometry": ""
+        },
+        {
+            "Id": "82f47df7-375c-4c7d-757b-a1269d5ec485",
+            "Location": "",
+            "Comment": "",
+            "Regions": "Øs,OsA,Te,Va,Ro,Ho,Nt",
+            "RegionsAssumed": "",
+            "ObservationYear": 1880,
+            "ObservationFromYear": 1861,
+            "ObservationMonth": 0,
+            "ObservationFromMonth": 0,
+            "SpeciesCount": 0,
+            "ExistenceArea": 76,
+            "ExistenceAreaCount": 0,
+            "SpreadArea": 0,
+            "SpeciesCountDarkFigure": 1,
+            "ExistenceAreaDarkFigure": 1,
+            "ExistenceAreaCountDarkFigure": 1,
+            "SpreadAreaDarkFigure": 1,
+            "SpeciesCountCalculated": null,
+            "ExistenceAreaCalculated": 76,
+            "ExistenceAreaCountCalculated": 76,
+            "SpreadAreaCalculated": null,
+            "SelectionGeometry": ""
+        },
+        {
+            "Id": "12de5a7a-3451-43d7-3cbd-62d51a8f882d",
+            "Location": "",
+            "Comment": "",
+            "Regions": "Øs,OsA,Ve,Te,Va,St,Nt",
+            "RegionsAssumed": "",
+            "ObservationYear": 1900,
+            "ObservationFromYear": 1881,
+            "ObservationMonth": 0,
+            "ObservationFromMonth": 0,
+            "SpeciesCount": 0,
+            "ExistenceArea": 84,
+            "ExistenceAreaCount": 0,
+            "SpreadArea": 0,
+            "SpeciesCountDarkFigure": 1,
+            "ExistenceAreaDarkFigure": 1,
+            "ExistenceAreaCountDarkFigure": 1,
+            "SpreadAreaDarkFigure": 1,
+            "SpeciesCountCalculated": null,
+            "ExistenceAreaCalculated": 84,
+            "ExistenceAreaCountCalculated": 84,
+            "SpreadAreaCalculated": null,
+            "SelectionGeometry": ""
+        },
+        {
+            "Id": "45902bc3-5994-4715-fc46-7812b6cd8502",
+            "Location": "",
+            "Comment": "",
+            "Regions": "Øs,He,Op,Bu,Ve,Te,Va,Ho,Sf,St",
+            "RegionsAssumed": "",
+            "ObservationYear": 1920,
+            "ObservationFromYear": 1901,
+            "ObservationMonth": 0,
+            "ObservationFromMonth": 0,
+            "SpeciesCount": 0,
+            "ExistenceArea": 196,
+            "ExistenceAreaCount": 0,
+            "SpreadArea": 0,
+            "SpeciesCountDarkFigure": 1,
+            "ExistenceAreaDarkFigure": 1,
+            "ExistenceAreaCountDarkFigure": 1,
+            "SpreadAreaDarkFigure": 1,
+            "SpeciesCountCalculated": null,
+            "ExistenceAreaCalculated": 196,
+            "ExistenceAreaCountCalculated": 196,
+            "SpreadAreaCalculated": null,
+            "SelectionGeometry": ""
+        },
+        {
+            "Id": "ee250628-6354-447f-4ceb-1e486e402357",
+            "Location": "",
+            "Comment": "",
+            "Regions": "Øs,OsA,Op,Bu,Ve,Te,Aa,Ro,Ho,Mr",
+            "RegionsAssumed": "",
+            "ObservationYear": 1940,
+            "ObservationFromYear": 1921,
+            "ObservationMonth": 0,
+            "ObservationFromMonth": 0,
+            "SpeciesCount": 0,
+            "ExistenceArea": 192,
+            "ExistenceAreaCount": 0,
+            "SpreadArea": 0,
+            "SpeciesCountDarkFigure": 1,
+            "ExistenceAreaDarkFigure": 1,
+            "ExistenceAreaCountDarkFigure": 1,
+            "SpreadAreaDarkFigure": 1,
+            "SpeciesCountCalculated": null,
+            "ExistenceAreaCalculated": 192,
+            "ExistenceAreaCountCalculated": 192,
+            "SpreadAreaCalculated": null,
+            "SelectionGeometry": ""
+        },
+        {
+            "Id": "c53eae37-89ea-4511-8226-a7b684d6c770",
+            "Location": "",
+            "Comment": "",
+            "Regions": "Øs,OsA,He,Ve,Te,Aa,Va,Ho,Nt",
+            "RegionsAssumed": "",
+            "ObservationYear": 1960,
+            "ObservationFromYear": 1941,
+            "ObservationMonth": 0,
+            "ObservationFromMonth": 0,
+            "SpeciesCount": 0,
+            "ExistenceArea": 144,
+            "ExistenceAreaCount": 0,
+            "SpreadArea": 0,
+            "SpeciesCountDarkFigure": 1,
+            "ExistenceAreaDarkFigure": 1,
+            "ExistenceAreaCountDarkFigure": 1,
+            "SpreadAreaDarkFigure": 1,
+            "SpeciesCountCalculated": null,
+            "ExistenceAreaCalculated": 144,
+            "ExistenceAreaCountCalculated": 144,
+            "SpreadAreaCalculated": null,
+            "SelectionGeometry": ""
+        },
+        {
+            "Id": "23b84115-329f-4e28-d69d-7615de1a2187",
+            "Location": "",
+            "Comment": "",
+            "Regions": "Øs,OsA,He,Op,Bu,Te,Aa,Va,Ro,Ho,Sf,Mr",
+            "RegionsAssumed": "",
+            "ObservationYear": 1980,
+            "ObservationFromYear": 1961,
+            "ObservationMonth": 0,
+            "ObservationFromMonth": 0,
+            "SpeciesCount": 0,
+            "ExistenceArea": 124,
+            "ExistenceAreaCount": 0,
+            "SpreadArea": 0,
+            "SpeciesCountDarkFigure": 1,
+            "ExistenceAreaDarkFigure": 1,
+            "ExistenceAreaCountDarkFigure": 1,
+            "SpreadAreaDarkFigure": 1,
+            "SpeciesCountCalculated": null,
+            "ExistenceAreaCalculated": 124,
+            "ExistenceAreaCountCalculated": 124,
+            "SpreadAreaCalculated": null,
+            "SelectionGeometry": ""
+        },
+        {
+            "Id": "64143139-ea89-474e-2ac2-c3dcd08ab0a0",
+            "Location": "",
+            "Comment": "",
+            "Regions": "Øs,OsA,He,Op,Bu,Ve,Te,Aa,Va,Ro,Ho,Sf,Mr,Nt",
+            "RegionsAssumed": "",
+            "ObservationYear": 2000,
+            "ObservationFromYear": 1981,
+            "ObservationMonth": 0,
+            "ObservationFromMonth": 0,
+            "SpeciesCount": 0,
+            "ExistenceArea": 600,
+            "ExistenceAreaCount": 0,
+            "SpreadArea": 0,
+            "SpeciesCountDarkFigure": 1,
+            "ExistenceAreaDarkFigure": 1,
+            "ExistenceAreaCountDarkFigure": 1,
+            "SpreadAreaDarkFigure": 1,
+            "SpeciesCountCalculated": null,
+            "ExistenceAreaCalculated": 600,
+            "ExistenceAreaCountCalculated": 600,
+            "SpreadAreaCalculated": null,
+            "SelectionGeometry": ""
+        },
+        {
+            "Id": "64cc43e9-6f03-47fb-f66a-fa2a406258c6",
+            "Location": "",
+            "Comment": "",
+            "Regions": "Øs,OsA,He,Op,Bu,Ve,Te,Aa,Va,Ro,Ho,Sf,Mr,St,Nt",
+            "RegionsAssumed": "",
+            "ObservationYear": 2016,
+            "ObservationFromYear": 2001,
+            "ObservationMonth": 0,
+            "ObservationFromMonth": 0,
+            "SpeciesCount": 0,
+            "ExistenceArea": 496,
+            "ExistenceAreaCount": 0,
+            "SpreadArea": 0,
+            "SpeciesCountDarkFigure": 1,
+            "ExistenceAreaDarkFigure": 1,
+            "ExistenceAreaCountDarkFigure": 1,
+            "SpreadAreaDarkFigure": 1,
+            "SpeciesCountCalculated": null,
+            "ExistenceAreaCalculated": 496,
+            "ExistenceAreaCountCalculated": 496,
+            "SpreadAreaCalculated": null,
+            "SelectionGeometry": ""
+        },
+        {
+            "Id": "c1018fe3-d8e4-4b41-dccc-598a06406f87",
+            "Location": "",
+            "Comment": "Deler av det eldre materialet i Osloherbariet er ikke digitalisert og dermed ikke med i dokumentasjonsfil.",
+            "Regions": "Øs,OsA,He,Op,Bu,Ve,Te,Aa,Va,Ro,Ho,Sf,Mr,St,Nt",
+            "RegionsAssumed": "",
+            "ObservationYear": 2016,
+            "ObservationFromYear": 1834,
+            "ObservationMonth": 0,
+            "ObservationFromMonth": 0,
+            "SpeciesCount": 0,
+            "ExistenceArea": 1752,
+            "ExistenceAreaCount": 0,
+            "SpreadArea": 196000,
+            "SpeciesCountDarkFigure": 1,
+            "ExistenceAreaDarkFigure": 1,
+            "ExistenceAreaCountDarkFigure": 1,
+            "SpreadAreaDarkFigure": 1,
+            "SpeciesCountCalculated": null,
+            "ExistenceAreaCalculated": 1752,
+            "ExistenceAreaCountCalculated": 1752,
+            "SpreadAreaCalculated": 196000,
+            "SelectionGeometry": ""
+        }
+    ],
+    "SpreadHistoryDomesticDocumentation": null,
+    "SpreadHistoryForeignDocumentation": null,
+    "FutureDistributionChangeExpectedDescription": null,
+    "FutureDistributionCriticalParameters": null,
+    "PotentialAreaDistribution": null,
+    "PotentialAreaDistributionInTheFuture": null,
+    "CurrentExistenceArea": 1752,
+    "CurrentExistenceAreaLowCalculated": 3504,
+    "CurrentExistenceAreaLowMultiplier": "2",
+    "CurrentExistenceAreaCalculated": 5256,
+    "CurrentExistenceAreaMultiplier": "3",
+    "CurrentExistenceAreaHighMultiplier": "5",
+    "CurrentExistenceAreaHighCalculated": 8760,
+    "CurrentIndividualCount": 0,
+    "CurrentIndividualCountLowCalculated": null,
+    "CurrentIndividualCountLowMultiplier": null,
+    "CurrentIndividualCountCalculated": null,
+    "CurrentIndividualCountMultiplier": "1",
+    "CurrentIndividualCountHighMultiplier": null,
+    "CurrentIndividualCountHighCalculated": null,
+    "CurrentSpreadArea": 196000,
+    "CurrentSpreadAreaLowCalculated": 196000,
+    "CurrentSpreadAreaHighCalculated": 196000,
+    "CurrentSpreadAreaCalculated": 196000,
+    "CurrentPresenceComment": "Potensielt utbredelsesområde omfatter områdene nord til og med Trøndelag. Arten begynner å bli vanlig i mange av de områdene der den dyrkes, men vi antar fortsatt en dobling i forekomstareal de neste 50 årene.",
+    "PotentialExistenceAreaLowQuartile": 7000,
+    "PotentialExistenceArea": 10500,
+    "PotentialExistenceAreaHighQuartile": 17000,
+    "PotentialPresenceComment": null,
+    "SpreadHistoryDomesticAreaInStronglyChangedNatureTypes": 30,
+    "ImpactedNatureTypes": [
+        {
+            "NiNCode": "T18",
+            "NiNVariation": [],
+            "DominanceForrest": [],
+            "TimeHorizon": "now",
+            "ColonizedArea": "0–2",
+            "StateChange": [],
+            "AffectedArea": "0"
+        },
+        {
+            "NiNCode": "T21",
+            "NiNVariation": [],
+            "DominanceForrest": [],
+            "TimeHorizon": "now",
+            "ColonizedArea": "0–2",
+            "StateChange": [],
+            "AffectedArea": "0"
+        },
+        {
+            "NiNCode": "T30",
+            "NiNVariation": [],
+            "DominanceForrest": [],
+            "TimeHorizon": "now",
+            "ColonizedArea": "2-5",
+            "StateChange": [
+                "1AG"
+            ],
+            "AffectedArea": "0–2"
+        },
+        {
+            "NiNCode": "T35",
+            "NiNVariation": [],
+            "DominanceForrest": [],
+            "TimeHorizon": "now",
+            "ColonizedArea": "0–2",
+            "StateChange": [],
+            "AffectedArea": "0"
+        },
+        {
+            "NiNCode": "T36",
+            "NiNVariation": [],
+            "DominanceForrest": [],
+            "TimeHorizon": "now",
+            "ColonizedArea": "0–2",
+            "StateChange": [],
+            "AffectedArea": "0"
+        },
+        {
+            "NiNCode": "T40",
+            "NiNVariation": [],
+            "DominanceForrest": [],
+            "TimeHorizon": "now",
+            "ColonizedArea": "0–2",
+            "StateChange": [],
+            "AffectedArea": "0"
+        },
+        {
+            "NiNCode": "T4",
+            "NiNVariation": [],
+            "DominanceForrest": [],
+            "TimeHorizon": "now",
+            "ColonizedArea": "0–2",
+            "StateChange": [],
+            "AffectedArea": "0"
+        },
+        {
+            "NiNCode": "V10",
+            "NiNVariation": [],
+            "DominanceForrest": [],
+            "TimeHorizon": "now",
+            "ColonizedArea": "0–2",
+            "StateChange": [
+                "1AG"
+            ],
+            "AffectedArea": "0–2"
+        },
+        {
+            "NiNCode": "V8",
+            "NiNVariation": [],
+            "DominanceForrest": [],
+            "TimeHorizon": "now",
+            "ColonizedArea": "2-5",
+            "StateChange": [
+                "1AG"
+            ],
+            "AffectedArea": "0–2"
+        }
+    ],
+    "RedlistedNatureTypes": [],
+    "UsesLivingSpeciesAsHabitat": false,
+    "UsesLivingSpeciesAsHabitatScientificName": null,
+    "RiskAssessment": {
+        "RiskLevel": 3,
+        "DecisiveCriteria": "3A,3DH",
+        "RiskLevelCode": "HI",
+        "RiskLevelText": "Høy risiko",
+        "EcoEffectLevel": 2,
+        "EcoEffectUncertaintyLevels": [
+            2
+        ],
+        "InvationPotentialLevel": 2,
+        "InvationPotentialUncertaintyLevels": [
+            2,
+            3
+        ],
+        "Criteria": [
+            {
+                "Id": "InvasionPopulationLifetimeExpectancy",
+                "Value": 3,
+                "Akse": "Invasion",
+                "CriteriaLetter": "A",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    3
+                ]
+            },
+            {
+                "Id": "InvasionExpansionSpeed",
+                "Value": 1,
+                "Akse": "Invasion",
+                "CriteriaLetter": "B",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    1,
+                    2
+                ]
+            },
+            {
+                "Id": "InvasionColonizationOfNaturetypeAfter50Years",
+                "Value": 0,
+                "Akse": "Invasion",
+                "CriteriaLetter": "C",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    0
+                ]
+            },
+            {
+                "Id": "EcologicalEffectInteractionWithThreatenedSpecies",
+                "Value": 2,
+                "Akse": "EcoEffect",
+                "CriteriaLetter": "D",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    2
+                ]
+            },
+            {
+                "Id": "EcologicalEffectInteractionWithDomesticSpecies",
+                "Value": 0,
+                "Akse": "EcoEffect",
+                "CriteriaLetter": "E",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    0
+                ]
+            },
+            {
+                "Id": "EcologicalEffectInfluenceOnThreatenedNatureTypes",
+                "Value": 0,
+                "Akse": "EcoEffect",
+                "CriteriaLetter": "F",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    0
+                ]
+            },
+            {
+                "Id": "EcologicalEffectInfluenceOnCommonNatureTypes",
+                "Value": 0,
+                "Akse": "EcoEffect",
+                "CriteriaLetter": "G",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    0
+                ]
+            },
+            {
+                "Id": "EcologicalEffectTransferOfGeneticMaterial",
+                "Value": 2,
+                "Akse": "EcoEffect",
+                "CriteriaLetter": "H",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    2,
+                    1
+                ]
+            },
+            {
+                "Id": "EcologicalEffectTransferOfDiseasesAndParasites",
+                "Value": 0,
+                "Akse": "EcoEffect",
+                "CriteriaLetter": "I",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    0
+                ]
+            }
+        ],
+        "QuantitativeDataForDomesticSpreadExsists": true,
+        "QuantitativeDataForForeignSpreadExsists": false,
+        "QuantitativeDataComment": null,
+        "EstimatedSpeciesCount": 20000,
+        "EstimatedSpeciesCountMethod": "Estimated",
+        "EstimatedSpeciesCountAssumption": "<p>Gr&#248;nnpil er pr. i dag kjent med ca. 500 forekomster (m&#248;rketall 2) i 16 fylker nord til NT, hver forekomst med anslagsvis 20 individer i snitt. Dette gir et estimat p&#229; 20.000 individer.</p>",
+        "EstimatedSpeciesLongevityMoreThan1000Years": true,
+        "EstimatedSpeciesLongevity": null,
+        "EstimatedSpeciesLongevityMethod": "<p>PVA og kvalifisert anslag.</p>",
+        "ChosenSpreadMedanLifespan": "RedListCategoryLevel",
+        "ActiveSpreadPVAAnalysisSpeciesLongevity": false,
+        "SpreadPVAAnalysis": "",
+        "ActiveSpreadPVAAnalysisEstimatedSpeciesLongevity": false,
+        "SpreadPVAAnalysisEstimatedSpeciesLongevity": ">1000",
+        "SpreadPVAAnalysisEstimatedSpeciesLongevityLowerQuartile": null,
+        "SpreadPVAAnalysisEstimatedSpeciesLongevityUpperQuartile": null,
+        "ActiveRedListCategoryLevel": true,
+        "RedListUsedCriteria": "B2",
+        "RedListDataDescription": "Titusener av individer fordelt på snart 500 kjente forekomster. Anslått forekomstareal (med mørketall) ligger på over 5000. Dette tilsier en trygg populasjon.",
+        "RedListCategory": "LC",
+        "RedListSubCategory": null,
+        "SpreadRscriptSpeciesCount": 0,
+        "SpreadRscriptPopulationGrowth": "0.0",
+        "SpreadRscriptDemographicVariance": null,
+        "SpreadRscriptEnvironmantVariance": null,
+        "SpreadRscriptQuasiExtinctionThreshold": null,
+        "SpreadRscriptSustainabilityK": null,
+        "ActiveSpreadRscriptEstimatedSpeciesLongevity": false,
+        "SpreadRscriptEstimatedSpeciesLongevity": null,
+        "ChosenSpreadYearlyIncrease": "SpreadYearlyIncreaseObservations",
+        "ActiveSpreadYearlyIncreaseObservations": true,
+        "SpreadYearlyIncreaseObservations": "151",
+        "SpreadYearlyIncreaseObservationsLowerQuartile": "142",
+        "SpreadYearlyIncreaseObservationsUpperQuartile": "161",
+        "ActiveSpreadYearlyIncreaseOccurrenceArea": false,
+        "SpreadYearlyIncreaseOccurrenceArea": null,
+        "SpreadYearlyIncreaseOccurrenceAreaLowerQuartile": null,
+        "SpreadYearlyIncreaseOccurrenceAreaUpperQuartile": null,
+        "ActiveSpreadYearlyLiteratureData": false,
+        "SpreadYearlyLiteratureDataExpansionSpeed": null,
+        "SpreadYearlyLiteratureDataUncertainty": null,
+        "SpreadYearlyLiteratureDataNumberOfIntroductionSources": null,
+        "SpreadYearlyLiteratureData": "",
+        "SpreadYearlyLiteratureDataSource": null,
+        "ActiveSpreadYearlyIncreaseCalculatedExpansionSpeed": false,
+        "SpreadYearlyIncreaseEstimate": null,
+        "SpreadYearlyIncreaseEstimateDescription": null,
+        "SpreadYearlyIncreaseCalculatedExpansionSpeed": "",
+        "SpreadYearlyIncrease": 11.05,
+        "SpreadYearlyIncreaseMethod": "<p>P-skript: line&#230;r kurve.</p>",
+        "SpreadManualEstimate": "<p>Arten har anslagsvis 20.000 individer fordelt på minst ca. 500 populasjoner. Ut fra funnfrekvensen ser arten ut til å ha en positiv vekstrate med&nbsp;under 20% økning i antall forekomster pr. tiår de siste&nbsp;50 år, bortsett fra et mektig hopp på 124% mellom 1981 og 2000, på grunn av spesielle undersøkelser. Arten vil derfor ligge langt over grenseverdi for en statistisk trygg populasjon (dvs. &gt;1000 år).</p>",
+        "SpreadManualEstimateSpeciesLongevity": null,
+        "SpreadManualEstimateSpeciesLongevityIsMoreThan1000years": true,
+        "IncreasingDensity": "Moderat",
+        "IncreasingDensityMethod": "<p>Prosentvis beregning. PVAs svakt negative my-verdi er ikke i samsvar med artens dokumenterte &#248;kning over lang tid.</p>",
+        "IncreasingDensityPVAAnalysis": "-0,001",
+        "IncreasingDensityPercentualComputation": "6%; 124%",
+        "IncreasingDensityPercentualComputationPeriod": "1961-1980, 2001-2011; 1981-2000",
+        "IncreasingDensityManualEstimate": "25-50%",
+        "IncreasingDensityManualEstimateDescription": "<p>Vi setter antatt fortetningsrate til moderat. Den ekstreme raten mellom 1981 og 2000 skyldes spesielle undersøkelser, men raten er høgere enn den som beregnes for tiårene før og etter (manglende interesse).</p>",
+        "NaturetypeExpectedColonized": "<p>Flommarkskog, &#229;pen flommark, ferskvass- og havstrender.</p>",
+        "SpeciesSpeciesInteractions": [],
+        "SpeciesNaturetypeInteractions": [
+            {
+                "NiNCode": "T18",
+                "NiNVariation": [],
+                "RedListCategory": "",
+                "KeyStoneSpecie": true,
+                "Effect": "Moderate",
+                "EffectLocalScale": true,
+                "InteractionType": "CompetitionSpace",
+                "LongDistanceEffect": false,
+                "ConfirmedOrAssumed": false,
+                "DomesticOrAbroad": "False"
+            },
+            {
+                "NiNCode": "T30",
+                "NiNVariation": [],
+                "RedListCategory": "",
+                "KeyStoneSpecie": true,
+                "Effect": "Moderate",
+                "EffectLocalScale": true,
+                "InteractionType": "CompetitionSpace",
+                "LongDistanceEffect": false,
+                "ConfirmedOrAssumed": false,
+                "DomesticOrAbroad": "False"
+            },
+            {
+                "NiNCode": "V8",
+                "NiNVariation": [],
+                "RedListCategory": "",
+                "KeyStoneSpecie": false,
+                "Effect": "Moderate",
+                "EffectLocalScale": true,
+                "InteractionType": "CompetitionSpace",
+                "LongDistanceEffect": false,
+                "ConfirmedOrAssumed": false,
+                "DomesticOrAbroad": "False"
+            },
+            {
+                "NiNCode": "T18",
+                "NiNVariation": [],
+                "RedListCategory": "",
+                "KeyStoneSpecie": false,
+                "Effect": "Moderate",
+                "EffectLocalScale": true,
+                "InteractionType": "CompetitionSpace",
+                "LongDistanceEffect": false,
+                "ConfirmedOrAssumed": false,
+                "DomesticOrAbroad": ""
+            },
+            {
+                "NiNCode": "T30",
+                "NiNVariation": [],
+                "RedListCategory": "",
+                "KeyStoneSpecie": false,
+                "Effect": "Moderate",
+                "EffectLocalScale": true,
+                "InteractionType": "CompetitionSpace",
+                "LongDistanceEffect": false,
+                "ConfirmedOrAssumed": false,
+                "DomesticOrAbroad": ""
+            }
+        ],
+        "SpeciesSpeciesInteractionsSupplementaryInformation": null,
+        "GeneticTransferDocumented": [
+            {
+                "ScientificName": "Salix pentandra",
+                "ScientificNameId": "102692",
+                "ScientificNameAuthor": "L.",
+                "VernacularName": "istervier",
+                "TaxonRank": "Species",
+                "TaxonId": "62652",
+                "RedListCategory": "LC",
+                "KeyStoneSpecie": false,
+                "Effect": "Weak",
+                "EffectLocalScale": false,
+                "InteractionType": "",
+                "LongDistanceEffect": false,
+                "ConfirmedOrAssumed": true,
+                "DomesticOrAbroad": "True"
+            }
+        ],
+        "HostParasiteInformations": [],
+        "ThreatenedNatureTypes": [],
+        "ThreatenedNatureTypesDomesticObserved": false,
+        "ThreatenedNatureTypesDomesticDocumented": false,
+        "ThreatenedNatureTypesForeignDocumented": false,
+        "ThreatenedNatureTypesAffectedDomesticDescription": null,
+        "ThreatenedNatureTypesAffectedAbroadDescription": "",
+        "CommonNatureTypes": [
+            "NA Fastmarkssystemer: Flomskogsmark"
+        ],
+        "CommonNatureTypesDomesticObserved": true,
+        "CommonNatureTypesDomesticDocumented": false,
+        "CommonNatureTypesForeignDocumented": false,
+        "CommonNatureTypesAffectedDomesticDescription": null,
+        "CommonNatureTypesAffectedAbroadDescription": "",
+        "GeneticTransferDomesticDescription": null,
+        "GeneticTransferDomesticObserved": true,
+        "GeneticTransferDomesticDocumented": false,
+        "GeneticTransferForeignDocumented": false,
+        "VectorBiologicalDiseaseSpreadingDomesticDescription": null,
+        "BiologicalDiseaseSpreadingDomesticObserved": false,
+        "BiologicalDiseaseSpreadingDomesticDocumented": false,
+        "BiologicalDiseaseSpreadingForeignDocumented": false,
+        "GeographicalVariation": [
+            "reproduksjonLimitedToCertainClimaticZones",
+            "ecologicalEffectLimitedToCertainClimaticZones",
+            "ecologicalEffectLimitedToCertainNatureTypes"
+        ],
+        "GeographicalVariationDocumentation": "Arten er trolig begrenset til boreonemoral og sørboreal sone, og det samme gjelder dens økologiske effekter. De økologiske effektene er begrenset til flommarkstyper, med eller uten skog.",
+        "ClimateEffectsInvationpotential": "no",
+        "ClimateEffectsEcoEffect": "no",
+        "ClimateEffectsDocumentation": null,
+        "CriteriaDocumentation": "<p>Grønnpil vurderes til høg økologisk risiko, med usikkerhet til svært høg risiko. Arten inntar strender, åpen flommark og flommarkskog og blir raskt en av de dominerende treartene, med opplagt fortrengning av stedegne arter. Den er nå meget vanlig langs de fleste større og mindre vassdrag på søndre Østlandet og også utbredt i andre landsdeler.</p>",
+        "CriteriaDocumentationSpeciesStatus": "Grønnpil <i>Salix </i>x <i>fragilis</i>&nbsp;(tidligere som <i>S. </i>x <i>rubens</i>) er potensielt et meget stort tre opp til 25 m, men opptrer oftere som en stor busk. Den formerer seg effektivt med avbrukne grener, en karakter nedarvet fra den ene av foreldreartene, skjørpil <i>S. euxina</i>. Den andre foreldrearten er kvitpil <i>S. alba</i>, og ofte kan man spore hvilken av den sistnevnte artens varieteter som er gått inn i hybriden (se dokumentasjonstabell). Grønnpil er trolig frøsteril, men neppe pollensteril. Den kan opplagt pollinere den hjemlige arten istervier <i>S. pentandra</i>&nbsp;og danne trippelhybrider (kalt trippelpil <i>S. </i>x <i>pentandroides</i>) som ikke er sjeldne der grønnpil og istervier forekommer sammen i flommark.",
+        "CriteriaDocumentationDomesticSpread": "<p>Grønnpil er gammel i kultur, kanskje fra sent 1700-tall i Norge, og er først notert forvillet i 1834 i Bu Hole: Storøya i Tyrifjorden. Allerede i 1850 var den notert fra 15 forekomster i tre fylker. Den har siden økt jamt og trutt inntil den nå er kjent fra 450-500 forekomster i alle fylker nord til og med Nord-Trøndelag. Den er trolig nesten eller helt frøsteril, men må ha fungerende pollen ettersom den danner hybrider introgressivt med stedegen istervier <em>S. pentandra </em>på et stort antall steder i seks fylker og også med stedegen mandelpil <em>S. triandra </em>noen få steder.</p>",
+        "CriteriaDocumentationMigrationPathways": "Den er innført som hageplante, og spres ut fra hager ved avbrukne og avskårne kvister. Grønnpil har omfattende egenspredning med kvister langs vassdrag og langs kysten.",
+        "CriteriaDocumentationInvationPotential": "Invasjonsotensialet er moderat (med usikkerhet til stort), en kombinasjon av lang median levetid og begrenset (med usikkerhet til moderat) ekspansjonshastighet. Arten har vært så lenge i landet, og ekspandert så jamt, at nyetablering ikke skjer så fort lenger. Arten er nå et hyppig innslag i storparten av velutviklete flommarkskoger langs vassdrag på søndre og midtre Østlandet og under tilsvarende etablering langs kysten og nordover.",
+        "CriteriaDocumentationEcoEffect": "Grønnpil vurderes å ha middels økologisk effekt. Arten endrer artssammensetningen og fortrenger andre arter, deriblant truete, i flere flommark-naturtyper, men bare lokalt (sensu Artsdatabanken) einne de truete artenes utbredelse. Den har dessuten godt dokumentert hybridisering med en hjemlig art (istervier <i>S. pentandra</i>), se Elven &amp; Fremstad (under forb.). Hybridiseringen er potensielt introgressiv, men vi har satt usikkerhet nedover for denne effekten fordi den ikke synes å påvirke stedegne bestander av istervier i noen merkbar grad."
+    },
+    "RegionalRiskAssessments": [],
+    "References": [
+        {
+            "Type": "Publication",
+            "ReferenceId": "dedffb7a-3b02-4d48-894e-318bcdd2182c",
+            "FormattedReference": "Elven, R. & Fremstad, E. Under forb. Salix - selje, vier og pil i Norge.."
+        }
+    ],
+    "LockedForEditByUser": "Reidar Elven",
+    "LockedForEditTimeStamp": "2017-12-17T15:51:33.073Z"
+}

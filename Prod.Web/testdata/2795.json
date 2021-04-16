@@ -1,0 +1,868 @@
+{
+    "RegionalPresenceKnown": "Te,Aa,Va,Ro,Ho,Sf,Mr,No",
+    "RegionalPresenceAssumed": "",
+    "RegionalPresencePotential": "Te,Aa,Va,Ro,Ho,Sf,Mr,No",
+    "VurderingId2012": 0,
+    "RiskLevel2012": -1,
+    "SpreadRiskLevel2012": -1,
+    "EcologicalRiskLevel2012": -1,
+    "EvaluationContext": "N",
+    "ExpertGroupId": "ExpertGroups/Fisker/N",
+    "TaxonId": 26138,
+    "ExpertGroup": null,
+    "Citation": "Forsgren E, Hesthagen T, Finstad AG, Wienerroither R, Nedreaas K og Bjelland O (2018). Phoxinus phoxinus, vurdering av økologisk risiko. Fremmedartslista 2018. Artsdatabanken. Hentet (dato) fra https://artsdatabanken.no/Fab2018/N/2795",
+    "AlienSpeciesCategory": "RegionallyAlien",
+    "VurderingsStatus": "finnished",
+    "SistOppdatert": "2018-04-09T11:09:23.7772216",
+    "SistOppdatertAv": "elisabet.forsgren@nina.no",
+    "IsEvaluated": false,
+    "EvaluatedScientificNameId": 42635,
+    "EvaluatedScientificName": "Phoxinus phoxinus",
+    "EvaluatedScientificNameAuthor": null,
+    "EvaluatedVernacularName": "ørekyt",
+    "Datasett": {
+        "Files": []
+    },
+    "AlienSpeciesCategory2012": null,
+    "DoorKnockerDescription": null,
+    "NotReproductiveDescription2012": null,
+    "NotReproductiveFutureDescription2012": null,
+    "AssesmentNotApplicableDescription": null,
+    "AlienSpecieUncertainIfEstablishedBefore1800": false,
+    "AlienSpecieUncertainAntropochor": false,
+    "AlienSpecieUncertainDescription": null,
+    "SkalVurderes": false,
+    "DoorKnockerCategory": null,
+    "RegionallyAlienCategory": "doRiskAssessment",
+    "NotApplicableCategory": null,
+    "ObservedAndEstablishedStatusInCountry": {
+        "Indoor": {
+            "ObservedInCountry": {
+                "Place": null,
+                "Time": null
+            },
+            "FertileSpecimenObserved": {
+                "Place": null,
+                "Time": null
+            },
+            "Established": {
+                "Place": null,
+                "Time": null
+            },
+            "Population": {
+                "Place": null,
+                "Time": null
+            },
+            "SpecimenCount": null
+        },
+        "ProductionArea": {
+            "ObservedInCountry": {
+                "Place": null,
+                "Time": null
+            },
+            "FertileSpecimenObserved": {
+                "Place": null,
+                "Time": null
+            },
+            "Established": {
+                "Place": null,
+                "Time": null
+            },
+            "Population": {
+                "Place": null,
+                "Time": null
+            },
+            "SpecimenCount": null
+        },
+        "NorwegianNature": {
+            "ObservedInCountry": {
+                "Place": null,
+                "Time": null
+            },
+            "FertileSpecimenObserved": {
+                "Place": null,
+                "Time": null
+            },
+            "Established": {
+                "Place": null,
+                "Time": null
+            },
+            "Population": {
+                "Place": "",
+                "Time": ""
+            },
+            "SpecimenCount": null
+        }
+    },
+    "Limnic": true,
+    "Terrestrial": false,
+    "Marine": false,
+    "BrackishWater": false,
+    "FirstDomesticObservation": "1850-1899",
+    "FirstDomesticObservationLocation": null,
+    "FirstDomesticEstablishmentObserved": null,
+    "FirstDomesticEstablishmentObservedLocation": null,
+    "ArrivedCountryFrom": [
+        "otherRegion"
+    ],
+    "ArrivedCountryFromDetails": "Regionalt fremmed art i Norge",
+    "NaturalOrigins": [
+        {
+            "ClimateZone": "polar;",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "temperate;boreal",
+            "Europe": true,
+            "Asia": true,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "temperate;nemoral",
+            "Europe": true,
+            "Asia": true,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "temperate;dry",
+            "Europe": true,
+            "Asia": true,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;unspecified",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;mediterranean",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;humid",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;dry",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;caperegion",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;highlands",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "tropic;",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "unknown;",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        }
+    ],
+    "NaturalOriginUnknownDocumentation": null,
+    "CurrentInternationalExistenceAreas": [
+        {
+            "ClimateZone": "polar;",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "temperate;boreal",
+            "Europe": true,
+            "Asia": true,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "temperate;nemoral",
+            "Europe": true,
+            "Asia": true,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "temperate;dry",
+            "Europe": true,
+            "Asia": true,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;unspecified",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;mediterranean",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;humid",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;dry",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;caperegion",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;highlands",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "tropic;",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "unknown;",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        }
+    ],
+    "CurrentInternationalExistenceAreasUnknownDocumentation": null,
+    "NaturalOriginMarine": [],
+    "NaturalOriginMarineDetails": null,
+    "CurrentInternationalExistenceMarineAreas": [],
+    "CurrentInternationalExistenceMarineAreasDetails": null,
+    "SurvivalBelow5c": false,
+    "IntroductionCourse": null,
+    "DomesticRiskEvaluationExists": null,
+    "DomesticRiskEvaluationExists2007": null,
+    "ForeignRiskEvaluationExists": true,
+    "ForeignRiskEvaluationComment": "Den er f.eks. vurdert som en art med \"high impact\" i EASIN-databasen over fremmede arter i Europa:&nbsp;<a href=\"https://easin.jrc.ec.europa.eu/\">https://easin.jrc.ec.europa.eu/</a>&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;",
+    "Regeneration": null,
+    "RegenerationYears": null,
+    "Reproduction": null,
+    "ReproductionAsexual": null,
+    "ReproductionGenerationTime": 2,
+    "ReproductionSexual": true,
+    "SimilarDemographicComparison": null,
+    "HealthEffects": "Ingen",
+    "EconomicEffects": "Ingen",
+    "EcosystemServiceEffectsBasicLifeProcesses": [
+        "f"
+    ],
+    "EcosystemServiceEffectsProvisioningServices": [],
+    "EcosystemServiceEffectsRegulatingServices": [],
+    "EcosystemServiceEffectsHumanSpiritualServices": [],
+    "PositiveEcologicalEffects": "Ingen",
+    "EffectsOnPopulationOfOrigin": "Ingen",
+    "ImportPathways": [],
+    "ImportedToIndoorOrProductionArea": false,
+    "AssesmentVectors": [
+        {
+            "CodeItem": "fishery",
+            "IntroductionSpread": "spread",
+            "InfluenceFactor": "unknown",
+            "Magnitude": "unknown",
+            "TimeOfIncident": "unknown",
+            "ElaborateInformation": "    Det har vært en hundretalls tilfeller av at ørekyt er satt ut i norsk natur.",
+            "Category": null
+        },
+        {
+            "CodeItem": "otherMeansOfTransport",
+            "IntroductionSpread": "spread",
+            "InfluenceFactor": "unknown",
+            "Magnitude": "unknown",
+            "TimeOfIncident": "unknown",
+            "ElaborateInformation": "I vassdrag med ørekyt kan den komme inn i anlegg/klekkeri for produksjon av yngel og settefisk av aure. Ved antropogen transport av fisk fra slike anlegg i forbindelse med utsettinger, har ørekyt blitt med som blindpassasjer. &nbsp; &nbsp; &nbsp;",
+            "Category": null
+        },
+        {
+            "CodeItem": "naturalDispersalAcrossBorders",
+            "IntroductionSpread": "spread",
+            "InfluenceFactor": "unknown",
+            "Magnitude": "unknown",
+            "TimeOfIncident": "ongoing",
+            "ElaborateInformation": "    Ved utsetting av ørekyt i øvre deler av et vassdrag, har den spredt seg til innsjøer og elver lengre ned i vassdraget.    ",
+            "Category": null
+        },
+        {
+            "CodeItem": "liveFoodLiveBait",
+            "IntroductionSpread": "spread",
+            "InfluenceFactor": "unknown",
+            "Magnitude": "unknown",
+            "TimeOfIncident": "ongoing",
+            "ElaborateInformation": "    Spredningen av ørekyt skyldes hovedsakelig at den er brukt som levende agn ved fiske. Dette er forbudt ved lov.    ",
+            "Category": null
+        },
+        {
+            "CodeItem": "interconnectedWaterways",
+            "IntroductionSpread": "spread",
+            "InfluenceFactor": "rarerThan10years",
+            "Magnitude": "unknown",
+            "TimeOfIncident": "ceased",
+            "ElaborateInformation": "",
+            "Category": null
+        }
+    ],
+    "Vector": null,
+    "SpreadHistory": [],
+    "SpreadHistoryDomesticDocumentation": null,
+    "SpreadHistoryForeignDocumentation": "    I Europa finnes ørekyta stort seg i de fleste land, trolig med naturlig forekommende også i Irland. Den er også naturlig utbredt i Asia, trolig mer eller mindre sammenhengende fra sørvestlige deler, sentrale deler og helt øst til Kina og Korea.&nbsp;",
+    "FutureDistributionChangeExpectedDescription": null,
+    "FutureDistributionCriticalParameters": null,
+    "PotentialAreaDistribution": null,
+    "PotentialAreaDistributionInTheFuture": null,
+    "CurrentExistenceArea": 3596,
+    "CurrentExistenceAreaLowCalculated": 4675,
+    "CurrentExistenceAreaLowMultiplier": "1,30",
+    "CurrentExistenceAreaCalculated": 5682,
+    "CurrentExistenceAreaMultiplier": "1,58",
+    "CurrentExistenceAreaHighMultiplier": "1,85",
+    "CurrentExistenceAreaHighCalculated": 6653,
+    "CurrentIndividualCount": null,
+    "CurrentIndividualCountLowCalculated": null,
+    "CurrentIndividualCountLowMultiplier": null,
+    "CurrentIndividualCountCalculated": null,
+    "CurrentIndividualCountMultiplier": null,
+    "CurrentIndividualCountHighMultiplier": null,
+    "CurrentIndividualCountHighCalculated": null,
+    "CurrentSpreadArea": 169409,
+    "CurrentSpreadAreaLowCalculated": 169409,
+    "CurrentSpreadAreaHighCalculated": 169409,
+    "CurrentSpreadAreaCalculated": 169409,
+    "CurrentPresenceComment": "Ørekyt er en regionalt fremmed art i åtte fylker. Spredningen er fremdeles betydelig, og økningen i forekomstareal i løpet av de neste 50 åra er anslått til 15 %.",
+    "PotentialExistenceAreaLowQuartile": 5376,
+    "PotentialExistenceArea": 6534,
+    "PotentialExistenceAreaHighQuartile": 7716,
+    "PotentialPresenceComment": null,
+    "SpreadHistoryDomesticAreaInStronglyChangedNatureTypes": 0,
+    "ImpactedNatureTypes": [
+        {
+            "NiNCode": "F2",
+            "NiNVariation": [],
+            "DominanceForrest": [],
+            "TimeHorizon": "now",
+            "ColonizedArea": "0–2",
+            "StateChange": [],
+            "AffectedArea": "0"
+        },
+        {
+            "NiNCode": "F1",
+            "NiNVariation": [],
+            "DominanceForrest": [],
+            "TimeHorizon": "now",
+            "ColonizedArea": "0–2",
+            "StateChange": [],
+            "AffectedArea": "0"
+        }
+    ],
+    "RedlistedNatureTypes": [],
+    "UsesLivingSpeciesAsHabitat": false,
+    "UsesLivingSpeciesAsHabitatScientificName": null,
+    "RiskAssessment": {
+        "RiskLevel": 4,
+        "DecisiveCriteria": "4A,4E",
+        "RiskLevelCode": "SE",
+        "RiskLevelText": "Svært høy risiko",
+        "EcoEffectLevel": 3,
+        "EcoEffectUncertaintyLevels": [
+            3
+        ],
+        "InvationPotentialLevel": 3,
+        "InvationPotentialUncertaintyLevels": [
+            3
+        ],
+        "Criteria": [
+            {
+                "Id": "InvasionPopulationLifetimeExpectancy",
+                "Value": 3,
+                "Akse": "Invasion",
+                "CriteriaLetter": "A",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    3
+                ]
+            },
+            {
+                "Id": "InvasionExpansionSpeed",
+                "Value": 2,
+                "Akse": "Invasion",
+                "CriteriaLetter": "B",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    2
+                ]
+            },
+            {
+                "Id": "InvasionColonizationOfNaturetypeAfter50Years",
+                "Value": 0,
+                "Akse": "Invasion",
+                "CriteriaLetter": "C",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    0
+                ]
+            },
+            {
+                "Id": "EcologicalEffectInteractionWithThreatenedSpecies",
+                "Value": 0,
+                "Akse": "EcoEffect",
+                "CriteriaLetter": "D",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    0
+                ]
+            },
+            {
+                "Id": "EcologicalEffectInteractionWithDomesticSpecies",
+                "Value": 3,
+                "Akse": "EcoEffect",
+                "CriteriaLetter": "E",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    3
+                ]
+            },
+            {
+                "Id": "EcologicalEffectInfluenceOnThreatenedNatureTypes",
+                "Value": 0,
+                "Akse": "EcoEffect",
+                "CriteriaLetter": "F",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    0
+                ]
+            },
+            {
+                "Id": "EcologicalEffectInfluenceOnCommonNatureTypes",
+                "Value": 0,
+                "Akse": "EcoEffect",
+                "CriteriaLetter": "G",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    0,
+                    1
+                ]
+            },
+            {
+                "Id": "EcologicalEffectTransferOfGeneticMaterial",
+                "Value": 0,
+                "Akse": "EcoEffect",
+                "CriteriaLetter": "H",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    0
+                ]
+            },
+            {
+                "Id": "EcologicalEffectTransferOfDiseasesAndParasites",
+                "Value": 0,
+                "Akse": "EcoEffect",
+                "CriteriaLetter": "I",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    0
+                ]
+            }
+        ],
+        "QuantitativeDataForDomesticSpreadExsists": null,
+        "QuantitativeDataForForeignSpreadExsists": null,
+        "QuantitativeDataComment": null,
+        "EstimatedSpeciesCount": null,
+        "EstimatedSpeciesCountMethod": null,
+        "EstimatedSpeciesCountAssumption": null,
+        "EstimatedSpeciesLongevityMoreThan1000Years": null,
+        "EstimatedSpeciesLongevity": null,
+        "EstimatedSpeciesLongevityMethod": null,
+        "ChosenSpreadMedanLifespan": "RedListCategoryLevel",
+        "ActiveSpreadPVAAnalysisSpeciesLongevity": false,
+        "SpreadPVAAnalysis": null,
+        "ActiveSpreadPVAAnalysisEstimatedSpeciesLongevity": false,
+        "SpreadPVAAnalysisEstimatedSpeciesLongevity": null,
+        "SpreadPVAAnalysisEstimatedSpeciesLongevityLowerQuartile": null,
+        "SpreadPVAAnalysisEstimatedSpeciesLongevityUpperQuartile": null,
+        "ActiveRedListCategoryLevel": true,
+        "RedListUsedCriteria": "B",
+        "RedListDataDescription": "Ørekyt er en livskraftig art med stor utbredelse og spredning i Norge",
+        "RedListCategory": "LC",
+        "RedListSubCategory": null,
+        "SpreadRscriptSpeciesCount": null,
+        "SpreadRscriptPopulationGrowth": "0.0",
+        "SpreadRscriptDemographicVariance": null,
+        "SpreadRscriptEnvironmantVariance": null,
+        "SpreadRscriptQuasiExtinctionThreshold": null,
+        "SpreadRscriptSustainabilityK": null,
+        "ActiveSpreadRscriptEstimatedSpeciesLongevity": false,
+        "SpreadRscriptEstimatedSpeciesLongevity": null,
+        "ChosenSpreadYearlyIncrease": "SpreadYearlyIncreaseObservations",
+        "ActiveSpreadYearlyIncreaseObservations": true,
+        "SpreadYearlyIncreaseObservations": " 300,2",
+        "SpreadYearlyIncreaseObservationsLowerQuartile": "363,1",
+        "SpreadYearlyIncreaseObservationsUpperQuartile": "439,1 ",
+        "ActiveSpreadYearlyIncreaseOccurrenceArea": false,
+        "SpreadYearlyIncreaseOccurrenceArea": null,
+        "SpreadYearlyIncreaseOccurrenceAreaLowerQuartile": null,
+        "SpreadYearlyIncreaseOccurrenceAreaUpperQuartile": null,
+        "ActiveSpreadYearlyLiteratureData": false,
+        "SpreadYearlyLiteratureDataExpansionSpeed": null,
+        "SpreadYearlyLiteratureDataUncertainty": null,
+        "SpreadYearlyLiteratureDataNumberOfIntroductionSources": null,
+        "SpreadYearlyLiteratureData": "",
+        "SpreadYearlyLiteratureDataSource": null,
+        "ActiveSpreadYearlyIncreaseCalculatedExpansionSpeed": false,
+        "SpreadYearlyIncreaseEstimate": null,
+        "SpreadYearlyIncreaseEstimateDescription": null,
+        "SpreadYearlyIncreaseCalculatedExpansionSpeed": "",
+        "SpreadYearlyIncrease": null,
+        "SpreadYearlyIncreaseMethod": null,
+        "SpreadManualEstimate": null,
+        "SpreadManualEstimateSpeciesLongevity": null,
+        "SpreadManualEstimateSpeciesLongevityIsMoreThan1000years": null,
+        "IncreasingDensity": null,
+        "IncreasingDensityMethod": null,
+        "IncreasingDensityPVAAnalysis": null,
+        "IncreasingDensityPercentualComputation": null,
+        "IncreasingDensityPercentualComputationPeriod": null,
+        "IncreasingDensityManualEstimate": null,
+        "IncreasingDensityManualEstimateDescription": null,
+        "NaturetypeExpectedColonized": null,
+        "SpeciesSpeciesInteractions": [
+            {
+                "ScientificName": "Salmo trutta",
+                "ScientificNameId": "42663",
+                "ScientificNameAuthor": "Linnaeus, 1758",
+                "VernacularName": "ørret",
+                "TaxonRank": "Species",
+                "TaxonId": "26165",
+                "RedListCategory": "LC",
+                "KeyStoneSpecie": false,
+                "Effect": "Displacement",
+                "EffectLocalScale": false,
+                "InteractionType": "CompetitionSpace",
+                "LongDistanceEffect": false,
+                "ConfirmedOrAssumed": false,
+                "DomesticOrAbroad": ""
+            },
+            {
+                "ScientificName": "Salmo trutta",
+                "ScientificNameId": "42663",
+                "ScientificNameAuthor": "Linnaeus, 1758",
+                "VernacularName": "ørret",
+                "TaxonRank": "Species",
+                "TaxonId": "26165",
+                "RedListCategory": "LC",
+                "KeyStoneSpecie": false,
+                "Effect": "Moderate",
+                "EffectLocalScale": false,
+                "InteractionType": "CompetitionFood",
+                "LongDistanceEffect": false,
+                "ConfirmedOrAssumed": true,
+                "DomesticOrAbroad": "True"
+            },
+            {
+                "ScientificName": "Salmo trutta",
+                "ScientificNameId": "42663",
+                "ScientificNameAuthor": "Linnaeus, 1758",
+                "VernacularName": "ørret",
+                "TaxonRank": "Species",
+                "TaxonId": "26165",
+                "RedListCategory": "LC",
+                "KeyStoneSpecie": false,
+                "Effect": "Moderate",
+                "EffectLocalScale": false,
+                "InteractionType": "Predation",
+                "LongDistanceEffect": false,
+                "ConfirmedOrAssumed": true,
+                "DomesticOrAbroad": "True"
+            }
+        ],
+        "SpeciesNaturetypeInteractions": [],
+        "SpeciesSpeciesInteractionsSupplementaryInformation": "Ørekyta vurderes til å ha stor økologisk effekt. Den etablerer spesielt tette bestander i grunne innsjøer, som gjerne også kan være vegetasjonsrike. I rennende vann foretrekker den stille partier som kulper og bakevjer, spesielt for overvintring (Thorstad mfl. 2006). I innsjøer med tette bestander er ørekyta en sterk konkurrent til ørretungene, både i strandsona og i gyte- og oppvekstbekker (Borgstrøm mfl. 2010a, Museth mfl. 2010). Ørekyt kan også spise nyklekt ørretyngel. Analyse av garnfangster fra norske innsjøer viser en nedgang i utbyttet av ørret på ca. 35 % der ørekyta blir satt ut og har etablert seg (Museth mfl. 2007).&nbsp;    Hos ørret er det påvist en betydelig økning i infeksjon av&nbsp;<i>Diphyllobothrium ditremum</i>&nbsp;etter innførsel av ørekyt (Borgstrøm mfl. 2017). Ørekyt kan være infisert av flere parasittarter, men det synes å være liten utveksling av makroparasitter med andre fiskearter som f. eks. ørret (Hartvigsen 1997). Ørekyta introduserer imidlertid makroparasitter som igjen kan infisere andre organismer i en vannforekomst. &nbsp; &nbsp; &nbsp;",
+        "GeneticTransferDocumented": [],
+        "HostParasiteInformations": [
+            {
+                "ParasiteScientificName": "Diphyllobothrium ditremum",
+                "ParasiteVernacularName": "",
+                "ParasiteEcoEffect": "2",
+                "ParasiteNewForHost": false,
+                "ParasiteIsAlien": false,
+                "DiseaseConfirmedOrAssumed": true,
+                "ScientificName": "Salmo trutta",
+                "ScientificNameId": "42663",
+                "ScientificNameAuthor": "Linnaeus, 1758",
+                "VernacularName": "ørret",
+                "TaxonRank": "Species",
+                "TaxonId": "26165",
+                "RedListCategory": "LC",
+                "KeyStoneSpecie": false,
+                "Effect": null,
+                "EffectLocalScale": true,
+                "InteractionType": null,
+                "LongDistanceEffect": false,
+                "ConfirmedOrAssumed": false,
+                "DomesticOrAbroad": "True"
+            }
+        ],
+        "ThreatenedNatureTypes": [],
+        "ThreatenedNatureTypesDomesticObserved": null,
+        "ThreatenedNatureTypesDomesticDocumented": null,
+        "ThreatenedNatureTypesForeignDocumented": null,
+        "ThreatenedNatureTypesAffectedDomesticDescription": null,
+        "ThreatenedNatureTypesAffectedAbroadDescription": "",
+        "CommonNatureTypes": [],
+        "CommonNatureTypesDomesticObserved": null,
+        "CommonNatureTypesDomesticDocumented": null,
+        "CommonNatureTypesForeignDocumented": null,
+        "CommonNatureTypesAffectedDomesticDescription": "Ingen dokumenterte effekter på natturtyper",
+        "CommonNatureTypesAffectedAbroadDescription": "",
+        "GeneticTransferDomesticDescription": null,
+        "GeneticTransferDomesticObserved": null,
+        "GeneticTransferDomesticDocumented": null,
+        "GeneticTransferForeignDocumented": null,
+        "VectorBiologicalDiseaseSpreadingDomesticDescription": null,
+        "BiologicalDiseaseSpreadingDomesticObserved": null,
+        "BiologicalDiseaseSpreadingDomesticDocumented": null,
+        "BiologicalDiseaseSpreadingForeignDocumented": null,
+        "GeographicalVariation": [],
+        "GeographicalVariationDocumentation": null,
+        "ClimateEffectsInvationpotential": "no",
+        "ClimateEffectsEcoEffect": "no",
+        "ClimateEffectsDocumentation": "Ørekyta har en stor evne til etablering under dagens klima, og dette vil trolig øke ved en eventuelt klimaendring med høyere temperatur. Ørekyta har etablert bestander i innsjøer over 1400 m o.h. &nbsp;",
+        "CriteriaDocumentation": "<p>Det har vært en omfattende spredning av ørekyt gjennom  lang tid, spesielt fra 1950-tallet og utover. Den økologiske effekten vurderes som stor, spesielt kan den være en sterk konkurrent til ørret. Spredningen av ørekyt har også fortsatt i seinere år 20 åra, og invasjonspotensialet &nbsp;blir vurdert som stort. Dette plasserer ørekyta i kategorien svært høy risiko.</p>",
+        "CriteriaDocumentationSpeciesStatus": "<p>Ørekyta <i>Phoxinus  phoxinus</i> er en regionalt fremmed art i Norge. Det er en ferskvannsfisk som tilhører karpefamilien. Den kan oppnå ei  lengde på 15 cm, men blir sjelden over 8-10 cm (Pethon 2005). Ryggen er vanligvis fra brun  til olivengrønn, med mørke tverrstreker. Sidene er messinggule til kvite og  buken er kvit eller har en messingglans. Her i landet gyter ørekyta i løpet av  juni-juli, avhengig høyde over havet og breddegrad. I gytetiden har hannene  metallskimrende grønne sider, rød buk og røde bryst- og bukfinner. Føden kan  være variert, men består som oftest av insektlarver, småkreps og  plantemateriale. Ørekyta er en stimfisk, og i innsjøer holder seg for det meste  på grunt vann i strandnære områder.&nbsp;</p>",
+        "CriteriaDocumentationDomesticSpread": "<p style=\"margin-bottom:6.0pt\">I Sør-Norge er ørekytas  naturlige utbredelse i hovedsak begrenset til sørøstlige områder (Huitfeldt-Kaas  1918). Den er relativt vanlig i deler av Østfold, Akershus, Vestfold, nedre  deler av Buskerud og Oppland inkludert Mjøsa og nedre deler av Lågen (til  Harpefoss), og deler av Hedmark i Glomma- og Trysilvassdraget. Sør-Trøndelag  har noen naturlige bestander av ørekyt i Røros-området. I Nord-Trøndelag  begrenser dette seg til noen få lokaliteter som drenerer østover til Sverige.  Troms har ørekyt i Målselv/Barduvassdragene i sørlige deler, og i Signaldal,  Reisa og Kvænangen lengre nord (Hesthagen &amp; Østborg 2004). I Finnmark har  innvandringen av ørekyt skjedd fra sør og sørøst, og arten er relativt vanlig i  flere østlige vassdrag.</p><p style=\"margin-bottom:6.0pt\">Spredningen av ørekyt har  foregått minst siden slutten av 1800-tallet (Huitfeldt-Kaas 1918). I løpet  av 1900-tallet har spredningen vært svært omfattende (Hesthagen &amp; Sandlund  1997, 2006,&nbsp; Museth mfl. 2007). I tillegg til spredning  innen de fylkene hvor den forekom naturlig, ble den da innført til åtte fylker hvor  den ikke fantes tidligere. Dette  var Telemark, Aust-Agder, Vest-Agder, Rogaland, Hordaland, Sogn og Fjordane,  Møre og Romsdal og Nordland. I høyereliggende deler av Oppland,  Buskerud og Telemark var det omfattende spredning av ørekyt i perioden ca. 1950-1980.  Spredningen omfatter også sentrale deler av Hardangervidda, med lokaliteter både  i Hordaland (Eidfjord) og Buskerud. På 1980-tallet etablerte ørekyta seg også i  flere innsjøer rundt i Hovden i Bykle kommune i Otravassdraget i Aust-Agder  (Kleiven mfl. 2009, Kleiven &amp; Hesthagen 2012). På 1990-tallet ble det oppdaget ørekyt i nedre deler av  Kvina- og Mandalsvassdraget i Vest-Agder. I Sogn og Fjordane er det innført  ørekyt til Jølstra (Jølstravatnet), Lærdal- og Tyavassdraget. I Møre og Romsdal  har det kommet ørekyt til noen innsjøer i Surnadal og Rindal kommuner. I  Sør-Trøndelag har ørekyta blitt spredt til en rekke steder siden 1970-tallet,  bl.a. til Nea- og Orklavassdraget. I Nord-Trøndelag skjedde den første  introduksjonen av ørekyt allerede på 1930-tallet, til Verdal. Seinere har den  blitt spredt til flere greiner av Namsenvassdraget (Thorstad mfl. 2006, 2007).&nbsp; I Nordland er det ørekyt i flere innsjøer i  Svenningdalsvassdraget i Grane kommune. I Troms er det innført ørekyt til tre  innsjøer på Tromsøya (Klemetsen 2000). Det er også eksempler på utsettinger i  Finnmark, trolig i den tro at det var ørretunger (Hesthagen &amp; Østborg  2004). </p><p style=\"margin-bottom:6.0pt\">Også i løpet av de siste 10-20 åra har ørekyta blitt spredt til nye vassdrag (Hesthagen &amp; Sandlund 2016a, b). Dette omfatter bl.a. noen tjern  ved Horgjemsætermoen i Brøstdalen, Rauma kommune i Møre og Romsdal og to  innsjøer i øvre deler av Ottavassdraget, i Skjåk kommune, Oppland.&nbsp; I 2010 ble det oppdaget ørekyt i Storinnsjøen  i Tynset kommune, Hedmark. I Rogaland har ørekyta nylig blitt innført til Bjøreimsvannet  i Strand kommune og til Suldalsvatnet i Suldal kommune. I 2012 ble det påvist  ørekyt i et mindre tjern i Lærdalsfjellet. Det har også kommet ørekyt i Vågvatnet  i Røssågavassdraget i Hattfjelldal kommune, Nordland. Rask mfl. (2000) beregnet  at det fantes ca. 2300 bestander av ørekyt i Norge på slutten av  1990-tallet.&nbsp;&nbsp;</p>",
+        "CriteriaDocumentationMigrationPathways": "<p style=\"margin-bottom:6.0pt\">Spredningen av ørekyt skyldes  hovedsakelig at den er brukt som levende agn ved fiske. Dette er forbudt ved  lov. I tillegg har den blitt spredt i forbindelse med utsettinger av ørret og via  overføringstuneller i regulerte vassdrag (Borgstrøm 1973, Lillehammer &amp;  Saltveit 1979, Saltveit &amp; Brabrand 1991, 1992). Ørekyt har  også vært satt ut i den tro at det ville skape næring for å oppnå storvokst fisk (ørret). </p><p style=\"margin-bottom:6.0pt\"></p>",
+        "CriteriaDocumentationInvationPotential": "<p>Ørekyt vurderes å ha et stort invasjonspotensiale  fordi motivasjonen blant personer som sprer fisk anses som relativt høyt for  denne arten. Det skyldes for det første at mennesker, bevisst eller  ubevisst, i stor grad har flyttet den til nye vannforekomster. Denne  utviklingen har fortsatt i de siste ti-årene. Ørekyta er også en svært  tilpasningsdyktig art med høy etableringssuksess. Den foretrekker helst grunne  og vegetasjonsrike innsjøer, men den oppnår livskraftige bestander i de fleste  innsjøer og elver. I Jotunheimen har&nbsp; ørekyta etablert seg i en innsjø lokalisert&nbsp; 1401  m o.h. Den etablerer også levedyktige bestander i reguleringsmagasiner fordi  den gyter om våren og har en kort klekkeperiode. Ørekyt har også relativt god evne til  å forsere&nbsp; strømpartier i elver og bekker (Holthe mfl. 2005, 2009).</p>",
+        "CriteriaDocumentationEcoEffect": "<p style=\"margin-bottom:6.0pt\">Ørekyta vurderes til å ha  stor økologisk effekt. Den etablerer spesielt tette bestander i grunne  innsjøer, som gjerne også kan være vegetasjonsrike. I dype innsjøer der  strandsona er bratt og dekker et lite areal, blir ørekyta begrensa til et lite  areal langs land. Dersom konkurransen fra andre fiskearter i tillegg er sterk,  kan ikke ørekyta utvikle tette bestander. I rennende vann foretrekker den stille  partier som kulper og bakevjer, spesielt for overvintring (Thorstad mfl. 2006).  I innsjøer med tette bestander er ørekyta en sterk konkurrent til ørretunger om plass og næring,  både i strandsona og i gyte- og oppvekstbekker (Museth mfl. 2002, Borgstrøm &amp; Brittain 2010, Borgstrøm mfl. 2010, Museth  mfl. 2010). Den kan også spise nyklekt ørretyngel. Analyse av garnfangster fra  norske innsjøer viser en nedgang i utbyttet av ørret på ca. 35 % der ørekyta blir  satt ut og har etablert seg (Museth mfl. 2007). Det ser ut til at ørekyta  generelt betyr lite som næring for ørreten. Dette skyldes trolig at den har en  effektiv beskyttelse mot rovfisk ved at den går i stim, og at det er et begrensa habitatoverlapp mellom ørekyta og f. eks. ørret. Den blir for øvrig sjelden  fiskespiser før den har oppnådd en lengde på ca. 25 cm. Ørekyt synes å være mer eksponert for  predasjon fra ørret under gyteperioden om våren (Museth mfl. 2003). Hos ørret  er det påvist en betydelig økning i infeksjon av <i>Diphyllobothrium ditremum</i> etter innførsel av ørekyt (Borgstrøm mfl.  2017). Ørekyt kan være infisert av flere parasittarter, men det synes å være  liten utveksling av makroparasitter med andre fiskearter som for eksempel ørret  (Hartvigsen 1997). Ørekyta introduserer imidlertid makroparasitter som igjen kan  infisere andre organismer i en vannforekomst.</p>"
+    },
+    "RegionalRiskAssessments": [],
+    "References": [
+        {
+            "Type": "Publication",
+            "ReferenceId": "2cb83d58-2570-422d-95fd-42189268de84",
+            "FormattedReference": "Pethon, P. 2005. Aschehougs store fiskebok. H. Aschehoug & Co."
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "375012b5-18ed-444e-ac4b-852dc55166e2",
+            "FormattedReference": "Huitfeldt-Kaas, H. 1918. Fersvandsfiskenes utbredelse og indvandring i Norge med et tillæg om krebsen. Centraltrykkeriet. Kristiania"
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "26db288b-bd97-4ffc-bd3d-0aacb1c17281",
+            "FormattedReference": "Kleiven, E. & Hesthagen, T. 2012. Fremmede fiskearter i ferskvann i Aust-Agder - Historikk, status og kvenskvenser NINA Rapport 665: 115 s."
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "c8b7d859-0d71-4730-9f89-f39819b7f329",
+            "FormattedReference": "Thorstad, E.B.,Hesthagen, T. & Heggberget, T.G. 2007. Overvåking av spredning av ørekyt i øvre deler av Namsenvassdraget i 2006. NINA Minirapport 186. 18 s."
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "c7534f32-b17c-480a-aa1f-c30cc7022820",
+            "FormattedReference": "Hesthagen, T. & Sandlund, O.T. 2006. Phoxinus phoxinus Nobanis - Invasive Alien Species Fact Sheet. 10 pp."
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "2651f1b1-c3a1-43aa-a1a0-8a5f4a2059ad",
+            "FormattedReference": "Museth, J., Hesthagen, T., Sandlund, O.T., Thorstad, E.B. & Ugedal, O. 2007. The history of the minnow Phoxinus phoxinus (L.) in Norway: from harmless species to pest. Journal of Fish Biology 71 (Supplement D): 184-195."
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "4fae672e-73fd-4667-9178-ad3c08dde36c",
+            "FormattedReference": "Hesthagen, T. & Sandlund, O.T. 2016b. Spredning av ferskvannsfisk i Norge. En fylkesvis oversikt og nye registreringer i 2015. NINA Rapport 1205. 54 s."
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "7e828bf7-f383-409d-881a-ce4a5d97e0a9",
+            "FormattedReference": "Hesthagen,T. & Sandlund, O.T. 2016a. Tiltaksrettet kartlegging og overvåking av fremmed ferskvannsfisk - en tilstandsvurdering av spredningen pr. 2016. NINA Rapport 1302. 49 s."
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "95f7037d-08fe-4900-b833-5da130556439",
+            "FormattedReference": "Hesthagen,T. & Østborg, G. 2004. Utbredelse av ferskvannfisk, naturlige fiskesamfunn og fisketomme vatn i Troms og Finnmark. NINA Oppdragsmelding. 805: 1-30"
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "21b133b3-530b-4f2b-a1ff-5f29bde60fb9",
+            "FormattedReference": "Klemetsen, A. 2000. Ørekyt Phoxinus phoxinus etablert i Tromsø. Fauna 53:11-15."
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "a5ccf062-9530-432c-8c0b-2d76acf5d2ef",
+            "FormattedReference": "Hesthagen, T. & Sandlund, O.T. 1997. Endringer i utbredelse av ørekyte i Norge: årsaker og effekter. NINA Fagrapport. 13: 1-16"
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "d4cfceb0-02a0-458e-9bb6-e813cc45ea47",
+            "FormattedReference": "Thorstad, E., Sandlund, O.T, Heggberget, T.G., Finstad, A, Museth, J., Berger, H.M., Hesthagen, T. & Berg, O.K. 2006. Ørekyt i Namsenvassdraget: utbredelse, spredningsrisiko og tiltak. NINA Rapport 155"
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "915bba16-af24-4b25-8bd0-f10c9df7dd97",
+            "FormattedReference": "Rask, M.,Appelberg, M., Hesthagen, T., Tammi, J., Beier, U. & Lappalainen, A. 2000. Fish status survey of Nordic lakes - species composition, distribution, effects of environmetal changes TemaNord Report 2000:508"
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "8eb72d4c-c578-4e54-a83d-5db8d3a059ac",
+            "FormattedReference": "Museth, J. Borgstrøm, R, Brittain, J.E., Herberg, I. & Naalsund, C. 2002. Introduction of the European minnow into a subalpine lake; habitat use and long-term changes in population dynamics. Journal of Fish Biology 60: 1308-1361."
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "261b4dab-1507-45be-b8e9-c3839593f0eb",
+            "FormattedReference": "Museth, J. Borgstrøm, R, Hame, T. & Holen, L.Å. 2003. Predation by brown trout: a major mortality factor for sexually mature European minnows. Journal of Fish Biology 62: 692-705."
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "f42226f4-93bc-44e4-a2f7-c41d647b6fa4",
+            "FormattedReference": "Museth, J., Borgstrøm, R. & Brittain, J.E. 2010. Diet overlap between introduced European minnow  (Phoxinus phoxinus) and young brown trout (Salmo trutta) in the lake, Øvre Heimdalsvatn: a result of abundant resources or forced niche overlap? Hydrobiologia 211: 93-100."
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "d4d300e1-6588-4dfb-b785-8c96f76e42b6",
+            "FormattedReference": "Borgstrøm, R. 1973. Spredning av ørekyt Jakt, Fiske & Friluftsliv 12: 28-29"
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "6c3f1828-72ed-4d43-a56e-2e033c4435c5",
+            "FormattedReference": "Borgstrøm, R. & Brittain, J.E. 2010. Diet overlap between introduced European minnow (Phoxinus phoxinus) and young brown trout (Salmo trutta) in the lake Øvre Heimdalsvatn; a result of abundant resources or forced niche overlap? Hydrobiologia 642: 93-100."
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "7d89603d-6966-4fac-a5be-f044648c00d8",
+            "FormattedReference": "Borgstrøm, R., Museth, J. & Brittain, J.E. 2010. The brown trout (Salmo trutta) in the lake, Øvre Heimdalsvatn: long-term changes in population dynamics due to exploitation and the invasive species, European minnow (Phoxinus phoxinus). Hydrobiologia 642: 81-91"
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "b3c91711-5959-4cb1-99dc-a9fe6958b9c5",
+            "FormattedReference": "Kleiven, E., Vethe,, A. & Homme,T.A. 2009. Ørekyte Phoxinus phoxinus i Øvre Setesdal har spreidd seg nedover Otra til Byglandsfjorden, Aust-Agder. Fauna 61:64-73."
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "5c2e671d-8269-479e-9080-08681fdabe2b",
+            "FormattedReference": "Lillehammer, A. & Saltveit, S.J. 1991. Stream regulation in Norway. s. 201-203 i Ward, J.W & Stanford, J.A. (red.). The ecology of regulated stremas. Plenum Press, New York. USA."
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "a881042c-afea-43a2-bdf3-4a8256ce3497",
+            "FormattedReference": "Saltveit, S.J. & Brabrand, Å. 1992. Ørekyt - konkurrent eller næring? s. 259-277 i Vassdragsregulantenes Forening, Fiskesymposiet 1992."
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "fa6ade05-2317-4b32-b0c6-2cff14e04d0f",
+            "FormattedReference": "Saltveit, S.J. & Brabrand, Å. 1991. Ørekyt. En litteraturoversikt om økologi og utbredelse i Norge. Rapport Laboratoriet for Innlandsfiske og ferskvannsøkologi, Nr 130. 21 s."
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "78ce2992-f458-4cfa-b8a7-e92ecfbdcb32",
+            "FormattedReference": "Hartvigsen, R. 1997. Spredning av parasitter ved innvandring og/eller introduksjon av nye fiskearter: spredning av ørekyt (Phoxinus phoxinus) til ørretvassdrag. NINA Oppdragsmelding 466. 14 s."
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "8f1b27ad-21a5-4cf1-ae3b-d47e486bbf21",
+            "FormattedReference": "Borgstrøm, R., Trømborg, J., Haugen T.O. & Rosseland, B,O. 2017. Plerocercoids of the cetode Diphyllobothrium ditremum in brown trout Salmo trutta: substanial increase in infection after establishmet of European minnom Phoxinus phoxinus Journal of Fish Bology. doi:10.1111/jfb.13391."
+        }
+    ],
+    "LockedForEditByUser": "elisabet.forsgren@nina.no",
+    "LockedForEditTimeStamp": "2017-11-27T11:38:06.132Z"
+}

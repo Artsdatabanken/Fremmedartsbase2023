@@ -1,0 +1,1101 @@
+{
+    "RegionalPresenceKnown": "Øs,OsA,He,Op,Bu,Ve,Te,Aa,Va,Ro,Ho,Sf,Mr,St,Nt,No",
+    "RegionalPresenceAssumed": "",
+    "RegionalPresencePotential": "Øs,OsA,He,Op,Bu,Ve,Te,Aa,Va,Ro,Ho,Sf,Mr,St,Nt,No,Tr,Fi,Sv",
+    "VurderingId2012": 46,
+    "RiskLevel2012": 5,
+    "SpreadRiskLevel2012": 3,
+    "EcologicalRiskLevel2012": 4,
+    "EvaluationContext": "N",
+    "ExpertGroupId": "ExpertGroups/Fugler/N",
+    "TaxonId": 3457,
+    "ExpertGroup": "Fugler",
+    "Citation": "Stokke BG og Gjershaug JO (2018). Branta canadensis, vurdering av økologisk risiko. Fremmedartslista 2018. Artsdatabanken. Hentet (dato) fra https://artsdatabanken.no/Fab2018/N/46",
+    "AlienSpeciesCategory": "AlienSpecie",
+    "VurderingsStatus": "finnished",
+    "SistOppdatert": "2018-02-08T13:36:04.2778915",
+    "SistOppdatertAv": "bardst",
+    "IsEvaluated": true,
+    "EvaluatedScientificNameId": 3495,
+    "EvaluatedScientificName": "Branta canadensis",
+    "EvaluatedScientificNameAuthor": null,
+    "EvaluatedVernacularName": "kanadagås",
+    "Datasett": {
+        "Files": []
+    },
+    "AlienSpeciesCategory2012": "AlienSpecie",
+    "DoorKnockerDescription": null,
+    "NotReproductiveDescription2012": null,
+    "NotReproductiveFutureDescription2012": null,
+    "AssesmentNotApplicableDescription": null,
+    "AlienSpecieUncertainIfEstablishedBefore1800": false,
+    "AlienSpecieUncertainAntropochor": false,
+    "AlienSpecieUncertainDescription": null,
+    "SkalVurderes": false,
+    "DoorKnockerCategory": null,
+    "RegionallyAlienCategory": "doRiskAssessment",
+    "NotApplicableCategory": "notAlienSpecie",
+    "ObservedAndEstablishedStatusInCountry": {
+        "Indoor": {
+            "ObservedInCountry": {
+                "Place": null,
+                "Time": null
+            },
+            "FertileSpecimenObserved": {
+                "Place": null,
+                "Time": null
+            },
+            "Established": {
+                "Place": null,
+                "Time": null
+            },
+            "Population": {
+                "Place": null,
+                "Time": null
+            },
+            "SpecimenCount": null
+        },
+        "ProductionArea": {
+            "ObservedInCountry": {
+                "Place": null,
+                "Time": null
+            },
+            "FertileSpecimenObserved": {
+                "Place": null,
+                "Time": null
+            },
+            "Established": {
+                "Place": null,
+                "Time": null
+            },
+            "Population": {
+                "Place": null,
+                "Time": null
+            },
+            "SpecimenCount": null
+        },
+        "NorwegianNature": {
+            "ObservedInCountry": {
+                "Place": null,
+                "Time": null
+            },
+            "FertileSpecimenObserved": {
+                "Place": "Nesodden, Oslo",
+                "Time": "1936"
+            },
+            "Established": {
+                "Place": null,
+                "Time": null
+            },
+            "Population": {
+                "Place": "Nesodden, Oslo",
+                "Time": "1936"
+            },
+            "SpecimenCount": null
+        }
+    },
+    "Limnic": true,
+    "Terrestrial": true,
+    "Marine": false,
+    "BrackishWater": false,
+    "FirstDomesticObservation": "1900",
+    "FirstDomesticObservationLocation": null,
+    "FirstDomesticEstablishmentObserved": "1900-1949",
+    "FirstDomesticEstablishmentObservedLocation": null,
+    "ArrivedCountryFrom": [
+        "other"
+    ],
+    "ArrivedCountryFromDetails": "Hele den skandinaviske bestanden stammer trolig fra svenske utsettinger i 1929. De første utsettinger i Norge ble gjort i 1936.",
+    "NaturalOrigins": [
+        {
+            "ClimateZone": "polar;",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": true,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "temperate;boreal",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": true,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "temperate;nemoral",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": true,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "temperate;dry",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": true,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;unspecified",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;mediterranean",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;humid",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;dry",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;caperegion",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;highlands",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "tropic;",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "unknown;",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        }
+    ],
+    "NaturalOriginUnknownDocumentation": null,
+    "CurrentInternationalExistenceAreas": [
+        {
+            "ClimateZone": "polar;",
+            "Europe": true,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": true,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "temperate;boreal",
+            "Europe": true,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": true,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "temperate;nemoral",
+            "Europe": true,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": true,
+            "NorthAndCentralAmerica": true,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "temperate;dry",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": true,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;unspecified",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": true,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;mediterranean",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;humid",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;dry",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;caperegion",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;highlands",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "tropic;",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "unknown;",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        }
+    ],
+    "CurrentInternationalExistenceAreasUnknownDocumentation": null,
+    "NaturalOriginMarine": [],
+    "NaturalOriginMarineDetails": null,
+    "CurrentInternationalExistenceMarineAreas": [],
+    "CurrentInternationalExistenceMarineAreasDetails": null,
+    "SurvivalBelow5c": false,
+    "IntroductionCourse": [
+        "ABevissIntrodUtsatt"
+    ],
+    "DomesticRiskEvaluationExists": true,
+    "DomesticRiskEvaluationExists2007": true,
+    "ForeignRiskEvaluationExists": true,
+    "ForeignRiskEvaluationComment": "Gallardo et al. (2013) nevner 12 svartelistede arter i Storbritannia, Frankrike, Belgia og Nederland med høyest risiko mht miljømessige-, økonomiske- og økologiske konsekvenser. Her er kanadagås eneste fugleart. Risikovurderinger er utført i bl.a. Tyskland, Danmark og Storbritannia.",
+    "Regeneration": null,
+    "RegenerationYears": null,
+    "Reproduction": null,
+    "ReproductionAsexual": false,
+    "ReproductionGenerationTime": 10,
+    "ReproductionSexual": true,
+    "SimilarDemographicComparison": null,
+    "HealthEffects": "Arten kan være vektor for sykdommer (Jansson et al. 2008; Miljøstyrelsen 2017), spesielt ved høye tettheter og mye avføring på steder hvor folk ferdes (Anonym 2011). Alvorlighetsgraden av dette er imidlertid foreløpig ukjent (Banks et al. 2008) ",
+    "EconomicEffects": "De økonomiske skadevirkningene anses å være betydelige (Kumschick & Nentwig 2010). Arten forurenser parkanlegg og vann gjennom avføring, og øker risiko for kollisjoner med fly nær flyplasser. Kan forårsake problemer for landbruket, bl.a. ved at de kan spise såkorn (Banks et al. 2008). I Tyskland forårsaker arten således betydelige skader for landbruket (Miljøstyrelsen 2017)",
+    "EcosystemServiceEffectsBasicLifeProcesses": [
+        "f",
+        "d"
+    ],
+    "EcosystemServiceEffectsProvisioningServices": [
+        "f",
+        "b"
+    ],
+    "EcosystemServiceEffectsRegulatingServices": [],
+    "EcosystemServiceEffectsHumanSpiritualServices": [],
+    "PositiveEcologicalEffects": "Ingen kjent effekt",
+    "EffectsOnPopulationOfOrigin": "Ingen kjent effekt",
+    "ImportPathways": [],
+    "ImportedToIndoorOrProductionArea": false,
+    "AssesmentVectors": [
+        {
+            "CodeItem": "otherUnknownRelease",
+            "IntroductionSpread": "introduction",
+            "InfluenceFactor": "unknown",
+            "Magnitude": "unknown",
+            "TimeOfIncident": "historic",
+            "ElaborateInformation": "",
+            "Category": null
+        },
+        {
+            "CodeItem": "naturalDispersalAcrossBorders",
+            "IntroductionSpread": "introduction",
+            "InfluenceFactor": "unknown",
+            "Magnitude": "unknown",
+            "TimeOfIncident": "ongoing",
+            "ElaborateInformation": "",
+            "Category": null
+        },
+        {
+            "CodeItem": "hunting",
+            "IntroductionSpread": "introduction",
+            "InfluenceFactor": "severalPr10years",
+            "Magnitude": "101-1000",
+            "TimeOfIncident": "historic",
+            "ElaborateInformation": "De første utsettingene til norsk natur fant sted i 1936, og bestanden var svært liten fram til midten av 1960-tallet. I de neste tyve år ble det satt ut minst 750 individer fordelt på alle sørnorske fylker unntatt Oppland.",
+            "Category": null
+        }
+    ],
+    "Vector": null,
+    "SpreadHistory": [
+        {
+            "Id": "baca09fa-5691-4c55-b9ba-d730a5e26507",
+            "Location": "Stjørnfjorden, Rissa, Sør-Trøndelag",
+            "Comment": "Ett individ ble observert i Stjørnfjorden, Rissa, Sør-Trøndelag 22.06.1900.     Den norske hekkebestanden blir i dag estimert til 2000-4000 par, og 30000 individer før jakt utpå ettersommeren (Shimmings og Øien 2015)    ",
+            "Regions": "Øs,OsA,Op,Bu,Ve,Mr,St,Nt",
+            "RegionsAssumed": "He",
+            "ObservationYear": 1970,
+            "ObservationFromYear": 1900,
+            "ObservationMonth": 0,
+            "ObservationFromMonth": 0,
+            "SpeciesCount": 108,
+            "ExistenceArea": 76,
+            "ExistenceAreaCount": 0,
+            "SpreadArea": 52756,
+            "SpeciesCountDarkFigure": 5,
+            "ExistenceAreaDarkFigure": 1,
+            "ExistenceAreaCountDarkFigure": 2,
+            "SpreadAreaDarkFigure": 1,
+            "SpeciesCountCalculated": 540,
+            "ExistenceAreaCalculated": 152,
+            "ExistenceAreaCountCalculated": 152,
+            "SpreadAreaCalculated": 52756,
+            "SelectionGeometry": ""
+        },
+        {
+            "Id": "04f3fb1f-2da5-407c-eb4f-2e90e4b28645",
+            "Location": "",
+            "Comment": "Antall individer er hentet fra Artskart og er ikke identisk med reelt antall individer siden mange observasjoner i Artskart er av samme individer. Den norske hekkebestanden blir i dag estimert til 2000-4000 par, og 30000 individer før jakt utpå ettersommeren (Shimmings og Øien 2015)    ",
+            "Regions": "Øs,OsA,He,Op,Bu,Ve,Te,Va,Ro,Ho,Sf,Mr,St,Nt",
+            "RegionsAssumed": "Aa",
+            "ObservationYear": 1980,
+            "ObservationFromYear": 1971,
+            "ObservationMonth": 0,
+            "ObservationFromMonth": 0,
+            "SpeciesCount": 6067,
+            "ExistenceArea": 568,
+            "ExistenceAreaCount": 0,
+            "SpreadArea": 210252,
+            "SpeciesCountDarkFigure": 1,
+            "ExistenceAreaDarkFigure": 1,
+            "ExistenceAreaCountDarkFigure": 2,
+            "SpreadAreaDarkFigure": 1,
+            "SpeciesCountCalculated": 6067,
+            "ExistenceAreaCalculated": 1136,
+            "ExistenceAreaCountCalculated": 1136,
+            "SpreadAreaCalculated": 210252,
+            "SelectionGeometry": ""
+        },
+        {
+            "Id": "c1395794-7089-4f0b-48b5-4702ff7dbe53",
+            "Location": "",
+            "Comment": "Antall individer er hentet fra Artskart og er ikke identisk med reelt antall individer siden mange observasjoner i Artskart er av samme individer. Den norske hekkebestanden blir i dag estimert til 2000-4000 par, og 30000 individer før jakt utpå ettersommeren (Shimmings og Øien 2015)    ",
+            "Regions": "Øs,OsA,He,Op,Bu,Ve,Te,Aa,Va,Ro,Ho,Sf,Mr,St,Nt,No,Tr,Fi",
+            "RegionsAssumed": "",
+            "ObservationYear": 1990,
+            "ObservationFromYear": 1981,
+            "ObservationMonth": 0,
+            "ObservationFromMonth": 0,
+            "SpeciesCount": 56082,
+            "ExistenceArea": 2592,
+            "ExistenceAreaCount": 0,
+            "SpreadArea": 340484,
+            "SpeciesCountDarkFigure": 1,
+            "ExistenceAreaDarkFigure": 1,
+            "ExistenceAreaCountDarkFigure": 1,
+            "SpreadAreaDarkFigure": 1,
+            "SpeciesCountCalculated": 56082,
+            "ExistenceAreaCalculated": 2592,
+            "ExistenceAreaCountCalculated": 2592,
+            "SpreadAreaCalculated": 340484,
+            "SelectionGeometry": ""
+        },
+        {
+            "Id": "15b42550-aed3-471b-c044-6768c628c4de",
+            "Location": "",
+            "Comment": "Antall individer er hentet fra Artskart og er ikke identisk med reelt antall individer siden mange observasjoner i Artskart er av samme individer. Den norske hekkebestanden blir i dag estimert til 2000-4000 par, og 30000 individer før jakt utpå ettersommeren (Shimmings og Øien 2015)    ",
+            "Regions": "Øs,OsA,He,Op,Bu,Ve,Te,Aa,Va,Ro,Ho,Sf,Mr,St,Nt,No,Tr,Fi,Sv",
+            "RegionsAssumed": "",
+            "ObservationYear": 2017,
+            "ObservationFromYear": 1991,
+            "ObservationMonth": 0,
+            "ObservationFromMonth": 0,
+            "SpeciesCount": 1371800,
+            "ExistenceArea": 17964,
+            "ExistenceAreaCount": 0,
+            "SpreadArea": 1530790,
+            "SpeciesCountDarkFigure": 1,
+            "ExistenceAreaDarkFigure": 1,
+            "ExistenceAreaCountDarkFigure": 1,
+            "SpreadAreaDarkFigure": 1,
+            "SpeciesCountCalculated": 1371800,
+            "ExistenceAreaCalculated": 17964,
+            "ExistenceAreaCountCalculated": 17964,
+            "SpreadAreaCalculated": 1530790,
+            "SelectionGeometry": ""
+        }
+    ],
+    "SpreadHistoryDomesticDocumentation": null,
+    "SpreadHistoryForeignDocumentation": "Arten hekker naturlig i midtre og nordlige deler av  Nord-Amerika, og består av en rekke underarter. Den er satt ut i flere europeiske land siden 1600-tallet. I Storbritannia er det estimert en bestandsstørrelse på 62000 par, og bestanden er sterkt økende både i antall og utbredelse (Holling 2017). Arten er etablert i Finland, Sverige og Danmark. Ca 17000 par hekker i Sverige (Ottosson et al. 2012). Ca. 20 par hekker i Danmark per 1998, men her øker bestanden (Miljøstyrelsen 2017). Arten er også etablert i bl.a. Tyskland (3600-5000 par), Belgia (mer enn 1500 par) og Nederland (4200 par), med økende bestander (Banks et al. 2008; Boele et al. 2013; Gedeon et al. 2014).",
+    "FutureDistributionChangeExpectedDescription": null,
+    "FutureDistributionCriticalParameters": null,
+    "PotentialAreaDistribution": null,
+    "PotentialAreaDistributionInTheFuture": null,
+    "CurrentExistenceArea": 24000,
+    "CurrentExistenceAreaLowCalculated": 24000,
+    "CurrentExistenceAreaLowMultiplier": "1",
+    "CurrentExistenceAreaCalculated": 48000,
+    "CurrentExistenceAreaMultiplier": "2",
+    "CurrentExistenceAreaHighMultiplier": "2",
+    "CurrentExistenceAreaHighCalculated": 48000,
+    "CurrentIndividualCount": 6000,
+    "CurrentIndividualCountLowCalculated": 12000,
+    "CurrentIndividualCountLowMultiplier": "2",
+    "CurrentIndividualCountCalculated": 30000,
+    "CurrentIndividualCountMultiplier": "5",
+    "CurrentIndividualCountHighMultiplier": "7",
+    "CurrentIndividualCountHighCalculated": 42000,
+    "CurrentSpreadArea": 37632,
+    "CurrentSpreadAreaLowCalculated": 37632,
+    "CurrentSpreadAreaHighCalculated": 37632,
+    "CurrentSpreadAreaCalculated": 37632,
+    "CurrentPresenceComment": "Arten er i dag under spredning nordover på fastlands-Norge, og den er observert et fåtall ganger på Svalbard. I et 50-årsperspektiv kan man tenke seg en ytterligere spredning på fastlands-Norge (inklusive Finnmark), og en etablering på Svalbard (feks i Adventdalen og andre vegetasjonsrike områder). I Nord-Amerika hekker arten helt nord i polare områder. Den norske hekkebestanden blir i dag estimert til 2000-4000 par, og 30000 individer før jakt utpå ettersommeren (Shimmings og Øien 2015).    ",
+    "PotentialExistenceAreaLowQuartile": 24000,
+    "PotentialExistenceArea": 48000,
+    "PotentialExistenceAreaHighQuartile": 48000,
+    "PotentialPresenceComment": null,
+    "SpreadHistoryDomesticAreaInStronglyChangedNatureTypes": 0,
+    "ImpactedNatureTypes": [
+        {
+            "NiNCode": "T12",
+            "NiNVariation": [],
+            "DominanceForrest": [],
+            "TimeHorizon": "now",
+            "ColonizedArea": "20-50",
+            "StateChange": [
+                "other"
+            ],
+            "AffectedArea": "0–2"
+        },
+        {
+            "NiNCode": "V10",
+            "NiNVariation": [],
+            "DominanceForrest": [],
+            "TimeHorizon": "now",
+            "ColonizedArea": "5-10",
+            "StateChange": [
+                "other"
+            ],
+            "AffectedArea": "2-5"
+        },
+        {
+            "NiNCode": "F3",
+            "NiNVariation": [],
+            "DominanceForrest": [],
+            "TimeHorizon": "now",
+            "ColonizedArea": "5-10",
+            "StateChange": [
+                "7EU"
+            ],
+            "AffectedArea": "2-5"
+        },
+        {
+            "NiNCode": "T3",
+            "NiNVariation": [],
+            "DominanceForrest": [],
+            "TimeHorizon": "future",
+            "ColonizedArea": "0–2",
+            "StateChange": [],
+            "AffectedArea": "0"
+        },
+        {
+            "NiNCode": "T32",
+            "NiNVariation": [],
+            "DominanceForrest": [],
+            "TimeHorizon": "now",
+            "ColonizedArea": "2-5",
+            "StateChange": [
+                "other"
+            ],
+            "AffectedArea": "2-5"
+        },
+        {
+            "NiNCode": "L4",
+            "NiNVariation": [],
+            "DominanceForrest": [],
+            "TimeHorizon": "now",
+            "ColonizedArea": "2-5",
+            "StateChange": [
+                "7EU"
+            ],
+            "AffectedArea": "2-5"
+        }
+    ],
+    "RedlistedNatureTypes": [],
+    "UsesLivingSpeciesAsHabitat": false,
+    "UsesLivingSpeciesAsHabitatScientificName": null,
+    "RiskAssessment": {
+        "RiskLevel": 4,
+        "DecisiveCriteria": "4C,4DE",
+        "RiskLevelCode": "SE",
+        "RiskLevelText": "Svært høy risiko",
+        "EcoEffectLevel": 3,
+        "EcoEffectUncertaintyLevels": [
+            2,
+            3
+        ],
+        "InvationPotentialLevel": 3,
+        "InvationPotentialUncertaintyLevels": [
+            3
+        ],
+        "Criteria": [
+            {
+                "Id": "InvasionPopulationLifetimeExpectancy",
+                "Value": 3,
+                "Akse": "Invasion",
+                "CriteriaLetter": "A",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    3
+                ]
+            },
+            {
+                "Id": "InvasionExpansionSpeed",
+                "Value": 0,
+                "Akse": "Invasion",
+                "CriteriaLetter": "B",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    0,
+                    1
+                ]
+            },
+            {
+                "Id": "InvasionColonizationOfNaturetypeAfter50Years",
+                "Value": 3,
+                "Akse": "Invasion",
+                "CriteriaLetter": "C",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    3
+                ]
+            },
+            {
+                "Id": "EcologicalEffectInteractionWithThreatenedSpecies",
+                "Value": 3,
+                "Akse": "EcoEffect",
+                "CriteriaLetter": "D",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    3,
+                    2
+                ]
+            },
+            {
+                "Id": "EcologicalEffectInteractionWithDomesticSpecies",
+                "Value": 3,
+                "Akse": "EcoEffect",
+                "CriteriaLetter": "E",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    3,
+                    2
+                ]
+            },
+            {
+                "Id": "EcologicalEffectInfluenceOnThreatenedNatureTypes",
+                "Value": 0,
+                "Akse": "EcoEffect",
+                "CriteriaLetter": "F",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    0,
+                    1
+                ]
+            },
+            {
+                "Id": "EcologicalEffectInfluenceOnCommonNatureTypes",
+                "Value": 0,
+                "Akse": "EcoEffect",
+                "CriteriaLetter": "G",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    0
+                ]
+            },
+            {
+                "Id": "EcologicalEffectTransferOfGeneticMaterial",
+                "Value": 2,
+                "Akse": "EcoEffect",
+                "CriteriaLetter": "H",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    2,
+                    1
+                ]
+            },
+            {
+                "Id": "EcologicalEffectTransferOfDiseasesAndParasites",
+                "Value": 0,
+                "Akse": "EcoEffect",
+                "CriteriaLetter": "I",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    0,
+                    1
+                ]
+            }
+        ],
+        "QuantitativeDataForDomesticSpreadExsists": false,
+        "QuantitativeDataForForeignSpreadExsists": false,
+        "QuantitativeDataComment": "<p>Finnes bare fragmentarisk kunnskap om endring i utbredelse og bestand etter introduksjon.</p>",
+        "EstimatedSpeciesCount": 5000,
+        "EstimatedSpeciesCountMethod": "Estimated",
+        "EstimatedSpeciesCountAssumption": "<p>Birdlife 2004 og mer tilfeldige og mangelfulle registreringer 2005-2010.</p>",
+        "EstimatedSpeciesLongevityMoreThan1000Years": true,
+        "EstimatedSpeciesLongevity": null,
+        "EstimatedSpeciesLongevityMethod": "<p>Arten har reprodusert i Norge i ca 70 &#229;r, bestanden antas &#229; v&#230;re i vekst og arten har i Norge et klimaregime tilsvarende der den har sin opprinnelse.</p>",
+        "ChosenSpreadMedanLifespan": "RedListCategoryLevel",
+        "ActiveSpreadPVAAnalysisSpeciesLongevity": false,
+        "SpreadPVAAnalysis": null,
+        "ActiveSpreadPVAAnalysisEstimatedSpeciesLongevity": false,
+        "SpreadPVAAnalysisEstimatedSpeciesLongevity": null,
+        "SpreadPVAAnalysisEstimatedSpeciesLongevityLowerQuartile": null,
+        "SpreadPVAAnalysisEstimatedSpeciesLongevityUpperQuartile": null,
+        "ActiveRedListCategoryLevel": true,
+        "RedListUsedCriteria": "",
+        "RedListDataDescription": "Stor, økende bestand",
+        "RedListCategory": "LC",
+        "RedListSubCategory": null,
+        "SpreadRscriptSpeciesCount": 0,
+        "SpreadRscriptPopulationGrowth": "0.0",
+        "SpreadRscriptDemographicVariance": null,
+        "SpreadRscriptEnvironmantVariance": null,
+        "SpreadRscriptQuasiExtinctionThreshold": null,
+        "SpreadRscriptSustainabilityK": null,
+        "ActiveSpreadRscriptEstimatedSpeciesLongevity": false,
+        "SpreadRscriptEstimatedSpeciesLongevity": null,
+        "ChosenSpreadYearlyIncrease": "SpreadYearlyIncreaseCalculatedExpansionSpeed",
+        "ActiveSpreadYearlyIncreaseObservations": false,
+        "SpreadYearlyIncreaseObservations": null,
+        "SpreadYearlyIncreaseObservationsLowerQuartile": null,
+        "SpreadYearlyIncreaseObservationsUpperQuartile": null,
+        "ActiveSpreadYearlyIncreaseOccurrenceArea": false,
+        "SpreadYearlyIncreaseOccurrenceArea": null,
+        "SpreadYearlyIncreaseOccurrenceAreaLowerQuartile": null,
+        "SpreadYearlyIncreaseOccurrenceAreaUpperQuartile": null,
+        "ActiveSpreadYearlyLiteratureData": false,
+        "SpreadYearlyLiteratureDataExpansionSpeed": null,
+        "SpreadYearlyLiteratureDataUncertainty": null,
+        "SpreadYearlyLiteratureDataNumberOfIntroductionSources": null,
+        "SpreadYearlyLiteratureData": "",
+        "SpreadYearlyLiteratureDataSource": null,
+        "ActiveSpreadYearlyIncreaseCalculatedExpansionSpeed": true,
+        "SpreadYearlyIncreaseEstimate": "0",
+        "SpreadYearlyIncreaseEstimateDescription": "Nordligste hekkefunn Ballangen, Nordland 2013",
+        "SpreadYearlyIncreaseCalculatedExpansionSpeed": "0",
+        "SpreadYearlyIncrease": null,
+        "SpreadYearlyIncreaseMethod": null,
+        "SpreadManualEstimate": "<p>Dersom ikke effektive tiltak settes inn for å fjerne arten fra Norge antar vi at den har en levetid på &gt; 1000 år.</p>",
+        "SpreadManualEstimateSpeciesLongevity": null,
+        "SpreadManualEstimateSpeciesLongevityIsMoreThan1000years": true,
+        "IncreasingDensity": null,
+        "IncreasingDensityMethod": null,
+        "IncreasingDensityPVAAnalysis": null,
+        "IncreasingDensityPercentualComputation": null,
+        "IncreasingDensityPercentualComputationPeriod": null,
+        "IncreasingDensityManualEstimate": null,
+        "IncreasingDensityManualEstimateDescription": null,
+        "NaturetypeExpectedColonized": null,
+        "SpeciesSpeciesInteractions": [
+            {
+                "ScientificName": "Gallinula chloropus",
+                "ScientificNameId": "4099",
+                "ScientificNameAuthor": "(Linnaeus, 1758)",
+                "VernacularName": "sivhøne",
+                "TaxonRank": "Species",
+                "TaxonId": "4018",
+                "RedListCategory": "VU",
+                "KeyStoneSpecie": false,
+                "Effect": "Displacement",
+                "EffectLocalScale": true,
+                "InteractionType": "CompetitionSpace",
+                "LongDistanceEffect": false,
+                "ConfirmedOrAssumed": true,
+                "DomesticOrAbroad": ""
+            },
+            {
+                "ScientificName": "Fulica atra",
+                "ScientificNameId": "4096",
+                "ScientificNameAuthor": "Linnaeus, 1758",
+                "VernacularName": "sothøne",
+                "TaxonRank": "Species",
+                "TaxonId": "4015",
+                "RedListCategory": "VU",
+                "KeyStoneSpecie": false,
+                "Effect": "Displacement",
+                "EffectLocalScale": true,
+                "InteractionType": "CompetitionSpace",
+                "LongDistanceEffect": false,
+                "ConfirmedOrAssumed": true,
+                "DomesticOrAbroad": ""
+            },
+            {
+                "ScientificName": "Anser anser",
+                "ScientificNameId": "3471",
+                "ScientificNameAuthor": "(Linnaeus, 1758)",
+                "VernacularName": "grågås",
+                "TaxonRank": "Species",
+                "TaxonId": "3436",
+                "RedListCategory": "LC",
+                "KeyStoneSpecie": false,
+                "Effect": "Weak",
+                "EffectLocalScale": false,
+                "InteractionType": "CompetitionSpace",
+                "LongDistanceEffect": false,
+                "ConfirmedOrAssumed": true,
+                "DomesticOrAbroad": "True"
+            },
+            {
+                "ScientificName": "Cygnus olor",
+                "ScientificNameId": "3511",
+                "ScientificNameAuthor": "(J. F. Gmelin, 1789)",
+                "VernacularName": "knoppsvane",
+                "TaxonRank": "Species",
+                "TaxonId": "3473",
+                "RedListCategory": "LC",
+                "KeyStoneSpecie": false,
+                "Effect": "Weak",
+                "EffectLocalScale": false,
+                "InteractionType": "CompetitionSpace",
+                "LongDistanceEffect": false,
+                "ConfirmedOrAssumed": true,
+                "DomesticOrAbroad": "True"
+            }
+        ],
+        "SpeciesNaturetypeInteractions": [
+            {
+                "NiNCode": "T12",
+                "NiNVariation": [],
+                "RedListCategory": "",
+                "KeyStoneSpecie": false,
+                "Effect": "Weak",
+                "EffectLocalScale": false,
+                "InteractionType": "CompetitionFood",
+                "LongDistanceEffect": false,
+                "ConfirmedOrAssumed": false,
+                "DomesticOrAbroad": ""
+            },
+            {
+                "NiNCode": "V10",
+                "NiNVariation": [],
+                "RedListCategory": "",
+                "KeyStoneSpecie": false,
+                "Effect": "Weak",
+                "EffectLocalScale": false,
+                "InteractionType": "CompetitionFood",
+                "LongDistanceEffect": false,
+                "ConfirmedOrAssumed": false,
+                "DomesticOrAbroad": ""
+            },
+            {
+                "NiNCode": "V10",
+                "NiNVariation": [],
+                "RedListCategory": "",
+                "KeyStoneSpecie": false,
+                "Effect": "Moderate",
+                "EffectLocalScale": false,
+                "InteractionType": "CompetitionSpace",
+                "LongDistanceEffect": false,
+                "ConfirmedOrAssumed": false,
+                "DomesticOrAbroad": ""
+            },
+            {
+                "NiNCode": "F3",
+                "NiNVariation": [],
+                "RedListCategory": "",
+                "KeyStoneSpecie": false,
+                "Effect": "Moderate",
+                "EffectLocalScale": false,
+                "InteractionType": "Other",
+                "LongDistanceEffect": false,
+                "ConfirmedOrAssumed": false,
+                "DomesticOrAbroad": ""
+            },
+            {
+                "NiNCode": "T32",
+                "NiNVariation": [],
+                "RedListCategory": "",
+                "KeyStoneSpecie": false,
+                "Effect": "Weak",
+                "EffectLocalScale": false,
+                "InteractionType": "CompetitionFood",
+                "LongDistanceEffect": false,
+                "ConfirmedOrAssumed": false,
+                "DomesticOrAbroad": ""
+            },
+            {
+                "NiNCode": "L4",
+                "NiNVariation": [],
+                "RedListCategory": "",
+                "KeyStoneSpecie": false,
+                "Effect": "Displacement",
+                "EffectLocalScale": false,
+                "InteractionType": "CompetitionSpace",
+                "LongDistanceEffect": false,
+                "ConfirmedOrAssumed": true,
+                "DomesticOrAbroad": ""
+            }
+        ],
+        "SpeciesSpeciesInteractionsSupplementaryInformation": "Kanadagåsa er den introduserte fuglearten i Europa som medfører flest skadevirkninger både på miljø og økonomi (Kumschick &amp; Nentwig 2010). Arten er aggresiv i hekkeperioden og konkurerer med stedegne arter både om plass og næring (Banks et al. 2008; Anonym 2011; Nehring et al. 2015). I områder med høye tettheter kan dette medføre fortrengning av stedegne arter. Man har observert at både unge og voksne siv- og sothøner er blitt drept av territoriehevdende kanadagjess. Stedegne svaner og gjess kan også fortrenges av arten (Banks et al. 2008), selv om alvorlighetsgraden av dette fortsatt blir diskutert (Anonym 2011; Bevanger &amp; Follestad 2012). I Storbritannia er det vist at kanadagåsa furasjerer på ålegress om vinteren, noe som kan medføre konkurranse med ringgås om føde (Anonym 2011). Kanadagåsa kan hybridisere med en rekke gåsearter, og særlig ofte med grågås. Introgresjon er kjent med grågås, og trolig med hvitkinngås (McCarthy 2006; Banks et al. 2008).&nbsp;    Welch et al. (2001) anser kanadagåsa å være en potensiell trussel mot andre gåspopulasjoner inkludert grågås gjennom hybridisering og introgresjon. For øvrig vil kanadagås føre til at det er tettere med fugl i enkelte vannlokaliteter vinterstid, noe som øker spredningsmuligheter for stedegne sykdommer og parasitter    ",
+        "GeneticTransferDocumented": [
+            {
+                "ScientificName": "Anser anser",
+                "ScientificNameId": "3471",
+                "ScientificNameAuthor": "(Linnaeus, 1758)",
+                "VernacularName": "grågås",
+                "TaxonRank": "Species",
+                "TaxonId": "3436",
+                "RedListCategory": "LC",
+                "KeyStoneSpecie": false,
+                "Effect": "Weak",
+                "EffectLocalScale": false,
+                "InteractionType": "",
+                "LongDistanceEffect": false,
+                "ConfirmedOrAssumed": true,
+                "DomesticOrAbroad": "True"
+            },
+            {
+                "ScientificName": "Branta leucopsis",
+                "ScientificNameId": "3499",
+                "ScientificNameAuthor": "(Bechstein, 1803)",
+                "VernacularName": "hvitkinngås",
+                "TaxonRank": "Species",
+                "TaxonId": "3461",
+                "RedListCategory": "LC",
+                "KeyStoneSpecie": false,
+                "Effect": "Weak",
+                "EffectLocalScale": false,
+                "InteractionType": "",
+                "LongDistanceEffect": false,
+                "ConfirmedOrAssumed": true,
+                "DomesticOrAbroad": ""
+            }
+        ],
+        "HostParasiteInformations": [],
+        "ThreatenedNatureTypes": [
+            "Aktivt marint delta",
+            "Sørlig strandeng",
+            "Kroksjøer, meandere og flomløp",
+            "Rikere myrflate i låglandet"
+        ],
+        "ThreatenedNatureTypesDomesticObserved": false,
+        "ThreatenedNatureTypesDomesticDocumented": false,
+        "ThreatenedNatureTypesForeignDocumented": false,
+        "ThreatenedNatureTypesAffectedDomesticDescription": null,
+        "ThreatenedNatureTypesAffectedAbroadDescription": "",
+        "CommonNatureTypes": [],
+        "CommonNatureTypesDomesticObserved": false,
+        "CommonNatureTypesDomesticDocumented": false,
+        "CommonNatureTypesForeignDocumented": false,
+        "CommonNatureTypesAffectedDomesticDescription": null,
+        "CommonNatureTypesAffectedAbroadDescription": "",
+        "GeneticTransferDomesticDescription": null,
+        "GeneticTransferDomesticObserved": true,
+        "GeneticTransferDomesticDocumented": false,
+        "GeneticTransferForeignDocumented": true,
+        "VectorBiologicalDiseaseSpreadingDomesticDescription": null,
+        "BiologicalDiseaseSpreadingDomesticObserved": false,
+        "BiologicalDiseaseSpreadingDomesticDocumented": false,
+        "BiologicalDiseaseSpreadingForeignDocumented": false,
+        "GeographicalVariation": [
+            "ecologicalEffectLimitedToCertainNatureTypes"
+        ],
+        "GeographicalVariationDocumentation": "Arten finnes i mange ulike naturtyper knyttet til vann&nbsp; &nbsp;&nbsp;",
+        "ClimateEffectsInvationpotential": "unknown",
+        "ClimateEffectsEcoEffect": "unknown",
+        "ClimateEffectsDocumentation": "Mange underarter, som er tilpasset ulike klimasoner",
+        "CriteriaDocumentation": "<p>    Kanadagåsa er vel etablert i Norge med flere tusen hekkende par. Stor økologisk effekt (feks konkurranse om mat, plass og hybridisering med introgresjon) kombinert med     stort invasjonspotensiale gir risikokategorien \"svært høy risiko\" (SE) etter C (invasjonspotensial), D og E-kriteriet (økologisk effekt).&nbsp;</p>",
+        "CriteriaDocumentationSpeciesStatus": "Kanadagåsa hekker naturlig i midtre og nordlige deler av Nord-Amerika, og består av en rekke underarter. Arten finnes i mange ulike naturtyper knyttet til vann. Den er satt ut i flere europeiske land siden 1600-tallet. I Storbritannia er det estimert en bestandsstørrelse på 62000 par, og bestanden er sterkt økende både i antall og utbredelse (Holling 2017). Arten er etablert i Finland, Sverige og Danmark. Ca 17000 par hekker i Sverige (Ottosson et al. 2012) og ca. 20 par hekker i Danmark per 1998, men her øker bestanden (Miljøstyrelsen 2017). Arten er også etablert i bl.a. Tyskland (3600-5000 par), Belgia (mer enn 1500 par) og Nederland (4200 par), med økende bestander (Banks et al. 2008; Boele et al. 2013; Gedeon et al. 2014). &nbsp; &nbsp;",
+        "CriteriaDocumentationDomesticSpread": "    De første utsettingene i Norge fant sted i 1936, og bestanden var svært liten fram til midten av 1960-tallet (Bevanger 2005). Fra da av og de neste tyve årene ble det satt ut minst 750 kanadagjess fordelt på alle sørnorske fylker unntatt Oppland. Bestanden økte sterkt i takt med utsettingene og ble trolig fordoblet hvert tredje år i perioden 1971-1983. Bestanden i 1984 ble estimert til 700-900 par (Heggberget 1987), eller 5000-7000 individer. Bestanden ble minst fordoblet fram til 1994, da den ble estimert til 1500-2000 par (Heggberget og Reitan 1994). Den norske hekkebestanden blir i dag estimert til 2000-4000 par, og 30000 individer før jakt utpå ettersommeren (Shimmings &amp; Øien 2015).",
+        "CriteriaDocumentationMigrationPathways": "Ble opprinnelig innført og satt ut til jaktformål. Ekspansjonen fra og med Nordland og nordover går foreløpig relativt langsomt, og arten er fortsatt sjelden i disse områdene. Kanadagåsa har imidlertid etablert seg med noen få hekkende par i Nordland.",
+        "CriteriaDocumentationInvationPotential": "    Kanadagåsa har økt i forekomst og utbredelse både i Norge og i mange av våre naboland. Arten vurderes som vel etablert i Norge, og det forventes en ytterligere spredning nordover i landet i et 50års-perspektiv.",
+        "CriteriaDocumentationEcoEffect": "<p>Kanadagåsa er den introduserte  fuglearten i Europa som medfører flest skadevirkninger både på miljø og økonomi  (Kumschick &amp; Nentwig 2010). Arten er aggresiv i hekkeperioden og konkurerer  med stedegne arter både om plass og næring (Banks et al. 2008; Anonym 2011;  Nehring et al. 2015). I områder med høye tettheter kan dette medføre  fortrengning av stedegne arter. Man har observert at både unge og voksne siv-  og sothøner er blitt drept av territoriehevdende kanadagjess. Stedegne svaner  og gjess kan også fortrenges av arten (Banks et al. 2008), selv om  alvorlighetsgraden av dette fortsatt blir diskutert (Anonym 2011; Bevanger  &amp; Follestad 2012). I Storbritannia er det vist at kanadagåsa furasjerer på  ålegress om vinteren, noe som kan medføre konkurranse med ringgås om føde (Anonym  2011). Kanadagåsa kan hybridisere med en rekke gåsearter, og særlig ofte med  grågås. Introgresjon er kjent med grågås, og trolig med hvitkinngås (McCarthy  2006; Banks et al. 2008).&nbsp; Welch et al. (2001) anser kanadagåsa å være en  potensiell trussel mot andre gåspopulasjoner inkludert grågås gjennom  hybridisering og introgressjon. For øvrig vil kanadagås føre til at det er  tettere med fugl i enkelte vannlokaliteter vinterstid, noe som øker  spredningsmuligheter for stedegne sykdommer og parasitter.</p>"
+    },
+    "RegionalRiskAssessments": [],
+    "References": [
+        {
+            "Type": "Publication",
+            "ReferenceId": "ee394ce1-2816-4aa2-a3e6-58196272a123",
+            "FormattedReference": "Gallardo, B., Zieritz, A. & Aldridge, D.C. 2013. Targeting and Prioritisation for INS in the RINSE Project Area Cambridge Environmental Consulting"
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "eff5618d-ffba-40d9-8864-68524b9af132",
+            "FormattedReference": "Anonymous 2017. Harmonia. Invasive species in Belgium. http://ias.biodiversity.be/species/all"
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "e8ca4a07-b35b-440f-b716-f1068207e49b",
+            "FormattedReference": "Carboneras, C., Christie, D.A. & Kirwan, G.M. 2017. Canada Goose (Branta canadensis). In: del Hoyo, J., Elliott, A., Sargatal, J., Christie, D.A. & de Juana, E. (eds.). Handbook of the Birds of the World Alive. Lynx Edicions, Barcelona. (retrieved from http://www.hbw.com/node/52821 on 4 August 2017)"
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "7d58964e-ae26-4264-a266-73a3136a6b74",
+            "FormattedReference": "Shimmings P. & Øien, I.J. 2015. Bestandsestimater og trender for norske hekkefugler. NOF-rapport 2015-2."
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "0ec8feb6-22da-437a-a09f-4c780ed96697",
+            "FormattedReference": "McCarthy, E.M. 2006. Handbook of avian hybrids of the world. Oxford University Press, Oxford"
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "4384f6e2-cb2b-48d4-8dcb-d58ff1ed2fa4",
+            "FormattedReference": "Nehring, S., Rabitsch, W., Kowarik, I. & Essl, F. 2015. Naturschutzfachliche Invasivitätsbewertungen für in Deutschland wild lebende gebietsfremde Wirbeltiere Bundesamt für Naturschutz BfN-Skripten 409"
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "465b4f85-a113-497c-9b6b-b2cc43da242e",
+            "FormattedReference": "Holling, M. 2017. Non-native breeding birds in the UK, 2012–14 British Birds 110: 92–108"
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "043f07ad-0e6c-4cd0-9aea-fa0e9526c773",
+            "FormattedReference": "Gedeon, K., Grüneberg, C., Mitschke, A., Sudfeldt, C., Eikhorst, W., Fischer, S., Flade, M., Frick, S., Geiersberger, I., Koop, B., Kramer, M., Krüger, T., Roth, N., Ryslavy, T., Stübing, S., Sudmann, S. R., Steffens, R., Vökler, F. & Witt, K. 2014. Atlas Deutscher Brutvogelarten. Atlas of German Breeding Birds. Stiftung Vogelmonitoring und dem Dachverband Deutscher Avifaunisten. Münster 800 sider"
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "85999079-f71d-49d4-8378-9e0cd1dde7ef",
+            "FormattedReference": "Ottosson, U., Ottvall, R., Elmberg, J., Green, M., Gustafsson, R., Haas, F., Holmqvist, N., Lindström, Å., Nilsson, L., Svensson, M., Svensson, S. & Tjernberg, M. 2012. Fåglarna i Sverige – antal och förekomst. Sveriges Ornitologiska Förening, Halmstad."
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "6ff46860-8c80-4e54-9273-4339539ad1fc",
+            "FormattedReference": "Bevanger, K. 2005. Nye dyrearter i norsk natur. Landbruksforlaget"
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "2174cece-8757-44e6-be95-121ba46a2801",
+            "FormattedReference": "Falkenberg, F., Reinsborg, T., Myklebust, M., Winnem, A. M., Magnussen, J. H., Holtskog, T., Heggøy, O & Ranke, P. S. 2016. Fugler i Norge i 2013 og 2014. Rapport fra Norsk faunakomité for fugl (NFKF) Fugleårene 2013 og 2014 70-193"
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "426cb487-5ef4-406f-9815-381f2655ab1d",
+            "FormattedReference": "Boele, A., van Bruggen, J., van Dijk, A., Hustings, F., Vergeer, J.-W. & Plate, C. 2013. Broedvogels in Nederland in 2011 Sovon Vogelonderzoek Nederland Sovon-rapport 2013/01"
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "715c2ab9-d7fe-41a2-908d-42d2dae449c4",
+            "FormattedReference": "Kampe-Persson H 2010. Naturalised geese in Europe Ornis Svecica 20: 155–173"
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "45c57dc9-a278-4fbe-af8f-f5d20cd6cdb6",
+            "FormattedReference": "Banks, A. N., Wright, L. J., Maclean, I. M. D., Hann, C. & Rehfisch, M. M. 2008. Review of the Status of Introduced Non-Native Waterbird Species in the Area of the African-Eurasian Waterbird Agreement: 2007 Update BTO Research Report No. 489. British Trust for Ornithology, The Nunnery, Thetford, Norfolk"
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "06a4dfba-140f-4ff1-b2eb-a779d3d62727",
+            "FormattedReference": "Jansson, K., Josefsson, M. and Weidema, I. 2008. NOBANIS – Invasive Alien Species Fact Sheet –Branta canadensis. – From: Online Database of the North European and Baltic Network on Invasive Alien Species – NOBANIS www.nobanis.org, Date of access 04/08/2017"
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "57ea746d-82f5-46f8-8f68-13a0d7a257d6",
+            "FormattedReference": "Miljøstyrelsen 2017. Faktaark for invasive arter – Canadagås (Branta canadensis) fra www.mst.dk. Hentet 04.08.2017"
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "98312596-99b3-40a5-88d8-f742c85ac7cd",
+            "FormattedReference": "Anonym 2011. Branta canadensis - Greater Canada Goose. GB NON-NATIVE ORGANISM RISK ASSESSMENT SCHEME. www.nonnativespecies.org"
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "b59d5c4c-4c05-4f5f-a3a8-32bba38b3194",
+            "FormattedReference": "Kumschick, S. & Nentwig, W. 2010. Some alien birds have as severe an impact as the most effectual alien mammals in Europe Biological Conservation 143: 2757-2762"
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "14e5aa97-16f0-4b79-8283-df9e88eb1321",
+            "FormattedReference": "Reitan, O. 2006. Kanadagås Branta canadensis. - S. 56-57 i Svorkmo-Lundberg, T., Bakken, V., Helberg, M., Mork, K., Røer, J.E. & Sæbø, S. (red.). Norsk vinterfuglatlas. Fuglenes utbredelse, bestandsstørrelse og økologi vinterstid. Norsk Ornitologisk Forening, Trondheim"
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "b18d1f25-9c1b-4ed7-bda8-623c0949b4ea",
+            "FormattedReference": "Heggberget, T. M. & Reitan, O. 1994. Kanadagås Branta canadensis"
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "3bb101a7-b759-4e12-b003-fa3934435436",
+            "FormattedReference": "Heggberget, T. M. 1987. Utviklingen i den norske bestanden av kanadagjess inntil 1984. Fauna 40: 1-9"
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "05a3c162-52aa-411b-9152-e3fe8760cba8",
+            "FormattedReference": "Bevanger, K. & Follestad, A. 2012. Kanadagås. Branta canadensis. Artsdatabankens faktaark ISSN1504-9140 nr. 218"
+        },
+        {
+            "Type": "Publication",
+            "ReferenceId": "7990ad5f-93f0-495f-82a9-bedf2cf86c6d",
+            "FormattedReference": "Welch, D., Carrs, D.N., Gornall, J., Manchester, S.J., Marquiss, M., Preston, C.D., Telfer, M.G., Arnold, H. & Holbrook, J. 2001. An audit of alien species in Scotland. Scottish Natural Heritage Review No 139, SNH Publications, Battleby"
+        }
+    ],
+    "LockedForEditByUser": "bardst",
+    "LockedForEditTimeStamp": "2017-09-19T07:16:10.807Z"
+}

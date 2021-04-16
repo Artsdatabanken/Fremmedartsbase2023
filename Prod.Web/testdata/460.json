@@ -1,0 +1,972 @@
+{
+    "RegionalPresenceKnown": "Øs,OsA,He,Op,Bu,Ve,Te,Aa,Va,Ro,Ho,Sf,Mr,St,Nt",
+    "RegionalPresenceAssumed": "",
+    "RegionalPresencePotential": "Øs,OsA,He,Op,Bu,Ve,Te,Aa,Va,Ro,Ho,Sf,Mr,St,Nt",
+    "VurderingId2012": 460,
+    "RiskLevel2012": 3,
+    "SpreadRiskLevel2012": 4,
+    "EcologicalRiskLevel2012": 1,
+    "EvaluationContext": "N",
+    "ExpertGroupId": "ExpertGroups/Karplanter/N",
+    "TaxonId": 130655,
+    "ExpertGroup": "Karplanter",
+    "Citation": "Elven R, Hegre H, Solstad H, Pedersen O, Pedersen PA, Åsen PA og Vandvik V (2018). Armoracia rusticana, vurdering av økologisk risiko. Fremmedartslista 2018. Artsdatabanken. Hentet (dato) fra https://artsdatabanken.no/Fab2018/N/460",
+    "AlienSpeciesCategory": "AlienSpecie",
+    "VurderingsStatus": "finnished",
+    "SistOppdatert": "2018-01-16T09:55:17.2777700",
+    "SistOppdatertAv": "Reidar Elven",
+    "IsEvaluated": true,
+    "EvaluatedScientificNameId": 101094,
+    "EvaluatedScientificName": "Armoracia rusticana",
+    "EvaluatedScientificNameAuthor": null,
+    "EvaluatedVernacularName": "pepperrot",
+    "Datasett": {
+        "Files": [
+            {
+                "Filename": "Armoracia rusticana.xlsx",
+                "Size": 106158,
+                "LastModified": "0001-01-01T00:00:00.0000000",
+                "Description": null,
+                "Url": "FA3_N_460/SpreadHistory/Armoracia rusticana.xlsx"
+            },
+            {
+                "Filename": "Armoracia rusticana.csv",
+                "Size": 26433,
+                "LastModified": "0001-01-01T00:00:00.0000000",
+                "Description": "Analyse med mørketallsintervall 3-10.",
+                "Url": "FA3_N_460/SpreadYearlyIncrease/Armoracia rusticana.csv"
+            }
+        ]
+    },
+    "AlienSpeciesCategory2012": "AlienSpecie",
+    "DoorKnockerDescription": null,
+    "NotReproductiveDescription2012": null,
+    "NotReproductiveFutureDescription2012": null,
+    "AssesmentNotApplicableDescription": null,
+    "AlienSpecieUncertainIfEstablishedBefore1800": false,
+    "AlienSpecieUncertainAntropochor": false,
+    "AlienSpecieUncertainDescription": null,
+    "SkalVurderes": false,
+    "DoorKnockerCategory": null,
+    "RegionallyAlienCategory": "doRiskAssessment",
+    "NotApplicableCategory": "notAlienSpecie",
+    "ObservedAndEstablishedStatusInCountry": {
+        "Indoor": {
+            "ObservedInCountry": {
+                "Place": null,
+                "Time": null
+            },
+            "FertileSpecimenObserved": {
+                "Place": null,
+                "Time": null
+            },
+            "Established": {
+                "Place": null,
+                "Time": null
+            },
+            "Population": {
+                "Place": null,
+                "Time": null
+            },
+            "SpecimenCount": null
+        },
+        "ProductionArea": {
+            "ObservedInCountry": {
+                "Place": null,
+                "Time": null
+            },
+            "FertileSpecimenObserved": {
+                "Place": null,
+                "Time": null
+            },
+            "Established": {
+                "Place": null,
+                "Time": null
+            },
+            "Population": {
+                "Place": null,
+                "Time": null
+            },
+            "SpecimenCount": null
+        },
+        "NorwegianNature": {
+            "ObservedInCountry": {
+                "Place": null,
+                "Time": null
+            },
+            "FertileSpecimenObserved": {
+                "Place": "MR Kristiansund: \"Gomalandet kirkegaard (ballastjord)\"",
+                "Time": "1870"
+            },
+            "Established": {
+                "Place": null,
+                "Time": null
+            },
+            "Population": {
+                "Place": "Vf Sande: mellom Holmestrand og Sande",
+                "Time": "1884"
+            },
+            "SpecimenCount": null
+        }
+    },
+    "Limnic": false,
+    "Terrestrial": true,
+    "Marine": false,
+    "BrackishWater": false,
+    "FirstDomesticObservation": "1870",
+    "FirstDomesticObservationLocation": "MR Kristiansund: Gomalandet (ballast)",
+    "FirstDomesticEstablishmentObserved": "1884",
+    "FirstDomesticEstablishmentObservedLocation": "Vf Sande - Holmestrand",
+    "ArrivedCountryFrom": [
+        "unknown"
+    ],
+    "ArrivedCountryFromDetails": "Trolig kommet fra naboland i Nord-Europa heller enn direkte fra Russland-Sibir.",
+    "NaturalOrigins": [
+        {
+            "ClimateZone": "polar;",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "temperate;boreal",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "temperate;nemoral",
+            "Europe": true,
+            "Asia": true,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "temperate;dry",
+            "Europe": true,
+            "Asia": true,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;unspecified",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;mediterranean",
+            "Europe": true,
+            "Asia": true,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;humid",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;dry",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;caperegion",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;highlands",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "tropic;",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "unknown;",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        }
+    ],
+    "NaturalOriginUnknownDocumentation": "Sør-Russland og Vest-Asia (trolig, gammel kulturplante). &nbsp; &nbsp;",
+    "CurrentInternationalExistenceAreas": [
+        {
+            "ClimateZone": "polar;",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "temperate;boreal",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "temperate;nemoral",
+            "Europe": true,
+            "Asia": true,
+            "Africa": false,
+            "Oceania": true,
+            "NorthAndCentralAmerica": true,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "temperate;dry",
+            "Europe": true,
+            "Asia": true,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;unspecified",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;mediterranean",
+            "Europe": true,
+            "Asia": true,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": true,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;humid",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;dry",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;caperegion",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;highlands",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "tropic;",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "unknown;",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        }
+    ],
+    "CurrentInternationalExistenceAreasUnknownDocumentation": null,
+    "NaturalOriginMarine": [],
+    "NaturalOriginMarineDetails": null,
+    "CurrentInternationalExistenceMarineAreas": [],
+    "CurrentInternationalExistenceMarineAreasDetails": null,
+    "SurvivalBelow5c": false,
+    "IntroductionCourse": [
+        "BRomtEllerForvil",
+        "CBlindp"
+    ],
+    "DomesticRiskEvaluationExists": true,
+    "DomesticRiskEvaluationExists2007": false,
+    "ForeignRiskEvaluationExists": null,
+    "ForeignRiskEvaluationComment": null,
+    "Regeneration": null,
+    "RegenerationYears": null,
+    "Reproduction": null,
+    "ReproductionAsexual": false,
+    "ReproductionGenerationTime": 10,
+    "ReproductionSexual": true,
+    "SimilarDemographicComparison": null,
+    "HealthEffects": "Ingen kjent effekt",
+    "EconomicEffects": "Ingen kjent effekt",
+    "EcosystemServiceEffectsBasicLifeProcesses": [],
+    "EcosystemServiceEffectsProvisioningServices": [],
+    "EcosystemServiceEffectsRegulatingServices": [],
+    "EcosystemServiceEffectsHumanSpiritualServices": [],
+    "PositiveEcologicalEffects": "Ingen kjent effekt",
+    "EffectsOnPopulationOfOrigin": "Ingen kjent effekt",
+    "ImportPathways": [
+        {
+            "CodeItem": "privateImportation",
+            "IntroductionSpread": null,
+            "InfluenceFactor": "severalPr10years",
+            "Magnitude": "unknown",
+            "TimeOfIncident": "ceased",
+            "ElaborateInformation": "",
+            "Category": null
+        }
+    ],
+    "ImportedToIndoorOrProductionArea": true,
+    "AssesmentVectors": [
+        {
+            "CodeItem": "seedContaminant",
+            "IntroductionSpread": "introduction",
+            "InfluenceFactor": "severalPr10years",
+            "Magnitude": "unknown",
+            "TimeOfIncident": "historic",
+            "ElaborateInformation": "",
+            "Category": null
+        },
+        {
+            "CodeItem": "ballastWater",
+            "IntroductionSpread": "introduction",
+            "InfluenceFactor": "rarerThan10years",
+            "Magnitude": "unknown",
+            "TimeOfIncident": "historic",
+            "ElaborateInformation": "",
+            "Category": null
+        },
+        {
+            "CodeItem": "transportationOfHabitatMaterial",
+            "IntroductionSpread": "spread",
+            "InfluenceFactor": "severalPr10years",
+            "Magnitude": "unknown",
+            "TimeOfIncident": "ongoing",
+            "ElaborateInformation": "",
+            "Category": null
+        },
+        {
+            "CodeItem": "naturalDispersalAcrossBorders",
+            "IntroductionSpread": "spread",
+            "InfluenceFactor": "numerousYearly",
+            "Magnitude": "unknown",
+            "TimeOfIncident": "ongoing",
+            "ElaborateInformation": "",
+            "Category": null
+        },
+        {
+            "CodeItem": "horticulture",
+            "IntroductionSpread": "introduction",
+            "InfluenceFactor": "severalPr10years",
+            "Magnitude": "unknown",
+            "TimeOfIncident": "ongoing",
+            "ElaborateInformation": "",
+            "Category": null
+        }
+    ],
+    "Vector": null,
+    "SpreadHistory": [
+        {
+            "Id": "8b572e59-7929-45a8-615c-733e921c9281",
+            "Location": "MR Kristiansund: Gomalandet kirkegård (ballast) 1870; VA Kristiansand: Kongsgård 1876",
+            "Comment": "",
+            "Regions": "Va,Mr",
+            "RegionsAssumed": "",
+            "ObservationYear": 1880,
+            "ObservationFromYear": 1861,
+            "ObservationMonth": 0,
+            "ObservationFromMonth": 0,
+            "SpeciesCount": 0,
+            "ExistenceArea": 8,
+            "ExistenceAreaCount": 0,
+            "SpreadArea": 0,
+            "SpeciesCountDarkFigure": 1,
+            "ExistenceAreaDarkFigure": 1,
+            "ExistenceAreaCountDarkFigure": 1,
+            "SpreadAreaDarkFigure": 1,
+            "SpeciesCountCalculated": null,
+            "ExistenceAreaCalculated": 8,
+            "ExistenceAreaCountCalculated": 8,
+            "SpreadAreaCalculated": null,
+            "SelectionGeometry": ""
+        },
+        {
+            "Id": "81a15f37-43aa-4fbe-26e1-4eccfb9a93f8",
+            "Location": "",
+            "Comment": "",
+            "Regions": "OsA,Ve,Aa",
+            "RegionsAssumed": "",
+            "ObservationYear": 1900,
+            "ObservationFromYear": 1881,
+            "ObservationMonth": 0,
+            "ObservationFromMonth": 0,
+            "SpeciesCount": 0,
+            "ExistenceArea": 36,
+            "ExistenceAreaCount": 0,
+            "SpreadArea": 0,
+            "SpeciesCountDarkFigure": 1,
+            "ExistenceAreaDarkFigure": 1,
+            "ExistenceAreaCountDarkFigure": 1,
+            "SpreadAreaDarkFigure": 1,
+            "SpeciesCountCalculated": null,
+            "ExistenceAreaCalculated": 36,
+            "ExistenceAreaCountCalculated": 36,
+            "SpreadAreaCalculated": null,
+            "SelectionGeometry": ""
+        },
+        {
+            "Id": "dad92761-cc27-42fe-1974-f95847b10826",
+            "Location": "",
+            "Comment": "",
+            "Regions": "OsA,He,Bu,Te,Aa,Va,Ho",
+            "RegionsAssumed": "",
+            "ObservationYear": 1920,
+            "ObservationFromYear": 1901,
+            "ObservationMonth": 0,
+            "ObservationFromMonth": 0,
+            "SpeciesCount": 0,
+            "ExistenceArea": 60,
+            "ExistenceAreaCount": 0,
+            "SpreadArea": 0,
+            "SpeciesCountDarkFigure": 1,
+            "ExistenceAreaDarkFigure": 1,
+            "ExistenceAreaCountDarkFigure": 1,
+            "SpreadAreaDarkFigure": 1,
+            "SpeciesCountCalculated": null,
+            "ExistenceAreaCalculated": 60,
+            "ExistenceAreaCountCalculated": 60,
+            "SpreadAreaCalculated": null,
+            "SelectionGeometry": ""
+        },
+        {
+            "Id": "cbfc4313-060f-4916-f059-12d9e3675b9e",
+            "Location": "",
+            "Comment": "",
+            "Regions": "Øs,OsA,Bu,Ve,Va,Ro,Mr",
+            "RegionsAssumed": "",
+            "ObservationYear": 1940,
+            "ObservationFromYear": 1921,
+            "ObservationMonth": 0,
+            "ObservationFromMonth": 0,
+            "SpeciesCount": 0,
+            "ExistenceArea": 72,
+            "ExistenceAreaCount": 0,
+            "SpreadArea": 0,
+            "SpeciesCountDarkFigure": 1,
+            "ExistenceAreaDarkFigure": 1,
+            "ExistenceAreaCountDarkFigure": 1,
+            "SpreadAreaDarkFigure": 1,
+            "SpeciesCountCalculated": null,
+            "ExistenceAreaCalculated": 72,
+            "ExistenceAreaCountCalculated": 72,
+            "SpreadAreaCalculated": null,
+            "SelectionGeometry": ""
+        },
+        {
+            "Id": "364a18bd-6262-4c4f-8c25-437cb50d53fb",
+            "Location": "",
+            "Comment": "",
+            "Regions": "Øs,OsA,He,Op,Bu,Ve,Te,Aa,Va,Ho,St,Nt",
+            "RegionsAssumed": "",
+            "ObservationYear": 1960,
+            "ObservationFromYear": 1941,
+            "ObservationMonth": 0,
+            "ObservationFromMonth": 0,
+            "SpeciesCount": 0,
+            "ExistenceArea": 196,
+            "ExistenceAreaCount": 0,
+            "SpreadArea": 0,
+            "SpeciesCountDarkFigure": 1,
+            "ExistenceAreaDarkFigure": 1,
+            "ExistenceAreaCountDarkFigure": 1,
+            "SpreadAreaDarkFigure": 1,
+            "SpeciesCountCalculated": null,
+            "ExistenceAreaCalculated": 196,
+            "ExistenceAreaCountCalculated": 196,
+            "SpreadAreaCalculated": null,
+            "SelectionGeometry": ""
+        },
+        {
+            "Id": "3577668e-fbaa-45dd-5d15-0e6744e642a7",
+            "Location": "",
+            "Comment": "",
+            "Regions": "Øs,OsA,Bu,Te,Aa,Va,Ro,Ho,Sf,St",
+            "RegionsAssumed": "",
+            "ObservationYear": 1980,
+            "ObservationFromYear": 1961,
+            "ObservationMonth": 0,
+            "ObservationFromMonth": 0,
+            "SpeciesCount": 0,
+            "ExistenceArea": 172,
+            "ExistenceAreaCount": 0,
+            "SpreadArea": 0,
+            "SpeciesCountDarkFigure": 1,
+            "ExistenceAreaDarkFigure": 1,
+            "ExistenceAreaCountDarkFigure": 1,
+            "SpreadAreaDarkFigure": 1,
+            "SpeciesCountCalculated": null,
+            "ExistenceAreaCalculated": 172,
+            "ExistenceAreaCountCalculated": 172,
+            "SpreadAreaCalculated": null,
+            "SelectionGeometry": ""
+        },
+        {
+            "Id": "8f768f54-92db-4593-1352-89333c5ee048",
+            "Location": "",
+            "Comment": "",
+            "Regions": "Øs,OsA,He,Bu,Ve,Te,Aa,Va,Ro,Sf,St",
+            "RegionsAssumed": "",
+            "ObservationYear": 2000,
+            "ObservationFromYear": 1981,
+            "ObservationMonth": 0,
+            "ObservationFromMonth": 0,
+            "SpeciesCount": 0,
+            "ExistenceArea": 232,
+            "ExistenceAreaCount": 0,
+            "SpreadArea": 0,
+            "SpeciesCountDarkFigure": 1,
+            "ExistenceAreaDarkFigure": 1,
+            "ExistenceAreaCountDarkFigure": 1,
+            "SpreadAreaDarkFigure": 1,
+            "SpeciesCountCalculated": null,
+            "ExistenceAreaCalculated": 232,
+            "ExistenceAreaCountCalculated": 232,
+            "SpreadAreaCalculated": null,
+            "SelectionGeometry": ""
+        },
+        {
+            "Id": "a7925394-2eb2-432b-0d21-218f74084d62",
+            "Location": "",
+            "Comment": "",
+            "Regions": "Øs,OsA,He,Op,Bu,Ve,Te,Aa,Va,Ro,Ho,St,Nt",
+            "RegionsAssumed": "",
+            "ObservationYear": 2016,
+            "ObservationFromYear": 2001,
+            "ObservationMonth": 0,
+            "ObservationFromMonth": 0,
+            "SpeciesCount": 0,
+            "ExistenceArea": 424,
+            "ExistenceAreaCount": 0,
+            "SpreadArea": 0,
+            "SpeciesCountDarkFigure": 1,
+            "ExistenceAreaDarkFigure": 1,
+            "ExistenceAreaCountDarkFigure": 1,
+            "SpreadAreaDarkFigure": 1,
+            "SpeciesCountCalculated": null,
+            "ExistenceAreaCalculated": 424,
+            "ExistenceAreaCountCalculated": 424,
+            "SpreadAreaCalculated": null,
+            "SelectionGeometry": ""
+        },
+        {
+            "Id": "1e511fc2-fa9b-4528-0347-16412162a083",
+            "Location": "",
+            "Comment": "",
+            "Regions": "Øs,OsA,He,Op,Bu,Ve,Te,Aa,Va,Ro,Ho,Sf,Mr,St,Nt",
+            "RegionsAssumed": "",
+            "ObservationYear": 2016,
+            "ObservationFromYear": 1870,
+            "ObservationMonth": 0,
+            "ObservationFromMonth": 0,
+            "SpeciesCount": 0,
+            "ExistenceArea": 1040,
+            "ExistenceAreaCount": 0,
+            "SpreadArea": 193000,
+            "SpeciesCountDarkFigure": 1,
+            "ExistenceAreaDarkFigure": 1,
+            "ExistenceAreaCountDarkFigure": 1,
+            "SpreadAreaDarkFigure": 1,
+            "SpeciesCountCalculated": null,
+            "ExistenceAreaCalculated": 1040,
+            "ExistenceAreaCountCalculated": 1040,
+            "SpreadAreaCalculated": 193000,
+            "SelectionGeometry": ""
+        }
+    ],
+    "SpreadHistoryDomesticDocumentation": null,
+    "SpreadHistoryForeignDocumentation": null,
+    "FutureDistributionChangeExpectedDescription": null,
+    "FutureDistributionCriticalParameters": null,
+    "PotentialAreaDistribution": null,
+    "PotentialAreaDistributionInTheFuture": null,
+    "CurrentExistenceArea": 1040,
+    "CurrentExistenceAreaLowCalculated": 3120,
+    "CurrentExistenceAreaLowMultiplier": "3",
+    "CurrentExistenceAreaCalculated": 5200,
+    "CurrentExistenceAreaMultiplier": "5",
+    "CurrentExistenceAreaHighMultiplier": "8",
+    "CurrentExistenceAreaHighCalculated": 8320,
+    "CurrentIndividualCount": 0,
+    "CurrentIndividualCountLowCalculated": null,
+    "CurrentIndividualCountLowMultiplier": null,
+    "CurrentIndividualCountCalculated": null,
+    "CurrentIndividualCountMultiplier": "1",
+    "CurrentIndividualCountHighMultiplier": null,
+    "CurrentIndividualCountHighCalculated": null,
+    "CurrentSpreadArea": 193000,
+    "CurrentSpreadAreaLowCalculated": 193000,
+    "CurrentSpreadAreaHighCalculated": 193000,
+    "CurrentSpreadAreaCalculated": 193000,
+    "CurrentPresenceComment": "Arten begynner å nærme seg metning av sitt potensielle utbredelsesområde i deler av Sør-Norge, men fortsatt med mye ledig potensielt forekomstarealareal i Vest- og Midt-Norge. Ekspansjonshastigheten er moderat, og vi forutser noe mindre enn en dobling i forekomstareal de neste 50 år.",
+    "PotentialExistenceAreaLowQuartile": 5000,
+    "PotentialExistenceArea": 8000,
+    "PotentialExistenceAreaHighQuartile": 11000,
+    "PotentialPresenceComment": null,
+    "SpreadHistoryDomesticAreaInStronglyChangedNatureTypes": 90,
+    "ImpactedNatureTypes": [
+        {
+            "NiNCode": "T35",
+            "NiNVariation": [],
+            "DominanceForrest": [],
+            "TimeHorizon": "now",
+            "ColonizedArea": "0–2",
+            "StateChange": [],
+            "AffectedArea": "0"
+        },
+        {
+            "NiNCode": "T40",
+            "NiNVariation": [],
+            "DominanceForrest": [],
+            "TimeHorizon": "now",
+            "ColonizedArea": "0–2",
+            "StateChange": [],
+            "AffectedArea": "0"
+        },
+        {
+            "NiNCode": "T24",
+            "NiNVariation": [],
+            "DominanceForrest": [],
+            "TimeHorizon": "now",
+            "ColonizedArea": "0–2",
+            "StateChange": [],
+            "AffectedArea": "0"
+        },
+        {
+            "NiNCode": "T32",
+            "NiNVariation": [],
+            "DominanceForrest": [],
+            "TimeHorizon": "now",
+            "ColonizedArea": "0–2",
+            "StateChange": [],
+            "AffectedArea": "0"
+        }
+    ],
+    "RedlistedNatureTypes": [
+        {
+            "RedlistedNatureTypeName": "Åpen grunnlendt kalkmark i boreonemoral sone",
+            "Category": "VU",
+            "TimeHorizon": "now",
+            "ColonizedArea": "0–2",
+            "StateChange": [
+                "1AG"
+            ],
+            "AffectedArea": "0–2"
+        }
+    ],
+    "UsesLivingSpeciesAsHabitat": false,
+    "UsesLivingSpeciesAsHabitatScientificName": null,
+    "RiskAssessment": {
+        "RiskLevel": 3,
+        "DecisiveCriteria": "4A,2DF",
+        "RiskLevelCode": "HI",
+        "RiskLevelText": "Høy risiko",
+        "EcoEffectLevel": 1,
+        "EcoEffectUncertaintyLevels": [
+            1
+        ],
+        "InvationPotentialLevel": 3,
+        "InvationPotentialUncertaintyLevels": [
+            3
+        ],
+        "Criteria": [
+            {
+                "Id": "InvasionPopulationLifetimeExpectancy",
+                "Value": 3,
+                "Akse": "Invasion",
+                "CriteriaLetter": "A",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    3
+                ]
+            },
+            {
+                "Id": "InvasionExpansionSpeed",
+                "Value": 2,
+                "Akse": "Invasion",
+                "CriteriaLetter": "B",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    2
+                ]
+            },
+            {
+                "Id": "InvasionColonizationOfNaturetypeAfter50Years",
+                "Value": 0,
+                "Akse": "Invasion",
+                "CriteriaLetter": "C",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    0
+                ]
+            },
+            {
+                "Id": "EcologicalEffectInteractionWithThreatenedSpecies",
+                "Value": 1,
+                "Akse": "EcoEffect",
+                "CriteriaLetter": "D",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    1
+                ]
+            },
+            {
+                "Id": "EcologicalEffectInteractionWithDomesticSpecies",
+                "Value": 0,
+                "Akse": "EcoEffect",
+                "CriteriaLetter": "E",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    0
+                ]
+            },
+            {
+                "Id": "EcologicalEffectInfluenceOnThreatenedNatureTypes",
+                "Value": 1,
+                "Akse": "EcoEffect",
+                "CriteriaLetter": "F",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    1
+                ]
+            },
+            {
+                "Id": "EcologicalEffectInfluenceOnCommonNatureTypes",
+                "Value": 0,
+                "Akse": "EcoEffect",
+                "CriteriaLetter": "G",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    0
+                ]
+            },
+            {
+                "Id": "EcologicalEffectTransferOfGeneticMaterial",
+                "Value": 0,
+                "Akse": "EcoEffect",
+                "CriteriaLetter": "H",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    0
+                ]
+            },
+            {
+                "Id": "EcologicalEffectTransferOfDiseasesAndParasites",
+                "Value": 0,
+                "Akse": "EcoEffect",
+                "CriteriaLetter": "I",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    0
+                ]
+            }
+        ],
+        "QuantitativeDataForDomesticSpreadExsists": true,
+        "QuantitativeDataForForeignSpreadExsists": false,
+        "QuantitativeDataComment": null,
+        "EstimatedSpeciesCount": 75000,
+        "EstimatedSpeciesCountMethod": "MinimumEstimate",
+        "EstimatedSpeciesCountAssumption": "<p>Pepperrot er pr. i dag kjent med over 190 forekomster (m&#248;rketall 20) i 14 fylker, hver forekomst med minst 20 individer. Dette gir et minimumsestimat p&#229; ca. 75-80.000 individer.</p>",
+        "EstimatedSpeciesLongevityMoreThan1000Years": true,
+        "EstimatedSpeciesLongevity": null,
+        "EstimatedSpeciesLongevityMethod": "<p>PVA og kvalifisert anslag</p>",
+        "ChosenSpreadMedanLifespan": "RedListCategoryLevel",
+        "ActiveSpreadPVAAnalysisSpeciesLongevity": false,
+        "SpreadPVAAnalysis": null,
+        "ActiveSpreadPVAAnalysisEstimatedSpeciesLongevity": false,
+        "SpreadPVAAnalysisEstimatedSpeciesLongevity": ">1000",
+        "SpreadPVAAnalysisEstimatedSpeciesLongevityLowerQuartile": null,
+        "SpreadPVAAnalysisEstimatedSpeciesLongevityUpperQuartile": null,
+        "ActiveRedListCategoryLevel": true,
+        "RedListUsedCriteria": "B2",
+        "RedListDataDescription": "Forekomstareal på over 1000 km2 (med mørketall over 5000 km2).",
+        "RedListCategory": "LC",
+        "RedListSubCategory": null,
+        "SpreadRscriptSpeciesCount": 0,
+        "SpreadRscriptPopulationGrowth": "0.0",
+        "SpreadRscriptDemographicVariance": null,
+        "SpreadRscriptEnvironmantVariance": null,
+        "SpreadRscriptQuasiExtinctionThreshold": null,
+        "SpreadRscriptSustainabilityK": null,
+        "ActiveSpreadRscriptEstimatedSpeciesLongevity": false,
+        "SpreadRscriptEstimatedSpeciesLongevity": null,
+        "ChosenSpreadYearlyIncrease": "SpreadYearlyIncreaseObservations",
+        "ActiveSpreadYearlyIncreaseObservations": true,
+        "SpreadYearlyIncreaseObservations": "231",
+        "SpreadYearlyIncreaseObservationsLowerQuartile": "197",
+        "SpreadYearlyIncreaseObservationsUpperQuartile": "269",
+        "ActiveSpreadYearlyIncreaseOccurrenceArea": false,
+        "SpreadYearlyIncreaseOccurrenceArea": null,
+        "SpreadYearlyIncreaseOccurrenceAreaLowerQuartile": null,
+        "SpreadYearlyIncreaseOccurrenceAreaUpperQuartile": null,
+        "ActiveSpreadYearlyLiteratureData": false,
+        "SpreadYearlyLiteratureDataExpansionSpeed": null,
+        "SpreadYearlyLiteratureDataUncertainty": null,
+        "SpreadYearlyLiteratureDataNumberOfIntroductionSources": null,
+        "SpreadYearlyLiteratureData": "",
+        "SpreadYearlyLiteratureDataSource": null,
+        "ActiveSpreadYearlyIncreaseCalculatedExpansionSpeed": false,
+        "SpreadYearlyIncreaseEstimate": null,
+        "SpreadYearlyIncreaseEstimateDescription": null,
+        "SpreadYearlyIncreaseCalculatedExpansionSpeed": "",
+        "SpreadYearlyIncrease": null,
+        "SpreadYearlyIncreaseMethod": null,
+        "SpreadManualEstimate": "<p>Arten har minst&nbsp;75.000 individer fordelt på minst 193 populasjoner eller populasjonsgrupper over store deler av landet. Ut fra funnfrekvensen ser arten ut til å ha en positiv vekstrate med&nbsp;20&nbsp;% økning i antall forekomster pr. tiår de siste&nbsp;50 år. Arten vil derfor ligge godt over enhver grenseverdi for en statistisk trygg populasjon (dvs. &gt;1000 år).</p>",
+        "SpreadManualEstimateSpeciesLongevity": null,
+        "SpreadManualEstimateSpeciesLongevityIsMoreThan1000years": true,
+        "IncreasingDensity": "Høg",
+        "IncreasingDensityMethod": "<p>PVAs my er brukt; prosentvis beregning gir l&#229;gere anslag, men her spiller trolig inn at antall observasjoner har avtatt etterhvert som arten er blitt vanligere.</p>",
+        "IncreasingDensityPVAAnalysis": "0,028",
+        "IncreasingDensityPercentualComputation": "20%",
+        "IncreasingDensityPercentualComputationPeriod": "1961-2011",
+        "IncreasingDensityManualEstimate": null,
+        "IncreasingDensityManualEstimateDescription": null,
+        "NaturetypeExpectedColonized": "<p>Vesentlig ulike typer skrotemark, men ogs&#229; forlatt eng og beite.</p>",
+        "SpeciesSpeciesInteractions": [],
+        "SpeciesNaturetypeInteractions": [
+            {
+                "NiNCode": "T24",
+                "NiNVariation": [],
+                "RedListCategory": "",
+                "KeyStoneSpecie": false,
+                "Effect": "Weak",
+                "EffectLocalScale": false,
+                "InteractionType": "CompetitionSpace",
+                "LongDistanceEffect": false,
+                "ConfirmedOrAssumed": false,
+                "DomesticOrAbroad": ""
+            },
+            {
+                "NiNCode": "T32",
+                "NiNVariation": [],
+                "RedListCategory": "",
+                "KeyStoneSpecie": true,
+                "Effect": "Weak",
+                "EffectLocalScale": true,
+                "InteractionType": "CompetitionSpace",
+                "LongDistanceEffect": false,
+                "ConfirmedOrAssumed": false,
+                "DomesticOrAbroad": ""
+            }
+        ],
+        "SpeciesSpeciesInteractionsSupplementaryInformation": null,
+        "GeneticTransferDocumented": [],
+        "HostParasiteInformations": [],
+        "ThreatenedNatureTypes": [],
+        "ThreatenedNatureTypesDomesticObserved": false,
+        "ThreatenedNatureTypesDomesticDocumented": false,
+        "ThreatenedNatureTypesForeignDocumented": false,
+        "ThreatenedNatureTypesAffectedDomesticDescription": null,
+        "ThreatenedNatureTypesAffectedAbroadDescription": "",
+        "CommonNatureTypes": [],
+        "CommonNatureTypesDomesticObserved": false,
+        "CommonNatureTypesDomesticDocumented": false,
+        "CommonNatureTypesForeignDocumented": false,
+        "CommonNatureTypesAffectedDomesticDescription": null,
+        "CommonNatureTypesAffectedAbroadDescription": "",
+        "GeneticTransferDomesticDescription": null,
+        "GeneticTransferDomesticObserved": false,
+        "GeneticTransferDomesticDocumented": false,
+        "GeneticTransferForeignDocumented": false,
+        "VectorBiologicalDiseaseSpreadingDomesticDescription": null,
+        "BiologicalDiseaseSpreadingDomesticObserved": false,
+        "BiologicalDiseaseSpreadingDomesticDocumented": false,
+        "BiologicalDiseaseSpreadingForeignDocumented": false,
+        "GeographicalVariation": [],
+        "GeographicalVariationDocumentation": null,
+        "ClimateEffectsInvationpotential": "no",
+        "ClimateEffectsEcoEffect": "no",
+        "ClimateEffectsDocumentation": null,
+        "CriteriaDocumentation": "<p>Pepperrot vurderes til høg økologisk risiko på grunn av stort invasjonspotensial og en liten økologisk effekt. Arten er nå et vanlig og lett synlig element i kulturlandskapet sørpå, særlig langs veier, men gjør liten skade unntatt der den invaderer semi-naturlig eng på kalkgrunn, og kanskje tangvoller. Den kan bli noe vanligere enn den allerede er, men blir neppe noe økologisk problem andre steder enn rundt indre Oslofjord.</p><p><br></p>",
+        "CriteriaDocumentationSpeciesStatus": "Pepperrot <i>Armoracia rusticana</i> er en langlevd flerårig urt med middels sterk vegetativ vekst (klondannelse). I Norge er skulpene som regel uten frø, og pepperroten formeres helt overveiende vegetativt ved rotdeling (Åsen 2014). Frøspredning og etablering av frøplanter er likevel observert flere steder. Arten er kommet inn fra Sørøst-Europa (kanskje særlig Balkan og Svartehavsområdet), trolig med ballastjord og korn, men også fra resten av Europa med generelle transporter. Den har sine hovedforekomster på ulike typer skrotemark som veikanter og jernbanekanter, men går også inn i forfallen eng, på grunnlendt kalkmark, i åkerkanter, flomsoner, og foreløpig i liten grad på flerårs-tangvoller og indre deler av brakkvassenger. Den er salttolerant, noe som gjør at den er blitt favorisert langs hovedveiene de siste årene på grunn av økt salting om vinteren. Salttoleransen gir den også et visst potensial i havstrandvegetasjon. Der den kommer inn tar den mye plass, og den er fortsatt i tydelig økning.    ",
+        "CriteriaDocumentationDomesticSpread": "<p>Pepperrot er en gammel grønnsakplante, trolig dyrket lenge i Norge. Første registrerte forvilling er imidlertid som følge av innførsel med ballastjord i MR Kristiansund 1870 og første etablering i Vestfold i 1884. Siden har arten ekspandert jamt med tyngdepunkt på Østlandet, med noe innførsel med korn til møller, men hoveddelen av forekomstene knyttet til transportårer (vei, jernbane, delvis havner). Arten er solid etablert i store deler av sitt potensielle areal utbredelsesområde til og med Trøndelag, men fortsatt med stort rom for fortetning i forekomstareal. Forekomster kan være midlertidige, men der arten er kommet solid inn, blir den oftest permanent.</p>",
+        "CriteriaDocumentationMigrationPathways": "Arten er kommet inn med ballastjord og grasfrø og forvillet fra dyrkning. Den har egenspredning med frø (liten produksjon av fertile frø) og spred ved forflytting av jordmasser, spesielt langs veier.",
+        "CriteriaDocumentationInvationPotential": "Invasjonspotensialet er stort, med lang median levetid og moderat ekspansjonshastighet (190-270 m/år), men nesten bare på sterkt forstyrret mark (veikanter og annen skrotemark).",
+        "CriteriaDocumentationEcoEffect": "Arten har en liten økologisk effekt ved noe endring av artssammensetning og fortrengning, hovedsakelig på sterkt forstyrret mark, men også på semi-naturlig eng på kalkgrunn i Oslofeltet, naturtyper med stort innslag av sårbare og truete planter som fortrenges noe av pepperrot. Det kan også være en viss fortrengningseffekt i tangvoller."
+    },
+    "RegionalRiskAssessments": [],
+    "References": [
+        {
+            "Type": "Publication",
+            "ReferenceId": "6e5a232c-43f3-413a-937a-2cece1e1c476",
+            "FormattedReference": "Åsen, P.A. 2004. Norske klosterplanter. Levende kulturminner fra middelalderen. Cappelen Damm"
+        }
+    ],
+    "LockedForEditByUser": "Reidar Elven",
+    "LockedForEditTimeStamp": "2017-11-09T13:42:22.438Z"
+}

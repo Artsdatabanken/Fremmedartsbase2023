@@ -1,0 +1,613 @@
+{
+    "RegionalPresenceKnown": "",
+    "RegionalPresenceAssumed": "",
+    "RegionalPresencePotential": "Øs,OsA,Bu,Ve,Te,Aa,Va,Ro,Ho,Sf,Mr",
+    "VurderingId2012": 0,
+    "RiskLevel2012": -1,
+    "SpreadRiskLevel2012": -1,
+    "EcologicalRiskLevel2012": -1,
+    "EvaluationContext": "N",
+    "ExpertGroupId": "ExpertGroups/Karplanter/N",
+    "TaxonId": 141042,
+    "ExpertGroup": null,
+    "Citation": "Elven, R., Hegre, H., Solstad, H., Pedersen, O., Pedersen, P.A., Åsen, P.A., Bjureke, K. & Vandvik, V. (2018). Paeonia ×suffruticosa, vurdering av økologisk risiko. Artsdatabanken.",
+    "AlienSpeciesCategory": "DoorKnocker",
+    "VurderingsStatus": "finnished",
+    "SistOppdatert": "2018-04-23T11:59:32.0361975",
+    "SistOppdatertAv": "Reidar Elven",
+    "IsEvaluated": false,
+    "EvaluatedScientificNameId": 170193,
+    "EvaluatedScientificName": "Paeonia ×suffruticosa",
+    "EvaluatedScientificNameAuthor": null,
+    "EvaluatedVernacularName": null,
+    "Datasett": {
+        "Files": []
+    },
+    "AlienSpeciesCategory2012": null,
+    "DoorKnockerDescription": null,
+    "NotReproductiveDescription2012": null,
+    "NotReproductiveFutureDescription2012": null,
+    "AssesmentNotApplicableDescription": null,
+    "AlienSpecieUncertainIfEstablishedBefore1800": false,
+    "AlienSpecieUncertainAntropochor": false,
+    "AlienSpecieUncertainDescription": null,
+    "DoorKnockerCategory": "doRiskAssessment",
+    "RegionallyAlienCategory": null,
+    "NotApplicableCategory": null,
+    "ObservedAndEstablishedStatusInCountry": {
+        "Indoor": {
+            "ObservedInCountry": {
+                "Place": null,
+                "Time": null
+            },
+            "FertileSpecimenObserved": {
+                "Place": null,
+                "Time": null
+            },
+            "Established": {
+                "Place": null,
+                "Time": null
+            },
+            "Population": {
+                "Place": null,
+                "Time": null
+            },
+            "SpecimenCount": null
+        },
+        "ProductionArea": {
+            "ObservedInCountry": {
+                "Place": null,
+                "Time": null
+            },
+            "FertileSpecimenObserved": {
+                "Place": null,
+                "Time": null
+            },
+            "Established": {
+                "Place": "MR Ålesund",
+                "Time": "2017"
+            },
+            "Population": {
+                "Place": null,
+                "Time": null
+            },
+            "SpecimenCount": null
+        },
+        "NorwegianNature": {
+            "ObservedInCountry": {
+                "Place": null,
+                "Time": null
+            },
+            "FertileSpecimenObserved": {
+                "Place": null,
+                "Time": null
+            },
+            "Established": {
+                "Place": null,
+                "Time": null
+            },
+            "Population": {
+                "Place": null,
+                "Time": null
+            },
+            "SpecimenCount": null
+        }
+    },
+    "Limnic": false,
+    "Terrestrial": true,
+    "Marine": false,
+    "BrackishWater": false,
+    "FirstDomesticObservation": "2017",
+    "FirstDomesticObservationLocation": null,
+    "FirstDomesticEstablishmentObserved": null,
+    "FirstDomesticEstablishmentObservedLocation": null,
+    "ArrivedCountryFrom": [
+        "unknown"
+    ],
+    "ArrivedCountryFromDetails": "Innført hageplante, uvisst hvorfra.",
+    "NaturalOrigins": [
+        {
+            "ClimateZone": "polar;",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "temperate;boreal",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "temperate;nemoral",
+            "Europe": false,
+            "Asia": true,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "temperate;dry",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;unspecified",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;mediterranean",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;humid",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;dry",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;caperegion",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;highlands",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "tropic;",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "unknown;",
+            "Europe": false,
+            "Asia": true,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        }
+    ],
+    "NaturalOriginUnknownDocumentation": "Art eller hybridart fra Øst-Asia: Kina.",
+    "CurrentInternationalExistenceAreas": [
+        {
+            "ClimateZone": "polar;",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "temperate;boreal",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "temperate;nemoral",
+            "Europe": true,
+            "Asia": true,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "temperate;dry",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;unspecified",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;mediterranean",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;humid",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;dry",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;caperegion",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "subtropic;highlands",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "tropic;",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        },
+        {
+            "ClimateZone": "unknown;",
+            "Europe": false,
+            "Asia": false,
+            "Africa": false,
+            "Oceania": false,
+            "NorthAndCentralAmerica": false,
+            "SouthAmerica": false
+        }
+    ],
+    "CurrentInternationalExistenceAreasUnknownDocumentation": "Angitt flere steder i Vest- og Mellom-Europa.",
+    "NaturalOriginMarine": [],
+    "NaturalOriginMarineDetails": null,
+    "CurrentInternationalExistenceMarineAreas": [],
+    "CurrentInternationalExistenceMarineAreasDetails": null,
+    "SurvivalBelow5c": false,
+    "IntroductionCourse": null,
+    "DomesticRiskEvaluationExists": null,
+    "DomesticRiskEvaluationExists2007": null,
+    "ForeignRiskEvaluationExists": null,
+    "ForeignRiskEvaluationComment": null,
+    "Regeneration": null,
+    "RegenerationYears": null,
+    "Reproduction": null,
+    "ReproductionAsexual": null,
+    "ReproductionGenerationTime": 10,
+    "ReproductionSexual": true,
+    "SimilarDemographicComparison": null,
+    "HealthEffects": "Ingen kjent effekt",
+    "EconomicEffects": "Ingen kjent effekt",
+    "EcosystemServiceEffectsBasicLifeProcesses": [],
+    "EcosystemServiceEffectsProvisioningServices": [],
+    "EcosystemServiceEffectsRegulatingServices": [],
+    "EcosystemServiceEffectsHumanSpiritualServices": [],
+    "PositiveEcologicalEffects": "Ingen kjent effekt",
+    "EffectsOnPopulationOfOrigin": "Ingen kjent effekt",
+    "ImportPathways": [
+        {
+            "CodeItem": "importHorticulture",
+            "IntroductionSpread": null,
+            "InfluenceFactor": "numerousYearly",
+            "Magnitude": "unknown",
+            "TimeOfIncident": "ongoing",
+            "ElaborateInformation": "",
+            "Category": null
+        }
+    ],
+    "ImportedToIndoorOrProductionArea": true,
+    "AssesmentVectors": [],
+    "Vector": null,
+    "SpreadHistory": [],
+    "SpreadHistoryDomesticDocumentation": null,
+    "SpreadHistoryForeignDocumentation": null,
+    "FutureDistributionChangeExpectedDescription": null,
+    "FutureDistributionCriticalParameters": null,
+    "PotentialAreaDistribution": null,
+    "PotentialAreaDistributionInTheFuture": null,
+    "CurrentExistenceArea": 0,
+    "CurrentExistenceAreaLowCalculated": null,
+    "CurrentExistenceAreaLowMultiplier": null,
+    "CurrentExistenceAreaCalculated": 0,
+    "CurrentExistenceAreaMultiplier": null,
+    "CurrentExistenceAreaHighMultiplier": null,
+    "CurrentExistenceAreaHighCalculated": null,
+    "CurrentIndividualCount": null,
+    "CurrentIndividualCountLowCalculated": null,
+    "CurrentIndividualCountLowMultiplier": null,
+    "CurrentIndividualCountCalculated": null,
+    "CurrentIndividualCountMultiplier": null,
+    "CurrentIndividualCountHighMultiplier": null,
+    "CurrentIndividualCountHighCalculated": null,
+    "CurrentSpreadArea": 0,
+    "CurrentSpreadAreaLowCalculated": null,
+    "CurrentSpreadAreaHighCalculated": null,
+    "CurrentSpreadAreaCalculated": null,
+    "CurrentPresenceComment": "Arten er ikke funnet i norsk natur, men har frøformering i hager. Vi antar at den kan ha potensielt areal i kystfylkene til Møre og med et fåtall forekomster de kommende 50 år.",
+    "PotentialExistenceAreaLowQuartile": 4,
+    "PotentialExistenceArea": 8,
+    "PotentialExistenceAreaHighQuartile": 12,
+    "PotentialPresenceComment": null,
+    "SpreadHistoryDomesticAreaInStronglyChangedNatureTypes": null,
+    "ImpactedNatureTypes": [],
+    "RedlistedNatureTypes": [],
+    "UsesLivingSpeciesAsHabitat": false,
+    "UsesLivingSpeciesAsHabitatScientificName": null,
+    "RiskAssessment": {
+        "RiskLevel": 0,
+        "DecisiveCriteria": "1,1",
+        "RiskLevelCode": "NK",
+        "RiskLevelText": "Ingen kjent risiko",
+        "EcoEffectLevel": 0,
+        "EcoEffectUncertaintyLevels": [
+            0
+        ],
+        "InvationPotentialLevel": 0,
+        "InvationPotentialUncertaintyLevels": [
+            0
+        ],
+        "Criteria": [
+            {
+                "Id": "InvasionPopulationLifetimeExpectancy",
+                "Value": 0,
+                "Akse": "Invasion",
+                "CriteriaLetter": "A",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    0
+                ]
+            },
+            {
+                "Id": "InvasionExpansionSpeed",
+                "Value": 0,
+                "Akse": "Invasion",
+                "CriteriaLetter": "B",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    0
+                ]
+            },
+            {
+                "Id": "InvasionColonizationOfNaturetypeAfter50Years",
+                "Value": 0,
+                "Akse": "Invasion",
+                "CriteriaLetter": "C",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    0
+                ]
+            },
+            {
+                "Id": "EcologicalEffectInteractionWithThreatenedSpecies",
+                "Value": 0,
+                "Akse": "EcoEffect",
+                "CriteriaLetter": "D",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    0
+                ]
+            },
+            {
+                "Id": "EcologicalEffectInteractionWithDomesticSpecies",
+                "Value": 0,
+                "Akse": "EcoEffect",
+                "CriteriaLetter": "E",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    0
+                ]
+            },
+            {
+                "Id": "EcologicalEffectInfluenceOnThreatenedNatureTypes",
+                "Value": 0,
+                "Akse": "EcoEffect",
+                "CriteriaLetter": "F",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    0
+                ]
+            },
+            {
+                "Id": "EcologicalEffectInfluenceOnCommonNatureTypes",
+                "Value": 0,
+                "Akse": "EcoEffect",
+                "CriteriaLetter": "G",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    0
+                ]
+            },
+            {
+                "Id": "EcologicalEffectTransferOfGeneticMaterial",
+                "Value": 0,
+                "Akse": "EcoEffect",
+                "CriteriaLetter": "H",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    0
+                ]
+            },
+            {
+                "Id": "EcologicalEffectTransferOfDiseasesAndParasites",
+                "Value": 0,
+                "Akse": "EcoEffect",
+                "CriteriaLetter": "I",
+                "NoValueInformation": null,
+                "UncertaintyValues": [
+                    0
+                ]
+            }
+        ],
+        "QuantitativeDataForDomesticSpreadExsists": null,
+        "QuantitativeDataForForeignSpreadExsists": null,
+        "QuantitativeDataComment": null,
+        "EstimatedSpeciesCount": null,
+        "EstimatedSpeciesCountMethod": null,
+        "EstimatedSpeciesCountAssumption": null,
+        "EstimatedSpeciesLongevityMoreThan1000Years": null,
+        "EstimatedSpeciesLongevity": null,
+        "EstimatedSpeciesLongevityMethod": null,
+        "ChosenSpreadMedanLifespan": "RedListCategoryLevel",
+        "ActiveSpreadPVAAnalysisSpeciesLongevity": false,
+        "SpreadPVAAnalysis": null,
+        "ActiveSpreadPVAAnalysisEstimatedSpeciesLongevity": false,
+        "SpreadPVAAnalysisEstimatedSpeciesLongevity": null,
+        "SpreadPVAAnalysisEstimatedSpeciesLongevityLowerQuartile": null,
+        "SpreadPVAAnalysisEstimatedSpeciesLongevityUpperQuartile": null,
+        "ActiveRedListCategoryLevel": true,
+        "RedListUsedCriteria": "B2",
+        "RedListDataDescription": "Ingen kjent forekomst i norsk natur, ennå. Beste anslag på forekomstareal om 50 år er på 8 km2, noe som tilsvarer CR.",
+        "RedListCategory": "CR",
+        "RedListSubCategory": null,
+        "SpreadRscriptSpeciesCount": null,
+        "SpreadRscriptPopulationGrowth": "0.0",
+        "SpreadRscriptDemographicVariance": null,
+        "SpreadRscriptEnvironmantVariance": null,
+        "SpreadRscriptQuasiExtinctionThreshold": null,
+        "SpreadRscriptSustainabilityK": null,
+        "ActiveSpreadRscriptEstimatedSpeciesLongevity": false,
+        "SpreadRscriptEstimatedSpeciesLongevity": null,
+        "ChosenSpreadYearlyIncrease": "SpreadYearlyLiteratureData",
+        "ActiveSpreadYearlyIncreaseObservations": false,
+        "SpreadYearlyIncreaseObservations": null,
+        "SpreadYearlyIncreaseObservationsLowerQuartile": null,
+        "SpreadYearlyIncreaseObservationsUpperQuartile": null,
+        "ActiveSpreadYearlyIncreaseOccurrenceArea": false,
+        "SpreadYearlyIncreaseOccurrenceArea": null,
+        "SpreadYearlyIncreaseOccurrenceAreaLowerQuartile": null,
+        "SpreadYearlyIncreaseOccurrenceAreaUpperQuartile": null,
+        "ActiveSpreadYearlyLiteratureData": true,
+        "SpreadYearlyLiteratureDataExpansionSpeed": "32",
+        "SpreadYearlyLiteratureDataUncertainty": null,
+        "SpreadYearlyLiteratureDataNumberOfIntroductionSources": "1",
+        "SpreadYearlyLiteratureData": "32",
+        "SpreadYearlyLiteratureDataSource": "Ekspansjonshastighet (lagt inn på feltet for litteraturverdi på spredningshastighet i mangel på et mer egnet felt) er beregnet ut fra anslått forekomstareal om 50 år.",
+        "ActiveSpreadYearlyIncreaseCalculatedExpansionSpeed": false,
+        "SpreadYearlyIncreaseEstimate": "",
+        "SpreadYearlyIncreaseEstimateDescription": "",
+        "SpreadYearlyIncreaseCalculatedExpansionSpeed": "",
+        "SpreadYearlyIncrease": null,
+        "SpreadYearlyIncreaseMethod": null,
+        "SpreadManualEstimate": null,
+        "SpreadManualEstimateSpeciesLongevity": null,
+        "SpreadManualEstimateSpeciesLongevityIsMoreThan1000years": null,
+        "IncreasingDensity": null,
+        "IncreasingDensityMethod": null,
+        "IncreasingDensityPVAAnalysis": null,
+        "IncreasingDensityPercentualComputation": null,
+        "IncreasingDensityPercentualComputationPeriod": null,
+        "IncreasingDensityManualEstimate": null,
+        "IncreasingDensityManualEstimateDescription": null,
+        "NaturetypeExpectedColonized": null,
+        "SpeciesSpeciesInteractions": [],
+        "SpeciesNaturetypeInteractions": [],
+        "SpeciesSpeciesInteractionsSupplementaryInformation": null,
+        "GeneticTransferDocumented": [],
+        "HostParasiteInformations": [],
+        "ThreatenedNatureTypes": [],
+        "ThreatenedNatureTypesDomesticObserved": null,
+        "ThreatenedNatureTypesDomesticDocumented": null,
+        "ThreatenedNatureTypesForeignDocumented": null,
+        "ThreatenedNatureTypesAffectedDomesticDescription": null,
+        "ThreatenedNatureTypesAffectedAbroadDescription": "",
+        "CommonNatureTypes": [],
+        "CommonNatureTypesDomesticObserved": null,
+        "CommonNatureTypesDomesticDocumented": null,
+        "CommonNatureTypesForeignDocumented": null,
+        "CommonNatureTypesAffectedDomesticDescription": null,
+        "CommonNatureTypesAffectedAbroadDescription": "",
+        "GeneticTransferDomesticDescription": null,
+        "GeneticTransferDomesticObserved": null,
+        "GeneticTransferDomesticDocumented": null,
+        "GeneticTransferForeignDocumented": null,
+        "VectorBiologicalDiseaseSpreadingDomesticDescription": null,
+        "BiologicalDiseaseSpreadingDomesticObserved": null,
+        "BiologicalDiseaseSpreadingDomesticDocumented": null,
+        "BiologicalDiseaseSpreadingForeignDocumented": null,
+        "GeographicalVariation": [
+            "reproduksjonLimitedToCertainClimaticZones"
+        ],
+        "GeographicalVariationDocumentation": "Potensial i noe oseaniske deler av boreonemoral sone.",
+        "ClimateEffectsInvationpotential": "no",
+        "ClimateEffectsEcoEffect": "no",
+        "ClimateEffectsDocumentation": null,
+        "CriteriaDocumentation": "Trepion vurderes til ingen kjent økologisk risiko. Ved forrige vurderingsrunde i 2012 ble den ikke realitetsvurdert. Den gang var den ikke kjent med frøreproduksjon i Norge.",
+        "CriteriaDocumentationSpeciesStatus": "Trepion <i>Paeonia </i>x <i>suffruticosa</i>&nbsp;er trolig en hagehybrid fra Kina. Arten har frøformering. Den dyrkes en del som prydbusk i kyststrøk i Norge og er nå påvist med frøformering utendørs i Norge. Den kategoriseres derfor som en dørstokkart.",
+        "CriteriaDocumentationDomesticSpread": "Trepion er funnet med frøformering i hage i MR Ålesund i 2017 (Dag Holtan pers. komm. 2017).",
+        "CriteriaDocumentationMigrationPathways": "Den er innført som hageplante, uten spredning i norsk natur foreløpig.",
+        "CriteriaDocumentationInvationPotential": "Invasjonspotensialet er lite; den skårer på laveste nivå både på median levetid og ekspansjonshastighet.",
+        "CriteriaDocumentationEcoEffect": "Det er ingen kjente negative økologiske effekter knyttet til arten."
+    },
+    "RegionalRiskAssessments": [],
+    "References": [],
+    "LockedForEditByUser": "Reidar Elven",
+    "LockedForEditTimeStamp": "2017-10-24T11:49:22.674Z"
+}
