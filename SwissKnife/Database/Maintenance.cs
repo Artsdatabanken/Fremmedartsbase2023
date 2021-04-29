@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Threading.Tasks;
 using McMaster.Extensions.CommandLineUtils;
@@ -23,15 +24,27 @@ namespace SwissKnife.Database
 
         public void Import(IConsole console, string inputFolder)
         {
+            var jsonSerializerOptions = new JsonSerializerOptions
+            {
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+            };
             _database.Database.EnsureCreated();
             var batchsize = 50;
             var count = 0;
             IEnumerable<Prod.Domain.Legacy.FA3Legacy> assessments = GetAssessments(inputFolder);
             foreach (var assessment in assessments)
             {
-                var entity = new Assessment();
+                var entity = new Assessment {Doc = JsonSerializer.Serialize(assessment, jsonSerializerOptions)};
                 _database.Assessments.Add(entity);
+                count++;
+                if (count>batchsize)
+                {
+                    _database.SaveChanges();
+                    count = 0;
+                }
             }
+
+            _database.SaveChanges();
         }
 
         private IEnumerable<FA3Legacy> GetAssessments(string inputFolder)

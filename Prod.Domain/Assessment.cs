@@ -19,15 +19,15 @@ namespace Prod.Domain
         public string TaxonHierarcy { get; set; }
         public bool IsDeleted { get; set; }
         public string Category { get; set; }
-        public string Criteria { get; set; }
-        public string[] MainCriteria { get; set; }
+        //public string Criteria { get; set; }
+        //public string[] MainCriteria { get; set; }
         public int ScientificNameId { get; set; }
-        public int AssessmentYear { get; set; } //Vurderingsår
-        public string CategoryLastRedList { get; set; } //KategoriFraForrigeListe
-        //public List<string> NatureTypes { get; set; } = new List<string>(); //NaturtypeHovedenhet (Hovendhabitat)
-        public string NatureTypes { get; set; } //NaturtypeHovedenhet (Hovendhabitat)         List or string ????
-        public string RedListAssessedSpecies { get; set; }
-        public string AssessmentContext { get; set; }
+        //public int AssessmentYear { get; set; } //Vurderingsår
+        //public string CategoryLastRedList { get; set; } //KategoriFraForrigeListe
+        ////public List<string> NatureTypes { get; set; } = new List<string>(); //NaturtypeHovedenhet (Hovendhabitat)
+        //public string NatureTypes { get; set; } //NaturtypeHovedenhet (Hovendhabitat)         List or string ????
+        //public string RedListAssessedSpecies { get; set; }
+        //public string AssessmentContext { get; set; }
 
         public List<AssessmentComment> Comments { get; set; }
         public List<Attachment> Attachments { get; set; }

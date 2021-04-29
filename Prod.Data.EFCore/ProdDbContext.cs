@@ -86,14 +86,14 @@ namespace Prod.Data.EFCore
                 e.Property(x => x.TaxonHierarcy).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.VurdertVitenskapeligNavnHierarki') as nvarchar(1500))");
                 e.Property(x => x.IsDeleted).HasComputedColumnSql("cast((case when JSON_VALUE(Doc,'$.Slettet') = 'true' then 1 else 0 end) as bit)");
                 e.Property(x => x.Category).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.Kategori') as nvarchar(5))");
-                e.Property(x => x.Criteria).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.Kriterier') as nvarchar(50))");
-                e.Ignore(x => x.MainCriteria);
+                //e.Property(x => x.Criteria).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.Kriterier') as nvarchar(50))");
+                //e.Ignore(x => x.MainCriteria);
                 e.Property(x => x.ScientificNameId).HasComputedColumnSql("Convert(int,JSON_VALUE(Doc, '$.VurdertVitenskapeligNavnId'))");
-                e.Property(x => x.AssessmentYear).HasComputedColumnSql("Convert(int,JSON_VALUE(Doc, '$.\"Vurderingsår\"'))");
-                e.Property(x => x.CategoryLastRedList).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.KategoriFraForrigeListe') as nvarchar(100))");
-                e.Property(x => x.NatureTypes).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.NaturtypeHovedenhet') as nvarchar(500))");
-                e.Property(x => x.RedListAssessedSpecies).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.RodlisteVurdertArt') as nvarchar(100))");
-                e.Property(x => x.AssessmentContext).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.VurderingsContext') as nvarchar(10))");
+                //e.Property(x => x.AssessmentYear).HasComputedColumnSql("Convert(int,JSON_VALUE(Doc, '$.\"Vurderingsår\"'))");
+                //e.Property(x => x.CategoryLastRedList).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.KategoriFraForrigeListe') as nvarchar(100))");
+                //e.Property(x => x.NatureTypes).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.NaturtypeHovedenhet') as nvarchar(500))");
+                //e.Property(x => x.RedListAssessedSpecies).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.RodlisteVurdertArt') as nvarchar(100))");
+                //e.Property(x => x.AssessmentContext).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.VurderingsContext') as nvarchar(10))");
             });
             // Assessment
             modelBuilder.Entity<AssessmentHistory>(e =>
