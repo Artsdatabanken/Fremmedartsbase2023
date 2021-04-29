@@ -71,6 +71,9 @@ namespace SwissKnife
                     oldDbService.Dump(console, OutputFolder);
                 }
             }
+            [Command("import", Description = "import from json files",
+                ExtendedHelpText =
+                    "Sample : olddb import --connectionstring 'constring'  --inputfolder ../../../dump")]
             internal class Import
             {
                 [Option("--connectionstring", Description = "connectionstring to database to establish and load data into")]
