@@ -14,24 +14,24 @@ namespace Prod.Domain
     //    public string VurderingsContext { get; set; }
     //    public string Ekspertgruppe { get; set; }
     //}
-    public class NyVurderingsInfo
-    {
-        //public string VurderingId { get; set; }
-        public string ScientificName { get; set; }
-        public int ScientificNameId { get; set; }
-        public int TaxonId { get; set; }
-        public string Author { get; set; }
-        //public string VernacularName { get; set; }
-        public string TaxonRank { get; set; }   // "Species" or "SupSpecies"
-        public string VurderingsContext { get; set; } // not set in the request, but used in the process of validate the creation of new vurdering // not needed becauso ekspertgruppe contains context - no need to validate
-        //public string VurderingsStatus { get; set; }
-        public string Ekspertgruppe { get; set; } // vurderingscontext is derived from Ekspertgruppe
-        public DateTime SistOppdatert { get; set; }
-        public string SistOppdatertAv { get; set; }
-        //public string Kategori { get; set; }
+    //public class NyVurderingsInfo
+    //{
+    //    //public string VurderingId { get; set; }
+    //    public string ScientificName { get; set; }
+    //    public int ScientificNameId { get; set; }
+    //    public int TaxonId { get; set; }
+    //    public string Author { get; set; }
+    //    //public string VernacularName { get; set; }
+    //    public string TaxonRank { get; set; }   // "Species" or "SupSpecies"
+    //    public string VurderingsContext { get; set; } // not set in the request, but used in the process of validate the creation of new vurdering // not needed becauso ekspertgruppe contains context - no need to validate
+    //    //public string VurderingsStatus { get; set; }
+    //    public string Ekspertgruppe { get; set; } // vurderingscontext is derived from Ekspertgruppe
+    //    public DateTime SistOppdatert { get; set; }
+    //    public string SistOppdatertAv { get; set; }
+    //    //public string Kategori { get; set; }
 
-        //public Guid[] References { get; set; }
-    }
+    //    //public Guid[] References { get; set; }
+    //}
 
     public partial class FA3 // () Id-informjosjon
     {
@@ -43,7 +43,8 @@ namespace Prod.Domain
             return newfa;
         }
 
-        public string Id { get; set; }
+        public int Id { get; set; }
+        public string VurderingId2018 { get; set; }
         public int VurderingId2012 { get; set; }
         public int RiskLevel2012 { get; set; }
         public int SpreadRiskLevel2012 { get; set; }
@@ -51,7 +52,7 @@ namespace Prod.Domain
 
         public string EvaluationContext { get; set; }
 
-        public string ExpertGroupId { get; set; }
+        //public string ExpertGroupId { get; set; } // removed sah 20210502
 
         //public Taxon Taxon { get; set; }
         public int TaxonId { get; set; }
@@ -72,11 +73,13 @@ namespace Prod.Domain
         //public string SpeciesName { get; set; } // fab: SpeciesName // Brukes 'over alt' i 2012 - toooodo: bør kunne klare oss uten?
 
 
-        public DateTime SistOppdatert { get; set; }
-        public string SistOppdatertAv { get; set; }
-
+        public DateTime LastUpdatedAt { get; set; }
+        public string LastUpdatedBy { get; set; }
+        public DateTime LockedForEditAt { get; set; }
+        public string LockedForEditBy { get; set; }
         public bool IsEvaluated { get; set; }  // ???
-
+        public bool IsDeleted { get; set; }
+        public string EvaluationStatus { get; set; }
 
         /// <summary>
         /// Scientific name Id (from Artsnavnebase) used for Risk Evaluation (at the time of evaluation)
@@ -89,6 +92,9 @@ namespace Prod.Domain
         public string EvaluatedScientificName { get; set; }
         public string EvaluatedScientificNameAuthor { get; set; } //added 23.08.2017
         public string EvaluatedVernacularName { get; set; } //added 29.09.2017
+
+        public string TaxonHierarcy { get; set; }
+
         //public string VurdertVitenskapeligNavn { get; set; }
 
         //        public string SynonymSpecies_________ { get; set; } // fab: Synonym_Species

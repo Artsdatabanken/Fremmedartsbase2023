@@ -100,7 +100,7 @@ namespace Prod.Api.Controllers
             };
         }
 
-        private static MemoryStream CreateCvsMemoryStream(List<Rodliste2019WithComments> result)
+        private static MemoryStream CreateCvsMemoryStream(List<FA3WithComments> result)
         {
             var mem = new MemoryStream();
             var writer = new StreamWriter(mem, Encoding.Unicode);
@@ -127,7 +127,7 @@ namespace Prod.Api.Controllers
             return mem;
         }
 
-        private List<Rodliste2019WithComments> GetAssessmentsFromDb(string expertgroupid, string[] exlude)
+        private List<FA3WithComments> GetAssessmentsFromDb(string expertgroupid, string[] exlude)
         {
             var result = _dbContext.Assessments
                 .FromSqlRaw(
@@ -147,8 +147,8 @@ namespace Prod.Api.Controllers
                 .OrderBy(x => x.ScientificName).ToList()
                 .Select(assessment =>
                 {
-                    var deserializeObject = JsonConvert.DeserializeObject<Rodliste2019WithComments>(assessment.Doc);
-                    deserializeObject.Id = string.IsNullOrWhiteSpace(deserializeObject.Id) ? assessment.Id.ToString() : deserializeObject.Id;
+                    var deserializeObject = JsonConvert.DeserializeObject<FA3WithComments>(assessment.Doc);
+                    deserializeObject.Id = deserializeObject.Id == 0 ? assessment.Id : deserializeObject.Id;
                     return deserializeObject;
                 })
                 .ToList();
@@ -167,7 +167,7 @@ namespace Prod.Api.Controllers
                         }).ToDictionary(x => x.AssessmentId);
             foreach (var assessmentListItem in rodliste2019WithCommentses)
             {
-                var key = int.Parse(assessmentListItem.Id);
+                var key = assessmentListItem.Id;
                 if (commentStats.ContainsKey(key))
                 {
                     var stats = commentStats[key];
@@ -186,7 +186,7 @@ namespace Prod.Api.Controllers
         private async Task<List<AssessmentListItem>> GetExpertGroupAssessments(string expertgroupid, string brukerId)
         {
             var result = await _dbContext.Assessments
-                             .FromSqlRaw("SELECT Id, TaxonHierarcy, LockedForEditByUser, LastUpdatedBy, Expertgroup, EvaluationStatus, Category, LockedForEditAt, LastUpdatedAt, ScientificName, ScientificNameId, PopularName, IsDeleted FROM dbo.Assessments WITH (INDEX(IX_Assessments_Expertgroup))") // index hint - speeds up computed columns
+                             .FromSqlRaw("SELECT Id, TaxonHierarcy, LockedForEditBy, LastUpdatedBy, Expertgroup, EvaluationStatus, Category, LockedForEditAt, LastUpdatedAt, ScientificName, ScientificNameId, PopularName, IsDeleted FROM dbo.Assessments WITH (INDEX(IX_Assessments_Expertgroup))") // index hint - speeds up computed columns
                              .Where(x => x.Expertgroup == expertgroupid && x.IsDeleted == false).OrderBy(x => x.ScientificName)
                 .Select(x =>
                     new AssessmentListItem()
@@ -196,7 +196,7 @@ namespace Prod.Api.Controllers
                         EvaluationStatus = x.EvaluationStatus,
                         LastUpdatedBy = x.LastUpdatedBy,
                         LastUpdatedAt = x.LastUpdatedAt,
-                        LockedForEditByUser = x.LockedForEditByUser,
+                        LockedForEditByUser = x.LockedForEditBy,
                         LockedForEditAt = x.LockedForEditAt,
                         ScientificName = x.ScientificName,
                         TaxonHierarcy = x.TaxonHierarcy,

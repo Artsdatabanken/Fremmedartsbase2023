@@ -100,7 +100,7 @@
 //                if (role.Skriver)
 //                {
 //                    doc.LockedForEditAt = DateTime.Now;
-//                    doc.LockedForEditByUser = role.Bruker.Brukernavn;
+//                    doc.LockedForEditBy = role.Bruker.Brukernavn;
 //                    await StoreAssessment(id, doc, role.Bruker, true);
 //                    await _dbContext.SaveChangesAsync();
 //                }
@@ -130,7 +130,7 @@
 //                if (role.Skriver || force)
 //                {
 //                    doc.LockedForEditAt = DateTime.Now;
-//                    doc.LockedForEditByUser = null;
+//                    doc.LockedForEditBy = null;
 //                    await StoreAssessment(id, doc, role.Bruker, true, force);
 //                    await _dbContext.SaveChangesAsync();
 //                }
@@ -161,7 +161,7 @@
 //                {
 //                    doc.EvaluationStatus = "finished";
 //                    doc.LockedForEditAt = DateTime.Now;
-//                    doc.LockedForEditByUser = null;
+//                    doc.LockedForEditBy = null;
 //                    await StoreAssessment(id, doc, role.Bruker, true, force);
 //                    await _dbContext.SaveChangesAsync();
 //                }
@@ -264,7 +264,7 @@
 //                {
 //                    doc.EvaluationStatus = "inprogress";
 //                    doc.LockedForEditAt = DateTime.Now;
-//                    doc.LockedForEditByUser = null;
+//                    doc.LockedForEditBy = null;
 //                    await StoreAssessment(id, doc, role.Bruker, true, force);
 //                    await _dbContext.SaveChangesAsync();
 //                }
@@ -410,7 +410,7 @@
 
 //            var assessment = _dbContext.Assessments.SingleOrDefault(x => x.Id == id);
 
-//            if (!forceStore && (assessment.LockedForEditByUser != null && assessment.LockedForEditByUser != user.Brukernavn))
+//            if (!forceStore && (assessment.LockedForEditBy != null && assessment.LockedForEditBy != user.Brukernavn))
 //            {
 //                throw new Exception("IKKE SKRIVETILGANG TIL DENNE VURDERINGEN - Låst av annen bruker");
 //            }
@@ -729,7 +729,7 @@
 //            var role = await base.GetRoleInGroup(doc.Ekspertgruppe);
 //            try
 //            {
-//                //if (role.Skriver && (doc.LockedForEditByUser == role.Bruker.Brukernavn) && (doc.Ekspertgruppe == value.Ekspertgruppe))
+//                //if (role.Skriver && (doc.LockedForEditBy == role.Bruker.Brukernavn) && (doc.Ekspertgruppe == value.Ekspertgruppe))
 //                if ( doc.Ekspertgruppe == value.Ekspertgruppe)
 //                {
 //                    int scientificNameId = int.Parse(value.ScientificNameId);

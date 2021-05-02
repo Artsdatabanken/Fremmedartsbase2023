@@ -11,7 +11,7 @@ namespace Prod.Domain
         public string EvaluationStatus { get; set; }
         public string LastUpdatedBy { get; set; }
         public DateTime LastUpdatedAt { get; set; }
-        public string LockedForEditByUser { get; set; }
+        public string LockedForEditBy { get; set; }
         public DateTime LockedForEditAt { get; set; }
         public string Doc { get; set; }
         public string ScientificName { get; set; }

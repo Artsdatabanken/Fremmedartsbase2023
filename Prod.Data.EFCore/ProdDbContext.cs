@@ -17,19 +17,14 @@ namespace Prod.Data.EFCore
 
         public virtual DbSet<Bruker> Users { get; set; }
         public virtual DbSet<Assessment> Assessments { get; set; }
-        public virtual DbSet<AssessmentHistory> AssessmentHistories { get; set; }
-        public virtual DbSet<Kode> Codes { get; set; }
+        //public virtual DbSet<AssessmentHistory> AssessmentHistories { get; set; }
+        //public virtual DbSet<Kode> Codes { get; set; }
 
         public virtual DbSet<AssessmentComment> Comments { get; set; }
         public virtual DbSet<Attachment> Attachments { get; set; }
 
-        public virtual DbSet<UserFeedback> UserFeedbacks { get; set; }
-
-
-
-        //public virtual DbSet<Assessment> Assessment { get; set; }
-        //public virtual DbSet<AssessmentRevision> AssessmentRevision { get; set; }
-        //public virtual DbSet<ReferenceUsage> ReferenceUsage { get; set; }
+        //public virtual DbSet<UserFeedback> UserFeedbacks { get; set; } // later?
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
@@ -71,24 +66,24 @@ namespace Prod.Data.EFCore
             {
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Doc).IsRequired();
-                e.Property(x=>x.Expertgroup).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.Ekspertgruppe') as nvarchar(150))");
+                e.Property(x=>x.Expertgroup).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.ExpertGroup') as nvarchar(150))");
                 e.Property(x => x.Expertgroup).HasMaxLength(ekspertgruppeIdSize).IsRequired();
-                e.HasIndex(x => x.Expertgroup).IncludeProperties(x=>new {x.ScientificName, x.PopularName, x.ScientificNameId, x.TaxonHierarcy, x.IsDeleted, x.EvaluationStatus, x.LastUpdatedAt,x.LastUpdatedBy,x.LockedForEditByUser, x.LockedForEditAt, x.Category}); // hurtig tilgang til verdiene i ekspertgruppekontroller
-                e.Property(x => x.LockedForEditByUser).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.LockedForEditByUser') as nvarchar(100))");
+                e.HasIndex(x => x.Expertgroup).IncludeProperties(x=>new {x.ScientificName, x.PopularName, x.ScientificNameId, x.TaxonHierarcy, x.IsDeleted, x.EvaluationStatus, x.LastUpdatedAt,x.LastUpdatedBy, x.LockedForEditBy, x.LockedForEditAt, x.Category}); // hurtig tilgang til verdiene i ekspertgruppekontroller
+                e.Property(x => x.LockedForEditBy).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.LockedForEditBy') as nvarchar(100))");
                 e.Property(x => x.LockedForEditAt).HasComputedColumnSql("CONVERT(datetime2,JSON_VALUE(Doc, '$.LockedForEditAt'),112)");
                 e.Property(x => x.LastUpdatedBy).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.LastUpdatedBy') as nvarchar(100))");
-                e.Property(x => x.LastUpdatedAt).HasComputedColumnSql("CONVERT(datetime2,JSON_VALUE(Doc, '$.LastUpdatedOn'),112)");
+                e.Property(x => x.LastUpdatedAt).HasComputedColumnSql("CONVERT(datetime2,JSON_VALUE(Doc, '$.LastUpdatedAt'),112)");
                 e.Property(x => x.EvaluationStatus).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.EvaluationStatus') as nvarchar(100))");
 
                 // json props
-                e.Property(x => x.ScientificName).HasComputedColumnSql("CONVERT([nvarchar](300),json_value([Doc],'$.VurdertVitenskapeligNavn')) + ISNULL(' ' + CONVERT([nvarchar](300),json_value([Doc],'$.VurdertVitenskapeligNavnAutor')), '')");
-                e.Property(x => x.PopularName).HasComputedColumnSql("CONVERT([nvarchar](300),json_value([Doc],'$.PopularName'))");
-                e.Property(x => x.TaxonHierarcy).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.VurdertVitenskapeligNavnHierarki') as nvarchar(1500))");
-                e.Property(x => x.IsDeleted).HasComputedColumnSql("cast((case when JSON_VALUE(Doc,'$.Slettet') = 'true' then 1 else 0 end) as bit)");
-                e.Property(x => x.Category).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.Kategori') as nvarchar(5))");
+                e.Property(x => x.ScientificName).HasComputedColumnSql("CONVERT([nvarchar](300),json_value([Doc],'$.EvaluatedScientificName')) + ISNULL(' ' + CONVERT([nvarchar](300),json_value([Doc],'$.EvaluatedScientificNameAuthor')), '')");
+                e.Property(x => x.PopularName).HasComputedColumnSql("CONVERT([nvarchar](300),json_value([Doc],'$.EvaluatedVernacularName'))");
+                e.Property(x => x.TaxonHierarcy).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.TaxonHierarcy') as nvarchar(1500))");
+                e.Property(x => x.IsDeleted).HasComputedColumnSql("cast((case when JSON_VALUE(Doc,'$.IsDeleted') = 'true' then 1 else 0 end) as bit)");
+                e.Property(x => x.Category).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.RiskAssessment.RiskLevelCode') as nvarchar(5))");
                 //e.Property(x => x.Criteria).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.Kriterier') as nvarchar(50))");
                 //e.Ignore(x => x.MainCriteria);
-                e.Property(x => x.ScientificNameId).HasComputedColumnSql("Convert(int,JSON_VALUE(Doc, '$.VurdertVitenskapeligNavnId'))");
+                e.Property(x => x.ScientificNameId).HasComputedColumnSql("Convert(int,JSON_VALUE(Doc, '$.EvaluatedScientificNameId'))");
                 //e.Property(x => x.AssessmentYear).HasComputedColumnSql("Convert(int,JSON_VALUE(Doc, '$.\"Vurderingsår\"'))");
                 //e.Property(x => x.CategoryLastRedList).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.KategoriFraForrigeListe') as nvarchar(100))");
                 //e.Property(x => x.NatureTypes).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.NaturtypeHovedenhet') as nvarchar(500))");
@@ -103,7 +98,7 @@ namespace Prod.Data.EFCore
                 e.Property(x => x.Doc).IsRequired();
                 e.Property(x => x.Expertgroup).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.Ekspertgruppe') as nvarchar(150))");
                 e.HasIndex(x => x.Expertgroup);
-                e.Property(x => x.LockedForEditByUser).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.LockedForEditByUser') as nvarchar(100))");
+                e.Property(x => x.LockedForEditByUser).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.LockedForEditBy') as nvarchar(100))");
                 e.Property(x => x.LockedForEditAt).HasComputedColumnSql("CONVERT(datetime2,JSON_VALUE(Doc, '$.LockedForEditAt'),112)");
                 e.Property(x => x.LastUpdatedBy).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.LastUpdatedBy') as nvarchar(100))");
                 e.Property(x => x.LastUpdatedAt).HasComputedColumnSql("CONVERT(datetime2,JSON_VALUE(Doc, '$.LastUpdatedOn'),112)");
@@ -111,14 +106,14 @@ namespace Prod.Data.EFCore
                 e.HasIndex(x => x.HistoryAt);
             });
 
-            // Koder
-            modelBuilder.Entity<Kode>(e =>
-            {
-                e.HasKey(x => x.Id);
-                e.Property(x=>x.Id).ValueGeneratedNever();
-                e.Property(x => x.Context).HasMaxLength(20).IsRequired();
-                e.Property(x => x.JsonData).IsRequired();
-            });
+            //// Koder
+            //modelBuilder.Entity<Kode>(e =>
+            //{
+            //    e.HasKey(x => x.Id);
+            //    e.Property(x=>x.Id).ValueGeneratedNever();
+            //    e.Property(x => x.Context).HasMaxLength(20).IsRequired();
+            //    e.Property(x => x.JsonData).IsRequired();
+            //});
 
             // Comments
             modelBuilder.Entity<AssessmentComment>(e =>
@@ -130,7 +125,7 @@ namespace Prod.Data.EFCore
                 e.Property(x => x.Comment).IsRequired().HasMaxLength(3900);
                 e.Property(x => x.CommentDate).IsRequired();
                 e.Property(x => x.ClosedDate);
-                e.HasOne(x=> x.User).WithMany().OnDelete(DeleteBehavior.NoAction).IsRequired();
+                e.HasOne(x => x.User).WithMany().OnDelete(DeleteBehavior.NoAction).IsRequired();
                 e.HasOne(x => x.ClosedBy).WithMany().OnDelete(DeleteBehavior.NoAction);
             });
 

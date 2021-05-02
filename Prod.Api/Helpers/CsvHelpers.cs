@@ -13,7 +13,7 @@ namespace Prod.Api.Helpers
 {
     public class CsvHelpers
     {
-        public class RodlisteToCsvMap : ClassMap<Rodliste2019WithComments>
+        public class RodlisteToCsvMap : ClassMap<FA3WithComments>
         {
             public RodlisteToCsvMap()
             {
@@ -34,7 +34,7 @@ namespace Prod.Api.Helpers
                 ////Map(m => m.UtdoddINorgeRE).Index(i++);
                 //Map(m => m.OverordnetKlassifiseringGruppeKode).Index(i++);
                 //Map(m => m.BegrensetForekomstNA).Index(i++).Name("OverordnetKlassifiseringKode")
-                //    .ConvertUsing(delegate(Rodliste2019WithComments rl)
+                //    .ConvertUsing(delegate(FA3WithComments rl)
                 //    {
                 //        string result = null;
                 //        switch (rl.OverordnetKlassifiseringGruppeKode)
@@ -236,7 +236,7 @@ namespace Prod.Api.Helpers
                 //Map(m => m.ArtskartModel.IncludeSvalbard).Index(i++);
 
                 ////Map(m => m.LockedForEditAt).Index(i++);
-                ////Map(m => m.LockedForEditByUser).Index(i++);
+                ////Map(m => m.LockedForEditBy).Index(i++);
                 //Map(m => m.EvaluationStatus).Index(i++);
                 //Map(m => m.PopularName).Index(i++).Name("NorskNavn");
                 //Map(m => m.Kommentarer).Index(i++);
@@ -312,7 +312,7 @@ namespace Prod.Api.Helpers
 
         //private static string GetFylkesStatus(object rl, string item)
         //{
-        //    FA3 o = (Rodliste2019WithComments) rl;
+        //    FA3 o = (FA3WithComments) rl;
         //    var fylkesforekomsts = o.Fylkesforekomster.FirstOrDefault(x => x.Fylke == item);
         //    if (fylkesforekomsts == null)
         //    {
@@ -333,7 +333,7 @@ namespace Prod.Api.Helpers
 
         //private static string GetAarsakTilNedgraderingAvKategoritekst(object rl)
         //{
-        //    var o = (Rodliste2019WithComments)rl;
+        //    var o = (FA3WithComments)rl;
         //    return o.UtdøingSterktPåvirket == "Ja" ? o.ÅrsakTilNedgraderingAvKategori ?? "" : "";
         //}
 
@@ -509,7 +509,7 @@ namespace Prod.Api.Helpers
 
         //public static string PavirkningsfaktorListConverter(object rl)
         //{
-        //    Rodliste2019 o = (Rodliste2019WithComments) rl;
+        //    Rodliste2019 o = (FA3WithComments) rl;
 
         //    var thing = o.Påvirkningsfaktorer;
         //        if (thing == null || thing.Count == 0)
