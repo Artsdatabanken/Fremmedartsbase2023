@@ -8,6 +8,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using AutoMapper;
 using McMaster.Extensions.CommandLineUtils;
+using Microsoft.EntityFrameworkCore;
 using Prod.Data.EFCore;
 using Prod.Domain;
 using Prod.Domain.Legacy;
@@ -32,6 +33,27 @@ namespace SwissKnife.Database
                 Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
             };
 
+            var brukere = GetBrukers(inputFolder);
+            var dummyDate = new DateTime(2018,1,1);
+            foreach (var bruker in brukere)
+            {
+                _database.Users.Add(new User()
+                {
+                    Id = Guid.Parse(bruker.GUID),
+                    Brukernavn = bruker.Brukernavn,
+                    DatoForTilgang = dummyDate,
+                    DatoOpprettet = dummyDate,
+                    DatoSistAktiv = dummyDate,
+                    Email = "",
+                    HarTilgang = false,
+                    Navn = bruker.Brukernavn,
+                    TilgangAvvist = true
+                });
+            }
+
+            _database.SaveChanges();
+            var users = _database.Users.ToDictionary(x => x.Brukernavn, x => x);
+
             // mapping
             var mapper = CreateMappingFromOldToNew();
             var batchsize = 50;
@@ -54,8 +76,51 @@ namespace SwissKnife.Database
             // add users
 
             // add files
+            count = 0;
+            var dummydate = dummyDate;
+            var array = _database.Assessments.Include(x=>x.Attachments).ToArray();
+            foreach (var assessment in array)
+            {
+                var doc = JsonSerializer.Deserialize<FA3>(assessment.Doc);
+                if (doc != null)
+                {
+                    doc.Id = assessment.Id;
+                    if (doc.Datasett.Files.Any())
+                    {
+                        foreach (var datasettFile in doc.Datasett.Files)
+                        {
+                            var readAllBytes =
+                                File.ReadAllBytes(inputFolder + "\\Files\\" + datasettFile.Url.Replace("/", "\\"));
+                            if (readAllBytes.Length > 0)
+                            {
+                                assessment.Attachments.Add(new Attachment()
+                                {
+                                    FileName = datasettFile.Filename,
+                                    Date = (string.IsNullOrWhiteSpace(datasettFile.LastModified) || datasettFile.LastModified.StartsWith("0001-01-01") ? dummydate : DateTimeOffset
+                                        .FromUnixTimeMilliseconds(long.Parse(datasettFile.LastModified)).DateTime),
+                                    Name = datasettFile.Filename,
+                                    Description = string.IsNullOrWhiteSpace(datasettFile.Description)
+                                        ? ""
+                                        : datasettFile.Description,
+                                    File = readAllBytes,
+                                    UserId = users[doc.LastUpdatedBy].Id,
+                                    Type = datasettFile.Filename.ToLowerInvariant().EndsWith("zip") ? "application/zip" : "application/csv"
+                                });
+                            }
 
-            
+                        }
+                    }
+
+                    count++;
+                    if (count > batchsize)
+                    {
+                        _database.SaveChanges();
+                        count = 0;
+                    }
+                }
+            }
+            _database.SaveChanges();
+
         }
 
         private static Mapper CreateMappingFromOldToNew()
@@ -138,6 +203,26 @@ namespace SwissKnife.Database
                 else
                 {
                     yield return JsonSerializer.Deserialize<FA3Legacy>(line);
+                }
+
+            } while (hasLine);
+        }
+        private IEnumerable<Bruker> GetBrukers(string inputFolder)
+        {
+            var dir = Directory.CreateDirectory(inputFolder);
+            var path = dir.FullName;
+            using var read = new StreamReader(path + "\\brukere.json");
+            var hasLine = true;
+            do
+            {
+                var line = read.ReadLine();
+                if (string.IsNullOrWhiteSpace(line))
+                {
+                    hasLine = false;
+                }
+                else
+                {
+                    yield return JsonSerializer.Deserialize<Bruker>(line);
                 }
 
             } while (hasLine);

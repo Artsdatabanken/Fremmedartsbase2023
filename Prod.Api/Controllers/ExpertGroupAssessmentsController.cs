@@ -35,7 +35,7 @@ namespace Prod.Api.Controllers
         }
         public class ExpertgroupAssessments
         {
-            public Bruker.EkspertgruppeRolle Rolle;
+            public User.EkspertgruppeRolle Rolle;
             public List<AssessmentListItem> Assessments = new List<AssessmentListItem>();
         }
 
@@ -49,7 +49,7 @@ namespace Prod.Api.Controllers
             return new ExpertgroupAssessments
             {
                 Rolle = roleInGroup,
-                Assessments = await GetExpertGroupAssessments(expertgroupid, roleInGroup.Bruker.Id)
+                Assessments = await GetExpertGroupAssessments(expertgroupid, roleInGroup.User.Id)
             };
             
         }
@@ -183,7 +183,7 @@ namespace Prod.Api.Controllers
         }
 
 
-        private async Task<List<AssessmentListItem>> GetExpertGroupAssessments(string expertgroupid, string brukerId)
+        private async Task<List<AssessmentListItem>> GetExpertGroupAssessments(string expertgroupid, Guid brukerId)
         {
             var result = await _dbContext.Assessments
                              .FromSqlRaw("SELECT Id, TaxonHierarcy, LockedForEditBy, LastUpdatedBy, Expertgroup, EvaluationStatus, Category, LockedForEditAt, LastUpdatedAt, ScientificName, ScientificNameId, PopularName, IsDeleted FROM dbo.Assessments WITH (INDEX(IX_Assessments_Expertgroup))") // index hint - speeds up computed columns

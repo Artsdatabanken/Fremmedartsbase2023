@@ -15,7 +15,7 @@ namespace Prod.Data.EFCore
         {
         }
 
-        public virtual DbSet<Bruker> Users { get; set; }
+        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Assessment> Assessments { get; set; }
         //public virtual DbSet<AssessmentHistory> AssessmentHistories { get; set; }
         //public virtual DbSet<Kode> Codes { get; set; }
@@ -31,12 +31,12 @@ namespace Prod.Data.EFCore
             const int brukerIdSize = 100;
             const int ekspertgruppeIdSize = 200;
 
-            // Bruker
+            // User
             modelBuilder
-                .Entity<Bruker>(e =>
+                .Entity<User>(e =>
                 {
                     e.HasKey(x => x.Id);
-                    e.HasMany(x => x.EkspertgruppeRoller).WithOne(x => x.Bruker).OnDelete(DeleteBehavior.Cascade);
+                    e.HasMany(x => x.EkspertgruppeRoller).WithOne(x => x.User).OnDelete(DeleteBehavior.Cascade);
 
                     e.Property(x => x.Id).HasMaxLength(brukerIdSize);
                     e.Property(x => x.Brukernavn).HasMaxLength(brukerIdSize).IsRequired();
@@ -50,7 +50,7 @@ namespace Prod.Data.EFCore
 
 
             // EkspertgruppeRolle
-            modelBuilder.Entity<Bruker.EkspertgruppeRolle>(e =>
+            modelBuilder.Entity<User.EkspertgruppeRolle>(e =>
             {
                 e.HasKey(x => new
                 {

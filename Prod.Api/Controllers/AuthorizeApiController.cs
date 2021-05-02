@@ -27,7 +27,7 @@ namespace Prod.Api.Controllers
         }
 
         protected async 
-        Task<Bruker> GetUser()
+        Task<User> GetUser()
         {
             var disco = await _discoveryCache.GetAsync();
             if (disco.IsError) throw new Exception(disco.Error);
@@ -48,9 +48,9 @@ namespace Prod.Api.Controllers
             var name = infuser.Claims.FirstOrDefault(x => x.Type == "name")?.Value;
             var email = infuser.Claims.FirstOrDefault(x => x.Type == "email")?.Value;
 
-            var user = _dbContext.Users.Include(x=>x.EkspertgruppeRoller).FirstOrDefault(x => x.Id == infuserId) ?? new Bruker
+            var user = _dbContext.Users.Include(x=>x.EkspertgruppeRoller).FirstOrDefault(x => x.Id == Guid.Parse(infuserId)) ?? new User
             {
-                Id = infuserId, ErAdministrator = isAdmin, HarSoktOmTilgang = false, HarTilgang = false,
+                Id = Guid.Parse(infuserId), ErAdministrator = isAdmin, HarSoktOmTilgang = false, HarTilgang = false,
                 Brukernavn = userName, Navn = name, Email = email, DatoOpprettet = DateTime.Now
             };
 
@@ -61,21 +61,21 @@ namespace Prod.Api.Controllers
             return user;
         }
 
-        protected async Task<Bruker.EkspertgruppeRolle> GetRoleInGroup(string id)
+        protected async Task<User.EkspertgruppeRolle> GetRoleInGroup(string id)
         {
             var user = await GetUser();
-            var roleInGroup = user.EkspertgruppeRoller.Select(x=>new Bruker.EkspertgruppeRolle()
+            var roleInGroup = user.EkspertgruppeRoller.Select(x=>new User.EkspertgruppeRolle()
                               {
                                   EkspertgruppeId = x.EkspertgruppeId, 
                                   Leder = x.Leder, 
                                   Leser = x.Leser, 
                                   Skriver = x.Skriver,
-                                  Bruker = new Bruker() { Brukernavn = user.Brukernavn, Id = user.Id, ErAdministrator = user.ErAdministrator}
+                                  User = new User() { Brukernavn = user.Brukernavn, Id = user.Id, ErAdministrator = user.ErAdministrator}
             }).FirstOrDefault(x => x.EkspertgruppeId == id);
             if (roleInGroup == null)
             {
-                roleInGroup = new Bruker.EkspertgruppeRolle()
-                                  { EkspertgruppeId = id, Leder = false, Leser = false, Skriver = false, Bruker = new Bruker(){Brukernavn = user.Brukernavn, Id = user.Id, ErAdministrator = user.ErAdministrator } };
+                roleInGroup = new User.EkspertgruppeRolle()
+                                  { EkspertgruppeId = id, Leder = false, Leser = false, Skriver = false, User = new User(){Brukernavn = user.Brukernavn, Id = user.Id, ErAdministrator = user.ErAdministrator } };
             }
 
             // gi admin anledning til å låse opp vurderinger o.l.

@@ -1168,7 +1168,7 @@ namespace Prod.Domain
         public string KTVNin1 { get; set; }
         public string category { get; set; }
     }
-    public class Rodliste2019WithComments : FA3
+    public class FA3WithComments : FA3
     {
         public string NewestCommentDate { get; set; }
         public int CommentClosed { get; set; }

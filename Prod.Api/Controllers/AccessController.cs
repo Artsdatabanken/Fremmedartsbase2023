@@ -33,7 +33,7 @@ namespace Prod.Api.Controllers
         }
 
         [HttpGet("Access")]
-        public async Task<Bruker> Get()
+        public async Task<User> Get()
         {
             var user = await base.GetUser();
             await StoreUserInfo(user);
@@ -47,12 +47,12 @@ namespace Prod.Api.Controllers
             if (user == null || !user.ErAdministrator) throw new HttpRequestException("Not admin");
 
             var apps = await _dbContext.Users.Where(x => x.HarTilgang || x.ErAdministrator)
-                .Select(x => new SelectList {Id = x.Id, Value = x.Navn + " <" + x.Email + ">"}).ToArrayAsync();
+                .Select(x => new SelectList {Id = x.Id.ToString(), Value = x.Navn + " <" + x.Email + ">"}).ToArrayAsync();
             return apps.OrderBy(x=>x.Value).ToArray();
 
         }
         [HttpPost(("applications/apply"))]
-        public async Task<Bruker> Post([FromBody]string value)
+        public async Task<User> Post([FromBody]string value)
         {
             var user = await base.GetUser();
             user.HarSoktOmTilgang = true;
@@ -62,7 +62,7 @@ namespace Prod.Api.Controllers
         }
 
         [HttpGet("applications")]
-        public async Task<Bruker[]> GetApplications()
+        public async Task<User[]> GetApplications()
         {
             var user = await base.GetUser();
             if (user == null || !user.ErAdministrator) throw new HttpRequestException("Not admin");
@@ -76,7 +76,7 @@ namespace Prod.Api.Controllers
         {
             var user = await base.GetUser();
             if (user == null || !user.ErAdministrator) throw new HttpRequestException("Not admin");
-            var dbUser = await _dbContext.Users.Where(x => x.Id == id && x.HarSoktOmTilgang && x.HarTilgang == false)
+            var dbUser = await _dbContext.Users.Where(x => x.Id == Guid.Parse(id) && x.HarSoktOmTilgang && x.HarTilgang == false)
                 .SingleOrDefaultAsync();
             if (dbUser == null) return false;
             
@@ -92,7 +92,7 @@ namespace Prod.Api.Controllers
         {
             var user = await base.GetUser();
             if (user == null || !user.ErAdministrator) throw new HttpRequestException("Not admin");
-            var dbUser = await _dbContext.Users.Where(x => x.Id == id && x.HarSoktOmTilgang && x.HarTilgang == false)
+            var dbUser = await _dbContext.Users.Where(x => x.Id == Guid.Parse(id) && x.HarSoktOmTilgang && x.HarTilgang == false)
                 .SingleOrDefaultAsync();
             if (dbUser == null) return false;
 
@@ -103,7 +103,7 @@ namespace Prod.Api.Controllers
             return true;
         }
 
-        private async Task<Bruker> StoreUserInfo(Bruker user)
+        private async Task<User> StoreUserInfo(User user)
         {
             var dbUser = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == user.Id);
             if (dbUser == null)

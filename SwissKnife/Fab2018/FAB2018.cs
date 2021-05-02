@@ -49,6 +49,7 @@ namespace SwissKnife.Fab2018
             InfoFor(console, verbose, "Fab2018", GetFab2018());
 
             InfoForFiles(console, verbose, "Fab2018Files", GetFab2018Files());
+            InfoFor(console, verbose, "Brukere", GetUsers());
         }
 
         private void InfoForFiles(IConsole console, bool verbose, string s, IEnumerable<FileHeader> all)
@@ -107,6 +108,7 @@ namespace SwissKnife.Fab2018
             console.WriteLine(DumpToJsonFile(path, "RedlistedNaturetypeGroups.json", GetRedlistedNaturetypeGroups()));
             console.WriteLine(DumpToJsonFile(path, "Fa3.json", GetFab2018()));
             console.WriteLine(DumpFiles(path, GetFab2018Files()));
+            console.WriteLine(DumpToJsonFile(path, "Brukere.json", GetUsers()));
             console.WriteLine("done...");
         }
 
@@ -182,6 +184,11 @@ namespace SwissKnife.Fab2018
         {
             using var session = _store.OpenSession();
             return session.Query<Code>().AsEnumerable();
+        }
+        private IEnumerable<Bruker> GetUsers()
+        {
+            using var session = _store.OpenSession();
+            return session.Query<Bruker>().AsEnumerable();
         }
 
         private IEnumerable<Livsmedium> GetLivsmedium()

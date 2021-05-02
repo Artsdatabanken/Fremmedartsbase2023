@@ -34,7 +34,7 @@ namespace Prod.Api.Controllers
                 value.Id = Guid.NewGuid();
             }
 
-            value.UserId = new Guid(user.Id);
+            value.UserId = user.Id;
             value.ApplicationId = ReferenceService.AppId;
             var result = await _referenceService.Store(value);
 
@@ -59,7 +59,7 @@ namespace Prod.Api.Controllers
                 value.Id = Guid.NewGuid();
             }
 
-            value.UserId = new Guid(user.Id);
+            value.UserId = user.Id;
             value.ApplicationId = ReferenceService.AppId;
             var result = await _referenceService.Update(value);
 
@@ -75,7 +75,7 @@ namespace Prod.Api.Controllers
                 return NotFound("Reference with id:" + id);
             }
 
-            if (reference.UserId.ToString() != user.Id)
+            if (reference.UserId != user.Id)
             {
                 throw new HttpRequestException("Forsøk på å slette referanse oprettet av en annen bruker");
             }

@@ -100,8 +100,8 @@
 //                if (role.Skriver)
 //                {
 //                    doc.LockedForEditAt = DateTime.Now;
-//                    doc.LockedForEditBy = role.Bruker.Brukernavn;
-//                    await StoreAssessment(id, doc, role.Bruker, true);
+//                    doc.LockedForEditBy = role.User.Brukernavn;
+//                    await StoreAssessment(id, doc, role.User, true);
 //                    await _dbContext.SaveChangesAsync();
 //                }
 //                else
@@ -124,14 +124,14 @@
 
 //            var doc = JsonConvert.DeserializeObject<FA3>(data.Doc);
 //            var role = await base.GetRoleInGroup(doc.Ekspertgruppe);
-//            var force = role.Leder || role.Bruker.ErAdministrator;
+//            var force = role.Leder || role.User.ErAdministrator;
 //            try
 //            {
 //                if (role.Skriver || force)
 //                {
 //                    doc.LockedForEditAt = DateTime.Now;
 //                    doc.LockedForEditBy = null;
-//                    await StoreAssessment(id, doc, role.Bruker, true, force);
+//                    await StoreAssessment(id, doc, role.User, true, force);
 //                    await _dbContext.SaveChangesAsync();
 //                }
 //                else
@@ -154,7 +154,7 @@
 
 //            var doc = JsonConvert.DeserializeObject<FA3>(data.Doc);
 //            var role = await base.GetRoleInGroup(doc.Ekspertgruppe);
-//            var force = role.Leder || role.Bruker.ErAdministrator;
+//            var force = role.Leder || role.User.ErAdministrator;
 //            try
 //            {
 //                if (force || role.Skriver)
@@ -162,7 +162,7 @@
 //                    doc.EvaluationStatus = "finished";
 //                    doc.LockedForEditAt = DateTime.Now;
 //                    doc.LockedForEditBy = null;
-//                    await StoreAssessment(id, doc, role.Bruker, true, force);
+//                    await StoreAssessment(id, doc, role.User, true, force);
 //                    await _dbContext.SaveChangesAsync();
 //                }
 //                else
@@ -185,13 +185,13 @@
 
 //        //    var doc = JsonConvert.DeserializeObject<Rodliste2019>(data.Doc);
 //        //    var role = await base.GetRoleInGroup(doc.Ekspertgruppe);
-//        //    var force = role.Bruker.ErAdministrator;
+//        //    var force = role.User.ErAdministrator;
 //        //    try
 //        //    {
 //        //        if (force)
 //        //        {
 //        //            doc.Slettet = true;
-//        //            await StoreAssessment(id, doc, role.Bruker, false, true);
+//        //            await StoreAssessment(id, doc, role.User, false, true);
 //        //            await _dbContext.SaveChangesAsync();
 //        //        }
 //        //        else
@@ -235,11 +235,11 @@
 //            //}
 
 //            var role = await base.GetRoleInGroup(doc.Ekspertgruppe);
-//            var force = role.Bruker.ErAdministrator;
+//            var force = role.User.ErAdministrator;
 //            if (force)
 //            {
 //                doc.Slettet = true;
-//                await StoreAssessment(id, doc, role.Bruker, false, true);
+//                await StoreAssessment(id, doc, role.User, false, true);
 //                await _dbContext.SaveChangesAsync();
 //            }
 //            else
@@ -257,7 +257,7 @@
 
 //            var doc = JsonConvert.DeserializeObject<FA3>(data.Doc);
 //            var role = await base.GetRoleInGroup(doc.Ekspertgruppe);
-//            var force = role.Leder || role.Bruker.ErAdministrator;
+//            var force = role.Leder || role.User.ErAdministrator;
 //            try
 //            {
 //                if (role.Skriver || force)
@@ -265,7 +265,7 @@
 //                    doc.EvaluationStatus = "inprogress";
 //                    doc.LockedForEditAt = DateTime.Now;
 //                    doc.LockedForEditBy = null;
-//                    await StoreAssessment(id, doc, role.Bruker, true, force);
+//                    await StoreAssessment(id, doc, role.User, true, force);
 //                    await _dbContext.SaveChangesAsync();
 //                }
 //                else
@@ -300,7 +300,7 @@
 //            {
 //                if (role.Skriver)
 //                {
-//                    await StoreAssessment(int.Parse(id), value, role.Bruker, false);
+//                    await StoreAssessment(int.Parse(id), value, role.User, false);
 //                }
 //                else
 //                {
@@ -341,7 +341,7 @@
 //            {
 //                if (role.Skriver)
 //                {
-//                    var userName = role.Bruker.Brukernavn;
+//                    var userName = role.User.Brukernavn;
 //                    var rlRodliste2019 = CreateNewAssessment(value.Ekspertgruppe, userName, scientificNameId);
 //                    rlRodliste2019.EvaluationStatus = "created";
 //                    rlRodliste2019.LastUpdatedOn = now;
@@ -402,7 +402,7 @@
 //        }
 
 
-//        private async Task StoreAssessment(int id, FA3 rlRodliste2019, Bruker user, bool notUpdateChangedBy, bool forceStore = false)
+//        private async Task StoreAssessment(int id, FA3 rlRodliste2019, User user, bool notUpdateChangedBy, bool forceStore = false)
 //        {
 //            //var dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
 //            var now = DateTime.Now;
@@ -662,7 +662,7 @@
 //            return rl;
 //        }
 
-//        private async Task<FA3> moveAssessment(ProdDbContext dbContext, string expertgroup, Bruker user,
+//        private async Task<FA3> moveAssessment(ProdDbContext dbContext, string expertgroup, User user,
 //            int scientificNameId, FA3 assessment, int assessmentId) // change taxonomic info
 //        {
 //            if (string.IsNullOrWhiteSpace(expertgroup))
@@ -729,12 +729,12 @@
 //            var role = await base.GetRoleInGroup(doc.Ekspertgruppe);
 //            try
 //            {
-//                //if (role.Skriver && (doc.LockedForEditBy == role.Bruker.Brukernavn) && (doc.Ekspertgruppe == value.Ekspertgruppe))
+//                //if (role.Skriver && (doc.LockedForEditBy == role.User.Brukernavn) && (doc.Ekspertgruppe == value.Ekspertgruppe))
 //                if ( doc.Ekspertgruppe == value.Ekspertgruppe)
 //                {
 //                    int scientificNameId = int.Parse(value.ScientificNameId);
-//                    var assessment = await moveAssessment(_dbContext, value.Ekspertgruppe, role.Bruker, scientificNameId, doc, id);
-//                    await StoreAssessment(id, assessment, role.Bruker, true, true);
+//                    var assessment = await moveAssessment(_dbContext, value.Ekspertgruppe, role.User, scientificNameId, doc, id);
+//                    await StoreAssessment(id, assessment, role.User, true, true);
 //                    // 5 lagre
 //                }
 //                else

@@ -38,9 +38,9 @@ namespace Prod.Domain
         public DateTime HistoryAt { get; set; }
         public string Expertgroup { get; set; }
         public string EvaluationStatus { get; set; }
-        public string LastUpdatedBy { get; set; }
+        public Guid LastUpdatedBy { get; set; }
         public DateTime LastUpdatedAt { get; set; }
-        public string LockedForEditByUser { get; set; }
+        public Guid LockedForEditByUser { get; set; }
         public DateTime LockedForEditAt { get; set; }
         public string Doc { get; set; }
     }
@@ -51,11 +51,11 @@ namespace Prod.Domain
         public Assessment Assessment { get; set; }
         public string Comment { get; set; }
         public DateTime CommentDate { get; set; }
-        public Bruker User { get; set; }
-        public string UserId { get; set; }
+        public User User { get; set; }
+        public Guid UserId { get; set; }
         public bool Closed { get; set; }
-        public string ClosedById { get; set; }
-        public Bruker ClosedBy { get; set; }
+        public Guid ClosedById { get; set; }
+        public User ClosedBy { get; set; }
         public DateTime? ClosedDate { get; set; }
         public bool IsDeleted { get; set; }
     }

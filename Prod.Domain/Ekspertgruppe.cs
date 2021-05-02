@@ -10,7 +10,7 @@ namespace Prod.Domain
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public Bruker.EkspertgruppeRolle Rolle { get; set; }
+        public User.EkspertgruppeRolle Rolle { get; set; }
        // public string EkspertgruppeLeder { get; set; }
         //public IEnumerable<TaxonSearchResult> Taxons { get; set; }
     }

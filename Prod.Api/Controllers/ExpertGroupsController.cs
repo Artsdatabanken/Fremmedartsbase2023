@@ -33,7 +33,7 @@ namespace Prod.Api.Controllers
 
         public class Tilgang
         {
-            public string Id { get; set; }
+            public Guid Id { get; set; }
             public string Navn { get; set; }
             public bool Leder { get; set; }
             public bool Skriver { get; set; }
@@ -61,7 +61,7 @@ namespace Prod.Api.Controllers
         public class LeggTilgang
         {
             public string EkspertgruppeId { get; set; }
-            public string Id { get; set; }
+            public Guid Id { get; set; }
             public bool Leder { get; set; }
             public bool Skriver { get; set; }
             public bool Leser { get; set; }
@@ -84,7 +84,7 @@ namespace Prod.Api.Controllers
             var medlem = bruker.EkspertgruppeRoller.FirstOrDefault(y => y.EkspertgruppeId == eid);
             if (medlem == null)
             {
-                medlem = new Bruker.EkspertgruppeRolle {EkspertgruppeId = eid};
+                medlem = new User.EkspertgruppeRolle {EkspertgruppeId = eid};
                 bruker.EkspertgruppeRoller.Add(medlem);
 
             }
@@ -101,7 +101,7 @@ namespace Prod.Api.Controllers
 
         [Authorize]
         [HttpDelete("members/{bid}/{eid}")]
-        public async Task<bool> RemoveMembers(string bid, string eid)
+        public async Task<bool> RemoveMembers(Guid bid, string eid)
         {
             var user = await base.GetUser();
             if (user == null || !user.ErAdministrator) throw new HttpRequestException("Not admin");

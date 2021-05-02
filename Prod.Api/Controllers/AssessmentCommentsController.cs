@@ -29,7 +29,7 @@ namespace Prod.Api.Controllers
             public string ClosedBy { get; set; }
             public DateTime? ClosedDate { get; set; }
             public bool IsDeleted { get; set; }
-            public string UserId { get; internal set; }
+            public Guid UserId { get; internal set; }
         }
 
         public AssessmentCommentsController(IDiscoveryCache discoveryCache, ProdDbContext dbContext): base(discoveryCache, dbContext)

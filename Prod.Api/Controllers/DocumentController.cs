@@ -116,7 +116,7 @@ namespace Prod.Api.Controllers
             }
 
             var user = await base.GetRoleInGroup(value.Assessment.Expertgroup);
-            if (!user.Skriver && !user.Leder && !user.Bruker.ErAdministrator) return false;
+            if (!user.Skriver && !user.Leder && !user.User.ErAdministrator) return false;
             
             value.IsDeleted = true;
             await _dbContext.SaveChangesAsync();
