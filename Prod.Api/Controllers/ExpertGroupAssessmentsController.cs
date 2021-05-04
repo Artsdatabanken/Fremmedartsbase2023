@@ -35,8 +35,8 @@ namespace Prod.Api.Controllers
         }
         public class ExpertgroupAssessments
         {
-            public User.EkspertgruppeRolle Rolle;
-            public List<AssessmentListItem> Assessments = new List<AssessmentListItem>();
+            public User.EkspertgruppeRolle Rolle { get; set; }
+            public List<AssessmentListItem> Assessments { get; set; }
         }
 
             // GET api/assessment/5
@@ -46,11 +46,12 @@ namespace Prod.Api.Controllers
         {
             var expertgroupid = id.Replace('_', '/');
             var roleInGroup = await GetRoleInGroup(id);
-            return new ExpertgroupAssessments
+            var expertgroupAssessments = new ExpertgroupAssessments
             {
                 Rolle = roleInGroup,
                 Assessments = await GetExpertGroupAssessments(expertgroupid, roleInGroup.User.Id)
             };
+            return expertgroupAssessments;
             
         }
 

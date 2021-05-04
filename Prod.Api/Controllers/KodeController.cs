@@ -51,7 +51,7 @@ namespace Prod.Api.Controllers
             return JsonSerializer.Deserialize<Prod.Domain.RedlistedNaturetypeGroups>(await ReadResource("RedlistedNaturetypeGroups"));
         }
         [HttpGet("NiN10Livsmedium")]
-        public async Task<Livsmedium?> NiN10Livsmedium()
+        public async Task<Livsmedium> NiN10Livsmedium()
         {
             return JsonSerializer.Deserialize<Prod.Domain.Livsmedium>(await ReadResource("Livsmedium"));
         }
