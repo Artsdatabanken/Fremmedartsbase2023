@@ -66,7 +66,7 @@ namespace Prod.Data.EFCore
             {
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Doc).IsRequired();
-                e.Property(x=>x.Expertgroup).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.ExpertGroup') as nvarchar(150))");
+                e.Property(x=>x.Expertgroup).HasComputedColumnSql(" isnull(cast(JSON_VALUE(Doc, '$.ExpertGroup') as nvarchar(150)),'mangler')");
                 e.Property(x => x.Expertgroup).HasMaxLength(ekspertgruppeIdSize).IsRequired();
                 e.HasIndex(x => x.Expertgroup).IncludeProperties(x=>new {x.ScientificName, x.PopularName, x.ScientificNameId, x.TaxonHierarcy, x.IsDeleted, x.EvaluationStatus, x.LastUpdatedAt,x.LastUpdatedBy, x.LockedForEditBy, x.LockedForEditAt, x.Category}); // hurtig tilgang til verdiene i ekspertgruppekontroller
                 e.Property(x => x.LockedForEditBy).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.LockedForEditBy') as nvarchar(100))");
