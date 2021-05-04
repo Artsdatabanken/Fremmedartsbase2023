@@ -12,8 +12,8 @@ const mainView = ({appState, appState:{assessment, isServicesReady}, appState:{r
     <div className="header_background">
         <div className="header_padding" style={{display: 'flex'}}>
           <img src="https://artsdatabanken.no/Files/7809" className="top_image"/>
-{(assessment && assessment.popularName) ? <h1 className="header_title" style={{width: '90%'}}>Rødlista 2021{assessment && ": "+ assessment.vurdertVitenskapeligNavn + ", " + assessment.popularName +". Kategori: " + assessment.kategori}</h1>  : 
-<h1 className="header_title" style={{width: '90%'}}>Rødlista 2021{assessment && ": "+ assessment.vurdertVitenskapeligNavn + ". Kategori: " + assessment.kategori}</h1>}
+{(assessment && assessment.popularName) ? <h1 className="header_title" style={{width: '90%'}}>Fremmede arter 2023{assessment && ": "+ assessment.vurdertVitenskapeligNavn + ", " + assessment.popularName +". Kategori: " + assessment.kategori}</h1>  : 
+<h1 className="header_title" style={{width: '90%'}}>Fremmede arter 2023{assessment && ": "+ assessment.vurdertVitenskapeligNavn + ". Kategori: " + assessment.kategori}</h1>}
 
            {assessment && assessment.evaluationStatus !== 'finished' &&      <Xcomp.Button primary onClick= {() => {
                     console.log("Save assessment")

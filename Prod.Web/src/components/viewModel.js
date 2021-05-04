@@ -257,6 +257,9 @@ class ViewModel {
         });
         autorun(() => {
             console.log("isServicesReady: " + this.isServicesReady)
+            // console.log("- koder:" + this.koder != null)
+            console.log("exp" + (this.expertgroups != null))
+            // console.log("-lab" + this.codeLabels != null)
         });
         autorun(() => {
             console.log("viewMode: " + this.viewMode)
@@ -457,9 +460,10 @@ class ViewModel {
 
     @computed get isServicesReady() {
         return (
-            this.koder != null &&
-            this.expertgroups != null &&
-            this.codeLabels != null)
+            this.expertgroups != null )
+            // this.koder != null &&
+            // this.expertgroups != null &&
+            // this.codeLabels != null)
     }
 
     @computed get isDirty() {
@@ -678,7 +682,7 @@ class ViewModel {
 
     // async loadKoder() {
     //     const json = await this.getKoder()
-    //     const grupper = json.grupper
+    //     const grupper = json.Children
     //     for (let key in grupper) {
     //         for (let obj of grupper[key]) 
     //         {
@@ -689,24 +693,11 @@ class ViewModel {
     //     runInAction(() => this.koder = koder)
     // }
 
-    async loadKoder() {
-        const json = await this.getKoder()
-        const grupper = json.Children
-        for (let key in grupper) {
-            for (let obj of grupper[key]) 
-            {
-                obj.name = key
-            }
-        }
-        const koder = observable.object(grupper)
-        runInAction(() => this.koder = koder)
-    }
-
-    async loadPåvirkningsfaktorer() {
-        const json = await this.getPåvirkningsfaktorer()
-        const pvf = observable.object(json)
-        runInAction(() => this.påvirkningsfaktorer = pvf)
-    }
+    // async loadPåvirkningsfaktorer() {
+    //     const json = await this.getPåvirkningsfaktorer()
+    //     const pvf = observable.object(json)
+    //     runInAction(() => this.påvirkningsfaktorer = pvf)
+    // }
 
 
     async loadExpertGroups() {
@@ -946,22 +937,27 @@ class ViewModel {
         )
     }
 
-    async getKoder() {
-        const url = config.getUrl("Kode/101")  //todo: this is temporory to test new kode format
-        const response = await fetch(url)
-        const json = await response.json()
-        return json
-    }
-    async getPåvirkningsfaktorer() {
-        const url = config.getUrl("Kode/2")
-        const response = await fetch(url)
-        const json = await response.json()
-        return json
-    }
+    // async getKoder() {
+    //     const url = config.getUrl("Kode/101")  //todo: this is temporory to test new kode format
+    //     const response = await fetch(url)
+    //     const json = await response.json()
+    //     return json
+    // }
+    // async getPåvirkningsfaktorer() {
+    //     const url = config.getUrl("Kode/2")
+    //     const response = await fetch(url)
+    //     const json = await response.json()
+    //     return json
+    // }
     async getExpertGroups() {
+
         const url = config.getUrl("expertgroups")
+        console.log("getExpertGroups: " + url )
+
         const response = await fetch(url)
         const json = await response.json()
+        console.log("getExpertGroups: " + JSON.stringify(json) )
+
         return json
     }
 
@@ -976,8 +972,9 @@ class ViewModel {
     }
 
     initializeServices() {
-        this.loadKoder()
-        this.loadPåvirkningsfaktorer()
+        console.log("start initializeServices")
+        // this.loadKoder()
+        // this.loadPåvirkningsfaktorer()
         this.loadExpertGroups()
     }
 

@@ -25,6 +25,8 @@ class AppViewMain extends React.Component {
         const {appState} = this.props
         const isThingsLoaded = appState.isThingsLoaded
 
+        console.log("AppViewMain: " + appState.viewMode + "#" + isThingsLoaded)
+
         return (
             <section className="main">
                 {appState.viewMode === "assessment"
@@ -76,8 +78,9 @@ export default class AppView extends React.Component {
         const {appState} = this.props;
         const labels = appState.codeLabels.AppHeader
 
-        // console.log("appviewloaded" + appState.isServicesReady)
-        // console.log("appviewisServicesReady" + this.props.isServicesReady)
+        console.log("appvieoaded" + appState.isServicesReady)
+        console.log("appviewisServicesReady" + this.props.isServicesReady)
+        console.log("AppView: " + appState.viewMode )
 
         console.log("AppView render->")
 
@@ -106,7 +109,7 @@ export default class AppView extends React.Component {
         return (
             <div className="_container">
                 {/* <button onClick={action(() => {appState.userContext.readonly=!appState.userContext.readonly})}>readonlytest</button> */}
-                {process.env.NODE_ENV == 'development' && <DevTool/>}
+                {/* {process.env.NODE_ENV == 'development' && <DevTool/>} */}
                 <div
                     className="row"
                     style={{
@@ -161,12 +164,10 @@ export default class AppView extends React.Component {
                     : null}
                     </nav>
                 </div> 
-                <ul className="nav_menu">
-                    {/* <li className="dropdown"> */}
+                {/* <ul className="nav_menu">
                     <div className="dropdown">
                         <button className="btn btn-secondary dropdown-toggle" type="button" style={{marginTop: '5px'}} id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <b>{labels.information} 
-                               {/* <span className="caret"></span>*/}
                             </b>
                         </button>
                         <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -189,7 +190,7 @@ export default class AppView extends React.Component {
                     <li role="presentation" onClick={action(() => appState.viewMode = "administrasjon")}><b>{labels.administration}</b></li>
                     }
                 <li role="presentation" disabled={!auth.isLoggedIn} onClick={auth.logout}><b>&nbsp; {auth.user ? labels.logout : ""} {(auth.user ? auth.user.profile.name : "")} </b></li>
-                </ul>
+                </ul> */}
                 {!auth.isLoggedIn
                     ? <Login authModel={appState.authModel}/>
                     :
@@ -197,7 +198,7 @@ export default class AppView extends React.Component {
                      <AppViewMain appState={appState} appState={appState}/> 
                      : <ApplyForAccess applicationPending={auth.hasApplication} />
                 }
-                <Footer labels={labels}/>
+                {/* <Footer labels={labels}/> */}
             </div>
         )
     }
