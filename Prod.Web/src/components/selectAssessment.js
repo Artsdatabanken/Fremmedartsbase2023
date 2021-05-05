@@ -135,15 +135,15 @@ export default class SelectAssessment extends Component {
                             <Xcomp.Bool observableValue={[appState, "kunMine"]} label={"Vis mine vurderinger"} />
                         </div> 
                     </div>
-                    <div className="filters">
+                    {/* <div className="filters">
                         <span>Kategori</span>
                         <Xcomp.MultiselectArray
                                 observableValue={[appState, 'expertgroupCategoryCheckboxFilter']} 
                                 codes={koder.rødlisteKategori2010}
                                 mode="check"/>
-                    </div>
+                    </div> */}
                     <div>
-                    <div className="filters" style={{marginRight: 0}}>
+                    {/* <div className="filters" style={{marginRight: 0}}>
                         <span>Vurderingsstatus</span>
                         <div style={{display: 'flex'}}>
                         <Xcomp.MultiselectArray
@@ -155,7 +155,7 @@ export default class SelectAssessment extends Component {
                                     null}
 
                         </div>                       
-                    </div>
+                    </div> */}
                     <input type="button" className="btn btn-primary" style={{marginTop: '100px'}} value="Last ned fil" onClick={() => window.open(config.apiUrl + '/api/ExpertGroupAssessments/export/' + appState.expertgroup)}></input>
                     </div>
                 </div>

@@ -70,6 +70,23 @@
                 "Children": null
             }
         ],
+        "workStatus": [
+            {
+              "text": "Ikke påbegynt",
+              "value": "notStarted"
+            },
+            {
+  
+              "text": "Påbegynt",
+              "value": "inprogress"
+            },
+            {
+  
+              "text": "Ferdigstilt",
+              "value": "finished"
+            }
+        ],
+  
         "DoorKnocker": [
             {
                 "Id": "DoorKnocker",

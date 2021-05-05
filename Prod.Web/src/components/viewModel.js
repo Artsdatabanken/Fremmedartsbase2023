@@ -35,31 +35,36 @@ class ViewModel {
             logger: signalR.LogLevel.Trace
             //accessTokenFactory: () => this.props.accessToken,  // todo: <---- check this 
         }
-        // console.log("#########################################################")
-        // console.log(JSON.stringify(signalR))
-        // console.log("#########################################################")
 
-        this.hubConnection = new signalR.HubConnectionBuilder()
-        .configureLogging(signalR.LogLevel.Debug)
-        .withUrl(config.getSignalRUrl, {
-                // skipNegotiation: true,
-                // transport: signalR.HttpTransportType.WebSockets,
-                logMessageContent: true,
-                logger: signalR.LogLevel.Trace
-                //accessTokenFactory: () => this.props.accessToken,  // todo: <---- check this 
-            })
-            .withAutomaticReconnect()
-            .withHubProtocol(new signalR.JsonHubProtocol())
-            .build()
-        this.hubConnection.on("ReceiveMessage", (context, message) => {
-                // alert("SignalR: " + context + " - " + message)
-                events.trigger(context, message)
-            });
+
+
+        // utkommenterer SignalR foreløpig for å unngå støy i consollog
+
+        // // // // // // console.log("#########################################################")
+        // // // // // // console.log(JSON.stringify(signalR))
+        // // // // // // console.log("#########################################################")
+
+        // // // // // this.hubConnection = new signalR.HubConnectionBuilder()
+        // // // // // .configureLogging(signalR.LogLevel.Debug)
+        // // // // // .withUrl(config.getSignalRUrl, {
+        // // // // //         // skipNegotiation: true,
+        // // // // //         // transport: signalR.HttpTransportType.WebSockets,
+        // // // // //         logMessageContent: true,
+        // // // // //         logger: signalR.LogLevel.Trace
+        // // // // //         //accessTokenFactory: () => this.props.accessToken,  // todo: <---- check this 
+        // // // // //     })
+        // // // // //     .withAutomaticReconnect()
+        // // // // //     .withHubProtocol(new signalR.JsonHubProtocol())
+        // // // // //     .build()
+        // // // // // this.hubConnection.on("ReceiveMessage", (context, message) => {
+        // // // // //         // alert("SignalR: " + context + " - " + message)
+        // // // // //         events.trigger(context, message)
+        // // // // //     });
             
-        this.hubConnection
-            .start()
-            .then(() => console.info('SignalR Connected'))
-            .catch(err => console.error('SignalR Connection Error: ', err));
+        // // // // // this.hubConnection
+        // // // // //     .start()
+        // // // // //     .then(() => console.info('SignalR Connected'))
+        // // // // //     .catch(err => console.error('SignalR Connection Error: ', err));
 
 
             
@@ -134,11 +139,20 @@ class ViewModel {
         this.initializeServices()
         // ---------------
 
-        const labels = require('../FA3CodesNB.json') 
-        console.log("labels:" + typeof(labels))
-        // const clabels =  codes2labels(labels.labels[0].Children)
-        const clabels =  codes2labels(labels.Children.labels[0].Children)
+        // const labels = require('../FA3CodesNB.json') 
+        const codes = require('../FA3CodesNB.json') 
+        console.log("===================codes:" + typeof(codes))
+        const clabels =  codes2labels(codes.Children.labels[0].Children)
         console.log("clabels:", clabels)
+
+
+        // console.log("codes json: " + JSON.stringify(codes))
+        // console.log("----------------------------------------------+++")
+        // console.log(JSON.stringify(clabels))
+        this.codeLabels = clabels
+        //
+        this.koder = codes
+
 
 
         this.theUserContext = createContext(this.userContext)   
@@ -183,12 +197,6 @@ class ViewModel {
 
 
 
-
-        // console.log("labels2: " + JSON.stringify(labels))
-        // console.log("----------------------------------------------+++")
-        // console.log(JSON.stringify(clabels))
-        this.codeLabels = clabels
-        //
 
         // autorun(() => {
         //     console.log("selectedPåvirkningsfaktor: " + (this.selectedPåvirkningsfaktor ? this.selectedPåvirkningsfaktor.id : "None"))
@@ -392,10 +400,10 @@ class ViewModel {
             selectAssessmentTabs: {
                 activeTab: {id: 1},
                 tabList: () => [
-                    new tabItem({id: 1, label:labels.mainSelectAssessment, enabled:true}),
-                    new tabItem({id: 2, label:labels.mainCreateAssessment, enabled:true}),
-                    new tabItem({id: 3, label:labels.mainStatistics, enabled:true, visible: this.showstatistikk}),
-                    new tabItem({id: 4, label:labels.mainReport, enabled:true})
+                    new tabItem({id: 1, label:this.koder.mainSelectAssessment, enabled:true}),
+                    new tabItem({id: 2, label:this.koder.mainCreateAssessment, enabled:true}),
+                    new tabItem({id: 3, label:this.koder.mainStatistics, enabled:true, visible: this.showstatistikk}),
+                    new tabItem({id: 4, label:this.koder.mainReport, enabled:true})
                 ],
                 setActiveTab: (tab) => {
                     action(() => {
@@ -713,8 +721,12 @@ class ViewModel {
         const id = expertgroupId.replace('/','_')
         const url = config.getUrl("expertgroupassessments/") + id
         const expertgroupAssessments = await auth.getJsonRequest(url)
+
+        console.log("------" + JSON.stringify(expertgroupAssessments))
+
         const role = expertgroupAssessments.rolle; // todo: implement functionality
-        const assessments = observable.array(expertgroupAssessments.assessments)
+        const assessments = observable.array(expertgroupAssessments.Assessments)
+        console.log("loded " + assessments.length + " assessments")
         runInAction(() => {
             this.expertgroupAssessmentList = assessments
             this.roleincurrentgroup = role
@@ -725,6 +737,7 @@ class ViewModel {
 
     async loadCurrentExpertgroupAssessmentList() {
         const expertgroupId = this.expertgroup
+        console.log("loadCurrentExpertgroupAssessmentList : " + expertgroupId)
         this.loadExpertgroupAssessmentList(expertgroupId)
     }
     

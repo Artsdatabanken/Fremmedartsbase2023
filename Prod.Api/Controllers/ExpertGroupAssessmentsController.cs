@@ -49,7 +49,7 @@ namespace Prod.Api.Controllers
             var expertgroupAssessments = new ExpertgroupAssessments
             {
                 Rolle = roleInGroup,
-                Assessments = await GetExpertGroupAssessments(expertgroupid, roleInGroup.User.Id)
+                Assessments = await GetExpertGroupAssessments(expertgroupid) // , roleInGroup.User.Id)
             };
             return expertgroupAssessments;
             
@@ -183,8 +183,39 @@ namespace Prod.Api.Controllers
             return rodliste2019WithCommentses;
         }
 
+        private async Task<List<AssessmentListItem>> GetExpertGroupAssessments(string expertgroupid) //, string brukerId)
+        {
+            var key = "ass_" + expertgroupid;
+            //if (_cache.TryGetValue(key, out List<AssessmentListItem> cachedresult))
+            //{
+            //    return cachedresult;
+            //}
+            var result = await _dbContext.Assessments
+                             // .FromSqlRaw("SELECT Id, TaxonHierarcy, LockedForEditBy, LastUpdatedBy, Expertgroup, EvaluationStatus, Category, LockedForEditAt, LastUpdatedAt, ScientificName, ScientificNameId, PopularName, IsDeleted FROM dbo.Assessments WITH (INDEX(IX_Assessments_Expertgroup))") // index hint - speeds up computed columns
 
-        private async Task<List<AssessmentListItem>> GetExpertGroupAssessments(string expertgroupid, Guid brukerId)
+                             .FromSqlRaw("SELECT Id, TaxonHierarcy, LockedForEditBy, LastUpdatedBy, Expertgroup, EvaluationStatus, Category, LockedForEditAt, LastUpdatedAt, ScientificName, ScientificNameId, PopularName, IsDeleted FROM dbo.Assessments WITH (INDEX(IX_Assessments_Expertgroup))") // index hint - speeds up computed columns
+                             .Where(x => x.Expertgroup == expertgroupid && x.IsDeleted == false).OrderBy(x => x.ScientificName)
+                .Select(x =>
+                    new AssessmentListItem()
+                    {
+                        Id = x.Id.ToString(),
+                        Expertgroup = x.Expertgroup,
+                        EvaluationStatus = x.EvaluationStatus,
+                        LastUpdatedBy = x.LastUpdatedBy,
+                        LastUpdatedAt = x.LastUpdatedAt,
+                        LockedForEditByUser = x.LockedForEditBy,
+                        LockedForEditAt = x.LockedForEditAt,
+                        ScientificName = x.ScientificName,
+                        TaxonHierarcy = x.TaxonHierarcy,
+                        Category = x.Category,
+                        Criteria = "dummy", //x.Criteria,
+                        PopularName = x.PopularName
+                    }).OrderBy(x => x.ScientificName).ToListAsync();
+            //_cache.Set(key, result, TimeSpan.FromMinutes(10));
+            return result;
+        }
+
+        private async Task<List<AssessmentListItem>> ______GetExpertGroupAssessments(string expertgroupid, Guid brukerId)
         {
             var result = await _dbContext.Assessments
                              .FromSqlRaw("SELECT Id, TaxonHierarcy, LockedForEditBy, LastUpdatedBy, Expertgroup, EvaluationStatus, Category, LockedForEditAt, LastUpdatedAt, ScientificName, ScientificNameId, PopularName, IsDeleted FROM dbo.Assessments WITH (INDEX(IX_Assessments_Expertgroup))") // index hint - speeds up computed columns

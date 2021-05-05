@@ -17,6 +17,9 @@ export class ObservableMultiselectArrayCheckboxes extends React.Component {
         if(obj[prop] === null) {
             console.log("ObservableMultiselectArrayCheckboxes - prop:" + prop + " is null! It has to be an array")
         }
+        if(!codes) {
+            console.log("ObservableMultiselectArrayCheckboxes - prop:" + prop + " no codes")
+        }
         return(
             <ul className={className ? className : "" }  >
                 {codes.map(code => 
