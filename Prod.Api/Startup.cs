@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Logging;
 using Microsoft.OpenApi.Models;
 using Prod.Api.Controllers;
 using Prod.Data.EFCore;
@@ -39,7 +40,7 @@ namespace Prod.Api
             // The following line enables Application Insights telemetry collection.
             //services.AddApplicationInsightsTelemetry();// "023396f1-285d-45cc-920c-eb957cdd6c01");
             StartupAddDependencies(services);
-            services.AddControllers().AddJsonOptions(x=>x.JsonSerializerOptions.PropertyNamingPolicy = null); //.AddNewtonsoftJson(); For å unngå camelcase - frem til klienten er camelcase.....
+            services.AddControllers().AddJsonOptions(x=>x.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase); //.AddNewtonsoftJson(); For å unngå camelcase - frem til klienten er camelcase.....
 
             //services.AddMvc();
             services.AddSwaggerGen(c =>
@@ -69,7 +70,7 @@ namespace Prod.Api
 
             app.UseCors(builder =>
                 //builder.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod()
-                builder.WithOrigins(new []{"https://rl2021.test.artsdatabanken.no", "https://rl2021.artsdatabanken.no", "http://localhost:1234", "http://localhost:8090" }).AllowAnyHeader().AllowAnyMethod().AllowCredentials()
+                builder.WithOrigins(new []{"https://rl2021.test.artsdatabanken.no", "https://rl2021.artsdatabanken.no", "http://localhost:1234", "http://localhost:12237" }).AllowAnyHeader().AllowAnyMethod().AllowCredentials()
             );
 
             app.UseStaticFiles();
@@ -132,7 +133,7 @@ namespace Prod.Api
                     // name of the API resource
                     identityServerAuthenticationOptions.ApiName = "redlist2019api";
                     identityServerAuthenticationOptions.RequireHttpsMetadata = false;
-
+                    IdentityModelEventSource.ShowPII = true;
                     identityServerAuthenticationOptions.JwtBearerEvents = new JwtBearerEvents
                     {
                         OnMessageReceived = e =>
