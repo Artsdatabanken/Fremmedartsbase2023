@@ -725,7 +725,7 @@ class ViewModel {
         console.log("------" + JSON.stringify(expertgroupAssessments))
 
         const role = expertgroupAssessments.rolle; // todo: implement functionality
-        const assessments = observable.array(expertgroupAssessments.Assessments)
+        const assessments = observable.array(expertgroupAssessments.assessments)
         console.log("loded " + assessments.length + " assessments")
         runInAction(() => {
             this.expertgroupAssessmentList = assessments
