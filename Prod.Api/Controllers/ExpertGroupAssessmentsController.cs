@@ -39,7 +39,7 @@ namespace Prod.Api.Controllers
             public List<AssessmentListItem> Assessments { get; set; }
         }
 
-            // GET api/assessment/5
+        // GET api/assessment/5
         [HttpGet("{id}")]
         [Authorize]
         public async Task<ExpertgroupAssessments> Get(string id)
@@ -49,10 +49,10 @@ namespace Prod.Api.Controllers
             var expertgroupAssessments = new ExpertgroupAssessments
             {
                 Rolle = roleInGroup,
-                Assessments = await GetExpertGroupAssessments(expertgroupid) // , roleInGroup.User.Id)
+                Assessments = await GetExpertGroupAssessments(expertgroupid, roleInGroup.User.Id)
             };
             return expertgroupAssessments;
-            
+
         }
 
         [HttpGet("export/{id}")]
@@ -76,15 +76,15 @@ namespace Prod.Api.Controllers
         public FileResult GetExport()
         {
             //var expertgroupid = id.Replace('_', '/');
-            var exlude = new[] {"LC", "LCº", "NA", "NE"};
+            var exlude = new[] { "LC", "LCº", "NA", "NE" };
             var result = GetAssessmentsFromDb("", exlude);
 
             var mem = CreateCvsMemoryStream(result);
-            
+
             return new FileStreamResult(mem, "text/csv")
-                       {
-                           FileDownloadName = "eksportall.csv"
-                       };
+            {
+                FileDownloadName = "eksportall.csv"
+            };
         }
         [HttpGet("export/absoluteall")]
         //[Authorize]
@@ -142,7 +142,7 @@ namespace Prod.Api.Controllers
 
             var rodlisteIds = result.Where(x => x.IsDeleted == false).Select(x => x.Id);
             var rodliste2019WithCommentses = _dbContext.Assessments.FromSqlRaw(
-                    "SELECT * FROM dbo.Assessments WITH (INDEX(IX_Assessments_Expertgroup))").Where(x=>rodlisteIds.Contains(x.Id))
+                    "SELECT * FROM dbo.Assessments WITH (INDEX(IX_Assessments_Expertgroup))").Where(x => rodlisteIds.Contains(x.Id))
             //result
             //    .Where(x => x.IsDeleted == false)
                 .OrderBy(x => x.ScientificName).ToList()
@@ -183,39 +183,8 @@ namespace Prod.Api.Controllers
             return rodliste2019WithCommentses;
         }
 
-        private async Task<List<AssessmentListItem>> GetExpertGroupAssessments(string expertgroupid) //, string brukerId)
-        {
-            var key = "ass_" + expertgroupid;
-            //if (_cache.TryGetValue(key, out List<AssessmentListItem> cachedresult))
-            //{
-            //    return cachedresult;
-            //}
-            var result = await _dbContext.Assessments
-                             // .FromSqlRaw("SELECT Id, TaxonHierarcy, LockedForEditBy, LastUpdatedBy, Expertgroup, EvaluationStatus, Category, LockedForEditAt, LastUpdatedAt, ScientificName, ScientificNameId, PopularName, IsDeleted FROM dbo.Assessments WITH (INDEX(IX_Assessments_Expertgroup))") // index hint - speeds up computed columns
 
-                             .FromSqlRaw("SELECT Id, TaxonHierarcy, LockedForEditBy, LastUpdatedBy, Expertgroup, EvaluationStatus, Category, LockedForEditAt, LastUpdatedAt, ScientificName, ScientificNameId, PopularName, IsDeleted FROM dbo.Assessments WITH (INDEX(IX_Assessments_Expertgroup))") // index hint - speeds up computed columns
-                             .Where(x => x.Expertgroup == expertgroupid && x.IsDeleted == false).OrderBy(x => x.ScientificName)
-                .Select(x =>
-                    new AssessmentListItem()
-                    {
-                        Id = x.Id.ToString(),
-                        Expertgroup = x.Expertgroup,
-                        EvaluationStatus = x.EvaluationStatus,
-                        LastUpdatedBy = x.LastUpdatedBy,
-                        LastUpdatedAt = x.LastUpdatedAt,
-                        LockedForEditByUser = x.LockedForEditBy,
-                        LockedForEditAt = x.LockedForEditAt,
-                        ScientificName = x.ScientificName,
-                        TaxonHierarcy = x.TaxonHierarcy,
-                        Category = x.Category,
-                        Criteria = "dummy", //x.Criteria,
-                        PopularName = x.PopularName
-                    }).OrderBy(x => x.ScientificName).ToListAsync();
-            //_cache.Set(key, result, TimeSpan.FromMinutes(10));
-            return result;
-        }
-
-        private async Task<List<AssessmentListItem>> ______GetExpertGroupAssessments(string expertgroupid, Guid brukerId)
+        private async Task<List<AssessmentListItem>> GetExpertGroupAssessments(string expertgroupid, Guid brukerId)
         {
             var result = await _dbContext.Assessments
                              .FromSqlRaw("SELECT Id, TaxonHierarcy, LockedForEditBy, LastUpdatedBy, Expertgroup, EvaluationStatus, Category, LockedForEditAt, LastUpdatedAt, ScientificName, ScientificNameId, PopularName, IsDeleted FROM dbo.Assessments WITH (INDEX(IX_Assessments_Expertgroup))") // index hint - speeds up computed columns
@@ -240,17 +209,17 @@ namespace Prod.Api.Controllers
                 .GroupBy(x => x.AssessmentId)
                 .Select(
                     x => new
-                             {
-                                 AssessmentId = x.Key,
-                                 Latest = x.Max(y => y.CommentDate),
-                                 Closed = x.Count(y => y.Closed ),
-                                 Open = x.Count(y => !y.Closed && !y.Comment.StartsWith(TaksonomiskEndring) && !y.Comment.StartsWith(PotensiellTaksonomiskEndring)),
-                                 New = x.Count(y => y.IsDeleted == false && y.Closed == false && y.UserId != brukerId && y.CommentDate > 
-                                     (x.Any(y2 => y2.IsDeleted == false && y2.UserId == brukerId) 
-                                     ? x.Where(y2 => y2.IsDeleted == false && y2.UserId == brukerId).Max(z => z.CommentDate) 
-                                     : DateTime.Now)
+                    {
+                        AssessmentId = x.Key,
+                        Latest = x.Max(y => y.CommentDate),
+                        Closed = x.Count(y => y.Closed),
+                        Open = x.Count(y => !y.Closed && !y.Comment.StartsWith(TaksonomiskEndring) && !y.Comment.StartsWith(PotensiellTaksonomiskEndring)),
+                        New = x.Count(y => y.IsDeleted == false && y.Closed == false && y.UserId != brukerId && y.CommentDate >
+                            (x.Any(y2 => y2.IsDeleted == false && y2.UserId == brukerId)
+                            ? x.Where(y2 => y2.IsDeleted == false && y2.UserId == brukerId).Max(z => z.CommentDate)
+                            : DateTime.Now)
                                  ),// x.Where(y=>y.IsDeleted == false && y.Closed == false && y.UserId == brukerId).Max(z=>z.CommentDate),
-                                 TaxonChange = x.Any(y=>y.Comment.StartsWith(PotensiellTaksonomiskEndring) && y.IsDeleted == false && y.Closed == false) ? 2 : (x.Any(y => y.Comment.StartsWith(TaksonomiskEndring) && y.IsDeleted == false && y.Closed == false)? 1 : 0)
+                        TaxonChange = x.Any(y => y.Comment.StartsWith(PotensiellTaksonomiskEndring) && y.IsDeleted == false && y.Closed == false) ? 2 : (x.Any(y => y.Comment.StartsWith(TaksonomiskEndring) && y.IsDeleted == false && y.Closed == false) ? 1 : 0)
                     }).ToDictionary(x => x.AssessmentId);
             foreach (var assessmentListItem in result)
             {
