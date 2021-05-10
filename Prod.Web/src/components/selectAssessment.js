@@ -161,6 +161,11 @@ export default class SelectAssessment extends Component {
                 </div>
                 
                             
+
+
+
+
+
                 {/* <Xcomp.String observableValue={[appState, 'assessmentId']} /> */}
                 {/* <input type="number" id="vurderingsid" min="1" max="60000"></input>
                 <button onClick= {() => {
@@ -247,6 +252,10 @@ export default class SelectAssessment extends Component {
                 <div style={{marginLeft: '10px'}}><Xcomp.Bool label="Vis kun mine vurderinger" observableValue={[appState, "kunMine"]} /></div>
                 
             {/*<div><a target="_blank" href={config.apiUrl + '/api/ExpertGroupAssessments/export/' + appState.expertgroup} >Last ned CVS fil</a> </div><br />*/ }
+
+
+
+            
             <div className="usedFilters"><span>Brukte filtre: </span> 
                             {appState.expertgroupCategoryCheckboxFilter && appState.expertgroupCategoryCheckboxFilter.length > 0 &&                             
                             appState.expertgroupCategoryCheckboxFilter.map ((category) => {

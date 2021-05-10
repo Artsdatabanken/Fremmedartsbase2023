@@ -131,7 +131,19 @@ class ViewModel {
             antallNavnEndret: 0,
             loadingExpertGroup: false,
             includeLC: false  ,
-        
+            evaluationContext: 'N',
+            evaluationContexts: {
+                'N': {
+                    name: 'Norge',
+                    nameWithPreposition: 'i Norge',
+                    map: 'norge'
+                },
+                'S': {
+                    name: 'Svalbard',
+                    nameWithPreposition: 'på Svalbard',
+                    map: 'svalbard'
+                }
+            },        
         })
 
       
@@ -141,9 +153,9 @@ class ViewModel {
 
         // const labels = require('../FA3CodesNB.json') 
         const codes = require('../FA3CodesNB.json') 
-        console.log("===================codes:" + typeof(codes))
+        // console.log("codes:" + typeof(codes))
         const clabels =  codes2labels(codes.Children.labels[0].Children)
-        console.log("clabels:", clabels)
+        // console.log("clabels:", clabels)
 
 
         // console.log("codes json: " + JSON.stringify(codes))
@@ -629,12 +641,16 @@ class ViewModel {
     }
 
     @action navigate(assessmentTabId, id) {
-        this.assessmentTabs.activeTab.id = assessmentTabId
-        this.assessmentId = id
+        console.log("navigate: " + assessmentTabId + " - " + id)
+        action(() => {
+            this.assessmentTabs.activeTab.id = assessmentTabId
+            // this.assessmentId = id
+        })
     }
 
     async setCurrentAssessment(id) {
         window.scrollTo(0,0)
+        console.log("setCurrentAssessment: " + id)
         const intid = Number(id)
         if(intid === this.assessmentId)
             return; // do not get or change assessment when unless id is different
@@ -722,7 +738,7 @@ class ViewModel {
         const url = config.getUrl("expertgroupassessments/") + id
         const expertgroupAssessments = await auth.getJsonRequest(url)
 
-        console.log("------" + JSON.stringify(expertgroupAssessments))
+        // console.log("------" + JSON.stringify(expertgroupAssessments))
 
         const role = expertgroupAssessments.rolle; // todo: implement functionality
         const assessments = observable.array(expertgroupAssessments.assessments)
@@ -800,6 +816,7 @@ class ViewModel {
 
 
     @action updateCurrentAssessment(json) {
+        // console.log("updateCurrentAssessment: " + JSON.stringify(json))
         const codegroups = this.koder
         if (!codegroups) {
             throw "Codes not loaded" // Fail fast
@@ -811,10 +828,12 @@ class ViewModel {
             const assessmentStringCopy = JSON.stringify(json)
             const jsoncopy = JSON.parse(assessmentStringCopy)
 
-            const assessment = observable.object(jsoncopy)
+             const assessment = observable.object(jsoncopy)
+
+
             // enhanceWithRiskEvaluation(assessment)
             this.navigate(1)
-            transaction(() => {
+            runInAction(() => {
                 this.assessmentSavedVersion = json
                 this.assessmentSavedVersionString = assessmentStringCopy
                 this.assessment = assessment
@@ -822,7 +841,7 @@ class ViewModel {
             })
         } else {
             this.navigate(1)
-            transaction(() => {
+            runInAction(() => {
                 this.assessmentSavedVersion = null
                 this.assessmentSavedVersionString = ""
                 this.assessment = null
@@ -925,6 +944,8 @@ class ViewModel {
     }
 
     open(assessmentInfo) {	
+        // console.log("########################" + JSON.stringify(assessmentInfo))
+        // console.log("########################" + assessmentInfo.id)
         this.setCurrentAssessment(assessmentInfo.id)	
     }
 

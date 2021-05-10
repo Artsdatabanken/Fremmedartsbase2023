@@ -55,9 +55,9 @@ const DomesticObservedAndEstablished = (props) => {
             </tr>
         </thead>
         <tbody>
-            <ObservedAndEstablishedRow label={props.labels.indoor} item={props.observedAndEstablishedStatusInNorway.Indoor} koder={props.koder}  showIndividualCount={props.showIndividualCount}/>
-            <ObservedAndEstablishedRow label={props.labels.outdoor} item={props.observedAndEstablishedStatusInNorway.ProductionArea} koder={props.koder}  showIndividualCount={props.showIndividualCount}/>
-            <ObservedAndEstablishedRow label={props.labels.domesticNature} item={props.observedAndEstablishedStatusInNorway.NorwegianNature} koder={props.koder} showIndividualCount={props.showIndividualCount}/>
+            <ObservedAndEstablishedRow label={props.labels.indoor} item={props.observedAndEstablishedStatusInNorway.indoor} koder={props.koder}  showIndividualCount={props.showIndividualCount}/>
+            <ObservedAndEstablishedRow label={props.labels.outdoor} item={props.observedAndEstablishedStatusInNorway.productionArea} koder={props.koder}  showIndividualCount={props.showIndividualCount}/>
+            <ObservedAndEstablishedRow label={props.labels.domesticNature} item={props.observedAndEstablishedStatusInNorway.norwegianNature} koder={props.koder} showIndividualCount={props.showIndividualCount}/>
         </tbody>
     </table>}
 

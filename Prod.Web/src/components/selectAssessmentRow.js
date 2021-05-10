@@ -7,8 +7,8 @@ import {beskrivTidSiden} from '../formatting'
 @observer
 export default class selectAssessmentRow extends Component {
     render() {
-        console.log("props: " + Object.keys(this.props))
-        console.log("assessment: " + Object.keys(this.props.assessment))
+        // console.log("props: " + Object.keys(this.props))
+        // console.log("assessment: " + Object.keys(this.props.assessment))
         // console.log("rolle: " + JSON.stringify(this.props.rolle))
 
 
@@ -34,6 +34,8 @@ export default class selectAssessmentRow extends Component {
                 cursor: "pointer"
             }
  var totalComments = assessment.commentClosed + assessment.commentOpen
+
+            // console.log("------" + JSON.stringify(assessment))
         
             if(isLockedByMe)
                 style.backgroundColor = '#90ffa0'

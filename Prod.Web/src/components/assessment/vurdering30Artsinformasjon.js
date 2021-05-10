@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types'
-import {observer} from 'mobx-react';
+import {observer, inject} from 'mobx-react';
 import {observable, autorun} from 'mobx';
 import Tabs from '../tabs';
 import Vurdering31ArtensStatus from './vurdering31ArtensStatus';
@@ -8,10 +8,16 @@ import Vurdering32Artsegenskaper from './vurdering32Artsegenskaper';
 import Vurdering33Import from './vurdering33Import';
 import Vurdering34Spredningsveier from './vurdering34Spredningsveier';
 import Vurdering35Utbredelseshistorikk from './vurdering35Utbredelseshistorikk';
+import { JsonHubProtocol } from '@microsoft/signalr';
 
+
+@inject("appState")
 @observer
-export default class Vurdering extends React.Component {
+export default class AssessmentSpesiesinformation extends React.Component {
     render() {
+        console.log("Vurdering: " + JSON.stringify(Object.keys(this.props)))
+
+
         const {fabModel: {vurdering, ekspertgrupper}, fabModel, viewModel} = this.props;
         const {artsinformasjonTabs} = viewModel;
         return(
@@ -35,7 +41,7 @@ export default class Vurdering extends React.Component {
     }
 }
 
-Vurdering.propTypes = {
-	viewModel: PropTypes.object.isRequired,
-	fabModel: PropTypes.object.isRequired
-}
+// Vurdering.propTypes = {
+// 	viewModel: PropTypes.object.isRequired,
+// 	fabModel: PropTypes.object.isRequired
+// }

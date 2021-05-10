@@ -1,5 +1,5 @@
 ﻿import React from 'react';
-import {observer} from 'mobx-react';
+import {observer, inject} from 'mobx-react';
 import PropTypes from 'prop-types';
 import config from '../../config';
 // import RadioGroup from './radioGroup'
@@ -30,16 +30,27 @@ const SkalVurderesLabel = ({skalVurderes}) => (skalVurderes
 
 const nbsp = "\u00a0"
 
+@inject("appState")
 @observer
 export default class vurdering31ArtensStatus extends React.Component {
-    constructor(props) {
-        super(props)
+// @observer
+//     constructor(props) {
+//         super(props)
 
-    }
+//     }
+
+
+
     render() {
-        const {vurdering, viewModel, fabModel} = this.props;
-        const labels = fabModel.kodeLabels
-        const koder = fabModel.koder
+        const {appState:{assessment}, appState} = this.props;
+        const vurdering = assessment
+        const labels = appState.codeLabels
+
+
+
+        // console.log("labels" + JSON.stringify(labels.FirstObservation))
+
+        const koder = appState.koder.Children
         const standardPeriods = [
             nbsp,
             "-1800",
@@ -63,7 +74,8 @@ export default class vurdering31ArtensStatus extends React.Component {
                     : <br/>}
 
                 <Xcomp.Radio
-                    kode={fabModel.koder.AlienSpeciesCategory[0]}
+                     kode={koder.AlienSpeciesCategory[0]}
+                    //kode={labels.AlienSpeciesCategory[0]}
                     observableValue={[vurdering, "AlienSpeciesCategory"]}/>
                     {vurdering.AlienSpeciesCategory === 'AlienSpecie' ?
                     <div className="well">
@@ -81,20 +93,20 @@ export default class vurdering31ArtensStatus extends React.Component {
                         </div>
                     : null}
                 <Xcomp.Radio
-                    kode={fabModel.koder.AlienSpeciesCategory[4]}
+                    kode={koder.AlienSpeciesCategory[4]}
                     observableValue={[vurdering, "AlienSpeciesCategory"]}/>
                 <Xcomp.Radio
-                    kode={fabModel.koder.AlienSpeciesCategory[1]}
+                    kode={koder.AlienSpeciesCategory[1]}
                     observableValue={[vurdering, "AlienSpeciesCategory"]}/> 
                     {vurdering.AlienSpeciesCategory === 'DoorKnocker'
                     ? <div className="well">
                             <Xcomp.StringEnum
                                 observableValue={[vurdering, 'DoorKnockerCategory']}
-                                codes={fabModel.koder.DoorKnocker}
+                                codes={koder.DoorKnocker}
                                 mode="radio"
                                 forceSync/>
                             <br/> 
-                            {fabModel.skalVurderes
+                            {appState.skalVurderes
                                 ? null
                                 : <div>
                                     <Xcomp.HtmlString
@@ -105,16 +117,16 @@ export default class vurdering31ArtensStatus extends React.Component {
                                 </div>}
                         </div>
                     : null}
-                {fabModel.regionalRiskAssessmentEnabled
+                {appState.regionalRiskAssessmentEnabled
                 ? <div>
                     <Xcomp.Radio
-                        kode={fabModel.koder.AlienSpeciesCategory[2]}
+                        kode={koder.AlienSpeciesCategory[2]}
                         observableValue={[vurdering, "AlienSpeciesCategory"]}/> 
                         {vurdering.AlienSpeciesCategory === 'RegionallyAlien' 
                         ? <div className="well">
                             <Xcomp.StringEnum
                                 observableValue={[vurdering, 'RegionallyAlienCategory']}
-                                codes={fabModel.koder.RegionallyAlien}
+                                codes={koder.RegionallyAlien}
                                 mode="radio"
                                 forceSync/>
                         </div> 
@@ -122,7 +134,7 @@ export default class vurdering31ArtensStatus extends React.Component {
                 </div>
                 : null}
                 <Xcomp.Radio
-                    kode={fabModel.koder.AlienSpeciesCategory[3]}
+                    kode={koder.AlienSpeciesCategory[3]}
                     observableValue={[vurdering, "AlienSpeciesCategory"]}/> 
                     {vurdering.AlienSpeciesCategory === 'NotApplicable'
                     ? <div
@@ -137,9 +149,9 @@ export default class vurdering31ArtensStatus extends React.Component {
                         }}>
                             <Xcomp.StringEnum
                                 observableValue={[vurdering, 'NotApplicableCategory']}
-                                codes={fabModel.koder.NotApplicable}
+                                codes={koder.NotApplicable}
                                 mode="radio"
-                                forceSync/> {!fabModel.skalVurderes
+                                forceSync/> {!appState.skalVurderes
                                 ? <div>
                                         <Xcomp.HtmlString
                                             observableValue={[vurdering, 'AssesmentNotApplicableDescription']}
@@ -157,8 +169,8 @@ export default class vurdering31ArtensStatus extends React.Component {
                 <br/>
                 <div className="well">
                     {vurdering.AlienSpeciesCategory === 'RegionallyAlien'
-                        ? <h4>{labels.FirstObservation.firstregionalobservation} {fabModel.evaluationContext.nameWithPreposition}</h4>
-                        : <h4>{labels.FirstObservation.firstobservation} {fabModel.evaluationContext.nameWithPreposition}</h4>}
+                        ? <h4>{labels.FirstObservation.firstregionalobservation} {appState.evaluationContext[assessment.EvaluationContext].nameWithPreposition}</h4>
+                        : <h4>{labels.FirstObservation.firstobservation} {appState.evaluationContext.nameWithPreposition}</h4>}
                     {/*<div style={{width: "190px"}}><Xcomp.StringCombobox observableValue={[vurdering, 'FirstDomesticEstablishmentObserved']} selectableValues={standardPeriods} /></div>*/}
                     <div style={{
                         width: "190px"
@@ -166,10 +178,10 @@ export default class vurdering31ArtensStatus extends React.Component {
                         observableValue={[vurdering, 'FirstDomesticObservation']}
                         selectableValues={standardPeriods}/></div>
                     <DomesticObservedAndEstablished
-                        observedAndEstablishedStatusInNorway={vurdering.ObservedAndEstablishedStatusInCountry}
-                        koder={fabModel.koder}
+                        observedAndEstablishedStatusInNorway={vurdering.observedAndEstablishedStatusInCountry}
+                        koder={koder}
                         labels={labels.FirstObservation}
-                        showIndividualCount={fabModel.isVKM}/>
+                        showIndividualCount={appState.isVKM}/>
                 </div>
                 <br/>
                 <div className="well">
@@ -231,7 +243,7 @@ export default class vurdering31ArtensStatus extends React.Component {
     }
 }
 
-vurdering31ArtensStatus.propTypes = {
-    viewModel: PropTypes.object.isRequired,
-    vurdering: PropTypes.object.isRequired
-}
+// vurdering31ArtensStatus.propTypes = {
+//     viewModel: PropTypes.object.isRequired,
+//     vurdering: PropTypes.object.isRequired
+// }

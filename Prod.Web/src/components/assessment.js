@@ -4,7 +4,9 @@ import {action, observable} from 'mobx'
 import auth from './authService'
 import * as Xcomp from './observableComponents'
 import Tabs from './tabs'
-import Vurdering from './assessment/vurdering'
+// import Vurdering from './assessment/vurdering'
+import Vurdering31ArtensStatus from './assessment/vurdering31ArtensStatus'
+
 // import AssessmentSpesiesinformation from './assessmentSpesiesinformation'
 // import AssessmentNaturetypes from './assessmentNaturetypes';
 // import AssessmentImpact from './assessmentImpact'
@@ -79,10 +81,9 @@ class AssessmentRoot extends Component {
                 <Tabs tabData={assessmentTabs}/> 
                 {
                 assessmentTabs.activeTab.id === 1  ?
-                <Vurdering />
 
                 // // // assessmentTabs.activeTab.id === 1  ?
-                // // // <AssessmentSpesiesinformation />
+                <Vurdering31ArtensStatus />
                 // // // : assessmentTabs.activeTab.id === 2  ?
                 // // // <AssessmentNaturetypes/>
                 // // // : assessmentTabs.activeTab.id === 3  ?

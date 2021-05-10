@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import * as RL from "react-leaflet";
 import * as L from "leaflet";
-import { EditControl } from "react-leaflet-draw";
+// import { EditControl } from "react-leaflet-draw";
 import "leaflet/dist/leaflet.css";
 import "leaflet-draw/dist/leaflet.draw.css";
 
@@ -104,11 +104,11 @@ const Kart = ({
         }
       />
       <RL.FeatureGroup className="x" style={{ marginLeft: 0 }}>
-        <EditControl
+        {/* <EditControl
           onCreated={e => handlePolygonDrawn(e)}
           onDrawStart={e => handleEdit(e)}
           draw={selectionDrawingOptions}
-        />
+        /> */}
       </RL.FeatureGroup>
       {children}
     </RL.Map>
