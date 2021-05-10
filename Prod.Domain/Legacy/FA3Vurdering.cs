@@ -1176,7 +1176,7 @@ namespace Prod.Domain.Legacy
         public string KTVNin1 { get; set; }
         public string category { get; set; }
     }
-    public class Rodliste2019WithComments : FA3
+    public class Rodliste2019WithComments : FA4
     {
         public string NewestCommentDate { get; set; }
         public int CommentClosed { get; set; }

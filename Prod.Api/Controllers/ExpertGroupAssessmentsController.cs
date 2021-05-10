@@ -101,7 +101,7 @@ namespace Prod.Api.Controllers
             };
         }
 
-        private static MemoryStream CreateCvsMemoryStream(List<FA3WithComments> result)
+        private static MemoryStream CreateCvsMemoryStream(List<FA4WithComments> result)
         {
             var mem = new MemoryStream();
             var writer = new StreamWriter(mem, Encoding.Unicode);
@@ -128,7 +128,7 @@ namespace Prod.Api.Controllers
             return mem;
         }
 
-        private List<FA3WithComments> GetAssessmentsFromDb(string expertgroupid, string[] exlude)
+        private List<FA4WithComments> GetAssessmentsFromDb(string expertgroupid, string[] exlude)
         {
             var result = _dbContext.Assessments
                 .FromSqlRaw(
@@ -148,7 +148,7 @@ namespace Prod.Api.Controllers
                 .OrderBy(x => x.ScientificName).ToList()
                 .Select(assessment =>
                 {
-                    var deserializeObject = JsonConvert.DeserializeObject<FA3WithComments>(assessment.Doc);
+                    var deserializeObject = JsonConvert.DeserializeObject<FA4WithComments>(assessment.Doc);
                     deserializeObject.Id = deserializeObject.Id == 0 ? assessment.Id : deserializeObject.Id;
                     return deserializeObject;
                 })

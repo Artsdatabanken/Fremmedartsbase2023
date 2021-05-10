@@ -13,7 +13,7 @@ namespace Prod.Api.Helpers
 {
     public class CsvHelpers
     {
-        public class RodlisteToCsvMap : ClassMap<FA3WithComments>
+        public class RodlisteToCsvMap : ClassMap<FA4WithComments>
         {
             public RodlisteToCsvMap()
             {

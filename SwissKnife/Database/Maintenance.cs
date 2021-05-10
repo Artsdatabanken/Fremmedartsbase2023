@@ -81,7 +81,7 @@ namespace SwissKnife.Database
             var array = _database.Assessments.Include(x=>x.Attachments).ToArray();
             foreach (var assessment in array)
             {
-                var doc = JsonSerializer.Deserialize<FA3>(assessment.Doc);
+                var doc = JsonSerializer.Deserialize<FA4>(assessment.Doc);
                 if (doc != null)
                 {
                     doc.Id = assessment.Id;
@@ -127,10 +127,10 @@ namespace SwissKnife.Database
         { 
             var mapperConfig = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<FA3Legacy.NaturalOrigin, FA3.NaturalOrigin>();
-                cfg.CreateMap<FA3Legacy.RedlistedNatureType, FA3.RedlistedNatureType>();
-                cfg.CreateMap<FA3Legacy.Reference, FA3.Reference>();
-                cfg.CreateMap<FA3Legacy.RegionalRiskAssessment, FA3.RegionalRiskAssessment>();
+                cfg.CreateMap<FA3Legacy.NaturalOrigin, FA4.NaturalOrigin>();
+                cfg.CreateMap<FA3Legacy.RedlistedNatureType, FA4.RedlistedNatureType>();
+                cfg.CreateMap<FA3Legacy.Reference, FA4.Reference>();
+                cfg.CreateMap<FA3Legacy.RegionalRiskAssessment, FA4.RegionalRiskAssessment>();
                 cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.Criterion, Prod.Domain.RiskAssessment.Criterion>();
                 cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.HostParasiteInteraction,
                     Prod.Domain.RiskAssessment.HostParasiteInteraction>();
@@ -153,11 +153,11 @@ namespace SwissKnife.Database
                 cfg.CreateMap<Prod.Domain.Legacy.RedlistedNatureTypeCodeGroup, Prod.Domain.RedlistedNatureTypeCodeGroup>();
                 cfg.CreateMap<Prod.Domain.Legacy.RegionalPresence, Prod.Domain.RegionalPresence>();
                 cfg.CreateMap<Prod.Domain.Legacy.RegionalPresenceWithPotential, Prod.Domain.RegionalPresenceWithPotential>();
-                cfg.CreateMap<FA3Legacy.ImpactedNatureType, FA3.ImpactedNatureType>();
-                cfg.CreateMap<FA3Legacy.TimeAndPlace, FA3.TimeAndPlace>();
-                cfg.CreateMap<FA3Legacy.ObservedAndEstablished, FA3.ObservedAndEstablished>();
-                cfg.CreateMap<FA3Legacy.ObservedAndEstablishedInCountry, FA3.ObservedAndEstablishedInCountry>();
-                cfg.CreateMap<FA3Legacy, FA3>()
+                cfg.CreateMap<FA3Legacy.ImpactedNatureType, FA4.ImpactedNatureType>();
+                cfg.CreateMap<FA3Legacy.TimeAndPlace, FA4.TimeAndPlace>();
+                cfg.CreateMap<FA3Legacy.ObservedAndEstablished, FA4.ObservedAndEstablished>();
+                cfg.CreateMap<FA3Legacy.ObservedAndEstablishedInCountry, FA4.ObservedAndEstablishedInCountry>();
+                cfg.CreateMap<FA3Legacy, FA4>()
                     .ForMember(dest => dest.LastUpdatedBy, opt => opt.MapFrom(src => src.SistOppdatertAv))
                     .ForMember(dest => dest.LastUpdatedAt, opt => opt.MapFrom(src => src.SistOppdatert))
                     .ForMember(dest => dest.LockedForEditAt,
@@ -184,7 +184,7 @@ namespace SwissKnife.Database
         private static Assessment InitialTransformFrom2018to2023(FA3Legacy assessment,
             JsonSerializerOptions jsonSerializerOptions, Mapper mapper)
         {
-            return new Assessment {Doc = JsonSerializer.Serialize(mapper.Map<FA3>(assessment), jsonSerializerOptions)};
+            return new Assessment {Doc = JsonSerializer.Serialize(mapper.Map<FA4>(assessment), jsonSerializerOptions)};
         }
 
         private IEnumerable<FA3Legacy> GetAssessments(string inputFolder)

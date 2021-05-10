@@ -33,11 +33,11 @@ namespace Prod.Domain
     //    //public Guid[] References { get; set; }
     //}
 
-    public partial class FA3 // () Id-informjosjon
+    public partial class FA4 // () Id-informjosjon
     {
-        public static FA3 CreateNewFA3()
+        public static FA4 CreateNewFA4()
         {
-            var newfa = new FA3();
+            var newfa = new FA4();
             newfa.initNaturalOrigins();
             newfa.RiskAssessment.Criteria = RiskAssessment.CreateDefaultCriteria();
             return newfa;
@@ -102,7 +102,7 @@ namespace Prod.Domain
         public Datasett Datasett { get; set; } = new Datasett();
     }
 
-    public partial class FA3 // (3.1) Artens status
+    public partial class FA4 // (3.1) Artens status
     {
         public string AlienSpeciesCategory2012 { get; set; } // added 10.01.2017
         public string DoorKnockerDescription { get; set; } // fab: Door_Knocker_Description
@@ -149,7 +149,7 @@ namespace Prod.Domain
         }
         public ObservedAndEstablishedInCountry ObservedAndEstablishedStatusInCountry { get; set; } = new ObservedAndEstablishedInCountry(); // lagt til 30.08.2016 //
     }
-    public partial class FA3 // (3.2) Artsegenskaper
+    public partial class FA4 // (3.2) Artsegenskaper
     {
         //public string LimnicTerrestrialMarine { get; set; } // lagt til 2.9.2016 // fjernet 26.09.2016
         public bool Limnic { get; set; } // lagt til 26.9.2016
@@ -304,17 +304,17 @@ namespace Prod.Domain
         public string RegionalPresenceAssumed;
         public string RegionalPresencePotential;
     }
-    public partial class FA3 // (3.3) Import
+    public partial class FA4 // (3.3) Import
     {
         public List<MigrationPathway> ImportPathways { get; set; } = new List<MigrationPathway>();
         public bool ImportedToIndoorOrProductionArea { get; set; } = false;
     }
-    public partial class FA3 // (3.4) Spredningsveier
+    public partial class FA4 // (3.4) Spredningsveier
     {
         public List<MigrationPathway> AssesmentVectors { get; set; } = new List<MigrationPathway>(); // lagt til 09.01.2017
         public string Vector { get; set; }  // ???!!
     }
-    public partial class FA3 // (3.5) Spredningshistorikk
+    public partial class FA4 // (3.5) Spredningshistorikk
     {
         public List<SpreadHistory> SpreadHistory { get; set; } = new List<SpreadHistory>();
 
@@ -371,7 +371,7 @@ namespace Prod.Domain
         [JsonConverter(typeof(CustomDoubleFormatConverter))]
         public double? SpreadHistoryDomesticAreaInStronglyChangedNatureTypes { get; set; }
     }
-    public partial class FA3 // (4) Naturtyper
+    public partial class FA4 // (4) Naturtyper
     {
         //public List<NatureType> AssessmentNatureTypes { get; set; } // removed 03.11.2016 - * see comment for NatureType class
         public List<ImpactedNatureType> ImpactedNatureTypes { get; set; } = new List<ImpactedNatureType>();
@@ -385,7 +385,7 @@ namespace Prod.Domain
         public string UsesLivingSpeciesAsHabitatScientificName { get; set; }
     }
 
-    public partial class FA3 // (5) Risikovurdering
+    public partial class FA4 // (5) Risikovurdering
     {
         public class RegionalRiskAssessment
         {
@@ -401,7 +401,7 @@ namespace Prod.Domain
 
 
 
-    public partial class RiskAssessment // FA3 // () Risikovurdering (dette er avledet informasjon!!)
+    public partial class RiskAssessment // FA4 // () Risikovurdering (dette er avledet informasjon!!)
     {
         //-------------------------------------------------------------------------------
         // --------------------------- Risikovurdering ----------------------------------
@@ -898,13 +898,13 @@ namespace Prod.Domain
     }
 
 
-    public partial class FA3 // (8) Referanser
+    public partial class FA4 // (8) Referanser
     {
         public List<Reference> References { get; set; } = new List<Reference>();
     }
 
 
-    public partial class FA3 // Disse variablene er sjekket og var ikke i bruk i 2012 fab Prod
+    public partial class FA4 // Disse variablene er sjekket og var ikke i bruk i 2012 fab Prod
     {
 
         // public bool? AlienGenotypOfDomesticSpecie { get; set; } // fab: Alien_Genotyp_Of_Domestic_Specie // ikke i bruk i 2012
@@ -946,7 +946,7 @@ namespace Prod.Domain
 
     }
 
-    public partial class FA3 // FA3 Internal classes
+    public partial class FA4 // FA4 Internal classes
     {
 
         // depricated 03.11.2016 - this class is from fab2012 and can be of interest for viewing old naturetype information
@@ -1168,7 +1168,7 @@ namespace Prod.Domain
         public string KTVNin1 { get; set; }
         public string category { get; set; }
     }
-    public class FA3WithComments : FA3
+    public class FA4WithComments : FA4
     {
         public string NewestCommentDate { get; set; }
         public int CommentClosed { get; set; }
