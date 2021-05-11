@@ -15,7 +15,7 @@ using Prod.Domain.Legacy;
 
 namespace SwissKnife.Database
 {
-    class Maintenance
+    public class Maintenance
     {
         private SqlServerProdDbContext _database;
 
@@ -123,7 +123,7 @@ namespace SwissKnife.Database
 
         }
 
-        private static Mapper CreateMappingFromOldToNew()
+        public static Mapper CreateMappingFromOldToNew()
         { 
             var mapperConfig = new MapperConfiguration(cfg =>
             {
