@@ -5,15 +5,15 @@ import * as Xcomp from '../observableComponents';
 const ObservedAndEstablishedRow = (props) => 
     <tr>
         <td>{props.label}</td>
-        <td><Xcomp.String observableValue={[props.item.ObservedInCountry, 'Time']} /></td>
-        <td><Xcomp.String observableValue={[props.item.ObservedInCountry, 'Place']} /></td>
-        <td><Xcomp.String observableValue={[props.item.FertileSpecimenObserved, 'Time']} /></td>
-        <td><Xcomp.String observableValue={[props.item.FertileSpecimenObserved, 'Place']} /></td>
-        <td><Xcomp.String observableValue={[props.item.Established, 'Time']} /></td>
-        <td><Xcomp.String observableValue={[props.item.Established, 'Place']} /></td>
-        <td><Xcomp.String observableValue={[props.item.Population, 'Time']} /></td>
-        <td><Xcomp.String observableValue={[props.item.Population, 'Place']} /></td>
-        {props.showIndividualCount ? <td><Xcomp.StringEnum observableValue={[props.item, 'SpecimenCount']} codes={props.koder.firstObservationIndividualCount} /></td> : null}
+        <td><Xcomp.String observableValue={[props.item.observedInCountry, 'time']} /></td>
+        <td><Xcomp.String observableValue={[props.item.observedInCountry, 'place']} /></td>
+        <td><Xcomp.String observableValue={[props.item.fertileSpecimenObserved, 'time']} /></td>
+        <td><Xcomp.String observableValue={[props.item.fertileSpecimenObserved, 'place']} /></td>
+        <td><Xcomp.String observableValue={[props.item.established, 'time']} /></td>
+        <td><Xcomp.String observableValue={[props.item.established, 'place']} /></td>
+        <td><Xcomp.String observableValue={[props.item.population, 'time']} /></td>
+        <td><Xcomp.String observableValue={[props.item.population, 'place']} /></td>
+        {props.showIndividualCount ? <td><Xcomp.StringEnum observableValue={[props.item, 'specimenCount']} codes={props.koder.firstObservationIndividualCount} /></td> : null}
     </tr>
 
 const DomesticObservedAndEstablished = (props) => {
