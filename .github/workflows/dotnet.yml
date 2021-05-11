@@ -28,7 +28,7 @@ jobs:
       with:
         node-version: '14'
     - run: |
-        cd sandbox/angular-test-artsnavnebase    
+        cd Prod.Web    
         npm install
         npm run build
     - name: Build and push Docker image api
