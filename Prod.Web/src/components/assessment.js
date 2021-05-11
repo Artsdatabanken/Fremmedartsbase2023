@@ -6,6 +6,10 @@ import * as Xcomp from './observableComponents'
 import Tabs from './tabs'
 // import Vurdering from './assessment/vurdering'
 import Vurdering31ArtensStatus from './assessment/vurdering31ArtensStatus'
+import Vurdering32Artsegenskaper from './assessment/vurdering32Artsegenskaper'
+import Vurdering33Import from './assessment/vurdering33Import'
+import Vurdering34Spredningsveier from './assessment/vurdering34Spredningsveier'
+import Vurdering35Utbredelseshistorikk from './assessment/vurdering35Utbredelseshistorikk'
 
 // import AssessmentSpesiesinformation from './assessmentSpesiesinformation'
 // import AssessmentNaturetypes from './assessmentNaturetypes';
@@ -81,17 +85,15 @@ class AssessmentRoot extends Component {
                 <Tabs tabData={assessmentTabs}/> 
                 {
                 assessmentTabs.activeTab.id === 1  ?
-
-                // // // assessmentTabs.activeTab.id === 1  ?
                 <Vurdering31ArtensStatus />
-                // // // : assessmentTabs.activeTab.id === 2  ?
-                // // // <AssessmentNaturetypes/>
-                // // // : assessmentTabs.activeTab.id === 3  ?
-                // // // <AssessmentImpact/>
-                // // // : assessmentTabs.activeTab.id === 4  ?
-                // // // <AssessmentA/>
-                // // // : assessmentTabs.activeTab.id === 5  ?
-                // // // <AssessmentB/>
+                : assessmentTabs.activeTab.id === 2  ?
+                <Vurdering32Artsegenskaper />
+                : assessmentTabs.activeTab.id === 3  ?
+                <Vurdering33Import/>
+                : assessmentTabs.activeTab.id === 4  ?
+                <Vurdering34Spredningsveier/>
+                : assessmentTabs.activeTab.id === 5  ?
+                <Vurdering35Utbredelseshistorikk/>
                 // // // : assessmentTabs.activeTab.id === 6  ?
                 // // // <AssessmentC/>
                 // // // : assessmentTabs.activeTab.id === 7  ?
