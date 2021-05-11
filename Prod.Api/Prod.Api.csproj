@@ -19,6 +19,7 @@
     <PackageReference Include="IdentityModel" Version="5.0.1" />
     <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.15.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.13" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
@@ -33,10 +34,10 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\Codes.json" />
-    <EmbeddedResource  Include="Resources\KodeGrupper.json" />
-    <EmbeddedResource  Include="Resources\Livsmedium.json" />
-    <EmbeddedResource  Include="Resources\MigrationPathwayCode.json" />
-    <EmbeddedResource  Include="Resources\RedlistedNaturetypeGroups.json" />
+    <EmbeddedResource Include="Resources\KodeGrupper.json" />
+    <EmbeddedResource Include="Resources\Livsmedium.json" />
+    <EmbeddedResource Include="Resources\MigrationPathwayCode.json" />
+    <EmbeddedResource Include="Resources\RedlistedNaturetypeGroups.json" />
   </ItemGroup>
 
 </Project>

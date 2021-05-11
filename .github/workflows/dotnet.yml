@@ -23,3 +23,21 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+    - name: Build react
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+    - run: |
+        cd sandbox/angular-test-artsnavnebase    
+        npm install
+        npm run build
+    - name: Build and push Docker image api
+      uses: docker/build-push-action@v1
+      with:
+        username: ${{ secrets.ORG_DOCKER_USER }}
+        password: ${{ secrets.ORG_DOCKER_PASS }}
+        dockerfile: Prod.Api/Dockerfile
+        repository: artsdatabanken/fab4api
+        tags: latest
+    - name: Post to slack
+      run: ${{ secrets.POST_DEPLOY_FEEDBACK }}

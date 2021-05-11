@@ -129,7 +129,7 @@ namespace SwissKnife.Database
             {
                 cfg.CreateMap<FA3Legacy.NaturalOrigin, FA4.NaturalOrigin>();
                 cfg.CreateMap<FA3Legacy.RedlistedNatureType, FA4.RedlistedNatureType>();
-                cfg.CreateMap<FA3Legacy.Reference, FA4.Reference>();
+                cfg.CreateMap<FA3Legacy.Reference, FA4.SimpleReference>();
                 cfg.CreateMap<FA3Legacy.RegionalRiskAssessment, FA4.RegionalRiskAssessment>();
                 cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.Criterion, Prod.Domain.RiskAssessment.Criterion>();
                 cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.HostParasiteInteraction,

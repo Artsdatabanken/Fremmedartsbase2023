@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
@@ -12,6 +13,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.OpenApi.Models;
@@ -70,7 +72,7 @@ namespace Prod.Api
 
             app.UseCors(builder =>
                 //builder.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod()
-                builder.WithOrigins(new []{"https://rl2021.test.artsdatabanken.no", "https://rl2021.artsdatabanken.no", "http://localhost:1234", "http://localhost:12237" }).AllowAnyHeader().AllowAnyMethod().AllowCredentials()
+                builder.WithOrigins(new []{"https://rl2021.test.artsdatabanken.no", "https://rl2021.artsdatabanken.no", "http://localhost:1234", "http://localhost:24625" }).AllowAnyHeader().AllowAnyMethod().AllowCredentials()
             );
 
             app.UseStaticFiles();
@@ -79,7 +81,24 @@ namespace Prod.Api
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Prod.Api v1"));
 
             //app.UseHttpsRedirection();
-
+            // temp serve sandbox app
+            var path = Path.Combine(env.ContentRootPath, "Frontend");
+            if (Directory.Exists(path))
+            {
+                app.UseDefaultFiles(new DefaultFilesOptions()
+                {
+                    DefaultFileNames = new List<string>() {
+                        "index.html"},
+                    FileProvider = new PhysicalFileProvider(
+                        path)
+                });
+                app.UseStaticFiles(new StaticFileOptions
+                {
+                    FileProvider = new PhysicalFileProvider(
+                        path)
+                    //RequestPath = "/App"
+                });
+            }
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

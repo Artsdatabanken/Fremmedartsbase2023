@@ -7,16 +7,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Prod.Api", "Prod.Api\Prod.A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Prod.Data.EFCore", "Prod.Data.EFCore\Prod.Data.EFCore.csproj", "{0F19E784-4875-4409-A250-A83C3C06DAA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prod.Domain", "Prod.Domain\Prod.Domain.csproj", "{46ADB3D5-27DC-46D8-8AD3-6639300C6264}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Prod.Domain", "Prod.Domain\Prod.Domain.csproj", "{46ADB3D5-27DC-46D8-8AD3-6639300C6264}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{06277FB9-B177-4A66-8816-6861EE099AC6}"
 	ProjectSection(SolutionItems) = preProject
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
 		LICENSE = LICENSE
 		ProjectStructure.md = ProjectStructure.md
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwissKnife", "SwissKnife\SwissKnife.csproj", "{344F13F5-5A73-4B6C-A5AC-6A35CCE32D6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SwissKnife", "SwissKnife\SwissKnife.csproj", "{344F13F5-5A73-4B6C-A5AC-6A35CCE32D6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

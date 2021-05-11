@@ -900,7 +900,7 @@ namespace Prod.Domain
 
     public partial class FA4 // (8) Referanser
     {
-        public List<Reference> References { get; set; } = new List<Reference>();
+        public List<SimpleReference> References { get; set; } = new List<SimpleReference>();
     }
 
 
@@ -988,7 +988,7 @@ namespace Prod.Domain
 
 
 
-        public class Reference
+        public class SimpleReference
         {
             public string Type { get; set; }
 
