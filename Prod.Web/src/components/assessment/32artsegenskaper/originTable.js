@@ -1,7 +1,7 @@
 import React from 'react';
 // import {action} from 'mobx';
 // import {observer} from 'mobx-react';
-import * as Xcomp from '../observableComponents';
+import * as Xcomp from '../../observableComponents';
 
 
 const nbsp = "\u00a0"
@@ -11,12 +11,12 @@ const OriginRow = (props) =>
     <tr>
         <td>{props.climateZoneLabel(props.item.ClimateZone)}</td>
         <td>{props.subClimateZoneLabel(props.item.ClimateZone)}</td>
-        <td>{props.naturalOriginDisabled(props.item.ClimateZone, "Europe") ? null : <Xcomp.Bool observableValue={[props.item, 'Europe']} />}</td>
-        <td>{props.naturalOriginDisabled(props.item.ClimateZone, "Asia") ? null : <Xcomp.Bool observableValue={[props.item, 'Asia']} />}</td>
-        <td>{props.naturalOriginDisabled(props.item.ClimateZone, "Africa") ? null : <Xcomp.Bool observableValue={[props.item, 'Africa']} />}</td>
-        <td>{props.naturalOriginDisabled(props.item.ClimateZone, "Oceania") ? null : <Xcomp.Bool observableValue={[props.item, 'Oceania']} />}</td>
-        <td>{props.naturalOriginDisabled(props.item.ClimateZone, "NorthAndCentralAmerica") ? null : <Xcomp.Bool observableValue={[props.item, 'NorthAndCentralAmerica']} />}</td>
-        <td>{props.naturalOriginDisabled(props.item.ClimateZone, "SouthAmerica") ? null : <Xcomp.Bool observableValue={[props.item, 'SouthAmerica']} />}</td>
+        <td>{props.naturalOriginDisabled(props.item.ClimateZone, "Europe") ? null : <Xcomp.Bool observableValue={[props.item, 'europe']} />}</td>
+        <td>{props.naturalOriginDisabled(props.item.ClimateZone, "Asia") ? null : <Xcomp.Bool observableValue={[props.item, 'asia']} />}</td>
+        <td>{props.naturalOriginDisabled(props.item.ClimateZone, "Africa") ? null : <Xcomp.Bool observableValue={[props.item, 'africa']} />}</td>
+        <td>{props.naturalOriginDisabled(props.item.ClimateZone, "Oceania") ? null : <Xcomp.Bool observableValue={[props.item, 'oceania']} />}</td>
+        <td>{props.naturalOriginDisabled(props.item.ClimateZone, "NorthAndCentralAmerica") ? null : <Xcomp.Bool observableValue={[props.item, 'northAndCentralAmerica']} />}</td>
+        <td>{props.naturalOriginDisabled(props.item.ClimateZone, "SouthAmerica") ? null : <Xcomp.Bool observableValue={[props.item, 'southAmerica']} />}</td>
     </tr>
 
 
