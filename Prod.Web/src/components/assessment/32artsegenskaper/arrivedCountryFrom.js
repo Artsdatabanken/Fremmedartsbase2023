@@ -17,7 +17,7 @@ export default class ArrivedCountryFrom extends React.Component {
 
 
         // const {vurdering, fabModel} = this.props;
-        const values = vurdering.ArrivedCountryFrom
+        const values = vurdering.arrivedCountryFrom
         // const labels = config.labels
         const codes = koder.ArrivedCountryFrom
         const originCode = codes.find(code => code.Value === "origin")
