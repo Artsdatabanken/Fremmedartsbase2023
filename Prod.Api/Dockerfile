@@ -24,7 +24,7 @@ RUN dotnet publish "Prod.Api.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-#COPY ["sandbox/angular-test-artsnavnebase/dist/angular-test-artsnavnebase/", "Frontend/"]
+COPY ["Prod.Web/dist/", "Frontend/"]
 ENV ASPNETCORE_URLS="http://+:3001"
 RUN groupadd -r --gid 1007 dockerrunner && useradd -r -g dockerrunner dockerrunner
 USER dockerrunner
