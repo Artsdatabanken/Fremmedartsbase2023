@@ -388,7 +388,7 @@ class ViewModel {
                 activeTab: {id: 1},
                 tabList: [
                     new tabItem({id: 1, label:"Artens status 31", enabled: this.harVurdering, url: "artensstatus" }),
-                    new tabItem({id: 2, label:"Artsegenskaper 32", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "artsegenskaper" }),
+                    new tabItem({id: 2, label:"Artsinformasjon 32", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "artsegenskaper" }),
                     new tabItem({id: 3, label:"Import 33", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "import" }),
                     new tabItem({id: 4, label:"Spredningsveier 34", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "spredningsveier" }),
                     new tabItem({id: 5, label:"Utbredelseshistorikk 35", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "utbredelseshistorikk" }),

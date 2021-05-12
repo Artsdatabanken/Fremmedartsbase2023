@@ -104,7 +104,7 @@ export default class SelectAssessment extends Component {
                     <li><b>Velg vurdering</b></li>
                     <li><b>Legg til ny art</b></li>
                     <li role="presentation"><b>Administrasjon</b></li>
-                    <li role="presentation"><b>&nbsp; Logg ut {auth.userName} </b></li>
+                    <li role="presentation" disabled={!auth.isLoggedIn} onClick={auth.logout}><b>&nbsp; {auth.user ? "Logg ut " : ""} {(auth.user ? auth.user.profile.name : "")} </b></li>
                     <li role="presentation"><b>Retningslinjer</b></li>
                 </ul>
                 <h4>Velg artsgruppe</h4>

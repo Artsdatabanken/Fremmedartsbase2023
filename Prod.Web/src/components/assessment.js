@@ -76,7 +76,7 @@ class AssessmentRoot extends Component {
                 <ul className="nav_menu">
                     <li onClick={action(() => {sjekkForEndringerOgGiAdvarsel()})} disabled={!auth.isLoggedIn}><b>Velg vurdering</b></li>
                     <li role="presentation"><b>Administrasjon</b></li>
-                    <li role="presentation"><b>&nbsp; Logg ut {auth.userName} </b></li>
+                    <li role="presentation" disabled={!auth.isLoggedIn} onClick={auth.logout}><b>&nbsp; {auth.user ? "Logg ut " : ""} {(auth.user ? auth.user.profile.name : "")} </b></li>
                     <li role="presentation"><b>Retningslinjer</b></li>
                 </ul>
                 {assessment.popularName ? 
@@ -126,7 +126,7 @@ class AssessmentRoot extends Component {
                 // // // <AssessmentReferences/>
                 // // // : assessmentTabs.activeTab.id === 11  ?
                 // // // <AssessmentComments/>
-                : assessmentTabs.activeTab.id === 12  ?
+                : assessmentTabs.activeTab.id === 13  ?
                 <AssessmentDiff/>
                 :<h1>Oooops?? artinfotab:{assessmentTabs.activeTab.id}</h1>}
                 {assessmentTabs.activeTab.id != 12 && assessmentTabs.activeTab.id != 11 && assessment && assessment.evaluationStatus !== 'finished' &&     
