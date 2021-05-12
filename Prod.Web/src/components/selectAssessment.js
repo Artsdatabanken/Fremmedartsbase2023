@@ -5,8 +5,9 @@ import * as Xcomp from './observableComponents';
 import HelpIcon from '@material-ui/icons/Help';
 import SelectAssessmentTable from './selectAssessmentTable';
 import SelectAssessmentStatistics from './selectAssessmentStatistics';
-
+import auth from './authService';
 import config from '../config';
+import catimg from '../cat.gif';
 
 @inject('appState')
 @observer
@@ -60,7 +61,7 @@ export default class SelectAssessment extends Component {
         const {appState, appState:{assessment, koder}} = this.props
         // const {appState, appState:{assessment, koder}} = this.props
         const rolle = appState.roleincurrentgroup // todo: implement real     
-        document.title = "Velg art - Rødlista"
+        document.title = "Velg art - Fremmede arter"
 
      /*   let checkList = document.getElementById('list1');
         if (checkList) {checkList.getElementsByClassName('anchor')[0].onclick = function (evt) {
@@ -99,6 +100,13 @@ export default class SelectAssessment extends Component {
                         <td style={{textAlign: 'center', color: 'red'}}><b>Dette er en testversjon. Driftversjonen finner du <a href="https://rl2021.artsdatabanken.no/">her</a>.</b></td>
                     </tr>
                 </table>}
+                <ul class="nav_menu">
+                    <li><b>Velg vurdering</b></li>
+                    <li><b>Legg til ny art</b></li>
+                    <li role="presentation"><b>Administrasjon</b></li>
+                    <li role="presentation"><b>&nbsp; Logg ut {auth.userName} </b></li>
+                    <li role="presentation"><b>Retningslinjer</b></li>
+                </ul>
                 <h4>Velg artsgruppe</h4>
                 <div className="selectAssessment">                   
                     <Xcomp.StringEnum 
@@ -156,6 +164,7 @@ export default class SelectAssessment extends Component {
 
                         </div>                       
                     </div> */}
+                    <img src={catimg} style={{width: '280px'}}></img>
                     <input type="button" className="btn btn-primary" style={{marginTop: '100px'}} value="Last ned fil" onClick={() => window.open(config.apiUrl + '/api/ExpertGroupAssessments/export/' + appState.expertgroup)}></input>
                     </div>
                 </div>

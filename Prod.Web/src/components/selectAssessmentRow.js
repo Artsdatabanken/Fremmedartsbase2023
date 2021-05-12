@@ -52,13 +52,16 @@ export default class selectAssessmentRow extends Component {
                 <td>
                     <span>{assessment.popularName}</span>
                 </td>
+                <td>Ja / Nei </td>
                 <td><span>{assessment.category}</span></td> 
-                {/*<td>{isLocked && <span className='glyphicon glyphicon-lock'/>}</td>*/} 
-                <td>&nbsp;{isLocked && <span className='glyphicon glyphicon-lock'/>}</td>             
+                <td><span>Kategori 2023</span></td>
                 <td>
                     <span>{assessment.lastUpdatedAt.substring(0,10) + " av " + assessment.lastUpdatedBy}</span>
                 </td>
-                <td>&nbsp;{isLocked && <span className='glyphicon glyphicon-lock'/>}</td>
+                {/*<td>{isLocked && <span className='glyphicon glyphicon-lock'/>}</td> 
+                <td>&nbsp;{isLocked && <span className='glyphicon glyphicon-lock'/>}</td>          
+                
+                <td>&nbsp;{isLocked && <span className='glyphicon glyphicon-lock'/>}</td>*/}   
                 <td style={{width: '15%'}}>
                     <p>Totalt: {totalComments}{ assessment.commentOpen > 0 ? (' Nyeste:' + assessment.commentDate) : ''}</p>
                    {assessment.commentOpen > 0 ? <p style={{color: 'red'}}>Ubehandlet: {assessment.commentOpen}</p> : <p>Ubehandlet: {assessment.commentOpen}</p>}
