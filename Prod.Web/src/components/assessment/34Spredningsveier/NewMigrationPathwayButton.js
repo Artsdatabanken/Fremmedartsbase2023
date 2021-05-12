@@ -63,12 +63,12 @@ export default class NewMigrationPathwayButton extends React.Component {
                     labels={labels.General}
                 >
                     {hideIntroductionSpread ? null :
-                    <Xcomp.StringEnum label={mplabels.introductionSpread} observableValue={[this.newMigrationPathway, 'IntroductionSpread']} forceSync codes={koder.migrationPathwayIntroductionSpread}/>
+                    <Xcomp.StringEnum label={mplabels.introductionSpread} observableValue={[this.newMigrationPathway, 'introductionSpread']} forceSync codes={koder.migrationPathwayIntroductionSpread}/>
                     }
-                    <Xcomp.StringEnum label={mplabels.influenceFactor} observableValue={[this.newMigrationPathway, 'InfluenceFactor']} forceSync codes={koder.migrationPathwayFrequency}/>
-                    <Xcomp.StringEnum label={mplabels.magnitude} observableValue={[this.newMigrationPathway, 'Magnitude']} forceSync codes={koder.migrationPathwayAbundance}/>
-                    <Xcomp.StringEnum label={mplabels.timeOfIncident} observableValue={[this.newMigrationPathway, 'TimeOfIncident']} forceSync codes={koder.migrationPathwayTime}/>
-                    <Xcomp.HtmlString label={mplabels.elaborateInformation} observableValue={[this.newMigrationPathway, 'ElaborateInformation']} />
+                    <Xcomp.StringEnum label={mplabels.influenceFactor} observableValue={[this.newMigrationPathway, 'influenceFactor']} forceSync codes={koder.migrationPathwayFrequency}/>
+                    <Xcomp.StringEnum label={mplabels.magnitude} observableValue={[this.newMigrationPathway, 'magnitude']} forceSync codes={koder.migrationPathwayAbundance}/>
+                    <Xcomp.StringEnum label={mplabels.timeOfIncident} observableValue={[this.newMigrationPathway, 'timeOfIncident']} forceSync codes={koder.migrationPathwayTime}/>
+                    <Xcomp.HtmlString label={mplabels.elaborateInformation} observableValue={[this.newMigrationPathway, 'elaborateInformation']} />
                 </BsModal> :
                 null}
             </div>

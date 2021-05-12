@@ -1,12 +1,14 @@
 import config from '../../config';
 import React from 'react';
 import PropTypes from 'prop-types'
-import {observer} from 'mobx-react';
+import {observer, inject} from 'mobx-react';
 import {action, autorun, computed, extendObservable, observable, toJS} from 'mobx';
 import * as Xcomp from './observableComponents';
 import NewMigrationPathwaySelector from './34Spredningsveier/NewMigrationPathwaySelector'
 import MPTable from './34Spredningsveier/MigrationPathwayTable'
 const labels = config.labels
+
+@inject("appState")
 @observer
 export default class Vurdering33Import extends React.Component {
     constructor(props) {
@@ -27,30 +29,35 @@ export default class Vurdering33Import extends React.Component {
     }
 
     @action removeImportPathway = (vurdering, value) => {
-        const result = vurdering.ImportPathways.remove(value);
+        const result = vurdering.importPathways.remove(value);
         // console.log("item removed : " + result)
     };
 
     render() {
-        const {vurdering, viewModel, fabModel} = this.props;
-        const labels = fabModel.kodeLabels
-        const importPathways = vurdering.ImportPathways
-        const importPathwayKoder = fabModel.spredningsveier.children.filter(child => child.name === "Import")
+        const {appState:{assessment}, appState} = this.props;
+        const vurdering = assessment
+        const labels = appState.codeLabels
+        const koder = appState.koder.Children
+
+        // const {vurdering, viewModel, fabModel} = this.props;
+        // const labels = fabModel.kodeLabels
+        const importPathways = vurdering.importPathways
+        const importPathwayKoder = appState.spredningsveier.children.filter(child => child.name === "Import")
         const nbsp = "\u00a0"
         const removeImportPathway = (mp) => this.removeImportPathway(vurdering, mp)
 
         return(
             <div>
                 {config.showPageHeaders ? <h3>{labels.Import.importIndoor}</h3> : <br />}
-                <Xcomp.Bool label="" observableValue={[vurdering, "ImportedToIndoorOrProductionArea"]} />
+                <Xcomp.Bool label="" observableValue={[vurdering, "importedToIndoorOrProductionArea"]} />
                 <h4 style={{display: "inline-block", marginLeft: "6px" }}>{labels.Import.importIndoor}</h4>
-                {vurdering.ImportedToIndoorOrProductionArea && 
+                {vurdering.importedToIndoorOrProductionArea && 
                 <div>
-                    <MPTable migrationPathways={importPathways} fabModel={fabModel} removeMigrationPathway={removeImportPathway} />
+                    <MPTable migrationPathways={importPathways} removeMigrationPathway={removeImportPathway} />
                     <hr/>
                     <div className="well">
                         <h4>{labels.Import.importAdd}</h4>
-                        <NewMigrationPathwaySelector migrationPathways={importPathwayKoder} onSave={mp => this.saveImportPathway(vurdering, mp)} koder={fabModel.koder} hideIntroductionSpread labels={labels}/>
+                        <NewMigrationPathwaySelector migrationPathways={importPathwayKoder} onSave={mp => this.saveImportPathway(vurdering, mp)} koder={koder} hideIntroductionSpread labels={labels}/>
                     </div>
                 </div>}
             </div>
@@ -62,7 +69,7 @@ export default class Vurdering33Import extends React.Component {
 <h3>Importert til Innendørs-{fabModel.evaluationContext.name} eller produsksjonsareal</h3>*/
 
 
-Vurdering33Import.propTypes = {
-	viewModel: PropTypes.object.isRequired,
-	vurdering: PropTypes.object.isRequired
-}
+// Vurdering33Import.propTypes = {
+// 	viewModel: PropTypes.object.isRequired,
+// 	vurdering: PropTypes.object.isRequired
+// }

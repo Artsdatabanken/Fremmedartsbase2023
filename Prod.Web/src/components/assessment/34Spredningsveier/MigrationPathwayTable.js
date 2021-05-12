@@ -1,15 +1,14 @@
-import config from '../../../config';
+// import config from '../../../config';
 import React from 'react';
 import PropTypes from 'prop-types'
-import {observer} from 'mobx-react';
+import {observer, inject} from 'mobx-react';
 import {action, extendObservable, observable} from 'mobx';
-import * as Xcomp from '../observableComponents';
+import * as Xcomp from '../../observableComponents';
 
 import {processTree} from '../../../utils'
 //const labels = config.labels
 
-
-
+@inject("appState")
 @observer
 export default class MigrationPathwayTable extends React.Component {
     constructor(props) {
@@ -17,8 +16,15 @@ export default class MigrationPathwayTable extends React.Component {
     }
 
     render() {
-        const {migrationPathways, fabModel, removeMigrationPathway, showIntroductionSpread} = this.props;
-        const labels = fabModel.kodeLabels
+        const {migrationPathways, appState, removeMigrationPathway, showIntroductionSpread} = this.props;
+        // const {appState:{assessment}, appState} = this.props;
+        // const vurdering = assessment
+        const labels = appState.codeLabels
+        const koder = appState.koder.Children
+
+
+        // const {migrationPathways, fabModel, removeMigrationPathway, showIntroductionSpread} = this.props;
+        // const labels = fabModel.kodeLabels
         const nbsp = "\u00a0"
         return(
             <table className="table">
@@ -40,8 +46,8 @@ export default class MigrationPathwayTable extends React.Component {
                     <MigrationPathwayTableRow 
                         item={mp} 
                         key={mp.Category+mp.CodeItem+mp.IntroductionSpread+mp.InfluenceFactor+mp.Magnitude+mp.TimeOfIncident}
-                        codes={fabModel.koder}
-                        migrationPathways={fabModel.spredningsveier}
+                        codes={koder}
+                        migrationPathways={spredningsveier}
                         showIntroductionSpread={showIntroductionSpread}
                         removeMigrationPathway={removeMigrationPathway}
                         labels={labels}
@@ -101,19 +107,19 @@ class MigrationPathwayTableRow extends React.Component {
                 <td>{codeItemLabel(mp.CodeItem)}</td>
                 {showIntroductionSpread ? <td>{introductionSpreadLabel(mp.IntroductionSpread)}</td> : null}
                 {this.edit
-                ? <td><Xcomp.StringEnum observableValue={[mp, 'InfluenceFactor']}  codes={codes.migrationPathwayFrequency}/></td>
+                ? <td><Xcomp.StringEnum observableValue={[mp, 'influenceFactor']}  codes={codes.migrationPathwayFrequency}/></td>
                 : <td>{frequencyLabel(mp.InfluenceFactor)}</td>
                 }
                 {this.edit
-                ? <td><Xcomp.StringEnum observableValue={[mp, 'Magnitude']}  codes={codes.migrationPathwayAbundance}/></td>
+                ? <td><Xcomp.StringEnum observableValue={[mp, 'magnitude']}  codes={codes.migrationPathwayAbundance}/></td>
                 : <td>{abundaceLabel(mp.Magnitude)}</td>
                 }
                 {this.edit
-                ? <td><Xcomp.StringEnum observableValue={[mp, 'TimeOfIncident']}  codes={codes.migrationPathwayTime}/></td>
+                ? <td><Xcomp.StringEnum observableValue={[mp, 'timeOfIncident']}  codes={codes.migrationPathwayTime}/></td>
                 : <td>{timeOfIncidentLabel(mp.TimeOfIncident)}</td>
                 }
                 {this.edit
-                ? <td><Xcomp.HtmlString observableValue={[mp, 'ElaborateInformation']} /></td>
+                ? <td><Xcomp.HtmlString observableValue={[mp, 'elaborateInformation']} /></td>
                 : <td dangerouslySetInnerHTML={{__html: elobTxt}} onClick={() => this.open = !this.open} />
                 }
                 <td><Xcomp.Button disabled={this.context.readonly} xs onClick={() => this.edit = !this.edit}>{this.edit ? labels.General.ok : labels.General.edit}</Xcomp.Button></td>

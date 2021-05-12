@@ -2,12 +2,13 @@
 import config from '../../config';
 import React from 'react';
 import PropTypes from 'prop-types'
-import {observer} from 'mobx-react';
+import {observer, inject} from 'mobx-react';
 import {action, autorun, computed, extendObservable, observable, toJS} from 'mobx';
 import NewMigrationPathwaySelector from './34Spredningsveier/NewMigrationPathwaySelector'
 import MPTable from './34Spredningsveier/MigrationPathwayTable'
 const labels = config.labels
 
+@inject("appState")
 @observer
 export default class Vurdering34Spredningsveier extends React.Component {
     constructor(props) {
@@ -33,15 +34,20 @@ export default class Vurdering34Spredningsveier extends React.Component {
 
 
     @action fjernSpredningsvei = (vurdering, value) => {
-        const result = vurdering.AssesmentVectors.remove(value);
+        const result = vurdering.assesmentVectors.remove(value);
         // console.log("item removed : " + result)
     };
 
     render() {
-        const {vurdering, viewModel, fabModel} = this.props;
-        const migrationPathways = vurdering.AssesmentVectors
-        const migrationPathwayKoder = fabModel.spredningsveier.children.filter(child => child.name != "Import")
-        const labels = fabModel.kodeLabels
+        const {appState:{assessment}, appState} = this.props;
+        const vurdering = assessment
+        const labels = appState.codeLabels
+        const koder = appState.koder.Children
+
+        // const {vurdering, viewModel, fabModel} = this.props;
+        const migrationPathways = vurdering.assesmentVectors
+        const migrationPathwayKoder = appState.spredningsveier.children.filter(child => child.name != "Import")
+        // const labels = fabModel.kodeLabels
         // console.log("''''''''''''''''''''''")
         // console.log(JSON.stringify(migrationPathwayKoder))
         const nbsp = "\u00a0"
@@ -51,11 +57,11 @@ export default class Vurdering34Spredningsveier extends React.Component {
         return(
             <div>
                 { true || config.showPageHeaders ? <h4 style={{marginTop: "25px"}} >{labels.MigrationPathway.introductionSpread}</h4> : <br />}
-                <MPTable migrationPathways={migrationPathways} fabModel={fabModel} removeMigrationPathway={fjernSpredningsvei} showIntroductionSpread />
+                <MPTable migrationPathways={migrationPathways} removeMigrationPathway={fjernSpredningsvei} showIntroductionSpread />
                 <hr/>
                 <div className="well">
                     <h4>Legg til spredningsveier</h4>
-                    <NewMigrationPathwaySelector migrationPathways={migrationPathwayKoder} onSave={mp => this.saveMigrationPathway(vurdering, mp)} koder={fabModel.koder} labels={labels} />
+                    <NewMigrationPathwaySelector migrationPathways={migrationPathwayKoder} onSave={mp => this.saveMigrationPathway(vurdering, mp)} koder={koder} labels={labels} />
                 </div>
             </div>
         );
@@ -65,7 +71,7 @@ export default class Vurdering34Spredningsveier extends React.Component {
 
 
 
-Vurdering34Spredningsveier.propTypes = {
-	viewModel: PropTypes.object.isRequired,
-	vurdering: PropTypes.object.isRequired
-}
+// Vurdering34Spredningsveier.propTypes = {
+// 	viewModel: PropTypes.object.isRequired,
+// 	vurdering: PropTypes.object.isRequired
+// }
