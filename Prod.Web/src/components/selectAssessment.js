@@ -99,14 +99,7 @@ export default class SelectAssessment extends Component {
                     <tr style={{backgroundColor: '#f9f9f9'}}>
                         <td style={{textAlign: 'center', color: 'red'}}><b>Dette er en testversjon. Driftversjonen finner du <a href="https://rl2021.artsdatabanken.no/">her</a>.</b></td>
                     </tr>
-                </table>}
-                <ul class="nav_menu">
-                    <li><b>Velg vurdering</b></li>
-                    <li><b>Legg til ny art</b></li>
-                    <li role="presentation"><b>Administrasjon</b></li>
-                    <li role="presentation" disabled={!auth.isLoggedIn} onClick={auth.logout}><b>&nbsp; {auth.user ? "Logg ut " : ""} {(auth.user ? auth.user.profile.name : "")} </b></li>
-                    <li role="presentation"><b>Retningslinjer</b></li>
-                </ul>
+                </table>}                
                 <h4>Velg artsgruppe</h4>
                 <div className="selectAssessment">                   
                     <Xcomp.StringEnum 
@@ -130,13 +123,23 @@ export default class SelectAssessment extends Component {
                 <div className="selectFilter" style={{display: 'flex'}}>
                     <div>
                     <div className="filters"> 
-                        <span>Vurderinger med kommentar </span>
+                        {/*<span>Vurderinger med kommentar </span>
                         <div className="comment"><Xcomp.Bool observableValue={[appState, "withNewComments"]} label={"Nye kommentarer (på dine) (" + appState.antallNye + ")"}/></div>
                         <div className="comment"><Xcomp.Bool observableValue={[appState, "withComments"]} label={"Alle vurderinger med kommentar (" + appState.antallVurderinger + ")"}/></div>
                         <div className="comment" style={{marginLeft: '20px'}}>
                                 <Xcomp.Bool observableValue={[appState, "kunUbehandlede"]} label={"Kun ubehandlede kommentarer (" + appState.antallUbehandlede + ")"} /></div>
                         <div className="comment"><Xcomp.Bool observableValue={[appState, "withAutomaticNameChanges"]} label={"Automatisk oppdatert taksonomiendring (" + appState.antallNavnEndret + ")"}/></div>
-                        <div className="comment"><Xcomp.Bool observableValue={[appState, "withPotentialTaxonChanges"]} label={"Taksonomiendring trenger avklaring (" + appState.antallTaxonEndring + ")"}/></div> 
+                        <div className="comment"><Xcomp.Bool observableValue={[appState, "withPotentialTaxonChanges"]} label={"Taksonomiendring trenger avklaring (" + appState.antallTaxonEndring + ")"}/></div> */}
+
+                        <div className="comment" style={{marginLeft: '10px'}}>
+                            <Xcomp.Bool observableValue={[appState, "fl2018"]} label={"Filtrer på status, kategori og kriterier fra Fremmedartslista 2018"} />
+                        </div>
+                        <div className="comment" style={{marginLeft: '10px'}}>
+                            <Xcomp.Bool observableValue={[appState, "fl2023Status"]} label={"Filtrer på status, kategori og kriterier fra nåværende vurdering"} />
+                        </div>
+                        <div className="comment" style={{marginLeft: '10px'}}>
+                            <Xcomp.Bool observableValue={[appState, "fl2023Comments"]} label={"Filtrer på påbegynt/ferdigstilt, kommentarer og vurderingsansvarlig i nåværende risikovurdering"} />
+                        </div>
                     </div>
                         
                         <div className="comment" style={{marginTop: '170px', marginLeft: '10px'}}>

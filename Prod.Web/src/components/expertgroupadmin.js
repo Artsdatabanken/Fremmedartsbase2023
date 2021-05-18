@@ -51,12 +51,13 @@ export default class ExpertGroupAdmin extends React.Component {
             return (<h3>Ingen adgang til administrasjon av ekspertgrupper - Du kom hit p.g.a. en feil</h3>);
         return (
             <div>
-            <section className="main">
+            <section className="main adm">
                 <h2>Administrasjon av ekspertgrupper</h2>
                 <h3>Ekspertgruppe</h3>
                 <Xcomp.StringEnum 
-                            observableValue={[expertGroupModel, 'valgtekspertgruppe']} 
-                            codes={expertGroupModel.alleekspertgrupper}/>
+                            forceSync
+                            observableValue={[appState, 'expertgroup']} 
+                            codes={appState.expertgroups}/>
                 {/* <select type="select" label="Velg ekspertgruppe" placeholder="select" onChange={e =>
                 expertGroupModel.valgtekspertgruppe = e.target.value}>
                     {expertGroupModel.alleekspertgrupper
@@ -82,13 +83,20 @@ export default class ExpertGroupAdmin extends React.Component {
                             {/* <td><span>{ega.leser ? 'X' : ''}</span></td> */}
                             <td><Xcomp.Button primary xs onClick={e => fjernRettighet(ega.id) }>Slett</Xcomp.Button></td>
                         </tr>)}
-                        <tr><td><h3>Brukere</h3></td></tr>
+
+                    </tbody>
+                </table>
+                        <h3>Brukere</h3>
+                 <table className="table table-striped table-hover">
+                        <thead>
                         <tr><th />
                             <th>Leder</th>
                             <th>Skriver</th>
                            {/* <th>Leser</th> */}
                             <th>Ny rettighet</th>
                     </tr>
+                    </thead>
+                    <tbody>
                     <tr>
                 <td>
                 <Xcomp.StringEnum 
