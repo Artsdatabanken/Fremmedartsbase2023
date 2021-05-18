@@ -46,6 +46,20 @@ class AssessmentRoot extends Component {
         const isFinished = assessment.evaluationStatus && assessment.evaluationStatus === "finished"
         const canEdit = !isFinished && appState.roleincurrentgroup.skriver && assessment.lockedForEditByUser == null    
         
+        function sjekkForEndringerOgGiAdvarsel(){
+            // var isLockedByMe = appState.assessment && appState.assessment.lockedForEditByUser === auth.user.name
+            var isdirty = appState.isDirty
+            var skriver = !!appState.roleincurrentgroup && appState.roleincurrentgroup.skriver
+            var ok = true;
+            // if (isLockedByMe && isdirty && skriver) {
+            if (isdirty && skriver) {
+                ok = window.confirm("Det er endringer på vurderingen - ønsker du virkelig å gå bort fra den uten å lagre?")
+            }
+            if (ok) {
+                appState.viewMode = "choosespecie"
+                appState.updateCurrentAssessment(null)
+            }
+    }
                 
         // console.log(rolle)
         // console.log(rolle.skriver)
@@ -59,6 +73,12 @@ class AssessmentRoot extends Component {
         window.scrollTo(0,0)
         return (
             <div>
+                <ul className="nav_menu">
+                    <li onClick={action(() => {sjekkForEndringerOgGiAdvarsel()})} disabled={!auth.isLoggedIn}><b>Velg vurdering</b></li>
+                    <li role="presentation"><b>Administrasjon</b></li>
+                    <li role="presentation" disabled={!auth.isLoggedIn} onClick={auth.logout}><b>&nbsp; {auth.user ? "Logg ut " : ""} {(auth.user ? auth.user.profile.name : "")} </b></li>
+                    <li role="presentation"><b>Retningslinjer</b></li>
+                </ul>
                 {assessment.popularName ? 
                     <h1>{assessment.vurdertVitenskapeligNavn + ", " + assessment.popularName}&nbsp;{canEdit && 
                         <Xcomp.Button alwaysEnabled='true' onClick={(e) => this.lockAssessment(e, assessment, appState)}>Start vurdering</Xcomp.Button>
@@ -106,7 +126,7 @@ class AssessmentRoot extends Component {
                 // // // <AssessmentReferences/>
                 // // // : assessmentTabs.activeTab.id === 11  ?
                 // // // <AssessmentComments/>
-                : assessmentTabs.activeTab.id === 12  ?
+                : assessmentTabs.activeTab.id === 13  ?
                 <AssessmentDiff/>
                 :<h1>Oooops?? artinfotab:{assessmentTabs.activeTab.id}</h1>}
                 {assessmentTabs.activeTab.id != 12 && assessmentTabs.activeTab.id != 11 && assessment && assessment.evaluationStatus !== 'finished' &&     
