@@ -120,7 +120,7 @@ class AssessmentRoot extends Component {
                 // // // <AssessmentReferences/>
                 // // // : assessmentTabs.activeTab.id === 11  ?
                 // // // <AssessmentComments/>
-                : assessmentTabs.activeTab.id === 13  ?
+                : assessmentTabs.activeTab.id === 15  ?
                 <AssessmentDiff/>
                 :<h1>Oooops?? artinfotab:{assessmentTabs.activeTab.id}</h1>}
                 {assessmentTabs.activeTab.id != 12 && assessmentTabs.activeTab.id != 11 && assessment && assessment.evaluationStatus !== 'finished' &&     
