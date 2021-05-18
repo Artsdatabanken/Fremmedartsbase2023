@@ -21,6 +21,7 @@ export default class MigrationPathwayTable extends React.Component {
         // const vurdering = assessment
         const labels = appState.codeLabels
         const koder = appState.koder.Children
+        const spredningsveier = koder.migrationPathways[0]
 
 
         // const {migrationPathways, fabModel, removeMigrationPathway, showIntroductionSpread} = this.props;
@@ -75,8 +76,30 @@ class MigrationPathwayTableRow extends React.Component {
         })
     }
 
+    // *processData(data){
+    //     if (!data) { return; }
+    //     for (var i = 0; i< data.length; i++){
+    //         var val = data[i];
+    //         yield val;
+    
+    //         if (val.children) {
+    //         yield *processData(val.children);
+    //         }
+    //     }
+    // }
+    
+
+    // *processTree(tree){
+    //     yield tree
+    //     yield *this.processData(tree.children)
+    // }
+
     findSV(mpk, value) {
         const iterable = processTree(mpk)
+        console.log("___mpk: " + JSON.stringify(mpk))
+        console.log("___value: " + JSON.stringify(value))
+        console.log("___iterable: " + JSON.stringify(iterable))
+
         for (let item of iterable) {
             if (item.value === value) 
                 return item
@@ -93,30 +116,37 @@ class MigrationPathwayTableRow extends React.Component {
     render() {
         const {item, codes, migrationPathways, showIntroductionSpread, removeMigrationPathway, labels } = this.props;
         const mp = item
+
+
+        // console.log("___mp: " + JSON.stringify(migrationPathways))
+        console.log("___: " + JSON.stringify(codes.migrationPathwayIntroductionSpread))
+        // console.log("___: " + JSON.stringify(Object.keys(clabels)))
+
+
         const introductionSpreadLabel = (id) => codes.migrationPathwayIntroductionSpread.find(code => code.Value === id).Text
         const frequencyLabel = (id) => codes.migrationPathwayFrequency.find(code => code.Value === id).Text
         const abundaceLabel = (id) => codes.migrationPathwayAbundance.find(code => code.Value === id).Text
         const timeOfIncidentLabel = (id) => codes.migrationPathwayTime.find(code => code.Value === id).Text
-        const codeItemLabel = (id) => this.findSV(migrationPathways, id).name
+        const codeItemLabel = (id) => console.log(JSON.stringify( this.findSV(migrationPathways, id)))  //.name
 
 
-        const eloborateText = item.ElaborateInformation
+        const eloborateText = item.elaborateInformation
         const elobTxt = this.open ? eloborateText : this.trunc(eloborateText)
         return(
             <tr >
-                <td>{codeItemLabel(mp.CodeItem)}</td>
-                {showIntroductionSpread ? <td>{introductionSpreadLabel(mp.IntroductionSpread)}</td> : null}
+                <td>{codeItemLabel(mp.codeItem)}</td>
+                {showIntroductionSpread ? <td>{introductionSpreadLabel(mp.introductionSpread)}</td> : null}
                 {this.edit
                 ? <td><Xcomp.StringEnum observableValue={[mp, 'influenceFactor']}  codes={codes.migrationPathwayFrequency}/></td>
-                : <td>{frequencyLabel(mp.InfluenceFactor)}</td>
+                : <td>{frequencyLabel(mp.influenceFactor)}</td>
                 }
                 {this.edit
                 ? <td><Xcomp.StringEnum observableValue={[mp, 'magnitude']}  codes={codes.migrationPathwayAbundance}/></td>
-                : <td>{abundaceLabel(mp.Magnitude)}</td>
+                : <td>{abundaceLabel(mp.magnitude)}</td>
                 }
                 {this.edit
                 ? <td><Xcomp.StringEnum observableValue={[mp, 'timeOfIncident']}  codes={codes.migrationPathwayTime}/></td>
-                : <td>{timeOfIncidentLabel(mp.TimeOfIncident)}</td>
+                : <td>{timeOfIncidentLabel(mp.timeOfIncident)}</td>
                 }
                 {this.edit
                 ? <td><Xcomp.HtmlString observableValue={[mp, 'elaborateInformation']} /></td>

@@ -94,6 +94,7 @@ class ViewModel {
             artskartModel: {},
             koder: null,
             påvirkningsfaktorer: [],
+            spredningsveier: null,
             selectedPåvirkningsfaktor: {
                 id: null,
                 forkortelse: null,
@@ -158,6 +159,8 @@ class ViewModel {
         // console.log("clabels:", clabels)
 
 
+        console.log("labels keys: " + JSON.stringify(Object.keys(clabels)))
+        console.log("codes keys: " + JSON.stringify(Object.keys(codes.Children)))
         // console.log("codes json: " + JSON.stringify(codes))
         // console.log("----------------------------------------------+++")
         // console.log(JSON.stringify(clabels))
@@ -165,6 +168,11 @@ class ViewModel {
         //
         this.koder = codes
 
+        //-----------------------------------------------------
+
+        const mp = this.koder.Children.migrationPathways[0]
+        this.spredningsveier = this.koder2migrationPathways(mp)
+        //-----------------------------------------------------
 
 
         this.theUserContext = createContext(this.userContext)   
@@ -1115,6 +1123,27 @@ class ViewModel {
             {console.error('Error:', error)}
           );
     }
+
+
+    koder2migrationPathways(mp) {
+        const r = {}
+        r.name = mp.Text
+        // console.log(r.name)
+        r.value = mp.Value
+        if(mp.Children) {
+            r.children = []
+            const mpckey = Object.keys(mp.Children)[0]
+            const mpc = mp.Children[mpckey]
+            for ( var i = 0; i < mpc.length; ++i )
+            {
+                r.children.push(this.koder2migrationPathways(mpc[i]));
+            }
+        }
+        return r
+    }
+
+
+
     
 }
 export default new ViewModel()
