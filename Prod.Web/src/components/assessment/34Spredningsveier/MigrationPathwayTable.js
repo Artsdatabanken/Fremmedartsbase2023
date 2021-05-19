@@ -76,29 +76,11 @@ class MigrationPathwayTableRow extends React.Component {
         })
     }
 
-    // *processData(data){
-    //     if (!data) { return; }
-    //     for (var i = 0; i< data.length; i++){
-    //         var val = data[i];
-    //         yield val;
-    
-    //         if (val.children) {
-    //         yield *processData(val.children);
-    //         }
-    //     }
-    // }
-    
-
-    // *processTree(tree){
-    //     yield tree
-    //     yield *this.processData(tree.children)
-    // }
-
     findSV(mpk, value) {
         const iterable = processTree(mpk)
-        console.log("___mpk: " + JSON.stringify(mpk))
-        console.log("___value: " + JSON.stringify(value))
-        console.log("___iterable: " + JSON.stringify(iterable))
+        // console.log("___mpk: " + JSON.stringify(mpk))
+        // console.log("___value: " + JSON.stringify(value))
+        // console.log("___iterable: " + JSON.stringify(iterable))
 
         for (let item of iterable) {
             if (item.value === value) 
