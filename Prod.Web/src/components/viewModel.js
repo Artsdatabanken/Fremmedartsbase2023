@@ -106,6 +106,9 @@ class ViewModel {
                 comment: null
             },
             codeLabels: null,
+
+            naturtypeLabels: {},
+
             expertgroups: null, // [],
             expertgroup: null,
             roleincurrentgroup: null,
