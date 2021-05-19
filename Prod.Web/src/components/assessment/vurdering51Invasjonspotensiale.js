@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 import PropTypes from 'prop-types'
-import {observer} from 'mobx-react';
+import {observer, inject} from 'mobx-react';
 import * as Xcomp from './observableComponents';
 import Criterion from './criterion'
 import config from '../../config'
@@ -13,8 +13,7 @@ class SelectableRadio extends React.Component {
     //     return true
     // }
     render() {
-        const [obj,
-            prop] = this.props.observableValue
+        const [obj, prop] = this.props.observableValue
         // console.log("Selectable" + this.props.value) console.log(" - - " +
         // obj["Selectable" + this.props.value])
         const val = this.props.value
@@ -40,22 +39,27 @@ class SelectableRadio extends React.Component {
     }
 }
 
-SelectableRadio.contextTypes = {
-    readonly: PropTypes.bool
-}
+// SelectableRadio.contextTypes = {
+//     readonly: PropTypes.bool
+// }
 
 // return <Xcomp.Radio         label={this.props.label + (obj[val] ? "  (" +
 // obj[val] + ")" : "")}         value={val}         observableValue={[obj,
 // prop]}         disabled={disabled}         dummy={dummy} />
 
+@inject("appState")
 @observer
 export default class Vurdering51Invasjonspotensiale extends React.Component {
     // getCriterion(riskAssessment, akse, letter) {     const result =
     // riskAssessment.Criteria.filter(c => c.Akse === akse && c.CriteriaLetter ===
     // letter)[0];     return result; }
     render() {
-        const {riskAssessment, viewModel, fabModel, existenceArea35} = this.props;
-        const labels = fabModel.kodeLabels
+        const {appState:{assessment:{riskAssessment}}, appState, existenceArea35} = this.props;
+        // const labels = appState.kodeLabels
+        const labels = appState.codeLabels
+        const koder = appState.koder.Children
+
+
 
         // const bassertpaValues = [
         //     {
@@ -78,11 +82,11 @@ export default class Vurdering51Invasjonspotensiale extends React.Component {
         const presentValue = (f) => f === "" ? <span>᠆᠆᠆᠆᠆</span> : f
 
         // &#11834;
-        // <h5>** Invasjonspotensiale nivå: {fabModel.invasjonspotensialeLevel.level + 1}
+        // <h5>** Invasjonspotensiale nivå: {appState.invasjonspotensialeLevel.level + 1}
         // **</h5> <h5>** Utslagsgivende kriterier:
-        // {fabModel.invasjonspotensialeLevel.decisiveCriteria.map(crit =>
+        // {appState.invasjonspotensialeLevel.decisiveCriteria.map(crit =>
         // crit.CriteriaLetter).sort().join()} **</h5> <h5>** usikkerhet:
-        // {fabModel.invasjonspotensialeLevel.uncertaintyLevels.slice().join(';')}
+        // {appState.invasjonspotensialeLevel.uncertaintyLevels.slice().join(';')}
         // **</h5>**</h5>
 
         return (
@@ -94,14 +98,14 @@ export default class Vurdering51Invasjonspotensiale extends React.Component {
                     <h4>{crit51A.heading}</h4>
                     <p>{crit51A.info}</p>
                     <Xcomp.Bool
-                        observableValue={[riskAssessment, "ActiveSpreadPVAAnalysisEstimatedSpeciesLongevity"]}
+                        observableValue={[riskAssessment, "activeSpreadPVAAnalysisEstimatedSpeciesLongevity"]}
                         label={labels.AcritSelect.a}/>
                     <Xcomp.Bool
-                        observableValue={[riskAssessment, "ActiveSpreadRscriptEstimatedSpeciesLongevity"]}
+                        observableValue={[riskAssessment, "activeSpreadRscriptEstimatedSpeciesLongevity"]}
                         label={labels.AcritSelect.b}/>
                     <Xcomp.Bool
-                        observableValue={[riskAssessment, "ActiveRedListCategoryLevel"]}
-                        label={labels.AcritSelect.c}/> {riskAssessment.ActiveSpreadPVAAnalysisEstimatedSpeciesLongevity
+                        observableValue={[riskAssessment, "activeRedListCategoryLevel"]}
+                        label={labels.AcritSelect.c}/> {riskAssessment.activeSpreadPVAAnalysisEstimatedSpeciesLongevity
                         ? <div>
                                 <table className="formtable">
                                     <tbody>
@@ -114,10 +118,10 @@ export default class Vurdering51Invasjonspotensiale extends React.Component {
                                                 <label htmlFor="SpreadPVAAnalysis">{labels.Acrit.PVAAnalysis}</label>
                                             </td>
                                             <td>
-                                                <Xcomp.HtmlString observableValue={[riskAssessment, 'SpreadPVAAnalysis']}/>
+                                                <Xcomp.HtmlString observableValue={[riskAssessment, 'spreadPVAAnalysis']}/>
                                             </td>
                                         </tr>
-                                        {fabModel.fileUploadEnabled
+                                        {appState.fileUploadEnabled
                                         ? <tr>
                                             <td>
                                                 {nbsp}
@@ -125,39 +129,39 @@ export default class Vurdering51Invasjonspotensiale extends React.Component {
                                             <td>
                                                 <h4>{labels.Acrit.data}</h4>
                                                 <Filliste
-                                                    baseDirectory={`${fabModel
+                                                    baseDirectory={`${appState
                                                     .vurderingId
                                                     .split('/').join('_')}/SpreadPVAAnalysis`}
                                                     labels={labels.DistributionHistory}
-                                                    {...fabModel.vurdering.Datasett}/>
+                                                    {...appState.vurdering.Datasett}/>
                                             </td>
                                         </tr>
                                         : null}
                                         <tr>
                                             <td>
-                                                <label htmlFor="SpreadPVAAnalysisEstimatedSpeciesLongevity">{labels.Acrit.median}</label>
+                                                <label htmlFor="spreadPVAAnalysisEstimatedSpeciesLongevity">{labels.Acrit.median}</label>
                                             </td>
                                             <td>
                                                 <Xcomp.String
-                                                    observableValue={[riskAssessment, 'SpreadPVAAnalysisEstimatedSpeciesLongevity']}/>
+                                                    observableValue={[riskAssessment, 'spreadPVAAnalysisEstimatedSpeciesLongevity']}/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label htmlFor="SpreadPVAAnalysisEstimatedSpeciesLongevityLowerQuartile">{labels.Acrit.lower}</label>
+                                                <label htmlFor="spreadPVAAnalysisEstimatedSpeciesLongevityLowerQuartile">{labels.Acrit.lower}</label>
                                             </td>
                                             <td>
                                                 <Xcomp.Number
-                                                    observableValue={[riskAssessment, 'SpreadPVAAnalysisEstimatedSpeciesLongevityLowerQuartile']}/>
+                                                    observableValue={[riskAssessment, 'spreadPVAAnalysisEstimatedSpeciesLongevityLowerQuartile']}/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label htmlFor="SpreadPVAAnalysisEstimatedSpeciesLongevityUpperQuartile">{labels.Acrit.upper}</label>
+                                                <label htmlFor="spreadPVAAnalysisEstimatedSpeciesLongevityUpperQuartile">{labels.Acrit.upper}</label>
                                             </td>
                                             <td>
                                                 <Xcomp.Number
-                                                    observableValue={[riskAssessment, 'SpreadPVAAnalysisEstimatedSpeciesLongevityUpperQuartile']}/>
+                                                    observableValue={[riskAssessment, 'spreadPVAAnalysisEstimatedSpeciesLongevityUpperQuartile']}/>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -174,58 +178,58 @@ export default class Vurdering51Invasjonspotensiale extends React.Component {
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label htmlFor="SpreadRscriptSpeciesCount">{labels.Acrit.speciesCount}</label>
+                                                <label htmlFor="spreadRscriptSpeciesCount">{labels.Acrit.speciesCount}</label>
                                             </td>
                                             <td>
                                                 <Xcomp.Number
-                                                    observableValue={[riskAssessment, 'SpreadRscriptSpeciesCount']}
+                                                    observableValue={[riskAssessment, 'spreadRscriptSpeciesCount']}
                                                     integer
                                                 />
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label htmlFor="SpreadRscriptPopulationGrowth">{labels.Acrit.populationGrowth}</label>
+                                                <label htmlFor="spreadRscriptPopulationGrowth">{labels.Acrit.populationGrowth}</label>
                                             </td>
                                             <td>
                                                 <Xcomp.String
-                                                    observableValue={[riskAssessment, 'SpreadRscriptPopulationGrowth']}/>
+                                                    observableValue={[riskAssessment, 'spreadRscriptPopulationGrowth']}/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label htmlFor="SpreadRscriptEnvironmantVariance">{labels.Acrit.environmantVariance}</label>
+                                                <label htmlFor="spreadRscriptEnvironmantVariance">{labels.Acrit.environmantVariance}</label>
                                             </td>
                                             <td>
                                                 <Xcomp.String
-                                                    observableValue={[riskAssessment, 'SpreadRscriptEnvironmantVariance']}/>
+                                                    observableValue={[riskAssessment, 'spreadRscriptEnvironmantVariance']}/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label htmlFor="SpreadRscriptDemographicVariance">{labels.Acrit.demographicVariance}</label>
+                                                <label htmlFor="spreadRscriptDemographicVariance">{labels.Acrit.demographicVariance}</label>
                                             </td>
                                             <td>
                                                 <Xcomp.String
-                                                    observableValue={[riskAssessment, 'SpreadRscriptDemographicVariance']}/>
+                                                    observableValue={[riskAssessment, 'spreadRscriptDemographicVariance']}/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label htmlFor="SpreadRscriptSustainabilityK">{labels.Acrit.sustainability}</label>
+                                                <label htmlFor="spreadRscriptSustainabilityK">{labels.Acrit.sustainability}</label>
                                             </td>
                                             <td>
                                                 <Xcomp.String
-                                                    observableValue={[riskAssessment, 'SpreadRscriptSustainabilityK']}/>
+                                                    observableValue={[riskAssessment, 'spreadRscriptSustainabilityK']}/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label htmlFor="SpreadRscriptQuasiExtinctionThreshold">{labels.Acrit.extinctionThreshold}</label>
+                                                <label htmlFor="spreadRscriptQuasiExtinctionThreshold">{labels.Acrit.extinctionThreshold}</label>
                                             </td>
                                             <td>
                                                 <Xcomp.String
-                                                    observableValue={[riskAssessment, 'SpreadRscriptQuasiExtinctionThreshold']}/>
+                                                    observableValue={[riskAssessment, 'spreadRscriptQuasiExtinctionThreshold']}/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -239,11 +243,11 @@ export default class Vurdering51Invasjonspotensiale extends React.Component {
                                         <tr>
                                             <td>
                                                 <br/>
-                                                <label htmlFor="SpreadRscriptEstimatedSpeciesLongevity">{labels.Acrit.median}</label>
+                                                <label htmlFor="spreadRscriptEstimatedSpeciesLongevity">{labels.Acrit.median}</label>
                                             </td>
                                             <td>
                                                 <Xcomp.String
-                                                    observableValue={[riskAssessment, 'SpreadRscriptEstimatedSpeciesLongevity']}/>
+                                                    observableValue={[riskAssessment, 'spreadRscriptEstimatedSpeciesLongevity']}/>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -269,26 +273,26 @@ export default class Vurdering51Invasjonspotensiale extends React.Component {
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label htmlFor="RedListDataDescription">{labels.Acrit.dataDescription}</label>
+                                                <label htmlFor="redListDataDescription">{labels.Acrit.dataDescription}</label>
                                             </td>
                                             <td>
-                                                <Xcomp.HtmlString observableValue={[riskAssessment, 'RedListDataDescription']}/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label htmlFor="RedListUsedCriteria">{labels.Acrit.redlistCrit}</label>
-                                            </td>
-                                            <td>
-                                                <Xcomp.String observableValue={[riskAssessment, 'RedListUsedCriteria']}/>
+                                                <Xcomp.HtmlString observableValue={[riskAssessment, 'redListDataDescription']}/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label htmlFor="RedListCategory">{labels.Acrit.redlistCategory}</label>
+                                                <label htmlFor="redListUsedCriteria">{labels.Acrit.redlistCrit}</label>
                                             </td>
                                             <td>
-                                                <Xcomp.String observableValue={[riskAssessment, 'RedListCategory']}/>
+                                                <Xcomp.String observableValue={[riskAssessment, 'redListUsedCriteria']}/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label htmlFor="redListCategory">{labels.Acrit.redlistCategory}</label>
+                                            </td>
+                                            <td>
+                                                <Xcomp.String observableValue={[riskAssessment, 'redListCategory']}/>
                                             </td>
                                         </tr>
 
@@ -305,16 +309,16 @@ export default class Vurdering51Invasjonspotensiale extends React.Component {
                         }}>
                             <SelectableRadio
                                 label={labels.AcritSelect.a}
-                                value={"SpreadPVAAnalysisEstimatedSpeciesLongevity"}
-                                observableValue={[riskAssessment, "ChosenSpreadMedanLifespan"]}/>
+                                value={"spreadPVAAnalysisEstimatedSpeciesLongevity"}
+                                observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]}/>
                             <SelectableRadio
                                 label={labels.AcritSelect.b}
-                                value={"SpreadRscriptEstimatedSpeciesLongevity"}
-                                observableValue={[riskAssessment, "ChosenSpreadMedanLifespan"]}/>
+                                value={"spreadRscriptEstimatedSpeciesLongevity"}
+                                observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]}/>
                             <SelectableRadio
                                 label={labels.AcritSelect.c}
-                                value={"RedListCategoryLevel"}
-                                observableValue={[riskAssessment, "ChosenSpreadMedanLifespan"]}/>
+                                value={"redListCategoryLevel"}
+                                observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]}/>
                         </div>
                         <div
                             style={{
@@ -329,15 +333,15 @@ export default class Vurdering51Invasjonspotensiale extends React.Component {
                     <h4>{crit51B.heading}</h4>
                     <p>{crit51B.info}</p>
                     <Xcomp.Bool
-                        observableValue={[riskAssessment, "ActiveSpreadYearlyIncreaseObservations"]}
+                        observableValue={[riskAssessment, "activeSpreadYearlyIncreaseObservations"]}
                         label={labels.BcritSelect.a}/>
                     <Xcomp.Bool
-                        observableValue={[riskAssessment, "ActiveSpreadYearlyLiteratureData"]}
+                        observableValue={[riskAssessment, "activeSpreadYearlyLiteratureData"]}
                         label={labels.BcritSelect.c}/>
                     <Xcomp.Bool
-                        observableValue={[riskAssessment, "ActiveSpreadYearlyIncreaseCalculatedExpansionSpeed"]}
+                        observableValue={[riskAssessment, "activeSpreadYearlyIncreaseCalculatedExpansionSpeed"]}
                         label={labels.BcritSelect.d}/>
-                    {riskAssessment.ActiveSpreadYearlyIncreaseObservations
+                    {riskAssessment.activeSpreadYearlyIncreaseObservations
                         ? <div>
                                 <table className="formtable">
                                     <tbody>
@@ -355,32 +359,32 @@ export default class Vurdering51Invasjonspotensiale extends React.Component {
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label htmlFor="SpreadYearlyIncreaseObservations">{labels.Bcrit.expansion}</label>
+                                                <label htmlFor="spreadYearlyIncreaseObservations">{labels.Bcrit.expansion}</label>
                                             </td>
                                             <td>
                                                 <Xcomp.String
-                                                    observableValue={[riskAssessment, 'SpreadYearlyIncreaseObservations']}/>
+                                                    observableValue={[riskAssessment, 'spreadYearlyIncreaseObservations']}/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label htmlFor="SpreadYearlyIncreaseObservationsLowerQuartile">{labels.Bcrit.lower}</label>
+                                                <label htmlFor="spreadYearlyIncreaseObservationsLowerQuartile">{labels.Bcrit.lower}</label>
                                             </td>
                                             <td>
                                                 <Xcomp.String
-                                                    observableValue={[riskAssessment, 'SpreadYearlyIncreaseObservationsLowerQuartile']}/>
+                                                    observableValue={[riskAssessment, 'spreadYearlyIncreaseObservationsLowerQuartile']}/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label htmlFor="SpreadYearlyIncreaseObservationsUpperQuartile">{labels.Bcrit.higher}</label>
+                                                <label htmlFor="spreadYearlyIncreaseObservationsUpperQuartile">{labels.Bcrit.higher}</label>
                                             </td>
                                             <td>
                                                 <Xcomp.String
-                                                    observableValue={[riskAssessment, 'SpreadYearlyIncreaseObservationsUpperQuartile']}/>
+                                                    observableValue={[riskAssessment, 'spreadYearlyIncreaseObservationsUpperQuartile']}/>
                                             </td>
                                         </tr>
-                                        {fabModel.fileUploadEnabled
+                                        {appState.fileUploadEnabled
                                         ? <tr>
                                             <td>
                                                 {nbsp}
@@ -388,11 +392,11 @@ export default class Vurdering51Invasjonspotensiale extends React.Component {
                                             <td>
                                                 <h4>{labels.Bcrit.data}</h4>
                                                 <Filliste
-                                                    baseDirectory={`${fabModel
+                                                    baseDirectory={`${appState
                                                     .vurderingId
                                                     .split('/').join('_')}/SpreadYearlyIncrease`}
                                                     labels={labels.DistributionHistory}
-                                                    {...fabModel.vurdering.Datasett}/>
+                                                    {...appState.vurdering.Datasett}/>
                                             </td>
                                         </tr>
                                         : null }
@@ -412,29 +416,29 @@ export default class Vurdering51Invasjonspotensiale extends React.Component {
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label htmlFor="SpreadYearlyLiteratureDataExpansionSpeed">{labels.Bcrit.literatureDataExpansionSpeed}</label>
+                                                <label htmlFor="spreadYearlyLiteratureDataExpansionSpeed">{labels.Bcrit.literatureDataExpansionSpeed}</label>
                                             </td>
                                             <td>
                                                 <Xcomp.String
-                                                    observableValue={[riskAssessment, 'SpreadYearlyLiteratureDataExpansionSpeed']}/>
+                                                    observableValue={[riskAssessment, 'spreadYearlyLiteratureDataExpansionSpeed']}/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label htmlFor="SpreadYearlyLiteratureDataUncertainty">{labels.Bcrit.uncertainty}</label>
+                                                <label htmlFor="spreadYearlyLiteratureDataUncertainty">{labels.Bcrit.uncertainty}</label>
                                             </td>
                                             <td>
                                                 <Xcomp.String
-                                                    observableValue={[riskAssessment, 'SpreadYearlyLiteratureDataUncertainty']}/>
+                                                    observableValue={[riskAssessment, 'spreadYearlyLiteratureDataUncertainty']}/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label htmlFor="SpreadYearlyLiteratureDataNumberOfIntroductionSources">{labels.Bcrit.introductionSources}</label>
+                                                <label htmlFor="spreadYearlyLiteratureDataNumberOfIntroductionSources">{labels.Bcrit.introductionSources}</label>
                                             </td>
                                             <td>
                                                 <Xcomp.String
-                                                    observableValue={[riskAssessment, 'SpreadYearlyLiteratureDataNumberOfIntroductionSources']}/>
+                                                    observableValue={[riskAssessment, 'spreadYearlyLiteratureDataNumberOfIntroductionSources']}/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -442,16 +446,16 @@ export default class Vurdering51Invasjonspotensiale extends React.Component {
                                                 <label>{labels.Bcrit.expansionSpeed}</label>
                                             </td>
                                             <td>
-                                                <b>{presentValue(riskAssessment.SpreadYearlyLiteratureData)}</b>
+                                                <b>{presentValue(riskAssessment.spreadYearlyLiteratureData)}</b>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label htmlFor="SpreadYearlyLiteratureDataAssumptions">{labels.Bcrit.literatureDataAssumptions}</label>
+                                                <label htmlFor="spreadYearlyLiteratureDataAssumptions">{labels.Bcrit.literatureDataAssumptions}</label>
                                             </td>
                                             <td>
                                                 <Xcomp.HtmlString
-                                                    observableValue={[riskAssessment, 'SpreadYearlyLiteratureDataSource']}/>
+                                                    observableValue={[riskAssessment, 'spreadYearlyLiteratureDataSource']}/>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -484,20 +488,20 @@ export default class Vurdering51Invasjonspotensiale extends React.Component {
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label htmlFor="SpreadYearlyIncreaseEstimate">{labels.Bcrit.yearlyIncrease}</label>
+                                                <label htmlFor="spreadYearlyIncreaseEstimate">{labels.Bcrit.yearlyIncrease}</label>
                                             </td>
                                             <td>
                                                 <Xcomp.String
-                                                    observableValue={[riskAssessment, 'SpreadYearlyIncreaseEstimate']}/>
+                                                    observableValue={[riskAssessment, 'spreadYearlyIncreaseEstimate']}/>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label htmlFor="SpreadYearlyIncreaseEstimateDescription">{labels.Bcrit.estimateDescription}</label>
+                                                <label htmlFor="spreadYearlyIncreaseEstimateDescription">{labels.Bcrit.estimateDescription}</label>
                                             </td>
                                             <td>
                                                 <Xcomp.HtmlString
-                                                    observableValue={[riskAssessment, 'SpreadYearlyIncreaseEstimateDescription']}/>
+                                                    observableValue={[riskAssessment, 'spreadYearlyIncreaseEstimateDescription']}/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -505,7 +509,7 @@ export default class Vurdering51Invasjonspotensiale extends React.Component {
                                                 <label>{labels.Bcrit.expansionSpeed}</label>
                                             </td>
                                             <td>
-                                                <b>{presentValue(riskAssessment.SpreadYearlyIncreaseCalculatedExpansionSpeed)}</b>
+                                                <b>{presentValue(riskAssessment.spreadYearlyIncreaseCalculatedExpansionSpeed)}</b>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -521,16 +525,16 @@ export default class Vurdering51Invasjonspotensiale extends React.Component {
                         }}>
                             <SelectableRadio
                                 label={labels.BcritSelect.a}
-                                value={"SpreadYearlyIncreaseObservations"}
-                                observableValue={[riskAssessment, "ChosenSpreadYearlyIncrease"]}/>
+                                value={"spreadYearlyIncreaseObservations"}
+                                observableValue={[riskAssessment, "chosenSpreadYearlyIncrease"]}/>
                             <SelectableRadio
                                 label={labels.BcritSelect.c}
-                                value={"SpreadYearlyLiteratureData"}
-                                observableValue={[riskAssessment, "ChosenSpreadYearlyIncrease"]}/>
+                                value={"spreadYearlyLiteratureData"}
+                                observableValue={[riskAssessment, "chosenSpreadYearlyIncrease"]}/>
                             <SelectableRadio
                                 label={labels.BcritSelect.d}
-                                value={"SpreadYearlyIncreaseCalculatedExpansionSpeed"}
-                                observableValue={[riskAssessment, "ChosenSpreadYearlyIncrease"]}/>
+                                value={"spreadYearlyIncreaseCalculatedExpansionSpeed"}
+                                observableValue={[riskAssessment, "chosenSpreadYearlyIncrease"]}/>
                         </div>
                         <div
                             style={{
@@ -551,7 +555,7 @@ export default class Vurdering51Invasjonspotensiale extends React.Component {
 }
 
 
-Vurdering51Invasjonspotensiale.propTypes = {
-    viewModel: PropTypes.object.isRequired,
-    riskAssessment: PropTypes.object.isRequired
-}
+// Vurdering51Invasjonspotensiale.propTypes = {
+//     viewModel: PropTypes.object.isRequired,
+//     riskAssessment: PropTypes.object.isRequired
+// }
