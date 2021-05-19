@@ -10,6 +10,9 @@ import Vurdering32Artsegenskaper from './assessment/vurdering32Artsegenskaper'
 import Vurdering33Import from './assessment/vurdering33Import'
 import Vurdering34Spredningsveier from './assessment/vurdering34Spredningsveier'
 import Vurdering35Utbredelseshistorikk from './assessment/vurdering35Utbredelseshistorikk'
+import Vurdering40Naturtyper from './assessment/vurdering40Naturtyper'
+
+
 
 // import AssessmentSpesiesinformation from './assessmentSpesiesinformation'
 // import AssessmentNaturetypes from './assessmentNaturetypes';
@@ -108,8 +111,8 @@ class AssessmentRoot extends Component {
                 <Vurdering34Spredningsveier/>
                 : assessmentTabs.activeTab.id === 5  ?
                 <Vurdering35Utbredelseshistorikk/>
-                // // // : assessmentTabs.activeTab.id === 6  ?
-                // // // <AssessmentC/>
+                : assessmentTabs.activeTab.id === 6  ?
+                <Vurdering40Naturtyper/>
                 // // // : assessmentTabs.activeTab.id === 7  ?
                 // // // <AssessmentD/>
                 // // // : assessmentTabs.activeTab.id === 8  ?
