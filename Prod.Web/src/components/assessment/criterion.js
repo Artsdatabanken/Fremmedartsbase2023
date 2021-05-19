@@ -10,6 +10,8 @@ export default class Criterion extends React.Component {
     }
     render() {
         const {criterion, mode} = this.props;
+        console.log("keys: " + JSON.stringify(Object.keys(criterion)))
+
         const {Id, Value, UncertaintyValues, auto, codes, heading, info, uncertaintyDisabled } = criterion;
         const showHeading = !mode || mode.indexOf("noheading") < 0
         const setUncertainty = e => {
@@ -36,7 +38,7 @@ export default class Criterion extends React.Component {
             <div className="criterion">
             {showHeading ? <div><h4>{heading}</h4><p>{info}</p></div> : null}
               
-            {codes.map(kode => {  
+            {/* {codes.map(kode => {  
                 const onChangeRadio = e => {
                     // console.log("radio2 change")
                     if (!auto) {
@@ -85,7 +87,7 @@ export default class Criterion extends React.Component {
                         {...checkboxoptional} />
                         {kode.Text}
                     </div>
-                </div>})} 
+                </div>})}  */}
             </div>
         );
 	}
