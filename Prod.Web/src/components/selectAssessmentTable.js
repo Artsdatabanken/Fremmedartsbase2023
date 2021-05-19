@@ -32,7 +32,7 @@ export default class SelectAssessmentTable extends Component {
                         <tr>
                             <th
                                 style={{
-                                width: '5%'
+                                width: '1%'
                             }}/>
                             <th>{labels.SelectAssessment.scientificName}</th>
                             <th>Populærnavn</th>
