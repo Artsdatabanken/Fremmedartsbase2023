@@ -18,6 +18,23 @@ export function padNumbers(str, numlen) {
     )
 }
 
+export function *processData(data){
+	if (!data) { return; }
+	for (var i = 0; i< data.length; i++){
+		var val = data[i];
+		yield val;
+
+		if (val.children) {
+		yield *processData(val.children);
+		}
+	}
+}
+
+export function *processTree(tree){
+	yield tree
+	yield *processData(tree.children)
+}
+
 // ********************************************************************************
 // Util functions that is not general purpose, but linked to the NBIC datastructure 
 // ********************************************************************************
