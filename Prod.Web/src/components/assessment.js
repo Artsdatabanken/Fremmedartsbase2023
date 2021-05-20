@@ -13,6 +13,7 @@ import Vurdering35Utbredelseshistorikk from './assessment/vurdering35Utbredelses
 import Vurdering40Naturtyper from './assessment/vurdering40Naturtyper'
 import Vurdering51Invasjonspotensiale from './assessment/vurdering51Invasjonspotensiale'
 import Vurdering52Okologiskeffekt from './assessment/vurdering52Okologiskeffekt'
+import Vurdering53GeografiskVariasjon from './assessment/vurdering53GeografiskVariasjon'
 
 
 
@@ -119,8 +120,8 @@ class AssessmentRoot extends Component {
                 <Vurdering51Invasjonspotensiale/>
                 : assessmentTabs.activeTab.id === 8  ?
                 <Vurdering52Okologiskeffekt/>
-                // // // assessmentTabs.activeTab.id === 9  ?
-                // // // <AssessmentOverview/>
+                : assessmentTabs.activeTab.id === 9  ?
+                <Vurdering53GeografiskVariasjon/>
                 // // // : assessmentTabs.activeTab.id === 10  ?
                 // // // <AssessmentReferences/>
                 // // // : assessmentTabs.activeTab.id === 11  ?
