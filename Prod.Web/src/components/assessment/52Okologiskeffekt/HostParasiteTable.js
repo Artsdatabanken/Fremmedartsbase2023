@@ -39,32 +39,32 @@ const HostParasiteTable = observer((props) =>
         <tbody>
             {props.list.map(item =>
             <tr key={
-                item.ScientificName+
-                item.KeyStoneSpecie+
-                item.ParasiteScientificName+
-                item.ParasiteEcoEffect+
-                item.EffectLocalScale+
-                item.ParasiteNewForHost+
-                item.ParasiteIsAlien+
-                item.DiseaseConfirmedOrAssumed+
-                item.DomesticOrAbroad
+                item.scientificName+
+                item.keyStoneSpecie+
+                item.parasiteScientificName+
+                item.parasiteEcoEffect+
+                item.effectLocalScale+
+                item.parasiteNewForHost+
+                item.parasiteIsAlien+
+                item.diseaseConfirmedOrAssumed+
+                item.domesticOrAbroad
                 }>
                 <td>
                     <div className="speciesItem">
-                        <div className={"rlCategory " + item.RedListCategory}>{item.RedListCategory}</div>
-                        <div className="vernacularName">{item.VernacularName}</div>
-                        <div className="scientificName">{item.ScientificName}</div>
-                        <div className="author">{"(" + item.ScientificNameAuthor + ")"}</div>
+                        <div className={"rlCategory " + item.redListCategory}>{item.redListCategory}</div>
+                        <div className="vernacularName">{item.vernacularName}</div>
+                        <div className="scientificName">{item.scientificName}</div>
+                        <div className="author">{"(" + item.scientificNameAuthor + ")"}</div>
                     </div>
                 </td>
-                {props.showKeyStoneSpecie ? <td><Xcomp.Bool observableValue={[item, 'KeyStoneSpecie']} /></td> : null}
+                {props.showKeyStoneSpecie ? <td><Xcomp.Bool observableValue={[item, 'keyStoneSpecie']} /></td> : null}
                 <td>{item.ParasiteScientificName}</td>
-                <td><Xcomp.StringEnum observableValue={[item, 'ParasiteEcoEffect']} forceSync codes={props.koder.ParasiteEcoEffectCodes} /></td>
-                <td><Xcomp.Bool observableValue={[item, 'EffectLocalScale']} /></td>
-                <td><Xcomp.Bool observableValue={[item, 'ParasiteNewForHost']} /></td>
-                <td><Xcomp.Bool observableValue={[item, 'ParasiteIsAlien']} /></td>
-                <td><Xcomp.Bool observableValue={[item, 'DiseaseConfirmedOrAssumed']} /></td>
-                <td><Xcomp.Bool observableValue={[item, 'DomesticOrAbroad']} stringBool="True,False" /></td>
+                <td><Xcomp.StringEnum observableValue={[item, 'parasiteEcoEffect']} forceSync codes={props.koder.ParasiteEcoEffectCodes} /></td>
+                <td><Xcomp.Bool observableValue={[item, 'effectLocalScale']} /></td>
+                <td><Xcomp.Bool observableValue={[item, 'parasiteNewForHost']} /></td>
+                <td><Xcomp.Bool observableValue={[item, 'parasiteIsAlien']} /></td>
+                <td><Xcomp.Bool observableValue={[item, 'diseaseConfirmedOrAssumed']} /></td>
+                <td><Xcomp.Bool observableValue={[item, 'domesticOrAbroad']} stringBool="True,False" /></td>
 
                 <td><Xcomp.Button primary xs onClick={() => props.list.remove(item) }>{labels.General.delete}</Xcomp.Button></td>
             </tr>
@@ -72,25 +72,25 @@ const HostParasiteTable = observer((props) =>
             <tr className="newRow">
                 <td>
                     <div style={{position: 'relative'}}>
-                        {props.newItem.ScientificName.length > 0 ?
+                        {props.newItem.scientificName.length > 0 ?
                         <div 
                             className="speciesNewItem"
                             onClick={action(() => {
-                                props.newItem.TaxonId = "";
-                                props.newItem.TaxonRank = "";
-                                props.newItem.ScientificName = "";
-                                props.newItem.ScientificNameId = "";
-                                props.newItem.ScientificNameAuthor = "";
-                                props.newItem.VernacularName = "";
-                                props.newItem.RedListCategory = "";
+                                props.newItem.taxonId = "";
+                                props.newItem.taxonRank = "";
+                                props.newItem.scientificName = "";
+                                props.newItem.scientificNameId = "";
+                                props.newItem.scientificNameAuthor = "";
+                                props.newItem.vernacularName = "";
+                                props.newItem.redListCategory = "";
                                 props.newItem.taxonSearchResult.replace([]); 
                                 props.newItem.taxonSearchString = "" }) 
                             }
                         >
-                            <div className={"rlCategory " + props.newItem.RedListCategory}>{props.newItem.RedListCategory}</div>
-                            <div className="vernacularName">{props.newItem.VernacularName}</div>
-                            <div className="scientificName">{props.newItem.ScientificName}</div>
-                            <div className="author">{"(" + props.newItem.ScientificNameAuthor + ")"}</div>
+                            <div className={"rlCategory " + props.newItem.redListCategory}>{props.newItem.redListCategory}</div>
+                            <div className="vernacularName">{props.newItem.vernacularName}</div>
+                            <div className="scientificName">{props.newItem.scientificName}</div>
+                            <div className="author">{"(" + props.newItem.scientificNameAuthor + ")"}</div>
                         </div> :
                         <Xcomp.String observableValue={[props.newItem, 'taxonSearchString']} placeholder={labels.General.searchSpecies} />}
                         {props.newItem.taxonSearchResult.length > 0 ?
@@ -98,13 +98,13 @@ const HostParasiteTable = observer((props) =>
                             <ul className="panel list-unstyled">
                             {props.newItem.taxonSearchResult.map(item =>
                                 <li onClick={action(e => {
-                                    props.newItem.TaxonId = item.taxonId;
-                                    props.newItem.TaxonRank = item.taxonRank;
-                                    props.newItem.ScientificName = item.scientificName;
-                                    props.newItem.ScientificNameId = item.scientificNameId;
-                                    props.newItem.ScientificNameAuthor = item.author;
-                                    props.newItem.VernacularName = item.popularName;
-                                    props.newItem.RedListCategory = item.rlCategory;
+                                    props.newItem.taxonId = item.taxonId;
+                                    props.newItem.taxonRank = item.taxonRank;
+                                    props.newItem.scientificName = item.scientificName;
+                                    props.newItem.scientificNameId = item.scientificNameId;
+                                    props.newItem.scientificNameAuthor = item.author;
+                                    props.newItem.vernacularName = item.popularName;
+                                    props.newItem.redListCategory = item.rlCategory;
                                     props.newItem.taxonSearchResult.replace([]); 
                                     props.newItem.taxonSearchString = "" })} 
                                     key={item.scientificName}
@@ -131,15 +131,15 @@ const HostParasiteTable = observer((props) =>
                         null}
                     </div>
                 </td>
-                {props.showRedlist ? <td><Xcomp.String observableValue={[props.newItem, 'RedListCategory']} /></td> : null}
-                {props.showKeyStoneSpecie ? <td><Xcomp.Bool observableValue={[props.newItem, 'KeyStoneSpecie']} /></td> : null}
-                <td><Xcomp.String observableValue={[props.newItem, 'ParasiteScientificName']} /></td>
-                <td><Xcomp.StringEnum observableValue={[props.newItem, 'ParasiteEcoEffect']} forceSync codes={props.koder.ParasiteEcoEffectCodes} /></td>
-                <td><Xcomp.Bool observableValue={[props.newItem, 'EffectLocalScale']} /></td>
-                <td><Xcomp.Bool observableValue={[props.newItem, 'ParasiteNewForHost']} /></td>
-                <td><Xcomp.Bool observableValue={[props.newItem, 'ParasiteIsAlien']} /></td>
-                <td><Xcomp.Bool observableValue={[props.newItem, 'DiseaseConfirmedOrAssumed']} /></td>
-                <td><Xcomp.Bool observableValue={[props.newItem, 'DomesticOrAbroad']} stringBool="True,False" /></td>
+                {props.showRedlist ? <td><Xcomp.String observableValue={[props.newItem, 'redListCategory']} /></td> : null}
+                {props.showKeyStoneSpecie ? <td><Xcomp.Bool observableValue={[props.newItem, 'keyStoneSpecie']} /></td> : null}
+                <td><Xcomp.String observableValue={[props.newItem, 'parasiteScientificName']} /></td>
+                <td><Xcomp.StringEnum observableValue={[props.newItem, 'parasiteEcoEffect']} forceSync codes={props.koder.ParasiteEcoEffectCodes} /></td>
+                <td><Xcomp.Bool observableValue={[props.newItem, 'effectLocalScale']} /></td>
+                <td><Xcomp.Bool observableValue={[props.newItem, 'parasiteNewForHost']} /></td>
+                <td><Xcomp.Bool observableValue={[props.newItem, 'parasiteIsAlien']} /></td>
+                <td><Xcomp.Bool observableValue={[props.newItem, 'diseaseConfirmedOrAssumed']} /></td>
+                <td><Xcomp.Bool observableValue={[props.newItem, 'domesticOrAbroad']} stringBool="True,False" /></td>
                 <td>
                     <Xcomp.Button primary xs
                         onClick={props.addNewItem}
