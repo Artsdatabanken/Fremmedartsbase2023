@@ -10,7 +10,7 @@ import {StringEnum2} from './naturetypeModal'
 export default class NewRedlistedNaturetype extends React.Component {
     constructor(props) {
         super()
-        const {fabModel, addNaturtype} = props;
+        const {appState, addNaturtype} = props;
         extendObservable(this, {
             showModal: false,
             hasStateChange: false,
@@ -45,8 +45,8 @@ export default class NewRedlistedNaturetype extends React.Component {
                 addNaturtype(clone)
             }
             autorun(() => {
-                if (fabModel.naturtypeLabels && this.nyNaturtype && this.nyNaturtype.NiNCode) {
-                    this.naturtypeLabel = fabModel.naturtypeLabels[this.nyNaturtype.NiNCode]
+                if (appState.naturtypeLabels && this.nyNaturtype && this.nyNaturtype.NiNCode) {
+                    this.naturtypeLabel = appState.naturtypeLabels[this.nyNaturtype.NiNCode]
                 }
             })
             autorun(() => {
@@ -59,17 +59,17 @@ export default class NewRedlistedNaturetype extends React.Component {
         }
 
         render() {
-            const {fabModel, addNaturtype, labels} = this.props;
-            const koder = fabModel.koder
+            const {appState, addNaturtype, labels} = this.props;
+            const koder = appState.koder
             const ntLabels = labels.NatureTypes
 
             return <div>
-                {/* {fabModel.language === "SV"
+                {/* {appState.language === "SV"
                 ? <h3>Här kommer hotade/sällsynta naturtyper</h3> */}
                 <div>
                     <h4>{ntLabels.chooseRedlistedNT}:</h4>
-                    {fabModel.redlistedNaturetypeCodes && <RedlistedNaturetypeSelector
-                        naturtyper={fabModel.redlistedNaturetypeCodes}
+                    {appState.redlistedNaturetypeCodes && <RedlistedNaturetypeSelector
+                        naturtyper={appState.redlistedNaturetypeCodes}
                         setSelected={this.setSelectedNaturtype}/>
                     }
                 </div>

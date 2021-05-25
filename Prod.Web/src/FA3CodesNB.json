@@ -908,31 +908,23 @@
         "geographicalVariation": [
             {
                 "Id": "geographicalVariation",
-                "Value": "reproduksjonLimitedToCertainClimaticZones",
-                "Text": "Artens evne til reproduksjon/spredning er begrensa til visse klimasoner eller -seksjoner",
-                "Info": null,
-                "Children": null
+                "value": "reproduksjonLimitedToCertainClimaticZones",
+                "text": "Artens evne til reproduksjon/spredning er begrensa til visse klimasoner eller -seksjoner"
             },
             {
                 "Id": "geographicalVariation",
-                "Value": "ecologicalEffectLimitedToCertainClimaticZones",
-                "Text": "Artens økologiske effekter er begrensa til visse klimasoner eller -seksjoner",
-                "Info": null,
-                "Children": null
+                "value": "ecologicalEffectLimitedToCertainClimaticZones",
+                "text": "Artens økologiske effekter er begrensa til visse klimasoner eller -seksjoner"
             },
             {
                 "Id": "geographicalVariation",
-                "Value": "ecologicalEffectLimitedToCertainNatureTypes",
-                "Text": "Artens økologiske effekter er begrensa til bestemte naturtyper",
-                "Info": null,
-                "Children": null
+                "value": "ecologicalEffectLimitedToCertainNatureTypes",
+                "text": "Artens økologiske effekter er begrensa til bestemte naturtyper"
             },
             {
                 "Id": "geographicalVariation",
-                "Value": "ecologicalEffectLimitedToIndigenousSpecies  ",
-                "Text": "Artens økologiske effekt består utelukkende i interaksjoner med stedegne arter som har svært begrensa utbredelse",
-                "Info": null,
-                "Children": null
+                "value": "ecologicalEffectLimitedToIndigenousSpecies  ",
+                "text": "Artens økologiske effekt består utelukkende i interaksjoner med stedegne arter som har svært begrensa utbredelse"
             }
         ],
         "climateEffects": [

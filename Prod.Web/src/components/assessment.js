@@ -10,6 +10,15 @@ import Vurdering32Artsegenskaper from './assessment/vurdering32Artsegenskaper'
 import Vurdering33Import from './assessment/vurdering33Import'
 import Vurdering34Spredningsveier from './assessment/vurdering34Spredningsveier'
 import Vurdering35Utbredelseshistorikk from './assessment/vurdering35Utbredelseshistorikk'
+import Vurdering40Naturtyper from './assessment/vurdering40Naturtyper'
+import Vurdering51Invasjonspotensiale from './assessment/vurdering51Invasjonspotensiale'
+import Vurdering52Okologiskeffekt from './assessment/vurdering52Okologiskeffekt'
+import Vurdering53GeografiskVariasjon from './assessment/vurdering53GeografiskVariasjon'
+import Vurdering54Klimaeffekter from './assessment/vurdering54Klimaeffekter'
+import Vurdering55Kriteriedokumentasjon from './assessment/vurdering55Kriteriedokumentasjon'
+
+
+
 
 // import AssessmentSpesiesinformation from './assessmentSpesiesinformation'
 // import AssessmentNaturetypes from './assessmentNaturetypes';
@@ -105,22 +114,33 @@ class AssessmentRoot extends Component {
                 : assessmentTabs.activeTab.id === 3  ?
                 <Vurdering33Import/>
                 : assessmentTabs.activeTab.id === 4  ?
-                <Vurdering35Utbredelseshistorikk/>
+                <Vurdering34Spredningsveier/>
                 : assessmentTabs.activeTab.id === 5  ?
-                <h1> <b> Invasjonspotensiale / Økologisk effekt  </b></h1>
-                // // // : assessmentTabs.activeTab.id === 6  ?
-                // // // <AssessmentC/>
-                // // // : assessmentTabs.activeTab.id === 7  ?
-                // // // <AssessmentD/>
-                // // // : assessmentTabs.activeTab.id === 8  ?
-                // // // <AssessmentE/>
-                // // // assessmentTabs.activeTab.id === 9  ?
-                // // // <AssessmentOverview/>
+                <Vurdering35Utbredelseshistorikk/>
+                : assessmentTabs.activeTab.id === 6  ?
+                <Vurdering40Naturtyper/>
+                : assessmentTabs.activeTab.id === 7  ?
+                <Vurdering51Invasjonspotensiale/>
+                : assessmentTabs.activeTab.id === 8  ?
+                <Vurdering52Okologiskeffekt/>
+                : assessmentTabs.activeTab.id === 9  ?
+                <Vurdering53GeografiskVariasjon/>
+                : assessmentTabs.activeTab.id === 10  ?
+                <Vurdering54Klimaeffekter/>
+                : assessmentTabs.activeTab.id === 11  ?
+                <Vurdering55Kriteriedokumentasjon kritDocInfo={{}}/>
+
+
+                
+                // // // : assessmentTabs.activeTab.id === 10  ?
+                // // // <AssessmentReferences/>
+                // // // : assessmentTabs.activeTab.id === 10  ?
+                // // // <AssessmentReferences/>
                 // // // : assessmentTabs.activeTab.id === 10  ?
                 // // // <AssessmentReferences/>
                 // // // : assessmentTabs.activeTab.id === 11  ?
                 // // // <AssessmentComments/>
-                : assessmentTabs.activeTab.id === 11  ?
+                : assessmentTabs.activeTab.id === 15  ?
                 <AssessmentDiff/>
                 :<h1>Oooops?? artinfotab:{assessmentTabs.activeTab.id}</h1>}
                 {assessmentTabs.activeTab.id != 12 && assessmentTabs.activeTab.id != 11 && assessment && assessment.evaluationStatus !== 'finished' &&     

@@ -1,4 +1,4 @@
-import {autorunAsync} from 'mobx';
+import {autorun} from 'mobx';
 // import {loadData} from '../../stores/apiService'; 
 import config from '../../../config';
 
@@ -58,6 +58,6 @@ function loadData() { alert("loaddata Not implemented")}
                     newObj.taxonSearchResult.replace([]) 
                 }
             }
-            autorunAsync(() => {doSearch(newObj.taxonSearchString)}, 300 )
+            autorun(() => {doSearch(newObj.taxonSearchString)}, {delay: 300} )
             return null
         }

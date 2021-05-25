@@ -9,7 +9,7 @@ import NaturtypeModal from './naturetypeModal';
 export default class NewNaturetype extends React.Component {
     constructor(props) {
         super()
-        const {fabModel, addNaturtype} = props;
+        const {appState, addNaturtype} = props;
         extendObservable(this, {
             showModal: false,
             hideStateChange: false,
@@ -55,16 +55,16 @@ export default class NewNaturetype extends React.Component {
     }
 
     render() {
-        const {fabModel, addNaturtype, labels} = this.props;
-        const nts = fabModel.naturtyper
-        const lms = fabModel.livsmediumCodes
-        const doms = fabModel.dominansSkog
-        const koder = fabModel.koder
+        const {appState, addNaturtype, labels} = this.props;
+        const nts = appState.naturtyper
+        const lms = appState.livsmediumCodes
+        const doms = appState.dominansSkog
+        const koder = appState.koder
 
         // console.log("labels " + JSON.stringify(labels))
 
         return <div>
-            {/* {fabModel.language === "SV"
+            {/* {appState.language === "SV"
             ? <h3>Här kommer SVEN</h3> */}
             <div>
                 <h4>{labels.NatureTypes.chooseNT}:</h4>
@@ -72,7 +72,7 @@ export default class NewNaturetype extends React.Component {
                     ? <NaturtypeSelector naturtyper={nts} mode={"naturetype"} setSelected={this.setSelectedNaturtype}/>
                     : null}
             </div>
-            {fabModel.livsmediumEnabled
+            {appState.livsmediumEnabled
                 ? <div>
                     <br />
                     <h4>{labels.NatureTypes.chooseLM}:</h4>
@@ -90,7 +90,7 @@ export default class NewNaturetype extends React.Component {
                 naturtype={this.nyNaturtype}
                 showModal={[this, "showModal"]}
                 onOk={addNaturtype}
-                fabModel={fabModel}
+                appState={appState}
                 labels={labels}/>
             : null}
 

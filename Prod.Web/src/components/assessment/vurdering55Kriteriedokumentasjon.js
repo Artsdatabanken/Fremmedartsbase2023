@@ -1,11 +1,12 @@
 import config from '../../config';
 import React from 'react';
 import PropTypes from 'prop-types'
-import {observer} from 'mobx-react';
+import {observer, inject} from 'mobx-react';
 import {autorun, extendObservable, observable} from 'mobx';
 import * as Xcomp from './observableComponents';
 import Risikomatrise from './risikomatrise';
 
+@inject("appState")
 @observer
 export default class Vurdering55Kriteriedokumentasjon extends React.Component {
     constructor(props) {
@@ -17,63 +18,68 @@ export default class Vurdering55Kriteriedokumentasjon extends React.Component {
 
     }
 
-    setAssessmentComplete(fabModel) {
+    setAssessmentComplete(appState) {
         const r = confirm("Er du sikker på at du vil ferdigstille vurderingen?")
         if (r) {
-            fabModel.setAssessmentComplete()
+            appState.setAssessmentComplete()
         }
     }
 
-    resetAssessmentComplete(fabModel) {
+    resetAssessmentComplete(appState) {
         const r = confirm("Er du sikker på at du vil åpne for videre vurdering?")
         if (r) {
-            fabModel.updateAssessmentStatus(null)
+            appState.updateAssessmentStatus(null)
         }
     }
-                        // <p>Artens status: {fabModel.kodeLabels.AlienSpeciesCategory[kdi.alienSpeciesCategory]}</p>
+                        // <p>Artens status: {appState.kodeLabels.AlienSpeciesCategory[kdi.alienSpeciesCategory]}</p>
 
 
     render() {
-        const {riskAssessment, viewModel, fabModel, kritDocInfo} = this.props;
-        const labels = fabModel.kodeLabels.critDocumentation
+        const {appState:{assessment:{riskAssessment}}, appState, kritDocInfo} = this.props;
+        const labels = appState.codeLabels
+		const koder = appState.koder.Children
+        const critlabels = labels.critDocumentation
+
+        // const {riskAssessment, viewModel, appState, kritDocInfo} = this.props;
+        // const labels = appState.kodeLabels.critDocumentation
         const kdi = kritDocInfo
         const hasEcology = kdi.limnic || kdi.terrestrial || kdi.marine || kdi.brackishWater
-        // const ltm = fabModel.kodeLabels.limnicTerrestrialMarine
-        const ltml = val => fabModel.koder.limnicTerrestrialMarine.filter(kode => kode.Value === val)[0].Text
-        const _alienSpeciesCategoryLabel = fabModel.koder.AlienSpeciesCategory.filter(kode => kode.Value === kdi.alienSpeciesCategory  )
+        // const ltm = appState.kodeLabels.limnicTerrestrialMarine
+        const ltml = val => koder.limnicTerrestrialMarine.filter(kode => kode.Value === val)[0].Text
+        const _alienSpeciesCategoryLabel = koder.AlienSpeciesCategory.filter(kode => kode.Value === kdi.alienSpeciesCategory  )
         const alienSpeciesCategoryLabel = _alienSpeciesCategoryLabel ? _alienSpeciesCategoryLabel[0] ? _alienSpeciesCategoryLabel[0].Text : "not set" : "net set"
-        // console.warn(fabModel.VurderingsStatus)
+        // console.warn(appState.VurderingsStatus)
         return (
             <div>
                 {config.showPageHeaders
                     ? <h3>Kriteriedokumentasjon</h3>
                     : <br/>}
-                    {fabModel.skalVurderes ?
+                    {appState.skalVurderes ?
                         <div>
                             <Risikomatrise
-                                labels={labels}
+                                labels={critlabels}
                                 invasjonspotensiale={riskAssessment.invasjonspotensialeLevel.level}
                                 ecoeffect={riskAssessment.ecoeffectLevel.level}
                                 invasjonUncertaintyLevels={riskAssessment.invasjonspotensialeLevel.uncertaintyLevels}
                                 ecoeffectUncertaintyLevels={riskAssessment.ecoeffectLevel.uncertaintyLevels}/>
-                            <h3>{riskAssessment.RiskLevelText} <b> {riskAssessment.RiskLevelCode}</b></h3>
-                            <h4>{labels.decisiveCriteria}:
-                                <b> {riskAssessment.DecisiveCriteria}</b>
+                            <h3>{riskAssessment.RiskLevelText} <b> {riskAssessment.riskLevelCode}</b></h3>
+                            <h4>{critlabels.decisiveCriteria}:
+                                <b> {riskAssessment.decisiveCriteria}</b>
                             </h4>
                         </div> :
                         <div>
-                            <h3><b>{labels.notEvaluated}</b></h3>
-                            <p>{labels.notEvaluated2}</p>
-                            <p>{labels.notEvaluated3}</p>
+                            <h3><b>{critlabels.notEvaluated}</b></h3>
+                            <p>{critlabels.notEvaluated2}</p>
+                            <p>{critlabels.notEvaluated3}</p>
                             <br />
                         </div> }
                 <div>
                     <div className="well">
-                        <h4>{labels.speciesDescription}</h4>
+                        <h4>{critlabels.speciesDescription}</h4>
                         {/* <b>Slekt: {viewModel.navnabaseGenus}</b> */}
-                        <p>{labels.status}: {alienSpeciesCategoryLabel}</p>
+                        <p>{critlabels.status}: {alienSpeciesCategoryLabel}</p>
                         {hasEcology
-                            ? <p>{labels.ecology}: {
+                            ? <p>{critlabels.ecology}: {
                                 (kdi.limnic
                                 ? (`${ltml("limnic")}  `)
                                 : "") +
@@ -87,11 +93,11 @@ export default class Vurdering55Kriteriedokumentasjon extends React.Component {
                                 ? (`${ltml("brackishWater")}  `)
                                 : "")
                                 }</p>
-                            : <b className="missingInfo">{labels.missingEcology}</b>}
+                            : <b className="missingInfo">{critlabels.missingEcology}</b>}
                         <br/>
                         <br/>
                         <Xcomp.HtmlString
-                            observableValue={[riskAssessment, 'CriteriaDocumentationSpeciesStatus']}
+                            observableValue={[riskAssessment, 'criteriaDocumentationSpeciesStatus']}
                             style={{
                             width: 800,
                             height: 150,
@@ -99,9 +105,9 @@ export default class Vurdering55Kriteriedokumentasjon extends React.Component {
                         }}/>
                     </div>
                     <div className="well">
-                        <h4>{labels.distribution} {fabModel.evaluationContext.nameWithPreposition}</h4>
+                        <h4>{critlabels.distribution} {appState.evaluationContext.nameWithPreposition}</h4>
                         <Xcomp.HtmlString
-                            observableValue={[riskAssessment, 'CriteriaDocumentationDomesticSpread']}
+                            observableValue={[riskAssessment, 'criteriaDocumentationDomesticSpread']}
                             style={{
                             width: 800,
                             height: 150,
@@ -109,10 +115,10 @@ export default class Vurdering55Kriteriedokumentasjon extends React.Component {
                         }}/>
                     </div>
                     <div className="well">
-                        <h4>{labels.domesticSpread}</h4>
-                        <p>{labels.see33And34}</p>
+                        <h4>{critlabels.domesticSpread}</h4>
+                        <p>{critlabels.see33And34}</p>
                         <Xcomp.HtmlString
-                            observableValue={[riskAssessment, 'CriteriaDocumentationMigrationPathways']}
+                            observableValue={[riskAssessment, 'criteriaDocumentationMigrationPathways']}
                             style={{
                             width: 800,
                             height: 150,
@@ -126,7 +132,7 @@ export default class Vurdering55Kriteriedokumentasjon extends React.Component {
                     <div className="well">
                         <h4>Kunnskapsgrunnlag og usikkerhet</h4>
                         <Xcomp.HtmlString
-                            observableValue={[riskAssessment, 'CriteriaDocumentation5']}
+                            observableValue={[riskAssessment, 'criteriaDocumentation5']}
                             style={{
                                 width: 800,
                                 height: 150,
@@ -135,9 +141,9 @@ export default class Vurdering55Kriteriedokumentasjon extends React.Component {
                         />
                     </div>*/}
                     <div className="well">
-                        <h4>{labels.invationPotential}</h4>
+                        <h4>{critlabels.invationPotential}</h4>
                         <Xcomp.HtmlString
-                            observableValue={[riskAssessment, 'CriteriaDocumentationInvationPotential']}
+                            observableValue={[riskAssessment, 'criteriaDocumentationInvationPotential']}
                             style={{
                             width: 800,
                             height: 150,
@@ -145,9 +151,9 @@ export default class Vurdering55Kriteriedokumentasjon extends React.Component {
                         }}/>
                     </div>
                     <div className="well">
-                        <h4>{labels.ecologicalEffect}</h4>
+                        <h4>{critlabels.ecologicalEffect}</h4>
                         <Xcomp.HtmlString
-                            observableValue={[riskAssessment, 'CriteriaDocumentationEcoEffect']}
+                            observableValue={[riskAssessment, 'criteriaDocumentationEcoEffect']}
                             style={{
                             width: 800,
                             height: 150,
@@ -156,9 +162,9 @@ export default class Vurdering55Kriteriedokumentasjon extends React.Component {
                     </div>
 
                     <div className="well">
-                        <h4>{labels.conclusion}</h4>
+                        <h4>{critlabels.conclusion}</h4>
                         <Xcomp.HtmlString
-                            observableValue={[riskAssessment, 'CriteriaDocumentation']}
+                            observableValue={[riskAssessment, 'criteriaDocumentation']}
                             style={{
                             width: 800,
                             height: 150,
@@ -167,51 +173,51 @@ export default class Vurdering55Kriteriedokumentasjon extends React.Component {
                     </div>
                 </div>
                 <div>
-                {/* fabModel.ekspertgruppe != null && fabModel.ekspertgruppeRolle && (fabModel.ekspertgruppeRolle.userName === "helgesan" || fabModel.ekspertgruppeRolle.userName === "olgah" || fabModel.ekspertgruppeRolle.userName === "Lisbeth Gederaas") */}
-                    {fabModel.language === "NB" || fabModel.language === "SV"
-                    ? <Xcomp.Button href={fabModel.AssessmentReportLink}>{labels.showSummary}</Xcomp.Button>
+                {/* appState.ekspertgruppe != null && appState.ekspertgruppeRolle && (appState.ekspertgruppeRolle.userName === "helgesan" || appState.ekspertgruppeRolle.userName === "olgah" || appState.ekspertgruppeRolle.userName === "Lisbeth Gederaas") */}
+                    {appState.language === "NB" || appState.language === "SV"
+                    ? <Xcomp.Button href={appState.AssessmentReportLink}>{critlabels.showSummary}</Xcomp.Button>
                     : null}
                 </div>
                 <div>
-                    {fabModel.vurdering.VurderingsStatus !== 'finnished' 
-                    && fabModel.ekspertgruppe !== null 
-                    && fabModel.ekspertgruppeRolle 
-                    && fabModel.ekspertgruppeRolle.Leder
-                    ? <div>{labels.assessmentUnderWork}<p/><Xcomp.Button onClick={() => this.setAssessmentComplete(fabModel)}>{labels.setComplete}</Xcomp.Button></div>
+                    {appState.vurdering.VurderingsStatus !== 'finnished' 
+                    && appState.ekspertgruppe !== null 
+                    && appState.ekspertgruppeRolle 
+                    && appState.ekspertgruppeRolle.Leder
+                    ? <div>{critlabels.assessmentUnderWork}<p/><Xcomp.Button onClick={() => this.setAssessmentComplete(appState)}>{critlabels.setComplete}</Xcomp.Button></div>
                     : null}
-                    {fabModel.vurdering.VurderingsStatus === 'finnished' 
-                    && fabModel.ekspertgruppe !== null 
-                    && fabModel.ekspertgruppeRolle 
-                    && fabModel.ekspertgruppeRolle.Leder
-                    ? <div>{labels.assessmentComplete}<p/><Xcomp.Button onClick={() => this.resetAssessmentComplete(fabModel)}>{labels.resetComplete}</Xcomp.Button></div>
+                    {appState.vurdering.VurderingsStatus === 'finnished' 
+                    && appState.ekspertgruppe !== null 
+                    && appState.ekspertgruppeRolle 
+                    && appState.ekspertgruppeRolle.Leder
+                    ? <div>{critlabels.assessmentComplete}<p/><Xcomp.Button onClick={() => this.resetAssessmentComplete(appState)}>{critlabels.resetComplete}</Xcomp.Button></div>
                     : null}
                 </div>
-{/*() => fabModel.setAssessmentComplete(fabModel.vurdering)*/}
+{/*() => appState.setAssessmentComplete(appState.vurdering)*/}
                 <div>
-                    <h3>{labels.criteriaDocumentation}</h3>
+                    <h3>{critlabels.criteriaDocumentation}</h3>
                     <p
                         dangerouslySetInnerHTML={{
-                        __html: riskAssessment.CriteriaDocumentationSpeciesStatus
+                        __html: riskAssessment.criteriaDocumentationSpeciesStatus
                     }} />
                     <p
                         dangerouslySetInnerHTML={{
-                        __html: riskAssessment.CriteriaDocumentationDomesticSpread
+                        __html: riskAssessment.criteriaDocumentationDomesticSpread
                     }} />
                     <p
                         dangerouslySetInnerHTML={{
-                        __html: riskAssessment.CriteriaDocumentationMigrationPathways
+                        __html: riskAssessment.criteriaDocumentationMigrationPathways
                     }} />
                     <p
                         dangerouslySetInnerHTML={{
-                        __html: riskAssessment.CriteriaDocumentationInvationPotential
+                        __html: riskAssessment.criteriaDocumentationInvationPotential
                     }} />
                     <p
                         dangerouslySetInnerHTML={{
-                        __html: riskAssessment.CriteriaDocumentationEcoEffect
+                        __html: riskAssessment.criteriaDocumentationEcoEffect
                     }} />
                     <p
                         dangerouslySetInnerHTML={{
-                        __html: riskAssessment.CriteriaDocumentation
+                        __html: riskAssessment.criteriaDocumentation
                     }} />
                 </div>
             </div>
@@ -219,7 +225,7 @@ export default class Vurdering55Kriteriedokumentasjon extends React.Component {
     }
 }
 
-Vurdering55Kriteriedokumentasjon.propTypes = {
-    viewModel: PropTypes.object.isRequired,
-    riskAssessment: PropTypes.object.isRequired
-}
+// Vurdering55Kriteriedokumentasjon.propTypes = {
+//     viewModel: PropTypes.object.isRequired,
+//     riskAssessment: PropTypes.object.isRequired
+// }

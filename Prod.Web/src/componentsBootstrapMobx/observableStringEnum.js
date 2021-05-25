@@ -1,5 +1,5 @@
 ﻿import React from 'react';
-import {PropTypes} from 'prop-types';
+import {object, PropTypes} from 'prop-types';
 import {action, runInAction, useStrict} from 'mobx';
 import {observer, Observer} from 'mobx-react';
 import {UserContext} from './components'
@@ -33,6 +33,8 @@ const ObservableStringEnum = (props) => <Observer>{() => {
     const [obj, prop] = observableValue;
     if (obj[prop] === undefined) {
         console.error("ObservableStringEnum " + prop + " is undefined")
+        console.log("object keys: " + JSON.stringify(Object.keys(obj)) )
+        console.log("object keys: " + JSON.stringify(obj, null, '  ') )
     }
     if (codes === undefined) {
         console.error("ObservableStringEnum " + prop + " misses codes")
