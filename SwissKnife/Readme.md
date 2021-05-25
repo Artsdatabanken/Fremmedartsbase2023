@@ -5,14 +5,13 @@ Tool for batchtasks, import, export and similar stuff.
 dotnet run:
 
 ```
-Toolkit for Alien species db
-
 Usage: SwissKnife [command] [options]
 
 Options:
   -?|-h|--help  Show help information.
 
 Commands:
+  newDb         Interact with old 2018 RavenDb instance
   oldDb         Interact with old 2018 RavenDb instance
 
 Run 'SwissKnife [command] -?|-h|--help' for more information about a command.
@@ -49,4 +48,11 @@ Dumped 1 items to file KodeGrupper.json
 Dumped 1 items to file MigrationPathwayCode.json
 Dumped 1 items to file RedlistedNaturetypeGroups.json
 Dumped 3204 items to file Fa3.json
-done...```
+done...
+```
+
+Import content from 2018 Dump into new database:
+```
+dotnet run -- newdb import --connectionstring "Server=localhost;Database=FAB20233;Integrated Security=true;MultipleActiveResultSets=true" --inputfolder ./Dump
+```
+
