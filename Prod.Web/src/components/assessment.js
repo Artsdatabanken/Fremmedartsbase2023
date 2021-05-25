@@ -15,6 +15,8 @@ import Vurdering51Invasjonspotensiale from './assessment/vurdering51Invasjonspot
 import Vurdering52Okologiskeffekt from './assessment/vurdering52Okologiskeffekt'
 import Vurdering53GeografiskVariasjon from './assessment/vurdering53GeografiskVariasjon'
 import Vurdering54Klimaeffekter from './assessment/vurdering54Klimaeffekter'
+import Vurdering55Kriteriedokumentasjon from './assessment/vurdering55Kriteriedokumentasjon'
+
 
 
 
@@ -125,6 +127,11 @@ class AssessmentRoot extends Component {
                 <Vurdering53GeografiskVariasjon/>
                 : assessmentTabs.activeTab.id === 10  ?
                 <Vurdering54Klimaeffekter/>
+                : assessmentTabs.activeTab.id === 11  ?
+                <Vurdering55Kriteriedokumentasjon kritDocInfo={{}}/>
+
+
+                
                 // // // : assessmentTabs.activeTab.id === 10  ?
                 // // // <AssessmentReferences/>
                 // // // : assessmentTabs.activeTab.id === 10  ?
