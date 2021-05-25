@@ -11,12 +11,16 @@ export default class Vurdering35Utbredelseshistorikk extends React.Component {
         const {vurdering, fabModel} = this.props
         return (
             <div>
+                <ul className="nav_menu">
+                    <li><b>Utbredelse</b></li>
+                    <li><b>Naturtyper</b></li>                    
+                </ul>
                 {config.showPageHeaders
                     ? <h3>{fabModel.kodeLabels.DistributionHistory.heading}</h3>
                     : <br/>}
-                <UtbredelseshistorikkInnenlands vurdering={vurdering} fabModel={fabModel}/>
+                {/*<UtbredelseshistorikkInnenlands vurdering={vurdering} fabModel={fabModel}/>
                 <UtbredelseIDag vurdering={vurdering} fabModel={fabModel}/>
-                <Utbredelseshistorikk vurdering={vurdering} fabModel={fabModel}/>
+                <Utbredelseshistorikk vurdering={vurdering} fabModel={fabModel}/>*/}
             </div>
         )
     }

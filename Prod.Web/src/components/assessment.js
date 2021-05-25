@@ -105,9 +105,9 @@ class AssessmentRoot extends Component {
                 : assessmentTabs.activeTab.id === 3  ?
                 <Vurdering33Import/>
                 : assessmentTabs.activeTab.id === 4  ?
-                <Vurdering34Spredningsveier/>
-                : assessmentTabs.activeTab.id === 5  ?
                 <Vurdering35Utbredelseshistorikk/>
+                : assessmentTabs.activeTab.id === 5  ?
+                <h1> <b> Invasjonspotensiale / Økologisk effekt  </b></h1>
                 // // // : assessmentTabs.activeTab.id === 6  ?
                 // // // <AssessmentC/>
                 // // // : assessmentTabs.activeTab.id === 7  ?
@@ -120,7 +120,7 @@ class AssessmentRoot extends Component {
                 // // // <AssessmentReferences/>
                 // // // : assessmentTabs.activeTab.id === 11  ?
                 // // // <AssessmentComments/>
-                : assessmentTabs.activeTab.id === 15  ?
+                : assessmentTabs.activeTab.id === 11  ?
                 <AssessmentDiff/>
                 :<h1>Oooops?? artinfotab:{assessmentTabs.activeTab.id}</h1>}
                 {assessmentTabs.activeTab.id != 12 && assessmentTabs.activeTab.id != 11 && assessment && assessment.evaluationStatus !== 'finished' &&     
