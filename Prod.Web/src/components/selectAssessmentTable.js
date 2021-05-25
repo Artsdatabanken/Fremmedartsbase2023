@@ -32,17 +32,18 @@ export default class SelectAssessmentTable extends Component {
                         <tr>
                             <th
                                 style={{
-                                width: '5%'
+                                width: '1%'
                             }}/>
                             <th>{labels.SelectAssessment.scientificName}</th>
                             <th>Populærnavn</th>
-                            <th>Kategori</th>
-                            <th></th>
+                            <th>Horisontskannes</th>
+                            <th>Kategori 2018</th>
+                            <th>Kategori 2023</th>
                             {/*<th>{labels.SelectAssessment.duration}</th>*/}
                             <th>{labels.SelectAssessment.lastSaved}</th>
-                            <th></th>
+                            
                             <th>Kommentar</th>
-                            <th>Status</th>
+                            <th>Vurderingsstatus</th>
                             <th>&nbsp;</th>
                             <th>&nbsp;</th>
                             {/*<th>&nbsp;</th>

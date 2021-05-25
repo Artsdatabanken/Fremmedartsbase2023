@@ -164,6 +164,15 @@ export default class AppView extends React.Component {
                     : null}
                     </nav>
                 </div> 
+               {auth.user && 
+               <ul className="nav_menu">
+                    <li onClick={action(() => {sjekkForEndringerOgGiAdvarsel()})} disabled={!auth.isLoggedIn}><b>Velg vurdering</b></li>
+                    <li><b>Legg til ny art</b></li>
+                    <li role="presentation" onClick={action(() => appState.viewMode = "administrasjon")}><b>Administrasjon</b></li>
+                    <li role="presentation" disabled={!auth.isLoggedIn} onClick={auth.logout}><b>&nbsp; {auth.user ? "Logg ut " : ""} {(auth.user ? auth.user.profile.name : "")} </b></li>
+                    <li role="presentation"><b>Retningslinjer</b></li>
+                </ul>
+    }
                 {/* <ul className="nav_menu">
                     <div className="dropdown">
                         <button className="btn btn-secondary dropdown-toggle" type="button" style={{marginTop: '5px'}} id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

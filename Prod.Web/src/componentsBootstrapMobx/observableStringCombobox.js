@@ -30,7 +30,7 @@ export default class ObservableStringCombobox extends React.Component {
                     <button id="input-dropdown-addon" role="button" aria-haspopup="true" aria-expanded={this.expanded} type="button" onClick={() => this.expanded = !this.expanded}
                             disabled={context.readonly}
                             className="dropdown-toggle btn btn-default">
-                        <span className="caret"></span>
+                        {/*<span className="caret"></span>*/}
                     </button>
                 </span>
             </div>

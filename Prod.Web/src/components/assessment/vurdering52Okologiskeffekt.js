@@ -1,7 +1,8 @@
 ﻿import React from 'react';
 import PropTypes from 'prop-types'
-import {observer} from 'mobx-react';
-import {action, autorun, autorunAsync, extendObservable, observable, toJS} from 'mobx';
+import {observer, inject} from 'mobx-react';
+// import {action, autorun, autorunAsync, extendObservable, observable, toJS} from 'mobx';
+import { extendObservable,  toJS} from 'mobx'
 
 import config from '../../config';
 // import {loadData} from '../stores/apiService'; 
@@ -19,83 +20,84 @@ import createTaxonSearch from './52Okologiskeffekt/createTaxonSearch'
 
 const kodeTekst = (koder, verdi) => koder.filter(item => item.Value === verdi).map(item => item.Text)[0] || verdi 
 
+@inject("appState")
 @observer
 export default class Vurdering52Okologiskeffekt extends React.Component {
     constructor(props) {
         super(props)
-        const {riskAssessment, evaluationContext} = props
+        const {appState:{assessment:{riskAssessment}}, appState, evaluationContext} = this.props;
         extendObservable(this, {
             // showModal: false,
             newSSITS: {
-                ScientificName: "",
-                ScientificNameId: "",
-                ScientificNameAuthor: "",
-                VernacularName: "",
-                TaxonRank: "",
-                TaxonId: "",
+                scientificName: "",
+                scientificNameId: "",
+                scientificNameAuthor: "",
+                vernacularName: "",
+                taxonRank: "",
+                taxonId: "",
                 taxonSearchString: "",
                 taxonSearchResult: [],
-                DomesticOrAbroad : "",
-                RedListCategory: "", 
-                KeyStoneSpecie : false, 
-                EffectLocalScale : false, 
-                Effect : "Weak",
-                InteractionType : "CompetitionSpace", 
-                LongDistanceEffect : false, 
-                ConfirmedOrAssumed : false, 
+                domesticOrAbroad : "",
+                redListCategory: "", 
+                keyStoneSpecie : false, 
+                effectLocalScale : false, 
+                effect : "Weak",
+                interactionType : "CompetitionSpace", 
+                longDistanceEffect : false, 
+                confirmedOrAssumed : false, 
             }, 
             newGTD: {
-                ScientificName: "",
-                ScientificNameId: "",
-                ScientificNameAuthor: "",
-                VernacularName: "",
-                TaxonRank: "",
-                TaxonId: "",
+                scientificName: "",
+                scientificNameId: "",
+                scientificNameAuthor: "",
+                vernacularName: "",
+                taxonRank: "",
+                taxonId: "",
                 taxonSearchString: "",
                 taxonSearchResult: [],
-                DomesticOrAbroad : "",
-                RedListCategory: "", 
-                KeyStoneSpecie : false, 
-                EffectLocalScale : false, 
-                Effect : "Weak", 
-                InteractionType : "", 
-                LongDistanceEffect : false, 
-                ConfirmedOrAssumed : false, 
+                domesticOrAbroad : "",
+                redListCategory: "", 
+                keyStoneSpecie : false, 
+                effectLocalScale : false, 
+                effect : "Weak", 
+                interactionType : "", 
+                longDistanceEffect : false, 
+                confirmedOrAssumed : false, 
             }, 
             newHPI: {
-                ScientificName: "",
-                ScientificNameId: "",
-                ScientificNameAuthor: "",
-                VernacularName: "",
-                TaxonRank: "",
-                TaxonId: "",
+                scientificName: "",
+                scientificNameId: "",
+                scientificNameAuthor: "",
+                vernacularName: "",
+                taxonRank: "",
+                taxonId: "",
                 taxonSearchString: "",
                 taxonSearchResult: [],
-                DomesticOrAbroad : "",
-                RedListCategory: "", 
-                KeyStoneSpecie : false, 
-                EffectLocalScale : false, 
-                ParasiteScientificName : "",
-                ParasiteVernacularName : "",
-                ParasiteEcoEffect : "1", 
-                ParasiteNewForHost : false, 
-                ParasiteIsAlien : false, 
-                DiseaseConfirmedOrAssumed : false, 
+                domesticOrAbroad : "",
+                redListCategory: "", 
+                keyStoneSpecie : false, 
+                effectLocalScale : false, 
+                parasiteScientificName : "",
+                parasiteVernacularName : "",
+                parasiteEcoEffect : "1", 
+                parasiteNewForHost : false, 
+                parasiteIsAlien : false, 
+                diseaseConfirmedOrAssumed : false, 
             },
             newSNITS: {
-                NiNCode: riskAssessment.vurderingAllImpactedNatureTypes.length > 0
-                    ? riskAssessment.vurderingAllImpactedNatureTypes[0].NiNCode
-                    : "",
-                NiNVariation: [],
+                // // // // NiNCode: riskAssessment.vurderingAllImpactedNatureTypes.length > 0
+                // // // //     ? riskAssessment.vurderingAllImpactedNatureTypes[0].NiNCode
+                // // // //     : "",
+                niNVariation: [],
                 naturetypes: riskAssessment.vurderingAllImpactedNatureTypes,
-                RedListCategory: "", 
-                DomesticOrAbroad : "",
-                KeyStoneSpecie : false, 
-                EffectLocalScale : false, 
-                Effect : "Weak",
-                InteractionType : "CompetitionSpace", 
-                LongDistanceEffect : false, 
-                ConfirmedOrAssumed : false
+                redListCategory: "", 
+                domesticOrAbroad : "",
+                keyStoneSpecie : false, 
+                effectLocalScale : false, 
+                effect : "Weak",
+                interactionType : "CompetitionSpace", 
+                longDistanceEffect : false, 
+                confirmedOrAssumed : false
                 // taxonSearchString: "",
                 // taxonSearchResult: [], 
                 // taxonSearchWaitingForResult: false - should not be observable
@@ -103,33 +105,33 @@ export default class Vurdering52Okologiskeffekt extends React.Component {
         })
 
         this.addSSITS = () => {
-            const list = riskAssessment.SpeciesSpeciesInteractions //ThreatenedSpecies;
+            const list = riskAssessment.speciesSpeciesInteractions //ThreatenedSpecies;
             const newItem = this.newSSITS;
             const clone = toJS(newItem);
             // console.log("Clone: " + JSON.stringify(clone))
             clone.taxonSearchString = undefined
             clone.taxonSearchResult = undefined
             list.push(clone)
-            newItem.ScientificName = ""
-            newItem.ScientificNameId = ""
-            newItem.ScientificNameAuthor = ""
-            newItem.VernacularName = ""
-            newItem.TaxonRank = ""
-            newItem.TaxonId = ""
-            newItem.RedListCategory = "" 
-            newItem.KeyStoneSpecie = false
-            newItem.InteractionType = "CompetitionSpace" 
-            newItem.Effect = "Weak" 
-            newItem.EffectLocalScale = false 
-            newItem.LongDistanceEffect = false 
-            newItem.ConfirmedOrAssumed = false
-            newItem.DomesticOrAbroad = ""
+            newItem.scientificName = ""
+            newItem.scientificNameId = ""
+            newItem.scientificNameAuthor = ""
+            newItem.vernacularName = ""
+            newItem.taxonRank = ""
+            newItem.taxonId = ""
+            newItem.redListCategory = "" 
+            newItem.keyStoneSpecie = false
+            newItem.interactionType = "CompetitionSpace" 
+            newItem.effect = "Weak" 
+            newItem.effectLocalScale = false 
+            newItem.longDistanceEffect = false 
+            newItem.confirmedOrAssumed = false
+            newItem.domesticOrAbroad = ""
             newItem.taxonSearchString = ""
             newItem.taxonSearchResult.replace([])
             newItem.taxonSearchWaitingForResult = false
         }
         this.addSNITS = () => {
-            const list = riskAssessment.SpeciesNaturetypeInteractions //ThreatenedSpecies;
+            const list = riskAssessment.speciesNaturetypeInteractions //ThreatenedSpecies;
             const newItem = this.newSNITS;
             const clone = toJS(newItem);
             // console.log("Clone: " + JSON.stringify(clone))
@@ -137,50 +139,50 @@ export default class Vurdering52Okologiskeffekt extends React.Component {
             // clone.taxonSearchResult = undefined
             list.push(clone)
 //            newItem.NiNCode = "",  Dropdown inneholder fortsatt samme naturtype - beholder derfor koden
-            newItem.NiNVariation.clear(),
+            newItem.niNVariation.clear(),
 
-            newItem.RedListCategory = "" 
-            newItem.KeyStoneSpecie = false
-            newItem.InteractionType = "CompetitionSpace" 
-            newItem.Effect = "Weak" 
+            newItem.redListCategory = "" 
+            newItem.keyStoneSpecie = false
+            newItem.interactionType = "CompetitionSpace" 
+            newItem.effect = "Weak" 
             newItem.EffectLocalScale = false 
-            newItem.LongDistanceEffect = false 
-            newItem.ConfirmedOrAssumed = false
-            newItem.DomesticOrAbroad = ""
+            newItem.longDistanceEffect = false 
+            newItem.confirmedOrAssumed = false
+            newItem.domesticOrAbroad = ""
             newItem.taxonSearchString = ""
 
             // newItem.taxonSearchResult.replace([])
             // newItem.taxonSearchWaitingForResult = false
         }
         this.addGTD = () => {
-            const list = riskAssessment.GeneticTransferDocumented;
+            const list = riskAssessment.geneticTransferDocumented;
             const newItem = this.newGTD;
             const clone = toJS(newItem);
             clone.taxonSearchString = undefined
             clone.taxonSearchResult = undefined
             list.push(clone)
-            newItem.ScientificName = ""
-            newItem.ScientificNameId = ""
-            newItem.ScientificNameAuthor = ""
-            newItem.VernacularName = ""
-            newItem.TaxonRank = ""
-            newItem.TaxonId = ""
-            newItem.RedListCategory = "" 
-            newItem.KeyStoneSpecie = false
-            newItem.InteractionType = ""
-            newItem.Effect = "Weak" 
-            newItem.EffectLocalScale = false 
+            newItem.scientificName = ""
+            newItem.scientificNameId = ""
+            newItem.scientificNameAuthor = ""
+            newItem.vernacularName = ""
+            newItem.taxonRank = ""
+            newItem.taxonId = ""
+            newItem.redListCategory = "" 
+            newItem.keyStoneSpecie = false
+            newItem.interactionType = ""
+            newItem.effect = "Weak" 
+            newItem.effectLocalScale = false 
 
 
-            newItem.LongDistanceEffect = false
-            newItem.ConfirmedOrAssumed = false
-            newItem.DomesticOrAbroad = "" 
+            newItem.longDistanceEffect = false
+            newItem.confirmedOrAssumed = false
+            newItem.domesticOrAbroad = "" 
             newItem.taxonSearchString = ""
             newItem.taxonSearchResult.replace([])
             newItem.taxonSearchWaitingForResult = false
         }
         this.addHPI = () => {
-            const list = riskAssessment.HostParasiteInformations;
+            const list = riskAssessment.hostParasiteInformations;
             const newItem = this.newHPI;
             const clone = toJS(newItem);
             clone.taxonSearchString = undefined
@@ -189,23 +191,23 @@ export default class Vurdering52Okologiskeffekt extends React.Component {
 // console.log("addHPI: " + JSON.stringify(clone))
 
             list.push(clone)
-            newItem.ScientificName = ""
-            newItem.ScientificNameId = ""
-            newItem.ScientificNameAuthor = ""
-            newItem.VernacularName = ""
-            newItem.TaxonRank = ""
-            newItem.TaxonId = ""
-            newItem.RedListCategory = "" 
-            newItem.KeyStoneSpecie = false
-            newItem.ParasiteScientificName = "" 
-            newItem.ParasiteVernacularName = "" 
-            newItem.ParasiteEcoEffect = "1"
-            newItem.EffectLocalScale = false 
-            newItem.ParasiteNewForHost = false 
-            newItem.ParasiteIsAlien = false 
-            newItem.NewHost = false
-            newItem.DiseaseConfirmedOrAssumed = false 
-            newItem.DomesticOrAbroad = "" 
+            newItem.scientificName = ""
+            newItem.scientificNameId = ""
+            newItem.scientificNameAuthor = ""
+            newItem.vernacularName = ""
+            newItem.taxonRank = ""
+            newItem.taxonId = ""
+            newItem.redListCategory = "" 
+            newItem.keyStoneSpecie = false
+            newItem.parasiteScientificName = "" 
+            newItem.parasiteVernacularName = "" 
+            newItem.parasiteEcoEffect = "1"
+            newItem.effectLocalScale = false 
+            newItem.parasiteNewForHost = false 
+            newItem.parasiteIsAlien = false 
+            newItem.newHost = false
+            newItem.diseaseConfirmedOrAssumed = false 
+            newItem.domesticOrAbroad = "" 
             newItem.taxonSearchString = ""
             newItem.taxonSearchResult.replace([])
             newItem.taxonSearchWaitingForResult = false
@@ -221,8 +223,11 @@ export default class Vurdering52Okologiskeffekt extends React.Component {
     }
 
     render() {
-        const {riskAssessment, viewModel, fabModel, evaluationContext} = this.props;
-        const labels = fabModel.kodeLabels
+        const {appState:{assessment:{riskAssessment}}, appState, evaluationContext} = this.props;
+        // const {riskAssessment, viewModel, fabModel, evaluationContext} = this.props;
+        // const labels = fabModel.kodeLabels
+        const labels = appState.codeLabels
+        const koder = appState.koder.Children
         const nbsp = "\u00a0"
         const crit52D = getCriterion(riskAssessment, 1 , "D")
         const crit52E = getCriterion(riskAssessment, 1 , "E")
@@ -236,11 +241,11 @@ export default class Vurdering52Okologiskeffekt extends React.Component {
                 {config.showPageHeaders ? <h3>Økologisk effekt</h3> : <br />}
                 <fieldset className="well">
                     <h4>{labels.DEcrit.heading}</h4>
-                    <SpeciesSpeciesTable list={riskAssessment.SpeciesSpeciesInteractions} newItem={this.newSSITS} addNewItem={this.addSSITS} koder={fabModel.koder} labels={labels} showRedlist showKeyStoneSpecie showEffect showInteractionType showConfirmedOrAssumed/>
-                    <Xcomp.HtmlString observableValue={[riskAssessment, 'SpeciesSpeciesInteractionsSupplementaryInformation']} label="Utfyllende informasjon" />
+                    <SpeciesSpeciesTable list={riskAssessment.speciesSpeciesInteractions} newItem={this.newSSITS} addNewItem={this.addSSITS} koder={koder} labels={labels} showRedlist showKeyStoneSpecie showEffect showInteractionType showConfirmedOrAssumed/>
+                    <Xcomp.HtmlString observableValue={[riskAssessment, 'speciesSpeciesInteractionsSupplementaryInformation']} label="Utfyllende informasjon" />
                     <hr />
                     <br />
-                    <SpeciesNaturetypeTable list={riskAssessment.SpeciesNaturetypeInteractions} newItem={this.newSNITS} addNewItem={this.addSNITS}  koder={fabModel.koder} labels={labels} naturtypeLabels={fabModel.naturtypeLabels} />
+                    <SpeciesNaturetypeTable list={riskAssessment.speciesNaturetypeInteractions} newItem={this.newSNITS} addNewItem={this.addSNITS}  koder={koder} labels={labels} naturtypeLabels={appState.naturtypeLabels} />
 
                     <hr/>
                     <Criterion criterion={crit52D} />
@@ -252,16 +257,16 @@ export default class Vurdering52Okologiskeffekt extends React.Component {
                 </fieldset>
                 <fieldset className="well">
                     <Criterion criterion={crit52G} />
-                </fieldset>
+                </fieldset> 
                 <fieldset className="well">
                     <h4>{crit52H.heading}</h4>
                     <p>{crit52H.info}</p>
-                    <SpeciesSpeciesTable list={riskAssessment.GeneticTransferDocumented} newItem={this.newGTD} addNewItem={this.addGTD} koder={fabModel.koder} labels={labels} showKeyStoneSpecie showConfirmedOrAssumed />
+                    <SpeciesSpeciesTable list={riskAssessment.geneticTransferDocumented} newItem={this.newGTD} addNewItem={this.addGTD} koder={koder} labels={labels} showKeyStoneSpecie showConfirmedOrAssumed />
                     <hr/>
                     {crit52H.majorUncertainty ?
                     <div>
                         <span>Beskrivelse</span>
-                        <Xcomp.HtmlString observableValue={[riskAssessment, 'GeneticTransferDomesticDescription']} />
+                        <Xcomp.HtmlString observableValue={[riskAssessment, 'geneticTransferDomesticDescription']} />
                     </div> : 
                     null}
                     <Criterion criterion={crit52H} mode="noheading"/>
@@ -270,26 +275,24 @@ export default class Vurdering52Okologiskeffekt extends React.Component {
                 <fieldset className="well">
                     <h4>{crit52I.heading} </h4>
                     <p>{crit52I.info}</p>
-                    <HostParasiteTable list={riskAssessment.HostParasiteInformations} newItem={this.newHPI} addNewItem={this.addHPI} koder={fabModel.koder} labels={labels} showKeyStoneSpecie />
+                    <HostParasiteTable list={riskAssessment.hostParasiteInformations} newItem={this.newHPI} addNewItem={this.addHPI} koder={koder} labels={labels} showKeyStoneSpecie />
                     <hr/>
                     {crit52I.majorUncertainty ?
                     <div>
                         <span>Beskrivelse</span>
-                        <Xcomp.HtmlString observableValue={[riskAssessment, 'VectorBiologicalDiseaseSpreadingDomesticDescription']} />
+                        <Xcomp.HtmlString observableValue={[riskAssessment, 'vectorBiologicalDiseaseSpreadingDomesticDescription']} />
                     </div> : 
                     null }
                     <Criterion criterion={crit52I} mode="noheading"/>
                 </fieldset>
             </div>
         );
+    }
+}
 
-
-                }
-                }
-
-                Vurdering52Okologiskeffekt.propTypes = {
-                    viewModel: PropTypes.object.isRequired,
-                    riskAssessment: PropTypes.object.isRequired
-                }
+                // Vurdering52Okologiskeffekt.propTypes = {
+                //     viewModel: PropTypes.object.isRequired,
+                //     riskAssessment: PropTypes.object.isRequired
+                // }
 
 

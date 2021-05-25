@@ -94,6 +94,7 @@ class ViewModel {
             artskartModel: {},
             koder: null,
             påvirkningsfaktorer: [],
+            spredningsveier: null,
             selectedPåvirkningsfaktor: {
                 id: null,
                 forkortelse: null,
@@ -105,6 +106,9 @@ class ViewModel {
                 comment: null
             },
             codeLabels: null,
+
+            naturtypeLabels: {},
+
             expertgroups: null, // [],
             expertgroup: null,
             roleincurrentgroup: null,
@@ -158,6 +162,8 @@ class ViewModel {
         // console.log("clabels:", clabels)
 
 
+        console.log("labels keys: " + JSON.stringify(Object.keys(clabels)))
+        console.log("codes keys: " + JSON.stringify(Object.keys(codes.Children)))
         // console.log("codes json: " + JSON.stringify(codes))
         // console.log("----------------------------------------------+++")
         // console.log(JSON.stringify(clabels))
@@ -165,6 +171,11 @@ class ViewModel {
         //
         this.koder = codes
 
+        //-----------------------------------------------------
+
+        const mp = this.koder.Children.migrationPathways[0]
+        this.spredningsveier = this.koder2migrationPathways(mp)
+        //-----------------------------------------------------
 
 
         this.theUserContext = createContext(this.userContext)   
@@ -387,18 +398,35 @@ class ViewModel {
             assessmentTabs: {
                 activeTab: {id: 1},
                 tabList: [
-                    new tabItem({id: 1, label:"Artsinformasjon", enabled: this.harVurdering, url: "artsinformasjon" }),
-                    new tabItem({id: 2, label:"Naturtyper", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "naturtyper" }),
-                    new tabItem({id: 3, label:"Påvirkning", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "pavirkning" }),
-                    new tabItem({id: 4, label:"A", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "a" }),
-                    new tabItem({id: 5, label:"B", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "b" }),
-                    new tabItem({id: 6, label:"C", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "c" }),
-                    new tabItem({id: 7, label:"D", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "d" }),
-                    new tabItem({id: 8, label:"E", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "e" }),
-                    new tabItem({id: 9, label:"Oppsummering", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "oppsummering" }),
-                    new tabItem({id: 10, label:"Referanser", enabled:this.harVurdering, url: "referanser"}),
-                    new tabItem({id: 11, label:"Kommentarer", enabled:this.harVurdering, url: "Kommentarer"}),
-                    new tabItem({id: 12, label:"JSON", enabled:this.harVurdering, url: "diff"})
+                    new tabItem({id: 1, label:"Artens status 31", enabled: this.harVurdering, url: "artensstatus" }),
+                    new tabItem({id: 2, label:"Artsinformasjon 32", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "artsegenskaper" }),
+                    new tabItem({id: 3, label:"Import 33", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "import" }),
+                    new tabItem({id: 4, label:"Spredningsveier 34", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "spredningsveier" }),
+                    new tabItem({id: 5, label:"Utbredelseshistorikk 35", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "utbredelseshistorikk" }),
+                    new tabItem({id: 6, label:"Naturtyper 40", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "naturtyper" }),
+                    new tabItem({id: 7, label:"Invasjonspotensiale 51", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "invasjonspotensiale" }),
+                    new tabItem({id: 8, label:"Økologisk effekt 52", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "ekologiskeffekt" }),
+                    new tabItem({id: 9, label:"Geografisk variasjon 53", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "geografiskvariasjon" }),
+                    new tabItem({id: 10, label:"Klimaeffekter 54", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "klimaeffekter" }),
+                    new tabItem({id: 11, label:"Kriteriedokumentasjon 55", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "kriteriedokumentasjon" }),
+                    // new tabItem({id: 9, label:"Oppsummering", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "oppsummering" }),
+                    new tabItem({id: 12, label:"Oppsummering", enabled:this.harVurdering, url: "oppsummmering"}),
+                    new tabItem({id: 13, label:"Referanser", enabled:this.harVurdering, url: "referanser"}),
+                    new tabItem({id: 14, label:"Kommentar på vurdering", enabled:this.harVurdering, url: "kommentar"}),
+                    // new tabItem({id: 11, label:"Kommentarer", enabled:this.harVurdering, url: "Kommentarer"}),
+                    new tabItem({id: 15, label:"JSON", enabled:this.harVurdering, url: "diff"})
+                    // new tabItem({id: 1, label:"Artsinformasjon", enabled: this.harVurdering, url: "artsinformasjon" }),
+                    // new tabItem({id: 2, label:"Naturtyper", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "naturtyper" }),
+                    // new tabItem({id: 3, label:"Påvirkning", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "pavirkning" }),
+                    // new tabItem({id: 4, label:"A", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "a" }),
+                    // new tabItem({id: 5, label:"B", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "b" }),
+                    // new tabItem({id: 6, label:"C", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "c" }),
+                    // new tabItem({id: 7, label:"D", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "d" }),
+                    // new tabItem({id: 8, label:"E", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "e" }),
+                    // new tabItem({id: 9, label:"Oppsummering", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "oppsummering" }),
+                    // new tabItem({id: 10, label:"Referanser", enabled:this.harVurdering, url: "referanser"}),
+                    // new tabItem({id: 11, label:"Kommentarer", enabled:this.harVurdering, url: "Kommentarer"}),
+                    // new tabItem({id: 12, label:"JSON", enabled:this.harVurdering, url: "diff"})
                 ],
                 setActiveTab: (tab) => {
                     action(() => {
@@ -1100,6 +1128,27 @@ class ViewModel {
             {console.error('Error:', error)}
           );
     }
+
+
+    koder2migrationPathways(mp) {
+        const r = {}
+        r.name = mp.Text
+        // console.log(r.name)
+        r.value = mp.Value
+        if(mp.Children) {
+            r.children = []
+            const mpckey = Object.keys(mp.Children)[0]
+            const mpc = mp.Children[mpckey]
+            for ( var i = 0; i < mpc.length; ++i )
+            {
+                r.children.push(this.koder2migrationPathways(mpc[i]));
+            }
+        }
+        return r
+    }
+
+
+
     
 }
 export default new ViewModel()

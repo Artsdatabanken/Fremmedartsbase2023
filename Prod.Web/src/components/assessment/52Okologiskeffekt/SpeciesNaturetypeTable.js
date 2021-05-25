@@ -47,40 +47,42 @@ const SpeciesNaturetypeTable = observer((props) =>
                         <div className="naturtypeName">{props.naturtypeLabels[item.NiNCode]}</div>
                     </div>
                 </td>
-                <td><Xcomp.Bool observableValue={[item, 'KeyStoneSpecie']} /></td>
-                <td><Xcomp.StringEnum observableValue={[item, 'Effect']} forceSync codes={props.koder.speciesSpeciesEffectType} /></td>
-                <td><Xcomp.Bool observableValue={[item, 'EffectLocalScale']} /></td>
-                <td><Xcomp.StringEnum observableValue={[item, 'InteractionType']} forceSync codes={props.koder.speciesSpeciesInteractionType} /></td>
-                <td><Xcomp.Bool observableValue={[item, 'LongDistanceEffect']} /></td>
-                <td><Xcomp.Bool observableValue={[item, 'ConfirmedOrAssumed']} /></td>
-                <td><Xcomp.Bool observableValue={[item, 'DomesticOrAbroad']} stringBool="True,False" /></td>
+                <td><Xcomp.Bool observableValue={[item, 'keyStoneSpecie']} /></td>
+                <td><Xcomp.StringEnum observableValue={[item, 'effect']} forceSync codes={props.koder.speciesSpeciesEffectType} /></td>
+                <td><Xcomp.Bool observableValue={[item, 'effectLocalScale']} /></td>
+                <td><Xcomp.StringEnum observableValue={[item, 'interactionType']} forceSync codes={props.koder.speciesSpeciesInteractionType} /></td>
+                <td><Xcomp.Bool observableValue={[item, 'longDistanceEffect']} /></td>
+                <td><Xcomp.Bool observableValue={[item, 'confirmedOrAssumed']} /></td>
+                <td><Xcomp.Bool observableValue={[item, 'domesticOrAbroad']} stringBool="True,False" /></td>
                 <td><Xcomp.Button primary xs onClick={() => props.list.remove(item) }>{labels.General.delete}</Xcomp.Button></td>
             </tr>
             )}
             <tr className="newRow">
                 <td>
-                    <select className="form-control" placeholder="velg naturtype" value={props.newItem.NiNCode}
-                            onChange={action(e => props.newItem.NiNCode = e.target.value)}
+                    <select className="form-control" placeholder="velg naturtype" value={props.newItem.niNCode}
+                            onChange={action(e => props.newItem.niNCode = e.target.value)}
                             >
-                        { props.newItem.naturetypes.map(nt => {
-                            const ninlabel = props.naturtypeLabels ? props.naturtypeLabels[nt.NiNCode] : ""
-                            const label = nt.NiNCode + " " + ninlabel
-                            return <option value={nt.NiNCode} key={nt.NiNCode}>{label}</option>})}
+
+                        {/*//todo: uncomment this when we have naturetypeLabels
+                         { props.newItem.naturetypes.map(nt => {
+                            const ninlabel = props.naturtypeLabels ? props.naturtypeLabels[nt.niNCode] : ""
+                            const label = nt.niNCode + " " + ninlabel
+                            return <option value={nt.niNCode} key={nt.niNCode}>{label}</option>})} */}
                     </select>
 
                 </td>
-                <td><Xcomp.Bool observableValue={[props.newItem, 'KeyStoneSpecie']} /></td>
-                <td><Xcomp.StringEnum observableValue={[props.newItem, 'Effect']} forceSync codes={props.koder.speciesSpeciesEffectType} /></td>
-                <td><Xcomp.Bool observableValue={[props.newItem, 'EffectLocalScale']} /></td>
-                <td><Xcomp.StringEnum observableValue={[props.newItem, 'InteractionType']} forceSync codes={props.koder.speciesSpeciesInteractionType} /></td>
-                <td><Xcomp.Bool observableValue={[props.newItem, 'LongDistanceEffect']} /></td>
-                <td><Xcomp.Bool observableValue={[props.newItem, 'ConfirmedOrAssumed']} /></td>
-                <td><Xcomp.Bool observableValue={[props.newItem, 'DomesticOrAbroad']} stringBool="True,False" /></td>
+                <td><Xcomp.Bool observableValue={[props.newItem, 'keyStoneSpecie']} /></td>
+                <td><Xcomp.StringEnum observableValue={[props.newItem, 'effect']} forceSync codes={props.koder.speciesSpeciesEffectType} /></td>
+                <td><Xcomp.Bool observableValue={[props.newItem, 'effectLocalScale']} /></td>
+                <td><Xcomp.StringEnum observableValue={[props.newItem, 'interactionType']} forceSync codes={props.koder.speciesSpeciesInteractionType} /></td>
+                <td><Xcomp.Bool observableValue={[props.newItem, 'longDistanceEffect']} /></td>
+                <td><Xcomp.Bool observableValue={[props.newItem, 'confirmedOrAssumed']} /></td>
+                <td><Xcomp.Bool observableValue={[props.newItem, 'domesticOrAbroad']} stringBool="True,False" /></td>
                 <td>
                     <div>
                         <Xcomp.Button primary xs 
                             onClick={props.addNewItem}
-                            disabled={!props.newItem.NiNCode}
+                            disabled={!props.newItem.niNCode}
                         >{labels.General.add}</Xcomp.Button>
                     </div>
                 </td>

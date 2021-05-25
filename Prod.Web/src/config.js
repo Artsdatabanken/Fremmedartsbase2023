@@ -2,13 +2,13 @@ function apiUrl (anchor) {
     //const relPath = '/lr/' + GIT_BRANCH + '_api/'
     switch (anchor) {
       case '#lokalapi':
-        return 'http://localhost:25807'
+        return 'http://localhost:25808'
       case '#remoteapi':
           return 'https://rl2021api.test.artsdatabanken.no'
       default:
         //return relPath   // This does not currently work because api is not relative to ("under") app 
         if (window.location.href.indexOf("test.") > 1) {return 'https://rl2021api.test.artsdatabanken.no'}
-        return  process.env.NODE_ENV === 'development' ? 'http://localhost:25807' : 'https://rl2021api.artsdatabanken.no'
+        return  process.env.NODE_ENV === 'development' ? 'http://localhost:25808' : 'https://rl2021api.artsdatabanken.no'
     }
   }
   function referenceApiUrl (anchor) {

@@ -1,18 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {observer} from 'mobx-react';
+import {observer, inject} from 'mobx-react';
 import * as Xcomp from '../observableComponents';
 
+@inject("appState")
 @observer
 export default class ArrivedCountryFrom extends React.Component {
     constructor(props) {
         super(props)
     }
     render() {
-        const {vurdering, fabModel} = this.props;
-        const values = vurdering.ArrivedCountryFrom
+        const {appState:{assessment}, appState} = this.props;
+        const vurdering = assessment
+        const labels = appState.codeLabels
+        const koder = appState.koder.Children
+
+
+        // const {vurdering, fabModel} = this.props;
+        const values = vurdering.arrivedCountryFrom
         // const labels = config.labels
-        const codes = fabModel.koder.ArrivedCountryFrom
+        const codes = koder.ArrivedCountryFrom
         const originCode = codes.find(code => code.Value === "origin")
         const otherCode = codes.find(code => code.Value === "other")
         const otherRegionCode = codes.find(code => code.Value === "otherRegion")

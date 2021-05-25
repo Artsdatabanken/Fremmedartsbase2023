@@ -10,8 +10,6 @@ import {action, computed, extendObservable, observable} from 'mobx';
 import NewMigrationPathwayButton from './NewMigrationPathwayButton'
 
 
-
-
 @observer
 export default class NewMigrationPathwayGroup extends React.Component {
     @observable expanded = false;

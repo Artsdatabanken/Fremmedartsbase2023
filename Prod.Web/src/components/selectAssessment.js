@@ -5,8 +5,11 @@ import * as Xcomp from './observableComponents';
 import HelpIcon from '@material-ui/icons/Help';
 import SelectAssessmentTable from './selectAssessmentTable';
 import SelectAssessmentStatistics from './selectAssessmentStatistics';
-
+import auth from './authService';
 import config from '../config';
+import catimg from 'url:../cat.gif';
+// const catimg = require('../cat.gif') 
+
 
 @inject('appState')
 @observer
@@ -60,7 +63,7 @@ export default class SelectAssessment extends Component {
         const {appState, appState:{assessment, koder}} = this.props
         // const {appState, appState:{assessment, koder}} = this.props
         const rolle = appState.roleincurrentgroup // todo: implement real     
-        document.title = "Velg art - Rødlista"
+        document.title = "Velg art - Fremmede arter"
 
      /*   let checkList = document.getElementById('list1');
         if (checkList) {checkList.getElementsByClassName('anchor')[0].onclick = function (evt) {
@@ -98,7 +101,7 @@ export default class SelectAssessment extends Component {
                     <tr style={{backgroundColor: '#f9f9f9'}}>
                         <td style={{textAlign: 'center', color: 'red'}}><b>Dette er en testversjon. Driftversjonen finner du <a href="https://rl2021.artsdatabanken.no/">her</a>.</b></td>
                     </tr>
-                </table>}
+                </table>}                
                 <h4>Velg artsgruppe</h4>
                 <div className="selectAssessment">                   
                     <Xcomp.StringEnum 
@@ -122,13 +125,23 @@ export default class SelectAssessment extends Component {
                 <div className="selectFilter" style={{display: 'flex'}}>
                     <div>
                     <div className="filters"> 
-                        <span>Vurderinger med kommentar </span>
+                        {/*<span>Vurderinger med kommentar </span>
                         <div className="comment"><Xcomp.Bool observableValue={[appState, "withNewComments"]} label={"Nye kommentarer (på dine) (" + appState.antallNye + ")"}/></div>
                         <div className="comment"><Xcomp.Bool observableValue={[appState, "withComments"]} label={"Alle vurderinger med kommentar (" + appState.antallVurderinger + ")"}/></div>
                         <div className="comment" style={{marginLeft: '20px'}}>
                                 <Xcomp.Bool observableValue={[appState, "kunUbehandlede"]} label={"Kun ubehandlede kommentarer (" + appState.antallUbehandlede + ")"} /></div>
                         <div className="comment"><Xcomp.Bool observableValue={[appState, "withAutomaticNameChanges"]} label={"Automatisk oppdatert taksonomiendring (" + appState.antallNavnEndret + ")"}/></div>
-                        <div className="comment"><Xcomp.Bool observableValue={[appState, "withPotentialTaxonChanges"]} label={"Taksonomiendring trenger avklaring (" + appState.antallTaxonEndring + ")"}/></div> 
+                        <div className="comment"><Xcomp.Bool observableValue={[appState, "withPotentialTaxonChanges"]} label={"Taksonomiendring trenger avklaring (" + appState.antallTaxonEndring + ")"}/></div> */}
+
+                        <div className="comment" style={{marginLeft: '10px'}}>
+                            <Xcomp.Bool observableValue={[appState, "fl2018"]} label={"Filtrer på status, kategori og kriterier fra Fremmedartslista 2018"} />
+                        </div>
+                        <div className="comment" style={{marginLeft: '10px'}}>
+                            <Xcomp.Bool observableValue={[appState, "fl2023Status"]} label={"Filtrer på status, kategori og kriterier fra nåværende vurdering"} />
+                        </div>
+                        <div className="comment" style={{marginLeft: '10px'}}>
+                            <Xcomp.Bool observableValue={[appState, "fl2023Comments"]} label={"Filtrer på påbegynt/ferdigstilt, kommentarer og vurderingsansvarlig i nåværende risikovurdering"} />
+                        </div>
                     </div>
                         
                         <div className="comment" style={{marginTop: '170px', marginLeft: '10px'}}>
@@ -156,6 +169,7 @@ export default class SelectAssessment extends Component {
 
                         </div>                       
                     </div> */}
+                    <img src={catimg} style={{width: '280px'}}></img>
                     <input type="button" className="btn btn-primary" style={{marginTop: '100px'}} value="Last ned fil" onClick={() => window.open(config.apiUrl + '/api/ExpertGroupAssessments/export/' + appState.expertgroup)}></input>
                     </div>
                 </div>

@@ -6,6 +6,17 @@ import * as Xcomp from './observableComponents'
 import Tabs from './tabs'
 // import Vurdering from './assessment/vurdering'
 import Vurdering31ArtensStatus from './assessment/vurdering31ArtensStatus'
+import Vurdering32Artsegenskaper from './assessment/vurdering32Artsegenskaper'
+import Vurdering33Import from './assessment/vurdering33Import'
+import Vurdering34Spredningsveier from './assessment/vurdering34Spredningsveier'
+import Vurdering35Utbredelseshistorikk from './assessment/vurdering35Utbredelseshistorikk'
+import Vurdering40Naturtyper from './assessment/vurdering40Naturtyper'
+import Vurdering51Invasjonspotensiale from './assessment/vurdering51Invasjonspotensiale'
+import Vurdering52Okologiskeffekt from './assessment/vurdering52Okologiskeffekt'
+import Vurdering53GeografiskVariasjon from './assessment/vurdering53GeografiskVariasjon'
+import Vurdering54Klimaeffekter from './assessment/vurdering54Klimaeffekter'
+
+
 
 // import AssessmentSpesiesinformation from './assessmentSpesiesinformation'
 // import AssessmentNaturetypes from './assessmentNaturetypes';
@@ -42,6 +53,20 @@ class AssessmentRoot extends Component {
         const isFinished = assessment.evaluationStatus && assessment.evaluationStatus === "finished"
         const canEdit = !isFinished && appState.roleincurrentgroup.skriver && assessment.lockedForEditByUser == null    
         
+        function sjekkForEndringerOgGiAdvarsel(){
+            // var isLockedByMe = appState.assessment && appState.assessment.lockedForEditByUser === auth.user.name
+            var isdirty = appState.isDirty
+            var skriver = !!appState.roleincurrentgroup && appState.roleincurrentgroup.skriver
+            var ok = true;
+            // if (isLockedByMe && isdirty && skriver) {
+            if (isdirty && skriver) {
+                ok = window.confirm("Det er endringer på vurderingen - ønsker du virkelig å gå bort fra den uten å lagre?")
+            }
+            if (ok) {
+                appState.viewMode = "choosespecie"
+                appState.updateCurrentAssessment(null)
+            }
+    }
                 
         // console.log(rolle)
         // console.log(rolle.skriver)
@@ -55,7 +80,7 @@ class AssessmentRoot extends Component {
         window.scrollTo(0,0)
         return (
             <div>
-                {assessment.popularName ? 
+                {/*{assessment.popularName ? 
                     <h1>{assessment.vurdertVitenskapeligNavn + ", " + assessment.popularName}&nbsp;{canEdit && 
                         <Xcomp.Button alwaysEnabled='true' onClick={(e) => this.lockAssessment(e, assessment, appState)}>Start vurdering</Xcomp.Button>
                         }{auth.isAdmin && <button className="btn" title="Flytt vurderingen" aria-label="Flytt vurderingen" onClick= {action(() => {this.move === false ? this.move = true : this.move =false})}><ArrowForwardIcon /></button>}
@@ -66,7 +91,7 @@ class AssessmentRoot extends Component {
                         }{auth.isAdmin && <button className="btn" title="Flytt vurderingen" aria-label="Flytt vurderingen" onClick= {action(() => {this.move === false ? this.move = true : this.move =false})}><ArrowForwardIcon /></button>}
                 
                     </h1>
-                }
+                }*/}
                 {/* auth.isAdmin  */}
                    {this.move  &&  <div className="form_category">
                         <AssessmentMove appState={appState} checkForExistingAssessment={appState.checkForExistingAssessment} onMoveAssessment={e => {appState.moveAssessment(e)}}/>            
@@ -81,30 +106,34 @@ class AssessmentRoot extends Component {
                 <Tabs tabData={assessmentTabs}/> 
                 {
                 assessmentTabs.activeTab.id === 1  ?
-
-                // // // assessmentTabs.activeTab.id === 1  ?
                 <Vurdering31ArtensStatus />
-                // // // : assessmentTabs.activeTab.id === 2  ?
-                // // // <AssessmentNaturetypes/>
-                // // // : assessmentTabs.activeTab.id === 3  ?
-                // // // <AssessmentImpact/>
-                // // // : assessmentTabs.activeTab.id === 4  ?
-                // // // <AssessmentA/>
-                // // // : assessmentTabs.activeTab.id === 5  ?
-                // // // <AssessmentB/>
-                // // // : assessmentTabs.activeTab.id === 6  ?
-                // // // <AssessmentC/>
-                // // // : assessmentTabs.activeTab.id === 7  ?
-                // // // <AssessmentD/>
-                // // // : assessmentTabs.activeTab.id === 8  ?
-                // // // <AssessmentE/>
-                // // // assessmentTabs.activeTab.id === 9  ?
-                // // // <AssessmentOverview/>
+                : assessmentTabs.activeTab.id === 2  ?
+                <Vurdering32Artsegenskaper />
+                : assessmentTabs.activeTab.id === 3  ?
+                <Vurdering33Import/>
+                : assessmentTabs.activeTab.id === 4  ?
+                <Vurdering34Spredningsveier/>
+                : assessmentTabs.activeTab.id === 5  ?
+                <Vurdering35Utbredelseshistorikk/>
+                : assessmentTabs.activeTab.id === 6  ?
+                <Vurdering40Naturtyper/>
+                : assessmentTabs.activeTab.id === 7  ?
+                <Vurdering51Invasjonspotensiale/>
+                : assessmentTabs.activeTab.id === 8  ?
+                <Vurdering52Okologiskeffekt/>
+                : assessmentTabs.activeTab.id === 9  ?
+                <Vurdering53GeografiskVariasjon/>
+                : assessmentTabs.activeTab.id === 10  ?
+                <Vurdering54Klimaeffekter/>
+                // // // : assessmentTabs.activeTab.id === 10  ?
+                // // // <AssessmentReferences/>
+                // // // : assessmentTabs.activeTab.id === 10  ?
+                // // // <AssessmentReferences/>
                 // // // : assessmentTabs.activeTab.id === 10  ?
                 // // // <AssessmentReferences/>
                 // // // : assessmentTabs.activeTab.id === 11  ?
                 // // // <AssessmentComments/>
-                : assessmentTabs.activeTab.id === 12  ?
+                : assessmentTabs.activeTab.id === 15  ?
                 <AssessmentDiff/>
                 :<h1>Oooops?? artinfotab:{assessmentTabs.activeTab.id}</h1>}
                 {assessmentTabs.activeTab.id != 12 && assessmentTabs.activeTab.id != 11 && assessment && assessment.evaluationStatus !== 'finished' &&     

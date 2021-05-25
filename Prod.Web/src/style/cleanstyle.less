@@ -208,8 +208,9 @@ h2, h3, h4{
 }
 
 .nav_menu li {
-  padding:0px;
+  //padding:0px;
   text-align:center;
+  margin: 2px;
   padding:@paddingInsideObjects;
   cursor: pointer;
   font-weight: 500;
@@ -222,10 +223,10 @@ h2, h3, h4{
 .nav_menu  > li.active 
 {
   //color: @colorRLOrangePrimary;
-  color: @colorRLOrangeLogo;
+  color: #fff;
   background-color: transparent;
-  border-bottom: 3px solid @colorRLOrangeLogo;
-  background-color: #bae2dd;
+  //border-bottom: 3px solid @colorRLOrangeLogo;
+  background-color: #4c4a48;
  
   text-transform: none;
   font-weight: 500;
@@ -390,7 +391,7 @@ form > .btn-default {
 }
 tr, button, .btn, .btn.focus, .btn[focus], .btn.active, .btn[active] {
   /*background:@colorRLWhiteRGBA;*/
-  background:@colorRLBlue;
+  background: #f5f5f5;
 }
 
 .btn.disabled, .btn[disabled] {
@@ -412,14 +413,16 @@ button:focus, button:active {
 
 .btn:hover { 
   border: 1px outset #aaa;
-    background-color: saturate(@colorRLBlue, 25%);
+    background-color: saturate(#4c4a48, 25%);
+    color: #fff;
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.35);
 }
 
 .btn:active,
 .btn:focus { 
     border: 2px inset #aaa;
-    background-color: saturate(@colorRLBlue, 25%);
+    background-color: saturate(#4c4a48, 25%);
+    color: #fff;
     box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.35);
     outline: thin dotted;
 }
@@ -586,6 +589,23 @@ ul table {
   width: 85%;
   margin-bottom: 0;
   margin-top: 5px;
+}
+
+.adm .form-control {
+  width: 20%;
+  margin-bottom: 40px;
+}
+
+.adm .table-hover .form-control {
+  width: 100%;
+}
+
+div > .dropdown > .form-control:not(:last-child) {
+  border-radius: 24px;
+}
+
+.adm input[type="checkbox"] {
+  margin: 4px 35px 0;
 }
 
 table.c tbody tr td div .form-control {

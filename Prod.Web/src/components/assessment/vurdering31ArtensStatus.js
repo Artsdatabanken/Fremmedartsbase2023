@@ -76,32 +76,32 @@ export default class vurdering31ArtensStatus extends React.Component {
                 <Xcomp.Radio
                      kode={koder.AlienSpeciesCategory[0]}
                     //kode={labels.AlienSpeciesCategory[0]}
-                    observableValue={[vurdering, "AlienSpeciesCategory"]}/>
+                    observableValue={[vurdering, "alienSpeciesCategory"]}/>
                     {vurdering.AlienSpeciesCategory === 'AlienSpecie' ?
                     <div className="well">
                         <Xcomp.Bool
                             label={labels.StatusUncertainty.uncertainIfEstablishedBefore1800}
-                            observableValue={[vurdering, 'AlienSpecieUncertainIfEstablishedBefore1800']}/>
+                            observableValue={[vurdering, 'alienSpecieUncertainIfEstablishedBefore1800']}/>
                         <Xcomp.Bool
                             label={labels.StatusUncertainty.uncertainAntropochor}
-                            observableValue={[vurdering, 'AlienSpecieUncertainAntropochor']}/> 
+                            observableValue={[vurdering, 'alienSpecieUncertainAntropochor']}/> 
                         {vurdering.AlienSpecieUncertainIfEstablishedBefore1800 || vurdering.AlienSpecieUncertainAntropochor
                             ? <Xcomp.HtmlString
-                                    observableValue={[vurdering, 'AlienSpecieUncertainDescription']}
+                                    observableValue={[vurdering, 'alienSpecieUncertainDescription']}
                                     label={labels.StatusUncertainty.uncertainDescription}/>
                             : null}
                         </div>
                     : null}
                 <Xcomp.Radio
                     kode={koder.AlienSpeciesCategory[4]}
-                    observableValue={[vurdering, "AlienSpeciesCategory"]}/>
+                    observableValue={[vurdering, "alienSpeciesCategory"]}/>
                 <Xcomp.Radio
                     kode={koder.AlienSpeciesCategory[1]}
-                    observableValue={[vurdering, "AlienSpeciesCategory"]}/> 
+                    observableValue={[vurdering, "alienSpeciesCategory"]}/> 
                     {vurdering.AlienSpeciesCategory === 'DoorKnocker'
                     ? <div className="well">
                             <Xcomp.StringEnum
-                                observableValue={[vurdering, 'DoorKnockerCategory']}
+                                observableValue={[vurdering, 'doorKnockerCategory']}
                                 codes={koder.DoorKnocker}
                                 mode="radio"
                                 forceSync/>
@@ -110,7 +110,7 @@ export default class vurdering31ArtensStatus extends React.Component {
                                 ? null
                                 : <div>
                                     <Xcomp.HtmlString
-                                        observableValue={[vurdering, 'DoorKnockerDescription']}
+                                        observableValue={[vurdering, 'doorKnockerDescription']}
                                         //label="Nærmere begrunnelse"/>
                                         label={labels.StatusUncertainty.furtherSpecification}/>
                                     <br/>
@@ -121,11 +121,11 @@ export default class vurdering31ArtensStatus extends React.Component {
                 ? <div>
                     <Xcomp.Radio
                         kode={koder.AlienSpeciesCategory[2]}
-                        observableValue={[vurdering, "AlienSpeciesCategory"]}/> 
+                        observableValue={[vurdering, "alienSpeciesCategory"]}/> 
                         {vurdering.AlienSpeciesCategory === 'RegionallyAlien' 
                         ? <div className="well">
                             <Xcomp.StringEnum
-                                observableValue={[vurdering, 'RegionallyAlienCategory']}
+                                observableValue={[vurdering, 'regionallyAlienCategory']}
                                 codes={koder.RegionallyAlien}
                                 mode="radio"
                                 forceSync/>
@@ -135,7 +135,7 @@ export default class vurdering31ArtensStatus extends React.Component {
                 : null}
                 <Xcomp.Radio
                     kode={koder.AlienSpeciesCategory[3]}
-                    observableValue={[vurdering, "AlienSpeciesCategory"]}/> 
+                    observableValue={[vurdering, "alienSpeciesCategory"]}/> 
                     {vurdering.AlienSpeciesCategory === 'NotApplicable'
                     ? <div
                             className="well"
@@ -148,13 +148,13 @@ export default class vurdering31ArtensStatus extends React.Component {
                             marginTop: "15px"
                         }}>
                             <Xcomp.StringEnum
-                                observableValue={[vurdering, 'NotApplicableCategory']}
+                                observableValue={[vurdering, 'notApplicableCategory']}
                                 codes={koder.NotApplicable}
                                 mode="radio"
                                 forceSync/> {!appState.skalVurderes
                                 ? <div>
                                         <Xcomp.HtmlString
-                                            observableValue={[vurdering, 'AssesmentNotApplicableDescription']}
+                                            observableValue={[vurdering, 'assesmentNotApplicableDescription']}
                                             //label="Nærmere begrunnelse"/>
                                             label={labels.StatusUncertainty.furtherSpecification}/>
                                         <br/>
@@ -162,7 +162,7 @@ export default class vurdering31ArtensStatus extends React.Component {
                                 : null}
                         </div>
                     : null}
-                {!(['AlienSpecie', 'DoorKnocker', 'RegionallyAlien', 'NotApplicable', 'EcoEffectWithoutEstablishment'].includes(vurdering.AlienSpeciesCategory))
+                {!(['AlienSpecie', 'DoorKnocker', 'RegionallyAlien', 'NotApplicable', 'EcoEffectWithoutEstablishment'].includes(vurdering.alienSpeciesCategory))
                     ? <div className="well">Sett artens status før du går videre</div>
                     : null}
                 <hr/>
@@ -171,11 +171,11 @@ export default class vurdering31ArtensStatus extends React.Component {
                     {vurdering.AlienSpeciesCategory === 'RegionallyAlien'
                         ? <h4>{labels.FirstObservation.firstregionalobservation} {appState.evaluationContext[assessment.EvaluationContext].nameWithPreposition}</h4>
                         : <h4>{labels.FirstObservation.firstobservation} {appState.evaluationContext.nameWithPreposition}</h4>}
-                    {/*<div style={{width: "190px"}}><Xcomp.StringCombobox observableValue={[vurdering, 'FirstDomesticEstablishmentObserved']} selectableValues={standardPeriods} /></div>*/}
+                    {/*<div style={{width: "190px"}}><Xcomp.StringCombobox observableValue={[vurdering, 'firstDomesticEstablishmentObserved']} selectableValues={standardPeriods} /></div>*/}
                     <div style={{
                         width: "190px"
                     }}><Xcomp.StringCombobox
-                        observableValue={[vurdering, 'FirstDomesticObservation']}
+                        observableValue={[vurdering, 'firstDomesticObservation']}
                         selectableValues={standardPeriods}/></div>
                     <DomesticObservedAndEstablished
                         observedAndEstablishedStatusInNorway={vurdering.observedAndEstablishedStatusInCountry}
@@ -200,7 +200,7 @@ export default class vurdering31ArtensStatus extends React.Component {
                                     whiteSpace: "nowrap",
                                     textTransform: "capitalize"
                                 }}>{labels.PreviousAssessment.domestic}</td>
-                                <td><Xcomp.Bool observableValue={[vurdering, 'DomesticRiskEvaluationExists']}/></td>
+                                <td><Xcomp.Bool observableValue={[vurdering, 'domesticRiskEvaluationExists']}/></td>
                             </tr>
                             <tr>
                                 <td>{labels.PreviousAssessment.abroad}</td>
@@ -229,7 +229,7 @@ export default class vurdering31ArtensStatus extends React.Component {
                                                 <span>{"Beskriv:"}</span>
                                                 <br/>
                                                 <Xcomp.HtmlString
-                                                    observableValue={[vurdering, 'ForeignRiskEvaluationComment']}/>
+                                                    observableValue={[vurdering, 'foreignRiskEvaluationComment']}/>
                                             </div>
                                         </td>
                                     </tr>
@@ -237,7 +237,6 @@ export default class vurdering31ArtensStatus extends React.Component {
                         </tbody>
                     </table>
                 </div>
-
             </div>
         );
     }
