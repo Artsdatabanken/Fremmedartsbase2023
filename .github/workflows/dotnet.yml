@@ -40,4 +40,4 @@ jobs:
         repository: artsdatabanken/fab4api
         tags: latest
     - name: Post to slack
-      run: .github/workflows/slack.sh ${{ secrets.POST_SLACK }}
+      run: .github/workflows/deploy.sh ${{ secrets.POST_SLACK }}
