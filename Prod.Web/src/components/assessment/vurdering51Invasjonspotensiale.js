@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {observer, inject} from 'mobx-react';
 import * as Xcomp from './observableComponents';
 import Criterion from './criterion'
+import Vurdering52Okologiskeffekt from './vurdering52Okologiskeffekt'
 import config from '../../config'
 import {getCriterion} from '../../utils'
 import Filliste from './35Utbredelseshistorikk/Filliste'
@@ -94,6 +95,12 @@ export default class Vurdering51Invasjonspotensiale extends React.Component {
                 {config.showPageHeaders
                     ? <h3>Invasjonspotensiale</h3>
                     : <br/>}
+                    <ul className="submeny">
+                    <li>
+                        Invasjonspotensiale
+                    </li>
+                    <li>Økologisk effekt</li>
+                </ul>
                 <fieldset className="well">
                     <h4>{crit51A.heading}</h4>
                     <p>{crit51A.info}</p>
@@ -549,6 +556,7 @@ export default class Vurdering51Invasjonspotensiale extends React.Component {
                     <p>{critC.info}</p>
                     <Criterion criterion={critC} mode="noheading"/>
                 </fieldset>
+                <Vurdering52Okologiskeffekt/>
             </div>
         );
     }

@@ -407,7 +407,7 @@ class ViewModel {
                     new tabItem({id: 5, label:"Risikovurdering", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "invasjonspotensiale" }),
                     //new tabItem({id: 7, label:"Økologisk effekt", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "ekologiskeffekt" }),
                     //new tabItem({id: 9, label:"Geografisk variasjon", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "geografiskvariasjon" }),
-                    new tabItem({id: 6, label:"Klimaeffekt", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "klimaeffekter" }),
+                    new tabItem({id: 6, label:"Klimaeffekter", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "klimaeffekter" }),
                     new tabItem({id: 7, label:"Geografisk variasjon", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "geografiskvariasjon" }),
                     //new tabItem({id: 9, label:"Kriteriedokumentasjon", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "kriteriedokumentasjon" }),
                     // new tabItem({id: 9, label:"Oppsummering", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "oppsummering" }),

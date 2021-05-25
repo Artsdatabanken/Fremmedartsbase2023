@@ -114,21 +114,21 @@ class AssessmentRoot extends Component {
                 : assessmentTabs.activeTab.id === 3  ?
                 <Vurdering33Import/>
                 : assessmentTabs.activeTab.id === 4  ?
-                <Vurdering34Spredningsveier/>
-                : assessmentTabs.activeTab.id === 5  ?
                 <Vurdering35Utbredelseshistorikk/>
-                : assessmentTabs.activeTab.id === 6  ?
-                <Vurdering40Naturtyper/>
-                : assessmentTabs.activeTab.id === 7  ?
+                : assessmentTabs.activeTab.id === 5  ?
                 <Vurdering51Invasjonspotensiale/>
-                : assessmentTabs.activeTab.id === 8  ?
-                <Vurdering52Okologiskeffekt/>
-                : assessmentTabs.activeTab.id === 9  ?
-                <Vurdering53GeografiskVariasjon/>
-                : assessmentTabs.activeTab.id === 10  ?
+                : assessmentTabs.activeTab.id === 6  ?
                 <Vurdering54Klimaeffekter/>
-                : assessmentTabs.activeTab.id === 11  ?
-                <Vurdering55Kriteriedokumentasjon kritDocInfo={{}}/>
+                : assessmentTabs.activeTab.id === 7  ?
+                <Vurdering53GeografiskVariasjon/>
+                : assessmentTabs.activeTab.id === 8  ?
+               <h1>Her kommer oppsummering</h1>
+                : assessmentTabs.activeTab.id === 9  ?
+                <h1>Her kommer referanser</h1>
+                : assessmentTabs.activeTab.id === 10  ?
+                <h1>Her kommer kommentarer</h1>
+                //: assessmentTabs.activeTab.id === 11  ?
+                //<Vurdering55Kriteriedokumentasjon kritDocInfo={{}}/>
 
 
                 
@@ -140,7 +140,7 @@ class AssessmentRoot extends Component {
                 // // // <AssessmentReferences/>
                 // // // : assessmentTabs.activeTab.id === 11  ?
                 // // // <AssessmentComments/>
-                : assessmentTabs.activeTab.id === 15  ?
+                : assessmentTabs.activeTab.id === 11  ?
                 <AssessmentDiff/>
                 :<h1>Oooops?? artinfotab:{assessmentTabs.activeTab.id}</h1>}
                 {assessmentTabs.activeTab.id != 12 && assessmentTabs.activeTab.id != 11 && assessment && assessment.evaluationStatus !== 'finished' &&     

@@ -188,7 +188,7 @@ h2, h3, h4{
 // Removed bootstrap, as it required too many overrides.
 // Mooched the best parts
 
-.nav_menu, .faner{
+.nav_menu, .faner, .submeny{
   list-style: none;
   display: -webkit-flex;
   display: flex;
@@ -207,7 +207,11 @@ h2, h3, h4{
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3)
 }
 
-.nav_menu li {
+.submeny {
+  justify-content: left;
+}
+
+.nav_menu li, .submeny li {
   //padding:0px;
   text-align:center;
   margin: 2px;
@@ -221,7 +225,11 @@ h2, h3, h4{
 .nav_menu  > li:hover,
 .nav_menu  > li.active:hover, 
 .nav_menu  > li.active:focus,
-.nav_menu  > li.active 
+.nav_menu  > li.active,
+.submeny  > li:hover,
+.submeny  > li.active:hover, 
+.submeny  > li.active:focus,
+.submeny  > li.active  
 {
   //color: @colorRLOrangePrimary;
   color: #fff;
@@ -240,7 +248,7 @@ h2, h3, h4{
   border-bottom: 4px solid @colorRLRedPrimary;
 }*/
 
-.nav_menu li {
+.nav_menu li, .submeny li {
   color: @colorRLPrimary;
   background-color: transparent;
   border-bottom: 4px solid transparent;
