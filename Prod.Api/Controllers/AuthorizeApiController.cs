@@ -43,7 +43,7 @@ namespace Prod.Api.Controllers
             if (infuser.IsError) throw new Exception("Feil ved uthenting av userinfo");
 
             var infuserId = infuser.Claims.FirstOrDefault(x=>x.Type=="sub")?.Value;
-            var isAdmin = infuser.Claims.Any(x => x.Type == "role" && x.Value == "redlist_administrator");
+            var isAdmin = infuser.Claims.Any(x => x.Type == "role" && x.Value == "fab_administrator");
             var userName = infuser.Claims.FirstOrDefault(x => x.Type == "preferred_username")?.Value;
             var name = infuser.Claims.FirstOrDefault(x => x.Type == "name")?.Value;
             var email = infuser.Claims.FirstOrDefault(x => x.Type == "email")?.Value;

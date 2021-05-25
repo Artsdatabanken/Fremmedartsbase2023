@@ -47,7 +47,7 @@ export default class ExpertGroupAdmin extends React.Component {
             }
             );
         }
-        if (!auth.isInRole("redlist_administrator")) //())
+        if (!auth.isInRole("fab_administrator")) //())
             return (<h3>Ingen adgang til administrasjon av ekspertgrupper - Du kom hit p.g.a. en feil</h3>);
         return (
             <div>

@@ -150,7 +150,7 @@ namespace Prod.Api
                     identityServerAuthenticationOptions.Authority = options.AuthAuthority;
 
                     // name of the API resource
-                    identityServerAuthenticationOptions.ApiName = "redlist2019api";
+                    identityServerAuthenticationOptions.ApiName = "fab4api";
                     identityServerAuthenticationOptions.RequireHttpsMetadata = false;
                     IdentityModelEventSource.ShowPII = true;
                     identityServerAuthenticationOptions.JwtBearerEvents = new JwtBearerEvents
