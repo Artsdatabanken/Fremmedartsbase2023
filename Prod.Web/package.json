@@ -5,7 +5,7 @@
   "main": "dist/index.html",
   "scripts": {
     "dev": "parcel index.html",
-    "build": "parcel build index.html",
+    "build": "parcel build index.html --no-scope-hoist",
     "test": "jest",
     "testWatch": "jest --watch",
     "npminstall": "npm install"
