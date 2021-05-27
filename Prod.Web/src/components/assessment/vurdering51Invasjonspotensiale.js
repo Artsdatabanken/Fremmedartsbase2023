@@ -2,6 +2,7 @@
 import PropTypes from 'prop-types'
 import {observer, inject} from 'mobx-react';
 import * as Xcomp from './observableComponents';
+import Tabs from '../tabs'
 import Criterion from './criterion'
 import Vurdering52Okologiskeffekt from './vurdering52Okologiskeffekt'
 import config from '../../config'
@@ -14,6 +15,7 @@ class SelectableRadio extends React.Component {
     //     return true
     // }
     render() {
+        
         const [obj, prop] = this.props.observableValue
         // console.log("Selectable" + this.props.value) console.log(" - - " +
         // obj["Selectable" + this.props.value])
@@ -55,7 +57,7 @@ export default class Vurdering51Invasjonspotensiale extends React.Component {
     // riskAssessment.Criteria.filter(c => c.Akse === akse && c.CriteriaLetter ===
     // letter)[0];     return result; }
     render() {
-        const {appState:{assessment:{riskAssessment}}, appState, existenceArea35} = this.props;
+        const {appState:{assessment:{riskAssessment}}, appState:{riskAssessmentTabs}, appState, existenceArea35} = this.props;
         // const labels = appState.kodeLabels
         const labels = appState.codeLabels
         const koder = appState.koder.Children
@@ -95,12 +97,11 @@ export default class Vurdering51Invasjonspotensiale extends React.Component {
                 {config.showPageHeaders
                     ? <h3>Invasjonspotensiale</h3>
                     : <br/>}
-                    <ul className="submeny">
-                    <li>
-                        Invasjonspotensiale
-                    </li>
-                    <li>Økologisk effekt</li>
-                </ul>
+                    <Tabs tabData={riskAssessmentTabs}/>
+                    {
+                riskAssessmentTabs.activeTab.id === 2  ?
+                <Vurdering52Okologiskeffekt/> :
+                <div>
                 <fieldset className="well">
                     <h4>{crit51A.heading}</h4>
                     <p>{crit51A.info}</p>
@@ -556,7 +557,9 @@ export default class Vurdering51Invasjonspotensiale extends React.Component {
                     <p>{critC.info}</p>
                     <Criterion criterion={critC} mode="noheading"/>
                 </fieldset>
-                <Vurdering52Okologiskeffekt/>
+                </div>
+                }
+                
             </div>
         );
     }
