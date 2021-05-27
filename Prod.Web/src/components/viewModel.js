@@ -8,7 +8,7 @@ import {codes2labels} from '../utils'
 import config from '../config'
 import auth from './authService'
 import createContext from './createContext'
-import enhanceAssessment from './assessment/enhanceAssessment'
+import enhanceAssessment from './assessment/enhanceAssassment.js'
 import { checkStatus, loadData } from '../apiService'
 import { any } from 'prop-types'
 // import { ConfigurationManager } from '../../dist/Prod.Web.e31bb0bc'
@@ -863,7 +863,7 @@ class ViewModel {
 
             // enhanceWithRiskEvaluation(assessment)
 
-            enhanceAssessmant(assessment)
+            enhanceAssessment(assessment, this)
 
             this.navigate(1)
             runInAction(() => {

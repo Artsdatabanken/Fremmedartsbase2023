@@ -1,6 +1,6 @@
 ﻿import {action, autorun, extendObservable, observable, observe, isObservableArray, transaction, whyRun} from 'mobx';
-import riskLevel from './riskLevel';
-import {extractFloat, getCriterion} from '../utils'
+import RiskLevel from './riskLevel';
+import {extractFloat, getCriterion} from '../../utils'
 
 // function getCriterion(riskAssessment, akse, letter) {
 //     const result = riskAssessment.Criteria.filter(c => c.Akse === akse && c.CriteriaLetter === letter)[0]; 
@@ -35,7 +35,6 @@ function medianLifespanLevel(num) {
         0
     return result
 }
-
 
 function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
     const ACriteriaSectionNames = [
@@ -538,7 +537,7 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
 function enhanceRiskAssessmentLevel(riskAssessment, labels) {
     extendObservable(riskAssessment, {
         invasjonspotensialeLevel: () => {
-            const result = riskLevel.invasjonspotensiale(riskAssessment)
+            const result = RiskLevel.invasjonspotensiale(riskAssessment)
             return result;
         }
     });
@@ -553,7 +552,7 @@ function enhanceRiskAssessmentLevel(riskAssessment, labels) {
     });
     extendObservable(riskAssessment, {
         ecoeffectLevel: () => {
-            const result = riskLevel.ecoeffect(riskAssessment)
+            const result = RiskLevel.ecoeffect(riskAssessment)
             return result;
         }
     });
@@ -566,12 +565,31 @@ function enhanceRiskAssessmentLevel(riskAssessment, labels) {
         //}
         //catch (e) {}
     });
+
+
+
+
+
+
+    delete riskAssessment.riskLevel  //?????!
+
+
     extendObservable(riskAssessment, {
         riskLevel: () => {
-            const result = riskLevel.riskLevel(riskAssessment.invasjonspotensialeLevel, riskAssessment.ecoeffectLevel)
+            const result = RiskLevel.riskLevel(riskAssessment.invasjonspotensialeLevel, riskAssessment.ecoeffectLevel)
             return result;
         }
     });
+    
+    
+
+
+
+
+
+    
+    
+    
     // autorun(() => {
     //     const {level, decisiveCriteriaLabel, code, text} = riskAssessment.riskLevel
     //     console.log("risklevel changed: " + level + " | " + decisiveCriteriaLabel)
@@ -584,7 +602,15 @@ function enhanceRiskAssessmentLevel(riskAssessment, labels) {
         const {level, decisiveCriteriaLabel} = riskAssessment.riskLevel
         console.log("risklevel changed: " + level + " | " + decisiveCriteriaLabel)
         const levtxt = level.toString()
-        riskAssessment.RiskLevel = level
+
+
+
+        //// riskAssessment.RiskLevel = level
+        
+        
+        
+        
+        
         riskAssessment.RiskLevelCode = labels.RiskLevelCode[levtxt]
         riskAssessment.RiskLevelText = labels.RiskLevelText[levtxt]
         riskAssessment.DecisiveCriteria = decisiveCriteriaLabel
