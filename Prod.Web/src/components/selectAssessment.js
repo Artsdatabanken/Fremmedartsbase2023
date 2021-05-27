@@ -7,7 +7,8 @@ import SelectAssessmentTable from './selectAssessmentTable';
 import SelectAssessmentStatistics from './selectAssessmentStatistics';
 import auth from './authService';
 import config from '../config';
-import catimg from '../cat.gif';
+// import catimg from '../cat.gif';
+import catimg from 'url:../cat.gif';
 // const catimg = require('../cat.gif') 
 
 
