@@ -72,7 +72,7 @@ namespace Prod.Api
 
             app.UseCors(builder =>
                 //builder.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod()
-                builder.WithOrigins(new []{"https://rl2021.test.artsdatabanken.no", "https://rl2021.artsdatabanken.no", "http://localhost:1234", "http://localhost:63660", "http://localhost:12237" }).AllowAnyHeader().AllowAnyMethod().AllowCredentials()
+                builder.WithOrigins(new []{ "https://fab4api.test.artsdatabanken.no", "https://fab4api.artsdatabanken.no", "http://localhost:1234", "http://localhost:63660", "http://localhost:12237" }).AllowAnyHeader().AllowAnyMethod().AllowCredentials()
             );
 
             app.UseStaticFiles();
@@ -150,7 +150,7 @@ namespace Prod.Api
                     identityServerAuthenticationOptions.Authority = options.AuthAuthority;
 
                     // name of the API resource
-                    identityServerAuthenticationOptions.ApiName = "redlist2019api";
+                    identityServerAuthenticationOptions.ApiName = "fab4api";
                     identityServerAuthenticationOptions.RequireHttpsMetadata = false;
                     IdentityModelEventSource.ShowPII = true;
                     identityServerAuthenticationOptions.JwtBearerEvents = new JwtBearerEvents

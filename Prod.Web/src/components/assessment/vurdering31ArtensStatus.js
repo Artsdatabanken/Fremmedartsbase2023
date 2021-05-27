@@ -73,7 +73,7 @@ export default class vurdering31ArtensStatus extends React.Component {
                     ? <h3>Artens status</h3>
                     : <br/>}
 
-                <Xcomp.Radio
+               {/* <Xcomp.Radio
                      kode={koder.AlienSpeciesCategory[0]}
                     //kode={labels.AlienSpeciesCategory[0]}
                     observableValue={[vurdering, "alienSpeciesCategory"]}/>
@@ -91,14 +91,14 @@ export default class vurdering31ArtensStatus extends React.Component {
                                     label={labels.StatusUncertainty.uncertainDescription}/>
                             : null}
                         </div>
-                    : null}
-                <Xcomp.Radio
+                        : null} */}
+               {/* <Xcomp.Radio
                     kode={koder.AlienSpeciesCategory[4]}
                     observableValue={[vurdering, "alienSpeciesCategory"]}/>
                 <Xcomp.Radio
                     kode={koder.AlienSpeciesCategory[1]}
-                    observableValue={[vurdering, "alienSpeciesCategory"]}/> 
-                    {vurdering.AlienSpeciesCategory === 'DoorKnocker'
+                    observableValue={[vurdering, "alienSpeciesCategory"]}/> */}
+                 {/*    {vurdering.AlienSpeciesCategory === 'DoorKnocker'
                     ? <div className="well">
                             <Xcomp.StringEnum
                                 observableValue={[vurdering, 'doorKnockerCategory']}
@@ -116,8 +116,8 @@ export default class vurdering31ArtensStatus extends React.Component {
                                     <br/>
                                 </div>}
                         </div>
-                    : null}
-                {appState.regionalRiskAssessmentEnabled
+                    : null} */}
+              {/*  {appState.regionalRiskAssessmentEnabled
                 ? <div>
                     <Xcomp.Radio
                         kode={koder.AlienSpeciesCategory[2]}
@@ -132,8 +132,8 @@ export default class vurdering31ArtensStatus extends React.Component {
                         </div> 
                         : null}
                 </div>
-                : null}
-                <Xcomp.Radio
+              : null} */}
+              {/*  <Xcomp.Radio
                     kode={koder.AlienSpeciesCategory[3]}
                     observableValue={[vurdering, "alienSpeciesCategory"]}/> 
                     {vurdering.AlienSpeciesCategory === 'NotApplicable'
@@ -161,8 +161,8 @@ export default class vurdering31ArtensStatus extends React.Component {
                                     </div>
                                 : null}
                         </div>
-                    : null}
-                {!(['AlienSpecie', 'DoorKnocker', 'RegionallyAlien', 'NotApplicable', 'EcoEffectWithoutEstablishment'].includes(vurdering.alienSpeciesCategory))
+                                : null} */}
+              {/*  {!(['AlienSpecie', 'DoorKnocker', 'RegionallyAlien', 'NotApplicable', 'EcoEffectWithoutEstablishment'].includes(vurdering.alienSpeciesCategory))
                     ? <div className="well">Sett artens status før du går videre</div>
                     : null}
                 <hr/>
@@ -172,7 +172,7 @@ export default class vurdering31ArtensStatus extends React.Component {
                         ? <h4>{labels.FirstObservation.firstregionalobservation} {appState.evaluationContext[assessment.EvaluationContext].nameWithPreposition}</h4>
                         : <h4>{labels.FirstObservation.firstobservation} {appState.evaluationContext.nameWithPreposition}</h4>}
                     {/*<div style={{width: "190px"}}><Xcomp.StringCombobox observableValue={[vurdering, 'firstDomesticEstablishmentObserved']} selectableValues={standardPeriods} /></div>*/}
-                    <div style={{
+                   {/*} <div style={{
                         width: "190px"
                     }}><Xcomp.StringCombobox
                         observableValue={[vurdering, 'firstDomesticObservation']}
@@ -183,8 +183,8 @@ export default class vurdering31ArtensStatus extends React.Component {
                         labels={labels.FirstObservation}
                         showIndividualCount={appState.isVKM}/>
                 </div>
-                <br/>
-                <div className="well">
+                <br/> /*}
+               {/* <div className="well">
                     <table className="formtable">
                         <thead>
                             <tr>
@@ -218,7 +218,7 @@ export default class vurdering31ArtensStatus extends React.Component {
                                                 </div>
                                             )}
                                         </RadioGroup> */}
-                                    </div>
+                                    {/*</div>
                                 </td>
                             </tr>
                             {vurdering.ForeignRiskEvaluationExists === true
@@ -236,7 +236,7 @@ export default class vurdering31ArtensStatus extends React.Component {
                                 : null}
                         </tbody>
                     </table>
-                </div>
+                  </div> */}
             </div>
         );
     }

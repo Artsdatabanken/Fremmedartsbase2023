@@ -4,11 +4,11 @@ function apiUrl (anchor) {
       case '#lokalapi':
         return 'http://localhost:25808'
       case '#remoteapi':
-          return 'https://rl2021api.test.artsdatabanken.no'
+          return 'https://fab4api.test.artsdatabanken.no/'
       default:
         //return relPath   // This does not currently work because api is not relative to ("under") app 
-        if (window.location.href.indexOf("test.") > 1) {return 'https://rl2021api.test.artsdatabanken.no'}
-        return  process.env.NODE_ENV === 'development' ? 'http://localhost:25808' : 'https://rl2021api.artsdatabanken.no'
+        if (window.location.href.indexOf("test.") > 1) {return 'https://fab4api.test.artsdatabanken.no'}
+        return  process.env.NODE_ENV === 'development' ? 'http://localhost:25808' : 'https://fab4api.test.artsdatabanken.no'
     }
   }
   function referenceApiUrl (anchor) {
@@ -46,13 +46,13 @@ function apiUrl (anchor) {
   (process.env.NODE_ENV === 'development') ?
   { 
       authority: "https://id.artsdatabanken.no/",
-      client_id: "redlist2019",
+      client_id: "fab4",
       redirect_uri: "http://localhost:1234/#signin-oidc",
       silent_redirect_uri: "http://localhost:1234/#silentredirect",
       popup_redirect_uri: "http://localhost:1234/#silentredirect",
       post_logout_redirect_uri: "http://localhost:1234/#post-logout",
       response_type: "code",
-      scope: "openid profile roles email redlist2019api",
+      scope: "openid profile roles email fab4api",
       automaticSilentRenew: true,
       acr_values: "Level3",
       ui_locales: "nb",
@@ -62,13 +62,13 @@ function apiUrl (anchor) {
   } : (window.location.href.indexOf("test.") > 1 ?
   {
       authority: "https://id.artsdatabanken.no/",
-      client_id: "redlist2019",
-      redirect_uri: "https://rl2021.test.artsdatabanken.no/#signin-oidc",
-      silent_redirect_uri: "https://rl2021.test.artsdatabanken.no/#silentredirect",
-      popup_redirect_uri: "https://rl2021.test.artsdatabanken.no/#silentredirect",
-      post_logout_redirect_uri: "https://rl2021.test.artsdatabanken.no/#post-logout",
+      client_id: "fab4",
+      redirect_uri: "https://fab4api.test.artsdatabanken.no/#signin-oidc",
+      silent_redirect_uri: "https://fab4api.test.artsdatabanken.no/#silentredirect",
+      popup_redirect_uri: "https://fab4api.test.artsdatabanken.no/#silentredirect",
+      post_logout_redirect_uri: "https://fab4api.test.artsdatabanken.no/#post-logout",
       response_type: "code",
-      scope: "openid profile roles email redlist2019api",
+      scope: "openid profile roles email fab4api",
       automaticSilentRenew: true,
       acr_values: "Level3",
       ui_locales: "nb",
@@ -78,13 +78,13 @@ function apiUrl (anchor) {
   }:
   {
     authority: "https://id.artsdatabanken.no/",
-    client_id: "redlist2019",
-    redirect_uri: "https://rl2021.artsdatabanken.no/#signin-oidc",
-    silent_redirect_uri: "https://rl2021.artsdatabanken.no/#silentredirect",
-    popup_redirect_uri: "https://rl2021.artsdatabanken.no/#silentredirect",
-    post_logout_redirect_uri: "https://rl2021.artsdatabanken.no/#post-logout",
+    client_id: "fab4",
+    redirect_uri: "https://fab4api.test.artsdatabanken.no/#signin-oidc",
+    silent_redirect_uri: "https://fab4api.test.artsdatabanken.no/#silentredirect",
+    popup_redirect_uri: "https://fab4api.test.artsdatabanken.no/#silentredirect",
+    post_logout_redirect_uri: "https://fab4api.test.artsdatabanken.no/#post-logout",
     response_type: "code",
-    scope: "openid profile roles email redlist2019api",
+    scope: "openid profile roles email fab4api",
     automaticSilentRenew: true,
     acr_values: "Level3",
     ui_locales: "nb",

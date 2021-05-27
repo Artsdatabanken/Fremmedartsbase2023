@@ -48,8 +48,17 @@ export default class Vurdering33Import extends React.Component {
 
         return(
             <div>
+                <h2>
+                    Introduksjon til natur
+                </h2>
+                <h2>
+                    Spredningsveier i naturen
+                </h2>
+                <h2>
+                    Til innendørs- eller produksjonsareal
+                </h2>
                 {config.showPageHeaders ? <h3>{labels.Import.importIndoor}</h3> : <br />}
-                <Xcomp.Bool label="" observableValue={[vurdering, "importedToIndoorOrProductionArea"]} />
+               {/*} <Xcomp.Bool label="" observableValue={[vurdering, "importedToIndoorOrProductionArea"]} />
                 <h4 style={{display: "inline-block", marginLeft: "6px" }}>{labels.Import.importIndoor}</h4>
                 {vurdering.importedToIndoorOrProductionArea && 
                 <div>
@@ -59,7 +68,7 @@ export default class Vurdering33Import extends React.Component {
                         <h4>{labels.Import.importAdd}</h4>
                         <NewMigrationPathwaySelector migrationPathways={importPathwayKoder} onSave={mp => this.saveImportPathway(vurdering, mp)} koder={koder} hideIntroductionSpread labels={labels}/>
                     </div>
-                </div>}
+                </div>} */}
             </div>
         )
     }

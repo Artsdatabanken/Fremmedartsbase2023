@@ -81,12 +81,12 @@ constructor() {
     @computed
     get hasAccess() {
         //        return true
-        return this.isLoggedIn && (this.isInRole("redlist_administrator") || this.access != null && this.access.harTilgang); // || (this.access != null && this.access.HasAccess ));
+        return this.isLoggedIn && (this.isInRole("fab_administrator") || this.access != null && this.access.harTilgang); // || (this.access != null && this.access.HasAccess ));
     }
     @computed
     get isAdmin() {
         //        return true
-        return this.isLoggedIn && (this.isInRole("redlist_administrator") || (this.access != null && this.access.ErAdministrator)); // || (this.access != null && this.access.HasAccess ));
+        return this.isLoggedIn && (this.isInRole("fab_administrator") || (this.access != null && this.access.ErAdministrator)); // || (this.access != null && this.access.HasAccess ));
     }
     @computed
     get hasApplication() {

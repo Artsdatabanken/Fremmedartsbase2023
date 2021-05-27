@@ -70,6 +70,7 @@ export default class Vurdering32Artsegenskaper extends React.Component {
 
         return(
             <div>
+                <h2>Global utbredelse og artsegenskaper</h2>
                 {config.showPageHeaders ? <h3>Artsegenskaper</h3> : <br />}
                 <br />
                 {appState.imageUploadEnabled
