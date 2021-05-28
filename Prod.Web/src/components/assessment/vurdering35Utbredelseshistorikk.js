@@ -16,7 +16,8 @@ export default class Vurdering35Utbredelseshistorikk extends React.Component {
         const {vurdering, fabModel, appState:{infoTabs}} = this.props
         return (
             <div>
-                <Tabs tabData={infoTabs}/>
+                <br/>
+                <Tabs clName={"nav_menu submenu"} tabData={infoTabs}/>
                 {
                 infoTabs.activeTab.id === 2  ?
                 <Vurdering40Naturtyper/> :

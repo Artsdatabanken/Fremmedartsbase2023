@@ -106,7 +106,7 @@ class AssessmentRoot extends Component {
                     appState.saveCurrentAssessment();
                   }}>Lagre</Xcomp.Button></div>*/}
 
-                <Tabs tabData={assessmentTabs}/> 
+                <Tabs clName={"nav_menu faner"} tabData={assessmentTabs}/> 
                 {
                 assessmentTabs.activeTab.id === 0  ?
                 <HSkanning /> :

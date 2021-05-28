@@ -82,7 +82,7 @@ export default class assessmentNew extends React.Component {
                 <div className="well">
                     <div className="row">
                         <div className="col-md-6">
-                            <h3>Opprett ny vurdering</h3>
+                            <h3>Legg til ny art</h3>
                             <br></br>
                             <h4>{labels.SelectAssessment.expertgroup}</h4>
                             <Xcomp.StringEnum
@@ -144,7 +144,7 @@ export default class assessmentNew extends React.Component {
                                     </ul>
                                 </div> :
                                 null}
-                                {newAssessment.taxonSearchWaitingForResult ?
+                               {/* {newAssessment.taxonSearchWaitingForResult ?
                                 <div  style={{zIndex: 10000, position: 'absolute', top: "40px", left:"35px"}}>
                                     <div  className={"three-bounce"}>
                                         <div className="bounce1" />
@@ -152,14 +152,23 @@ export default class assessmentNew extends React.Component {
                                         <div className="bounce3" />
                                     </div>
                                 </div> :
-                                null}
+                               null} */}
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+                    <div className="row">                            
+                            <div className="col-md-6">
+                                <Xcomp.Bool observableValue={[appState, "potensiellDørstokkart"]} label={"Potensiell dørstokkart"} />
+                                <Xcomp.Bool observableValue={[appState, "øvrigeArter"]} label={"Øvrige arter"} />
                             </div>
                         </div>
                         <div className="col-md-6" style={{display: 'flex'}}>
-                            <Xcomp.Button primary onClick={this.onNewAssessment} disabled={!rolle.skriver || (!newAssessment.ScientificName || checkForExistingAssessment(newAssessment.ScientificName + ' ' + newAssessment.ScientificNameAuthor))}>{labels.SelectAssessment.createAssessment}</Xcomp.Button><div>NB! Må ha leder- eller skrivetilgang i komité for å opprette vurdering!</div>
+                            <div>NB! For å legge til ny art må du være leder eller ha skrivetilgang!</div>
+                            <Xcomp.Button primary onClick={this.onNewAssessment} disabled={!rolle.skriver || (!newAssessment.ScientificName || checkForExistingAssessment(newAssessment.ScientificName + ' ' + newAssessment.ScientificNameAuthor))}>{labels.SelectAssessment.createAssessment}</Xcomp.Button>
                             {(newAssessment.ScientificName.length > 0 && !rolle.skriver || ( checkForExistingAssessment(newAssessment.ScientificName + ' ' + newAssessment.ScientificNameAuthor))) ? <div style={{color: 'red'}}>Arten er allerede i listen!</div>: null}
                         </div>
-                    </div>
                 </div>
             </div>
         )

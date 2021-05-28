@@ -8,7 +8,7 @@ import SelectAssessmentStatistics from './selectAssessmentStatistics';
 import auth from './authService';
 import config from '../config';
 // import catimg from '../cat.gif';
-import catimg from 'url:../cat.gif';
+import catimg from '../cat.gif';
 // const catimg = require('../cat.gif') 
 
 
@@ -178,8 +178,8 @@ export default class SelectAssessment extends Component {
                             observableValue={[appState, "assessmentType"]}/> 
                         <Xcomp.Radio
                         // TO DO: change the code
-                            kode={"Horisontskanning"}
-                            label={"Horisontskanning"}
+                            kode={"Horisont-skanning"}
+                            label={"Horisont-skanning"}
                             observableValue={[appState, "assessmentType"]}/> 
                         </div>
                         <div className="filters"><b>Artens status</b>
@@ -224,10 +224,10 @@ export default class SelectAssessment extends Component {
                     
                 </div>
                         
-                        <div className="comment" style={{marginLeft: '10px', display: 'flex'}}>
+                     {/*   <div className="comment" style={{marginLeft: '10px', display: 'flex'}}>
                             <Xcomp.Bool observableValue={[appState, "kunMine"]} label={"Vis mine vurderinger"} />
                             <input type="button" className="btn btn-primary" value="Last ned fil" onClick={() => window.open(config.apiUrl + '/api/ExpertGroupAssessments/export/' + appState.expertgroup)}></input>
-                        </div> 
+                    </div>  */}
              </div>
                     {/* <div className="filters">
                         <span>Kategori</span>
