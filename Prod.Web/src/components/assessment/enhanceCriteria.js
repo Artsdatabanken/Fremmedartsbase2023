@@ -571,18 +571,21 @@ function enhanceRiskAssessmentLevel(riskAssessment, labels) {
 
 
 
-    delete riskAssessment.riskLevel  //?????!
+    // delete riskAssessment.riskLevel  //?????!
+    // extendObservable(riskAssessment, {
+    //     riskLevel: () => {
+    //         const result = RiskLevel.riskLevel(riskAssessment.invasjonspotensialeLevel, riskAssessment.ecoeffectLevel)
+    //         return result;
+    //     }
+    // });
+    
+    
 
-
-    extendObservable(riskAssessment, {
-        riskLevel: () => {
-            const result = RiskLevel.riskLevel(riskAssessment.invasjonspotensialeLevel, riskAssessment.ecoeffectLevel)
-            return result;
-        }
+    autorun(() => {
+        const level = RiskLevel.riskLevel(riskAssessment.invasjonspotensialeLevel, riskAssessment.ecoeffectLevel)
+        riskAssessment.riskLevel = level;
     });
-    
-    
-
+ 
 
 
 

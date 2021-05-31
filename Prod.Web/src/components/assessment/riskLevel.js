@@ -1,4 +1,6 @@
-﻿ 
+﻿import { object } from "prop-types";
+
+ 
 const self = {
     riskColors: ["#FFF","#CCC", "#888", "#444", "#000" ],
     riskLevelMatrise: [ 
@@ -47,6 +49,9 @@ const self = {
         // console.log("AdjustedAB: " + a + " "  + b + " " + adjustedAB + abAdjustment[0][0])
         const adjustedA = Math.min(adjustedAB, a)
         const adjustedB = Math.min(adjustedAB, b)
+
+        console.log("AB:" + adjustedAB + adjustedA + adjustedB)            
+
         const level = Math.max(adjustedAB, c);
         const decisiveCrits = []
         //const uncertentyLevelsAB = []
@@ -145,7 +150,15 @@ const self = {
         return result;
     },
     riskLevel: (invasjonspotensiale, ecoeffect) => {
-        const lev = self.riskLevelMatrise[3 - ecoeffect.level][invasjonspotensiale.level]
+        console.log("self" + JSON.stringify(Object.keys(self)))
+        console.log("risklevelmatrise" + JSON.stringify(self.riskLevelMatrise))
+        console.log("ecoeffect" + self.ecoeffect.level)
+        console.log("invasjonspotensiale" + self.invasjonspotensiale.level)
+
+
+
+
+        const lev = self.riskLevelMatrise[3 - self.ecoeffect.level][self.invasjonspotensiale.level]
         // const code =  self.riskLevelCode[lev]
         // const text =  self.riskLevelText[lev]
         // const label = code + " - " + text
