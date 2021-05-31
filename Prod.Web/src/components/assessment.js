@@ -8,6 +8,7 @@ import Tabs from './tabs'
 import Vurdering31ArtensStatus from './assessment/vurdering31ArtensStatus'
 import Vurdering32Artsegenskaper from './assessment/vurdering32Artsegenskaper'
 import Vurdering33Import from './assessment/vurdering33Import'
+import HSkanning from './assessment/hSkanning'
 import Vurdering34Spredningsveier from './assessment/vurdering34Spredningsveier'
 import Vurdering35Utbredelseshistorikk from './assessment/vurdering35Utbredelseshistorikk'
 import Vurdering40Naturtyper from './assessment/vurdering40Naturtyper'
@@ -105,8 +106,10 @@ class AssessmentRoot extends Component {
                     appState.saveCurrentAssessment();
                   }}>Lagre</Xcomp.Button></div>*/}
 
-                <Tabs tabData={assessmentTabs}/> 
+                <Tabs clName={"nav_menu faner"} tabData={assessmentTabs}/> 
                 {
+                assessmentTabs.activeTab.id === 0  ?
+                <HSkanning /> :
                 assessmentTabs.activeTab.id === 1  ?
                 <Vurdering31ArtensStatus />
                 : assessmentTabs.activeTab.id === 2  ?

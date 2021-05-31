@@ -166,8 +166,8 @@ export default class AppView extends React.Component {
                 </div> 
                {auth.user && 
                <ul className="nav_menu">
-                    <li onClick={action(() => {sjekkForEndringerOgGiAdvarsel()})} disabled={!auth.isLoggedIn}><b>Velg vurdering</b></li>
-                    <li><b>Legg til ny art</b></li>
+                    <li onClick={action(() => {sjekkForEndringerOgGiAdvarsel()})} disabled={!auth.isLoggedIn}><b>Velg vurdering</b></li>                    
+                    <li onClick={action(() => appState.viewMode = "newassessment")} disabled={!auth.isLoggedIn}><b>Legg til ny art</b></li>  
                     <li role="presentation" onClick={action(() => appState.viewMode = "administrasjon")}><b>Administrasjon</b></li>
                     <li role="presentation"><b>Retningslinjer</b></li>
                     <li role="presentation" disabled={!auth.isLoggedIn} onClick={auth.logout}><b>&nbsp; {auth.user ? "Logg ut " : ""} {(auth.user ? auth.user.profile.name : "")} </b></li>

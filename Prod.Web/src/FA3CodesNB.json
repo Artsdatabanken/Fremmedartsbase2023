@@ -3119,7 +3119,7 @@
                         {
                             "Id": null,
                             "Value": "searchSpecies",
-                            "Text": "Sök art",
+                            "Text": "Skriv inn artsnavn",
                             "Info": null,
                             "Children": null
                         },
@@ -3476,7 +3476,7 @@
                         {
                             "Id": null,
                             "Value": "expertgroup",
-                            "Text": "Ekspertgruppe",
+                            "Text": "Ekspertkomité",
                             "Info": null,
                             "Children": null
                         },
@@ -3490,7 +3490,7 @@
                         {
                             "Id": null,
                             "Value": "createAssessment",
-                            "Text": "Opprett vurdering",
+                            "Text": "Legg til ny art",
                             "Info": null,
                             "Children": null
                         },
@@ -3725,7 +3725,7 @@
                         {
                             "Id": null,
                             "Value": "mainCreateAssessment",
-                            "Text": "Opprett ny vurdering",
+                            "Text": "Legg til ny art",
                             "Info": null,
                             "Children": null
                         },

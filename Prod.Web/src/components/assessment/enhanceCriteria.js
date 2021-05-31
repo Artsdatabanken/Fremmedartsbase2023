@@ -89,7 +89,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 
 
     // observe the Selectable* observables to make shure that the chosen method/section does not point to a not selectable method/section
-    ACriteriaSectionNames.map(tag =>
+   /* ACriteriaSectionNames.map(tag =>
         observe(riskAssessment, "Selectable" + tag, (newValue, oldValue) => {
             if(!newValue) {
                 if (riskAssessment.ChosenSpreadMedanLifespan === tag) {
@@ -110,7 +110,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 }
             }
         })
-    )
+    )*/
 
     extendObservable(riskAssessment, {
         RedListCategoryLevel: () => {
@@ -857,5 +857,5 @@ export default function enhanceCriteria(riskAssessment, vurdering, codes, labels
     enhanceCriteriaAddLabelsAndAuto(riskAssessment, codes)
     enhanceRiskAssessmentEcoEffect(riskAssessment)
     enhanceRiskAssessmentInvasjonspotensiale(riskAssessment)
-    enhanceCriteriaAddUncertaintyRules(riskAssessment)
+    //enhanceCriteriaAddUncertaintyRules(riskAssessment)
 }

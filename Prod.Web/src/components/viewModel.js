@@ -148,7 +148,12 @@ class ViewModel {
                     nameWithPreposition: 'på Svalbard',
                     map: 'svalbard'
                 }
-            },        
+            },   
+            
+            assessmentType: "",
+            vurdert: false,
+            ikkevurdert: false
+
         })
 
       
@@ -397,8 +402,9 @@ class ViewModel {
 
         extendObservable(this, {
             assessmentTabs: {
-                activeTab: {id: 1},
+                activeTab: {id: 0},
                 tabList: [
+                    new tabItem({id: 0, label:"Horisont-skanning", enabled: this.harVurdering, url: "horisont-skanning" }),
                     new tabItem({id: 1, label:"Artens status", enabled: this.harVurdering, url: "artensstatus" }),
                     new tabItem({id: 2, label:"Artsinformasjon", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "artsegenskaper" }),
                     new tabItem({id: 3, label:"Spredningsveier", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "import" }),
@@ -454,6 +460,42 @@ class ViewModel {
                         if(tab.enabled) {
                             this.selectAssessmentTabs.activeTab.id = tab.id
                             this.assessmentId = null
+                            //                            this.router.hash = "#" + tab.url + "/" + this.assessmentId
+                        }
+                    })()
+                }
+            },
+            infoTabs: {
+                activeTab: {id: 1},
+                tabList: [
+                    new tabItem({id: 1, label: "Utbredelse", enabled:true}),
+                    new tabItem({id: 2, label: "Naturtyper", enabled:true})
+                ],
+                setActiveTab: (tab) => {
+                    action(() => {
+                        //console.log('xxx', this.selectAssessmentTabs.activeTab)
+                        //console.log('xxx', tab)
+                        if(tab.enabled) {
+                            this.infoTabs.activeTab.id = tab.id
+                            //this.assessmentId = null
+                            //                            this.router.hash = "#" + tab.url + "/" + this.assessmentId
+                        }
+                    })()
+                }
+            },
+            riskAssessmentTabs: {
+                activeTab: {id: 1},
+                tabList: [
+                    new tabItem({id: 1, label:"Invasjonspotensiale", enabled:true}),
+                    new tabItem({id: 2, label: "Økologisk effekt", enabled:true})
+                ],
+                setActiveTab: (tab) => {
+                    action(() => {
+                        //console.log('xxx', this.riskAssessmentTabs.activeTab)
+                        //console.log('xxx', tab)
+                        if(tab.enabled) {
+                            this.riskAssessmentTabs.activeTab.id = tab.id
+                            //this.assessmentId = null
                             //                            this.router.hash = "#" + tab.url + "/" + this.assessmentId
                         }
                     })()

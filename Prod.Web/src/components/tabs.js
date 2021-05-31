@@ -6,11 +6,12 @@ export default class Tabs extends React.Component {
 
     render(){
         const tabData = this.props.tabData
+        const clName = this.props.clName
         // console.log("aCTIVE KEY: " + tabData.activeTab.id)
         // console.log("Type: " + typeof(tabData.tabList))
 
         return (
-            <ul className="nav_menu faner" role="menu">
+            <ul className={clName} role="menu">
             {tabData.tabList.filter(tab =>
                     tab.visible
                 ).map((tab) => {

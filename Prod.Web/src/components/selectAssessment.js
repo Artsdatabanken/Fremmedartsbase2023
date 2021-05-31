@@ -8,7 +8,7 @@ import SelectAssessmentStatistics from './selectAssessmentStatistics';
 import auth from './authService';
 import config from '../config';
 // import catimg from '../cat.gif';
-import catimg from 'url:../cat.gif';
+import catimg from '../cat.gif';
 // const catimg = require('../cat.gif') 
 
 
@@ -20,6 +20,7 @@ export default class SelectAssessment extends Component {
         super()
     }
     @observable show = false;
+
     resetFilters = action((appState) => {
         appState.expertgroupCategoryCheckboxFilter = []
         appState.expertgroupAssessmentFilter = ""
@@ -63,8 +64,22 @@ export default class SelectAssessment extends Component {
         // const {appState, appState:{assessment}, appState:{assessmentTabs}} = this.props
         const {appState, appState:{assessment, koder}} = this.props
         // const {appState, appState:{assessment, koder}} = this.props
-        const rolle = appState.roleincurrentgroup // todo: implement real     
+        const rolle = appState.roleincurrentgroup // todo: implement real    
+        const labels = appState.codeLabels
+        const statusCodes = [
+            {
+                "text": "Risikovurdert",
+                "value": "vurdert"
+              },
+              {
+    
+                "text": "Ikke risikovurdert",
+                "value": "ikkevurdert"
+              }
+        ]
         document.title = "Velg art - Fremmede arter"
+
+        console.log(statusCodes)
 
      /*   let checkList = document.getElementById('list1');
         if (checkList) {checkList.getElementsByClassName('anchor')[0].onclick = function (evt) {
@@ -104,24 +119,34 @@ export default class SelectAssessment extends Component {
                     </tr>
                 </table>}                
                 <h4>Velg artsgruppe</h4>
-                <div className="selectAssessment">                   
-                    <Xcomp.StringEnum 
-                            forceSync
-                            observableValue={[appState, 'expertgroup']} 
-                            codes={appState.expertgroups}/>
-                </div> 
-                <div className="taxon">
-                    <li>
-                        <span style={{marginRight: '10px', marginTop: '5px'}}>Taksonomisk søk</span> 
-                        <Xcomp.String observableValue={[appState, 'expertgroupAssessmentFilter']}/>
-                        <button className="btn" style={{height: '35px', marginRight: '5px'}} title="Vis hjelpetekst" aria-label="Vis hjelpetekst" onClick= {action(() => {this.show === false ? this.show = true : this.show = false})}><HelpIcon /></button>
-                        {this.show && 
-                            <span style={{width: '60%', fontSize: 'small'}}>
-                                Søk i alle taksonomiske nivå, søket returnerer alle navn som inneholder innskrevet bokstavkombinasjon. "/abc" returnerer alle navn som starter med abc, og "!abc" returnerer alle slekter som starter på abc (søket fungerer som før).
-                            </span>
-                        }                       
-                    </li>
-                </div>   
+                <div style={{display: 'flex'}}>
+                    <div style={{float: 'left', width: '90%'}}>
+                        <div className="selectAssessment">                   
+                            <Xcomp.StringEnum 
+                                    forceSync
+                                    observableValue={[appState, 'expertgroup']} 
+                                    codes={appState.expertgroups}/>
+
+                            
+                        </div> 
+                
+                        <div className="taxon">
+                            <li>
+                                <span style={{marginRight: '10px', marginTop: '5px'}}>Taksonomisk søk</span> 
+                                <Xcomp.String observableValue={[appState, 'expertgroupAssessmentFilter']}/>
+                                <button className="btn" style={{height: '35px', marginRight: '5px'}} title="Vis hjelpetekst" aria-label="Vis hjelpetekst" onClick= {action(() => {this.show === false ? this.show = true : this.show = false})}><HelpIcon /></button>
+                                {this.show && 
+                                    <span style={{width: '60%', fontSize: 'small'}}>
+                                        Søk i alle taksonomiske nivå, søket returnerer alle navn som inneholder innskrevet bokstavkombinasjon. "/abc" returnerer alle navn som starter med abc, og "!abc" returnerer alle slekter som starter på abc (søket fungerer som før).
+                                    </span>
+                                }                       
+                            </li>                            
+                        </div> 
+                    </div> 
+                    <div style={{float: 'right'}}>
+                        <img src={catimg} style={{width: '150px'}}></img>
+                    </div> 
+                </div>
                 <h5 style={{fontWeight: 'bold', fontSize: '1rem'}}>Filtrer på:</h5>
                 <div className="selectFilter" style={{display: 'flex'}}>
                     <div>
@@ -144,11 +169,66 @@ export default class SelectAssessment extends Component {
                             <Xcomp.Bool observableValue={[appState, "fl2023Comments"]} label={"Filtrer på påbegynt/ferdigstilt, kommentarer og vurderingsansvarlig i nåværende risikovurdering"} />
                         </div>
                     </div>
+                    <div className="nav_menu">
+                        <div className="filters"><b>Type vurdering</b>
+                        <Xcomp.Radio
+                        // TO DO: change the code and observable value
+                            kode={"Risikovurdering"}
+                            label={"Risikovurdering"}
+                            observableValue={[appState, "assessmentType"]}/> 
+                        <Xcomp.Radio
+                        // TO DO: change the code
+                            kode={"Horisont-skanning"}
+                            label={"Horisont-skanning"}
+                            observableValue={[appState, "assessmentType"]}/> 
+                        </div>
+                        <div className="filters"><b>Artens status</b>
+                            <Xcomp.Bool observableValue={[appState, "vurdert"]} label={"Risikovurdert"} />
+                                <div style={{marginLeft: '10px'}}>
+                                    <Xcomp.Bool observableValue={[appState, "a"]} label={"Etablert etter 1800"} />
+                                    <Xcomp.Bool observableValue={[appState, "b"]} label={"Dørstokkart"} />
+                                    <Xcomp.Bool observableValue={[appState, "c"]} label={"Regionalt fremmed"} />
+                                    <Xcomp.Bool observableValue={[appState, "d"]} label={"Effekt uten etablering"} />
+                                </div>
+                            <Xcomp.Bool observableValue={[appState, "ikkevurdert"]} label={"Ikke risikovurdert"} />
+                            <div style={{marginLeft: '10px'}}>
+                                    <Xcomp.Bool observableValue={[appState, "e"]} label={"Etablert før 1800"} />
+                                    <Xcomp.Bool observableValue={[appState, "f"]} label={"Ingen etablering på 50 år"} />
+                                    <Xcomp.Bool observableValue={[appState, "g"]} label={"Tradisjonell produksjonsart"} />
+                                    <Xcomp.Bool observableValue={[appState, "h"]} label={"Deler moderartens status"} />
+                                    <Xcomp.Bool observableValue={[appState, "i"]} label={"Arten finnes ikke i Norge"} />
+                                    <Xcomp.Bool observableValue={[appState, "j"]} label={"Arten er ikke fremmed i Norge"} />
+                                    <Xcomp.Bool observableValue={[appState, "k"]} label={"Dørstokkart som ikke skal vurderes"} />
+                                    <Xcomp.Bool observableValue={[appState, "l"]} label={"Potensiell dørstokkart som ikke skal vurderes"} />
+                                </div>
+                        </div>
+                        <div className="filters"><b>Risikokategori</b>
+                                    <Xcomp.Bool observableValue={[appState, "SE"]} label={"Svært høy risiko (SE)"} />
+                                    <Xcomp.Bool observableValue={[appState, "HI"]} label={"Høy risiko (HI)"} />
+                                    <Xcomp.Bool observableValue={[appState, "PH"]} label={"Potensielt høy risiko (PH)"} />
+                                    <Xcomp.Bool observableValue={[appState, "LO"]} label={"Lav risiko (LO)"} />
+                                    <Xcomp.Bool observableValue={[appState, "NK"]} label={"Ingen kjent risiko (NK)"} />
+                                    <Xcomp.Bool observableValue={[appState, "NR"]} label={"Ikke vurdert (NR)"} />
+                        </div>
+                        <div className="filters"><b>Utslagsgivende kriterium</b>
+                                    <Xcomp.Bool observableValue={[appState, "kritA"]} label={"A"} />
+                                    <Xcomp.Bool observableValue={[appState, "kritB"]} label={"B"} />
+                                    <Xcomp.Bool observableValue={[appState, "kritC"]} label={"C"} />
+                                    <Xcomp.Bool observableValue={[appState, "kritD"]} label={"D"} />
+                                    <Xcomp.Bool observableValue={[appState, "kritE"]} label={"E"} />
+                                    <Xcomp.Bool observableValue={[appState, "kritF"]} label={"F"} />
+                                    <Xcomp.Bool observableValue={[appState, "kritG"]} label={"G"} />
+                                    <Xcomp.Bool observableValue={[appState, "kritH"]} label={"H"} />                                    
+                                    <Xcomp.Bool observableValue={[appState, "kritI"]} label={"I"} />
+                        </div>
+                    
+                </div>
                         
-                        <div className="comment" style={{marginTop: '170px', marginLeft: '10px'}}>
+                     {/*   <div className="comment" style={{marginLeft: '10px', display: 'flex'}}>
                             <Xcomp.Bool observableValue={[appState, "kunMine"]} label={"Vis mine vurderinger"} />
-                        </div> 
-                    </div>
+                            <input type="button" className="btn btn-primary" value="Last ned fil" onClick={() => window.open(config.apiUrl + '/api/ExpertGroupAssessments/export/' + appState.expertgroup)}></input>
+                    </div>  */}
+             </div>
                     {/* <div className="filters">
                         <span>Kategori</span>
                         <Xcomp.MultiselectArray
@@ -156,7 +236,11 @@ export default class SelectAssessment extends Component {
                                 codes={koder.rødlisteKategori2010}
                                 mode="check"/>
                     </div> */}
-                    <div>
+                    
+                </div>
+                
+                            
+
                     {/* <div className="filters" style={{marginRight: 0}}>
                         <span>Vurderingsstatus</span>
                         <div style={{display: 'flex'}}>
@@ -170,14 +254,8 @@ export default class SelectAssessment extends Component {
 
                         </div>                       
                     </div> */}
-                    <img src={catimg} style={{width: '280px'}}></img>
-                    <input type="button" className="btn btn-primary" style={{marginTop: '100px'}} value="Last ned fil" onClick={() => window.open(config.apiUrl + '/api/ExpertGroupAssessments/export/' + appState.expertgroup)}></input>
-                    </div>
-                </div>
-                
-                            
-
-
+                    
+                    
 
 
 
