@@ -86,6 +86,182 @@
               "value": "finished"
             }
         ],
+
+        "statusCodes": [
+            {
+                "text": "Risikovurdert",
+                "value": "vurdert"
+              },
+              {
+    
+                "text": "Ikke risikovurdert",
+                "value": "ikkevurdert"
+              }
+        ],
+
+        "assessmentType": [
+            {
+                "text": "Risikovurdering",
+                "value": "riskAssessment"
+              },
+              {
+    
+                "text": "Horisont-skanning",
+                "value": "horizonScanning"
+              }
+        ],
+        
+        "filterTypes": [
+            {
+                "text": "Filtrer på status, kategori og kriterier fra Fremmedartslista 2018",
+                "value": "FL2018"
+            },
+            {
+
+                "text": "Filtrer på status, kategori og kriterier fra nåværende vurdering",
+                "value": "FL2023"
+            },
+            {
+                "text": "Filtrer på påbegynt/ferdigstilt, kommentarer og vurderingsansvarlig i nåværende risikovurdering",
+                "value": "statusAndCommentFL2023"
+            }
+        ],
+
+        "assessedTypes": [
+            {
+                "text": "Etablert etter 1800",
+                "value": "establishedAfter1800"
+            },
+            {
+
+                "text": "Dørstokkart",
+                "value": "doorKnocker"
+            },
+            {
+                "text": "Regionalt fremmed",
+                "value": "regionallyAlien"
+            },
+            {
+                "text": "Effekt uten etablering",
+                "value": "effectWithoutEstablishment"
+            }
+        ],
+
+        "notAssessedTypes": [
+            {
+                "text": "Etablert før 1800",
+                "value": "establishedBefore1800"
+            },
+            {
+
+                "text": "Ingen etablering på 50 år",
+                "value": "notEstablishedFor50Years"
+            },
+            {
+                "text": "Tradisjonell produksjonsart",
+                "value": "traditionalProductionSpecies"
+            },
+            {
+                "text": "Deler moderartens status",
+                "value": "sharesMotherSpeciesStatus"
+            },
+            {
+                "text": "Arten finnes ikke i Norge",
+                "value": "notFoundInNorway"
+            },
+            {
+
+                "text": "Arten er ikke fremmed i Norge",
+                "value": "notAlienInNorway"
+            },
+            {
+                "text": "Dørstokkart som ikke skal vurderes",
+                "value": "notAssessedDoorKnocker"
+            },
+            {
+                "text": "Potensiell dørstokkart som ikke skal vurderes",
+                "value": "notAssessedPotentialDoorKnocker"
+            }
+        ],
+
+        "riskCategory": [
+            {
+            "text": "Svært høy risiko (SE)",
+            "value": "SE"
+            },
+            {
+
+            "text": "Høy risiko (HI)",
+            "value": "HI"
+            },
+            {
+
+            "text": "Potensielt høy risiko (PH)",
+            "value": "PH"
+            },
+            {
+
+            "text": "Lav risiko (LO)",
+            "value": "LO"
+            },
+            {
+
+            "text": "Ingen kjent risiko (NK)",
+            "value": "NK"
+            },
+            {
+
+            "text": "Ikke vurdert (NR)",
+            "value": "NR"
+            }
+        ],
+
+        "decisiveCriteria": [
+            {
+              "text": "A",
+              "value": "a"
+            },
+            {
+  
+              "text": "B",
+              "value": "b"
+            },
+            {
+  
+              "text": "C",
+              "value": "c"
+            },
+            {
+  
+              "text": "D",
+              "value": "d"
+            },
+            {
+  
+              "text": "E",
+              "value": "e"
+            },
+            {
+  
+              "text": "F",
+              "value": "f"
+            },
+            {
+  
+              "text": "G",
+              "value": "g"
+            },
+            {
+  
+              "text": "H",
+              "value": "h"
+            },
+            {
+  
+              "text": "I",
+              "value": "i"
+            }
+        ],
   
         "DoorKnocker": [
             {

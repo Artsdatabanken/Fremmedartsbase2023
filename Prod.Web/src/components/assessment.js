@@ -149,8 +149,8 @@ class AssessmentRoot extends Component {
                 <AssessmentDiff/>
                 :<h1>Oooops?? artinfotab:{assessmentTabs.activeTab.id}</h1>}
                 {assessmentTabs.activeTab.id != 12 && assessmentTabs.activeTab.id != 11 && assessment && assessment.evaluationStatus !== 'finished' &&     
-                <Xcomp.Button primary onClick= {() => {
-                    console.log("Save assessment")
+                <Xcomp.Button primary style={{marginTop: '10px', marginBottom: '10px'}} onClick= {() => {
+                    console.log("Save assessment");
                     appState.saveCurrentAssessment();
                   }}>Lagre</Xcomp.Button>}
             </div>

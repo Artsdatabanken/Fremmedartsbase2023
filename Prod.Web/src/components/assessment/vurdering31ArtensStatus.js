@@ -82,10 +82,11 @@ export default class vurdering31ArtensStatus extends React.Component {
                     <b>Er taksonet omfatta av vurderinga til et annet takson?  </b>
                     <Xcomp.Radio kode={"Connected"} observableValue={[vurdering.riskAssessment, "connected"]} label={"Taksonet vurderes sammen med et annet takson. "} />
                     <p>Oppgi navnet på dette taxonet:</p>
-                    <Xcomp.String observableValue={[appState, 'expertgroupAssessmentFilter']}/>
+                    <Xcomp.String observableValue={[vurdering.riskAssessment, 'connectedTaxon1']} placeholder={labels.General.searchSpecies} />
+                    
                     <Xcomp.Radio kode={"Shared"} observableValue={[vurdering.riskAssessment, "connected"]} label={"Taksonet vurderes ikke, men deler vurderinga til et annet takson. "} />
                     <p>Oppgi navnet på dette taxonet:</p>
-                    <Xcomp.String observableValue={[appState, 'expertgroupAssessmentFilter']}/>
+                    <Xcomp.String observableValue={[vurdering.riskAssessment, 'connectedTaxon2']} placeholder={labels.General.searchSpecies} />
                     <b>  
                     <Xcomp.Bool observableValue={[vurdering.riskAssessment, "bruksart"]} label={"Er arten en bruksart? "} /> 
                     </b>

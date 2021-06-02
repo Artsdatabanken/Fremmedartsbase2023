@@ -62,24 +62,14 @@ export default class SelectAssessment extends Component {
     })
     render() {
         // const {appState, appState:{assessment}, appState:{assessmentTabs}} = this.props
-        const {appState, appState:{assessment, koder}} = this.props
+        const {appState, appState:{assessment}} = this.props
         // const {appState, appState:{assessment, koder}} = this.props
         const rolle = appState.roleincurrentgroup // todo: implement real    
         const labels = appState.codeLabels
-        const statusCodes = [
-            {
-                "text": "Risikovurdert",
-                "value": "vurdert"
-              },
-              {
-    
-                "text": "Ikke risikovurdert",
-                "value": "ikkevurdert"
-              }
-        ]
+        const koder = appState.koder.Children
+         
         document.title = "Velg art - Fremmede arter"
 
-        console.log(statusCodes)
 
      /*   let checkList = document.getElementById('list1');
         if (checkList) {checkList.getElementsByClassName('anchor')[0].onclick = function (evt) {
@@ -151,6 +141,7 @@ export default class SelectAssessment extends Component {
                 <div className="selectFilter" style={{display: 'flex'}}>
                     <div>
                     <div className="filters"> 
+                    
                         {/*<span>Vurderinger med kommentar </span>
                         <div className="comment"><Xcomp.Bool observableValue={[appState, "withNewComments"]} label={"Nye kommentarer (på dine) (" + appState.antallNye + ")"}/></div>
                         <div className="comment"><Xcomp.Bool observableValue={[appState, "withComments"]} label={"Alle vurderinger med kommentar (" + appState.antallVurderinger + ")"}/></div>
@@ -158,68 +149,47 @@ export default class SelectAssessment extends Component {
                                 <Xcomp.Bool observableValue={[appState, "kunUbehandlede"]} label={"Kun ubehandlede kommentarer (" + appState.antallUbehandlede + ")"} /></div>
                         <div className="comment"><Xcomp.Bool observableValue={[appState, "withAutomaticNameChanges"]} label={"Automatisk oppdatert taksonomiendring (" + appState.antallNavnEndret + ")"}/></div>
                         <div className="comment"><Xcomp.Bool observableValue={[appState, "withPotentialTaxonChanges"]} label={"Taksonomiendring trenger avklaring (" + appState.antallTaxonEndring + ")"}/></div> */}
-
-                        <div className="comment" style={{marginLeft: '10px'}}>
-                            <Xcomp.Bool observableValue={[appState, "fl2018"]} label={"Filtrer på status, kategori og kriterier fra Fremmedartslista 2018"} />
-                        </div>
-                        <div className="comment" style={{marginLeft: '10px'}}>
-                            <Xcomp.Bool observableValue={[appState, "fl2023Status"]} label={"Filtrer på status, kategori og kriterier fra nåværende vurdering"} />
-                        </div>
-                        <div className="comment" style={{marginLeft: '10px'}}>
-                            <Xcomp.Bool observableValue={[appState, "fl2023Comments"]} label={"Filtrer på påbegynt/ferdigstilt, kommentarer og vurderingsansvarlig i nåværende risikovurdering"} />
-                        </div>
+                        <Xcomp.MultiselectArray
+                                observableValue={[appState, 'filterType']} 
+                                codes={koder.filterTypes}
+                                mode="check"/>                        
                     </div>
                     <div className="nav_menu">
                         <div className="filters"><b>Type vurdering</b>
                         <Xcomp.Radio
-                        // TO DO: change the code and observable value
-                            kode={"Risikovurdering"}
-                            label={"Risikovurdering"}
+                        // TO DO: change the observable value
+                            kode={koder.assessmentType[0].value}
+                            label={koder.assessmentType[0].text}
                             observableValue={[appState, "assessmentType"]}/> 
                         <Xcomp.Radio
-                        // TO DO: change the code
-                            kode={"Horisont-skanning"}
-                            label={"Horisont-skanning"}
+                        
+                            kode={koder.assessmentType[1].value}
+                            label={koder.assessmentType[1].text}
                             observableValue={[appState, "assessmentType"]}/> 
                         </div>
                         <div className="filters"><b>Artens status</b>
-                            <Xcomp.Bool observableValue={[appState, "vurdert"]} label={"Risikovurdert"} />
-                                <div style={{marginLeft: '10px'}}>
-                                    <Xcomp.Bool observableValue={[appState, "a"]} label={"Etablert etter 1800"} />
-                                    <Xcomp.Bool observableValue={[appState, "b"]} label={"Dørstokkart"} />
-                                    <Xcomp.Bool observableValue={[appState, "c"]} label={"Regionalt fremmed"} />
-                                    <Xcomp.Bool observableValue={[appState, "d"]} label={"Effekt uten etablering"} />
-                                </div>
-                            <Xcomp.Bool observableValue={[appState, "ikkevurdert"]} label={"Ikke risikovurdert"} />
-                            <div style={{marginLeft: '10px'}}>
-                                    <Xcomp.Bool observableValue={[appState, "e"]} label={"Etablert før 1800"} />
-                                    <Xcomp.Bool observableValue={[appState, "f"]} label={"Ingen etablering på 50 år"} />
-                                    <Xcomp.Bool observableValue={[appState, "g"]} label={"Tradisjonell produksjonsart"} />
-                                    <Xcomp.Bool observableValue={[appState, "h"]} label={"Deler moderartens status"} />
-                                    <Xcomp.Bool observableValue={[appState, "i"]} label={"Arten finnes ikke i Norge"} />
-                                    <Xcomp.Bool observableValue={[appState, "j"]} label={"Arten er ikke fremmed i Norge"} />
-                                    <Xcomp.Bool observableValue={[appState, "k"]} label={"Dørstokkart som ikke skal vurderes"} />
-                                    <Xcomp.Bool observableValue={[appState, "l"]} label={"Potensiell dørstokkart som ikke skal vurderes"} />
-                                </div>
+                            <Xcomp.Bool observableValue={[appState, "vurdert"]} label={koder.statusCodes[0].text} />
+                            <Xcomp.MultiselectArray
+                                observableValue={[appState, 'riskAssessedFilter']} 
+                                codes={koder.assessedTypes}
+                                mode="check"/>
+                            <Xcomp.Bool observableValue={[appState, "ikkevurdert"]} label={koder.statusCodes[1].text} />
+                            <Xcomp.MultiselectArray
+                                observableValue={[appState, 'riskNotAssessedFilter']} 
+                                codes={koder.notAssessedTypes}
+                                mode="check"/>
                         </div>
                         <div className="filters"><b>Risikokategori</b>
-                                    <Xcomp.Bool observableValue={[appState, "SE"]} label={"Svært høy risiko (SE)"} />
-                                    <Xcomp.Bool observableValue={[appState, "HI"]} label={"Høy risiko (HI)"} />
-                                    <Xcomp.Bool observableValue={[appState, "PH"]} label={"Potensielt høy risiko (PH)"} />
-                                    <Xcomp.Bool observableValue={[appState, "LO"]} label={"Lav risiko (LO)"} />
-                                    <Xcomp.Bool observableValue={[appState, "NK"]} label={"Ingen kjent risiko (NK)"} />
-                                    <Xcomp.Bool observableValue={[appState, "NR"]} label={"Ikke vurdert (NR)"} />
+                        <Xcomp.MultiselectArray
+                                observableValue={[appState, 'riskCategoryFilter']} 
+                                codes={koder.riskCategory}
+                                mode="check"/>
                         </div>
                         <div className="filters"><b>Utslagsgivende kriterium</b>
-                                    <Xcomp.Bool observableValue={[appState, "kritA"]} label={"A"} />
-                                    <Xcomp.Bool observableValue={[appState, "kritB"]} label={"B"} />
-                                    <Xcomp.Bool observableValue={[appState, "kritC"]} label={"C"} />
-                                    <Xcomp.Bool observableValue={[appState, "kritD"]} label={"D"} />
-                                    <Xcomp.Bool observableValue={[appState, "kritE"]} label={"E"} />
-                                    <Xcomp.Bool observableValue={[appState, "kritF"]} label={"F"} />
-                                    <Xcomp.Bool observableValue={[appState, "kritG"]} label={"G"} />
-                                    <Xcomp.Bool observableValue={[appState, "kritH"]} label={"H"} />                                    
-                                    <Xcomp.Bool observableValue={[appState, "kritI"]} label={"I"} />
+                        <Xcomp.MultiselectArray
+                                observableValue={[appState, 'decisiveCriteriaFilter']} 
+                                codes={koder.decisiveCriteria}
+                                mode="check"/>
                         </div>
                     
                 </div>
