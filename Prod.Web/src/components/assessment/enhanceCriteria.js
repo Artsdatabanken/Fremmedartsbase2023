@@ -536,32 +536,32 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
 
 function enhanceRiskAssessmentLevel(riskAssessment, labels) {
     extendObservable(riskAssessment, {
-        invasjonspotensialeLevel: () => {
+        _invasjonspotensialeLevel: () => {
             const result = RiskLevel.invasjonspotensiale(riskAssessment)
             return result;
         }
     });
     autorun(() => {
         //try {
-        const {level, decisiveCriteria, uncertaintyLevels} = riskAssessment.invasjonspotensialeLevel
-        console.log("invasjonspotensialeLevel changed: " + level)
-        riskAssessment.InvationPotentialLevel = level
-        riskAssessment.InvationPotentialUncertaintyLevels = uncertaintyLevels
+        const {level, decisiveCriteria, uncertaintyLevels} = riskAssessment._invasjonspotensialeLevel
+        console.log("_invasjonspotensialeLevel changed: " + level)
+        riskAssessment.invationPotentialLevel = level
+        riskAssessment.invationPotentialUncertaintyLevels = uncertaintyLevels
         //}
         //catch (e) {}
     });
     extendObservable(riskAssessment, {
-        ecoeffectLevel: () => {
+        _ecoeffectLevel: () => {
             const result = RiskLevel.ecoeffect(riskAssessment)
             return result;
         }
     });
     autorun(() => {
         //try {
-        const {level, decisiveCriteria, uncertaintyLevels} = riskAssessment.ecoeffectLevel
+        const {level, decisiveCriteria, uncertaintyLevels} = riskAssessment._ecoeffectLevel
         console.log("ecoeffectlevel changed: " + level)
-        riskAssessment.EcoEffectLevel = level
-        riskAssessment.EcoEffectUncertaintyLevels = uncertaintyLevels
+        riskAssessment.ecoEffectLevel = level
+        riskAssessment.ecoEffectUncertaintyLevels = uncertaintyLevels
         //}
         //catch (e) {}
     });
@@ -571,20 +571,24 @@ function enhanceRiskAssessmentLevel(riskAssessment, labels) {
 
 
 
-    // delete riskAssessment.riskLevel  //?????!
-    // extendObservable(riskAssessment, {
-    //     riskLevel: () => {
-    //         const result = RiskLevel.riskLevel(riskAssessment.invasjonspotensialeLevel, riskAssessment.ecoeffectLevel)
-    //         return result;
-    //     }
-    // });
+    delete riskAssessment.riskLevel  //?????!
+    extendObservable(riskAssessment, {
+        riskLevel: () => {
+            const result = RiskLevel.riskLevel(riskAssessment._invasjonspotensialeLevel, riskAssessment._ecoeffectLevel)
+            return result;
+        }
+    });
     
     
 
-    autorun(() => {
-        const level = RiskLevel.riskLevel(riskAssessment.invasjonspotensialeLevel, riskAssessment.ecoeffectLevel)
-        riskAssessment.riskLevel = level;
-    });
+    // autorun(() => {
+    //     console.log("autorun risklevel: " + JSON.stringify(Object.keys(riskAssessment)))
+
+
+
+    //     const level = RiskLevel.riskLevel(riskAssessment._invasjonspotensialeLevel, riskAssessment._ecoeffectLevel)
+    //     riskAssessment.riskLevel = level;
+    // });
  
 
 
