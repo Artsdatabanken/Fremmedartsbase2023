@@ -72,7 +72,71 @@ export default class vurdering31ArtensStatus extends React.Component {
                 {config.showPageHeaders
                     ? <h3>Artens status</h3>
                     : <br/>}
+                <div className="well">
+                    <b>Er arten fremmed? </b>
+                    <p>Ved usikkerhet velges svaret som det er sannsynlighetsovervekt for.</p>
+                    <Xcomp.Radio kode={"YES"} observableValue={[vurdering.riskAssessment, "isAlienSpecies"]} label={"JA"} />
+                    <Xcomp.Bool observableValue={[vurdering.riskAssessment, "isRegionallyAlien"]} label={"regionalt fremmed"} />
+                    <Xcomp.Radio kode={"NO"} observableValue={[vurdering.riskAssessment, "isAlienSpecies"]} label={"NEI"} />
+                    <Xcomp.HtmlString observableValue={[vurdering.riskAssessment, 'isAlien']}/>
+                    <b>Er taksonet omfatta av vurderinga til et annet takson?  </b>
+                    <Xcomp.Radio kode={"Connected"} observableValue={[vurdering.riskAssessment, "connected"]} label={"Taksonet vurderes sammen med et annet takson. "} />
+                    <p>Oppgi navnet på dette taxonet:</p>
+                    <Xcomp.String observableValue={[appState, 'expertgroupAssessmentFilter']}/>
+                    <Xcomp.Radio kode={"Shared"} observableValue={[vurdering.riskAssessment, "connected"]} label={"Taksonet vurderes ikke, men deler vurderinga til et annet takson. "} />
+                    <p>Oppgi navnet på dette taxonet:</p>
+                    <Xcomp.String observableValue={[appState, 'expertgroupAssessmentFilter']}/>
+                    <b>  
+                    <Xcomp.Bool observableValue={[vurdering.riskAssessment, "bruksart"]} label={"Er arten en bruksart? "} /> 
+                    </b>
+                    <b>Hvilken status har arten i Norge? </b>
+                    <p>Merk av den høyeste (øverste) kategorien som oppfylles av arten i Norge i dag:</p>
+                    <ul>
+                        <li>Arten er etablert (C3–E)</li>
+                        <li>Arten produserer levedyktig avkom utendørs og uten hjelp og kan overleve vinteren (C2)</li>
+                        <li>Arten kan overleve vinteren utendørs og uten hjelp (C1)</li>
+                        <li>Arten er dokumentert fra norsk natur (C0)</li>
+                        <li>Arten forekommer utendørs på sitt eget produksjonsareal (B2)</li>
+                        <li>Arten forekommer innendørs eller i lukkede installasjoner (B1)</li>
+                        <li>Arten forekommer ikke i Norge (A)</li>
+                    </ul>
+                    <p>Koder i parentes angir «etableringskategoriene» ifølge internasjonal standardisering (Blackburn mfl. 2011).</p>
 
+                    <b>Var arten etablert per 1800? </b>
+                    <p>Ved usikkerhet avgjør sannsynlighetsovervekt.</p>
+                    <p>Beskriv eventuell usikkerhet vedrørende artens etableringstidspunkt:</p>
+                    <Xcomp.HtmlString observableValue={[vurdering.riskAssessment, 'establishedBefore1800']}/>
+                    <b>                        
+                        <Xcomp.Bool observableValue={[vurdering.riskAssessment, "wrongAssessed"]} label={"Har arten tidligere vært feilbestemt? "} />  
+                    </b>
+                    <b>Har arten </b>
+                    <Xcomp.Radio kode={"VærtFremmed"} observableValue={[vurdering.riskAssessment, "changedFromAlien"]} label={"vært fremmed, men har nå etablert minst én stedegen bestand"} />
+                    <Xcomp.Radio kode={"VærtAntattFremmed"} observableValue={[vurdering.riskAssessment, "changedFromAlien"]} label={"vært antatt å være fremmed, men kunnskapsgrunnlaget/tolkninga er endra"} />
+                    <p>Beskriv hva som ligger til grunn for endringa i artens status:</p>
+                    <Xcomp.HtmlString observableValue={[vurdering.riskAssessment, 'changedAssessment']}/>
+                    <br/>
+                    <h2>Konklusjon</h2>
+                    <p>Arten skal risikovurderes.</p>
+                    <p>Arten skal ikke risikovurderes.</p>
+                    <br/>
+                    <h3>Første observasjon av arten</h3>
+                    <p>Angi årstallet for første observasjon i Norge av</p>		
+                    <ul>
+                        <li>individ innendørs (hvis relevant): </li>
+                        <li>selvstendig reproduksjon innendørs (hvis relevant):</li>
+                        <li>individ på artens eget produksjonsareal utendørs: </li>
+                        <li>selvstendig reproduksjon på artens eget produksjonsareal utendørs:</li>
+                        <li>individ i norsk natur:</li>
+                        <li>selvstendig reproduksjon i norsk natur:</li>
+                        <li>etablering i norsk natur:</li>
+                    </ul>				
+                    <p>Hvis usikkerheten er større enn ± 5 år, sett et kryss til høyre for årstallet.</p>
+
+                    <p>Om arten tidligere har blitt funnet i Norge, beskriv tidspunkt og status:</p>
+                    <p>Eventuelle utdypende opplysninger om observasjoner av arten, f.eks. om den tidligere er funnet i norsk natur:</p>
+                    <p>Eventuelle utdypende opplysninger om observasjoner av arten, f.eks. om den tidligere er funnet reproduserende i norsk natur:</p>
+                    <Xcomp.HtmlString observableValue={[vurdering.riskAssessment, 'furtherInfo']}/>
+                </div>
                {/* <Xcomp.Radio
                      kode={koder.AlienSpeciesCategory[0]}
                     //kode={labels.AlienSpeciesCategory[0]}

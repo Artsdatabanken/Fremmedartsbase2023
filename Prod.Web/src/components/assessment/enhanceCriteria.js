@@ -604,7 +604,7 @@ function enhanceRiskAssessmentLevel(riskAssessment, labels) {
     autorun(() => {
         const {level, decisiveCriteriaLabel} = riskAssessment.riskLevel
         console.log("risklevel changed: " + level + " | " + decisiveCriteriaLabel)
-        const levtxt = level.toString()
+        //const levtxt = level.toString()
 
 
 
@@ -614,8 +614,8 @@ function enhanceRiskAssessmentLevel(riskAssessment, labels) {
         
         
         
-        riskAssessment.RiskLevelCode = labels.RiskLevelCode[levtxt]
-        riskAssessment.RiskLevelText = labels.RiskLevelText[levtxt]
+       // riskAssessment.RiskLevelCode = labels.RiskLevelCode[levtxt]
+        //riskAssessment.RiskLevelText = labels.RiskLevelText[levtxt]
         riskAssessment.DecisiveCriteria = decisiveCriteriaLabel
     });
 }

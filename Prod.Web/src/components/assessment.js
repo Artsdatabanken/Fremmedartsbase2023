@@ -16,6 +16,9 @@ import Vurdering51Invasjonspotensiale from './assessment/vurdering51Invasjonspot
 import Vurdering52Okologiskeffekt from './assessment/vurdering52Okologiskeffekt'
 import Vurdering53GeografiskVariasjon from './assessment/vurdering53GeografiskVariasjon'
 import Vurdering54Klimaeffekter from './assessment/vurdering54Klimaeffekter'
+import VurderingSummary from './assessment/vurderingSummary'
+import VurderingReferences from './assessment/vurderingReferences'
+import VurderingComments from './assessment/vurderingComments'
 import Vurdering55Kriteriedokumentasjon from './assessment/vurdering55Kriteriedokumentasjon'
 
 
@@ -31,7 +34,6 @@ import Vurdering55Kriteriedokumentasjon from './assessment/vurdering55Kriteriedo
 // import AssessmentE from './assessmentE'
 import AssessmentDiff from './assessmentDiff'
 // import AssessmentOverview from './assessmentOverview'
-// import AssessmentReferences from './assessmentReferences'
 // import AssessmentComments from './assessmentComments'
 import AssessmentMove from './assessmentMove'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
@@ -125,11 +127,11 @@ class AssessmentRoot extends Component {
                 : assessmentTabs.activeTab.id === 7  ?
                 <Vurdering53GeografiskVariasjon/>
                 : assessmentTabs.activeTab.id === 8  ?
-               <h1>Her kommer oppsummering</h1>
+               <VurderingSummary/>
                 : assessmentTabs.activeTab.id === 9  ?
-                <h1>Her kommer referanser</h1>
+                <VurderingReferences/>
                 : assessmentTabs.activeTab.id === 10  ?
-                <h1>Her kommer kommentarer</h1>
+                <VurderingComments/>
                 //: assessmentTabs.activeTab.id === 11  ?
                 //<Vurdering55Kriteriedokumentasjon kritDocInfo={{}}/>
 
