@@ -110,7 +110,7 @@
                 "value": "horizonScanning"
               }
         ],
-        
+
         "filterTypes": [
             {
                 "text": "Filtrer på status, kategori og kriterier fra Fremmedartslista 2018",
@@ -158,7 +158,7 @@
                 "value": "notEstablishedFor50Years"
             },
             {
-                "text": "Tradisjonell produksjonsart",
+                "text": "Bruksart (tidligere produksjonsart)",
                 "value": "traditionalProductionSpecies"
             },
             {
