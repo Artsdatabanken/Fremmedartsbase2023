@@ -31,38 +31,6 @@ async function parseJSON(response) {
 
 function handleApiError(error, url) {
     console.log("error:" + JSON.stringify(error) + "  url: " + url);
-
-    // error.url = url
-    // const exobj = new Error("Could not fetch " + url)
-    // exobj.name = "apiService_handleApiError"
-    // exobj.stack = error.stack.toString()
-    //     // message: "test apiService.handleApiError",
-    //     // stack: error.stack,
-    //     // error: error
-    // // }
-    // console.log(error.stack)
-    // const log = {
-    //     errorContext: "apiService.handleApiError",
-    //     message: error.toString(),
-    //     build: "X", // BUILD_NUMBER,
-    //     version: "Y", // VERSION,
-    //     commitHash: "Z", // COMMITHASH,
-    //     userAgent: navigator.userAgent,
-    //     url: url
-    // }
-    // if (error.stack) {
-    //     log.stack = error
-    //         .stack
-    //         .replace(`${log.message}\n`, '')
-    // }
-    // // log.roles = user.roles
-    // // log.userName = user.userName
-    // // appInsights.trackException(exobj, "apiService.handleApiError", log)
-
-    // const xhr = new XMLHttpRequest()
-    // xhr.open('POST', `${config.apiUrl}/api/log`, true)
-    // xhr.setRequestHeader("Content-type", "application/json");
-    // xhr.send(JSON.stringify(log))
 }
 
 export function loadData(resourceId, callback, errorCallback) {
