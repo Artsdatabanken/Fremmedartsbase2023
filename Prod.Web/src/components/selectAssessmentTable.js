@@ -14,6 +14,10 @@ export default class SelectAssessmentTable extends Component {
         //console.log("ROLLE" + JSON.stringify(rolle))
         const labels = appState.codeLabels; // assessmentModel.kodeLabels
         const userName = auth.userName
+
+
+        //console.log("* * * * USERNAME: " + userName + " * * * * *")
+
         // if (ekspertgruppeArter.error)
         //     return (
         //         <div style={{

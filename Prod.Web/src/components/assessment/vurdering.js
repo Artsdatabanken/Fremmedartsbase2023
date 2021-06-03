@@ -84,7 +84,7 @@ export default class Vurdering extends React.Component {
     }
 
     isReadOnly() {
-        // const isreadonly = this.props.fabModel.vurdering.LockedForEditByUser !== user.userName
+        // const isreadonly = this.props.fabModel.vurdering.LockedForEditByUser !== auth.userName
         const isreadonly = false
         return isreadonly || this.isFinnished()
     }

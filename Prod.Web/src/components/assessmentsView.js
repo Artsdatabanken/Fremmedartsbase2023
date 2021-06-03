@@ -36,7 +36,7 @@ export default class AssessmentsView extends React.Component {
         // console.log("rolle " + JSON.stringify(this.props.rolle))
         return (
             <div>
-            {appState.ekspertgruppe != null && ((appState.ekspertgruppeRolle && appState.ekspertgruppeRolle.Leder) || user.isAdministrator ) ?
+            {appState.ekspertgruppe != null && ((appState.ekspertgruppeRolle && appState.ekspertgruppeRolle.Leder) || auth.isAdmin ) ?
                 <div>
 -                <h1><i>{assessment.vurdertVitenskapeligNavn}</i></h1>
                     <Tabs tabData={selectAssessmentTabs} />

@@ -28,15 +28,8 @@ export default class AssessmentComments extends Component {
         
         // alert('Kommentar er sendt! ' + this.comment.newComment);
         postData(this.baseUrl + this.assessmentId, {
-            // id: 1,
             assessmentId: this.assessmentId,
-            comment: newComment,
-            // commentDate: "2020-03-24T00:00:00+01:00",
-            // user: auth.userName,
-            // closed: false,
-            // closedBy: null,
-            // closedDate: "0001-01-01T00:00:00",
-            // isDeleted: false
+            comment: newComment
         }, ok => { if (ok) { 
             console.log('kommentert ')
             // clear new comment box

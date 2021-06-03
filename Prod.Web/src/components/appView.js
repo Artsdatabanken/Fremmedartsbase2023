@@ -6,7 +6,7 @@ import { observer, inject } from 'mobx-react';
 import DevTool from 'mobx-react-devtools';
 import LoadingHoc from './LoadingHoc'
 
-import Assessment from './assessment';
+import Assessment from './assessment/assessment';
 import AssessmentsView from './assessmentsView';
 import AssessmentNew from './assessmentNew'
 import ExpertGroupAdmin from './expertgroupadmin';
@@ -78,22 +78,20 @@ export default class AppView extends React.Component {
         const {appState} = this.props;
         const labels = appState.codeLabels.AppHeader
 
-        console.log("appvieoaded" + appState.isServicesReady)
-        console.log("appviewisServicesReady" + this.props.isServicesReady)
-        console.log("AppView: " + appState.viewMode )
+        // console.log("appvieoaded" + appState.isServicesReady)
+        // console.log("appviewisServicesReady" + this.props.isServicesReady)
+        // console.log("AppView: " + appState.viewMode )
 
-        console.log("AppView render->")
+        // console.log("AppView render->")
 
 
         function lagreVurdering() {
             appState.lagreVurdering(appState)
         }
         function sjekkForEndringerOgGiAdvarsel(){
-                // var isLockedByMe = appState.assessment && appState.assessment.lockedForEditByUser === auth.user.name
                 var isdirty = appState.isDirty
                 var skriver = !!appState.roleincurrentgroup && appState.roleincurrentgroup.skriver
                 var ok = true;
-                // if (isLockedByMe && isdirty && skriver) {
                 if (isdirty && skriver) {
                     ok = window.confirm("Det er endringer på vurderingen - ønsker du virkelig å gå bort fra den uten å lagre?")
                 }
@@ -103,7 +101,7 @@ export default class AppView extends React.Component {
                 }
         }
 
-        const isLockedByMe = appState.assessment && appState.assessment.lockedForEditByUser === auth.user.name
+        const isLockedByMe = appState.assessment && appState.assessment.lockedForEditByUser === auth.userName
         const isFinished = appState.assessment && appState.assessment.evaluationStatus && appState.assessment.evaluationStatus === "finished"
 
         return (
@@ -170,7 +168,8 @@ export default class AppView extends React.Component {
                     <li onClick={action(() => appState.viewMode = "newassessment")} disabled={!auth.isLoggedIn}><b>Legg til ny art</b></li>  
                     <li role="presentation" onClick={action(() => appState.viewMode = "administrasjon")}><b>Administrasjon</b></li>
                     <li role="presentation"><b>Retningslinjer</b></li>
-                    <li role="presentation" disabled={!auth.isLoggedIn} onClick={auth.logout}><b>&nbsp; {auth.user ? "Logg ut " : ""} {(auth.user ? auth.user.profile.name : "")} </b></li>
+                    {/* <li role="presentation" disabled={!auth.isLoggedIn} onClick={auth.logout}><b>&nbsp; {auth.user ? "Logg ut " : ""} {(auth.user ? auth.user.profile.name : "")} </b></li> */}
+                    <li role="presentation" disabled={!auth.isLoggedIn} onClick={auth.logout}><b>&nbsp; {auth.isLoggedIn ? "Logg ut " : ""} {auth.userName} </b></li>
                     
                 </ul>
     }
@@ -199,7 +198,7 @@ export default class AppView extends React.Component {
                     {auth.isAdmin &&
                     <li role="presentation" onClick={action(() => appState.viewMode = "administrasjon")}><b>{labels.administration}</b></li>
                     }
-                <li role="presentation" disabled={!auth.isLoggedIn} onClick={auth.logout}><b>&nbsp; {auth.user ? labels.logout : ""} {(auth.user ? auth.user.profile.name : "")} </b></li>
+                <li role="presentation" disabled={!auth.isLoggedIn} onClick={auth.logout}><b>&nbsp; {auth.user ? labels.logout : ""} {auth.userName} </b></li>
                 </ul> */}
                 {!auth.isLoggedIn
                     ? <Login authModel={appState.authModel}/>

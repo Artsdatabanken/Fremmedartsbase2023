@@ -162,14 +162,14 @@ export default class AssessmentReferences extends Component {
             // }
             // storeData("api/referansesok/", ref, this.updateSearchResult.bind(this), 'post')
             
-           // if (this.assessment && user.isAuthenticated)
+           // if (this.assessment && auth.isLoggedIn)
             this.doReferenceSearch()
         })
         autorun(() => {
             if(this.valgtReferanseId) {
                // loadData(config.referenceApiUrl + "api/References/" + this.valgtReferanseId, this.updateValgtReferanse)
             }
-          // if (this.assessment && user.isAuthenticated)
+          // if (this.assessment && auth.isLoggedIn)
             this.doReferenceSearch()        
         })
     }
