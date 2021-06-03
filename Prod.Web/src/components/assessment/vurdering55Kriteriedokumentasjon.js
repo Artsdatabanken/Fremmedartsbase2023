@@ -58,10 +58,10 @@ export default class Vurdering55Kriteriedokumentasjon extends React.Component {
                         <div>
                             <Risikomatrise
                                 labels={critlabels}
-                                invasjonspotensiale={riskAssessment.invasjonspotensialeLevel.level}
-                                ecoeffect={riskAssessment.ecoeffectLevel.level}
-                                invasjonUncertaintyLevels={riskAssessment.invasjonspotensialeLevel.uncertaintyLevels}
-                                ecoeffectUncertaintyLevels={riskAssessment.ecoeffectLevel.uncertaintyLevels}/>
+                                invasjonspotensiale={riskAssessment._invasjonspotensialeLevel.level}
+                                ecoeffect={riskAssessment._ecoeffectLevel.level}
+                                invasjonUncertaintyLevels={riskAssessment._invasjonspotensialeLevel.uncertaintyLevels}
+                                ecoeffectUncertaintyLevels={riskAssessment._ecoeffectLevel.uncertaintyLevels}/>
                             <h3>{riskAssessment.RiskLevelText} <b> {riskAssessment.riskLevelCode}</b></h3>
                             <h4>{critlabels.decisiveCriteria}:
                                 <b> {riskAssessment.decisiveCriteria}</b>

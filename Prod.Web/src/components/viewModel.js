@@ -307,47 +307,18 @@ class ViewModel {
             console.log("viewMode: " + this.viewMode)
         });
 
-        // autorun(() => {
-        //     const s = toJS(this.expertgroupAssessmentListStatistic)
-        //     console.log("Status: " + JSON.stringify(s))
-        // });
-
-
-
-
-        // autorun(() => {
-        //     if (user.isAuthenticated) {
-        //         //console.log("x: " + this.assessmentId + " " + typeof(this.assessmentId) + " " + (this.assessment ? this.assessment.id : "nix"))
-        //         //console.trace()
-        //         if (this.assessmentId) {
-        //             // console.log("hentVurdering: " + this.assessmentId + " " + typeof(this))
-        //             this.setCurrentAssessment(this.assessmentId)
-        //         } else {
-        //             this.setCurrentAssessment(null)
-        //             action(() => this.viewMode = "choosespecie")
-        //         }
-        //     } else {
-        //         this.setCurrentAssessment(null)
-        //         action(() => this.viewMode = "choosespecie")
-        //     }
-        // });
-
+       
         reaction(() => this.assessmentId,
             assessmentId => {
-                //if (user.isAuthenticated) {
                 console.log("x: " + this.assessmentId + " " + typeof(this.assessmentId) + " " + (this.assessment ? this.assessment.id : "nix"))
                 if (assessmentId) {
-                    // console.log("hentVurdering: " + this.assessmentId + " " + typeof(this))
                     this.setCurrentAssessment(assessmentId)
                 } else {
                     this.setCurrentAssessment(null)
                     action(() => this.viewMode = "choosespecie")
                 }
-                // } else {
-                //     this.setCurrentAssessment(null)
-                //     action(() => this.viewMode = "choosespecie")
-                // }
-            });
+            }
+        );
 
 
         autorun(() => {
@@ -403,8 +374,7 @@ class ViewModel {
         // enhanceWithRiskEvaluation({}); // this.assessment, this.kritHelpers);
 
         // console.log("assessmentId:" + this.assessmentId)
-        // console.log("isAuthenticated:" + user.isAuthenticated())
-
+  
         extendObservable(this, {
             assessmentTabs: {
                 activeTab: {id: 0},
@@ -537,7 +507,7 @@ class ViewModel {
 
     @computed get isLockedByMe() {
         if (!this.assessment) return false;
-        return this.assessment.lockedForEditByUser === auth.user.name;
+        return this.assessment.lockedForEditByUser === auth.userName;
     };
     
     @computed get isFinnished() {
@@ -1120,12 +1090,12 @@ class ViewModel {
 
     @action finishassessment(statusaction, assessment) {
         let status = statusaction === "finish" ? "finished" : statusaction === "unfinish" ? "inprogress" : ""
-        //let username = statusaction === "unfinish" ? auth.userName : null
+        let username = statusaction === "unfinish" ? auth.userName : null
         let now = Date.now().toString()
         transaction(() => {
             assessment.evaluationStatus = status
             assessment.lockedForEditAt = now
-            assessment.lockedForEditByUser = null // username
+            assessment.lockedForEditByUser = username
             assessment.lastUpdatedOn = now
         })
 
