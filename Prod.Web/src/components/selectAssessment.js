@@ -8,7 +8,7 @@ import SelectAssessmentStatistics from './selectAssessmentStatistics';
 import auth from './authService';
 import config from '../config';
 // import catimg from '../cat.gif';
-import catimg from 'url:../cat.gif';
+import catimg from '../cat.gif';
 // const catimg = require('../cat.gif') 
 
 
@@ -154,7 +154,35 @@ export default class SelectAssessment extends Component {
                                 codes={koder.filterTypes}
                                 mode="check"/>                        
                     </div>
-                    <div className="nav_menu">
+
+                    {appState.filterType.indexOf('FL2018') > -1 &&  <div className="nav_menu">                        
+                        <div className="filters"><b>Artens status</b>
+                            <Xcomp.Bool observableValue={[appState, "vurdert"]} label={koder.statusCodes[0].text} />
+                            <Xcomp.MultiselectArray
+                                observableValue={[appState, 'riskAssessedFilter']} 
+                                codes={koder.assessedTypes}
+                                mode="check"/>
+                            <Xcomp.Bool observableValue={[appState, "ikkevurdert"]} label={koder.statusCodes[1].text} />
+                            <Xcomp.MultiselectArray
+                                observableValue={[appState, 'riskNotAssessedFilter']} 
+                                codes={koder.notAssessedTypes2018}
+                                mode="check"/>
+                        </div>
+                        <div className="filters"><b>Risikokategori</b>
+                        <Xcomp.MultiselectArray
+                                observableValue={[appState, 'riskCategoryFilter']} 
+                                codes={koder.riskCategory}
+                                mode="check"/>
+                        </div>
+                        <div className="filters"><b>Utslagsgivende kriterium</b>
+                        <Xcomp.MultiselectArray
+                                observableValue={[appState, 'decisiveCriteriaFilter']} 
+                                codes={koder.decisiveCriteria}
+                                mode="check"/>
+                        </div>
+                    
+                </div> }
+                   {appState.filterType.indexOf('FL2023') > -1 &&  <div className="nav_menu">
                         <div className="filters"><b>Type vurdering</b>
                         <Xcomp.Radio
                         // TO DO: change the observable value
@@ -192,7 +220,35 @@ export default class SelectAssessment extends Component {
                                 mode="check"/>
                         </div>
                     
-                </div>
+                </div> }
+
+                {appState.filterType.indexOf('statusAndCommentFL2023') > -1 &&  <div className="nav_menu">
+                        <div className="filters"><b>Vurderingsstatus</b>                            
+                            <Xcomp.MultiselectArray
+                                observableValue={[appState, 'workStatus']} 
+                                codes={koder.workStatus}
+                                mode="check"/>                            
+                        </div>
+                        <div className="filters"><b>Vurderinger med kommentarer fra ADB</b>
+                        <p>Nye kommentarer
+                        <Xcomp.MultiselectArray
+                                observableValue={[appState, 'newComments']} 
+                                codes={koder.newComments}
+                                mode="check"/>
+                        </p>
+                        <Xcomp.MultiselectArray
+                                observableValue={[appState, 'otherComments']} 
+                                codes={koder.comments}
+                                mode="check"/>
+                        </div>
+                        <div className="filters"><b>Vurderingsansvarlig</b>
+                        <Xcomp.MultiselectArray
+                                observableValue={[appState, 'responsible']} 
+                                codes={koder.responsible}
+                                mode="check"/>
+                        </div>
+                    
+                </div> }
                         
                      {/*   <div className="comment" style={{marginLeft: '10px', display: 'flex'}}>
                             <Xcomp.Bool observableValue={[appState, "kunMine"]} label={"Vis mine vurderinger"} />

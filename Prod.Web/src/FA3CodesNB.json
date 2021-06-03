@@ -127,6 +127,51 @@
             }
         ],
 
+        "newComments": [
+            {
+                "text": "på mine",
+                "value": "mine"
+            },
+            {
+
+                "text": "alle",
+                "value": "all"
+            }
+        ],
+
+        "comments": [
+            {
+                "text": "Alle vurderinger med kommentarer",
+                "value": "allAssessmentsWithComments"
+            },
+            {
+
+                "text": "Automatisk oppdatert taksonomiendring",
+                "value": "autoTaxonChange"
+            },
+            {
+
+                "text": "Taksonomiendring trenger oppdatering",
+                "value": "taxonChangeRequiresUpdate"
+            }
+        ],
+
+        "responsible": [
+            {
+                "text": "Per",
+                "value": "Per"
+            },
+            {
+
+                "text": "Pål",
+                "value": "Pål"
+            },
+            {
+                "text": "Astrid",
+                "value": "Astrid"
+            }
+        ],
+
         "assessedTypes": [
             {
                 "text": "Etablert etter 1800",
@@ -181,6 +226,39 @@
             {
                 "text": "Potensiell dørstokkart som ikke skal vurderes",
                 "value": "notAssessedPotentialDoorKnocker"
+            }
+        ],
+
+        "notAssessedTypes2018": [
+            {
+                "text": "Etablert før 1800",
+                "value": "establishedBefore1800"
+            },
+            {
+
+                "text": "Ingen etablering på 50 år",
+                "value": "notEstablishedFor50Years"
+            },
+            {
+                "text": "Bruksart (tidligere produksjonsart)",
+                "value": "traditionalProductionSpecies"
+            },
+            {
+                "text": "Deler moderartens status",
+                "value": "sharesMotherSpeciesStatus"
+            },
+            {
+                "text": "Arten finnes ikke i Norge",
+                "value": "notFoundInNorway"
+            },
+            {
+
+                "text": "Arten er ikke fremmed i Norge",
+                "value": "notAlienInNorway"
+            },
+            {
+                "text": "Dørstokkart som ikke skal vurderes",
+                "value": "notAssessedDoorKnocker"
             }
         ],
 
