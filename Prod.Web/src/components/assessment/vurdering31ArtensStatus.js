@@ -78,6 +78,7 @@ export default class vurdering31ArtensStatus extends React.Component {
                     <Xcomp.Radio kode={"YES"} observableValue={[vurdering.riskAssessment, "isAlienSpecies"]} label={"JA"} />
                     <Xcomp.Bool observableValue={[vurdering.riskAssessment, "isRegionallyAlien"]} label={"regionalt fremmed"} />
                     <Xcomp.Radio kode={"NO"} observableValue={[vurdering.riskAssessment, "isAlienSpecies"]} label={"NEI"} />
+                    <p>Beskriv eventuell usikkerhet vedrørende artens status som fremmed:</p>
                     <Xcomp.HtmlString observableValue={[vurdering.riskAssessment, 'isAlien']}/>
                     <b>Er taksonet omfatta av vurderinga til et annet takson?  </b>
                     <Xcomp.Radio kode={"Connected"} observableValue={[vurdering.riskAssessment, "connected"]} label={"Taksonet vurderes sammen med et annet takson. "} />
@@ -92,15 +93,15 @@ export default class vurdering31ArtensStatus extends React.Component {
                     </b>
                     <b>Hvilken status har arten i Norge? </b>
                     <p>Merk av den høyeste (øverste) kategorien som oppfylles av arten i Norge i dag:</p>
-                    <ul>
-                        <li>Arten er etablert (C3–E)</li>
-                        <li>Arten produserer levedyktig avkom utendørs og uten hjelp og kan overleve vinteren (C2)</li>
-                        <li>Arten kan overleve vinteren utendørs og uten hjelp (C1)</li>
-                        <li>Arten er dokumentert fra norsk natur (C0)</li>
-                        <li>Arten forekommer utendørs på sitt eget produksjonsareal (B2)</li>
-                        <li>Arten forekommer innendørs eller i lukkede installasjoner (B1)</li>
-                        <li>Arten forekommer ikke i Norge (A)</li>
-                    </ul>
+                    
+                    <Xcomp.Radio kode={"C3–E"} observableValue={[vurdering.riskAssessment, "speciesStatus"]} label={"Arten er etablert (C3–E)"} />
+                    <Xcomp.Radio kode={"C2"} observableValue={[vurdering.riskAssessment, "speciesStatus"]} label={"Arten produserer levedyktig avkom utendørs og uten hjelp og kan overleve vinteren (C2)"} />
+                    <Xcomp.Radio kode={"C1"} observableValue={[vurdering.riskAssessment, "speciesStatus"]} label={"Arten kan overleve vinteren utendørs og uten hjelp (C1)"} />
+                    <Xcomp.Radio kode={"C0"} observableValue={[vurdering.riskAssessment, "speciesStatus"]} label={"Arten er dokumentert fra norsk natur (C0)"} />
+                    <Xcomp.Radio kode={"B2"} observableValue={[vurdering.riskAssessment, "speciesStatus"]} label={"Arten forekommer utendørs på sitt eget produksjonsareal (B2)"} />
+                    <Xcomp.Radio kode={"B1"} observableValue={[vurdering.riskAssessment, "speciesStatus"]} label={"Arten forekommer innendørs eller i lukkede installasjoner (B1)"} />
+                    <Xcomp.Radio kode={"A"} observableValue={[vurdering.riskAssessment, "speciesStatus"]} label={"Arten forekommer ikke i Norge (A)"} />
+                        
                     <p>Koder i parentes angir «etableringskategoriene» ifølge internasjonal standardisering (Blackburn mfl. 2011).</p>
 
                     <b>Var arten etablert per 1800? </b>
@@ -121,15 +122,57 @@ export default class vurdering31ArtensStatus extends React.Component {
                     <p>Arten skal ikke risikovurderes.</p>
                     <br/>
                     <h3>Første observasjon av arten</h3>
-                    <p>Angi årstallet for første observasjon i Norge av</p>		
-                    <ul>
-                        <li>individ innendørs (hvis relevant): </li>
-                        <li>selvstendig reproduksjon innendørs (hvis relevant):</li>
-                        <li>individ på artens eget produksjonsareal utendørs: </li>
-                        <li>selvstendig reproduksjon på artens eget produksjonsareal utendørs:</li>
-                        <li>individ i norsk natur:</li>
-                        <li>selvstendig reproduksjon i norsk natur:</li>
-                        <li>etablering i norsk natur:</li>
+                    <p>Angi årstallet for første observasjon i Norge av... </p>		
+                    <ul className="listOfYears">
+                        <li>individ innendørs (hvis relevant): 
+                        <Xcomp.Number                            
+                            observableValue={[vurdering.riskAssessment, "yearFirstIndoors"]}
+                            integer
+                        />    
+                        <Xcomp.Bool observableValue={[vurdering.riskAssessment, "yearFirstIndoorsInsecure"]} /> 
+                         </li>
+                        <li>selvstendig reproduksjon innendørs (hvis relevant):
+                        <Xcomp.Number                            
+                            observableValue={[vurdering.riskAssessment, "yearFirstReproductionIndoors"]}
+                            integer
+                        />    
+                        <Xcomp.Bool observableValue={[vurdering.riskAssessment, "yearFirstReproductionIndoorsInsecure"]} /> 
+                        </li>
+                        <li>individ på artens eget produksjonsareal utendørs: 
+                        <Xcomp.Number                            
+                            observableValue={[vurdering.riskAssessment, "yearFirstProductionOutdoors"]}
+                            integer
+                        />    
+                        <Xcomp.Bool observableValue={[vurdering.riskAssessment, "yearFirstProductionOutdoorsInsecure"]} /> 
+                        </li>
+                        <li>selvstendig reproduksjon på artens eget produksjonsareal utendørs:
+                        <Xcomp.Number                            
+                            observableValue={[vurdering.riskAssessment, "yearFirstReproductionOutdoors"]}
+                            integer
+                        />    
+                        <Xcomp.Bool observableValue={[vurdering.riskAssessment, "yearFirstReproductionOutdoorsInsecure"]} /> 
+                        </li>
+                        <li>individ i norsk natur:
+                        <Xcomp.Number                            
+                            observableValue={[vurdering.riskAssessment, "yearFirstNature"]}
+                            integer
+                        />    
+                        <Xcomp.Bool observableValue={[vurdering.riskAssessment, "yearFirstNatureInsecure"]} /> 
+                        </li>
+                        <li>selvstendig reproduksjon i norsk natur:
+                        <Xcomp.Number                            
+                            observableValue={[vurdering.riskAssessment, "yearFirstReproductionNature"]}
+                            integer
+                        />    
+                        <Xcomp.Bool observableValue={[vurdering.riskAssessment, "yearFirstReproductionNatureInsecure"]} /> 
+                        </li>
+                        <li>etablering i norsk natur:
+                        <Xcomp.Number                            
+                            observableValue={[vurdering.riskAssessment, "yearFirstEstablishedNature"]}
+                            integer
+                        />    
+                        <Xcomp.Bool observableValue={[vurdering.riskAssessment, "yearFirstEstablishedNature"]} /> 
+                        </li>
                     </ul>				
                     <p>Hvis usikkerheten er større enn ± 5 år, sett et kryss til høyre for årstallet.</p>
 

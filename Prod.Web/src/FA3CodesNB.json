@@ -1932,6 +1932,53 @@
                 }
             }
         ],
+
+        "naturtyper2018": [
+            {
+  
+              "text": "Ferskvann",
+              "value": "Ferskvann"
+            },
+            {
+                "text": "Fjell, berg, rasmark og annen grunnlendt mark",
+                "value": "FjellBergRasmark"
+              },
+            {
+  
+              "text": "Fjæresone",
+              "value": "Fjæresone"
+            },
+            {
+  
+              "text": "Høgarktiske terrestriske områder",
+              "value": "Høgarktisk"
+            },
+            {
+  
+              "text": "Kulturmark og boreal hei",
+              "value": "KulturmarkOgBoreal"
+            },
+            {
+  
+              "text": "Marine dypvannsområder",
+              "value": "MarineDypvann"
+            },
+            {
+  
+              "text": "Marine gruntvannsområder",
+              "value": "MarineGruntvann"
+            },
+            {
+  
+              "text": "Skog",
+              "value": "Skog"
+            },
+            {
+  
+              "text": "Våtmark",
+              "value": "Våtmark"
+            }
+          ],
         "redlistedNaturetypes": [
             {
                 "Id": "redlistedNaturetypes",
@@ -3507,14 +3554,21 @@
                         {
                             "Id": null,
                             "Value": "dominanceForrest",
-                            "Text": "Dominans skog",
+                            "Text": "Dominans",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "natureTypeArea",
+                            "Text": "Naturtypeareal",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "timeHorizon",
-                            "Text": "Tidshorisont",
+                            "Text": "Tid",
                             "Info": null,
                             "Children": null
                         },
@@ -3528,14 +3582,14 @@
                         {
                             "Id": null,
                             "Value": "stateChange",
-                            "Text": "Tydelig tilstandsendring",
+                            "Text": "Tilstandsendring",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "affectedArea",
-                            "Text": "Tydelig påvirka areal (%)",
+                            "Text": "Påvirka areal (%)",
                             "Info": null,
                             "Children": null
                         },
@@ -5036,14 +5090,21 @@
                         {
                             "Id": null,
                             "Value": "dominanceForrest",
-                            "Text": "Dominans skog",
+                            "Text": "Dominans",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "natureTypeArea",
+                            "Text": "Naturtypeareal",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "timeHorizon",
-                            "Text": "Tidshorisont",
+                            "Text": "Tid",
                             "Info": null,
                             "Children": null
                         },
@@ -5057,14 +5118,14 @@
                         {
                             "Id": null,
                             "Value": "stateChange",
-                            "Text": "Tydelig tilstandsendring",
+                            "Text": "Tilstandsendring",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "affectedArea",
-                            "Text": "Tydelig påvirka areal (%)",
+                            "Text": "Påvirka areal (%)",
                             "Info": null,
                             "Children": null
                         },
