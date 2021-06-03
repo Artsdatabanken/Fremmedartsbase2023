@@ -1,25 +1,25 @@
 import React, {Component} from 'react'
 import { observer, inject } from 'mobx-react'
 import {action, observable} from 'mobx'
-import auth from './authService'
-import * as Xcomp from './observableComponents'
-import Tabs from './tabs'
+import auth from '../authService'
+import * as Xcomp from '../observableComponents'
+import Tabs from '../tabs'
 // import Vurdering from './assessment/vurdering'
-import Vurdering31ArtensStatus from './assessment/vurdering31ArtensStatus'
-import Vurdering32Artsegenskaper from './assessment/vurdering32Artsegenskaper'
-import Vurdering33Import from './assessment/vurdering33Import'
-import HSkanning from './assessment/hSkanning'
-import Vurdering34Spredningsveier from './assessment/vurdering34Spredningsveier'
-import Vurdering35Utbredelseshistorikk from './assessment/vurdering35Utbredelseshistorikk'
-import Vurdering40Naturtyper from './assessment/vurdering40Naturtyper'
-import Vurdering51Invasjonspotensiale from './assessment/vurdering51Invasjonspotensiale'
-import Vurdering52Okologiskeffekt from './assessment/vurdering52Okologiskeffekt'
-import Vurdering53GeografiskVariasjon from './assessment/vurdering53GeografiskVariasjon'
-import Vurdering54Klimaeffekter from './assessment/vurdering54Klimaeffekter'
-import VurderingSummary from './assessment/vurderingSummary'
-import VurderingReferences from './assessment/vurderingReferences'
-import VurderingComments from './assessment/vurderingComments'
-import Vurdering55Kriteriedokumentasjon from './assessment/vurdering55Kriteriedokumentasjon'
+import Vurdering31ArtensStatus from './vurdering31ArtensStatus'
+import Vurdering32Artsegenskaper from './vurdering32Artsegenskaper'
+import Vurdering33Import from './vurdering33Import'
+import HSkanning from './hSkanning'
+import Vurdering34Spredningsveier from './vurdering34Spredningsveier'
+import Vurdering35Utbredelseshistorikk from './vurdering35Utbredelseshistorikk'
+import Vurdering40Naturtyper from './vurdering40Naturtyper'
+import Vurdering51Invasjonspotensiale from './vurdering51Invasjonspotensiale'
+import Vurdering52Okologiskeffekt from './vurdering52Okologiskeffekt'
+import Vurdering53GeografiskVariasjon from './vurdering53GeografiskVariasjon'
+import Vurdering54Klimaeffekter from './vurdering54Klimaeffekter'
+import VurderingSummary from './vurderingSummary'
+import VurderingReferences from './vurderingReferences'
+import VurderingComments from './vurderingComments'
+import Vurdering55Kriteriedokumentasjon from './vurdering55Kriteriedokumentasjon'
 
 
 
@@ -32,10 +32,10 @@ import Vurdering55Kriteriedokumentasjon from './assessment/vurdering55Kriteriedo
 // import AssessmentC from './assessmentC'
 // import AssessmentD from './assessmentD'
 // import AssessmentE from './assessmentE'
-import AssessmentDiff from './assessmentDiff'
+import AssessmentDiff from '../assessmentDiff'
 // import AssessmentOverview from './assessmentOverview'
 // import AssessmentComments from './assessmentComments'
-import AssessmentMove from './assessmentMove'
+import AssessmentMove from '../assessmentMove'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
 // import {Fylkesforekomst} from './fylkesforekomst'
 // import config from '../config'
@@ -59,7 +59,7 @@ class AssessmentRoot extends Component {
         const canEdit = !isFinished && appState.roleincurrentgroup.skriver && assessment.lockedForEditByUser == null    
         
         function sjekkForEndringerOgGiAdvarsel(){
-            // var isLockedByMe = appState.assessment && appState.assessment.lockedForEditByUser === auth.user.name
+            // var isLockedByMe = appState.assessment && appState.assessment.lockedForEditByUser === auth.userName
             var isdirty = appState.isDirty
             var skriver = !!appState.roleincurrentgroup && appState.roleincurrentgroup.skriver
             var ok = true;
@@ -163,7 +163,7 @@ class AssessmentRoot extends Component {
     }
 
     isReadOnly() {
-        const isreadonly = this.props.appState.asssessment.lockedForEditByUser !== user.userName
+        const isreadonly = this.props.appState.asssessment.lockedForEditByUser !== auth.userName
         return isreadonly || this.isFinished()
     }
 }
@@ -175,3 +175,4 @@ export default function Assessment(props) {
     </UserContext.Provider>
 
 }
+
