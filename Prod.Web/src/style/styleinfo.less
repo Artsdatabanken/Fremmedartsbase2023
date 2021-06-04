@@ -1206,6 +1206,10 @@ table.table-hover,
   margin-left: 10px;
 }
 
+.selectFilter .speciesStatus li label {
+  white-space: break-spaces;
+}
+
 .filters span {
   font-weight: bold;
 }
@@ -1216,6 +1220,10 @@ table.table-hover,
 
 .filters p ul {
   padding-inline-start: 20px;
+}
+
+.filters ul.status {
+  padding-inline-start: 40px;
 }
 
 .nav_menu .filters li.checkbox {
@@ -1262,7 +1270,15 @@ table.table-hover,
 }
 
 .listOfYears p {
-  text-align: right;
+  text-align: center;
+}
+
+.listOfYears > li > div {
+  width: 50%;
+}
+
+.listOfYears > li > div > span > .form-control {
+  width: 100%;
 }
 
 .listOfYears li {
@@ -1272,6 +1288,10 @@ table.table-hover,
 
 .listOfYears li div {
   padding: 0 10px 0;
+}
+
+.yearsAndCheckboxes > ul.listOfYears {
+  padding-inline-start: 0;
 }
 
 .filters label {
