@@ -105,7 +105,7 @@ export default class ObservableMultiselectArray extends React.Component {
         //console.log("////" + prop +"-" + mode)
         return(
             mode === "check" ?
-            <ObservableMultiselectArrayCheckboxes observableValue={observableValue} codes={codes} />
+            <ObservableMultiselectArrayCheckboxes observableValue={observableValue} codes={codes} className={className} />
             :
             hasLabel ?
             <div className="hasLabel">

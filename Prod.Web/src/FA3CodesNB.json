@@ -203,7 +203,7 @@
                 "value": "notEstablishedFor50Years"
             },
             {
-                "text": "Bruksart (tidligere produksjonsart)",
+                "text": "Tradisjonell bruksart \n (før: Tradisjonell produksjonsart)",
                 "value": "traditionalProductionSpecies"
             },
             {
@@ -224,7 +224,7 @@
                 "value": "notAssessedDoorKnocker"
             },
             {
-                "text": "Potensiell dørstokkart som ikke skal vurderes",
+                "text": "Potensiell dørstokkart som \n ikke skal vurderes",
                 "value": "notAssessedPotentialDoorKnocker"
             }
         ],
@@ -240,7 +240,7 @@
                 "value": "notEstablishedFor50Years"
             },
             {
-                "text": "Bruksart (tidligere produksjonsart)",
+                "text": "Tradisjonell bruksart  \n (før: Tradisjonell produksjonsart)",
                 "value": "traditionalProductionSpecies"
             },
             {
