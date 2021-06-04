@@ -63,7 +63,7 @@ export default class Vurdering40Naturtyper extends React.Component {
         const doms = appState.dominansSkog
         const canRenderTable = !!appState.naturtypeLabels && (!!appState.dominansSkog || appState.language === "SV")
         return (
-            <div style={{display: 'flex', marginBottom: '20px', height: '100%'}}>
+            <div style={{display: 'flex', marginBottom: '20px'}}>
                <div className="filters" style={{float: 'left', width: '50%'}}>
                     <h3>Etableringspotensial</h3>
                     

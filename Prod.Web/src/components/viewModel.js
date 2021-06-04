@@ -383,7 +383,7 @@ class ViewModel {
             assessmentTabs: {
                 activeTab: {id: 0},
                 tabList: [
-                    new tabItem({id: 0, label:"Horisont-skanning", enabled: this.harVurdering, url: "horisont-skanning" }),
+                    new tabItem({id: 0, label:"Horisontskanning", enabled: this.harVurdering, url: "horisontskanning" }),
                     new tabItem({id: 1, label:"Artens status", enabled: this.harVurdering, url: "artensstatus" }),
                     new tabItem({id: 2, label:"Artsinformasjon", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "artsegenskaper" }),
                     new tabItem({id: 3, label:"Spredningsveier", enabled: this.harVurdering, notrequired: !this.skalVurderes, url: "import" }),
