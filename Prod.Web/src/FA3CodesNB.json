@@ -1932,6 +1932,80 @@
                 }
             }
         ],
+        "hovedøkosystemer": [
+            {
+  
+              "text": "Hav og kyst",
+              "value": "HavOgKyst"
+            },
+            {
+  
+              "text": "Elver og innsjøer",
+              "value": "ElverOgInnsjøer"
+            },
+            {
+                "text": "Våtmark",
+                "value": "Våtmark"
+              },
+            {
+  
+              "text": "Skog",
+              "value": "Skog"
+            },
+            {
+  
+              "text": "Fjell",
+              "value": "Fjell"
+            },
+            {
+  
+              "text": "Kulturlandskap og åpent lavland",
+              "value": "Kulturlandskap"
+            },
+            {
+  
+              "text": "Bymiljø og sterkt endret natur",
+              "value": "Bymiljø"
+            }
+          ],
+
+
+        "naturtyperNIN2": [
+            {
+  
+              "text": "T Fastmarkssystemer",
+              "value": "Fastmarkssystemer"
+            },
+            {
+  
+              "text": "V Våtmarkssystemer",
+              "value": "Våtmarkssystemer"
+            },
+            {
+                "text": "H Marine vannmasser",
+                "value": "MarineVannmasser"
+              },
+            {
+  
+              "text": "I Snø- og issystemer",
+              "value": "SnøOgIssystemer"
+            },
+            {
+  
+              "text": "F Limniske vannmasser",
+              "value": "LimniskeVannmasser"
+            },
+            {
+  
+              "text": "M Saltvannsbunnsystemer",
+              "value": "Saltvannsbunnsystemer"
+            },
+            {
+  
+              "text": "L Ferskvannsbunnsystemer",
+              "value": "Ferskvannsbunnsystemer"
+            }
+          ],
 
         "naturtyper2018": [
             {
@@ -2282,6 +2356,35 @@
                 "Children": null
             }
         ],
+
+        "assessmentBackgrounds": [
+            {
+  
+                "text": "Skriftlig dokumentasjon fra Norge",
+                "value": "WrittenDocumentationNorway"
+              },
+              {
+    
+                "text": "Kun observasjoner fra Norge",
+                "value": "ObservationNorway"
+              },
+              {
+  
+                "text": "Skriftlig dokumentasjon fra utlandet",
+                "value": "WrittenDocumentationAbroad"
+              },
+              {
+    
+                "text": "Kun observasjoner fra utlandet",
+                "value": "ObservationAbroad"
+              },
+              {
+    
+                "text": "Annet",
+                "value": "Other"
+              }
+
+        ],
         "Criterion": [
             {
                 "Id": "Criterion",
@@ -2362,8 +2465,8 @@
             {
                 "Id": "Criterion",
                 "Value": "C",
-                "Text": "C-kriteriet: Kolonisert areal av naturtype",
-                "Info": "Andel av forekomstarealet til minst én naturtype som vil være kolonisert etter 50 år, med usikkerhet",
+                "Text": "C-kriteriet: Kolonisert naturtypeareal ",
+                "Info": "Kolonisert naturtypeareal (%) er overført fra «Naturtyper»",
                 "Children": {
                     "CritC": [
                         {
@@ -2476,8 +2579,8 @@
             {
                 "Id": "Criterion",
                 "Value": "F",
-                "Text": "F-kriteriet: Effekter på truete/sjeldne naturtyper",
-                "Info": "Andel av naturtypeareal som gjennomgår tilstandsendring innen 50 år, med usikkerhet",
+                "Text": "F-kriteriet: Effekter på truede/sjeldne naturtyper",
+                "Info": "Naturtypeareal (%) som gjennomgår tilstandsendring er overført fra «Naturtyper»",
                 "Children": {
                     "CritF": [
                         {
@@ -2515,7 +2618,7 @@
                 "Id": "Criterion",
                 "Value": "G",
                 "Text": "G-kriteriet: Effekter på øvrige naturtyper",
-                "Info": "Andel av naturtypeareal som gjennomgår tilstandsendring innen 50 år, med usikkerhet",
+                "Info": "Naturtypeareal (%) som gjennomgår tilstandsendring er overført fra «Naturtyper»",
                 "Children": {
                     "CritG": [
                         {
@@ -5152,6 +5255,13 @@
                         },
                         {
                             "Id": null,
+                            "Value": "chooseRL2018",
+                            "Text": "Velg blant følgende fra Rødlista for naturtyper 2018:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "chooseLM",
                             "Text": "Velg blant følgende livsmedium (NiN 1.0)",
                             "Info": null,
@@ -5166,8 +5276,29 @@
                         },
                         {
                             "Id": null,
+                            "Value": "score",
+                            "Text": "Skår, angi usikkerhet",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "scoreSummary",
+                            "Text": "Skår og usikkerhet, oppsummert",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "assessmentBackground",
+                            "Text": "Vurderingsgrunnlag",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "critGHeading",
-                            "Text": "Effekter på naturtyper som hverken er trua, sjeldne eller sterkt endra (overføres til G-kriteriet)",
+                            "Text": "Påvirket areal i en 'øvrig' naturtype(overføres til G-kriteriet)",
                             "Info": null,
                             "Children": null
                         },
@@ -5194,15 +5325,22 @@
                         },
                         {
                             "Id": null,
+                            "Value": "natureAffectedAbroad",
+                            "Text": "Beskriv eventuelle effekter på natur i utlandet",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "effectOnThreatenedNatureTypes",
-                            "Text": "Effekter på truete/sjeldne naturtyper",
+                            "Text": "Effekter på truede/sjeldne naturtyper",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "critFHeading",
-                            "Text": "Effekter på truete/sjeldne naturtyper (overføres til F-kriteriet)",
+                            "Text": "Påvirket areal (%) i en truet/sjelden naturtype (overføres til F-kriteriet)",
                             "Info": null,
                             "Children": null
                         },
@@ -5229,6 +5367,27 @@
                         },
                         {
                             "Id": null,
+                            "Value": "mainEcosystem",
+                            "Text": "Hovedøkosystem",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "habitat",
+                            "Text": "Livsmedium",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "chooseHabitat",
+                            "Text": "Velg blant livsmedium fra NiN 1",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "chooseRedlistedNT",
                             "Text": "Velg blant følgende naturtyper (NiN 1.0)",
                             "Info": null,
@@ -5244,7 +5403,7 @@
                         {
                             "Id": null,
                             "Value": "threatenedNatureTypesForeignDocumented",
-                            "Text": "Dokumentert effekt på truete/sjeldne naturtyper",
+                            "Text": "Dokumentert effekt på truede/sjeldne naturtyper",
                             "Info": null,
                             "Children": null
                         },

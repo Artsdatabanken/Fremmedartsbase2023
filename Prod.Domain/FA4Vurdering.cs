@@ -845,6 +845,21 @@ namespace Prod.Domain
         // -- (D) potensiale for å endre én eller flere øvrige naturtyper
         public List<string> CommonNatureTypes { get; set; } = new List<string>(); // 09.01.2017  // Common_Nature_Types
         //public string Common_Nature_Types_Affected_Documentation { get; set; }               //intern informasjon
+
+        public List<string> Naturetype2018 { get; set; } = new List<string>();        
+        public List<string> NaturetypeNIN2 { get; set; } = new List<string>();
+
+        public List<string> BackgroundC { get; set; } = new List<string>();
+
+        public List<string> BackgroundF { get; set; } = new List<string>();
+
+        public List<string> BackgroundG { get; set; } = new List<string>();
+        public List<string> Hovedøkosystem { get; set; } = new List<string>();
+
+        public string natureAffectedAbroadF { get; set; }
+
+        public string natureAffectedAbroadG { get; set; }
+
         public bool? CommonNatureTypesDomesticObserved { get; set; }  // Common_Nature_Types_Affected_Domestic_Observed
         public bool? CommonNatureTypesDomesticDocumented { get; set; }  // Common_Nature_Types_Affected_Domestic_Documented
         public bool? CommonNatureTypesForeignDocumented { get; set; }  // Common_Nature_Types_Affected_Foreign_Documented

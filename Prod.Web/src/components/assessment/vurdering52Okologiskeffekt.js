@@ -235,7 +235,7 @@ export default class Vurdering52Okologiskeffekt extends React.Component {
         const crit52G = getCriterion(riskAssessment, 1 , "G")
         const crit52H = getCriterion(riskAssessment, 1 , "H")
         const crit52I = getCriterion(riskAssessment, 1 , "I")
-        
+        const ntLabels = labels.NatureTypes
         return(
             <div>
                 {config.showPageHeaders ? <h3>Økologisk effekt</h3> : <br />}
@@ -254,9 +254,11 @@ export default class Vurdering52Okologiskeffekt extends React.Component {
                 </fieldset>
                 <fieldset className="well">
                     <Criterion criterion={crit52F} />
+                    <p>{ntLabels.scoreSummary}</p>
                 </fieldset>
                 <fieldset className="well">
                     <Criterion criterion={crit52G} />
+                    <p>{ntLabels.scoreSummary}</p>
                 </fieldset> 
                 <fieldset className="well">
                     <h4>{crit52H.heading}</h4>

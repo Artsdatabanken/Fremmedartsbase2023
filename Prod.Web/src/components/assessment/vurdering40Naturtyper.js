@@ -63,19 +63,23 @@ export default class Vurdering40Naturtyper extends React.Component {
         const canRenderTable = !!appState.naturtypeLabels && (!!appState.dominansSkog || appState.language === "SV")
         return (
             <div>
-                <br/>
-                <br/>
               {/*  <h4>{ntLabels.colonizedAreaHeading}</h4> */}
                 <br/>
-                <h4>Velg blant følgende fra Rødlista for naturtyper 2018:</h4>
-               {/* <Xcomp.MultiselectArray
-                                observableValue={[this, 'naturetype2018']} 
+                <h4>{ntLabels.chooseRL2018}</h4>
+                <Xcomp.MultiselectArray
+                                observableValue={[riskAssessment, 'naturetype2018']} 
                                 codes={koder.naturtyper2018}
-                                mode="check"/> */}
-                <NewNaturetype
+                                mode="check"/>
+
+                <h4>{ntLabels.chooseNT}</h4>
+                <Xcomp.MultiselectArray
+                                observableValue={[riskAssessment, 'naturetypeNIN2']} 
+                                codes={koder.naturtyperNIN2}
+                                mode="check"/>
+              {/*  <NewNaturetype
                     appState={appState}
                     addNaturtype={this.addNaturtype}
-                    labels={labels} />
+              labels={labels} /> */}
                 <br/>
                 <NaturtypeTable
                     naturetypes={assessment.impactedNatureTypes}
@@ -88,61 +92,28 @@ export default class Vurdering40Naturtyper extends React.Component {
 
                 <fieldset className="well">
                     <h4>{ntLabels.critCHeading}</h4>
-                    <p>{critC.info}</p>
+                    <p>{ntLabels.score}</p>
+                    <b>{ntLabels.assessmentBackground}</b>
+                    <Xcomp.MultiselectArray
+                                observableValue={[riskAssessment, 'backgroundC']} 
+                                codes={koder.assessmentBackgrounds}
+                                mode="check"/>
+
+                    
                     <Criterion criterion={critC} mode="noheading"/>
                 </fieldset>
                 <fieldset className="well">
-                    <h4>{ntLabels.critGHeading}</h4>
-                    <p>{critG.info}</p>
-                    <div>
-                        <span>{appState.evaluationContext.name}:
-                        </span>
-                        <Xcomp.Bool
-                            label='Dokumentert'
-                            observableValue={[riskAssessment, 'commonNatureTypesDomesticDocumented']}/>
-                        <Xcomp.Bool
-                            label='Observert'
-                            observableValue={[riskAssessment, 'commonNatureTypesDomesticObserved']}/>
-                        <span>{ntLabels.commonNatureTypesAffectedDomestic} {appState.evaluationContext.nameWithPreposition}</span>
-                        <Xcomp.HtmlString
-                            observableValue={[riskAssessment, 'commonNatureTypesAffectedDomesticDescription']}/>
-                    </div>
-                    <br/>
-                    <Criterion criterion={critG} mode="noheading"/>
-                    <hr/>
-                    <div>
-                        <span>{ntLabels.abroad}:
-                        </span>
-                        <Xcomp.Bool
-                        label={ntLabels.commonNatureTypesForeignDocumented}
-                            observableValue={[riskAssessment, 'commonNatureTypesForeignDocumented']}/> 
-                        <br/>
-                        <span>{ntLabels.commonNatureTypesAffectedAbroad}</span>
-                        <Xcomp.HtmlString
-                            observableValue={[riskAssessment, 'commonNatureTypesAffectedAbroadDescription']}/>
-                    </div>
-                </fieldset>
-                <hr/>
-                <br/> 
-                <h4>{ntLabels.effectOnThreatenedNatureTypes }</h4>
-                <br/>
-                <NewRedlistedNaturetype
-                    appState={appState}
-                    addNaturtype={this.addRedlistedNaturetype}
-                    labels={labels}/>
-                <br/>
-                <br/>
-                <RedlistedNaturetypeTable
-                    naturetypes={assessment.redlistedNatureTypes}
-                    canRenderTable={canRenderTable}
-                    labels={labels}
-                    appState={appState}/>
-                <br/>
-                <br/>
-                <fieldset className="well">
                     <h4>{ntLabels.critFHeading}</h4>
                     <p>{critF.info}</p>
-                    <div>
+                    <p>{ntLabels.score}</p>
+                    <b>{ntLabels.assessmentBackground}</b>
+                    <Xcomp.MultiselectArray
+                                observableValue={[riskAssessment, 'backgroundF']} 
+                                codes={koder.assessmentBackgrounds}
+                                mode="check"/>
+                    <p>{ntLabels.natureAffectedAbroad}</p>
+                    <Xcomp.HtmlString observableValue={[riskAssessment, 'natureAffectedAbroadF']}/>
+                    {/*<div>
                         <span>{appState.evaluationContext.name}:
                         </span>
                         <Xcomp.Bool
@@ -155,10 +126,10 @@ export default class Vurdering40Naturtyper extends React.Component {
                         <Xcomp.HtmlString
                             observableValue={[riskAssessment, 'threatenedNatureTypesAffectedDomesticDescription']}/>
                     </div>
-                    <br/>
+                    <br/>*/}
                     <Criterion criterion={critF} mode="noheading"/>
-                    <hr/>
-                    <div>
+                    
+                   {/* <div>
                         <span>{ntLabels.abroad}:
                         </span>
                         <Xcomp.Bool
@@ -168,12 +139,69 @@ export default class Vurdering40Naturtyper extends React.Component {
                         <span>{ntLabels.threatenedNatureTypesChangeAbroad}</span>
                         <Xcomp.HtmlString
                             observableValue={[riskAssessment, 'threatenedNatureTypesAffectedAbroadDescription']}/>
-                    </div>
+                   </div> */}
                 </fieldset>
-                <br/>
                 <fieldset className="well">
-                    <h4>{ntLabels.parasiteHabitat}</h4>
-                    <div>
+                    <h4>{ntLabels.critGHeading}</h4>
+                    
+                    <p>{critG.info}</p>
+                    <p>{ntLabels.score}</p>
+                    <b>{ntLabels.assessmentBackground}</b>
+                    <Xcomp.MultiselectArray
+                                observableValue={[riskAssessment, 'backgroundG']} 
+                                codes={koder.assessmentBackgrounds}
+                                mode="check"/>
+                    <p>{ntLabels.natureAffectedAbroad}</p>
+                    <Xcomp.HtmlString observableValue={[riskAssessment, 'natureAffectedAbroadG']}/>
+                   {/* <div>
+                        <span>{appState.evaluationContext.name}:
+                        </span>
+                        <Xcomp.Bool
+                            label='Dokumentert'
+                            observableValue={[riskAssessment, 'commonNatureTypesDomesticDocumented']}/>
+                        <Xcomp.Bool
+                            label='Observert'
+                            observableValue={[riskAssessment, 'commonNatureTypesDomesticObserved']}/>
+                        <span>{ntLabels.commonNatureTypesAffectedDomestic} {appState.evaluationContext.nameWithPreposition}</span>
+                        <Xcomp.HtmlString
+                            observableValue={[riskAssessment, 'commonNatureTypesAffectedDomesticDescription']}/>
+                    </div>
+                   <br/> */}
+                    <Criterion criterion={critG} mode="noheading"/>
+                    
+                   {/* <div>
+                        <span>{ntLabels.abroad}:
+                        </span>
+                        <Xcomp.Bool
+                        label={ntLabels.commonNatureTypesForeignDocumented}
+                            observableValue={[riskAssessment, 'commonNatureTypesForeignDocumented']}/> 
+                        <br/>
+                        <span>{ntLabels.commonNatureTypesAffectedAbroad}</span>
+                        <Xcomp.HtmlString
+                            observableValue={[riskAssessment, 'commonNatureTypesAffectedAbroadDescription']}/>
+                   </div>*/}
+                </fieldset>
+                
+               {/* <h4>{ntLabels.effectOnThreatenedNatureTypes }</h4>
+                <br/>
+                <NewRedlistedNaturetype
+                    appState={appState}
+                    addNaturtype={this.addRedlistedNaturetype}
+                    labels={labels}/>
+                <br/>
+                <br/>
+                <RedlistedNaturetypeTable
+                    naturetypes={assessment.redlistedNatureTypes}
+                    canRenderTable={canRenderTable}
+                    labels={labels}
+                    appState={appState}/>
+                */}
+                <br/>
+                
+                <fieldset className="well">
+                    <h4>{ntLabels.habitat}</h4>
+                    <p>{ntLabels.chooseHabitat}</p>
+                   {/* <div>
                         <Xcomp.Bool
                             label={ntLabels.usesLivingSpeciesAsHabitat}
                             observableValue={[assessment, 'usesLivingSpeciesAsHabitat']}/> 
@@ -182,11 +210,16 @@ export default class Vurdering40Naturtyper extends React.Component {
                             label={ntLabels.usesLivingSpeciesAsHabitatScientificName}
                             observableValue={[assessment, 'usesLivingSpeciesAsHabitatScientificName']}/> :
                         null }
-                    </div>
-                    <br/>
+                        </div> */}
                 </fieldset>
-                <br/>
-                <br/>
+                <fieldset className="well">
+                    <h4>{ntLabels.mainEcosystem}</h4>     
+                    <Xcomp.MultiselectArray
+                                observableValue={[riskAssessment, 'hovedøkosystem']} 
+                                codes={koder.hovedøkosystemer}
+                                mode="check"/>
+          
+                </fieldset>
                 <br/>
             </div>
         );
