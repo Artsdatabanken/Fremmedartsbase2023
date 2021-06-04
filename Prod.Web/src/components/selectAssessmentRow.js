@@ -14,7 +14,7 @@ export default class selectAssessmentRow extends Component {
 
         const assessment = this.props.assessment
         const labels = this.props.labels
-        const rolle =  {leder: true}  // this.props.rolle
+        const rolle =  this.props.rolle
         const isLocked = !!assessment.lockedForEditByUser
         const isSuperUser = rolle.leder
         const isLockedByMe = assessment.lockedForEditByUser === this.props.userName
@@ -23,6 +23,9 @@ export default class selectAssessmentRow extends Component {
 
         const canUnlock = isLocked && (isLockedByMe || isSuperUser)
         const canEdit = rolle.skriver && !isLocked
+
+        // console.log("CANEDIT"+canEdit+rolle.skriver+isLocked)
+
         const isFinished = assessment.evaluationStatus && assessment.evaluationStatus === "finished"
         const color = isLockedByMe
             ? 'green'
@@ -121,6 +124,7 @@ export default class selectAssessmentRow extends Component {
 }
 
 const Status = ({isLocked, isLockedByMe, canEdit, isFinished, assessment, onLock, onUnlock, canUnlock, labels}) => {
+    // console.log("------"+isLocked+ isLockedByMe+ canEdit+ isFinished +canUnlock )
     return isFinished
     ? <span style={{color:"red"}}>{labels.SelectAssessment.assessmentClosed}&nbsp;</span>
     : isLocked

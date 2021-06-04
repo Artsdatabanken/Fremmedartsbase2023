@@ -64,7 +64,7 @@ export default class SelectAssessment extends Component {
         // const {appState, appState:{assessment}, appState:{assessmentTabs}} = this.props
         const {appState, appState:{assessment}} = this.props
         // const {appState, appState:{assessment, koder}} = this.props
-        const rolle = appState.roleincurrentgroup // todo: implement real    
+        const rolle = appState.roleincurrentgroup 
         const labels = appState.codeLabels
         const koder = appState.koder.Children
          

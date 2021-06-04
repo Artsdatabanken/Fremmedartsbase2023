@@ -785,7 +785,7 @@ class ViewModel {
         const url = config.getUrl("expertgroupassessments/") + id
         const expertgroupAssessments = await auth.getJsonRequest(url)
 
-        // console.log("------" + JSON.stringify(expertgroupAssessments))
+        console.log("------" + JSON.stringify(expertgroupAssessments))
 
         const role = expertgroupAssessments.rolle; // todo: implement functionality
         const assessments = observable.array(expertgroupAssessments.assessments)
