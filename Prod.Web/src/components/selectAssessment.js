@@ -4,9 +4,9 @@ import { observer, inject } from 'mobx-react';
 import * as Xcomp from './observableComponents';
 import HelpIcon from '@material-ui/icons/Help';
 import SelectAssessmentTable from './selectAssessmentTable';
-import SelectAssessmentStatistics from './selectAssessmentStatistics';
-import auth from './authService';
-import config from '../config';
+// import SelectAssessmentStatistics from './selectAssessmentStatistics';
+// import auth from './authService';
+// import config from '../config';
 // import catimg from '../cat.gif';
 import catimg from 'url:../cat.gif';
 // const catimg = require('../cat.gif') 
@@ -61,12 +61,8 @@ export default class SelectAssessment extends Component {
         appState.expertgroupCategoryCheckboxFilter = newCatFilter
     })
     render() {
-        // const {appState, appState:{assessment}, appState:{assessmentTabs}} = this.props
-        const {appState, appState:{assessment}} = this.props
-        // const {appState, appState:{assessment, koder}} = this.props
-        const rolle = appState.roleincurrentgroup 
-        const labels = appState.codeLabels
-        const koder = appState.koder.Children
+        const {appState, appState:{assessment,roleincurrentgroup:rolle,codeLabels:labels,koder:{Children:koder}}} = this.props
+        // const koder = appState.koder.Children
          
         document.title = "Velg art - Fremmede arter"
 
