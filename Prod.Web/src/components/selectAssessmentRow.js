@@ -7,22 +7,18 @@ import {beskrivTidSiden} from '../formatting'
 @observer
 export default class selectAssessmentRow extends Component {
     render() {
-        // console.log("props: " + Object.keys(this.props))
-        // console.log("assessment: " + Object.keys(this.props.assessment))
-        // console.log("rolle: " + JSON.stringify(this.props.rolle))
-
-
-        const assessment = this.props.assessment
-        const labels = this.props.labels
-        const rolle =  {leder: true}  // this.props.rolle
+        const {assessment, rolle, labels, userName} = this.props
         const isLocked = !!assessment.lockedForEditByUser
         const isSuperUser = rolle.leder
-        const isLockedByMe = assessment.lockedForEditByUser === this.props.userName
+        const isLockedByMe = assessment.lockedForEditByUser === userName
         
 // console.log("###" + assessment.lockedForEditByUser + "#" +  rolle.userName)
 
         const canUnlock = isLocked && (isLockedByMe || isSuperUser)
         const canEdit = rolle.skriver && !isLocked
+
+        // console.log("CANEDIT"+canEdit+rolle.skriver+isLocked)
+
         const isFinished = assessment.evaluationStatus && assessment.evaluationStatus === "finished"
         const color = isLockedByMe
             ? 'green'
@@ -121,6 +117,7 @@ export default class selectAssessmentRow extends Component {
 }
 
 const Status = ({isLocked, isLockedByMe, canEdit, isFinished, assessment, onLock, onUnlock, canUnlock, labels}) => {
+    // console.log("------"+isLocked+ isLockedByMe+ canEdit+ isFinished +canUnlock )
     return isFinished
     ? <span style={{color:"red"}}>{labels.SelectAssessment.assessmentClosed}&nbsp;</span>
     : isLocked

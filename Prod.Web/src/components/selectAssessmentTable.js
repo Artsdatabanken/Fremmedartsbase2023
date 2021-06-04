@@ -10,12 +10,10 @@ import auth from './authService'
 export default class SelectAssessmentTable extends Component {
     render() {
         const {assessmentList, rolle, appState} = this.props
-        const assessmentModel = appState
-        //console.log("ROLLE" + JSON.stringify(rolle))
-        const labels = appState.codeLabels; // assessmentModel.kodeLabels
+        const labels = appState.codeLabels; 
         const userName = auth.userName
 
-
+        //console.log("ROLLE" + JSON.stringify(rolle))
         //console.log("* * * * USERNAME: " + userName + " * * * * *")
 
         // if (ekspertgruppeArter.error)
@@ -24,8 +22,8 @@ export default class SelectAssessmentTable extends Component {
         //             color: "red"
         //         }}>{ekspertgruppeArter.error}</div>
         //     )
-        // let filter = assessmentModel.speciesNameFilter
-        //     ? assessmentModel.speciesNameFilter
+        // let filter = appState.speciesNameFilter
+        //     ? appState.speciesNameFilter
         //     : ''
         // filter = filter.toLowerCase()
         return (
@@ -72,9 +70,9 @@ export default class SelectAssessmentTable extends Component {
                             updatedBy={ega.lastUpdatedBy}
                             labels={labels}
                             rolle={rolle}
-                            onOpen={v => assessmentModel.open(v)}
-                            onLock={action(v => assessmentModel.lockFraHode(v))}
-                            onUnlock={action(v => assessmentModel.unlockFraHode(v))}/>)}
+                            onOpen={v => appState.open(v)}
+                            onLock={action(v => appState.lockFraHode(v))}
+                            onUnlock={action(v => appState.unlockFraHode(v))}/>)}
                     </tbody>
                 </table>
             </div>
