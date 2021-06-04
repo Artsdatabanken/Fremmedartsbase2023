@@ -55,6 +55,7 @@ export class NaturtypeRad extends React.Component {
                 <td>{nt.NiNCode}</td>
                 <td>{ntlabel}</td>
                 <td>{nt.DominanceForrest.join('\n')}</td>
+                <td></td>
                 <td>{kodeTekst(koder.timeHorizon, nt.TimeHorizon)}</td>
                 <td>{kodeTekst(koder.colonizedArea, nt.ColonizedArea)}</td>
                 <td>{stateChangLabel}</td>
@@ -87,27 +88,31 @@ export class NaturtypeRad extends React.Component {
 @observer
 export default class NaturtypeTable extends React.Component {
     render() {
-        const {naturetypes, labels, canRenderTable, fabModel} = this.props;
+        const {naturetypes, labels, canRenderTable, fabModel, desc} = this.props;
         const ntLabels = labels.NatureTypes
         // console.log("naturtyperader#: " + naturetypes.length)
         return(
+            <div><p>{desc}</p>
             <table className="table">
+            
             <colgroup>
-                <col  style={{width: "8%"}}/>
-                <col  style={{width: "18%"}}/>
                 <col  style={{width: "10%"}}/>
                 <col  style={{width: "10%"}}/>
-                <col  style={{width: "12%"}}/>
+                <col  style={{width: "10%"}}/>                
+                <col  style={{width: "15%"}}/>
                 <col  style={{width: "10%"}}/>
-                <col  style={{width: "12%"}}/>
-                <col  style={{width: "5%"}}/>
-                <col  style={{width: "5%"}}/>
+                <col  style={{width: "15%"}}/>
+                <col  style={{width: "15%"}}/>
+                <col  style={{width: "25%"}}/>
+                <col  style={{width: "15%"}}/>
+                <col  style={{width: "15%"}}/>
             </colgroup>
             <thead>
                 <tr>
                     <th>{ntLabels.code}</th>
                     <th>{ntLabels.name}</th>
                     <th>{ntLabels.dominanceForrest}</th>
+                    <th>{ntLabels.natureTypeArea}</th>
                     <th>{ntLabels.timeHorizon}</th>
                     <th>{ntLabels.colonizedArea}</th>
                     <th>{ntLabels.stateChange}</th>
@@ -125,6 +130,7 @@ export default class NaturtypeTable extends React.Component {
                 }
             </tbody>
             </table>
+            </div>
         )
     }
 }

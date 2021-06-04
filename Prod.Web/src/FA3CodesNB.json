@@ -106,7 +106,7 @@
               },
               {
     
-                "text": "Horisont-skanning",
+                "text": "Horisontskanning",
                 "value": "horizonScanning"
               }
         ],
@@ -124,6 +124,51 @@
             {
                 "text": "Filtrer på påbegynt/ferdigstilt, kommentarer og vurderingsansvarlig i nåværende risikovurdering",
                 "value": "statusAndCommentFL2023"
+            }
+        ],
+
+        "newComments": [
+            {
+                "text": "på mine",
+                "value": "mine"
+            },
+            {
+
+                "text": "alle",
+                "value": "all"
+            }
+        ],
+
+        "comments": [
+            {
+                "text": "Alle vurderinger med kommentarer",
+                "value": "allAssessmentsWithComments"
+            },
+            {
+
+                "text": "Automatisk oppdatert taksonomiendring",
+                "value": "autoTaxonChange"
+            },
+            {
+
+                "text": "Taksonomiendring trenger oppdatering",
+                "value": "taxonChangeRequiresUpdate"
+            }
+        ],
+
+        "responsible": [
+            {
+                "text": "Per",
+                "value": "Per"
+            },
+            {
+
+                "text": "Pål",
+                "value": "Pål"
+            },
+            {
+                "text": "Astrid",
+                "value": "Astrid"
             }
         ],
 
@@ -181,6 +226,39 @@
             {
                 "text": "Potensiell dørstokkart som ikke skal vurderes",
                 "value": "notAssessedPotentialDoorKnocker"
+            }
+        ],
+
+        "notAssessedTypes2018": [
+            {
+                "text": "Etablert før 1800",
+                "value": "establishedBefore1800"
+            },
+            {
+
+                "text": "Ingen etablering på 50 år",
+                "value": "notEstablishedFor50Years"
+            },
+            {
+                "text": "Bruksart (tidligere produksjonsart)",
+                "value": "traditionalProductionSpecies"
+            },
+            {
+                "text": "Deler moderartens status",
+                "value": "sharesMotherSpeciesStatus"
+            },
+            {
+                "text": "Arten finnes ikke i Norge",
+                "value": "notFoundInNorway"
+            },
+            {
+
+                "text": "Arten er ikke fremmed i Norge",
+                "value": "notAlienInNorway"
+            },
+            {
+                "text": "Dørstokkart som ikke skal vurderes",
+                "value": "notAssessedDoorKnocker"
             }
         ],
 
@@ -1854,6 +1932,53 @@
                 }
             }
         ],
+
+        "naturtyper2018": [
+            {
+  
+              "text": "Ferskvann",
+              "value": "Ferskvann"
+            },
+            {
+                "text": "Fjell, berg, rasmark og annen grunnlendt mark",
+                "value": "FjellBergRasmark"
+              },
+            {
+  
+              "text": "Fjæresone",
+              "value": "Fjæresone"
+            },
+            {
+  
+              "text": "Høgarktiske terrestriske områder",
+              "value": "Høgarktisk"
+            },
+            {
+  
+              "text": "Kulturmark og boreal hei",
+              "value": "KulturmarkOgBoreal"
+            },
+            {
+  
+              "text": "Marine dypvannsområder",
+              "value": "MarineDypvann"
+            },
+            {
+  
+              "text": "Marine gruntvannsområder",
+              "value": "MarineGruntvann"
+            },
+            {
+  
+              "text": "Skog",
+              "value": "Skog"
+            },
+            {
+  
+              "text": "Våtmark",
+              "value": "Våtmark"
+            }
+          ],
         "redlistedNaturetypes": [
             {
                 "Id": "redlistedNaturetypes",
@@ -3429,14 +3554,21 @@
                         {
                             "Id": null,
                             "Value": "dominanceForrest",
-                            "Text": "Dominans skog",
+                            "Text": "Dominans",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "natureTypeArea",
+                            "Text": "Naturtypeareal",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "timeHorizon",
-                            "Text": "Tidshorisont",
+                            "Text": "Tid",
                             "Info": null,
                             "Children": null
                         },
@@ -3450,14 +3582,14 @@
                         {
                             "Id": null,
                             "Value": "stateChange",
-                            "Text": "Tydelig tilstandsendring",
+                            "Text": "Tilstandsendring",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "affectedArea",
-                            "Text": "Tydelig påvirka areal (%)",
+                            "Text": "Påvirka areal (%)",
                             "Info": null,
                             "Children": null
                         },
@@ -4958,14 +5090,21 @@
                         {
                             "Id": null,
                             "Value": "dominanceForrest",
-                            "Text": "Dominans skog",
+                            "Text": "Dominans",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "natureTypeArea",
+                            "Text": "Naturtypeareal",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "timeHorizon",
-                            "Text": "Tidshorisont",
+                            "Text": "Tid",
                             "Info": null,
                             "Children": null
                         },
@@ -4979,14 +5118,14 @@
                         {
                             "Id": null,
                             "Value": "stateChange",
-                            "Text": "Tydelig tilstandsendring",
+                            "Text": "Tilstandsendring",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "affectedArea",
-                            "Text": "Tydelig påvirka areal (%)",
+                            "Text": "Påvirka areal (%)",
                             "Info": null,
                             "Children": null
                         },

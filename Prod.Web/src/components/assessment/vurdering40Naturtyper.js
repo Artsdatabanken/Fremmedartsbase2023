@@ -20,7 +20,7 @@ export default class Vurdering40Naturtyper extends React.Component {
     constructor(props) {
         super(props)
         const {appState:{assessment}, appState} = this.props;
-
+        
         // extendObservable(this, { })
         this.addNaturtype = (nyNt) => {
             assessment
@@ -50,7 +50,6 @@ export default class Vurdering40Naturtyper extends React.Component {
         // const labels = appState.kodeLabels
         const ntLabels = labels.NatureTypes
 
-
         // console.log("keys: " + JSON.stringify(Object.keys(assessment)))
 
 
@@ -66,8 +65,13 @@ export default class Vurdering40Naturtyper extends React.Component {
             <div>
                 <br/>
                 <br/>
-                <h4>{ntLabels.colonizedAreaHeading}</h4>
+              {/*  <h4>{ntLabels.colonizedAreaHeading}</h4> */}
                 <br/>
+                <h4>Velg blant følgende fra Rødlista for naturtyper 2018:</h4>
+               {/* <Xcomp.MultiselectArray
+                                observableValue={[this, 'naturetype2018']} 
+                                codes={koder.naturtyper2018}
+                                mode="check"/> */}
                 <NewNaturetype
                     appState={appState}
                     addNaturtype={this.addNaturtype}
@@ -77,7 +81,8 @@ export default class Vurdering40Naturtyper extends React.Component {
                     naturetypes={assessment.impactedNatureTypes}
                     canRenderTable={canRenderTable}
                     labels={labels}
-                    appState={appState}/>
+                    appState={appState}
+                    desc={"Anslå kolonisert areal i de naturtypene arten er observert i, beskriv artens påvirkning i naturtypen og anslå hvor stor andel av naturtypen som blir påvirket. Det skal være sannsynlighetsovervekt for at valgt tilstandsendring skjer."}/>
                 <br/>
                 <br/>
 
