@@ -8,7 +8,7 @@ import SelectAssessmentTable from './selectAssessmentTable';
 // import auth from './authService';
 // import config from '../config';
 // import catimg from '../cat.gif';
-// import catimg from 'url:../cat.gif';
+import catimg from 'url:../cat.gif';
 // const catimg = require('../cat.gif') 
 
 
@@ -130,9 +130,9 @@ export default class SelectAssessment extends Component {
                             </li>                            
                         </div> 
                     </div> 
-                    {/* <div style={{float: 'right'}}>
+                   {/* <div style={{float: 'right'}}>
                         <img src={catimg} style={{width: '150px'}}></img>
-                    </div>  */}
+                            </div> */}
                 </div>
                 <h5 style={{fontWeight: 'bold', fontSize: '1rem'}}>Filtrer på:</h5>
                 <div className="selectFilter" style={{display: 'flex'}}>

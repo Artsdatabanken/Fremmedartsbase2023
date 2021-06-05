@@ -62,7 +62,7 @@ export default class Vurdering51Invasjonspotensiale extends React.Component {
         const labels = appState.codeLabels
         const koder = appState.koder
 
-
+        const ntLabels = labels.NatureTypes
 
         // const bassertpaValues = [
         //     {
@@ -553,8 +553,10 @@ export default class Vurdering51Invasjonspotensiale extends React.Component {
                     </div>
                 </fieldset>
                 <fieldset className="well">
-                    <h4>{critC.heading} &nbsp;{labels.Ccrit.transferedFrom4}</h4>
+                    {/* {/*<h4>{critC.heading} &nbsp;{labels.Ccrit.transferedFrom4}</h4> */}
+                    <h4>{critC.heading}</h4>
                     <p>{critC.info}</p>
+                    <p>{ntLabels.scoreSummary}</p>
                     <Criterion criterion={critC} mode="noheading"/>
                 </fieldset>
                 </div>
