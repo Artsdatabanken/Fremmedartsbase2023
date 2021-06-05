@@ -90,10 +90,24 @@ class ViewModel {
             userContext: {
                 readonly: false
             },
+            koder: null,
+            codeLabels: null,
+            naturtypeLabels: {},
+
             comments: [],
             newComment: null,
+            newComments: [],
+            otherComments: [],
+            withComments: false,
+            withNewComments: false,
+            withPotentialTaxonChanges: false,
+            withAutomaticNameChanges: false,   
+            kunUbehandlede: false,
+            kunMine: false,
+            includeLC: false  ,
+
+
             artskartModel: {},
-            koder: null,
             påvirkningsfaktorer: [],
             spredningsveier: null,
             selectedPåvirkningsfaktor: {
@@ -106,9 +120,11 @@ class ViewModel {
                 alvorlighetsgrad: null,
                 comment: null
             },
-            codeLabels: null,
+            artificialAndConstructedSites: ["F4", "F5", "H4", "L7", "L8", "M14", "M15", "T35", "T36", "T37", "T38", "T39", "T40", "T41", "T42", "T43", "T44", "T45", "V11", "V12", "V13"],
+            assessmentType: "",
+            vurdert: false,
+            ikkevurdert: false,
 
-            naturtypeLabels: {},
 
             expertgroups: null, // [],
             expertgroup: null,
@@ -125,27 +141,19 @@ class ViewModel {
             filterType: [],
             workStatus: [],
             responsible: [],
-            newComments: [],
-            otherComments: [],
-            kunUbehandlede: false,
-            kunMine: false,
-            withComments: false,
-            withNewComments: false,
-            withPotentialTaxonChanges: false,
-            withAutomaticNameChanges: false,   
+
             ekspertgruppeReport: null,
             lockedForEditByUser: null,
             assessmentIsSaving: false,
 			showSaveSuccessful: false,
             showSaveFailure: false,
-            artificialAndConstructedSites: ["F4", "F5", "H4", "L7", "L8", "M14", "M15", "T35", "T36", "T37", "T38", "T39", "T40", "T41", "T42", "T43", "T44", "T45", "V11", "V12", "V13"],
             antallVurderinger: 0,
             antallUbehandlede: 0,
             antallTaxonEndring: 0,
             antallNavnEndret: 0,
             loadingExpertGroup: false,
-            includeLC: false  ,
             evaluationContext: 'N',
+            //todo: this thing should go to the code file
             evaluationContexts: {
                 'N': {
                     name: 'Norge',
@@ -157,12 +165,7 @@ class ViewModel {
                     nameWithPreposition: 'på Svalbard',
                     map: 'svalbard'
                 }
-            },   
-            
-            assessmentType: "",
-            vurdert: false,
-            ikkevurdert: false
-
+            }  
         })
 
       
