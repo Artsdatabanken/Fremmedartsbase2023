@@ -20,7 +20,7 @@ export default class MigrationPathwayTable extends React.Component {
         // const {appState:{assessment}, appState} = this.props;
         // const vurdering = assessment
         const labels = appState.codeLabels
-        const koder = appState.koder.Children
+        const koder = appState.koder
         const spredningsveier = koder.migrationPathways[0]
 
 

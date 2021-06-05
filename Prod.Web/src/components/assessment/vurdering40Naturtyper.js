@@ -44,7 +44,7 @@ export default class Vurdering40Naturtyper extends React.Component {
         
         
         const labels = appState.codeLabels
-        const koder = appState.koder.Children
+        const koder = appState.koder
 
         
         // const labels = appState.kodeLabels

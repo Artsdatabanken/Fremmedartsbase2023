@@ -12,7 +12,7 @@ export default class Vurdering53GeografiskVariasjon extends React.Component {
 	render() {
 		const {appState:{assessment:{riskAssessment}}, appState} = this.props;
         const labels = appState.codeLabels
-		const koder = appState.koder.Children
+		const koder = appState.koder
 		const geolabels = labels.geographicVariation
         
 		return(

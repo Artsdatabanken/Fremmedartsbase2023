@@ -60,7 +60,7 @@ export default class Vurdering51Invasjonspotensiale extends React.Component {
         const {appState:{assessment:{riskAssessment}}, appState:{riskAssessmentTabs}, appState, existenceArea35} = this.props;
         // const labels = appState.kodeLabels
         const labels = appState.codeLabels
-        const koder = appState.koder.Children
+        const koder = appState.koder
 
 
 

@@ -13,7 +13,7 @@ export default class ArrivedCountryFrom extends React.Component {
         const {appState:{assessment}, appState} = this.props;
         const vurdering = assessment
         const labels = appState.codeLabels
-        const koder = appState.koder.Children
+        const koder = appState.koder
 
 
         // const {vurdering, fabModel} = this.props;

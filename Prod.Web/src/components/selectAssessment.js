@@ -61,7 +61,8 @@ export default class SelectAssessment extends Component {
         appState.expertgroupCategoryCheckboxFilter = newCatFilter
     })
     render() {
-        const {appState, appState:{assessment,roleincurrentgroup:rolle,codeLabels:labels,koder:{Children:koder}}} = this.props
+        const {appState, appState:{assessment,roleincurrentgroup:rolle,codeLabels:labels,koder}} = this.props
+        // const {appState, appState:{assessment,roleincurrentgroup:rolle,codeLabels:labels,koder:{Children:koder}}} = this.props
         // const koder = appState.koder.Children
          
         document.title = "Velg art - Fremmede arter"
@@ -129,9 +130,9 @@ export default class SelectAssessment extends Component {
                             </li>                            
                         </div> 
                     </div> 
-                    <div style={{float: 'right'}}>
+                    {/* <div style={{float: 'right'}}>
                         <img src={catimg} style={{width: '150px'}}></img>
-                    </div> 
+                    </div>  */}
                 </div>
                 <h5 style={{fontWeight: 'bold', fontSize: '1rem'}}>Filtrer på:</h5>
                 <div className="selectFilter" style={{display: 'flex'}}>

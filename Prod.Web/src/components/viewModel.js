@@ -170,25 +170,21 @@ class ViewModel {
         this.initializeServices()
         // ---------------
 
-        // const labels = require('../FA3CodesNB.json') 
         const codes = require('../FA3CodesNB.json') 
-        // console.log("codes:" + typeof(codes))
         const clabels =  codes2labels(codes.Children.labels[0].Children)
-        // console.log("clabels:", clabels)
 
 
-        console.log("labels keys: " + JSON.stringify(Object.keys(clabels)))
-        console.log("codes keys: " + JSON.stringify(Object.keys(codes.Children)))
+        // console.log("labels keys: " + JSON.stringify(Object.keys(clabels)))
+        // console.log("codes keys: " + JSON.stringify(Object.keys(codes.Children)))
         // console.log("codes json: " + JSON.stringify(codes))
         // console.log("----------------------------------------------+++")
         // console.log(JSON.stringify(clabels))
         this.codeLabels = clabels
-        //
-        this.koder = codes
+        this.koder = codes.Children
 
         //-----------------------------------------------------
 
-        const mp = this.koder.Children.migrationPathways[0]
+        const mp = this.koder.migrationPathways[0]
         this.spredningsveier = this.koder2migrationPathways(mp)
         //-----------------------------------------------------
 
@@ -303,9 +299,7 @@ class ViewModel {
         });
         autorun(() => {
             console.log("isServicesReady: " + this.isServicesReady)
-            // console.log("- koder:" + this.koder != null)
             console.log("exp" + (this.expertgroups != null))
-            // console.log("-lab" + this.codeLabels != null)
         });
         autorun(() => {
             console.log("viewMode: " + this.viewMode)

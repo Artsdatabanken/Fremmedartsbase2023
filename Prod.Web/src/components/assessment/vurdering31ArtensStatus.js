@@ -50,7 +50,7 @@ export default class vurdering31ArtensStatus extends React.Component {
 
         // console.log("labels" + JSON.stringify(labels.FirstObservation))
 
-        const koder = appState.koder.Children
+        const koder = appState.koder
         const standardPeriods = [
             nbsp,
             "-1800",

@@ -12,7 +12,7 @@ export default class Vurdering54Klimaeffekter extends React.Component {
     render() {
 		const {appState:{assessment:{riskAssessment}}, appState} = this.props;
         const labels = appState.codeLabels
-		const koder = appState.koder.Children
+		const koder = appState.koder
         // const {riskAssessment, viewModel, fabModel} = this.props;
         const climatelabel = (id) => koder.climateEffects.find(code => code.Value === id).Text
 

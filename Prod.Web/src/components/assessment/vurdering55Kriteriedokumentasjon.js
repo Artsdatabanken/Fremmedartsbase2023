@@ -37,7 +37,7 @@ export default class Vurdering55Kriteriedokumentasjon extends React.Component {
     render() {
         const {appState:{assessment:{riskAssessment}}, appState, kritDocInfo} = this.props;
         const labels = appState.codeLabels
-		const koder = appState.koder.Children
+		const koder = appState.koder
         const critlabels = labels.critDocumentation
 
         // const {riskAssessment, viewModel, appState, kritDocInfo} = this.props;

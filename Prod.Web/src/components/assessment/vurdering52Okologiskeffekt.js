@@ -227,7 +227,7 @@ export default class Vurdering52Okologiskeffekt extends React.Component {
         // const {riskAssessment, viewModel, fabModel, evaluationContext} = this.props;
         // const labels = fabModel.kodeLabels
         const labels = appState.codeLabels
-        const koder = appState.koder.Children
+        const koder = appState.koder
         const nbsp = "\u00a0"
         const crit52D = getCriterion(riskAssessment, 1 , "D")
         const crit52E = getCriterion(riskAssessment, 1 , "E")
