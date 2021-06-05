@@ -174,7 +174,9 @@ class ViewModel {
         // ---------------
 
         const codes = require('../FA3CodesNB.json') 
-        const clabels =  codes2labels(codes.Children.labels[0].Children)
+        this.koder = codes.Children
+        const clabels =  codes2labels(this.koder.labels[0].Children)
+        this.codeLabels = clabels
 
 
         // console.log("labels keys: " + JSON.stringify(Object.keys(clabels)))
@@ -182,8 +184,6 @@ class ViewModel {
         // console.log("codes json: " + JSON.stringify(codes))
         // console.log("----------------------------------------------+++")
         // console.log(JSON.stringify(clabels))
-        this.codeLabels = clabels
-        this.koder = codes.Children
 
         //-----------------------------------------------------
 
@@ -194,6 +194,8 @@ class ViewModel {
 
         this.theUserContext = createContext(this.userContext)   
 
+
+        //***** pubsub event handlers *****
 		let savetimer = null
 		events.on("saveAssessment",
 			(tag) => {
@@ -230,8 +232,7 @@ class ViewModel {
                      console.log("signalR: *save*")
                 }
 			})
-
-
+        //*************************************************
 
 
 
@@ -241,10 +242,11 @@ class ViewModel {
 
 
         autorun(() => {
-            // Lurer Mobx til å kjøre koden... TODO: Gjør dette på en "riktig" måte
+            // **** Lurer Mobx til å kjøre koden... TODO: Gjør dette på en "riktig" måte ****
             this._viewMode = this.viewMode
             this._assessment = this.assessment
             this._evaluationStatus = !this.assessment || this.assessment.evaluationStatus
+            // ******************************************************************************
 
             runInAction(() => {
                 this.userContext.readonly = (
@@ -290,25 +292,22 @@ class ViewModel {
         });
 
 
-        // extendObservable(this, {
-        //     isDirty: () => {
-        //         const a = JSON.stringify(this.assessment)
-        //         const b = this.assessmentSavedVersionString
-        //         return a != b
-        //     }
-        // })
-        autorun(() => {
-            console.log("dirty: " + this.isDirty)
-        });
+
+
+
         autorun(() => {
             console.log("isServicesReady: " + this.isServicesReady)
             console.log("exp" + (this.expertgroups != null))
+        });
+        autorun(() => {
+            console.log("dirty: " + this.isDirty)
         });
         autorun(() => {
             console.log("viewMode: " + this.viewMode)
         });
 
        
+        // **** set assessment and assessmentId ****
         reaction(() => this.assessmentId,
             assessmentId => {
                 console.log("x: " + this.assessmentId + " " + typeof(this.assessmentId) + " " + (this.assessment ? this.assessment.id : "nix"))
@@ -320,46 +319,31 @@ class ViewModel {
                 }
             }
         );
-
-
-        autorun(() => {
-            if (this.viewMode === "choosespecie") {
-                this.setCurrentAssessment(null)
-                // this.setCurrentAssessment( 291556)
-            }
-        });
-
-        reaction(
-            () => this.assessment,
-            assessment => {
-                if (assessment && this.isServicesReady) {
-                    // console.log("viewMode = 'assessment' - before:" + this.viewMode)
-                    this.viewMode = "assessment"
-                }
-            })
-
-
-
         reaction(
             () => this.assessmentId,
             async assessmentId => {
                 console.log("ny assessmentId: " + assessmentId)
             }
         )
-
+        autorun(() => {
+            if (this.viewMode === "choosespecie") {
+                this.setCurrentAssessment(null)
+            }
+        });
         reaction(
             () => this.assessment,
             assessment => {
                 console.log(assessment ? "ny assessment: " + assessment.id : "no assessment")
-                // if (assessment && !assessment.oppsummeringA) {
-                //     enhanceWithRiskEvaluation(assessment); 
-                //     console.log("assessment enhanced")
-                // }
-                // console.trace()
+                if (assessment && this.isServicesReady) {
+                    // console.log("viewMode = 'assessment' - before:" + this.viewMode)
+                    this.viewMode = "assessment"
+                }
             }
         )
+        // ***************************************
 
 
+        // **** sett expert group ****
         reaction(
             () => [this.expertgroup, auth.isLoggedIn],
             ([expertgroupId, isLoggedIn])  => {
@@ -371,12 +355,32 @@ class ViewModel {
                 }
             }
         )
+        // ***************************************
 
-        // enhanceWithRiskEvaluation({}); // this.assessment, this.kritHelpers);
-
-        // console.log("assessmentId:" + this.assessmentId)
-  
+        // **** initialize tabs ****
         extendObservable(this, {
+            selectAssessmentTabs: {
+                activeTab: {id: 1},
+                tabList: () => [
+                    new tabItem({id: 1, label:this.koder.mainSelectAssessment, enabled:true}),
+                    new tabItem({id: 2, label:this.koder.mainCreateAssessment, enabled:true}),
+                    new tabItem({id: 3, label:this.koder.mainStatistics, enabled:true, visible: this.showstatistikk}),
+                    new tabItem({id: 4, label:this.koder.mainReport, enabled:true})
+                ],
+                setActiveTab: (tab) => {
+                    action(() => {
+                        console.log('xxx', this.selectAssessmentTabs.activeTab)
+                        console.log('xxx', tab)
+                        if(tab.enabled) {
+                            this.selectAssessmentTabs.activeTab.id = tab.id
+                            this.assessmentId = null
+                            //                            this.router.hash = "#" + tab.url + "/" + this.assessmentId
+                        }
+                    })()
+                }
+            },
+
+
             assessmentTabs: {
                 activeTab: {id: 0},
                 tabList: [
@@ -421,26 +425,6 @@ class ViewModel {
                     })()
                 }
             },
-            selectAssessmentTabs: {
-                activeTab: {id: 1},
-                tabList: () => [
-                    new tabItem({id: 1, label:this.koder.mainSelectAssessment, enabled:true}),
-                    new tabItem({id: 2, label:this.koder.mainCreateAssessment, enabled:true}),
-                    new tabItem({id: 3, label:this.koder.mainStatistics, enabled:true, visible: this.showstatistikk}),
-                    new tabItem({id: 4, label:this.koder.mainReport, enabled:true})
-                ],
-                setActiveTab: (tab) => {
-                    action(() => {
-                        console.log('xxx', this.selectAssessmentTabs.activeTab)
-                        console.log('xxx', tab)
-                        if(tab.enabled) {
-                            this.selectAssessmentTabs.activeTab.id = tab.id
-                            this.assessmentId = null
-                            //                            this.router.hash = "#" + tab.url + "/" + this.assessmentId
-                        }
-                    })()
-                }
-            },
             infoTabs: {
                 activeTab: {id: 1},
                 tabList: [
@@ -478,6 +462,10 @@ class ViewModel {
                 }
             }
         })
+        // **** end initialize tabs ****
+
+
+
 
         const createRoutes = tablist => {
             const items = []
@@ -499,8 +487,10 @@ class ViewModel {
 
         //this.assessmentId = 3155 //1231
 
-    }
+    }  // ########### end constructor ###########
+    //    #######################################
 
+    
     getUrl = config.getUrl
 
 
