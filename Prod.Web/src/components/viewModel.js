@@ -490,8 +490,6 @@ class ViewModel {
     }  // ########### end constructor ###########
     //    #######################################
 
-    
-    getUrl = config.getUrl
 
 
     get UserContext() {return this.theUserContext};
@@ -531,15 +529,6 @@ class ViewModel {
         return a != b
     }
 
-    @computed get AssessmentReportLink() {
-        if (!this.assessment) {
-            return null
-        }
-        const docid = this.assessmentId
-        const url = config.getUrl("artsrapport/assessmentview/") + docid
-        // console.log("URL:" + url)
-        return url
-    }
 
     @computed get unresolvedComments() {
         const comments = this.assessmentComments
@@ -714,33 +703,6 @@ class ViewModel {
         }
     }
 
-    async saveCurrentAssessment() {
-        events.trigger("saveAssessment", "savestart")
-        const data = toJS(this.assessment)
-        console.log("Y:" + JSON.stringify(data).length)
-        const id = data.id
-        const url = config.getUrl("assessment/") + id
-        fetch(url, {
-            method: 'POST',
-            // mode: 'no-cors',
-            body: JSON.stringify(data), // data can be `string` or {object}! (cant get it to work with {object}...)
-            headers:{
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' + auth.getAuthToken
-
-            }
-          })
-        //   .then(res => res.json())
-        //   .then(response => console.log('Success:', JSON.stringify(response)))
-          .then(response => checkStatus(response))
-          .then(() => this.updateAssessmentSavedVersion(data))
-          .then(() => events.trigger("saveAssessment", "savesuccess"))
-          .catch(error => 
-            {events.trigger("saveAssessment", "savefailure")
-             console.error('Error:', error)}
-          );
-    }
 
     // async loadKoder() {
     //     const json = await this.getKoder()
@@ -770,32 +732,6 @@ class ViewModel {
         runInAction(() => this.expertgroups = expertgroups)
     }
 
-    async loadExpertgroupAssessmentList(expertgroupId) {
-        runInAction(() => this.loadingExpertGroup = true)
-        const id = expertgroupId.replace('/','_')
-        const url = config.getUrl("expertgroupassessments/") + id
-        const expertgroupAssessments = await auth.getJsonRequest(url)
-
-        console.log("------" + JSON.stringify(expertgroupAssessments))
-
-        const role = expertgroupAssessments.rolle; 
-        
-
-
-
-        // role.skriver = true
-        // role.leser = true
-
-
-        const assessments = observable.array(expertgroupAssessments.assessments)
-        console.log("loded " + assessments.length + " assessments")
-        runInAction(() => {
-            this.expertgroupAssessmentList = assessments
-            this.roleincurrentgroup = role
-            this.loadingExpertGroup = false
-        })
-                
-    }
 
     async loadCurrentExpertgroupAssessmentList() {
         const expertgroupId = this.expertgroup
@@ -899,6 +835,199 @@ class ViewModel {
         }
     }
 
+
+    checkForExistingAssessment = (sciName, assessmentId) => {
+        //this.expertgroupAssessmentList.map(ega => console.log( ega.scientificName))
+        const result = this.expertgroupAssessmentList.some(ega => ega.scientificName == sciName && ega.id != assessmentId)
+        //console.log("sciname:" + sciName + " " + result)
+    
+        return result
+    }
+
+
+    open(assessmentInfo) {	
+        // console.log("########################" + JSON.stringify(assessmentInfo))
+        // console.log("########################" + assessmentInfo.id)
+        this.setCurrentAssessment(assessmentInfo.id)	
+    }
+
+
+
+    initializeServices() {
+        console.log("start initializeServices")
+        // this.loadKoder()
+        // this.loadPåvirkningsfaktorer()
+        this.loadExpertGroups()
+    }
+
+
+
+    @action finishassessment(statusaction, assessment) {
+        let status = statusaction === "finish" ? "finished" : statusaction === "unfinish" ? "inprogress" : ""
+        let username = statusaction === "unfinish" ? auth.userName : null
+        let now = Date.now().toString()
+        transaction(() => {
+            assessment.evaluationStatus = status
+            assessment.lockedForEditAt = now
+            assessment.lockedForEditByUser = username
+            assessment.lastUpdatedOn = now
+        })
+
+        if(statusaction === "unfinish") {
+            this.viewMode = "choosespecie"
+            this.updateCurrentAssessment(null)
+        } else {
+            this.updateAssessmentSavedVersion(assessment)
+        }
+
+    }
+
+
+    // @action updateAssessmentStatus(status) {
+    //     this.assessment.evaluationStatus = status
+    //     this.finishCurrentAssessment("finish")
+    // }
+  
+    @action setAssessmentComplete(statusaction) {
+        if (!this.roleincurrentgroup.leder) {
+            alert("setAssessmentComplete: 'Not allowed'")
+            return
+        }
+        if (statusaction !== "finish" && statusaction !== "unfinish" )
+        {
+            alert("Wrong statusaction: " + statusaction)
+        }
+        // const status = statusaction === "finish" ? "finished" : "inprogress"  // ???
+        // this.assessment.evaluationStatus = status
+
+        this.finishCurrentAssessment(statusaction)
+    }
+
+
+
+    koder2migrationPathways(mp) {
+        const r = {}
+        r.name = mp.Text
+        // console.log(r.name)
+        r.value = mp.Value
+        if(mp.Children) {
+            r.children = []
+            const mpckey = Object.keys(mp.Children)[0]
+            const mpc = mp.Children[mpckey]
+            for ( var i = 0; i < mpc.length; ++i )
+            {
+                r.children.push(this.koder2migrationPathways(mpc[i]));
+            }
+        }
+        return r
+    }
+
+
+
+    // ################# section API stuff ##################
+
+    getUrl = config.getUrl
+
+    @computed get AssessmentReportLink() {
+        if (!this.assessment) {
+            return null
+        }
+        const docid = this.assessmentId
+        const url = config.getUrl("artsrapport/assessmentview/") + docid
+        // console.log("URL:" + url)
+        return url
+    }
+
+    async saveCurrentAssessment() {
+        events.trigger("saveAssessment", "savestart")
+        const data = toJS(this.assessment)
+        console.log("Y:" + JSON.stringify(data).length)
+        const id = data.id
+        const url = config.getUrl("assessment/") + id
+        fetch(url, {
+            method: 'POST',
+            // mode: 'no-cors',
+            body: JSON.stringify(data), // data can be `string` or {object}! (cant get it to work with {object}...)
+            headers:{
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + auth.getAuthToken
+
+            }
+          })
+        //   .then(res => res.json())
+        //   .then(response => console.log('Success:', JSON.stringify(response)))
+          .then(response => checkStatus(response))
+          .then(() => this.updateAssessmentSavedVersion(data))
+          .then(() => events.trigger("saveAssessment", "savesuccess"))
+          .catch(error => 
+            {events.trigger("saveAssessment", "savefailure")
+             console.error('Error:', error)}
+          );
+    }
+
+    async loadExpertgroupAssessmentList(expertgroupId) {
+        runInAction(() => this.loadingExpertGroup = true)
+        const id = expertgroupId.replace('/','_')
+        const url = config.getUrl("expertgroupassessments/") + id
+        const expertgroupAssessments = await auth.getJsonRequest(url)
+
+        console.log("------" + JSON.stringify(expertgroupAssessments))
+
+        const role = expertgroupAssessments.rolle; 
+        
+
+
+
+        // role.skriver = true
+        // role.leser = true
+
+
+        const assessments = observable.array(expertgroupAssessments.assessments)
+        console.log("loded " + assessments.length + " assessments")
+        runInAction(() => {
+            this.expertgroupAssessmentList = assessments
+            this.roleincurrentgroup = role
+            this.loadingExpertGroup = false
+        })
+                
+    }
+
+    //getAssessment = flow(function * (assessmentId) {
+    async getAssessment(assessmentId) {
+        const url = config.getUrl("assessment/") + assessmentId
+        //console.log("assessmentId: " + assessmentId)
+        // try {
+        const response = await fetch(url
+            , {
+                method: 'GET',
+                // mode: 'no-cors',
+                headers: new Headers( {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + auth.getAuthToken
+                })
+            }
+        ).then((response) => {
+            if (response.status >= 400 && response.status < 600) {
+                throw new Error("Bad response from server");
+            }
+            return response;
+        }).then((returnedResponse) => {
+            // Your response to manipulate
+            //    const json = await returnedResponse.json()
+            return returnedResponse;
+
+        }).catch((error) => {
+            // Your error is here!
+            console.log(error)
+        });
+
+        const json = await response.json()
+        return json
+    }
+    
+
     @action createNewAssessment(taxinfo) {
         console.log("opprett ny vurdering: " + taxinfo.ScientificName + " " + taxinfo.ScientificNameId + " " + taxinfo.Ekspertgruppe)
         const url = config.getUrl("assessment/createnew") 
@@ -950,55 +1079,7 @@ class ViewModel {
         );
     }
 
-    checkForExistingAssessment = (sciName, assessmentId) => {
-        //this.expertgroupAssessmentList.map(ega => console.log( ega.scientificName))
-        const result = this.expertgroupAssessmentList.some(ega => ega.scientificName == sciName && ega.id != assessmentId)
-        //console.log("sciname:" + sciName + " " + result)
-    
-        return result
-    }
-
-    //getAssessment = flow(function * (assessmentId) {
-    async getAssessment(assessmentId) {
-        const url = config.getUrl("assessment/") + assessmentId
-        //console.log("assessmentId: " + assessmentId)
-        // try {
-        const response = await fetch(url
-            , {
-                method: 'GET',
-                // mode: 'no-cors',
-                headers: new Headers( {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + auth.getAuthToken
-                })
-            }
-        ).then((response) => {
-            if (response.status >= 400 && response.status < 600) {
-                throw new Error("Bad response from server");
-            }
-            return response;
-        }).then((returnedResponse) => {
-            // Your response to manipulate
-            //    const json = await returnedResponse.json()
-            return returnedResponse;
-
-        }).catch((error) => {
-            // Your error is here!
-            console.log(error)
-        });
-
-        const json = await response.json()
-        return json
-    }
-
-    open(assessmentInfo) {	
-        // console.log("########################" + JSON.stringify(assessmentInfo))
-        // console.log("########################" + assessmentInfo.id)
-        this.setCurrentAssessment(assessmentInfo.id)	
-    }
-
-     lockFraHode(v) {
+    lockFraHode(v) {
         loadData(
             config.getUrl("assessment/"+v.id+ "/lock"),
             data => {
@@ -1044,6 +1125,7 @@ class ViewModel {
         return json
     }
 
+
     async getExpertGroupAssessmentList(expertgroupId) {
         const id = expertgroupId.value.replace('/','_')
         const url = config.getUrl("expertgroupassessments/") + id
@@ -1052,13 +1134,6 @@ class ViewModel {
         const json = await response.json()
         //console.log("getExpertGroupAssessmentList: " + JSON.stringify(json))
         return json
-    }
-
-    initializeServices() {
-        console.log("start initializeServices")
-        // this.loadKoder()
-        // this.loadPåvirkningsfaktorer()
-        this.loadExpertGroups()
     }
 
 
@@ -1087,46 +1162,6 @@ class ViewModel {
         
     }
 
-    @action finishassessment(statusaction, assessment) {
-        let status = statusaction === "finish" ? "finished" : statusaction === "unfinish" ? "inprogress" : ""
-        let username = statusaction === "unfinish" ? auth.userName : null
-        let now = Date.now().toString()
-        transaction(() => {
-            assessment.evaluationStatus = status
-            assessment.lockedForEditAt = now
-            assessment.lockedForEditByUser = username
-            assessment.lastUpdatedOn = now
-        })
-
-        if(statusaction === "unfinish") {
-            this.viewMode = "choosespecie"
-            this.updateCurrentAssessment(null)
-        } else {
-            this.updateAssessmentSavedVersion(assessment)
-        }
-
-    }
-
-
-    // @action updateAssessmentStatus(status) {
-    //     this.assessment.evaluationStatus = status
-    //     this.finishCurrentAssessment("finish")
-    // }
-  
-    @action setAssessmentComplete(statusaction) {
-        if (!this.roleincurrentgroup.leder) {
-            alert("setAssessmentComplete: 'Not allowed'")
-            return
-        }
-        if (statusaction !== "finish" && statusaction !== "unfinish" )
-        {
-            alert("Wrong statusaction: " + statusaction)
-        }
-        // const status = statusaction === "finish" ? "finished" : "inprogress"  // ???
-        // this.assessment.evaluationStatus = status
-
-        this.finishCurrentAssessment(statusaction)
-    }
 
     @action copyThisAssessmentToTestarter() {
         if (!this.roleincurrentgroup.leder) {
@@ -1150,26 +1185,7 @@ class ViewModel {
           );
     }
 
-
-    koder2migrationPathways(mp) {
-        const r = {}
-        r.name = mp.Text
-        // console.log(r.name)
-        r.value = mp.Value
-        if(mp.Children) {
-            r.children = []
-            const mpckey = Object.keys(mp.Children)[0]
-            const mpc = mp.Children[mpckey]
-            for ( var i = 0; i < mpc.length; ++i )
-            {
-                r.children.push(this.koder2migrationPathways(mpc[i]));
-            }
-        }
-        return r
-    }
-
-
-
+    // ################# end section API stuff ##################
     
 }
 export default new ViewModel()
