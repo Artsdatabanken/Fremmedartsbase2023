@@ -34,7 +34,7 @@ class ViewModel {
             transport: signalR.HttpTransportType.WebSockets,
             logMessageContent: true,
             logger: signalR.LogLevel.Trace
-            //accessTokenFactory: () => this.props.accessToken,  // todo: <---- check this 
+            //accessTokenFactory: () => this.props.accessToken,  // todo: <---- check this
         }
 
 
@@ -52,7 +52,7 @@ class ViewModel {
         // // // // //         // transport: signalR.HttpTransportType.WebSockets,
         // // // // //         logMessageContent: true,
         // // // // //         logger: signalR.LogLevel.Trace
-        // // // // //         //accessTokenFactory: () => this.props.accessToken,  // todo: <---- check this 
+        // // // // //         //accessTokenFactory: () => this.props.accessToken,  // todo: <---- check this
         // // // // //     })
         // // // // //     .withAutomaticReconnect()
         // // // // //     .withHubProtocol(new signalR.JsonHubProtocol())
@@ -61,14 +61,14 @@ class ViewModel {
         // // // // //         // alert("SignalR: " + context + " - " + message)
         // // // // //         events.trigger(context, message)
         // // // // //     });
-            
+
         // // // // // this.hubConnection
         // // // // //     .start()
         // // // // //     .then(() => console.info('SignalR Connected'))
         // // // // //     .catch(err => console.error('SignalR Connection Error: ', err));
 
 
-            
+
 
         extendObservable(this, {
             harVurdering: () => !!this.assessment
@@ -101,7 +101,7 @@ class ViewModel {
             withComments: false,
             withNewComments: false,
             withPotentialTaxonChanges: false,
-            withAutomaticNameChanges: false,   
+            withAutomaticNameChanges: false,
             kunUbehandlede: false,
             kunMine: false,
             includeLC: false  ,
@@ -165,15 +165,14 @@ class ViewModel {
                     nameWithPreposition: 'på Svalbard',
                     map: 'svalbard'
                 }
-            }  
+            }
         })
 
-      
 
         this.initializeServices()
         // ---------------
 
-        const codes = require('../FA3CodesNB.json') 
+        const codes = require('../FA3CodesNB.json')
         this.koder = codes.Children
         const clabels =  codes2labels(this.koder.labels[0].Children)
         this.codeLabels = clabels
@@ -192,7 +191,7 @@ class ViewModel {
         //-----------------------------------------------------
 
 
-        this.theUserContext = createContext(this.userContext)   
+        this.theUserContext = createContext(this.userContext)
 
 
         //***** pubsub event handlers *****
@@ -250,7 +249,7 @@ class ViewModel {
 
             runInAction(() => {
                 this.userContext.readonly = (
-                    this.viewMode === "assessment" && 
+                    this.viewMode === "assessment" &&
                     (
                         (!this.assessment || this.assessment.lockedForEditByUser !== auth.userName ) ||
                         (!this.assessment || this.assessment.evaluationStatus === "finished" )
@@ -292,9 +291,6 @@ class ViewModel {
         });
 
 
-
-
-
         autorun(() => {
             console.log("isServicesReady: " + this.isServicesReady)
             console.log("exp" + (this.expertgroups != null))
@@ -306,7 +302,7 @@ class ViewModel {
             console.log("viewMode: " + this.viewMode)
         });
 
-       
+
         // **** set assessment and assessmentId ****
         reaction(() => this.assessmentId,
             assessmentId => {
@@ -492,27 +488,27 @@ class ViewModel {
 
 
 
+
     get UserContext() {return this.theUserContext};
 
-    @computed get isLockedByMe() {
-        if (!this.assessment) return false;
-        return this.assessment.lockedForEditByUser === auth.userName;
-    };
-    
-    @computed get isFinnished() {
-        if (!this.assessment) return false;
-        return (
-        this.assessment.evaluationStatus &&
-        this.assessment.evaluationStatus === "finished"
-        );
-    };
-    
-    @computed get canEdit() {
-        if (!auth.hasAccess) return false;
-        if (appState.viewMode === "choosespecie") return false;
-        return isLockedByMe() && !isFinished();
-    };
-        
+    initializeServices() {
+        console.log("start initializeServices")
+        // this.loadKoder()
+        // this.loadPåvirkningsfaktorer()
+        this.loadExpertGroups()
+    }
+
+    @action navigate(assessmentTabId, id) {
+        console.log("navigate: " + assessmentTabId + " - " + id)
+        action(() => {
+            this.assessmentTabs.activeTab.id = assessmentTabId
+            // this.assessmentId = id
+        })
+    }
+
+
+
+
 
     @computed get isServicesReady() {
         return (
@@ -522,12 +518,32 @@ class ViewModel {
             // this.codeLabels != null)
     }
 
+    @computed get isLockedByMe() {
+        if (!this.assessment) return false;
+        return this.assessment.lockedForEditByUser === auth.userName;
+    };
+
+    @computed get isFinnished() {
+        if (!this.assessment) return false;
+        return (
+        this.assessment.evaluationStatus &&
+        this.assessment.evaluationStatus === "finished"
+        );
+    };
+
+    @computed get canEdit() {
+        if (!auth.hasAccess) return false;
+        if (appState.viewMode === "choosespecie") return false;
+        return isLockedByMe() && !isFinished();
+    };
+
     @computed get isDirty() {
         if (!this.assessmentId) return false
         const a = JSON.stringify(this.assessment)
         const b = this.assessmentSavedVersionString
         return a != b
     }
+
 
 
     @computed get unresolvedComments() {
@@ -538,39 +554,26 @@ class ViewModel {
     }
 
 
-    @computed get canAddSelectedPåvirkningsfaktor() {
-        var sp = this.selectedPåvirkningsfaktor
-        var validsp = (sp.id === "11." || sp.id === "0.") ?  // ukjent og ingen trussel
-            // sp.tidspunkt === "-" &&
-            // sp.omfang === "-" &&
-            // sp.alvorlighetsgrad === "-" 
-            true :
-            // sp.forkortelse &&
-            sp.beskrivelse &&
-            sp.tidspunkt != "-" &&
-            sp.omfang != "-" &&
-            sp.alvorlighetsgrad != "-"
-        return validsp
+
+    // ################ Start section expert groups ##################
+    async loadExpertGroups() {
+        const json = await this.getExpertGroups()
+        // setter ekspertgrupper og fjerner Moser (Svalbard)
+        const res = json.map(s => {return {value:s, text:s}}).filter(n => {return n.value != 'Moser (Svalbard)'}) // todo: remove this line when server data is correct
+        const expertgroups = observable.array(res)
+        runInAction(() => this.expertgroups = expertgroups)
     }
 
-    @action clearSelectedPåvirkningsfaktor() {
-        transaction(() => {
-            const sp = this.selectedPåvirkningsfaktor
-            sp.id = null
-            sp.forkortelse = null
-            sp.overordnetTittel = null
-            sp.beskrivelse = null
-            sp.tidspunkt = null
-            sp.omfang = null
-            sp.alvorlighetsgrad = null
-            sp.comment = null
-        })
+    async loadCurrentExpertgroupAssessmentList() {
+        const expertgroupId = this.expertgroup
+        console.log("loadCurrentExpertgroupAssessmentList : " + expertgroupId)
+        this.loadExpertgroupAssessmentList(expertgroupId)
     }
 
     @computed get expertgroupAssessmentFilteredList() {
         const list = this.expertgroupAssessmentList
         const originalFilter = this.expertgroupAssessmentFilter.toLowerCase()
-        const filter = this.expertgroupAssessmentFilter.toLowerCase().replace(" ", "/")        
+        const filter = this.expertgroupAssessmentFilter.toLowerCase().replace(" ", "/")
         //console.log(filter)
         // const katFilter = this.expertgroupCategoryFilter.toLowerCase().replace(" ", "/")
        // const result = list.filter (ega =>
@@ -579,11 +582,11 @@ class ViewModel {
             if (bolle === "!") return true;
             var balle = bolle.substring(1); // ta bort utropstegn
             var items = item.taxonHierarcy.toLowerCase().split("/"); // del opp sti i array
-            if (items[5].indexOf(balle) == 0) return true; // element 6 er slekt 
+            if (items[5].indexOf(balle) == 0) return true; // element 6 er slekt
             return false;
-        } 
-        const result = list.filter(ega => 
-            ((filter === "" || (filter.indexOf("!") > -1 ? bollefilter(ega, filter) : ((ega.taxonHierarcy.toLowerCase().indexOf(filter) > -1 || ega.scientificName.toLowerCase().indexOf(originalFilter) > -1)))) 
+        }
+        const result = list.filter(ega =>
+            ((filter === "" || (filter.indexOf("!") > -1 ? bollefilter(ega, filter) : ((ega.taxonHierarcy.toLowerCase().indexOf(filter) > -1 || ega.scientificName.toLowerCase().indexOf(originalFilter) > -1))))
             && (this.kunUbehandlede ? ega.commentOpen > 0 ? true : false : true)
             && (this.withNewComments ? (ega.commentNew > 0) ? true : false : true)
             && (this.withComments ? (ega.commentOpen > 0 || ega.commentClosed > 0) ? true : false : true)
@@ -591,18 +594,18 @@ class ViewModel {
             && (this.withAutomaticNameChanges ? (ega.taxonChange == 1) ? true : false : true)
             && (this.kunMine ? (ega.lockedForEditByUser === auth.userName || ega.lastUpdatedBy === auth.userName) ? true : false : true)
 
-            && (this.statusCheckboxFilter.length ? this.statusCheckboxFilter.some (s => ega.evaluationStatus === s && s != 'notStarted' ? true : (s === 'notStarted' && (ega.evaluationStatus === 'initial' || ega.evaluationStatus === 'created' || ega.evaluationStatus === 'createdbyloading')) ? true :false): true) 
-            && (this.expertgroupCategoryCheckboxFilter.length ? this.expertgroupCategoryCheckboxFilter.some(s => !ega.category && s != 'NL'? false : !ega.category && s === 'NL' ? true: s.indexOf(ega.category.substring(0,2)) > -1) : true))) 
+            && (this.statusCheckboxFilter.length ? this.statusCheckboxFilter.some (s => ega.evaluationStatus === s && s != 'notStarted' ? true : (s === 'notStarted' && (ega.evaluationStatus === 'initial' || ega.evaluationStatus === 'created' || ega.evaluationStatus === 'createdbyloading')) ? true :false): true)
+            && (this.expertgroupCategoryCheckboxFilter.length ? this.expertgroupCategoryCheckboxFilter.some(s => !ega.category && s != 'NL'? false : !ega.category && s === 'NL' ? true: s.indexOf(ega.category.substring(0,2)) > -1) : true)))
         //console.log (result)
             //this.expertgroupCategoryCheckboxFilter.length ? this.expertgroupCategoryCheckboxFilter.some(s => !ega.category && s != 'NL' ? false : !ega.category && s === 'NL' ? true: s.indexOf(ega.category.substring(0,2)) > -1) : true))
             //(this.expertgroupCategoryCheckboxFilter.length ? this.expertgroupCategoryCheckboxFilter.some(s => !ega.category && s != 'NL' ? false : !ega.category && s === 'NL' ? true: s.indexOf(ega.category.substring(0,2)) > -1) : true) ) )
-           // && 
+           // &&
             //console.log(ega),
             // ((!ega.category && this.expertgroupCategoryCheckboxFilter.length) ? false : this.expertgroupCategoryCheckboxFilter.length ? this.expertgroupCategoryCheckboxFilter.some(s => s.indexOf(ega.category.substring(0,2)) > -1) : true))
             //this.expertgroupCategoryCheckboxFilter.length ? this.expertgroupCategoryCheckboxFilter.some(s => !ega.category && s != 'NL' ? false : !ega.category && s === 'NL' ? true: s.indexOf(ega.category.substring(0,2)) > -1) : true)
            // this.expertgroupCategoryCheckboxFilter.length ? true : false )
             //.searchStrings
-                 //.some(s => s.indexOf(filter) > -1))                      
+                 //.some(s => s.indexOf(filter) > -1))
         return result
     }
 
@@ -614,30 +617,30 @@ class ViewModel {
             if(this.expertgroupCategoryCheckboxFilter.length > 0) {
                 //if ((this.expertgroupCategoryCheckboxFilter.indexOf(arr[i].category) > -1) || (arr[i].category === null) || (arr[i].category === "")) {
                 if ((arr[i].category && this.expertgroupCategoryCheckboxFilter.indexOf(arr[i].category.substring(0,2)) > -1) || ((arr[i].category === null || arr[i].category === "") && this.expertgroupCategoryCheckboxFilter.indexOf('Ingen kategori') > -1)) {
-                //if ((arr[i].category && this.expertgroupCategoryCheckboxFilter.indexOf(arr[i].category.substring(0,2)) > -1) || (arr[i].category === null)) {                    
+                //if ((arr[i].category && this.expertgroupCategoryCheckboxFilter.indexOf(arr[i].category.substring(0,2)) > -1) || (arr[i].category === null)) {
                     tot++
                     const stat = arr[i].evaluationStatus
                     if(stat === "inprogress") {
                         prog++
-                    } else if(stat === "finished") { 
+                    } else if(stat === "finished") {
                         fin++
-                    } else if(stat === "created" || stat === "initial" || stat === 'createdbyloading') { 
+                    } else if(stat === "created" || stat === "initial" || stat === 'createdbyloading') {
                         ini++
                     } else {
                         oth++
                     }
                 }
             }
-            
+
         /*if (!this.includeLC && !config.isRelease) {
              if (arr[i].category != "LC" && arr[i].category != "NE" && arr[i].category != "NA") {
                 tot++
                 const stat = arr[i].evaluationStatus
                 if(stat === "inprogress") {
                     prog++
-                } else if(stat === "finished") { 
+                } else if(stat === "finished") {
                     fin++
-                } else if(stat === "created" || stat === "initial" || stat === 'createdbyloading') { 
+                } else if(stat === "created" || stat === "initial" || stat === 'createdbyloading') {
                  ini++
                 } else {
                     oth++
@@ -648,15 +651,15 @@ class ViewModel {
                 const stat = arr[i].evaluationStatus
                 if(stat === "inprogress") {
                     prog++
-                } else if(stat === "finished") { 
+                } else if(stat === "finished") {
                     fin++
-                } else if(stat === "created" || stat === "initial" || stat === 'createdbyloading') { 
+                } else if(stat === "created" || stat === "initial" || stat === 'createdbyloading') {
                  ini++
                 } else {
                     oth++
                 }
         }
-    } 
+    }
         const result = {
             total: tot,
             initial: ini,
@@ -666,15 +669,10 @@ class ViewModel {
         }
         return result
     }
+    // ################ Start section expert groups ##################
 
-    @action navigate(assessmentTabId, id) {
-        console.log("navigate: " + assessmentTabId + " - " + id)
-        action(() => {
-            this.assessmentTabs.activeTab.id = assessmentTabId
-            // this.assessmentId = id
-        })
-    }
 
+    // ################ Start section current assessment ##################
     async setCurrentAssessment(id) {
         window.scrollTo(0,0)
         console.log("setCurrentAssessment: " + id)
@@ -703,101 +701,7 @@ class ViewModel {
         }
     }
 
-
-    // async loadKoder() {
-    //     const json = await this.getKoder()
-    //     const grupper = json.Children
-    //     for (let key in grupper) {
-    //         for (let obj of grupper[key]) 
-    //         {
-    //             obj.name = key
-    //         }
-    //     }
-    //     const koder = observable.object(grupper)
-    //     runInAction(() => this.koder = koder)
-    // }
-
-    // async loadPåvirkningsfaktorer() {
-    //     const json = await this.getPåvirkningsfaktorer()
-    //     const pvf = observable.object(json)
-    //     runInAction(() => this.påvirkningsfaktorer = pvf)
-    // }
-
-
-    async loadExpertGroups() {
-        const json = await this.getExpertGroups()
-        // setter ekspertgrupper og fjerner Moser (Svalbard)
-        const res = json.map(s => {return {value:s, text:s}}).filter(n => {return n.value != 'Moser (Svalbard)'}) // todo: remove this line when server data is correct       
-        const expertgroups = observable.array(res)
-        runInAction(() => this.expertgroups = expertgroups)
-    }
-
-
-    async loadCurrentExpertgroupAssessmentList() {
-        const expertgroupId = this.expertgroup
-        console.log("loadCurrentExpertgroupAssessmentList : " + expertgroupId)
-        this.loadExpertgroupAssessmentList(expertgroupId)
-    }
-    
-
-    // @action forceSyncWithCodes(assessment, codegroups) {
-    //     this.criteriaWithCodes.map(tupple =>
-    //         {
-    //             const prop = tupple[0]
-    //             const codekey = tupple[1]
-    //             const codes = codegroups[codekey]
-    //             if(codes == null) {
-    //                 console.warn("forceSyncWithCodes: no codes for " + codekey)
-    //             }
-    //             console.log("-" + prop + "¤" + assessment[prop])
-    //             if (assessment[prop] === []) {
-    //                 console.log("*****")
-    //             }
-    //             const existingCode = codes.find(code => code.value === assessment[prop])
-    //             if (existingCode === undefined ) {
-    //                 assessment[prop] = codes[0].value
-    //             }
-    //         }
-    //     )
-    // }
-
-    @action addSelectedPåvirkningsfaktor() {
-        const påv = toJS(this.selectedPåvirkningsfaktor)
-        const existing = this.assessment.påvirkningsfaktorer.find(item =>
-            item.id == påv.id)
-        if(existing) {
-            // console.log("existing:" + JSON.stringify(existing))
-            this.assessment.påvirkningsfaktorer.remove(existing)
-        }
-        this.assessment.påvirkningsfaktorer.push(påv)
-        this.clearSelectedPåvirkningsfaktor()        
-    }
-
-    @action removeSelectedPåvirkningsfaktor(påv) {
-        //const påv = this.selectedPåvirkningsfaktor
-
-        this.assessment.påvirkningsfaktorer.remove(påv)
-        console.log("Removed " + påv.beskrivelse)
-    }
-
-    @action editPåvirkningsfaktor(påv) {
-        console.log("Edit " + JSON.stringify(påv))
-
-        transaction(() => {
-            const sp = this.selectedPåvirkningsfaktor
-            sp.id = påv.id
-            sp.forkortelse = påv.forkortelse
-            sp.overordnetTittel = påv.overordnetTittel
-            sp.beskrivelse = påv.beskrivelse
-            sp.tidspunkt = påv.tidspunkt
-            sp.omfang = påv.omfang
-            sp.alvorlighetsgrad = påv.alvorlighetsgrad
-            sp.comment = påv.comment
-        })
-    }
-
-
-    @action updateCurrentAssessment(json) {
+    @action updateCurrentAssessment(json) {  // that is: open new assessment (and replace current) with data from server
         // console.log("updateCurrentAssessment: " + JSON.stringify(json))
         const codegroups = this.koder
         if (!codegroups) {
@@ -835,32 +739,19 @@ class ViewModel {
         }
     }
 
+    open(assessmentInfo) {	// used by the selectAssessmentTable
+        // console.log("########################" + JSON.stringify(assessmentInfo))
+        // console.log("########################" + assessmentInfo.id)
+        this.setCurrentAssessment(assessmentInfo.id)
+    }
 
     checkForExistingAssessment = (sciName, assessmentId) => {
         //this.expertgroupAssessmentList.map(ega => console.log( ega.scientificName))
         const result = this.expertgroupAssessmentList.some(ega => ega.scientificName == sciName && ega.id != assessmentId)
         //console.log("sciname:" + sciName + " " + result)
-    
+
         return result
     }
-
-
-    open(assessmentInfo) {	
-        // console.log("########################" + JSON.stringify(assessmentInfo))
-        // console.log("########################" + assessmentInfo.id)
-        this.setCurrentAssessment(assessmentInfo.id)	
-    }
-
-
-
-    initializeServices() {
-        console.log("start initializeServices")
-        // this.loadKoder()
-        // this.loadPåvirkningsfaktorer()
-        this.loadExpertGroups()
-    }
-
-
 
     @action finishassessment(statusaction, assessment) {
         let status = statusaction === "finish" ? "finished" : statusaction === "unfinish" ? "inprogress" : ""
@@ -882,12 +773,6 @@ class ViewModel {
 
     }
 
-
-    // @action updateAssessmentStatus(status) {
-    //     this.assessment.evaluationStatus = status
-    //     this.finishCurrentAssessment("finish")
-    // }
-  
     @action setAssessmentComplete(statusaction) {
         if (!this.roleincurrentgroup.leder) {
             alert("setAssessmentComplete: 'Not allowed'")
@@ -902,6 +787,7 @@ class ViewModel {
 
         this.finishCurrentAssessment(statusaction)
     }
+    // ################ end section current assessment ##################
 
 
 
@@ -924,8 +810,108 @@ class ViewModel {
 
 
 
-    // ################# section API stuff ##################
 
+
+    // ################# start section unused code!! ##################
+
+
+    // @action forceSyncWithCodes(assessment, codegroups) {
+    //     this.criteriaWithCodes.map(tupple =>
+    //         {
+    //             const prop = tupple[0]
+    //             const codekey = tupple[1]
+    //             const codes = codegroups[codekey]
+    //             if(codes == null) {
+    //                 console.warn("forceSyncWithCodes: no codes for " + codekey)
+    //             }
+    //             console.log("-" + prop + "¤" + assessment[prop])
+    //             if (assessment[prop] === []) {
+    //                 console.log("*****")
+    //             }
+    //             const existingCode = codes.find(code => code.value === assessment[prop])
+    //             if (existingCode === undefined ) {
+    //                 assessment[prop] = codes[0].value
+    //             }
+    //         }
+    //     )
+    // }
+
+
+    // async loadPåvirkningsfaktorer() {
+    //     const json = await this.getPåvirkningsfaktorer()
+    //     const pvf = observable.object(json)
+    //     runInAction(() => this.påvirkningsfaktorer = pvf)
+    // }
+
+    @computed get canAddSelectedPåvirkningsfaktor() {
+        var sp = this.selectedPåvirkningsfaktor
+        var validsp = (sp.id === "11." || sp.id === "0.") ?  // ukjent og ingen trussel
+            // sp.tidspunkt === "-" &&
+            // sp.omfang === "-" &&
+            // sp.alvorlighetsgrad === "-"
+            true :
+            // sp.forkortelse &&
+            sp.beskrivelse &&
+            sp.tidspunkt != "-" &&
+            sp.omfang != "-" &&
+            sp.alvorlighetsgrad != "-"
+        return validsp
+    }
+
+    @action clearSelectedPåvirkningsfaktor() {
+        transaction(() => {
+            const sp = this.selectedPåvirkningsfaktor
+            sp.id = null
+            sp.forkortelse = null
+            sp.overordnetTittel = null
+            sp.beskrivelse = null
+            sp.tidspunkt = null
+            sp.omfang = null
+            sp.alvorlighetsgrad = null
+            sp.comment = null
+        })
+    }
+
+    @action addSelectedPåvirkningsfaktor() {
+        const påv = toJS(this.selectedPåvirkningsfaktor)
+        const existing = this.assessment.påvirkningsfaktorer.find(item =>
+            item.id == påv.id)
+        if(existing) {
+            // console.log("existing:" + JSON.stringify(existing))
+            this.assessment.påvirkningsfaktorer.remove(existing)
+        }
+        this.assessment.påvirkningsfaktorer.push(påv)
+        this.clearSelectedPåvirkningsfaktor()
+    }
+
+    @action removeSelectedPåvirkningsfaktor(påv) {
+        //const påv = this.selectedPåvirkningsfaktor
+
+        this.assessment.påvirkningsfaktorer.remove(påv)
+        console.log("Removed " + påv.beskrivelse)
+    }
+
+    @action editPåvirkningsfaktor(påv) {
+        console.log("Edit " + JSON.stringify(påv))
+
+        transaction(() => {
+            const sp = this.selectedPåvirkningsfaktor
+            sp.id = påv.id
+            sp.forkortelse = påv.forkortelse
+            sp.overordnetTittel = påv.overordnetTittel
+            sp.beskrivelse = påv.beskrivelse
+            sp.tidspunkt = påv.tidspunkt
+            sp.omfang = påv.omfang
+            sp.alvorlighetsgrad = påv.alvorlighetsgrad
+            sp.comment = påv.comment
+        })
+    }
+    // ################# end section unused code!! ##################
+
+
+
+
+    // ################# section API stuff ##################
     getUrl = config.getUrl
 
     @computed get AssessmentReportLink() {
@@ -960,7 +946,7 @@ class ViewModel {
           .then(response => checkStatus(response))
           .then(() => this.updateAssessmentSavedVersion(data))
           .then(() => events.trigger("saveAssessment", "savesuccess"))
-          .catch(error => 
+          .catch(error =>
             {events.trigger("saveAssessment", "savefailure")
              console.error('Error:', error)}
           );
@@ -974,8 +960,8 @@ class ViewModel {
 
         console.log("------" + JSON.stringify(expertgroupAssessments))
 
-        const role = expertgroupAssessments.rolle; 
-        
+        const role = expertgroupAssessments.rolle;
+
 
 
 
@@ -990,7 +976,7 @@ class ViewModel {
             this.roleincurrentgroup = role
             this.loadingExpertGroup = false
         })
-                
+
     }
 
     //getAssessment = flow(function * (assessmentId) {
@@ -1026,11 +1012,10 @@ class ViewModel {
         const json = await response.json()
         return json
     }
-    
 
     @action createNewAssessment(taxinfo) {
         console.log("opprett ny vurdering: " + taxinfo.ScientificName + " " + taxinfo.ScientificNameId + " " + taxinfo.Ekspertgruppe)
-        const url = config.getUrl("assessment/createnew") 
+        const url = config.getUrl("assessment/createnew")
         fetch(url, {
             method: 'POST',
             // mode: 'no-cors',
@@ -1045,9 +1030,9 @@ class ViewModel {
           .then(() => events.trigger("saveAssessment", "savesuccess"))
           .then(() => this.loadCurrentExpertgroupAssessmentList())
           .then(() => this.viewMode = "choosespecie")
-          
+
         //   .then((responsdata) => {if (responsdata && responsdata.message) alert(responsdata.message)})
-        .catch(error => 
+        .catch(error =>
             {events.trigger("saveAssessment", "savefailure")
              console.error('Error:', error)}
         );
@@ -1057,7 +1042,7 @@ class ViewModel {
         const id = this.assessmentId
         console.log("flytt vurdering til nytt navn: " + taxinfo.ScientificName + " " + taxinfo.ScientificNameId + " " + taxinfo.Ekspertgruppe)
         console.log(id + " - " + JSON.stringify(taxinfo))
-        const url = config.getUrl("assessment/" + id + "/move") 
+        const url = config.getUrl("assessment/" + id + "/move")
         fetch(url, {
             method: 'POST',
             // mode: 'no-cors',
@@ -1073,7 +1058,7 @@ class ViewModel {
           .then(() => this.loadCurrentExpertgroupAssessmentList())
           .then(() => action(() => this.viewMode = "choosespecie")())
           //   .then((responsdata) => {if (responsdata && responsdata.message) alert(responsdata.message)})
-        .catch(error => 
+        .catch(error =>
             {events.trigger("saveAssessment", "savefailure")
              console.error('Error:', error)}
         );
@@ -1125,7 +1110,6 @@ class ViewModel {
         return json
     }
 
-
     async getExpertGroupAssessmentList(expertgroupId) {
         const id = expertgroupId.value.replace('/','_')
         const url = config.getUrl("expertgroupassessments/") + id
@@ -1135,7 +1119,6 @@ class ViewModel {
         //console.log("getExpertGroupAssessmentList: " + JSON.stringify(json))
         return json
     }
-
 
     async finishCurrentAssessment(statusaction) {
         const id = this.assessment.id
@@ -1153,15 +1136,14 @@ class ViewModel {
           .then(() => this.finishassessment(statusaction, this.assessment))
           .then(() => events.trigger("saveAssessment", "savesuccess"))
           .then(() => this.loadCurrentExpertgroupAssessmentList())
-          .catch(error => 
+          .catch(error =>
             {events.trigger("saveAssessment", "savefailure")
             console.error('Error:', error)}
           );
-  
 
-        
+
+
     }
-
 
     @action copyThisAssessmentToTestarter() {
         if (!this.roleincurrentgroup.leder) {
@@ -1180,12 +1162,11 @@ class ViewModel {
 
             }
           })
-          .catch(error => 
+          .catch(error =>
             {console.error('Error:', error)}
           );
     }
-
     // ################# end section API stuff ##################
-    
+
 }
 export default new ViewModel()
