@@ -143,7 +143,15 @@ namespace SwissKnife.Database
                     Prod.Domain.RiskAssessment.SpeciesNaturetypeInteraction>();
                 cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.SpeciesSpeciesInteraction,
                     Prod.Domain.RiskAssessment.SpeciesSpeciesInteraction>();
-                cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment, Prod.Domain.RiskAssessment>();
+                cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment, Prod.Domain.RiskAssessment>()
+                    .ForMember(dest => dest.Naturetype2018, opt => opt.Ignore())
+                    .ForMember(dest => dest.NaturetypeNIN2, opt => opt.Ignore())
+                    .ForMember(dest => dest.BackgroundC, opt => opt.Ignore())
+                    .ForMember(dest => dest.BackgroundF, opt => opt.Ignore())
+                    .ForMember(dest => dest.BackgroundG, opt => opt.Ignore())
+                    .ForMember(dest => dest.Hovedøkosystem, opt => opt.Ignore())
+                    .ForMember(dest => dest.natureAffectedAbroadF, opt => opt.Ignore())
+                    .ForMember(dest => dest.natureAffectedAbroadG, opt => opt.Ignore());
                 cfg.CreateMap<Prod.Domain.Legacy.MigrationPathway, Prod.Domain.MigrationPathway>();
                 cfg.CreateMap<Prod.Domain.Legacy.MigrationPathwayCode, Prod.Domain.MigrationPathwayCode>();
                 cfg.CreateMap<Prod.Domain.Legacy.SpreadHistory, Prod.Domain.SpreadHistory>();
