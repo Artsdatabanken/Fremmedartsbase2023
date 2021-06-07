@@ -42,15 +42,25 @@ function apiUrl (anchor) {
   function isRelease(){
    return window.location.href.indexOf("rl2021.artsdatabanken.no") > 1
   }
+
+  const homeuri = window.location.protocol + "//" + window.location.host
+  // const homeuri = 
+  //   (process.env.NODE_ENV === 'development') ?
+  //   "http://localhost:12345" :
+  //   (window.location.href.indexOf("test.") > 1) ?
+  //   "https://fab4api.test.artsdatabanken.no" :
+  //   "https://fab4api.test.artsdatabanken.no"
+
+
+
   const authconfig = 
-  (process.env.NODE_ENV === 'development') ?
   { 
       authority: "https://id.artsdatabanken.no/",
       client_id: "fab4",
-      redirect_uri: "http://localhost:1234/#signin-oidc",
-      silent_redirect_uri: "http://localhost:1234/#silentredirect",
-      popup_redirect_uri: "http://localhost:1234/#silentredirect",
-      post_logout_redirect_uri: "http://localhost:1234/#post-logout",
+      redirect_uri: homeuri + "/#signin-oidc",
+      silent_redirect_uri: homeuri + "/#silentredirect",
+      popup_redirect_uri: homeuri + "/#silentredirect",
+      post_logout_redirect_uri: homeuri + "/#post-logout",
       response_type: "code",
       scope: "openid profile roles email fab4api",
       automaticSilentRenew: true,
@@ -59,39 +69,59 @@ function apiUrl (anchor) {
       loadUserInfo: true,
       revokeAccessTokenOnSignout: true,
       response_mode: "query"
-  } : (window.location.href.indexOf("test.") > 1 ?
-  {
-      authority: "https://id.artsdatabanken.no/",
-      client_id: "fab4",
-      redirect_uri: "https://fab4api.test.artsdatabanken.no/#signin-oidc",
-      silent_redirect_uri: "https://fab4api.test.artsdatabanken.no/#silentredirect",
-      popup_redirect_uri: "https://fab4api.test.artsdatabanken.no/#silentredirect",
-      post_logout_redirect_uri: "https://fab4api.test.artsdatabanken.no/#post-logout",
-      response_type: "code",
-      scope: "openid profile roles email fab4api",
-      automaticSilentRenew: true,
-      acr_values: "Level3",
-      ui_locales: "nb",
-      loadUserInfo: true,
-      revokeAccessTokenOnSignout: true,
-      response_mode: "query"
-  }:
-  {
-    authority: "https://id.artsdatabanken.no/",
-    client_id: "fab4",
-    redirect_uri: "https://fab4api.test.artsdatabanken.no/#signin-oidc",
-    silent_redirect_uri: "https://fab4api.test.artsdatabanken.no/#silentredirect",
-    popup_redirect_uri: "https://fab4api.test.artsdatabanken.no/#silentredirect",
-    post_logout_redirect_uri: "https://fab4api.test.artsdatabanken.no/#post-logout",
-    response_type: "code",
-    scope: "openid profile roles email fab4api",
-    automaticSilentRenew: true,
-    acr_values: "Level3",
-    ui_locales: "nb",
-    loadUserInfo: true,
-    revokeAccessTokenOnSignout: true,
-    response_mode: "query"
-});  
+  }     
+
+
+//   const authconfig = 
+//   (process.env.NODE_ENV === 'development') ?
+//   { 
+//       authority: "https://id.artsdatabanken.no/",
+//       client_id: "fab4",
+//       redirect_uri: "http://localhost:1234/#signin-oidc",
+//       silent_redirect_uri: "http://localhost:1234/#silentredirect",
+//       popup_redirect_uri: "http://localhost:1234/#silentredirect",
+//       post_logout_redirect_uri: "http://localhost:1234/#post-logout",
+//       response_type: "code",
+//       scope: "openid profile roles email fab4api",
+//       automaticSilentRenew: true,
+//       acr_values: "Level3",
+//       ui_locales: "nb",
+//       loadUserInfo: true,
+//       revokeAccessTokenOnSignout: true,
+//       response_mode: "query"
+//   } : (window.location.href.indexOf("test.") > 1 ?
+//   {
+//       authority: "https://id.artsdatabanken.no/",
+//       client_id: "fab4",
+//       redirect_uri: "https://fab4api.test.artsdatabanken.no/#signin-oidc",
+//       silent_redirect_uri: "https://fab4api.test.artsdatabanken.no/#silentredirect",
+//       popup_redirect_uri: "https://fab4api.test.artsdatabanken.no/#silentredirect",
+//       post_logout_redirect_uri: "https://fab4api.test.artsdatabanken.no/#post-logout",
+//       response_type: "code",
+//       scope: "openid profile roles email fab4api",
+//       automaticSilentRenew: true,
+//       acr_values: "Level3",
+//       ui_locales: "nb",
+//       loadUserInfo: true,
+//       revokeAccessTokenOnSignout: true,
+//       response_mode: "query"
+//   }:
+//   {
+//     authority: "https://id.artsdatabanken.no/",
+//     client_id: "fab4",
+//     redirect_uri: "https://fab4api.test.artsdatabanken.no/#signin-oidc",
+//     silent_redirect_uri: "https://fab4api.test.artsdatabanken.no/#silentredirect",
+//     popup_redirect_uri: "https://fab4api.test.artsdatabanken.no/#silentredirect",
+//     post_logout_redirect_uri: "https://fab4api.test.artsdatabanken.no/#post-logout",
+//     response_type: "code",
+//     scope: "openid profile roles email fab4api",
+//     automaticSilentRenew: true,
+//     acr_values: "Level3",
+//     ui_locales: "nb",
+//     loadUserInfo: true,
+//     revokeAccessTokenOnSignout: true,
+//     response_mode: "query"
+// });  
   
 
 const config = {
