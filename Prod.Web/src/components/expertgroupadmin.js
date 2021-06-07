@@ -48,12 +48,12 @@ export default class ExpertGroupAdmin extends React.Component {
             );
         }
         if (!auth.isInRole("fab_administrator")) //())
-            return (<h3>Ingen adgang til administrasjon av ekspertgrupper - Du kom hit p.g.a. en feil</h3>);
+            return (<h3>Ingen adgang til administrasjon av ekspertkomitéer - Du kom hit p.g.a. en feil</h3>);
         return (
             <div>
             <section className="main adm">
-                <h2>Administrasjon av ekspertgrupper</h2>
-                <h3>Ekspertgruppe</h3>
+                <h2>Administrasjon av ekspertkomitéer</h2>
+                <h3>Ekspertkomité</h3>
                 <Xcomp.StringEnum 
                             forceSync
                             observableValue={[appState, 'expertgroup']} 
