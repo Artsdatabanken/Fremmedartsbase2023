@@ -1973,37 +1973,37 @@
         "naturtyperNIN2": [
             {
   
-              "text": "T Fastmarkssystemer",
-              "value": "Fastmarkssystemer"
+              "Text": "T Fastmarkssystemer",
+              "Value": "Fastmarkssystemer"
             },
             {
   
-              "text": "V Våtmarkssystemer",
-              "value": "Våtmarkssystemer"
+              "Text": "V Våtmarkssystemer",
+              "Value": "Våtmarkssystemer"
             },
             {
-                "text": "H Marine vannmasser",
-                "value": "MarineVannmasser"
+                "Text": "H Marine vannmasser",
+                "Value": "MarineVannmasser"
               },
             {
   
-              "text": "I Snø- og issystemer",
-              "value": "SnøOgIssystemer"
+              "Text": "I Snø- og issystemer",
+              "Value": "SnøOgIssystemer"
             },
             {
   
-              "text": "F Limniske vannmasser",
-              "value": "LimniskeVannmasser"
+              "Text": "F Limniske vannmasser",
+              "Value": "LimniskeVannmasser"
             },
             {
   
-              "text": "M Saltvannsbunnsystemer",
-              "value": "Saltvannsbunnsystemer"
+              "Text": "M Saltvannsbunnsystemer",
+              "Value": "Saltvannsbunnsystemer"
             },
             {
   
-              "text": "L Ferskvannsbunnsystemer",
-              "value": "Ferskvannsbunnsystemer"
+              "Text": "L Ferskvannsbunnsystemer",
+              "Value": "Ferskvannsbunnsystemer"
             }
           ],
 
@@ -2384,6 +2384,98 @@
                 "value": "Other"
               }
 
+        ],
+
+        "scores": [
+            {
+  
+                "text": "1",
+                "value": "1"
+              },
+              {
+    
+                "text": "2",
+                "value": "2"
+              },
+              {
+  
+                "text": "3",
+                "value": "3"
+              },
+              {
+    
+                "text": "4",
+                "value": "4"
+              }
+        ],
+
+        "scoresC": [
+            {
+  
+                "text": " < 5% ",
+                "value": "5-"
+              },
+              {
+    
+                "text": "≥ 5%",
+                "value": "5+"
+              },
+              {
+  
+                "text": "≥ 10%",
+                "value": "10"
+              },
+              {
+    
+                "text": "≥ 20%",
+                "value": "20"
+              }
+        ],
+
+        "scoresF": [
+            {
+  
+                "text": "= 0%",
+                "value": "0"
+              },
+              {
+    
+                "text": "> 0%",
+                "value": "0+"
+              },
+              {
+  
+                "text": "≥ 2%",
+                "value": "2"
+              },
+              {
+    
+                "text": "≥ 5%",
+                "value": "5"
+              }
+        ],
+
+        "scoresG": [
+            {
+  
+                "text": "= 0%",
+                "value": "0"
+              },
+              {
+    
+                "text": "> 0%",
+                "value": "0+"
+              },
+              {
+  
+                "text": "≥ 2%",
+                "value": "2"
+              },
+              {
+    
+                "text": "≥ 5%",
+                "value": "5"
+              }
         ],
         "Criterion": [
             {
@@ -5249,7 +5341,7 @@
                         {
                             "Id": null,
                             "Value": "chooseNT",
-                            "Text": "Velg blant følgende naturtyper (NiN 2.0)",
+                            "Text": "Velg blant øvrige naturtyper fra NIN 2:",
                             "Info": null,
                             "Children": null
                         },
@@ -5298,7 +5390,7 @@
                         {
                             "Id": null,
                             "Value": "critGHeading",
-                            "Text": "Påvirket areal i en 'øvrig' naturtype(overføres til G-kriteriet)",
+                            "Text": "Påvirket areal i en «øvrig» naturtype (overføres til G-kriteriet)",
                             "Info": null,
                             "Children": null
                         },
@@ -5411,6 +5503,13 @@
                             "Id": null,
                             "Value": "usesLivingSpeciesAsHabitat",
                             "Text": "Bruker levende arter som livsmedium",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "hosts",
+                            "Text": "Vert(er)",
                             "Info": null,
                             "Children": null
                         },

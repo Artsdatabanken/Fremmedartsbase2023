@@ -5,6 +5,7 @@ import * as Xcomp from './observableComponents';
 import Tabs from '../tabs'
 import Criterion from './criterion'
 import Vurdering52Okologiskeffekt from './vurdering52Okologiskeffekt'
+import ScoreUnsure from './40Naturtyper/scoreUnsure';
 import config from '../../config'
 import {getCriterion} from '../../utils'
 import Filliste from './35Utbredelseshistorikk/Filliste'
@@ -557,6 +558,10 @@ export default class Vurdering51Invasjonspotensiale extends React.Component {
                     <h4>{critC.heading}</h4>
                     <p>{critC.info}</p>
                     <p>{ntLabels.scoreSummary}</p>
+                    <ScoreUnsure appState={appState}
+                                critScores={koder.scoresC}
+                                firstValue={"scoreC"}
+                                secondValue={"unsureC"}/>
                     <Criterion criterion={critC} mode="noheading"/>
                 </fieldset>
                 </div>

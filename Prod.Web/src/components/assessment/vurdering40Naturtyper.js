@@ -7,7 +7,9 @@ import * as Xcomp from './observableComponents';
 import Criterion from './criterion'
 import {getCriterion} from '../../utils'
 import NaturtypeTable from './40Naturtyper/naturtypeTable';
+import HabitatTable from './40Naturtyper/habitatTable';
 import NewNaturetype from './40Naturtyper/newNaturetype';
+import ScoreUnsure from './40Naturtyper/scoreUnsure';
 // import NaturtypeSelector from './naturtypeSelector';
 import RedlistedNaturetypeTable from './40Naturtyper/redlistedNaturetypeTable';
 import NewRedlistedNaturetype from './40Naturtyper/newRedlistedNaturetype';
@@ -63,23 +65,20 @@ export default class Vurdering40Naturtyper extends React.Component {
         const canRenderTable = !!appState.naturtypeLabels && (!!appState.dominansSkog || appState.language === "SV")
         return (
             <div>
-              {/*  <h4>{ntLabels.colonizedAreaHeading}</h4> */}
-                <br/>
-                <h4>{ntLabels.chooseRL2018}</h4>
-                <Xcomp.MultiselectArray
-                                observableValue={[riskAssessment, 'naturetype2018']} 
-                                codes={koder.naturtyper2018}
-                                mode="check"/>
-
-                <h4>{ntLabels.chooseNT}</h4>
-                <Xcomp.MultiselectArray
-                                observableValue={[riskAssessment, 'naturetypeNIN2']} 
-                                codes={koder.naturtyperNIN2}
-                                mode="check"/>
-              {/*  <NewNaturetype
+              {/*  <h4>{ntLabels.colonizedAreaHeading}</h4>     */}            
+                <NewNaturetype
                     appState={appState}
                     addNaturtype={this.addNaturtype}
-              labels={labels} /> */}
+                    labels={labels}
+                    codes={koder.redlistedNaturetypes}
+                    header={ntLabels.chooseRL2018}/> 
+               
+               <NewNaturetype
+                    appState={appState}
+                    addNaturtype={this.addNaturtype}
+                    labels={labels}
+                    codes={koder.naturtyperNIN2}
+                    header={ntLabels.chooseNT} /> 
                 <br/>
                 <NaturtypeTable
                     naturetypes={assessment.impactedNatureTypes}
@@ -93,6 +92,10 @@ export default class Vurdering40Naturtyper extends React.Component {
                 <fieldset className="well">
                     <h4>{ntLabels.critCHeading}</h4>
                     <p>{ntLabels.score}</p>
+                    <ScoreUnsure appState={appState}
+                                critScores={koder.scoresC}
+                                firstValue={"scoreC"}
+                                secondValue={"unsureC"}/>
                     <b>{ntLabels.assessmentBackground}</b>
                     <Xcomp.MultiselectArray
                                 observableValue={[riskAssessment, 'backgroundC']} 
@@ -104,8 +107,12 @@ export default class Vurdering40Naturtyper extends React.Component {
                 </fieldset>
                 <fieldset className="well">
                     <h4>{ntLabels.critFHeading}</h4>
-                    <p>{critF.info}</p>
+                   {/* <p>{critF.info}</p>*/}
                     <p>{ntLabels.score}</p>
+                    <ScoreUnsure appState={appState}
+                                 critScores={koder.scoresF}
+                                 firstValue={"scoreF"}
+                                 secondValue={"unsureF"}/>
                     <b>{ntLabels.assessmentBackground}</b>
                     <Xcomp.MultiselectArray
                                 observableValue={[riskAssessment, 'backgroundF']} 
@@ -144,8 +151,12 @@ export default class Vurdering40Naturtyper extends React.Component {
                 <fieldset className="well">
                     <h4>{ntLabels.critGHeading}</h4>
                     
-                    <p>{critG.info}</p>
+                    {/*<p>{critG.info}</p>*/}
                     <p>{ntLabels.score}</p>
+                    <ScoreUnsure appState={appState}
+                                critScores={koder.scoresG}
+                                firstValue={"scoreG"}
+                                secondValue={"unsureG"}/>
                     <b>{ntLabels.assessmentBackground}</b>
                     <Xcomp.MultiselectArray
                                 observableValue={[riskAssessment, 'backgroundG']} 
@@ -201,6 +212,10 @@ export default class Vurdering40Naturtyper extends React.Component {
                 <fieldset className="well">
                     <h4>{ntLabels.habitat}</h4>
                     <p>{ntLabels.chooseHabitat}</p>
+                    <HabitatTable
+                     canRenderTable={canRenderTable}
+                     labels={labels}
+                     appState={appState}/>
                    {/* <div>
                         <Xcomp.Bool
                             label={ntLabels.usesLivingSpeciesAsHabitat}

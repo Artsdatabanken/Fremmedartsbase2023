@@ -856,6 +856,17 @@ namespace Prod.Domain
         public List<string> BackgroundG { get; set; } = new List<string>();
         public List<string> Hovedøkosystem { get; set; } = new List<string>();
 
+        public List<string> ScoreC { get; set; } = new List<string>();
+
+        public List<string> UnsureC { get; set; } = new List<string>();
+
+        public List<string> ScoreF { get; set; } = new List<string>();
+
+        public List<string> UnsureF { get; set; } = new List<string>();
+        public List<string> ScoreG { get; set; } = new List<string>();
+
+        public List<string> UnsureG { get; set; } = new List<string>();
+
         public string natureAffectedAbroadF { get; set; }
 
         public string natureAffectedAbroadG { get; set; }

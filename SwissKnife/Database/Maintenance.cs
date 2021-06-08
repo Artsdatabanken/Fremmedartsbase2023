@@ -150,6 +150,12 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.BackgroundF, opt => opt.Ignore())
                     .ForMember(dest => dest.BackgroundG, opt => opt.Ignore())
                     .ForMember(dest => dest.Hovedøkosystem, opt => opt.Ignore())
+                    .ForMember(dest => dest.ScoreC, opt => opt.Ignore())
+                    .ForMember(dest => dest.UnsureC, opt => opt.Ignore())
+                    .ForMember(dest => dest.ScoreF, opt => opt.Ignore())
+                    .ForMember(dest => dest.UnsureF, opt => opt.Ignore())
+                    .ForMember(dest => dest.ScoreG, opt => opt.Ignore())
+                    .ForMember(dest => dest.UnsureG, opt => opt.Ignore())
                     .ForMember(dest => dest.natureAffectedAbroadF, opt => opt.Ignore())
                     .ForMember(dest => dest.natureAffectedAbroadG, opt => opt.Ignore());
                 cfg.CreateMap<Prod.Domain.Legacy.MigrationPathway, Prod.Domain.MigrationPathway>();

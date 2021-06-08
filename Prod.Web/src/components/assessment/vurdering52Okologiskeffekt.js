@@ -14,6 +14,7 @@ import SpeciesSpeciesTable from './52Okologiskeffekt/SpeciesSpeciesTable'
 import SpeciesNaturetypeTable from './52Okologiskeffekt/SpeciesNaturetypeTable'
 
 
+import ScoreUnsure from './40Naturtyper/scoreUnsure'
 import HostParasiteTable from './52Okologiskeffekt/HostParasiteTable'
 import createTaxonSearch from './52Okologiskeffekt/createTaxonSearch'
 
@@ -255,10 +256,18 @@ export default class Vurdering52Okologiskeffekt extends React.Component {
                 <fieldset className="well">
                     <Criterion criterion={crit52F} />
                     <p>{ntLabels.scoreSummary}</p>
+                    <ScoreUnsure appState={appState}
+                                critScores={koder.scoresF}
+                                firstValue={"scoreF"}
+                                secondValue={"unsureF"}/>
                 </fieldset>
                 <fieldset className="well">
                     <Criterion criterion={crit52G} />
                     <p>{ntLabels.scoreSummary}</p>
+                    <ScoreUnsure appState={appState}
+                                critScores={koder.scoresG}
+                                firstValue={"scoreG"}
+                                secondValue={"unsureG"}/>
                 </fieldset> 
                 <fieldset className="well">
                     <h4>{crit52H.heading}</h4>
