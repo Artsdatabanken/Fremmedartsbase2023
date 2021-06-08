@@ -7,8 +7,9 @@ import Criterion from './criterion'
 import Vurdering52Okologiskeffekt from './vurdering52Okologiskeffekt'
 import ScoreUnsure from './40Naturtyper/scoreUnsure';
 import config from '../../config'
-import {getCriterion} from '../../utils'
+import {codes2labels, getCriterion} from '../../utils'
 import Filliste from './35Utbredelseshistorikk/Filliste'
+import { KeyboardHideSharp } from '@material-ui/icons';
 
 @observer
 class SelectableRadio extends React.Component {
@@ -106,15 +107,193 @@ export default class Vurdering51Invasjonspotensiale extends React.Component {
                 <fieldset className="well">
                     <h4>{crit51A.heading}</h4>
                     <p>{crit51A.info}</p>
-                    <Xcomp.Bool
-                        observableValue={[riskAssessment, "activeSpreadPVAAnalysisEstimatedSpeciesLongevity"]}
-                        label={labels.AcritSelect.a}/>
-                    <Xcomp.Bool
-                        observableValue={[riskAssessment, "activeSpreadRscriptEstimatedSpeciesLongevity"]}
-                        label={labels.AcritSelect.b}/>
-                    <Xcomp.Bool
-                        observableValue={[riskAssessment, "activeRedListCategoryLevel"]}
-                        label={labels.AcritSelect.c}/> {riskAssessment.activeSpreadPVAAnalysisEstimatedSpeciesLongevity
+                    
+                    <SelectableRadio
+                            label={labels.AcritSelect.a}
+                            value={"spreadPVAAnalysisEstimatedSpeciesLongevity"}
+                            observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]}/>
+                    <SelectableRadio
+                            label={labels.AcritSelect.b}
+                            value={"spreadRscriptEstimatedSpeciesLongevity"}
+                            observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]}/>
+                    <SelectableRadio
+                            label={labels.AcritSelect.c}
+                            value={"redListCategoryLevel"}
+                            observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]}/>
+
+                    <p>Basert på de beste anslagene på forekomstareal i dag ([X1] km2) og om 50 år ([X2] km2) er A-kriteriet forhåndsskåret som [X3] (med usikkerhet: [X4-X5]). 
+                        Dette innebærer at artens mediane levetid ligger [mellom X6 år og X7 år], eller at sannsynligheten for utdøing innen 50 år er på [mellom X8 % og X9 %].</p>
+                    
+                    <Xcomp.Radio
+                        kode={"y"}
+                        observableValue={[riskAssessment, "acceptOrAdjustCritA"]}
+                        label={labels.AcceptOrAdjust.a}/>
+                    <Xcomp.Radio
+                        kode={"n"}
+                        observableValue={[riskAssessment, "acceptOrAdjustCritA"]}
+                        label={labels.AcceptOrAdjust.b}/> 
+                     <Xcomp.HtmlString observableValue={[riskAssessment, 'reasonForAdjustmentCritA']} label="Begrunnelse for justering:" />
+                    <p>{ntLabels.scoreSummary}</p>
+                    <ScoreUnsure appState={appState}
+                                critScores={koder.scoresA}
+                                firstValue={"scoreC"}
+                                secondValue={"unsureC"}/>
+                    <p>{ntLabels.score}</p>
+                    <ScoreUnsure appState={appState}
+                                critScores={koder.scoresA}
+                                firstValue={"scoreC"}
+                                secondValue={"unsureC"}/>
+
+                    <Xcomp.Button primary onClick= {() => {
+                         console.log("Save assessment")
+                        appState.saveCurrentAssessment();
+                    }}>Lagre</Xcomp.Button>
+
+                    <p>Basert på det beste anslaget på [X1] forekomster i løpet av 10 år og [X2] introduksjoner i samme tidsperiode er A-kriteriet forhåndsskåret som [X3] (med usikkerhet: [X4-X5]). 
+                        Dette innebærer at artens mediane levetid ligger [mellom X6 år og X7 år], eller at sannsynligheten for utdøing innen 50 år er på [mellom X8 % og X9 %].</p>
+                    <Xcomp.Radio
+                        kode={"y"}
+                        observableValue={[riskAssessment, "acceptOrAdjustCritA"]}
+                        label={labels.AcceptOrAdjust.a}/>
+                    <Xcomp.Radio
+                        kode={"n"}
+                        observableValue={[riskAssessment, "acceptOrAdjustCritA"]}
+                        label={labels.AcceptOrAdjust.b}/> 
+                     <Xcomp.HtmlString observableValue={[riskAssessment, 'reasonForAdjustmentCritA']} label="Begrunnelse for justering:" />
+
+                    <p>{ntLabels.scoreSummary}</p>
+                    <ScoreUnsure appState={appState}
+                                critScores={koder.scoresA}
+                                firstValue={"scoreC"}
+                                secondValue={"unsureC"}/>
+                    <p>{ntLabels.score}</p>
+                    <ScoreUnsure appState={appState}
+                                critScores={koder.scoresA}
+                                firstValue={"scoreC"}
+                                secondValue={"unsureC"}/>
+
+                    <Xcomp.Button primary onClick= {() => {
+                         console.log("Save assessment")
+                        appState.saveCurrentAssessment();
+                    }}>Lagre</Xcomp.Button>
+
+
+                   <div className="statusField"> 
+                   <div className="labels">
+                        <p>{labels.Acrit.speciesCount}</p>
+                        <p>{labels.Acrit.populationGrowth}</p>
+                        <p>{labels.Acrit.environmantVariance}</p>
+                        <p>{labels.Acrit.demographicVariance}</p>
+                        <p>{labels.Acrit.sustainability}</p>
+                        <p>{labels.Acrit.extinctionThreshold}</p>
+                        
+                   </div>
+                   <div className="numberFields">
+                   <Xcomp.Number                            
+                                observableValue={[riskAssessment, "ACritSpeciesCount"]}
+                                integer
+                            />  
+                    <Xcomp.Number                            
+                                observableValue={[riskAssessment, "ACritPopGrowth"]}
+                                double
+                            />  
+
+                    <Xcomp.Number                            
+                                observableValue={[riskAssessment, "ACritEnvirVariance"]}
+                                integer
+                            />  
+
+                    <Xcomp.Number                            
+                                observableValue={[riskAssessment, "ACritDemoVariance"]}
+                                integer
+                            />  
+                    <Xcomp.Number                            
+                                observableValue={[riskAssessment, "ACritSustainability"]}
+                                integer
+                            />  
+                            
+                   <Xcomp.Number                            
+                                observableValue={[riskAssessment, "ACritExtThreshold"]}
+                                integer
+                            />  
+                    
+                            
+                   </div>
+                   </div>
+                   <a href="#">{labels.Acrit.rScriptLongevity}</a>
+                   <div className="statusField">
+                       <div className="labels">
+                        
+                        <p>{labels.Acrit.median}</p> 
+                       </div>
+                       <div className="numberFields">
+                       <Xcomp.Number                            
+                                observableValue={[riskAssessment, "ACritMedian"]}
+                                integer
+                            />  
+                       </div>
+                   </div>
+                   
+                    <p>{ntLabels.scoreSummary}</p>
+                    <ScoreUnsure appState={appState}
+                                critScores={koder.scoresB}
+                                firstValue={"scoreC"}
+                                secondValue={"unsureC"}/>
+
+                    <Xcomp.Button primary onClick= {() => {
+                         console.log("Save assessment")
+                        appState.saveCurrentAssessment();
+                    }}>Lagre</Xcomp.Button>
+
+                <div className="statusField"> 
+                   <div className="labels">
+                        <p>{labels.Acrit.PVAAnalysis}</p>
+
+                    </div>
+                    <div className="numberFields">
+                        <Xcomp.HtmlString observableValue={[riskAssessment, 'PVAAnalysis']} />
+                        <h4>{labels.Acrit.data}</h4>
+                        <p>{labels.DistributionHistory.noDocuments}</p>
+                        <span>Last opp:</span> <Xcomp.Button primary >Velg filer</Xcomp.Button>
+                        <span>Ingen fil valgt</span>
+                    </div>
+                    </div>
+                    <div className="statusField">
+                        <div className="labels">
+                        <p>{labels.Acrit.median}</p>
+                        <p>{labels.Acrit.lower}</p>
+                        <p>{labels.Acrit.upper}</p>
+                        
+                   </div>
+                   <div className="numberFields">                  
+
+                    <Xcomp.Number                            
+                                observableValue={[riskAssessment, "ACritMedianLifespan"]}
+                                integer
+                            />  
+                    <Xcomp.Number                            
+                                observableValue={[riskAssessment, "ACritLower"]}
+                                integer
+                            />  
+                            
+                   <Xcomp.Number                            
+                                observableValue={[riskAssessment, "ACritUpper"]}
+                                integer
+                            />                     
+                            
+                   </div>
+                   </div>
+                    
+                    <p>{ntLabels.scoreSummary}</p>
+                    <ScoreUnsure appState={appState}
+                                critScores={koder.scoresB}
+                                firstValue={"scoreC"}
+                                secondValue={"unsureC"}/>
+                     <Xcomp.Button primary onClick= {() => {
+                         console.log("Save assessment")
+                        appState.saveCurrentAssessment();
+                    }}>Lagre</Xcomp.Button>
+                   {/* {riskAssessment.activeSpreadPVAAnalysisEstimatedSpeciesLongevity
                         ? <div>
                                 <table className="formtable">
                                     <tbody>
@@ -309,25 +488,14 @@ export default class Vurdering51Invasjonspotensiale extends React.Component {
                                 </table>
                                 <hr/>
                             </div>
-                        : null}
+                    : null} */}
                     <div>
                         <div
                             style={{
                             marginRight: "90px",
                             display: "inline-block"
                         }}>
-                            <SelectableRadio
-                                label={labels.AcritSelect.a}
-                                value={"spreadPVAAnalysisEstimatedSpeciesLongevity"}
-                                observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]}/>
-                            <SelectableRadio
-                                label={labels.AcritSelect.b}
-                                value={"spreadRscriptEstimatedSpeciesLongevity"}
-                                observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]}/>
-                            <SelectableRadio
-                                label={labels.AcritSelect.c}
-                                value={"redListCategoryLevel"}
-                                observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]}/>
+                            
                         </div>
                         <div
                             style={{
@@ -338,10 +506,64 @@ export default class Vurdering51Invasjonspotensiale extends React.Component {
                     </div>
 
                 </fieldset>
+                <br/>
                 <fieldset className="well">
                     <h4>{crit51B.heading}</h4>
                     <p>{crit51B.info}</p>
-                    <Xcomp.Bool
+
+                    <SelectableRadio
+                                label={labels.BcritSelect.a}
+                                value={"a"}
+                                observableValue={[riskAssessment, "chosenSpreadYearlyIncrease"]}/>
+                     
+                    <SelectableRadio
+                                label={labels.BcritSelect.d}
+                                value={"b"}
+                                observableValue={[riskAssessment, "chosenSpreadYearlyIncrease"]}/>
+
+                    <p>{ntLabels.scoreSummary}</p>
+                    <ScoreUnsure appState={appState}
+                                critScores={koder.scoresB}
+                                firstValue={"scoreC"}
+                                secondValue={"unsureC"}/>
+                     <Xcomp.Button primary onClick= {() => {
+                         console.log("Save assessment")
+                        appState.saveCurrentAssessment();
+                    }}>Lagre</Xcomp.Button>
+
+                    <p>
+                    Ekspansjonshastigheten er beregnet til [tallverdi] m/år basert på anslått økning i forekomstareal i perioden fra [t1] til [t2].
+                    </p>
+
+                    <p>{ntLabels.scoreSummary}</p>
+                    <ScoreUnsure appState={appState}
+                                critScores={koder.scoresB}
+                                firstValue={"scoreC"}
+                                secondValue={"unsureC"}/>
+                     <Xcomp.Button primary onClick= {() => {
+                         console.log("Save assessment")
+                        appState.saveCurrentAssessment();
+                    }}>Lagre</Xcomp.Button>
+
+                    <p>Basert på det beste anslaget på [X1] forekomster i løpet av 10 år og [X2] introduksjoner i samme tidsperiode er B-kriteriet skåra som [X3] (med usikkerhet: [X4-X5]). 
+                        Dette innebærer at artens ekspansjonshastighet ligger mellom [X6 m/år og X7 m/år].
+                        Dersom denne verdien framstår som urealistisk, bør antatt forekomstareal om 50 år (se Utbredelse i Norge) vurderes justert.
+                    </p>
+                    <p>{ntLabels.scoreSummary}</p>
+                    <ScoreUnsure appState={appState}
+                                critScores={koder.scoresB}
+                                firstValue={"scoreC"}
+                                secondValue={"unsureC"}/>
+                     <Xcomp.Button primary onClick= {() => {
+                         console.log("Save assessment")
+                        appState.saveCurrentAssessment();
+                    }}>Lagre</Xcomp.Button>
+                  {/*  
+                    <SelectableRadio
+                                label={labels.BcritSelect.c}
+                                value={"spreadYearlyLiteratureData"}
+                           observableValue={[riskAssessment, "chosenSpreadYearlyIncrease"]}/> 
+                  <Xcomp.Bool
                         observableValue={[riskAssessment, "activeSpreadYearlyIncreaseObservations"]}
                         label={labels.BcritSelect.a}/>
                     <Xcomp.Bool
@@ -349,7 +571,7 @@ export default class Vurdering51Invasjonspotensiale extends React.Component {
                         label={labels.BcritSelect.c}/>
                     <Xcomp.Bool
                         observableValue={[riskAssessment, "activeSpreadYearlyIncreaseCalculatedExpansionSpeed"]}
-                        label={labels.BcritSelect.d}/>
+                  label={labels.BcritSelect.d}/> */}
                     {riskAssessment.activeSpreadYearlyIncreaseObservations
                         ? <div>
                                 <table className="formtable">
@@ -532,18 +754,7 @@ export default class Vurdering51Invasjonspotensiale extends React.Component {
                             marginRight: "90px",
                             display: "inline-block"
                         }}>
-                            <SelectableRadio
-                                label={labels.BcritSelect.a}
-                                value={"spreadYearlyIncreaseObservations"}
-                                observableValue={[riskAssessment, "chosenSpreadYearlyIncrease"]}/>
-                            <SelectableRadio
-                                label={labels.BcritSelect.c}
-                                value={"spreadYearlyLiteratureData"}
-                                observableValue={[riskAssessment, "chosenSpreadYearlyIncrease"]}/>
-                            <SelectableRadio
-                                label={labels.BcritSelect.d}
-                                value={"spreadYearlyIncreaseCalculatedExpansionSpeed"}
-                                observableValue={[riskAssessment, "chosenSpreadYearlyIncrease"]}/>
+                            
                         </div>
                         <div
                             style={{

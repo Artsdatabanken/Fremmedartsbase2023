@@ -2409,6 +2409,52 @@
               }
         ],
 
+        "scoresA": [
+            {
+  
+                "text": "< 10 år ",
+                "value": "10"
+              },
+              {
+    
+                "text": "10-59 år",
+                "value": "59"
+              },
+              {
+  
+                "text": "60-649 år",
+                "value": "649"
+              },
+              {
+    
+                "text": "≥ 650 år",
+                "value": "650"
+              }
+        ],
+
+        "scoresB": [
+            {
+  
+                "text": "< 50 m/år",
+                "value": "50"
+              },
+              {
+    
+                "text": "50-159 m/år",
+                "value": "159"
+              },
+              {
+  
+                "text": "160-499 m/år",
+                "value": "499"
+              },
+              {
+    
+                "text": "≥ 500 m/år",
+                "value": "500"
+              }
+        ],
+
         "scoresC": [
             {
   
@@ -2481,8 +2527,8 @@
             {
                 "Id": "Criterion",
                 "Value": "A",
-                "Text": "A-kriteriet: Populasjonens mediane levetid",
-                "Info": "Estimert levetid for arten i Norge, med usikkerhet",
+                "Text": "A-kriteriet: Median levetid",
+                "Info": "Velg én av følgende metoder for å anslå/estimere artens mediane levetid i Norge:",
                 "Children": {
                     "CritA": [
                         {
@@ -2520,7 +2566,7 @@
                 "Id": "Criterion",
                 "Value": "B",
                 "Text": "B-kriteriet: Ekspansjonshastighet",
-                "Info": "Gjennomsnittlig ekspansjonshastighet, med usikkerhet",
+                "Info": "Velg én av følgende metoder for å estimere/anslå artens gjennomsnittlige ekspansjonshastighet:",
                 "Children": {
                     "CritB": [
                         {
@@ -3655,25 +3701,41 @@
                             "Children": null
                         }
                     ],
-                    "AcritSelect": [
+                    "AcceptOrAdjust": [
                         {
                             "Id": null,
                             "Value": "a",
-                            "Text": "a) Levedyktighetsanalyse",
+                            "Text": "Godtar beregnet skår",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "b",
-                            "Text": "b) Numerisk estimering",
+                            "Text": "Ønsker å justere skår",
+                            "Info": null,
+                            "Children": null
+                        }
+                    ],
+                    "AcritSelect": [
+                        {
+                            "Id": null,
+                            "Value": "a",
+                            "Text": "Forenklet anslag",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "b",
+                            "Text": "Numerisk estimering",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "c",
-                            "Text": "c) Rødlistekriterier",
+                            "Text": "Levedyktighetsanalyse",
                             "Info": null,
                             "Children": null
                         }
@@ -3682,7 +3744,7 @@
                         {
                             "Id": null,
                             "Value": "a",
-                            "Text": "a) Datasett med tid- og stedfesta observasjoner",
+                            "Text": "Datasett med tid- og stedfesta observasjoner",
                             "Info": null,
                             "Children": null
                         },
@@ -3703,7 +3765,7 @@
                         {
                             "Id": null,
                             "Value": "d",
-                            "Text": "c) Anslått økning i forekomstareal siste året",
+                            "Text": "Anslått økning i forekomstareal",
                             "Info": null,
                             "Children": null
                         }
@@ -5369,7 +5431,7 @@
                         {
                             "Id": null,
                             "Value": "score",
-                            "Text": "Skår, angi usikkerhet",
+                            "Text": "Angi skår og usikkerhet",
                             "Info": null,
                             "Children": null
                         },
@@ -5474,7 +5536,7 @@
                         {
                             "Id": null,
                             "Value": "chooseHabitat",
-                            "Text": "Velg blant livsmedium fra NiN 1",
+                            "Text": "Velg blant livsmedium fra NiN 1:",
                             "Info": null,
                             "Children": null
                         },
