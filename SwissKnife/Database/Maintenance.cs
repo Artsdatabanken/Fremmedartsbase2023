@@ -140,10 +140,12 @@ namespace SwissKnife.Database
                 cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.SpeciesInteraction,
                     Prod.Domain.RiskAssessment.SpeciesInteraction>();
                 cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.SpeciesNaturetypeInteraction,
-                    Prod.Domain.RiskAssessment.SpeciesNaturetypeInteraction>();
+                    Prod.Domain.RiskAssessment.SpeciesNaturetypeInteraction>()
+                    .ForMember(dest => dest.Scale, opt => opt.Ignore())
+                    .ForMember(dest => dest.BasisOfAssessment, opt => opt.Ignore())
+                    .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.Ignore());
                 cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.SpeciesSpeciesInteraction,
                     Prod.Domain.RiskAssessment.SpeciesSpeciesInteraction>()
-
                     .ForMember(dest => dest.Scale, opt => opt.Ignore())
                     .ForMember(dest => dest.BasisOfAssessment, opt => opt.Ignore())
                     .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.Ignore());
