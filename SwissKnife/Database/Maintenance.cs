@@ -133,12 +133,24 @@ namespace SwissKnife.Database
                 cfg.CreateMap<FA3Legacy.RegionalRiskAssessment, FA4.RegionalRiskAssessment>();
                 cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.Criterion, Prod.Domain.RiskAssessment.Criterion>();
                 cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.HostParasiteInteraction,
-                    Prod.Domain.RiskAssessment.HostParasiteInteraction>();
-                cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.Interaction, Prod.Domain.RiskAssessment.Interaction>();
+                    Prod.Domain.RiskAssessment.HostParasiteInteraction>()
+                    .ForMember(dest => dest.Scale, opt => opt.Ignore())
+                    .ForMember(dest => dest.BasisOfAssessment, opt => opt.Ignore())
+                    .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.Ignore());
+                cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.Interaction, Prod.Domain.RiskAssessment.Interaction>()
+                    .ForMember(dest => dest.Scale, opt => opt.Ignore())
+                    .ForMember(dest => dest.BasisOfAssessment, opt => opt.Ignore())
+                    .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.Ignore());
                 cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.NaturetypeInteraction,
-                    Prod.Domain.RiskAssessment.NaturetypeInteraction>();
+                    Prod.Domain.RiskAssessment.NaturetypeInteraction>()
+                    .ForMember(dest => dest.Scale, opt => opt.Ignore())
+                    .ForMember(dest => dest.BasisOfAssessment, opt => opt.Ignore())
+                    .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.Ignore());
                 cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.SpeciesInteraction,
-                    Prod.Domain.RiskAssessment.SpeciesInteraction>();
+                    Prod.Domain.RiskAssessment.SpeciesInteraction>()
+                     .ForMember(dest => dest.Scale, opt => opt.Ignore())
+                    .ForMember(dest => dest.BasisOfAssessment, opt => opt.Ignore())
+                    .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.Ignore());
                 cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.SpeciesNaturetypeInteraction,
                     Prod.Domain.RiskAssessment.SpeciesNaturetypeInteraction>()
                     .ForMember(dest => dest.Scale, opt => opt.Ignore())
