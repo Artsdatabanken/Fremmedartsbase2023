@@ -748,10 +748,15 @@ namespace Prod.Domain
             //public string TaxonRank { get; set; }
             //public string TaxonId { get; set; }
             public string RedListCategory { get; set; }
-            public bool KeyStoneSpecie { get; set; }  
+            public bool KeyStoneSpecie { get; set; }
+            public bool KeyStoneOrEndangeredSpecie { get; set; }
             public string Effect { get; set; } // lagt til 10.10.2016
             public bool EffectLocalScale { get; set; } // lagt til 10.10.2016
             public string InteractionType { get; set; }
+            //public List<string> InteractionType { get; set; } = new List<string>();
+            public List<string> BasisOfAssessment { get; set; } = new List<string>();
+            public string Scale { get; set; }
+
             public bool LongDistanceEffect { get; set; }
             public bool ConfirmedOrAssumed { get; set; }
             //public string NorwayOrAbroad { get; set; }

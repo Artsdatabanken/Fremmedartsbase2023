@@ -9,7 +9,7 @@ export default class Criterion extends React.Component {
         super(props)
     }
     render() {
-        const {criterion, mode} = this.props;
+        const {criterion, mode, hideInfo} = this.props;
         console.log("keys: " + JSON.stringify(Object.keys(criterion)))
 
         const {Id, Value, UncertaintyValues, auto, codes, heading, info, uncertaintyDisabled } = criterion;
@@ -36,7 +36,7 @@ export default class Criterion extends React.Component {
 
         return(
             <div className="criterion">
-            {showHeading ? <div><h4>{heading}</h4><p>{info}</p></div> : null}
+            {showHeading ? <div><h4>{heading}</h4> {!hideInfo ? <p>{info}</p> : null}</div> : null}
               
             {/* {codes.map(kode => {  
                 const onChangeRadio = e => {

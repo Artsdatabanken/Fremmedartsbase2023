@@ -11,16 +11,16 @@ const SpeciesSpeciesTable = observer((props) =>
     const labels = props.labels
     return <table className="table">
         <colgroup>
-            <col style={{width: "30%"}} />
-            <col style={{width: "5%"}} />
+            <col style={{width: "20%"}} />
+            <col style={{width: "15%"}} />
             <col style={{width: "16%"}} />
-            <col style={{width: "5%"}} />
+            <col style={{width: "25%"}} />
 
-            <col style={{width: "21%"}} />
+            <col style={{width: "25%"}} />
             <col style={{width: "5%"}} />
             <col style={{width: "5%"}} />
-            <col style={{width: "5%"}} />
-            <col style={{width: "8%"}} />
+            {/*<col style={{width: "5%"}} />
+            <col style={{width: "8%"}} />*/}
 
         </colgroup>
 
@@ -29,12 +29,14 @@ const SpeciesSpeciesTable = observer((props) =>
                 <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.localSpecies}} ></th>
                 {props.showKeyStoneSpecie ? <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.keystoneSpecies}} ></th> : null}
                 {props.showEffect ? <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.effect}} ></th> : null}
-                <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.localScale}} ></th>
+                <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.scope}} ></th>
                 {props.showInteractionType ? <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.interactionType}} ></th> : null}
-                <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.longDistanceEffect}} ></th>
+                <th style={{textAlign: 'center'}} dangerouslySetInnerHTML={{ __html: labels.DEcrit.assessmentBasis}} ></th>
+                <th>&nbsp;</th>
+               {/* <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.longDistanceEffect}} ></th>
                 {props.showConfirmedOrAssumed ? <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.documented}} ></th> : null}
                 <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.domesticOrAbroad}} ></th>
-                <th>&nbsp;</th>
+ */}
             </tr>
         </thead>
         <tbody>
@@ -50,18 +52,43 @@ const SpeciesSpeciesTable = observer((props) =>
                 </td>
                 {props.showKeyStoneSpecie ? <td><Xcomp.Bool observableValue={[item, 'keyStoneSpecie']} /></td> : null}
                 {props.showEffect ? <td><Xcomp.StringEnum observableValue={[item, 'effect']} forceSync codes={props.koder.speciesSpeciesEffectType} /></td> : null}
-                <td><Xcomp.Bool observableValue={[item, 'effectLocalScale']} /></td>
-                {props.showInteractionType ? <td><Xcomp.StringEnum observableValue={[item, 'interactionType']} forceSync codes={props.koder.speciesSpeciesInteractionType} /></td> : null}
-                <td><Xcomp.Bool observableValue={[item, 'longDistanceEffect']} /></td>
-                {props.showConfirmedOrAssumed ? <td><Xcomp.Bool observableValue={[item, 'confirmedOrAssumed']} /></td> : null}
-                <td><Xcomp.Bool observableValue={[item, 'domesticOrAbroad']} stringBool="True,False" /></td>
+                <td>
+                <Xcomp.StringEnum observableValue={[item, 'scale']} forceSync codes={props.koder.speciesSpeciesScopeType}/>
+                  {/*  <Xcomp.Bool observableValue={[item, 'effectLocalScale']} />*/}
+                    </td>
+                {props.showInteractionType ? <td>
+                   <Xcomp.StringEnum observableValue={[item, 'interactionType']} forceSync codes={props.koder.speciesSpeciesInteractionType} /> 
+                    {/*<Xcomp.MultiselectArray
+                                observableValue={[item, 'interactionType']} 
+                                codes={props.koder.speciesSpeciesInteractionType}
+                    mode="check"/> */}
+                    </td> : null}
+                <td>
+                <Xcomp.MultiselectArray
+                                observableValue={[item, 'basisOfAssessment']} 
+                                codes={props.koder.assessmentBackgrounds}
+                                mode="check"/>
+                    {/*<Xcomp.Bool observableValue={[item, 'longDistanceEffect']} />*/}
+                    </td>
+                {/*{props.showConfirmedOrAssumed ? <td><Xcomp.Bool observableValue={[item, 'confirmedOrAssumed']} /></td> : null}
+                <td><Xcomp.Bool observableValue={[item, 'domesticOrAbroad']} stringBool="True,False" /></td> */}
 
                 <td><Xcomp.Button primary xs onClick={() => props.list.remove(item) }>{labels.General.delete}</Xcomp.Button></td>
             </tr>
             )}
             <tr className="newRow">
                 <td>
-                    <div style={{position: 'relative'}}>
+                <select className="form-control" placeholder="velg art" value={props.newItem.niNCode}
+                            onChange={action(e => props.newItem.niNCode = e.target.value)}
+                            >
+
+                        {/*//todo: uncomment this when we have naturetypeLabels
+                         { props.newItem.naturetypes.map(nt => {
+                            const ninlabel = props.naturtypeLabels ? props.naturtypeLabels[nt.niNCode] : ""
+                            const label = nt.niNCode + " " + ninlabel
+                            return <option value={nt.niNCode} key={nt.niNCode}>{label}</option>})} */}
+                    </select>
+                  {/*  <div style={{position: 'relative'}}>
                         {props.newItem.scientificName.length > 0 ?
                         <div 
                             className="speciesNewItem"
@@ -120,15 +147,32 @@ const SpeciesSpeciesTable = observer((props) =>
                             </div>
                         </div> :
                         null}
-                    </div>
+                        </div> */}
                 </td>
                 {props.showKeyStoneSpecie ? <td><Xcomp.Bool observableValue={[props.newItem, 'keyStoneSpecie']} /></td> : null}
                 {props.showEffect ? <td><Xcomp.StringEnum observableValue={[props.newItem, 'effect']} forceSync codes={props.koder.speciesSpeciesEffectType} /></td> : null}
-                <td><Xcomp.Bool observableValue={[props.newItem, 'effectLocalScale']} /></td>
-                {props.showInteractionType ? <td><Xcomp.StringEnum observableValue={[props.newItem, 'interactionType']} forceSync codes={props.koder.speciesSpeciesInteractionType} /></td> : null}
-                <td><Xcomp.Bool observableValue={[props.newItem, 'longDistanceEffect']} /></td>
-                {props.showConfirmedOrAssumed ? <td><Xcomp.Bool observableValue={[props.newItem, 'confirmedOrAssumed']} /></td> : null}
-                <td><Xcomp.Bool observableValue={[props.newItem, 'domesticOrAbroad']} stringBool="True,False" /></td>
+                <td>
+                    <Xcomp.StringEnum observableValue={[props.newItem, 'scale']} forceSync codes={props.koder.speciesSpeciesScopeType} />
+                  {/*  <Xcomp.Bool observableValue={[props.newItem, 'effectLocalScale']} /> */}
+                </td>
+                {props.showInteractionType ? <td>
+                    {/*<Xcomp.MultiselectArray
+                                observableValue={[props.newItem, 'interactionType']} 
+                                codes={props.koder.speciesSpeciesInteractionType}
+                                mode="check"/>*/}
+                    <Xcomp.StringEnum observableValue={[props.newItem, 'interactionType']} forceSync codes={props.koder.speciesSpeciesInteractionType} />
+                    
+                    
+                    </td> : null}
+                <td>
+                <Xcomp.MultiselectArray
+                                observableValue={[props.newItem, 'basisOfAssessment']} 
+                                codes={props.koder.assessmentBackgrounds}
+                                mode="check"/>
+                    {/*<Xcomp.Bool observableValue={[props.newItem, 'longDistanceEffect']} />*/}
+                </td>
+               {/* {props.showConfirmedOrAssumed ? <td><Xcomp.Bool observableValue={[props.newItem, 'confirmedOrAssumed']} /></td> : null}
+                <td><Xcomp.Bool observableValue={[props.newItem, 'domesticOrAbroad']} stringBool="True,False" /></td> */}
                 <td>
                     <div>
                         <Xcomp.Button primary xs 

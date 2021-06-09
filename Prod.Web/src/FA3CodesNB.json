@@ -904,6 +904,22 @@
                 "Children": null
             }
         ],
+        "speciesSpeciesScopeType": [
+            {
+                "Id": "speciesSpeciesScopeType",
+                "Value": "Limited",
+                "Text": "Begrenset",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "speciesSpeciesScopeType",
+                "Value": "Large",
+                "Text": "Storskala",
+                "Info": null,
+                "Children": null
+            }
+        ],
         "ParasiteEcoEffectCodes": [
             {
                 "Id": "ParasiteEcoEffectCodes",
@@ -2478,6 +2494,52 @@
               }
         ],
 
+        "scoresD": [
+            {
+  
+                "text": "Ingen kjent effekt",
+                "value": "no"
+              },
+              {
+    
+                "text": "Svak styrke og begrenset omfang",
+                "value": "limited"
+              },
+              {
+  
+                "text": "Svak styrke og storskala omfang/Moderat styrke og begrenset omfang",
+                "value": "weak"
+              },
+              {
+    
+                "text": "Moderat styrke og storskala omfang ELLER fortrengning",
+                "value": "moderate"
+              }
+        ],
+
+        "scoresE": [
+            {
+  
+                "text": "Svak styrke/Moderat styrke og begrenset omfang",
+                "value": "weak"
+              },
+              {
+    
+                "text": "Moderat styrke og storskala omfang",
+                "value": "moderate"
+              },
+              {
+  
+                "text": "Fortrengning i begrenset omfang",
+                "value": "limited"
+              },
+              {
+    
+                "text": "Fortrengning i storskala omfang",
+                "value": "large"
+              }
+        ],
+
         "scoresF": [
             {
   
@@ -2641,7 +2703,7 @@
             {
                 "Id": "Criterion",
                 "Value": "D",
-                "Text": "D-kriteriet: Truete arter eller nøkkelarter, med usikkerhet",
+                "Text": "D-kriteriet: Effekter på truede arter eller nøkkelarter",
                 "Info": "Kan arten påvirke truede arter eller nøkkelarter innen 50 år",
                 "Children": {
                     "CritD": [
@@ -2679,7 +2741,7 @@
             {
                 "Id": "Criterion",
                 "Value": "E",
-                "Text": "E-kriteriet: Øvrige stedegne arter, med usikkerhet",
+                "Text": "E-kriteriet: Effekter på øvrige stedegne arter",
                 "Info": "Kan arten påvirke øvrige stedegne arter innen 50 år",
                 "Children": {
                     "CritE": [
@@ -5102,6 +5164,13 @@
                         },
                         {
                             "Id": null,
+                            "Value": "insecurity",
+                            "Text": "Dersom usikkerhet er angitt: Beskriv hvilke relevante elementer som utgjør usikkerheten",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "localSpecies",
                             "Text": "Stedegen art",
                             "Info": null,
@@ -5116,8 +5185,29 @@
                         },
                         {
                             "Id": null,
+                            "Value": "keystoneOrEndangeredSpecies",
+                            "Text": "Inkludert nøkkel&shy;art / truet art",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "effect",
-                            "Text": "Effekt",
+                            "Text": "Interaksjonens styrke",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "scope",
+                            "Text": "Interaksjonens omfang",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "assessmentBasis",
+                            "Text": "Vurderingsgrunnlag",
                             "Info": null,
                             "Children": null
                         },

@@ -43,9 +43,12 @@ export default class Vurdering52Okologiskeffekt extends React.Component {
                 keyStoneSpecie : false, 
                 effectLocalScale : false, 
                 effect : "Weak",
+                scale: "Limited",
                 interactionType : "CompetitionSpace", 
+                //interactionType : [], 
                 longDistanceEffect : false, 
                 confirmedOrAssumed : false, 
+                basisOfAssessment: [],
             }, 
             newGTD: {
                 scientificName: "",
@@ -60,10 +63,13 @@ export default class Vurdering52Okologiskeffekt extends React.Component {
                 redListCategory: "", 
                 keyStoneSpecie : false, 
                 effectLocalScale : false, 
-                effect : "Weak", 
-                interactionType : "", 
+                effect : "Weak",                 
+                scale: "Limited",
+                interactionType : "",
+                //interactionType : [], 
                 longDistanceEffect : false, 
                 confirmedOrAssumed : false, 
+                basisOfAssessment: [],
             }, 
             newHPI: {
                 scientificName: "",
@@ -78,12 +84,14 @@ export default class Vurdering52Okologiskeffekt extends React.Component {
                 redListCategory: "", 
                 keyStoneSpecie : false, 
                 effectLocalScale : false, 
+                scale: "Limited",
                 parasiteScientificName : "",
                 parasiteVernacularName : "",
                 parasiteEcoEffect : "1", 
                 parasiteNewForHost : false, 
                 parasiteIsAlien : false, 
                 diseaseConfirmedOrAssumed : false, 
+                basisOfAssessment: [],
             },
             newSNITS: {
                 // // // // NiNCode: riskAssessment.vurderingAllImpactedNatureTypes.length > 0
@@ -95,10 +103,13 @@ export default class Vurdering52Okologiskeffekt extends React.Component {
                 domesticOrAbroad : "",
                 keyStoneSpecie : false, 
                 effectLocalScale : false, 
+                scale: "Limited",
                 effect : "Weak",
                 interactionType : "CompetitionSpace", 
+                //interactionType : [], 
                 longDistanceEffect : false, 
-                confirmedOrAssumed : false
+                confirmedOrAssumed : false,                
+                basisOfAssessment: [],
                 // taxonSearchString: "",
                 // taxonSearchResult: [], 
                 // taxonSearchWaitingForResult: false - should not be observable
@@ -122,13 +133,16 @@ export default class Vurdering52Okologiskeffekt extends React.Component {
             newItem.redListCategory = "" 
             newItem.keyStoneSpecie = false
             newItem.interactionType = "CompetitionSpace" 
+            //newItem.interactionType = []
             newItem.effect = "Weak" 
+            newItem.scale = "Limited" 
             newItem.effectLocalScale = false 
             newItem.longDistanceEffect = false 
             newItem.confirmedOrAssumed = false
             newItem.domesticOrAbroad = ""
             newItem.taxonSearchString = ""
             newItem.taxonSearchResult.replace([])
+            newItem.basisOfAssessment = []
             newItem.taxonSearchWaitingForResult = false
         }
         this.addSNITS = () => {
@@ -144,13 +158,16 @@ export default class Vurdering52Okologiskeffekt extends React.Component {
 
             newItem.redListCategory = "" 
             newItem.keyStoneSpecie = false
+            //newItem.interactionType = []
             newItem.interactionType = "CompetitionSpace" 
-            newItem.effect = "Weak" 
+            newItem.effect = "Weak"              
+            newItem.scale = "Limited" 
             newItem.EffectLocalScale = false 
             newItem.longDistanceEffect = false 
             newItem.confirmedOrAssumed = false
             newItem.domesticOrAbroad = ""
             newItem.taxonSearchString = ""
+            newItem.basisOfAssessment = []
 
             // newItem.taxonSearchResult.replace([])
             // newItem.taxonSearchWaitingForResult = false
@@ -170,10 +187,12 @@ export default class Vurdering52Okologiskeffekt extends React.Component {
             newItem.taxonId = ""
             newItem.redListCategory = "" 
             newItem.keyStoneSpecie = false
+            //newItem.interactionType = []
             newItem.interactionType = ""
-            newItem.effect = "Weak" 
+            newItem.effect = "Weak"  
+            newItem.scale = "Limited" 
             newItem.effectLocalScale = false 
-
+            newItem.basisOfAssessment = []
 
             newItem.longDistanceEffect = false
             newItem.confirmedOrAssumed = false
@@ -211,6 +230,7 @@ export default class Vurdering52Okologiskeffekt extends React.Component {
             newItem.domesticOrAbroad = "" 
             newItem.taxonSearchString = ""
             newItem.taxonSearchResult.replace([])
+            newItem.basisOfAssessment = []
             newItem.taxonSearchWaitingForResult = false
         }
 
@@ -242,16 +262,40 @@ export default class Vurdering52Okologiskeffekt extends React.Component {
                 {config.showPageHeaders ? <h3>Økologisk effekt</h3> : <br />}
                 <fieldset className="well">
                     <h4>{labels.DEcrit.heading}</h4>
+                    <p>Beskriv artens interaksjon(er) med stedegne arter. Det skal være sannsynlighetsovervekt for interaksjonen</p>
                     <SpeciesSpeciesTable list={riskAssessment.speciesSpeciesInteractions} newItem={this.newSSITS} addNewItem={this.addSSITS} koder={koder} labels={labels} showRedlist showKeyStoneSpecie showEffect showInteractionType showConfirmedOrAssumed/>
-                    <Xcomp.HtmlString observableValue={[riskAssessment, 'speciesSpeciesInteractionsSupplementaryInformation']} label="Utfyllende informasjon" />
-                    <hr />
-                    <br />
-                    <SpeciesNaturetypeTable list={riskAssessment.speciesNaturetypeInteractions} newItem={this.newSNITS} addNewItem={this.addSNITS}  koder={koder} labels={labels} naturtypeLabels={appState.naturtypeLabels} />
+                    
+                    
+                    <hr/>
+                    <SpeciesNaturetypeTable list={riskAssessment.speciesNaturetypeInteractions} newItem={this.newSNITS} addNewItem={this.addSNITS}  koder={koder} labels={labels} naturtypeLabels={appState.naturtypeLabels } showKeyStoneSpecie showEffect showInteractionType />
 
                     <hr/>
-                    <Criterion criterion={crit52D} />
+
+                    <Xcomp.HtmlString observableValue={[riskAssessment, 'speciesSpeciesInteractionsSupplementaryInformation']} label="Utfyllende informasjon (hvilke(n) artsgruppe i naturtypen påvirkes og hvordan blir disse generelt påvirket):" />
+
                     <hr/>
-                    <Criterion criterion={crit52E} />
+                    <Criterion criterion={crit52D} hideInfo={true} />
+                    <p>{ntLabels.score}</p>
+                    <ScoreUnsure appState={appState}
+                                critScores={koder.scoresD}
+                                firstValue={"scoreC"}
+                                secondValue={"unsureC"}/>
+                     <Xcomp.HtmlString                            
+                                observableValue={[riskAssessment, "DCritInsecurity"]}
+                                label={labels.DEcrit.insecurity}
+                            />                      
+                   
+                    <Criterion criterion={crit52E} hideInfo={true} />
+
+                    <p>{ntLabels.score}</p>
+                    <ScoreUnsure appState={appState}
+                                critScores={koder.scoresE}
+                                firstValue={"scoreC"}
+                                secondValue={"unsureC"}/>
+                     <Xcomp.HtmlString                            
+                                observableValue={[riskAssessment, "ECritInsecurity"]}
+                                label={labels.DEcrit.insecurity}
+                            />                      
                 </fieldset>
                 <fieldset className="well">
                     <Criterion criterion={crit52F} />
