@@ -4916,8 +4916,99 @@
                         },
                         {
                             "Id": null,
+                            "Value": "mCount",
+                            "Text": "mtall",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "exact",
+                            "Text": "eksakt",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "p",
+                            "Text": "p",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "newObs",
+                            "Text": "ny obs.",
+                            "Info": null,
+                            "Children": null
+                        }, 
+                        {
+                            "Id": null,
+                            "Value": "commentOrDescription",
+                            "Text": "Kommentar/Beskriv dersom tallene ikke hentes fra Artskart:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "choose",
+                            "Text": "Velg",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "getFromMap",
+                            "Text": "hent fra Artskart",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "addManually",
+                            "Text": "eller legg inn manuelt",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "data",
                             "Text": "Datasett",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "fromYear",
+                            "Text": "f.o.m. år (t0)",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "toYear",
+                            "Text": "t.o.m. år (ti)",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "i",
+                            "Text": "i",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "knownExpansion",
+                            "Text": "Kjent forekomstareal",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "km2",
+                            "Text": "km2",
                             "Info": null,
                             "Children": null
                         },

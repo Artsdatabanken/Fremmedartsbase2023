@@ -1258,7 +1258,10 @@ table.table-hover,
   width: auto;
 }
 
-.statusField {
+.well p {
+  margin: 10px 0 10px;
+}
+.statusField, .BCritFiles {
   display: flex;
   padding: 10px 0 10px;
 }
@@ -1272,12 +1275,18 @@ table.table-hover,
   width: 55%;
 }
 
+.filenames {
+  width: 35%;
+  float: left;
+}
+
 .statusField .firstObs li {
 
   margin-bottom: 16px;
 }
 
-.statusField .yearsAndCheckboxes {
+.statusField .yearsAndCheckboxes,
+.fileDescriptions {
   float: left;
 }
 
@@ -1285,7 +1294,8 @@ table.table-hover,
   margin-left: 20px;
 }
 
-.statusField .numberFields .form-control {
+.statusField .numberFields .form-control,
+.statusField .numberFieldsB .form-control {
   margin: 0 0 15px;
   width: 50%;
 }
@@ -1294,9 +1304,24 @@ table.table-hover,
   width: 250px;
 }
 
-.statusField .labels p {
+.labelsB {
+  width: 35%;
+}
+
+.numberFieldsB {
+  width: 65%;
+}
+
+.statusField .labels p,
+.statusField .labelsB p {
   margin: 5px 0 25px;
 }
+
+.BCritTable {
+  width: 50%;
+  margin: 20px 0 20px;
+}
+
 .listOfYears p {
   text-align: center;
 }
@@ -1342,6 +1367,7 @@ table.table-hover,
 .filters p {
   margin-bottom: 20px;
 }
+
 .scanning {
   height: 50%;
 }
