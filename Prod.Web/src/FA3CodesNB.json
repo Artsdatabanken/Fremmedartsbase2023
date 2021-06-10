@@ -881,6 +881,57 @@
                 "Children": null
             }
         ],
+        "speciesSpeciesInteractionTypes": [
+            {
+                "Id": "speciesSpeciesInteractionType",
+                "value": "Predation",
+                "text": "Predasjon",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "speciesSpeciesInteractionType",
+                "value": "Parasitizing",
+                "text": "Parasittering",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "speciesSpeciesInteractionType",
+                "value": "CompetitionSpace",
+                "text": "Konkurranse om plass",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "speciesSpeciesInteractionType",
+                "value": "CompetitionFood",
+                "text": "Konkurranse om mat",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "speciesSpeciesInteractionType",
+                "value": "Allelopathy",
+                "text": "Allelopati",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "speciesSpeciesInteractionType",
+                "value": "Phytophagy",
+                "text": "Fytofagi",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "speciesSpeciesInteractionType",
+                "value": "Other",
+                "text": "Andre",
+                "Info": null,
+                "Children": null
+            }
+        ],
         "speciesSpeciesEffectType": [
             {
                 "Id": "speciesSpeciesEffectType",

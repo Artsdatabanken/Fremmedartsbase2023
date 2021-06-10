@@ -55,11 +55,11 @@ const SpeciesNaturetypeTable = observer((props) =>
                     <Xcomp.StringEnum observableValue={[item, 'scale']} forceSync codes={props.koder.speciesSpeciesScopeType} />
                 </td>
                 <td>
-                    <Xcomp.StringEnum observableValue={[item, 'interactionType']} forceSync codes={props.koder.speciesSpeciesInteractionType} />
-                    {/*<Xcomp.MultiselectArray
-                                observableValue={[item, 'interactionType']} 
-                                codes={props.koder.speciesSpeciesInteractionType}
-                    mode="check"/>*/}
+                    {/*<Xcomp.StringEnum observableValue={[item, 'interactionType']} forceSync codes={props.koder.speciesSpeciesInteractionType} />*/}
+                    <Xcomp.MultiselectArray
+                                observableValue={[item, 'interactionTypes']} 
+                                codes={props.koder.speciesSpeciesInteractionTypes}
+                    mode="check"/>
                 </td>
                 <td>
                 <Xcomp.MultiselectArray
@@ -95,11 +95,11 @@ const SpeciesNaturetypeTable = observer((props) =>
                     {/*<Xcomp.Bool observableValue={[props.newItem, 'effectLocalScale']} />*/}
                     </td>
                 <td>
-                    <Xcomp.StringEnum observableValue={[props.newItem, 'interactionType']} forceSync codes={props.koder.speciesSpeciesInteractionType} />
-                   {/* <Xcomp.MultiselectArray
-                                observableValue={[props.newItem, 'interactionType']} 
-                                codes={props.koder.speciesSpeciesInteractionType}
-                                mode="check"/>*/}
+                   {/* <Xcomp.StringEnum observableValue={[props.newItem, 'interactionType']} forceSync codes={props.koder.speciesSpeciesInteractionType} /> */}
+                    <Xcomp.MultiselectArray
+                                observableValue={[props.newItem, 'interactionTypes']} 
+                                codes={props.koder.speciesSpeciesInteractionTypes}
+                                mode="check"/>
                 </td>
                 <td>
                 <Xcomp.MultiselectArray

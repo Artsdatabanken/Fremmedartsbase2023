@@ -753,7 +753,7 @@ namespace Prod.Domain
             public string Effect { get; set; } // lagt til 10.10.2016
             public bool EffectLocalScale { get; set; } // lagt til 10.10.2016
             public string InteractionType { get; set; }
-            //public List<string> InteractionType { get; set; } = new List<string>();
+            public List<string> InteractionTypes { get; set; } = new List<string>();
             public List<string> BasisOfAssessment { get; set; } = new List<string>();
             public string Scale { get; set; }
 

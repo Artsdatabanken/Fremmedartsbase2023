@@ -49,6 +49,7 @@ export default class Vurdering52Okologiskeffekt extends React.Component {
                 longDistanceEffect : false, 
                 confirmedOrAssumed : false, 
                 basisOfAssessment: [],
+                interactionTypes: [],
             }, 
             newGTD: {
                 scientificName: "",
@@ -70,6 +71,7 @@ export default class Vurdering52Okologiskeffekt extends React.Component {
                 longDistanceEffect : false, 
                 confirmedOrAssumed : false, 
                 basisOfAssessment: [],
+                interactionTypes: [],
             }, 
             newHPI: {
                 scientificName: "",
@@ -92,6 +94,7 @@ export default class Vurdering52Okologiskeffekt extends React.Component {
                 parasiteIsAlien : false, 
                 diseaseConfirmedOrAssumed : false, 
                 basisOfAssessment: [],
+                interactionTypes: [],
             },
             newSNITS: {
                 // // // // NiNCode: riskAssessment.vurderingAllImpactedNatureTypes.length > 0
@@ -110,6 +113,7 @@ export default class Vurdering52Okologiskeffekt extends React.Component {
                 longDistanceEffect : false, 
                 confirmedOrAssumed : false,                
                 basisOfAssessment: [],
+                interactionTypes: [],
                 // taxonSearchString: "",
                 // taxonSearchResult: [], 
                 // taxonSearchWaitingForResult: false - should not be observable
@@ -143,6 +147,7 @@ export default class Vurdering52Okologiskeffekt extends React.Component {
             newItem.taxonSearchString = ""
             newItem.taxonSearchResult.replace([])
             newItem.basisOfAssessment = []
+            newItem.interactionTypes = []
             newItem.taxonSearchWaitingForResult = false
         }
         this.addSNITS = () => {
@@ -168,6 +173,7 @@ export default class Vurdering52Okologiskeffekt extends React.Component {
             newItem.domesticOrAbroad = ""
             newItem.taxonSearchString = ""
             newItem.basisOfAssessment = []
+            newItem.interactionTypes = []
 
             // newItem.taxonSearchResult.replace([])
             // newItem.taxonSearchWaitingForResult = false
@@ -193,7 +199,7 @@ export default class Vurdering52Okologiskeffekt extends React.Component {
             newItem.scale = "Limited" 
             newItem.effectLocalScale = false 
             newItem.basisOfAssessment = []
-
+            newItem.interactionTypes = []
             newItem.longDistanceEffect = false
             newItem.confirmedOrAssumed = false
             newItem.domesticOrAbroad = "" 
@@ -231,6 +237,7 @@ export default class Vurdering52Okologiskeffekt extends React.Component {
             newItem.taxonSearchString = ""
             newItem.taxonSearchResult.replace([])
             newItem.basisOfAssessment = []
+            newItem.interactionTypes = []
             newItem.taxonSearchWaitingForResult = false
         }
 

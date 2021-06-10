@@ -57,11 +57,11 @@ const SpeciesSpeciesTable = observer((props) =>
                   {/*  <Xcomp.Bool observableValue={[item, 'effectLocalScale']} />*/}
                     </td>
                 {props.showInteractionType ? <td>
-                   <Xcomp.StringEnum observableValue={[item, 'interactionType']} forceSync codes={props.koder.speciesSpeciesInteractionType} /> 
-                    {/*<Xcomp.MultiselectArray
-                                observableValue={[item, 'interactionType']} 
-                                codes={props.koder.speciesSpeciesInteractionType}
-                    mode="check"/> */}
+                  {/* <Xcomp.StringEnum observableValue={[item, 'interactionType']} forceSync codes={props.koder.speciesSpeciesInteractionType} /> */}
+                    <Xcomp.MultiselectArray
+                                observableValue={[item, 'interactionTypes']} 
+                                codes={props.koder.speciesSpeciesInteractionTypes}
+                    mode="check"/> 
                     </td> : null}
                 <td>
                 <Xcomp.MultiselectArray
@@ -78,17 +78,8 @@ const SpeciesSpeciesTable = observer((props) =>
             )}
             <tr className="newRow">
                 <td>
-                <select className="form-control" placeholder="velg art" value={props.newItem.niNCode}
-                            onChange={action(e => props.newItem.niNCode = e.target.value)}
-                            >
-
-                        {/*//todo: uncomment this when we have naturetypeLabels
-                         { props.newItem.naturetypes.map(nt => {
-                            const ninlabel = props.naturtypeLabels ? props.naturtypeLabels[nt.niNCode] : ""
-                            const label = nt.niNCode + " " + ninlabel
-                            return <option value={nt.niNCode} key={nt.niNCode}>{label}</option>})} */}
-                    </select>
-                  {/*  <div style={{position: 'relative'}}>
+              
+                   <div style={{position: 'relative'}}>
                         {props.newItem.scientificName.length > 0 ?
                         <div 
                             className="speciesNewItem"
@@ -147,7 +138,7 @@ const SpeciesSpeciesTable = observer((props) =>
                             </div>
                         </div> :
                         null}
-                        </div> */}
+                        </div> 
                 </td>
                 {props.showKeyStoneSpecie ? <td><Xcomp.Bool observableValue={[props.newItem, 'keyStoneSpecie']} /></td> : null}
                 {props.showEffect ? <td><Xcomp.StringEnum observableValue={[props.newItem, 'effect']} forceSync codes={props.koder.speciesSpeciesEffectType} /></td> : null}
@@ -156,11 +147,11 @@ const SpeciesSpeciesTable = observer((props) =>
                   {/*  <Xcomp.Bool observableValue={[props.newItem, 'effectLocalScale']} /> */}
                 </td>
                 {props.showInteractionType ? <td>
-                    {/*<Xcomp.MultiselectArray
-                                observableValue={[props.newItem, 'interactionType']} 
-                                codes={props.koder.speciesSpeciesInteractionType}
-                                mode="check"/>*/}
-                    <Xcomp.StringEnum observableValue={[props.newItem, 'interactionType']} forceSync codes={props.koder.speciesSpeciesInteractionType} />
+                    <Xcomp.MultiselectArray
+                                observableValue={[props.newItem, 'interactionTypes']} 
+                                codes={props.koder.speciesSpeciesInteractionTypes}
+                                mode="check"/>
+                   {/* <Xcomp.StringEnum observableValue={[props.newItem, 'interactionType']} forceSync codes={props.koder.speciesSpeciesInteractionType} />*/}
                     
                     
                     </td> : null}
