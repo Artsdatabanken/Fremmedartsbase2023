@@ -31,15 +31,23 @@ export default class MigrationPathwayTable extends React.Component {
             <table className="table">
                 <thead>
                 <tr>
+                    <th>{labels.MigrationPathway.mainCategory}</th>
                     <th>{labels.MigrationPathway.category}</th>
-                    {/*<th>{labels.migrationPathway.CodeItem}</th>*/}
+                    <th>{labels.MigrationPathway.influenceFactor}</th>
+                    <th>{labels.MigrationPathway.magnitude}</th>
+                    <th>{labels.MigrationPathway.timeOfIncident}</th>
+                    <th>{nbsp}</th>
+                    <th>{nbsp}</th>
+                    <th>{nbsp}</th>
+                   
+                    {/*<th>{labels.migrationPathway.CodeItem}</th>
                     {showIntroductionSpread ? <th>{labels.MigrationPathway.introductionSpread}</th> : null}
                     <th>{labels.MigrationPathway.influenceFactor}</th>
                     <th>{labels.MigrationPathway.magnitude}</th>
                     <th>{labels.MigrationPathway.timeOfIncident}</th>
                     <th>{labels.MigrationPathway.elaborateInformation}</th>
                     <th>{nbsp}</th>
-                    <th>{nbsp}</th>
+                    <th>{nbsp}</th>*/}
                 </tr>
                 </thead>
                 <tbody>

@@ -3075,7 +3075,7 @@
                                     {
                                         "Id": null,
                                         "Value": "released",
-                                        "Text": "bevist utsetting",
+                                        "Text": "Tilsiktet utsetting",
                                         "Info": null,
                                         "Children": {
                                             "mpimportationrelease": [
@@ -3148,7 +3148,7 @@
                                     {
                                         "Id": null,
                                         "Value": "escaped",
-                                        "Text": "rømning/forvilling",
+                                        "Text": "Rømning/forvilling",
                                         "Info": null,
                                         "Children": {
                                             "mpimportationescape": [
@@ -3249,7 +3249,7 @@
                                     {
                                         "Id": null,
                                         "Value": "transportpolution",
-                                        "Text": "transport/forurensning",
+                                        "Text": "Forurensning av vare",
                                         "Info": null,
                                         "Children": {
                                             "mpimportationpolution": [
@@ -3336,7 +3336,7 @@
                                     {
                                         "Id": null,
                                         "Value": "stowaway",
-                                        "Text": "transport/blindpassasjer",
+                                        "Text": "Blindpassasjer med transport",
                                         "Info": null,
                                         "Children": {
                                             "mpimportationstowaway": [
@@ -3433,7 +3433,7 @@
                                     {
                                         "Id": null,
                                         "Value": "corridor",
-                                        "Text": "korridor",
+                                        "Text": "Korridor",
                                         "Info": null,
                                         "Children": {
                                             "mpspreadcorridor": [
@@ -3457,7 +3457,7 @@
                                     {
                                         "Id": null,
                                         "Value": "naturalDispersal",
-                                        "Text": "egenspredning",
+                                        "Text": "Egenspredning",
                                         "Info": null,
                                         "Children": {
                                             "mpspreadnatural": [
@@ -3887,6 +3887,22 @@
                             "Id": null,
                             "Value": "multipleSelected",
                             "Text": "Flere valgt",
+                            "Info": null,
+                            "Children": null
+                        }
+                    ],
+                    "indoorProduktionImport": [
+                        {
+                            "Id": null,
+                            "Value": "a",
+                            "Text": "Ja (gjelder også arter som per nå kun befinner seg i innendørs- eller produksjonsareal)",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "b",
+                            "Text": "Nei, arten kommer utelukkende direkte til norsk natur",
                             "Info": null,
                             "Children": null
                         }
@@ -4855,6 +4871,20 @@
                         },
                         {
                             "Id": null,
+                            "Value": "furtherInfo",
+                            "Text": "Utfyllende informasjon om introduksjon til naturen",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "furtherInfoComment",
+                            "Text": "Legg inn eventuell utfyllende informasjon om spredningsveiene. Gjelder informasjonen en spesifikk kategori må kategorien nevnes i teksten.",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "importAdd",
                             "Text": "Legg til importveier",
                             "Info": null,
@@ -4901,6 +4931,13 @@
                             "Id": null,
                             "Value": "heading",
                             "Text": "Spredningsveier",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "mainCategory",
+                            "Text": "Hovedkategori",
                             "Info": null,
                             "Children": null
                         },

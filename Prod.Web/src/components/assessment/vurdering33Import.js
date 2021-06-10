@@ -4,9 +4,42 @@ import PropTypes from 'prop-types'
 import {observer, inject} from 'mobx-react';
 import {action, autorun, computed, extendObservable, observable, toJS} from 'mobx';
 import * as Xcomp from './observableComponents';
+import Vurdering34Spredningsveier from './vurdering34Spredningsveier'
 import NewMigrationPathwaySelector from './34Spredningsveier/NewMigrationPathwaySelector'
 import MPTable from './34Spredningsveier/MigrationPathwayTable'
 const labels = config.labels
+
+class SelectableRadio extends React.Component {
+    // shouldComponentUpdate() {
+    //     return true
+    // }
+    render() {
+        
+        const [obj, prop] = this.props.observableValue
+        // console.log("Selectable" + this.props.value) console.log(" - - " +
+        // obj["Selectable" + this.props.value])
+        const val = this.props.value
+        // const activeVal =  disabled ? "" : val
+        const disabled = !obj["Selectable" + val] || this.context.readonly
+        const label = this.props.label + (obj[val]
+            ? "  (" + obj[val] + ")"
+            : "")
+        const dummy = obj[prop]
+        // console.log("dummy:" + dummy) console.log(">" + prop + " (" + obj[prop] + ")
+        // " + val  )
+        return <div className="radio" key={val}>
+            <label className={disabled
+                ? "disabled"
+                : ""}><input
+                type="radio"
+                name={"radio" + prop}
+                value={val}
+                checked={obj[prop] === val}
+                disabled={disabled}
+                onChange={(e) => obj[prop] = e.currentTarget.value}/>{label}</label>
+        </div>
+    }
+}
 
 @inject("appState")
 @observer
@@ -34,7 +67,7 @@ export default class Vurdering33Import extends React.Component {
     };
 
     render() {
-        const {appState:{assessment}, appState} = this.props;
+        const {appState:{assessment:{riskAssessment}}, appState:{assessment}, appState} = this.props;
         const vurdering = assessment
         const labels = appState.codeLabels
         const koder = appState.koder
@@ -48,16 +81,53 @@ export default class Vurdering33Import extends React.Component {
 
         return(
             <div>
-                <h2>
+                <p>Kommer arten (utelukkende eller også) til norsk natur via innendørs- eller produksjonsareal?</p>
+                <SelectableRadio
+                            label={labels.indoorProduktionImport.a}
+                            value={"positive"}
+                            observableValue={[riskAssessment, "indoorProduktion"]}/>
+                    <SelectableRadio
+                            label={labels.indoorProduktionImport.b}
+                            value={"negative"}
+                            observableValue={[riskAssessment, "indoorProduktion"]}/>
+                <h3>
                     Til innendørs- eller produksjonsareal
-                </h2>
-                <h2>
+                </h3>
+                <Vurdering34Spredningsveier/>
+                <h3>
                     Introduksjon til natur
-                </h2>
-                <h2>
-                    Spredningsveier i naturen
-                </h2>
+                </h3>
+                <Vurdering34Spredningsveier/>
+                {/*<table className="table">
+                    <thead>
+                        <tr>
+                            <th>{labels.MigrationPathway.mainCategory}</th>
+                            <th>{labels.MigrationPathway.category}</th>
+                            <th>{labels.MigrationPathway.influenceFactor}</th>
+                            <th>{labels.MigrationPathway.magnitude}</th>
+                            <th>{labels.MigrationPathway.timeOfIncident}</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <button className="btn btn-primary btn-xs" disabled>Fjern</button>
+                            </td>
+                        </tr>
+                    </tbody>
+        </table>*/}
+               
                 
+                <h3>
+                    Spredningsveier i naturen
+                </h3>
+                <Vurdering34Spredningsveier/>
                 {config.showPageHeaders ? <h3>{labels.Import.importIndoor}</h3> : <br />}
                {/*} <Xcomp.Bool label="" observableValue={[vurdering, "importedToIndoorOrProductionArea"]} />
                 <h4 style={{display: "inline-block", marginLeft: "6px" }}>{labels.Import.importIndoor}</h4>

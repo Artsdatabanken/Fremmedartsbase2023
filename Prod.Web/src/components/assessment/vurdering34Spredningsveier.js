@@ -3,6 +3,8 @@ import config from '../../config';
 import React from 'react';
 import PropTypes from 'prop-types'
 import {observer, inject} from 'mobx-react';
+
+import * as Xcomp from './observableComponents';
 import {action, autorun, computed, extendObservable, observable, toJS} from 'mobx';
 import NewMigrationPathwaySelector from './34Spredningsveier/NewMigrationPathwaySelector'
 import MPTable from './34Spredningsveier/MigrationPathwayTable'
@@ -39,7 +41,7 @@ export default class Vurdering34Spredningsveier extends React.Component {
     };
 
     render() {
-        const {appState:{assessment}, appState} = this.props;
+        const {appState:{assessment:{riskAssessment}}, appState:{assessment}, appState} = this.props;
         const vurdering = assessment
         const labels = appState.codeLabels
         const koder = appState.koder
@@ -56,13 +58,19 @@ export default class Vurdering34Spredningsveier extends React.Component {
         const fjernSpredningsvei = (mp) => this.fjernSpredningsvei(vurdering, mp)
         return(
             <div>
-                { true || config.showPageHeaders ? <h4 style={{marginTop: "25px"}} >{labels.MigrationPathway.introductionSpread}</h4> : <br />}
+               {/* { true || config.showPageHeaders ? <h4 style={{marginTop: "25px"}} >{labels.MigrationPathway.introductionSpread}</h4> : <br />} */}
                 <MPTable migrationPathways={migrationPathways} removeMigrationPathway={fjernSpredningsvei} showIntroductionSpread />
                 <hr/>
                 <div className="well">
                     <h4>Legg til spredningsveier</h4>
-                    <NewMigrationPathwaySelector migrationPathways={migrationPathwayKoder} onSave={mp => this.saveMigrationPathway(vurdering, mp)} koder={koder} labels={labels} />
+                    <NewMigrationPathwaySelector migrationPathways={migrationPathwayKoder} onSave={mp => this.saveMigrationPathway(vurdering, mp)} koder={koder.mpimportation} labels={labels} />
                 </div>
+                <p>{labels.Import.furtherInfo}</p>
+                <i>{labels.Import.furtherInfoComment}</i>
+                <Xcomp.HtmlString                            
+                                observableValue={[riskAssessment, "furtherInfoAboutImport"]}
+                                //label={labels.DEcrit.insecurity}
+                                />
             </div>
         );
     }
