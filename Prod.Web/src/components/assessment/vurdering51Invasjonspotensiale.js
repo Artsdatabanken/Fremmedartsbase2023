@@ -644,12 +644,14 @@ export default class Vurdering51Invasjonspotensiale extends React.Component {
                         </table>
 
                         <table className="table BCritTable">
-                            <thead>                                
+                            <thead>    
+                                <tr>                          
                                 <th>{labels.Bcrit.fromYear}</th>
                                 <th>{labels.Bcrit.toYear}</th>
                                 <th></th>
                                 <th>{labels.Bcrit.knownExpansion}</th>
                                 <th></th>
+                                </tr>  
                             </thead>
                             <tbody>
                             <tr>

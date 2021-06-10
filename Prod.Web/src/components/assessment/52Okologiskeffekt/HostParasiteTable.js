@@ -11,15 +11,15 @@ const HostParasiteTable = observer((props) =>
     const labels = props.labels
     return <table className="table">
         <colgroup>
-            <col style={{width: "30%"}} />
-            <col style={{width: "5%"}} />
-            <col style={{width: "25%"}} />
             <col style={{width: "10%"}} />
             <col style={{width: "5%"}} />
-            <col style={{width: "5%"}} />
-            <col style={{width: "5%"}} />
-            <col style={{width: "5%"}} />
-            <col style={{width: "5%"}} />
+            <col style={{width: "20%"}} />
+            <col style={{width: "10%"}} />
+            <col style={{width: "15%"}} />
+            <col style={{width: "15%"}} />
+            <col style={{width: "15%"}} />
+            {/*<col style={{width: "5%"}} />
+            <col style={{width: "5%"}} />*/}
             <col style={{width: "5%"}} />
         </colgroup>
         <thead>
@@ -27,12 +27,16 @@ const HostParasiteTable = observer((props) =>
                 <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.localSpecie}}></th>
                 {props.showKeyStoneSpecie ? <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.keystoneSpecies}}></th> : null}
                 <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.parasiteScientificname}}></th>
-                <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.parasiteEcoEffect}}></th>
+                <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.parasiteStatus}}></th>
+                <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.scope}}></th>
+                <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.parasiteEffectScore}}></th>
+                <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.assessmentBasis}}></th>
+               {/* <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.parasiteEcoEffect}}></th>
                 <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.localScale}} ></th>
                 <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.parasiteNew}}></th>
                 <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.parasiteAlien}}></th>
                 <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.diseaseDocumented}}></th>
-                <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.domesticOrAbroad}} ></th>
+        <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.domesticOrAbroad}} ></th>*/}
                 <th>&nbsp;</th>
             </tr>
         </thead>
@@ -59,12 +63,27 @@ const HostParasiteTable = observer((props) =>
                 </td>
                 {props.showKeyStoneSpecie ? <td><Xcomp.Bool observableValue={[item, 'keyStoneSpecie']} /></td> : null}
                 <td>{item.ParasiteScientificName}</td>
-                <td><Xcomp.StringEnum observableValue={[item, 'parasiteEcoEffect']} forceSync codes={props.koder.ParasiteEcoEffectCodes} /></td>
+                <td>
+                    <Xcomp.StringEnum observableValue={[item, 'status']} forceSync codes={props.koder.ParasiteStatus}/>   
+                </td>
+                <td>
+                    <Xcomp.StringEnum observableValue={[item, 'scale']} forceSync codes={props.koder.speciesSpeciesScopeType}/>
+                </td>
+                <td>
+                    <Xcomp.StringEnum observableValue={[item, 'parasiteEcoEffect']} forceSync codes={props.koder.ParasiteEcoEffectCodes} />
+                </td>
+                <td>
+                <Xcomp.MultiselectArray
+                                observableValue={[item, 'basisOfAssessment']} 
+                                codes={props.koder.assessmentBackgrounds}
+                                mode="check"/>
+                </td>
+                {/*<td><Xcomp.StringEnum observableValue={[item, 'parasiteEcoEffect']} forceSync codes={props.koder.ParasiteEcoEffectCodes} /></td>
                 <td><Xcomp.Bool observableValue={[item, 'effectLocalScale']} /></td>
                 <td><Xcomp.Bool observableValue={[item, 'parasiteNewForHost']} /></td>
                 <td><Xcomp.Bool observableValue={[item, 'parasiteIsAlien']} /></td>
                 <td><Xcomp.Bool observableValue={[item, 'diseaseConfirmedOrAssumed']} /></td>
-                <td><Xcomp.Bool observableValue={[item, 'domesticOrAbroad']} stringBool="True,False" /></td>
+            <td><Xcomp.Bool observableValue={[item, 'domesticOrAbroad']} stringBool="True,False" /></td>*/}
 
                 <td><Xcomp.Button primary xs onClick={() => props.list.remove(item) }>{labels.General.delete}</Xcomp.Button></td>
             </tr>
@@ -131,15 +150,30 @@ const HostParasiteTable = observer((props) =>
                         null}
                     </div>
                 </td>
-                {props.showRedlist ? <td><Xcomp.String observableValue={[props.newItem, 'redListCategory']} /></td> : null}
+               {/* {props.showRedlist ? <td><Xcomp.String observableValue={[props.newItem, 'redListCategory']} /></td> : null}*/}
                 {props.showKeyStoneSpecie ? <td><Xcomp.Bool observableValue={[props.newItem, 'keyStoneSpecie']} /></td> : null}
                 <td><Xcomp.String observableValue={[props.newItem, 'parasiteScientificName']} /></td>
-                <td><Xcomp.StringEnum observableValue={[props.newItem, 'parasiteEcoEffect']} forceSync codes={props.koder.ParasiteEcoEffectCodes} /></td>
+                <td>
+                    <Xcomp.StringEnum observableValue={[props.newItem, 'status']} forceSync codes={props.koder.ParasiteStatus}/>                
+                </td>
+                <td>
+                    <Xcomp.StringEnum observableValue={[props.newItem, 'scale']} forceSync codes={props.koder.speciesSpeciesScopeType}/>
+                </td>
+                <td>
+                    <Xcomp.StringEnum observableValue={[props.newItem, 'parasiteEcoEffect']} forceSync codes={props.koder.ParasiteEcoEffectCodes} />
+                </td>
+                <td>
+                <Xcomp.MultiselectArray
+                                observableValue={[props.newItem, 'basisOfAssessment']} 
+                                codes={props.koder.assessmentBackgrounds}
+                                mode="check"/>
+                </td>
+                {/*<td><Xcomp.StringEnum observableValue={[props.newItem, 'parasiteEcoEffect']} forceSync codes={props.koder.ParasiteEcoEffectCodes} /></td>
                 <td><Xcomp.Bool observableValue={[props.newItem, 'effectLocalScale']} /></td>
                 <td><Xcomp.Bool observableValue={[props.newItem, 'parasiteNewForHost']} /></td>
                 <td><Xcomp.Bool observableValue={[props.newItem, 'parasiteIsAlien']} /></td>
                 <td><Xcomp.Bool observableValue={[props.newItem, 'diseaseConfirmedOrAssumed']} /></td>
-                <td><Xcomp.Bool observableValue={[props.newItem, 'domesticOrAbroad']} stringBool="True,False" /></td>
+                        <td><Xcomp.Bool observableValue={[props.newItem, 'domesticOrAbroad']} stringBool="True,False" /></td>*/}
                 <td>
                     <Xcomp.Button primary xs
                         onClick={props.addNewItem}

@@ -1001,6 +1001,37 @@
                 "Children": null
             }
         ],
+
+        "ParasiteStatus": [
+            {
+                "Id": "ParasiteStatus",
+                "Value": "NewAlien",
+                "Text": "Ny for verten og fremmed",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ParasiteStatus",
+                "Value": "NewNative",
+                "Text": "Ny for verten og stedegen",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ParasiteStatus",
+                "Value": "KnownAlien",
+                "Text": "Kjent for verten og fremmed",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ParasiteStatus",
+                "Value": "KnownNative",
+                "Text": "Kjent for verten og stedegen",
+                "Info": null,
+                "Children": null
+            }
+        ],
         "ecosystemServiceEffectsBasicLifeProcesses": [
             {
                 "Id": "ecosystemServiceEffectsBasicLifeProcesses",
@@ -2636,6 +2667,52 @@
                 "value": "5"
               }
         ],
+
+        "scoresH": [
+            {
+  
+                "text": "Ingen overføring",
+                "value": "no"
+              },
+              {
+    
+                "text": "Begrenset til stedegen art",
+                "value": "limited"
+              },
+              {
+  
+                "text": "Storskala til stedegen art / Begrenset til truet art eller nøkkelart",
+                "value": "largeOrLimited"
+              },
+              {
+    
+                "text": "Storskala til truet art eller nøkkelart",
+                "value": "large"
+              }
+        ],
+
+        "scoresI": [
+            {
+  
+                "text": "Ingen overføring / Begrenset til art som allerede er vert for denne parasitten",
+                "value": "no"
+              },
+              {
+    
+                "text": "Storskala til art som allerede er vert for denne parasitten / Begrenset til ny vert",
+                "value": "limited"
+              },
+              {
+  
+                "text": "Storskala av stedegen parasitt til ny vert / Begrenset til ny truet verter",
+                "value": "largeOrLimited"
+              },
+              {
+    
+                "text": "Storskala av stedegen til ny truet vert /Storskala eller begrenset av en fremmed parasitt",
+                "value": "large"
+              }
+        ],
         "Criterion": [
             {
                 "Id": "Criterion",
@@ -2907,7 +2984,7 @@
                 "Id": "Criterion",
                 "Value": "H",
                 "Text": "H-kriteriet: Overføring av genetisk materiale",
-                "Info": "Kan arten overføre genetisk materiale til stedegne arter, med usikkerhet",
+                "Info": "Beskriv overføring av genetisk materiale (introgresjon) til stedegen art. Det skal være sannsynlighetsovervekt for overføringen",
                 "Children": {
                     "CritH": [
                         {
@@ -2945,7 +3022,7 @@
                 "Id": "Criterion",
                 "Value": "I",
                 "Text": "I-kriteriet: Overføring av parasitter eller patogener",
-                "Info": "Kan arten overføre parasitter, bakterier eller virus til stedegne arter, med usikkerhet",
+                "Info": "Beskriv overføring av parasitter eller patgogener (bakterier og virus inkludert) til stedegen art. Det skal være sannsynlighetsovervekt for overføringen",
                 "Children": {
                     "CritI": [
                         {
@@ -5329,6 +5406,20 @@
                             "Id": null,
                             "Value": "parasiteEcoEffect",
                             "Text": "Para&shy;sittens øko&shy;logiske effekt",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "parasiteStatus",
+                            "Text": "Para&shy;sittens status",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "parasiteEffectScore",
+                            "Text": "Para&shy;sittens effektskår",
                             "Info": null,
                             "Children": null
                         },

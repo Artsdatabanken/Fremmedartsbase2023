@@ -325,12 +325,22 @@ export default class Vurdering52Okologiskeffekt extends React.Component {
                     <p>{crit52H.info}</p>
                     <SpeciesSpeciesTable list={riskAssessment.geneticTransferDocumented} newItem={this.newGTD} addNewItem={this.addGTD} koder={koder} labels={labels} showKeyStoneSpecie showConfirmedOrAssumed />
                     <hr/>
-                    {crit52H.majorUncertainty ?
+
+                    <p>{ntLabels.score}</p>
+                    <ScoreUnsure appState={appState}
+                                critScores={koder.scoresH}
+                                firstValue={"scoreC"}
+                                secondValue={"unsureC"}/>
+                     <Xcomp.HtmlString                            
+                                observableValue={[riskAssessment, "HCritInsecurity"]}
+                                label={labels.DEcrit.insecurity}
+                            />                      
+                    {/*{crit52H.majorUncertainty ?
                     <div>
                         <span>Beskrivelse</span>
                         <Xcomp.HtmlString observableValue={[riskAssessment, 'geneticTransferDomesticDescription']} />
                     </div> : 
-                    null}
+                    null}*/}
                     <Criterion criterion={crit52H} mode="noheading"/>
                     {/*<p>HGeneticTransferLevel: {riskAssessment.HGeneticTransferLevel}</p>*/}
                 </fieldset>
@@ -339,12 +349,21 @@ export default class Vurdering52Okologiskeffekt extends React.Component {
                     <p>{crit52I.info}</p>
                     <HostParasiteTable list={riskAssessment.hostParasiteInformations} newItem={this.newHPI} addNewItem={this.addHPI} koder={koder} labels={labels} showKeyStoneSpecie />
                     <hr/>
-                    {crit52I.majorUncertainty ?
+                    <p>{ntLabels.score}</p>
+                    <ScoreUnsure appState={appState}
+                                critScores={koder.scoresI}
+                                firstValue={"scoreC"}
+                                secondValue={"unsureC"}/>
+                     <Xcomp.HtmlString                            
+                                observableValue={[riskAssessment, "ICritInsecurity"]}
+                                label={labels.DEcrit.insecurity}
+                            />                      
+                    {/*{crit52I.majorUncertainty ?
                     <div>
                         <span>Beskrivelse</span>
                         <Xcomp.HtmlString observableValue={[riskAssessment, 'vectorBiologicalDiseaseSpreadingDomesticDescription']} />
                     </div> : 
-                    null }
+                    null }*/}
                     <Criterion criterion={crit52I} mode="noheading"/>
                 </fieldset>
             </div>
