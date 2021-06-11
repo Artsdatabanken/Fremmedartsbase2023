@@ -41,11 +41,11 @@ export default class Vurdering34Spredningsveier extends React.Component {
     };
 
     render() {
-        const {appState:{assessment:{riskAssessment}}, appState:{assessment}, appState} = this.props;
+        const {appState:{assessment:{riskAssessment}}, appState:{assessment}, appState, name, furtherInfo} = this.props;
         const vurdering = assessment
         const labels = appState.codeLabels
         const koder = appState.koder
-
+        const importationCodes = koder.migrationPathways[0].Children.mp[0].Children.mpimportation
         // const {vurdering, viewModel, fabModel} = this.props;
         const migrationPathways = vurdering.assesmentVectors
         const migrationPathwayKoder = appState.spredningsveier.children.filter(child => child.name != "Import")
@@ -59,13 +59,15 @@ export default class Vurdering34Spredningsveier extends React.Component {
         return(
             <div>
                {/* { true || config.showPageHeaders ? <h4 style={{marginTop: "25px"}} >{labels.MigrationPathway.introductionSpread}</h4> : <br />} */}
+                <h3>{name}</h3>
                 <MPTable migrationPathways={migrationPathways} removeMigrationPathway={fjernSpredningsvei} showIntroductionSpread />
                 <hr/>
                 <div className="well">
-                    <h4>Legg til spredningsveier</h4>
-                    <NewMigrationPathwaySelector migrationPathways={migrationPathwayKoder} onSave={mp => this.saveMigrationPathway(vurdering, mp)} koder={koder.mpimportation} labels={labels} />
+                    <h4>Legg til spredningsvei</h4>
+                    <NewMigrationPathwaySelector migrationPathways={migrationPathwayKoder} onSave={mp => this.saveMigrationPathway(vurdering, mp)} mainCodes={koder} koder={importationCodes} labels={labels} />
                 </div>
-                <p>{labels.Import.furtherInfo}</p>
+                <button className="primary">Se definisjoner</button>
+                <p>{furtherInfo}</p>
                 <i>{labels.Import.furtherInfoComment}</i>
                 <Xcomp.HtmlString                            
                                 observableValue={[riskAssessment, "furtherInfoAboutImport"]}

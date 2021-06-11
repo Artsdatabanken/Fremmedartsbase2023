@@ -3110,14 +3110,14 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "landscapeFloraFaunaImprovement",
-                                                    "Text": "til restaureringstiltak",
+                                                    "Text": "til estetisk 'berikelse'",
                                                     "Info": null,
                                                     "Children": null
                                                 },
                                                 {
                                                     "Id": null,
                                                     "Value": "erosionControl",
-                                                    "Text": "til erosjonskontroll",
+                                                    "Text": "til erosjonskontroll, lebeplanting o.l.",
                                                     "Info": null,
                                                     "Children": null
                                                 },
@@ -3131,7 +3131,7 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "otherIntentionalRelease",
-                                                    "Text": "øvrig utsetting",
+                                                    "Text": "øvrig utsetting av nyttearter",
                                                     "Info": null,
                                                     "Children": null
                                                 },
@@ -3211,7 +3211,14 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "petAquariumTerrariumSpecies",
-                                                    "Text": "kjæledyr (inkl. fra private terrarier/akvarier)",
+                                                    "Text": "fra kjæledyr/hobbydyr eller private akvarieplanter",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "petAquariumTerrariumFood",
+                                                    "Text": "av levende mat til kjæledyr/hobbydyr",
                                                     "Info": null,
                                                     "Children": null
                                                 },
@@ -3219,6 +3226,20 @@
                                                     "Id": null,
                                                     "Value": "botanicalGardenZooAquarium",
                                                     "Text": "fra botaniske/zoologiske hager / akvarier (ikke privat)",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "garden",
+                                                    "Text": "fra hager",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "gardenWaste",
+                                                    "Text": "som hageutkast",
                                                     "Info": null,
                                                     "Children": null
                                                 },
@@ -4871,8 +4892,22 @@
                         },
                         {
                             "Id": null,
-                            "Value": "furtherInfo",
+                            "Value": "furtherInfoIntro",
                             "Text": "Utfyllende informasjon om introduksjon til naturen",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "furtherInfoNature",
+                            "Text": "Utfyllende informasjon om videre spredning i naturen",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "furtherInfoIndoors",
+                            "Text": "Utfyllende informasjon om spredning til innendørs- eller produksjonsareal",
                             "Info": null,
                             "Children": null
                         },
@@ -4907,7 +4942,7 @@
                         {
                             "Id": null,
                             "Value": "____timeOfIncident",
-                            "Text": "Tidspunkt",
+                            "Text": "Tidsrom",
                             "Info": null,
                             "Children": null
                         },

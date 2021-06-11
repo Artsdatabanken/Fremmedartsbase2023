@@ -90,14 +90,10 @@ export default class Vurdering33Import extends React.Component {
                             label={labels.indoorProduktionImport.b}
                             value={"negative"}
                             observableValue={[riskAssessment, "indoorProduktion"]}/>
-                <h3>
-                    Til innendørs- eller produksjonsareal
-                </h3>
-                <Vurdering34Spredningsveier/>
-                <h3>
-                    Introduksjon til natur
-                </h3>
-                <Vurdering34Spredningsveier/>
+               
+                <Vurdering34Spredningsveier  name={"Til innendørs- eller produksjonsareal"} furtherInfo={labels.Import.furtherInfoIndoors}/>
+                
+                <Vurdering34Spredningsveier name={"Introduksjon til natur"} furtherInfo={labels.Import.furtherInfoIntro}/>
                 {/*<table className="table">
                     <thead>
                         <tr>
@@ -123,11 +119,7 @@ export default class Vurdering33Import extends React.Component {
                     </tbody>
         </table>*/}
                
-                
-                <h3>
-                    Spredningsveier i naturen
-                </h3>
-                <Vurdering34Spredningsveier/>
+                <Vurdering34Spredningsveier name={"Videre spredning i natur"} furtherInfo={labels.Import.furtherInfoNature}/>
                 {config.showPageHeaders ? <h3>{labels.Import.importIndoor}</h3> : <br />}
                {/*} <Xcomp.Bool label="" observableValue={[vurdering, "importedToIndoorOrProductionArea"]} />
                 <h4 style={{display: "inline-block", marginLeft: "6px" }}>{labels.Import.importIndoor}</h4>

@@ -17,11 +17,11 @@ export default class NewMigrationPathwayButton extends React.Component {
                 // Category : props.migrationPathway.parentValue ? props.migrationPathway.parentValue : props.migrationPathway.value,
                 // CodeItem : props.migrationPathway.parentValue ? props.migrationPathway.value : null,
                 CodeItem : props.migrationPathway.value,
-                IntroductionSpread : null,
-                InfluenceFactor : "unknown", 
-                Magnitude : "unknown",
-                TimeOfIncident : "unknown",
-                ElaborateInformation : ""
+                introductionSpread : null,
+                influenceFactor : "unknown", 
+                magnitude : "unknown",
+                timeOfIncident : "unknown",
+                elaborateInformation : ""
             },
         })
         extendObservable(this, {
@@ -42,7 +42,7 @@ export default class NewMigrationPathwayButton extends React.Component {
 
 
     render() {
-        const {migrationPathway, onSave, koder, hideIntroductionSpread, labels} = this.props;
+        const {migrationPathway, onSave, koder, hideIntroductionSpread, labels, mainCodes} = this.props;
         const mplabels = labels.MigrationPathway
         // this.newMigrationPathway.Category = migrationPathway.name
         // try {
@@ -63,11 +63,11 @@ export default class NewMigrationPathwayButton extends React.Component {
                     labels={labels.General}
                 >
                     {hideIntroductionSpread ? null :
-                    <Xcomp.StringEnum label={mplabels.introductionSpread} observableValue={[this.newMigrationPathway, 'introductionSpread']} forceSync codes={koder.migrationPathwayIntroductionSpread}/>
+                    <Xcomp.StringEnum label={mplabels.introductionSpread} observableValue={[this.newMigrationPathway, 'introductionSpread']} forceSync codes={mainCodes.migrationPathwayIntroductionSpread}/>
                     }
-                    <Xcomp.StringEnum label={mplabels.influenceFactor} observableValue={[this.newMigrationPathway, 'influenceFactor']} forceSync codes={koder.migrationPathwayFrequency}/>
-                    <Xcomp.StringEnum label={mplabels.magnitude} observableValue={[this.newMigrationPathway, 'magnitude']} forceSync codes={koder.migrationPathwayAbundance}/>
-                    <Xcomp.StringEnum label={mplabels.timeOfIncident} observableValue={[this.newMigrationPathway, 'timeOfIncident']} forceSync codes={koder.migrationPathwayTime}/>
+                    <Xcomp.StringEnum label={mplabels.influenceFactor} observableValue={[this.newMigrationPathway, 'influenceFactor']} forceSync codes={mainCodes.migrationPathwayFrequency}/>
+                    <Xcomp.StringEnum label={mplabels.magnitude} observableValue={[this.newMigrationPathway, 'magnitude']} forceSync codes={mainCodes.migrationPathwayAbundance}/>
+                    <Xcomp.StringEnum label={mplabels.timeOfIncident} observableValue={[this.newMigrationPathway, 'timeOfIncident']} forceSync codes={mainCodes.migrationPathwayTime}/>
                     <Xcomp.HtmlString label={mplabels.elaborateInformation} observableValue={[this.newMigrationPathway, 'elaborateInformation']} />
                 </BsModal> :
                 null}

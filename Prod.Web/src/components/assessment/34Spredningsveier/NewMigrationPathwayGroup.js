@@ -15,8 +15,9 @@ export default class NewMigrationPathwayGroup extends React.Component {
     @observable expanded = false;
     
     render() {
-        const {migrationPathway, onSave, koder, hideIntroductionSpread, labels} = this.props;
+        const {migrationPathway, onSave, koder, hideIntroductionSpread, labels, mainCodes} = this.props;
         //  console.log("koder3" + koder.toString() )
+
         const hasChildren = migrationPathway.children && migrationPathway.children.length > 0 
             // <div className="clearfix col-lg-4 col-md-6 col-sm-8 col-xs-12">
         //todo: fix data for "egenspredning". remove the invalid child
@@ -27,14 +28,14 @@ export default class NewMigrationPathwayGroup extends React.Component {
                         {hasChildren ? <div style={{float: "right"}} onClick={ (e)=> {e.stopPropagation(); this.expand()}}><span className={"glyphicon glyphicon-chevron-" + (this.expanded ? "up" : "down")}></span></div> : null}
                         {migrationPathway.value === null ?
                         <div>{migrationPathway.name}</div> :              
-                        <NewMigrationPathwayButton migrationPathway={migrationPathway} onSave={onSave} koder={koder} hideIntroductionSpread={hideIntroductionSpread} labels={labels}/>}
+                        <NewMigrationPathwayButton migrationPathway={migrationPathway} onSave={onSave} koder={koder} mainCodes={mainCodes} hideIntroductionSpread={hideIntroductionSpread} labels={labels}/>}
                     </div>
                     <div className={"panel-collapse collapse" + (this.expanded ? " in" : "")} aria-hidden="false">
                         <div className="panel-body">
                             <ul className="list-unstyled">
                             {migrationPathway.children.map(child => {
                                 {/*child.parentValue = migrationPathway.value*/} 
-                                return <li  key={child.name}><NewMigrationPathwayButton migrationPathway={child} onSave={onSave} koder={koder} hideIntroductionSpread={hideIntroductionSpread} labels={labels}/></li>
+                                return <li  key={child.name}><NewMigrationPathwayButton migrationPathway={child} onSave={onSave} koder={koder} mainCodes={mainCodes} hideIntroductionSpread={hideIntroductionSpread} labels={labels}/></li>
                             })}
                             </ul>
                         </div>
