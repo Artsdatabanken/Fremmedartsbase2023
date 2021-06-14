@@ -3,7 +3,7 @@ import RiskLevel from './riskLevel';
 import {extractFloat, getCriterion} from '../../utils'
 
 // function getCriterion(riskAssessment, akse, letter) {
-//     const result = riskAssessment.Criteria.filter(c => c.Akse === akse && c.CriteriaLetter === letter)[0]; 
+//     const result = riskAssessment.criteria.filter(c => c.Akse === akse && c.CriteriaLetter === letter)[0]; 
 //     return result;
 // }
 
@@ -535,11 +535,15 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
 }
 
 function enhanceRiskAssessmentLevel(riskAssessment, labels) {
+//     extendObservable(riskAssessment, {
+//         _invasjonspotensialeLevel: () => {
+//             const result = RiskLevel.invasjonspotensiale(riskAssessment)
+// console.log("__invasjonspotensialeLevel" + JSON.stringify(result))
+//             return result;
+//         }
+//     });
     extendObservable(riskAssessment, {
-        _invasjonspotensialeLevel: () => {
-            const result = RiskLevel.invasjonspotensiale(riskAssessment)
-            return result;
-        }
+        _invasjonspotensialeLevel: RiskLevel.invasjonspotensiale(riskAssessment)
     });
     autorun(() => {
         //try {
@@ -550,11 +554,14 @@ function enhanceRiskAssessmentLevel(riskAssessment, labels) {
         //}
         //catch (e) {}
     });
+    // extendObservable(riskAssessment, {
+    //     _ecoeffectLevel: () => {
+    //         const result = RiskLevel.ecoeffect(riskAssessment)
+    //         return result;
+    //     }
+    // });
     extendObservable(riskAssessment, {
-        _ecoeffectLevel: () => {
-            const result = RiskLevel.ecoeffect(riskAssessment)
-            return result;
-        }
+        _ecoeffectLevel: RiskLevel.ecoeffect(riskAssessment)
     });
     autorun(() => {
         //try {
@@ -785,7 +792,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
 
     }
 
-    for(const crit of riskAssessment.Criteria) { 
+    for(const crit of riskAssessment.criteria) { 
         let firstrun = true
         extendObservable(crit, {
             uncertaintyDisabled: observable([]),
