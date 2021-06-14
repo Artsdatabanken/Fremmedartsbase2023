@@ -32,7 +32,16 @@ export default class NewMigrationPathwayButton extends React.Component {
                 && !this.newMigrationPathway.ElaborateInformation 
                 )
         })
-        this.showModal = () => this.visibleModal = true
+       // this.showModal = () => this.visibleModal = true
+
+       this.showModal = (e) => {
+            action(() => {
+                e.stopPropagation();
+                this.visibleModal = !this.visibleModal
+            })()
+        }
+      
+
         this.hideModal = (e) => {e.stopPropagation(); this.visibleModal = false}
         this.onOk = (e) => {
             this.hideModal(e)
@@ -44,6 +53,7 @@ export default class NewMigrationPathwayButton extends React.Component {
     render() {
         const {migrationPathway, onSave, koder, hideIntroductionSpread, labels, mainCodes} = this.props;
         const mplabels = labels.MigrationPathway
+        
         // this.newMigrationPathway.Category = migrationPathway.name
         // try {
         //   console.log("koder4" + koder.toString() )
@@ -53,9 +63,26 @@ export default class NewMigrationPathwayButton extends React.Component {
         // const a = koder.migrationPathwayFrequency[0]
         return(
 
-            <div className="btn-flat" style={{textTransform: "none"}} onClick={this.showModal} >{migrationPathway.name}
+            <div className="btn-flat btn" style={{textTransform: "none"}} onClick={this.showModal} >{migrationPathway.name}
                 {this.visibleModal ?
                 <BsModal 
+                heading={migrationPathway.name} 
+                onCancel={this.hideModal} 
+                onOk={this.onOk} 
+                okEnabled={this.okEnabled}
+                labels={labels.General}
+                children={migrationPathway.children}
+            >
+               {/* {hideIntroductionSpread ? null :
+                <Xcomp.StringEnum label={mplabels.introductionSpread} observableValue={[this.newMigrationPathway, 'introductionSpread']} forceSync codes={mainCodes.migrationPathwayIntroductionSpread}/>
+                }
+                <Xcomp.StringEnum label={mplabels.influenceFactor} observableValue={[this.newMigrationPathway, 'influenceFactor']} forceSync codes={mainCodes.migrationPathwayFrequency}/>
+                <Xcomp.StringEnum label={mplabels.magnitude} observableValue={[this.newMigrationPathway, 'magnitude']} forceSync codes={mainCodes.migrationPathwayAbundance}/>
+                <Xcomp.StringEnum label={mplabels.timeOfIncident} observableValue={[this.newMigrationPathway, 'timeOfIncident']} forceSync codes={mainCodes.migrationPathwayTime}/>
+            <Xcomp.HtmlString label={mplabels.elaborateInformation} observableValue={[this.newMigrationPathway, 'elaborateInformation']} /> */}
+            </BsModal> :
+                null}
+                {/*<BsModal 
                     heading={migrationPathway.name} 
                     onCancel={this.hideModal} 
                     onOk={this.onOk} 
@@ -69,8 +96,8 @@ export default class NewMigrationPathwayButton extends React.Component {
                     <Xcomp.StringEnum label={mplabels.magnitude} observableValue={[this.newMigrationPathway, 'magnitude']} forceSync codes={mainCodes.migrationPathwayAbundance}/>
                     <Xcomp.StringEnum label={mplabels.timeOfIncident} observableValue={[this.newMigrationPathway, 'timeOfIncident']} forceSync codes={mainCodes.migrationPathwayTime}/>
                     <Xcomp.HtmlString label={mplabels.elaborateInformation} observableValue={[this.newMigrationPathway, 'elaborateInformation']} />
-                </BsModal> :
-                null}
+                </BsModal>*/}
+                 
             </div>
         )}
 }

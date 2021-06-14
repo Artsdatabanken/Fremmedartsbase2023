@@ -16,10 +16,24 @@ export default class BootstrapModal extends React.Component {
 
     render() {
         const okEnabled = this.props.okEnabled === undefined ? true : this.props.okEnabled
+        
         return <div role="dialog">
-            <div className="modal-backdrop fade in"  style={{zIndex: 1110}}></div>
+            <div className="modal-header">
+                        </div>
+           {this.children ?
+            this.children.map(child =>
+                <div className="modal-body">
+                            <div>
+                                {child.name}
+                            </div>
+                        </div>
+                
+            ): null
+           
+            }
+        {/*   <div className="modal-backdrop fade in"  style={{zIndex: 1110}}></div>
             <div role="dialog" tabIndex="-1" className="modal fade in" style={{display: "block", zIndex: 1120}}>
-                <div className="modal-dialog">
+                 <div className="modal-dialog">
                     <div className="modal-content" role="document">
                         <div className="modal-header">
                             <Xcomp.Button className="close" ariaLabel="Close" onClick={this.onCancel}>
@@ -44,7 +58,7 @@ export default class BootstrapModal extends React.Component {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>*/}
         </div>
     }
 }

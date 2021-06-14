@@ -3620,7 +3620,7 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "importParasitesOnAnimals",
-                                                    "Text": "som parasitter på/i dyr",
+                                                    "Text": "som smitte/parasitter på/i dyr",
                                                     "Info": null,
                                                     "Children": null
                                                 },
@@ -3634,7 +3634,7 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "importParasitesOnPlants",
-                                                    "Text": "som parasitter på/i planter",
+                                                    "Text": "som smitte/parasitter på/i planter",
                                                     "Info": null,
                                                     "Children": null
                                                 },
@@ -3648,7 +3648,7 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "importSeedContaminant",
-                                                    "Text": "av frø",
+                                                    "Text": "av frø (ikke mat eller fôr)",
                                                     "Info": null,
                                                     "Children": null
                                                 },
@@ -3669,14 +3669,14 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "importTimberTrade",
-                                                    "Text": "av trevirke",
+                                                    "Text": "av trevirke og treprodukter",
                                                     "Info": null,
                                                     "Children": null
                                                 },
                                                 {
                                                     "Id": null,
                                                     "Value": "importTransportationOfHabitatMaterial",
-                                                    "Text": "av habitatmateriale, jord o.l.",
+                                                    "Text": "av habitatmateriale som sand, torv, jord og kompost",
                                                     "Info": null,
                                                     "Children": null
                                                 },
@@ -3714,14 +3714,14 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "importVehicles",
-                                                    "Text": "med kjøretøy (biler, tog)",
+                                                    "Text": "med kjøretøy (ikke med last e.l.)",
                                                     "Info": null,
                                                     "Children": null
                                                 },
                                                 {
                                                     "Id": null,
                                                     "Value": "importHitchhikersPlane",
-                                                    "Text": "med fly",
+                                                    "Text": "med fly (ikke med last e.l.)",
                                                     "Info": null,
                                                     "Children": null
                                                 },
@@ -3763,14 +3763,14 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "importOrganicPackagingMaterial",
-                                                    "Text": "med organisk emballasje",
+                                                    "Text": "med emballasje",
                                                     "Info": null,
                                                     "Children": null
                                                 },
                                                 {
                                                     "Id": null,
                                                     "Value": "importFishingEquipment",
-                                                    "Text": "med fiske/akvakulturutstyr",
+                                                    "Text": "med fiskeutstyr",
                                                     "Info": null,
                                                     "Children": null
                                                 },
