@@ -3,7 +3,7 @@ import RiskLevel from './riskLevel';
 import {extractFloat, getCriterion} from '../../utils'
 
 // function getCriterion(riskAssessment, akse, letter) {
-//     const result = riskAssessment.Criteria.filter(c => c.Akse === akse && c.CriteriaLetter === letter)[0]; 
+//     const result = riskAssessment.criteria.filter(c => c.Akse === akse && c.CriteriaLetter === letter)[0]; 
 //     return result;
 // }
 
@@ -450,65 +450,8 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
     extendObservable(riskAssessment, {
         IHostParasiteLevel: () => {
             return critILevel(riskAssessment.HostParasiteInformations)
-
-            // // // const rlCats = ["LC","DD","NT"]
-            // // // const rlThreatCats = ["VU","EN","CR"]
-            // // // const list = riskAssessment.HostParasiteInformations
-            // // // // list.map(item => {
-            // // // //     console.log("ParasiteNewForHost type: " + typeof(item.ParasiteNewForHost))
-            // // // //     console.log("ParasiteNewForHost value: " + item.ParasiteNewForHost)
-            // // // // })
-            // // // const list4 = list.filter(item =>
-            // // //     item.ParasiteNewForHost ||
-            // // //     (rlThreatCats.indexOf(item.RedListCategory) > -1 && item.NewHost && !item.EffectLocalScale) ||
-            // // //     (rlCats.indexOf(item.RedListCategory) > -1 && item.KeyStoneSpecie && item.NewHost && !item.EffectLocalScale)
-            // // // )
-            // // // const list3 = list.filter(item => 
-            // // //     !item.ParasiteNewForHost &&
-            // // //     (
-            // // //         (rlThreatCats.indexOf(item.RedListCategory) > -1 && item.NewHost && item.EffectLocalScale) ||
-            // // //         (rlCats.indexOf(item.RedListCategory) > -1 && item.KeyStoneSpecie && item.NewHost && item.EffectLocalScale) ||
-            // // //         (rlCats.indexOf(item.RedListCategory) > -1 && !item.KeyStoneSpecie && item.NewHost && !item.EffectLocalScale)
-            // // //     )
-            // // // )
-            // // // const list2 = list.filter(item => 
-            // // //     !item.ParasiteNewForHost &&
-            // // //     (
-            // // //         (rlCats.indexOf(item.RedListCategory) > -1 && !item.KeyStoneSpecie && item.NewHost && item.EffectLocalScale) ||
-            // // //         (!item.NewHost && !item.EffectLocalScale)
-            // // //     )
-            // // // )
-            // // // // console.log("list2 " + JSON.stringify(list2)   )
-            // // // // console.log("list3 " + JSON.stringify(list3)   )
-            // // // // console.log("list4 " + JSON.stringify(list4)   )
-
-
-            // // // const maxEffect4 = Math.max(...list4.map(item => parseInt(item.ParasiteEcoEffect)))
-            // // // const maxEffect3 = Math.max(...list3.map(item => parseInt(item.ParasiteEcoEffect)))
-            // // // const maxEffect2 = Math.max(...list2.map(item => parseInt(item.ParasiteEcoEffect)))
-
-            // // // // console.log("maxeffect2 " + maxEffect2)
-            // // // // console.log("maxeffect3 " + maxEffect3)
-            // // // // console.log("maxeffect4 " + maxEffect4)
-
-
-            // // // // console.log("maxEffect4: " + maxEffect4)
-            // // // // console.log("maxEffect3: " + maxEffect3)
-            // // // // console.log("maxEffect2: " + maxEffect2)
-            // // // // const maxEffect4 = 3
-            // // // // const maxEffect3 = 3
-            // // // // const maxEffect2 = 3
-            // // // const effect4 = list4.length > 0 ? Math.min(4, maxEffect4) : 1
-            // // // const effect3 = list3.length > 0 ? Math.min(3, maxEffect3) : 1
-            // // // const effect2 = list2.length > 0 ? Math.min(2, maxEffect2) : 1
-            // // // const result = Math.max(effect4, effect3, effect2)
-            // // // // console.log("Ihostparasitelevel " + result)
-            // // // return result - 1;
         }
     });
-
-
-
     autorun(() => {
         const criterionD = getCriterion(riskAssessment, 1, "D")
         // console.log("Autorun criterionD: " + criterionD.Value)
@@ -536,10 +479,7 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
 
 function enhanceRiskAssessmentLevel(riskAssessment, labels) {
     extendObservable(riskAssessment, {
-        _invasjonspotensialeLevel: () => {
-            const result = RiskLevel.invasjonspotensiale(riskAssessment)
-            return result;
-        }
+        _invasjonspotensialeLevel: RiskLevel.invasjonspotensiale(riskAssessment)
     });
     autorun(() => {
         //try {
@@ -551,10 +491,7 @@ function enhanceRiskAssessmentLevel(riskAssessment, labels) {
         //catch (e) {}
     });
     extendObservable(riskAssessment, {
-        _ecoeffectLevel: () => {
-            const result = RiskLevel.ecoeffect(riskAssessment)
-            return result;
-        }
+        _ecoeffectLevel: RiskLevel.ecoeffect(riskAssessment)
     });
     autorun(() => {
         //try {
@@ -566,12 +503,7 @@ function enhanceRiskAssessmentLevel(riskAssessment, labels) {
         //catch (e) {}
     });
 
-
-
-
-
-
-    delete riskAssessment.riskLevel  //?????!
+    delete riskAssessment.riskLevel  //todo: Check if necessary (or the correct way to do this) ?????  Basically: risklevel is observable from db data, but we want it to be a computed observable!
     extendObservable(riskAssessment, {
         riskLevel: () => {
             const result = RiskLevel.riskLevel(riskAssessment._invasjonspotensialeLevel, riskAssessment._ecoeffectLevel)
@@ -579,49 +511,17 @@ function enhanceRiskAssessmentLevel(riskAssessment, labels) {
         }
     });
     
-    
-
     // autorun(() => {
-    //     console.log("autorun risklevel: " + JSON.stringify(Object.keys(riskAssessment)))
-
-
-
-    //     const level = RiskLevel.riskLevel(riskAssessment._invasjonspotensialeLevel, riskAssessment._ecoeffectLevel)
-    //     riskAssessment.riskLevel = level;
-    // });
- 
-
-
-
-
-    
-    
-    
-    // autorun(() => {
-    //     const {level, decisiveCriteriaLabel, code, text} = riskAssessment.riskLevel
+    //     const {level, decisiveCriteriaLabel} = riskAssessment.riskLevel
     //     console.log("risklevel changed: " + level + " | " + decisiveCriteriaLabel)
-    //     riskAssessment.RiskLevel = level
-    //     riskAssessment.RiskLevelCode = code
-    //     riskAssessment.RiskLevelText = text
-    //     riskAssessment.DecisiveCriteria = decisiveCriteriaLabel
+    //     const levtxt = level.toString()
+
+    //     riskAssessment.riskLevel = level
+        
+    //     riskAssessment.riskLevelCode = labels.RiskLevelCode[levtxt]
+    //     riskAssessment.riskLevelText = labels.RiskLevelText[levtxt]
+    //     riskAssessment.decisiveCriteria = decisiveCriteriaLabel
     // });
-    autorun(() => {
-        const {level, decisiveCriteriaLabel} = riskAssessment.riskLevel
-        console.log("risklevel changed: " + level + " | " + decisiveCriteriaLabel)
-        //const levtxt = level.toString()
-
-
-
-        //// riskAssessment.RiskLevel = level
-        
-        
-        
-        
-        
-       // riskAssessment.RiskLevelCode = labels.RiskLevelCode[levtxt]
-        //riskAssessment.RiskLevelText = labels.RiskLevelText[levtxt]
-        riskAssessment.DecisiveCriteria = decisiveCriteriaLabel
-    });
 }
 
 function enhanceCriteriaAddLabelsAndAuto(riskAssessment, codes) {
@@ -653,108 +553,6 @@ function enhanceCriteriaAddLabelsAndAuto(riskAssessment, codes) {
 }
 
 
-// function _enhanceCriteriaAddLabelsAndAuto(riskAssessment) {
-//     Object.assign(getCriterion(riskAssessment, 0, "A"), {
-//         codes: [
-//             {Value:0, Text:"< 10 år"},
-//             {Value:1, Text:"10 - 59 år"},
-//             {Value:2, Text:"60 - 649 år"},
-//             {Value:3, Text:">= 650 år"},
-//         ],
-//         heading: "A-kriteriet: Populasjonens mediane levetid",
-//         info: "Estimert levetid for arten i Norge, med usikkerhet",
-//         auto: true
-//     })
-//     Object.assign(getCriterion(riskAssessment, 0, "B"), {
-//         codes: [
-//             {Value:0, Text:"< 50 m/år"},
-//             {Value:1, Text:"50 - 159  m/år"},
-//             {Value:2, Text:"160 - 499 m/år"},
-//             {Value:3, Text:">= 500 m/år"},
-//         ],
-//         heading: "B-kriteriet: Ekspansjonshastighet",
-//         info: "Gjennomsnittlig ekspansjonshastighet, med usikkerhet",
-//         auto: true
-//     })
-//     Object.assign(getCriterion(riskAssessment, 0, "C"), {
-//         codes: [
-//             {Value:0, Text:"< 5%"},
-//             {Value:1, Text:">= 5%"},
-//             {Value:2, Text:">= 10%"},
-//             {Value:3, Text:">= 20%"},
-//         ],
-//         heading: "C-kriteriet: Kolonisert areal av naturtype",
-//         info: "Andel av forekomstarealet til minst én naturtype som vil være kolonisert etter 50 år, med usikkerhet",
-//         auto: true
-//     })
-//     Object.assign(getCriterion(riskAssessment, 1, "D"), { //A->D
-//         codes: [
-//             {Value:0, Text:"Ingen kjent effekt"},
-//             {Value:1, Text:"Liten effekt"},
-//             {Value:2, Text:"Middels effekt"},
-//             {Value:3, Text:"Stor effekt"},
-//         ],
-//         heading: "D-kriteriet: Truete arter eller nøkkelarter, med usikkerhet",
-//         info: "Kan arten påvirke truede arter eller nøkkelarter innen 50 år",
-//         auto: true
-//     })
-//     Object.assign(getCriterion(riskAssessment, 1, "E"), { //B->E
-//         codes: [
-//             {Value:0, Text:"Ingen kjent effekt"},
-//             {Value:1, Text:"Liten effekt"},
-//             {Value:2, Text:"Middels effekt"},
-//             {Value:3, Text:"Stor effekt"},
-//         ],
-//         heading: "E-kriteriet: Øvrige stedegne arter, med usikkerhet",
-//         info: "Kan arten påvirke øvrige stedegne arter innen 50 år",
-//         auto: true
-//     })
-//     Object.assign(getCriterion(riskAssessment, 1, "F"), {//C->F
-//         codes: [
-//             {Value:0, Text:"= 0%"},
-//             {Value:1, Text:"> 0%"},
-//             {Value:2, Text:"≥ 2%"},
-//             {Value:3, Text:"≥ 5%"},
-//         ],
-//         heading: "F-kriteriet: Effekter på truete/sjeldne naturtyper",
-//         info: "Andel av naturtypeareal som gjennomgår tilstandsendring innen 50 år, med usikkerhet",
-//         auto: true
-//     })
-//     Object.assign(getCriterion(riskAssessment, 1, "G"), {//D->G
-//         codes: [
-//             {Value:0, Text:"< 5%"},
-//             {Value:1, Text:"≥ 5%"},
-//             {Value:2, Text:"≥ 10%"},
-//             {Value:3, Text:"≥ 20%"},
-//         ],
-//         heading: "G-kriteriet: Effekter på øvrige naturtyper",
-//         info: "Andel av naturtypeareal som gjennomgår tilstandsendring innen 50 år, med usikkerhet",
-//         auto: true
-//     })
-//     Object.assign(getCriterion(riskAssessment, 1, "H"), {//E->H
-//         codes: [
-//             {Value:0, Text:"Ingen kjent effekt"},
-//             {Value:1, Text:"Liten effekt"},
-//             {Value:2, Text:"Middels effekt"},
-//             {Value:3, Text:"Stor effekt"},
-//         ],
-//         heading: "H-kriteriet: Overføring av genetisk materiale",
-//         info: "Kan arten overføre genetisk materiale til stedegne arter, med usikkerhet",
-//         auto: true
-//     })
-//     Object.assign(getCriterion(riskAssessment, 1, "I"), {//F->I
-//         codes: [
-//             {Value:0, Text:"Ingen kjent effekt"},
-//             {Value:1, Text:"Liten effekt"},
-//             {Value:2, Text:"Middels effekt"},
-//             {Value:3, Text:"Stor effekt"},
-//         ],
-//         heading: "I-kriteriet: Overføring av parasitter eller patogener",
-//         info: "Kan arten overføre parasitter, bakterier eller virus til stedegne arter, med usikkerhet",
-//         auto: true
-//     })
-// }
-
 function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
     function uncertaintylevelsFor(baseAttributeName, levelfunc) {
         // medianLifespanLevel
@@ -785,7 +583,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
 
     }
 
-    for(const crit of riskAssessment.Criteria) { 
+    for(const crit of riskAssessment.criteria) { 
         let firstrun = true
         extendObservable(crit, {
             uncertaintyDisabled: observable([]),
@@ -830,7 +628,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
 
                         // console.log("nextrun: " + crit.CriteriaLetter + " : " + crit.Value)
                         
-                        crit.UncertaintyValues.replace(uv)
+                        crit.uncertaintyValues.replace(uv)
                     } else {
                         // added 27.2.2017
                         // In the hope that this does not mess tings up
@@ -839,10 +637,10 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                         // This functionality is also dependent on a well working "firstrun"; se comment above
                         // e.g. the criteria must not have a default value that is updated from db after the first run!
 
-                        // console.log("firstrun: " + crit.CriteriaLetter + " : " + crit.Value + " - " + JSON.stringify(crit.UncertaintyValues))
-                        if (crit.UncertaintyValues.indexOf(value) <= -1 ) {
+                        // console.log("firstrun: " + crit.CriteriaLetter + " : " + crit.Value + " - " + JSON.stringify(crit.uncertaintyValues))
+                        if (crit.uncertaintyValues.indexOf(value) <= -1 ) {
                             // console.log("rectify uncertainties")
-                            crit.UncertaintyValues.replace(uv)
+                            crit.uncertaintyValues.replace(uv)
                         }
 
                     }
@@ -861,5 +659,5 @@ export default function enhanceCriteria(riskAssessment, vurdering, codes, labels
     enhanceCriteriaAddLabelsAndAuto(riskAssessment, codes)
     enhanceRiskAssessmentEcoEffect(riskAssessment)
     enhanceRiskAssessmentInvasjonspotensiale(riskAssessment)
-    //enhanceCriteriaAddUncertaintyRules(riskAssessment)
+    enhanceCriteriaAddUncertaintyRules(riskAssessment)
 }

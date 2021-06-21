@@ -79,7 +79,7 @@ export default class Vurdering extends React.Component {
     }
 
     isFinnished() {
-        const isfinnished = this.props.fabModel.vurdering.VurderingsStatus === "finnished"
+        const isfinnished = this.props.fabModel.vurdering.vurderingsStatus === "finnished"
         return isfinnished
     }
 

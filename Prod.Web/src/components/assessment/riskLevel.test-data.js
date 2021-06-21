@@ -18,13 +18,13 @@ const createCrit = (critdef) => ({
     Value:0,
 })
 export const getCriterion = (riskAssessment, letter) => {
-    const result = riskAssessment.Criteria.find(c => c.CriteriaLetter === letter); 
+    const result = riskAssessment.criteria.find(c => c.CriteriaLetter === letter); 
     return result;
 };        
 
 // const createCrits = () => critdefs.map(createCrit)reduce((acc, crit) => {acc[crit.CriteriaLetter] = crit; return acc}, {})
 const createCrits = () => critdefs.map(createCrit)
-const createRiskAssessment = () => ({Criteria: createCrits()})
+const createRiskAssessment = () => ({criteria: createCrits()})
 describe('createRiskAssessment', () => {
   it('creates criterias', () => {
     const ra = createRiskAssessment()

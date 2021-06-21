@@ -82,6 +82,16 @@ class AssessmentRoot extends Component {
             name: 'Assessment ' + assessment.vurdertVitenskapeligNavn, 
             properties: { SpeciesGroup: assessment.ekspertgruppe }});
         }
+
+        const kritDocInfo = {
+            alienSpeciesCategory: assessment.alienSpeciesCategory || "AlienSpecie",
+            limnic: assessment.limnic,
+            terrestrial: assessment.terrestrial,
+            marine: assessment.marine,
+            brackishWater: assessment.brackishWater
+        }
+
+
         window.scrollTo(0,0)
         return (
             <div>
@@ -132,9 +142,9 @@ class AssessmentRoot extends Component {
                 <VurderingReferences/>
                 : assessmentTabs.activeTab.id === 10  ?
                 <VurderingComments/>
-                //: assessmentTabs.activeTab.id === 11  ?
-                //<Vurdering55Kriteriedokumentasjon kritDocInfo={{}}/>
-
+                : assessmentTabs.activeTab.id === 11  ?
+                <Vurdering55Kriteriedokumentasjon kritDocInfo={kritDocInfo}/>
+                // // kritDocInfo={{}}
 
                 
                 // // // : assessmentTabs.activeTab.id === 10  ?
@@ -145,7 +155,7 @@ class AssessmentRoot extends Component {
                 // // // <AssessmentReferences/>
                 // // // : assessmentTabs.activeTab.id === 11  ?
                 // // // <AssessmentComments/>
-                : assessmentTabs.activeTab.id === 11  ?
+                : assessmentTabs.activeTab.id === 12  ?
                 <AssessmentDiff/>
                 :<h1>Oooops?? artinfotab:{assessmentTabs.activeTab.id}</h1>}
                 {assessmentTabs.activeTab.id != 12 && assessmentTabs.activeTab.id != 11 && assessment && assessment.evaluationStatus !== 'finished' &&     

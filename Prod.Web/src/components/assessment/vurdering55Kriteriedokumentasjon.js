@@ -48,7 +48,7 @@ export default class Vurdering55Kriteriedokumentasjon extends React.Component {
         const ltml = val => koder.limnicTerrestrialMarine.filter(kode => kode.Value === val)[0].Text
         const _alienSpeciesCategoryLabel = koder.AlienSpeciesCategory.filter(kode => kode.Value === kdi.alienSpeciesCategory  )
         const alienSpeciesCategoryLabel = _alienSpeciesCategoryLabel ? _alienSpeciesCategoryLabel[0] ? _alienSpeciesCategoryLabel[0].Text : "not set" : "net set"
-        // console.warn(appState.VurderingsStatus)
+        // console.warn(appState.vurderingsStatus)
         return (
             <div>
                 {config.showPageHeaders
@@ -179,13 +179,13 @@ export default class Vurdering55Kriteriedokumentasjon extends React.Component {
                     : null}
                 </div>
                 <div>
-                    {appState.vurdering.VurderingsStatus !== 'finnished' 
+                    {appState.assessment.vurderingsStatus !== 'finnished' 
                     && appState.ekspertgruppe !== null 
                     && appState.ekspertgruppeRolle 
                     && appState.ekspertgruppeRolle.Leder
                     ? <div>{critlabels.assessmentUnderWork}<p/><Xcomp.Button onClick={() => this.setAssessmentComplete(appState)}>{critlabels.setComplete}</Xcomp.Button></div>
                     : null}
-                    {appState.vurdering.VurderingsStatus === 'finnished' 
+                    {appState.assessment.vurderingsStatus === 'finnished' 
                     && appState.ekspertgruppe !== null 
                     && appState.ekspertgruppeRolle 
                     && appState.ekspertgruppeRolle.Leder
