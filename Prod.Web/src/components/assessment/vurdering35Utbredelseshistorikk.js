@@ -13,7 +13,7 @@ import UtbredelseshistorikkInnenlands from './35Utbredelseshistorikk/Utbredelses
 @observer
 export default class Vurdering35Utbredelseshistorikk extends React.Component {
     render() {
-        const {vurdering, fabModel, appState:{infoTabs}} = this.props
+        const {appState:{assessment:{riskAssessment}}, appState, vurdering, fabModel, appState:{infoTabs}} = this.props
         return (
             <div>
                 <br/>
@@ -21,7 +21,8 @@ export default class Vurdering35Utbredelseshistorikk extends React.Component {
                 {
                 infoTabs.activeTab.id === 2  ?
                 <Vurdering40Naturtyper/> :
-                <h1>Her kommer info om utbredelse</h1>}
+                <Utbredelseshistorikk vurdering={vurdering} fabModel={appState}/>
+                }
                 {config.showPageHeaders
                     ? <h3>{fabModel.kodeLabels.DistributionHistory.heading}</h3>
                     : <br/>}
