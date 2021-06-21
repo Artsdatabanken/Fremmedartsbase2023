@@ -16,7 +16,7 @@ import NewRedlistedNaturetype from './40Naturtyper/newRedlistedNaturetype';
 
 @inject("appState")
 @observer
-export default class Vurdering40Naturtyper extends React.Component {
+export default class Assessment10Horisontskanning extends React.Component {
     constructor(props) {
         super(props)
         const {appState:{assessment}, appState} = this.props;
