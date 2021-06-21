@@ -32,7 +32,7 @@ const nbsp = "\u00a0"
 
 @inject("appState")
 @observer
-export default class vurdering31ArtensStatus extends React.Component {
+export default class assessment20ArtensStatus extends React.Component {
 // @observer
 //     constructor(props) {
 //         super(props)

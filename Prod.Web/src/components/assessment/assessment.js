@@ -5,7 +5,7 @@ import auth from '../authService'
 import * as Xcomp from '../observableComponents'
 import Tabs from '../tabs'
 // import Vurdering from './assessment/vurdering'
-import Vurdering31ArtensStatus from './vurdering31ArtensStatus'
+import Assessment20ArtensStatus from './Assessment20ArtensStatus'
 import Vurdering32Artsegenskaper from './vurdering32Artsegenskaper'
 import Vurdering33Import from './vurdering33Import'
 import assessment10Horisontskanning from './assessment10Horisontskanning'
@@ -123,7 +123,7 @@ class AssessmentRoot extends Component {
                 assessmentTabs.activeTab.id === 0  ?
                 <Assessment10Horisontskanning /> :
                 assessmentTabs.activeTab.id === 1  ?
-                <Vurdering31ArtensStatus />
+                <Assessment20ArtensStatus />
                 : assessmentTabs.activeTab.id === 2  ?
                 <Vurdering32Artsegenskaper />
                 : assessmentTabs.activeTab.id === 3  ?
