@@ -8,7 +8,7 @@ import Tabs from '../tabs'
 import Vurdering31ArtensStatus from './vurdering31ArtensStatus'
 import Vurdering32Artsegenskaper from './vurdering32Artsegenskaper'
 import Vurdering33Import from './vurdering33Import'
-import HSkanning from './hSkanning'
+import assessment10Horisontskanning from './assessment10Horisontskanning'
 import Vurdering34Spredningsveier from './vurdering34Spredningsveier'
 import Vurdering35Utbredelseshistorikk from './vurdering35Utbredelseshistorikk'
 import Vurdering40Naturtyper from './vurdering40Naturtyper'
@@ -121,7 +121,7 @@ class AssessmentRoot extends Component {
                 <Tabs clName={"nav_menu faner"} tabData={assessmentTabs}/> 
                 {
                 assessmentTabs.activeTab.id === 0  ?
-                <HSkanning /> :
+                <Assessment10Horisontskanning /> :
                 assessmentTabs.activeTab.id === 1  ?
                 <Vurdering31ArtensStatus />
                 : assessmentTabs.activeTab.id === 2  ?
