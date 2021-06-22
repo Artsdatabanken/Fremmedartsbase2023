@@ -20,12 +20,12 @@ import Assessment60Risikovurdering from './assessment60Risikovurdering'
 //import Vurdering40Naturtyper from './assessment51Naturtyper'
 // import Vurdering51Invasjonspotensiale from './vurdering51Invasjonspotensiale'
 // import Vurdering52Okologiskeffekt from './vurdering52Okologiskeffekt'
-import Vurdering53GeografiskVariasjon from './vurdering53GeografiskVariasjon'
-import Vurdering54Klimaeffekter from './vurdering54Klimaeffekter'
-import VurderingSummary from './vurderingSummary'
+import Vurdering53GeografiskVariasjon from './assessment80GeografiskVariasjon'
+import Vurdering54Klimaeffekter from './assessment70Klimaeffekter'
+import VurderingSummary from './assessment90Summary'
 import VurderingReferences from './vurderingReferences'
 import VurderingComments from './vurderingComments'
-import Vurdering55Kriteriedokumentasjon from './vurdering55Kriteriedokumentasjon'
+import Vurdering55Kriteriedokumentasjon from './assessment91Kriteriedokumentasjon'
 
 
 
