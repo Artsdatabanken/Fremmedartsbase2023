@@ -14,7 +14,7 @@ import SpeciesSpeciesTable from './52Okologiskeffekt/SpeciesSpeciesTable'
 import SpeciesNaturetypeTable from './52Okologiskeffekt/SpeciesNaturetypeTable'
 
 
-import ScoreUnsure from './40Naturtyper/scoreUnsure'
+import ScoreUnsure from './51Naturtyper/scoreUnsure'
 import HostParasiteTable from './52Okologiskeffekt/HostParasiteTable'
 import createTaxonSearch from './52Okologiskeffekt/createTaxonSearch'
 

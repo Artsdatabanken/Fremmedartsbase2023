@@ -5,7 +5,7 @@ import * as Xcomp from './observableComponents';
 import Tabs from '../tabs'
 import Criterion from './criterion'
 import Vurdering52Okologiskeffekt from './vurdering52Okologiskeffekt'
-import ScoreUnsure from './40Naturtyper/scoreUnsure';
+import ScoreUnsure from './51Naturtyper/scoreUnsure';
 import config from '../../config'
 import {codes2labels, getCriterion} from '../../utils'
 import Filliste from './35Utbredelseshistorikk/Filliste'

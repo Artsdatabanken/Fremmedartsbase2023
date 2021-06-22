@@ -6,19 +6,19 @@ import {autorun, extendObservable, observable} from 'mobx';
 import * as Xcomp from './observableComponents';
 import Criterion from './criterion'
 import {getCriterion} from '../../utils'
-import NaturtypeTable from './40Naturtyper/naturtypeTable';
-import HabitatTable from './40Naturtyper/habitatTable';
-import NewNaturetype from './40Naturtyper/newNaturetype';
-import ScoreUnsure from './40Naturtyper/scoreUnsure';
+import NaturtypeTable from './51Naturtyper/naturtypeTable';
+import HabitatTable from './51Naturtyper/habitatTable';
+import NewNaturetype from './51Naturtyper/newNaturetype';
+import ScoreUnsure from './51Naturtyper/scoreUnsure';
 // import NaturtypeSelector from './naturtypeSelector';
-import RedlistedNaturetypeTable from './40Naturtyper/redlistedNaturetypeTable';
-import NewRedlistedNaturetype from './40Naturtyper/newRedlistedNaturetype';
+import RedlistedNaturetypeTable from './51Naturtyper/redlistedNaturetypeTable';
+import NewRedlistedNaturetype from './51Naturtyper/newRedlistedNaturetype';
 // import BsModal from './bootstrapModal' import RedlistedNaturtypeSelector from
-// './40Naturtyper/redlistedNaturetypeSelector';
+// './51Naturtyper/redlistedNaturetypeSelector';
 
 @inject("appState")
 @observer
-export default class Vurdering40Naturtyper extends React.Component {
+export default class Assessment51Naturtyper extends React.Component {
     constructor(props) {
         super(props)
         const {appState:{assessment}, appState} = this.props;
