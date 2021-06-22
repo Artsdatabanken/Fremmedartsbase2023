@@ -136,12 +136,12 @@ class AssessmentRoot extends Component {
                 <Assessment80GeografiskVariasjon/>
                 : assessmentTabs.activeTab.id === 8  ?
                 <Assessment90Summary/>
+                : assessmentTabs.activeTab.id === 11  ?
+                <Assessment91Kriteriedokumentasjon kritDocInfo={kritDocInfo}/>
                 : assessmentTabs.activeTab.id === 9  ?
                 <VurderingReferences/>
                 : assessmentTabs.activeTab.id === 10  ?
                 <VurderingComments/>
-                : assessmentTabs.activeTab.id === 11  ?
-                <Assessment91Kriteriedokumentasjon kritDocInfo={kritDocInfo}/>
                 // // kritDocInfo={{}}
 
                 

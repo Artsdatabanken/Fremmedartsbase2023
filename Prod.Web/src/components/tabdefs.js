@@ -98,10 +98,10 @@ function tabdefs(appState) {
             new tabItem({id: 6, label:"Klimaeffekter", enabled: appState.harVurdering, notrequired: !appState.skalVurderes, url: "klimaeffekter" }),
             new tabItem({id: 7, label:"Geografisk variasjon", enabled: appState.harVurdering, notrequired: !appState.skalVurderes, url: "geografiskvariasjon" }),
             new tabItem({id: 8, label:"Oppsummering", enabled:appState.harVurdering, url: "oppsummmering"}),
+            new tabItem({id: 11, label:"Kriteriedokumentasjon", enabled: appState.harVurdering, notrequired: !appState.skalVurderes, url: "kriteriedokumentasjon" }),
             new tabItem({id: 9, label:"Referanser", enabled:appState.harVurdering, url: "referanser"}),
             new tabItem({id: 10, label:"Kommentar på vurdering", enabled:appState.harVurdering, url: "kommentar"}),
             // new tabItem({id: 11, label:"Kommentarer", enabled:appState.harVurdering, url: "Kommentarer"}),
-            new tabItem({id: 11, label:"Kriteriedokumentasjon", enabled: appState.harVurdering, notrequired: !appState.skalVurderes, url: "kriteriedokumentasjon" }),
             new tabItem({id: 12, label:"JSON", enabled:appState.harVurdering, url: "diff"})
             // new tabItem({id: 1, label:"Artsinformasjon", enabled: appState.harVurdering, url: "artsinformasjon" }),
             // new tabItem({id: 2, label:"Naturtyper", enabled: appState.harVurdering, notrequired: !appState.skalVurderes, url: "naturtyper" }),
