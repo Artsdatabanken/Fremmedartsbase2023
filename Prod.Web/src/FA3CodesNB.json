@@ -6081,6 +6081,13 @@
                     "DistributionHistory": [
                         {
                             "Id": null,
+                            "Value": "goTo",
+                            "Text": "Gå til",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "heading",
                             "Text": "Utbredelse- og spredningshistorikk",
                             "Info": null,
@@ -6090,6 +6097,13 @@
                             "Id": null,
                             "Value": "distributionHistory",
                             "Text": "Utbredelseshistorikk",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "speciesMap",
+                            "Text": "Artskart",
                             "Info": null,
                             "Children": null
                         },

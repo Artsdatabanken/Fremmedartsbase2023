@@ -137,13 +137,13 @@ class AssessmentRoot extends Component {
                 : assessmentTabs.activeTab.id === 7  ?
                 <Vurdering53GeografiskVariasjon/>
                 : assessmentTabs.activeTab.id === 8  ?
-               <VurderingSummary/>
+                <Vurdering55Kriteriedokumentasjon kritDocInfo={kritDocInfo}/>
                 : assessmentTabs.activeTab.id === 9  ?
                 <VurderingReferences/>
                 : assessmentTabs.activeTab.id === 10  ?
                 <VurderingComments/>
-                : assessmentTabs.activeTab.id === 11  ?
-                <Vurdering55Kriteriedokumentasjon kritDocInfo={kritDocInfo}/>
+               // : assessmentTabs.activeTab.id === 11  ?
+               // <Vurdering55Kriteriedokumentasjon kritDocInfo={kritDocInfo}/>
                 // // kritDocInfo={{}}
 
                 
@@ -155,7 +155,7 @@ class AssessmentRoot extends Component {
                 // // // <AssessmentReferences/>
                 // // // : assessmentTabs.activeTab.id === 11  ?
                 // // // <AssessmentComments/>
-                : assessmentTabs.activeTab.id === 12  ?
+                : assessmentTabs.activeTab.id === 11  ?
                 <AssessmentDiff/>
                 :<h1>Oooops?? artinfotab:{assessmentTabs.activeTab.id}</h1>}
                 {assessmentTabs.activeTab.id != 12 && assessmentTabs.activeTab.id != 11 && assessment && assessment.evaluationStatus !== 'finished' &&     
