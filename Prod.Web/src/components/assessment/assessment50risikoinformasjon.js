@@ -13,7 +13,8 @@ import Assessment52Utbredelse from './assessment52Utbredelse'
 @observer
 export default class Assessment50risikoinformasjon extends React.Component {
     render() {
-        const {appState:{assessment:{riskAssessment}}, appState, vurdering, fabModel, appState:{infoTabs}} = this.props
+        const {appState, appState:{infoTabs}} = this.props
+        const labels = appState.codeLabels.DistributionHistory
         return (
             <div>
                 <br/>
@@ -24,7 +25,7 @@ export default class Assessment50risikoinformasjon extends React.Component {
                 <Assessment52Utbredelse />
                 }
                 {config.showPageHeaders
-                    ? <h3>{fabModel.kodeLabels.DistributionHistory.heading}</h3>
+                    ? <h3>{labels.heading}</h3>
                     : <br/>}
                 {/*<UtbredelseshistorikkInnenlands vurdering={vurdering} fabModel={fabModel}/>
                 <UtbredelseIDag vurdering={vurdering} fabModel={fabModel}/>
