@@ -125,6 +125,25 @@ function tabdefs(appState) {
             })()
         }
     },
+    spredningsveierTabs: {
+        activeTab: {id: 1},
+        tabList: [
+            new tabItem({id: 1, label: "Spredningsveier i naturen", enabled:true})
+        ],
+        setActiveTab: (tab) => {
+            action(() => {
+                //console.log('xxx', appState.selectAssessmentTabs.activeTab)
+                //console.log('xxx', tab)
+                if(tab.enabled) {
+                    appState.spredningsveierTabs.activeTab.id = tab.id
+                    //appState.assessmentId = null
+                    //                            appState.router.hash = "#" + tab.url + "/" + appState.assessmentId
+                }
+            })()
+        }
+    },
+
+
     infoTabs: {
         activeTab: {id: 1},
         tabList: [
