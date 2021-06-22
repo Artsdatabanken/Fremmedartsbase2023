@@ -7,7 +7,7 @@ import assessment20ArtensStatus from './assessment20ArtensStatus';
 import Vurdering32Artsegenskaper from './assessment30Artsegenskaper';
 import Vurdering33Import from './assessment41Import';
 import Vurdering34Spredningsveier from './vurdering34Spredningsveier';
-import Vurdering35Utbredelseshistorikk from './vurdering35Utbredelseshistorikk';
+import Vurdering35Utbredelseshistorikk from './assessment50risikoinformasjon';
 import { JsonHubProtocol } from '@microsoft/signalr';
 
 

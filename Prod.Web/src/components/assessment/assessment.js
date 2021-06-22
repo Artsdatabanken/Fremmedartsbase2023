@@ -11,7 +11,7 @@ import Assessment30Artsegenskaper from './assessment30Artsegenskaper'
 import Assessment40Spredningsveier from './assessment40Spredningsveier'
 import Assessment10Horisontskanning from './assessment10Horisontskanning'
 import Vurdering34Spredningsveier from './vurdering34Spredningsveier'
-import Vurdering35Utbredelseshistorikk from './vurdering35Utbredelseshistorikk'
+import Assessment50risikoinformasjon from './assessment50risikoinformasjon'
 import Vurdering40Naturtyper from './vurdering40Naturtyper'
 import Vurdering51Invasjonspotensiale from './vurdering51Invasjonspotensiale'
 import Vurdering52Okologiskeffekt from './vurdering52Okologiskeffekt'
@@ -130,7 +130,7 @@ class AssessmentRoot extends Component {
                 : assessmentTabs.activeTab.id === 3  ?
                 <Assessment40Spredningsveier clName={"nav_menu faner"} tabData={spredningsveierTabs}/>
                 : assessmentTabs.activeTab.id === 4  ?
-                <Vurdering35Utbredelseshistorikk/>
+                <Assessment50risikoinformasjon/>
                 : assessmentTabs.activeTab.id === 5  ?
                 <Vurdering51Invasjonspotensiale/>
                 : assessmentTabs.activeTab.id === 6  ?
