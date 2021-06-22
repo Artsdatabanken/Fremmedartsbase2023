@@ -4,22 +4,14 @@ import {action, observable} from 'mobx'
 import auth from '../authService'
 import * as Xcomp from '../observableComponents'
 import Tabs from '../tabs'
-// import Vurdering from './assessment/vurdering'
+
+import Assessment10Horisontskanning from './assessment10Horisontskanning'
 import Assessment20ArtensStatus from './assessment20ArtensStatus'
 import Assessment30Artsegenskaper from './assessment30Artsegenskaper'
-// import Vurdering33Import from './assessment41Import'
 import Assessment40Spredningsveier from './assessment40Spredningsveier'
-import Assessment10Horisontskanning from './assessment10Horisontskanning'
-// import Vurdering34Spredningsveier from './vurdering34Spredningsveier'
-
-
-
 import Assessment50risikoinformasjon from './assessment50risikoinformasjon'
 import Assessment60Risikovurdering from './assessment60Risikovurdering'
-// import Assessment50risikoinformasjon from './assessment50risikoinformasjon'
-//import Vurdering40Naturtyper from './assessment51Naturtyper'
-// import Vurdering51Invasjonspotensiale from './vurdering51Invasjonspotensiale'
-// import Vurdering52Okologiskeffekt from './vurdering52Okologiskeffekt'
+
 import Vurdering53GeografiskVariasjon from './assessment80GeografiskVariasjon'
 import Vurdering54Klimaeffekter from './assessment70Klimaeffekter'
 import VurderingSummary from './assessment90Summary'
