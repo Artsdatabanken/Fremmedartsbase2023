@@ -21,7 +21,7 @@ export default class Assessment50risikoinformasjon extends React.Component {
                 {
                 infoTabs.activeTab.id === 2  ?
                 <Assessment51Naturtyper/> :
-                <Assessment52Utbredelse vurdering={vurdering} fabModel={appState}/>
+                <Assessment52Utbredelse />
                 }
                 {config.showPageHeaders
                     ? <h3>{fabModel.kodeLabels.DistributionHistory.heading}</h3>
