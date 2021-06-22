@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
 import { observer, inject } from 'mobx-react';
 import {autorun, action, extendObservable, observable, toJS} from 'mobx';
-import {deleteData, loadData, postData, putData} from '../apiService';
+//import {deleteData, loadData, postData, putData} from '../apiService';
 import * as Xcomp from './observableComponents';
-import config from '../config'
-import auth from './authService'
+//import config from '../config';
+import auth from '../authService'
 
 @inject('appState')
 @observer
@@ -167,7 +167,7 @@ export default class AssessmentReferences extends Component {
         })
         autorun(() => {
             if(this.valgtReferanseId) {
-                loadData(config.referenceApiUrl + "api/References/" + this.valgtReferanseId, this.updateValgtReferanse)
+                //loadData(config.referenceApiUrl + "api/References/" + this.valgtReferanseId, this.updateValgtReferanse)
             }
           // if (this.assessment && auth.isLoggedIn)
             this.doReferenceSearch()        
@@ -207,7 +207,7 @@ export default class AssessmentReferences extends Component {
         // r.kanLagres= false
     })
 
-    doReferenceSearch = () => {
+    _doReferenceSearch = () => {
        // const side = 0;
         const pageSize = 10;
         const sortering = this.valgtSortering
@@ -228,7 +228,7 @@ export default class AssessmentReferences extends Component {
         
     }
 
-    lagreReferanse = action(() => {
+    _lagreReferanse = action(() => {
         var clone = toJS(this.valgtReferanse)
         console.log(clone);
         if (clone.id === "NY_REFERANSE") {
@@ -314,7 +314,7 @@ export default class AssessmentReferences extends Component {
         }
     })
 
-    slettReferanse = action(() => {
+    _slettReferanse = action(() => {
         const clone = toJS(this.valgtReferanse)
         if (clone.id != "NY_REFERANSE") {
             // eksisterende
@@ -425,7 +425,7 @@ export default class AssessmentReferences extends Component {
         }
         return comparison;
       }
-    updateSearchResult = action((data) => {
+    _updateSearchResult = action((data) => {
         let result = data.slice().sort(this.compare)
         this.sokeresultat = result
     //    for (let i = 0; i < data.length; i++){
@@ -451,7 +451,7 @@ export default class AssessmentReferences extends Component {
         
     
 
-    linkify(text) {
+    _linkify(text) {
         var urlRegex =/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
         var showUrl = ""
         return text.replace(urlRegex, function(url) {
@@ -475,8 +475,8 @@ export default class AssessmentReferences extends Component {
             return match && match.text ? match.text : id
         }
         this.theAssessment = assessment
-
-        var sortedReferences = assessment.referanser.slice().sort(this.compare)
+        var sortedReferences = []
+        //var sortedReferences = assessment.referanser.slice().sort(this.compare)
                 
         return (
             <div className="page_container">
