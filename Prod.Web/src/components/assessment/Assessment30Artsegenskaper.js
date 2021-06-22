@@ -12,7 +12,7 @@ import ArrivedCountryFrom from './32artsegenskaper/arrivedCountryFrom'
 
 @inject("appState")
 @observer
-export default class Vurdering32Artsegenskaper extends React.Component {
+export default class Assessment30Artsegenskaper extends React.Component {
     constructor(props) {
         super(props)
     }
