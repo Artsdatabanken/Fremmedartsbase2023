@@ -5,7 +5,7 @@ import {observable, autorun} from 'mobx';
 import Tabs from '../tabs';
 import assessment20ArtensStatus from './assessment20ArtensStatus';
 import Vurdering32Artsegenskaper from './assessment30Artsegenskaper';
-import Vurdering33Import from './vurdering33Import';
+import Vurdering33Import from './assessment41Import';
 import Vurdering34Spredningsveier from './vurdering34Spredningsveier';
 import Vurdering35Utbredelseshistorikk from './vurdering35Utbredelseshistorikk';
 import { JsonHubProtocol } from '@microsoft/signalr';

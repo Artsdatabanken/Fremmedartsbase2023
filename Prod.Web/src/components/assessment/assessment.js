@@ -7,8 +7,9 @@ import Tabs from '../tabs'
 // import Vurdering from './assessment/vurdering'
 import Assessment20ArtensStatus from './assessment20ArtensStatus'
 import Assessment30Artsegenskaper from './assessment30Artsegenskaper'
-import Vurdering33Import from './vurdering33Import'
-import assessment10Horisontskanning from './assessment10Horisontskanning'
+// import Vurdering33Import from './assessment41Import'
+import Assessment40Spredningsveier from './assessment40Spredningsveier'
+import Assessment10Horisontskanning from './assessment10Horisontskanning'
 import Vurdering34Spredningsveier from './vurdering34Spredningsveier'
 import Vurdering35Utbredelseshistorikk from './vurdering35Utbredelseshistorikk'
 import Vurdering40Naturtyper from './vurdering40Naturtyper'
@@ -52,7 +53,7 @@ class AssessmentRoot extends Component {
     @observable move = false
     
     render() {
-        const {appState, appState:{assessment}, appState:{assessmentTabs}} = this.props
+        const {appState, appState:{assessment}, appState:{assessmentTabs, spredningsveierTabs}} = this.props
         const rolle = appState.roleincurrentgroup
         const isSuperUser = rolle.leder
         const isFinished = assessment.evaluationStatus && assessment.evaluationStatus === "finished"
@@ -127,7 +128,7 @@ class AssessmentRoot extends Component {
                 : assessmentTabs.activeTab.id === 2  ?
                 <Assessment30Artsegenskaper />
                 : assessmentTabs.activeTab.id === 3  ?
-                <Vurdering33Import/>
+                <Assessment40Spredningsveier clName={"nav_menu faner"} tabData={spredningsveierTabs}/>
                 : assessmentTabs.activeTab.id === 4  ?
                 <Vurdering35Utbredelseshistorikk/>
                 : assessmentTabs.activeTab.id === 5  ?

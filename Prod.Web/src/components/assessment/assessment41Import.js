@@ -43,7 +43,7 @@ class SelectableRadio extends React.Component {
 
 @inject("appState")
 @observer
-export default class Vurdering33Import extends React.Component {
+export default class Assessment41Import extends React.Component {
     constructor(props) {
         super(props);
     }
