@@ -12,12 +12,12 @@ import Assessment40Spredningsveier from './assessment40Spredningsveier'
 import Assessment50risikoinformasjon from './assessment50risikoinformasjon'
 import Assessment60Risikovurdering from './assessment60Risikovurdering'
 
-import Vurdering53GeografiskVariasjon from './assessment80GeografiskVariasjon'
 import Vurdering54Klimaeffekter from './assessment70Klimaeffekter'
+import Vurdering53GeografiskVariasjon from './assessment80GeografiskVariasjon'
 import VurderingSummary from './assessment90Summary'
+import Vurdering55Kriteriedokumentasjon from './assessment91Kriteriedokumentasjon'
 import VurderingReferences from './vurderingReferences'
 import VurderingComments from './vurderingComments'
-import Vurdering55Kriteriedokumentasjon from './assessment91Kriteriedokumentasjon'
 
 
 
