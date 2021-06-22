@@ -4,8 +4,8 @@ import {observer, inject} from 'mobx-react';
 import * as Xcomp from './observableComponents';
 import Tabs from '../tabs'
 import Criterion from './criterion'
-import Vurdering52Okologiskeffekt from './vurdering52Okologiskeffekt'
-import ScoreUnsure from './40Naturtyper/scoreUnsure';
+import Vurdering52Okologiskeffekt from './assessment62Okologiskeffekt'
+import ScoreUnsure from './51Naturtyper/scoreUnsure';
 import config from '../../config'
 import {codes2labels, getCriterion} from '../../utils'
 import Filliste from './35Utbredelseshistorikk/Filliste'
@@ -54,17 +54,21 @@ class SelectableRadio extends React.Component {
 
 @inject("appState")
 @observer
-export default class Vurdering51Invasjonspotensiale extends React.Component {
+export default class Assessment61Invasjonspotensiale extends React.Component {
     // getCriterion(riskAssessment, akse, letter) {     const result =
     // riskAssessment.criteria.filter(c => c.Akse === akse && c.CriteriaLetter ===
     // letter)[0];     return result; }
     render() {
-        const {appState:{assessment:{riskAssessment}}, appState:{riskAssessmentTabs}, appState, existenceArea35} = this.props;
+        const {appState:{assessment, assessment:{riskAssessment}}, appState, } = this.props;
+
         // const labels = appState.kodeLabels
         const labels = appState.codeLabels
         const koder = appState.koder
 
         const ntLabels = labels.NatureTypes
+
+        const existenceArea35 = assessment.CurrentExistenceAreaCalculated
+
 
         // const bassertpaValues = [
         //     {
@@ -99,11 +103,11 @@ export default class Vurdering51Invasjonspotensiale extends React.Component {
                 {config.showPageHeaders
                     ? <h3>Invasjonspotensiale</h3>
                     : <br/>}
-                    <Tabs clName={"nav_menu submenu"} tabData={riskAssessmentTabs}/>
+                    {/* <Tabs clName={"nav_menu submenu"} tabData={riskAssessmentTabs}/>
                     {
                 riskAssessmentTabs.activeTab.id === 2  ?
                 <Vurdering52Okologiskeffekt/> :
-                <div>
+                <div> */}
                 <fieldset className="well">
                     <h4>{crit51A.heading}</h4>
                     <p>{crit51A.info}</p>
@@ -919,7 +923,7 @@ export default class Vurdering51Invasjonspotensiale extends React.Component {
                                 secondValue={"unsureC"}/>
                     <Criterion criterion={critC} mode="noheading"/>
                 </fieldset>
-                </div>
+                {/* </div> */}
                 }
                 
             </div>

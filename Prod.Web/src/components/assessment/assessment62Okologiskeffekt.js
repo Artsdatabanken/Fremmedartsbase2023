@@ -14,7 +14,7 @@ import SpeciesSpeciesTable from './52Okologiskeffekt/SpeciesSpeciesTable'
 import SpeciesNaturetypeTable from './52Okologiskeffekt/SpeciesNaturetypeTable'
 
 
-import ScoreUnsure from './40Naturtyper/scoreUnsure'
+import ScoreUnsure from './51Naturtyper/scoreUnsure'
 import HostParasiteTable from './52Okologiskeffekt/HostParasiteTable'
 import createTaxonSearch from './52Okologiskeffekt/createTaxonSearch'
 
@@ -23,7 +23,7 @@ const kodeTekst = (koder, verdi) => koder.filter(item => item.Value === verdi).m
 
 @inject("appState")
 @observer
-export default class Vurdering52Okologiskeffekt extends React.Component {
+export default class Assessment62Okologiskeffekt extends React.Component {
     constructor(props) {
         super(props)
         const {appState:{assessment:{riskAssessment}}, appState, evaluationContext} = this.props;

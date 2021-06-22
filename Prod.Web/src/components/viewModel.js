@@ -11,6 +11,8 @@ import createContext from './createContext'
 import enhanceAssessment from './assessment/enhanceAssassment.js'
 import { checkStatus, loadData } from '../apiService'
 import tabdefs from './tabdefs'
+import assessmentTabdefs from './assessment/assessmentTabdefs'
+
 import { any } from 'prop-types'
 // import { ConfigurationManager } from '../../dist/Prod.Web.e31bb0bc'
 
@@ -343,6 +345,7 @@ class ViewModel {
 
         // **** initialize tabs ****
         extendObservable(this, tabdefs(this))
+        extendObservable(this, assessmentTabdefs(this))
         // **** end initialize tabs ****
 
 

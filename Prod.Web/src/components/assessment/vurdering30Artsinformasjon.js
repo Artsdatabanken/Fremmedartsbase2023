@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import {observer, inject} from 'mobx-react';
 import {observable, autorun} from 'mobx';
 import Tabs from '../tabs';
-import Vurdering31ArtensStatus from './vurdering31ArtensStatus';
-import Vurdering32Artsegenskaper from './vurdering32Artsegenskaper';
-import Vurdering33Import from './vurdering33Import';
+import assessment20ArtensStatus from './assessment20ArtensStatus';
+import Vurdering32Artsegenskaper from './assessment30Artsegenskaper';
+import Vurdering33Import from './assessment41Import';
 import Vurdering34Spredningsveier from './vurdering34Spredningsveier';
-import Vurdering35Utbredelseshistorikk from './vurdering35Utbredelseshistorikk';
+import Vurdering35Utbredelseshistorikk from './assessment50risikoinformasjon';
 import { JsonHubProtocol } from '@microsoft/signalr';
 
 
@@ -25,7 +25,7 @@ export default class AssessmentSpesiesinformation extends React.Component {
                 <Tabs tabData={artsinformasjonTabs} />
                 <div className="content">
                     {artsinformasjonTabs.activeTab.id === 1  ?
-                    <Vurdering31ArtensStatus vurdering={vurdering}  viewModel={viewModel} fabModel={fabModel} />
+                    <assessment20ArtensStatus vurdering={vurdering}  viewModel={viewModel} fabModel={fabModel} />
                     : artsinformasjonTabs.activeTab.id === 2  ?
                     <Vurdering32Artsegenskaper vurdering={vurdering}  viewModel={viewModel} fabModel={fabModel} />
                     : artsinformasjonTabs.activeTab.id === 3  ?

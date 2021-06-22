@@ -5,8 +5,8 @@ import {observer, inject} from 'mobx-react';
 import {action, autorun, computed, extendObservable, observable, toJS} from 'mobx';
 import * as Xcomp from './observableComponents';
 import Vurdering34Spredningsveier from './vurdering34Spredningsveier'
-import NewMigrationPathwaySelector from './34Spredningsveier/NewMigrationPathwaySelector'
-import MPTable from './34Spredningsveier/MigrationPathwayTable'
+import NewMigrationPathwaySelector from './40Spredningsveier/NewMigrationPathwaySelector'
+import MPTable from './40Spredningsveier/MigrationPathwayTable'
 const labels = config.labels
 
 class SelectableRadio extends React.Component {
@@ -43,7 +43,7 @@ class SelectableRadio extends React.Component {
 
 @inject("appState")
 @observer
-export default class Vurdering33Import extends React.Component {
+export default class Assessment41Import extends React.Component {
     constructor(props) {
         super(props);
     }
