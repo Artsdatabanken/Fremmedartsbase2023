@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import config from '../../config';
 // import RadioGroup from './radioGroup'
 import * as Xcomp from './observableComponents';
-import DomesticObservedAndEstablished from './31ArtensStatus/DomesticObservedAndEstablished';
+import DomesticObservedAndEstablished from './20ArtensStatus/DomesticObservedAndEstablished';
 
 // const labels = config.labels
 // const standardPeriods = [
