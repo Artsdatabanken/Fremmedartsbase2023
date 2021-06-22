@@ -8,7 +8,7 @@ import Risikomatrise from './risikomatrise';
 
 @inject("appState")
 @observer
-export default class Vurdering55Kriteriedokumentasjon extends React.Component {
+export default class Assessment91Kriteriedokumentasjon extends React.Component {
     constructor(props) {
         super(props)
         // extendObservable(this, {     CriteriaDocumentation1: null,

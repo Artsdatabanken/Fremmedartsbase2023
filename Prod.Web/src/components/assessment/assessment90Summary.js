@@ -9,7 +9,7 @@ import { action } from 'mobx';
 
 @inject('appState')
 @observer
-export default class VurderingSummary extends Component {
+export default class Assessment90Summary extends Component {
     
     
     //utdøingSterktPåvirket = 'Nei';

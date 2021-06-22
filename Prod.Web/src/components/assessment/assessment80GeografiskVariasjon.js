@@ -8,7 +8,7 @@ import * as Xcomp from './observableComponents';
 
 @inject("appState")
 @observer
-export default class Vurdering53GeografiskVariasjon extends React.Component {
+export default class Assessment80GeografiskVariasjon extends React.Component {
 	render() {
 		const {appState:{assessment:{riskAssessment}}, appState} = this.props;
         const labels = appState.codeLabels

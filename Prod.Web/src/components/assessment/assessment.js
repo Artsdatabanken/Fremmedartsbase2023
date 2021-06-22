@@ -12,10 +12,10 @@ import Assessment40Spredningsveier from './assessment40Spredningsveier'
 import Assessment50risikoinformasjon from './assessment50risikoinformasjon'
 import Assessment60Risikovurdering from './assessment60Risikovurdering'
 
-import Vurdering54Klimaeffekter from './assessment70Klimaeffekter'
-import Vurdering53GeografiskVariasjon from './assessment80GeografiskVariasjon'
-import VurderingSummary from './assessment90Summary'
-import Vurdering55Kriteriedokumentasjon from './assessment91Kriteriedokumentasjon'
+import Assessment70Klimaeffekter from './assessment70Klimaeffekter'
+import Assessment80GeografiskVariasjon from './assessment80GeografiskVariasjon'
+import Assessment90Summary from './assessment90Summary'
+import Assessment91Kriteriedokumentasjon from './assessment91Kriteriedokumentasjon'
 import VurderingReferences from './vurderingReferences'
 import VurderingComments from './vurderingComments'
 
@@ -131,17 +131,17 @@ class AssessmentRoot extends Component {
                 : assessmentTabs.activeTab.id === 5  ?
                 <Assessment60Risikovurdering/>
                 : assessmentTabs.activeTab.id === 6  ?
-                <Vurdering54Klimaeffekter/>
+                <Assessment70Klimaeffekter/>
                 : assessmentTabs.activeTab.id === 7  ?
-                <Vurdering53GeografiskVariasjon/>
+                <Assessment80GeografiskVariasjon/>
                 : assessmentTabs.activeTab.id === 8  ?
-               <VurderingSummary/>
+                <Assessment90Summary/>
                 : assessmentTabs.activeTab.id === 9  ?
                 <VurderingReferences/>
                 : assessmentTabs.activeTab.id === 10  ?
                 <VurderingComments/>
                 : assessmentTabs.activeTab.id === 11  ?
-                <Vurdering55Kriteriedokumentasjon kritDocInfo={kritDocInfo}/>
+                <Assessment91Kriteriedokumentasjon kritDocInfo={kritDocInfo}/>
                 // // kritDocInfo={{}}
 
                 
