@@ -100,6 +100,7 @@ export default class Assessment20ArtensStatus extends React.Component {
                     <Xcomp.Radio kode={"B1"} observableValue={[vurdering.riskAssessment, "speciesStatus"]} label={"Arten forekommer innendørs eller i lukkede installasjoner (B1)"} />
                     <Xcomp.Radio kode={"A"} observableValue={[vurdering.riskAssessment, "speciesStatus"]} label={"Arten forekommer ikke i Norge (A)"} />
                         
+                        
                     <p>Koder i parentes angir «etableringskategoriene» ifølge internasjonal standardisering (Blackburn mfl. 2011).</p>
                     <div className="statusField">
                         <b>Var arten etablert per 1800? </b>
