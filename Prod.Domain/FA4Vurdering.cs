@@ -102,6 +102,17 @@ namespace Prod.Domain
         public Datasett Datasett { get; set; } = new Datasett();
     }
 
+    public partial class FA4 // Horisontskanning
+    {
+        public string HorizonEstablismentPotential { get; set; }
+        public string HorizonEstablismentPotentialDescription { get; set; } = "";
+        public string HorizonEcologicalEffect { get; set; }
+        public string HorizonEcologicalEffectDescription { get; set; } = "";
+    }
+
+
+
+
     public partial class FA4 // (3.1) Artens status
     {
         public string AlienSpeciesCategory2012 { get; set; } // added 10.01.2017
