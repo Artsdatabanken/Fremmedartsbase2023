@@ -20,6 +20,7 @@ export default class Assessment10Horisontskanning extends React.Component {
         const labels = appState.codeLabels
         const codes = appState.koder
         return (
+            <div>
             <div style={{display: 'flex', marginBottom: '20px'}}>
                <div className="filters" style={{float: 'left', width: '50%'}}>
                     <h3>Etableringspotensial</h3>
@@ -73,7 +74,13 @@ export default class Assessment10Horisontskanning extends React.Component {
                     </div>
                     <Xcomp.HtmlString observableValue={[assessment, 'horizonEcologicalEffectDescription']} />
                </div>
+               
             </div>
+            { (assessment.horizonEstablismentPotential == "2" || (assessment.horizonEstablismentPotential == "1" && assessment.horizonEcologicalEffect != "no") || (assessment.horizonEstablismentPotential == "0" && assessment.horizonEcologicalEffect == "yesAfterGone")) ? 
+                    <p>Arten skal risikovurderes som dørstokkart.</p> :
+                    <p>Arten faller utenfor avgrensningen og skal ikke risikovurderes som dørstokkart.</p>}
+            
+        </div>
         );
     }
 }
