@@ -14,7 +14,7 @@ import ArrivedCountryFrom from './30artsegenskaper/arrivedCountryFrom'
 @observer
 export default class Assessment30Artsegenskaper extends React.Component {
     constructor(props) {
-        super(props)
+        super(props) 
     }
     setNaturalOriginsAllUnknown(vurdering) {
         const unknown = vurdering.NaturalOrigins.find(row => row.ClimateZone == "unknown;")
