@@ -1,11 +1,14 @@
 import React from 'react'
+import config from '../../config';
 import {observer, inject} from 'mobx-react'
 import * as Xcomp from './observableComponents'
+import Tabs from '../tabs'
+import Assessment51Naturtyper from './assessment51Naturtyper'
 @inject('appState')
 @observer
-export default class Utbredelseshistorikk extends React.Component {
+export default class Assessment52Utbredelse extends React.Component {
     render() {
-        const {appState:{assessment}, appState} = this.props
+        const {appState:{assessment}, appState, appState:{infoTabs}} = this.props
         // const {appState:{assessment}, vurdering, fabModel} = this.props
         //const labels = fabModel.kodeLabels.DistributionHistory
         
@@ -13,7 +16,15 @@ export default class Utbredelseshistorikk extends React.Component {
         const labels = appState.codeLabels.DistributionHistory
         return (
             <div>
-                <fieldset>
+                <div>
+                    <br/>
+                    <Tabs clName={"nav_menu submenu"} tabData={infoTabs}/>
+                    {
+                    infoTabs.activeTab.id === 2  ?
+                    <Assessment51Naturtyper/> :
+                    //<Utbredelseshistorikk vurdering={vurdering} fabModel={appState}/>
+                    <div>
+                        <fieldset>
                     <h2>Utbredelse i Norge</h2>
                     <h3>Forekomstareal [for selvstendig reproduserende arter]</h3>
                     <div style={{marginBottom: '20px'}}>
@@ -94,6 +105,16 @@ export default class Utbredelseshistorikk extends React.Component {
                         observableValue={[vurdering.RiskAssessment, 'CriteriaDocumentationDomesticSpread']}/>*/}
                         
                 </fieldset>
+                    </div>
+                    }
+                    {config.showPageHeaders
+                        ? <h3>{fabModel.kodeLabels.DistributionHistory.heading}</h3>
+                        : <br/>}
+                    {/*<UtbredelseshistorikkInnenlands vurdering={vurdering} fabModel={fabModel}/>
+                    <UtbredelseIDag vurdering={vurdering} fabModel={fabModel}/>
+                    <Utbredelseshistorikk vurdering={vurdering} fabModel={fabModel}/>*/}
+            </div>
+                
                 {/* <fieldset className="well" id="spreadHistoryForeign">
                     <h4>{labels.distributionHistoryAbroad}</h4>
                    <Xcomp.HtmlString

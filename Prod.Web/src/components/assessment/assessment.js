@@ -5,21 +5,21 @@ import auth from '../authService'
 import * as Xcomp from '../observableComponents'
 import Tabs from '../tabs'
 // import Vurdering from './assessment/vurdering'
-import Vurdering31ArtensStatus from './assessment20ArtensStatus'
-import Vurdering32Artsegenskaper from './assessment30Artsegenskaper'
-import Vurdering33Import from './assessment41Import'
-import HSkanning from './assessment10Horisontskanning'
-//import Vurdering34Spredningsveier from './vurdering34Spredningsveier'
-import Vurdering35Utbredelseshistorikk from './assessment52Utbredelse'
-//import Vurdering40Naturtyper from './assessment51Naturtyper'
-import Vurdering51Invasjonspotensiale from './assessment61Invasjonspotensiale'
-//import Vurdering52Okologiskeffekt from './vurdering52Okologiskeffekt'
-import Vurdering53GeografiskVariasjon from './assessment80GeografiskVariasjon'
-import Vurdering54Klimaeffekter from './assessment70Klimaeffekter'
+import Assessment20ArtensStatus from './assessment20ArtensStatus'
+import Assessment30Artsegenskaper from './assessment30Artsegenskaper'
+import Assessment41Import from './assessment41Import'
+import Assessment10Horisontskanning from './assessment10Horisontskanning'
+import Assessment40Spredningsveier from './assessment40Spredningsveier'
+import Assessment52Utbredelse from './assessment52Utbredelse'
+import Assessment51Naturtyper from './assessment51Naturtyper'
+import Assessment61Invasjonspotensiale from './assessment61Invasjonspotensiale'
+import Assessment62Okologiskeffekt from './assessment62Okologiskeffekt'
+import Assessment80GeografiskVariasjon from './assessment80GeografiskVariasjon'
+import Assessment70Klimaeffekter from './assessment70Klimaeffekter'
 //import VurderingSummary from './vurderingSummary'
-import VurderingReferences from './assessmentReferences'
+import AssessmentReferences from './assessmentReferences'
 import VurderingComments from './vurderingComments'
-import Vurdering55Kriteriedokumentasjon from './assessment91Kriteriedokumentasjon'
+import Assessment91Kriteriedokumentasjon from './assessment91Kriteriedokumentasjon'
 
 
 
@@ -121,25 +121,25 @@ class AssessmentRoot extends Component {
                 <Tabs clName={"nav_menu faner"} tabData={assessmentTabs}/> 
                 {
                 assessmentTabs.activeTab.id === 0  ?
-                <HSkanning /> :
+                <Assessment10Horisontskanning/> :
                 assessmentTabs.activeTab.id === 1  ?
-                <Vurdering31ArtensStatus />
+                <Assessment20ArtensStatus />
                 : assessmentTabs.activeTab.id === 2  ?
-                <Vurdering32Artsegenskaper />
+                <Assessment30Artsegenskaper />
                 : assessmentTabs.activeTab.id === 3  ?
-                <Vurdering33Import/>
+                <Assessment41Import/>
                 : assessmentTabs.activeTab.id === 4  ?
-                <Vurdering35Utbredelseshistorikk/>
+                <Assessment52Utbredelse/>
                 : assessmentTabs.activeTab.id === 5  ?
-                <Vurdering51Invasjonspotensiale/>
+                <Assessment61Invasjonspotensiale/>
                 : assessmentTabs.activeTab.id === 6  ?
-                <Vurdering54Klimaeffekter/>
+                <Assessment70Klimaeffekter/>
                 : assessmentTabs.activeTab.id === 7  ?
-                <Vurdering53GeografiskVariasjon/>
+                <Assessment80GeografiskVariasjon/>
                 : assessmentTabs.activeTab.id === 8  ?
-                <Vurdering55Kriteriedokumentasjon kritDocInfo={kritDocInfo}/>
+                <Assessment91Kriteriedokumentasjon kritDocInfo={kritDocInfo}/>
                 : assessmentTabs.activeTab.id === 9  ?
-                <VurderingReferences/>
+                <AssessmentReferences/>
                 : assessmentTabs.activeTab.id === 10  ?
                 <VurderingComments/>
                // : assessmentTabs.activeTab.id === 11  ?
