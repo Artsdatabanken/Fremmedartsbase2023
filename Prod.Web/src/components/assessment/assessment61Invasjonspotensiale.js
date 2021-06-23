@@ -4,7 +4,7 @@ import {observer, inject} from 'mobx-react';
 import * as Xcomp from './observableComponents';
 import Tabs from '../tabs'
 import Criterion from './criterion'
-import Vurdering52Okologiskeffekt from './assessment62Okologiskeffekt'
+import Assessment62Okologiskeffekt from './assessment62Okologiskeffekt'
 import ScoreUnsure from './51Naturtyper/scoreUnsure';
 import config from '../../config'
 import {codes2labels, getCriterion} from '../../utils'
@@ -59,7 +59,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
     // riskAssessment.criteria.filter(c => c.Akse === akse && c.CriteriaLetter ===
     // letter)[0];     return result; }
     render() {
-        const {appState:{assessment, assessment:{riskAssessment}}, appState, } = this.props;
+        const {appState:{assessment, assessment:{riskAssessment}}, appState:{riskAssessmentTabs}, appState, } = this.props;
 
         // const labels = appState.kodeLabels
         const labels = appState.codeLabels
@@ -103,11 +103,11 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                 {config.showPageHeaders
                     ? <h3>Invasjonspotensiale</h3>
                     : <br/>}
-                    {/* <Tabs clName={"nav_menu submenu"} tabData={riskAssessmentTabs}/>
-                    {
+                    <Tabs clName={"nav_menu submenu"} tabData={riskAssessmentTabs}/>
+                {
                 riskAssessmentTabs.activeTab.id === 2  ?
-                <Vurdering52Okologiskeffekt/> :
-                <div> */}
+                <Assessment62Okologiskeffekt/> :
+                <div> 
                 <fieldset className="well">
                     <h4>{crit51A.heading}</h4>
                     <p>{crit51A.info}</p>
@@ -922,16 +922,14 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                 firstValue={"scoreC"}
                                 secondValue={"unsureC"}/>
                     <Criterion criterion={critC} mode="noheading"/>
-                </fieldset>
-                {/* </div> */}
+                    </fieldset>
+                </div>
                 }
                 
             </div>
         );
     }
 }
-
-
 // Vurdering51Invasjonspotensiale.propTypes = {
 //     viewModel: PropTypes.object.isRequired,
 //     riskAssessment: PropTypes.object.isRequired
