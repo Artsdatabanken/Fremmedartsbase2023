@@ -3,6 +3,44 @@
     "Text": null,
     "Info": null,
     "Children": {
+
+        "HorizonEstablismentPotential": [
+            {
+                "Id": "HorizonEstablismentPotential",
+                "Value": "0",
+                "Text": "0 (dvs. arten er utgått fra introduksjonsstedet)"
+            },
+            {
+                "Id": "HorizonEstablismentPotential",
+                "Value": "1",
+                "Text": "1 (dvs. arten er verken utdødd eller har ekspandert)"
+            },
+            {
+                "Id": "HorizonEstablismentPotential",
+                "Value": "2",
+                "Text": "2 eller flere (arten har ekspandert)"
+            }
+        ],
+
+        "HorizonEcologicalEffect": [
+            {
+                "Id": "HorizonEcologicalEffect",
+                "Value": "yesWhilePresent",
+                "Text": "Ja, men bare så lenge arten er til stede "
+            },
+            {
+                "Id": "HorizonEcologicalEffect",
+                "Value": "yesAfterGone",
+                "Text": "Ja, og effekten vedvarer også etter at arten er borte"
+            },
+            {
+                "Id": "HorizonEcologicalEffect",
+                "Value": "no",
+                "Text": "Nei"
+            }
+        ],
+
+
         "ArrivedCountryFrom": [
             {
                 "Id": "ArrivedCountryFrom",
