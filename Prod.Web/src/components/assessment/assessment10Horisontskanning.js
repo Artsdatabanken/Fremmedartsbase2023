@@ -13,42 +13,12 @@ export default class Assessment10Horisontskanning extends React.Component {
     constructor(props) {
         super(props)
         const {appState:{assessment}, appState} = this.props;
-
-        // // extendObservable(this, { })
-        // this.addNaturtype = (nyNt) => {
-        //     assessment
-        //         .impactedNatureTypes
-        //         .push(nyNt)
-        // }
-        // this.addRedlistedNaturetype = (nyNt) => {
-        //     assessment
-        //         .redlistedNatureTypes
-        //         .push(nyNt)
-
-        //     // alert("add new redlisted nature type: " + nyNt.RedlistedNatureTypeName + " -
-        //     // " + nyNt.Category)
-        // }
     }
 
     render() {
         const {appState:{assessment}, appState} = this.props;
-        const riskAssessment = assessment.riskAssessment // fabModel.activeRegionalRiskAssessment
-        // const labels = config.labels.NatureType
-        
-        
         const labels = appState.codeLabels
         const codes = appState.koder
-
-        
-        // // // // const labels = appState.kodeLabels
-        // // // const ntLabels = labels.NatureTypes
-        // // // // console.log("keys: " + JSON.stringify(Object.keys(assessment)))
-        // // // const critC = getCriterion(riskAssessment, 0, "C")
-        // // // const critF = getCriterion(riskAssessment, 1, "F")
-        // // // const critG = getCriterion(riskAssessment, 1, "G")
-        // // // const nts = appState.naturtyper
-        // // // const doms = appState.dominansSkog
-        // // // const canRenderTable = !!appState.naturtypeLabels && (!!appState.dominansSkog || appState.language === "SV")
         return (
             <div style={{display: 'flex', marginBottom: '20px'}}>
                <div className="filters" style={{float: 'left', width: '50%'}}>
@@ -107,9 +77,3 @@ export default class Assessment10Horisontskanning extends React.Component {
         );
     }
 }
-
-// Vurdering40Naturtyper.propTypes = {
-//     // fabModel: PropTypes.object.isRequired,
-//     appState: PropTypes.object.isRequired,
-//     assessment: PropTypes.object.isRequired
-// }
