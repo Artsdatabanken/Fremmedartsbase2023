@@ -238,13 +238,14 @@ class ViewModel {
             // ******************************************************************************
 
             runInAction(() => {
-                this.userContext.readonly = (
-                    this.viewMode === "assessment" &&
-                    (
-                        (!this.assessment || this.assessment.lockedForEditByUser !== auth.userName ) ||
-                        (!this.assessment || this.assessment.evaluationStatus === "finished" )
-                    )
-                )
+                this.userContext.readonly = false
+                // this.userContext.readonly = (
+                //     this.viewMode === "assessment" &&
+                //     (
+                //         (!this.assessment || this.assessment.lockedForEditByUser !== auth.userName ) ||
+                //         (!this.assessment || this.assessment.evaluationStatus === "finished" )
+                //     )
+                // )
             })
             if (this.expertgroupAssessmentList) {
                 let list = this.expertgroupAssessmentList
@@ -418,9 +419,10 @@ class ViewModel {
     };
 
     @computed get canEdit() {
-        if (!auth.hasAccess) return false;
-        if (appState.viewMode === "choosespecie") return false;
-        return isLockedByMe() && !isFinished();
+        return true
+        // if (!auth.hasAccess) return false;
+        // if (appState.viewMode === "choosespecie") return false;
+        // return isLockedByMe() && !isFinished();
     };
 
     @computed get isDirty() {
