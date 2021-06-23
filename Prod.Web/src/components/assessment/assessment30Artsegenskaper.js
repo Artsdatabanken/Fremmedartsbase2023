@@ -6,9 +6,9 @@ import {observable, autorun} from 'mobx';
 // import RadioGroup from './radioGroup'
 import config from '../../config';
 import * as Xcomp from './observableComponents';
-import UploadPicturesButton from './30artsegenskaper/uploadPicturesButton'
-import OriginTable from './30artsegenskaper/originTable'
-import ArrivedCountryFrom from './30artsegenskaper/arrivedCountryFrom'
+import UploadPicturesButton from './30Artsegenskaper/uploadPicturesButton'
+import OriginTable from './30Artsegenskaper/originTable'
+import ArrivedCountryFrom from './30Artsegenskaper/arrivedCountryFrom'
 
 @inject("appState")
 @observer
