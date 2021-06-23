@@ -44,7 +44,7 @@ export default class Assessment20ArtensStatus extends React.Component {
     render() {
         const {appState:{assessment}, appState} = this.props;
         const vurdering = assessment
-        const labels = appState.codeLabels
+        const labels = appState.codeLabels 
 
 
 
