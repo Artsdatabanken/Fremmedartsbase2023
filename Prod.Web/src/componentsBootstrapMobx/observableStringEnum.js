@@ -39,6 +39,11 @@ const ObservableStringEnum = (props) => <Observer>{() => {
     if (codes === undefined) {
         console.error("ObservableStringEnum " + prop + " misses codes")
     }
+
+
+    console.log("READONLY" + context.readonly)
+
+
     if (forceSync) {
         // force the observableValue to have a value that exists in the codes list
         // typically used to set initial value for property (so that it is not null)
@@ -61,20 +66,24 @@ const ObservableStringEnum = (props) => <Observer>{() => {
         mode === 'radio' ?
             <div className={className}>
                 {hasLabel ? <label key="radiolabel" htmlFor={prop}>{label}</label> : null}
-                {codes.map((kode) => <Radio kode={kode} key={kode.value || kode.Value}
+                {codes.map((kode) => <Radio kode={kode} 
+                                            key={kode.value || kode.Value}
                                             observableValue={observableValue}
                                             defaultChecked ={obj[prop] === kode.value || obj[prop] === kode.Value}
                                             id={prop} 
-                                            name={name}/>)}
+                                            name={name}
+                                            disabled={context.readonly || disabled}/>)}
             </div>
             : mode === 'radiohorizontal' ?
             <div className="radiohorizontal">
                 {hasLabel ? <label key="radiolabel" htmlFor={prop}>{label}</label> : null}
-                {codes.map((kode) => <Radio kode={kode} key={kode.value || kode.Value}
+                {codes.map((kode) => <Radio kode={kode} 
+                                            key={kode.value || kode.Value}
                                             observableValue={observableValue}
                                             id={prop} 
                                             defaultChecked = {false}
-                                            name={prop} disabled={disabled} />)}                                               
+                                            name={prop} 
+                                            disabled={context.readonly || disabled} />)}                                               
             </div>                
             :
             <div>
