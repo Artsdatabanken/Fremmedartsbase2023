@@ -11,7 +11,7 @@ function assessmentTabdefs(appState) {
             new tabItem({id: 1, label:"Artens status", enabled: appState.harVurdering, url: "artensstatus" }),
             new tabItem({id: 2, label:"Artsinformasjon", enabled: appState.harVurdering, notrequired: !appState.skalVurderes, url: "artsegenskaper" }),
             new tabItem({id: 3, label:"Spredningsveier", enabled: appState.harVurdering, notrequired: !appState.skalVurderes, url: "spredningsveier" }),
-            new tabItem({id: 4, label:"Informasjon for risikovurdering", enabled: appState.harVurdering, notrequired: !appState.skalVurderes, url: "utbredelseshistorikk" }),
+            new tabItem({id: 4, label:"Bakgrunnsdata for risikovurdering", enabled: appState.harVurdering, notrequired: !appState.skalVurderes, url: "utbredelseshistorikk" }),
             new tabItem({id: 5, label:"Risikovurdering", enabled: appState.harVurdering, notrequired: !appState.skalVurderes, url: "invasjonspotensiale" }),
             new tabItem({id: 6, label:"Klimaeffekter", enabled: appState.harVurdering, notrequired: !appState.skalVurderes, url: "klimaeffekter" }),
             new tabItem({id: 7, label:"Geografisk variasjon", enabled: appState.harVurdering, notrequired: !appState.skalVurderes, url: "geografiskvariasjon" }),

@@ -21,8 +21,8 @@ export default class Assessment10Horisontskanning extends React.Component {
         const codes = appState.koder
         return (
             <div>
-            <div style={{display: 'flex', marginBottom: '20px'}}>
-               <div className="filters" style={{float: 'left', width: '50%'}}>
+            <div style={{marginBottom: '20px'}}>
+               <div className="filters">
                     <h3>Etableringspotensial</h3>
                     
                     <div className="scanning">
@@ -47,9 +47,9 @@ export default class Assessment10Horisontskanning extends React.Component {
                                 label={"2 eller flere (arten har ekspandert)"}
                                 observableValue={[assessment, "etableringspotensial"]}/>  */}
                         </div>
-                        <Xcomp.HtmlString observableValue={[assessment, 'horizonEstablismentPotentialDescription']} /> 
+                        <Xcomp.HtmlString observableValue={[assessment, 'horizonEstablismentPotentialDescription']} placeholder="Utfyllende informasjon" /> 
                </div>
-               <div  className="filters" style={{float: 'right', width: '50%'}}>
+               <div  className="filters">
                     <h3>Økologisk effekt</h3>
                     <div className="scanning">
                         <p>Er det noen kjente (fra utlandet) eller antatte (i Norge) negative økologiske effekter knyttet til arten?</p>
@@ -72,13 +72,19 @@ export default class Assessment10Horisontskanning extends React.Component {
                                 label={"Nei"}
                                 observableValue={[assessment, "oekologiskeffekt"]}/>  */}
                     </div>
-                    <Xcomp.HtmlString observableValue={[assessment, 'horizonEcologicalEffectDescription']} />
+                    <Xcomp.HtmlString observableValue={[assessment, 'horizonEcologicalEffectDescription']} placeholder="Utfyllende informasjon" />
                </div>
                
             </div>
-            { (assessment.horizonEstablismentPotential == "2" || (assessment.horizonEstablismentPotential == "1" && assessment.horizonEcologicalEffect != "no") || (assessment.horizonEstablismentPotential == "0" && assessment.horizonEcologicalEffect == "yesAfterGone")) ? 
-                    <p>Arten skal risikovurderes som dørstokkart.</p> :
-                    <p>Arten faller utenfor avgrensningen og skal ikke risikovurderes som dørstokkart.</p>}
+
+            { assessment.horizonEstablismentPotential == null || assessment.horizonEcologicalEffect == null ? 
+                <b>Husk å svare på spørsmålene om artens etableringspotensial og økologiske effekt før du går videre.</b> : 
+                (assessment.horizonEstablismentPotential == "2" || (assessment.horizonEstablismentPotential == "1" && assessment.horizonEcologicalEffect != "no") || (assessment.horizonEstablismentPotential == "0" && assessment.horizonEcologicalEffect == "yesAfterGone")) ? 
+                <p>Arten skal risikovurderes som dørstokkart. Gå videre til Artens status.</p> :
+                <p>Arten faller utenfor avgrensningen og skal ikke risikovurderes.</p> }
+            {/*  (assessment.horizonEstablismentPotential == "2" || (assessment.horizonEstablismentPotential == "1" && assessment.horizonEcologicalEffect != "no") || (assessment.horizonEstablismentPotential == "0" && assessment.horizonEcologicalEffect == "yesAfterGone")) ? 
+                    <p>Arten skal risikovurderes som dørstokkart. Gå videre til Artens status.</p> :
+            <p>Arten faller utenfor avgrensningen og skal ikke risikovurderes som dørstokkart.</p>*/}
             
         </div>
         );
