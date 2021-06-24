@@ -43,15 +43,9 @@ export default class Assessment10Horisontskanning extends React.Component {
             { (typeof assessment.horizonEstablismentPotential != "string" || typeof assessment.horizonEcologicalEffect != "string" )
                     ? <b>{labels.General.answerEstablishmentQuestionReminder}</b>
                 : appState.horizonDoAssessment
-                ?    <p>Arten skal risikovurderes som dørstokkart.</p> 
-                :    <p>Arten faller utenfor avgrensningen og skal ikke risikovurderes som dørstokkart.</p>}
+                ?    <p>{labels.General.willBeAssessed}</p>
+                :    <p>{labels.General.willNotBeAssessed}</p> }
 
-            { assessment.horizonEstablismentPotential == null || assessment.horizonEcologicalEffect == null ? 
-                <b>{labels.General.answerEstablishmentQuestionReminder}</b> : 
-                (assessment.horizonEstablismentPotential == "2" || (assessment.horizonEstablismentPotential == "1" && assessment.horizonEcologicalEffect != "no") || (assessment.horizonEstablismentPotential == "0" && assessment.horizonEcologicalEffect == "yesAfterGone")) ? 
-                <p>{labels.General.willBeAssessed}</p> :
-                <p>{labels.General.willNotBeAssessed}</p> }
-            
         </div>
         );
     }
