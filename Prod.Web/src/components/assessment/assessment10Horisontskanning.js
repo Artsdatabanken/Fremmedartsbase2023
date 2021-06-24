@@ -21,34 +21,36 @@ export default class Assessment10Horisontskanning extends React.Component {
         const codes = appState.koder
         return (
             <div>
-            <div style={{display: 'flex', marginBottom: '20px'}}>
-               <div className="filters" style={{float: 'left', width: '50%'}}>
-                    <h3>Etableringspotensial</h3>
-                    
+            <div style={{marginBottom: '20px'}}>
+               <div className="filters">
+                    <h3>{labels.General.establishmentPotential}</h3>                    
                     <div className="scanning">
-                        <p>Hvor mange 2 km x 2 km-ruter kan arten kolonisere i løpet av en 10 års-periode basert på én introduksjon til norsk natur? 
-                            (Anta at selve introduksjonen skjer i perioden f.o.m. i dag og inntil 40 år fram i tid).</p>
-
-                            <Xcomp.StringEnum observableValue={[assessment, "horizonEstablismentPotential"]} mode="radio" codes={codes.HorizonEstablismentPotential}/>
-                        </div>
-                        <Xcomp.HtmlString observableValue={[assessment, 'horizonEstablismentPotentialDescription']} /> 
+                        <p>{labels.General.colonizationInformation}</p>
+                            <Xcomp.StringEnum observableValue={[assessment, "horizonEstablismentPotential"]} mode="radio" codes={codes.HorizonEstablismentPotential}/>                            
+                    </div>
+                        <Xcomp.HtmlString observableValue={[assessment, 'horizonEstablismentPotentialDescription']} placeholder="Utfyllende informasjon" /> 
                </div>
-               <div  className="filters" style={{float: 'right', width: '50%'}}>
-                    <h3>Økologisk effekt</h3>
+               <div  className="filters">
+                    <h3>{labels.General.ecologicalEffect}</h3>
                     <div className="scanning">
-                        <p>Er det noen kjente (fra utlandet) eller antatte (i Norge) negative økologiske effekter knyttet til arten?</p>
-
+                        <p>{labels.General.knownNegativeEffects}</p>
                         <Xcomp.StringEnum observableValue={[assessment, "horizonEcologicalEffect"]} mode="radio" codes={codes.HorizonEcologicalEffect}/>
                     </div>
-                    <Xcomp.HtmlString observableValue={[assessment, 'horizonEcologicalEffectDescription']} />
+                    <Xcomp.HtmlString observableValue={[assessment, 'horizonEcologicalEffectDescription']} placeholder="Utfyllende informasjon" />
                </div>
                
             </div>
             { (typeof assessment.horizonEstablismentPotential != "string" || typeof assessment.horizonEcologicalEffect != "string" )
-                ? <p>Gjennomfør horisontskanning!</p>
+                    ? <b>{labels.General.answerEstablishmentQuestionReminder}</b>
                 : appState.horizonDoAssessment
-                ?    <p>Arten skal risikovurderes som dørstokkart.</p> 
-                :    <p>Arten faller utenfor avgrensningen og skal ikke risikovurderes som dørstokkart.</p>}
+                ?    <p>Arten skal risikovurderes som d�rstokkart.</p> 
+                :    <p>Arten faller utenfor avgrensningen og skal ikke risikovurderes som d�rstokkart.</p>}
+
+            { assessment.horizonEstablismentPotential == null || assessment.horizonEcologicalEffect == null ? 
+                <b>{labels.General.answerEstablishmentQuestionReminder}</b> : 
+                (assessment.horizonEstablismentPotential == "2" || (assessment.horizonEstablismentPotential == "1" && assessment.horizonEcologicalEffect != "no") || (assessment.horizonEstablismentPotential == "0" && assessment.horizonEcologicalEffect == "yesAfterGone")) ? 
+                <p>{labels.General.willBeAssessed}</p> :
+                <p>{labels.General.willNotBeAssessed}</p> }
             
         </div>
         );

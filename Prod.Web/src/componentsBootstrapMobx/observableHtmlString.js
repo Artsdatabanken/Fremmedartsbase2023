@@ -134,7 +134,7 @@ export default class ObservableHtmlString extends React.Component {
     }
     render() {
         const context = UserContext.getContext()
-        const {observableValue, label, disabled, editable} = this.props;        
+        const {observableValue, label, disabled, editable, placeholder} = this.props;        
         const readonly = !!context.readonly
         const [obj, prop] = observableValue;
         const hasLabel = !!label;
@@ -143,7 +143,7 @@ export default class ObservableHtmlString extends React.Component {
             <HtmlEditor 
                         disabled={(readonly || disabled) && !editable }
                         style={this.style}
-                        content={obj[prop] || ""}
+                        content={obj[prop] || placeholder}
                         onChange={action(e => {obj[prop] = e.target.value; return null})}
                         onPasteTransformer={this.pasteTransform}/>
         </div>

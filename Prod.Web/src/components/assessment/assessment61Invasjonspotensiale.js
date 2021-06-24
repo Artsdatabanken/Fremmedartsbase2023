@@ -103,7 +103,6 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                 {config.showPageHeaders
                     ? <h3>Invasjonspotensiale</h3>
                     : <br/>}
-                    <Tabs clName={"nav_menu submenu"} tabData={riskAssessmentTabs}/>
                 {
                 riskAssessmentTabs.activeTab.id === 2  ?
                 <Assessment62Okologiskeffekt/> :

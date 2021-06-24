@@ -5,6 +5,21 @@ function assessmentTabdefs(appState) {
     extendObservable(appState, {
     assessmentTabs: {
         activeTab: {id: 0},
+        tabList: [
+            new tabItem({id: 0, label:"Horisontskanning", enabled: appState.harVurdering, url: "horisontskanning" }),
+            new tabItem({id: 1, label:"Artens status", enabled: appState.harVurdering, url: "artensstatus" }),
+            new tabItem({id: 2, label:"Artsinformasjon", enabled: appState.harVurdering, notrequired: !appState.skalVurderes, url: "artsegenskaper" }),
+            new tabItem({id: 3, label:"Spredningsveier", enabled: appState.harVurdering, notrequired: !appState.skalVurderes, url: "spredningsveier" }),
+            new tabItem({id: 4, label:"Bakgrunnsdata for risikovurdering", enabled: appState.harVurdering, notrequired: !appState.skalVurderes, url: "utbredelseshistorikk" }),
+            new tabItem({id: 5, label:"Risikovurdering", enabled: appState.harVurdering, notrequired: !appState.skalVurderes, url: "invasjonspotensiale" }),
+            new tabItem({id: 6, label:"Klimaeffekter", enabled: appState.harVurdering, notrequired: !appState.skalVurderes, url: "klimaeffekter" }),
+            new tabItem({id: 7, label:"Geografisk variasjon", enabled: appState.harVurdering, notrequired: !appState.skalVurderes, url: "geografiskvariasjon" }),
+            new tabItem({id: 8, label:"Oppsummering", enabled:appState.harVurdering, url: "oppsummmering"}),
+            //new tabItem({id: 11, label:"Kriteriedokumentasjon", enabled: appState.harVurdering, notrequired: !appState.skalVurderes, url: "kriteriedokumentasjon" }),
+            new tabItem({id: 9, label:"Referanser", enabled:appState.harVurdering, url: "referanser"}),
+            new tabItem({id: 10, label:"Kommentar på vurdering", enabled:appState.harVurdering, url: "kommentar"}),
+            new tabItem({id: 11, label:"JSON", enabled:appState.harVurdering, url: "diff"})
+        ],
         get tabinfos() {return [
             {id: 0, label:"Horisontskanning", enabled: appState.harVurdering, url: "horisontskanning" },
             {id: 1, label:"Artens status", enabled: appState.harVurdering, url: "artensstatus" },

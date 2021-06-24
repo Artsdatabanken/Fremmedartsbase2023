@@ -17,12 +17,9 @@ export default class Assessment52Utbredelse extends React.Component {
         return (
             <div>
                 <div>
-                    <br/>
-                    <Tabs clName={"nav_menu submenu"} tabData={infoTabs}/>
-                    {
-                    infoTabs.activeTab.id === 2  ?
-                    <Assessment51Naturtyper/> :
-                    //<Utbredelseshistorikk vurdering={vurdering} fabModel={appState}/>
+                   
+                    
+                   
                     <div>
                         <fieldset>
                     <h2>Utbredelse i Norge</h2>
@@ -106,7 +103,7 @@ export default class Assessment52Utbredelse extends React.Component {
                         
                 </fieldset>
                     </div>
-                    }
+                    
                     {config.showPageHeaders
                         ? <h3>{fabModel.kodeLabels.DistributionHistory.heading}</h3>
                         : <br/>}
