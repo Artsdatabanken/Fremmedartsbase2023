@@ -40,8 +40,7 @@ const ObservableStringEnum = (props) => <Observer>{() => {
         console.error("ObservableStringEnum " + prop + " misses codes")
     }
 
-
-    console.log("READONLY" + context.readonly)
+    // console.log("READONLY" + context.readonly)
 
 
     if (forceSync) {
