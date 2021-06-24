@@ -8,7 +8,7 @@ function assessmentTabdefs(appState) {
         get tabinfos() {return [
             {id: 0, label:"Horisontskanning", enabled: appState.harVurdering, url: "horisontskanning" },
             {id: 1, label:"Artens status", enabled: appState.harVurdering, url: "artensstatus" },
-            {id: 2, label:"Artsinformasjon", enabled: appState.horizonDoAssessment , notrequired: !appState.skalVurderes, url: "artinformasjon" },
+            {id: 2, label:"Artsinformasjon", enabled: appState.harVurdering , notrequired: !appState.skalVurderes, url: "artinformasjon" },
             {id: 3, label:"Spredningsveier", enabled:  appState.harVurdering, notrequired: !appState.skalVurderes, url: "spredningsveier" },
             {id: 4, label:"Bakgrunnsdata for risikovurdering", enabled: appState.harVurdering, notrequired: !appState.skalVurderes, url: "bakgrunnsdata" },
             {id: 5, label:"Risikovurdering", enabled: appState.harVurdering, notrequired: !appState.skalVurderes, url: "risikovurdering" },
