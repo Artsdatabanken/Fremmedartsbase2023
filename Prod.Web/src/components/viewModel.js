@@ -1,4 +1,4 @@
-import {action, autorun, computed, extendObservable, flow, observable, reaction, runInAction,trace, transaction, toJS} from 'mobx'
+import {action, autorun, computed, extendObservable, makeObservable, flow, observable, reaction, runInAction,trace, transaction, toJS, isObservable, isObservableProp} from 'mobx'
 import {router} from "./routeMatcher"
 import events from './event-pubsub'
 // import {HttpTransportType, HubConnectionBuilder, JsonHubProtocol, LogLevel} from "@microsoft/signalr"
@@ -60,12 +60,13 @@ class ViewModel {
 
 
 
-        extendObservable(this, {
-            harVurdering: () => !!this.assessment
-        })
-        extendObservable(this, {
-            skalVurderes: () => true // todo: implement!
-        })
+        // extendObservable(this, {
+        //     harVurdering: () => !!this.assessment
+        // })
+        // extendObservable(this, {
+        //     skalVurderes: () => //true // todo: implement!
+        //         this.horizonDoAssessment
+        // })
 
         // -------------------------------------
         extendObservable(this, {
@@ -282,6 +283,24 @@ class ViewModel {
         });
 
 
+
+        // autorun(() => {
+        //     // if(this.assessmentTabs) {
+        //         const b = this.horizonDoAssessment
+        //         const a = this.assessmentTabs ? JSON.stringify(this.assessmentTabs.tabinfos[2].enabled) : "not ready"
+        //         console.log("aaaaaaaaaaaaaaa"  + a + b)
+        //         if(this.assessmentTabs) {
+        //         console.log("aaaaaaaaaaaaaaab" + isObservable(this.assessmentTabs))
+        //         console.log("aaaaaaaaaaaaaaac" + isObservable(this.assessmentTabs.tabinfos))
+        //         console.log("aaaaaaaaaaaaaaad" + isObservable(this.assessmentTabs.tabinfos[2]))
+        //         console.log("aaaaaaaaaaaaaaae" + isObservableProp(this.assessmentTabs.tabinfos[2], "enabled"))
+        //         }
+        //     // }
+        // })
+    
+
+
+
         autorun(() => {
             console.log("isServicesReady: " + this.isServicesReady)
             console.log("exp" + (this.expertgroups != null))
@@ -292,7 +311,15 @@ class ViewModel {
         autorun(() => {
             console.log("viewMode: " + this.viewMode)
         });
-
+        autorun(() => {
+            console.log("horizonDoAssessment: " + this.horizonDoAssessment)
+        });
+        autorun(() => {
+            console.log("har vurdering: " + this.harVurdering)
+        });
+        autorun(() => {
+            console.log("skal vurderes: " + this.skalVurderes)
+        });
 
         // **** set assessment and assessmentId ****
         reaction(() => this.assessmentId,
@@ -346,7 +373,7 @@ class ViewModel {
 
         // **** initialize tabs ****
         extendObservable(this, tabdefs(this))
-        extendObservable(this, assessmentTabdefs(this))
+        assessmentTabdefs(this)
         // **** end initialize tabs ****
 
 
@@ -367,6 +394,8 @@ class ViewModel {
                 router(hash, routes) // - then navigate
             }
         })
+
+        // makeObservable(this)
 
         //this.assessmentId = 3155 //1231
 
@@ -425,6 +454,15 @@ class ViewModel {
         // return isLockedByMe() && !isFinished();
     };
 
+    @computed get harVurdering() {
+        return !!this.assessment
+    }
+
+    @computed get skalVurderes() {
+         //return true 
+         return this.horizonDoAssessment // todo: implement real!
+    }
+
     @computed get isDirty() {
         if (!this.assessmentId) return false
         const a = JSON.stringify(this.assessment)
@@ -432,7 +470,14 @@ class ViewModel {
         return a != b
     }
 
-
+    @computed get horizonDoAssessment() {
+        if (!this.assessment) return false;
+        const result =
+            this.assessment.horizonEstablismentPotential == "2" 
+            || (this.assessment.horizonEstablismentPotential == "1" && this.assessment.horizonEcologicalEffect != "no") 
+            || (this.assessment.horizonEstablismentPotential == "0" && this.assessment.horizonEcologicalEffect == "yesAfterGone")
+        return result
+    }
 
     @computed get unresolvedComments() {
         const comments = this.assessmentComments
