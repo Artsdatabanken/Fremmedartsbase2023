@@ -30,22 +30,6 @@ export default class Assessment10Horisontskanning extends React.Component {
                             (Anta at selve introduksjonen skjer i perioden f.o.m. i dag og inntil 40 år fram i tid).</p>
 
                             <Xcomp.StringEnum observableValue={[assessment, "horizonEstablismentPotential"]} mode="radio" codes={codes.HorizonEstablismentPotential}/>
-
-                            {/* <Xcomp.Radio
-                            // TO DO: change the code and observable value
-                                kode={"Etableringspotensial"}
-                                label={"0 (dvs. arten er utgått fra introduksjonsstedet)"}
-                                observableValue={[assessment, "etableringspotensial"]}/> 
-                                <Xcomp.Radio
-                            // TO DO: change the code and observable value
-                                kode={"Etableringspotensial"}
-                                label={"1 (dvs. arten er verken utdødd eller har ekspandert)"}
-                                observableValue={[assessment, "etableringspotensial"]}/> 
-                                <Xcomp.Radio
-                            // TO DO: change the code and observable value
-                                kode={"Etableringspotensial"}
-                                label={"2 eller flere (arten har ekspandert)"}
-                                observableValue={[assessment, "etableringspotensial"]}/>  */}
                         </div>
                         <Xcomp.HtmlString observableValue={[assessment, 'horizonEstablismentPotentialDescription']} /> 
                </div>
@@ -55,30 +39,16 @@ export default class Assessment10Horisontskanning extends React.Component {
                         <p>Er det noen kjente (fra utlandet) eller antatte (i Norge) negative økologiske effekter knyttet til arten?</p>
 
                         <Xcomp.StringEnum observableValue={[assessment, "horizonEcologicalEffect"]} mode="radio" codes={codes.HorizonEcologicalEffect}/>
-
-                        {/* <Xcomp.Radio
-                            // TO DO: change the code and observable value
-                                kode={"Oekologiskeffekt"}
-                                label={"Ja, men bare så lenge arten er til stede "}
-                                observableValue={[assessment, "oekologiskeffekt"]}/> 
-                                <Xcomp.Radio
-                            // TO DO: change the code and observable value
-                                kode={"Oekologiskeffekt"}
-                                label={"Ja, og effekten vedvarer også etter at arten er borte"}
-                                observableValue={[assessment, "oekologiskeffekt"]}/> 
-                                <Xcomp.Radio
-                            // TO DO: change the code and observable value
-                                kode={"Oekologiskeffekt"}
-                                label={"Nei"}
-                                observableValue={[assessment, "oekologiskeffekt"]}/>  */}
                     </div>
                     <Xcomp.HtmlString observableValue={[assessment, 'horizonEcologicalEffectDescription']} />
                </div>
                
             </div>
-            { (assessment.horizonEstablismentPotential == "2" || (assessment.horizonEstablismentPotential == "1" && assessment.horizonEcologicalEffect != "no") || (assessment.horizonEstablismentPotential == "0" && assessment.horizonEcologicalEffect == "yesAfterGone")) ? 
-                    <p>Arten skal risikovurderes som dørstokkart.</p> :
-                    <p>Arten faller utenfor avgrensningen og skal ikke risikovurderes som dørstokkart.</p>}
+            { (typeof assessment.horizonEstablismentPotential != "string" || typeof assessment.horizonEcologicalEffect != "string" )
+                ? <p>Gjennomfør horisontskanning!</p>
+                : appState.horizonDoAssessment
+                ?    <p>Arten skal risikovurderes som dørstokkart.</p> 
+                :    <p>Arten faller utenfor avgrensningen og skal ikke risikovurderes som dørstokkart.</p>}
             
         </div>
         );
