@@ -12,6 +12,8 @@ import Assessment10Horisontskanning from './assessment10Horisontskanning'
 import Assessment40Spredningsveier from './assessment40Spredningsveier'
 import Assessment52Utbredelse from './assessment52Utbredelse'
 import Assessment51Naturtyper from './assessment51Naturtyper'
+import AssessmentRisikovurdering from './assessmentRisikovurdering'
+import AssessmentBakgrunnsdata from './assessmentBakgrunnsdata'
 import Assessment61Invasjonspotensiale from './assessment61Invasjonspotensiale'
 import Assessment62Okologiskeffekt from './assessment62Okologiskeffekt'
 import Assessment80GeografiskVariasjon from './assessment80GeografiskVariasjon'
@@ -129,9 +131,9 @@ class AssessmentRoot extends Component {
                 : assessmentTabs.activeTab.id === 3  ?
                 <Assessment41Import/>
                 : assessmentTabs.activeTab.id === 4  ?
-                <Assessment52Utbredelse/>
+                <AssessmentBakgrunnsdata/>
                 : assessmentTabs.activeTab.id === 5  ?
-                <Assessment61Invasjonspotensiale/>
+                <AssessmentRisikovurdering/>
                 : assessmentTabs.activeTab.id === 6  ?
                 <Assessment70Klimaeffekter/>
                 : assessmentTabs.activeTab.id === 7  ?

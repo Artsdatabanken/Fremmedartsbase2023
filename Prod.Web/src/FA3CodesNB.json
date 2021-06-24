@@ -3899,11 +3899,60 @@
                             "Text": "Rediger",
                             "Info": null,
                             "Children": null
-                        },
+                        },                        
                         {
                             "Id": null,
                             "Value": "search",
                             "Text": "Søk",
+                            "Info": null,
+                            "Children": null
+                        },                        
+                        {
+                            "Id": null,
+                            "Value": "establishmentPotential",
+                            "Text": "Etableringspotensial",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "ecologicalEffect",
+                            "Text": "Økologisk effekt",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "colonizationInformation",
+                            "Text": "Hvor mange 2 km x 2 km-ruter kan arten kolonisere i løpet av en 10 års-periode basert på én introduksjon til norsk natur? (Anta at selve introduksjonen skjer i perioden f.o.m. i dag og inntil 40 år fram i tid).",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "knownNegativeEffects",
+                            "Text": "Er det noen kjente (fra utlandet) eller antatte (i Norge) negative økologiske effekter knyttet til arten?",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "answerEstablishmentQuestionReminder",
+                            "Text": "Husk å svare på spørsmålene om artens etableringspotensial og økologiske effekt før du går videre.",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "willBeAssessed",
+                            "Text": "Arten skal risikovurderes som dørstokkart. Gå videre til Artens status.",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "willNotBeAssessed",
+                            "Text": "Arten faller utenfor avgrensningen og skal ikke risikovurderes.",
                             "Info": null,
                             "Children": null
                         },
