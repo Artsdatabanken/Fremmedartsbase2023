@@ -460,7 +460,8 @@ class ViewModel {
 
     @computed get skalVurderes() {
          //return true 
-         return this.horizonDoAssessment // todo: implement real!
+         
+         return !this.harVurdering ? false : this.assessment.horizonDoScanning === false ? true : this.horizonDoAssessment // todo: implement real!
     }
 
     @computed get isDirty() {
@@ -468,6 +469,10 @@ class ViewModel {
         const a = JSON.stringify(this.assessment)
         const b = this.assessmentSavedVersionString
         return a != b
+    }
+
+    @computed get horizonDoScanning() {
+        return !this.harVurdering ? false : this.assessment.horizonDoScanning
     }
 
     @computed get horizonDoAssessment() {

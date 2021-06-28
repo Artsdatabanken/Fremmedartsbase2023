@@ -6,19 +6,33 @@ function assessmentTabdefs(appState) {
     assessmentTabs: {
         activeTab: {id: 0},
         get tabinfos() {return [
-            {id: 0, label:"Horisontskanning", enabled: appState.harVurdering, url: "horisontskanning" },
-            {id: 1, label:"Artens status", enabled: appState.harVurdering, url: "artensstatus" },
-            {id: 2, label:"Artsinformasjon", enabled: appState.harVurdering , notrequired: !appState.skalVurderes, url: "artinformasjon" },
-            {id: 3, label:"Spredningsveier", enabled:  appState.harVurdering, notrequired: !appState.skalVurderes, url: "spredningsveier" },
-            {id: 4, label:"Bakgrunnsdata for risikovurdering", enabled: appState.harVurdering, notrequired: !appState.skalVurderes, url: "bakgrunnsdata" },
-            {id: 5, label:"Risikovurdering", enabled: appState.harVurdering, notrequired: !appState.skalVurderes, url: "risikovurdering" },
-            {id: 6, label:"Klimaeffekter", enabled: appState.harVurdering, notrequired: !appState.skalVurderes, url: "klimaeffekter" },
-            {id: 7, label:"Geografisk variasjon", enabled: appState.harVurdering, notrequired: !appState.skalVurderes, url: "geografiskvariasjon" },
-            {id: 8, label:"Oppsummering", enabled:appState.harVurdering, url: "oppsummmering"},
+            {id: 0, label:"Horisontskanning", enabled: appState.harVurdering, visible: appState.horizonDoScanning, url: "horisontskanning" },
+            {id: 1, label:"Artens status", enabled: appState.skalVurderes, url: "artensstatus" },
+            {id: 2, label:"Artsinformasjon", enabled: appState.skalVurderes , notrequired: !appState.skalVurderes, url: "artinformasjon" },
+            {id: 3, label:"Spredningsveier", enabled:  appState.skalVurderes, notrequired: !appState.skalVurderes, url: "spredningsveier" },
+            {id: 4, label:"Bakgrunnsdata for risikovurdering", enabled: appState.skalVurderes, notrequired: !appState.skalVurderes, url: "bakgrunnsdata" },
+            {id: 5, label:"Risikovurdering", enabled: appState.skalVurderes, notrequired: !appState.skalVurderes, url: "risikovurdering" },
+            {id: 6, label:"Klimaeffekter", enabled: appState.skalVurderes, notrequired: !appState.skalVurderes, url: "klimaeffekter" },
+            {id: 7, label:"Geografisk variasjon", enabled: appState.skalVurderes, notrequired: !appState.skalVurderes, url: "geografiskvariasjon" },
+            {id: 8, label:"Oppsummering", enabled:appState.skalVurderes, url: "oppsummmering"},
             {id: 9, label:"Referanser", enabled:appState.harVurdering, url: "referanser"},
             {id: 10, label:"Kommentar på vurdering", enabled:appState.harVurdering, url: "kommentar"},
             {id: 11, label:"JSON", enabled:appState.harVurdering, url: "diff"}
         ]},
+        // get tabinfos() {return [
+        //     {id: 0, label:"Horisontskanning", enabled: appState.harVurdering, visible: appState.horizonDoScanning, url: "horisontskanning" },
+        //     {id: 1, label:"Artens status", enabled: appState.harVurdering, url: "artensstatus" },
+        //     {id: 2, label:"Artsinformasjon", enabled: appState.harVurdering , notrequired: !appState.skalVurderes, url: "artinformasjon" },
+        //     {id: 3, label:"Spredningsveier", enabled:  appState.harVurdering, notrequired: !appState.skalVurderes, url: "spredningsveier" },
+        //     {id: 4, label:"Bakgrunnsdata for risikovurdering", enabled: appState.harVurdering, notrequired: !appState.skalVurderes, url: "bakgrunnsdata" },
+        //     {id: 5, label:"Risikovurdering", enabled: appState.harVurdering, notrequired: !appState.skalVurderes, url: "risikovurdering" },
+        //     {id: 6, label:"Klimaeffekter", enabled: appState.harVurdering, notrequired: !appState.skalVurderes, url: "klimaeffekter" },
+        //     {id: 7, label:"Geografisk variasjon", enabled: appState.harVurdering, notrequired: !appState.skalVurderes, url: "geografiskvariasjon" },
+        //     {id: 8, label:"Oppsummering", enabled:appState.harVurdering, url: "oppsummmering"},
+        //     {id: 9, label:"Referanser", enabled:appState.harVurdering, url: "referanser"},
+        //     {id: 10, label:"Kommentar på vurdering", enabled:appState.harVurdering, url: "kommentar"},
+        //     {id: 11, label:"JSON", enabled:appState.harVurdering, url: "diff"}
+        // ]},
         get tabList() {
             // console.log("##" + this.tabinfos.length)
             return tabItems(this.tabinfos)

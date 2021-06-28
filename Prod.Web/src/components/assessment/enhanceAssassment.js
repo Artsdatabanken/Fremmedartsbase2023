@@ -21,5 +21,10 @@ export default function enhanceAssessment(assessment, appState) {
     enhanceCriteria(riskAssessment, assessment, codes, labels, artificialAndConstructedSites)
 
 
+    if(assessment.horizonDoScanning !== false) {console.warn("horizonDoScanning should be false for now")}
+
+    assessment.horizonDoScanning = true;  //todo: remove this (It is here for testing purposes)
+
+
 
 }
