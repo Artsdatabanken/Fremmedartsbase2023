@@ -26,5 +26,5 @@
 ## To Register a new page tab:
 
 - create the file you wish to import
-- in viewModel, create a new tabItem (in the extendObservable), somwjhere around line 200
+- in assessmentTabdefs, create a new item (in the tabinfos). (tabInfos.js defines the properties of the item and transform it for the use of the tabs.js module)
 - in assesment.js, import the class and use in the assesment criteria
