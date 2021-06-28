@@ -104,6 +104,10 @@ namespace Prod.Domain
 
     public partial class FA4 // Horisontskanning
     {
+        /// <summary>
+        /// If true this assessment is marked for horizon scanning prior to risk assessment
+        /// </summary>
+        public bool HorizonDoScanning { get; set; } = false;
         public string HorizonEstablismentPotential { get; set; }
         public string HorizonEstablismentPotentialDescription { get; set; } = "";
         public string HorizonEcologicalEffect { get; set; }
