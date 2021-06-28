@@ -593,21 +593,28 @@
             {
                 "Id": "limnicTerrestrialMarine",
                 "Value": "limnic",
-                "Text": "Limnisk art",
+                "Text": "Limnisk",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "limnicTerrestrialMarine",
                 "Value": "terrestrial",
-                "Text": "Terrestrisk art",
+                "Text": "Terrestrisk",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "limnicTerrestrialMarine",
                 "Value": "marine",
-                "Text": "Marin art",
+                "Text": "Marin",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "limnicTerrestrialMarine",
+                "Value": "brackishWater",
+                "Text": "Brakkvann",
                 "Info": null,
                 "Children": null
             }
@@ -4863,8 +4870,15 @@
                         },
                         {
                             "Id": null,
+                            "Value": "arrivedCountry",
+                            "Text": "Kom til ",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "arrivedCountryFrom",
-                            "Text": "Kom til vurderingsområdet fra",
+                            "Text": " fra ",
                             "Info": null,
                             "Children": null
                         },
