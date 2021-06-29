@@ -70,146 +70,216 @@ export default class Assessment20ArtensStatus extends React.Component {
         return (
             <div>
                 {config.showPageHeaders
-                    ? <h3>Artens status</h3>
-                    : <br/>}
+                    ? <h3>{labels.critDocumentation.status}</h3>
+                    : <br/>}            
                 <div className="well">
-                    <b>Er arten fremmed? </b>
-                    <p>Ved usikkerhet velges svaret som det er sannsynlighetsovervekt for.</p>
-                    <Xcomp.Radio kode={"YES"} observableValue={[vurdering.riskAssessment, "isAlienSpecies"]} label={"JA"} />
-                    <Xcomp.Bool observableValue={[vurdering.riskAssessment, "isRegionallyAlien"]} label={"regionalt fremmed"} />
-                    <Xcomp.Radio kode={"NO"} observableValue={[vurdering.riskAssessment, "isAlienSpecies"]} label={"NEI"} />
-                    <p>Beskriv eventuell usikkerhet vedrørende artens status som fremmed:</p>
+                    <b>{labels.General.isAlienSpecies} </b>
+                    <p>{labels.General.unsureIfAlien} </p>
+                    <Xcomp.Radio value={'true'} observableValue={[vurdering.riskAssessment, "isAlienSpecies"]} label={labels.General.yes} />                    
+                    { vurdering.riskAssessment.isAlienSpecies == 'true' && vurdering.alienSpeciesCategory != "DoorKnocker" ? <Xcomp.Bool observableValue={[vurdering.riskAssessment, "isRegionallyAlien"]} label={labels.General.regionallyAlien} /> : null }
+                    <Xcomp.Radio value={'false'} observableValue={[vurdering.riskAssessment, "isAlienSpecies"]} label={labels.General.no} />
+                    <p>{labels.General.unsureAlienDescription}</p>
                     <Xcomp.HtmlString observableValue={[vurdering.riskAssessment, 'isAlien']}/>
-                    <b>Er taksonet omfatta av vurderinga til et annet takson?  </b>
-                    <Xcomp.Radio kode={"Connected"} observableValue={[vurdering.riskAssessment, "connected"]} label={"Taksonet vurderes sammen med et annet takson. "} />
-                    <p>Oppgi navnet på dette taxonet:</p>
-                    <Xcomp.String observableValue={[vurdering.riskAssessment, 'connectedTaxon1']} placeholder={labels.General.searchSpecies} />
-                    
-                    <Xcomp.Radio kode={"Shared"} observableValue={[vurdering.riskAssessment, "connected"]} label={"Taksonet vurderes ikke, men deler vurderinga til et annet takson. "} />
-                    <p>Oppgi navnet på dette taxonet:</p>
-                    <Xcomp.String observableValue={[vurdering.riskAssessment, 'connectedTaxon2']} placeholder={labels.General.searchSpecies} />
-                    <div className="statusField"><b> Er arten en bruksart?</b> <Xcomp.Bool observableValue={[vurdering.riskAssessment, "bruksart"]} /> </div>
-                    <b>Hvilken status har arten i Norge? </b>
-                    <p>Merk av den høyeste (øverste) kategorien som oppfylles av arten i Norge i dag:</p>
-                    
-                    <Xcomp.Radio kode={"C3–E"} observableValue={[vurdering.riskAssessment, "speciesStatus"]} label={"Arten er etablert (C3–E)"} />
-                    <Xcomp.Radio kode={"C2"} observableValue={[vurdering.riskAssessment, "speciesStatus"]} label={"Arten produserer levedyktig avkom utendørs og uten hjelp og kan overleve vinteren (C2)"} />
-                    <Xcomp.Radio kode={"C1"} observableValue={[vurdering.riskAssessment, "speciesStatus"]} label={"Arten kan overleve vinteren utendørs og uten hjelp (C1)"} />
-                    <Xcomp.Radio kode={"C0"} observableValue={[vurdering.riskAssessment, "speciesStatus"]} label={"Arten er dokumentert fra norsk natur (C0)"} />
-                    <Xcomp.Radio kode={"B2"} observableValue={[vurdering.riskAssessment, "speciesStatus"]} label={"Arten forekommer utendørs på sitt eget produksjonsareal (B2)"} />
-                    <Xcomp.Radio kode={"B1"} observableValue={[vurdering.riskAssessment, "speciesStatus"]} label={"Arten forekommer innendørs eller i lukkede installasjoner (B1)"} />
-                    <Xcomp.Radio kode={"A"} observableValue={[vurdering.riskAssessment, "speciesStatus"]} label={"Arten forekommer ikke i Norge (A)"} />
-                        
 
-                    <p>Koder i parentes angir «etableringskategoriene» ifølge internasjonal standardisering (Blackburn mfl. 2011).</p>
-                    <div className="statusField">
-                        <b>Var arten etablert per 1800? </b>
-                        <Xcomp.Bool observableValue={[vurdering.riskAssessment, "estBefore1800"]} />
-                    </div>
-                    
-                    <p>Ved usikkerhet avgjør sannsynlighetsovervekt.</p>
-                    <p>Beskriv eventuell usikkerhet vedrørende artens etableringstidspunkt:</p>
-                    <Xcomp.HtmlString observableValue={[vurdering.riskAssessment, 'establishedBefore1800']}/>
-                    <div className="statusField">
-                        <b> Har arten tidligere vært feilbestemt? </b>                
-                        <Xcomp.Bool observableValue={[vurdering.riskAssessment, "wrongAssessed"]} />  
-                        
-                    </div>
-                    
-                    <b>Har arten </b>
-                    <Xcomp.Radio kode={"VærtFremmed"} observableValue={[vurdering.riskAssessment, "changedFromAlien"]} label={"vært fremmed, men har nå etablert minst én stedegen bestand"} />
-                    <Xcomp.Radio kode={"VærtAntattFremmed"} observableValue={[vurdering.riskAssessment, "changedFromAlien"]} label={"vært antatt å være fremmed, men kunnskapsgrunnlaget/tolkninga er endra"} />
-                    <p>Beskriv hva som ligger til grunn for endringa i artens status:</p>
-                    <Xcomp.HtmlString observableValue={[vurdering.riskAssessment, 'changedAssessment']}/>
-                    <br/>
-                    <h2>Konklusjon</h2>
-                    <p>Arten skal risikovurderes.</p>
-                    <p>Arten skal ikke risikovurderes.</p>
-                    <br/>
-                    <h3>Første observasjon av arten</h3>
-                    
-                    <div className="statusField">
-                        	
-                        <div className="firstObs">
-                        <p>Angi årstallet for første observasjon i Norge av... </p>	
-                        <ul>
-                            <li>individ innendørs (hvis relevant):                             
-                            </li>
-                            <li>selvstendig reproduksjon innendørs (hvis relevant):                            
-                            </li>
-                            <li>individ på artens eget produksjonsareal utendørs:                             
-                            </li>
-                            <li>selvstendig reproduksjon på artens eget produksjonsareal utendørs:
-                            </li>
-                            <li>individ i norsk natur:
-                            </li>
-                            <li>selvstendig reproduksjon i norsk natur:                            
-                            </li>
-                            <li>etablering i norsk natur:                            
-                            </li>
-                        </ul>	
-                        </div>
-                        <div className="yearsAndCheckboxes">
-                        <ul className="listOfYears">
-                        <p>Usikkerhet</p>	
-                            <li> 
-                            <Xcomp.Number                            
-                                observableValue={[vurdering.riskAssessment, "yearFirstIndoors"]}
-                                integer
-                            />    
-                            <Xcomp.Bool observableValue={[vurdering.riskAssessment, "yearFirstIndoorsInsecure"]} /> 
-                            </li>
-                            <li>
-                            <Xcomp.Number                            
-                                observableValue={[vurdering.riskAssessment, "yearFirstReproductionIndoors"]}
-                                integer
-                            />    
-                            <Xcomp.Bool observableValue={[vurdering.riskAssessment, "yearFirstReproductionIndoorsInsecure"]} /> 
-                            </li>
-                            <li>
-                            <Xcomp.Number                            
-                                observableValue={[vurdering.riskAssessment, "yearFirstProductionOutdoors"]}
-                                integer
-                            />    
-                            <Xcomp.Bool observableValue={[vurdering.riskAssessment, "yearFirstProductionOutdoorsInsecure"]} /> 
-                            </li>
-                            <li>
-                            <Xcomp.Number                            
-                                observableValue={[vurdering.riskAssessment, "yearFirstReproductionOutdoors"]}
-                                integer
-                            />    
-                            <Xcomp.Bool observableValue={[vurdering.riskAssessment, "yearFirstReproductionOutdoorsInsecure"]} /> 
-                            </li>
-                            <li>
-                            <Xcomp.Number                            
-                                observableValue={[vurdering.riskAssessment, "yearFirstNature"]}
-                                integer
-                            />    
-                            <Xcomp.Bool observableValue={[vurdering.riskAssessment, "yearFirstNatureInsecure"]} /> 
-                            </li>
-                            <li>
-                            <Xcomp.Number                            
-                                observableValue={[vurdering.riskAssessment, "yearFirstReproductionNature"]}
-                                integer
-                            />    
-                            <Xcomp.Bool observableValue={[vurdering.riskAssessment, "yearFirstReproductionNatureInsecure"]} /> 
-                            </li>
-                            <li>
-                            <Xcomp.Number                            
-                                observableValue={[vurdering.riskAssessment, "yearFirstEstablishedNature"]}
-                                integer
-                            />    
-                            <Xcomp.Bool observableValue={[vurdering.riskAssessment, "yearFirstEstablishedNature"]} /> 
-                            </li>
-                        </ul>
-                        </div>
-                    </div>			
-                    <p>Hvis usikkerheten er større enn ± 5 år, sett et kryss til høyre for årstallet.</p>
+                    { vurdering.riskAssessment.isAlienSpecies == 'true' ?
+                    <div style={{marginTop: '10px'}}> 
+                        <div className="statusField"><b>{labels.General.connectedToAnotherTaxon} </b> <Xcomp.Bool observableValue={[vurdering.riskAssessment, "connectedToAnother"]} /></div>
+                        { vurdering.riskAssessment.connectedToAnother == true ?
+                            <div>
+                            <Xcomp.Radio value={"Connected"} observableValue={[vurdering.riskAssessment, "connected"]} label={labels.General.assessedWithAnotherTaxon}/>
+                            <p>{labels.General.enterTaxonName}</p>
+                            <Xcomp.String observableValue={[vurdering.riskAssessment, 'connectedTaxon1']} placeholder={labels.General.searchSpecies} />
+                            
+                            <Xcomp.Radio value={"Shared"} observableValue={[vurdering.riskAssessment, "connected"]} label={labels.General.notAssessedButShared} />
+                            <p>{labels.General.enterTaxonName}</p>
+                            <Xcomp.String observableValue={[vurdering.riskAssessment, 'connectedTaxon2']} placeholder={labels.General.searchSpecies} /> 
+                            </div> : null }
+                    </div> : null}
 
-                    <p>Om arten tidligere har blitt funnet i Norge, beskriv tidspunkt og status:</p>
-                    <p>Eventuelle utdypende opplysninger om observasjoner av arten, f.eks. om den tidligere er funnet i norsk natur:</p>
-                    <p>Eventuelle utdypende opplysninger om observasjoner av arten, f.eks. om den tidligere er funnet reproduserende i norsk natur:</p>
-                    <Xcomp.HtmlString observableValue={[vurdering.riskAssessment, 'furtherInfo']}/>
+                    { vurdering.riskAssessment.isAlienSpecies == 'true' && (vurdering.riskAssessment.connectedToAnother == false || vurdering.riskAssessment.connectedToAnother == null ) ? 
+                     <div>
+                     <div className="statusField">
+                         <b>{labels.General.isProductionSpecies}</b> <Xcomp.Bool observableValue={[vurdering.riskAssessment, "bruksart"]} /> </div>
+                         <b> {labels.General.statusInNorway}</b>
+                         <p>{labels.General.highestCategoryPerToday}</p>
+                        
+                        <Xcomp.Radio value={"C3–E"} observableValue={[vurdering.riskAssessment, "speciesStatus"]} label={labels.establishmentCategory.C3} />
+                        <Xcomp.Radio value={"C2"} observableValue={[vurdering.riskAssessment, "speciesStatus"]} label={labels.establishmentCategory.C2} />
+                        <Xcomp.Radio value={"C1"} observableValue={[vurdering.riskAssessment, "speciesStatus"]} label={labels.establishmentCategory.C1} />
+                        <Xcomp.Radio value={"C0"} observableValue={[vurdering.riskAssessment, "speciesStatus"]} label={labels.establishmentCategory.C0} />
+                        <Xcomp.Radio value={"B2"} observableValue={[vurdering.riskAssessment, "speciesStatus"]} label={labels.establishmentCategory.B2} />
+                        <Xcomp.Radio value={"B1"} observableValue={[vurdering.riskAssessment, "speciesStatus"]} label={labels.establishmentCategory.B1} />
+                        <Xcomp.Radio value={"A"} observableValue={[vurdering.riskAssessment, "speciesStatus"]} label={labels.establishmentCategory.A} />
+                            
+
+                        <p>{labels.General.codesExplanation}</p>
+                        <div className="statusField">
+                            <b>{labels.General.establishedBefore1800} </b>
+                            <Xcomp.Bool observableValue={[vurdering.riskAssessment, "estBefore1800"]} />
+                        </div>
+                        
+                        <p>{labels.General.probabilityUncertainity}</p>
+                        <p>{labels.General.uncertainityEstablishmentTimeDescription}</p>
+                        <Xcomp.HtmlString observableValue={[vurdering.riskAssessment, 'establishedBefore1800']}/>
+                     </div> : null}
+
+                     { vurdering.riskAssessment.isAlienSpecies == 'true'  && vurdering.alienSpeciesCategory != "DoorKnocker" && vurdering.riskAssessment.speciesStatus == "A" &&
+                        (vurdering.riskAssessment.connectedToAnother == false || vurdering.riskAssessment.connectedToAnother == null) ? 
+                        <div className="statusField">
+                            <b> {labels.General.wronglyAssessedBefore} </b>                
+                            <Xcomp.Bool observableValue={[vurdering.riskAssessment, "wrongAssessed"]} />  
+                            
+                        </div> : null }
+                    
+                    { vurdering.riskAssessment.isAlienSpecies == 'false' ?
+                    <div>
+                        <b>{labels.General.didSpecies} </b>
+                        <Xcomp.Radio kode={"VærtFremmed"} observableValue={[vurdering.riskAssessment, "changedFromAlien"]} label={labels.General.wasAlienButEstablishedNow} />
+                        <Xcomp.Radio kode={"VærtAntattFremmed"} observableValue={[vurdering.riskAssessment, "changedFromAlien"]} label={labels.General.wasThoughtToBeAlien} />
+                        <p>{labels.General.reasonForChangingOfStatusDescription}</p>
+                        <Xcomp.HtmlString observableValue={[vurdering.riskAssessment, 'changedAssessment']}/>
+                    </div> : null }
+
+                    <br/>
+                    
+                    {vurdering.riskAssessment.isAlienSpecies == null ? null : 
+                    
+                    vurdering.riskAssessment.isAlienSpecies == 'true' && 
+                        (vurdering.riskAssessment.connectedToAnother == false || vurdering.riskAssessment.connectedToAnother == null ) && 
+                        (vurdering.riskAssessment.estBefore1800 == false || vurdering.riskAssessment.estBefore1800 == null ) &&
+                        (vurdering.alienSpeciesCategory == "DoorKnocker" || vurdering.riskAssessment.speciesStatus == "C2" || vurdering.riskAssessment.speciesStatus == "C3–E") &&
+                        vurdering.riskAssessment.speciesStatus != null && 
+                        (vurdering.riskAssessment.connectedToAnother == false || vurdering.riskAssessment.connectedToAnother == null) ? 
+                    <div>
+                        <h2>{labels.General.conclusion}</h2>
+                        <p>{labels.General.willBeRiskAssessed}</p> 
+                    </div> :
+                     <div>
+                     <h2>{labels.General.conclusion}</h2>
+                     <p>{labels.General.willNotBeRiskAssessed}</p> 
+                 </div>}
+
+                    <br/>
+
+                    { vurdering.riskAssessment.isAlienSpecies == 'true' && 
+                        (vurdering.riskAssessment.connectedToAnother == false || vurdering.riskAssessment.connectedToAnother == null ) &&
+                        (vurdering.riskAssessment.wrongAssessed == false || vurdering.riskAssessment.wrongAssessed == null ) ?
+                        <div>
+                            {vurdering.riskAssessment.speciesStatus != null && vurdering.riskAssessment.speciesStatus != "A" &&
+                                <h3>{labels.General.firstObservationOfSpecies}</h3>
+                            }
+                            
+                            <div className="statusField">
+                                    
+                                <div className="firstObs">
+                                { vurdering.riskAssessment.speciesStatus != null && vurdering.riskAssessment.speciesStatus != "A" &&
+                                    <p>{labels.General.enterYearOfTheFirstObservationInNorway}</p>	
+                                }
+                                <ul>
+                                   {vurdering.riskAssessment.speciesStatus != "A" && vurdering.riskAssessment.speciesStatus != null &&
+                                        <li>{labels.General.speciesIndoorsIfRelevant}</li>
+                                    }
+                                    {vurdering.riskAssessment.speciesStatus != "A" && vurdering.riskAssessment.speciesStatus != null &&
+                                        <li> {labels.General.reproductionOutdoorsIfRelevant}</li>
+                                    }
+                                    {vurdering.riskAssessment.bruksart == true && vurdering.riskAssessment.speciesStatus != "A" && vurdering.riskAssessment.speciesStatus != "B1"
+                                     && vurdering.riskAssessment.speciesStatus != null &&
+                                        <li>{labels.General.speciesInProductionAreaOutdoors}</li>
+                                    }
+                                    {vurdering.riskAssessment.bruksart == true && (vurdering.riskAssessment.speciesStatus == "C2" || vurdering.riskAssessment.speciesStatus == "C3–E") &&
+                                        <li>{labels.General.speciesReproductionInProductionAreaOutdoors}</li>
+                                    }
+                                    {vurdering.riskAssessment.speciesStatus != null && vurdering.riskAssessment.speciesStatus.indexOf("C") > -1 &&
+                                    <li>{labels.General.speciesInNorwegianNature}</li> }
+
+                                    {(vurdering.riskAssessment.speciesStatus == "C3–E" || vurdering.riskAssessment.speciesStatus == "C2") &&
+                                        <li>{labels.General.reproductionInNorwegianNature}</li> }
+
+                                    {vurdering.riskAssessment.speciesStatus == "C3–E" &&
+                                    <li> {labels.General.establishmentInNorwegianNature}</li> }
+                                </ul>	
+                                </div>
+                                <div className="yearsAndCheckboxes">
+                                <ul className="listOfYears">
+                                { vurdering.riskAssessment.speciesStatus != null && vurdering.riskAssessment.speciesStatus != "A" &&
+                                    <p>{labels.General.uncertainity}</p>	
+                                }
+                                {vurdering.riskAssessment.speciesStatus != "A" && vurdering.riskAssessment.speciesStatus != null &&
+                                    <li> 
+                                    <Xcomp.Number                            
+                                        observableValue={[vurdering.riskAssessment, "yearFirstIndoors"]}
+                                        integer
+                                    />    
+                                    <Xcomp.Bool observableValue={[vurdering.riskAssessment, "yearFirstIndoorsInsecure"]} /> 
+                                    </li>}
+                                    {vurdering.riskAssessment.speciesStatus != "A" && vurdering.riskAssessment.speciesStatus != null &&                                   
+                                    <li>
+                                    <Xcomp.Number                            
+                                        observableValue={[vurdering.riskAssessment, "yearFirstReproductionIndoors"]}
+                                        integer
+                                    />    
+                                    <Xcomp.Bool observableValue={[vurdering.riskAssessment, "yearFirstReproductionIndoorsInsecure"]} /> 
+                                    </li> }
+
+                                    {vurdering.riskAssessment.bruksart == true && vurdering.riskAssessment.speciesStatus != "A" && vurdering.riskAssessment.speciesStatus != "B1"
+                                     && vurdering.riskAssessment.speciesStatus != null &&
+                                    <li>
+                                    <Xcomp.Number                            
+                                        observableValue={[vurdering.riskAssessment, "yearFirstProductionOutdoors"]}
+                                        integer
+                                    />    
+                                    <Xcomp.Bool observableValue={[vurdering.riskAssessment, "yearFirstProductionOutdoorsInsecure"]} /> 
+                                    </li>}
+                                    {vurdering.riskAssessment.bruksart == true && (vurdering.riskAssessment.speciesStatus == "C2" || vurdering.riskAssessment.speciesStatus == "C3–E") &&
+                                    <li>
+                                    <Xcomp.Number                            
+                                        observableValue={[vurdering.riskAssessment, "yearFirstReproductionOutdoors"]}
+                                        integer
+                                    />    
+                                    <Xcomp.Bool observableValue={[vurdering.riskAssessment, "yearFirstReproductionOutdoorsInsecure"]} /> 
+                                    </li> }
+                                    
+                                    {vurdering.riskAssessment.speciesStatus != null && vurdering.riskAssessment.speciesStatus.indexOf("C") > -1 && 
+                                        <li>                                    
+                                        <Xcomp.Number                            
+                                            observableValue={[vurdering.riskAssessment, "yearFirstNature"]}
+                                            integer
+                                        />    
+                                        <Xcomp.Bool observableValue={[vurdering.riskAssessment, "yearFirstNatureInsecure"]} /> 
+                                        </li> }
+                                    { (vurdering.riskAssessment.speciesStatus == "C3–E" || vurdering.riskAssessment.speciesStatus == "C2") && 
+                                        <li>
+                                        <Xcomp.Number                            
+                                            observableValue={[vurdering.riskAssessment, "yearFirstReproductionNature"]}
+                                            integer
+                                        />    
+                                        <Xcomp.Bool observableValue={[vurdering.riskAssessment, "yearFirstReproductionNatureInsecure"]} /> 
+                                        </li> }
+                                    {vurdering.riskAssessment.speciesStatus == "C3–E" && 
+                                        <li>
+                                        <Xcomp.Number                            
+                                            observableValue={[vurdering.riskAssessment, "yearFirstEstablishedNature"]}
+                                            integer
+                                        />    
+                                        <Xcomp.Bool observableValue={[vurdering.riskAssessment, "yearFirstEstablishedNature"]} /> 
+                                        </li>}
+                                </ul>
+                                </div>
+                            </div>		
+
+                            {vurdering.riskAssessment.speciesStatus != "A" && vurdering.riskAssessment.speciesStatus != null &&                            	
+                                <p>{labels.General.uncertainityMoreThanFiveYears}</p> }
+
+                            {vurdering.riskAssessment.speciesStatus == "A" && 
+                                <p>{labels.General.foundInNorwayBefore}</p> }
+                            {(vurdering.riskAssessment.speciesStatus == "B1" || vurdering.riskAssessment.speciesStatus == "B2" ) &&
+                                <p>{labels.General.furtherInformationRegardingSpecies}</p>}
+                            {(vurdering.riskAssessment.speciesStatus == "C0" || vurdering.riskAssessment.speciesStatus == "C1" ) &&
+                                <p>{labels.General.furtherInformationRegardingReproductionOfSpecies}</p>
+                            }
+                            {vurdering.riskAssessment.speciesStatus != "C3–E" && vurdering.riskAssessment.speciesStatus != "C2" && vurdering.riskAssessment.speciesStatus != null &&
+                                <Xcomp.HtmlString observableValue={[vurdering.riskAssessment, 'furtherInfo']}/> }
+                            </div> : null }
                 </div>
                {/* <Xcomp.Radio
                      kode={koder.AlienSpeciesCategory[0]}

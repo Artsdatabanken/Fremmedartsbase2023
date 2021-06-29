@@ -143,7 +143,7 @@ export default class ObservableHtmlString extends React.Component {
             <HtmlEditor 
                         disabled={(readonly || disabled) && !editable }
                         style={this.style}
-                        content={obj[prop] || placeholder}
+                        content={obj[prop] || placeholder || ""}
                         onChange={action(e => {obj[prop] = e.target.value; return null})}
                         onPasteTransformer={this.pasteTransform}/>
         </div>

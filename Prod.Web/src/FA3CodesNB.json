@@ -3916,6 +3916,13 @@
                         },       
                         {
                             "Id": null,
+                            "Value": "uncertainity",
+                            "Text": "Usikkerhet",
+                            "Info": null,
+                            "Children": null
+                        },  
+                        {
+                            "Id": null,
                             "Value": "potentialDoorknocker",
                             "Text": "Potensiell dørstokkart",
                             "Info": null,
@@ -3927,7 +3934,259 @@
                             "Text": "Øvrige arter",
                             "Info": null,
                             "Children": null
-                        },                        
+                        },         
+                        {
+                            "Id": null,
+                            "Value": "regionallyAlien",
+                            "Text": "regionalt fremmed",
+                            "Info": null,
+                            "Children": null
+                        },   
+                        {
+                            "Id": null,
+                            "Value": "isAlienSpecies",
+                            "Text": "Er arten fremmed?",
+                            "Info": null,
+                            "Children": null
+                        },     
+                        {
+                            "Id": null,
+                            "Value": "unsureIfAlien",
+                            "Text": "Ved usikkerhet velges svaret som det er sannsynlighetsovervekt for.",
+                            "Info": null,
+                            "Children": null
+                        },        
+                        {
+                            "Id": null,
+                            "Value": "unsureAlienDescription",
+                            "Text": " Beskriv eventuell usikkerhet vedrørende artens status som fremmed:",
+                            "Info": null,
+                            "Children": null
+                        },          
+                        {
+                            "Id": null,
+                            "Value": "connectedToAnotherTaxon",
+                            "Text": "Er taksonet omfatta av vurderinga til et annet takson? ",
+                            "Info": null,
+                            "Children": null
+                        }, 
+                        {
+                            "Id": null,
+                            "Value": "enterTaxonName",
+                            "Text": "Oppgi navnet på dette taksonet:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "assessedWithAnotherTaxon",
+                            "Text": "Taksonet vurderes sammen med et annet takson.",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "notAssessedButShared",
+                            "Text": "Taksonet vurderes ikke, men deler vurderinga til et annet takson.",
+                            "Info": null,
+                            "Children": null
+                        }, 
+                        {
+                            "Id": null,
+                            "Value": "isProductionSpecies",
+                            "Text": "Er arten en bruksart?",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "statusInNorway",
+                            "Text": "Hvilken status har arten i Norge?",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "highestCategoryPerToday",
+                            "Text": "Merk av den høyeste (øverste) kategorien som oppfylles av arten i Norge i dag:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "codesExplanation",
+                            "Text": "Koder i parentes angir «etableringskategoriene» ifølge internasjonal standardisering (Blackburn mfl. 2011).",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "establishedBefore1800",
+                            "Text": "Var arten etablert per 1800?",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "probabilityUncertainity",
+                            "Text": "Ved usikkerhet avgjør sannsynlighetsovervekt.",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "uncertainityEstablishmentTimeDescription",
+                            "Text": "Beskriv eventuell usikkerhet vedrørende artens etableringstidspunkt:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "wronglyAssessedBefore",
+                            "Text": "Har arten tidligere vært feilbestemt?",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "didSpecies",
+                            "Text": "Har arten",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "wasAlienButEstablishedNow",
+                            "Text": "vært fremmed, men har nå etablert minst én stedegen bestand",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "wasThoughtToBeAlien",
+                            "Text": "vært antatt å være fremmed, men kunnskapsgrunnlaget/tolkninga er endra",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "reasonForChangingOfStatusDescription",
+                            "Text": "Beskriv hva som ligger til grunn for endringa i artens status:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "conclusion",
+                            "Text": "Konklusjon",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "willBeRiskAssessed",
+                            "Text": "Arten skal risikovurderes.",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "willNotBeRiskAssessed",
+                            "Text": "Arten skal ikke risikovurderes.",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "firstObservationOfSpecies",
+                            "Text": "Første observasjon av arten",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "enterYearOfTheFirstObservationInNorway",
+                            "Text": "Angi årstallet for første observasjon i Norge av... ",
+                            "Info": null,
+                            "Children": null
+                        }, 
+                        {
+                            "Id": null,
+                            "Value": "speciesIndoorsIfRelevant",
+                            "Text": "individ innendørs (hvis relevant):",
+                            "Info": null,
+                            "Children": null
+                        },  
+                        {
+                            "Id": null,
+                            "Value": "reproductionOutdoorsIfRelevant",
+                            "Text": "selvstendig reproduksjon innendørs (hvis relevant):",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "speciesInProductionAreaOutdoors",
+                            "Text": "individ på artens eget produksjonsareal utendørs:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "speciesReproductionInProductionAreaOutdoors",
+                            "Text": "selvstendig reproduksjon på artens eget produksjonsareal utendørs:",
+                            "Info": null,
+                            "Children": null
+                        }, 
+                        {
+                            "Id": null,
+                            "Value": "speciesInNorwegianNature",
+                            "Text": "individ i norsk natur:",
+                            "Info": null,
+                            "Children": null
+                        }, 
+                        {
+                            "Id": null,
+                            "Value": "reproductionInNorwegianNature",
+                            "Text": "selvstendig reproduksjon i norsk natur:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "establishmentInNorwegianNature",
+                            "Text": "etablering i norsk natur: ",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "uncertainityMoreThanFiveYears",
+                            "Text": "Hvis usikkerheten er større enn ± 5 år, sett et kryss til høyre for årstallet.",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "furtherInformationRegardingSpecies",
+                            "Text": "Eventuelle utdypende opplysninger om observasjoner av arten, f.eks. om den tidligere er funnet i norsk natur:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "furtherInformationRegardingReproductionOfSpecies",
+                            "Text": "Eventuelle utdypende opplysninger om observasjoner av arten, f.eks. om den tidligere er funnet reproduserende i norsk natur:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "foundInNorwayBefore",
+                            "Text": "Om arten tidligere har blitt funnet i Norge, beskriv tidspunkt og status:",
+                            "Info": null,
+                            "Children": null
+                        },
                         {
                             "Id": null,
                             "Value": "establishmentPotential",
@@ -4016,6 +4275,59 @@
                             "Id": null,
                             "Value": "multipleSelected",
                             "Text": "Flere valgt",
+                            "Info": null,
+                            "Children": null
+                        }
+                    ],
+
+                    "establishmentCategory": [                       
+
+                        {
+                            "Id": null,
+                            "Value": "C3",
+                            "Text": "Arten er etablert (C3–E)",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "C2",
+                            "Text": "Arten produserer levedyktig avkom utendørs og uten hjelp og kan overleve vinteren (C2)",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "C1",
+                            "Text": "Arten kan overleve vinteren utendørs og uten hjelp (C1)",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "C0",
+                            "Text": "Arten er dokumentert fra norsk natur (C0)",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "B2",
+                            "Text": "Arten forekommer utendørs på sitt eget produksjonsareal (B2)",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "B1",
+                            "Text": "Arten forekommer innendørs eller i lukkede installasjoner (B1)",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "A",
+                            "Text": "Arten forekommer ikke i Norge (A)",
                             "Info": null,
                             "Children": null
                         }
