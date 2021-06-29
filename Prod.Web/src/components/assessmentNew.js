@@ -1,5 +1,5 @@
 import React from 'react';
-import {observer} from 'mobx-react';
+import {observer, inject} from 'mobx-react';
 import * as Xcomp from './observableComponents';
 // import LoadingHoc from './LoadingHoc'
 import {action, autorun, extendObservable, observable, toJS} from "mobx"
@@ -21,7 +21,7 @@ const  newAssessment = observable({
     // taxonSearchWaitingForResult: false - should not be observable
 })
 
-
+@inject("appState")
 
 @observer
 export default class assessmentNew extends React.Component {
@@ -82,7 +82,7 @@ export default class assessmentNew extends React.Component {
                 <div className="well">
                     <div className="row">
                         <div className="col-md-6">
-                            <h3>Legg til ny art</h3>
+                            <h3>{labels.SelectAssessment.createAssessment}</h3>
                             <br></br>
                             <h4>{labels.SelectAssessment.expertgroup}</h4>
                             <Xcomp.StringEnum
@@ -160,14 +160,14 @@ export default class assessmentNew extends React.Component {
                     </div>
                     <div className="row">                            
                             <div className="col-md-6">
-                                <Xcomp.Bool observableValue={[appState, "potensiellDørstokkart"]} label={"Potensiell dørstokkart"} />
-                                <Xcomp.Bool observableValue={[appState, "øvrigeArter"]} label={"Øvrige arter"} />
+                                <Xcomp.Bool observableValue={[newAssessment, "potensiellDørstokkart"]} label={labels.General.potentialDoorknocker} />
+                                <Xcomp.Bool observableValue={[newAssessment, "øvrigeArter"]} label={labels.General.otherSpecies} />
                             </div>
                         </div>
                         <div className="col-md-6" style={{display: 'flex'}}>
-                            <div>NB! For å legge til ny art må du være leder eller ha skrivetilgang!</div>
+                            <div>{labels.SelectAssessment.NBWritingAccess}</div>
                             <Xcomp.Button primary onClick={this.onNewAssessment} disabled={!rolle.skriver || (!newAssessment.ScientificName || checkForExistingAssessment(newAssessment.ScientificName + ' ' + newAssessment.ScientificNameAuthor))}>{labels.SelectAssessment.createAssessment}</Xcomp.Button>
-                            {(newAssessment.ScientificName.length > 0 && !rolle.skriver || ( checkForExistingAssessment(newAssessment.ScientificName + ' ' + newAssessment.ScientificNameAuthor))) ? <div style={{color: 'red'}}>Arten er allerede i listen!</div>: null}
+                            {(newAssessment.ScientificName.length > 0 && !rolle.skriver || ( checkForExistingAssessment(newAssessment.ScientificName + ' ' + newAssessment.ScientificNameAuthor))) ? <div style={{color: 'red'}}>{labels.SelectAssessment.alreadyOnTheList}</div>: null}
                         </div>
                 </div>
             </div>

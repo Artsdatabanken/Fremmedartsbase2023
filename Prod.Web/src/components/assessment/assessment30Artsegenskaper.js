@@ -80,14 +80,16 @@ export default class Assessment30Artsegenskaper extends React.Component {
                 </div>
                 : null}
                 <p>Livsmiljø</p>
-                <Xcomp.Bool observableValue={[vurdering, 'limnic']} label={limnicTerrestrialMarinelabel("limnic")} />            
-                <Xcomp.Bool observableValue={[vurdering, 'terrestrial']} label={limnicTerrestrialMarinelabel("terrestrial")} />            
-                <Xcomp.Bool observableValue={[vurdering, 'marine']} label={limnicTerrestrialMarinelabel("marine")} />     
-                <Xcomp.Bool observableValue={[vurdering, 'brackishWater']} label={limnicTerrestrialMarinelabel("brackishWater")} />         
+                <Xcomp.Bool observableValue={[vurdering, 'Limnic']} label={limnicTerrestrialMarinelabel("limnic")} />            
+                <Xcomp.Bool observableValue={[vurdering, 'Terrestrial']} label={limnicTerrestrialMarinelabel("terrestrial")} />            
+                <Xcomp.Bool observableValue={[vurdering, 'Marine']} label={limnicTerrestrialMarinelabel("marine")} />     
+                <Xcomp.Bool observableValue={[vurdering, 'BrackishWater']} label={limnicTerrestrialMarinelabel("brackishWater")} />         
                 {/*appState.showBrackishWater
                 ? <Xcomp.Bool observableValue={[vurdering, 'brackishWater']} label={limnicTerrestrialMarinelabel("brackishWater")} />            
                 : null*/}
-                {isLimnicTerrestrial ?
+                {
+                isLimnicTerrestrial ?
+                //vurdering.limnic || vurdering.terrestrial ?
                 <div>
                     <br/>
                     <div className="well">

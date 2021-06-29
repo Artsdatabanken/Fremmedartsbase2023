@@ -3913,6 +3913,20 @@
                             "Text": "Søk",
                             "Info": null,
                             "Children": null
+                        },       
+                        {
+                            "Id": null,
+                            "Value": "potentialDoorknocker",
+                            "Text": "Potensiell dørstokkart",
+                            "Info": null,
+                            "Children": null
+                        },       
+                        {
+                            "Id": null,
+                            "Value": "otherSpecies",
+                            "Text": "Øvrige arter",
+                            "Info": null,
+                            "Children": null
                         },                        
                         {
                             "Id": null,
@@ -4384,6 +4398,20 @@
                             "Id": null,
                             "Value": "count",
                             "Text": "Antall",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "alreadyOnTheList",
+                            "Text": "Arten er allerede i listen!",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "NBWritingAccess",
+                            "Text": "NB! For å legge til ny art må du være leder eller ha skrivetilgang!",
                             "Info": null,
                             "Children": null
                         },
