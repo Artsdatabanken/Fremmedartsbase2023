@@ -160,8 +160,8 @@ export default class assessmentNew extends React.Component {
                     </div>
                     <div className="row">                            
                             <div className="col-md-6">
-                                <Xcomp.Bool observableValue={[newAssessment, "potensiellDørstokkart"]} label={labels.General.potentialDoorknocker} />
-                                <Xcomp.Bool observableValue={[newAssessment, "øvrigeArter"]} label={labels.General.otherSpecies} />
+                                <Xcomp.Bool observableValue={[newAssessment, "potensiellDørstokkart"]} label={labels.SpeciesStatus.potentialDoorknocker} />
+                                <Xcomp.Bool observableValue={[newAssessment, "øvrigeArter"]} label={labels.SpeciesStatus.otherSpecies} />
                             </div>
                         </div>
                         <div className="col-md-6" style={{display: 'flex'}}>

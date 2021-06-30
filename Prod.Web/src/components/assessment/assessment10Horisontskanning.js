@@ -23,17 +23,17 @@ export default class Assessment10Horisontskanning extends React.Component {
             <div>
             <div style={{marginBottom: '20px'}}>
                <div className="filters">
-                    <h3>{labels.General.establishmentPotential}</h3>                    
+                    <h3>{labels.SpeciesStatus.establishmentPotential}</h3>                    
                     <div className="scanning">
-                        <p>{labels.General.colonizationInformation}</p>
+                        <p>{labels.SpeciesStatus.colonizationInformation}</p>
                             <Xcomp.StringEnum observableValue={[assessment, "horizonEstablismentPotential"]} mode="radio" codes={codes.HorizonEstablismentPotential}/>                            
                     </div>
                         <Xcomp.HtmlString observableValue={[assessment, 'horizonEstablismentPotentialDescription']} placeholder="Utfyllende informasjon" /> 
                </div>
                <div  className="filters">
-                    <h3>{labels.General.ecologicalEffect}</h3>
+                    <h3>{labels.SpeciesStatus.ecologicalEffect}</h3>
                     <div className="scanning">
-                        <p>{labels.General.knownNegativeEffects}</p>
+                        <p>{labels.SpeciesStatus.knownNegativeEffects}</p>
                         <Xcomp.StringEnum observableValue={[assessment, "horizonEcologicalEffect"]} mode="radio" codes={codes.HorizonEcologicalEffect}/>
                     </div>
                     <Xcomp.HtmlString observableValue={[assessment, 'horizonEcologicalEffectDescription']} placeholder="Utfyllende informasjon" />
@@ -41,10 +41,10 @@ export default class Assessment10Horisontskanning extends React.Component {
                
             </div>
             { (typeof assessment.horizonEstablismentPotential != "string" || typeof assessment.horizonEcologicalEffect != "string" )
-                    ? <b>{labels.General.answerEstablishmentQuestionReminder}</b>
+                    ? <b>{labels.SpeciesStatus.answerEstablishmentQuestionReminder}</b>
                 : appState.horizonDoAssessment
-                ?    <p>{labels.General.willBeAssessed}</p>
-                :    <p>{labels.General.willNotBeAssessed}</p> }
+                ?    <p>{labels.SpeciesStatus.willBeAssessed}</p>
+                :    <p>{labels.SpeciesStatus.willNotBeAssessed}</p> }
 
         </div>
         );

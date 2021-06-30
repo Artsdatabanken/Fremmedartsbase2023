@@ -40,6 +40,59 @@
             }
         ],
 
+        "EstablishmentCategory": [                       
+
+            {
+                "Id": "EstablishmentCategory",
+                "Value": "C3",
+                "Text": "Arten er etablert (C3–E)",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "EstablishmentCategory",
+                "Value": "C2",
+                "Text": "Arten produserer levedyktig avkom utendørs og uten hjelp og kan overleve vinteren (C2)",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "EstablishmentCategory",
+                "Value": "C1",
+                "Text": "Arten kan overleve vinteren utendørs og uten hjelp (C1)",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "EstablishmentCategory",
+                "Value": "C0",
+                "Text": "Arten er dokumentert fra norsk natur (C0)",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "EstablishmentCategory",
+                "Value": "B2",
+                "Text": "Arten forekommer utendørs på sitt eget produksjonsareal (B2)",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "EstablishmentCategory",
+                "Value": "B1",
+                "Text": "Arten forekommer innendørs eller i lukkede installasjoner (B1)",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "EstablishmentCategory",
+                "Value": "A",
+                "Text": "Arten forekommer ikke i Norge (A)",
+                "Info": null,
+                "Children": null
+            }
+        ],
+
 
         "ArrivedCountryFrom": [
             {
@@ -3913,7 +3966,101 @@
                             "Text": "Søk",
                             "Info": null,
                             "Children": null
-                        },       
+                        },  
+                        {
+                            "Id": null,
+                            "Value": "searchSpecies",
+                            "Text": "Skriv inn artsnavn",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "nextPage",
+                            "Text": "Neste Side",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "previousPage",
+                            "Text": "Forrige side",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "showDetails",
+                            "Text": "Vis detaljer",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "noneSelected",
+                            "Text": "Ingen valgt",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "multipleSelected",
+                            "Text": "Flere valgt",
+                            "Info": null,
+                            "Children": null
+                        }
+                    ],
+
+                    "SpeciesStatus": [
+                        {
+                            "Id": null,
+                            "Value": "establishmentPotential",
+                            "Text": "Etableringspotensial",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "ecologicalEffect",
+                            "Text": "Økologisk effekt",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "colonizationInformation",
+                            "Text": "Hvor mange 2 km x 2 km-ruter kan arten kolonisere i løpet av en 10 års-periode basert på én introduksjon til norsk natur? (Anta at selve introduksjonen skjer i perioden f.o.m. i dag og inntil 40 år fram i tid).",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "knownNegativeEffects",
+                            "Text": "Er det noen kjente (fra utlandet) eller antatte (i Norge) negative økologiske effekter knyttet til arten?",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "answerEstablishmentQuestionReminder",
+                            "Text": "Husk å svare på spørsmålene om artens etableringspotensial og økologiske effekt før du går videre.",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "willBeAssessed",
+                            "Text": "Arten skal risikovurderes som dørstokkart. Gå videre til Artens status.",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "willNotBeAssessed",
+                            "Text": "Arten faller utenfor avgrensningen og skal ikke risikovurderes.",
+                            "Info": null,
+                            "Children": null
+                        },
                         {
                             "Id": null,
                             "Value": "uncertainity",
@@ -4186,152 +4333,9 @@
                             "Text": "Om arten tidligere har blitt funnet i Norge, beskriv tidspunkt og status:",
                             "Info": null,
                             "Children": null
-                        },
-                        {
-                            "Id": null,
-                            "Value": "establishmentPotential",
-                            "Text": "Etableringspotensial",
-                            "Info": null,
-                            "Children": null
-                        },
-                        {
-                            "Id": null,
-                            "Value": "ecologicalEffect",
-                            "Text": "Økologisk effekt",
-                            "Info": null,
-                            "Children": null
-                        },
-                        {
-                            "Id": null,
-                            "Value": "colonizationInformation",
-                            "Text": "Hvor mange 2 km x 2 km-ruter kan arten kolonisere i løpet av en 10 års-periode basert på én introduksjon til norsk natur? (Anta at selve introduksjonen skjer i perioden f.o.m. i dag og inntil 40 år fram i tid).",
-                            "Info": null,
-                            "Children": null
-                        },
-                        {
-                            "Id": null,
-                            "Value": "knownNegativeEffects",
-                            "Text": "Er det noen kjente (fra utlandet) eller antatte (i Norge) negative økologiske effekter knyttet til arten?",
-                            "Info": null,
-                            "Children": null
-                        },
-                        {
-                            "Id": null,
-                            "Value": "answerEstablishmentQuestionReminder",
-                            "Text": "Husk å svare på spørsmålene om artens etableringspotensial og økologiske effekt før du går videre.",
-                            "Info": null,
-                            "Children": null
-                        },
-                        {
-                            "Id": null,
-                            "Value": "willBeAssessed",
-                            "Text": "Arten skal risikovurderes som dørstokkart. Gå videre til Artens status.",
-                            "Info": null,
-                            "Children": null
-                        },
-                        {
-                            "Id": null,
-                            "Value": "willNotBeAssessed",
-                            "Text": "Arten faller utenfor avgrensningen og skal ikke risikovurderes.",
-                            "Info": null,
-                            "Children": null
-                        },
-                        {
-                            "Id": null,
-                            "Value": "searchSpecies",
-                            "Text": "Skriv inn artsnavn",
-                            "Info": null,
-                            "Children": null
-                        },
-                        {
-                            "Id": null,
-                            "Value": "nextPage",
-                            "Text": "Neste Side",
-                            "Info": null,
-                            "Children": null
-                        },
-                        {
-                            "Id": null,
-                            "Value": "previousPage",
-                            "Text": "Forrige side",
-                            "Info": null,
-                            "Children": null
-                        },
-                        {
-                            "Id": null,
-                            "Value": "showDetails",
-                            "Text": "Vis detaljer",
-                            "Info": null,
-                            "Children": null
-                        },
-                        {
-                            "Id": null,
-                            "Value": "noneSelected",
-                            "Text": "Ingen valgt",
-                            "Info": null,
-                            "Children": null
-                        },
-                        {
-                            "Id": null,
-                            "Value": "multipleSelected",
-                            "Text": "Flere valgt",
-                            "Info": null,
-                            "Children": null
                         }
                     ],
-
-                    "establishmentCategory": [                       
-
-                        {
-                            "Id": null,
-                            "Value": "C3",
-                            "Text": "Arten er etablert (C3–E)",
-                            "Info": null,
-                            "Children": null
-                        },
-                        {
-                            "Id": null,
-                            "Value": "C2",
-                            "Text": "Arten produserer levedyktig avkom utendørs og uten hjelp og kan overleve vinteren (C2)",
-                            "Info": null,
-                            "Children": null
-                        },
-                        {
-                            "Id": null,
-                            "Value": "C1",
-                            "Text": "Arten kan overleve vinteren utendørs og uten hjelp (C1)",
-                            "Info": null,
-                            "Children": null
-                        },
-                        {
-                            "Id": null,
-                            "Value": "C0",
-                            "Text": "Arten er dokumentert fra norsk natur (C0)",
-                            "Info": null,
-                            "Children": null
-                        },
-                        {
-                            "Id": null,
-                            "Value": "B2",
-                            "Text": "Arten forekommer utendørs på sitt eget produksjonsareal (B2)",
-                            "Info": null,
-                            "Children": null
-                        },
-                        {
-                            "Id": null,
-                            "Value": "B1",
-                            "Text": "Arten forekommer innendørs eller i lukkede installasjoner (B1)",
-                            "Info": null,
-                            "Children": null
-                        },
-                        {
-                            "Id": null,
-                            "Value": "A",
-                            "Text": "Arten forekommer ikke i Norge (A)",
-                            "Info": null,
-                            "Children": null
-                        }
-                    ],
+            
                     "indoorProduktionImport": [
                         {
                             "Id": null,
