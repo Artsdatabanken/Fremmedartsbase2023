@@ -5,7 +5,7 @@ import {observer, inject} from 'mobx-react';
 import {autorun, extendObservable, observable} from 'mobx';
 import * as Xcomp from './observableComponents';
 import Risikomatrise from './risikomatrise';
-import FileUpload from '../fileUpload';
+import FileUpload from './../fileUpload';
 
 @inject("appState")
 @observer
@@ -225,11 +225,15 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                     }} />
                 </div>*/}
                 <div>
-                    <h3>Årsak til endring</h3>
-                        <p>Kategori Fremmedartslista 2023: {assessment.riskAssessment.riskLevelCode}</p>
-                        <p>Kategori Fremmedartslista 2018: {assessment.riskAssessment.riskLevelCode}</p>
-                        <p>Årsak til endring i kategori er</p> 
-                        <Xcomp.Bool
+                    <h3>{labels.critDocumentation.reasonForChangeHeading}</h3>
+                        <p> {labels.critDocumentation.cat2023} {assessment.riskAssessment.riskLevelCode}</p>
+                        <p> {labels.critDocumentation.cat2018} {assessment.riskAssessment.riskLevelCode}</p>
+                        <p>{labels.critDocumentation.reasonForChange}</p> 
+                        <Xcomp.MultiselectArray
+                                observableValue={[assessment, 'reasonForChangeOfCategory']}                                 
+                                codes={koder.reasonsForCategoryChange}
+                                mode="check"/>
+                        {/*<Xcomp.Bool
                             label='Reell endring i utbredelse, forekomstareal og/eller økologiske effekter'
                             observableValue={[assessment, 'reasonForChangeOfCategory']}/>
                          <Xcomp.Bool
@@ -243,11 +247,11 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                             observableValue={[assessment, 'reasonForChangeOfCategory']}/>
                         <Xcomp.Bool
                             label='Endret status (inkl. taksonomi, til/fra hjemlig)'
-                            observableValue={[assessment, 'reasonForChangeOfCategory']}/>
+                        observableValue={[assessment, 'reasonForChangeOfCategory']}/> */}
 
-                        <p>Endring i kategori fra 2018 er en følge av: {assessment.reasonForChangeOfCategory}</p>
+                        <p>{labels.critDocumentation.reasonForChangeFrom2018} {assessment.reasonForChangeOfCategory}</p>
 
-                        <p>Gi en utfyllende beskrivelse av årsaken(e) for endret kategori</p>
+                        <p>{labels.critDocumentation.detailedDescriptionOfTheReasons}</p>
                         <Xcomp.HtmlString
                             observableValue={[assessment, 'descriptionOfReasonsForChangeOfCategory']}
                             style={{

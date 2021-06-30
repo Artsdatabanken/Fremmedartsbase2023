@@ -71,8 +71,7 @@ namespace Prod.Domain
         public string VurderingsStatus { get; set; }
 
         //public string SpeciesName { get; set; } // fab: SpeciesName // Brukes 'over alt' i 2012 - toooodo: bør kunne klare oss uten?
-
-
+        public List<string> ReasonForChangeOfCategory { get; set; } = new List<string>();
         public DateTime LastUpdatedAt { get; set; }
         public string LastUpdatedBy { get; set; }
         public DateTime LockedForEditAt { get; set; }

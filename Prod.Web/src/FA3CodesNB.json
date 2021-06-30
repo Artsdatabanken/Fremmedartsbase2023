@@ -431,6 +431,34 @@
               "value": "i"
             }
         ],
+
+        "reasonsForCategoryChange": [
+
+            {
+                "text": "Reell endring i utbredelse, forekomstareal og/eller økologiske effekter",
+                "value": "realChange"
+              },
+              {
+    
+                "text": "Ny kunnskap",
+                "value": "newInformation"
+              },
+              {
+    
+                "text": "Endrede kriterier, avgrensninger eller retningslinjer",
+                "value": "changedCriteria"
+              },
+              {
+    
+                "text": "Ny tolkning av tidligere data",
+                "value": "newInterpretation"
+              },
+              {
+    
+                "text": "Endret status (inkl. taksonomi, til/fra hjemlig)",
+                "value": "changedStatus"
+              }
+        ],
   
         "DoorKnocker": [
             {
@@ -6093,6 +6121,48 @@
                             "Id": null,
                             "Value": "conclusion",
                             "Text": "Konklusjon",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "reasonForChangeHeading",
+                            "Text": "Årsak til endring",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "cat2023",
+                            "Text": "Kategori Fremmedartslista 2023: ",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "cat2018",
+                            "Text": "Kategori Fremmedartslista 2018:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "reasonForChange",
+                            "Text": "Årsak til endring i kategori er",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "reasonForChangeFrom2018",
+                            "Text": "Endring i kategori fra 2018 er en følge av:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "detailedDescriptionOfTheReasons",
+                            "Text": "Gi en utfyllende beskrivelse av årsaken(e) for endret kategori",
                             "Info": null,
                             "Children": null
                         },

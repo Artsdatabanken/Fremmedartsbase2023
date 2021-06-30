@@ -213,6 +213,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.IsAlienSpecies, opt => opt.Ignore())
                     .ForMember(dest => dest.ConnectedToAnother, opt => opt.Ignore())
                     .ForMember(dest => dest.SpeciesStatus, opt => opt.Ignore())
+                    .ForMember(dest => dest.ReasonForChangeOfCategory, opt => opt.Ignore())
                     .ForMember(dest => dest.LastUpdatedBy, opt => opt.MapFrom(src => src.SistOppdatertAv))
                     .ForMember(dest => dest.LastUpdatedAt, opt => opt.MapFrom(src => src.SistOppdatert))
                     .ForMember(dest => dest.LockedForEditAt,
