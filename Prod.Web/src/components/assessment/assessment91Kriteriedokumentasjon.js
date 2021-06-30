@@ -5,6 +5,7 @@ import {observer, inject} from 'mobx-react';
 import {autorun, extendObservable, observable} from 'mobx';
 import * as Xcomp from './observableComponents';
 import Risikomatrise from './risikomatrise';
+import FileUpload from '../fileUpload';
 
 @inject("appState")
 @observer
@@ -35,7 +36,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
 
 
     render() {
-        const {appState:{assessment:{riskAssessment}}, appState, kritDocInfo} = this.props;
+        const {appState:{assessment}, appState:{assessment:{riskAssessment}}, appState, kritDocInfo} = this.props;
         const labels = appState.codeLabels
 		const koder = appState.koder
         const critlabels = labels.critDocumentation
@@ -52,8 +53,10 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
         return (
             <div>
                 {config.showPageHeaders
-                    ? <h3>Kriteriedokumentasjon</h3>
+                    ? <h3>{labels.critDocumentation.status}</h3>
                     : <br/>}
+
+                    <h3>{labels.critDocumentation.status}</h3>
                     {appState.skalVurderes ?
                         <div>
                             <Risikomatrise
@@ -62,7 +65,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                                 ecoeffect={riskAssessment._ecoeffectLevel.level}
                                 invasjonUncertaintyLevels={riskAssessment._invasjonspotensialeLevel.uncertaintyLevels}
                                 ecoeffectUncertaintyLevels={riskAssessment._ecoeffectLevel.uncertaintyLevels}/>
-                            <h3>{riskAssessment.RiskLevelText} <b> {riskAssessment.riskLevelCode}</b></h3>
+                            <h3>{riskAssessment.riskLevelText} <b> {riskAssessment.riskLevelCode}</b></h3>
                             <h4>{critlabels.decisiveCriteria}:
                                 <b> {riskAssessment.decisiveCriteria}</b>
                             </h4>
@@ -73,6 +76,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                             <p>{critlabels.notEvaluated3}</p>
                             <br />
                         </div> }
+                <br/>
                 <div>
                     <div className="well">
                         <h4>{critlabels.speciesDescription}</h4>
@@ -192,7 +196,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                     ? <div>{critlabels.assessmentComplete}<p/><Xcomp.Button onClick={() => this.resetAssessmentComplete(appState)}>{critlabels.resetComplete}</Xcomp.Button></div>
                     : null}
                 </div>
-{/*() => appState.setAssessmentComplete(appState.vurdering)*/}
+{/*() => appState.setAssessmentComplete(appState.vurdering)
                 <div>
                     <h3>{critlabels.criteriaDocumentation}</h3>
                     <p
@@ -219,6 +223,39 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                         dangerouslySetInnerHTML={{
                         __html: riskAssessment.criteriaDocumentation
                     }} />
+                </div>*/}
+                <div>
+                    <h3>Årsak til endring</h3>
+                        <p>Kategori Fremmedartslista 2023: {assessment.riskAssessment.riskLevelCode}</p>
+                        <p>Kategori Fremmedartslista 2018: {assessment.riskAssessment.riskLevelCode}</p>
+                        <p>Årsak til endring i kategori er</p> 
+                        <Xcomp.Bool
+                            label='Reell endring i utbredelse, forekomstareal og/eller økologiske effekter'
+                            observableValue={[assessment, 'reasonForChangeOfCategory']}/>
+                         <Xcomp.Bool
+                            label='Ny kunnskap'
+                            observableValue={[assessment, 'reasonForChangeOfCategory']}/>
+                         <Xcomp.Bool
+                            label='Endrede kriterier, avgrensninger eller retningslinjer'
+                            observableValue={[assessment, 'reasonForChangeOfCategory']}/>
+                         <Xcomp.Bool
+                            label='Ny tolkning av tidligere data'
+                            observableValue={[assessment, 'reasonForChangeOfCategory']}/>
+                        <Xcomp.Bool
+                            label='Endret status (inkl. taksonomi, til/fra hjemlig)'
+                            observableValue={[assessment, 'reasonForChangeOfCategory']}/>
+
+                        <p>Endring i kategori fra 2018 er en følge av: {assessment.reasonForChangeOfCategory}</p>
+
+                        <p>Gi en utfyllende beskrivelse av årsaken(e) for endret kategori</p>
+                        <Xcomp.HtmlString
+                            observableValue={[assessment, 'descriptionOfReasonsForChangeOfCategory']}
+                            style={{
+                            width: 800,
+                            height: 150,
+                            maxHeight: 150
+                        }}/>
+                        <FileUpload/>
                 </div>
             </div>
         );
