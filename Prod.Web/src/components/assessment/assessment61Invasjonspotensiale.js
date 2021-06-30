@@ -139,13 +139,13 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     <p>{ntLabels.scoreSummary}</p>
                     <ScoreUnsure appState={appState}
                                 critScores={koder.scoresA}
-                                firstValue={"scoreC"}
-                                secondValue={"unsureC"}/>
+                                firstValue={"scoreA"}
+                                secondValue={"unsureA"}/>
                     <p>{ntLabels.score}</p>
                     <ScoreUnsure appState={appState}
                                 critScores={koder.scoresA}
-                                firstValue={"scoreC"}
-                                secondValue={"unsureC"}/>
+                                firstValue={"scoreA"}
+                                secondValue={"unsureA"}/>
 
                     <Xcomp.Button primary onClick= {() => {
                          console.log("Save assessment")
@@ -167,13 +167,13 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     <p>{ntLabels.scoreSummary}</p>
                     <ScoreUnsure appState={appState}
                                 critScores={koder.scoresA}
-                                firstValue={"scoreC"}
-                                secondValue={"unsureC"}/>
+                                firstValue={"scoreA"}
+                                secondValue={"unsureA"}/>
                     <p>{ntLabels.score}</p>
                     <ScoreUnsure appState={appState}
                                 critScores={koder.scoresA}
-                                firstValue={"scoreC"}
-                                secondValue={"unsureC"}/>
+                                firstValue={"scoreA"}
+                                secondValue={"unsureA"}/>
 
                     <Xcomp.Button primary onClick= {() => {
                          console.log("Save assessment")
@@ -240,8 +240,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     <p>{ntLabels.scoreSummary}</p>
                     <ScoreUnsure appState={appState}
                                 critScores={koder.scoresB}
-                                firstValue={"scoreC"}
-                                secondValue={"unsureC"}/>
+                                firstValue={"scoreB"}
+                                secondValue={"unsureB"}/>
 
                     <Xcomp.Button primary onClick= {() => {
                          console.log("Save assessment")
@@ -290,8 +290,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     <p>{ntLabels.scoreSummary}</p>
                     <ScoreUnsure appState={appState}
                                 critScores={koder.scoresB}
-                                firstValue={"scoreC"}
-                                secondValue={"unsureC"}/>
+                                firstValue={"scoreB"}
+                                secondValue={"unsureB"}/>
                      <Xcomp.Button primary onClick= {() => {
                          console.log("Save assessment")
                         appState.saveCurrentAssessment();
@@ -600,8 +600,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     <p>{ntLabels.scoreSummary}</p>
                     <ScoreUnsure appState={appState}
                                 critScores={koder.scoresB}
-                                firstValue={"scoreC"}
-                                secondValue={"unsureC"}/>
+                                firstValue={"scoreB"}
+                                secondValue={"unsureB"}/>
                      <Xcomp.Button primary onClick= {() => {
                          console.log("Save assessment")
                         appState.saveCurrentAssessment();
@@ -685,8 +685,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     <p>{ntLabels.scoreSummary}</p>
                     <ScoreUnsure appState={appState}
                                 critScores={koder.scoresB}
-                                firstValue={"scoreC"}
-                                secondValue={"unsureC"}/>
+                                firstValue={"scoreB"}
+                                secondValue={"unsureB"}/>
                      <Xcomp.Button primary onClick= {() => {
                          console.log("Save assessment")
                         appState.saveCurrentAssessment();
@@ -699,8 +699,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     <p>{ntLabels.scoreSummary}</p>
                     <ScoreUnsure appState={appState}
                                 critScores={koder.scoresB}
-                                firstValue={"scoreC"}
-                                secondValue={"unsureC"}/>
+                                firstValue={"scoreB"}
+                                secondValue={"unsureB"}/>
                      <Xcomp.Button primary onClick= {() => {
                          console.log("Save assessment")
                         appState.saveCurrentAssessment();

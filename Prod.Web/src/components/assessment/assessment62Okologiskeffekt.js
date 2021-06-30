@@ -285,8 +285,8 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                     <p>{ntLabels.score}</p>
                     <ScoreUnsure appState={appState}
                                 critScores={koder.scoresD}
-                                firstValue={"scoreC"}
-                                secondValue={"unsureC"}/>
+                                firstValue={"scoreD"}
+                                secondValue={"unsureD"}/>
                      <Xcomp.HtmlString                            
                                 observableValue={[riskAssessment, "DCritInsecurity"]}
                                 label={labels.DEcrit.insecurity}
@@ -297,8 +297,8 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                     <p>{ntLabels.score}</p>
                     <ScoreUnsure appState={appState}
                                 critScores={koder.scoresE}
-                                firstValue={"scoreC"}
-                                secondValue={"unsureC"}/>
+                                firstValue={"scoreE"}
+                                secondValue={"unsureE"}/>
                      <Xcomp.HtmlString                            
                                 observableValue={[riskAssessment, "ECritInsecurity"]}
                                 label={labels.DEcrit.insecurity}
@@ -329,8 +329,8 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                     <p>{ntLabels.score}</p>
                     <ScoreUnsure appState={appState}
                                 critScores={koder.scoresH}
-                                firstValue={"scoreC"}
-                                secondValue={"unsureC"}/>
+                                firstValue={"scoreH"}
+                                secondValue={"unsureH"}/>
                      <Xcomp.HtmlString                            
                                 observableValue={[riskAssessment, "HCritInsecurity"]}
                                 label={labels.DEcrit.insecurity}
@@ -352,8 +352,8 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                     <p>{ntLabels.score}</p>
                     <ScoreUnsure appState={appState}
                                 critScores={koder.scoresI}
-                                firstValue={"scoreC"}
-                                secondValue={"unsureC"}/>
+                                firstValue={"scoreI"}
+                                secondValue={"unsureI"}/>
                      <Xcomp.HtmlString                            
                                 observableValue={[riskAssessment, "ICritInsecurity"]}
                                 label={labels.DEcrit.insecurity}

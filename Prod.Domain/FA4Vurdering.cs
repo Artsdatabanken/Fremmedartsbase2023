@@ -881,10 +881,24 @@ namespace Prod.Domain
 
         public List<string> BackgroundG { get; set; } = new List<string>();
         public List<string> Hovedøkosystem { get; set; } = new List<string>();
+        public List<string> ScoreA { get; set; } = new List<string>();
+
+        public List<string> UnsureA { get; set; } = new List<string>();
+        public List<string> ScoreB { get; set; } = new List<string>();
+
+        public List<string> UnsureB { get; set; } = new List<string>();
 
         public List<string> ScoreC { get; set; } = new List<string>();
 
         public List<string> UnsureC { get; set; } = new List<string>();
+
+        public List<string> ScoreD { get; set; } = new List<string>();
+
+        public List<string> UnsureD { get; set; } = new List<string>();
+
+        public List<string> ScoreE { get; set; } = new List<string>();
+
+        public List<string> UnsureE { get; set; } = new List<string>();
 
         public List<string> ScoreF { get; set; } = new List<string>();
 
@@ -892,6 +906,16 @@ namespace Prod.Domain
         public List<string> ScoreG { get; set; } = new List<string>();
 
         public List<string> UnsureG { get; set; } = new List<string>();
+
+        public List<string> ScoreI { get; set; } = new List<string>();
+
+        public List<string> UnsureI { get; set; } = new List<string>();
+
+        public List<string> ScoreH { get; set; } = new List<string>();
+
+        public List<string> UnsureH { get; set; } = new List<string>();
+
+
 
         public string natureAffectedAbroadF { get; set; }
 
