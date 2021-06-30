@@ -259,7 +259,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                             height: 150,
                             maxHeight: 150
                         }}/>
-                        <FileUpload/>
+                        {/*<FileUpload/>*/}
                 </div>
             </div>
         );
