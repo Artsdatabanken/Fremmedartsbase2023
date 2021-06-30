@@ -78,10 +78,12 @@ import {UserContext} from './components'
 //   observableValue: PropTypes.array.isRequired
 // }
 
-function filterDisplay(obj, prop) {
+function filterDisplay(obj, prop, yearRange) {
   if (obj[prop] || obj[prop] === 0)
     if (obj[prop] === 'ERROR!')
         return 'ERROR!'
+    else if (yearRange && (obj[prop] < 0 || obj[prop] > 2024))
+        return 'Oppgi korrekt årstall!'
     else return filterNumericInput(obj[prop].toString())
   return ''
 }
@@ -107,7 +109,7 @@ function filterNumericInput(s, integer = false) {
 
 const ObservableNumber = (props) => <Observer>{() => {
   const context = UserContext.getContext()
-  const { observableValue, validate, integer, label, width, disabled, displayed, className } = props
+  const { observableValue, validate, integer, label, width, disabled, displayed, className, yearRange } = props
   const [obj, prop] = observableValue
   // const obstype = typeof(obj[prop])
   //console.log("obstype (" + prop + "):" + obstype + "  value: " + obj[prop])
@@ -124,7 +126,7 @@ const ObservableNumber = (props) => <Observer>{() => {
         <input
           className="form-control"
           name={prop}
-          value={displayed ? displayed : filterDisplay(obj, prop)}
+          value={displayed ? displayed : filterDisplay(obj, prop, yearRange)}
           onChange={action(e => {
             obj[prop] = filterNumericInput(
               e.currentTarget.value,
