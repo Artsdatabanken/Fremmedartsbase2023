@@ -5,7 +5,7 @@ import {observer, inject} from 'mobx-react';
 import {autorun, extendObservable, observable} from 'mobx';
 import * as Xcomp from './observableComponents';
 import Risikomatrise from './risikomatrise';
-import FileUpload from './../fileUpload';
+//import FileUpload from './../fileUpload';
 
 @inject("appState")
 @observer
