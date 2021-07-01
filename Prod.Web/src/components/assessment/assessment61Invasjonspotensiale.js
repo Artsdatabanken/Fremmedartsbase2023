@@ -23,7 +23,8 @@ class SelectableRadio extends React.Component {
         // obj["Selectable" + this.props.value])
         const val = this.props.value
         // const activeVal =  disabled ? "" : val
-        const disabled = !obj["Selectable" + val] || this.context.readonly
+        //const disabled = !obj["Selectable" + val] || this.context.readonly
+        const disabled = false
         const label = this.props.label + (obj[val]
             ? "  (" + obj[val] + ")"
             : "")
@@ -123,65 +124,78 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                             label={labels.AcritSelect.c}
                             value={"redListCategoryLevel"}
                             observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]}/>
+                    {riskAssessment.chosenSpreadMedanLifespan == "spreadPVAAnalysisEstimatedSpeciesLongevity" ? 
+                        assessment.alienSpeciesCategory == "DoorKnocker" ? 
+                        <fieldset className="well">
 
-                    <p>Basert på de beste anslagene på forekomstareal i dag ([X1] km2) og om 50 år ([X2] km2) er A-kriteriet forhåndsskåret som [X3] (med usikkerhet: [X4-X5]). 
-                        Dette innebærer at artens mediane levetid ligger [mellom X6 år og X7 år], eller at sannsynligheten for utdøing innen 50 år er på [mellom X8 % og X9 %].</p>
+                        <p>Basert på det beste anslaget på [X1] forekomster i løpet av 10 år og [X2] introduksjoner i samme tidsperiode er A-kriteriet forhåndsskåret som [X3] (med usikkerhet: [X4-X5]). 
+                                                Dette innebærer at artens mediane levetid ligger [mellom X6 år og X7 år], eller at sannsynligheten for utdøing innen 50 år er på [mellom X8 % og X9 %].</p>
+                                           
+                            <Xcomp.StringEnum observableValue={[riskAssessment, "acceptOrAdjustCritA"]} mode="radio" codes={koder.AcceptOrAdjust}/>   
+                                         
+                                            {riskAssessment.acceptOrAdjustCritA == "b" ? 
+                                            <div>
+                                                <Xcomp.HtmlString observableValue={[riskAssessment, 'reasonForAdjustmentCritA']} label="Begrunnelse for justering:" />
+                                                <p>{ntLabels.score}</p>
+                                                <ScoreUnsure appState={appState}
+                                                        critScores={koder.scoresA}
+                                                        firstValue={"scoreA"}
+                                                        secondValue={"unsureA"}/>
+                                            </div> : 
+                                            <div>
+                                                <p>{ntLabels.scoreSummary}</p>
+                                                <ScoreUnsure appState={appState}
+                                                        critScores={koder.scoresA}                                                        
+                                                        disabled={"false"}
+                                                        firstValue={"scoreA"}
+                                                        secondValue={"unsureA"}/>
+                                            </div> }
+                                            <Xcomp.Button primary onClick= {() => {
+                                                //console.log("Save assessment")
+                                                 appState.saveCurrentAssessment();
+                                                }}>Lagre</Xcomp.Button>   
+                                            
+                        </fieldset> : 
+                        <fieldset className="well">
+                            <p>Basert på de beste anslagene på forekomstareal i dag ([X1] km2) og om 50 år ([X2] km2) er A-kriteriet forhåndsskåret som [X3] (med usikkerhet: [X4-X5]). 
+                                Dette innebærer at artens mediane levetid ligger [mellom X6 år og X7 år], eller at sannsynligheten for utdøing innen 50 år er på [mellom X8 % og X9 %].</p>
+                            <Xcomp.StringEnum observableValue={[riskAssessment, "acceptOrAdjustCritA"]} mode="radio" codes={koder.AcceptOrAdjust}/>   
+
+                            {riskAssessment.acceptOrAdjustCritA == "b" ? 
+                                            <div>
+                                                <Xcomp.HtmlString observableValue={[riskAssessment, 'reasonForAdjustmentCritA']} label="Begrunnelse for justering:" />
+                                                <p>{ntLabels.score}</p>
+                                                <ScoreUnsure appState={appState}
+                                                        critScores={koder.scoresA}
+                                                        firstValue={"scoreA"}
+                                                        secondValue={"unsureA"}/>
+                                            </div> : 
+                                            <div>
+                                                <p>{ntLabels.scoreSummary}</p>
+                                                <ScoreUnsure appState={appState}
+                                                        critScores={koder.scoresA}                                                        
+                                                        disabled={"false"}
+                                                        firstValue={"scoreA"}
+                                                        secondValue={"unsureA"}/>
+                                            </div> }     
+                                            <Xcomp.Button primary onClick= {() => {
+                                                //console.log("Save assessment")
+                                                 appState.saveCurrentAssessment();
+                                                }}>Lagre</Xcomp.Button>                      
+                        </fieldset>
+                        : null
+
+                }
                     
-                    <Xcomp.Radio
-                        kode={"y"}
-                        observableValue={[riskAssessment, "acceptOrAdjustCritA"]}
-                        label={labels.AcceptOrAdjust.a}/>
-                    <Xcomp.Radio
-                        kode={"n"}
-                        observableValue={[riskAssessment, "acceptOrAdjustCritA"]}
-                        label={labels.AcceptOrAdjust.b}/> 
-                     <Xcomp.HtmlString observableValue={[riskAssessment, 'reasonForAdjustmentCritA']} label="Begrunnelse for justering:" />
-                    <p>{ntLabels.scoreSummary}</p>
-                    <ScoreUnsure appState={appState}
-                                critScores={koder.scoresA}
-                                firstValue={"scoreA"}
-                                secondValue={"unsureA"}/>
-                    <p>{ntLabels.score}</p>
-                    <ScoreUnsure appState={appState}
-                                critScores={koder.scoresA}
-                                firstValue={"scoreA"}
-                                secondValue={"unsureA"}/>
 
-                    <Xcomp.Button primary onClick= {() => {
+                  {/*  <Xcomp.Button primary onClick= {() => {
                          console.log("Save assessment")
                         appState.saveCurrentAssessment();
-                    }}>Lagre</Xcomp.Button>
+                    }}>Lagre</Xcomp.Button> */}
 
-                    <p>Basert på det beste anslaget på [X1] forekomster i løpet av 10 år og [X2] introduksjoner i samme tidsperiode er A-kriteriet forhåndsskåret som [X3] (med usikkerhet: [X4-X5]). 
-                        Dette innebærer at artens mediane levetid ligger [mellom X6 år og X7 år], eller at sannsynligheten for utdøing innen 50 år er på [mellom X8 % og X9 %].</p>
-                    <Xcomp.Radio
-                        kode={"y"}
-                        observableValue={[riskAssessment, "acceptOrAdjustCritA"]}
-                        label={labels.AcceptOrAdjust.a}/>
-                    <Xcomp.Radio
-                        kode={"n"}
-                        observableValue={[riskAssessment, "acceptOrAdjustCritA"]}
-                        label={labels.AcceptOrAdjust.b}/> 
-                     <Xcomp.HtmlString observableValue={[riskAssessment, 'reasonForAdjustmentCritA']} label="Begrunnelse for justering:" />
-
-                    <p>{ntLabels.scoreSummary}</p>
-                    <ScoreUnsure appState={appState}
-                                critScores={koder.scoresA}
-                                firstValue={"scoreA"}
-                                secondValue={"unsureA"}/>
-                    <p>{ntLabels.score}</p>
-                    <ScoreUnsure appState={appState}
-                                critScores={koder.scoresA}
-                                firstValue={"scoreA"}
-                                secondValue={"unsureA"}/>
-
-                    <Xcomp.Button primary onClick= {() => {
-                         console.log("Save assessment")
-                        appState.saveCurrentAssessment();
-                    }}>Lagre</Xcomp.Button>
-
-
-                   <div className="statusField"> 
+            {riskAssessment.chosenSpreadMedanLifespan == "spreadRscriptEstimatedSpeciesLongevity" ? 
+                <div>
+                    <div className="statusField"> 
                    <div className="labels">
                         <p>{labels.Acrit.speciesCount}</p>
                         <p>{labels.Acrit.populationGrowth}</p>
@@ -240,6 +254,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     <p>{ntLabels.scoreSummary}</p>
                     <ScoreUnsure appState={appState}
                                 critScores={koder.scoresB}
+                                disabled={"false"}
                                 firstValue={"scoreB"}
                                 secondValue={"unsureB"}/>
 
@@ -248,7 +263,11 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                         appState.saveCurrentAssessment();
                     }}>Lagre</Xcomp.Button>
 
-                <div className="statusField"> 
+                </div> : null }
+                   
+                {riskAssessment.chosenSpreadMedanLifespan == "redListCategoryLevel" ? 
+                <div>
+                    <div className="statusField"> 
                    <div className="labels">
                         <p>{labels.Acrit.PVAAnalysis}</p>
 
@@ -289,13 +308,16 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     
                     <p>{ntLabels.scoreSummary}</p>
                     <ScoreUnsure appState={appState}
-                                critScores={koder.scoresB}
+                                critScores={koder.scoresB}                                
+                                disabled={"false"}
                                 firstValue={"scoreB"}
                                 secondValue={"unsureB"}/>
                      <Xcomp.Button primary onClick= {() => {
                          console.log("Save assessment")
                         appState.saveCurrentAssessment();
                     }}>Lagre</Xcomp.Button>
+                </div> : null }
+                
                    {/* {riskAssessment.activeSpreadPVAAnalysisEstimatedSpeciesLongevity
                         ? <div>
                                 <table className="formtable">

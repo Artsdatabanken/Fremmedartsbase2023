@@ -168,12 +168,14 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.BasisOfAssessment, opt => opt.Ignore())
                     .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.Ignore());
 
-                cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment, Prod.Domain.RiskAssessment>()
+                cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment, Prod.Domain.RiskAssessment>()               
+               
                     .ForMember(dest => dest.Naturetype2018, opt => opt.Ignore())
                     .ForMember(dest => dest.NaturetypeNIN2, opt => opt.Ignore())
                     .ForMember(dest => dest.BackgroundC, opt => opt.Ignore())
                     .ForMember(dest => dest.BackgroundF, opt => opt.Ignore())
                     .ForMember(dest => dest.BackgroundG, opt => opt.Ignore())
+                    .ForMember(dest => dest.AcceptOrAdjustCritA, opt => opt.Ignore())
                     .ForMember(dest => dest.Hovedøkosystem, opt => opt.Ignore())
                     .ForMember(dest => dest.ScoreA, opt => opt.Ignore())
                     .ForMember(dest => dest.UnsureA, opt => opt.Ignore())

@@ -93,7 +93,23 @@
             }
         ],
 
-
+        "AcceptOrAdjust": [
+            {
+                "Id": "AcceptOrAdjust",
+                "Value": "a",
+                "Text": "Godtar beregnet skår",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "AcceptOrAdjust",
+                "Value": "b",
+                "Text": "Ønsker å justere skår",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        
         "ArrivedCountryFrom": [
             {
                 "Id": "ArrivedCountryFrom",
@@ -4380,22 +4396,7 @@
                             "Children": null
                         }
                     ],
-                    "AcceptOrAdjust": [
-                        {
-                            "Id": null,
-                            "Value": "a",
-                            "Text": "Godtar beregnet skår",
-                            "Info": null,
-                            "Children": null
-                        },
-                        {
-                            "Id": null,
-                            "Value": "b",
-                            "Text": "Ønsker å justere skår",
-                            "Info": null,
-                            "Children": null
-                        }
-                    ],
+                   
                     "AcritSelect": [
                         {
                             "Id": null,
