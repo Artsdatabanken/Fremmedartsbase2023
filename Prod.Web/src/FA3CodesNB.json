@@ -3071,7 +3071,7 @@
             {
                 "Id": "Criterion",
                 "Value": "G",
-                "Text": "G-kriteriet: Effekter på øvrige naturtyper",
+                "Text": "G-kriteriet: Effekter på «øvrige» naturtyper",
                 "Info": "Naturtypeareal (%) som gjennomgår tilstandsendring er overført fra «Naturtyper»",
                 "Children": {
                     "CritG": [

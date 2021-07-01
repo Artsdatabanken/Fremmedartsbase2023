@@ -84,6 +84,7 @@ export default class Assessment51Naturtyper extends React.Component {
                     naturetypes={assessment.impactedNatureTypes}
                     canRenderTable={canRenderTable}
                     labels={labels}
+                    codes={koder}
                     appState={appState}
                     desc={"Anslå kolonisert areal i de naturtypene arten er observert i, beskriv artens påvirkning i naturtypen og anslå hvor stor andel av naturtypen som blir påvirket. Det skal være sannsynlighetsovervekt for at valgt tilstandsendring skjer."}/>
                 <br/>
@@ -96,11 +97,11 @@ export default class Assessment51Naturtyper extends React.Component {
                                 critScores={koder.scoresC}
                                 firstValue={"scoreC"}
                                 secondValue={"unsureC"}/>
-                    <b>{ntLabels.assessmentBackground}</b>
+                   {/* <b>{ntLabels.assessmentBackground}</b>
                     <Xcomp.MultiselectArray
                                 observableValue={[riskAssessment, 'backgroundC']} 
                                 codes={koder.assessmentBackgrounds}
-                                mode="check"/>
+                    mode="check"/>*/}
 
                     
                     <Criterion criterion={critC} mode="noheading"/>
@@ -113,13 +114,19 @@ export default class Assessment51Naturtyper extends React.Component {
                                  critScores={koder.scoresF}
                                  firstValue={"scoreF"}
                                  secondValue={"unsureF"}/>
-                    <b>{ntLabels.assessmentBackground}</b>
+                   {/* <b>{ntLabels.assessmentBackground}</b>
                     <Xcomp.MultiselectArray
                                 observableValue={[riskAssessment, 'backgroundF']} 
                                 codes={koder.assessmentBackgrounds}
-                                mode="check"/>
-                    <p>{ntLabels.natureAffectedAbroad}</p>
-                    <Xcomp.HtmlString observableValue={[riskAssessment, 'natureAffectedAbroadF']}/>
+                   mode="check"/>*/}
+
+                    {riskAssessment.backgroundF.indexOf("ObservationAbroad") > -1 || riskAssessment.backgroundF.indexOf("WrittenDocumentationAbroad") > -1 ? 
+                    <div>
+                        <p>{ntLabels.natureAffectedAbroad}</p>
+                        <Xcomp.HtmlString observableValue={[riskAssessment, 'natureAffectedAbroadF']}/>
+                    </div> : null}
+                   
+                    
                     {/*<div>
                         <span>{appState.evaluationContext.name}:
                         </span>
@@ -157,13 +164,18 @@ export default class Assessment51Naturtyper extends React.Component {
                                 critScores={koder.scoresG}
                                 firstValue={"scoreG"}
                                 secondValue={"unsureG"}/>
-                    <b>{ntLabels.assessmentBackground}</b>
+                   {/* <b>{ntLabels.assessmentBackground}</b>
                     <Xcomp.MultiselectArray
                                 observableValue={[riskAssessment, 'backgroundG']} 
                                 codes={koder.assessmentBackgrounds}
-                                mode="check"/>
-                    <p>{ntLabels.natureAffectedAbroad}</p>
-                    <Xcomp.HtmlString observableValue={[riskAssessment, 'natureAffectedAbroadG']}/>
+                mode="check"/> */}
+
+                    {riskAssessment.backgroundG.indexOf("ObservationAbroad") > -1 || riskAssessment.backgroundG.indexOf("WrittenDocumentationAbroad") > -1 ? 
+                    <div>
+                        <p>{ntLabels.natureAffectedAbroad}</p>
+                        <Xcomp.HtmlString observableValue={[riskAssessment, 'natureAffectedAbroadG']}/>
+                    </div> : null }
+                    
                    {/* <div>
                         <span>{appState.evaluationContext.name}:
                         </span>
