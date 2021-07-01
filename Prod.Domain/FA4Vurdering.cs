@@ -328,6 +328,8 @@ namespace Prod.Domain
     {
         public List<MigrationPathway> ImportPathways { get; set; } = new List<MigrationPathway>();
         public bool ImportedToIndoorOrProductionArea { get; set; } = false;
+
+        public string IndoorProduktion { get; set; }
     }
     public partial class FA4 // (3.4) Spredningsveier
     {

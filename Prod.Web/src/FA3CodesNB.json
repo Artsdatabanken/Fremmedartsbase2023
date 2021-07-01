@@ -109,7 +109,7 @@
                 "Children": null
             }
         ],
-        
+
         "ArrivedCountryFrom": [
             {
                 "Id": "ArrivedCountryFrom",
@@ -4015,6 +4015,27 @@
                             "Id": null,
                             "Value": "searchSpecies",
                             "Text": "Skriv inn artsnavn",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "upload",
+                            "Text": "Last opp:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "chooseFiles",
+                            "Text": "Velg filer",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "noFileChosen",
+                            "Text": "Ingen fil valgt",
                             "Info": null,
                             "Children": null
                         },

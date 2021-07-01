@@ -9,6 +9,7 @@ import NewMigrationPathwaySelector from './40Spredningsveier/NewMigrationPathway
 import MPTable from './40Spredningsveier/MigrationPathwayTable'
 const labels = config.labels
 
+@observer
 class SelectableRadio extends React.Component {
     // shouldComponentUpdate() {
     //     return true
@@ -20,7 +21,7 @@ class SelectableRadio extends React.Component {
         // obj["Selectable" + this.props.value])
         const val = this.props.value
         // const activeVal =  disabled ? "" : val
-        const disabled = !obj["Selectable" + val] || this.context.readonly
+        const disabled = obj["Selectable" + val] || this.context.readonly
         const label = this.props.label + (obj[val]
             ? "  (" + obj[val] + ")"
             : "")
@@ -81,19 +82,35 @@ export default class Assessment41Import extends React.Component {
 
         return(
             <div>
-                <p>Kommer arten (utelukkende eller også) til norsk natur via innendørs- eller produksjonsareal?</p>
+                <p style={{marginLeft: '20px'}}>Kommer arten (utelukkende eller også) til norsk natur via innendørs- eller produksjonsareal?
                 <SelectableRadio
                             label={labels.indoorProduktionImport.a}
                             value={"positive"}
-                            observableValue={[riskAssessment, "indoorProduktion"]}/>
+                            observableValue={[assessment, "indoorProduktion"]}/>
                     <SelectableRadio
                             label={labels.indoorProduktionImport.b}
                             value={"negative"}
-                            observableValue={[riskAssessment, "indoorProduktion"]}/>
+                            observableValue={[assessment, "indoorProduktion"]}/>
+
+                </p>
+
+                 {assessment.indoorProduktion == "negative" ? 
+                    <fieldset className="well">
+                        <Vurdering34Spredningsveier name={"Introduksjon til natur"} furtherInfo={labels.Import.furtherInfoIntro}/>
+                        <Vurdering34Spredningsveier name={"Videre spredning i natur"} furtherInfo={labels.Import.furtherInfoNature}/>
+
+                    </fieldset> : assessment.indoorProduktion == "positive" ? 
+                    <fieldset className="well">
+                         <Vurdering34Spredningsveier  name={"Til innendørs- eller produksjonsareal"} furtherInfo={labels.Import.furtherInfoIndoors}/>
+                         <Vurdering34Spredningsveier name={"Introduksjon til natur"} furtherInfo={labels.Import.furtherInfoIntro}/>
+                         <Vurdering34Spredningsveier name={"Videre spredning i natur"} furtherInfo={labels.Import.furtherInfoNature}/>
+
+                    </fieldset> : null
+                }
                
-                <Vurdering34Spredningsveier  name={"Til innendørs- eller produksjonsareal"} furtherInfo={labels.Import.furtherInfoIndoors}/>
+               
                 
-                <Vurdering34Spredningsveier name={"Introduksjon til natur"} furtherInfo={labels.Import.furtherInfoIntro}/>
+                
                 {/*<table className="table">
                     <thead>
                         <tr>
@@ -119,7 +136,7 @@ export default class Assessment41Import extends React.Component {
                     </tbody>
         </table>*/}
                
-                <Vurdering34Spredningsveier name={"Videre spredning i natur"} furtherInfo={labels.Import.furtherInfoNature}/>
+                
                 {config.showPageHeaders ? <h3>{labels.Import.importIndoor}</h3> : <br />}
                {/*} <Xcomp.Bool label="" observableValue={[vurdering, "importedToIndoorOrProductionArea"]} />
                 <h4 style={{display: "inline-block", marginLeft: "6px" }}>{labels.Import.importIndoor}</h4>
