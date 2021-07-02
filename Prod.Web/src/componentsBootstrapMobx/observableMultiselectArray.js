@@ -8,7 +8,7 @@ import {UserContext} from './components'
 @observer
 export class ObservableMultiselectArrayCheckboxes extends React.Component {
     render() {
-        const {observableValue, codes, className} = this.props;
+        const {observableValue, codes, className, disabled} = this.props;
         const [obj, prop] = observableValue;
         const context = UserContext.getContext()
         if(obj[prop] === undefined) {
@@ -26,7 +26,8 @@ export class ObservableMultiselectArrayCheckboxes extends React.Component {
                 <li className="checkbox" key={code.value} >
                     <label style={{cursor: 'pointer'}}>
                         <input type="checkbox" label={code.text} checked={obj[prop].indexOf(code.value) !== -1} style={{cursor: 'pointer'}}
-                            disabled={context.readonly}
+                            disabled={disabled}
+                            //disabled={disabled || context.readonly}
                             onChange={action(e => {
                             // e.nativeEvent.stopImmediatePropagation()
                             if(e.target.checked) {
@@ -99,22 +100,22 @@ export default class ObservableMultiselectArray extends React.Component {
         // this.selectHelper = multipleSelectHelper(prop, obj[prop] , codes, this.context.readonly)
     }
     render() {
-        const {observableValue, className, codes, label, labels, mode, formlayout} = this.props;
+        const {observableValue, className, codes, label, labels, mode, formlayout, disabled} = this.props;
         const [obj, prop] = observableValue;
         const hasLabel = !!label;
         //console.log("////" + prop +"-" + mode)
         return(
             mode === "check" ?
-            <ObservableMultiselectArrayCheckboxes observableValue={observableValue} codes={codes} className={className} />
+            <ObservableMultiselectArrayCheckboxes observableValue={observableValue} codes={codes} disabled={disabled} className={className} />
             :
             hasLabel ?
             <div className="hasLabel">
                 <label htmlFor={prop}>{label}
                     {formlayout ? <br /> : null}
-                    <ObservableMultiselectArrayDropdown observableValue={observableValue} codes={codes} labels={labels} />
+                    <ObservableMultiselectArrayDropdown observableValue={observableValue} codes={codes} disabled={disabled} labels={labels} />
                 </label>
             </div> :
-            <ObservableMultiselectArrayDropdown observableValue={observableValue} codes={codes} labels={labels} />
+            <ObservableMultiselectArrayDropdown observableValue={observableValue} disabled={disabled} codes={codes} labels={labels} />
         );
 	}
 }

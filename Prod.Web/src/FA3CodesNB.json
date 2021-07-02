@@ -93,6 +93,22 @@
             }
         ],
 
+        "AcceptOrAdjust": [
+            {
+                "Id": "AcceptOrAdjust",
+                "Value": "a",
+                "Text": "Godtar beregnet skår",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "AcceptOrAdjust",
+                "Value": "b",
+                "Text": "Ønsker å justere skår",
+                "Info": null,
+                "Children": null
+            }
+        ],
 
         "ArrivedCountryFrom": [
             {
@@ -3071,7 +3087,7 @@
             {
                 "Id": "Criterion",
                 "Value": "G",
-                "Text": "G-kriteriet: Effekter på øvrige naturtyper",
+                "Text": "G-kriteriet: Effekter på «øvrige» naturtyper",
                 "Info": "Naturtypeareal (%) som gjennomgår tilstandsendring er overført fra «Naturtyper»",
                 "Children": {
                     "CritG": [
@@ -4004,6 +4020,27 @@
                         },
                         {
                             "Id": null,
+                            "Value": "upload",
+                            "Text": "Last opp:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "chooseFiles",
+                            "Text": "Velg filer",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "noFileChosen",
+                            "Text": "Ingen fil valgt",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "nextPage",
                             "Text": "Neste Side",
                             "Info": null,
@@ -4380,22 +4417,7 @@
                             "Children": null
                         }
                     ],
-                    "AcceptOrAdjust": [
-                        {
-                            "Id": null,
-                            "Value": "a",
-                            "Text": "Godtar beregnet skår",
-                            "Info": null,
-                            "Children": null
-                        },
-                        {
-                            "Id": null,
-                            "Value": "b",
-                            "Text": "Ønsker å justere skår",
-                            "Info": null,
-                            "Children": null
-                        }
-                    ],
+                   
                     "AcritSelect": [
                         {
                             "Id": null,

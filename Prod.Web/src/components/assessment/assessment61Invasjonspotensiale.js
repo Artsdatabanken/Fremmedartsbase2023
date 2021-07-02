@@ -23,7 +23,8 @@ class SelectableRadio extends React.Component {
         // obj["Selectable" + this.props.value])
         const val = this.props.value
         // const activeVal =  disabled ? "" : val
-        const disabled = !obj["Selectable" + val] || this.context.readonly
+        //const disabled = !obj["Selectable" + val] || this.context.readonly
+        const disabled = false
         const label = this.props.label + (obj[val]
             ? "  (" + obj[val] + ")"
             : "")
@@ -123,65 +124,72 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                             label={labels.AcritSelect.c}
                             value={"redListCategoryLevel"}
                             observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]}/>
+                    {riskAssessment.chosenSpreadMedanLifespan == "spreadPVAAnalysisEstimatedSpeciesLongevity" ? 
+                        assessment.alienSpeciesCategory == "DoorKnocker" ? 
+                        <fieldset className="well">
 
-                    <p>Basert på de beste anslagene på forekomstareal i dag ([X1] km2) og om 50 år ([X2] km2) er A-kriteriet forhåndsskåret som [X3] (med usikkerhet: [X4-X5]). 
-                        Dette innebærer at artens mediane levetid ligger [mellom X6 år og X7 år], eller at sannsynligheten for utdøing innen 50 år er på [mellom X8 % og X9 %].</p>
-                    
-                    <Xcomp.Radio
-                        kode={"y"}
-                        observableValue={[riskAssessment, "acceptOrAdjustCritA"]}
-                        label={labels.AcceptOrAdjust.a}/>
-                    <Xcomp.Radio
-                        kode={"n"}
-                        observableValue={[riskAssessment, "acceptOrAdjustCritA"]}
-                        label={labels.AcceptOrAdjust.b}/> 
-                     <Xcomp.HtmlString observableValue={[riskAssessment, 'reasonForAdjustmentCritA']} label="Begrunnelse for justering:" />
-                    <p>{ntLabels.scoreSummary}</p>
-                    <ScoreUnsure appState={appState}
-                                critScores={koder.scoresA}
-                                firstValue={"scoreA"}
-                                secondValue={"unsureA"}/>
-                    <p>{ntLabels.score}</p>
-                    <ScoreUnsure appState={appState}
-                                critScores={koder.scoresA}
-                                firstValue={"scoreA"}
-                                secondValue={"unsureA"}/>
+                        <p>Basert på det beste anslaget på [X1] forekomster i løpet av 10 år og [X2] introduksjoner i samme tidsperiode er A-kriteriet forhåndsskåret som [X3] (med usikkerhet: [X4-X5]). 
+                           Dette innebærer at artens mediane levetid ligger [mellom X6 år og X7 år], eller at sannsynligheten for utdøing innen 50 år er på [mellom X8 % og X9 %].</p>
+                                           
+                            <Xcomp.StringEnum observableValue={[riskAssessment, "acceptOrAdjustCritA"]} mode="radio" codes={koder.AcceptOrAdjust}/>   
+                                         
+                                            {riskAssessment.acceptOrAdjustCritA == "b" ? 
+                                            <div>
+                                                <Xcomp.HtmlString observableValue={[riskAssessment, 'reasonForAdjustmentCritA']} label="Begrunnelse for justering:" />
+                                                <p>{ntLabels.score}</p>
+                                                <ScoreUnsure appState={appState}
+                                                        critScores={koder.scoresA}
+                                                        firstValue={"scoreA"}
+                                                        secondValue={"unsureA"}/>
+                                            </div> : 
+                                            <div>
+                                                <p>{ntLabels.scoreSummary}</p>
+                                                <ScoreUnsure appState={appState}
+                                                        critScores={koder.scoresA}                                                        
+                                                        disabled={"false"}
+                                                        firstValue={"scoreA"}
+                                                        secondValue={"unsureA"}/>
+                                            </div> }
+                                            <Xcomp.Button primary onClick= {() => {
+                                                //console.log("Save assessment")
+                                                 appState.saveCurrentAssessment();
+                                                }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>   
+                                            
+                        </fieldset> : 
+                        <fieldset className="well">
+                            <p>Basert på de beste anslagene på forekomstareal i dag ([X1] km2) og om 50 år ([X2] km2) er A-kriteriet forhåndsskåret som [X3] (med usikkerhet: [X4-X5]). 
+                                Dette innebærer at artens mediane levetid ligger [mellom X6 år og X7 år], eller at sannsynligheten for utdøing innen 50 år er på [mellom X8 % og X9 %].</p>
+                            <Xcomp.StringEnum observableValue={[riskAssessment, "acceptOrAdjustCritA"]} mode="radio" codes={koder.AcceptOrAdjust}/>   
 
-                    <Xcomp.Button primary onClick= {() => {
-                         console.log("Save assessment")
-                        appState.saveCurrentAssessment();
-                    }}>Lagre</Xcomp.Button>
+                            {riskAssessment.acceptOrAdjustCritA == "b" ? 
+                                            <div>
+                                                <Xcomp.HtmlString observableValue={[riskAssessment, 'reasonForAdjustmentCritA']} label="Begrunnelse for justering:" />
+                                                <p>{ntLabels.score}</p>
+                                                <ScoreUnsure appState={appState}
+                                                        critScores={koder.scoresA}
+                                                        firstValue={"scoreA"}
+                                                        secondValue={"unsureA"}/>
+                                            </div> : 
+                                            <div>
+                                                <p>{ntLabels.scoreSummary}</p>
+                                                <ScoreUnsure appState={appState}
+                                                        critScores={koder.scoresA}                                                        
+                                                        disabled={"false"}
+                                                        firstValue={"scoreA"}
+                                                        secondValue={"unsureA"}/>
+                                            </div> }     
+                                            <Xcomp.Button primary onClick= {() => {
+                                                //console.log("Save assessment")
+                                                 appState.saveCurrentAssessment();
+                                                }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>                      
+                        </fieldset>
+                        : null
 
-                    <p>Basert på det beste anslaget på [X1] forekomster i løpet av 10 år og [X2] introduksjoner i samme tidsperiode er A-kriteriet forhåndsskåret som [X3] (med usikkerhet: [X4-X5]). 
-                        Dette innebærer at artens mediane levetid ligger [mellom X6 år og X7 år], eller at sannsynligheten for utdøing innen 50 år er på [mellom X8 % og X9 %].</p>
-                    <Xcomp.Radio
-                        kode={"y"}
-                        observableValue={[riskAssessment, "acceptOrAdjustCritA"]}
-                        label={labels.AcceptOrAdjust.a}/>
-                    <Xcomp.Radio
-                        kode={"n"}
-                        observableValue={[riskAssessment, "acceptOrAdjustCritA"]}
-                        label={labels.AcceptOrAdjust.b}/> 
-                     <Xcomp.HtmlString observableValue={[riskAssessment, 'reasonForAdjustmentCritA']} label="Begrunnelse for justering:" />
+                }
 
-                    <p>{ntLabels.scoreSummary}</p>
-                    <ScoreUnsure appState={appState}
-                                critScores={koder.scoresA}
-                                firstValue={"scoreA"}
-                                secondValue={"unsureA"}/>
-                    <p>{ntLabels.score}</p>
-                    <ScoreUnsure appState={appState}
-                                critScores={koder.scoresA}
-                                firstValue={"scoreA"}
-                                secondValue={"unsureA"}/>
-
-                    <Xcomp.Button primary onClick= {() => {
-                         console.log("Save assessment")
-                        appState.saveCurrentAssessment();
-                    }}>Lagre</Xcomp.Button>
-
-
-                   <div className="statusField"> 
+            {riskAssessment.chosenSpreadMedanLifespan == "spreadRscriptEstimatedSpeciesLongevity" ? 
+                <div>
+                    <div className="statusField"> 
                    <div className="labels">
                         <p>{labels.Acrit.speciesCount}</p>
                         <p>{labels.Acrit.populationGrowth}</p>
@@ -240,15 +248,20 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     <p>{ntLabels.scoreSummary}</p>
                     <ScoreUnsure appState={appState}
                                 critScores={koder.scoresB}
+                                disabled={"false"}
                                 firstValue={"scoreB"}
                                 secondValue={"unsureB"}/>
 
                     <Xcomp.Button primary onClick= {() => {
                          console.log("Save assessment")
                         appState.saveCurrentAssessment();
-                    }}>Lagre</Xcomp.Button>
+                    }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>
 
-                <div className="statusField"> 
+                </div> : null }
+                   
+                {riskAssessment.chosenSpreadMedanLifespan == "redListCategoryLevel" ? 
+                <div>
+                    <div className="statusField"> 
                    <div className="labels">
                         <p>{labels.Acrit.PVAAnalysis}</p>
 
@@ -257,8 +270,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                         <Xcomp.HtmlString observableValue={[riskAssessment, 'PVAAnalysis']} />
                         <h4>{labels.Acrit.data}</h4>
                         <p>{labels.DistributionHistory.noDocuments}.</p>
-                        <span>Last opp:</span> <Xcomp.Button primary >Velg filer</Xcomp.Button>
-                        <span>Ingen fil valgt</span>
+                        <span>{labels.General.upload}</span> <Xcomp.Button primary >{labels.General.chooseFiles}</Xcomp.Button>
+                        <span>{labels.General.noFileChosen}</span>
                     </div>
                     </div>
                     <div className="statusField">
@@ -289,13 +302,16 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     
                     <p>{ntLabels.scoreSummary}</p>
                     <ScoreUnsure appState={appState}
-                                critScores={koder.scoresB}
+                                critScores={koder.scoresB}                                
+                                disabled={"false"}
                                 firstValue={"scoreB"}
                                 secondValue={"unsureB"}/>
                      <Xcomp.Button primary onClick= {() => {
                          console.log("Save assessment")
                         appState.saveCurrentAssessment();
-                    }}>Lagre</Xcomp.Button>
+                    }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>
+                </div> : null }
+                
                    {/* {riskAssessment.activeSpreadPVAAnalysisEstimatedSpeciesLongevity
                         ? <div>
                                 <table className="formtable">
@@ -523,188 +539,199 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                 label={labels.BcritSelect.d}
                                 value={"b"}
                                 observableValue={[riskAssessment, "chosenSpreadYearlyIncrease"]}/>
-                                
-                <p>Angi verdi på parametere <i>(standardinnstilling er forhåndsfylt)</i></p>
 
-                <div className="statusField"> 
-                   <div className="labels">
-                        <p>{labels.Bcrit.mCount}</p>
-                        <p>{labels.Bcrit.exact}</p>
-                        <p>{labels.Bcrit.p}</p>
-                        <p>{labels.Bcrit.newObs}</p>
-                                                
-                   </div>
-                   <div className="numberFields">
-                   <Xcomp.String                            
-                                observableValue={[riskAssessment, "BCritMCount"]}
-                                placeholder={""}
-                            />  
-                    <Xcomp.String                            
-                                observableValue={[riskAssessment, "BCritExact"]}
-                                placeholder={"false"}
-                            />  
+                {riskAssessment.chosenSpreadYearlyIncrease == "a" ? 
+                        <fieldset className="well"> 
+                            <p> <i>(standardinnstilling er forhåndsfylt)</i></p>
 
-                    <Xcomp.String                            
-                                observableValue={[riskAssessment, "BCritP"]}
-                                placeholder={"1"}
-                            />  
-
-                    <Xcomp.String                            
-                                observableValue={[riskAssessment, "BCritNewObs"]}
-                                placeholder={"true"}
-                            />                      
-                            
-                   </div>
-                   </div>
-
-                   <a href="#">{labels.Bcrit.rScriptExpansion}</a>
-                   <div className="statusField">
-                       <div className="labelsB">
-                        
-                        <p>{labels.Bcrit.expansion}</p> 
-                        <p>{labels.Bcrit.lower}</p> 
-                        <p>{labels.Bcrit.higher}</p> 
-                       </div>
-                       <div className="numberFieldsB">
-                       <Xcomp.Number                            
-                                observableValue={[riskAssessment, "BCritExpansion"]}
-                                double
-                            />  
-                        <Xcomp.Number                            
-                                observableValue={[riskAssessment, "BCritLower"]}
-                                double
-                            />  
-                        <Xcomp.Number                            
-                                observableValue={[riskAssessment, "BCritHigher"]}
-                                double
-                            />  
-                        <h4>{labels.Bcrit.data}</h4>
-                        <div className="BCritFiles">
-                            <div className="filenames">
-                                <p><b>{labels.DistributionHistory.filename}</b></p>
-
-                                
-                                
+                            <div className="statusField"> 
+                            <div className="labels">
+                                    <p>{labels.Bcrit.mCount}</p>
+                                    <p>{labels.Bcrit.exact}</p>
+                                    <p>{labels.Bcrit.p}</p>
+                                    <p>{labels.Bcrit.newObs}</p>
+                                                            
                             </div>
-                            <div className="fileDescriptions">
-                                <p><b>{labels.DistributionHistory.fileDescription}</b></p>
-                                <Xcomp.HtmlString observableValue={[riskAssessment, 'fileDescription']} />
+                            <div className="numberFields">
+                            <Xcomp.String                            
+                                            observableValue={[riskAssessment, "BCritMCount"]}
+                                            placeholder={""}
+                                        />  
+                                <Xcomp.String                            
+                                            observableValue={[riskAssessment, "BCritExact"]}
+                                            placeholder={"false"}
+                                        />  
+
+                                <Xcomp.String                            
+                                            observableValue={[riskAssessment, "BCritP"]}
+                                            placeholder={"1"}
+                                        />  
+
+                                <Xcomp.String                            
+                                            observableValue={[riskAssessment, "BCritNewObs"]}
+                                            placeholder={"true"}
+                                        />                      
+                                        
                             </div>
-                        </div> 
-                            <p>Last opp:</p> <Xcomp.Button primary >Velg filer</Xcomp.Button>
-                            <span>Ingen fil valgt</span>
-                       </div>
-                   </div>
+                            </div>
+
+                            <a href="#">{labels.Bcrit.rScriptExpansion}</a>
+                            <div className="statusField">
+                                <div className="labelsB">
+                                    
+                                    <p>{labels.Bcrit.expansion}</p> 
+                                    <p>{labels.Bcrit.lower}</p> 
+                                    <p>{labels.Bcrit.higher}</p> 
+                                </div>
+                                <div className="numberFieldsB">
+                                <Xcomp.Number                            
+                                            observableValue={[riskAssessment, "BCritExpansion"]}
+                                            double
+                                        />  
+                                    <Xcomp.Number                            
+                                            observableValue={[riskAssessment, "BCritLower"]}
+                                            double
+                                        />  
+                                    <Xcomp.Number                            
+                                            observableValue={[riskAssessment, "BCritHigher"]}
+                                            double
+                                        />  
+                                    <h4>{labels.Bcrit.data}</h4>
+                                    <div className="BCritFiles">
+                                        <div className="filenames">
+                                            <p><b>{labels.DistributionHistory.filename}</b></p>
+
+                                            
+                                            
+                                        </div>
+                                        <div className="fileDescriptions">
+                                            <p><b>{labels.DistributionHistory.fileDescription}</b></p>
+                                            <Xcomp.HtmlString observableValue={[riskAssessment, 'fileDescription']} />
+                                        </div>
+                                    </div> 
+                                        <p>{labels.General.upload}</p> <Xcomp.Button primary >{labels.General.chooseFiles}</Xcomp.Button>
+                                        <span>{labels.General.noFilesChosen}</span>
+                                </div>
+                            </div>
 
 
-                    <p>{ntLabels.scoreSummary}</p>
-                    <ScoreUnsure appState={appState}
-                                critScores={koder.scoresB}
-                                firstValue={"scoreB"}
-                                secondValue={"unsureB"}/>
-                     <Xcomp.Button primary onClick= {() => {
-                         console.log("Save assessment")
-                        appState.saveCurrentAssessment();
-                    }}>Lagre</Xcomp.Button>
+                                <p>{ntLabels.scoreSummary}</p>
+                                <ScoreUnsure appState={appState}
+                                            critScores={koder.scoresB}
+                                            disabled={"false"}
+                                            firstValue={"scoreB"}
+                                            secondValue={"unsureB"}/>
+                                <Xcomp.Button primary onClick= {() => {
+                                    console.log("Save assessment")
+                                    appState.saveCurrentAssessment();
+                                }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>
+                        </fieldset> : 
+                        riskAssessment.chosenSpreadYearlyIncrease == "b" && assessment.alienSpeciesCategory == "DoorKnocker" ?
+                            <fieldset className="well">
+                            <p>Basert på det beste anslaget på [X1] forekomster i løpet av 10 år og [X2] introduksjoner i samme tidsperiode er B-kriteriet skåra som [X3] (med usikkerhet: [X4-X5]). 
+                                                    Dette innebærer at artens ekspansjonshastighet ligger mellom [X6 m/år og X7 m/år]. </p>
+                            <p>  Dersom denne verdien framstår som urealistisk, bør antatt forekomstareal om 50 år (se Utbredelse i Norge) vurderes justert. </p>
+                                                <p>{ntLabels.scoreSummary}</p>
+                                                <ScoreUnsure appState={appState}
+                                                            critScores={koder.scoresB}
+                                                            disabled={"false"}
+                                                            firstValue={"scoreB"}
+                                                            secondValue={"unsureB"}/>
+                                                <Xcomp.Button primary onClick= {() => {
+                                                   // console.log("Save assessment")
+                                                    appState.saveCurrentAssessment();
+                                                }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>
+                            </fieldset> : 
+                            riskAssessment.chosenSpreadYearlyIncrease == "b" ?
+                            <fieldset className="well">
+                                <p> Økningen i forekomstareal beregnes ut fra kjent forekomstareal ved to ulike år; år t1 og år t2 hvor t1 er mindre enn t2. 
+                                        Forekomstarealet per år t1 (eller t2) regnes ut fra alle inkluderte forekomster fra og med et valgt startår (t0) til og med år t1 (eller t2). 
+                                        Startåret t0 er felles for t1 og t2. For t2 er i år satt som standardinnstilling og kjent forekomstareal i dag, tilhørende t0 og t2 er overført direkte fra 
+                                        Utbredelse i Norge. Valgt periode (antall år mellom t1 og t2) skal ikke overstige 20 år og skal representere den perioden økningen er størst 
+                                        (anbefaler å bruke minimum 10 år hvis tidsserien tillater det).   </p>
 
-                    <p> Økningen i forekomstareal beregnes ut fra kjent forekomstareal ved to ulike år; år t1 og år t2 hvor t1 er mindre enn t2. 
-                        Forekomstarealet per år t1 (eller t2) regnes ut fra alle inkluderte forekomster fra og med et valgt startår (t0) til og med år t1 (eller t2). 
-                        Startåret t0 er felles for t1 og t2. For t2 er i år satt som standardinnstilling og kjent forekomstareal i dag, tilhørende t0 og t2 er overført direkte fra 
-                        Utbredelse i Norge. Valgt periode (antall år mellom t1 og t2) skal ikke overstige 20 år og skal representere den perioden økningen er størst 
-                        (anbefaler å bruke minimum 10 år hvis tidsserien tillater det).   </p>
+                                        <span>{labels.Bcrit.choose}</span> <Xcomp.Button primary >{labels.Bcrit.getFromMap}</Xcomp.Button>
+                                            <span>{labels.Bcrit.addManually}</span>
 
-                        <span>{labels.Bcrit.choose}</span> <Xcomp.Button primary >{labels.Bcrit.getFromMap}</Xcomp.Button>
-                            <span>{labels.Bcrit.addManually}</span>
+                                        <Xcomp.Bool observableValue={[riskAssessment, "notUseExpansionInNorway"]} label={"jeg ønsker ikke å bruke kjent forekomstareal i dag (ved år t2) fra Utbredelse i Norge"} />
 
-                        <Xcomp.Bool observableValue={[riskAssessment, "notUseExpansionInNorway"]} label={"jeg ønsker ikke å bruke kjent forekomstareal i dag (ved år t2) fra Utbredelse i Norge"} />
+                                        <table className="table BCritTable">
+                                            <thead>
+                                                <tr>
+                                                <th><i>{labels.Bcrit.i}</i></th>
+                                                <th>{labels.Bcrit.fromYear}</th>
+                                                <th>{labels.Bcrit.toYear}</th>
+                                                <th>{labels.Bcrit.knownExpansion}</th>
+                                                <th></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>[overført fra utbr. fanen]</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>{labels.Bcrit.km2}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>[overført fra utbr. fanen]</td>
+                                                <td>[overført fra utbr. fanen]</td>
+                                                <td>[overført fra utbr. fanen]</td>
+                                                <td>{labels.Bcrit.km2}</td>
+                                            </tr>
+                                            </tbody>                            
+                                        </table>
 
-                        <table className="table BCritTable">
-                            <thead>
-                                <tr>
-                                <th><i>{labels.Bcrit.i}</i></th>
-                                <th>{labels.Bcrit.fromYear}</th>
-                                <th>{labels.Bcrit.toYear}</th>
-                                <th>{labels.Bcrit.knownExpansion}</th>
-                                <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>[overført fra utbr. fanen]</td>
-                                <td></td>
-                                <td></td>
-                                <td>{labels.Bcrit.km2}</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>[overført fra utbr. fanen]</td>
-                                <td>[overført fra utbr. fanen]</td>
-                                <td>[overført fra utbr. fanen]</td>
-                                <td>{labels.Bcrit.km2}</td>
-                            </tr>
-                            </tbody>                            
-                        </table>
+                                        <table className="table BCritTable">
+                                            <thead>    
+                                                <tr>                          
+                                                <th>{labels.Bcrit.fromYear}</th>
+                                                <th>{labels.Bcrit.toYear}</th>
+                                                <th></th>
+                                                <th>{labels.Bcrit.knownExpansion}</th>
+                                                <th></th>
+                                                </tr>  
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td>t1</td>
+                                                <td></td>
+                                                <td>{labels.Bcrit.km2}</td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td>t2</td>
+                                                <td></td>
+                                                <td>{labels.Bcrit.km2}</td>
+                                            </tr>
+                                            </tbody>                            
+                                        </table>
 
-                        <table className="table BCritTable">
-                            <thead>    
-                                <tr>                          
-                                <th>{labels.Bcrit.fromYear}</th>
-                                <th>{labels.Bcrit.toYear}</th>
-                                <th></th>
-                                <th>{labels.Bcrit.knownExpansion}</th>
-                                <th></th>
-                                </tr>  
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td>t1</td>
-                                <td></td>
-                                <td>{labels.Bcrit.km2}</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td>t2</td>
-                                <td></td>
-                                <td>{labels.Bcrit.km2}</td>
-                            </tr>
-                            </tbody>                            
-                        </table>
+                                    <Xcomp.HtmlString                            
+                                                observableValue={[riskAssessment, "commentOrDescription"]}
+                                                label={labels.Bcrit.commentOrDescription}
+                                            />                      
+                                    <p>
+                                    Ekspansjonshastigheten er beregnet til [tallverdi] m/år basert på anslått økning i forekomstareal i perioden fra [t1] til [t2].
+                                    </p>
 
-                    <Xcomp.HtmlString                            
-                                observableValue={[riskAssessment, "commentOrDescription"]}
-                                label={labels.Bcrit.commentOrDescription}
-                            />                      
-                    <p>
-                    Ekspansjonshastigheten er beregnet til [tallverdi] m/år basert på anslått økning i forekomstareal i perioden fra [t1] til [t2].
-                    </p>
+                                    <p>{ntLabels.scoreSummary}</p>
+                                    <ScoreUnsure appState={appState}
+                                                critScores={koder.scoresB}
+                                                disabled={"false"}
+                                                firstValue={"scoreB"}
+                                                secondValue={"unsureB"}/>
+                                    <Xcomp.Button primary onClick= {() => {
+                                        console.log("Save assessment")
+                                        appState.saveCurrentAssessment();
+                                    }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>
 
-                    <p>{ntLabels.scoreSummary}</p>
-                    <ScoreUnsure appState={appState}
-                                critScores={koder.scoresB}
-                                firstValue={"scoreB"}
-                                secondValue={"unsureB"}/>
-                     <Xcomp.Button primary onClick= {() => {
-                         console.log("Save assessment")
-                        appState.saveCurrentAssessment();
-                    }}>Lagre</Xcomp.Button>
-
-                    <p>Basert på det beste anslaget på [X1] forekomster i løpet av 10 år og [X2] introduksjoner i samme tidsperiode er B-kriteriet skåra som [X3] (med usikkerhet: [X4-X5]). 
-                        Dette innebærer at artens ekspansjonshastighet ligger mellom [X6 m/år og X7 m/år]. </p>
-                      <p>  Dersom denne verdien framstår som urealistisk, bør antatt forekomstareal om 50 år (se Utbredelse i Norge) vurderes justert.
-                    </p>
-                    <p>{ntLabels.scoreSummary}</p>
-                    <ScoreUnsure appState={appState}
-                                critScores={koder.scoresB}
-                                firstValue={"scoreB"}
-                                secondValue={"unsureB"}/>
-                     <Xcomp.Button primary onClick= {() => {
-                         console.log("Save assessment")
-                        appState.saveCurrentAssessment();
-                    }}>Lagre</Xcomp.Button>
+                            </fieldset> : null
+                }
                   {/*  
                     <SelectableRadio
                                 label={labels.BcritSelect.c}

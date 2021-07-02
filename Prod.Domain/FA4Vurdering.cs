@@ -328,6 +328,8 @@ namespace Prod.Domain
     {
         public List<MigrationPathway> ImportPathways { get; set; } = new List<MigrationPathway>();
         public bool ImportedToIndoorOrProductionArea { get; set; } = false;
+
+        public string IndoorProduktion { get; set; }
     }
     public partial class FA4 // (3.4) Spredningsveier
     {
@@ -584,7 +586,7 @@ namespace Prod.Domain
         // ikke i bruk i 2012 applikasjon (?)
         //public string SpreadingDescription { get; set; } //Spreading_Description
 
-
+        public string AcceptOrAdjustCritA { get; set; } = "a";
         public string ChosenSpreadMedanLifespan { get; set; } = "";  //lagt til 08.11.2016
 
         public bool ActiveSpreadPVAAnalysisSpeciesLongevity { get; set; } // added 27.09.2016

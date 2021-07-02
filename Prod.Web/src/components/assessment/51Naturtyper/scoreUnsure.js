@@ -11,8 +11,9 @@ export default class ScoreUnsure extends React.Component {
        
     }
     render() {
-        const {appState:{assessment}, appState, critScores, firstValue, secondValue} = this.props;
-        const riskAssessment = assessment.riskAssessment    
+        const {appState:{assessment}, appState, critScores, firstValue, secondValue, disabled} = this.props;
+        const riskAssessment = assessment.riskAssessment  
+        //const disabled = disabled == "b"  
         //const nts = appState.naturtyper
        
        // const doms = appState.dominansSkog
@@ -26,11 +27,13 @@ export default class ScoreUnsure extends React.Component {
             <Xcomp.MultiselectArray
                                 className={"scores"}
                                 observableValue={[riskAssessment, firstValue]} 
+                                disabled={disabled}
                                 codes={koder.scores}
                                 mode="check"/>
 
             <Xcomp.MultiselectArray
                                 observableValue={[riskAssessment, secondValue]} 
+                                disabled={disabled}
                                 codes={critScores}
                                 mode="check"/>
 
