@@ -9,7 +9,7 @@ const kodeTekst = (koder, verdi) => koder.filter(item => item.Value === verdi).m
 const SpeciesNaturetypeTable = observer((props) => 
 {
     const labels = props.labels
-    return <table className="table">
+    return <table className="table ecologicalEffect">
         <colgroup>
             <col style={{width: "20%"}} />
             {/*<col style={{width: "8%"}} />*/}

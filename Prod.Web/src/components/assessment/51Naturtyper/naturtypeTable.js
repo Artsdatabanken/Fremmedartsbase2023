@@ -74,6 +74,7 @@ export class NaturtypeRad extends React.Component {
                 </td>
                 <td>
                     <Xcomp.Button 
+                    style= {{marginBottom: '10px'}}
                         primary 
                         xs 
                         onClick={() => {
@@ -90,8 +91,10 @@ export class NaturtypeRad extends React.Component {
                         fabModel={fabModel} 
                         labels={labels}/>
                     : null}
+                    
+                    <Xcomp.Button primary xs onClick={deleteRow}>{gLabels.delete}</Xcomp.Button>
                 </td>
-                <td><Xcomp.Button primary xs onClick={deleteRow}>{gLabels.delete}</Xcomp.Button></td>
+                <td>&nbsp;</td>
             </tr>
         );
     }
@@ -105,7 +108,7 @@ export default class NaturtypeTable extends React.Component {
         // console.log("naturtyperader#: " + naturetypes.length)
         return(
             <div><p>{desc}</p>
-            <table className="table">
+            <table className="table naturetype">
             
             <colgroup>
                 <col  style={{width: "10%"}}/>
