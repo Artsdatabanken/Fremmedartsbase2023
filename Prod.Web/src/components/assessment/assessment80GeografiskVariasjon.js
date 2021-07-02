@@ -18,13 +18,15 @@ export default class Assessment80GeografiskVariasjon extends React.Component {
 		return(
 			<div>
 				{config.showPageHeaders ? <h3>{geolabels.heading}</h3> : <br />}
-				<Xcomp.MultiselectArray observableValue={[riskAssessment, "geographicalVariation"]} mode="check" codes={koder.geographicalVariation} labels={labels.General} />
-				{riskAssessment.geographicalVariation.length > 0 ?
-				<div>
-				<label>{geolabels.extendedInformation}</label>
-				<Xcomp.HtmlString observableValue={[riskAssessment, "geographicalVariationDocumentation"]} /> 
-				</div>:
-				null}
+				<fieldset className="well">
+					<Xcomp.MultiselectArray observableValue={[riskAssessment, "geographicalVariation"]} mode="check" codes={koder.geographicalVariation} labels={labels.General} />
+					{riskAssessment.geographicalVariation.length > 0 ?
+					<div>
+					<label>{geolabels.extendedInformation}</label>
+					<Xcomp.HtmlString observableValue={[riskAssessment, "geographicalVariationDocumentation"]} /> 
+					</div>:
+					null}
+				</fieldset>
 			</div>
         );
 	}

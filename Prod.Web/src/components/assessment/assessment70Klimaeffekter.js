@@ -19,11 +19,13 @@ export default class Assessment70Klimaeffekter extends React.Component {
         return(
             <div>
    				{config.showPageHeaders ? <h3>Klimaeffekter</h3> : <br />}
+                <fieldset className="well">
                 <Xcomp.StringEnum observableValue={[riskAssessment, 'climateEffectsInvationpotential']} codes={koder.yesNoUnknown} label={climatelabel("climateChangeAffectsInvationPotential")} mode="radio" />
                 <br/>
                 <Xcomp.StringEnum observableValue={[riskAssessment, 'climateEffectsEcoEffect']} codes={koder.yesNoUnknown} label={climatelabel("climateChangeAffectsEcoeffect")} mode="radio" />
                 <br/>
                 <Xcomp.HtmlString observableValue={[riskAssessment, 'climateEffectsDocumentation']} label={climatelabel("climateEffectsDocumentation")}/>
+                </fieldset>
             </div>
         );
     }

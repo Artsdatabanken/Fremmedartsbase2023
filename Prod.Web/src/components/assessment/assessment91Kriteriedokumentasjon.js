@@ -55,7 +55,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                 {config.showPageHeaders
                     ? <h3>{labels.critDocumentation.status}</h3>
                     : <br/>}
-
+                    <fieldset className="well">
                     <h3>{labels.critDocumentation.status}</h3>
                     {appState.skalVurderes ?
                         <div>
@@ -261,6 +261,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                         }}/>
                         <FileUpload/>
                 </div>
+                </fieldset>
             </div>
         );
     }

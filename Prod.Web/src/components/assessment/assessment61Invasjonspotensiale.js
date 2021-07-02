@@ -126,7 +126,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                             observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]}/>
                     {riskAssessment.chosenSpreadMedanLifespan == "spreadPVAAnalysisEstimatedSpeciesLongevity" ? 
                         assessment.alienSpeciesCategory == "DoorKnocker" ? 
-                        <fieldset className="well">
+                        <div>
 
                         <p>Basert på det beste anslaget på [X1] forekomster i løpet av 10 år og [X2] introduksjoner i samme tidsperiode er A-kriteriet forhåndsskåret som [X3] (med usikkerhet: [X4-X5]). 
                            Dette innebærer at artens mediane levetid ligger [mellom X6 år og X7 år], eller at sannsynligheten for utdøing innen 50 år er på [mellom X8 % og X9 %].</p>
@@ -155,8 +155,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                  appState.saveCurrentAssessment();
                                                 }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>   
                                             
-                        </fieldset> : 
-                        <fieldset className="well">
+                        </div> : 
+                        <div>
                             <p>Basert på de beste anslagene på forekomstareal i dag ([X1] km2) og om 50 år ([X2] km2) er A-kriteriet forhåndsskåret som [X3] (med usikkerhet: [X4-X5]). 
                                 Dette innebærer at artens mediane levetid ligger [mellom X6 år og X7 år], eller at sannsynligheten for utdøing innen 50 år er på [mellom X8 % og X9 %].</p>
                             <Xcomp.StringEnum observableValue={[riskAssessment, "acceptOrAdjustCritA"]} mode="radio" codes={koder.AcceptOrAdjust}/>   
@@ -182,7 +182,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                 //console.log("Save assessment")
                                                  appState.saveCurrentAssessment();
                                                 }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>                      
-                        </fieldset>
+                        </div>
                         : null
 
                 }
@@ -541,7 +541,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                 observableValue={[riskAssessment, "chosenSpreadYearlyIncrease"]}/>
 
                 {riskAssessment.chosenSpreadYearlyIncrease == "a" ? 
-                        <fieldset className="well"> 
+                        <div> 
                             <p> <i>(standardinnstilling er forhåndsfylt)</i></p>
 
                             <div className="statusField"> 
@@ -625,9 +625,9 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                     console.log("Save assessment")
                                     appState.saveCurrentAssessment();
                                 }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>
-                        </fieldset> : 
+                        </div> : 
                         riskAssessment.chosenSpreadYearlyIncrease == "b" && assessment.alienSpeciesCategory == "DoorKnocker" ?
-                            <fieldset className="well">
+                            <div>
                             <p>Basert på det beste anslaget på [X1] forekomster i løpet av 10 år og [X2] introduksjoner i samme tidsperiode er B-kriteriet skåra som [X3] (med usikkerhet: [X4-X5]). 
                                                     Dette innebærer at artens ekspansjonshastighet ligger mellom [X6 m/år og X7 m/år]. </p>
                             <p>  Dersom denne verdien framstår som urealistisk, bør antatt forekomstareal om 50 år (se Utbredelse i Norge) vurderes justert. </p>
@@ -641,9 +641,9 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                    // console.log("Save assessment")
                                                     appState.saveCurrentAssessment();
                                                 }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>
-                            </fieldset> : 
+                            </div> : 
                             riskAssessment.chosenSpreadYearlyIncrease == "b" ?
-                            <fieldset className="well">
+                            <div>
                                 <p> Økningen i forekomstareal beregnes ut fra kjent forekomstareal ved to ulike år; år t1 og år t2 hvor t1 er mindre enn t2. 
                                         Forekomstarealet per år t1 (eller t2) regnes ut fra alle inkluderte forekomster fra og med et valgt startår (t0) til og med år t1 (eller t2). 
                                         Startåret t0 er felles for t1 og t2. For t2 er i år satt som standardinnstilling og kjent forekomstareal i dag, tilhørende t0 og t2 er overført direkte fra 
@@ -730,7 +730,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                         appState.saveCurrentAssessment();
                                     }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>
 
-                            </fieldset> : null
+                            </div> : null
                 }
                   {/*  
                     <SelectableRadio

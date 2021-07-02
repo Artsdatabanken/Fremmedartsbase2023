@@ -280,7 +280,9 @@ export default class Assessment62Okologiskeffekt extends React.Component {
 
                     <Xcomp.HtmlString observableValue={[riskAssessment, 'speciesSpeciesInteractionsSupplementaryInformation']} label="Utfyllende informasjon (hvilke(n) artsgruppe i naturtypen påvirkes og hvordan blir disse generelt påvirket):" />
 
-                    <hr/>
+                    
+                </fieldset>
+                <fieldset className="well">
                     <Criterion criterion={crit52D} hideInfo={true} />
                     <p>{ntLabels.score}</p>
                     <ScoreUnsure appState={appState}
@@ -291,7 +293,8 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                                 observableValue={[riskAssessment, "DCritInsecurity"]}
                                 label={labels.DEcrit.insecurity}
                             />                      
-                   
+                    </fieldset>
+                    <fieldset className="well">
                     <Criterion criterion={crit52E} hideInfo={true} />
 
                     <p>{ntLabels.score}</p>

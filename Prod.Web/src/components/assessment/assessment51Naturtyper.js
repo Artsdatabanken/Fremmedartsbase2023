@@ -65,21 +65,24 @@ export default class Assessment51Naturtyper extends React.Component {
         const canRenderTable = !!appState.naturtypeLabels && (!!appState.dominansSkog || appState.language === "SV")
         return (
             <div>
-              {/*  <h4>{ntLabels.colonizedAreaHeading}</h4>     */}            
+              {/*  <h4>{ntLabels.colonizedAreaHeading}</h4>     */}     
+              <fieldset className="well">     
                 <NewNaturetype
                     appState={appState}
                     addNaturtype={this.addNaturtype}
                     labels={labels}
                     codes={koder.redlistedNaturetypes}
                     header={ntLabels.chooseRL2018}/> 
-               
+                </fieldset>
+                <fieldset className="well">               
                <NewNaturetype
                     appState={appState}
                     addNaturtype={this.addNaturtype}
                     labels={labels}
                     codes={koder.naturtyperNIN2}
-                    header={ntLabels.chooseNT} /> 
-                <br/>
+                    header={ntLabels.chooseNT} />
+                </fieldset> 
+                <fieldset className="well">   
                 <NaturtypeTable
                     naturetypes={assessment.impactedNatureTypes}
                     canRenderTable={canRenderTable}
@@ -87,8 +90,7 @@ export default class Assessment51Naturtyper extends React.Component {
                     codes={koder}
                     appState={appState}
                     desc={"Anslå kolonisert areal i de naturtypene arten er observert i, beskriv artens påvirkning i naturtypen og anslå hvor stor andel av naturtypen som blir påvirket. Det skal være sannsynlighetsovervekt for at valgt tilstandsendring skjer."}/>
-                <br/>
-                <br/>
+                </fieldset>  
 
                 <fieldset className="well">
                     <h4>{ntLabels.critCHeading}</h4>

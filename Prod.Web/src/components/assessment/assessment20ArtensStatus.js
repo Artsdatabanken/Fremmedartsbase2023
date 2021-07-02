@@ -72,7 +72,7 @@ export default class Assessment20ArtensStatus extends React.Component {
                 {config.showPageHeaders
                     ? <h3>{labels.critDocumentation.status}</h3>
                     : <br/>}            
-                <div className="well">
+                <fieldset className="well">
                     <b>{labels.SpeciesStatus.isAlienSpecies} </b>
                     <p>{labels.SpeciesStatus.unsureIfAlien} </p>
                     <Xcomp.Radio value={'true'} observableValue={[assessment.riskAssessment, "isAlienSpecies"]} label={labels.General.yes} />                    
@@ -82,7 +82,7 @@ export default class Assessment20ArtensStatus extends React.Component {
                     <Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'isAlien']}/>
 
                     { assessment.riskAssessment.isAlienSpecies == 'true' ?
-                    <div style={{marginTop: '10px'}}> 
+                    <div> 
                         <div className="statusField"><b>{labels.SpeciesStatus.connectedToAnotherTaxon} </b> <Xcomp.Bool observableValue={[assessment.riskAssessment, "connectedToAnother"]} /></div>
                         { assessment.riskAssessment.connectedToAnother == true ?
                             <div>
@@ -279,7 +279,7 @@ export default class Assessment20ArtensStatus extends React.Component {
                             {assessment.speciesStatus != "C3" && assessment.speciesStatus != "C2" && assessment.speciesStatus != null &&
                                 <Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'furtherInfo']}/> }
                             </div> : null }
-                </div>
+                </fieldset>
                {/* <Xcomp.Radio
                      kode={koder.AlienSpeciesCategory[0]}
                     //kode={labels.AlienSpeciesCategory[0]}

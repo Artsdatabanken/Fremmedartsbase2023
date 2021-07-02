@@ -81,7 +81,7 @@ export default class Assessment41Import extends React.Component {
         const removeImportPathway = (mp) => this.removeImportPathway(vurdering, mp)
 
         return(
-            <div>
+            <fieldset className="well">
                 <p style={{marginLeft: '20px'}}>Kommer arten (utelukkende eller også) til norsk natur via innendørs- eller produksjonsareal?
                 <SelectableRadio
                             label={labels.indoorProduktionImport.a}
@@ -149,7 +149,7 @@ export default class Assessment41Import extends React.Component {
                         <NewMigrationPathwaySelector migrationPathways={importPathwayKoder} onSave={mp => this.saveImportPathway(vurdering, mp)} koder={koder} hideIntroductionSpread labels={labels}/>
                     </div>
                 </div>} */}
-            </div>
+            </fieldset>
         )
     }
 }
