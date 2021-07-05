@@ -3419,35 +3419,42 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "parasitesOnAnimals",
-                                                    "Text": "som parasitter på/i dyr",
+                                                    "Text": "som smitte/parasitter på/i dyr",
                                                     "Info": null,
                                                     "Children": null
                                                 },
                                                 {
                                                     "Id": null,
                                                     "Value": "contaminantOnAnimals",
-                                                    "Text": "som annen smitte/forurensning på/med dyr",
+                                                    "Text": "som annen forurensning av dyr",
                                                     "Info": null,
                                                     "Children": null
                                                 },
                                                 {
                                                     "Id": null,
                                                     "Value": "parasitesOnPlants",
-                                                    "Text": "som parasitter på/i planter",
+                                                    "Text": "som smitte/parasitter på/i planter",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "contaminantOnPlantsCommercial",
+                                                    "Text": "som forurensning av planter eller medfølgende jord under kommersiell plantehandel",
                                                     "Info": null,
                                                     "Children": null
                                                 },
                                                 {
                                                     "Id": null,
                                                     "Value": "contaminantOnPlants",
-                                                    "Text": "som annen smitte/forurensninger på/med planter",
+                                                    "Text": "som øvrig forurensning av planter",
                                                     "Info": null,
                                                     "Children": null
                                                 },
                                                 {
                                                     "Id": null,
-                                                    "Value": "seedContaminant",
-                                                    "Text": "av frø",
+                                                    "Value": "timberTrade",
+                                                    "Text": "av trevirke og treprodukter",
                                                     "Info": null,
                                                     "Children": null
                                                 },
@@ -3457,7 +3464,7 @@
                                                     "Text": "av mat",
                                                     "Info": null,
                                                     "Children": null
-                                                },
+                                                },                                                
                                                 {
                                                     "Id": null,
                                                     "Value": "contaminatedBait",
@@ -3467,32 +3474,11 @@
                                                 },
                                                 {
                                                     "Id": null,
-                                                    "Value": "timberTrade",
-                                                    "Text": "av trevirke",
+                                                    "Value": "seedContaminant",
+                                                    "Text": "av frø (ikke mat eller fôr)",
                                                     "Info": null,
                                                     "Children": null
-                                                },
-                                                {
-                                                    "Id": null,
-                                                    "Value": "transportationOfHabitatMaterial",
-                                                    "Text": "av habitatmateriale, jord o.l.",
-                                                    "Info": null,
-                                                    "Children": null
-                                                },
-                                                {
-                                                    "Id": null,
-                                                    "Value": "contaminantNurseryMaterial",
-                                                    "Text": "av hageavfall o.l.",
-                                                    "Info": null,
-                                                    "Children": null
-                                                },
-                                                {
-                                                    "Id": null,
-                                                    "Value": "otherUnknownContaminant",
-                                                    "Text": "øvrig/ukjent forurensning",
-                                                    "Info": null,
-                                                    "Children": null
-                                                }
+                                                }                                                
                                             ]
                                         }
                                     },

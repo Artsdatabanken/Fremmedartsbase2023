@@ -45,10 +45,15 @@ export default class Vurdering34Spredningsveier extends React.Component {
         const vurdering = assessment
         const labels = appState.codeLabels
         const koder = appState.koder
-        const importationCodes = koder.migrationPathways[0].Children.mp[0].Children.mpimportation
+        const importationCodes = name == "Til innendørs- eller produksjonsareal" ? koder.migrationPathways[0].Children.mp[0].Children.mpimport : 
+                                name == "Introduksjon til natur" ? koder.migrationPathways[0].Children.mp[0].Children.mpimportation : 
+                                name == "Videre spredning i natur" ? koder.migrationPathways[0].Children.mp[0].Children.mpspread : null 
         // const {vurdering, viewModel, fabModel} = this.props;
-        const migrationPathways = vurdering.assesmentVectors
-        const migrationPathwayKoder = appState.spredningsveier.children.filter(child => child.name != "Import")
+        const migrationPathways = assessment.assesmentVectors
+        //const migrationPathwayKoder = appState.spredningsveier.children.filter(child => child.name != "Import")
+        const migrationPathwayKoder = name == "Til innendørs- eller produksjonsareal" ? appState.spredningsveier.children.filter(child => child.name == "Import" || child.name == "transportpolution" || child.name == "stowaway") :
+                                     name == "Videre spredning i natur" ? appState.spredningsveier.children.filter(child => child.name != "Import" && child.name != "escaped")
+                                        : appState.spredningsveier.children.filter(child => child.name != "Import")
         // const labels = fabModel.kodeLabels
         // console.log("''''''''''''''''''''''")
         // console.log(JSON.stringify(migrationPathwayKoder))
