@@ -51,9 +51,11 @@ export default class Vurdering34Spredningsveier extends React.Component {
         // const {vurdering, viewModel, fabModel} = this.props;
         const migrationPathways = assessment.assesmentVectors
         //const migrationPathwayKoder = appState.spredningsveier.children.filter(child => child.name != "Import")
-        const migrationPathwayKoder = name == "Til innendørs- eller produksjonsareal" ? appState.spredningsveier.children.filter(child => child.name == "Import" || child.name == "transportpolution" || child.name == "stowaway") :
-                                     name == "Videre spredning i natur" ? appState.spredningsveier.children.filter(child => child.name != "Import" && child.name != "escaped")
+        const migrationPathwayKoder = name == "Til innendørs- eller produksjonsareal" ? appState.spredningsveier.children.filter(child => child.name == "Import") :
+                                     name == "Videre spredning i natur" ? appState.spredningsveier.children.filter(child => child.name != "Import" && child.name != "Innførsel")
                                         : appState.spredningsveier.children.filter(child => child.name != "Import")
+
+        //console.log(appState.spredningsveier.children)
         // const labels = fabModel.kodeLabels
         // console.log("''''''''''''''''''''''")
         // console.log(JSON.stringify(migrationPathwayKoder))
