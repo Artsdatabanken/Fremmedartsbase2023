@@ -383,11 +383,23 @@ form.minMax .form-group div {
     transition: all .3s ease-out;
 }
 
-.btn:active {
-  background-color: rgba(0,0,0,0.1);
-  box-shadow: none;
+div .btn, div .form-control {
+  border-radius: 24px;
+  background-color: #f5f5f5;
+  color: #4c4a48;
 }
 
+.btn:active, .header_padding .btn-primary:hover, .page_padding .btn-primary:hover {
+  //background-color: rgba(0,0,0,0.1);
+  background-color: #4c4a48;
+  color: #fff;
+  box-shadow: none;
+  border: 2px solid #fff;
+}
+
+div .btn:hover * {
+  color: #fff;
+}
 
 .btn-flat {
     border: none;
