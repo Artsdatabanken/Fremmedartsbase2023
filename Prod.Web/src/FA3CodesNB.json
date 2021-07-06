@@ -3238,21 +3238,7 @@
                                         "Text": "Tilsiktet utsetting",
                                         "Info": null,
                                         "Children": {
-                                            "mpimportationrelease": [
-                                                {
-                                                    "Id": null,
-                                                    "Value": "releaseForUseOther",
-                                                    "Text": "til kommersiell bruk (f.eks. produksjonsarter)",
-                                                    "Info": null,
-                                                    "Children": null
-                                                },
-                                                {
-                                                    "Id": null,
-                                                    "Value": "biologicalControl",
-                                                    "Text": "til biologisk bekjemping",
-                                                    "Info": null,
-                                                    "Children": null
-                                                },
+                                            "mpimportationrelease": [                                                
                                                 {
                                                     "Id": null,
                                                     "Value": "hunting",
@@ -3269,11 +3255,11 @@
                                                 },
                                                 {
                                                     "Id": null,
-                                                    "Value": "landscapeFloraFaunaImprovement",
-                                                    "Text": "til estetisk 'berikelse'",
+                                                    "Value": "biologicalControl",
+                                                    "Text": "til biologisk bekjemping",
                                                     "Info": null,
                                                     "Children": null
-                                                },
+                                                },                                                
                                                 {
                                                     "Id": null,
                                                     "Value": "erosionControl",
@@ -3290,6 +3276,13 @@
                                                 },
                                                 {
                                                     "Id": null,
+                                                    "Value": "landscapeFloraFaunaImprovement",
+                                                    "Text": "til estetisk 'berikelse'",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
                                                     "Value": "otherIntentionalRelease",
                                                     "Text": "øvrig utsetting av nyttearter",
                                                     "Info": null,
@@ -3298,7 +3291,7 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "otherUnknownRelease",
-                                                    "Text": "øvrig/ukjent utsetting",
+                                                    "Text": "øvrig tilsiktet utsetting",
                                                     "Info": null,
                                                     "Children": null
                                                 }
@@ -3315,7 +3308,7 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "agriculture",
-                                                    "Text": "fra jordbruk",
+                                                    "Text": "fra jordbruk (unntatt husdyrhold)",
                                                     "Info": null,
                                                     "Children": null
                                                 },
@@ -3329,21 +3322,35 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "horticulture",
-                                                    "Text": "fra hager/hagebruk",
+                                                    "Text": "fra kommersiell plantehandel",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "gardening",
+                                                    "Text": "fra hager",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "gardenWaste",
+                                                    "Text": "som hageutkast",
                                                     "Info": null,
                                                     "Children": null
                                                 },
                                                 {
                                                     "Id": null,
                                                     "Value": "ornamentalPurposeOther",
-                                                    "Text": "fra grøntanlegg",
+                                                    "Text": "fra grøntanlegg (inkl. parker, rabatter o.l.)",
                                                     "Info": null,
                                                     "Children": null
                                                 },
                                                 {
                                                     "Id": null,
                                                     "Value": "farmedAnimals",
-                                                    "Text": "fra husdyrhold",
+                                                    "Text": "fra husdyrhold (i landbruket)",
                                                     "Info": null,
                                                     "Children": null
                                                 },
@@ -3357,28 +3364,28 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "aquaculture",
-                                                    "Text": "fra akvakultur (inkl. dammer)",
-                                                    "Info": null,
-                                                    "Children": null
-                                                },
-                                                {
-                                                    "Id": null,
-                                                    "Value": "liveFoodLiveBait",
-                                                    "Text": "fra levende mat, fôr eller agn",
+                                                    "Text": "fra akvakultur (inkl. fiskedammer)",
                                                     "Info": null,
                                                     "Children": null
                                                 },
                                                 {
                                                     "Id": null,
                                                     "Value": "petAquariumTerrariumSpecies",
-                                                    "Text": "fra kjæledyr/hobbydyr eller private akvarieplanter",
+                                                    "Text": "av kjæledyr/hobbydyr eller private akvarieplanter",
                                                     "Info": null,
                                                     "Children": null
-                                                },
+                                                },                                                
+                                                {
+                                                    "Id": null,
+                                                    "Value": "liveFoodLiveBait",
+                                                    "Text": "av levende mat til kjæledyr/hobbydyr",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },                                                
                                                 {
                                                     "Id": null,
                                                     "Value": "petAquariumTerrariumFood",
-                                                    "Text": "av levende mat til kjæledyr/hobbydyr",
+                                                    "Text": "fra levende mat, fôr eller agn (unntatt til kjæledyr)",
                                                     "Info": null,
                                                     "Children": null
                                                 },
@@ -3386,20 +3393,6 @@
                                                     "Id": null,
                                                     "Value": "botanicalGardenZooAquarium",
                                                     "Text": "fra botaniske/zoologiske hager / akvarier (ikke privat)",
-                                                    "Info": null,
-                                                    "Children": null
-                                                },
-                                                {
-                                                    "Id": null,
-                                                    "Value": "garden",
-                                                    "Text": "fra hager",
-                                                    "Info": null,
-                                                    "Children": null
-                                                },
-                                                {
-                                                    "Id": null,
-                                                    "Value": "gardenWaste",
-                                                    "Text": "som hageutkast",
                                                     "Info": null,
                                                     "Children": null
                                                 },
@@ -3414,13 +3407,6 @@
                                                     "Id": null,
                                                     "Value": "otherEscape",
                                                     "Text": "øvrig rømning/forvilling",
-                                                    "Info": null,
-                                                    "Children": null
-                                                },
-                                                {
-                                                    "Id": null,
-                                                    "Value": "otherUnknownEscape",
-                                                    "Text": "øvrig/ukjent rømming/forvilling",
                                                     "Info": null,
                                                     "Children": null
                                                 }
@@ -3857,7 +3843,7 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "tunnelsAndLandBridges",
-                                                    "Text": "over menneskeskapt landforbindelse",
+                                                    "Text": "over menneskeskapt landforbindelse / gjennom tunnell",
                                                     "Info": null,
                                                     "Children": null
                                                 }
@@ -3901,7 +3887,7 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "importAgriculture",
-                                                    "Text": "til jordbruk (planteproduksjon)",
+                                                    "Text": "til jordbruk (unntatt husdyrhold)",
                                                     "Info": null,
                                                     "Children": null
                                                 },
@@ -3915,21 +3901,21 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "importHorticulture",
-                                                    "Text": "til gartneri, planteskoler, hagesentre, blomsterbuttikker o.l.",
+                                                    "Text": "til kommersiell plantehandel",
                                                     "Info": null,
                                                     "Children": null
                                                 },
                                                 {
                                                     "Id": null,
                                                     "Value": "importOrnamentalPurposeOther",
-                                                    "Text": "til grøntanlegg",
+                                                    "Text": "til grøntanlegg (inkl. parker, rabatter o.l.)",
                                                     "Info": null,
                                                     "Children": null
                                                 },
                                                 {
                                                     "Id": null,
                                                     "Value": "importFarmedAnimals",
-                                                    "Text": "til husdyrhold",
+                                                    "Text": "til husdyrhold (i landbruket)",
                                                     "Info": null,
                                                     "Children": null
                                                 },
@@ -3949,29 +3935,15 @@
                                                 },
                                                 {
                                                     "Id": null,
-                                                    "Value": "importLiveFoodLiveBait",
-                                                    "Text": "til salg av levende mat, fôr eller agn",
-                                                    "Info": null,
-                                                    "Children": null
-                                                },
-                                                {
-                                                    "Id": null,
                                                     "Value": "importPetShops",
-                                                    "Text": "til dyrebutikk (inkludert kjæledyr, miljøplanter i akvarier og terrarier, levende fôr, agn)",
+                                                    "Text": "til dyrebutikk (inkludert akvarieplanter)",
                                                     "Info": null,
                                                     "Children": null
                                                 },
                                                 {
                                                     "Id": null,
-                                                    "Value": "directlyToEndUserByMail",
-                                                    "Text": "direkte til forbruker per post",
-                                                    "Info": null,
-                                                    "Children": null
-                                                },
-                                                {
-                                                    "Id": null,
-                                                    "Value": "privateImportation",
-                                                    "Text": "privatpersoners egenimport",
+                                                    "Value": "importLiveFoodLiveBait",
+                                                    "Text": "til salg av levende mat, fôr eller agn (unntatt kjæledyr)",
                                                     "Info": null,
                                                     "Children": null
                                                 },
@@ -3995,7 +3967,21 @@
                                                     "Text": "øvrig/ukjent formål",
                                                     "Info": null,
                                                     "Children": null
-                                                }
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "privateImportation",
+                                                    "Text": "privatpersoners egenimport",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "directlyToEndUserByMail",
+                                                    "Text": "direkte til forbruker per post",
+                                                    "Info": null,
+                                                    "Children": null
+                                                } 
                                             ]
                                         }
                                     },
@@ -4102,6 +4088,20 @@
                                                 },
                                                 {
                                                     "Id": null,
+                                                    "Value": "importContainerBulk",
+                                                    "Text": "med container/last",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "importMachinery",
+                                                    "Text": "med maskiner/utstyr",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
                                                     "Value": "importVehicles",
                                                     "Text": "med kjøretøy (ikke med last e.l.)",
                                                     "Info": null,
@@ -4117,35 +4117,28 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "importHitchhikersShip",
-                                                    "Text": "med skip",
+                                                    "Text": "med fartøy (skip, båter o.l., unntatt last, ballastvann og påvekst e.l.)",
                                                     "Info": null,
                                                     "Children": null
                                                 },
                                                 {
                                                     "Id": null,
                                                     "Value": "importBallastWater",
-                                                    "Text": "med ballastvann/sand",
+                                                    "Text": "med ballastvann",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "importBallastWater",
+                                                    "Text": "med ballastsand/jord",
                                                     "Info": null,
                                                     "Children": null
                                                 },
                                                 {
                                                     "Id": null,
                                                     "Value": "importHullFouling",
-                                                    "Text": "med påvekst på skip",
-                                                    "Info": null,
-                                                    "Children": null
-                                                },
-                                                {
-                                                    "Id": null,
-                                                    "Value": "importMachinery",
-                                                    "Text": "med maskiner/utstyr",
-                                                    "Info": null,
-                                                    "Children": null
-                                                },
-                                                {
-                                                    "Id": null,
-                                                    "Value": "importContainerBulk",
-                                                    "Text": "med container/last",
+                                                    "Text": "som påvekst på fartøy (skip, båter o.l.",
                                                     "Info": null,
                                                     "Children": null
                                                 },
@@ -4166,7 +4159,7 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "importOtherMeansOfTransport",
-                                                    "Text": "øvrig/ukjent transport",
+                                                    "Text": "øvrige blindpassasjerer",
                                                     "Info": null,
                                                     "Children": null
                                                 }
