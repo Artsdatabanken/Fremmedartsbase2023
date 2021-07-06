@@ -383,18 +383,24 @@ form.minMax .form-group div {
     transition: all .3s ease-out;
 }
 
-div .btn, div .form-control {
+div .btn, div .form-control, .well .btn-primary {
   border-radius: 24px;
   background-color: #f5f5f5;
   color: #4c4a48;
 }
 
-.btn:active, .header_padding .btn-primary:hover, .page_padding .btn-primary:hover {
+.btn:active, .header_padding .btn-primary:hover, .page_padding .btn-primary:hover, .well .btn-primary:hover {
   //background-color: rgba(0,0,0,0.1);
   background-color: #4c4a48;
   color: #fff;
   box-shadow: none;
   border: 2px solid #fff;
+}
+
+.well .btn-primary:disabled, .well .btn-primary.disabled {
+  background-color: #f5f5f5;
+  color: #4c4a48;
+  border: 1px solid #4c4a48;
 }
 
 div .btn:hover * {

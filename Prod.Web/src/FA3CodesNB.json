@@ -110,6 +110,24 @@
             }
         ],
 
+        "SpeciesStatus": [
+            {
+                "Id": "SpeciesStatus",
+                "Value": "potentialDoorknocker",
+                "Text": "Potensiell dørstokkart",
+                "Info": null,
+                "Children": null
+            },       
+            {
+                "Id": "SpeciesStatus",
+                "Value": "otherSpecies",
+                "Text": "Øvrige arter",
+                "Info": null,
+                "Children": null
+            }
+            
+        ],
+
         "ArrivedCountryFrom": [
             {
                 "Id": "ArrivedCountryFrom",
@@ -3633,7 +3651,7 @@
                                     {
                                         "Id": null,
                                         "Value": "importDirect",
-                                        "Text": "direkte import",
+                                        "Text": "Direkte import",
                                         "Info": null,
                                         "Children": {
                                             "mpimportdirect": [
@@ -3741,7 +3759,7 @@
                                     {
                                         "Id": null,
                                         "Value": "importTransportpolution",
-                                        "Text": "transport/forurensning",
+                                        "Text": "Forurensning av vare",
                                         "Info": null,
                                         "Children": {
                                             "mpimportpolution": [
@@ -3828,7 +3846,7 @@
                                     {
                                         "Id": null,
                                         "Value": "importStowaway",
-                                        "Text": "transport/blindpassasjer",
+                                        "Text": "Blindpassasjer med transport",
                                         "Info": null,
                                         "Children": {
                                             "mpimportpolution": [
