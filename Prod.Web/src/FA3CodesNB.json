@@ -3593,6 +3593,249 @@
                         {
                             "Id": null,
                             "Value": null,
+                            "Text": "Videre spredning",
+                            "Info": null,
+                            "Children": {
+                                "mpimportation": [
+                                    {
+                                        "Id": null,
+                                        "Value": "released",
+                                        "Text": "Tilsiktet utsetting",
+                                        "Info": null,
+                                        "Children": {
+                                            "mpimportationrelease": [
+                                                {
+                                                    "Id": null,
+                                                    "Value": "releaseForUseOther",
+                                                    "Text": "til kommersiell bruk (f.eks. produksjonsarter)",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "biologicalControl",
+                                                    "Text": "til biologisk bekjemping",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "hunting",
+                                                    "Text": "til jakt",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "fishery",
+                                                    "Text": "til fiske",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "landscapeFloraFaunaImprovement",
+                                                    "Text": "til estetisk 'berikelse'",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "erosionControl",
+                                                    "Text": "til erosjonskontroll, lebeplanting o.l.",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "wildlifeManagement",
+                                                    "Text": "som bevarings- eller forvaltningstiltak",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "otherIntentionalRelease",
+                                                    "Text": "øvrig utsetting av nyttearter",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "otherUnknownRelease",
+                                                    "Text": "øvrig/ukjent utsetting",
+                                                    "Info": null,
+                                                    "Children": null
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "Id": null,
+                                        "Value": "transportpolution",
+                                        "Text": "Forurensning av vare",
+                                        "Info": null,
+                                        "Children": {
+                                            "mpimportationpolution": [
+                                                {
+                                                    "Id": null,
+                                                    "Value": "parasitesOnAnimals",
+                                                    "Text": "som smitte/parasitter på/i dyr",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "contaminantOnAnimals",
+                                                    "Text": "som annen forurensning av dyr",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "parasitesOnPlants",
+                                                    "Text": "som smitte/parasitter på/i planter",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "contaminantOnPlantsCommercial",
+                                                    "Text": "som forurensning av planter eller medfølgende jord under kommersiell plantehandel",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "contaminantOnPlants",
+                                                    "Text": "som øvrig forurensning av planter",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "timberTrade",
+                                                    "Text": "av trevirke og treprodukter",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "foodContaminant",
+                                                    "Text": "av mat",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },                                                
+                                                {
+                                                    "Id": null,
+                                                    "Value": "contaminatedBait",
+                                                    "Text": "av fôr eller agn",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "seedContaminant",
+                                                    "Text": "av frø (ikke mat eller fôr)",
+                                                    "Info": null,
+                                                    "Children": null
+                                                }                                                
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "Id": null,
+                                        "Value": "stowaway",
+                                        "Text": "Blindpassasjer med transport",
+                                        "Info": null,
+                                        "Children": {
+                                            "mpimportationstowaway": [
+                                                {
+                                                    "Id": null,
+                                                    "Value": "peopleAndLuggage",
+                                                    "Text": "med mennesker og deres bagasje",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "vehicles",
+                                                    "Text": "med kjøretøy (biler, tog)",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "hitchhikersPlane",
+                                                    "Text": "med fly",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "hitchhikersShip",
+                                                    "Text": "med skip",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "ballastWater",
+                                                    "Text": "med ballastvann/sand",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "hullFouling",
+                                                    "Text": "med påvekst på skip",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "machinery",
+                                                    "Text": "med maskiner/utstyr",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "containerBulk",
+                                                    "Text": "med container/last",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "organicPackagingMaterial",
+                                                    "Text": "med organisk emballasje",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "fishingEquipment",
+                                                    "Text": "med fiske/akvakulturutstyr",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "otherMeansOfTransport",
+                                                    "Text": "øvrige blindpassasjerer",
+                                                    "Info": null,
+                                                    "Children": null
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "Id": null,
+                            "Value": null,
                             "Text": "Spredning",
                             "Info": null,
                             "Children": {
