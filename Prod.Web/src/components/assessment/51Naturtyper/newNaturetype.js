@@ -21,6 +21,7 @@ export default class NewNaturetype extends React.Component {
                 TimeHorizon: null,
                 ColonizedArea: null,
                 StateChange: [],
+                Background: [],
                 AffectedArea: null
             }
         })
