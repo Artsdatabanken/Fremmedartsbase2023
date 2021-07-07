@@ -24,13 +24,18 @@ export default class ScoreUnsure extends React.Component {
 
         return <div style={{display: 'flex'}}>
             
-            <Xcomp.MultiselectArray
+           {/* <Xcomp.MultiselectArray
                                 className={"scores"}
                                 observableValue={[riskAssessment, firstValue]} 
                                 disabled={disabled}
                                 codes={koder.scores}
-                                mode="check"/>
-
+                                mode="check"/> */}
+            <Xcomp.StringEnum 
+                        className={"scores"}
+                        observableValue={[riskAssessment, firstValue]} 
+                        disabled={disabled}
+                        mode="radio" 
+                        codes={koder.scores}/>
             <Xcomp.MultiselectArray
                                 observableValue={[riskAssessment, secondValue]} 
                                 disabled={disabled}
