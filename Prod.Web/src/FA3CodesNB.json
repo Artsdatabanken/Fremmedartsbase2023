@@ -479,14 +479,15 @@
               },
               {
     
-                "text": "Endrede kriterier, avgrensninger eller retningslinjer",
-                "value": "changedCriteria"
-              },
-              {
-    
                 "text": "Ny tolkning av tidligere data",
                 "value": "newInterpretation"
               },
+              {
+    
+                "text": "Endrede kriterier, avgrensninger eller retningslinjer",
+                "value": "changedCriteria"
+              },
+              
               {
     
                 "text": "Endret status (inkl. taksonomi, til/fra hjemlig)",
@@ -3943,7 +3944,7 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "importLiveFoodLiveBait",
-                                                    "Text": "til salg av levende mat, fôr eller agn (unntatt kjæledyr)",
+                                                    "Text": "til salg av levende mat, fôr eller agn (unntatt til kjæledyr)",
                                                     "Info": null,
                                                     "Children": null
                                                 },
