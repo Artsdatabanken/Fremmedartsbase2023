@@ -75,10 +75,10 @@ export default class Vurdering34Spredningsveier extends React.Component {
                 </div>
                 <button className="btn btn-primary">Se definisjoner</button>
                 <p>{furtherInfo}</p>
-                <i>{labels.Import.furtherInfoComment}</i>
                 <Xcomp.HtmlString                            
                                 observableValue={[riskAssessment, "furtherInfoAboutImport"]}
                                 //label={labels.DEcrit.insecurity}
+                                placeholder={labels.Import.furtherInfoComment}
                                 />
             </div>
         );

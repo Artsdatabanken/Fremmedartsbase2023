@@ -383,10 +383,11 @@ form.minMax .form-group div {
     transition: all .3s ease-out;
 }
 
-div .btn, div .form-control, .well .btn-primary {
+div .btn, div .form-control, .well .btn-primary, .btn-flat {
   border-radius: 24px;
   background-color: #f5f5f5;
   color: #4c4a48;
+  border: 1px solid #777;
 }
 
 .btn:active, .header_padding .btn-primary:hover, .page_padding .btn-primary:hover, .well .btn-primary:hover {
@@ -397,13 +398,13 @@ div .btn, div .form-control, .well .btn-primary {
   border: 2px solid #fff;
 }
 
-.well .btn-primary:disabled, .well .btn-primary.disabled {
+.well .btn-primary:disabled, .well .btn-primary.disabled  {
   background-color: #f5f5f5;
   color: #4c4a48;
   border: 1px solid #4c4a48;
 }
 
-div .btn:hover * {
+div .btn:hover *, .btn-flat:hover {
   color: #fff;
 }
 
@@ -1257,6 +1258,13 @@ table.table-hover,
   padding-inline-start: 40px;
 }
 
+.submenu {
+  position: sticky;
+  top: 141px;
+  z-index: 100;
+  background-color: #fff;
+}
+
 .nav_menu .filters li.checkbox {
   text-align: left;
 }
@@ -1295,6 +1303,10 @@ fieldset.well {
 
 .well div .form-control {
   width: auto;
+}
+
+.well div .input_field .form-control {  
+  min-height: 80px;
 }
 
 .well p {
