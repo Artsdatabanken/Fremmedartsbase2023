@@ -213,6 +213,7 @@ namespace SwissKnife.Database
                 cfg.CreateMap<FA3Legacy, FA4>()
 
                     .ForMember(dest => dest.IsAlienSpecies, opt => opt.Ignore())
+                    .ForMember(dest => dest.IsRegionallyAlien, opt => opt.Ignore())
                     .ForMember(dest => dest.ConnectedToAnother, opt => opt.Ignore())
                     .ForMember(dest => dest.SpeciesStatus, opt => opt.Ignore())
                     .ForMember(dest => dest.ReasonForChangeOfCategory, opt => opt.Ignore())

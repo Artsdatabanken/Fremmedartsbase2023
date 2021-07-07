@@ -8,7 +8,8 @@ import config from '../../config';
 import * as Xcomp from './observableComponents';
 import UploadPicturesButton from './30Artsegenskaper/uploadPicturesButton'
 import OriginTable from './30Artsegenskaper/originTable'
-import ArrivedCountryFrom from './30Artsegenskaper/arrivedCountryFrom'
+//import ArrivedCountryFrom from './30Artsegenskaper/arrivedCountryFrom'
+import ArrivedCountryFrom from './arrivedCountryFrom'
 
 @inject("appState")
 @observer
@@ -69,7 +70,9 @@ export default class Assessment30Artsegenskaper extends React.Component {
         const naturalOriginDisabled = (id, region) => koder.naturalOriginDisabled.find(code => code.Value === id).Text.indexOf(region) !== -1
 
         return(
+            
             <fieldset className="well">
+
                 <h2>Global utbredelse og artsegenskaper</h2>
                 {config.showPageHeaders ? <h3>Artsegenskaper</h3> : <br />}
                 <br />
@@ -79,7 +82,131 @@ export default class Assessment30Artsegenskaper extends React.Component {
                     <br />
                 </div>
                 : null}
-                <p>Livsmiljø</p>
+                {assessment.alienSpeciesCategory == "DoorKnocker" && assessment.speciesStatus == "A" ?
+
+                <div>
+                    <p>Livsmiljø</p>
+                    <Xcomp.Bool observableValue={[vurdering, 'Limnic']} label={limnicTerrestrialMarinelabel("limnic")} />            
+                    <Xcomp.Bool observableValue={[vurdering, 'Terrestrial']} label={limnicTerrestrialMarinelabel("terrestrial")} />            
+                    <Xcomp.Bool observableValue={[vurdering, 'Marine']} label={limnicTerrestrialMarinelabel("marine")} />     
+                    <Xcomp.Bool observableValue={[vurdering, 'BrackishWater']} label={limnicTerrestrialMarinelabel("brackishWater")} />         
+                    {/*appState.showBrackishWater
+                    ? <Xcomp.Bool observableValue={[vurdering, 'brackishWater']} label={limnicTerrestrialMarinelabel("brackishWater")} />            
+                    : null*/}
+                    {
+                    isLimnicTerrestrial ?
+                    //vurdering.limnic || vurdering.terrestrial ?
+                    <div>
+                        <br/>
+                        <div className="well">
+                        <h4><b>{labels.NaturalOrigin.naturalOrigin}</b></h4>
+                        <OriginTable 
+                            origins={vurdering.NaturalOrigins} 
+                            climateZoneLabel={climateZoneLabel}
+                            subClimateZoneLabel={subClimateZoneLabel}
+                            naturalOriginDisabled={naturalOriginDisabled}
+                            labels={labels.NaturalOrigin}
+                        />
+                        <Xcomp.Button 
+                            primary 
+                            onClick={() => this.transferNaturalOriginsToCurrentInternationalExistenceAreas(vurdering)} 
+                            className="pull-right"
+                            >{labels.NaturalOrigin.transfer}</Xcomp.Button>
+                        <Xcomp.Button 
+                            primary 
+                            onClick={() => this.setNaturalOriginsAllUnknown(vurdering)} 
+                            className="pull-left"
+                            >{labels.NaturalOrigin.noKnown}</Xcomp.Button>
+                        <br />
+                        <br />
+                        { vurdering.NaturalOrigins.filter(
+                                row => row.Europe || row.Asia || row.Africa || row.Oceania || row.NorthAndCentralAmerica || row.SouthAmerica
+                            ).length > 0 ?
+                            <Xcomp.HtmlString observableValue={[vurdering, 'naturalOriginUnknownDocumentation']} label={labels.NaturalOrigin.describe} /> :
+                            null}
+                        </div>
+                        <div className="well">
+                        <h4><b>{labels.NaturalOrigin.currentExistenceAria}</b></h4>
+                        <OriginTable 
+                            origins={vurdering.CurrentInternationalExistenceAreas} 
+                            climateZoneLabel={climateZoneLabel}
+                            subClimateZoneLabel={subClimateZoneLabel}
+                            naturalOriginDisabled={naturalOriginDisabled}
+                            labels={labels.NaturalOrigin}
+                        />
+                        <Xcomp.Button 
+                            primary 
+                            onClick={() => this.setCurrentInternationalExistenceAreasAllUnknown(vurdering)} 
+                            className="pull-left"
+                            >{labels.NaturalOrigin.noKnown}</Xcomp.Button>
+                        <br />
+                        <br />
+                        { vurdering.CurrentInternationalExistenceAreas.filter(
+                                row => row.Europe || row.Asia || row.Africa || row.Oceania || row.NorthAndCentralAmerica || row.SouthAmerica
+                            ).length > 0 ?
+                            <Xcomp.HtmlString observableValue={[vurdering, 'currentInternationalExistenceAreasUnknownDocumentation']} label='Gi utdypende informasjon ved behov (påkrevd for "Ukjent" )' /> :
+                            null}
+                        </div>
+                    </div> :
+                    null}
+                    {isLimnic ?
+                    <div>
+                        <Xcomp.Bool observableValue={[vurdering, 'survivalBelow5c']} label={labels.NaturalOrigin.survivalBelow5c}/>
+                        <hr/>
+                    </div> :
+                    null }
+                    {isMarine ?
+                    <div>
+                        <div className="well">
+                            <h4><b>{labels.NaturalOrigin.naturalOrigin}</b></h4>
+                            <Xcomp.MultiselectArray observableValue={[vurdering, 'naturalOriginMarine']} codes={koder.naturalOriginMarine} labels={labels.General} />
+                            <Xcomp.HtmlString observableValue={[vurdering, 'naturalOriginMarineDetails']} label={labels.NaturalOrigin.describeMarine} /> 
+                        </div>
+                        <div className="well">
+                            <h4><b>{labels.NaturalOrigin.currentExistenceAria}</b></h4>
+                            <Xcomp.MultiselectArray observableValue={[vurdering, 'currentInternationalExistenceMarineAreas']} codes={koder.naturalOriginMarine} labels={labels.General}/>
+                            <Xcomp.HtmlString observableValue={[vurdering, 'currentInternationalExistenceMarineAreasDetails']} label={labels.NaturalOrigin.describeMarine} /> 
+                        </div> 
+                    </div>:
+                    null }                
+               <div className="well">
+                    <h4>{labels.Reproduction.reproduction}</h4>
+                    <Xcomp.Bool label={labels.Reproduction.sexual} observableValue={[vurdering, 'reproductionSexual']}/>
+                    <Xcomp.Bool label={labels.Reproduction.asexual} observableValue={[vurdering, 'reproductionAsexual']}/>
+                    <Xcomp.Number label={labels.Reproduction.generationTime} observableValue={[vurdering, 'reproductionGenerationTime']}/>
+                </div>
+                {appState.otherEffectsEnabled 
+                ? <div className="well">
+                        <Xcomp.Button 
+                            primary 
+                            xs
+                            className="pull-right"
+                            onClick={() => {
+                                vurdering.HealthEffects = labels.OtherEffects.noKnownValue
+                                vurdering.EconomicEffects = labels.OtherEffects.noKnownValue
+                                vurdering.PositiveEcologicalEffects = labels.OtherEffects.noKnownValue
+                                vurdering.EffectsOnPopulationOfOrigin = labels.OtherEffects.noKnownValue
+                            }}
+                        >{labels.OtherEffects.fillNoKnown} "{labels.OtherEffects.noKnownValue}"</Xcomp.Button>
+                    <h4>{labels.OtherEffects.otherEffects}</h4>
+                    <Xcomp.String label={labels.OtherEffects.healthEffects} observableValue={[vurdering, 'healthEffects']}/>
+                    <Xcomp.String label={labels.OtherEffects.economicEffects} observableValue={[vurdering, 'economicEffects']}/>
+                    <label>{labels.OtherEffects.ecosystemEffects}</label>
+                    <div className="intent30">
+                        <Xcomp.MultiselectArray label={labels.OtherEffects.ecoBasic} labels={labels.General} observableValue={[vurdering, 'ecosystemServiceEffectsBasicLifeProcesses']} codes={koder.ecosystemServiceEffectsBasicLifeProcesses}/>
+                        <Xcomp.MultiselectArray label={labels.OtherEffects.ecoSupport} labels={labels.General} observableValue={[vurdering, 'ecosystemServiceEffectsProvisioningServices']} codes={koder.ecosystemServiceEffectsSupportingServices}/>
+                        <Xcomp.MultiselectArray label={labels.OtherEffects.ecoRegulating} labels={labels.General} observableValue={[vurdering, 'ecosystemServiceEffectsRegulatingServices']} codes={koder.ecosystemServiceEffectsRegulatingServices}/>
+                        <Xcomp.MultiselectArray label={labels.OtherEffects.ecoKnowledge} labels={labels.General} observableValue={[vurdering, 'ecosystemServiceEffectsHumanSpiritualServices']} codes={koder.ecosystemServiceEffectsHumanMindServices}/>
+                    </div>
+                    <Xcomp.String label={labels.OtherEffects.positiveEffects} observableValue={[vurdering, 'positiveEcologicalEffects']}/>
+                    <Xcomp.String label={labels.OtherEffects.effectsOnPopulationOfOrigin} observableValue={[vurdering, 'effectsOnPopulationOfOrigin']}/>
+                </div>
+                : null}
+                </div>
+                 : assessment.isRegionallyAlien == true ? 
+
+                 <div>
+                     <p>Livsmiljø</p>
                 <Xcomp.Bool observableValue={[vurdering, 'Limnic']} label={limnicTerrestrialMarinelabel("limnic")} />            
                 <Xcomp.Bool observableValue={[vurdering, 'Terrestrial']} label={limnicTerrestrialMarinelabel("terrestrial")} />            
                 <Xcomp.Bool observableValue={[vurdering, 'Marine']} label={limnicTerrestrialMarinelabel("marine")} />     
@@ -165,9 +292,9 @@ export default class Assessment30Artsegenskaper extends React.Component {
                 null }
                 <div className="well">
                     <div>
-                        <h4>{labels.NaturalOrigin.arrivedCountry} {vurdering.expertGroup.indexOf("Svalbard") > -1 ? "Svalbard" : "Fastlands-Norge"} {labels.NaturalOrigin.arrivedCountryFrom}</h4>
+                        <h4>{labels.NaturalOrigin.arrivedCountry} {" vurderingsområdet "} {labels.NaturalOrigin.arrivedCountryFrom}</h4>
                         {/* <ArrivedCountryFrom vurdering={vurdering} fabModel={fabModel} /> */}
-                        <ArrivedCountryFrom vurdering={vurdering} />
+                        <ArrivedCountryFrom assessment={assessment} appState={appState} />
                     </div>
                     <label>{labels.NaturalOrigin.arrivedCountryFromDetails}</label>
                     <Xcomp.HtmlString observableValue={[vurdering, 'arrivedCountryFromDetails']} /> {/* earlier named: 'NaturalOrigin' */}
@@ -205,6 +332,138 @@ export default class Assessment30Artsegenskaper extends React.Component {
                     <Xcomp.String label={labels.OtherEffects.effectsOnPopulationOfOrigin} observableValue={[vurdering, 'effectsOnPopulationOfOrigin']}/>
                 </div>
                 : null}
+                 </div> :
+                 
+                 <div>
+                     <p>Livsmiljø</p>
+                <Xcomp.Bool observableValue={[vurdering, 'Limnic']} label={limnicTerrestrialMarinelabel("limnic")} />            
+                <Xcomp.Bool observableValue={[vurdering, 'Terrestrial']} label={limnicTerrestrialMarinelabel("terrestrial")} />            
+                <Xcomp.Bool observableValue={[vurdering, 'Marine']} label={limnicTerrestrialMarinelabel("marine")} />     
+                <Xcomp.Bool observableValue={[vurdering, 'BrackishWater']} label={limnicTerrestrialMarinelabel("brackishWater")} />         
+                {/*appState.showBrackishWater
+                ? <Xcomp.Bool observableValue={[vurdering, 'brackishWater']} label={limnicTerrestrialMarinelabel("brackishWater")} />            
+                : null*/}
+                {
+                isLimnicTerrestrial ?
+                //vurdering.limnic || vurdering.terrestrial ?
+                <div>
+                    <br/>
+                    <div className="well">
+                    <h4><b>{labels.NaturalOrigin.naturalOrigin}</b></h4>
+                    <OriginTable 
+                        origins={vurdering.NaturalOrigins} 
+                        climateZoneLabel={climateZoneLabel}
+                        subClimateZoneLabel={subClimateZoneLabel}
+                        naturalOriginDisabled={naturalOriginDisabled}
+                        labels={labels.NaturalOrigin}
+                    />
+                    <Xcomp.Button 
+                        primary 
+                        onClick={() => this.transferNaturalOriginsToCurrentInternationalExistenceAreas(vurdering)} 
+                        className="pull-right"
+                        >{labels.NaturalOrigin.transfer}</Xcomp.Button>
+                    <Xcomp.Button 
+                        primary 
+                        onClick={() => this.setNaturalOriginsAllUnknown(vurdering)} 
+                        className="pull-left"
+                        >{labels.NaturalOrigin.noKnown}</Xcomp.Button>
+                    <br />
+                    <br />
+                    { vurdering.NaturalOrigins.filter(
+                            row => row.Europe || row.Asia || row.Africa || row.Oceania || row.NorthAndCentralAmerica || row.SouthAmerica
+                        ).length > 0 ?
+                        <Xcomp.HtmlString observableValue={[vurdering, 'naturalOriginUnknownDocumentation']} label={labels.NaturalOrigin.describe} /> :
+                        null}
+                    </div>
+                    <div className="well">
+                    <h4><b>{labels.NaturalOrigin.currentExistenceAria}</b></h4>
+                    <OriginTable 
+                        origins={vurdering.CurrentInternationalExistenceAreas} 
+                        climateZoneLabel={climateZoneLabel}
+                        subClimateZoneLabel={subClimateZoneLabel}
+                        naturalOriginDisabled={naturalOriginDisabled}
+                        labels={labels.NaturalOrigin}
+                    />
+                    <Xcomp.Button 
+                        primary 
+                        onClick={() => this.setCurrentInternationalExistenceAreasAllUnknown(vurdering)} 
+                        className="pull-left"
+                        >{labels.NaturalOrigin.noKnown}</Xcomp.Button>
+                    <br />
+                    <br />
+                    { vurdering.CurrentInternationalExistenceAreas.filter(
+                            row => row.Europe || row.Asia || row.Africa || row.Oceania || row.NorthAndCentralAmerica || row.SouthAmerica
+                        ).length > 0 ?
+                        <Xcomp.HtmlString observableValue={[vurdering, 'currentInternationalExistenceAreasUnknownDocumentation']} label='Gi utdypende informasjon ved behov (påkrevd for "Ukjent" )' /> :
+                        null}
+                    </div>
+                </div> :
+                null}
+                {isLimnic ?
+                <div>
+                    <Xcomp.Bool observableValue={[vurdering, 'survivalBelow5c']} label={labels.NaturalOrigin.survivalBelow5c}/>
+                    <hr/>
+                </div> :
+                null }
+                {isMarine ?
+                <div>
+                    <div className="well">
+                        <h4><b>{labels.NaturalOrigin.naturalOrigin}</b></h4>
+                        <Xcomp.MultiselectArray observableValue={[vurdering, 'naturalOriginMarine']} codes={koder.naturalOriginMarine} labels={labels.General} />
+                        <Xcomp.HtmlString observableValue={[vurdering, 'naturalOriginMarineDetails']} label={labels.NaturalOrigin.describeMarine} /> 
+                    </div>
+                    <div className="well">
+                        <h4><b>{labels.NaturalOrigin.currentExistenceAria}</b></h4>
+                        <Xcomp.MultiselectArray observableValue={[vurdering, 'currentInternationalExistenceMarineAreas']} codes={koder.naturalOriginMarine} labels={labels.General}/>
+                        <Xcomp.HtmlString observableValue={[vurdering, 'currentInternationalExistenceMarineAreasDetails']} label={labels.NaturalOrigin.describeMarine} /> 
+                    </div> 
+                </div>:
+                null }
+                <div className="well">
+                    <div>
+                        <h4>{labels.NaturalOrigin.arrivedCountry}  {vurdering.expertGroup.indexOf("Svalbard") > -1 ? "Svalbard" : "Fastlands-Norge"} {labels.NaturalOrigin.arrivedCountryFrom}</h4>
+                        {/* <ArrivedCountryFrom vurdering={vurdering} fabModel={fabModel} /> */}
+                        <ArrivedCountryFrom assessment={assessment} appState={appState}/>
+                    </div>
+                    <label>{labels.NaturalOrigin.arrivedCountryFromDetails}</label>
+                    <Xcomp.HtmlString observableValue={[vurdering, 'arrivedCountryFromDetails']} /> {/* earlier named: 'NaturalOrigin' */}
+                </div>
+               <div className="well">
+                    <h4>{labels.Reproduction.reproduction}</h4>
+                    <Xcomp.Bool label={labels.Reproduction.sexual} observableValue={[vurdering, 'reproductionSexual']}/>
+                    <Xcomp.Bool label={labels.Reproduction.asexual} observableValue={[vurdering, 'reproductionAsexual']}/>
+                    <Xcomp.Number label={labels.Reproduction.generationTime} observableValue={[vurdering, 'reproductionGenerationTime']}/>
+                </div>
+                {appState.otherEffectsEnabled 
+                ? <div className="well">
+                        <Xcomp.Button 
+                            primary 
+                            xs
+                            className="pull-right"
+                            onClick={() => {
+                                vurdering.HealthEffects = labels.OtherEffects.noKnownValue
+                                vurdering.EconomicEffects = labels.OtherEffects.noKnownValue
+                                vurdering.PositiveEcologicalEffects = labels.OtherEffects.noKnownValue
+                                vurdering.EffectsOnPopulationOfOrigin = labels.OtherEffects.noKnownValue
+                            }}
+                        >{labels.OtherEffects.fillNoKnown} "{labels.OtherEffects.noKnownValue}"</Xcomp.Button>
+                    <h4>{labels.OtherEffects.otherEffects}</h4>
+                    <Xcomp.String label={labels.OtherEffects.healthEffects} observableValue={[vurdering, 'healthEffects']}/>
+                    <Xcomp.String label={labels.OtherEffects.economicEffects} observableValue={[vurdering, 'economicEffects']}/>
+                    <label>{labels.OtherEffects.ecosystemEffects}</label>
+                    <div className="intent30">
+                        <Xcomp.MultiselectArray label={labels.OtherEffects.ecoBasic} labels={labels.General} observableValue={[vurdering, 'ecosystemServiceEffectsBasicLifeProcesses']} codes={koder.ecosystemServiceEffectsBasicLifeProcesses}/>
+                        <Xcomp.MultiselectArray label={labels.OtherEffects.ecoSupport} labels={labels.General} observableValue={[vurdering, 'ecosystemServiceEffectsProvisioningServices']} codes={koder.ecosystemServiceEffectsSupportingServices}/>
+                        <Xcomp.MultiselectArray label={labels.OtherEffects.ecoRegulating} labels={labels.General} observableValue={[vurdering, 'ecosystemServiceEffectsRegulatingServices']} codes={koder.ecosystemServiceEffectsRegulatingServices}/>
+                        <Xcomp.MultiselectArray label={labels.OtherEffects.ecoKnowledge} labels={labels.General} observableValue={[vurdering, 'ecosystemServiceEffectsHumanSpiritualServices']} codes={koder.ecosystemServiceEffectsHumanMindServices}/>
+                    </div>
+                    <Xcomp.String label={labels.OtherEffects.positiveEffects} observableValue={[vurdering, 'positiveEcologicalEffects']}/>
+                    <Xcomp.String label={labels.OtherEffects.effectsOnPopulationOfOrigin} observableValue={[vurdering, 'effectsOnPopulationOfOrigin']}/>
+                </div>
+                : null}
+                 </div>
+                }
+                
             </fieldset>
 
         );

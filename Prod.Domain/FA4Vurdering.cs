@@ -126,6 +126,8 @@ namespace Prod.Domain
 
         public bool IsAlienSpecies { get; set; }
 
+        public bool IsRegionallyAlien { get; set; }
+
         public bool ConnectedToAnother { get; set; }
 
         public string SpeciesStatus { get; set; }
