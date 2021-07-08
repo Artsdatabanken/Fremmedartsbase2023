@@ -126,6 +126,8 @@ namespace Prod.Domain
 
         public bool IsAlienSpecies { get; set; }
 
+        public bool IsRegionallyAlien { get; set; }
+
         public bool ConnectedToAnother { get; set; }
 
         public string SpeciesStatus { get; set; }
@@ -1044,6 +1046,8 @@ namespace Prod.Domain
             public string NiNCode { get; set; }
             public List<string> NiNVariation { get; set; } = new List<string>();
             public List<string> DominanceForrest { get; set; } = new List<string>(); // changed datatype from string 18.11.2016
+
+            public List<string> Background { get; set; } = new List<string>();
             public string TimeHorizon { get; set; }
             public string ColonizedArea { get; set; }
             public List<string> StateChange { get; set; } = new List<string>(); // changed datatype from string 19.12.2016

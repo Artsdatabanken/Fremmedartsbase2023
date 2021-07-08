@@ -206,13 +206,16 @@ namespace SwissKnife.Database
                 cfg.CreateMap<Prod.Domain.Legacy.RedlistedNatureTypeCodeGroup, Prod.Domain.RedlistedNatureTypeCodeGroup>();
                 cfg.CreateMap<Prod.Domain.Legacy.RegionalPresence, Prod.Domain.RegionalPresence>();
                 cfg.CreateMap<Prod.Domain.Legacy.RegionalPresenceWithPotential, Prod.Domain.RegionalPresenceWithPotential>();
-                cfg.CreateMap<FA3Legacy.ImpactedNatureType, FA4.ImpactedNatureType>();
+                cfg.CreateMap<FA3Legacy.ImpactedNatureType, FA4.ImpactedNatureType>()
+
+                    .ForMember(dest => dest.Background, opt => opt.Ignore());
                 cfg.CreateMap<FA3Legacy.TimeAndPlace, FA4.TimeAndPlace>();
                 cfg.CreateMap<FA3Legacy.ObservedAndEstablished, FA4.ObservedAndEstablished>();
                 cfg.CreateMap<FA3Legacy.ObservedAndEstablishedInCountry, FA4.ObservedAndEstablishedInCountry>();
                 cfg.CreateMap<FA3Legacy, FA4>()
 
                     .ForMember(dest => dest.IsAlienSpecies, opt => opt.Ignore())
+                    .ForMember(dest => dest.IsRegionallyAlien, opt => opt.Ignore())
                     .ForMember(dest => dest.ConnectedToAnother, opt => opt.Ignore())
                     .ForMember(dest => dest.SpeciesStatus, opt => opt.Ignore())
                     .ForMember(dest => dest.ReasonForChangeOfCategory, opt => opt.Ignore())

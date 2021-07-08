@@ -51,9 +51,11 @@ export default class Vurdering34Spredningsveier extends React.Component {
         // const {vurdering, viewModel, fabModel} = this.props;
         const migrationPathways = assessment.assesmentVectors
         //const migrationPathwayKoder = appState.spredningsveier.children.filter(child => child.name != "Import")
-        const migrationPathwayKoder = name == "Til innendørs- eller produksjonsareal" ? appState.spredningsveier.children.filter(child => child.name == "Import" || child.name == "transportpolution" || child.name == "stowaway") :
-                                     name == "Videre spredning i natur" ? appState.spredningsveier.children.filter(child => child.name != "Import" && child.name != "escaped")
-                                        : appState.spredningsveier.children.filter(child => child.name != "Import")
+        const migrationPathwayKoder = name == "Til innendørs- eller produksjonsareal" ? appState.spredningsveier.children.filter(child => child.name == "Import") :
+                                     name == "Videre spredning i natur" ? appState.spredningsveier.children.filter(child => child.name == "Videre spredning" || child.name == "Spredning")
+                                        : appState.spredningsveier.children.filter(child => child.name != "Import" && child.name != "Videre spredning")
+
+        //console.log(appState.spredningsveier.children)
         // const labels = fabModel.kodeLabels
         // console.log("''''''''''''''''''''''")
         // console.log(JSON.stringify(migrationPathwayKoder))
@@ -71,12 +73,12 @@ export default class Vurdering34Spredningsveier extends React.Component {
                     <h4>Legg til spredningsvei</h4>
                     <NewMigrationPathwaySelector migrationPathways={migrationPathwayKoder} onSave={mp => this.saveMigrationPathway(vurdering, mp)} mainCodes={koder} koder={importationCodes} labels={labels} />
                 </div>
-                <button className="primary">Se definisjoner</button>
+                <button className="btn btn-primary">Se definisjoner</button>
                 <p>{furtherInfo}</p>
-                <i>{labels.Import.furtherInfoComment}</i>
                 <Xcomp.HtmlString                            
                                 observableValue={[riskAssessment, "furtherInfoAboutImport"]}
                                 //label={labels.DEcrit.insecurity}
+                                placeholder={labels.Import.furtherInfoComment}
                                 />
             </div>
         );

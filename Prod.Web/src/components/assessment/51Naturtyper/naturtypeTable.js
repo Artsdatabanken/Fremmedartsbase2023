@@ -68,7 +68,7 @@ export class NaturtypeRad extends React.Component {
                 <td>{kodeTekst(koder.affectedArea, nt.affectedArea)}</td>
                 <td>
                 <Xcomp.MultiselectArray
-                                observableValue={[riskAssessment, 'backgroundC']} 
+                                observableValue={[nt, 'background']} 
                                 codes={koder.assessmentBackgrounds}
                                 mode="check"/>
                 </td>

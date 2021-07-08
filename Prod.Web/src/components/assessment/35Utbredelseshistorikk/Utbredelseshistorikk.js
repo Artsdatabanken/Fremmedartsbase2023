@@ -17,9 +17,9 @@ export default class Utbredelseshistorikk extends React.Component {
                     <div style={{marginBottom: '20px'}}>
                         <span>{labels.goTo}</span> <Xcomp.Button primary >{labels.speciesMap}</Xcomp.Button>
                     </div>
-                    <div style={{marginBottom: '20px'}}>
+                   {/* <div style={{marginBottom: '20px'}}>
                         <span>{labels.goTo}</span> <Xcomp.Button primary >{labels.distributionHistory}</Xcomp.Button>
-                    </div>
+                     </div> */}
                     
                     <div>
                         <p>Forekomstareal i dag (km2):</p>

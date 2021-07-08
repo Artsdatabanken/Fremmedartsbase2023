@@ -76,10 +76,11 @@ export default class assessmentNew extends React.Component {
         }
         const {appState, checkForExistingAssessment} = this.props
         const labels = appState.codeLabels
+        const codes = appState.koder
         const rolle = appState.roleincurrentgroup
         return (
             <div>
-                <div className="well">
+                <fieldset className="well">
                     <div className="row">
                         <div className="col-md-6">
                             <h3>{labels.SelectAssessment.createAssessment}</h3>
@@ -160,8 +161,9 @@ export default class assessmentNew extends React.Component {
                     </div>
                     <div className="row">                            
                             <div className="col-md-6">
-                                <Xcomp.Bool observableValue={[newAssessment, "potensiellDørstokkart"]} label={labels.SpeciesStatus.potentialDoorknocker} />
-                                <Xcomp.Bool observableValue={[newAssessment, "øvrigeArter"]} label={labels.SpeciesStatus.otherSpecies} />
+                            <Xcomp.StringEnum observableValue={[newAssessment, "potensiellDørstokkart"]} mode="radio" codes={codes.SpeciesStatus}/>
+                               {/* <Xcomp.Bool observableValue={[newAssessment, "potensiellDørstokkart"]} label={labels.SpeciesStatus.potentialDoorknocker} />
+                                <Xcomp.Bool observableValue={[newAssessment, "øvrigeArter"]} label={labels.SpeciesStatus.otherSpecies} /> */}
                             </div>
                         </div>
                         <div className="col-md-6" style={{display: 'flex'}}>
@@ -169,7 +171,7 @@ export default class assessmentNew extends React.Component {
                             <Xcomp.Button primary onClick={this.onNewAssessment} disabled={!rolle.skriver || (!newAssessment.ScientificName || checkForExistingAssessment(newAssessment.ScientificName + ' ' + newAssessment.ScientificNameAuthor))}>{labels.SelectAssessment.createAssessment}</Xcomp.Button>
                             {(newAssessment.ScientificName.length > 0 && !rolle.skriver || ( checkForExistingAssessment(newAssessment.ScientificName + ' ' + newAssessment.ScientificNameAuthor))) ? <div style={{color: 'red'}}>{labels.SelectAssessment.alreadyOnTheList}</div>: null}
                         </div>
-                </div>
+                </fieldset>
             </div>
         )
     }

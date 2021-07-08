@@ -76,7 +76,7 @@ export default class Assessment20ArtensStatus extends React.Component {
                     <b>{labels.SpeciesStatus.isAlienSpecies} </b>
                     <p>{labels.SpeciesStatus.unsureIfAlien} </p>
                     <Xcomp.Radio value={'true'} observableValue={[assessment.riskAssessment, "isAlienSpecies"]} label={labels.General.yes} />                    
-                    { assessment.riskAssessment.isAlienSpecies == 'true' && assessment.alienSpeciesCategory != "DoorKnocker" ? <Xcomp.Bool observableValue={[assessment.riskAssessment, "isRegionallyAlien"]} label={labels.SpeciesStatus.regionallyAlien} /> : null }
+                    { assessment.riskAssessment.isAlienSpecies == 'true' && assessment.alienSpeciesCategory != "DoorKnocker" ? <Xcomp.Bool observableValue={[assessment, "isRegionallyAlien"]} label={labels.SpeciesStatus.regionallyAlien} /> : null }
                     <Xcomp.Radio value={'false'} observableValue={[assessment.riskAssessment, "isAlienSpecies"]} label={labels.General.no} />
                     <p>{labels.SpeciesStatus.unsureAlienDescription}</p>
                     <Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'isAlien']}/>
