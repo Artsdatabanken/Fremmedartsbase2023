@@ -54,7 +54,7 @@ export default class FileUpload extends Component {
         const {appState, appState:{assessment}} = this.props
         if (this.context.readonly)
             return null
-        return (<div>
+        return (<div className="fileUpload">
             <h4>Last opp nytt filvedlegg</h4>
             <Xcomp.String className="col-md-8" observableValue={[this.selectedFile, 'name']} placeholder={"Beskrivende navn (obligatorisk)"}/>
             {/*<input style={{marginTop: '20px'}} onChange={(e) => this.startOpplastinger(e,assessment.id)} type="file" multiple />

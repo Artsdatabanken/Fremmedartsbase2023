@@ -16,7 +16,7 @@ export default class BootstrapModal extends React.Component {
 
     render() {
         const okEnabled = this.props.okEnabled === undefined ? true : this.props.okEnabled
-        
+        console.log (this.children)
         return <div role="dialog">
             <div className="modal-header">
                         </div>

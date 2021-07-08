@@ -1,5 +1,5 @@
 ﻿const self = {
-    riskColors: ["#FFF","#CCC", "#888", "#444", "#000" ],
+    riskColors: ["#9ba963","#5ea4a1", "#185a6c", "#1b386f", "#5e3063" ],
     riskLevelMatrise: [ 
         // invasjonspotensiale -->
         [2,3,4,4], //        A

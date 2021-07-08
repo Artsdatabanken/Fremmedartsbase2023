@@ -74,6 +74,11 @@ export default class Vurdering34Spredningsveier extends React.Component {
                     <NewMigrationPathwaySelector migrationPathways={migrationPathwayKoder} onSave={mp => this.saveMigrationPathway(vurdering, mp)} mainCodes={koder} koder={importationCodes} labels={labels} />
                 </div>
                 <button className="btn btn-primary">Se definisjoner</button>
+                <p>
+                    <b>Forurensning av vare:</b> Arten følger med <i>levende/døde organismer</i> eller <i>organisk materiale</i> som parasitt (dvs. den transporterte organismen er vektor) eller som annen «smitte»
+                    <p><b>Blindpassasjer med/på transport:</b>Arten følger med under transport av <i>mennesker, varer</i> eller <i>kjøretøy/fartøy</i>.</p> 
+
+                </p>
                 <p>{furtherInfo}</p>
                 <Xcomp.HtmlString                            
                                 observableValue={[riskAssessment, "furtherInfoAboutImport"]}

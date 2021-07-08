@@ -91,7 +91,7 @@ export default class NaturetypeModal extends React.Component {
     }
 
     render() {
-        const {fabModel, addNaturtype, labels, showModal, hideStateChange} = this.props;
+        const {fabModel, naturtype, labels, showModal, hideStateChange} = this.props;
         const [sm, smprop] = showModal
         const [hsc, hscprop] = hideStateChange
         this.hideStateChange = hsc[hscprop]
@@ -99,7 +99,8 @@ export default class NaturetypeModal extends React.Component {
         // const nts = fabModel.naturtyper
         const doms = fabModel.dominansSkog
         const koder = fabModel.koder
-        
+        const addNaturtype = naturtype
+        console.log(addNaturtype)
         console.log("render naturtypeModal")
         return <div>
             {sm[smprop]
@@ -111,7 +112,8 @@ export default class NaturetypeModal extends React.Component {
                             </div >}
                         onCancel={this.hideModal}
                         onOk={this.onOk}
-                        labels={labels.General}>
+                        labels={labels.General}
+                        children = {this.editNaturtype.Children}>
                         {doms && this.hasDominanceForrest(this.editNaturtype.NiNCode)
                             ? <Xcomp.MultiselectArray
                                     label={ntLabels.dominanceForrest}
