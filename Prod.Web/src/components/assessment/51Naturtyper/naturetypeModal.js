@@ -72,7 +72,7 @@ export default class NaturetypeModal extends React.Component {
             }
         })
         autorun(() => {
-            const hasSC = this.editNaturtype.StateChange.length > 0
+            const hasSC = this.editNaturtype ? this.editNaturtype.StateChange.length > 0 : null
             this.hasStateChange =  hasSC 
             if (!hasSC) {
                 this.editNaturtype.AffectedArea = "0"

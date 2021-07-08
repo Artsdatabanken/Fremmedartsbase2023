@@ -24,7 +24,8 @@ export default class BootstrapModal extends React.Component {
             this.children.map(child =>
                 <div className="modal-body">
                             <div>
-                                {child.name}
+                                {/*{child.name}*/}
+                                {child != null ? child.Text ? child.Text : child.name ? child.name : null : null}
                             </div>
                         </div>
                 

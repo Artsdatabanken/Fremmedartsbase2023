@@ -37,6 +37,7 @@ export default class NewNaturetype extends React.Component {
             nnt.ColonizedArea = null
             nnt.StateChange.clear()
             nnt.AffectedArea = null
+            nnt.Background.clear()
             this.showModal = true
         }
 
@@ -74,7 +75,7 @@ export default class NewNaturetype extends React.Component {
                     ? <NaturtypeSelector 
                         naturtyper={nts} 
                         mode={"naturetype"} 
-                        //setSelected={this.setSelectedNaturtype}
+                        setSelected={this.setSelectedNaturtype}
                         />
                     : null}
             </div>
@@ -92,8 +93,10 @@ export default class NewNaturetype extends React.Component {
                 : null}
             {this.showModal
             ? <NaturtypeModal
+                
                 hideStateChange={[this, "hideStateChange"]}
                 naturtype={this.nyNaturtype}
+                fabModel={appState}
                 showModal={[this, "showModal"]}
                 onOk={addNaturtype}
                 appState={appState}

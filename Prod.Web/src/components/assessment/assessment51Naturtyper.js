@@ -108,6 +108,17 @@ export default class Assessment51Naturtyper extends React.Component {
                     
                     <Criterion criterion={critC} mode="noheading"/>
                 </fieldset>
+
+                <fieldset className="well">   
+                <NaturtypeTable
+                    naturetypes={assessment.impactedNatureTypes}
+                    canRenderTable={canRenderTable}
+                    labels={labels}
+                    codes={koder}
+                    appState={appState}
+                    desc={"Anslå kolonisert areal i de naturtypene arten er observert i, beskriv artens påvirkning i naturtypen og anslå hvor stor andel av naturtypen som blir påvirket. Det skal være sannsynlighetsovervekt for at valgt tilstandsendring skjer."}/>
+                </fieldset>  
+
                 <fieldset className="well">
                     <h4>{ntLabels.critFHeading}</h4>
                    {/* <p>{critF.info}</p>*/}
@@ -157,6 +168,15 @@ export default class Assessment51Naturtyper extends React.Component {
                             observableValue={[riskAssessment, 'threatenedNatureTypesAffectedAbroadDescription']}/>
                    </div> */}
                 </fieldset>
+                <fieldset className="well">   
+                <NaturtypeTable
+                    naturetypes={assessment.impactedNatureTypes}
+                    canRenderTable={canRenderTable}
+                    labels={labels}
+                    codes={koder}
+                    appState={appState}
+                    desc={"Anslå kolonisert areal i de naturtypene arten er observert i, beskriv artens påvirkning i naturtypen og anslå hvor stor andel av naturtypen som blir påvirket. Det skal være sannsynlighetsovervekt for at valgt tilstandsendring skjer."}/>
+                </fieldset>  
                 <fieldset className="well">
                     <h4>{ntLabels.critGHeading}</h4>
                     
