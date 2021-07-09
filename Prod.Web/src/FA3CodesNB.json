@@ -1451,14 +1451,14 @@
             {
                 "Id": "climateEffects",
                 "Value": "climateChangeAffectsInvationPotential",
-                "Text": "Er artens delkategori for invasjonspotensial påvirka av klimaendringene?",
+                "Text": "Ville artens delkategori for invasjonspotensiale ha blitt lavere i fravær av pågående eller forventede klimaendringer?",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "climateEffects",
                 "Value": "climateChangeAffectsEcoeffect",
-                "Text": "Er artens delkategori for økologisk effekt påvirka av klimaendringene?",
+                "Text": "Ville artens delkategori for økologisk effekt ha blitt lavere i fravær av pågående eller forventede klimaendringer?",
                 "Info": null,
                 "Children": null
             },
@@ -1473,6 +1473,22 @@
                 "Id": "climateEffects",
                 "Value": "climateEffectsDocumentation",
                 "Text": "Betydningen av klimaendringer",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "yesNo": [
+            {
+                "Id": "yesNo",
+                "Value": "yes",
+                "Text": "Ja",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "yesNo",
+                "Value": "no",
+                "Text": "Nei",
                 "Info": null,
                 "Children": null
             }
