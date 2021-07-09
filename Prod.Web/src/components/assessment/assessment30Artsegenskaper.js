@@ -7,7 +7,7 @@ import {observable, autorun} from 'mobx';
 import config from '../../config';
 import * as Xcomp from './observableComponents';
 import UploadPicturesButton from './30Artsegenskaper/uploadPicturesButton'
-import OriginTable from './30Artsegenskaper/originTable'
+import OriginTable from './30artsegenskaper/originTable'
 //import ArrivedCountryFrom from './30Artsegenskaper/arrivedCountryFrom'
 import ArrivedCountryFrom from './arrivedCountryFrom'
 
@@ -18,32 +18,32 @@ export default class Assessment30Artsegenskaper extends React.Component {
         super(props)
     }
     setNaturalOriginsAllUnknown(vurdering) {
-        const unknown = vurdering.NaturalOrigins.find(row => row.ClimateZone == "unknown;")
-        unknown.Europe = true
-        unknown.Asia = true
-        unknown.Africa = true
-        unknown.Oceania = true
-        unknown.NorthAndCentralAmerica = true
-        unknown.SouthAmerica = true
+        const unknown = vurdering.naturalOrigins.find(row => row.climateZone == "unknown;")
+        unknown.europe = true
+        unknown.asia = true
+        unknown.africa = true
+        unknown.oceania = true
+        unknown.northAndCentralAmerica = true
+        unknown.southAmerica = true
     }
     setCurrentInternationalExistenceAreasAllUnknown(vurdering) {
-        const unknown = vurdering.CurrentInternationalExistenceAreas.find(row => row.ClimateZone == "unknown;")
-        unknown.Europe = true
-        unknown.Asia = true
-        unknown.Africa = true
-        unknown.Oceania = true
-        unknown.NorthAndCentralAmerica = true
-        unknown.SouthAmerica = true
+        const unknown = vurdering.currentInternationalExistenceAreas.find(row => row.climateZone == "unknown;")
+        unknown.europe = true
+        unknown.asia = true
+        unknown.africa = true
+        unknown.oceania = true
+        unknown.northAndCentralAmerica = true
+        unknown.southAmerica = true
     }
     transferNaturalOriginsToCurrentInternationalExistenceAreas(vurdering) {
-        const origins=vurdering.NaturalOrigins
-        const destinations=vurdering.CurrentInternationalExistenceAreas
+        const origins=vurdering.naturalOrigins
+        const destinations=vurdering.currentInternationalExistenceAreas
         for(let n = 0; n < origins.length; n++) {
             const origin = origins[n]
             const dest = destinations[n]
             // for (let key of Object.keys(origin))
             for (const key in origin) {
-                if (key != "ClimateZone" && origin[key]) {
+                if (key != "climateZone" && origin[key]) {
                     dest[key] = true
                 }
             }
@@ -54,16 +54,16 @@ export default class Assessment30Artsegenskaper extends React.Component {
         const vurdering = assessment
         const labels = appState.codeLabels
         const koder = appState.koder
-
+        console.log(assessment.naturalOrigins)
 
         // const {vurdering, viewModel, fabModel} = this.props;
         const nbsp = "\u00a0"
         // const labels = config.labels
         // const labels = fabModel.codeLabels
         // const isMarine = vurdering.Marine && !vurdering.Terrestrial && !vurdering.Limnic
-        const isMarine = vurdering.Marine || vurdering.BrackishWater
-        const isLimnic = vurdering.Limnic && !vurdering.Terrestrial && !vurdering.Marine  && !vurdering.BrackishWater
-        const isLimnicTerrestrial = vurdering.Terrestrial || vurdering.Limnic
+        const isMarine = vurdering.marine || vurdering.brackishWater
+        const isLimnic = vurdering.limnic && !vurdering.terrestrial && !vurdering.marine  && !vurdering.brackishWater
+        const isLimnicTerrestrial = vurdering.terrestrial || vurdering.limnic
         const limnicTerrestrialMarinelabel = (id) => koder.limnicTerrestrialMarine.find(code => code.Value === id).Text
         const climateZoneLabel = (id) => koder.naturalOriginClimateZone.find(code => code.Value === id).Text
         const subClimateZoneLabel = (id) => koder.naturalOriginSubClimateZone.find(code => code.Value === id).Text
@@ -78,7 +78,7 @@ export default class Assessment30Artsegenskaper extends React.Component {
                 <br />
                 {appState.imageUploadEnabled
                 ? <div>
-                    <UploadPicturesButton scientificName={vurdering.EvaluatedScientificName}/>
+                    <UploadPicturesButton scientificName={vurdering.evaluatedScientificName}/>
                     <br />
                 </div>
                 : null}
@@ -86,10 +86,10 @@ export default class Assessment30Artsegenskaper extends React.Component {
 
                 <div>
                     <p>Livsmiljø</p>
-                    <Xcomp.Bool observableValue={[vurdering, 'Limnic']} label={limnicTerrestrialMarinelabel("limnic")} />            
-                    <Xcomp.Bool observableValue={[vurdering, 'Terrestrial']} label={limnicTerrestrialMarinelabel("terrestrial")} />            
-                    <Xcomp.Bool observableValue={[vurdering, 'Marine']} label={limnicTerrestrialMarinelabel("marine")} />     
-                    <Xcomp.Bool observableValue={[vurdering, 'BrackishWater']} label={limnicTerrestrialMarinelabel("brackishWater")} />         
+                    <Xcomp.Bool observableValue={[vurdering, 'limnic']} label={limnicTerrestrialMarinelabel("limnic")} />            
+                    <Xcomp.Bool observableValue={[vurdering, 'terrestrial']} label={limnicTerrestrialMarinelabel("terrestrial")} />            
+                    <Xcomp.Bool observableValue={[vurdering, 'marine']} label={limnicTerrestrialMarinelabel("marine")} />     
+                    <Xcomp.Bool observableValue={[vurdering, 'brackishWater']} label={limnicTerrestrialMarinelabel("brackishWater")} />         
                     {/*appState.showBrackishWater
                     ? <Xcomp.Bool observableValue={[vurdering, 'brackishWater']} label={limnicTerrestrialMarinelabel("brackishWater")} />            
                     : null*/}
@@ -101,7 +101,7 @@ export default class Assessment30Artsegenskaper extends React.Component {
                         <div className="well">
                         <h4><b>{labels.NaturalOrigin.naturalOrigin}</b></h4>
                         <OriginTable 
-                            origins={vurdering.NaturalOrigins} 
+                            origins={vurdering.naturalOrigins} 
                             climateZoneLabel={climateZoneLabel}
                             subClimateZoneLabel={subClimateZoneLabel}
                             naturalOriginDisabled={naturalOriginDisabled}
@@ -119,8 +119,8 @@ export default class Assessment30Artsegenskaper extends React.Component {
                             >{labels.NaturalOrigin.noKnown}</Xcomp.Button>
                         <br />
                         <br />
-                        { vurdering.NaturalOrigins.filter(
-                                row => row.Europe || row.Asia || row.Africa || row.Oceania || row.NorthAndCentralAmerica || row.SouthAmerica
+                        { assessment.naturalOrigins.filter(
+                                row => row.europe || row.asia || row.africa || row.oceania || row.northAndCentralAmerica || row.southAmerica
                             ).length > 0 ?
                             <Xcomp.HtmlString observableValue={[vurdering, 'naturalOriginUnknownDocumentation']} label={labels.NaturalOrigin.describe} /> :
                             null}
@@ -128,7 +128,7 @@ export default class Assessment30Artsegenskaper extends React.Component {
                         <div className="well">
                         <h4><b>{labels.NaturalOrigin.currentExistenceAria}</b></h4>
                         <OriginTable 
-                            origins={vurdering.CurrentInternationalExistenceAreas} 
+                            origins={vurdering.currentInternationalExistenceAreas} 
                             climateZoneLabel={climateZoneLabel}
                             subClimateZoneLabel={subClimateZoneLabel}
                             naturalOriginDisabled={naturalOriginDisabled}
@@ -141,8 +141,8 @@ export default class Assessment30Artsegenskaper extends React.Component {
                             >{labels.NaturalOrigin.noKnown}</Xcomp.Button>
                         <br />
                         <br />
-                        { vurdering.CurrentInternationalExistenceAreas.filter(
-                                row => row.Europe || row.Asia || row.Africa || row.Oceania || row.NorthAndCentralAmerica || row.SouthAmerica
+                        { vurdering.currentInternationalExistenceAreas.filter(
+                                row => row.europe || row.asia || row.africa || row.oceania || row.northAndCentralAmerica || row.southAmerica
                             ).length > 0 ?
                             <Xcomp.HtmlString observableValue={[vurdering, 'currentInternationalExistenceAreasUnknownDocumentation']} label='Gi utdypende informasjon ved behov (påkrevd for "Ukjent" )' /> :
                             null}
@@ -182,10 +182,10 @@ export default class Assessment30Artsegenskaper extends React.Component {
                             xs
                             className="pull-right"
                             onClick={() => {
-                                vurdering.HealthEffects = labels.OtherEffects.noKnownValue
-                                vurdering.EconomicEffects = labels.OtherEffects.noKnownValue
-                                vurdering.PositiveEcologicalEffects = labels.OtherEffects.noKnownValue
-                                vurdering.EffectsOnPopulationOfOrigin = labels.OtherEffects.noKnownValue
+                                vurdering.healthEffects = labels.OtherEffects.noKnownValue
+                                vurdering.economicEffects = labels.OtherEffects.noKnownValue
+                                vurdering.positiveEcologicalEffects = labels.OtherEffects.noKnownValue
+                                vurdering.effectsOnPopulationOfOrigin = labels.OtherEffects.noKnownValue
                             }}
                         >{labels.OtherEffects.fillNoKnown} "{labels.OtherEffects.noKnownValue}"</Xcomp.Button>
                     <h4>{labels.OtherEffects.otherEffects}</h4>
@@ -207,10 +207,10 @@ export default class Assessment30Artsegenskaper extends React.Component {
 
                  <div>
                      <p>Livsmiljø</p>
-                <Xcomp.Bool observableValue={[vurdering, 'Limnic']} label={limnicTerrestrialMarinelabel("limnic")} />            
-                <Xcomp.Bool observableValue={[vurdering, 'Terrestrial']} label={limnicTerrestrialMarinelabel("terrestrial")} />            
-                <Xcomp.Bool observableValue={[vurdering, 'Marine']} label={limnicTerrestrialMarinelabel("marine")} />     
-                <Xcomp.Bool observableValue={[vurdering, 'BrackishWater']} label={limnicTerrestrialMarinelabel("brackishWater")} />         
+                <Xcomp.Bool observableValue={[vurdering, 'limnic']} label={limnicTerrestrialMarinelabel("limnic")} />            
+                <Xcomp.Bool observableValue={[vurdering, 'terrestrial']} label={limnicTerrestrialMarinelabel("terrestrial")} />            
+                <Xcomp.Bool observableValue={[vurdering, 'marine']} label={limnicTerrestrialMarinelabel("marine")} />     
+                <Xcomp.Bool observableValue={[vurdering, 'brackishWater']} label={limnicTerrestrialMarinelabel("brackishWater")} />         
                 {/*appState.showBrackishWater
                 ? <Xcomp.Bool observableValue={[vurdering, 'brackishWater']} label={limnicTerrestrialMarinelabel("brackishWater")} />            
                 : null*/}
@@ -222,7 +222,7 @@ export default class Assessment30Artsegenskaper extends React.Component {
                     <div className="well">
                     <h4><b>{labels.NaturalOrigin.naturalOrigin}</b></h4>
                     <OriginTable 
-                        origins={vurdering.NaturalOrigins} 
+                        origins={vurdering.naturalOrigins} 
                         climateZoneLabel={climateZoneLabel}
                         subClimateZoneLabel={subClimateZoneLabel}
                         naturalOriginDisabled={naturalOriginDisabled}
@@ -240,8 +240,8 @@ export default class Assessment30Artsegenskaper extends React.Component {
                         >{labels.NaturalOrigin.noKnown}</Xcomp.Button>
                     <br />
                     <br />
-                    { vurdering.NaturalOrigins.filter(
-                            row => row.Europe || row.Asia || row.Africa || row.Oceania || row.NorthAndCentralAmerica || row.SouthAmerica
+                    { vurdering.naturalOrigins.filter(
+                            row => row.europe || row.asia || row.africa || row.oceania || row.northAndCentralAmerica || row.southAmerica
                         ).length > 0 ?
                         <Xcomp.HtmlString observableValue={[vurdering, 'naturalOriginUnknownDocumentation']} label={labels.NaturalOrigin.describe} /> :
                         null}
@@ -249,7 +249,7 @@ export default class Assessment30Artsegenskaper extends React.Component {
                     <div className="well">
                     <h4><b>{labels.NaturalOrigin.currentExistenceAria}</b></h4>
                     <OriginTable 
-                        origins={vurdering.CurrentInternationalExistenceAreas} 
+                        origins={vurdering.currentInternationalExistenceAreas} 
                         climateZoneLabel={climateZoneLabel}
                         subClimateZoneLabel={subClimateZoneLabel}
                         naturalOriginDisabled={naturalOriginDisabled}
@@ -262,8 +262,8 @@ export default class Assessment30Artsegenskaper extends React.Component {
                         >{labels.NaturalOrigin.noKnown}</Xcomp.Button>
                     <br />
                     <br />
-                    { vurdering.CurrentInternationalExistenceAreas.filter(
-                            row => row.Europe || row.Asia || row.Africa || row.Oceania || row.NorthAndCentralAmerica || row.SouthAmerica
+                    { vurdering.currentInternationalExistenceAreas.filter(
+                            row => row.europe || row.asia || row.africa || row.oceania || row.northAndCentralAmerica || row.southAmerica
                         ).length > 0 ?
                         <Xcomp.HtmlString observableValue={[vurdering, 'currentInternationalExistenceAreasUnknownDocumentation']} label='Gi utdypende informasjon ved behov (påkrevd for "Ukjent" )' /> :
                         null}
@@ -312,10 +312,10 @@ export default class Assessment30Artsegenskaper extends React.Component {
                             xs
                             className="pull-right"
                             onClick={() => {
-                                vurdering.HealthEffects = labels.OtherEffects.noKnownValue
-                                vurdering.EconomicEffects = labels.OtherEffects.noKnownValue
-                                vurdering.PositiveEcologicalEffects = labels.OtherEffects.noKnownValue
-                                vurdering.EffectsOnPopulationOfOrigin = labels.OtherEffects.noKnownValue
+                                vurdering.healthEffects = labels.OtherEffects.noKnownValue
+                                vurdering.economicEffects = labels.OtherEffects.noKnownValue
+                                vurdering.positiveEcologicalEffects = labels.OtherEffects.noKnownValue
+                                vurdering.effectsOnPopulationOfOrigin = labels.OtherEffects.noKnownValue
                             }}
                         >{labels.OtherEffects.fillNoKnown} "{labels.OtherEffects.noKnownValue}"</Xcomp.Button>
                     <h4>{labels.OtherEffects.otherEffects}</h4>
@@ -336,10 +336,10 @@ export default class Assessment30Artsegenskaper extends React.Component {
                  
                  <div>
                      <p>Livsmiljø</p>
-                <Xcomp.Bool observableValue={[vurdering, 'Limnic']} label={limnicTerrestrialMarinelabel("limnic")} />            
-                <Xcomp.Bool observableValue={[vurdering, 'Terrestrial']} label={limnicTerrestrialMarinelabel("terrestrial")} />            
-                <Xcomp.Bool observableValue={[vurdering, 'Marine']} label={limnicTerrestrialMarinelabel("marine")} />     
-                <Xcomp.Bool observableValue={[vurdering, 'BrackishWater']} label={limnicTerrestrialMarinelabel("brackishWater")} />         
+                <Xcomp.Bool observableValue={[vurdering, 'limnic']} label={limnicTerrestrialMarinelabel("limnic")} />            
+                <Xcomp.Bool observableValue={[vurdering, 'terrestrial']} label={limnicTerrestrialMarinelabel("terrestrial")} />            
+                <Xcomp.Bool observableValue={[vurdering, 'marine']} label={limnicTerrestrialMarinelabel("marine")} />     
+                <Xcomp.Bool observableValue={[vurdering, 'brackishWater']} label={limnicTerrestrialMarinelabel("brackishWater")} />         
                 {/*appState.showBrackishWater
                 ? <Xcomp.Bool observableValue={[vurdering, 'brackishWater']} label={limnicTerrestrialMarinelabel("brackishWater")} />            
                 : null*/}
@@ -351,7 +351,7 @@ export default class Assessment30Artsegenskaper extends React.Component {
                     <div className="well">
                     <h4><b>{labels.NaturalOrigin.naturalOrigin}</b></h4>
                     <OriginTable 
-                        origins={vurdering.NaturalOrigins} 
+                        origins={vurdering.naturalOrigins} 
                         climateZoneLabel={climateZoneLabel}
                         subClimateZoneLabel={subClimateZoneLabel}
                         naturalOriginDisabled={naturalOriginDisabled}
@@ -369,8 +369,8 @@ export default class Assessment30Artsegenskaper extends React.Component {
                         >{labels.NaturalOrigin.noKnown}</Xcomp.Button>
                     <br />
                     <br />
-                    { vurdering.NaturalOrigins.filter(
-                            row => row.Europe || row.Asia || row.Africa || row.Oceania || row.NorthAndCentralAmerica || row.SouthAmerica
+                    { vurdering.naturalOrigins.filter(
+                            row => row.europe || row.asia || row.africa || row.oceania || row.northAndCentralAmerica || row.southAmerica
                         ).length > 0 ?
                         <Xcomp.HtmlString observableValue={[vurdering, 'naturalOriginUnknownDocumentation']} label={labels.NaturalOrigin.describe} /> :
                         null}
@@ -378,7 +378,7 @@ export default class Assessment30Artsegenskaper extends React.Component {
                     <div className="well">
                     <h4><b>{labels.NaturalOrigin.currentExistenceAria}</b></h4>
                     <OriginTable 
-                        origins={vurdering.CurrentInternationalExistenceAreas} 
+                        origins={vurdering.currentInternationalExistenceAreas} 
                         climateZoneLabel={climateZoneLabel}
                         subClimateZoneLabel={subClimateZoneLabel}
                         naturalOriginDisabled={naturalOriginDisabled}
@@ -391,8 +391,8 @@ export default class Assessment30Artsegenskaper extends React.Component {
                         >{labels.NaturalOrigin.noKnown}</Xcomp.Button>
                     <br />
                     <br />
-                    { vurdering.CurrentInternationalExistenceAreas.filter(
-                            row => row.Europe || row.Asia || row.Africa || row.Oceania || row.NorthAndCentralAmerica || row.SouthAmerica
+                    { vurdering.currentInternationalExistenceAreas.filter(
+                            row => row.europe || row.asia || row.africa || row.oceania || row.northAndCentralAmerica || row.southAmerica
                         ).length > 0 ?
                         <Xcomp.HtmlString observableValue={[vurdering, 'currentInternationalExistenceAreasUnknownDocumentation']} label='Gi utdypende informasjon ved behov (påkrevd for "Ukjent" )' /> :
                         null}
@@ -441,10 +441,10 @@ export default class Assessment30Artsegenskaper extends React.Component {
                             xs
                             className="pull-right"
                             onClick={() => {
-                                vurdering.HealthEffects = labels.OtherEffects.noKnownValue
-                                vurdering.EconomicEffects = labels.OtherEffects.noKnownValue
-                                vurdering.PositiveEcologicalEffects = labels.OtherEffects.noKnownValue
-                                vurdering.EffectsOnPopulationOfOrigin = labels.OtherEffects.noKnownValue
+                                vurdering.healthEffects = labels.OtherEffects.noKnownValue
+                                vurdering.economicEffects = labels.OtherEffects.noKnownValue
+                                vurdering.positiveEcologicalEffects = labels.OtherEffects.noKnownValue
+                                vurdering.effectsOnPopulationOfOrigin = labels.OtherEffects.noKnownValue
                             }}
                         >{labels.OtherEffects.fillNoKnown} "{labels.OtherEffects.noKnownValue}"</Xcomp.Button>
                     <h4>{labels.OtherEffects.otherEffects}</h4>

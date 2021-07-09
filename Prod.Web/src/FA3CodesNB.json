@@ -738,113 +738,113 @@
         "naturalOriginMarine": [
             {
                 "Id": "naturalOriginMarine",
-                "Value": "Nordis",
-                "Text": "Nordishavet",
+                "value": "Nordis",
+                "text": "Nordishavet",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "naturalOriginMarine",
-                "Value": "AtlantNordVest",
-                "Text": "Atlanterhavet nordvest",
+                "value": "AtlantNordVest",
+                "text": "Atlanterhavet nordvest",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "naturalOriginMarine",
-                "Value": "AtlantNordOst",
-                "Text": "Atlanterhavet nordøst",
+                "value": "AtlantNordOst",
+                "text": "Atlanterhavet nordøst",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "naturalOriginMarine",
-                "Value": "AtlantTropic",
-                "Text": "Atlanterhavet tropisk",
+                "value": "AtlantTropic",
+                "text": "Atlanterhavet tropisk",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "naturalOriginMarine",
-                "Value": "AtlantSor",
-                "Text": "Atlanterhavet sørlig",
+                "value": "AtlantSor",
+                "text": "Atlanterhavet sørlig",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "naturalOriginMarine",
-                "Value": "Osters",
-                "Text": "Østersjøen",
+                "value": "Osters",
+                "text": "Østersjøen",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "naturalOriginMarine",
-                "Value": "Middel",
-                "Text": "Middelhavet",
+                "value": "Middel",
+                "text": "Middelhavet",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "naturalOriginMarine",
-                "Value": "BlackSea",
-                "Text": "Svartehavet",
+                "value": "BlackSea",
+                "text": "Svartehavet",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "naturalOriginMarine",
-                "Value": "CaspianSea",
-                "Text": "Det kaspiske hav",
+                "value": "CaspianSea",
+                "text": "Det kaspiske hav",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "naturalOriginMarine",
-                "Value": "StilleNord",
-                "Text": "Stillehavet nordlig",
+                "value": "StilleNord",
+                "text": "Stillehavet nordlig",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "naturalOriginMarine",
-                "Value": "StilleTropic",
-                "Text": "Stillehavet tropisk",
+                "value": "StilleTropic",
+                "text": "Stillehavet tropisk",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "naturalOriginMarine",
-                "Value": "StilleSor",
-                "Text": "Stillehavet sørlig",
+                "value": "StilleSor",
+                "text": "Stillehavet sørlig",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "naturalOriginMarine",
-                "Value": "IndianOTropic",
-                "Text": "Indiahavet tropisk",
+                "value": "IndianOTropic",
+                "text": "Indiahavet tropisk",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "naturalOriginMarine",
-                "Value": "IndianOSouth",
-                "Text": "Indiahavet sørlig",
+                "value": "IndianOSouth",
+                "text": "Indiahavet sørlig",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "naturalOriginMarine",
-                "Value": "Sorish",
-                "Text": "Sørishavet",
+                "value": "Sorish",
+                "text": "Sørishavet",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "naturalOriginMarine",
-                "Value": "Ukjent",
-                "Text": "Ukjent",
+                "value": "Ukjent",
+                "text": "Ukjent",
                 "Info": null,
                 "Children": null
             }
