@@ -53,11 +53,12 @@ export default class Risikomatrise extends React.Component {
                 <text 
                     transform={"translate(20," + (size - 28) + ")rotate(270)"}
                     style={textStyle}>
-                    {labels.ecologicalEffect } -->                </text>
+                    {labels.ecologicalEffect }
+                </text>
                 <text 
                     transform={"translate(28," + (size - 9) + ")"}
                     style={textStyle}>
-                    {labels.invationPotential } -->
+                    {labels.invationPotential } 
                 </text>
             </svg>
         );

@@ -49,6 +49,8 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
         const ltml = val => koder.limnicTerrestrialMarine.filter(kode => kode.Value === val)[0].Text
         const _alienSpeciesCategoryLabel = koder.AlienSpeciesCategory.filter(kode => kode.Value === kdi.alienSpeciesCategory  )
         const alienSpeciesCategoryLabel = _alienSpeciesCategoryLabel ? _alienSpeciesCategoryLabel[0] ? _alienSpeciesCategoryLabel[0].Text : "not set" : "net set"
+
+        const changeLabel = (id) => koder.reasonsForCategoryChange.find(code => code.value === id).text
         // console.warn(appState.vurderingsStatus)
         return (
             <div>
@@ -252,7 +254,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                         <p className="reasonsForChange">{labels.critDocumentation.reasonForChangeFrom2018} {assessment.reasonForChangeOfCategory != null ? assessment.reasonForChangeOfCategory.map(reason =>                            
                                        
                                        <li style={{marginLeft: '20px'}}>                                            
-                                            {reason}
+                                            {changeLabel(reason)}
                                         </li>                
                             ): null }</p>
 
@@ -300,6 +302,14 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                                // onUploadComplete={this.getAttachments}
                                 />
                         </fieldset>
+
+                        <Xcomp.Button>Vis oppsummering</Xcomp.Button>
+                        {assessment.vurderingsStatus != "finnished" ? 
+                        <div>
+                            <p>Vurderingen er under arbeid.</p>
+                            <Xcomp.Button>Ferdigstill</Xcomp.Button>
+                         </div>: <p>Vurderingen er ferdigstilt.</p>}
+                       
                 </div>
             </div>
         );

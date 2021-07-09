@@ -6414,7 +6414,7 @@
                         {
                             "Id": null,
                             "Value": "speciesDescription",
-                            "Text": "Beskrivelse av arten",
+                            "Text": "Generelt om arten",
                             "Info": null,
                             "Children": null
                         },
@@ -6456,7 +6456,7 @@
                         {
                             "Id": null,
                             "Value": "see33And34",
-                            "Text": "Se fane 3.3 og 3.4 for relevante opplysninger",
+                            "Text": "Se fane spredningsveier for relevante opplysninger",
                             "Info": null,
                             "Children": null
                         },
