@@ -7,7 +7,7 @@ import {observable, autorun} from 'mobx';
 import config from '../../config';
 import * as Xcomp from './observableComponents';
 import UploadPicturesButton from './30Artsegenskaper/uploadPicturesButton'
-import OriginTable from './30artsegenskaper/originTable'
+import OriginTable from './30Artsegenskaper/originTable'
 //import ArrivedCountryFrom from './30Artsegenskaper/arrivedCountryFrom'
 import ArrivedCountryFrom from './arrivedCountryFrom'
 
