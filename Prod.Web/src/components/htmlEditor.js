@@ -343,6 +343,7 @@ var HtmlEditor = createReactClass({
                         style: this.props.style,
                         disabled: this.props.disabled,
                         onPaste: this.handlePaste,
+                        placeholder: this.props.placeholder,
                         contentEditable: (!this.context.readonly && !this.props.disabled),
                         dangerouslySetInnerHTML: {__html: this.state.html},
                         onInput: this.emitChange

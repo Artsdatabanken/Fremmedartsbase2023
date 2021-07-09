@@ -284,6 +284,10 @@ td {
   width: 55%;
 }
 
+div.form-control:empty:not(:focus):before {
+  content: attr(placeholder);
+}
+
 div.fileUpload div .form-control {
   width: 60%;
 }
