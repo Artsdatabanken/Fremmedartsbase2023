@@ -478,6 +478,8 @@ class ViewModel {
     @computed get horizonDoAssessment() {
         if (!this.assessment) return false;
         const result =
+            !this.assessment.horizonEstablismentPotential || !this.assessment.horizonEcologicalEffect ?
+            false :
             this.assessment.horizonEstablismentPotential == "2" 
             || (this.assessment.horizonEstablismentPotential == "1" && this.assessment.horizonEcologicalEffect != "no") 
             || (this.assessment.horizonEstablismentPotential == "0" && this.assessment.horizonEcologicalEffect == "yesAfterGone")
