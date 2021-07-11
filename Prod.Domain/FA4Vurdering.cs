@@ -601,14 +601,15 @@ namespace Prod.Domain
         public string SpreadPVAAnalysisEstimatedSpeciesLongevityLowerQuartile { get; set; }  // lagt til 07.09.2016
         public string SpreadPVAAnalysisEstimatedSpeciesLongevityUpperQuartile { get; set; }  // lagt til 07.09.2016 
 
-        //Rødliste info
 
+        //todo: is this section in use???
+        //Rødliste info
         public bool ActiveRedListCategoryLevel { get; set; } // lagt til 27.09.2016
         public string RedListUsedCriteria { get; set; }  // lagt til 07.09.2016
         public string RedListDataDescription { get; set; }  // lagt til 07.09.2016
         public string RedListCategory { get; set; }  // lagt til 07.09.2016
         public string RedListSubCategory { get; set; }  // lagt til 07.09.2016
-
+        // -----------------------------------------------------------------------------------------
 
         //public bool ActiveSpreadRscriptSpeciesCount { get; set; } // lagt til 27.09.2016
 
