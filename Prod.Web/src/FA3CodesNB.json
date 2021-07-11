@@ -96,14 +96,14 @@
         "AcceptOrAdjust": [
             {
                 "Id": "AcceptOrAdjust",
-                "Value": "a",
+                "Value": "accept",
                 "Text": "Godtar beregnet skår",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "AcceptOrAdjust",
-                "Value": "b",
+                "Value": "adjust",
                 "Text": "Ønsker å justere skår",
                 "Info": null,
                 "Children": null
