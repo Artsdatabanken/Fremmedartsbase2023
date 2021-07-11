@@ -85,6 +85,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
         // ];
         const crit51A = getCriterion(riskAssessment, 0, "A")
         const crit51B = getCriterion(riskAssessment, 0, "B")
+        crit51A.auto = false
         const critC = getCriterion(riskAssessment, 0, "C")
 
         const nbsp = "\u00a0"
@@ -112,9 +113,12 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     <h4>{crit51A.heading}</h4>
                     <p>{crit51A.info}</p>
                     
+                    {/* <Xcomp.StringEnum observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]} mode="radio" codes={codes.HorizonEstablismentPotential}/> */}
+                    
+                    <hr />
                     <SelectableRadio
                             label={labels.AcritSelect.a}
-                            value={"spreadPVAAnalysisEstimatedSpeciesLongevity"}
+                            value={"lifespanA1aSimplifiedEstimate"}
                             observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]}/>
                     <SelectableRadio
                             label={labels.AcritSelect.b}
@@ -124,70 +128,77 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                             label={labels.AcritSelect.c}
                             value={"redListCategoryLevel"}
                             observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]}/>
-                    {riskAssessment.chosenSpreadMedanLifespan == "spreadPVAAnalysisEstimatedSpeciesLongevity" ? 
-                        assessment.alienSpeciesCategory == "DoorKnocker" ? 
+                    {riskAssessment.chosenSpreadMedanLifespan == "lifespanA1aSimplifiedEstimate" ? 
                         <div>
 
+                        {assessment.alienSpeciesCategory == "DoorKnocker" ? 
                         <p>Basert på det beste anslaget på [X1] forekomster i løpet av 10 år og [X2] introduksjoner i samme tidsperiode er A-kriteriet forhåndsskåret som [X3] (med usikkerhet: [X4-X5]). 
-                           Dette innebærer at artens mediane levetid ligger [mellom X6 år og X7 år], eller at sannsynligheten for utdøing innen 50 år er på [mellom X8 % og X9 %].</p>
-                                           
-                            <Xcomp.StringEnum observableValue={[riskAssessment, "acceptOrAdjustCritA"]} mode="radio" codes={koder.AcceptOrAdjust}/>   
+                           Dette innebærer at artens mediane levetid ligger [mellom X6 år og X7 år], eller at sannsynligheten for utdøing innen 50 år er på [mellom X8 % og X9 %].</p> :
+                        <p>Basert på de beste anslagene på forekomstareal i dag ([X1] km2) og om 50 år ([X2] km2) er A-kriteriet forhåndsskåret som [X3] (med usikkerhet: [X4-X5]). 
+                                Dette innebærer at artens mediane levetid ligger [mellom X6 år og X7 år], eller at sannsynligheten for utdøing innen 50 år er på [mellom X8 % og X9 %].</p>}
+
+                        <Xcomp.StringEnum observableValue={[riskAssessment, "acceptOrAdjustCritA"]} mode="radio" codes={koder.AcceptOrAdjust}/>   
                                          
-                                            {riskAssessment.acceptOrAdjustCritA == "b" ? 
-                                            <div>
-                                                <Xcomp.HtmlString observableValue={[riskAssessment, 'reasonForAdjustmentCritA']} label="Begrunnelse for justering:" />
-                                                <p>{ntLabels.score}</p>
-                                                <ScoreUnsure appState={appState}
-                                                        critScores={koder.scoresA}
-                                                        firstValue={"scoreA"}
-                                                        secondValue={"unsureA"}/>
-                                            </div> : 
-                                            <div>
-                                                <p>{ntLabels.scoreSummary}</p>
-                                                <ScoreUnsure appState={appState}
-                                                        critScores={koder.scoresA}                                                        
-                                                        disabled={"false"}
-                                                        firstValue={"scoreA"}
-                                                        secondValue={"unsureA"}/>
-                                            </div> }
-                                            <Xcomp.Button primary onClick= {() => {
-                                                //console.log("Save assessment")
-                                                 appState.saveCurrentAssessment();
-                                                }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>   
                                             
-                        </div> : 
                         <div>
-                            <p>Basert på de beste anslagene på forekomstareal i dag ([X1] km2) og om 50 år ([X2] km2) er A-kriteriet forhåndsskåret som [X3] (med usikkerhet: [X4-X5]). 
-                                Dette innebærer at artens mediane levetid ligger [mellom X6 år og X7 år], eller at sannsynligheten for utdøing innen 50 år er på [mellom X8 % og X9 %].</p>
-                            <Xcomp.StringEnum observableValue={[riskAssessment, "acceptOrAdjustCritA"]} mode="radio" codes={koder.AcceptOrAdjust}/>   
+                            {riskAssessment.acceptOrAdjustCritA == "adjust" ? 
+                                <>
+                                <Xcomp.HtmlString observableValue={[riskAssessment, 'reasonForAdjustmentCritA']} label="Begrunnelse for justering:" />
+                                <p>{ntLabels.score}</p> 
+                                </> :
+                                <p>{ntLabels.scoreSummary}</p>
+                            }
 
-                            {riskAssessment.acceptOrAdjustCritA == "b" ? 
-                                            <div>
-                                                <Xcomp.HtmlString observableValue={[riskAssessment, 'reasonForAdjustmentCritA']} label="Begrunnelse for justering:" />
-                                                <p>{ntLabels.score}</p>
-                                                <ScoreUnsure appState={appState}
-                                                        critScores={koder.scoresA}
-                                                        firstValue={"scoreA"}
-                                                        secondValue={"unsureA"}/>
-                                            </div> : 
-                                            <div>
-                                                <p>{ntLabels.scoreSummary}</p>
-                                                <ScoreUnsure appState={appState}
-                                                        critScores={koder.scoresA}                                                        
-                                                        disabled={"false"}
-                                                        firstValue={"scoreA"}
-                                                        secondValue={"unsureA"}/>
-                                            </div> }     
-                                            <Xcomp.Button primary onClick= {() => {
-                                                //console.log("Save assessment")
-                                                 appState.saveCurrentAssessment();
-                                                }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>                      
-                        </div>
-                        : null
 
-                }
+                            {/* <ScoreUnsure appState={appState}
+                                    critScores={koder.scoresA}
+                                    firstValue={"scoreA"}
+                                    secondValue={"unsureA"}/> */}
+                        </div> 
+                            {/* : 
+                            <div>
+                                <p>{ntLabels.scoreSummary}</p>
+                                <ScoreUnsure appState={appState}
+                                        critScores={koder.scoresA}                                                        
+                                        disabled={"false"}
+                                        firstValue={"scoreA"}
+                                        secondValue={"unsureA"}/>
+                                </div> } */}
+                            {/* <Xcomp.Button primary onClick= {() => {
+                                //console.log("Save assessment")
+                                    appState.saveCurrentAssessment();
+                                }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>    */}
+                                            
+                        </div>      
+                        // : 
+                        // <div>
+                        //     <p>Basert på de beste anslagene på forekomstareal i dag ([X1] km2) og om 50 år ([X2] km2) er A-kriteriet forhåndsskåret som [X3] (med usikkerhet: [X4-X5]). 
+                        //         Dette innebærer at artens mediane levetid ligger [mellom X6 år og X7 år], eller at sannsynligheten for utdøing innen 50 år er på [mellom X8 % og X9 %].</p>
+                        //     <Xcomp.StringEnum observableValue={[riskAssessment, "acceptOrAdjustCritA"]} mode="radio" codes={koder.AcceptOrAdjust}/>   
 
-            {riskAssessment.chosenSpreadMedanLifespan == "spreadRscriptEstimatedSpeciesLongevity" ? 
+                        //     {riskAssessment.acceptOrAdjustCritA == "b" ? 
+                        //                     <div>
+                        //                         <Xcomp.HtmlString observableValue={[riskAssessment, 'reasonForAdjustmentCritA']} label="Begrunnelse for justering:" />
+                        //                         <p>{ntLabels.score}</p>
+                        //                         <ScoreUnsure appState={appState}
+                        //                                 critScores={koder.scoresA}
+                        //                                 firstValue={"scoreA"}
+                        //                                 secondValue={"unsureA"}/>
+                        //                     </div> : 
+                        //                     <div>
+                        //                         <p>{ntLabels.scoreSummary}</p>
+                        //                         <ScoreUnsure appState={appState}
+                        //                                 critScores={koder.scoresA}                                                        
+                        //                                 disabled={"false"}
+                        //                                 firstValue={"scoreA"}
+                        //                                 secondValue={"unsureA"}/>
+                        //                     </div> }     
+                        //                     <Xcomp.Button primary onClick= {() => {
+                        //                         //console.log("Save assessment")
+                        //                          appState.saveCurrentAssessment();
+                        //                         }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>                      
+                        // </div>
+                    : riskAssessment.chosenSpreadMedanLifespan == "spreadRscriptEstimatedSpeciesLongevity" ? 
                 <div>
                     <div className="statusField"> 
                    <div className="labels">
@@ -246,7 +257,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                    </div>
                    
                     <p>{ntLabels.scoreSummary}</p>
-                    <ScoreUnsure appState={appState}
+                    {/* <ScoreUnsure appState={appState}
                                 critScores={koder.scoresB}
                                 disabled={"false"}
                                 firstValue={"scoreB"}
@@ -255,11 +266,13 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     <Xcomp.Button primary onClick= {() => {
                          console.log("Save assessment")
                         appState.saveCurrentAssessment();
-                    }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>
+                    }}>{labels.AppHeader.assessmentSave}</Xcomp.Button> */}
 
-                </div> : null }
+                </div> : 
+                // null }
                    
-                {riskAssessment.chosenSpreadMedanLifespan == "redListCategoryLevel" ? 
+                // {
+                riskAssessment.chosenSpreadMedanLifespan == "redListCategoryLevel" ? 
                 <div>
                     <div className="statusField"> 
                    <div className="labels">
@@ -301,7 +314,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                    </div>
                     
                     <p>{ntLabels.scoreSummary}</p>
-                    <ScoreUnsure appState={appState}
+                    {/* <ScoreUnsure appState={appState}
                                 critScores={koder.scoresB}                                
                                 disabled={"false"}
                                 firstValue={"scoreB"}
@@ -309,205 +322,17 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                      <Xcomp.Button primary onClick= {() => {
                          console.log("Save assessment")
                         appState.saveCurrentAssessment();
-                    }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>
-                </div> : null }
-                
-                   {/* {riskAssessment.activeSpreadPVAAnalysisEstimatedSpeciesLongevity
-                        ? <div>
-                                <table className="formtable">
-                                    <tbody>
-                                        <tr>
-                                            <th colSpan="2">{labels.AcritSelect.a}
-                                            </th>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label htmlFor="SpreadPVAAnalysis">{labels.Acrit.PVAAnalysis}</label>
-                                            </td>
-                                            <td>
-                                                <Xcomp.HtmlString observableValue={[riskAssessment, 'spreadPVAAnalysis']}/>
-                                            </td>
-                                        </tr>
-                                        {appState.fileUploadEnabled
-                                        ? <tr>
-                                            <td>
-                                                {nbsp}
-                                            </td>
-                                            <td>
-                                                <h4>{labels.Acrit.data}</h4>
-                                                <Filliste
-                                                    baseDirectory={`${appState
-                                                    .vurderingId
-                                                    .split('/').join('_')}/SpreadPVAAnalysis`}
-                                                    labels={labels.DistributionHistory}
-                                                    {...appState.vurdering.Datasett}/>
-                                            </td>
-                                        </tr>
-                                        : null}
-                                        <tr>
-                                            <td>
-                                                <label htmlFor="spreadPVAAnalysisEstimatedSpeciesLongevity">{labels.Acrit.median}</label>
-                                            </td>
-                                            <td>
-                                                <Xcomp.String
-                                                    observableValue={[riskAssessment, 'spreadPVAAnalysisEstimatedSpeciesLongevity']}/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label htmlFor="spreadPVAAnalysisEstimatedSpeciesLongevityLowerQuartile">{labels.Acrit.lower}</label>
-                                            </td>
-                                            <td>
-                                                <Xcomp.Number
-                                                    observableValue={[riskAssessment, 'spreadPVAAnalysisEstimatedSpeciesLongevityLowerQuartile']}/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label htmlFor="spreadPVAAnalysisEstimatedSpeciesLongevityUpperQuartile">{labels.Acrit.upper}</label>
-                                            </td>
-                                            <td>
-                                                <Xcomp.Number
-                                                    observableValue={[riskAssessment, 'spreadPVAAnalysisEstimatedSpeciesLongevityUpperQuartile']}/>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <hr/>
-                            </div>
-                        : null}
-                    {riskAssessment.ActiveSpreadRscriptEstimatedSpeciesLongevity
-                        ? <div>
-                                <table className="formtable">
-                                    <tbody>
-                                        <tr>
-                                            <th colSpan="2">{labels.AcritSelect.b}</th>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label htmlFor="spreadRscriptSpeciesCount">{labels.Acrit.speciesCount}</label>
-                                            </td>
-                                            <td>
-                                                <Xcomp.Number
-                                                    observableValue={[riskAssessment, 'spreadRscriptSpeciesCount']}
-                                                    integer
-                                                />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label htmlFor="spreadRscriptPopulationGrowth">{labels.Acrit.populationGrowth}</label>
-                                            </td>
-                                            <td>
-                                                <Xcomp.String
-                                                    observableValue={[riskAssessment, 'spreadRscriptPopulationGrowth']}/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label htmlFor="spreadRscriptEnvironmantVariance">{labels.Acrit.environmantVariance}</label>
-                                            </td>
-                                            <td>
-                                                <Xcomp.String
-                                                    observableValue={[riskAssessment, 'spreadRscriptEnvironmantVariance']}/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label htmlFor="spreadRscriptDemographicVariance">{labels.Acrit.demographicVariance}</label>
-                                            </td>
-                                            <td>
-                                                <Xcomp.String
-                                                    observableValue={[riskAssessment, 'spreadRscriptDemographicVariance']}/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label htmlFor="spreadRscriptSustainabilityK">{labels.Acrit.sustainability}</label>
-                                            </td>
-                                            <td>
-                                                <Xcomp.String
-                                                    observableValue={[riskAssessment, 'spreadRscriptSustainabilityK']}/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label htmlFor="spreadRscriptQuasiExtinctionThreshold">{labels.Acrit.extinctionThreshold}</label>
-                                            </td>
-                                            <td>
-                                                <Xcomp.String
-                                                    observableValue={[riskAssessment, 'spreadRscriptQuasiExtinctionThreshold']}/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colSpan="2">
-                                                <br/>
-                                                <br/>
-                                                <a href="http://www.evol.no/hanno/11/levetid.htm" target="_blank">{labels.Acrit.rScriptLongevity}</a>
-                                                <br/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <br/>
-                                                <label htmlFor="spreadRscriptEstimatedSpeciesLongevity">{labels.Acrit.median}</label>
-                                            </td>
-                                            <td>
-                                                <Xcomp.String
-                                                    observableValue={[riskAssessment, 'spreadRscriptEstimatedSpeciesLongevity']}/>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <hr/>
-                            </div>
-                        : null}
-                    {riskAssessment.ActiveRedListCategoryLevel
-                        ? <div>
-                                <table className="formtable">
-                                    <tbody>
-                                        <tr>
-                                            <th colSpan="2">{labels.AcritSelect.c}</th>
-                                        </tr>
-                                        <tr>
-                                            <th colSpan="2">
-                                                <br/>
-                                                <span>{labels.Acrit.overview} &nbsp;
-                                                    <a href="http://data.artsdatabanken.no/Files/12371" target="_blank">{labels.Acrit.overviewHere}</a>
-                                                </span>
-                                                <br/>
-                                            </th>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label htmlFor="redListDataDescription">{labels.Acrit.dataDescription}</label>
-                                            </td>
-                                            <td>
-                                                <Xcomp.HtmlString observableValue={[riskAssessment, 'redListDataDescription']}/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label htmlFor="redListUsedCriteria">{labels.Acrit.redlistCrit}</label>
-                                            </td>
-                                            <td>
-                                                <Xcomp.String observableValue={[riskAssessment, 'redListUsedCriteria']}/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label htmlFor="redListCategory">{labels.Acrit.redlistCategory}</label>
-                                            </td>
-                                            <td>
-                                                <Xcomp.String observableValue={[riskAssessment, 'redListCategory']}/>
-                                            </td>
-                                        </tr>
+                    }}>{labels.AppHeader.assessmentSave}</Xcomp.Button> */}
+                </div> : 
+                <b>Unknown value for chosenSpreadMedanLifespan!: {riskAssessment.chosenSpreadMedanLifespan}</b> }
+                <Criterion criterion={crit51A} mode="noheading"/>
 
-                                    </tbody>
-                                </table>
-                                <hr/>
-                            </div>
-                    : null} */}
+                <Xcomp.Button primary onClick= {() => {
+                    //console.log("Save assessment")
+                        appState.saveCurrentAssessment();
+                    }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>   
+                
+                 
                     <div>
                         <div
                             style={{
@@ -520,7 +345,6 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                             style={{
                             display: "inline-block"
                         }}>
-                            <Criterion criterion={crit51A} mode="noheading"/>
                         </div>
                     </div>
 
