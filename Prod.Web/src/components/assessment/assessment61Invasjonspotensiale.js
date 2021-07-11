@@ -118,17 +118,17 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     <hr />
                     <SelectableRadio
                             label={labels.AcritSelect.a}
-                            value={"lifespanA1aSimplifiedEstimate"}
+                            value={"LifespanA1aSimplifiedEstimate"}
                             observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]}/>
                     <SelectableRadio
                             label={labels.AcritSelect.b}
-                            value={"spreadRscriptEstimatedSpeciesLongevity"}
+                            value={"SpreadRscriptEstimatedSpeciesLongevity"}
                             observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]}/>
                     <SelectableRadio
                             label={labels.AcritSelect.c}
-                            value={"redListCategoryLevel"}
+                            value={"ViableAnalysis"}
                             observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]}/>
-                    {riskAssessment.chosenSpreadMedanLifespan == "lifespanA1aSimplifiedEstimate" ? 
+                    {riskAssessment.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" ? 
                         <div>
 
                         {assessment.alienSpeciesCategory == "DoorKnocker" ? 
@@ -198,7 +198,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                         //                          appState.saveCurrentAssessment();
                         //                         }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>                      
                         // </div>
-                    : riskAssessment.chosenSpreadMedanLifespan == "spreadRscriptEstimatedSpeciesLongevity" ? 
+                    : riskAssessment.chosenSpreadMedanLifespan == "SpreadRscriptEstimatedSpeciesLongevity" ? 
                 <div>
                     <div className="statusField"> 
                    <div className="labels">
@@ -272,7 +272,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                 // null }
                    
                 // {
-                riskAssessment.chosenSpreadMedanLifespan == "redListCategoryLevel" ? 
+                riskAssessment.chosenSpreadMedanLifespan == "ViableAnalysis" ? 
                 <div>
                     <div className="statusField"> 
                    <div className="labels">
@@ -325,8 +325,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     }}>{labels.AppHeader.assessmentSave}</Xcomp.Button> */}
                 </div> : 
                 <b>Unknown value for chosenSpreadMedanLifespan!: {riskAssessment.chosenSpreadMedanLifespan}</b> }
-                <Criterion criterion={crit51A} mode="noheading"/>
 
+                <Criterion criterion={crit51A} mode="noheading"/>
                 <Xcomp.Button primary onClick= {() => {
                     //console.log("Save assessment")
                         appState.saveCurrentAssessment();

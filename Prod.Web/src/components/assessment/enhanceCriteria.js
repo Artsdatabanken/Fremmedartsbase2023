@@ -38,9 +38,9 @@ function medianLifespanLevel(num) {
 
 function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
     const ACriteriaSectionNames = [
-        "lifespanA1aSimplifiedEstimate", // changed from  "SpreadPVAAnalysisEstimatedSpeciesLongevity" 11.07.21
+        "LifespanA1aSimplifiedEstimate", // changed from  "SpreadPVAAnalysisEstimatedSpeciesLongevity" 11.07.21
         "SpreadRscriptEstimatedSpeciesLongevity",
-        "RedListCategoryLevel"
+        "ViableAnalysis"                                     // "RedListCategoryLevel"
     ]
 
     const BCriteriaSectionNames = [
@@ -595,7 +595,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
             let ud
             let uv
             if (crit.CriteriaLetter === "A" && 
-                    riskAssessment.ChosenSpreadMedanLifespan === 'lifespanA1aSimplifiedEstimate' 
+                    riskAssessment.ChosenSpreadMedanLifespan === 'LifespanA1aSimplifiedEstimate' 
             ) {
                 const ulevels = uncertaintylevelsFor(riskAssessment.ChosenSpreadMedanLifespan, medianLifespanLevel)
                 uv = ulevels
