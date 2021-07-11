@@ -26,7 +26,7 @@ export default class Assessment10Horisontskanning extends React.Component {
                     <h3>{labels.SpeciesStatus.establishmentPotential}</h3>                    
                     <div className="scanning">
                         <p>{labels.SpeciesStatus.colonizationInformation}</p>
-                            <Xcomp.StringEnum observableValue={[assessment, "horizonEstablismentPotential"]} mode="radio" codes={codes.HorizonEstablismentPotential}/>                            
+                            <Xcomp.StringEnum observableValue={[assessment, "horizonEstablismentPotential"]} mode="radio" codes={codes.HorizonEstablismentPotential}/>
                     </div>
                         <Xcomp.HtmlString observableValue={[assessment, 'horizonEstablismentPotentialDescription']} placeholder="Utfyllende informasjon" /> 
                </div>
