@@ -23,7 +23,7 @@ export default class Criterion extends React.Component {
             }
         }
 
-        // consol.log("##info:" + JSON.stringify(criterion))
+        console.log("##info:" + JSON.stringify(criterion))
 
         // console.log("head " + heading)
         // console.log("val " + Value) // + "|" + Id)
@@ -38,7 +38,7 @@ export default class Criterion extends React.Component {
             <div className="criterion">
             {showHeading ? <div><h4>{heading}</h4> {!hideInfo ? <p>{info}</p> : null}</div> : null}
               
-            {/* {codes.map(kode => {  
+            {codes.map(kode => {  
                 const onChangeRadio = e => {
                     // console.log("radio2 change")
                     if (!auto) {
@@ -87,7 +87,7 @@ export default class Criterion extends React.Component {
                         {...checkboxoptional} />
                         {kode.Text}
                     </div>
-                </div>})}  */}
+                </div>})} 
             </div>
         );
 	}
