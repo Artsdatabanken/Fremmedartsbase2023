@@ -9,7 +9,7 @@ export default class Criterion extends React.Component {
         super(props)
     }
     render() {
-        const {criterion, mode, hideInfo} = this.props;
+        const {criterion, mode, hideInfo, disabled} = this.props;
         console.log("keys: " + JSON.stringify(Object.keys(criterion)))
 
         const {Id, Value, UncertaintyValues, auto, codes, heading, info, uncertaintyDisabled } = criterion;
@@ -74,13 +74,17 @@ export default class Criterion extends React.Component {
                     <div>
                         {auto ?
                             <div className={"criteriaCheck" + (radiooptional.checked ? " glyphicon glyphicon-ok" : "")}>&nbsp;</div> :
+                            <>{parseInt(kode.Value)+1}
                             <input
+                            disabled={disabled}
                             value={kode.Value}
                             type="radio"
                             onChange={onChangeRadio}
                             {...radiooptional} />
+                            </>
                         }
                         <input
+                        disabled={disabled}
                         value={kode.Value}
                         type="checkbox"
                         onChange={onChangeCheckbox}

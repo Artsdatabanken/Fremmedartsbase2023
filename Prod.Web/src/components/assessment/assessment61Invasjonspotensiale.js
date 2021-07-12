@@ -84,6 +84,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
         //     }
         // ];
         const crit51A = getCriterion(riskAssessment, 0, "A")
+        console.log(crit51A)
         const crit51B = getCriterion(riskAssessment, 0, "B")
         crit51A.auto = false
         const critC = getCriterion(riskAssessment, 0, "C")
@@ -326,7 +327,10 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                 </div> : 
                 <b>Unknown value for chosenSpreadMedanLifespan!: {riskAssessment.chosenSpreadMedanLifespan}</b> }
 
-                <Criterion criterion={crit51A} mode="noheading"/>
+                <Criterion criterion={crit51A} 
+                        mode="noheading"
+                        disabled = {riskAssessment.acceptOrAdjustCritA == "accept"}
+                        />
                 <Xcomp.Button primary onClick= {() => {
                     //console.log("Save assessment")
                         appState.saveCurrentAssessment();
