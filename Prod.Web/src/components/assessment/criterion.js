@@ -1,16 +1,20 @@
 ﻿import React from 'react';
 import PropTypes from 'prop-types'
-import {observer} from 'mobx-react';
+import {observer, inject} from 'mobx-react';
 import {autorun , observable} from 'mobx';
+import * as Xcomp from './observableComponents';
 
+@inject("appState")
 @observer
 export default class Criterion extends React.Component {
     constructor(props) {
         super(props)
     }
     render() {
-        const {criterion, mode, hideInfo, disabled} = this.props;
+        const {criterion, appState, mode, hideInfo, disabled} = this.props;
+        
         console.log("keys: " + JSON.stringify(Object.keys(criterion)))
+        const labels = appState.codeLabels
 
         const {Id, Value, UncertaintyValues, auto, codes, heading, info, uncertaintyDisabled } = criterion;
         const showHeading = !mode || mode.indexOf("noheading") < 0
@@ -25,6 +29,8 @@ export default class Criterion extends React.Component {
 
         console.log("##info:" + JSON.stringify(criterion))
 
+        console.log("disabled: " + disabled)
+
         // console.log("head " + heading)
         // console.log("val " + Value) // + "|" + Id)
         // console.log("udis " + JSON.stringify(uncertaintyDisabled))
@@ -35,7 +41,7 @@ export default class Criterion extends React.Component {
         // const logthis = criterion.CriteriaLetter === "A"
 
         return(
-            <div className="criterion">
+            <div className= {disabled ? "criterion disabled" : "criterion" }>
             {showHeading ? <div><h4>{heading}</h4> {!hideInfo ? <p>{info}</p> : null}</div> : null}
               
             {codes.map(kode => {  
@@ -51,7 +57,9 @@ export default class Criterion extends React.Component {
                 }
                 const radiooptional = {};
                 const checkboxoptional = {};
-                const disabled = kode.Text === null
+                const disabled = (kode.Text === null || this.props.disabled)
+                
+                console.log(disabled)
                 if(Value !== undefined) {
                     radiooptional.checked = (kode.Value === Value)
                 }
@@ -75,7 +83,7 @@ export default class Criterion extends React.Component {
                         {auto ?
                             <div className={"criteriaCheck" + (radiooptional.checked ? " glyphicon glyphicon-ok" : "")}>&nbsp;</div> :
                             <>{parseInt(kode.Value)+1}
-                            <input
+                            <input                            
                             disabled={disabled}
                             value={kode.Value}
                             type="radio"
@@ -91,7 +99,14 @@ export default class Criterion extends React.Component {
                         {...checkboxoptional} />
                         {kode.Text}
                     </div>
+                   
+                
                 </div>})} 
+                <br/>
+                <Xcomp.Button primary onClick= {() => {
+                    //console.log("Save assessment")
+                        appState.saveCurrentAssessment();
+                    }}>{labels.AppHeader.assessmentSave}</Xcomp.Button> 
             </div>
         );
 	}

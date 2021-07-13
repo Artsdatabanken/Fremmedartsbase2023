@@ -5,7 +5,7 @@ import * as Xcomp from './observableComponents';
 import Tabs from '../tabs'
 import Criterion from './criterion'
 import Assessment62Okologiskeffekt from './assessment62Okologiskeffekt'
-import ScoreUnsure from './51Naturtyper/scoreUnsure';
+//import ScoreUnsure from './51Naturtyper/scoreUnsure';
 import config from '../../config'
 import {codes2labels, getCriterion} from '../../utils'
 import Filliste from './35Utbredelseshistorikk/Filliste'
@@ -87,7 +87,10 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
         console.log(crit51A)
         const crit51B = getCriterion(riskAssessment, 0, "B")
         crit51A.auto = false
+        crit51B.auto = false
         const critC = getCriterion(riskAssessment, 0, "C")
+        critC.auto = false
+        
 
         const nbsp = "\u00a0"
 
@@ -327,31 +330,16 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                 </div> : 
                 <b>Unknown value for chosenSpreadMedanLifespan!: {riskAssessment.chosenSpreadMedanLifespan}</b> }
 
-                <Criterion criterion={crit51A} 
-                        mode="noheading"
-                        disabled = {riskAssessment.acceptOrAdjustCritA == "accept"}
-                        />
-                <Xcomp.Button primary onClick= {() => {
-                    //console.log("Save assessment")
-                        appState.saveCurrentAssessment();
-                    }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>   
-                
-                 
-                    <div>
-                        <div
-                            style={{
-                            marginRight: "90px",
-                            display: "inline-block"
-                        }}>
+                {riskAssessment.chosenSpreadMedanLifespan != "RedListCategoryLevel" && 
+                    <Criterion criterion={crit51A} 
+                    appState={appState}
+                    mode="noheading"
+                    disabled = {riskAssessment.chosenSpreadMedanLifespan == "ViableAnalysis" ||
+                             riskAssessment.chosenSpreadMedanLifespan == "SpreadRscriptEstimatedSpeciesLongevity" ||
+                             (riskAssessment.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && riskAssessment.acceptOrAdjustCritA != "adjust") 
                             
-                        </div>
-                        <div
-                            style={{
-                            display: "inline-block"
-                        }}>
-                        </div>
-                    </div>
-
+                            }
+                    />}
                 </fieldset>
                 <br/>
                 <fieldset className="well">
@@ -444,15 +432,17 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
 
 
                                 <p>{ntLabels.scoreSummary}</p>
-                                <ScoreUnsure appState={appState}
+                               {/* <ScoreUnsure appState={appState}
                                             critScores={koder.scoresB}
                                             disabled={"false"}
                                             firstValue={"scoreB"}
                                             secondValue={"unsureB"}/>
-                                <Xcomp.Button primary onClick= {() => {
+                                            
+                                            <Xcomp.Button primary onClick= {() => {
                                     console.log("Save assessment")
                                     appState.saveCurrentAssessment();
-                                }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>
+                                }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>*/}
+                                
                         </div> : 
                         riskAssessment.chosenSpreadYearlyIncrease == "b" && assessment.alienSpeciesCategory == "DoorKnocker" ?
                             <div>
@@ -460,15 +450,17 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                     Dette innebærer at artens ekspansjonshastighet ligger mellom [X6 m/år og X7 m/år]. </p>
                             <p>  Dersom denne verdien framstår som urealistisk, bør antatt forekomstareal om 50 år (se Utbredelse i Norge) vurderes justert. </p>
                                                 <p>{ntLabels.scoreSummary}</p>
-                                                <ScoreUnsure appState={appState}
+                                                {/*<ScoreUnsure appState={appState}
                                                             critScores={koder.scoresB}
                                                             disabled={"false"}
                                                             firstValue={"scoreB"}
                                                             secondValue={"unsureB"}/>
-                                                <Xcomp.Button primary onClick= {() => {
+                                                            
+                                                            <Xcomp.Button primary onClick= {() => {
                                                    // console.log("Save assessment")
                                                     appState.saveCurrentAssessment();
-                                                }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>
+                                                }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>*/}
+                                                
                             </div> : 
                             riskAssessment.chosenSpreadYearlyIncrease == "b" ?
                             <div>
@@ -548,16 +540,18 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                     </p>
 
                                     <p>{ntLabels.scoreSummary}</p>
-                                    <ScoreUnsure appState={appState}
+                                    {/*<ScoreUnsure appState={appState}
                                                 critScores={koder.scoresB}
                                                 disabled={"false"}
                                                 firstValue={"scoreB"}
-                                                secondValue={"unsureB"}/>
-                                    <Xcomp.Button primary onClick= {() => {
+                                            secondValue={"unsureB"}/>
+                                            
+                                            <Xcomp.Button primary onClick= {() => {
                                         console.log("Save assessment")
                                         appState.saveCurrentAssessment();
                                     }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>
-
+*/}
+                                    
                             </div> : null
                 }
                   {/*  
@@ -751,31 +745,36 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                             </div>
                         : null}
                     <div>
-                        <div
+                       {/* <div
                             style={{
                             marginRight: "90px",
                             display: "inline-block"
                         }}>
                             
-                        </div>
+                    </div>*/}
+                    {riskAssessment.chosenSpreadYearlyIncrease != "SpreadYearlyIncreaseCalculatedExpansionSpeed" && 
                         <div
                             style={{
                             display: "inline-block"
-                        }}>
-                            <Criterion criterion={crit51B} mode="noheading"/>
-                        </div>
+                         }}>
+                        <Criterion criterion={crit51B} appState={appState} disabled= {true} mode="noheading"/>
+                    </div>
+                    }
+                        
                     </div>
                 </fieldset>
                 <fieldset className="well">
-                    {/* {/*<h4>{critC.heading} &nbsp;{labels.Ccrit.transferedFrom4}</h4> */}
-                    <h4>{critC.heading}</h4>
-                    <p>{critC.info}</p>
-                    <p>{ntLabels.scoreSummary}</p>
-                    <ScoreUnsure appState={appState}
+                    {/* {/*<h4>{critC.heading} &nbsp;{labels.Ccrit.transferedFrom4}</h4>
+                    
+                     <ScoreUnsure appState={appState}
                                 critScores={koder.scoresC}
                                 firstValue={"scoreC"}
                                 secondValue={"unsureC"}/>
-                    <Criterion criterion={critC} mode="noheading"/>
+                    */}
+                    <h4>{critC.heading}</h4>
+                    <p>{critC.info}</p>
+                    <p>{ntLabels.scoreSummary}</p>
+                    <Criterion criterion={critC} mode="noheading" appState={appState}/>
                     </fieldset>
                 </div>
                 }
