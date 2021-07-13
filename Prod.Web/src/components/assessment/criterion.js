@@ -15,7 +15,7 @@ export default class Criterion extends React.Component {
         
         console.log("keys: " + JSON.stringify(Object.keys(criterion)))
         const labels = appState.codeLabels
-
+        const ntLabels = labels.NatureTypes
         const {Id, Value, UncertaintyValues, auto, codes, heading, info, uncertaintyDisabled } = criterion;
         const showHeading = !mode || mode.indexOf("noheading") < 0
         const setUncertainty = e => {
@@ -41,9 +41,11 @@ export default class Criterion extends React.Component {
         // const logthis = criterion.CriteriaLetter === "A"
 
         return(
-            <div className= {disabled ? "criterion disabled" : "criterion" }>
+            <>
             {showHeading ? <div><h4>{heading}</h4> {!hideInfo ? <p>{info}</p> : null}</div> : null}
-              
+            {disabled ?  <p>{ntLabels.scoreSummary}</p> :  <p>{ntLabels.score}</p>}
+            <div className= {disabled ? "criterion disabled" : "criterion" }>
+            
             {codes.map(kode => {  
                 const onChangeRadio = e => {
                     // console.log("radio2 change")
@@ -80,6 +82,7 @@ export default class Criterion extends React.Component {
 
                 return <div key={kode.Value} className="uncertainty">      
                     <div>
+                        
                         {auto ?
                             <div className={"criteriaCheck" + (radiooptional.checked ? " glyphicon glyphicon-ok" : "")}>&nbsp;</div> :
                             <>{parseInt(kode.Value)+1}
@@ -108,6 +111,7 @@ export default class Criterion extends React.Component {
                         appState.saveCurrentAssessment();
                     }}>{labels.AppHeader.assessmentSave}</Xcomp.Button> 
             </div>
+            </>
         );
 	}
 }

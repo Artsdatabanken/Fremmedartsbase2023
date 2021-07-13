@@ -264,6 +264,12 @@ export default class Assessment62Okologiskeffekt extends React.Component {
         const crit52H = getCriterion(riskAssessment, 1 , "H")
         const crit52I = getCriterion(riskAssessment, 1 , "I")
         const ntLabels = labels.NatureTypes
+        crit52D.auto = false
+        crit52E.auto = false
+        crit52F.auto = false
+        crit52G.auto = false
+        crit52H.auto = false
+        crit52I.auto = false
         return(
             <div>
                 {config.showPageHeaders ? <h3>Økologisk effekt</h3> : <br />}
@@ -284,11 +290,11 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                 </fieldset>
                 <fieldset className="well">
                     <Criterion criterion={crit52D} hideInfo={true} />
-                    <p>{ntLabels.score}</p>
+                    <p><b>Verdier stemmer ikke! ^^</b></p>
                     <ScoreUnsure appState={appState}
                                 critScores={koder.scoresD}
                                 firstValue={"scoreD"}
-                                secondValue={"unsureD"}/>
+                                secondValue={"unsureD"}/> 
                      <Xcomp.HtmlString                            
                                 observableValue={[riskAssessment, "DCritInsecurity"]}
                                 label={labels.DEcrit.insecurity}
@@ -297,7 +303,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                     <fieldset className="well">
                     <Criterion criterion={crit52E} hideInfo={true} />
 
-                    <p>{ntLabels.score}</p>
+                    <p><b>Verdier stemmer ikke! ^^</b></p>
                     <ScoreUnsure appState={appState}
                                 critScores={koder.scoresE}
                                 firstValue={"scoreE"}
@@ -308,20 +314,23 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                             />                      
                 </fieldset>
                 <fieldset className="well">
-                    <Criterion criterion={crit52F} />
-                    <p>{ntLabels.scoreSummary}</p>
-                    <ScoreUnsure appState={appState}
+                    
+                    <Criterion criterion={crit52F}  disabled={true}/>
+                    
+                   {/* 
+                   <p>{ntLabels.scoreSummary}</p>
+                   <ScoreUnsure appState={appState}
                                 critScores={koder.scoresF}
                                 firstValue={"scoreF"}
-                                secondValue={"unsureF"}/>
+                                secondValue={"unsureF"}/>*/}
                 </fieldset>
                 <fieldset className="well">
-                    <Criterion criterion={crit52G} />
-                    <p>{ntLabels.scoreSummary}</p>
+                    <Criterion criterion={crit52G} disabled={true}/>
+                    {/*<p>{ntLabels.scoreSummary}</p>
                     <ScoreUnsure appState={appState}
                                 critScores={koder.scoresG}
                                 firstValue={"scoreG"}
-                                secondValue={"unsureG"}/>
+                            secondValue={"unsureG"}/>*/}
                 </fieldset> 
                 <fieldset className="well">
                     <h4>{crit52H.heading}</h4>
@@ -329,11 +338,14 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                     <SpeciesSpeciesTable list={riskAssessment.geneticTransferDocumented} newItem={this.newGTD} addNewItem={this.addGTD} koder={koder} labels={labels} showKeyStoneSpecie showConfirmedOrAssumed />
                     <hr/>
 
-                    <p>{ntLabels.score}</p>
+                   {/* <p>{ntLabels.score}</p>*/}
                     <ScoreUnsure appState={appState}
                                 critScores={koder.scoresH}
                                 firstValue={"scoreH"}
-                                secondValue={"unsureH"}/>
+                        secondValue={"unsureH"}/> 
+                    <p><b>Verdier stemmer ikke! ^^</b></p>
+                    <Criterion criterion={crit52H} mode="noheading"/>
+
                      <Xcomp.HtmlString                            
                                 observableValue={[riskAssessment, "HCritInsecurity"]}
                                 label={labels.DEcrit.insecurity}
@@ -344,7 +356,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                         <Xcomp.HtmlString observableValue={[riskAssessment, 'geneticTransferDomesticDescription']} />
                     </div> : 
                     null}*/}
-                    <Criterion criterion={crit52H} mode="noheading"/>
+                    
                     {/*<p>HGeneticTransferLevel: {riskAssessment.HGeneticTransferLevel}</p>*/}
                 </fieldset>
                 <fieldset className="well">
@@ -357,6 +369,9 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                                 critScores={koder.scoresI}
                                 firstValue={"scoreI"}
                                 secondValue={"unsureI"}/>
+
+                    <p><b>Verdier stemmer ikke! ^^</b></p>
+                    <Criterion criterion={crit52I} mode="noheading"/>
                      <Xcomp.HtmlString                            
                                 observableValue={[riskAssessment, "ICritInsecurity"]}
                                 label={labels.DEcrit.insecurity}
@@ -367,7 +382,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                         <Xcomp.HtmlString observableValue={[riskAssessment, 'vectorBiologicalDiseaseSpreadingDomesticDescription']} />
                     </div> : 
                     null }*/}
-                    <Criterion criterion={crit52I} mode="noheading"/>
+                    
                 </fieldset>
             </div>
         );

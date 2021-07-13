@@ -494,6 +494,36 @@
                 "value": "changedStatus"
               }
         ],
+
+        "TrueOrFalse": [
+            {
+                "Id": "TrueOrFalse",
+                "Value": "false",
+                "Text": "False"
+            },
+            {
+                "Id": "TrueOrFalse",
+                "Value": "true",
+                "Text": "True"
+            }
+        ],
+        "BCritP": [
+            {
+                "Id": "BCritP",
+                "Value": "1",
+                "Text": "1"
+            },
+            {
+                "Id": "BCritP",
+                "Value": "2",
+                "Text": "2"
+            },
+            {
+                "Id": "BCritP",
+                "Value": "3",
+                "Text": "3"
+            }
+        ],
   
         "DoorKnocker": [
             {
@@ -4806,6 +4836,139 @@
                             "Children": null
                         }
                     ],
+
+                    "AcritText": [
+                        {
+                            "Id": null,
+                            "Value": "a",
+                            "Text": "Basert på de beste anslagene på forekomstareal i dag (",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "b",
+                            "Text": " km<sup>2</sup>) og om 50 år ( ",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "c",
+                            "Text": " km<sup>2</sup>) er A-kriteriet forhåndsskåret som ",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "d",
+                            "Text": " (med usikkerhet: ",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "e",
+                            "Text": "). Dette innebærer at artens mediane levetid ligger [mellom ",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "f",
+                            "Text": " år og ",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "g",
+                            "Text": " år], eller at sannsynligheten for utdøing innen 50 år er på [mellom ",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "h",
+                            "Text": " % og ",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "i",
+                            "Text": " %].",
+                            "Info": null,
+                            "Children": null
+                        }
+                    ],
+
+                    "AcritTextDoorKnocker": [
+                        {
+                            "Id": null,
+                            "Value": "a",
+                            "Text": "Basert på det beste anslaget på ",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "b",
+                            "Text": " forekomster i løpet av 10 år og ",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "c",
+                            "Text": " introduksjoner i samme tidsperiode er A-kriteriet forhåndsskåret som ",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "d",
+                            "Text": " (med usikkerhet: [",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "e",
+                            "Text": "]). Dette innebærer at artens mediane levetid ligger [mellom ",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "f",
+                            "Text": " år og ",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "g",
+                            "Text": " år], eller at sannsynligheten for utdøing innen 50 år er på [mellom ",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "h",
+                            "Text": " % og ",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "i",
+                            "Text": " %].",
+                            "Info": null,
+                            "Children": null
+                        }
+                    ],
+
                     "AlienSpecie": [
                         {
                             "Id": null,
@@ -6072,14 +6235,14 @@
                         {
                             "Id": null,
                             "Value": "fromYear",
-                            "Text": "f.o.m. år (t0)",
+                            "Text": "f.o.m. år (t<sub>0</sub>)",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "toYear",
-                            "Text": "t.o.m. år (ti)",
+                            "Text": "t.o.m. år (t<sub>i</sub>)",
                             "Info": null,
                             "Children": null
                         },
@@ -6100,7 +6263,7 @@
                         {
                             "Id": null,
                             "Value": "km2",
-                            "Text": "km2",
+                            "Text": "km<sup>2</sup>",
                             "Info": null,
                             "Children": null
                         },
