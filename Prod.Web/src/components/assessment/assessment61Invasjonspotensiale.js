@@ -5,7 +5,7 @@ import * as Xcomp from './observableComponents';
 import Tabs from '../tabs'
 import Criterion from './criterion'
 import Assessment62Okologiskeffekt from './assessment62Okologiskeffekt'
-import ScoreUnsure from './51Naturtyper/scoreUnsure';
+//import ScoreUnsure from './51Naturtyper/scoreUnsure';
 import config from '../../config'
 import {codes2labels, getCriterion} from '../../utils'
 import Filliste from './35Utbredelseshistorikk/Filliste'
@@ -84,9 +84,13 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
         //     }
         // ];
         const crit51A = getCriterion(riskAssessment, 0, "A")
+        console.log(crit51A)
         const crit51B = getCriterion(riskAssessment, 0, "B")
         crit51A.auto = false
+        crit51B.auto = false
         const critC = getCriterion(riskAssessment, 0, "C")
+        critC.auto = false
+        
 
         const nbsp = "\u00a0"
 
@@ -132,21 +136,52 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                         <div>
 
                         {assessment.alienSpeciesCategory == "DoorKnocker" ? 
-                        <p>Basert på det beste anslaget på [X1] forekomster i løpet av 10 år og [X2] introduksjoner i samme tidsperiode er A-kriteriet forhåndsskåret som [X3] (med usikkerhet: [X4-X5]). 
-                           Dette innebærer at artens mediane levetid ligger [mellom X6 år og X7 år], eller at sannsynligheten for utdøing innen 50 år er på [mellom X8 % og X9 %].</p> :
-                        <p>Basert på de beste anslagene på forekomstareal i dag ([X1] km2) og om 50 år ([X2] km2) er A-kriteriet forhåndsskåret som [X3] (med usikkerhet: [X4-X5]). 
-                                Dette innebærer at artens mediane levetid ligger [mellom X6 år og X7 år], eller at sannsynligheten for utdøing innen 50 år er på [mellom X8 % og X9 %].</p>}
+                        <p>
+                            {labels.AcritTextDoorKnocker.a}
+                            [X1] 
+                            {labels.AcritTextDoorKnocker.b}
+                            [X2] 
+                            {labels.AcritTextDoorKnocker.c}
+                            [X3] 
+                            {labels.AcritTextDoorKnocker.d}
+                            X4-X5
+                            {labels.AcritTextDoorKnocker.e}
+                            X6 
+                            {labels.AcritTextDoorKnocker.f}
+                            X7 
+                            {labels.AcritTextDoorKnocker.g}
+                            X8
+                            {labels.AcritTextDoorKnocker.h}
+                            X9 
+                            {labels.AcritTextDoorKnocker.i}
+                           </p> :
+                        <p>
+                           {labels.AcritText.a}
+                            [X1] 
+                            <span dangerouslySetInnerHTML={{
+                                         __html: labels.AcritText.b}}></span>
+                            [X2] 
+                            <span dangerouslySetInnerHTML={{
+                                         __html: labels.AcritText.c }}></span>
+                            [X3] 
+                            {labels.AcritText.d}
+                            [X4-X5]
+                            {labels.AcritText.e}
+                            X6 
+                            {labels.AcritText.f} 
+                            X7
+                            {labels.AcritText.g}
+                            X8 
+                            {labels.AcritText.h} 
+                            X9                            
+                            {labels.AcritText.i}</p>}
 
                         <Xcomp.StringEnum observableValue={[riskAssessment, "acceptOrAdjustCritA"]} mode="radio" codes={koder.AcceptOrAdjust}/>   
                                          
                                             
                         <div>
-                            {riskAssessment.acceptOrAdjustCritA == "adjust" ? 
-                                <>
+                            {riskAssessment.acceptOrAdjustCritA == "adjust" &&                                
                                 <Xcomp.HtmlString observableValue={[riskAssessment, 'reasonForAdjustmentCritA']} label="Begrunnelse for justering:" />
-                                <p>{ntLabels.score}</p> 
-                                </> :
-                                <p>{ntLabels.scoreSummary}</p>
                             }
 
 
@@ -217,32 +252,32 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                             />  
                     <Xcomp.Number                            
                                 observableValue={[riskAssessment, "ACritPopGrowth"]}
-                                double
+                                
                             />  
 
                     <Xcomp.Number                            
                                 observableValue={[riskAssessment, "ACritEnvirVariance"]}
-                                integer
+                                
                             />  
 
                     <Xcomp.Number                            
                                 observableValue={[riskAssessment, "ACritDemoVariance"]}
-                                integer
+                                
                             />  
                     <Xcomp.Number                            
                                 observableValue={[riskAssessment, "ACritSustainability"]}
-                                integer
+                                
                             />  
                             
                    <Xcomp.Number                            
                                 observableValue={[riskAssessment, "ACritExtThreshold"]}
-                                integer
+                                
                             />  
                     
                             
                    </div>
                    </div>
-                   <a href="#">{labels.Acrit.rScriptLongevity}</a>
+                   <a href="http://www.evol.no/hanno/11/levetid.htm" target="_blank">{labels.Acrit.rScriptLongevity}</a>
                    <div className="statusField">
                        <div className="labels">
                         
@@ -251,13 +286,13 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                        <div className="numberFields">
                        <Xcomp.Number                            
                                 observableValue={[riskAssessment, "ACritMedian"]}
-                                integer
+                                
                             />  
                        </div>
                    </div>
                    
-                    <p>{ntLabels.scoreSummary}</p>
-                    {/* <ScoreUnsure appState={appState}
+                    {/* <p>{ntLabels.scoreSummary}</p>
+                    <ScoreUnsure appState={appState}
                                 critScores={koder.scoresB}
                                 disabled={"false"}
                                 firstValue={"scoreB"}
@@ -298,23 +333,23 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
 
                     <Xcomp.Number                            
                                 observableValue={[riskAssessment, "ACritMedianLifespan"]}
-                                integer
+                                
                             />  
                     <Xcomp.Number                            
                                 observableValue={[riskAssessment, "ACritLower"]}
-                                integer
+                                
                             />  
                             
                    <Xcomp.Number                            
                                 observableValue={[riskAssessment, "ACritUpper"]}
-                                integer
+                                
                             />                     
                             
                    </div>
                    </div>
                     
-                    <p>{ntLabels.scoreSummary}</p>
-                    {/* <ScoreUnsure appState={appState}
+                   {/* <p>{ntLabels.scoreSummary}</p>
+                     <ScoreUnsure appState={appState}
                                 critScores={koder.scoresB}                                
                                 disabled={"false"}
                                 firstValue={"scoreB"}
@@ -326,28 +361,16 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                 </div> : 
                 <b>Unknown value for chosenSpreadMedanLifespan!: {riskAssessment.chosenSpreadMedanLifespan}</b> }
 
-                <Criterion criterion={crit51A} mode="noheading"/>
-                <Xcomp.Button primary onClick= {() => {
-                    //console.log("Save assessment")
-                        appState.saveCurrentAssessment();
-                    }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>   
-                
-                 
-                    <div>
-                        <div
-                            style={{
-                            marginRight: "90px",
-                            display: "inline-block"
-                        }}>
+                {riskAssessment.chosenSpreadMedanLifespan != "RedListCategoryLevel" && riskAssessment.chosenSpreadMedanLifespan != "" && 
+                    <Criterion criterion={crit51A} 
+                    appState={appState}
+                    mode="noheading"
+                    disabled = {riskAssessment.chosenSpreadMedanLifespan == "ViableAnalysis" ||
+                             riskAssessment.chosenSpreadMedanLifespan == "SpreadRscriptEstimatedSpeciesLongevity" ||
+                             (riskAssessment.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && riskAssessment.acceptOrAdjustCritA != "adjust") 
                             
-                        </div>
-                        <div
-                            style={{
-                            display: "inline-block"
-                        }}>
-                        </div>
-                    </div>
-
+                            }
+                    />}
                 </fieldset>
                 <br/>
                 <fieldset className="well">
@@ -366,7 +389,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
 
                 {riskAssessment.chosenSpreadYearlyIncrease == "a" ? 
                         <div> 
-                            <p> <i>(standardinnstilling er forhåndsfylt)</i></p>
+                            <p> Angi verdi på parametere <i>(standardinnstilling er forhåndsfylt)</i></p>
 
                             <div className="statusField"> 
                             <div className="labels">
@@ -381,25 +404,26 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             observableValue={[riskAssessment, "BCritMCount"]}
                                             placeholder={""}
                                         />  
-                                <Xcomp.String                            
+                              <Xcomp.StringEnum                            
                                             observableValue={[riskAssessment, "BCritExact"]}
-                                            placeholder={"false"}
+                                            //placeholder={"false"}
+                                            codes={koder.TrueOrFalse}
                                         />  
-
-                                <Xcomp.String                            
+                                <br/>
+                                <Xcomp.StringEnum                            
                                             observableValue={[riskAssessment, "BCritP"]}
-                                            placeholder={"1"}
+                                            codes={koder.BCritP}
                                         />  
 
                                 <Xcomp.String                            
                                             observableValue={[riskAssessment, "BCritNewObs"]}
-                                            placeholder={"true"}
+                                            placeholder={"True"}
                                         />                      
                                         
                             </div>
                             </div>
 
-                            <a href="#">{labels.Bcrit.rScriptExpansion}</a>
+                            <a href="http://www.evol.no/hanno/16/ekspan.htm" target="_blank">{labels.Bcrit.rScriptExpansion}</a>
                             <div className="statusField">
                                 <div className="labelsB">
                                     
@@ -439,32 +463,36 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                             </div>
 
 
-                                <p>{ntLabels.scoreSummary}</p>
-                                <ScoreUnsure appState={appState}
+                              {/*   <p>{ntLabels.scoreSummary}</p>
+                               <ScoreUnsure appState={appState}
                                             critScores={koder.scoresB}
                                             disabled={"false"}
                                             firstValue={"scoreB"}
                                             secondValue={"unsureB"}/>
-                                <Xcomp.Button primary onClick= {() => {
+                                            
+                                            <Xcomp.Button primary onClick= {() => {
                                     console.log("Save assessment")
                                     appState.saveCurrentAssessment();
-                                }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>
+                                }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>*/}
+                                
                         </div> : 
                         riskAssessment.chosenSpreadYearlyIncrease == "b" && assessment.alienSpeciesCategory == "DoorKnocker" ?
                             <div>
                             <p>Basert på det beste anslaget på [X1] forekomster i løpet av 10 år og [X2] introduksjoner i samme tidsperiode er B-kriteriet skåra som [X3] (med usikkerhet: [X4-X5]). 
                                                     Dette innebærer at artens ekspansjonshastighet ligger mellom [X6 m/år og X7 m/år]. </p>
                             <p>  Dersom denne verdien framstår som urealistisk, bør antatt forekomstareal om 50 år (se Utbredelse i Norge) vurderes justert. </p>
-                                                <p>{ntLabels.scoreSummary}</p>
+                                              {/*  <p>{ntLabels.scoreSummary}</p>
                                                 <ScoreUnsure appState={appState}
                                                             critScores={koder.scoresB}
                                                             disabled={"false"}
                                                             firstValue={"scoreB"}
                                                             secondValue={"unsureB"}/>
-                                                <Xcomp.Button primary onClick= {() => {
+                                                            
+                                                            <Xcomp.Button primary onClick= {() => {
                                                    // console.log("Save assessment")
                                                     appState.saveCurrentAssessment();
-                                                }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>
+                                                }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>*/}
+                                                
                             </div> : 
                             riskAssessment.chosenSpreadYearlyIncrease == "b" ?
                             <div>
@@ -483,8 +511,10 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             <thead>
                                                 <tr>
                                                 <th><i>{labels.Bcrit.i}</i></th>
-                                                <th>{labels.Bcrit.fromYear}</th>
-                                                <th>{labels.Bcrit.toYear}</th>
+                                                <th dangerouslySetInnerHTML={{
+                                                     __html: labels.Bcrit.fromYear }}></th>
+                                                <th dangerouslySetInnerHTML={{
+                                                     __html: labels.Bcrit.toYear}}></th>
                                                 <th>{labels.Bcrit.knownExpansion}</th>
                                                 <th></th>
                                                 </tr>
@@ -493,21 +523,32 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             <tr>
                                                 <td>1</td>
                                                 <td>[overført fra utbr. fanen]</td>
-                                                <td></td>
-                                                <td></td>
-                                                <td>{labels.Bcrit.km2}</td>
+                                                <td><Xcomp.Number                            
+                                                        observableValue={[riskAssessment, "BCritToYear"]}
+                                                        integer
+                                                        yearRange={true}
+                                                    /> </td>
+                                                <td><Xcomp.Number                            
+                                                        observableValue={[riskAssessment, "BCritArea"]}
+                                                        
+                                                    />
+
+                                                </td>
+                                                <td dangerouslySetInnerHTML={{
+                                                     __html: labels.Bcrit.km2 }}></td>
                                             </tr>
                                             <tr>
                                                 <td>2</td>
                                                 <td>[overført fra utbr. fanen]</td>
                                                 <td>[overført fra utbr. fanen]</td>
                                                 <td>[overført fra utbr. fanen]</td>
-                                                <td>{labels.Bcrit.km2}</td>
+                                                <td dangerouslySetInnerHTML={{
+                                                     __html: labels.Bcrit.km2 }}></td>
                                             </tr>
                                             </tbody>                            
                                         </table>
 
-                                        <table className="table BCritTable">
+                                        {/*<table className="table BCritTable">
                                             <thead>    
                                                 <tr>                          
                                                 <th>{labels.Bcrit.fromYear}</th>
@@ -523,17 +564,19 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                 <td></td>
                                                 <td>t1</td>
                                                 <td></td>
-                                                <td>{labels.Bcrit.km2}</td>
+                                                <td dangerouslySetInnerHTML={{
+                                                     __html: labels.Bcrit.km2 }}></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
                                                 <td></td>
                                                 <td>t2</td>
                                                 <td></td>
-                                                <td>{labels.Bcrit.km2}</td>
+                                                <td dangerouslySetInnerHTML={{
+                                                     __html: labels.Bcrit.km2 }}></td>
                                             </tr>
                                             </tbody>                            
-                                        </table>
+                                                </table>*/}
 
                                     <Xcomp.HtmlString                            
                                                 observableValue={[riskAssessment, "commentOrDescription"]}
@@ -543,17 +586,19 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                     Ekspansjonshastigheten er beregnet til [tallverdi] m/år basert på anslått økning i forekomstareal i perioden fra [t1] til [t2].
                                     </p>
 
-                                    <p>{ntLabels.scoreSummary}</p>
+                                   {/* <p>{ntLabels.scoreSummary}</p>
                                     <ScoreUnsure appState={appState}
                                                 critScores={koder.scoresB}
                                                 disabled={"false"}
                                                 firstValue={"scoreB"}
-                                                secondValue={"unsureB"}/>
-                                    <Xcomp.Button primary onClick= {() => {
+                                            secondValue={"unsureB"}/>
+                                            
+                                            <Xcomp.Button primary onClick= {() => {
                                         console.log("Save assessment")
                                         appState.saveCurrentAssessment();
                                     }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>
-
+*/}
+                                    
                             </div> : null
                 }
                   {/*  
@@ -747,31 +792,35 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                             </div>
                         : null}
                     <div>
-                        <div
+                       {/* <div
                             style={{
                             marginRight: "90px",
                             display: "inline-block"
                         }}>
                             
-                        </div>
+                    </div>*/}
+                    {riskAssessment.chosenSpreadYearlyIncrease != "SpreadYearlyIncreaseCalculatedExpansionSpeed" && riskAssessment.chosenSpreadYearlyIncrease != "" && 
                         <div
                             style={{
                             display: "inline-block"
-                        }}>
-                            <Criterion criterion={crit51B} mode="noheading"/>
-                        </div>
+                         }}>
+                        <Criterion criterion={crit51B} appState={appState} disabled= {assessment.alienSpeciesCategory == "DoorKnocker"} mode="noheading"/>
+                    </div>
+                    }
+                        
                     </div>
                 </fieldset>
                 <fieldset className="well">
-                    {/* {/*<h4>{critC.heading} &nbsp;{labels.Ccrit.transferedFrom4}</h4> */}
-                    <h4>{critC.heading}</h4>
-                    <p>{critC.info}</p>
-                    <p>{ntLabels.scoreSummary}</p>
-                    <ScoreUnsure appState={appState}
+                    {/* {/*<h4>{critC.heading} &nbsp;{labels.Ccrit.transferedFrom4}</h4>
+                    
+                     <ScoreUnsure appState={appState}
                                 critScores={koder.scoresC}
                                 firstValue={"scoreC"}
                                 secondValue={"unsureC"}/>
-                    <Criterion criterion={critC} mode="noheading"/>
+                    */}
+                    <h4>{critC.heading}</h4>
+                    <p>{critC.info}</p>
+                    <Criterion criterion={critC} mode="noheading" disabled={true} appState={appState}/>
                     </fieldset>
                 </div>
                 }

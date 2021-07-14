@@ -60,6 +60,9 @@ export default class Assessment51Naturtyper extends React.Component {
         const critC = getCriterion(riskAssessment, 0, "C")
         const critF = getCriterion(riskAssessment, 1, "F")
         const critG = getCriterion(riskAssessment, 1, "G")
+        critC.auto = false
+        critF.auto = false
+        critG.auto = false
         const nts = appState.naturtyper
         const doms = appState.dominansSkog
         const canRenderTable = !!appState.naturtypeLabels && (!!appState.dominansSkog || appState.language === "SV")
@@ -94,11 +97,11 @@ export default class Assessment51Naturtyper extends React.Component {
 
                 <fieldset className="well">
                     <h4>{ntLabels.critCHeading}</h4>
-                    <p>{ntLabels.score}</p>
+                   {/* <p>{ntLabels.score}</p>
                     <ScoreUnsure appState={appState}
                                 critScores={koder.scoresC}
                                 firstValue={"scoreC"}
-                                secondValue={"unsureC"}/>
+                                // secondValue={"unsureC"}/>*/}
                    {/* <b>{ntLabels.assessmentBackground}</b>
                     <Xcomp.MultiselectArray
                                 observableValue={[riskAssessment, 'backgroundC']} 
@@ -121,12 +124,12 @@ export default class Assessment51Naturtyper extends React.Component {
 
                 <fieldset className="well">
                     <h4>{ntLabels.critFHeading}</h4>
-                   {/* <p>{critF.info}</p>*/}
-                    <p>{ntLabels.score}</p>
-                    <ScoreUnsure appState={appState}
+                   {/* <p>{critF.info}</p>
+                    <p>{ntLabels.score}</p>*/}
+                   {/* <ScoreUnsure appState={appState}
                                  critScores={koder.scoresF}
                                  firstValue={"scoreF"}
-                                 secondValue={"unsureF"}/>
+                                 secondValue={"unsureF"}/> */}
                    {/* <b>{ntLabels.assessmentBackground}</b>
                     <Xcomp.MultiselectArray
                                 observableValue={[riskAssessment, 'backgroundF']} 
@@ -180,12 +183,12 @@ export default class Assessment51Naturtyper extends React.Component {
                 <fieldset className="well">
                     <h4>{ntLabels.critGHeading}</h4>
                     
-                    {/*<p>{critG.info}</p>*/}
-                    <p>{ntLabels.score}</p>
-                    <ScoreUnsure appState={appState}
+                    {/*<p>{critG.info}</p>
+                    <p>{ntLabels.score}</p>*/}
+                    {/*<ScoreUnsure appState={appState}
                                 critScores={koder.scoresG}
                                 firstValue={"scoreG"}
-                                secondValue={"unsureG"}/>
+                                secondValue={"unsureG"}/> */}
                    {/* <b>{ntLabels.assessmentBackground}</b>
                     <Xcomp.MultiselectArray
                                 observableValue={[riskAssessment, 'backgroundG']} 
