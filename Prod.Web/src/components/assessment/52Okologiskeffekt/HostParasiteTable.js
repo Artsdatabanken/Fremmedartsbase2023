@@ -8,7 +8,15 @@ const kodeTekst = (koder, verdi) => koder.filter(item => item.Value === verdi).m
 
 const HostParasiteTable = observer((props) => 
 {
+    // const {appState} = props;
+    // const labels = appState.codeLabels
+    // const koder = appState.koder
     const labels = props.labels
+    const koder = props.koder
+    // console.log("hostkoder: "  + JSON.stringify(Object.keys(koder)))
+    // console.log("ParasiteEcoEffectCodes: "  + JSON.stringify(koder.ParasiteEcoEffectCodes))
+
+
     return <table className="table ecologicalEffect">
         <colgroup>
             <col style={{width: "10%"}} />
@@ -53,6 +61,7 @@ const HostParasiteTable = observer((props) =>
                 item.diseaseConfirmedOrAssumed+
                 item.domesticOrAbroad
                 }>
+                    {/* <td>Item:{JSON.stringify(item)}</td> */}
                 <td>
                     <div className="speciesItem">
                         <div className={"rlCategory " + item.redListCategory}>{item.redListCategory}</div>
@@ -64,21 +73,21 @@ const HostParasiteTable = observer((props) =>
                 {props.showKeyStoneSpecie ? <td><Xcomp.Bool observableValue={[item, 'keyStoneSpecie']} /></td> : null}
                 <td>{item.ParasiteScientificName}</td>
                 <td>
-                    <Xcomp.StringEnum observableValue={[item, 'status']} forceSync codes={props.koder.ParasiteStatus}/>   
+                    <Xcomp.StringEnum observableValue={[item, 'status']} forceSync codes={koder.ParasiteStatus}/>   
                 </td>
                 <td>
-                    <Xcomp.StringEnum observableValue={[item, 'scale']} forceSync codes={props.koder.speciesSpeciesScopeType}/>
+                    <Xcomp.StringEnum observableValue={[item, 'scale']} forceSync codes={koder.speciesSpeciesScopeType}/>
                 </td>
                 <td>
-                    <Xcomp.StringEnum observableValue={[item, 'parasiteEcoEffect']} forceSync codes={props.koder.ParasiteEcoEffectCodes} />
+                    <Xcomp.StringEnum observableValue={[item, 'parasiteEcoEffect']} forceSync codes={koder.ParasiteEcoEffectCodes} />
                 </td>
                 <td>
                 <Xcomp.MultiselectArray
                                 observableValue={[item, 'basisOfAssessment']} 
-                                codes={props.koder.assessmentBackgrounds}
+                                codes={koder.assessmentBackgrounds}
                                 mode="check"/>
                 </td>
-                {/*<td><Xcomp.StringEnum observableValue={[item, 'parasiteEcoEffect']} forceSync codes={props.koder.ParasiteEcoEffectCodes} /></td>
+                {/*<td><Xcomp.StringEnum observableValue={[item, 'parasiteEcoEffect']} forceSync codes={koder.ParasiteEcoEffectCodes} /></td>
                 <td><Xcomp.Bool observableValue={[item, 'effectLocalScale']} /></td>
                 <td><Xcomp.Bool observableValue={[item, 'parasiteNewForHost']} /></td>
                 <td><Xcomp.Bool observableValue={[item, 'parasiteIsAlien']} /></td>
@@ -154,21 +163,21 @@ const HostParasiteTable = observer((props) =>
                 {props.showKeyStoneSpecie ? <td><Xcomp.Bool observableValue={[props.newItem, 'keyStoneSpecie']} /></td> : null}
                 <td><Xcomp.String observableValue={[props.newItem, 'parasiteScientificName']} /></td>
                 <td>
-                    <Xcomp.StringEnum observableValue={[props.newItem, 'status']} forceSync codes={props.koder.ParasiteStatus}/>                
+                    <Xcomp.StringEnum observableValue={[props.newItem, 'status']}  codes={koder.ParasiteStatus}/>                
                 </td>
                 <td>
-                    <Xcomp.StringEnum observableValue={[props.newItem, 'scale']} forceSync codes={props.koder.speciesSpeciesScopeType}/>
+                    <Xcomp.StringEnum observableValue={[props.newItem, 'scale']} forceSync codes={koder.speciesSpeciesScopeType}/>
                 </td>
                 <td>
-                    <Xcomp.StringEnum observableValue={[props.newItem, 'parasiteEcoEffect']} forceSync codes={props.koder.ParasiteEcoEffectCodes} />
+                    <Xcomp.StringEnum observableValue={[props.newItem, 'parasiteEcoEffect']} forceSync codes={koder.ParasiteEcoEffectCodes} />
                 </td>
                 <td>
                 <Xcomp.MultiselectArray
                                 observableValue={[props.newItem, 'basisOfAssessment']} 
-                                codes={props.koder.assessmentBackgrounds}
+                                codes={koder.assessmentBackgrounds}
                                 mode="check"/>
                 </td>
-                {/*<td><Xcomp.StringEnum observableValue={[props.newItem, 'parasiteEcoEffect']} forceSync codes={props.koder.ParasiteEcoEffectCodes} /></td>
+                {/*<td><Xcomp.StringEnum observableValue={[props.newItem, 'parasiteEcoEffect']} forceSync codes={koder.ParasiteEcoEffectCodes} /></td>
                 <td><Xcomp.Bool observableValue={[props.newItem, 'effectLocalScale']} /></td>
                 <td><Xcomp.Bool observableValue={[props.newItem, 'parasiteNewForHost']} /></td>
                 <td><Xcomp.Bool observableValue={[props.newItem, 'parasiteIsAlien']} /></td>
