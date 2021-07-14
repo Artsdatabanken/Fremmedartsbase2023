@@ -1,4 +1,4 @@
-﻿import {action, autorun, extendObservable, observable, observe, isObservableArray, transaction, whyRun} from 'mobx';
+﻿import {action, autorun, computed, extendObservable, observable, observe, isObservableArray, transaction, whyRun} from 'mobx';
 import RiskLevel from './riskLevel';
 import {extractFloat, getCriterion} from '../../utils'
 
@@ -113,7 +113,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
     )*/
 
     extendObservable(riskAssessment, {
-        RedListCategoryLevel: () => {
+        RedListCategoryLevel: () => {  //todo: should this be called "ViableAnalysisLevel"?
             const catstr = riskAssessment.RedListCategory || ""
             const cat = catstr.trim().substring(0, 2).toUpperCase()
             const result = cat === "CR" ? 1 :  
@@ -128,27 +128,27 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 
     autorun(() => {
         const criterionA = getCriterion(riskAssessment, 0, "A")
-        //  console.log("Autorun criterionB: " + criterionB.Value)
+        //  console.log("Autorun criterionB: " + criterionB.value)
         const nv = riskAssessment.ChosenSpreadMedanLifespanLevel
         //  console.log("Autorun criterionB nv: " + nv)
-        criterionA.Value = nv
+        criterionA.value = nv
     });
 
     autorun(() => {
         const criterionB = getCriterion(riskAssessment, 0, "B")
-        //  console.log("Autorun criterionB: " + criterionB.Value)
+        //  console.log("Autorun criterionB: " + criterionB.value)
         const nv = riskAssessment.ChosenSpreadYearlyIncreaseLevel
         //  console.log("Autorun criterionB nv: " + nv)
-        criterionB.Value = nv
+        criterionB.value = nv
     });
 
     autorun(() => {
         const criterionC = getCriterion(riskAssessment, 0, "C")
-        //   console.log("Autorun criterionC .Value: " + criterionC.Value)
+        //   console.log("Autorun criterionC .value: " + criterionC.value)
         const nv = riskAssessment.impactedNaturtypesColonizedAreaLevel
         //   console.log("Autorun criterionC new value: " + nv)
-        //   console.log("Autorun criterionC not equal: " + (nv != criterionC.Value))
-            criterionC.Value = nv
+        //   console.log("Autorun criterionC not equal: " + (nv != criterionC.value))
+            criterionC.value = nv
     });
 
     autorun(() => {
@@ -405,20 +405,20 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
 
     autorun(() => {
         const criterionF = getCriterion(riskAssessment, 1, "F")
-        //   console.log("Autorun criterionF .Value: " + criterionF.Value)
+        //   console.log("Autorun criterionF .value: " + criterionF.value)
         const nv = riskAssessment.effectOnThreathenedNaturetypesLevel
         //   console.log("Autorun criterionF new value: " + nv)
-        //   console.log("Autorun criterionF not equal: " + (nv != criterionF.Value))
-        criterionF.Value = nv
+        //   console.log("Autorun criterionF not equal: " + (nv != criterionF.value))
+        criterionF.value = nv
     });
 
     autorun(() => {
         const criterionG = getCriterion(riskAssessment, 1, "G")
-        //   console.log("Autorun criterionG .Value: " + criterionG.Value)
+        //   console.log("Autorun criterionG .value: " + criterionG.value)
         const nv = riskAssessment.effectOnOtherNaturetypesLevel
         //   console.log("Autorun criterionG new value: " + nv)
-        //   console.log("Autorun criterionG not equal: " + (nv != criterionG.Value))
-        criterionG.Value = nv
+        //   console.log("Autorun criterionG not equal: " + (nv != criterionG.value))
+        criterionG.value = nv
     });
 
 
@@ -454,26 +454,26 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
     });
     autorun(() => {
         const criterionD = getCriterion(riskAssessment, 1, "D")
-        // console.log("Autorun criterionD: " + criterionD.Value)
+        // console.log("Autorun criterionD: " + criterionD.value)
         const nv = riskAssessment.DThreathenedSpeciesLevel
         // console.log("Autorun criterionD nv: " + nv)
-        criterionD.Value = nv
+        criterionD.value = nv
     });
     autorun(() => {
         const criterionE = getCriterion(riskAssessment, 1, "E")
         const nv = riskAssessment.EDomesticSpeciesLevel
-        criterionE.Value = nv
+        criterionE.value = nv
     });
     autorun(() => {
         const criterionH = getCriterion(riskAssessment, 1, "H")
-        criterionH.Value = riskAssessment.HGeneticTransferLevel
+        criterionH.value = riskAssessment.HGeneticTransferLevel
     });
     autorun(() => {
         const criterionI = getCriterion(riskAssessment, 1, "I")
-        // console.log("Autorun criterionI: " + criterionI.Value)
+        // console.log("Autorun criterionI: " + criterionI.value)
         const nv = riskAssessment.IHostParasiteLevel
         // console.log("Autorun criterionI nv: " + nv)
-        criterionI.Value = nv
+        criterionI.value = nv
     });
 }
 
@@ -534,11 +534,11 @@ function enhanceCriteriaAddLabelsAndAuto(riskAssessment, codes) {
         const levs = []        
         const letter = cr.Value
 
-        // console.log("Crit>: " + letter)
+        console.log("Crit>: " + letter)
         for (const levdef of cr.Children["Crit" + letter]) {
             const lev = {
-                Value: Number(levdef.Value),
-                Text: levdef.Text
+                value: Number(levdef.Value),
+                text: levdef.Text
             }
             // console.log("-" + JSON.stringify( lev))
             levs.push(lev)
@@ -547,8 +547,24 @@ function enhanceCriteriaAddLabelsAndAuto(riskAssessment, codes) {
         crit.info = cr.Info
         crit.codes = levs
         crit.auto = true
-        
-        Object.assign(getCriterion(riskAssessment, axis[letter], letter), crit)
+
+        const criteria = getCriterion(riskAssessment, axis[letter], letter)
+        Object.assign(criteria, crit)
+
+        // extendObservable(criteria, {currentValueLabel: computed(function() {
+        //     const v = criteria.value 
+        //     const result = criteria.codes[v]
+        //     console.log("Curr crit value: " + criteria.criteriaLetter+ v+result)
+        //     return result
+        // })})
+        extendObservable(criteria, {
+            currentValueLabel: function() {
+                const v = this.value 
+                const result = this.codes[v].text
+                console.log("Curr crit value: " + this.criteriaLetter+ v + result)
+                return result
+            }
+        })
     }
 }
 
@@ -591,7 +607,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
         })
         autorun(() => {
             const maxDistanecFromValue = 1
-            const value = crit.Value
+            const value = crit.value
             let ud
             let uv
             if (crit.CriteriaLetter === "A" && 
@@ -626,7 +642,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                         // NB! Careless changes to the application may cause this code to run multiple times during page load 
                         // Take care this does not happen! (uncomment the whyRun() function to trace the problem if necassary)
 
-                        // console.log("nextrun: " + crit.CriteriaLetter + " : " + crit.Value)
+                        // console.log("nextrun: " + crit.CriteriaLetter + " : " + crit.value)
                         
                         crit.uncertaintyValues.replace(uv)
                     } else {
@@ -637,7 +653,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                         // This functionality is also dependent on a well working "firstrun"; se comment above
                         // e.g. the criteria must not have a default value that is updated from db after the first run!
 
-                        // console.log("firstrun: " + crit.CriteriaLetter + " : " + crit.Value + " - " + JSON.stringify(crit.uncertaintyValues))
+                        // console.log("firstrun: " + crit.CriteriaLetter + " : " + crit.value + " - " + JSON.stringify(crit.uncertaintyValues))
                         if (crit.uncertaintyValues.indexOf(value) <= -1 ) {
                             // console.log("rectify uncertainties")
                             crit.uncertaintyValues.replace(uv)
