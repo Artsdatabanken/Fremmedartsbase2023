@@ -4840,134 +4840,67 @@
                     "AcritText": [
                         {
                             "Id": null,
-                            "Value": "a",
-                            "Text": "Basert på de beste anslagene på forekomstareal i dag (",
+                            "Value": "SelfProducing",
+                            "Text": "Basert på de beste anslagene på forekomstareal i dag ([X1] km2) og om 50 år ([X2] km2) er A-kriteriet forhåndsskåret som [X3] (med usikkerhet: [X4-X5]). Dette innebærer at artens mediane levetid ligger [mellom X6 år og X7 år], eller at sannsynligheten for utdøing innen 50 år er på [mellom X8 % og X9 %].",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
-                            "Value": "b",
-                            "Text": " km<sup>2</sup>) og om 50 år ( ",
-                            "Info": null,
-                            "Children": null
-                        },
-                        {
-                            "Id": null,
-                            "Value": "c",
-                            "Text": " km<sup>2</sup>) er A-kriteriet forhåndsskåret som ",
-                            "Info": null,
-                            "Children": null
-                        },
-                        {
-                            "Id": null,
-                            "Value": "d",
-                            "Text": " (med usikkerhet: ",
-                            "Info": null,
-                            "Children": null
-                        },
-                        {
-                            "Id": null,
-                            "Value": "e",
-                            "Text": "). Dette innebærer at artens mediane levetid ligger [mellom ",
-                            "Info": null,
-                            "Children": null
-                        },
-                        {
-                            "Id": null,
-                            "Value": "f",
-                            "Text": " år og ",
-                            "Info": null,
-                            "Children": null
-                        },
-                        {
-                            "Id": null,
-                            "Value": "g",
-                            "Text": " år], eller at sannsynligheten for utdøing innen 50 år er på [mellom ",
-                            "Info": null,
-                            "Children": null
-                        },
-                        {
-                            "Id": null,
-                            "Value": "h",
-                            "Text": " % og ",
-                            "Info": null,
-                            "Children": null
-                        },
-                        {
-                            "Id": null,
-                            "Value": "i",
-                            "Text": " %].",
+                            "Value": "DoorKnocker",
+                            "Text": "Basert på det beste anslaget på [X1] forekomster i løpet av 10 år og [X2] introduksjoner i samme tidsperiode er A-kriteriet forhåndsskåret som [X3] (med usikkerhet: [X4-X5]). Dette innebærer at artens mediane levetid ligger [mellom X6 år og X7 år], eller at sannsynligheten for utdøing innen 50 år er på [mellom X8 % og X9 %].",
                             "Info": null,
                             "Children": null
                         }
                     ],
 
-                    "AcritTextDoorKnocker": [
+                    "BcritText": [
+                        
                         {
                             "Id": null,
-                            "Value": "a",
-                            "Text": "Basert på det beste anslaget på ",
+                            "Value": "enterParameters",
+                            "Text": "Angi verdi på parametere ",
+                            "Info": null,
+                            "Children": null
+                        },
+                        
+                        {
+                            "Id": null,
+                            "Value": "standartSettings",
+                            "Text": "(standardinnstilling er forhåndsfylt)",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
-                            "Value": "b",
-                            "Text": " forekomster i løpet av 10 år og ",
+                            "Value": "SelfProducing",
+                            "Text": "Økningen i forekomstareal beregnes ut fra kjent forekomstareal ved to ulike år; år t1 og år t2 hvor t1 < t2. Forekomstarealet per år t1 (eller t2) regnes ut fra alle inkluderte forekomster fra og med et valgt startår (t0) til og med år t1 (eller t2). Startåret t0 er felles for t1 og t2. For t2 er i år satt som standardinnstilling og kjent forekomstareal i dag, tilhørende t0 og t2 er overført direkte fra Utbredelse i Norge. Valgt periode (antall år mellom t1 og t2) skal ikke overstige 20 år og skal representere den perioden økningen er størst (anbefaler å bruke minimum 10 år hvis tidsserien tillater det). ",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
-                            "Value": "c",
-                            "Text": " introduksjoner i samme tidsperiode er A-kriteriet forhåndsskåret som ",
+                            "Value": "DoorKnocker",
+                            "Text": "Basert på det beste anslaget på [X1] forekomster i løpet av 10 år og [X2] introduksjoner i samme tidsperiode er B-kriteriet skåra som [X3] (med usikkerhet: [X4-X5]). Dette innebærer at artens ekspansjonshastighet ligger mellom [X6 m/år og X7 m/år]. Dersom denne verdien framstår som urealistisk, bør antatt forekomstareal om 50 år (se Utbredelse i Norge) vurderes justert.",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
-                            "Value": "d",
-                            "Text": " (med usikkerhet: [",
+                            "Value": "chooseNotToUseKnownArea",
+                            "Text": "jeg ønsker ikke å bruke kjent forekomstareal i dag (ved år t2) fra Utbredelse i Norge",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
-                            "Value": "e",
-                            "Text": "]). Dette innebærer at artens mediane levetid ligger [mellom ",
-                            "Info": null,
-                            "Children": null
-                        },
-                        {
-                            "Id": null,
-                            "Value": "f",
-                            "Text": " år og ",
-                            "Info": null,
-                            "Children": null
-                        },
-                        {
-                            "Id": null,
-                            "Value": "g",
-                            "Text": " år], eller at sannsynligheten for utdøing innen 50 år er på [mellom ",
-                            "Info": null,
-                            "Children": null
-                        },
-                        {
-                            "Id": null,
-                            "Value": "h",
-                            "Text": " % og ",
-                            "Info": null,
-                            "Children": null
-                        },
-                        {
-                            "Id": null,
-                            "Value": "i",
-                            "Text": " %].",
+                            "Value": "expansionSpeed",
+                            "Text": "Ekspansjonshastigheten er beregnet til [tallverdi] m/år basert på anslått økning i forekomstareal i perioden fra [t1] til [t2].",
                             "Info": null,
                             "Children": null
                         }
                     ],
+
 
                     "AlienSpecie": [
                         {

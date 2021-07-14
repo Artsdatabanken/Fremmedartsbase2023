@@ -11,7 +11,8 @@ import Assessment62Okologiskeffekt from './assessment62Okologiskeffekt'
 import config from '../../config'
 import {codes2labels, getCriterion} from '../../utils'
 import Filliste from './35Utbredelseshistorikk/Filliste'
-import { KeyboardHideSharp } from '@material-ui/icons';
+import { KeyboardHideSharp } from '@material-ui/icons'
+import {stringFormat} from "../../utils"
 
 @observer
 class SelectableRadio extends React.Component {
@@ -88,12 +89,14 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
         const crit51A = getCriterion(riskAssessment, 0, "A")
         // console.log(crit51A)
         const crit51B = getCriterion(riskAssessment, 0, "B")
+        crit51A.auto = false
+        crit51B.auto = false
         const critC = getCriterion(riskAssessment, 0, "C")
-        runInAction(() => {
-            crit51A.auto = false
-            crit51B.auto = false
-            critC.auto = false
-        })        
+        critC.auto = false
+        const textAS = stringFormat(labels.AcritText.SelfProducing)
+        const textDK = stringFormat(labels.AcritText.DoorKnocker)
+        const textASB = stringFormat(labels.BcritText.SelfProducing)
+        const textDKB = stringFormat(labels.BcritText.DoorKnocker)
 
         const nbsp = "\u00a0"
 
@@ -139,45 +142,10 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                         <div>
 
                         {assessment.alienSpeciesCategory == "DoorKnocker" ? 
-                        <p>
-                            {labels.AcritTextDoorKnocker.a}
-                            [X1] 
-                            {labels.AcritTextDoorKnocker.b}
-                            [X2] 
-                            {labels.AcritTextDoorKnocker.c}
-                            [X3] 
-                            {labels.AcritTextDoorKnocker.d}
-                            X4-X5
-                            {labels.AcritTextDoorKnocker.e}
-                            X6 
-                            {labels.AcritTextDoorKnocker.f}
-                            X7 
-                            {labels.AcritTextDoorKnocker.g}
-                            X8
-                            {labels.AcritTextDoorKnocker.h}
-                            X9 
-                            {labels.AcritTextDoorKnocker.i}
+                        <p>{textDK}
                            </p> :
-                        <p>
-                           {labels.AcritText.a}
-                            [X1] 
-                            <span dangerouslySetInnerHTML={{
-                                         __html: labels.AcritText.b}}></span>
-                            [X2] 
-                            <span dangerouslySetInnerHTML={{
-                                         __html: labels.AcritText.c }}></span>
-                            [X3] 
-                            {labels.AcritText.d}
-                            [X4-X5]
-                            {labels.AcritText.e}
-                            X6 
-                            {labels.AcritText.f} 
-                            X7
-                            {labels.AcritText.g}
-                            X8 
-                            {labels.AcritText.h} 
-                            X9                            
-                            {labels.AcritText.i}</p>}
+                        <p>{textAS}
+                            </p>}
 
                         <Xcomp.StringEnum observableValue={[riskAssessment, "acceptOrAdjustCritA"]} mode="radio" codes={koder.AcceptOrAdjust}/>   
                                          
@@ -186,7 +154,6 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                             {riskAssessment.acceptOrAdjustCritA == "adjust" &&                                
                                 <Xcomp.HtmlString observableValue={[riskAssessment, 'reasonForAdjustmentCritA']} label="Begrunnelse for justering:" />
                             }
-
 
                             {/* <ScoreUnsure appState={appState}
                                     critScores={koder.scoresA}
@@ -202,11 +169,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                         firstValue={"scoreA"}
                                         secondValue={"unsureA"}/>
                                 </div> } */}
-                            {/* <Xcomp.Button primary onClick= {() => {
-                                //console.log("Save assessment")
-                                    appState.saveCurrentAssessment();
-                                }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>    */}
-                                            
+                           
                         </div>      
                         // : 
                         // <div>
@@ -392,7 +355,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
 
                 {riskAssessment.chosenSpreadYearlyIncrease == "a" ? 
                         <div> 
-                            <p> Angi verdi på parametere <i>(standardinnstilling er forhåndsfylt)</i></p>
+                            <p> {labels.BcritText.enterParameters}<i>{labels.BcritText.standartSettings}</i></p>
 
                             <div className="statusField"> 
                             <div className="labels">
@@ -412,7 +375,6 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             //placeholder={"false"}
                                             codes={koder.TrueOrFalse}
                                         />  
-                                <br/>
                                 <Xcomp.StringEnum                            
                                             observableValue={[riskAssessment, "BCritP"]}
                                             codes={koder.BCritP}
@@ -481,9 +443,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                         </div> : 
                         riskAssessment.chosenSpreadYearlyIncrease == "b" && assessment.alienSpeciesCategory == "DoorKnocker" ?
                             <div>
-                            <p>Basert på det beste anslaget på [X1] forekomster i løpet av 10 år og [X2] introduksjoner i samme tidsperiode er B-kriteriet skåra som [X3] (med usikkerhet: [X4-X5]). 
-                                                    Dette innebærer at artens ekspansjonshastighet ligger mellom [X6 m/år og X7 m/år]. </p>
-                            <p>  Dersom denne verdien framstår som urealistisk, bør antatt forekomstareal om 50 år (se Utbredelse i Norge) vurderes justert. </p>
+                            <p>{textDKB}</p>
                                               {/*  <p>{ntLabels.scoreSummary}</p>
                                                 <ScoreUnsure appState={appState}
                                                             critScores={koder.scoresB}
@@ -499,16 +459,12 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                             </div> : 
                             riskAssessment.chosenSpreadYearlyIncrease == "b" ?
                             <div>
-                                <p> Økningen i forekomstareal beregnes ut fra kjent forekomstareal ved to ulike år; år t1 og år t2 hvor t1 er mindre enn t2. 
-                                        Forekomstarealet per år t1 (eller t2) regnes ut fra alle inkluderte forekomster fra og med et valgt startår (t0) til og med år t1 (eller t2). 
-                                        Startåret t0 er felles for t1 og t2. For t2 er i år satt som standardinnstilling og kjent forekomstareal i dag, tilhørende t0 og t2 er overført direkte fra 
-                                        Utbredelse i Norge. Valgt periode (antall år mellom t1 og t2) skal ikke overstige 20 år og skal representere den perioden økningen er størst 
-                                        (anbefaler å bruke minimum 10 år hvis tidsserien tillater det).   </p>
+                                <p>{textASB} </p>
 
                                         <span>{labels.Bcrit.choose}</span> <Xcomp.Button primary >{labels.Bcrit.getFromMap}</Xcomp.Button>
                                             <span>{labels.Bcrit.addManually}</span>
 
-                                        <Xcomp.Bool observableValue={[riskAssessment, "notUseExpansionInNorway"]} label={"jeg ønsker ikke å bruke kjent forekomstareal i dag (ved år t2) fra Utbredelse i Norge"} />
+                                        <Xcomp.Bool observableValue={[riskAssessment, "notUseExpansionInNorway"]} label={labels.BcritText.chooseNotToUseKnownArea} />
 
                                         <table className="table BCritTable">
                                             <thead>
@@ -585,9 +541,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                 observableValue={[riskAssessment, "commentOrDescription"]}
                                                 label={labels.Bcrit.commentOrDescription}
                                             />                      
-                                    <p>
-                                    Ekspansjonshastigheten er beregnet til [tallverdi] m/år basert på anslått økning i forekomstareal i perioden fra [t1] til [t2].
-                                    </p>
+                                    <p>{labels.BcritText.expansionSpeed}</p>
 
                                    {/* <p>{ntLabels.scoreSummary}</p>
                                     <ScoreUnsure appState={appState}
@@ -807,7 +761,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                             style={{
                             display: "inline-block"
                          }}>
-                        <Criterion criterion={crit51B} appState={appState} disabled= {assessment.alienSpeciesCategory == "DoorKnocker"} mode="noheading"/>
+                        <Criterion criterion={crit51B} appState={appState} disabled= {riskAssessment.chosenSpreadYearlyIncrease == "a" || assessment.alienSpeciesCategory == "DoorKnocker"} mode="noheading"/>
                     </div>
                     }
                         
