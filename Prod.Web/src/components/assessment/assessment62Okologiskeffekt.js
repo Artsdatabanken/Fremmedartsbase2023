@@ -2,7 +2,7 @@
 import PropTypes from 'prop-types'
 import {observer, inject} from 'mobx-react';
 // import {action, autorun, autorunAsync, extendObservable, observable, toJS} from 'mobx';
-import { extendObservable,  toJS} from 'mobx'
+import {action, extendObservable, runInAction, toJS} from 'mobx'
 
 import config from '../../config';
 // import {loadData} from '../stores/apiService'; 
@@ -27,6 +27,9 @@ export default class Assessment62Okologiskeffekt extends React.Component {
     constructor(props) {
         super(props)
         const {appState:{assessment:{riskAssessment}}, appState, evaluationContext} = this.props;
+        const labels = appState.codeLabels
+        const koder = appState.koder
+
         extendObservable(this, {
             // showModal: false,
             newSSITS: {
@@ -44,6 +47,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                 effectLocalScale : false, 
                 effect : "Weak",
                 scale: "Limited",
+                status: "NewAlien",
                 interactionType : "CompetitionSpace", 
                 //interactionType : [], 
                 longDistanceEffect : false, 
@@ -66,6 +70,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                 effectLocalScale : false, 
                 effect : "Weak",                 
                 scale: "Limited",
+                status: "NewAlien",
                 interactionType : "",
                 //interactionType : [], 
                 longDistanceEffect : false, 
@@ -87,6 +92,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                 keyStoneSpecie : false, 
                 effectLocalScale : false, 
                 scale: "Limited",
+                status: "NewAlien",
                 parasiteScientificName : "",
                 parasiteVernacularName : "",
                 parasiteEcoEffect : "1", 
@@ -107,6 +113,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                 keyStoneSpecie : false, 
                 effectLocalScale : false, 
                 scale: "Limited",
+                // status: "NewAlien",
                 effect : "Weak",
                 interactionType : "CompetitionSpace", 
                 //interactionType : [], 
@@ -264,12 +271,15 @@ export default class Assessment62Okologiskeffekt extends React.Component {
         const crit52H = getCriterion(riskAssessment, 1 , "H")
         const crit52I = getCriterion(riskAssessment, 1 , "I")
         const ntLabels = labels.NatureTypes
+        runInAction(() => {
+
         crit52D.auto = false
         crit52E.auto = false
         crit52F.auto = false
         crit52G.auto = false
         crit52H.auto = false
         crit52I.auto = false
+        })
         return(
             <div>
                 {config.showPageHeaders ? <h3>Økologisk effekt</h3> : <br />}
@@ -290,6 +300,9 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                 </fieldset>
                 <fieldset className="well">
                     <Criterion criterion={crit52D} hideInfo={true} />
+
+        <b>curr{crit52D.Value}{crit52D.currentValueLabel}</b>
+
                     <p><b>Verdier stemmer ikke! ^^</b></p>
                     <ScoreUnsure appState={appState}
                                 critScores={koder.scoresD}
