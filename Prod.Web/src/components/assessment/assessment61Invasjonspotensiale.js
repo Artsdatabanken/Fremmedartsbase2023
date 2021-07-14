@@ -1,6 +1,8 @@
 ﻿import React from 'react';
 import PropTypes from 'prop-types'
 import {observer, inject} from 'mobx-react';
+import {action, runInAction} from 'mobx'
+
 import * as Xcomp from './observableComponents';
 import Tabs from '../tabs'
 import Criterion from './criterion'
@@ -84,13 +86,14 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
         //     }
         // ];
         const crit51A = getCriterion(riskAssessment, 0, "A")
-        console.log(crit51A)
+        // console.log(crit51A)
         const crit51B = getCriterion(riskAssessment, 0, "B")
-        crit51A.auto = false
-        crit51B.auto = false
         const critC = getCriterion(riskAssessment, 0, "C")
-        critC.auto = false
-        
+        runInAction(() => {
+            crit51A.auto = false
+            crit51B.auto = false
+            critC.auto = false
+        })        
 
         const nbsp = "\u00a0"
 
