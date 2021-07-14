@@ -588,7 +588,7 @@ namespace Prod.Domain
         // ikke i bruk i 2012 applikasjon (?)
         //public string SpreadingDescription { get; set; } //Spreading_Description
 
-        public string AcceptOrAdjustCritA { get; set; } = "a";
+        public string AcceptOrAdjustCritA { get; set; } = "accept";
         public string ChosenSpreadMedanLifespan { get; set; } = "";  //lagt til 08.11.2016
 
         public bool ActiveSpreadPVAAnalysisSpeciesLongevity { get; set; } // added 27.09.2016

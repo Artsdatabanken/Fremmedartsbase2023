@@ -29,7 +29,6 @@ export default class Criterion extends React.Component {
 
         console.log("##info:" + JSON.stringify(criterion))
 
-        console.log("disabled: " + disabled)
 
         // console.log("head " + heading)
         // console.log("val " + Value) // + "|" + Id)
