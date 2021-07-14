@@ -47,9 +47,15 @@ const ObservableStringEnum = (props) => <Observer>{() => {
         // force the observableValue to have a value that exists in the codes list
         // typically used to set initial value for property (so that it is not null)
         // - the problem it solves is that ObservableStringEnum does not set the value before something is actively selected
-        const existingCode = codes.find(kode => kode.value === obj[prop])
+        const existingCode = codes.find(kode => kode.value === obj[prop]) || codes.find(kode => kode.Value === obj[prop])
+        // console.log("forcesync1:" + prop + " "  + obj[prop])
+        // console.log("forcesync2:" + JSON.stringify(existingCode))
+        // console.log("forcesync3:" + JSON.stringify(codes))
         if (existingCode === undefined ) {
-            runInAction(() => obj[prop] = codes[0].value)
+            const firstCodeValue = codes[0].value || codes[0].Value
+            // console.log("forcesync4:" + firstCodeValue)
+            runInAction(() => obj[prop] = firstCodeValue)
+
         }
     }
 
@@ -92,7 +98,7 @@ const ObservableStringEnum = (props) => <Observer>{() => {
                         placeholder={placeholder ? placeholder : "select"} 
                         id={prop} 
                         name={prop} 
-                        value={obj[prop] || ""}
+                        value={obj[prop]}
                         onChange={action(e => obj[prop] = e.target.value)}
                         disabled={context.readonly || disabled}>
                     { codes.map((kode) => <option value={kode.value || kode.Value}
