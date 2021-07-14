@@ -16,7 +16,7 @@ export default class Criterion extends React.Component {
         console.log("keys: " + JSON.stringify(Object.keys(criterion)))
         const labels = appState.codeLabels
         const ntLabels = labels.NatureTypes
-        const {Id, Value, UncertaintyValues, auto, codes, heading, info, uncertaintyDisabled } = criterion;
+        const {Id, value, UncertaintyValues, auto, codes, heading, info, uncertaintyDisabled } = criterion;
         const showHeading = !mode || mode.indexOf("noheading") < 0
         const setUncertainty = e => {
             // console.log("setUncertainty check: " + e.target.value + " | checked: " + e.target.checked)
@@ -32,7 +32,7 @@ export default class Criterion extends React.Component {
         console.log("disabled: " + disabled)
 
         // console.log("head " + heading)
-        // console.log("val " + Value) // + "|" + Id)
+        // console.log("val " + value) // + "|" + Id)
         // console.log("udis " + JSON.stringify(uncertaintyDisabled))
         // console.log("uval " + JSON.stringify(UncertaintyValues))
         // console.log("auto " + auto)
@@ -50,7 +50,7 @@ export default class Criterion extends React.Component {
                 const onChangeRadio = e => {
                     // console.log("radio2 change")
                     if (!auto) {
-                        criterion.Value = parseInt(e.target.value)
+                        criterion.value = parseInt(e.target.value)
                     }
                 } 
                 const onChangeCheckbox = e => {
@@ -62,33 +62,33 @@ export default class Criterion extends React.Component {
                 const disabled = (kode.Text === null || this.props.disabled)
                 
                 console.log(disabled)
-                if(Value !== undefined) {
-                    radiooptional.checked = (kode.Value === Value)
+                if(value !== undefined) {
+                    radiooptional.checked = (kode.value === value)
                 }
                 if(UncertaintyValues !== undefined) {
-                    checkboxoptional.checked = UncertaintyValues.indexOf(kode.Value) > -1;
+                    checkboxoptional.checked = UncertaintyValues.indexOf(kode.value) > -1;
                 }
 
-                // console.log("VVV " + value + " " + Value + " # " + radiooptional.checked)
+                // console.log("VVV " + value + " " + value + " # " + radiooptional.checked)
                 // console.log("name " + name)
-                checkboxoptional.disabled = this.context.readonly || disabled || uncertaintyDisabled.indexOf(kode.Value) > -1 
+                checkboxoptional.disabled = this.context.readonly || disabled || uncertaintyDisabled.indexOf(kode.value) > -1 
                 radiooptional.disabled = this.context.readonly || disabled || auto
 
 
                 // if (logthis) {
-                //     console.log("level " + kode.Value + "/\\" + Value + "#" + radiooptional.checked)
+                //     console.log("level " + kode.value + "/\\" + value + "#" + radiooptional.checked)
                 // }
 
 
-                return <div key={kode.Value} className="uncertainty">      
+                return <div key={kode.value} className="uncertainty">      
                     <div>
                         
                         {auto ?
                             <div className={"criteriaCheck" + (radiooptional.checked ? " glyphicon glyphicon-ok" : "")}>&nbsp;</div> :
-                            <>{parseInt(kode.Value)+1}
+                            <>{parseInt(kode.value)+1}
                             <input                            
                             disabled={disabled}
-                            value={kode.Value}
+                            value={kode.value}
                             type="radio"
                             onChange={onChangeRadio}
                             {...radiooptional} />
@@ -96,7 +96,7 @@ export default class Criterion extends React.Component {
                         }
                         <input
                         disabled={disabled}
-                        value={kode.Value}
+                        value={kode.value}
                         type="checkbox"
                         onChange={onChangeCheckbox}
                         {...checkboxoptional} />
