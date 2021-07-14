@@ -18,6 +18,15 @@ export function padNumbers(str, numlen) {
     )
 }
 
+export function stringFormat(formatstring) {
+	var args = Array.prototype.slice.call(arguments, 1)
+	return formatstring.replace(/\{(\d+)\}/g, function(match, number) { 
+		return typeof args[number] !== 'undefined'
+		? args[number] 
+		: match
+	})
+}
+
 export function *processData(data){
 	if (!data) { return; }
 	for (var i = 0; i< data.length; i++){
