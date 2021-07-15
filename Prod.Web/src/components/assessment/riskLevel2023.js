@@ -163,7 +163,7 @@ const AOO10yrHigh = 4 * ((1 + r.Occurrences1High) * (1 + IntroductionsHigh / 2) 
 // **************************************************************************************************
 // // // Beregninger 
 
-if(   "forenklet anslag"     ) { // todo: implement real
+if(r.chosenSpreadMedanLifespan ==    "forenklet anslag"     ) { // todo: implement real
     Amethod = "forekomstareal" 
     const AOOchangeBest = r.AOOtotalBest < 4 ? 1 : r.AOO50yrBest / r.AOOtotalBest 
     const AOOchangeLow = r.AOOtotalBest < 4 ? 1 : r.AOO50yrLow / r.AOOtotalBest 
@@ -223,41 +223,38 @@ if(   "forenklet anslag"     ) { // todo: implement real
         (r.AOO50yrBest < 20 & AOOchangeBest <= 0.05) ? 3 : 
         4 
 
-
-
     // Utmating 
     const a1aresulttext = `Basert på de beste anslagene på forekomstareal i dag (${AOOtotalBest}&nbsp;km²) og om 50&nbsp;år (${AOO50yrBest}&nbsp;km²) er A-kriteriet forhåndsskåret som ${AdefaultBest} (med usikkerhet: ${AdefaultLow}–${AdefaultHigh}). Dette innebærer at artens mediane levetid ligger ${LifetimeText}, eller at sannsynligheten for utdøing innen 50&nbsp;år er på ${ExtinctionText}.`
-}
 
-// Resten av beregninga er avhengig av radioknappen som velges nedenfor teksten: 
-if( radio == "Godtar beregnet skår") { // todo: implement real
-Amethod = "forekomstareal forenklet" 
-var Ascore = AdefaultBest 
-var Alow = AdefaultLow 
-var Ahigh = AdefaultHigh 
-var MedianLifetime = 
-    Ascore === 1 ? 3 :
-    Ascore === 2 ? 25 :
-    Ascore === 3 ? 200 :
-    Ascore === 4 ? 2000 :
-    NaN
-} else if (radio == "Ønsker å justere skår") { // todo: implement real
-    Amethod = "forekomstareal justert" 
-    // "Skårtabellen" åpnes for avkrysning, med ett mulig kryss for beste anslag og opptil tre kryss for usikkerhet, der ikke-valgbare bokser er grået ut. 
-    // Valgbare bokser for beste anslag er skårene fra og med ApossibleLow til og med ApossibleHigh. 
-    // Krysset i boksene bestemmer verdien til Ascore (mellom 1 og 4). 
-    // Valgbare bokser for usikkerhet er skårene fra og med max(1, Ascore - 1) til og med min(4, Ascore + 1). 
-    // Det laveste krysset i boksene bestemmer verdien til Alow (mellom 1 og 4). 
-    // Det høyeste krysset i boksene bestemmer verdien til Ahigh (mellom 1 og 4). 
-
-    MedianLifetime = // Samme som i "forekomstareal forenklet"!
+    // Resten av beregninga er avhengig av radioknappen som velges nedenfor teksten: 
+    if( radio == "Godtar beregnet skår") { // todo: implement real
+    Amethod = "forekomstareal forenklet" 
+    var Ascore = AdefaultBest 
+    var Alow = AdefaultLow 
+    var Ahigh = AdefaultHigh 
+    var MedianLifetime = 
         Ascore === 1 ? 3 :
         Ascore === 2 ? 25 :
         Ascore === 3 ? 200 :
         Ascore === 4 ? 2000 :
         NaN
-}
+    } else if (radio == "Ønsker å justere skår") { // todo: implement real
+        Amethod = "forekomstareal justert" 
+        // "Skårtabellen" åpnes for avkrysning, med ett mulig kryss for beste anslag og opptil tre kryss for usikkerhet, der ikke-valgbare bokser er grået ut. 
+        // Valgbare bokser for beste anslag er skårene fra og med ApossibleLow til og med ApossibleHigh. 
+        // Krysset i boksene bestemmer verdien til Ascore (mellom 1 og 4). 
+        // Valgbare bokser for usikkerhet er skårene fra og med max(1, Ascore - 1) til og med min(4, Ascore + 1). 
+        // Det laveste krysset i boksene bestemmer verdien til Alow (mellom 1 og 4). 
+        // Det høyeste krysset i boksene bestemmer verdien til Ahigh (mellom 1 og 4). 
 
+        MedianLifetime = // Samme som i "forekomstareal forenklet"!
+            Ascore === 1 ? 3 :
+            Ascore === 2 ? 25 :
+            Ascore === 3 ? 200 :
+            Ascore === 4 ? 2000 :
+            NaN
+    }
+}
 
 
 // ***************************************************************************************

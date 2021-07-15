@@ -10,19 +10,19 @@ const critdefs = [
     ["I",1,"EcologicalEffectTransferOfDiseasesAndParasites"]
 ]
 const createCrit = (critdef) => ({
-    CriteriaLetter: critdef[0],
-    Akse: critdef[1],
-    Id: critdef[2],
-    NoValueInformation:null,
-    UncertaintyValues:[0],
-    Value:0,
+    criteriaLetter: critdef[0],
+    akse: critdef[1],
+    id: critdef[2],
+    noValueInformation:null,
+    uncertaintyValues:[0],
+    value:0,
 })
 export const getCriterion = (riskAssessment, letter) => {
-    const result = riskAssessment.criteria.find(c => c.CriteriaLetter === letter); 
+    const result = riskAssessment.criteria.find(c => c.criteriaLetter === letter); 
     return result;
 };        
 
-// const createCrits = () => critdefs.map(createCrit)reduce((acc, crit) => {acc[crit.CriteriaLetter] = crit; return acc}, {})
+// const createCrits = () => critdefs.map(createCrit)reduce((acc, crit) => {acc[crit.criteriaLetter] = crit; return acc}, {})
 const createCrits = () => critdefs.map(createCrit)
 const createRiskAssessment = () => ({criteria: createCrits()})
 describe('createRiskAssessment', () => {
