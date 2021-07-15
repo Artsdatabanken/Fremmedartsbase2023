@@ -64,6 +64,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
     }
 
     // create Selectable* observables
+    // todo: trolig noe mobx som ikke virker her!!
     ACriteriaSectionNames.concat(BCriteriaSectionNames).map(tag => {
         const obj = {}
         obj["Selectable" + tag] = () => selectableSection(tag)
@@ -74,12 +75,12 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
     extendObservable(riskAssessment, {
         // SpreadYearlyLiteratureDataExpansionSpeed: "", // todo: remove this when domain is updated
         // SpreadYearlyIncreaseCalculatedExpansionSpeed: "", // todo: remove this when domain is updated
-        ChosenSpreadMedanLifespanLevel: () => {
+        get ChosenSpreadMedanLifespanLevel() {
             const num = extractFloat(riskAssessment[riskAssessment.ChosenSpreadMedanLifespan])
             const result = medianLifespanLevel(num)
             return result
         },
-        ChosenSpreadYearlyIncreaseLevel: () => {
+        get ChosenSpreadYearlyIncreaseLevel() {
             const num = extractFloat(riskAssessment[riskAssessment.ChosenSpreadYearlyIncrease])
             const result = yearlyIncreaseLevel(num)
             return result
@@ -113,7 +114,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
     )*/
 
     extendObservable(riskAssessment, {
-        RedListCategoryLevel: () => {  //todo: should this be called "ViableAnalysisLevel"?
+        get RedListCategoryLevel() {  //todo: should this be called "ViableAnalysisLevel"?
             const catstr = riskAssessment.RedListCategory || ""
             const cat = catstr.trim().substring(0, 2).toUpperCase()
             const result = cat === "CR" ? 1 :  
@@ -128,26 +129,26 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 
     autorun(() => {
         const criterionA = getCriterion(riskAssessment, 0, "A")
-        //  console.log("Autorun criterionB: " + criterionB.value)
+        console.log("Autorun criterionA: " + criterionA.value)
         const nv = riskAssessment.ChosenSpreadMedanLifespanLevel
-        //  console.log("Autorun criterionB nv: " + nv)
+        console.log("Autorun criterionA nv: " + nv)
         criterionA.value = nv
     });
 
     autorun(() => {
         const criterionB = getCriterion(riskAssessment, 0, "B")
-        //  console.log("Autorun criterionB: " + criterionB.value)
+          console.log("Autorun criterionB: " + criterionB.value)
         const nv = riskAssessment.ChosenSpreadYearlyIncreaseLevel
-        //  console.log("Autorun criterionB nv: " + nv)
+          console.log("Autorun criterionB nv: " + nv)
         criterionB.value = nv
     });
 
     autorun(() => {
         const criterionC = getCriterion(riskAssessment, 0, "C")
-        //   console.log("Autorun criterionC .value: " + criterionC.value)
+           console.log("Autorun criterionC .value: " + criterionC.value)
         const nv = riskAssessment.impactedNaturtypesColonizedAreaLevel
-        //   console.log("Autorun criterionC new value: " + nv)
-        //   console.log("Autorun criterionC not equal: " + (nv != criterionC.value))
+           console.log("Autorun criterionC new value: " + nv)
+           console.log("Autorun criterionC not equal: " + (nv != criterionC.value))
             criterionC.value = nv
     });
 
@@ -180,19 +181,19 @@ function enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering,
     // const artificialAndConstructedSites = ["F4", "F5", "H4", "L7", "L8", "M14", "M15", "T35", "T36", "T37", "T38", "T39", "T40", "T41", "T42", "T43", "T44", "T45", "V11", "V12", "V13"]
 
     extendObservable(riskAssessment, {
-        vurderingCurrentExistenceAreaCalculated: () => vurdering.CurrentExistenceAreaCalculated,
+        get vurderingCurrentExistenceAreaCalculated() {return vurdering.CurrentExistenceAreaCalculated},
 
-        vurderingAllImpactedNatureTypes: () => vurdering.ImpactedNatureTypes.map(x => x),
-        vurderingImpactedNaturalNatureTypes: () => vurdering.ImpactedNatureTypes.filter(
+        get vurderingAllImpactedNatureTypes() {return vurdering.impactedNatureTypes.map(x => x)},
+        get vurderingImpactedNaturalNatureTypes() { return vurdering.impactedNatureTypes.filter(
             nt => !artificialAndConstructedSites.filter(code => nt.NiNCode === code || nt.NiNCode.startsWith(code + "-") ).length > 0
         // ).filter(
         //     nt => !nt.NiNCode.startsWith("AM-") // Sverige
         ).filter(
             nt => !nt.NiNCode.startsWith("LI ")
-        ),
+        )},
 
         // C criteria
-        impactedNaturtypesColonizedAreaLevel: () => {
+        get impactedNaturtypesColonizedAreaLevel() {
                 const levels =  riskAssessment.vurderingImpactedNaturalNatureTypes.map(nt => nt.ColonizedArea).map(area =>
                     area === "0–2"? 0 :
                     area === "2-5"? 0 :
@@ -206,7 +207,7 @@ function enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering,
                 return maxlevel
         },
         // G criteria
-        effectOnOtherNaturetypesLevel: () => {
+        get effectOnOtherNaturetypesLevel() {
             const levels = riskAssessment.vurderingImpactedNaturalNatureTypes.map(nt => nt.AffectedArea).map(area =>
                 area === "0"? 0 :
                 area === "0–2"? 0 :
@@ -221,7 +222,7 @@ function enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering,
             return maxlevel
         },
         // F criteria
-        effectOnThreathenedNaturetypesLevel: () => {
+        get effectOnThreathenedNaturetypesLevel() {
             const levels = vurdering.RedlistedNatureTypes.map(
                 nt => nt.AffectedArea
             ).map(area => 
@@ -333,7 +334,7 @@ export const critILevel = list => {
 
 function enhanceRiskAssessmentEcoEffect(riskAssessment) {
     extendObservable(riskAssessment, {
-        DThreathenedSpeciesLevel: () => {
+        get DThreathenedSpeciesLevel() {
             const threatenedCats = ["VU","EN","CR"]
             const otherRlCats = ["LC","DD","NT"]
             const isThreatened = cat => threatenedCats.indexOf(cat) > -1
@@ -366,7 +367,7 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
         }
     });
     extendObservable(riskAssessment, {
-        EDomesticSpeciesLevel: () => {
+        get EDomesticSpeciesLevel() {
             const otherRlCats = ["LC","DD","NT"]
             const fullSpeciesList = riskAssessment.SpeciesSpeciesInteractions
             const speciesList = fullSpeciesList.filter(item => otherRlCats.indexOf(item.RedListCategory) > -1 && !item.KeyStoneSpecie)
@@ -426,7 +427,7 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
 
 
     extendObservable(riskAssessment, {
-        HGeneticTransferLevel: () => {
+        get HGeneticTransferLevel() {
             const rlCats = ["LC","DD","NT"]
             const rlThreatCats = ["VU","EN","CR"]
             const list = riskAssessment.GeneticTransferDocumented
@@ -448,7 +449,7 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
         }
     });
     extendObservable(riskAssessment, {
-        IHostParasiteLevel: () => {
+        get IHostParasiteLevel() {
             return critILevel(riskAssessment.HostParasiteInformations)
         }
     });
@@ -505,7 +506,7 @@ function enhanceRiskAssessmentLevel(riskAssessment, labels) {
 
     delete riskAssessment.riskLevel  //todo: Check if necessary (or the correct way to do this) ?????  Basically: risklevel is observable from db data, but we want it to be a computed observable!
     extendObservable(riskAssessment, {
-        riskLevel: () => {
+        get riskLevel() {
             const result = RiskLevel.riskLevel(riskAssessment._invasjonspotensialeLevel, riskAssessment._ecoeffectLevel)
             return result;
         }
@@ -558,7 +559,7 @@ function enhanceCriteriaAddLabelsAndAuto(riskAssessment, codes) {
         //     return result
         // })})
         extendObservable(criteria, {
-            currentValueLabel: function() {
+            get currentValueLabel() {
                 const v = this.value 
                 const result = this.codes[v].text
                 console.log("Curr crit value: " + this.criteriaLetter+ v + result)
@@ -603,7 +604,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
         let firstrun = true
         extendObservable(crit, {
             uncertaintyDisabled: observable([]),
-            majorUncertainty: () => crit.uncertaintyValues.length >= 3
+            get majorUncertainty() { return crit.uncertaintyValues.length >= 3}
         })
         autorun(() => {
             const maxDistanecFromValue = 1
