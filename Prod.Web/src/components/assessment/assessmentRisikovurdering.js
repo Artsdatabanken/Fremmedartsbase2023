@@ -57,7 +57,7 @@ class SelectableRadio extends React.Component {
 @observer
 export default class AssessmentRisikovurdering extends React.Component {
     // getCriterion(riskAssessment, akse, letter) {     const result =
-    // riskAssessment.criteria.filter(c => c.Akse === akse && c.CriteriaLetter ===
+    // riskAssessment.criteria.filter(c => c.akse === akse && c.criteriaLetter ===
     // letter)[0];     return result; }
     render() {
         const {appState:{assessment, assessment:{riskAssessment}}, appState:{riskAssessmentTabs}, appState, } = this.props;
@@ -95,7 +95,7 @@ export default class AssessmentRisikovurdering extends React.Component {
         // <h5>** Invasjonspotensiale nivå: {appState.invasjonspotensialeLevel.level + 1}
         // **</h5> <h5>** Utslagsgivende kriterier:
         // {appState.invasjonspotensialeLevel.decisiveCriteria.map(crit =>
-        // crit.CriteriaLetter).sort().join()} **</h5> <h5>** usikkerhet:
+        // crit.criteriaLetter).sort().join()} **</h5> <h5>** usikkerhet:
         // {appState.invasjonspotensialeLevel.uncertaintyLevels.slice().join(';')}
         // **</h5>**</h5>
 
