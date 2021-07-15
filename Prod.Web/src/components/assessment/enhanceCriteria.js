@@ -115,7 +115,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 
     extendObservable(riskAssessment, {
         get RedListCategoryLevel() {  //todo: should this be called "ViableAnalysisLevel"?
-            const catstr = riskAssessment.RedListCategory || ""
+            const catstr = riskAssessment.redListCategory || ""
             const cat = catstr.trim().substring(0, 2).toUpperCase()
             const result = cat === "CR" ? 1 :  
                             cat === "EN" ? 11 :
@@ -181,20 +181,20 @@ function enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering,
     // const artificialAndConstructedSites = ["F4", "F5", "H4", "L7", "L8", "M14", "M15", "T35", "T36", "T37", "T38", "T39", "T40", "T41", "T42", "T43", "T44", "T45", "V11", "V12", "V13"]
 
     extendObservable(riskAssessment, {
-        get vurderingCurrentExistenceAreaCalculated() {return vurdering.CurrentExistenceAreaCalculated},
+        get vurderingCurrentExistenceAreaCalculated() {return vurdering.currentExistenceAreaCalculated},
 
         get vurderingAllImpactedNatureTypes() {return vurdering.impactedNatureTypes.map(x => x)},
         get vurderingImpactedNaturalNatureTypes() { return vurdering.impactedNatureTypes.filter(
-            nt => !artificialAndConstructedSites.filter(code => nt.NiNCode === code || nt.NiNCode.startsWith(code + "-") ).length > 0
+            nt => !artificialAndConstructedSites.filter(code => nt.niNCode === code || nt.niNCode.startsWith(code + "-") ).length > 0
         // ).filter(
         //     nt => !nt.NiNCode.startsWith("AM-") // Sverige
         ).filter(
-            nt => !nt.NiNCode.startsWith("LI ")
+            nt => !nt.niNCode.startsWith("LI ")
         )},
 
         // C criteria
         get impactedNaturtypesColonizedAreaLevel() {
-                const levels =  riskAssessment.vurderingImpactedNaturalNatureTypes.map(nt => nt.ColonizedArea).map(area =>
+                const levels =  riskAssessment.vurderingImpactedNaturalNatureTypes.map(nt => nt.colonizedArea).map(area =>
                     area === "0–2"? 0 :
                     area === "2-5"? 0 :
                     area === "5-10"? 1 :
@@ -208,7 +208,7 @@ function enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering,
         },
         // G criteria
         get effectOnOtherNaturetypesLevel() {
-            const levels = riskAssessment.vurderingImpactedNaturalNatureTypes.map(nt => nt.AffectedArea).map(area =>
+            const levels = riskAssessment.vurderingImpactedNaturalNatureTypes.map(nt => nt.affectedArea).map(area =>
                 area === "0"? 0 :
                 area === "0–2"? 0 :
                 area === "2-5"? 0 :
@@ -223,8 +223,8 @@ function enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering,
         },
         // F criteria
         get effectOnThreathenedNaturetypesLevel() {
-            const levels = vurdering.RedlistedNatureTypes.map(
-                nt => nt.AffectedArea
+            const levels = vurdering.redlistedNatureTypes.map(
+                nt => nt.affectedArea
             ).map(area => 
                 area === "0"? 0 :
                 area === "0–2"? 1 :
@@ -279,27 +279,27 @@ export const critILevel = list => {
             const rlThreatCats = ["VU","EN","CR"]
             // const list = riskAssessment.HostParasiteInformations
             // list.map(item => {
-            //     console.log("ParasiteNewForHost type: " + typeof(item.ParasiteNewForHost))
-            //     console.log("ParasiteNewForHost value: " + item.ParasiteNewForHost)
+            //     console.log("parasiteNewForHost type: " + typeof(item.parasiteNewForHost))
+            //     console.log("parasiteNewForHost value: " + item.parasiteNewForHost)
             // })
             const list4 = list.filter(item =>
-                item.ParasiteIsAlien ||
-                (rlThreatCats.indexOf(item.RedListCategory) > -1 && item.ParasiteNewForHost && !item.EffectLocalScale) ||
-                (rlCats.indexOf(item.RedListCategory) > -1 && item.KeyStoneSpecie && item.ParasiteNewForHost && !item.EffectLocalScale)
+                item.parasiteIsAlien ||
+                (rlThreatCats.indexOf(item.redListCategory) > -1 && item.parasiteNewForHost && !item.effectLocalScale) ||
+                (rlCats.indexOf(item.redListCategory) > -1 && item.keyStoneSpecie && item.parasiteNewForHost && !item.effectLocalScale)
             )
             const list3 = list.filter(item => 
-                !item.ParasiteIsAlien &&
+                !item.parasiteIsAlien &&
                 (
-                    (rlThreatCats.indexOf(item.RedListCategory) > -1 && item.ParasiteNewForHost && item.EffectLocalScale) ||
-                    (rlCats.indexOf(item.RedListCategory) > -1 && item.KeyStoneSpecie && item.ParasiteNewForHost && item.EffectLocalScale) ||
-                    (rlCats.indexOf(item.RedListCategory) > -1 && !item.KeyStoneSpecie && item.ParasiteNewForHost && !item.EffectLocalScale)
+                    (rlThreatCats.indexOf(item.redListCategory) > -1 && item.parasiteNewForHost && item.effectLocalScale) ||
+                    (rlCats.indexOf(item.redListCategory) > -1 && item.keyStoneSpecie && item.parasiteNewForHost && item.effectLocalScale) ||
+                    (rlCats.indexOf(item.redListCategory) > -1 && !item.keyStoneSpecie && item.parasiteNewForHost && !item.effectLocalScale)
                 )
             )
             const list2 = list.filter(item => 
-                !item.ParasiteIsAlien &&
+                !item.parasiteIsAlien &&
                 (
-                    (rlCats.indexOf(item.RedListCategory) > -1 && !item.KeyStoneSpecie && item.ParasiteNewForHost && item.EffectLocalScale) ||
-                    (!item.ParasiteNewForHost && !item.EffectLocalScale)
+                    (rlCats.indexOf(item.redListCategory) > -1 && !item.keyStoneSpecie && item.parasiteNewForHost && item.effectLocalScale) ||
+                    (!item.parasiteNewForHost && !item.effectLocalScale)
                 )
             )
             // console.log("list2 " + JSON.stringify(list2)   )
@@ -307,9 +307,9 @@ export const critILevel = list => {
             // console.log("list4 " + JSON.stringify(list4)   )
 
 
-            const maxEffect4 = Math.max(...list4.map(item => parseInt(item.ParasiteEcoEffect)))
-            const maxEffect3 = Math.max(...list3.map(item => parseInt(item.ParasiteEcoEffect)))
-            const maxEffect2 = Math.max(...list2.map(item => parseInt(item.ParasiteEcoEffect)))
+            const maxEffect4 = Math.max(...list4.map(item => parseInt(item.parasiteEcoEffect)))
+            const maxEffect3 = Math.max(...list3.map(item => parseInt(item.parasiteEcoEffect)))
+            const maxEffect2 = Math.max(...list2.map(item => parseInt(item.parasiteEcoEffect)))
 
             // console.log("maxeffect2 " + maxEffect2)
             // console.log("maxeffect3 " + maxEffect3)
@@ -334,33 +334,33 @@ export const critILevel = list => {
 
 function enhanceRiskAssessmentEcoEffect(riskAssessment) {
     extendObservable(riskAssessment, {
-        get DThreathenedSpeciesLevel() {
+        get dThreathenedSpeciesLevel() {
             const threatenedCats = ["VU","EN","CR"]
             const otherRlCats = ["LC","DD","NT"]
             const isThreatened = cat => threatenedCats.indexOf(cat) > -1
             const isOther = cat => otherRlCats.indexOf(cat) > -1
             
-            const fullSpeciesList = riskAssessment.SpeciesSpeciesInteractions
+            const fullSpeciesList = riskAssessment.speciesSpeciesInteractions
             const speciesList = fullSpeciesList.filter(item => 
-                isThreatened(item.RedListCategory) ||
-                (isOther(item.RedListCategory) && item.KeyStoneSpecie))
+                isThreatened(item.redListCategory) ||
+                (isOther(item.redListCategory) && item.keyStoneSpecie))
 
-            const speciesNaturtypeList = riskAssessment.SpeciesNaturetypeInteractions.filter(item => 
-                item.KeyStoneSpecie)
+            const speciesNaturtypeList = riskAssessment.speciesNaturetypeInteractions.filter(item => 
+                item.keyStoneSpecie)
             const list = [].concat(speciesNaturtypeList).concat(speciesList)
             // console.log("runD nat:" + speciesNaturtypeList.length)
             // console.log("runD spec:" + speciesList.length)
             // console.log("runD:" + list.length)
             const result = list.filter(item => 
-                    (item.Effect === "Displacement") || 
-                    (item.Effect === "Moderate" && !item.EffectLocalScale)).length > 0 ? 
+                    (item.effect === "Displacement") || 
+                    (item.effect === "Moderate" && !item.effectLocalScale)).length > 0 ? 
                 4 :
                 list.filter(item => 
-                    (item.Effect === "Moderate" && item.EffectLocalScale) || 
-                    (item.Effect === "Weak" && !item.EffectLocalScale) ).length > 0 ? 
+                    (item.effect === "Moderate" && item.effectLocalScale) || 
+                    (item.effect === "Weak" && !item.effectLocalScale) ).length > 0 ? 
                 3 :
                 list.filter(item => 
-                    (item.Effect === "Weak" && item.EffectLocalScale) ).length > 0 ? 
+                    (item.effect === "Weak" && item.effectLocalScale) ).length > 0 ? 
                 2 :
                 1
             return result - 1;
@@ -369,11 +369,11 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
     extendObservable(riskAssessment, {
         get EDomesticSpeciesLevel() {
             const otherRlCats = ["LC","DD","NT"]
-            const fullSpeciesList = riskAssessment.SpeciesSpeciesInteractions
-            const speciesList = fullSpeciesList.filter(item => otherRlCats.indexOf(item.RedListCategory) > -1 && !item.KeyStoneSpecie)
+            const fullSpeciesList = riskAssessment.speciesSpeciesInteractions
+            const speciesList = fullSpeciesList.filter(item => otherRlCats.indexOf(item.redListCategory) > -1 && !item.keyStoneSpecie)
             // const speciesNaturtypeList = riskAssessment.SpeciesNaturetypeInteractions.map(x => x) // yeah - You need the map...
-            // const speciesNaturtypeList = riskAssessment.SpeciesNaturetypeInteractions.filter(item => !item.KeyStoneSpecie)
-            const speciesNaturtypeList = riskAssessment.SpeciesNaturetypeInteractions.map(a => a) // changed 23.02.2017 - let all nature types count for E-criteria (email from Heidi Solstad)
+            // const speciesNaturtypeList = riskAssessment.SpeciesNaturetypeInteractions.filter(item => !item.keyStoneSpecie)
+            const speciesNaturtypeList = riskAssessment.speciesNaturetypeInteractions.map(a => a) // changed 23.02.2017 - let all nature types count for E-criteria (email from Heidi Solstad)
             const list = [].concat(speciesNaturtypeList).concat(speciesList)
             // console.log("runE nat:" + speciesNaturtypeList.length)
             // console.log("runE spec:" + speciesList.length)
@@ -381,23 +381,23 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
 
             // console.log("runE:" + list.length)
             const result = list.filter(item => 
-                    item.Effect === "Displacement" && !item.EffectLocalScale).length > 0 ?
+                    item.effect === "Displacement" && !item.effectLocalScale).length > 0 ?
 
-                    // (item.Effect === "Displacement") ||
-                    // // (item.Effect === "Displacement" && item.KeyStoneSpecie) ||
-                    // (item.Effect === "Displacement" && !item.KeyStoneSpecie && !item.EffectLocalScale) ||
-                    // (item.Effect === "Moderate" && item.KeyStoneSpecie && !item.EffectLocalScale)).length > 0 ? 
+                    // (item.effect === "Displacement") ||
+                    // // (item.effect === "Displacement" && item.keyStoneSpecie) ||
+                    // (item.effect === "Displacement" && !item.keyStoneSpecie && !item.effectLocalScale) ||
+                    // (item.effect === "Moderate" && item.keyStoneSpecie && !item.effectLocalScale)).length > 0 ? 
                 4 :
                 list.filter(item =>
-                    item.Effect === "Displacement" && item.EffectLocalScale).length > 0 ?
-                    // (item.Effect === "Displacement" && !item.KeyStoneSpecie && item.EffectLocalScale) ||
-                    // (item.Effect === "Moderate" && item.KeyStoneSpecie && item.EffectLocalScale) ||
-                    // (item.Effect === "Weak" && item.KeyStoneSpecie && !item.EffectLocalScale)).length > 0 ? 
+                    item.effect === "Displacement" && item.effectLocalScale).length > 0 ?
+                    // (item.effect === "Displacement" && !item.keyStoneSpecie && item.effectLocalScale) ||
+                    // (item.effect === "Moderate" && item.keyStoneSpecie && item.effectLocalScale) ||
+                    // (item.effect === "Weak" && item.keyStoneSpecie && !item.effectLocalScale)).length > 0 ? 
                 3 :
                 list.filter(item => 
-                    item.Effect === "Moderate" && !item.EffectLocalScale).length > 0 ?
-                    // (item.Effect === "Moderate" && !item.KeyStoneSpecie && !item.EffectLocalScale) ||
-                    // (item.Effect === "Weak" && item.KeyStoneSpecie && item.EffectLocalScale)).length > 0 ? 
+                    item.effect === "Moderate" && !item.effectLocalScale).length > 0 ?
+                    // (item.effect === "Moderate" && !item.keyStoneSpecie && !item.effectLocalScale) ||
+                    // (item.effect === "Weak" && item.keyStoneSpecie && item.effectLocalScale)).length > 0 ? 
                 2 :
                 1
             return result - 1;
@@ -430,19 +430,19 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
         get HGeneticTransferLevel() {
             const rlCats = ["LC","DD","NT"]
             const rlThreatCats = ["VU","EN","CR"]
-            const list = riskAssessment.GeneticTransferDocumented
+            const list = riskAssessment.geneticTransferDocumented
             const result = list.filter(item => 
-                    !item.EffectLocalScale && 
-                        (item.KeyStoneSpecie ||
-                        (rlThreatCats.indexOf(item.RedListCategory) > -1))).length > 0 ? 
+                    !item.effectLocalScale && 
+                        (item.keyStoneSpecie ||
+                        (rlThreatCats.indexOf(item.redListCategory) > -1))).length > 0 ? 
                 4 :
                 list.filter(item =>
-                    (!item.EffectLocalScale && !item.KeyStoneSpecie && (rlCats.indexOf(item.RedListCategory) > -1)) ||
-                    (item.EffectLocalScale && (rlThreatCats.indexOf(item.RedListCategory) > -1)) ||
-                    (item.EffectLocalScale && item.KeyStoneSpecie && (rlCats.indexOf(item.RedListCategory) > -1))).length > 0 ? 
+                    (!item.effectLocalScale && !item.keyStoneSpecie && (rlCats.indexOf(item.redListCategory) > -1)) ||
+                    (item.effectLocalScale && (rlThreatCats.indexOf(item.redListCategory) > -1)) ||
+                    (item.effectLocalScale && item.keyStoneSpecie && (rlCats.indexOf(item.redListCategory) > -1))).length > 0 ? 
                 3 :
                 list.filter(item => 
-                    (item.EffectLocalScale && !item.KeyStoneSpecie && (rlCats.indexOf(item.RedListCategory) > -1))).length > 0 ? 
+                    (item.effectLocalScale && !item.keyStoneSpecie && (rlCats.indexOf(item.redListCategory) > -1))).length > 0 ? 
                 2 :
                 1
             return result - 1;
@@ -450,13 +450,13 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
     });
     extendObservable(riskAssessment, {
         get IHostParasiteLevel() {
-            return critILevel(riskAssessment.HostParasiteInformations)
+            return critILevel(riskAssessment.hostParasiteInformations)
         }
     });
     autorun(() => {
         const criterionD = getCriterion(riskAssessment, 1, "D")
         // console.log("Autorun criterionD: " + criterionD.value)
-        const nv = riskAssessment.DThreathenedSpeciesLevel
+        const nv = riskAssessment.dThreathenedSpeciesLevel
         // console.log("Autorun criterionD nv: " + nv)
         criterionD.value = nv
     });

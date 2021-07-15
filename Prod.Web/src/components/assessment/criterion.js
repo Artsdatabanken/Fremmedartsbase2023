@@ -16,15 +16,17 @@ export default class Criterion extends React.Component {
         console.log("keys: " + JSON.stringify(Object.keys(criterion)))
         const labels = appState.codeLabels
         const ntLabels = labels.NatureTypes
-        const {Id, value, uncertaintyValues, auto, codes, heading, info, uncertaintyDisabled } = criterion;
+        const {id, value, uncertaintyValues, auto, codes, heading, info, uncertaintyDisabled } = criterion;
         const showHeading = !mode || mode.indexOf("noheading") < 0
         const setUncertainty = e => {
             // console.log("setUncertainty check: " + e.target.value + " | checked: " + e.target.checked)
-            if( e.target.checked) {
-                uncertaintyValues.push(parseInt(e.target.value))
-            } else {
-                uncertaintyValues.remove(parseInt(e.target.value))
-            }
+            runInAction(() => {
+                if( e.target.checked) {
+                    uncertaintyValues.push(parseInt(e.target.value))
+                } else {
+                    uncertaintyValues.remove(parseInt(e.target.value))
+                }
+            })
         }
 
         console.log("##info:" + JSON.stringify(criterion))

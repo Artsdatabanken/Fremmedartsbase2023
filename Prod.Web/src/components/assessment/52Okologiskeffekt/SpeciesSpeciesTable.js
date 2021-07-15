@@ -44,7 +44,7 @@ const SpeciesSpeciesTable = observer((props) =>
             <tr key={item.scientificName+item.effect+item.interactionType+item.keyStoneSpecie}>
                 <td>
                     <div className="speciesItem">
-                        <div className={"rlCategory " + item.redListCategory}>{item.RedListCategory}</div>
+                        <div className={"rlCategory " + item.redListCategory}>{item.redListCategory}</div>
                         <div className="vernacularName">{item.vernacularName}</div>
                         <div className="scientificName">{item.scientificName}</div>
                         <div className="author">{"(" + item.scientificNameAuthor + ")"}</div>
