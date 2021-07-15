@@ -50,7 +50,8 @@ export default class ExpertGroupAdmin extends React.Component {
         if (!auth.isInRole("fab_administrator")) //())
             return (<h3>Ingen adgang til administrasjon av ekspertkomitéer - Du kom hit p.g.a. en feil</h3>);
         return (
-            <div>
+            <fieldset className="well">
+
             <section className="main adm">
                 <h2>Administrasjon av ekspertkomitéer</h2>
                 <h3>Ekspertkomité</h3>
@@ -156,7 +157,7 @@ soknad: "Eg treng tilgang med ein gong" */}
                     </tbody>
                 </table>
             </section>
-            </div>);
+            </fieldset>);
     }
 }
 ExpertGroupAdmin.propTypes = {

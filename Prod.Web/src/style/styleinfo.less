@@ -398,6 +398,8 @@ div .btn, div .form-control, .well .btn-primary, .btn-flat {
   border: 1px solid #777;
 }
 
+
+
 div.well > .btn-group > button.multiselect:first-child:not(:last-child):not(.dropdown-toggle) {
   border-top-right-radius: 24px;
   border-bottom-right-radius: 24px;
@@ -405,7 +407,7 @@ div.well > .btn-group > button.multiselect:first-child:not(:last-child):not(.dro
   padding-bottom: 35px;
 }
 
-.btn:active, .header_padding .btn-primary:hover, .page_padding .btn-primary:hover, .well .btn-primary:hover {
+.btn:active, .header_padding .btn-primary:hover, .page_padding .btn-primary:hover, .well .btn-primary:hover, .btn-default:hover, .btn-xs:hover {
   //background-color: rgba(0,0,0,0.1);
   background-color: #4c4a48;
   color: #fff;
@@ -416,11 +418,12 @@ div.well > .btn-group > button.multiselect:first-child:not(:last-child):not(.dro
 .well .btn-primary:disabled, .well .btn-primary.disabled  {
   background-color: #f5f5f5;
   color: #4c4a48;
-  border: 1px solid #4c4a48;
+  border: 1px solid #363635;
 }
 
-div .btn:hover *, .btn-flat:hover {
+div .btn:hover *, div .btn-flat:hover, div .btn:active *, div .btn-flat:active, td > button.btn-default:hover, td > button.btn-default:active {
   color: #fff;
+  background-color: #646464;
 }
 
 .btn-flat {
@@ -447,6 +450,15 @@ a.btn-flat {
     text-decoration: none;
     -webkit-tap-highlight-color: transparent
   }
+
+.btn-flat .modal-body {
+  padding: 5px 0 5px;
+  width: 350px;
+}
+
+.btn-flat .modal-body div {
+  white-space: break-spaces;
+}
 
 a:active, a:hover {
     outline: 0;
@@ -730,6 +742,7 @@ div.uncertainty {
 
 .tree-view-label .btn-flat:hover {
   background-color: #4c4a48;
+  color: #fff;
 }
 
 .hovedtypegruppe {
@@ -1327,9 +1340,28 @@ fieldset.well {
   border: 1px solid #e3e3e3;
   background-color: #f5f5f5;
   margin: 0 0 20px;
-  padding: 20px 15px 5px;
+  padding: 10px 15px 20px;
 }
- 
+
+fieldset.well table, fieldset.well h2, fieldset.well h3, fieldset.well h4 {
+  margin-bottom: 20px;
+}
+
+fieldset.well > div, div.well h4 {
+  margin-top: 20px;
+}
+
+fieldset.well button.dropdown-toggle{
+  padding-top: 2px;
+}
+
+fieldset.well .dropdown-menu ul {
+  padding-inline-start: 0;
+}
+
+div.well > .btn-group {
+  margin-bottom: 30px; 
+}
 .well .radio label {
   padding-left: 40px;
 }
@@ -1344,7 +1376,7 @@ fieldset.well {
 
 .well div .input_field .form-control {  
   min-height: 80px;
-  height: 80%;
+  height: 15%;
 }
 
 ul.geoVar {
@@ -1355,6 +1387,13 @@ ul.geoVar label {
   white-space: break-spaces;
 }
 
+.geoVarInput {
+  height: 300px;
+}
+div.geoVarInput > div > div.input_field > div.form-control {
+  min-height: 90px;
+  height: 80%;
+}
 .well p {
   margin: 10px 0 10px;
 }
@@ -1378,7 +1417,7 @@ ul.geoVar label {
 }
 
 .statusField .firstObs li {
-
+  margin-top: 19px;
   margin-bottom: 16px;
 }
 
@@ -1481,6 +1520,10 @@ table tbody tr td ul {
 
 .filters p {
   margin-bottom: 20px;
+}
+
+.scanning, .filters div div.input_field {
+  margin-left: 20px;
 }
 
 .taxon div {

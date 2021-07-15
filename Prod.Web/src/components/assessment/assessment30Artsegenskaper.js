@@ -74,12 +74,12 @@ export default class Assessment30Artsegenskaper extends React.Component {
             <fieldset className="well">
 
                 <h2>Global utbredelse og artsegenskaper</h2>
-                {config.showPageHeaders ? <h3>Artsegenskaper</h3> : <br />}
-                <br />
+                {config.showPageHeaders ? <h3>Artsegenskaper</h3> : null }
+                
                 {appState.imageUploadEnabled
                 ? <div>
                     <UploadPicturesButton scientificName={vurdering.evaluatedScientificName}/>
-                    <br />
+                    
                 </div>
                 : null}
                 {assessment.alienSpeciesCategory == "DoorKnocker" && assessment.speciesStatus == "A" ?

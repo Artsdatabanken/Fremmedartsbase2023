@@ -41,9 +41,9 @@ export default class Assessment80GeografiskVariasjon extends React.Component {
 				
 					}
 					{riskAssessment.geographicalVariation.length > 0 ?
-					<div style={{height: '500px'}}>
+					<div className="geoVarInput">
 					{/*<label>{geolabels.extendedInformation}</label>*/}
-					<Xcomp.HtmlString observableValue={[riskAssessment, "geographicalVariationDocumentation"]} /> 
+					<Xcomp.HtmlString  observableValue={[riskAssessment, "geographicalVariationDocumentation"]} /> 
 					</div>:
 					null}</> : null
 					}
