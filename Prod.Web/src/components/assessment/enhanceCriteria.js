@@ -3,7 +3,7 @@ import RiskLevel from './riskLevel';
 import {extractFloat, getCriterion} from '../../utils'
 
 // function getCriterion(riskAssessment, akse, letter) {
-//     const result = riskAssessment.criteria.filter(c => c.Akse === akse && c.CriteriaLetter === letter)[0]; 
+//     const result = riskAssessment.criteria.filter(c => c.akse === akse && c.criteriaLetter === letter)[0]; 
 //     return result;
 // }
 
@@ -603,24 +603,24 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
         let firstrun = true
         extendObservable(crit, {
             uncertaintyDisabled: observable([]),
-            majorUncertainty: () => crit.UncertaintyValues.length >= 3
+            majorUncertainty: () => crit.uncertaintyValues.length >= 3
         })
         autorun(() => {
             const maxDistanecFromValue = 1
             const value = crit.value
             let ud
             let uv
-            if (crit.CriteriaLetter === "A" && 
-                    riskAssessment.ChosenSpreadMedanLifespan === 'LifespanA1aSimplifiedEstimate' 
+            if (crit.criteriaLetter === "A" && 
+                    riskAssessment.chosenSpreadMedanLifespan === 'LifespanA1aSimplifiedEstimate' 
             ) {
-                const ulevels = uncertaintylevelsFor(riskAssessment.ChosenSpreadMedanLifespan, medianLifespanLevel)
+                const ulevels = uncertaintylevelsFor(riskAssessment.chosenSpreadMedanLifespan, medianLifespanLevel)
                 uv = ulevels
                 ud = [0,1,2,3]
-            } else if (crit.CriteriaLetter === "B" && 
-                    (riskAssessment.ChosenSpreadYearlyIncrease === 'SpreadYearlyIncreaseOccurrenceArea' || 
-                    riskAssessment.ChosenSpreadYearlyIncrease === 'SpreadYearlyIncreaseObservations')
+            } else if (crit.criteriaLetter === "B" && 
+                    (riskAssessment.chosenSpreadYearlyIncrease === 'SpreadYearlyIncreaseOccurrenceArea' || 
+                    riskAssessment.chosenSpreadYearlyIncrease === 'SpreadYearlyIncreaseObservations')
             ) {
-                const ulevels = uncertaintylevelsFor(riskAssessment.ChosenSpreadYearlyIncrease, yearlyIncreaseLevel)
+                const ulevels = uncertaintylevelsFor(riskAssessment.chosenSpreadYearlyIncrease, yearlyIncreaseLevel)
                 uv = ulevels
                 ud = [0,1,2,3]
             } else {    
@@ -642,7 +642,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                         // NB! Careless changes to the application may cause this code to run multiple times during page load 
                         // Take care this does not happen! (uncomment the whyRun() function to trace the problem if necassary)
 
-                        // console.log("nextrun: " + crit.CriteriaLetter + " : " + crit.value)
+                        // console.log("nextrun: " + crit.criteriaLetter + " : " + crit.value)
                         
                         crit.uncertaintyValues.replace(uv)
                     } else {
@@ -653,7 +653,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                         // This functionality is also dependent on a well working "firstrun"; se comment above
                         // e.g. the criteria must not have a default value that is updated from db after the first run!
 
-                        // console.log("firstrun: " + crit.CriteriaLetter + " : " + crit.value + " - " + JSON.stringify(crit.uncertaintyValues))
+                        // console.log("firstrun: " + crit.criteriaLetter + " : " + crit.value + " - " + JSON.stringify(crit.uncertaintyValues))
                         if (crit.uncertaintyValues.indexOf(value) <= -1 ) {
                             // console.log("rectify uncertainties")
                             crit.uncertaintyValues.replace(uv)

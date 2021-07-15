@@ -16,14 +16,14 @@ export default class Criterion extends React.Component {
         console.log("keys: " + JSON.stringify(Object.keys(criterion)))
         const labels = appState.codeLabels
         const ntLabels = labels.NatureTypes
-        const {Id, value, UncertaintyValues, auto, codes, heading, info, uncertaintyDisabled } = criterion;
+        const {Id, value, uncertaintyValues, auto, codes, heading, info, uncertaintyDisabled } = criterion;
         const showHeading = !mode || mode.indexOf("noheading") < 0
         const setUncertainty = e => {
             // console.log("setUncertainty check: " + e.target.value + " | checked: " + e.target.checked)
             if( e.target.checked) {
-                UncertaintyValues.push(parseInt(e.target.value))
+                uncertaintyValues.push(parseInt(e.target.value))
             } else {
-                UncertaintyValues.remove(parseInt(e.target.value))
+                uncertaintyValues.remove(parseInt(e.target.value))
             }
         }
 
@@ -33,11 +33,11 @@ export default class Criterion extends React.Component {
         // console.log("head " + heading)
         // console.log("val " + value) // + "|" + Id)
         // console.log("udis " + JSON.stringify(uncertaintyDisabled))
-        // console.log("uval " + JSON.stringify(UncertaintyValues))
+        // console.log("uval " + JSON.stringify(uncertaintyValues))
         // console.log("auto " + auto)
 
 
-        // const logthis = criterion.CriteriaLetter === "A"
+        // const logthis = criterion.criteriaLetter === "A"
 
         return(
             <>
@@ -64,8 +64,8 @@ export default class Criterion extends React.Component {
                 if(value !== undefined) {
                     radiooptional.checked = (kode.value === value)
                 }
-                if(UncertaintyValues !== undefined) {
-                    checkboxoptional.checked = UncertaintyValues.indexOf(kode.value) > -1;
+                if(uncertaintyValues !== undefined) {
+                    checkboxoptional.checked = uncertaintyValues.indexOf(kode.value) > -1;
                 }
 
                 // console.log("VVV " + value + " " + value + " # " + radiooptional.checked)
