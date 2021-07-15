@@ -5,14 +5,14 @@ import createRiskAssessment, {getCriterion} from './riskLevel.test-data'
 //   test('C criterion influences invasjonspotensiale level', () => {
 //     const ra = createRiskAssessment()
 //     const cCrit = getCriterion(ra, "C")
-//     cCrit.Value = 2
+//     cCrit.value = 2
 //     const inv = riskLevel.invasjonspotensiale(ra)
 //     expect(inv.level).toEqual(2);
 //   })
 //   test('C criterion influences invasjonspotensiale uncertainty', () => {
 //     const ra = createRiskAssessment()
 //     const cCrit = getCriterion(ra, "C")
-//     cCrit.Value = 2
+//     cCrit.value = 2
 //     cCrit.uncertaintyValues = [1,2,3]
 //     const inv = riskLevel.invasjonspotensiale(ra)
 //     expect(inv.uncertaintyLevels).toEqual([1,2,3]);
@@ -20,14 +20,14 @@ import createRiskAssessment, {getCriterion} from './riskLevel.test-data'
 //   test('E criterion influences ecoeffect level', () => {
 //     const ra = createRiskAssessment()
 //     const cCrit = getCriterion(ra, "E")
-//     cCrit.Value = 1
+//     cCrit.value = 1
 //     const eco = riskLevel.ecoeffect(ra)
 //     expect(eco.level).toEqual(1);
 //   })
 //   test('E criterion influences ecoeffect uncertainty', () => {
 //     const ra = createRiskAssessment()
 //     const eCrit = getCriterion(ra, "E")
-//     eCrit.Value = 1
+//     eCrit.value = 1
 //     eCrit.uncertaintyValues = [0,1,2]
 //     const eco = riskLevel.ecoeffect(ra)
 //     expect(eco.uncertaintyLevels).toEqual([0,1,2]);
@@ -37,8 +37,8 @@ import createRiskAssessment, {getCriterion} from './riskLevel.test-data'
 //     const ra = createRiskAssessment()
 //     const dCrit = getCriterion(ra, "D")
 //     const eCrit = getCriterion(ra, "E")
-//     dCrit.Value = 2
-//     eCrit.Value = 3
+//     dCrit.value = 2
+//     eCrit.value = 3
 //     const eco = riskLevel.ecoeffect(ra)
 //     expect(eco.level).toEqual(3);
 //   })
@@ -46,9 +46,9 @@ import createRiskAssessment, {getCriterion} from './riskLevel.test-data'
 //     const ra = createRiskAssessment()
 //     const dCrit = getCriterion(ra, "D")
 //     const eCrit = getCriterion(ra, "E")
-//     dCrit.Value = 1
+//     dCrit.value = 1
 //     dCrit.uncertaintyValues = [0,1,2]
-//     eCrit.Value = 2
+//     eCrit.value = 2
 //     eCrit.uncertaintyValues = [2,3]
 //     const eco = riskLevel.ecoeffect(ra)
 //     expect(eco.uncertaintyLevels).toEqual([2,3]);
@@ -58,9 +58,9 @@ import createRiskAssessment, {getCriterion} from './riskLevel.test-data'
 //     const ra = createRiskAssessment()
 //     const dCrit = getCriterion(ra, "D")
 //     const eCrit = getCriterion(ra, "E")
-//     dCrit.Value = 2
+//     dCrit.value = 2
 //     dCrit.uncertaintyValues = [1,2,3]
-//     eCrit.Value = 2
+//     eCrit.value = 2
 //     eCrit.uncertaintyValues = [2,3]
 //     const eco = riskLevel.ecoeffect(ra)
 //     expect(eco.uncertaintyLevels).toEqual([2,3]);
@@ -73,8 +73,8 @@ import createRiskAssessment, {getCriterion} from './riskLevel.test-data'
 //     const ra = createRiskAssessment()
 //     const aCrit = getCriterion(ra, "A")
 //     const bCrit = getCriterion(ra, "B")
-//     aCrit.Value = 3
-//     bCrit.Value = 1
+//     aCrit.value = 3
+//     bCrit.value = 1
 //     const inv = riskLevel.invasjonspotensiale(ra)
 //     expect(inv.level).toEqual(2);
 //   })
@@ -82,8 +82,8 @@ import createRiskAssessment, {getCriterion} from './riskLevel.test-data'
 //     const ra = createRiskAssessment()
 //     const aCrit = getCriterion(ra, "A")
 //     const bCrit = getCriterion(ra, "B")
-//     aCrit.Value = 3
-//     bCrit.Value = 1
+//     aCrit.value = 3
+//     bCrit.value = 1
 //     const inv = riskLevel.invasjonspotensiale(ra)
 //     expect(inv.decisiveCriteria.map(c => c.criteriaLetter)).toEqual(["A"]);
 //   })
@@ -91,8 +91,8 @@ import createRiskAssessment, {getCriterion} from './riskLevel.test-data'
 //     const ra = createRiskAssessment()
 //     const aCrit = getCriterion(ra, "A")
 //     const bCrit = getCriterion(ra, "B")
-//     aCrit.Value = 2
-//     bCrit.Value = 2
+//     aCrit.value = 2
+//     bCrit.value = 2
 //     const inv = riskLevel.invasjonspotensiale(ra)
 //     expect(inv.level).toEqual(2);
 //     expect(inv.decisiveCriteria.map(c => c.criteriaLetter)).toEqual(["A", "B"]);
@@ -101,8 +101,8 @@ import createRiskAssessment, {getCriterion} from './riskLevel.test-data'
 //     const ra = createRiskAssessment()
 //     const aCrit = getCriterion(ra, "A")
 //     const bCrit = getCriterion(ra, "B")
-//     aCrit.Value = 1
-//     bCrit.Value = 2
+//     aCrit.value = 1
+//     bCrit.value = 2
 //     const inv = riskLevel.invasjonspotensiale(ra)
 //     // console.log("dc length: " + inv.decisiveCriteria.length)
 //     // console.log("dc: " + JSON.stringify(inv.decisiveCriteria))
@@ -113,9 +113,9 @@ import createRiskAssessment, {getCriterion} from './riskLevel.test-data'
 //     const ra = createRiskAssessment()
 //     const aCrit = getCriterion(ra, "A")
 //     const bCrit = getCriterion(ra, "B")
-//     aCrit.Value = 2
+//     aCrit.value = 2
 //     aCrit.uncertaintyValues = [1,2]
-//     bCrit.Value = 2
+//     bCrit.value = 2
 //     bCrit.uncertaintyValues = [2,3]
 //     const inv = riskLevel.invasjonspotensiale(ra)
 //     // console.log("dc length: " + inv.decisiveCriteria.length)
@@ -127,9 +127,9 @@ import createRiskAssessment, {getCriterion} from './riskLevel.test-data'
 //     const ra = createRiskAssessment()
 //     const aCrit = getCriterion(ra, "A")
 //     const bCrit = getCriterion(ra, "B")
-//     aCrit.Value = 1
+//     aCrit.value = 1
 //     aCrit.uncertaintyValues = [0,1]
-//     bCrit.Value = 2
+//     bCrit.value = 2
 //     bCrit.uncertaintyValues = [2,3]
 //     const inv = riskLevel.invasjonspotensiale(ra)
 //     // console.log("dc length: " + inv.decisiveCriteria.length)
@@ -143,9 +143,9 @@ import createRiskAssessment, {getCriterion} from './riskLevel.test-data'
 //     const ra = createRiskAssessment()
 //     const aCrit = getCriterion(ra, "A")
 //     const bCrit = getCriterion(ra, "B")
-//     aCrit.Value = 1
+//     aCrit.value = 1
 //     aCrit.uncertaintyValues = [1,2]
-//     bCrit.Value = 0
+//     bCrit.value = 0
 //     bCrit.uncertaintyValues = [0,1]
 //     const inv = riskLevel.invasjonspotensiale(ra)
 //     expect(inv.level).toEqual(0);
@@ -157,9 +157,9 @@ import createRiskAssessment, {getCriterion} from './riskLevel.test-data'
 //     const ra = createRiskAssessment()
 //     const aCrit = getCriterion(ra, "A")
 //     const bCrit = getCriterion(ra, "B")
-//     aCrit.Value = 1
+//     aCrit.value = 1
 //     aCrit.uncertaintyValues = [0,1,2]
-//     bCrit.Value = 0
+//     bCrit.value = 0
 //     bCrit.uncertaintyValues = [0]
 //     const inv = riskLevel.invasjonspotensiale(ra)
 
@@ -172,9 +172,9 @@ import createRiskAssessment, {getCriterion} from './riskLevel.test-data'
 //     const ra = createRiskAssessment()
 //     const aCrit = getCriterion(ra, "A")
 //     const bCrit = getCriterion(ra, "B")
-//     aCrit.Value = 3
+//     aCrit.value = 3
 //     aCrit.uncertaintyValues = [3]
-//     bCrit.Value = 1
+//     bCrit.value = 1
 //     bCrit.uncertaintyValues = [0,1,2]
 //     const inv = riskLevel.invasjonspotensiale(ra)
 //     // console.log("dc length: " + inv.decisiveCriteria.length)
@@ -187,9 +187,9 @@ import createRiskAssessment, {getCriterion} from './riskLevel.test-data'
 //     const ra = createRiskAssessment()
 //     const eCrit = getCriterion(ra, "E")
 //     const gCrit = getCriterion(ra, "G")
-//     eCrit.Value = 2
+//     eCrit.value = 2
 //     eCrit.uncertaintyValues = [1,2,3]
-//     gCrit.Value = 2
+//     gCrit.value = 2
 //     gCrit.uncertaintyValues = [2,3]
 //     const eco = riskLevel.ecoeffect(ra)
 //     // console.log("dc length: " + inv.decisiveCriteria.length)
@@ -201,9 +201,9 @@ import createRiskAssessment, {getCriterion} from './riskLevel.test-data'
 //     const ra = createRiskAssessment()
 //     const eCrit = getCriterion(ra, "E")
 //     const gCrit = getCriterion(ra, "G")
-//     eCrit.Value = 2
+//     eCrit.value = 2
 //     eCrit.uncertaintyValues = [1,2]
-//     gCrit.Value = 2
+//     gCrit.value = 2
 //     gCrit.uncertaintyValues = [2,3]
 //     const eco = riskLevel.ecoeffect(ra)
 //     // console.log("dc length: " + inv.decisiveCriteria.length)

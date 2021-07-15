@@ -28,7 +28,7 @@ const createRiskAssessment = () => ({criteria: createCrits()})
 describe('createRiskAssessment', () => {
   it('creates criterias', () => {
     const ra = createRiskAssessment()
-    expect(getCriterion(ra, "E").Id === "EcologicalEffectInteractionWithDomesticSpecies").toBeTruthy();
+    expect(getCriterion(ra, "E").id === "EcologicalEffectInteractionWithDomesticSpecies").toBeTruthy();
   });
 })
 
