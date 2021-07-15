@@ -101,7 +101,7 @@ export default class Criterion extends React.Component {
                         type="checkbox"
                         onChange={onChangeCheckbox}
                         {...checkboxoptional} />
-                        {kode.Text}
+                        {kode.text}
                     </div>
                    
                 
