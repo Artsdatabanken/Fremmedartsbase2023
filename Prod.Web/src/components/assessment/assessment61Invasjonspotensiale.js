@@ -89,10 +89,12 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
         const crit51A = getCriterion(riskAssessment, 0, "A")
         // console.log(crit51A)
         const crit51B = getCriterion(riskAssessment, 0, "B")
-        crit51A.auto = false
-        crit51B.auto = false
         const critC = getCriterion(riskAssessment, 0, "C")
-        critC.auto = false
+        runInAction(() => {
+            crit51A.auto = false
+            crit51B.auto = false
+            critC.auto = false
+        })
         const textAS = stringFormat(labels.AcritText.SelfProducing)
         const textDK = stringFormat(labels.AcritText.DoorKnocker)
         const textASB = stringFormat(labels.BcritText.SelfProducing)
