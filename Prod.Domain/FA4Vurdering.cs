@@ -941,6 +941,8 @@ namespace Prod.Domain
         public List<string> GeographicalVariation { get; set; } = new List<string>(); // lagt til 23.09.2016
         public string GeographicalVariationDocumentation { get; set; } // lagt til 23.09.2016
 
+        public string PossibleLowerCategory { get; set; }
+
     }
 
     public partial class RiskAssessment // (5.4) Klimaeffekter

@@ -1452,22 +1452,44 @@
             {
                 "Id": "geographicalVariation",
                 "value": "reproduksjonLimitedToCertainClimaticZones",
-                "text": "Artens evne til reproduksjon/spredning er begrensa til visse klimasoner eller -seksjoner"
+                "text": "Artens evne til reproduksjon og/eller spredning er begrenset til visse bioklimatiske soner eller seksjoner"
             },
             {
                 "Id": "geographicalVariation",
                 "value": "ecologicalEffectLimitedToCertainClimaticZones",
-                "text": "Artens økologiske effekter er begrensa til visse klimasoner eller -seksjoner"
+                "text": "Artens økologiske effekter er begrenset til visse bioklimatiske soner eller seksjoner"
             },
             {
                 "Id": "geographicalVariation",
                 "value": "ecologicalEffectLimitedToCertainNatureTypes",
-                "text": "Artens økologiske effekter er begrensa til bestemte naturtyper"
+                "text": "Artens økologiske effekter er begrenset til bestemte naturtyper"
             },
             {
                 "Id": "geographicalVariation",
                 "value": "ecologicalEffectLimitedToIndigenousSpecies  ",
-                "text": "Artens økologiske effekt består utelukkende i interaksjoner med stedegne arter som har svært begrensa utbredelse"
+                "text": "Artens økologiske effekt består utelukkende i interaksjoner med stedegne arter som har svært begrenset utbredelse"
+            }
+        ],
+        "geographicalVariationMarine": [
+            {
+                "Id": "geographicalVariationMarine",
+                "value": "reproduksjonLimitedToCertainClimaticZones",
+                "text": "Artens evne til reproduksjon og/eller spredning er begrenset til visse kystvannssoner eller seksjoner"
+            },
+            {
+                "Id": "geographicalVariationMarine",
+                "value": "ecologicalEffectLimitedToCertainClimaticZones",
+                "text": "Artens økologiske effekter er begrenset til visse kystvannssoner eller seksjoner"
+            },
+            {
+                "Id": "geographicalVariationMarine",
+                "value": "ecologicalEffectLimitedToCertainNatureTypes",
+                "text": "Artens økologiske effekter er begrenset til bestemte naturtyper"
+            },
+            {
+                "Id": "geographicalVariationMarine",
+                "value": "ecologicalEffectLimitedToIndigenousSpecies  ",
+                "text": "Artens økologiske effekt består utelukkende i interaksjoner med stedegne arter som har svært begrenset utbredelse"
             }
         ],
         "climateEffects": [
@@ -6681,6 +6703,27 @@
                             "Id": null,
                             "Value": "extendedInformation",
                             "Text": "Gi utfyllende informasjon om geografisk variasjon",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "possibleLowerCategory",
+                            "Text": "Arter med en viss utstrekning i forekomstarealet kan, som en respons på ulike miljøbetingelser, ha ulik påvirkning i naturen. Kunne arten ha fått en <i>lavere</i> risikokategori (dvs. NK, LO eller PH) i deler av sitt (potensielle) forekomstareal?",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "notValid",
+                            "Text": "Geografisk  variasjon i risiko er kun aktuelt for arter i risikokategoriene PH, HI og SE.",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "reasonForGeographicalVariation",
+                            "Text": "Ettersom spørsmålet over er besvart positivt, bør geografisk variasjon beskrives nærmere: Hva kan forklare den geografiske variasjonen i risiko? (flere valg mulig)",
                             "Info": null,
                             "Children": null
                         }

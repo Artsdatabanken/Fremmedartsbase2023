@@ -178,7 +178,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.AcceptOrAdjustCritA, opt => opt.Ignore())
                     .ForMember(dest => dest.Hovedøkosystem, opt => opt.Ignore())
 
-
+                    
                     // todo: delete this section when domain is fixed
                     .ForMember(dest => dest.ScoreA, opt => opt.Ignore())
                     .ForMember(dest => dest.UnsureA, opt => opt.Ignore())
@@ -199,7 +199,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.ScoreI, opt => opt.Ignore())
                     .ForMember(dest => dest.UnsureI, opt => opt.Ignore())
                     // --------------------------------
-
+                    .ForMember(dest => dest.PossibleLowerCategory, opt => opt.Ignore())
                     .ForMember(dest => dest.natureAffectedAbroadF, opt => opt.Ignore())
                     .ForMember(dest => dest.natureAffectedAbroadG, opt => opt.Ignore());
                 cfg.CreateMap<Prod.Domain.Legacy.MigrationPathway, Prod.Domain.MigrationPathway>();
