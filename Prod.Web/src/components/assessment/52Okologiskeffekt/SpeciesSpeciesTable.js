@@ -12,13 +12,13 @@ const SpeciesSpeciesTable = observer((props) =>
     return <table className="table ecologicalEffect">
         <colgroup>
             <col style={{width: "20%"}} />
-            <col style={{width: "15%"}} />
-            <col style={{width: "16%"}} />
-            <col style={{width: "25%"}} />
+            <col style={{width: "5%"}} />
+            <col style={{width: "10%"}} />
+            <col style={{width: "10%"}} />
 
-            <col style={{width: "25%"}} />
-            <col style={{width: "5%"}} />
-            <col style={{width: "5%"}} />
+            <col style={{width: "20%"}} />
+            <col style={{width: "20%"}} />
+            <col style={{width: "15%"}} />
             {/*<col style={{width: "5%"}} />
             <col style={{width: "8%"}} />*/}
 
