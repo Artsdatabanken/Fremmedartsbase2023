@@ -507,6 +507,24 @@
                 "Text": "True"
             }
         ],
+
+        "DistributionOptions": [
+            {
+                "Id": "DistributionOptions",
+                "Value": "BBE",
+                "Text": "… etablert og produsere levedyktig avkom i minst 10 forekomster i norsk natur [BB E]"
+            },
+            {
+                "Id": "DistributionOptions",
+                "Value": "BBD2",
+                "Text": "… etablert og produsere levedyktig avkom i 1 til 9 forekomster i norsk natur [BB D2]"
+            },
+            {
+                "Id": "DistributionOptions",
+                "Value": "BBD1",
+                "Text": "… etablert og i tillegg ha levedyktige individer i minst én forekomst i norsk natur [BB D1]"
+            }
+        ],
         "BCritP": [
             {
                 "Id": "BCritP",
@@ -3357,7 +3375,7 @@
                 "Id": "Criterion",
                 "Value": "I",
                 "Text": "I-kriteriet: Overføring av parasitter eller patogener",
-                "Info": "Beskriv overføring av parasitter eller patgogener (bakterier og virus inkludert) til stedegen art. Det skal være sannsynlighetsovervekt for overføringen",
+                "Info": "Beskriv overføring av parasitter eller patogener (bakterier og virus inkludert) til stedegen art. Det skal være sannsynlighetsovervekt for overføringen",
                 "Children": {
                     "CritI": [
                         {

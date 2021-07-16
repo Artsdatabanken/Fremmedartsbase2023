@@ -1344,6 +1344,7 @@ fieldset.well {
 }
 
 fieldset.well table, fieldset.well h2, fieldset.well h3, fieldset.well h4 {
+  margin-top: 10px;
   margin-bottom: 20px;
 }
 
@@ -1356,6 +1357,10 @@ fieldset.well button.dropdown-toggle{
 }
 
 fieldset.well .dropdown-menu ul {
+  padding-inline-start: 0;
+}
+
+fieldset.well ul.mainEcosystem {
   padding-inline-start: 0;
 }
 
@@ -1377,6 +1382,23 @@ div.well > .btn-group {
 .well div .input_field .form-control {  
   min-height: 80px;
   height: 15%;
+}
+
+.well .import {
+  display: flex;
+}
+
+.well .import .definitions p {
+  border: 1px solid gray;
+  border-radius: 28px;
+  background-color: #c5c5c5;
+  padding: 15px;
+}
+
+.import .definitions {
+    width: 45%;
+    margin-left: 150px;
+    margin-top: 50px;
 }
 
 ul.geoVar {
@@ -1447,6 +1469,10 @@ div.geoVarInput > div > div.input_field > div.form-control {
 
 .statusField .labels {
   width: 250px;
+}
+
+.statusField .numbers div {
+  margin: 10px 0 5px;
 }
 
 .statusField p {

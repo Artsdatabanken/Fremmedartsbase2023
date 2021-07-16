@@ -463,7 +463,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                             <div>
                                 <p>{textASB} </p>
 
-                                        <span>{labels.Bcrit.choose}</span> <Xcomp.Button primary >{labels.Bcrit.getFromMap}</Xcomp.Button>
+                                        <span style={{paddingLeft: '40px'}}>{labels.Bcrit.choose}</span> <Xcomp.Button primary >{labels.Bcrit.getFromMap}</Xcomp.Button>
                                             <span>{labels.Bcrit.addManually}</span>
 
                                         <Xcomp.Bool observableValue={[riskAssessment, "notUseExpansionInNorway"]} label={labels.BcritText.chooseNotToUseKnownArea} />

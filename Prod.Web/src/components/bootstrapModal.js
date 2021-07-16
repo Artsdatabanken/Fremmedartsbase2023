@@ -32,7 +32,7 @@ export default class BootstrapModal extends React.Component {
             ): null
            
             }
-        {/*   <div className="modal-backdrop fade in"  style={{zIndex: 1110}}></div>
+          {/*<div className="modal-backdrop fade in"  style={{zIndex: 1110}}></div>
             <div role="dialog" tabIndex="-1" className="modal fade in" style={{display: "block", zIndex: 1120}}>
                  <div className="modal-dialog">
                     <div className="modal-content" role="document">

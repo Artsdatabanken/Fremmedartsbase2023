@@ -267,6 +267,7 @@ export default class Assessment51Naturtyper extends React.Component {
                 <fieldset className="well">
                     <h4>{ntLabels.mainEcosystem}</h4>     
                     <Xcomp.MultiselectArray
+                                className="mainEcosystem"
                                 observableValue={[riskAssessment, 'hovedøkosystem']} 
                                 codes={koder.hovedøkosystemer}
                                 mode="check"/>

@@ -35,6 +35,7 @@ export default class Vurdering34Spredningsveier extends React.Component {
     }
 
 
+
     @action fjernSpredningsvei = (vurdering, value) => {
         const result = vurdering.assesmentVectors.remove(value);
         // console.log("item removed : " + result)
@@ -63,22 +64,36 @@ export default class Vurdering34Spredningsveier extends React.Component {
         // console.log("fabModel" + fabModel.toString() )
         // console.log("koder" + fabModel.koder.toString() )
         const fjernSpredningsvei = (mp) => this.fjernSpredningsvei(vurdering, mp)
+
+        var showDefinitions = true
+
+        const toggleDefinitions = () => {
+            showDefinitions = !showDefinitions
+            console.log(showDefinitions)
+        }
         return(
             <div>
                {/* { true || config.showPageHeaders ? <h4 style={{marginTop: "25px"}} >{labels.MigrationPathway.introductionSpread}</h4> : <br />} */}
                 <h3>{name}</h3>
                 <MPTable migrationPathways={migrationPathways} removeMigrationPathway={fjernSpredningsvei} showIntroductionSpread />
                 <hr/>
+                <div className="import">
                 <div className="well">
                     <h4>Legg til spredningsvei</h4>
                     <NewMigrationPathwaySelector migrationPathways={migrationPathwayKoder} onSave={mp => this.saveMigrationPathway(vurdering, mp)} mainCodes={koder} koder={importationCodes} labels={labels} />
                 </div>
-                <button className="btn btn-primary">Se definisjoner</button>
-                <p>
-                    <b>Forurensning av vare:</b> Arten følger med <i>levende/døde organismer</i> eller <i>organisk materiale</i> som parasitt (dvs. den transporterte organismen er vektor) eller som annen «smitte»
-                    <p><b>Blindpassasjer med/på transport:</b>Arten følger med under transport av <i>mennesker, varer</i> eller <i>kjøretøy/fartøy</i>.</p> 
+                <div className="definitions">
+                    <button className="btn btn-primary"onClick={() => toggleDefinitions()}>Se definisjoner</button>
+                    {showDefinitions && 
+                    <p>
+                        <b>Forurensning av vare: </b>Arten følger med <i>levende/døde organismer</i> eller <i>organisk materiale</i> som parasitt (dvs. den transporterte organismen er vektor) eller som annen «smitte»
+                        <br/>
+                        <b>Blindpassasjer med/på transport: </b>Arten følger med under transport av <i>mennesker, varer</i> eller <i>kjøretøy/fartøy</i>.
 
-                </p>
+                    </p>
+                }
+                </div>
+                </div>
                 <p>{furtherInfo}</p>
                 <Xcomp.HtmlString                            
                                 observableValue={[riskAssessment, "furtherInfoAboutImport"]}

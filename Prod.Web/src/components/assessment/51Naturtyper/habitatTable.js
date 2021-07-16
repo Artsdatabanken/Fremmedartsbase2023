@@ -93,7 +93,7 @@ export default class HabitatTable extends React.Component {
         // console.log("naturtyperader#: " + naturetypes.length)
         return(
             <div><p>{desc}</p>
-            <table className="table">
+            <table className="table table-striped">
             
             <colgroup>
                 <col  style={{width: "10%"}}/>

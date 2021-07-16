@@ -93,20 +93,17 @@ export default class Assessment41Import extends React.Component {
                             observableValue={[assessment, "indoorProduktion"]}/>
 
                 </p>
-
-                 {assessment.indoorProduktion == "negative" ? 
+                
+                    {assessment.indoorProduktion != null &&
                     <fieldset className="well">
-                        <Vurdering34Spredningsveier name={"Introduksjon til natur"} furtherInfo={labels.Import.furtherInfoIntro}/>
-                        <Vurdering34Spredningsveier name={"Videre spredning i natur"} furtherInfo={labels.Import.furtherInfoNature}/>
-
-                    </fieldset> : assessment.indoorProduktion == "positive" ? 
-                    <fieldset className="well">
-                         <Vurdering34Spredningsveier  name={"Til innendørs- eller produksjonsareal"} furtherInfo={labels.Import.furtherInfoIndoors}/>
-                         <Vurdering34Spredningsveier name={"Introduksjon til natur"} furtherInfo={labels.Import.furtherInfoIntro}/>
-                         <Vurdering34Spredningsveier name={"Videre spredning i natur"} furtherInfo={labels.Import.furtherInfoNature}/>
-
-                    </fieldset> : null
-                }
+                        {assessment.indoorProduktion == "positive" &&                    
+                                <Vurdering34Spredningsveier  name={"Til innendørs- eller produksjonsareal"} furtherInfo={labels.Import.furtherInfoIndoors}/>  
+                        }
+                            <Vurdering34Spredningsveier name={"Introduksjon til natur"} furtherInfo={labels.Import.furtherInfoIntro}/>
+                            <Vurdering34Spredningsveier name={"Videre spredning i natur"} furtherInfo={labels.Import.furtherInfoNature}/>
+                     </fieldset>
+                    }
+                
                
                
                 

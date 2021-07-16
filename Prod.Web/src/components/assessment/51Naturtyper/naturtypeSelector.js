@@ -22,8 +22,8 @@ export default class NaturtypeSelector extends React.Component {
                 {naturtyper.map(hovedtypegruppe => 
                     <div key={hovedtypegruppe.id}>
                         <div
-                        //className={"glyphicon glyphicon-chevron-down tree-view-arrow " }
-                            className={"glyphicon glyphicon-chevron-down tree-view-arrow " + (hovedtypegruppe.Collapsed ? "tree-view-arrow-collapsed" : "")}
+                        className={"glyphicon glyphicon-chevron-down tree-view-arrow " }
+                            //className={"glyphicon glyphicon-chevron-down tree-view-arrow " + (hovedtypegruppe.Collapsed ? "tree-view-arrow-collapsed" : "")}
                             onClick={() => hovedtypegruppe.Collapsed = !hovedtypegruppe.Collapsed} 
                             > {hovedtypegruppe.Collapsed == false ? <ExpandMoreIcon/> : <NavigateNextIcon/>}
                             

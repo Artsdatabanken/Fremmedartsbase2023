@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {observer} from 'mobx-react'
+import {observer, inject} from 'mobx-react'
 import {Button} from 'react-bootstrap'
 import HistorikkTabell from './Historikktabell'
 import Filliste from './Filliste'
 
+@inject("appState")
 @observer
 export default class UtbredelseshistorikkInnenlands extends React.Component {
     render() {
