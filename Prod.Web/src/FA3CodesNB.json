@@ -1503,14 +1503,14 @@
             {
                 "Id": "climateEffects",
                 "Value": "climateChangeAffectsInvationPotential",
-                "Text": "Ville artens delkategori for invasjonspotensiale ha blitt lavere i fravær av pågående eller forventede klimaendringer?",
+                "Text": "Ville artens delkategori for invasjonspotensiale ha blitt <i>lavere</i> i fravær av pågående eller forventede klimaendringer?",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "climateEffects",
                 "Value": "climateChangeAffectsEcoeffect",
-                "Text": "Ville artens delkategori for økologisk effekt ha blitt lavere i fravær av pågående eller forventede klimaendringer?",
+                "Text": "Ville artens delkategori for økologisk effekt ha blitt <i>lavere</i> i fravær av pågående eller forventede klimaendringer?",
                 "Info": null,
                 "Children": null
             },
@@ -1525,6 +1525,34 @@
                 "Id": "climateEffects",
                 "Value": "climateEffectsDocumentation",
                 "Text": "Betydningen av klimaendringer",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "climateEffects",
+                "Value": "categoryNK",
+                "Text": "Arten er NK uten usikkerhet oppover, og utfylling av klimaeffekter er dermed ikke aktuelt.",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "climateEffects",
+                "Value": "timePerspective",
+                "Text": "Merk: Tidsperspektivet som lå til grunn for gjeldende delkategorier er vesentlig. Det skal være samsvar mellom tidsperspektivene det er svart ut fra under selve risikovurderingen, og tidsperspektivet her. ",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "climateEffects",
+                "Value": "partialCategoryInvasion",
+                "Text": "Delkategori invasjonspotensial: 20000 (usikkerhet opp mot 100500) Gjeldende kriterier: ",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "climateEffects",
+                "Value": "partialCategoryEcoeffect",
+                "Text": "Delkategori økologisk effekt: 100500 Gjeldende kriterier: ",
                 "Info": null,
                 "Children": null
             }
