@@ -4,6 +4,7 @@ import {observer, inject} from 'mobx-react'
 import * as Xcomp from './observableComponents'
 import Tabs from '../tabs'
 import Assessment51Naturtyper from './assessment51Naturtyper'
+import DistributionTable from './distributionTable'
 import UtbredelseshistorikkInnenlands from './35Utbredelseshistorikk/UtbredelseshistorikkInnenlands'
 @inject('appState')
 @observer
@@ -25,25 +26,29 @@ export default class Assessment52Utbredelse extends React.Component {
                     {assessment.alienSpeciesCategory == "DoorKnocker" ? 
                     
                         <div className="statusField">
-                            <div className="labels">
+                            <div className="labels distribution">
                                 <p>Hvor mange 2 km x 2 km-ruter kan arten kolonisere i løpet av en 10 års-periode basert på én introduksjon til norsk natur? (Innenfor vurderingsperioden på 50 år)?</p>
                                 <p>Hvor mange slike introduksjoner til norsk natur antas arten å få i løpet av samme 10-års periode?</p>
                                 <p>Totalt forekomstareal <b> 10 år etter første introduksjon </b> (km<sup>2</sup>)</p>
                                 <p>Andel av antatt forekomstareal i sterkt endra natur (%)</p>
                             </div>
-                            
+                            <div className="distribution">
+                                <DistributionTable/>
+                            </div>
                         </div>
                          :
                         <div>
                             <span>{labels.goTo}</span> <Xcomp.Button primary >{labels.speciesMap}</Xcomp.Button>
 
                             <div className="statusField">
-                                <div className="labels">
+                                <div className="labels distribution">
                                     <p>Forekomstareal <b>i dag</b> (km<sup>2</sup>):</p>
                                     <p>Forekomstareal <b>om 50 år </b> (km<sup>2</sup>)</p>
-                                    <p>Andel av kjent forekomstareal i sterkt endra natur (%)</p>
+                                    <p>Andel av kjent forekomstareal i sterkt endra natur (%)<b>[her kommer rullegardinmeny]</b></p>
                                 </div>
-                            
+                                <div className="distribution">
+                                <DistributionTable/>
+                            </div>
                         </div>
                         <p>Med utgangspunkt <b>én introduksjon</b>, antas arten å være… </p>   
                             <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "speciesDistribution"]} mode="radio" codes={koder.DistributionOptions}/>               
