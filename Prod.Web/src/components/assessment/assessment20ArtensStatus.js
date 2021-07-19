@@ -87,12 +87,16 @@ export default class Assessment20ArtensStatus extends React.Component {
                         { assessment.riskAssessment.connectedToAnother == true ?
                             <div>
                             <Xcomp.Radio value={"Connected"} observableValue={[assessment.riskAssessment, "connected"]} label={labels.SpeciesStatus.assessedWithAnotherTaxon}/>
-                            <p>{labels.SpeciesStatus.enterTaxonName}</p>
-                            <Xcomp.String observableValue={[assessment.riskAssessment, 'connectedTaxon1']} placeholder={labels.General.searchSpecies} />
+                            {assessment.riskAssessment.connected == "Connected" && 
+                               <div style={{marginLeft: '20px'}}> <p>{labels.SpeciesStatus.enterTaxonName}</p>
+                                <Xcomp.String observableValue={[assessment.riskAssessment, 'connectedTaxon1']} placeholder={labels.General.searchSpecies} /> </div>
+                            }
                             
                             <Xcomp.Radio value={"Shared"} observableValue={[assessment.riskAssessment, "connected"]} label={labels.SpeciesStatus.notAssessedButShared} />
-                            <p>{labels.SpeciesStatus.enterTaxonName}</p>
-                            <Xcomp.String observableValue={[assessment.riskAssessment, 'connectedTaxon2']} placeholder={labels.General.searchSpecies} /> 
+                            {assessment.riskAssessment.connected == "Shared" && 
+                                <div style={{marginLeft: '20px'}}><p>{labels.SpeciesStatus.enterTaxonName}</p>
+                                <Xcomp.String observableValue={[assessment.riskAssessment, 'connectedTaxon2']} placeholder={labels.General.searchSpecies} /> </div>
+                            }
                             </div> : null }
                     </div> : null}
 
@@ -102,7 +106,15 @@ export default class Assessment20ArtensStatus extends React.Component {
                          <b>{labels.SpeciesStatus.isProductionSpecies}</b> <Xcomp.Bool observableValue={[assessment.riskAssessment, "bruksart"]} /> </div>
                          <b> {labels.SpeciesStatus.statusInNorway}</b>
                          <p>{labels.SpeciesStatus.highestCategoryPerToday}</p>
-                       <Xcomp.StringEnum observableValue={[assessment, "speciesStatus"]} mode="radio" codes={codes.EstablishmentCategory}/>
+
+                         {assessment.alienSpeciesCategory == "DoorKnocker" ? assessment.riskAssessment.bruksart == true ? 
+                            <Xcomp.StringEnum observableValue={[assessment, "speciesStatus"]} mode="radio" codes={codes.EstablishmentCategoryDoorKnockerProduction}/>
+                            :  <Xcomp.StringEnum observableValue={[assessment, "speciesStatus"]} mode="radio" codes={codes.EstablishmentCategoryDoorKnocker}/>
+                            : assessment.riskAssessment.bruksart == true ?
+                            <Xcomp.StringEnum observableValue={[assessment, "speciesStatus"]} mode="radio" codes={codes.EstablishmentCategory}/>
+                            : <Xcomp.StringEnum observableValue={[assessment, "speciesStatus"]} mode="radio" codes={codes.EstablishmentCategoryWithoutProduction}/>                             
+                        }
+                       
 
                         <p>{labels.SpeciesStatus.codesExplanation}</p>
                         <div className="statusField">
@@ -151,120 +163,120 @@ export default class Assessment20ArtensStatus extends React.Component {
                      <p>{labels.SpeciesStatus.willNotBeRiskAssessed}</p> 
                  </div>}
 
-                    <br/>
-
                     { assessment.riskAssessment.isAlienSpecies == 'true' && 
                         (assessment.riskAssessment.connectedToAnother == false || assessment.riskAssessment.connectedToAnother == null ) &&
                         (assessment.riskAssessment.wrongAssessed == false || assessment.riskAssessment.wrongAssessed == null ) ?
                         <div>
                             {assessment.speciesStatus != null && assessment.speciesStatus != "A" &&
-                                <h3>{labels.SpeciesStatus.firstObservationOfSpecies}</h3>
-                            }
-                            
-                            <div className="statusField">
+                               <> <h3>{labels.SpeciesStatus.firstObservationOfSpecies}</h3> 
+                               <div className="statusField">
                                     
-                                <div className="firstObs">
-                                { assessment.speciesStatus != null && assessment.speciesStatus != "A" &&
-                                    <p>{labels.SpeciesStatus.enterYearOfTheFirstObservationInNorway}</p>	
-                                }
-                                <ul>
-                                   {assessment.speciesStatus != "A" && assessment.speciesStatus != null &&
-                                        <li>{labels.SpeciesStatus.speciesIndoorsIfRelevant}</li>
+                                    <div className="firstObs">
+                                    { assessment.speciesStatus != null && assessment.speciesStatus != "A" &&
+                                        <p>{labels.SpeciesStatus.enterYearOfTheFirstObservationInNorway}</p>	
+                                    }
+                                    <ul>
+                                       {assessment.speciesStatus != "A" && assessment.speciesStatus != null &&
+                                            <li>{labels.SpeciesStatus.speciesIndoorsIfRelevant}</li>
+                                        }
+                                        {assessment.speciesStatus != "A" && assessment.speciesStatus != null &&
+                                            <li> {labels.SpeciesStatus.reproductionOutdoorsIfRelevant}</li>
+                                        }
+                                        {assessment.riskAssessment.bruksart == true && assessment.speciesStatus != "A" && assessment.speciesStatus != "B1"
+                                         && assessment.speciesStatus != null &&
+                                            <li>{labels.SpeciesStatus.speciesInProductionAreaOutdoors}</li>
+                                        }
+                                        {assessment.riskAssessment.bruksart == true && (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3") &&
+                                            <li>{labels.SpeciesStatus.speciesReproductionInProductionAreaOutdoors}</li>
+                                        }
+                                        {assessment.speciesStatus != null && assessment.speciesStatus.indexOf("C") > -1 &&
+                                        <li>{labels.SpeciesStatus.speciesInNorwegianNature}</li> }
+    
+                                        {(assessment.speciesStatus == "C3" || assessment.speciesStatus == "C2") &&
+                                            <li>{labels.SpeciesStatus.reproductionInNorwegianNature}</li> }
+    
+                                        {assessment.speciesStatus == "C3" &&
+                                        <li> {labels.SpeciesStatus.establishmentInNorwegianNature}</li> }
+                                    </ul>	
+                                    </div>
+                                    <div className="yearsAndCheckboxes">
+                                    <ul className="listOfYears">
+                                    { assessment.speciesStatus != null && assessment.speciesStatus != "A" &&
+                                        <p>{labels.SpeciesStatus.uncertainity}</p>	
                                     }
                                     {assessment.speciesStatus != "A" && assessment.speciesStatus != null &&
-                                        <li> {labels.SpeciesStatus.reproductionOutdoorsIfRelevant}</li>
-                                    }
-                                    {assessment.riskAssessment.bruksart == true && assessment.speciesStatus != "A" && assessment.speciesStatus != "B1"
-                                     && assessment.speciesStatus != null &&
-                                        <li>{labels.SpeciesStatus.speciesInProductionAreaOutdoors}</li>
-                                    }
-                                    {assessment.riskAssessment.bruksart == true && (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3") &&
-                                        <li>{labels.SpeciesStatus.speciesReproductionInProductionAreaOutdoors}</li>
-                                    }
-                                    {assessment.speciesStatus != null && assessment.speciesStatus.indexOf("C") > -1 &&
-                                    <li>{labels.SpeciesStatus.speciesInNorwegianNature}</li> }
-
-                                    {(assessment.speciesStatus == "C3" || assessment.speciesStatus == "C2") &&
-                                        <li>{labels.SpeciesStatus.reproductionInNorwegianNature}</li> }
-
-                                    {assessment.speciesStatus == "C3" &&
-                                    <li> {labels.SpeciesStatus.establishmentInNorwegianNature}</li> }
-                                </ul>	
-                                </div>
-                                <div className="yearsAndCheckboxes">
-                                <ul className="listOfYears">
-                                { assessment.speciesStatus != null && assessment.speciesStatus != "A" &&
-                                    <p>{labels.SpeciesStatus.uncertainity}</p>	
-                                }
-                                {assessment.speciesStatus != "A" && assessment.speciesStatus != null &&
-                                    <li> 
-                                    <Xcomp.Number                            
-                                        observableValue={[assessment.riskAssessment, "yearFirstIndoors"]}
-                                        integer
-                                        yearRange={true}
-                                    />    
-                                    <Xcomp.Bool observableValue={[assessment.riskAssessment, "yearFirstIndoorsInsecure"]} /> 
-                                    </li>}
-                                    {assessment.speciesStatus != "A" && assessment.speciesStatus != null &&                                   
-                                    <li>
-                                    <Xcomp.Number                            
-                                        observableValue={[assessment.riskAssessment, "yearFirstReproductionIndoors"]}
-                                        integer
-                                        yearRange={true}
-                                    />    
-                                    <Xcomp.Bool observableValue={[assessment.riskAssessment, "yearFirstReproductionIndoorsInsecure"]} /> 
-                                    </li> }
-
-                                    {assessment.riskAssessment.bruksart == true && assessment.speciesStatus != "A" && assessment.speciesStatus != "B1"
-                                     && assessment.speciesStatus != null &&
-                                    <li>
-                                    <Xcomp.Number                            
-                                        observableValue={[assessment.riskAssessment, "yearFirstProductionOutdoors"]}
-                                        integer
-                                        yearRange={true}
-                                    />    
-                                    <Xcomp.Bool observableValue={[assessment.riskAssessment, "yearFirstProductionOutdoorsInsecure"]} /> 
-                                    </li>}
-                                    {assessment.riskAssessment.bruksart == true && (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3") &&
-                                    <li>
-                                    <Xcomp.Number                            
-                                        observableValue={[assessment.riskAssessment, "yearFirstReproductionOutdoors"]}
-                                        integer
-                                        yearRange={true}
-                                    />    
-                                    <Xcomp.Bool observableValue={[assessment.riskAssessment, "yearFirstReproductionOutdoorsInsecure"]} /> 
-                                    </li> }
-                                    
-                                    {assessment.speciesStatus != null && assessment.speciesStatus.indexOf("C") > -1 && 
-                                        <li>                                    
+                                        <li> 
                                         <Xcomp.Number                            
-                                            observableValue={[assessment.riskAssessment, "yearFirstNature"]}
+                                            observableValue={[assessment.riskAssessment, "yearFirstIndoors"]}
                                             integer
                                             yearRange={true}
                                         />    
-                                        <Xcomp.Bool observableValue={[assessment.riskAssessment, "yearFirstNatureInsecure"]} /> 
-                                        </li> }
-                                    { (assessment.speciesStatus == "C3" || assessment.speciesStatus == "C2") && 
-                                        <li>
-                                        <Xcomp.Number                            
-                                            observableValue={[assessment.riskAssessment, "yearFirstReproductionNature"]}
-                                            integer
-                                            yearRange={true}
-                                        />    
-                                        <Xcomp.Bool observableValue={[assessment.riskAssessment, "yearFirstReproductionNatureInsecure"]} /> 
-                                        </li> }
-                                    {assessment.speciesStatus == "C3" && 
-                                        <li>
-                                        <Xcomp.Number                            
-                                            observableValue={[assessment.riskAssessment, "yearFirstEstablishedNature"]}
-                                            integer
-                                            yearRange={true}
-                                        />    
-                                        <Xcomp.Bool observableValue={[assessment.riskAssessment, "yearFirstEstablishedNature"]} /> 
+                                        <Xcomp.Bool observableValue={[assessment.riskAssessment, "yearFirstIndoorsInsecure"]} /> 
                                         </li>}
-                                </ul>
-                                </div>
-                            </div>		
+                                        {assessment.speciesStatus != "A" && assessment.speciesStatus != null &&                                   
+                                        <li>
+                                        <Xcomp.Number                            
+                                            observableValue={[assessment.riskAssessment, "yearFirstReproductionIndoors"]}
+                                            integer
+                                            yearRange={true}
+                                        />    
+                                        <Xcomp.Bool observableValue={[assessment.riskAssessment, "yearFirstReproductionIndoorsInsecure"]} /> 
+                                        </li> }
+    
+                                        {assessment.riskAssessment.bruksart == true && assessment.speciesStatus != "A" && assessment.speciesStatus != "B1"
+                                         && assessment.speciesStatus != null &&
+                                        <li>
+                                        <Xcomp.Number                            
+                                            observableValue={[assessment.riskAssessment, "yearFirstProductionOutdoors"]}
+                                            integer
+                                            yearRange={true}
+                                        />    
+                                        <Xcomp.Bool observableValue={[assessment.riskAssessment, "yearFirstProductionOutdoorsInsecure"]} /> 
+                                        </li>}
+                                        {assessment.riskAssessment.bruksart == true && (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3") &&
+                                        <li>
+                                        <Xcomp.Number                            
+                                            observableValue={[assessment.riskAssessment, "yearFirstReproductionOutdoors"]}
+                                            integer
+                                            yearRange={true}
+                                        />    
+                                        <Xcomp.Bool observableValue={[assessment.riskAssessment, "yearFirstReproductionOutdoorsInsecure"]} /> 
+                                        </li> }
+                                        
+                                        {assessment.speciesStatus != null && assessment.speciesStatus.indexOf("C") > -1 && 
+                                            <li>                                    
+                                            <Xcomp.Number                            
+                                                observableValue={[assessment.riskAssessment, "yearFirstNature"]}
+                                                integer
+                                                yearRange={true}
+                                            />    
+                                            <Xcomp.Bool observableValue={[assessment.riskAssessment, "yearFirstNatureInsecure"]} /> 
+                                            </li> }
+                                        { (assessment.speciesStatus == "C3" || assessment.speciesStatus == "C2") && 
+                                            <li>
+                                            <Xcomp.Number                            
+                                                observableValue={[assessment.riskAssessment, "yearFirstReproductionNature"]}
+                                                integer
+                                                yearRange={true}
+                                            />    
+                                            <Xcomp.Bool observableValue={[assessment.riskAssessment, "yearFirstReproductionNatureInsecure"]} /> 
+                                            </li> }
+                                        {assessment.speciesStatus == "C3" && 
+                                            <li>
+                                            <Xcomp.Number                            
+                                                observableValue={[assessment.riskAssessment, "yearFirstEstablishedNature"]}
+                                                integer
+                                                yearRange={true}
+                                            />    
+                                            <Xcomp.Bool observableValue={[assessment.riskAssessment, "yearFirstEstablishedNature"]} /> 
+                                            </li>}
+                                    </ul>
+                                    </div>
+                                </div>	
+                               </>
+                            }
+                            
+                            	
 
                             {assessment.speciesStatus != "A" && assessment.speciesStatus != null &&                            	
                                 <p>{labels.SpeciesStatus.uncertainityMoreThanFiveYears}</p> }
