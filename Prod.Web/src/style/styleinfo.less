@@ -1492,8 +1492,12 @@ div.geoVarInput > div > div.input_field > div.form-control {
   margin: 15px 0 25px;
 }
 
+.statusField .labels.distribution {
+  width: 350px;
+}
 .statusField .labels.distribution p {
-  margin: 120px 0 80px;
+  height: 50px;
+  margin: 50px 0 0;
 }
 
 .BCritTable {
@@ -1533,17 +1537,22 @@ table tbody tr td ul {
 
 table.distribution {
   width: 50%;
-  margin-left: 250px;
+  margin-left: 120px;
 }
 
-table.distribution tbody tr td div span .form-control {
+table.distribution tbody tr td div span .form-control, .statusField .distribution .form-control {  
   max-width: 100px;
 }
 
-.distribution > h5{
+table.distribution thead tr th {
   text-align: center;
-  margin-left: 50px;
 }
+
+.distribution > h5 {
+  text-align: center;
+  margin-left: 160px;
+}
+
 
 .filters label {
   font-weight: normal;

@@ -643,6 +643,34 @@
                 "Text": "… etablert og i tillegg ha levedyktige individer i minst én forekomst i norsk natur [BB D1]"
             }
         ],
+
+        "KnownDistributionInNature": [
+            {
+                "Id": "KnownDistributionInNature",
+                "Value": "5",
+                "Text": "< 5 % "
+            },
+            {
+                "Id": "KnownDistributionInNature",
+                "Value": "5-25",
+                "Text": "f.o.m. 5 til 25 %"
+            },
+            {
+                "Id": "KnownDistributionInNature",
+                "Value": "25-75",
+                "Text": "f.o.m. 25 % til 75 %"
+            },
+            {
+                "Id": "KnownDistributionInNature",
+                "Value": "75-95",
+                "Text": "fra 75 % til 95 %"
+            },
+            {
+                "Id": "KnownDistributionInNature",
+                "Value": "95",
+                "Text": "> 95 % "
+            }
+        ],
         "BCritP": [
             {
                 "Id": "BCritP",

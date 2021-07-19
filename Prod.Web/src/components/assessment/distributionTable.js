@@ -80,6 +80,10 @@ export default class DistributionTable extends React.Component {
                     observableValue={[assessment.riskAssessment, "distributionC"]}
                     integer />   
                 </td>
+                {assessment.alienSpeciesCategory != "DoorKnocker" &&
+                    <td>km<sup>2</sup></td>
+                }
+                           
             </tr>
             <tr>
                 <td>
@@ -97,6 +101,10 @@ export default class DistributionTable extends React.Component {
                     observableValue={[assessment.riskAssessment, "distributionF"]}
                     integer />   
               </td>
+              {assessment.alienSpeciesCategory != "DoorKnocker" &&
+                    <td>mørketall</td>
+             }
+            
             </tr>           
            
         </tbody>
@@ -104,12 +112,23 @@ export default class DistributionTable extends React.Component {
     
      {assessment.alienSpeciesCategory == "DoorKnocker" && <h5>Antatt</h5> }
     <table className="table distribution">
-    <colgroup>
-        <col style={{width: "33%"}} />
-        <col style={{width: "33%"}} />
-        <col style={{width: "34%"}} />        
+    {assessment.alienSpeciesCategory != "DoorKnocker" ?
+        <colgroup>
+            <col style={{width: "33%"}} />
+            <col style={{width: "33%"}} /> 
+            <col style={{width: "17%"}} />
+            <col style={{width: "17%"}} />
+            {/*<col style={{width: "5%"}} />
+            <col style={{width: "8%"}} />*/}
+        </colgroup>: 
 
-    </colgroup>
+        <colgroup>
+            <col style={{width: "33%"}} />
+            <col style={{width: "33%"}} /> 
+            <col style={{width: "34%"}} />
+            {/*<col style={{width: "5%"}} />
+            <col style={{width: "8%"}} />*/}
+        </colgroup>}
 
     <thead>
         <tr>
@@ -118,6 +137,10 @@ export default class DistributionTable extends React.Component {
             <th>Beste anslag (median) </th>
            
             <th> Høyt anslag (75-prosentil)</th>
+
+            {assessment.alienSpeciesCategory != "DoorKnocker" && 
+                    <th>&nbsp;</th>
+                }
             
         </tr>
     </thead>
@@ -139,6 +162,9 @@ export default class DistributionTable extends React.Component {
                 observableValue={[assessment.riskAssessment, "distributionI"]}
                 integer />   
           </td>
+          {assessment.alienSpeciesCategory != "DoorKnocker" && 
+                    <td>km<sup>2</sup></td>
+                }
         </tr>             
        
     </tbody>

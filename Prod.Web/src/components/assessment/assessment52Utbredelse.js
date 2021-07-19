@@ -31,6 +31,7 @@ export default class Assessment52Utbredelse extends React.Component {
                                 <p>Hvor mange slike introduksjoner til norsk natur antas arten å få i løpet av samme 10-års periode?</p>
                                 <p>Totalt forekomstareal <b> 10 år etter første introduksjon </b> (km<sup>2</sup>)</p>
                                 <p>Andel av antatt forekomstareal i sterkt endra natur (%)</p>
+                                <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "speciesDistribution"]} codes={koder.KnownDistributionInNature}/>
                             </div>
                             <div className="distribution">
                                 <DistributionTable/>
@@ -42,9 +43,20 @@ export default class Assessment52Utbredelse extends React.Component {
 
                             <div className="statusField">
                                 <div className="labels distribution">
+                                    <div style={{display: 'flex'}}>
                                     <p>Forekomstareal <b>i dag</b> (km<sup>2</sup>):</p>
+                                    {assessment.alienSpeciesCategory != "DoorKnocker" && 
+                                    <div style={{width: '100px', marginTop: '60px'}}>
+                                        <b>Kjent</b>
+                                        <Xcomp.Number                            
+                                            observableValue={[assessment.riskAssessment, "knownDistribution"]}
+                                             /> 
+                                    </div>
+                                    }
+                                    </div>
                                     <p>Forekomstareal <b>om 50 år </b> (km<sup>2</sup>)</p>
-                                    <p>Andel av kjent forekomstareal i sterkt endra natur (%)<b>[her kommer rullegardinmeny]</b></p>
+                                    <p>Andel av kjent forekomstareal i sterkt endra natur (%) </p>
+                                    <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "speciesDistribution"]} codes={koder.KnownDistributionInNature}/>
                                 </div>
                                 <div className="distribution">
                                 <DistributionTable/>
