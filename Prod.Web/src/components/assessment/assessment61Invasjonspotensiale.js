@@ -11,6 +11,7 @@ import Assessment62Okologiskeffekt from './assessment62Okologiskeffekt'
 import config from '../../config'
 import {codes2labels, getCriterion} from '../../utils'
 import Filliste from './35Utbredelseshistorikk/Filliste'
+import FileUpload from '../FileUpload'
 import { KeyboardHideSharp } from '@material-ui/icons'
 import {stringFormat} from "../../utils"
 
@@ -284,10 +285,18 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     </div>
                     <div className="numberFields">
                         <Xcomp.HtmlString observableValue={[riskAssessment, 'PVAAnalysis']} />
-                        <h4>{labels.Acrit.data}</h4>
+                       <h4>{labels.Acrit.data}</h4>
                         <p>{labels.DistributionHistory.noDocuments}.</p>
-                        <span>{labels.General.upload}</span> <Xcomp.Button primary >{labels.General.chooseFiles}</Xcomp.Button>
+                        <span>{labels.General.upload}</span> 
+                       {/* <FileUpload
+                               // onUploadComplete={this.getAttachments}
+                                />*/}
+                        <Xcomp.Button primary >{labels.General.chooseFiles}</Xcomp.Button>
                         <span>{labels.General.noFileChosen}</span>
+                         {/*  <Filliste
+                                  baseDirectory={`${appState.vurderingId.split('/').join('_')}/ViableAnalysis`}
+                                 labels={labels.DistributionHistory}
+                                 {...appState.vurdering.Datasett}/>*/}
                     </div>
                     </div>
                     <div className="statusField">

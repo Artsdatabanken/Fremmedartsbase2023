@@ -28,7 +28,7 @@ export default class Assessment10Horisontskanning extends React.Component {
                         <p>{labels.SpeciesStatus.colonizationInformation}</p>
                             <Xcomp.StringEnum observableValue={[assessment, "horizonEstablismentPotential"]} mode="radio" codes={codes.HorizonEstablismentPotential}/>
                     </div>
-                        <Xcomp.HtmlString observableValue={[assessment, 'horizonEstablismentPotentialDescription']} placeholder="Utfyllende informasjon" /> 
+                        <Xcomp.HtmlString observableValue={[assessment, 'horizonEstablismentPotentialDescription']} placeholder={labels.SpeciesStatus.furtherInformation} /> 
                </div>
                <div  className="filters">
                     <h3>{labels.SpeciesStatus.ecologicalEffect}</h3>
@@ -36,7 +36,7 @@ export default class Assessment10Horisontskanning extends React.Component {
                         <p>{labels.SpeciesStatus.knownNegativeEffects}</p>
                         <Xcomp.StringEnum observableValue={[assessment, "horizonEcologicalEffect"]} mode="radio" codes={codes.HorizonEcologicalEffect}/>
                     </div>
-                    <Xcomp.HtmlString observableValue={[assessment, 'horizonEcologicalEffectDescription']} placeholder="Utfyllende informasjon" />
+                    <Xcomp.HtmlString observableValue={[assessment, 'horizonEcologicalEffectDescription']} placeholder={labels.SpeciesStatus.furtherInformation}/>
                </div>
                
             </div>

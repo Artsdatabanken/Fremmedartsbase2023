@@ -16,7 +16,16 @@ export default class Vurdering34Spredningsveier extends React.Component {
     constructor(props) {
         super(props);
         extendObservable(this, {
+            visibleDefinitions: false,
         })
+
+        this.toggleDefinitions = (e) => {
+            action(() => {
+               // e.stopPropagation();
+                this.visibleDefinitions = !this.visibleDefinitions
+                console.log(this.visibleDefinitions)
+            })()
+        }
     }
 
     @action saveMigrationPathway(vurdering, mp) {
@@ -34,7 +43,8 @@ export default class Vurdering34Spredningsveier extends React.Component {
         // this.showEditMigrationPathway = false;
     }
 
-
+    
+   
 
     @action fjernSpredningsvei = (vurdering, value) => {
         const result = vurdering.assesmentVectors.remove(value);
@@ -65,12 +75,7 @@ export default class Vurdering34Spredningsveier extends React.Component {
         // console.log("koder" + fabModel.koder.toString() )
         const fjernSpredningsvei = (mp) => this.fjernSpredningsvei(vurdering, mp)
 
-        var showDefinitions = true
-
-        const toggleDefinitions = () => {
-            showDefinitions = !showDefinitions
-            console.log(showDefinitions)
-        }
+        
         return(
             <div>
                {/* { true || config.showPageHeaders ? <h4 style={{marginTop: "25px"}} >{labels.MigrationPathway.introductionSpread}</h4> : <br />} */}
@@ -83,8 +88,9 @@ export default class Vurdering34Spredningsveier extends React.Component {
                     <NewMigrationPathwaySelector migrationPathways={migrationPathwayKoder} onSave={mp => this.saveMigrationPathway(vurdering, mp)} mainCodes={koder} koder={importationCodes} labels={labels} />
                 </div>
                 <div className="definitions">
-                    <button className="btn btn-primary"onClick={() => toggleDefinitions()}>Se definisjoner</button>
-                    {showDefinitions && 
+                    <button className="btn btn-primary" onClick={this.toggleDefinitions}>Se definisjoner</button>
+                    
+                    {this.visibleDefinitions && 
                     <p>
                         <b>Forurensning av vare: </b>Arten følger med <i>levende/døde organismer</i> eller <i>organisk materiale</i> som parasitt (dvs. den transporterte organismen er vektor) eller som annen «smitte»
                         <br/>
