@@ -371,6 +371,14 @@ namespace Prod.Domain
         //*******************************************************************
 
 
+        // *******  (B2a) Økning i forekomstareal – selvstendig reproduserende arter  **********
+        public long AOOyear1 { get; set; } // årstallet for det første forekomstarealet 
+        public long AOOyear2 { get; set; } // årstallet for det andre forekomstarealet 
+        public long AAO1 { get; set; } // forekomstarealet i år 1 
+        public long AAO2 { get; set; } // forekomstarealet i år 2 
+        // ************************************************************************************
+
+
         public Int64? CurrentIndividualCount { get; set; }
         public Int64? CurrentIndividualCountLowCalculated { get; set; }
         public string CurrentIndividualCountLowMultiplier { get; set; }
