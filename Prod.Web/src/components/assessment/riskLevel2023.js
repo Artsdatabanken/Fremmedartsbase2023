@@ -28,9 +28,28 @@ function roundToSignificantDecimals(num) {
 // // AOOtotalBest	//integer	// beste anslag på totalt forekomstareal nå 
 // // AOOtotalLow	//integer	// lavt anslag på totalt forekomstareal nå 
 // // AOOtotalHigh	//integer	// høyt anslag på totalt forekomstareal nå 
+// ---------------------------------------------
+// // // //    Fra FAB3:
+// // // // CurrentExistenceArea
+// // // // CurrentExistenceAreaMultiplier
+// // // // CurrentExistenceAreaCalculated
+// // // // CurrentExistenceAreaLowMultiplier
+// // // // CurrentExistenceAreaLowCalculated
+// // // // CurrentExistenceAreaHighMultiplier
+// // // // CurrentExistenceAreaHighCalculated
+// ----------------------------------------------
+
 // // AOO50yrBest	//integer	// beste anslag på totalt forekomstareal om 50 år 
 // // AOO50yrLow	//integer	// lavt anslag på totalt forekomstareal om 50 år 
 // // AOO50yrHigh	//integer	// høyt anslag på totalt forekomstareal om 50 år 
+// ---------------------------------------------
+// // // //    Fra FAB3:
+// // // // PotentialExistenceArea
+// // // // PotentialExistenceAreaLowQuartile
+// // // // PotentialExistenceAreaHighQuartile
+// ---------------------------------------------
+
+
 // // // Variabler som beregnes på fanen 
 // // AOOdarkfigureBest	//double	// beste anslag på forekomstarealets mørketall 
 // // AOOdarkfigureLow	//double	// lavt anslag på forekomstarealets mørketall 
@@ -67,6 +86,16 @@ var AOOdarkfigureHigh = r.AOOtotalHigh / r.AOOknown
 // // Occurrences1Low	//integer	// lavt anslag på antall forekomster fra 1 introduksjon 
 // // Occurrences1High	//integer	// høyt anslag på antall forekomster fra 1 introduksjon 
 // // IntroductionsBest	//double	// beste anslag på antall introduksjoner i løpet av 10 år 
+
+// // // // --------------------------------------------------
+// // // //      fra FAB3:
+// // // // SpreadYearlyIncreaseObservations
+// // // // SpreadYearlyIncreaseObservationsLowerQuartile
+// // // // SpreadYearlyIncreaseObservationsUpperQuartile
+// // // // 
+// // // // Er denne ny? - finner ikke i fab3: IntroductionsBest	//double	// beste anslag på antall introduksjoner i løpet av 10 år 
+// // // // --------------------------------------------------
+
 // // // Variabler som beregnes på fanen 
 // // IntroductionsLow	//integer	// lavt anslag på antall introduksjoner i løpet av 10 år 
 // // IntroductionsHigh	//integer	// høyt anslag på antall introduksjoner i løpet av 10 år 
@@ -344,6 +373,16 @@ if (radio === "Godtar beregnet skår") {//todo: replace with real
 // CarryingCapacity	//integer	// bestandens bæreevne (individtall) 
 // ExtinctionThreshold	//integer	// kvasiutdøingsterskel (individtall) 
 // MedianLifetime	//integer	// artens mediane levetid i Norge i år 
+// // // // ------------------------------------------------------------------------------------------
+// // // //       Fra FAB3
+// // // // SpreadRscriptSpeciesCount
+// // // // SpreadRscriptPopulationGrowth
+// // // // SpreadRscriptEnvironmantVariance
+// // // // SpreadRscriptDemographicVariance
+// // // // SpreadRscriptSustainabilityK
+// // // // SpreadRscriptEstimatedSpeciesLongevity  (ActiveSpreadRscriptEstimatedSpeciesLongevity?)
+// // // // ChosenSpreadMedanLifespan (?)
+// // // // ------------------------------------------------------------------------------------------
 
 // Angivelsen av fire variabler (fra EnvVariance til ExtinctionThreshold) er valgfritt. 
 // Beregninger 
@@ -430,6 +469,14 @@ var Bmethod = null	//string	// metode som ble brukt for å beregne B-kriteriet
 // ExpansionSpeed	//integer	// ekspansjonshastighet i meter per år 
 // ExpansionLowerQ	//integer	// nedre kvartil for ekspansjonshastighet i meter per år 
 // ExpansionUpperQ	//integer	// øvre kvartil for ekspansjonshastighet i meter per år 
+// // // // --------------------------------------------------------------------------------
+// // // //      fra FAB3
+// // // // SpreadYearlyIncreaseCalculatedExpansionSpeed (SpreadYearlyIncreaseObservations?)
+// // // // SpreadYearlyIncreaseOccurrenceAreaLowerQuartile (?)
+// // // // SpreadYearlyIncreaseOccurrenceAreaUpperQuartile (?)
+// // // // --------------------------------------------------------------------------------
+
+
 // // Beregninger 
 
 if (  "B1"   ) { // todo: implement real
