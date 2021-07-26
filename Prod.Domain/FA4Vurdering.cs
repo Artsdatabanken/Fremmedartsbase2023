@@ -635,10 +635,9 @@ namespace Prod.Domain
         public double DemVariance { get; set; } // demografisk varians 
         public long CarryingCapacity { get; set; } // bestandens bæreevne (individtall) 
         public long ExtinctionThreshold { get; set; } // kvasiutdøingsterskel (individtall) 
-        public long MedianLifetime { get; set; } // artens mediane levetid i Norge i år 
-        // -------- disse ((A2) Numerisk estimering) er erstattet:  
-        //todo: *sjekk konvertering fra FAB3 før sletting av utkommentert kode*
-        //////public bool ActiveSpreadRscriptSpeciesCount { get; set; } // lagt til 27.09.2016
+                                                      // -------- disse ((A2) Numerisk estimering) er erstattet:  
+                                                      //todo: *sjekk konvertering fra FAB3 før sletting av utkommentert kode*
+                                                      //////public bool ActiveSpreadRscriptSpeciesCount { get; set; } // lagt til 27.09.2016
 
         //[DisplayName("Bestandstørrelse")]
         //public int? SpreadRscriptSpeciesCount { get; set; }  //Spread_Rscript_Species_Count
@@ -672,13 +671,23 @@ namespace Prod.Domain
         ///// </summary>
         //[DisplayName("Terskel for kvasiutdøing")]
         //public string SpreadRscriptQuasiExtinctionThreshold { get; set; }  //Spread_Rscript_Quasi_Extinction_Threshold
-        //
-        //todo: check: MedianLifetime erstatter muligens ChosenSpreadMedanLifespan
-        //
         // ************************************************************************************
 
 
         #endregion
+
+        #region Median life time
+        public long MedianLifetime { get; set; } // artens mediane levetid i Norge i år 
+        //
+        //todo: check: MedianLifetime erstatter muligens ChosenSpreadMedanLifespan
+        //
+        public long LifetimeLowerQ { get; set; } // nedre kvartil for artens levetid i Norge i år 
+        public long LifetimeUpperQ { get; set; } // øvre kvartil for artens levetid i Norge i år 
+        #endregion Median life time
+
+
+
+
 
 
 
