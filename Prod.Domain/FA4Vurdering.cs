@@ -628,38 +628,54 @@ namespace Prod.Domain
 
 
 
-        [DisplayName("Bestandstørrelse")]
-        public int? SpreadRscriptSpeciesCount { get; set; }  //Spread_Rscript_Species_Count
-        [DisplayName("Vekstrate")]
-        //public double SpreadRscriptPopulationGrowth { get; set; } //Spread_Rscript_Population_Growth
-        public string SpreadRscriptPopulationGrowth { get; set; } // type change 01.11.2017
-        /// <summary>
-        /// R-script input - environmant (stocastic) variance - Description
-        /// </summary>
-        [DisplayName("Miljø varians")]
-        public string SpreadRscriptEnvironmantVariance { get; set; } //Spread_Rscript_Environmant_Variance
+        // ****************************  (A2) Numerisk estimering  ****************************
+        public long PopulationSize { get; set; } // bestandens nåværende størrelse (individtall) 
+        public double GrowthRate { get; set; } // bestandens multiplikative vekstrate 
+        public double EnvVariance { get; set; } // miljøvarians 
+        public double DemVariance { get; set; } // demografisk varians 
+        public long CarryingCapacity { get; set; } // bestandens bæreevne (individtall) 
+        public long ExtinctionThreshold { get; set; } // kvasiutdøingsterskel (individtall) 
+        public long MedianLifetime { get; set; } // artens mediane levetid i Norge i år 
+        // -------- disse ((A2) Numerisk estimering) er erstattet:  
+        //todo: *sjekk konvertering fra FAB3 før sletting av utkommentert kode*
+        //////public bool ActiveSpreadRscriptSpeciesCount { get; set; } // lagt til 27.09.2016
 
-        /// <summary>
-        /// R-script input - demographic variance - Description
-        /// </summary>
-        [DisplayName("Demografisk varians")]
-        public string SpreadRscriptDemographicVariance { get; set; }  //Spread_Rscript_Demographic_Variance
-        /// <summary>
-        /// R-script input - Sustainability K - Description
-        /// </summary>
-        [DisplayName("Bæreevne K")]
-        public string SpreadRscriptSustainabilityK { get; set; } //Spread_Rscript_Sustainability_K
-        public bool ActiveSpreadRscriptEstimatedSpeciesLongevity { get; set; } // lagt til 08.11.2016
-        /// <summary>
-        /// Estimated species longevity  Conclusion
-        /// </summary>
-        public string SpreadRscriptEstimatedSpeciesLongevity { get; set; } //Spread_Rscript_Sustainability_K
+        //[DisplayName("Bestandstørrelse")]
+        //public int? SpreadRscriptSpeciesCount { get; set; }  //Spread_Rscript_Species_Count
+        //[DisplayName("Vekstrate")]
+        ////public double SpreadRscriptPopulationGrowth { get; set; } //Spread_Rscript_Population_Growth
+        //public string SpreadRscriptPopulationGrowth { get; set; } // type change 01.11.2017
+        ///// <summary>
+        ///// R-script input - environmant (stocastic) variance - Description
+        ///// </summary>
+        //[DisplayName("Miljø varians")]
+        //public string SpreadRscriptEnvironmantVariance { get; set; } //Spread_Rscript_Environmant_Variance
 
-        /// <summary>
-        /// R-script input - Quasi-extinction Threshold - Description
-        /// </summary>
-        [DisplayName("Terskel for kvasiutdøing")]
-        public string SpreadRscriptQuasiExtinctionThreshold { get; set; }  //Spread_Rscript_Quasi_Extinction_Threshold
+        ///// <summary>
+        ///// R-script input - demographic variance - Description
+        ///// </summary>
+        //[DisplayName("Demografisk varians")]
+        //public string SpreadRscriptDemographicVariance { get; set; }  //Spread_Rscript_Demographic_Variance
+        ///// <summary>
+        ///// R-script input - Sustainability K - Description
+        ///// </summary>
+        //[DisplayName("Bæreevne K")]
+        //public string SpreadRscriptSustainabilityK { get; set; } //Spread_Rscript_Sustainability_K
+        //public bool ActiveSpreadRscriptEstimatedSpeciesLongevity { get; set; } // lagt til 08.11.2016
+        ///// <summary>
+        ///// Estimated species longevity  Conclusion
+        ///// </summary>
+        //public string SpreadRscriptEstimatedSpeciesLongevity { get; set; } //Spread_Rscript_Sustainability_K
+
+        ///// <summary>
+        ///// R-script input - Quasi-extinction Threshold - Description
+        ///// </summary>
+        //[DisplayName("Terskel for kvasiutdøing")]
+        //public string SpreadRscriptQuasiExtinctionThreshold { get; set; }  //Spread_Rscript_Quasi_Extinction_Threshold
+        //
+        //todo: check: MedianLifetime erstatter muligens ChosenSpreadMedanLifespan
+        //
+        // ************************************************************************************
 
 
         #endregion
