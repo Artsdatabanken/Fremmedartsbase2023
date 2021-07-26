@@ -417,6 +417,9 @@ namespace Prod.Domain
 
         [JsonConverter(typeof(CustomDoubleFormatConverter))]
         public double? SpreadHistoryDomesticAreaInStronglyChangedNatureTypes { get; set; }
+        public double? SpreadHistoryDomesticAreaInStronglyChangedNatureTypesLow { get; set; }
+        public double? SpreadHistoryDomesticAreaInStronglyChangedNatureTypesBest { get; set; }
+        public double? SpreadHistoryDomesticAreaInStronglyChangedNatureTypesHigh { get; set; }
     }
     public partial class FA4 // (4) Naturtyper
     {
