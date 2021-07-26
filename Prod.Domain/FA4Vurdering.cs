@@ -354,14 +354,22 @@ namespace Prod.Domain
         public Int64? PotentialAreaDistribution { get; set; } // fab: Potential_Area_Distribution -  ikke i bruk?
         public string PotentialAreaDistributionInTheFuture { get; set; } // fab: Potential_Area_Distribution_Future_Future @steinho - ikke i bruk?
 
-        //nye
-        public Int64? CurrentExistenceArea { get; set; }
-        public Int64? CurrentExistenceAreaLowCalculated { get; set; }
-        public string CurrentExistenceAreaLowMultiplier { get; set; }
-        public Int64? CurrentExistenceAreaCalculated { get; set; }
-        public string CurrentExistenceAreaMultiplier { get; set; }
-        public string CurrentExistenceAreaHighMultiplier { get; set; }
-        public Int64? CurrentExistenceAreaHighCalculated { get; set; }
+        //*************** Forekomstareal i dag ************************************
+        public Int64? AOOknown { get; set; }
+        public Int64? AOOtotalBest { get; set; }
+        public Int64? AOOtotalLow { get; set; }
+        public Int64? AOOtotalHigh { get; set; }
+        // -------- disse (forekomstareal i dag) er erstattet:  
+        //todo: *sjekk konvertering fra FAB3 før sletting av utkommentert kode*
+        //public Int64? CurrentExistenceArea { get; set; }
+        //public Int64? CurrentExistenceAreaLowCalculated { get; set; }
+        //public string CurrentExistenceAreaLowMultiplier { get; set; }
+        //public Int64? CurrentExistenceAreaCalculated { get; set; }
+        //public string CurrentExistenceAreaMultiplier { get; set; }
+        //public string CurrentExistenceAreaHighMultiplier { get; set; }
+        //public Int64? CurrentExistenceAreaHighCalculated { get; set; }
+        //*******************************************************************
+
 
         public Int64? CurrentIndividualCount { get; set; }
         public Int64? CurrentIndividualCountLowCalculated { get; set; }
@@ -381,10 +389,17 @@ namespace Prod.Domain
 
         public string CurrentPresenceComment { get; set; }
 
-        public Int64? PotentialExistenceAreaLowQuartile { get; set; }
-        public Int64? PotentialExistenceArea { get; set; }
-        public Int64? PotentialExistenceAreaHighQuartile { get; set; }
-        public string PotentialPresenceComment { get; set; }
+        //*************** Forekomstareal om 50år ************************************
+        public Int64? AOO50yrBest { get; set; } // beste anslag på totalt forekomstareal om 50 år 
+        public Int64? AOO50yrLow { get; set; } // lavt anslag på totalt forekomstareal om 50 år 
+        public Int64? AOO50yrHigh { get; set; }
+        // -------- disse (forekomstareal om 50år) er erstattet:  
+        //todo: *sjekk konvertering fra FAB3 før sletting av utkommentert kode*
+        //public Int64? PotentialExistenceAreaLowQuartile { get; set; }
+        //public Int64? PotentialExistenceArea { get; set; }
+        //public Int64? PotentialExistenceAreaHighQuartile { get; set; }
+        //public string PotentialPresenceComment { get; set; }
+        //*******************************************************************
 
         // end nye
 
@@ -654,11 +669,21 @@ namespace Prod.Domain
         #region (B) Ekspansjonshastighet
 
         public string ChosenSpreadYearlyIncrease { get; set; } = "";  //lagt til 14.10.2016
-
         public bool ActiveSpreadYearlyIncreaseObservations { get; set; } //lagt til 29.09.2016
-        public string SpreadYearlyIncreaseObservations { get; set; } //lagt til 29.09.2016
-        public string SpreadYearlyIncreaseObservationsLowerQuartile { get; set; } //lagt til 29.09.2016
-        public string SpreadYearlyIncreaseObservationsUpperQuartile { get; set; } //lagt til 29.09.2016
+
+
+        // ********************** (b) Forekomstareal – dørstokkarter  ****************************
+        public long Occurrences1Best { get; set; }	// beste anslag på antall forekomster fra 1 introduksjon 
+        public long Occurrences1Low { get; set; }	// lavt anslag på antall forekomster fra 1 introduksjon 
+        public long Occurrences1High { get; set; }	// høyt anslag på antall forekomster fra 1 introduksjon 
+        public double IntroductionsBest { get; set; }	// beste anslag på antall introduksjoner i løpet av 10 år 
+        // -------- disse (forekomstareal - dørstokkarter) er erstattet:  
+        //todo: *sjekk konvertering fra FAB3 før sletting av utkommentert kode*
+        //public string SpreadYearlyIncreaseObservations { get; set; } //lagt til 29.09.2016
+        //public string SpreadYearlyIncreaseObservationsLowerQuartile { get; set; } //lagt til 29.09.2016
+        //public string SpreadYearlyIncreaseObservationsUpperQuartile { get; set; } //lagt til 29.09.2016
+        // ****************************************************************************************
+
 
 
         public bool ActiveSpreadYearlyIncreaseOccurrenceArea { get; set; } //lagt til 29.09.2016
