@@ -672,8 +672,6 @@ namespace Prod.Domain
         //[DisplayName("Terskel for kvasiutdøing")]
         //public string SpreadRscriptQuasiExtinctionThreshold { get; set; }  //Spread_Rscript_Quasi_Extinction_Threshold
         // ************************************************************************************
-
-
         #endregion
 
         #region Median life time
@@ -684,10 +682,6 @@ namespace Prod.Domain
         public long LifetimeLowerQ { get; set; } // nedre kvartil for artens levetid i Norge i år 
         public long LifetimeUpperQ { get; set; } // øvre kvartil for artens levetid i Norge i år 
         #endregion Median life time
-
-
-
-
 
 
 
@@ -710,11 +704,20 @@ namespace Prod.Domain
         // ****************************************************************************************
 
 
-
-        public bool ActiveSpreadYearlyIncreaseOccurrenceArea { get; set; } //lagt til 29.09.2016
-        public string SpreadYearlyIncreaseOccurrenceArea { get; set; } //lagt til 29.09.2016
-        public string SpreadYearlyIncreaseOccurrenceAreaLowerQuartile { get; set; } //lagt til 29.09.2016
-        public string SpreadYearlyIncreaseOccurrenceAreaUpperQuartile { get; set; } //lagt til 29.09.2016
+        // ********************** ((B1) ekspansjonshastighet  ****************************
+        public long ExpansionSpeed { get; set; }  // ekspansjonshastighet i meter per år 
+        public long ExpansionLowerQ { get; set; } // nedre kvartil for ekspansjonshastighet i meter per år 
+        public long ExpansionUpperQ { get; set; } // øvre kvartil for ekspansjonshastighet i meter per år 
+        // -------- disse ((B1) ekspansjonshastighet) er erstattet:  
+        //todo: *sjekk konvertering fra FAB3 før sletting av utkommentert kode*
+        //public bool ActiveSpreadYearlyIncreaseOccurrenceArea { get; set; } //lagt til 29.09.2016
+        //public string SpreadYearlyIncreaseOccurrenceArea { get; set; } //lagt til 29.09.2016
+        //public string SpreadYearlyIncreaseOccurrenceAreaLowerQuartile { get; set; } //lagt til 29.09.2016
+        //public string SpreadYearlyIncreaseOccurrenceAreaUpperQuartile { get; set; } //lagt til 29.09.2016
+        //
+        // sjekk ogsa disse:
+        // // SpreadYearlyIncreaseCalculatedExpansionSpeed? SpreadYearlyIncreaseObservations?
+        // *********************************************************************************
 
 
         public bool ActiveSpreadYearlyLiteratureData { get; set; } //lagt til 29.09.2016
