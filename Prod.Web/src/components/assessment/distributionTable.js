@@ -149,17 +149,17 @@ export default class DistributionTable extends React.Component {
         <tr>
             <td>
             <Xcomp.Number                            
-                observableValue={[assessment.riskAssessment, "distributionG"]}
+                observableValue={[assessment.riskAssessment, "spreadHistoryDomesticAreaInStronglyChangedNatureTypesLow"]}
                 integer />   
             </td>            
             <td>
             <Xcomp.Number                            
-                observableValue={[assessment.riskAssessment, "distributionH"]}
+                observableValue={[assessment.riskAssessment, "spreadHistoryDomesticAreaInStronglyChangedNatureTypesLow"]}
                 integer />   
             </td>
            <td>
            <Xcomp.Number                            
-                observableValue={[assessment.riskAssessment, "distributionI"]}
+                observableValue={[assessment.riskAssessment, "spreadHistoryDomesticAreaInStronglyChangedNatureTypesLow"]}
                 integer />   
           </td>
           {assessment.alienSpeciesCategory != "DoorKnocker" && 
