@@ -168,8 +168,8 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.BasisOfAssessment, opt => opt.Ignore())
                     .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.Ignore());
 
-                cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment, Prod.Domain.RiskAssessment>()               
-               
+                cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment, Prod.Domain.RiskAssessment>()
+
                     .ForMember(dest => dest.Naturetype2018, opt => opt.Ignore())
                     .ForMember(dest => dest.NaturetypeNIN2, opt => opt.Ignore())
                     .ForMember(dest => dest.BackgroundC, opt => opt.Ignore())
@@ -178,30 +178,51 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.AcceptOrAdjustCritA, opt => opt.Ignore())
                     .ForMember(dest => dest.Hovedøkosystem, opt => opt.Ignore())
 
-                    
+
                     // todo: delete this section when domain is fixed
-                    .ForMember(dest => dest.ScoreA, opt => opt.Ignore())
-                    .ForMember(dest => dest.UnsureA, opt => opt.Ignore())
-                    .ForMember(dest => dest.ScoreB, opt => opt.Ignore())
-                    .ForMember(dest => dest.UnsureB, opt => opt.Ignore())
-                    .ForMember(dest => dest.ScoreC, opt => opt.Ignore())
-                    .ForMember(dest => dest.UnsureC, opt => opt.Ignore())
-                    .ForMember(dest => dest.ScoreD, opt => opt.Ignore())
-                    .ForMember(dest => dest.UnsureD, opt => opt.Ignore())
-                    .ForMember(dest => dest.ScoreE, opt => opt.Ignore())
-                    .ForMember(dest => dest.UnsureE, opt => opt.Ignore())
-                    .ForMember(dest => dest.ScoreF, opt => opt.Ignore())
-                    .ForMember(dest => dest.UnsureF, opt => opt.Ignore())
-                    .ForMember(dest => dest.ScoreG, opt => opt.Ignore())
-                    .ForMember(dest => dest.UnsureG, opt => opt.Ignore())
-                    .ForMember(dest => dest.ScoreH, opt => opt.Ignore())
-                    .ForMember(dest => dest.UnsureH, opt => opt.Ignore())
-                    .ForMember(dest => dest.ScoreI, opt => opt.Ignore())
-                    .ForMember(dest => dest.UnsureI, opt => opt.Ignore())
+                    //.ForMember(dest => dest.ScoreA, opt => opt.Ignore())
+                    //.ForMember(dest => dest.UnsureA, opt => opt.Ignore())
+                    //.ForMember(dest => dest.ScoreB, opt => opt.Ignore())
+                    //.ForMember(dest => dest.UnsureB, opt => opt.Ignore())
+                    //.ForMember(dest => dest.ScoreC, opt => opt.Ignore())
+                    //.ForMember(dest => dest.UnsureC, opt => opt.Ignore())
+                    //.ForMember(dest => dest.ScoreD, opt => opt.Ignore())
+                    //.ForMember(dest => dest.UnsureD, opt => opt.Ignore())
+                    //.ForMember(dest => dest.ScoreE, opt => opt.Ignore())
+                    //.ForMember(dest => dest.UnsureE, opt => opt.Ignore())
+                    //.ForMember(dest => dest.ScoreF, opt => opt.Ignore())
+                    //.ForMember(dest => dest.UnsureF, opt => opt.Ignore())
+                    //.ForMember(dest => dest.ScoreG, opt => opt.Ignore())
+                    //.ForMember(dest => dest.UnsureG, opt => opt.Ignore())
+                    //.ForMember(dest => dest.ScoreH, opt => opt.Ignore())
+                    //.ForMember(dest => dest.UnsureH, opt => opt.Ignore())
+                    //.ForMember(dest => dest.ScoreI, opt => opt.Ignore())
+                    //.ForMember(dest => dest.UnsureI, opt => opt.Ignore())
                     // --------------------------------
                     .ForMember(dest => dest.PossibleLowerCategory, opt => opt.Ignore())
                     .ForMember(dest => dest.natureAffectedAbroadF, opt => opt.Ignore())
-                    .ForMember(dest => dest.natureAffectedAbroadG, opt => opt.Ignore());
+                    .ForMember(dest => dest.natureAffectedAbroadG, opt => opt.Ignore())
+
+                    .ForMember(dest => dest.PopulationSize, opt => opt.MapFrom(src => src.SpreadRscriptSpeciesCount))
+                    .ForMember(dest => dest.GrowthRate, opt => opt.MapFrom(src => src.SpreadRscriptPopulationGrowth))
+                    .ForMember(dest => dest.EnvVariance, opt => opt.MapFrom(src => src.SpreadRscriptEnvironmantVariance))
+                    .ForMember(dest => dest.DemVariance, opt => opt.MapFrom(src => src.SpreadRscriptDemographicVariance))
+                    .ForMember(dest => dest.CarryingCapacity, opt => opt.MapFrom(src => src.SpreadRscriptSustainabilityK))
+                    .ForMember(dest => dest.ExtinctionThreshold, opt => opt.MapFrom(src => src.SpreadRscriptQuasiExtinctionThreshold))
+                    .ForMember(dest => dest.MedianLifetime, opt => opt.MapFrom(src => src.SpreadRscriptEstimatedSpeciesLongevity)) //ActiveSpreadRscriptEstimatedSpeciesLongevity?? ChosenSpreadMedanLifespan??
+                    .ForMember(dest => dest.LifetimeLowerQ, opt => opt.Ignore())
+                    .ForMember(dest => dest.LifetimeUpperQ, opt => opt.Ignore())
+                    .ForMember(dest => dest.Occurrences1Best, opt => opt.MapFrom(src => src.SpreadYearlyIncreaseObservations))
+                    .ForMember(dest => dest.Occurrences1Low, opt => opt.MapFrom(src => src.SpreadYearlyIncreaseObservationsLowerQuartile))
+                    .ForMember(dest => dest.Occurrences1High, opt => opt.MapFrom(src => src.SpreadYearlyIncreaseObservationsUpperQuartile))
+                    .ForMember(dest => dest.IntroductionsBest, opt => opt.Ignore())
+                    .ForMember(dest => dest.ExpansionSpeed, opt => opt.MapFrom(src => src.SpreadYearlyIncreaseOccurrenceArea)) // ActiveSpreadYearlyIncreaseOccurrenceArea?? SpreadYearlyIncreaseCalculatedExpansionSpeed?? SpreadYearlyIncreaseObservations??
+                    .ForMember(dest => dest.ExpansionLowerQ, opt => opt.MapFrom(src => src.SpreadYearlyIncreaseOccurrenceAreaLowerQuartile))
+                    .ForMember(dest => dest.ExpansionUpperQ, opt => opt.MapFrom(src => src.SpreadYearlyIncreaseOccurrenceAreaUpperQuartile));
+                    //.ForMember(dest => dest., opt => opt.MapFrom(src => src.))
+
+                    
+
                 cfg.CreateMap<Prod.Domain.Legacy.MigrationPathway, Prod.Domain.MigrationPathway>();
                 cfg.CreateMap<Prod.Domain.Legacy.MigrationPathwayCode, Prod.Domain.MigrationPathwayCode>();
                 cfg.CreateMap<Prod.Domain.Legacy.SpreadHistory, Prod.Domain.SpreadHistory>();
@@ -247,6 +268,26 @@ namespace SwissKnife.Database
                         dest.TaxonHierarcy = "";
                         dest.IsDeleted = false;
                     });
+
+                cfg.CreateMap<FA3Legacy, Prod.Domain.RiskAssessment>()
+                    .ForMember(dest => dest.AOOknown, opt => opt.MapFrom(src => src.CurrentExistenceArea))
+                    .ForMember(dest => dest.AOOtotalBest, opt => opt.MapFrom(src => src.CurrentExistenceAreaCalculated))
+                    .ForMember(dest => dest.AOOtotalLow, opt => opt.MapFrom(src => src.CurrentExistenceAreaLowCalculated))
+                    .ForMember(dest => dest.AOOtotalHigh, opt => opt.MapFrom(src => src.CurrentExistenceAreaHighCalculated))
+                    .ForMember(dest => dest.AOO50yrBest, opt => opt.MapFrom(src => src.PotentialExistenceArea))
+                    .ForMember(dest => dest.AOO50yrLow, opt => opt.MapFrom(src => src.PotentialExistenceAreaLowQuartile))
+                    .ForMember(dest => dest.AOO50yrHigh, opt => opt.MapFrom(src => src.PotentialExistenceAreaHighQuartile))
+                    .ForMember(dest => dest.AOOyear1, opt => opt.Ignore())
+                    .ForMember(dest => dest.AOOyear2, opt => opt.Ignore())
+                    .ForMember(dest => dest.AAO1, opt => opt.Ignore())
+                    .ForMember(dest => dest.AAO2, opt => opt.Ignore())
+                    .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes, opt => opt.MapFrom(src => src.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes))
+                    .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesBest, opt => opt.Ignore())
+                    .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesLow, opt => opt.Ignore())
+                    .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesHigh, opt => opt.Ignore())
+                    .ForAllOtherMembers(opt => opt.Ignore());
+
+
             });
             mapperConfig.AssertConfigurationIsValid();
             var mapper = new Mapper(mapperConfig);
