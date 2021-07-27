@@ -649,9 +649,9 @@ namespace Prod.Domain
         public double DemVariance { get; set; } // demografisk varians 
         public long CarryingCapacity { get; set; } // bestandens bæreevne (individtall) 
         public long ExtinctionThreshold { get; set; } // kvasiutdøingsterskel (individtall) 
-                                                      // -------- disse ((A2) Numerisk estimering) er erstattet:  
-                                                      //todo: *sjekk konvertering fra FAB3 før sletting av utkommentert kode*
-                                                      //////public bool ActiveSpreadRscriptSpeciesCount { get; set; } // lagt til 27.09.2016
+        // -------- disse ((A2) Numerisk estimering) er erstattet:  
+        //todo: *sjekk konvertering fra FAB3 før sletting av utkommentert kode*
+        //////public bool ActiveSpreadRscriptSpeciesCount { get; set; } // lagt til 27.09.2016
 
         //[DisplayName("Bestandstørrelse")]
         //public int? SpreadRscriptSpeciesCount { get; set; }  //Spread_Rscript_Species_Count
