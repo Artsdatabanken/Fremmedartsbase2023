@@ -218,10 +218,28 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.IntroductionsBest, opt => opt.Ignore())
                     .ForMember(dest => dest.ExpansionSpeed, opt => opt.MapFrom(src => src.SpreadYearlyIncreaseOccurrenceArea)) // ActiveSpreadYearlyIncreaseOccurrenceArea?? SpreadYearlyIncreaseCalculatedExpansionSpeed?? SpreadYearlyIncreaseObservations??
                     .ForMember(dest => dest.ExpansionLowerQ, opt => opt.MapFrom(src => src.SpreadYearlyIncreaseOccurrenceAreaLowerQuartile))
-                    .ForMember(dest => dest.ExpansionUpperQ, opt => opt.MapFrom(src => src.SpreadYearlyIncreaseOccurrenceAreaUpperQuartile));
-                    //.ForMember(dest => dest., opt => opt.MapFrom(src => src.))
+                    .ForMember(dest => dest.ExpansionUpperQ, opt => opt.MapFrom(src => src.SpreadYearlyIncreaseOccurrenceAreaUpperQuartile))
 
-                    
+                    // følgende blir mappet fra FA3Legacy lenger nede
+                    .ForMember(dest => dest.AOOknown, opt => opt.Ignore())
+                    .ForMember(dest => dest.AOOtotalBest, opt => opt.Ignore())
+                    .ForMember(dest => dest.AOOtotalLow, opt => opt.Ignore())
+                    .ForMember(dest => dest.AOOtotalHigh, opt => opt.Ignore())
+                    .ForMember(dest => dest.AOO50yrBest, opt => opt.Ignore())
+                    .ForMember(dest => dest.AOO50yrLow, opt => opt.Ignore())
+                    .ForMember(dest => dest.AOO50yrHigh, opt => opt.Ignore())
+                    .ForMember(dest => dest.AOOyear1, opt => opt.Ignore())
+                    .ForMember(dest => dest.AOOyear2, opt => opt.Ignore())
+                    .ForMember(dest => dest.AAO1, opt => opt.Ignore())
+                    .ForMember(dest => dest.AAO2, opt => opt.Ignore())
+                    .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes, opt => opt.Ignore())
+                    .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesBest, opt => opt.Ignore())
+                    .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesLow, opt => opt.Ignore())
+                    .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesHigh, opt => opt.Ignore())
+                    ;
+                //.ForMember(dest => dest., opt => opt.MapFrom(src => src.))
+
+
 
                 cfg.CreateMap<Prod.Domain.Legacy.MigrationPathway, Prod.Domain.MigrationPathway>();
                 cfg.CreateMap<Prod.Domain.Legacy.MigrationPathwayCode, Prod.Domain.MigrationPathwayCode>();
@@ -261,6 +279,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.HorizonEstablismentPotential, opt => opt.Ignore())
                     .ForMember(dest => dest.HorizonEstablismentPotentialDescription, opt => opt.Ignore())
                     .ForMember(dest => dest.Id, opt => opt.Ignore()) // primærnøkkel
+
                     .AfterMap((src, dest) =>
                     {
                         // set some standard values
