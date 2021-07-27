@@ -374,29 +374,6 @@ namespace Prod.Domain
 
         public string CurrentPresenceComment { get; set; }
 
-        //*************** Forekomstareal om 50år ************************************
-        public Int64? AOO50yrBest { get; set; } // beste anslag på totalt forekomstareal om 50 år 
-        public Int64? AOO50yrLow { get; set; } // lavt anslag på totalt forekomstareal om 50 år 
-        public Int64? AOO50yrHigh { get; set; }
-        // -------- disse (forekomstareal om 50år) er erstattet:  
-        //todo: *sjekk konvertering fra FAB3 før sletting av utkommentert kode*
-        //public Int64? PotentialExistenceAreaLowQuartile { get; set; }
-        //public Int64? PotentialExistenceArea { get; set; }
-        //public Int64? PotentialExistenceAreaHighQuartile { get; set; }
-        //public string PotentialPresenceComment { get; set; }
-        //*******************************************************************
-
-        // end nye
-
-
-        //public Int64? SpeciesCount { get; set; } // fab: Species_Count  // ikke i bruk som egen attributt (ligger i spredningshistorikk item) i 2012
-
-
-        [JsonConverter(typeof(CustomDoubleFormatConverter))]
-        public double? SpreadHistoryDomesticAreaInStronglyChangedNatureTypes { get; set; }
-        public double? SpreadHistoryDomesticAreaInStronglyChangedNatureTypesLow { get; set; }
-        public double? SpreadHistoryDomesticAreaInStronglyChangedNatureTypesBest { get; set; }
-        public double? SpreadHistoryDomesticAreaInStronglyChangedNatureTypesHigh { get; set; }
     }
     public partial class FA4 // (4) Naturtyper
     {
@@ -597,6 +574,9 @@ namespace Prod.Domain
         //*******************************************************************
 
 
+
+
+
         // *******  (B2a) Økning i forekomstareal – selvstendig reproduserende arter  **********
         public long AOOyear1 { get; set; } // årstallet for det første forekomstarealet 
         public long AOOyear2 { get; set; } // årstallet for det andre forekomstarealet 
@@ -605,6 +585,29 @@ namespace Prod.Domain
         // ************************************************************************************
 
 
+        //*************** Forekomstareal om 50år ************************************
+        public Int64? AOO50yrBest { get; set; } // beste anslag på totalt forekomstareal om 50 år 
+        public Int64? AOO50yrLow { get; set; } // lavt anslag på totalt forekomstareal om 50 år 
+        public Int64? AOO50yrHigh { get; set; }
+        // -------- disse (forekomstareal om 50år) er erstattet:  
+        //todo: *sjekk konvertering fra FAB3 før sletting av utkommentert kode*
+        //public Int64? PotentialExistenceAreaLowQuartile { get; set; }
+        //public Int64? PotentialExistenceArea { get; set; }
+        //public Int64? PotentialExistenceAreaHighQuartile { get; set; }
+        //public string PotentialPresenceComment { get; set; }
+        //*******************************************************************
+
+        // end nye
+
+
+        //public Int64? SpeciesCount { get; set; } // fab: Species_Count  // ikke i bruk som egen attributt (ligger i spredningshistorikk item) i 2012
+
+
+        [JsonConverter(typeof(CustomDoubleFormatConverter))]
+        public double? SpreadHistoryDomesticAreaInStronglyChangedNatureTypes { get; set; }
+        public double? SpreadHistoryDomesticAreaInStronglyChangedNatureTypesLow { get; set; }
+        public double? SpreadHistoryDomesticAreaInStronglyChangedNatureTypesBest { get; set; }
+        public double? SpreadHistoryDomesticAreaInStronglyChangedNatureTypesHigh { get; set; }
 
 
 
