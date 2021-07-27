@@ -22,7 +22,7 @@ export default class BootstrapModal extends React.Component {
                         </div>
            {this.children ?
             this.children.map(child =>
-                <div>
+                <div style={{display: 'flex'}}>
                 <div className="modal-body" >
                             <div style={{display: 'flex'}}>                               
                                 {this.children}
