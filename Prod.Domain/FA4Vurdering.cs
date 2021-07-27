@@ -354,29 +354,6 @@ namespace Prod.Domain
         public Int64? PotentialAreaDistribution { get; set; } // fab: Potential_Area_Distribution -  ikke i bruk?
         public string PotentialAreaDistributionInTheFuture { get; set; } // fab: Potential_Area_Distribution_Future_Future @steinho - ikke i bruk?
 
-        //*************** Forekomstareal i dag ************************************
-        public Int64? AOOknown { get; set; }
-        public Int64? AOOtotalBest { get; set; }
-        public Int64? AOOtotalLow { get; set; }
-        public Int64? AOOtotalHigh { get; set; }
-        // -------- disse (forekomstareal i dag) er erstattet:  
-        //todo: *sjekk konvertering fra FAB3 før sletting av utkommentert kode*
-        //public Int64? CurrentExistenceArea { get; set; }
-        //public Int64? CurrentExistenceAreaLowCalculated { get; set; }
-        //public string CurrentExistenceAreaLowMultiplier { get; set; }
-        //public Int64? CurrentExistenceAreaCalculated { get; set; }
-        //public string CurrentExistenceAreaMultiplier { get; set; }
-        //public string CurrentExistenceAreaHighMultiplier { get; set; }
-        //public Int64? CurrentExistenceAreaHighCalculated { get; set; }
-        //*******************************************************************
-
-
-        // *******  (B2a) Økning i forekomstareal – selvstendig reproduserende arter  **********
-        public long AOOyear1 { get; set; } // årstallet for det første forekomstarealet 
-        public long AOOyear2 { get; set; } // årstallet for det andre forekomstarealet 
-        public long AAO1 { get; set; } // forekomstarealet i år 1 
-        public long AAO2 { get; set; } // forekomstarealet i år 2 
-        // ************************************************************************************
 
 
         public Int64? CurrentIndividualCount { get; set; }
@@ -603,6 +580,29 @@ namespace Prod.Domain
 
 
 
+        //*************** Forekomstareal i dag ************************************
+        public Int64? AOOknown { get; set; }
+        public Int64? AOOtotalBest { get; set; }
+        public Int64? AOOtotalLow { get; set; }
+        public Int64? AOOtotalHigh { get; set; }
+        // -------- disse (forekomstareal i dag) er erstattet:  
+        //todo: *sjekk konvertering fra FAB3 før sletting av utkommentert kode*
+        //public Int64? CurrentExistenceArea { get; set; }
+        //public Int64? CurrentExistenceAreaLowCalculated { get; set; }
+        //public string CurrentExistenceAreaLowMultiplier { get; set; }
+        //public Int64? CurrentExistenceAreaCalculated { get; set; }
+        //public string CurrentExistenceAreaMultiplier { get; set; }
+        //public string CurrentExistenceAreaHighMultiplier { get; set; }
+        //public Int64? CurrentExistenceAreaHighCalculated { get; set; }
+        //*******************************************************************
+
+
+        // *******  (B2a) Økning i forekomstareal – selvstendig reproduserende arter  **********
+        public long AOOyear1 { get; set; } // årstallet for det første forekomstarealet 
+        public long AOOyear2 { get; set; } // årstallet for det andre forekomstarealet 
+        public long AAO1 { get; set; } // forekomstarealet i år 1 
+        public long AAO2 { get; set; } // forekomstarealet i år 2 
+        // ************************************************************************************
 
 
 
@@ -955,26 +955,26 @@ namespace Prod.Domain
 
 
 
-        // todo: delete this section when fixed (uses criterion instead)
-        public List<string> ScoreA { get; set; } = new List<string>();
-        public List<string> UnsureA { get; set; } = new List<string>();
-        public List<string> ScoreB { get; set; } = new List<string>();
-        public List<string> UnsureB { get; set; } = new List<string>();
-        public List<string> ScoreC { get; set; } = new List<string>();
-        public List<string> UnsureC { get; set; } = new List<string>();
-        public List<string> ScoreD { get; set; } = new List<string>();
-        public List<string> UnsureD { get; set; } = new List<string>();
-        public List<string> ScoreE { get; set; } = new List<string>();
-        public List<string> UnsureE { get; set; } = new List<string>();
-        public List<string> ScoreF { get; set; } = new List<string>();
-        public List<string> UnsureF { get; set; } = new List<string>();
-        public List<string> ScoreG { get; set; } = new List<string>();
-        public List<string> UnsureG { get; set; } = new List<string>();
-        public List<string> ScoreI { get; set; } = new List<string>();
-        public List<string> UnsureI { get; set; } = new List<string>();
-        public List<string> ScoreH { get; set; } = new List<string>();
-        public List<string> UnsureH { get; set; } = new List<string>();
-        // ----------------------------------------------------
+        //// todo: delete this section when fixed (uses criterion instead)
+        //public List<string> ScoreA { get; set; } = new List<string>();
+        //public List<string> UnsureA { get; set; } = new List<string>();
+        //public List<string> ScoreB { get; set; } = new List<string>();
+        //public List<string> UnsureB { get; set; } = new List<string>();
+        //public List<string> ScoreC { get; set; } = new List<string>();
+        //public List<string> UnsureC { get; set; } = new List<string>();
+        //public List<string> ScoreD { get; set; } = new List<string>();
+        //public List<string> UnsureD { get; set; } = new List<string>();
+        //public List<string> ScoreE { get; set; } = new List<string>();
+        //public List<string> UnsureE { get; set; } = new List<string>();
+        //public List<string> ScoreF { get; set; } = new List<string>();
+        //public List<string> UnsureF { get; set; } = new List<string>();
+        //public List<string> ScoreG { get; set; } = new List<string>();
+        //public List<string> UnsureG { get; set; } = new List<string>();
+        //public List<string> ScoreI { get; set; } = new List<string>();
+        //public List<string> UnsureI { get; set; } = new List<string>();
+        //public List<string> ScoreH { get; set; } = new List<string>();
+        //public List<string> UnsureH { get; set; } = new List<string>();
+        //// ----------------------------------------------------
 
 
         public string natureAffectedAbroadF { get; set; }
