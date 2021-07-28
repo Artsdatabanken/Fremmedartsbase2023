@@ -18,10 +18,12 @@ export default class BootstrapModal extends React.Component {
         const okEnabled = this.props.okEnabled === undefined ? true : this.props.okEnabled
         console.log (this.children)
         return <div>
-       <div className="modal-backdrop fade in"  style={{zIndex: 1110}}></div>
-        <div role="dialog" tabIndex="-1" className="modal fade in" style={{display: "block", zIndex: 1120}}>
-        <div className="modal-dialog">
-                    <div className="modal-content" role="document">
+       {/*<div className="modal-backdrop fade in"  style={{zIndex: 1110}}></div>*/}
+        <div role="dialog" 
+            //tabIndex="-1" className="modal fade in" style={{display: "block", zIndex: 1120}}
+        >
+       {/* <div className="modal-dialog">
+                    <div className="modal-content" role="document"> */}
                         <div className="modal-header">
                             <Xcomp.Button className="close" ariaLabel="Close" onClick={this.onCancel}>
                                 <span aria-hidden="true">×</span>
@@ -34,7 +36,7 @@ export default class BootstrapModal extends React.Component {
                                     {this.heading}
                                 </div>}
                         </div>
-                        <div className="modal-body">
+                        <div className="modal-body" style={{display: 'flex'}}>
                             <div>
                                 {this.children}
                             </div>
@@ -65,10 +67,10 @@ export default class BootstrapModal extends React.Component {
                 
             ): null 
            
-            }*/}
+            }
 
-
+            // end tags for modal-dialog and modal-content
         </div>
-        </div>
+        </div>*/}
     }
 }
