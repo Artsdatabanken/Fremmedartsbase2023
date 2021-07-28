@@ -15,7 +15,7 @@ export default class RedlistedNaturtypeSelector extends React.Component {
                     <div key={gruppe.Id}>
                         <div
                             className={"glyphicon glyphicon-chevron-down tree-view-arrow " + (gruppe.collapsed ? "tree-view-arrow-collapsed" : "")}
-                            onClick={() => gruppe.collapsed = !gruppe.collapsed}>
+                            onClick={action (() => gruppe.collapsed = !gruppe.collapsed)}>
                         </div>
                         <div className="tree-view-label">
                             <span className="hovedtypegruppe">{gruppe.Id}</span>

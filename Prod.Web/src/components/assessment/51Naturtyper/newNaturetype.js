@@ -1,5 +1,5 @@
 import React from 'react';
-import {autorun, extendObservable, observable, toJS} from 'mobx';
+import {autorun, extendObservable, observable, toJS, action} from 'mobx';
 import {observer} from 'mobx-react';
 import NaturtypeSelector from './naturtypeSelector';
 import NaturtypeModal from './naturetypeModal';
@@ -28,7 +28,7 @@ export default class NewNaturetype extends React.Component {
 
 
 
-        this.setSelectedNT = (naturtypekode) => {
+        this.setSelectedNT = action ((naturtypekode) => {
             const nnt = this.nyNaturtype
             // console.log("Nincode: " + naturtypekode)
             nnt.NiNCode = naturtypekode
@@ -39,7 +39,7 @@ export default class NewNaturetype extends React.Component {
             nnt.AffectedArea = null
             nnt.Background.clear()
             this.showModal = true
-        }
+        })
 
         this.setSelectedNaturtype = (naturtypekode) => {
             this.hideStateChange = false;

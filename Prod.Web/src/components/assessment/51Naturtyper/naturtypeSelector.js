@@ -3,6 +3,7 @@ import React from 'react';
 import {observer} from 'mobx-react';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { action } from 'mobx';
 
 
 @observer
@@ -24,7 +25,7 @@ export default class NaturtypeSelector extends React.Component {
                         <div
                         className={"glyphicon glyphicon-chevron-down tree-view-arrow " }
                             //className={"glyphicon glyphicon-chevron-down tree-view-arrow " + (hovedtypegruppe.Collapsed ? "tree-view-arrow-collapsed" : "")}
-                            onClick={() => hovedtypegruppe.Collapsed = !hovedtypegruppe.Collapsed} 
+                            onClick={action(() => hovedtypegruppe.Collapsed = !hovedtypegruppe.Collapsed)} 
                             > {hovedtypegruppe.Collapsed == false ? <ExpandMoreIcon/> : <NavigateNextIcon/>}
                             
                         </div>
