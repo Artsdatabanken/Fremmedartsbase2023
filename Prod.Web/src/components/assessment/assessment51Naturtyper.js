@@ -44,7 +44,7 @@ export default class Assessment51Naturtyper extends React.Component {
         const riskAssessment = assessment.riskAssessment // fabModel.activeRegionalRiskAssessment
         // const labels = config.labels.NatureType
         
-        
+        const fabModel = appState
         const labels = appState.codeLabels
         const koder = appState.koder
 
@@ -88,6 +88,7 @@ export default class Assessment51Naturtyper extends React.Component {
                 <fieldset className="well">   
                 <NaturtypeTable
                     naturetypes={assessment.impactedNatureTypes}
+                    fabModel={fabModel}
                     canRenderTable={canRenderTable}
                     labels={labels}
                     codes={koder}
@@ -230,7 +231,7 @@ export default class Assessment51Naturtyper extends React.Component {
                    </div>*/}
                 </fieldset>
                 
-               {/* <h4>{ntLabels.effectOnThreatenedNatureTypes }</h4>
+             {/*  <h4>{ntLabels.effectOnThreatenedNatureTypes }</h4>
                 <br/>
                 <NewRedlistedNaturetype
                     appState={appState}
@@ -243,8 +244,8 @@ export default class Assessment51Naturtyper extends React.Component {
                     canRenderTable={canRenderTable}
                     labels={labels}
                     appState={appState}/>
-                */}
-                <br/>
+            
+                <br/>*/}
                 
                 <fieldset className="well">
                     <h4>{ntLabels.habitat}</h4>

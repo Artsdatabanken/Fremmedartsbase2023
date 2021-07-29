@@ -293,10 +293,12 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                 />*/}
                         <Xcomp.Button primary >{labels.General.chooseFiles}</Xcomp.Button>
                         <span>{labels.General.noFileChosen}</span>
-                         {/*  <Filliste
-                                  baseDirectory={`${appState.vurderingId.split('/').join('_')}/ViableAnalysis`}
+                          <Filliste
+                                //baseDirectory={`${appState.vurderingId.split('/').join('_')}/ViableAnalysis`}
+                                vurdering ={assessment}
                                  labels={labels.DistributionHistory}
-                                 {...appState.vurdering.Datasett}/>*/}
+                                 //{...appState.vurdering.Datasett}
+                                 />
                     </div>
                     </div>
                     <div className="statusField">
@@ -638,7 +640,11 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                     .vurderingId
                                                     .split('/').join('_')}/SpreadYearlyIncrease`}
                                                     labels={labels.DistributionHistory}
-                                                    {...appState.vurdering.Datasett}/>
+                                                    //{...appState.vurdering.Datasett}
+                                                    />
+                                                    <FileUpload
+                                                        // onUploadComplete={this.getAttachments}
+                                                    />
                                             </td>
                                         </tr>
                                         : null }

@@ -41,11 +41,11 @@ const SpeciesNaturetypeTable = observer((props) =>
         </thead>
         <tbody>
             {props.list.map(item =>
-            <tr key={item.NiNCode+item.Effect+item.InteractionType+item.KeyStoneSpecie+item.EffectLocalScale}>
+            <tr key={item.niNCode+item.Effect+item.InteractionType+item.KeyStoneSpecie+item.EffectLocalScale}>
                 <td>
                     <div className="naturtypeItem">
-                        <div className="naturtypeCode">{item.NiNCode}</div>
-                        <div className="naturtypeName">{props.naturtypeLabels[item.NiNCode]}</div>
+                        <div className="naturtypeCode">{item.niNCode}</div>
+                        <div className="naturtypeName">{props.naturtypeLabels[item.niNCode]}</div>
                     </div>
                 </td>
                 <td><Xcomp.Bool observableValue={[item, 'keyStoneOrEndangeredSpecie']} /></td>

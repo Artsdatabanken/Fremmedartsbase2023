@@ -1,5 +1,5 @@
 import React from 'react';
-import {extendObservable} from 'mobx';
+import {extendObservable, action} from 'mobx';
 import {observer, inject} from 'mobx-react';
 import * as Xcomp from '../observableComponents';
 
@@ -16,18 +16,18 @@ export class NaturtypeRad extends React.Component {
             showModal: false,
             hideStateChange: false
         })
-        this.updateNaturetype = (upd) => {
+        this.updateNaturetype = action((upd) => {
             // console.log("upd nt: " + JSON.stringify(upd))
             const nt = naturtype
             nt.DominanceForrest.replace(upd.DominanceForrest)
             nt.TimeHorizon = upd.TimeHorizon
             nt.ColonizedArea = upd.ColonizedArea
             nt.StateChange.replace(upd.StateChange)
-            nt.AffectedArea = upd.AffectedArea
-
+            nt.AffectedArea = upd.AffectedArea            
+            nt.Background = upd.Background
             this.showModal = false
 
-        }
+        })
     }
 
     // editSelectedNaturtype(naturtypekode) {
@@ -62,10 +62,10 @@ export class NaturtypeRad extends React.Component {
                 <td>{ntlabel}</td>
                 <td>{dominanceForrest}</td>
                 <td></td>
-                <td>{kodeTekst(koder.timeHorizon, nt.timeHorizon)}</td>
-                <td>{kodeTekst(koder.colonizedArea, nt.colonizedArea)}</td>
+                <td>{kodeTekst(koder.timeHorizon, nt.TimeHorizon)}</td>
+                <td>{kodeTekst(koder.colonizedArea, nt.ColonizedArea)}</td>
                 <td>{stateChangLabel}</td>
-                <td>{kodeTekst(koder.affectedArea, nt.affectedArea)}</td>
+                <td>{kodeTekst(koder.affectedArea, nt.AffectedArea)}</td>
                 <td>
                 <Xcomp.MultiselectArray
                                 observableValue={[nt, 'background']} 
@@ -77,10 +77,10 @@ export class NaturtypeRad extends React.Component {
                     style= {{marginBottom: '10px'}}
                         primary 
                         xs 
-                        onClick={() => {
+                        onClick={action(() => {
                             this.showModal = true
-                            this.hideStateChange = nt.NiNCode.startsWith("LI ")
-                            }}
+                            this.hideStateChange = nt.niNCode.startsWith("LI ")
+                            })}
                         >{gLabels.edit}</Xcomp.Button>
                     {this.showModal
                     ? <NaturtypeModal 
@@ -140,8 +140,11 @@ export default class NaturtypeTable extends React.Component {
             <tbody>
                 {!canRenderTable ? naturetypes.map(nt => { 
                     const deleteRow = () => naturetypes.remove(nt)
+                    
                     //const key = nt.NiNCode + nt.TimeHorizon + nt.ColonizedArea + nt.StateChange.join(';') + nt.AffectedArea
-                    const key = nt.NiNCode + nt.TimeHorizon + nt.ColonizedArea
+                    //const key = nt.NiNCode + nt.TimeHorizon + nt.ColonizedArea
+                    //console.log(nt)
+                    const key = nt.niNCode
                     return <NaturtypeRad key={key} naturtype={nt} deleteRow={deleteRow} codes={codes} fabModel={fabModel} labels={labels}/> }) :
                     null
                 }

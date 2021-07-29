@@ -1,9 +1,10 @@
 import React from 'react';
 import {autorun, extendObservable, observable, toJS} from 'mobx';
-import {observer} from 'mobx-react';
+import {observer, inject} from 'mobx-react';
 import * as Xcomp from '../observableComponents';
 import BsModal from '../../bootstrapModal'
 
+@inject("appState")
 @observer
 export class StringEnum2 extends React.Component {
     render() {
@@ -63,19 +64,20 @@ export default class NaturetypeModal extends React.Component {
         this.hideModal = () => sm[smprop]  = false
         this.onOk = () => {
             this.hideModal()
-            const clone = toJS(this.editNaturtype) // clone once more to be shure...
+            console.log(this.editNatureype)
+            const clone = toJS(this.editNaturtype) // clone once more to be sure...
             onOk(clone)
         }
         autorun(() => {
-            if (fabModel.naturtypeLabels && this.editNaturtype && this.editNaturtype.NiNCode) {
-                this.naturtypeLabel = fabModel.naturtypeLabels[this.editNaturtype.NiNCode]
+            if (fabModel.naturtypeLabels && this.editNaturtype && this.editNaturtype.niNCode) {
+                this.naturtypeLabel = fabModel.naturtypeLabels[this.editNaturtype.niNCode]
             }
         })
         autorun(() => {
-            const hasSC = this.editNaturtype ? this.editNaturtype.StateChange.length > 0 : null
+            const hasSC = this.editNaturtype ? this.editNaturtype.stateChange.length > 0 : null
             this.hasStateChange =  hasSC 
             if (!hasSC) {
-                this.editNaturtype.AffectedArea = "0"
+                this.editNaturtype.affectedArea = "0"
             }
         })
     }
@@ -107,30 +109,30 @@ export default class NaturetypeModal extends React.Component {
                 ? <BsModal
                         heading={
                             <div> 
-                                <h4>{this.editNaturtype.NiNCode}</h4>
+                                <h4>{this.editNaturtype.niNCode}</h4>
                                 <p>{this.naturtypeLabel}</p>
                             </div >}
                         onCancel={this.hideModal}
                         onOk={this.onOk}
                         labels={labels.General}
                         children = {this.editNaturtype.Children}>
-                        {doms && this.hasDominanceForrest(this.editNaturtype.NiNCode)
+                        {doms && this.hasDominanceForrest(this.editNaturtype.niNCode)
                             ? <Xcomp.MultiselectArray
                                     label={ntLabels.dominanceForrest}
                                     labels={labels.General}
-                                    observableValue={[this.editNaturtype, 'DominanceForrest']}
+                                    observableValue={[this.editNaturtype, 'dominanceForrest']}
                                     codes={doms}
                                     forceSync
                                     formlayout/>
                             : null}
                         <Xcomp.StringEnum
                             label={ntLabels.timeHorizon}
-                            observableValue={[this.editNaturtype, 'TimeHorizon']}
+                            observableValue={[this.editNaturtype, 'timeHorizon']}
                             codes={koder.timeHorizon}
                             forceSync/>
                         <Xcomp.StringEnum
                             label={ntLabels.colonizedArea}
-                            observableValue={[this.editNaturtype, 'ColonizedArea']}
+                            observableValue={[this.editNaturtype, 'colonizedArea']}
                             codes={koder.colonizedArea}
                             forceSync/>
                         {hsc[hscprop]
@@ -138,13 +140,13 @@ export default class NaturetypeModal extends React.Component {
                             : <Xcomp.MultiselectArray
                                 label={ntLabels.stateChange}
                                 labels={labels.General}
-                                observableValue={[this.editNaturtype, 'StateChange']}
+                                observableValue={[this.editNaturtype, 'stateChange']}
                                 codes={koder.tilstandsendringer}
                                 forceSync
                                 formlayout/>}
                         <StringEnum2
                             label={ntLabels.affectedArea}
-                            observableValue={[this.editNaturtype, 'AffectedArea']}
+                            observableValue={[this.editNaturtype, 'affectedArea']}
                             codes={koder.affectedArea}
                             forceSync
                             observableDisabled={hsc[hscprop] || [this, "hasStateChange"]}/>

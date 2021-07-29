@@ -45,12 +45,12 @@ export default class NewRedlistedNaturetype extends React.Component {
                 addNaturtype(clone)
             }
             autorun(() => {
-                if (appState.naturtypeLabels && this.nyNaturtype && this.nyNaturtype.NiNCode) {
-                    this.naturtypeLabel = appState.naturtypeLabels[this.nyNaturtype.NiNCode]
+                if (appState.naturtypeLabels && this.nyNaturtype && this.nyNaturtype.niNCode) {
+                    this.naturtypeLabel = appState.naturtypeLabels[this.nyNaturtype.niNCode]
                 }
             })
             autorun(() => {
-                const hasSC = this.nyNaturtype.StateChange.length > 0
+                const hasSC = this.nyNaturtype.stateChange.length > 0
                 this.hasStateChange = hasSC
                 if (!hasSC) {
                     this.nyNaturtype.AffectedArea = "0"

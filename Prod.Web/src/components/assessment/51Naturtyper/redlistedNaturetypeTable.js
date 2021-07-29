@@ -1,12 +1,12 @@
 import React from 'react';
 import {extendObservable} from 'mobx';
-import {observer} from 'mobx-react';
+import {observer, inject} from 'mobx-react';
 import * as Xcomp from '../observableComponents';
 
 import NaturtypeModal from './naturetypeModal';
 
 const kodeTekst = (koder, verdi) => koder.filter(item => item.Value === verdi).map(item => item.Text)[0] || verdi 
-
+inject('appState')
 @observer
 export class RedlistedNaturetypeRad extends React.Component {
     constructor(props) {
@@ -16,7 +16,7 @@ export class RedlistedNaturetypeRad extends React.Component {
             showModal: false,
             hideStateChange: false
         })
-        this.updateNaturetype = (upd) => {
+        this.updateNaturetype = action((upd) => {
             // console.log("upd rlnt: " + JSON.stringify(upd))
             const nt = naturtype
 
@@ -24,18 +24,19 @@ export class RedlistedNaturetypeRad extends React.Component {
             nt.ColonizedArea = upd.ColonizedArea
             nt.StateChange.replace(upd.StateChange)
             nt.AffectedArea = upd.AffectedArea
-
+            nt.Background = upd.Background
             this.showModal = false
 
-        }
+        })
     }
     
     render() {
         const {naturtype, fabModel, deleteRow, labels} = this.props;
         const gLabels = labels.General
         const nt = naturtype
+        console.log(nt)
         const koder = fabModel.koder
-        const stateChangLabel = nt.StateChange.map(sc => kodeTekst(koder.tilstandsendringer, sc)).join('\n')
+        const stateChangLabel = nt.stateChange.map(sc => kodeTekst(koder.tilstandsendringer, sc)).join('\n')
         // console.log("rlntrow: " + JSON.stringify(nt))
 
         // const ntlabel = fabModel.naturtypeLabels[nt.NiNCode]
@@ -93,7 +94,7 @@ export default class RedlistedNaturetypeTable extends React.Component {
                 </tr>
             </thead>
             <tbody>
-                {canRenderTable ? naturetypes.map(nt => { 
+                {!canRenderTable ? naturetypes.map(nt => { 
                     const deleteRow = () => naturetypes.remove(nt)
                     const key = nt.RedlistedNatureTypeName + nt.TimeHorizon + nt.ColonizedArea + nt.StateChange.join(';') + nt.AffectedArea
                     return <RedlistedNaturetypeRad key={key} naturtype={nt} deleteRow={deleteRow} fabModel={fabModel} labels={labels}/> }) :

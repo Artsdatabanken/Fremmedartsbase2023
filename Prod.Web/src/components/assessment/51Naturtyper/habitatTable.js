@@ -24,7 +24,7 @@ export class HabitatTableRow extends React.Component {
             nt.ColonizedArea = upd.ColonizedArea
             nt.StateChange.replace(upd.StateChange)
             nt.AffectedArea = upd.AffectedArea
-
+            nt.Background = upd.Background
             this.showModal = false
 
         }
@@ -44,15 +44,16 @@ export class HabitatTableRow extends React.Component {
         const {naturtype, fabModel, deleteRow, labels} = this.props;
         const gLabels = labels.General
         const nt = naturtype
+        console.log(nt)
         const koder = fabModel.koder
-        const ntlabel = (nt.NiNCode && nt.NiNCode.length > 3 && nt.NiNCode.startsWith("LI "))
-            ? fabModel.livsmediumLabels[nt.NiNCode]
-            : fabModel.naturtypeLabels[nt.NiNCode]
+        const ntlabel = (nt.niNCode && nt.niNCode.length > 3 && nt.niNCode.startsWith("LI "))
+            ? fabModel.livsmediumLabels[nt.niNCode]
+            : fabModel.naturtypeLabels[nt.niNCode]
         const stateChangLabel = nt.StateChange.map(sc => kodeTekst(koder.tilstandsendringer, sc)).join('\n')
         // console.log("row: " + JSON.stringify(nt))
         return(
             <tr>
-                <td>{nt.NiNCode}</td>
+                <td>{nt.niNCode}</td>
                 <td>{ntlabel}</td>
                 <td>{nt.DominanceForrest.join('\n')}</td>
                 <td></td>
@@ -66,7 +67,7 @@ export class HabitatTableRow extends React.Component {
                         xs 
                         onClick={() => {
                             this.showModal = true
-                            this.hideStateChange = nt.NiNCode.startsWith("LI ")
+                            this.hideStateChange = nt.niNCode.startsWith("LI ")
                             }}
                         >{gLabels.edit}</Xcomp.Button>
                     {this.showModal
@@ -118,7 +119,7 @@ export default class HabitatTable extends React.Component {
             <tbody>
                 {canRenderTable ? naturetypes.map(nt => { 
                     const deleteRow = () => naturetypes.remove(nt)
-                    const key = nt.NiNCode + nt.TimeHorizon + nt.ColonizedArea + nt.StateChange.join(';') + nt.AffectedArea
+                    const key = nt.niNCode + nt.TimeHorizon + nt.ColonizedArea + nt.StateChange.join(';') + nt.AffectedArea
                     return <NaturtypeRad key={key} naturtype={nt} deleteRow={deleteRow} fabModel={fabModel} labels={labels}/> }) :
                     null
                 }

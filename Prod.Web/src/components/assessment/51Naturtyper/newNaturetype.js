@@ -1,10 +1,10 @@
 import React from 'react';
 import {autorun, extendObservable, observable, toJS, action} from 'mobx';
-import {observer} from 'mobx-react';
+import {observer, inject} from 'mobx-react';
 import NaturtypeSelector from './naturtypeSelector';
 import NaturtypeModal from './naturetypeModal';
 // import * as Xcomp from '../observableComponents';
-
+@inject("appState")
 @observer
 export default class NewNaturetype extends React.Component {
     constructor(props) {
@@ -16,13 +16,13 @@ export default class NewNaturetype extends React.Component {
             // hasStateChange: false,
             // naturtypeLabel: null,
             nyNaturtype: {
-                NiNCode: null,
-                DominanceForrest: [],
-                TimeHorizon: null,
-                ColonizedArea: null,
-                StateChange: [],
-                Background: [],
-                AffectedArea: null
+                niNCode: null,
+                dominanceForrest: [],
+                timeHorizon: null,
+                colonizedArea: null,
+                stateChange: [],
+                background: [],
+                affectedArea: null
             }
         })
 
@@ -31,13 +31,13 @@ export default class NewNaturetype extends React.Component {
         this.setSelectedNT = action ((naturtypekode) => {
             const nnt = this.nyNaturtype
             // console.log("Nincode: " + naturtypekode)
-            nnt.NiNCode = naturtypekode
-            nnt.DominanceForrest.clear()
-            nnt.TimeHorizon = null
-            nnt.ColonizedArea = null
-            nnt.StateChange.clear()
-            nnt.AffectedArea = null
-            nnt.Background.clear()
+            nnt.niNCode = naturtypekode
+            nnt.dominanceForrest.clear()
+            nnt.timeHorizon = null
+            nnt.colonizedArea = null
+            nnt.stateChange.clear()
+            nnt.affectedArea = null
+            nnt.background.clear()
             this.showModal = true
         })
 
