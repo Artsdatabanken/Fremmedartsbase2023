@@ -128,7 +128,8 @@ namespace SwissKnife.Database
             var mapperConfig = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<FA3Legacy.NaturalOrigin, FA4.NaturalOrigin>();
-                cfg.CreateMap<FA3Legacy.RedlistedNatureType, FA4.RedlistedNatureType>();
+                cfg.CreateMap<FA3Legacy.RedlistedNatureType, FA4.RedlistedNatureType>()
+                    .ForMember(dest => dest.Background, opt => opt.Ignore());
                 cfg.CreateMap<FA3Legacy.Reference, FA4.SimpleReference>();
                 cfg.CreateMap<FA3Legacy.RegionalRiskAssessment, FA4.RegionalRiskAssessment>();
                 cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.Criterion, Prod.Domain.RiskAssessment.Criterion>();
@@ -248,8 +249,7 @@ namespace SwissKnife.Database
                 //cfg.CreateMap<Prod.Domain.Legacy.KodeGrupper, Prod.Domain.KodeGrupper>();
                 cfg.CreateMap<Prod.Domain.Legacy.RedlistedNatureTypeCode, Prod.Domain.RedlistedNatureTypeCode>();
                 cfg.CreateMap<Prod.Domain.Legacy.RedlistedNatureTypeCodeGroup, Prod.Domain.RedlistedNatureTypeCodeGroup>();
-                cfg.CreateMap<FA3Legacy.RedlistedNatureType, FA4.RedlistedNatureType>()
-                    .ForMember(dest => dest.Background, opt => opt.Ignore());
+                
                 cfg.CreateMap<Prod.Domain.Legacy.RegionalPresence, Prod.Domain.RegionalPresence>();
                 cfg.CreateMap<Prod.Domain.Legacy.RegionalPresenceWithPotential, Prod.Domain.RegionalPresenceWithPotential>();
                 cfg.CreateMap<FA3Legacy.ImpactedNatureType, FA4.ImpactedNatureType>()
