@@ -40,6 +40,8 @@ export default class BootstrapModal extends React.Component {
                             <div style={{display: 'flex'}}>
                                 {this.children}
                             </div>
+
+                    
                         </div>
                         <div className="modal-footer">
                             <Xcomp.Button  onClick={this.onCancel}>{this.labels.cancel}</Xcomp.Button>

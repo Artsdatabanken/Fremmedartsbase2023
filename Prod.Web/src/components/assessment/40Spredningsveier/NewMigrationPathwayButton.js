@@ -53,7 +53,7 @@ export default class NewMigrationPathwayButton extends React.Component {
     render() {
         const {migrationPathway, onSave, koder, hideIntroductionSpread, labels, mainCodes} = this.props;
         const mplabels = labels.MigrationPathway
-        
+        //console.log(migrationPathway)
         // this.newMigrationPathway.Category = migrationPathway.name
         // try {
         //   console.log("koder4" + koder.toString() )
@@ -66,12 +66,12 @@ export default class NewMigrationPathwayButton extends React.Component {
             <div className="btn-flat btn" style={{textTransform: "none"}} onClick={this.showModal} >{migrationPathway.name}
                 {this.visibleModal ?
                 <BsModal 
-                heading={migrationPathway.name} 
-                onCancel={this.hideModal} 
-                onOk={this.onOk} 
-                okEnabled={this.okEnabled}
-                labels={labels.General}
-                children={migrationPathway.children}
+                    heading={migrationPathway.name} 
+                    onCancel={this.hideModal} 
+                    onOk={this.onOk} 
+                    okEnabled={this.okEnabled}
+                    labels={labels.General}
+                    children={migrationPathway.Children}
             >
                {/* {hideIntroductionSpread ? null :
                 <Xcomp.StringEnum label={mplabels.introductionSpread} observableValue={[this.newMigrationPathway, 'introductionSpread']} forceSync codes={mainCodes.migrationPathwayIntroductionSpread}/>

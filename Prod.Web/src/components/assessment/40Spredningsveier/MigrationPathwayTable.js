@@ -52,9 +52,10 @@ export default class MigrationPathwayTable extends React.Component {
                 </thead>
                 <tbody>
                 {migrationPathways.map(mp => 
+                    
                     <MigrationPathwayTableRow 
                         item={mp} 
-                        key={mp.Category+mp.CodeItem+mp.IntroductionSpread+mp.InfluenceFactor+mp.Magnitude+mp.TimeOfIncident}
+                        key={mp.category+mp.codeItem+mp.introductionSpread+mp.influenceFactor+mp.magnitude+mp.timeOfIncident}
                         codes={koder}
                         migrationPathways={spredningsveier}
                         showIntroductionSpread={showIntroductionSpread}

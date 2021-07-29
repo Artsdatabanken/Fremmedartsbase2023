@@ -143,11 +143,10 @@ export default class Assessment20ArtensStatus extends React.Component {
                         <p>{labels.SpeciesStatus.reasonForChangingOfStatusDescription}</p>
                         <Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'changedAssessment']}/>
                     </div> : null }
+                    
+                    
+                    {assessment.riskAssessment.isAlienSpecies == null ? null :                    
 
-                    <br/>
-                    
-                    {assessment.riskAssessment.isAlienSpecies == null ? null : 
-                    
                     assessment.riskAssessment.isAlienSpecies == 'true' && 
                         (assessment.riskAssessment.connectedToAnother == false || assessment.riskAssessment.connectedToAnother == null ) && 
                         (assessment.riskAssessment.estBefore1800 == false || assessment.riskAssessment.estBefore1800 == null ) &&
@@ -161,12 +160,14 @@ export default class Assessment20ArtensStatus extends React.Component {
                      <div>
                      <h2>{labels.SpeciesStatus.conclusion}</h2>
                      <p>{labels.SpeciesStatus.willNotBeRiskAssessed}</p> 
-                 </div>}
+                 </div>
+                 }
+                 </fieldset>
 
                     { assessment.riskAssessment.isAlienSpecies == 'true' && 
                         (assessment.riskAssessment.connectedToAnother == false || assessment.riskAssessment.connectedToAnother == null ) &&
                         (assessment.riskAssessment.wrongAssessed == false || assessment.riskAssessment.wrongAssessed == null ) ?
-                        <div>
+                        <fieldset className="well">
                             {assessment.speciesStatus != null && assessment.speciesStatus != "A" &&
                                <> <h3>{labels.SpeciesStatus.firstObservationOfSpecies}</h3> 
                                <div className="statusField">
@@ -290,8 +291,8 @@ export default class Assessment20ArtensStatus extends React.Component {
                             }
                             {assessment.speciesStatus != "C3" && assessment.speciesStatus != "C2" && assessment.speciesStatus != null &&
                                 <Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'furtherInfo']}/> }
-                            </div> : null }
-                </fieldset>
+                            </fieldset> : null }
+                
                {/* <Xcomp.Radio
                      kode={koder.AlienSpeciesCategory[0]}
                     //kode={labels.AlienSpeciesCategory[0]}
