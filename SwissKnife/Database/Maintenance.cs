@@ -248,10 +248,11 @@ namespace SwissKnife.Database
                 //cfg.CreateMap<Prod.Domain.Legacy.KodeGrupper, Prod.Domain.KodeGrupper>();
                 cfg.CreateMap<Prod.Domain.Legacy.RedlistedNatureTypeCode, Prod.Domain.RedlistedNatureTypeCode>();
                 cfg.CreateMap<Prod.Domain.Legacy.RedlistedNatureTypeCodeGroup, Prod.Domain.RedlistedNatureTypeCodeGroup>();
+                cfg.CreateMap<FA3Legacy.RedlistedNatureType, FA4.RedlistedNatureType>()
+                    .ForMember(dest => dest.Background, opt => opt.Ignore());
                 cfg.CreateMap<Prod.Domain.Legacy.RegionalPresence, Prod.Domain.RegionalPresence>();
                 cfg.CreateMap<Prod.Domain.Legacy.RegionalPresenceWithPotential, Prod.Domain.RegionalPresenceWithPotential>();
                 cfg.CreateMap<FA3Legacy.ImpactedNatureType, FA4.ImpactedNatureType>()
-
                     .ForMember(dest => dest.Background, opt => opt.Ignore());
                 cfg.CreateMap<FA3Legacy.TimeAndPlace, FA4.TimeAndPlace>();
                 cfg.CreateMap<FA3Legacy.ObservedAndEstablished, FA4.ObservedAndEstablished>();
