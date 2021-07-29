@@ -16,7 +16,7 @@ export default class MigrationPathwayTable extends React.Component {
     }
 
     render() {
-        const {migrationPathways, appState, removeMigrationPathway, showIntroductionSpread} = this.props;
+        const {migrationPathways, appState, removeMigrationPathway, showIntroductionSpread, hideIntroductionSpread} = this.props;
         // const {appState:{assessment}, appState} = this.props;
         // const vurdering = assessment
         const labels = appState.codeLabels
@@ -126,7 +126,7 @@ class MigrationPathwayTableRow extends React.Component {
         return(
             <tr >
                 <td>{codeItemLabel(mp.codeItem)}</td>
-                {showIntroductionSpread ? <td>{introductionSpreadLabel(mp.introductionSpread)}</td> : null}
+                {showIntroductionSpread || !hideIntroductionSpread ? <td>{introductionSpreadLabel(mp.introductionSpread)}</td> : null}
                 {this.edit
                 ? <td><Xcomp.StringEnum observableValue={[mp, 'influenceFactor']}  codes={codes.migrationPathwayFrequency}/></td>
                 : <td>{frequencyLabel(mp.influenceFactor)}</td>

@@ -28,13 +28,13 @@ export default class BootstrapModal extends React.Component {
                             <Xcomp.Button className="close" ariaLabel="Close" onClick={this.onCancel}>
                                 <span aria-hidden="true">×</span>
                             </Xcomp.Button>
-                            {typeof this.heading === "string" ?
+                            {/*{typeof this.heading === "string" ?
                                 <h4 className="modal-title">
                                     {this.heading}                                 
                                 </h4> :
                                 <div className="modal-title">
                                     {this.heading}
-                                </div>}
+                             </div>}*/}
                         </div>
                         <div className="modal-body" style={{display: 'flex'}}>
                             <div style={{display: 'flex'}}>
