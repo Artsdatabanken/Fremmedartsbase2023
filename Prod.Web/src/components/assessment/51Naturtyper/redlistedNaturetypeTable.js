@@ -1,5 +1,5 @@
 import React from 'react';
-import {extendObservable} from 'mobx';
+import {extendObservable, action} from 'mobx';
 import {observer, inject} from 'mobx-react';
 import * as Xcomp from '../observableComponents';
 
@@ -96,7 +96,7 @@ export default class RedlistedNaturetypeTable extends React.Component {
             <tbody>
                 {!canRenderTable ? naturetypes.map(nt => { 
                     const deleteRow = () => naturetypes.remove(nt)
-                    const key = nt.RedlistedNatureTypeName + nt.TimeHorizon + nt.ColonizedArea + nt.StateChange.join(';') + nt.AffectedArea
+                    const key = nt.redlistedNatureTypeName + nt.timeHorizon + nt.colonizedArea + nt.stateChange.join(';') + nt.affectedArea
                     return <RedlistedNaturetypeRad key={key} naturtype={nt} deleteRow={deleteRow} fabModel={fabModel} labels={labels}/> }) :
                     null
                 }

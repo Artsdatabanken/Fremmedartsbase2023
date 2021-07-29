@@ -88,11 +88,11 @@ export default class Assessment51Naturtyper extends React.Component {
                 <fieldset className="well">   
                 <NaturtypeTable
                     naturetypes={assessment.impactedNatureTypes}
-                    fabModel={fabModel}
+                    appState={appState}
                     canRenderTable={canRenderTable}
                     labels={labels}
                     codes={koder}
-                    appState={appState}
+                    fabModel={appState}
                     desc={"Anslå kolonisert areal i de naturtypene arten er observert i, beskriv artens påvirkning i naturtypen og anslå hvor stor andel av naturtypen som blir påvirket. Det skal være sannsynlighetsovervekt for at valgt tilstandsendring skjer."}/>
                 </fieldset>  
 
@@ -119,7 +119,7 @@ export default class Assessment51Naturtyper extends React.Component {
                     canRenderTable={canRenderTable}
                     labels={labels}
                     codes={koder}
-                    appState={appState}
+                    fabModel={appState}
                     desc={"Anslå kolonisert areal i de naturtypene arten er observert i, beskriv artens påvirkning i naturtypen og anslå hvor stor andel av naturtypen som blir påvirket. Det skal være sannsynlighetsovervekt for at valgt tilstandsendring skjer."}/>
                 </fieldset>  
 
@@ -178,7 +178,7 @@ export default class Assessment51Naturtyper extends React.Component {
                     canRenderTable={canRenderTable}
                     labels={labels}
                     codes={koder}
-                    appState={appState}
+                    fabModel={appState}
                     desc={"Anslå kolonisert areal i de naturtypene arten er observert i, beskriv artens påvirkning i naturtypen og anslå hvor stor andel av naturtypen som blir påvirket. Det skal være sannsynlighetsovervekt for at valgt tilstandsendring skjer."}/>
                 </fieldset>  
                 <fieldset className="well">
@@ -231,7 +231,7 @@ export default class Assessment51Naturtyper extends React.Component {
                    </div>*/}
                 </fieldset>
                 
-             {/*  <h4>{ntLabels.effectOnThreatenedNatureTypes }</h4>
+               <h4>{ntLabels.effectOnThreatenedNatureTypes }</h4>
                 <br/>
                 <NewRedlistedNaturetype
                     appState={appState}
@@ -243,9 +243,9 @@ export default class Assessment51Naturtyper extends React.Component {
                     naturetypes={assessment.redlistedNatureTypes}
                     canRenderTable={canRenderTable}
                     labels={labels}
-                    appState={appState}/>
+                    fabModel={appState}/>
             
-                <br/>*/}
+                <br/>
                 
                 <fieldset className="well">
                     <h4>{ntLabels.habitat}</h4>

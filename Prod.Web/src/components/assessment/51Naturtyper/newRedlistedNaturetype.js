@@ -67,7 +67,7 @@ export default class NewRedlistedNaturetype extends React.Component {
                 {/* {appState.language === "SV"
                 ? <h3>Här kommer hotade/sällsynta naturtyper</h3> */}
                 <div>
-                    <h4>{ntLabels.chooseRedlistedNT}:</h4>
+                    <h5>{ntLabels.chooseRedlistedNT}:</h5>
                     {appState.redlistedNaturetypeCodes && <RedlistedNaturetypeSelector
                         naturtyper={appState.redlistedNaturetypeCodes}
                         setSelected={this.setSelectedNaturtype}/>

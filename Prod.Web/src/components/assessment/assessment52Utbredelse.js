@@ -118,27 +118,27 @@ export default class Assessment52Utbredelse extends React.Component {
                 </fieldset>
                 <fieldset className="well" id="spreadHistoryDomestic">
                     <h2>Utbredelseshistorikk 2018</h2>
-                    {/* <h4>{labels.distributionHistory} {fabModel.evaluationContext.nameWithPreposition}</h4>
-                   {vurdering.SpreadHistoryDomesticDocumentation
+                   <h4>{labels.distributionHistory} {appState.evaluationContext.nameWithPreposition}</h4>
+                   {assessment.spreadHistoryDomesticDocumentation
                     ? <div>
                         <h4>{labels.previousInfo}. <b>{labels.mustTransfer}</b></h4>
                         <p
                             dangerouslySetInnerHTML={{
-                                __html: vurdering.SpreadHistoryDomesticDocumentation
+                                __html: assessment.spreadHistoryDomesticDocumentation
                             }} />
                         <Xcomp.Button onClick={() => {
-                            const existing = vurdering.RiskAssessment.CriteriaDocumentationDomesticSpread
+                            const existing = assessment.riskAssessment.criteriaDocumentationDomesticSpread
                             const newstring = !existing
-                                ? vurdering.SpreadHistoryDomesticDocumentation
-                                : existing + vurdering.SpreadHistoryDomesticDocumentation
-                            vurdering.RiskAssessment.CriteriaDocumentationDomesticSpread = newstring
-                            vurdering.SpreadHistoryDomesticDocumentation = null
+                                ? assessment.spreadHistoryDomesticDocumentation
+                                : existing + assessment.spreadHistoryDomesticDocumentation
+                                assessment.riskAssessment.criteriaDocumentationDomesticSpread = newstring
+                            assessment.spreadHistoryDomesticDocumentation = null
                         }}>{labels.transfer}</Xcomp.Button>
                         <hr />
                       </div>
                     : null } 
                     <Xcomp.HtmlString
-                        observableValue={[vurdering.RiskAssessment, 'CriteriaDocumentationDomesticSpread']}/>*/}
+                        observableValue={[assessment.riskAssessment, 'criteriaDocumentationDomesticSpread']}/>
                         
                 </fieldset>
             

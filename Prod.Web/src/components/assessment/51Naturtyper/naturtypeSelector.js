@@ -3,6 +3,7 @@ import React from 'react';
 import {observer} from 'mobx-react';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import * as Xcomp from './../observableComponents';
 import { action } from 'mobx';
 
 
@@ -48,11 +49,11 @@ export default class NaturtypeSelector extends React.Component {
                                     {/*▾*/}
                                 </div>
                                 <div className="tree-view-label" onClick={() => setSelected(hovedtype.Id) }>
-                                    <span className="hovedtype btn-flat">
+                                    <Xcomp.Button className="hovedtype btn-flat">
                                         {/*<span className="naturtype-kode">{this.truncLI(hovedtype.Id)}</span>
                                         <span>{hovedtype.Name}</span>*/}
                                         <span>{hovedtype.Text}</span>
-                                    </span>
+                                    </Xcomp.Button>
                                 </div>
                                 {!hovedtype.Collapsed && hovedtype.Children ?
                                 <div className="tree-view-children">
