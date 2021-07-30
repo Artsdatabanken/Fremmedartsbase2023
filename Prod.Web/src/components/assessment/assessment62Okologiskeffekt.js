@@ -174,7 +174,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
             newItem.interactionType = "CompetitionSpace" 
             newItem.effect = "Weak"              
             newItem.scale = "Limited" 
-            newItem.EffectLocalScale = false 
+            newItem.effectLocalScale = false 
             newItem.longDistanceEffect = false 
             newItem.confirmedOrAssumed = false
             newItem.domesticOrAbroad = ""
@@ -304,10 +304,10 @@ export default class Assessment62Okologiskeffekt extends React.Component {
         <b>curr{crit52D.Value}{crit52D.currentValueLabel}</b>
 
                     <p><b>Verdier stemmer ikke! ^^</b></p>
-                    <ScoreUnsure appState={appState}
+                   {/* <ScoreUnsure appState={appState}
                                 critScores={koder.scoresD}
                                 firstValue={"scoreD"}
-                                secondValue={"unsureD"}/> 
+                                secondValue={"unsureD"}/> */}
                      <Xcomp.HtmlString                            
                                 observableValue={[riskAssessment, "DCritInsecurity"]}
                                 label={labels.DEcrit.insecurity}
@@ -317,10 +317,10 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                     <Criterion criterion={crit52E} hideInfo={true} />
 
                     <p><b>Verdier stemmer ikke! ^^</b></p>
-                    <ScoreUnsure appState={appState}
+                   {/* <ScoreUnsure appState={appState}
                                 critScores={koder.scoresE}
                                 firstValue={"scoreE"}
-                                secondValue={"unsureE"}/>
+                                secondValue={"unsureE"}/>*/}
                      <Xcomp.HtmlString                            
                                 observableValue={[riskAssessment, "ECritInsecurity"]}
                                 label={labels.DEcrit.insecurity}
@@ -351,14 +351,14 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                     <SpeciesSpeciesTable list={riskAssessment.geneticTransferDocumented} newItem={this.newGTD} addNewItem={this.addGTD} koder={koder} labels={labels} showKeyStoneSpecie showConfirmedOrAssumed />
                     <hr/>
 
-                   {/* <p>{ntLabels.score}</p>*/}
+                   {/* <p>{ntLabels.score}</p>
                     <ScoreUnsure appState={appState}
                                 critScores={koder.scoresH}
                                 firstValue={"scoreH"}
-                        secondValue={"unsureH"}/> 
-                    <p><b>Verdier stemmer ikke! ^^</b></p>
+                        secondValue={"unsureH"}/> */}
+                   
                     <Criterion criterion={crit52H} mode="noheading"/>
-
+                    <p><b>Verdier stemmer ikke! ^^</b></p>
                      <Xcomp.HtmlString                            
                                 observableValue={[riskAssessment, "HCritInsecurity"]}
                                 label={labels.DEcrit.insecurity}
@@ -378,13 +378,14 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                     <HostParasiteTable list={riskAssessment.hostParasiteInformations} newItem={this.newHPI} addNewItem={this.addHPI} koder={koder} labels={labels} showKeyStoneSpecie />
                     <hr/>
                     <p>{ntLabels.score}</p>
-                    <ScoreUnsure appState={appState}
+                    {/*<ScoreUnsure appState={appState}
                                 critScores={koder.scoresI}
                                 firstValue={"scoreI"}
-                                secondValue={"unsureI"}/>
+                                secondValue={"unsureI"}/>*/}
 
-                    <p><b>Verdier stemmer ikke! ^^</b></p>
+                    
                     <Criterion criterion={crit52I} mode="noheading"/>
+                    <p><b>Verdier stemmer ikke! ^^</b></p>
                      <Xcomp.HtmlString                            
                                 observableValue={[riskAssessment, "ICritInsecurity"]}
                                 label={labels.DEcrit.insecurity}
