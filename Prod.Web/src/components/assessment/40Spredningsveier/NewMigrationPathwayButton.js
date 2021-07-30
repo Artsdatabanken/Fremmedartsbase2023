@@ -51,7 +51,7 @@ export default class NewMigrationPathwayButton extends React.Component {
 
 
     render() {
-        const {migrationPathway, onSave, koder, hideIntroductionSpread, labels, mainCodes} = this.props;
+        const {migrationPathway, onSave, koder, hideIntroductionSpread, disabled, labels, mainCodes} = this.props;
         const mplabels = labels.MigrationPathway
         //console.log(migrationPathway)
         // this.newMigrationPathway.Category = migrationPathway.name
@@ -63,7 +63,7 @@ export default class NewMigrationPathwayButton extends React.Component {
         // const a = koder.migrationPathwayFrequency[0]
         return(
 
-            <div className="btn-flat btn" style={{textTransform: "none"}} onClick={this.showModal} >{migrationPathway.name}
+            <div className="btn-flat btn" disabled={disabled} style={{textTransform: "none"}} onClick={this.showModal} >{migrationPathway.name}
                 {this.visibleModal ?
                 <BsModal 
                     heading={migrationPathway.name} 

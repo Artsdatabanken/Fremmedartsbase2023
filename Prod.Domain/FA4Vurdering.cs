@@ -132,6 +132,12 @@ namespace Prod.Domain
 
         public string SpeciesStatus { get; set; }
 
+        public string ConnectedTaxon1 { get; set; } = "";
+
+        public string ConnectedTaxon2 { get; set; } = "";
+
+        public bool ProductionSpecies { get; set; } = false;
+
         public bool AlienSpecieUncertainIfEstablishedBefore1800 { get; set; } // lagt til: 19.10.2016 - renamed 15.11.2016
         public bool AlienSpecieUncertainAntropochor { get; set; } // lagt til: 19.10.2016
         public string AlienSpecieUncertainDescription { get; set; } // lagt til: 22.12.2016
