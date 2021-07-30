@@ -24,10 +24,10 @@ function roundToSignificantDecimals(num) {
 
 // // // Variabler som angis på fanen 
 // // // bare variabler som er relevante for A- og B-kriteriet er tatt med her 
-// // AOOknown	//integer	// kjent forekomstareal 
-// // AOOtotalBest	//integer	// beste anslag på totalt forekomstareal nå 
-// // AOOtotalLow	//integer	// lavt anslag på totalt forekomstareal nå 
-// // AOOtotalHigh	//integer	// høyt anslag på totalt forekomstareal nå 
+// // aOOknown	//integer	// kjent forekomstareal 
+// // aOOtotalBest	//integer	// beste anslag på totalt forekomstareal nå 
+// // aOOtotalLow	//integer	// lavt anslag på totalt forekomstareal nå 
+// // aOOtotalHigh	//integer	// høyt anslag på totalt forekomstareal nå 
 // ---------------------------------------------
 // // // //    Fra FAB3:
 // // // // CurrentExistenceArea
@@ -39,9 +39,9 @@ function roundToSignificantDecimals(num) {
 // // // // CurrentExistenceAreaHighCalculated
 // ----------------------------------------------
 
-// // AOO50yrBest	//integer	// beste anslag på totalt forekomstareal om 50 år 
-// // AOO50yrLow	//integer	// lavt anslag på totalt forekomstareal om 50 år 
-// // AOO50yrHigh	//integer	// høyt anslag på totalt forekomstareal om 50 år 
+// // aOO50yrBest	//integer	// beste anslag på totalt forekomstareal om 50 år 
+// // aOO50yrLow	//integer	// lavt anslag på totalt forekomstareal om 50 år 
+// // aOO50yrHigh	//integer	// høyt anslag på totalt forekomstareal om 50 år 
 // ---------------------------------------------
 // // // //    Fra FAB3:
 // // // // PotentialExistenceArea
@@ -51,30 +51,30 @@ function roundToSignificantDecimals(num) {
 
 
 // // // Variabler som beregnes på fanen 
-// // AOOdarkfigureBest	//double	// beste anslag på forekomstarealets mørketall 
-// // AOOdarkfigureLow	//double	// lavt anslag på forekomstarealets mørketall 
-// // AOOdarkfigureHigh	//double	// høyt anslag på forekomstareal mørketall 
+// // aOOdarkfigureBest	//double	// beste anslag på forekomstarealets mørketall 
+// // aOOdarkfigureLow	//double	// lavt anslag på forekomstarealets mørketall 
+// // aOOdarkfigureHigh	//double	// høyt anslag på forekomstareal mørketall 
 // // // Beregninger 
 const r = {}
 const warnings = []
-if (r.AOOtotalLow > r.AOOtotalBest) 
+if (r.aOOtotalLow > r.aOOtotalBest) 
     return {error: "Det nedre anslaget på forekomstarealet kan ikke være større enn det beste anslaget."} 
-if (r.AOOtotalHigh < r.AOOtotalBest) 
+if (r.aOOtotalHigh < r.aOOtotalBest) 
     return {error: "Det øvre anslaget på forekomstarealet kan ikke være mindre enn det beste anslaget."}
-if (r.AOO50yrLow > r.AOO50yrBest) 
+if (r.aOO50yrLow > r.aOO50yrBest) 
     return {error: "Det nedre anslaget på forekomstarealet kan ikke være større enn det beste anslaget."}
-if (r.AOO50yrHigh < r.AOO50yrBest) 
+if (r.aOO50yrHigh < r.aOO50yrBest) 
     return {error: "Det øvre anslaget på forekomstarealet kan ikke være mindre enn det beste anslaget."}
-if (r.AOOtotalLow == r.AOOknown) 
+if (r.aOOtotalLow == r.aOOknown) 
     warnings.push("Er det realistisk at det ikke eksisterer noen uoppdagede forekomster av arten?") 
-if (r.AOOtotalLow < r.AOOknown) 
+if (r.aOOtotalLow < r.aOOknown) 
     warnings.push("Er det korrekt at artens totale nåværende forekomstareal kan være mindre enn det kjente?") 
-if (AOO50yrBest < AOOtotalBest) 
+if (aOO50yrBest < aOOtotalBest) 
     warnings.push("Er det korrekt at det er forventet en nedgang i artens forekomstareal i løpet av de neste 50&nbsp;år?") 
 
-var AOOdarkfigureBest = r.AOOtotalBest / r.AOOknown 
-var AOOdarkfigureLow = r.AOOtotalLow / r.AOOknown 
-var AOOdarkfigureHigh = r.AOOtotalHigh / r.AOOknown
+var aOOdarkfigureBest = r.aOOtotalBest / r.aOOknown 
+var aOOdarkfigureLow = r.aOOtotalLow / r.aOOknown 
+var aOOdarkfigureHigh = r.aOOtotalHigh / r.aOOknown
 
 
 // *********************************************************
@@ -82,10 +82,10 @@ var AOOdarkfigureHigh = r.AOOtotalHigh / r.AOOknown
 // *********************************************************
 // // Variabler som angis på fanen 
 // // bare variabler som er relevante for A- og B-kriteriet er tatt med her 
-// // Occurrences1Best	//integer	// beste anslag på antall forekomster fra 1 introduksjon 
-// // Occurrences1Low	//integer	// lavt anslag på antall forekomster fra 1 introduksjon 
-// // Occurrences1High	//integer	// høyt anslag på antall forekomster fra 1 introduksjon 
-// // IntroductionsBest	//double	// beste anslag på antall introduksjoner i løpet av 10 år 
+// // occurrences1Best	//integer	// beste anslag på antall forekomster fra 1 introduksjon 
+// // occurrences1Low	//integer	// lavt anslag på antall forekomster fra 1 introduksjon 
+// // occurrences1High	//integer	// høyt anslag på antall forekomster fra 1 introduksjon 
+// // introductionsBest	//double	// beste anslag på antall introduksjoner i løpet av 10 år 
 
 // // // // --------------------------------------------------
 // // // //      fra FAB3:
@@ -93,19 +93,19 @@ var AOOdarkfigureHigh = r.AOOtotalHigh / r.AOOknown
 // // // // SpreadYearlyIncreaseObservationsLowerQuartile
 // // // // SpreadYearlyIncreaseObservationsUpperQuartile
 // // // // 
-// // // // Er denne ny? - finner ikke i fab3: IntroductionsBest	//double	// beste anslag på antall introduksjoner i løpet av 10 år 
+// // // // Er denne ny? - finner ikke i fab3: introductionsBest	//double	// beste anslag på antall introduksjoner i løpet av 10 år 
 // // // // --------------------------------------------------
 
 // // // Variabler som beregnes på fanen 
-// // IntroductionsLow	//integer	// lavt anslag på antall introduksjoner i løpet av 10 år 
-// // IntroductionsHigh	//integer	// høyt anslag på antall introduksjoner i løpet av 10 år 
-// // AOO10yrBest	//integer	// beste anslag på totalt forekomstareal om 10 år  
-// // AOO10yrLow	//integer	// lavt anslag på totalt forekomstareal om 10 år 
-// // AOO10yrHigh	//integer	// høyt anslag på totalt forekomstareal om 10 år 
+// // introductionsLow	//integer	// lavt anslag på antall introduksjoner i løpet av 10 år 
+// // introductionsHigh	//integer	// høyt anslag på antall introduksjoner i løpet av 10 år 
+// // aOO10yrBest	//integer	// beste anslag på totalt forekomstareal om 10 år  
+// // aOO10yrLow	//integer	// lavt anslag på totalt forekomstareal om 10 år 
+// // aOO10yrHigh	//integer	// høyt anslag på totalt forekomstareal om 10 år 
 // Beregninger 
-if (r.Occurrences1Low > r.Occurrences1Best) 
+if (r.occurrences1Low > r.occurrences1Best) 
     return {error: "Det nedre anslaget på antall forekomster kan ikke være større enn det beste anslaget."}
-if (r.Occurrences1High < r.Occurrences1Best) 
+if (r.occurrences1High < r.occurrences1Best) 
     return {error: "Det øvre anslaget på antall forekomster kan ikke være mindre enn det beste anslaget."}
 
 
@@ -146,16 +146,16 @@ function introductionNum(table, best) {
     return i
 }
 
-const IntroductionsLowNum = introductionNum(introLowTable, r.IntroductionsBest)
-const IntroductionsLow = IntroductionsLowNum == 0 ? 0 : round(r.IntroductionsBest) - IntroductionsLowNum
+const introductionsLowNum = introductionNum(introLowTable, r.introductionsBest)
+const introductionsLow = introductionsLowNum == 0 ? 0 : round(r.introductionsBest) - introductionsLowNum
 
-const IntroductionsHighNum = introductionNum(introHighTable, r.IntroductionsBest)
-const IntroductionsHigh = IntroductionsHighNum == 0 ? 0 : round(r.IntroductionsBest) - IntroductionsHighNum
+const introductionsHighNum = introductionNum(introHighTable, r.introductionsBest)
+const introductionsHigh = introductionsHighNum == 0 ? 0 : round(r.introductionsBest) - introductionsHighNum
 
 
-const AOO10yrBest = 4 * ((1 + r.Occurrences1Best) * (1 + round(r.IntroductionsBest) / 2) - 1) 
-const AOO10yrLow = 4 * ((1 + r.Occurrences1Low) * (1 + IntroductionsLow / 2) - 1) 
-const AOO10yrHigh = 4 * ((1 + r.Occurrences1High) * (1 + IntroductionsHigh / 2) - 1) 
+const aOO10yrBest = 4 * ((1 + r.occurrences1Best) * (1 + round(r.introductionsBest) / 2) - 1) 
+const aOO10yrLow = 4 * ((1 + r.occurrences1Low) * (1 + introductionsLow / 2) - 1) 
+const aOO10yrHigh = 4 * ((1 + r.occurrences1High) * (1 + introductionsHigh / 2) - 1) 
 
 
 
@@ -166,21 +166,21 @@ const AOO10yrHigh = 4 * ((1 + r.Occurrences1High) * (1 + IntroductionsHigh / 2) 
 // ***********************************************************************
 
 // // // Variabler som beregnes på fanen 
-// // AOOchangeBest	//double	// beste anslag på endring i forek.areal i løpet av 50 år 
-// // AOOchangeLow	//double	// lavt anslag på endring i forek.areal i løpet av 50 år 
-// // AOOchangeHigh	//double	// høyt anslag på endring i forek.areal i løpet av 50 år 
-// // AdefaultBest	//integer	// forhåndsberegnet skår på A-kriteriet 
-// // AdefaultLow	//integer	// forhåndsberegnet nedre skår for A-kriteriet 
-// // AdefaultHigh	//integer	// forhåndsberegnet øvre skår for A-kriteriet 
-// // ApossibleLow	//integer	// laveste tillate skår ved endring av A 
-// // ApossibleHigh	//integer	// høyeste tillate skår ved endring av A 
-// // LifetimeText	//string	// tekstlig beskrivelse av median levetid 
-// // ExtinctionText	//string	// tekstlig beskrivelse av utdøingssannsynlighet 
-// // Amethod	//string	// metode som ble brukt for å beregne A-kriteriet 
-// // MedianLifetime	//integer	// artens mediane levetid i Norge i år 
-// // Ascore		//integer	// skår for A-kriteriet 
-// // Alow		//integer	// nedre skår for A-kriteriet (inkludert usikkerhet) 
-// // Ahigh		//integer	// øvre skår for A-kriteriet (inkludert usikkerhet) 
+// // aOOchangeBest	//double	// beste anslag på endring i forek.areal i løpet av 50 år 
+// // aOOchangeLow	//double	// lavt anslag på endring i forek.areal i løpet av 50 år 
+// // aOOchangeHigh	//double	// høyt anslag på endring i forek.areal i løpet av 50 år 
+// // adefaultBest	//integer	// forhåndsberegnet skår på A-kriteriet 
+// // adefaultLow	//integer	// forhåndsberegnet nedre skår for A-kriteriet 
+// // adefaultHigh	//integer	// forhåndsberegnet øvre skår for A-kriteriet 
+// // apossibleLow	//integer	// laveste tillate skår ved endring av A 
+// // apossibleHigh	//integer	// høyeste tillate skår ved endring av A 
+// // lifetimeText	//string	// tekstlig beskrivelse av median levetid 
+// // extinctionText	//string	// tekstlig beskrivelse av utdøingssannsynlighet 
+// // amethod	//string	// metode som ble brukt for å beregne A-kriteriet 
+// // medianLifetime	//integer	// artens mediane levetid i Norge i år 
+// // ascore		//integer	// skår for A-kriteriet 
+// // alow		//integer	// nedre skår for A-kriteriet (inkludert usikkerhet) 
+// // ahigh		//integer	// øvre skår for A-kriteriet (inkludert usikkerhet) 
 
 
 
@@ -193,94 +193,94 @@ const AOO10yrHigh = 4 * ((1 + r.Occurrences1High) * (1 + IntroductionsHigh / 2) 
 // // // Beregninger 
 
 if(r.chosenSpreadMedanLifespan ==    "forenklet anslag"     ) { // todo: implement real
-    Amethod = "forekomstareal" 
-    const AOOchangeBest = r.AOOtotalBest < 4 ? 1 : r.AOO50yrBest / r.AOOtotalBest 
-    const AOOchangeLow = r.AOOtotalBest < 4 ? 1 : r.AOO50yrLow / r.AOOtotalBest 
-    const AOOchangeHigh = r.AOOtotalBest >= 4 ? 1 : r.AOO50yrHigh / r.AOOtotalBest 
+    amethod = "forekomstareal" 
+    const aOOchangeBest = r.aOOtotalBest < 4 ? 1 : r.aOO50yrBest / r.aOOtotalBest 
+    const aOOchangeLow = r.aOOtotalBest < 4 ? 1 : r.aOO50yrLow / r.aOOtotalBest 
+    const aOOchangeHigh = r.aOOtotalBest >= 4 ? 1 : r.aOO50yrHigh / r.aOOtotalBest 
 
-    var AdefaultBest = null // var: denne kan bli ovorskrevet under "introduksjonspress"
-    if (r.AOO50yrBest < 4) AdefaultBest = 1 
-    if (r.AOO50yrBest >= 4) AdefaultBest = 2 
-    if (r.AOO50yrBest >= 8 && AOOchangeBest > 0.2) AdefaultBest = 3 
-    if (r.AOO50yrBest >= 20 && AOOchangeBest > 0.05) AdefaultBest = 3 
-    if (r.AOO50yrBest >= 20 && AOOchangeBest > 0.2) AdefaultBest = 4 
+    var adefaultBest = null // var: denne kan bli ovorskrevet under "introduksjonspress"
+    if (r.aOO50yrBest < 4) adefaultBest = 1 
+    if (r.aOO50yrBest >= 4) adefaultBest = 2 
+    if (r.aOO50yrBest >= 8 && aOOchangeBest > 0.2) adefaultBest = 3 
+    if (r.aOO50yrBest >= 20 && aOOchangeBest > 0.05) adefaultBest = 3 
+    if (r.aOO50yrBest >= 20 && aOOchangeBest > 0.2) adefaultBest = 4 
 
-    var AdefaultLow = null // var: denne kan bli ovorskrevet under "introduksjonspress"
-    if (r.AOO50yrLow < 4) AdefaultLow = max(1, AdefaultBest - 1) 
-    if (r.AOO50yrLow >= 4) AdefaultLow = max(2, AdefaultBest - 1) 
-    if (r.AOO50yrLow >= 8 && AOOchangeLow > 0.2) AdefaultLow = 3 
-    if (r.AOO50yrLow >= 20 && AOOchangeLow > 0.05) AdefaultLow = 3 
-    if (r.AOO50yrLow >= 20 && AOOchangeLow > 0.2) AdefaultLow = 4 
+    var adefaultLow = null // var: denne kan bli ovorskrevet under "introduksjonspress"
+    if (r.aOO50yrLow < 4) adefaultLow = max(1, adefaultBest - 1) 
+    if (r.aOO50yrLow >= 4) adefaultLow = max(2, adefaultBest - 1) 
+    if (r.aOO50yrLow >= 8 && aOOchangeLow > 0.2) adefaultLow = 3 
+    if (r.aOO50yrLow >= 20 && aOOchangeLow > 0.05) adefaultLow = 3 
+    if (r.aOO50yrLow >= 20 && aOOchangeLow > 0.2) adefaultLow = 4 
 
-    var AdefaultHigh = null // var: denne kan bli ovorskrevet under "introduksjonspress"
-    if (r.AOO50yrHigh < 4) AdefaultHigh = 1 
-    if (r.AOO50yrHigh >= 4) AdefaultHigh = 2 
-    if (r.AOO50yrHigh >= 8 && AOOchangeHigh > 0.2) AdefaultHigh = min(3, AdefaultBest + 1) 
-    if (r.AOO50yrHigh >= 20 && AOOchangeHigh > 0.05) AdefaultHigh = min(3, AdefaultBest + 1) 
-    if (r.AOO50yrHigh >= 20 && AOOchangeHigh > 0.2) AdefaultHigh = min(4, AdefaultBest + 1) 
+    var adefaultHigh = null // var: denne kan bli ovorskrevet under "introduksjonspress"
+    if (r.aOO50yrHigh < 4) adefaultHigh = 1 
+    if (r.aOO50yrHigh >= 4) adefaultHigh = 2 
+    if (r.aOO50yrHigh >= 8 && aOOchangeHigh > 0.2) adefaultHigh = min(3, adefaultBest + 1) 
+    if (r.aOO50yrHigh >= 20 && aOOchangeHigh > 0.05) adefaultHigh = min(3, adefaultBest + 1) 
+    if (r.aOO50yrHigh >= 20 && aOOchangeHigh > 0.2) adefaultHigh = min(4, adefaultBest + 1) 
 
 
-    var LifetimeText = null // var: denne kan bli ovorskrevet under "introduksjonspress"
-    var ExtinctionText = null // var: denne kan bli ovorskrevet under "introduksjonspress"
-    if (r.AdefaultBest == 1) {
-        LifetimeText = "under 10&nbsp;år" 
-        ExtinctionText = "over 97&nbsp;%" 
+    var lifetimeText = null // var: denne kan bli ovorskrevet under "introduksjonspress"
+    var extinctionText = null // var: denne kan bli ovorskrevet under "introduksjonspress"
+    if (r.adefaultBest == 1) {
+        lifetimeText = "under 10&nbsp;år" 
+        extinctionText = "over 97&nbsp;%" 
     }
-    if (r.AdefaultBest == 2) {
-        LifetimeText = "mellom 10&nbsp;år og 60&nbsp;år" 
-        ExtinctionText = "mellom 43&nbsp;% og 97&nbsp;%" 
+    if (r.adefaultBest == 2) {
+        lifetimeText = "mellom 10&nbsp;år og 60&nbsp;år" 
+        extinctionText = "mellom 43&nbsp;% og 97&nbsp;%" 
     }
-    if (r.AdefaultBest == 3) {
-        LifetimeText = "mellom 60&nbsp;år og 650&nbsp;år" 
-        ExtinctionText = "mellom 5&nbsp;% og 43&nbsp;%" 
+    if (r.adefaultBest == 3) {
+        lifetimeText = "mellom 60&nbsp;år og 650&nbsp;år" 
+        extinctionText = "mellom 5&nbsp;% og 43&nbsp;%" 
     }
-    if (r.AdefaultBest == 4) {
-        LifetimeText = "over 650&nbsp;år" 
-        ExtinctionText = "under 5&nbsp;%"
+    if (r.adefaultBest == 4) {
+        lifetimeText = "over 650&nbsp;år" 
+        extinctionText = "under 5&nbsp;%"
     }
 
-    var ApossibleLow = null // var: denne kan bli ovorskrevet under "introduksjonspress"
-    ApossibleLow = 
-        (r.AOO50yrBest > 80 && AOOchangeBest > 1) ? 4 :
-        (r.AOO50yrBest >= 20 & AOOchangeBest > 0.2) ? 3 :
-        (r.AOO50yrBest >= 4) ? 2 : 
+    var apossibleLow = null // var: denne kan bli ovorskrevet under "introduksjonspress"
+    apossibleLow = 
+        (r.aOO50yrBest > 80 && aOOchangeBest > 1) ? 4 :
+        (r.aOO50yrBest >= 20 & aOOchangeBest > 0.2) ? 3 :
+        (r.aOO50yrBest >= 4) ? 2 : 
         1
 
-    var ApossibleHigh = null // var: denne kan bli ovorskrevet under "introduksjonspress"
-    ApossibleHigh =
-        (r.AOO50yrBest < 4) ? 2 :
-        (r.AOO50yrBest < 20 & AOOchangeBest <= 0.05) ? 3 : 
+    var apossibleHigh = null // var: denne kan bli ovorskrevet under "introduksjonspress"
+    apossibleHigh =
+        (r.aOO50yrBest < 4) ? 2 :
+        (r.aOO50yrBest < 20 & aOOchangeBest <= 0.05) ? 3 : 
         4 
 
     // Utmating 
-    const a1aresulttext = `Basert på de beste anslagene på forekomstareal i dag (${AOOtotalBest}&nbsp;km²) og om 50&nbsp;år (${AOO50yrBest}&nbsp;km²) er A-kriteriet forhåndsskåret som ${AdefaultBest} (med usikkerhet: ${AdefaultLow}–${AdefaultHigh}). Dette innebærer at artens mediane levetid ligger ${LifetimeText}, eller at sannsynligheten for utdøing innen 50&nbsp;år er på ${ExtinctionText}.`
+    const a1aresulttext = `Basert på de beste anslagene på forekomstareal i dag (${aOOtotalBest}&nbsp;km²) og om 50&nbsp;år (${aOO50yrBest}&nbsp;km²) er A-kriteriet forhåndsskåret som ${adefaultBest} (med usikkerhet: ${adefaultLow}–${adefaultHigh}). Dette innebærer at artens mediane levetid ligger ${lifetimeText}, eller at sannsynligheten for utdøing innen 50&nbsp;år er på ${extinctionText}.`
 
     // Resten av beregninga er avhengig av radioknappen som velges nedenfor teksten: 
     if( radio == "Godtar beregnet skår") { // todo: implement real
-    Amethod = "forekomstareal forenklet" 
-    var Ascore = AdefaultBest 
-    var Alow = AdefaultLow 
-    var Ahigh = AdefaultHigh 
-    var MedianLifetime = 
-        Ascore === 1 ? 3 :
-        Ascore === 2 ? 25 :
-        Ascore === 3 ? 200 :
-        Ascore === 4 ? 2000 :
+    amethod = "forekomstareal forenklet" 
+    var ascore = adefaultBest 
+    var alow = adefaultLow 
+    var ahigh = adefaultHigh 
+    var medianLifetime = 
+        ascore === 1 ? 3 :
+        ascore === 2 ? 25 :
+        ascore === 3 ? 200 :
+        ascore === 4 ? 2000 :
         NaN
     } else if (radio == "Ønsker å justere skår") { // todo: implement real
-        Amethod = "forekomstareal justert" 
+        amethod = "forekomstareal justert" 
         // "Skårtabellen" åpnes for avkrysning, med ett mulig kryss for beste anslag og opptil tre kryss for usikkerhet, der ikke-valgbare bokser er grået ut. 
-        // Valgbare bokser for beste anslag er skårene fra og med ApossibleLow til og med ApossibleHigh. 
-        // Krysset i boksene bestemmer verdien til Ascore (mellom 1 og 4). 
-        // Valgbare bokser for usikkerhet er skårene fra og med max(1, Ascore - 1) til og med min(4, Ascore + 1). 
-        // Det laveste krysset i boksene bestemmer verdien til Alow (mellom 1 og 4). 
-        // Det høyeste krysset i boksene bestemmer verdien til Ahigh (mellom 1 og 4). 
+        // Valgbare bokser for beste anslag er skårene fra og med apossibleLow til og med apossibleHigh. 
+        // Krysset i boksene bestemmer verdien til ascore (mellom 1 og 4). 
+        // Valgbare bokser for usikkerhet er skårene fra og med max(1, ascore - 1) til og med min(4, ascore + 1). 
+        // Det laveste krysset i boksene bestemmer verdien til alow (mellom 1 og 4). 
+        // Det høyeste krysset i boksene bestemmer verdien til ahigh (mellom 1 og 4). 
 
-        MedianLifetime = // Samme som i "forekomstareal forenklet"!
-            Ascore === 1 ? 3 :
-            Ascore === 2 ? 25 :
-            Ascore === 3 ? 200 :
-            Ascore === 4 ? 2000 :
+        medianLifetime = // Samme som i "forekomstareal forenklet"!
+            ascore === 1 ? 3 :
+            ascore === 2 ? 25 :
+            ascore === 3 ? 200 :
+            ascore === 4 ? 2000 :
             NaN
     }
 }
@@ -290,71 +290,71 @@ if(r.chosenSpreadMedanLifespan ==    "forenklet anslag"     ) { // todo: impleme
 // ******************  (A1b) Forenklet anslag – dørstokkarter  ***************************
 // ***************************************************************************************
 // Beregninger 
-Amethod = "introduksjonspress" 
-if (AOO10yrBest < 1) AdefaultBest = 1 
-if (AOO10yrBest > 1) AdefaultBest = 2 
-if (AOO10yrBest > 4) AdefaultBest = 3 
-if (AOO10yrBest > 16) AdefaultBest = 4 
-if (AOO10yrLow < 1) AdefaultLow = max(1, Ascore - 1) 
-if (AOO10yrLow > 1) AdefaultLow = max(2, Ascore - 1) 
-if (AOO10yrLow > 4) AdefaultLow = 3 
-if (AOO10yrLow > 16) AdefaultLow = 4 
-if (AOO10yrHigh < 1) AdefaultHigh = 1 
-if (AOO10yrHigh > 1) AdefaultHigh = 2 
-if (AOO10yrHigh > 4) AdefaultHigh = min(3, Ascore + 1) 
-if (AOO10yrHigh > 16) AdefaultHigh = min(4, Ascore + 1) 
-if (AdefaultBest == 1) LifetimeText = "under 10&nbsp;år" 
-if (AdefaultBest == 1) ExtinctionText = "over 97&nbsp;%" 
-if (AdefaultBest == 2) LifetimeText = "mellom 10&nbsp;år og 60&nbsp;år" 
-if (AdefaultBest == 2) ExtinctionText = "mellom 43&nbsp;% og 97&nbsp;%" 
-if (AdefaultBest == 3) LifetimeText = "mellom 60&nbsp;år og 650&nbsp;år" 
-if (AdefaultBest == 3) ExtinctionText = "mellom 5&nbsp;% og 43&nbsp;%" 
-if (AdefaultBest == 4) LifetimeText = "over 650&nbsp;år" 
-if (AdefaultBest == 4) ExtinctionText = "under 5&nbsp;%"
-ApossibleLow = 
-    (AOO10yrBest >= 80) ? 4 :
-    (AOO10yrBest >= 20) ? 3 :
-    (AOO10yrBest >= 1) ? 2 :
+amethod = "introduksjonspress" 
+if (aOO10yrBest < 1) adefaultBest = 1 
+if (aOO10yrBest > 1) adefaultBest = 2 
+if (aOO10yrBest > 4) adefaultBest = 3 
+if (aOO10yrBest > 16) adefaultBest = 4 
+if (aOO10yrLow < 1) adefaultLow = max(1, ascore - 1) 
+if (aOO10yrLow > 1) adefaultLow = max(2, ascore - 1) 
+if (aOO10yrLow > 4) adefaultLow = 3 
+if (aOO10yrLow > 16) adefaultLow = 4 
+if (aOO10yrHigh < 1) adefaultHigh = 1 
+if (aOO10yrHigh > 1) adefaultHigh = 2 
+if (aOO10yrHigh > 4) adefaultHigh = min(3, ascore + 1) 
+if (aOO10yrHigh > 16) adefaultHigh = min(4, ascore + 1) 
+if (adefaultBest == 1) lifetimeText = "under 10&nbsp;år" 
+if (adefaultBest == 1) extinctionText = "over 97&nbsp;%" 
+if (adefaultBest == 2) lifetimeText = "mellom 10&nbsp;år og 60&nbsp;år" 
+if (adefaultBest == 2) extinctionText = "mellom 43&nbsp;% og 97&nbsp;%" 
+if (adefaultBest == 3) lifetimeText = "mellom 60&nbsp;år og 650&nbsp;år" 
+if (adefaultBest == 3) extinctionText = "mellom 5&nbsp;% og 43&nbsp;%" 
+if (adefaultBest == 4) lifetimeText = "over 650&nbsp;år" 
+if (adefaultBest == 4) extinctionText = "under 5&nbsp;%"
+apossibleLow = 
+    (aOO10yrBest >= 80) ? 4 :
+    (aOO10yrBest >= 20) ? 3 :
+    (aOO10yrBest >= 1) ? 2 :
     1
-ApossibleHigh =
-    (AOO10yrBest < 4) ? 1 :
+apossibleHigh =
+    (aOO10yrBest < 4) ? 1 :
     4
 
 // Utmating 
-const aresulttext = `Basert på det beste anslaget på ${Occurrences1Best} forekomster i løpet av 10&nbsp;år og ${IntroductionsBest} introduksjoner innen 50&nbsp;år er A-kriteriet forhåndsskåret som [AdefaultBest] (med usikkerhet: [AdefaultLow]–[AdefaultHigh]). Dette innebærer at artens mediane levetid ligger [LifetimeText], eller at sannsynligheten for utdøing innen 50 år er på [ExtinctionText].`
+const aresulttext = `Basert på det beste anslaget på ${occurrences1Best} forekomster i løpet av 10&nbsp;år og ${introductionsBest} introduksjoner innen 50&nbsp;år er A-kriteriet forhåndsskåret som [adefaultBest] (med usikkerhet: [adefaultLow]–[adefaultHigh]). Dette innebærer at artens mediane levetid ligger [lifetimeText], eller at sannsynligheten for utdøing innen 50 år er på [extinctionText].`
 
 
 
 // Resten av beregninga er avhengig av radioknappen som velges nedenfor teksten: 
 if (radio === "Godtar beregnet skår") {//todo: replace with real
-    Amethod = "introduksjonspress forenklet" 
+    amethod = "introduksjonspress forenklet" 
     // resten er identisk med det tilsvarende avsnittet for selvstendig reprod. arter 
-    Ascore = AdefaultBest 
-    Alow = AdefaultLow 
-    Ahigh = AdefaultHigh 
-    MedianLifetime = // Samme som i "forekomstareal forenklet"!
-        Ascore === 1 ? 3 :
-        Ascore === 2 ? 25 :
-        Ascore === 3 ? 200 :
-        Ascore === 4 ? 2000 :
+    ascore = adefaultBest 
+    alow = adefaultLow 
+    ahigh = adefaultHigh 
+    medianLifetime = // Samme som i "forekomstareal forenklet"!
+        ascore === 1 ? 3 :
+        ascore === 2 ? 25 :
+        ascore === 3 ? 200 :
+        ascore === 4 ? 2000 :
         NaN
 } else if (radio === "Ønsker å justere skår") {//todo: replace with real
-    Amethod = "introduksjonspress justert" 
+    amethod = "introduksjonspress justert" 
 
     // todo: implement score/usikkerhet thing. Beskrivelse under her
     // resten er identisk med det tilsvarende avsnittet for selvstendig reprod. arter 
     // "Skårtabellen" åpnes for avkrysning, med ett mulig kryss for beste anslag og opptil tre kryss for usikkerhet, der ikke-valgbare bokser er grået ut. 
-    // Valgbare bokser for beste anslag er skårene fra og med ApossibleLow til og med ApossibleHigh. 
-    // Krysset i boksene bestemmer verdien til Ascore (mellom 1 og 4). 
-    // Valgbare bokser for usikkerhet er skårene fra og med max(1, Ascore - 1) til og med min(4, Ascore + 1). 
-    // Det laveste krysset i boksene bestemmer verdien til Alow (mellom 1 og 4). 
-    // Det høyeste krysset i boksene bestemmer verdien til Ahigh (mellom 1 og 4). 
+    // Valgbare bokser for beste anslag er skårene fra og med apossibleLow til og med apossibleHigh. 
+    // Krysset i boksene bestemmer verdien til ascore (mellom 1 og 4). 
+    // Valgbare bokser for usikkerhet er skårene fra og med max(1, ascore - 1) til og med min(4, ascore + 1). 
+    // Det laveste krysset i boksene bestemmer verdien til alow (mellom 1 og 4). 
+    // Det høyeste krysset i boksene bestemmer verdien til ahigh (mellom 1 og 4). 
 
-    MedianLifetime = // Samme som i "forekomstareal forenklet"!
-        Ascore === 1 ? 3 :
-        Ascore === 2 ? 25 :
-        Ascore === 3 ? 200 :
-        Ascore === 4 ? 2000 :
+    medianLifetime = // Samme som i "forekomstareal forenklet"!
+        ascore === 1 ? 3 :
+        ascore === 2 ? 25 :
+        ascore === 3 ? 200 :
+        ascore === 4 ? 2000 :
         NaN
 
 }
@@ -366,13 +366,13 @@ if (radio === "Godtar beregnet skår") {//todo: replace with real
 // ************************************************************************************
 
 // Variabler som angis på fanen 
-// PopulationSize	//integer	// bestandens nåværende størrelse (individtall) 
-// GrowthRate	//double	// bestandens multiplikative vekstrate 
-// EnvVariance	//double	// miljøvarians 
-// DemVariance	//double	// demografisk varians 
-// CarryingCapacity	//integer	// bestandens bæreevne (individtall) 
-// ExtinctionThreshold	//integer	// kvasiutdøingsterskel (individtall) 
-// MedianLifetime	//integer	// artens mediane levetid i Norge i år 
+// PopulationSize	//integer	// bestandens nåværende størrelse (individtall)     //todo: NB! Denne blir aldri anvendt!!
+// GrowthRate	//double	// bestandens multiplikative vekstrate                  //todo: NB! Denne blir aldri anvendt!!
+// EnvVariance	//double	// miljøvarians                                         //todo: NB! Denne blir aldri anvendt!!
+// DemVariance	//double	// demografisk varians                                  //todo: NB! Denne blir aldri anvendt!!
+// CarryingCapacity	//integer	// bestandens bæreevne (individtall)                //todo: NB! Denne blir aldri anvendt!!
+// ExtinctionThreshold	//integer	// kvasiutdøingsterskel (individtall)           //todo: NB! Denne blir aldri anvendt!!
+// medianLifetime	//integer	// artens mediane levetid i Norge i år 
 // // // // ------------------------------------------------------------------------------------------
 // // // //       Fra FAB3
 // // // // SpreadRscriptSpeciesCount
@@ -386,60 +386,60 @@ if (radio === "Godtar beregnet skår") {//todo: replace with real
 
 // Angivelsen av fire variabler (fra EnvVariance til ExtinctionThreshold) er valgfritt. 
 // Beregninger 
-Amethod = "numerisk estimering" 
+amethod = "numerisk estimering" 
 
-Ascore = 
-    MedianLifetime >= 650 ? 4 :
-    MedianLifetime >= 60 ? 3 :
-    MedianLifetime >= 10 ? 2 :
-    MedianLifetime < 10 ? 1 :
+ascore = 
+    medianLifetime >= 650 ? 4 :
+    medianLifetime >= 60 ? 3 :
+    medianLifetime >= 10 ? 2 :
+    medianLifetime < 10 ? 1 :
     NaN
 
 // avrunding til to signifikante desimaler: 
 
 
-MedianLifetime = roundToSignificantDecimals(MedianLifetime)
+medianLifetime = roundToSignificantDecimals(medianLifetime)
 
 // "Skårtabellen" åpnes for avkrysning, men bare for usikkerhet, der ikke-valgbare bokser er grået ut. 
-// Valgbare bokser for usikkerhet er skårene fra og med max(1, Ascore - 1) til og med min(4, Ascore + 1). 
-// Det laveste krysset i usikkerhetsboksene bestemmer verdien til Alow (mellom 1 og 4). 
-// Det høyeste krysset i usikkerhetsboksene bestemmer verdien til Ahigh (mellom 1 og 4). 
+// Valgbare bokser for usikkerhet er skårene fra og med max(1, ascore - 1) til og med min(4, ascore + 1). 
+// Det laveste krysset i usikkerhetsboksene bestemmer verdien til alow (mellom 1 og 4). 
+// Det høyeste krysset i usikkerhetsboksene bestemmer verdien til ahigh (mellom 1 og 4). 
 // (A3) Levedyktighetsanalyse 
 // Variabler som angis på fanen 
-// MedianLifetime	//integer	// artens mediane levetid i Norge i år 
+// medianLifetime	//integer	// artens mediane levetid i Norge i år 
 // LifetimeLowerQ	//integer	// nedre kvartil for artens levetid i Norge i år 
 // LifetimeUpperQ	//integer	// øvre kvartil for artens levetid i Norge i år 
 // Beregninger 
-Amethod = "levedyktighetsanalyse" 
+amethod = "levedyktighetsanalyse" 
 
-if (r.LifetimeLowerQ > MedianLifetime) 
+if (r.LifetimeLowerQ > medianLifetime) 
     return {error: "Levetidens nedre kvartil må være mindre enn medianen."}
-if (r.LifetimeUpperQ <= MedianLifetime) 
+if (r.LifetimeUpperQ <= medianLifetime) 
     return {error: "Levetidens øvre kvartil må være større enn medianen."}
 
-Ascore = 
-    MedianLifetime >= 650 ? 4 :
-    MedianLifetime >= 60 ? 3 :
-    MedianLifetime >= 10 ? 2 :
-    MedianLifetime < 10 ? 1 :
+ascore = 
+    medianLifetime >= 650 ? 4 :
+    medianLifetime >= 60 ? 3 :
+    medianLifetime >= 10 ? 2 :
+    medianLifetime < 10 ? 1 :
     NaN
 
-Alow = 
+alow = 
     r.LifetimeLowerQ >= 650 ? 4 :
     r.LifetimeLowerQ >= 60 ? 3 :
-    r.LifetimeLowerQ >= 10 ? max(2, Ascore - 1)  :
-    r.LifetimeLowerQ < 10 ? max(1, Ascore - 1)  :
+    r.LifetimeLowerQ >= 10 ? max(2, ascore - 1)  :
+    r.LifetimeLowerQ < 10 ? max(1, ascore - 1)  :
     NaN
 
-Ahigh = 
-    r.LifetimeLowerQ >= 650 ? min(4, Ascore + 1) :
-    r.LifetimeLowerQ >= 60 ? min(3, Ascore + 1) :
+ahigh = 
+    r.LifetimeLowerQ >= 650 ? min(4, ascore + 1) :
+    r.LifetimeLowerQ >= 60 ? min(3, ascore + 1) :
     r.LifetimeLowerQ >= 10 ? 2 :
     r.LifetimeLowerQ < 10 ? 1 :
     NaN
 
 // avrunding til to signifikante desimaler: 
-MedianLifetime = roundToSignificantDecimals(MedianLifetime)
+medianLifetime = roundToSignificantDecimals(medianLifetime)
 r.LifetimeLowerQ = roundToSignificantDecimals(r.LifetimeLowerQ)  // todo: check! denne forandrer inputvariablen!?
 r.LifetimeUpperQ = roundToSignificantDecimals(r.LifetimeUpperQ)  // todo: check! denne forandrer inputvariablen!?
 
@@ -452,11 +452,11 @@ r.LifetimeUpperQ = roundToSignificantDecimals(r.LifetimeUpperQ)  // todo: check!
 // *************************************************************************
 
 // Variabler som beregnes på fanen for alle arter (og uansett metode) 
-var Bmethod = null	//string	// metode som ble brukt for å beregne B-kriteriet 
-// ExpansionSpeed	//integer	// ekspansjonshastighet i meter per år 
-// Bscore		//integer	// skår for B-kriteriet 
-// Blow		//integer	// nedre skår for B-kriteriet (inkludert usikkerhet) 
-// Bhigh		//integer	// øvre skår for B-kriteriet (inkludert usikkerhet) 
+var bmethod = null	//string	// metode som ble brukt for å beregne B-kriteriet 
+// expansionSpeed	//integer	// ekspansjonshastighet i meter per år 
+// bscore		//integer	// skår for B-kriteriet 
+// blow		//integer	// nedre skår for B-kriteriet (inkludert usikkerhet) 
+// bhigh		//integer	// øvre skår for B-kriteriet (inkludert usikkerhet) 
 
 
 // ****************************************************************************************
@@ -466,9 +466,9 @@ var Bmethod = null	//string	// metode som ble brukt for å beregne B-kriteriet
 // ****************************************************************************************
 
 // // Variabler som angis på fanen 
-// ExpansionSpeed	//integer	// ekspansjonshastighet i meter per år 
-// ExpansionLowerQ	//integer	// nedre kvartil for ekspansjonshastighet i meter per år 
-// ExpansionUpperQ	//integer	// øvre kvartil for ekspansjonshastighet i meter per år 
+// expansionSpeed	//integer	// ekspansjonshastighet i meter per år 
+// expansionLowerQ	//integer	// nedre kvartil for ekspansjonshastighet i meter per år 
+// expansionUpperQ	//integer	// øvre kvartil for ekspansjonshastighet i meter per år 
 // // // // --------------------------------------------------------------------------------
 // // // //      fra FAB3
 // // // // SpreadYearlyIncreaseCalculatedExpansionSpeed (SpreadYearlyIncreaseObservations?)
@@ -480,48 +480,48 @@ var Bmethod = null	//string	// metode som ble brukt for å beregne B-kriteriet
 // // Beregninger 
 
 if (  "B1"   ) { // todo: implement real
-    Bmethod = "modellering" 
-    // var Bscore = NaN
-    var Bscore = 
-        (r.ExpansionSpeed >= 500) ? 4 :
-        (r.ExpansionSpeed >= 160) ? 3 :
-        (r.ExpansionSpeed >= 50) ? 2 :
-        (r.ExpansionSpeed < 50) ? 1 :
+    bmethod = "modellering" 
+    // var bscore = NaN
+    var bscore = 
+        (r.expansionSpeed >= 500) ? 4 :
+        (r.expansionSpeed >= 160) ? 3 :
+        (r.expansionSpeed >= 50) ? 2 :
+        (r.expansionSpeed < 50) ? 1 :
         NaN
 
-    if (r.ExpansionLowerQ > r.ExpansionSpeed)
+    if (r.expansionLowerQ > r.expansionSpeed)
         return {error:  "Ekspansjonshastighetens nedre kvartil må være mindre enn medianen."}
-    if (r.ExpansionUpperQ <= r.ExpansionSpeed) 
+    if (r.expansionUpperQ <= r.expansionSpeed) 
         return {error: "Ekspansjonshastighetens øvre kvartil må være større enn medianen."}
-    var Blow =
-        (r.ExpansionLowerQ >= 500) ? 4 :
-        (r.ExpansionLowerQ >= 160) ? 3 :
-        (r.ExpansionLowerQ >= 50) ? max(2, Bscore - 1) :
-        (r.ExpansionLowerQ < 50) ? max(1, Bscore - 1) :
+    var blow =
+        (r.expansionLowerQ >= 500) ? 4 :
+        (r.expansionLowerQ >= 160) ? 3 :
+        (r.expansionLowerQ >= 50) ? max(2, bscore - 1) :
+        (r.expansionLowerQ < 50) ? max(1, bscore - 1) :
         NaN
 
-    var Bhigh =
-        (r.ExpansionUpperQ >= 500) ? min(4, Bscore + 1) :
-        (r.ExpansionUpperQ >= 160) ? min(3, Bscore + 1) :
-        (r.ExpansionUpperQ >= 50) ? 2 :
-        (r.ExpansionUpperQ < 50) ? 1 :
+    var bhigh =
+        (r.expansionUpperQ >= 500) ? min(4, bscore + 1) :
+        (r.expansionUpperQ >= 160) ? min(3, bscore + 1) :
+        (r.expansionUpperQ >= 50) ? 2 :
+        (r.expansionUpperQ < 50) ? 1 :
         NaN
     // avrunding til to signifikante desimaler: 
-    r.ExpansionSpeed = roundToSignificantDecimals(r.ExpansionSpeed) // ???!
-    r.ExpansionLowerQ = roundToSignificantDecimals(r.ExpansionLowerQ) // ???!
-    r.ExpansionUpperQ = roundToSignificantDecimals(r.ExpansionUpperQ) // ???!
+    r.expansionSpeed = roundToSignificantDecimals(r.expansionSpeed) // ???!
+    r.expansionLowerQ = roundToSignificantDecimals(r.expansionLowerQ) // ???!
+    r.expansionUpperQ = roundToSignificantDecimals(r.expansionUpperQ) // ???!
 }
 
 // ******************************************************************************************************
 // ******************  (B2a) Økning i forekomstareal – selvstendig reproduserende arter  ****************
 // ******************************************************************************************************
 // Variabler som angis på fanen 
-// AOOyear1	//integer	// årstallet for det første forekomstarealet 
-// AOOyear2	//integer	// årstallet for det andre forekomstarealet 
-// AAO1		//integer	// forekomstarealet i år 1 
-// AAO2		//integer	// forekomstarealet i år 2 
+// aOOyear1	//integer	// årstallet for det første forekomstarealet 
+// aOOyear2	//integer	// årstallet for det andre forekomstarealet 
+// AAO1		//integer	// forekomstarealet i år 1                      //todo: NB! Denne blir aldri anvendt!!
+// AAO2		//integer	// forekomstarealet i år 2                      //todo: NB! Denne blir aldri anvendt!!
 // Beregninger 
-Bmethod = "forekomstareal" 
+bmethod = "forekomstareal" 
 // avrunding til to signifikante desimaler: 
 function roundToSignificantDecimals2(num) {   // todo: spør om grenseverdiene (100 vs 99.5, og 2(?))
     const result = 
@@ -538,28 +538,28 @@ function roundToSignificantDecimals2(num) {   // todo: spør om grenseverdiene (
         num 
     return result
 }
-AOOdarkfigureBest = roundToSignificantDecimals2(AOOdarkfigureBest)
-r.ExpansionSpeed = round(sqrt(AOOdarkfigureBest) * (sqrt(r.AOO2) - sqrt(r.AOO1)) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi))) 
+aOOdarkfigureBest = roundToSignificantDecimals2(aOOdarkfigureBest)
+r.expansionSpeed = round(sqrt(aOOdarkfigureBest) * (sqrt(r.aOO2) - sqrt(r.aOO1)) / ((r.aOOyear2 - r.aOOyear1) * sqrt(pi))) 
 
-Bscore =
-    (r.ExpansionSpeed >= 500) ? 4 :
-    (r.ExpansionSpeed >= 160) ? 3 :
-    (r.ExpansionSpeed >= 50) ? 2 :
-    (r.ExpansionSpeed < 50) ? 1 :
+bscore =
+    (r.expansionSpeed >= 500) ? 4 :
+    (r.expansionSpeed >= 160) ? 3 :
+    (r.expansionSpeed >= 50) ? 2 :
+    (r.expansionSpeed < 50) ? 1 :
     Nan
 
 // avrunding til to signifikante desimaler: 
 
-r.ExpansionSpeed = roundToSignificantDecimals(r.ExpansionSpeed)
-round(ExpansionSpeed / 10) * 10 
+r.expansionSpeed = roundToSignificantDecimals(r.expansionSpeed)
+round(expansionSpeed / 10) * 10 
 // Utmating 
-const b2aresulttext = `Ekspansjonshastigheten er beregnet til ${ExpansionSpeed}&nbsp;m/år basert på økningen i artens forekomstareal i perioden fra ${AOOyear1} til ${AOOyear2} og et mørketall på ${AOOdarkfigureBest}.`
+const b2aresulttext = `Ekspansjonshastigheten er beregnet til ${expansionSpeed}&nbsp;m/år basert på økningen i artens forekomstareal i perioden fra ${aOOyear1} til ${aOOyear2} og et mørketall på ${aOOdarkfigureBest}.`
 
 
 // "Skårtabellen" åpnes for avkrysning, men bare for usikkerhet, der ikke-valgbare bokser er grået ut. 
-// Valgbare bokser for usikkerhet er skårene fra og med max(1, Bscore - 1) til og med min(4, Bscore + 1). 
-// Det laveste krysset i usikkerhetsboksene bestemmer verdien til Blow (mellom 1 og 4). 
-// Det høyeste krysset i usikkerhetsboksene bestemmer verdien til Bhigh (mellom 1 og 4). 
+// Valgbare bokser for usikkerhet er skårene fra og med max(1, bscore - 1) til og med min(4, bscore + 1). 
+// Det laveste krysset i usikkerhetsboksene bestemmer verdien til blow (mellom 1 og 4). 
+// Det høyeste krysset i usikkerhetsboksene bestemmer verdien til bhigh (mellom 1 og 4). 
 
 
 // ***************************************************************************************************
@@ -567,44 +567,44 @@ const b2aresulttext = `Ekspansjonshastigheten er beregnet til ${ExpansionSpeed}&
 // ***************************************************************************************************
 
 // Variabler som beregnes på fanen 
-// ExpansionLowerQ	//integer	// nedre kvartil for ekspansjonshastighet i meter per år 
-// ExpansionUpperQ	//integer	// øvre kvartil for ekspansjonshastighet i meter per år 
-// ExpansionText	//string	// tekstlig beskrivelse av ekspansjonshastighet 
+// expansionLowerQ	//integer	// nedre kvartil for ekspansjonshastighet i meter per år 
+// expansionUpperQ	//integer	// øvre kvartil for ekspansjonshastighet i meter per år 
+// expansionText	//string	// tekstlig beskrivelse av ekspansjonshastighet 
 // Beregninger 
-Bmethod = "introduksjonspress" 
-r.ExpansionSpeed = round(200 * (sqrt(AOO10yrBest / 4) - 1) / sqrt(pi)) 
-r.ExpansionLowerQ = round(200 * (sqrt(AOO10yrLow / 4) - 1) / sqrt(pi)) 
-r.ExpansionUpperQ = round(200 * (sqrt(AOO10yrHigh / 4) - 1) / sqrt(pi)) 
-Bscore =
-    (r.ExpansionSpeed >= 500) ? 4 :
-    (r.ExpansionSpeed >= 160) ? 3 :
-    (r.ExpansionSpeed >= 50) ? 2 :
-    (r.ExpansionSpeed < 50) ? 1 :
+bmethod = "introduksjonspress" 
+r.expansionSpeed = round(200 * (sqrt(aOO10yrBest / 4) - 1) / sqrt(pi)) 
+r.expansionLowerQ = round(200 * (sqrt(aOO10yrLow / 4) - 1) / sqrt(pi)) 
+r.expansionUpperQ = round(200 * (sqrt(aOO10yrHigh / 4) - 1) / sqrt(pi)) 
+bscore =
+    (r.expansionSpeed >= 500) ? 4 :
+    (r.expansionSpeed >= 160) ? 3 :
+    (r.expansionSpeed >= 50) ? 2 :
+    (r.expansionSpeed < 50) ? 1 :
     Nan
 
-var Blow =
-    (r.ExpansionLowerQ >= 500) ? 4 :
-    (r.ExpansionLowerQ >= 160) ? 3 :
-    (r.ExpansionLowerQ >= 50) ? max(2, Bscore - 1) :
-    (r.ExpansionLowerQ < 50) ? max(1, Bscore - 1) :
+var blow =
+    (r.expansionLowerQ >= 500) ? 4 :
+    (r.expansionLowerQ >= 160) ? 3 :
+    (r.expansionLowerQ >= 50) ? max(2, bscore - 1) :
+    (r.expansionLowerQ < 50) ? max(1, bscore - 1) :
     NaN
 
-var Bhigh =  // todo: check with Hanno. his code sets Blow here!! That must be wrong!!
-    (r.ExpansionUpperQ >= 500) ? min(4, Bscore + 1) :
-    (r.ExpansionUpperQ >= 160) ? min(3, Bscore + 1) :
-    (r.ExpansionUpperQ >= 50) ? 2 :
-    (r.ExpansionUpperQ < 50) ? 1 :
+var bhigh =  // todo: check with Hanno. his code sets blow here!! That must be wrong!!
+    (r.expansionUpperQ >= 500) ? min(4, bscore + 1) :
+    (r.expansionUpperQ >= 160) ? min(3, bscore + 1) :
+    (r.expansionUpperQ >= 50) ? 2 :
+    (r.expansionUpperQ < 50) ? 1 :
     NaN
 
 
-const ExpansionText =
-    Bscore === 1 ? "under 50&nbsp;m/år" :
-    Bscore === 2 ? "mellom 50&nbsp;m/år og 160&nbsp;m/år"  :
-    Bscore === 3 ? "mellom 160&nbsp;m/år og 500&nbsp;m/år" :
-    Bscore === 4 ? "over 500&nbsp;m/år" :
+const expansionText =
+    bscore === 1 ? "under 50&nbsp;m/år" :
+    bscore === 2 ? "mellom 50&nbsp;m/år og 160&nbsp;m/år"  :
+    bscore === 3 ? "mellom 160&nbsp;m/år og 500&nbsp;m/år" :
+    bscore === 4 ? "over 500&nbsp;m/år" :
     null
 // avrunding til to signifikante desimaler: 
-r.ExpansionSpeed = roundToSignificantDecimals(r.ExpansionSpeed)
+r.expansionSpeed = roundToSignificantDecimals(r.expansionSpeed)
 // Utmating 
-const b2bresulttext = `Basert på det beste anslaget på ${Occurrences1Best} forekomster i løpet av 10&nbsp;år og ${IntroductionsBest} introduksjoner innen 50&nbsp;år er B-kriteriet skåret som ${Bscore} (med usikkerhet: £{Blow}–${Bhigh}). Dette innebærer at artens ekspansjonshastighet ligger ${ExpansionText} (beste anslag: ${ExpansionSpeed}&nbsp;m/år).`
+const b2bresulttext = `Basert på det beste anslaget på ${occurrences1Best} forekomster i løpet av 10&nbsp;år og ${introductionsBest} introduksjoner innen 50&nbsp;år er B-kriteriet skåret som ${bscore} (med usikkerhet: £{blow}–${bhigh}). Dette innebærer at artens ekspansjonshastighet ligger ${expansionText} (beste anslag: ${expansionSpeed}&nbsp;m/år).`
  

@@ -8,7 +8,7 @@ import { Provider } from 'mobx-react';
 import App from './src/app';
 import viewModel from './src/components/viewModel'
 import ExpertGroupModel from './src/components/expertGroupModel'
-import router from './src/components/mobxRouter'
+// import router from './src/components/mobxRouter'
 import { Log, User, UserManager } from 'oidc-client';
 import auth from './src/components/authService'
 import { ApplicationInsights } from '@microsoft/applicationinsights-web'
@@ -46,7 +46,8 @@ else {
         window.history.replaceState({},
           window.document.title,
           window.location.origin + window.location.pathname);
-        window.location.hash = "";
+          window.location.href = window.location.href;
+        console.log("window.location.hash set - will not navigate")
       }
     );
   } else {
@@ -88,9 +89,9 @@ else {
 
     const appState = viewModel
 
-    action(() => {
-      appState.router = router
-    })()
+    // action(() => {
+    //   appState.router = router
+    // })()
 
 
     ReactDOM.render(
