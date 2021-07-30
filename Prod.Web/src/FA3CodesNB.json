@@ -2045,91 +2045,91 @@
             {
                 "Id": "tilstandsendringer",
                 "Value": "ER",
-                "Text": "Erosjonsutsatthet",
+                "text": "Erosjonsutsatthet",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "tilstandsendringer",
                 "Value": "OM",
-                "Text": "Oksygenmangel",
+                "text": "Oksygenmangel",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "tilstandsendringer",
                 "Value": "SS",
-                "Text": "Sandstabilisering",
+                "text": "Sandstabilisering",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "tilstandsendringer",
                 "Value": "VM",
-                "Text": "Vannmetning",
+                "text": "Vannmetning",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "tilstandsendringer",
                 "Value": "1AE",
-                "Text": "Enkeltarts-sammensetning",
+                "text": "Enkeltarts-sammensetning",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "tilstandsendringer",
                 "Value": "1AG",
-                "Text": "Artsgruppe-sammensetning",
+                "text": "Artsgruppe-sammensetning",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "tilstandsendringer",
                 "Value": "1AR",
-                "Text": "Relativ del-artsgruppe-sammensetning",
+                "text": "Relativ del-artsgruppe-sammensetning",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "tilstandsendringer",
                 "Value": "7EU",
-                "Text": "Eutrofiering",
+                "text": "Eutrofiering",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "tilstandsendringer",
                 "Value": "7RA",
-                "Text": "Rask suksesjon",
+                "text": "Rask suksesjon",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "tilstandsendringer",
                 "Value": "7SN",
-                "Text": "Naturlig bestandsreduksjon på tresatt areal",
+                "text": "Naturlig bestandsreduksjon på tresatt areal",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "tilstandsendringer",
                 "Value": "7UB",
-                "Text": "Ubalanse mellom trofiske nivåer",
+                "text": "Ubalanse mellom trofiske nivåer",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "tilstandsendringer",
                 "Value": "9TS",
-                "Text": "Tresjiktstruktur",
+                "text": "Tresjiktstruktur",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "tilstandsendringer",
                 "Value": "other",
-                "Text": "Annen tilstandsendring",
+                "text": "Annen tilstandsendring",
                 "Info": null,
                 "Children": null
             }
