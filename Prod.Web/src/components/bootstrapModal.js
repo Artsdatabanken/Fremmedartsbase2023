@@ -16,32 +16,27 @@ export default class BootstrapModal extends React.Component {
 
     render() {
         const okEnabled = this.props.okEnabled === undefined ? true : this.props.okEnabled
-        console.log (this.children)
-        return <div>
-       {/*<div className="modal-backdrop fade in"  style={{zIndex: 1110}}></div>*/}
-        <div role="dialog" 
-            //tabIndex="-1" className="modal fade in" style={{display: "block", zIndex: 1120}}
-        >
-       {/* <div className="modal-dialog">
-                    <div className="modal-content" role="document"> */}
+        return <div role="dialog">
+            <div className="modal-backdrop"  style={{zIndex: 1110, opacity: "75%"}}></div>
+            <div role="dialog" tabIndex="-1" className="modal" style={{display: "block", zIndex: 1120}}>
+                <div className="modal-dialog">
+                    <div className="modal-content" role="document">
                         <div className="modal-header">
                             <Xcomp.Button className="close" ariaLabel="Close" onClick={this.onCancel}>
                                 <span aria-hidden="true">×</span>
                             </Xcomp.Button>
-                            {/*{typeof this.heading === "string" ?
+                            {typeof this.heading === "string" ?
                                 <h4 className="modal-title">
                                     {this.heading}                                 
                                 </h4> :
                                 <div className="modal-title">
                                     {this.heading}
-                             </div>}*/}
+                                </div>}
                         </div>
-                        <div className="modal-body" style={{display: 'flex'}}>
-                            <div style={{display: 'flex'}}>
+                        <div className="modal-body">
+                            <div>
                                 {this.children}
                             </div>
-
-                    
                         </div>
                         <div className="modal-footer">
                             <Xcomp.Button  onClick={this.onCancel}>{this.labels.cancel}</Xcomp.Button>
@@ -49,7 +44,8 @@ export default class BootstrapModal extends React.Component {
                         </div>
                     </div>
                 </div>
-
+            </div>
+        </div>
 
           {/*  <div className="modal-header">
                         </div>
