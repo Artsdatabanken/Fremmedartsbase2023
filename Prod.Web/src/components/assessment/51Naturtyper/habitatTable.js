@@ -55,12 +55,12 @@ export class HabitatTableRow extends React.Component {
             <tr>
                 <td>{nt.niNCode}</td>
                 <td>{ntlabel}</td>
-                <td>{nt.DominanceForrest.join('\n')}</td>
+                <td>{nt.dominanceForrest.join('\n')}</td>
                 <td></td>
-                <td>{kodeTekst(koder.timeHorizon, nt.TimeHorizon)}</td>
-                <td>{kodeTekst(koder.colonizedArea, nt.ColonizedArea)}</td>
+                <td>{kodeTekst(koder.timeHorizon, nt.timeHorizon)}</td>
+                <td>{kodeTekst(koder.colonizedArea, nt.colonizedArea)}</td>
                 <td>{stateChangLabel}</td>
-                <td>{kodeTekst(koder.affectedArea, nt.AffectedArea)}</td>
+                <td>{kodeTekst(koder.affectedArea, nt.affectedArea)}</td>
                 <td>
                     <Xcomp.Button 
                         primary 
@@ -119,7 +119,7 @@ export default class HabitatTable extends React.Component {
             <tbody>
                 {canRenderTable ? naturetypes.map(nt => { 
                     const deleteRow = () => naturetypes.remove(nt)
-                    const key = nt.niNCode + nt.TimeHorizon + nt.ColonizedArea + nt.StateChange.join(';') + nt.AffectedArea
+                    const key = nt.niNCode + nt.timeHorizon + nt.colonizedArea + nt.stateChange.join(';') + nt.affectedArea
                     return <NaturtypeRad key={key} naturtype={nt} deleteRow={deleteRow} fabModel={fabModel} labels={labels}/> }) :
                     null
                 }

@@ -288,17 +288,17 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                        <h4>{labels.Acrit.data}</h4>
                         <p>{labels.DistributionHistory.noDocuments}.</p>
                         <span>{labels.General.upload}</span> 
-                       {/* <FileUpload
+                        <FileUpload
                                // onUploadComplete={this.getAttachments}
-                                />*/}
-                        <Xcomp.Button primary >{labels.General.chooseFiles}</Xcomp.Button>
+                                />
+                       {/* <Xcomp.Button primary >{labels.General.chooseFiles}</Xcomp.Button>
                         <span>{labels.General.noFileChosen}</span>
                           <Filliste
                                 //baseDirectory={`${appState.vurderingId.split('/').join('_')}/ViableAnalysis`}
                                 vurdering ={assessment}
                                  labels={labels.DistributionHistory}
                                  //{...appState.vurdering.Datasett}
-                                 />
+                                 />*/}
                     </div>
                     </div>
                     <div className="statusField">
@@ -435,8 +435,11 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             <Xcomp.HtmlString observableValue={[riskAssessment, 'fileDescription']} />
                                         </div>
                                     </div> 
-                                        <p>{labels.General.upload}</p> <Xcomp.Button primary >{labels.General.chooseFiles}</Xcomp.Button>
-                                        <span>{labels.General.noFilesChosen}</span>
+                                    <FileUpload
+                                                        // onUploadComplete={this.getAttachments}
+                                                    />
+                                       {/* <p>{labels.General.upload}</p> <Xcomp.Button primary >{labels.General.chooseFiles}</Xcomp.Button>
+                                        <span>{labels.General.noFilesChosen}</span> */}
                                 </div>
                             </div>
 
@@ -628,6 +631,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                     observableValue={[riskAssessment, 'spreadYearlyIncreaseObservationsUpperQuartile']}/>
                                             </td>
                                         </tr>
+                                       
                                         {appState.fileUploadEnabled
                                         ? <tr>
                                             <td>
@@ -642,14 +646,13 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                     labels={labels.DistributionHistory}
                                                     //{...appState.vurdering.Datasett}
                                                     />
-                                                    <FileUpload
-                                                        // onUploadComplete={this.getAttachments}
-                                                    />
+                                                    
                                             </td>
                                         </tr>
                                         : null }
                                     </tbody>
                                 </table>
+                                
                                 <hr/>
                             </div>
                         : null}
