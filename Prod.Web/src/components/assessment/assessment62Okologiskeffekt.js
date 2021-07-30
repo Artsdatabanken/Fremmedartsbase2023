@@ -174,7 +174,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
             newItem.interactionType = "CompetitionSpace" 
             newItem.effect = "Weak"              
             newItem.scale = "Limited" 
-            newItem.EffectLocalScale = false 
+            newItem.effectLocalScale = false 
             newItem.longDistanceEffect = false 
             newItem.confirmedOrAssumed = false
             newItem.domesticOrAbroad = ""
