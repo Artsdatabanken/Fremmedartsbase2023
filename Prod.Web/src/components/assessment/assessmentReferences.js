@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
 import { observer, inject } from 'mobx-react';
 import {autorun, action, extendObservable, observable, toJS} from 'mobx';
-//import {deleteData, loadData, postData, putData} from '../apiService';
+import {deleteData, loadData, postData, putData} from './../../apiService';
 import * as Xcomp from './observableComponents';
-//import config from '../config';
-import auth from '../authService'
+import config from './../../config';
+import auth from './../authService'
 
 @inject('appState')
 @observer
@@ -167,7 +167,7 @@ export default class AssessmentReferences extends Component {
         })
         autorun(() => {
             if(this.valgtReferanseId) {
-                //loadData(config.referenceApiUrl + "api/References/" + this.valgtReferanseId, this.updateValgtReferanse)
+                loadData(config.referenceApiUrl + "api/References/" + this.valgtReferanseId, this.updateValgtReferanse)
             }
           // if (this.assessment && auth.isLoggedIn)
             this.doReferenceSearch()        
@@ -207,7 +207,7 @@ export default class AssessmentReferences extends Component {
         // r.kanLagres= false
     })
 
-    _doReferenceSearch = () => {
+    doReferenceSearch = () => {
        // const side = 0;
         const pageSize = 10;
         const sortering = this.valgtSortering
@@ -228,7 +228,7 @@ export default class AssessmentReferences extends Component {
         
     }
 
-    _lagreReferanse = action(() => {
+    lagreReferanse = action(() => {
         var clone = toJS(this.valgtReferanse)
         console.log(clone);
         if (clone.id === "NY_REFERANSE") {
@@ -303,7 +303,6 @@ export default class AssessmentReferences extends Component {
     })
     updateReferenceFromAssessment = action((assessment, value) => {        
         let refs = assessment.referanser
-        console.log(refs)
         let result = refs.slice().sort(this.compare)
         refs = result
         const ref = refs.find(r => r.referenceId === value.id)
@@ -314,7 +313,7 @@ export default class AssessmentReferences extends Component {
         }
     })
 
-    _slettReferanse = action(() => {
+    slettReferanse = action(() => {
         const clone = toJS(this.valgtReferanse)
         if (clone.id != "NY_REFERANSE") {
             // eksisterende
@@ -324,9 +323,6 @@ export default class AssessmentReferences extends Component {
                 this.doReferenceSearch()
                 this.removeReferenceFromAssessment(this.theAssessment, clone.id)
             });
-        } else {
-
-            console.log ("Success!")
         }
         this.valgtReferanse.allowDelete = false
         console.log("Slettet referansen")
@@ -341,33 +337,18 @@ export default class AssessmentReferences extends Component {
         const reference = observable({type: value.referenceType, referenceId: value.id, formattedReference: value.referencePresentation, url: value.url});       
         const refs = assessment.referanser;
         
-        
-        //let found = false;
-        
         if (refs){
-        /*for (let i = 0; i < refs.length; i++) {
-            const referenceId = refs[i].referenceId;
-            if (referenceId === reference.referenceId) {
-                found = true;
-                break;
-            }
-        }
-    
-        if (found) {
-            //logger.error(config.toasts.referenceExists);
-            console.log("Referansen finnes allerede i vurderingen")
-        } else {*/
+       
             assessment
                 .referanser
                 .push(reference);
-        //}
+        
     } else {
         assessment.referanser = [];
         assessment
                 .referanser
                 .push(reference);
-    }
-        //event.trigger('addreference', reference.ReferenceId);
+    }        
         if (document.getElementById(value.id) != null) {
                 document.getElementById(value.id).setAttribute('disabled', 'true')
         }
@@ -425,12 +406,9 @@ export default class AssessmentReferences extends Component {
         }
         return comparison;
       }
-    _updateSearchResult = action((data) => {
+    updateSearchResult = action((data) => {
         let result = data.slice().sort(this.compare)
         this.sokeresultat = result
-    //    for (let i = 0; i < data.length; i++){
-    //         this.sokeresultat[i] = data[i];     
-    //         }      
 
         if (this.sokeresultat.length > 0) {
             this.antallSider = Math.ceil(this.sokeresultat.length / this.pageSize)
@@ -451,7 +429,7 @@ export default class AssessmentReferences extends Component {
         
     
 
-    _linkify(text) {
+    linkify(text) {
         var urlRegex =/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
         var showUrl = ""
         return text.replace(urlRegex, function(url) {
@@ -474,9 +452,8 @@ export default class AssessmentReferences extends Component {
             const match = gr.find(kode => kode.value = id)
             return match && match.text ? match.text : id
         }
-        this.theAssessment = assessment
-        var sortedReferences = []
-        //var sortedReferences = assessment.referanser.slice().sort(this.compare)
+        this.theAssessment = assessment        
+        var sortedReferences = assessment.references.slice().sort(this.compare)
                 
         return (
             <div className="page_container">
