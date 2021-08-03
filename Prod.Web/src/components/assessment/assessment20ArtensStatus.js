@@ -275,8 +275,8 @@ export default class Assessment20ArtensStatus extends React.Component {
                         <p>{labels.SpeciesStatus.reasonForChangingOfStatusDescription}</p>
                         <Xcomp.HtmlString observableValue={[assessment, 'changedAssessment']}/>
                     </div> : null }
-                    
-                    
+                    </fieldset>
+                    <fieldset className="well">
                     {assessment.riskAssessment.isAlienSpecies == null ? null :                    
 
                     assessment.riskAssessment.isAlienSpecies == 'true' && 

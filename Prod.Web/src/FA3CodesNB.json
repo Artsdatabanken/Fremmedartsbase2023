@@ -6933,7 +6933,7 @@
                         {
                             "Id": null,
                             "Value": "notValid",
-                            "Text": "Geografisk  variasjon i risiko er kun aktuelt for arter i risikokategoriene PH, HI og SE.",
+                            "Text": "Geografisk  variasjon i risiko er kun aktuelt for arter i risikokategoriene PH, HI, SE, og LO med usikkerhet oppover til PH eller HI.",
                             "Info": null,
                             "Children": null
                         },
