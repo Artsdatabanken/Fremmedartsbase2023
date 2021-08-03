@@ -245,10 +245,11 @@ export default class Assessment20ArtensStatus extends React.Component {
                     { assessment.riskAssessment.isAlienSpecies == 'false' ?
                     <div>
                         <b>{labels.SpeciesStatus.didSpecies} </b>
-                        <Xcomp.Radio kode={"VærtFremmed"} observableValue={[assessment.riskAssessment, "changedFromAlien"]} label={labels.SpeciesStatus.wasAlienButEstablishedNow} />
-                        <Xcomp.Radio kode={"VærtAntattFremmed"} observableValue={[assessment.riskAssessment, "changedFromAlien"]} label={labels.SpeciesStatus.wasThoughtToBeAlien} />
+                        <Xcomp.StringEnum observableValue={[assessment, "changedFromAlien"]} mode="radio" codes={codes.ChangedFromAlien}/>
+                       {/* <Xcomp.Radio kode={"VærtFremmed"} observableValue={[assessment, "changedFromAlien"]} label={labels.SpeciesStatus.wasAlienButEstablishedNow} />
+                        <Xcomp.Radio kode={"VærtAntattFremmed"} observableValue={[assessment, "changedFromAlien"]} label={labels.SpeciesStatus.wasThoughtToBeAlien} /> */}
                         <p>{labels.SpeciesStatus.reasonForChangingOfStatusDescription}</p>
-                        <Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'changedAssessment']}/>
+                        <Xcomp.HtmlString observableValue={[assessment, 'changedAssessment']}/>
                     </div> : null }
                     
                     
@@ -392,12 +393,12 @@ export default class Assessment20ArtensStatus extends React.Component {
                             {assessment.speciesStatus == "A" && 
                                 <p>{labels.SpeciesStatus.foundInNorwayBefore}</p> }
                             {(assessment.speciesStatus == "B1" || assessment.speciesStatus == "B2" ) &&
-                                <p>{labels.SpeciesStatus.furtherInformationRegardingSpecies}</p>}
+                                <p className="furtherInfo">{labels.SpeciesStatus.furtherInformationRegardingSpecies}</p>}
                             {(assessment.speciesStatus == "C0" || assessment.speciesStatus == "C1" ) &&
-                                <p>{labels.SpeciesStatus.furtherInformationRegardingReproductionOfSpecies}</p>
+                                <p className="furtherInfo">{labels.SpeciesStatus.furtherInformationRegardingReproductionOfSpecies}</p>
                             }
                             {assessment.speciesStatus != "C3" && assessment.speciesStatus != "C2" && assessment.speciesStatus != null &&
-                                <Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'furtherInfo']}/> }
+                                <Xcomp.HtmlString className="furtherInfo" observableValue={[assessment.riskAssessment, 'furtherInfo']}/> }
                             </fieldset> : null }
                 
                {/* <Xcomp.Radio

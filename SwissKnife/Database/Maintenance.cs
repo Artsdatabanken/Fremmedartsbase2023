@@ -266,6 +266,8 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.ProductionSpecies, opt => opt.Ignore())
                     .ForMember(dest => dest.ConnectedTaxon1, opt => opt.Ignore())
                     .ForMember(dest => dest.ConnectedTaxon2, opt => opt.Ignore())
+                    .ForMember(dest => dest.ChangedFromAlien, opt => opt.Ignore())
+                    .ForMember(dest => dest.ChangedAssessment, opt => opt.Ignore())
                     .ForMember(dest => dest.ReasonForChangeOfCategory, opt => opt.Ignore())
                     .ForMember(dest => dest.IndoorProduktion, opt => opt.Ignore())
                     .ForMember(dest => dest.LastUpdatedBy, opt => opt.MapFrom(src => src.SistOppdatertAv))
