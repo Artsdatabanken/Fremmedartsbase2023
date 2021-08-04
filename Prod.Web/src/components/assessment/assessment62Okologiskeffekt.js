@@ -357,7 +357,6 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                         secondValue={"unsureH"}/> */}
                    
                     <Criterion criterion={crit52H} mode="noheading"/>
-                    <p><b>Verdier stemmer ikke! ^^</b></p>
                      <Xcomp.HtmlString                            
                                 observableValue={[riskAssessment, "HCritInsecurity"]}
                                 label={labels.DEcrit.insecurity}
@@ -384,7 +383,6 @@ export default class Assessment62Okologiskeffekt extends React.Component {
 
                     
                     <Criterion criterion={crit52I} mode="noheading"/>
-                    <p><b>Verdier stemmer ikke! ^^</b></p>
                      <Xcomp.HtmlString                            
                                 observableValue={[riskAssessment, "ICritInsecurity"]}
                                 label={labels.DEcrit.insecurity}

@@ -3507,28 +3507,28 @@
                         {
                             "Id": "CritH",
                             "Value": "0",
-                            "Text": "Ingen kjent effekt",
+                            "Text": "Ingen overføring",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": "CritH",
                             "Value": "1",
-                            "Text": "Liten effekt",
+                            "Text": "Begrenset til stedegen art",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": "CritH",
                             "Value": "2",
-                            "Text": "Middels effekt",
+                            "Text": "Storskala til stedegen art / Begrenset til truet art eller nøkkelart",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": "CritH",
                             "Value": "3",
-                            "Text": "Stor effekt",
+                            "Text": "Storskala til truet art eller nøkkelart"                            ,
                             "Info": null,
                             "Children": null
                         }
@@ -3545,28 +3545,28 @@
                         {
                             "Id": "CritI",
                             "Value": "0",
-                            "Text": "Ingen kjent effekt",
+                            "Text": "Ingen overføring / Begrenset til art som allerede er vert for denne parasitten",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": "CritI",
                             "Value": "1",
-                            "Text": "Liten effekt",
+                            "Text": "Storskala til art som allerede er vert for denne parasitten / Begrenset til ny vert",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": "CritI",
                             "Value": "2",
-                            "Text": "Middels effekt",
+                            "Text": "Storskala av stedegen parasitt til ny vert / Begrenset til ny truet verter",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": "CritI",
                             "Value": "3",
-                            "Text": "Stor effekt",
+                            "Text": "Storskala av stedegen til ny truet vert /Storskala eller begrenset av en fremmed parasitt",
                             "Info": null,
                             "Children": null
                         }
