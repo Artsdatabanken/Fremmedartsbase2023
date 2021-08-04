@@ -246,6 +246,24 @@
             
         ],
 
+        "ChangedFromAlien": [
+            {
+                "Id": "ChangedFromAlien",
+                "Value": "wasAlienButEstablishedNow",
+                "Text": "vært fremmed, men har nå etablert minst én stedegen bestand",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ChangedFromAlien",
+                "Value": "wasThoughtToBeAlien",
+                "Text": "vært antatt å være fremmed, men kunnskapsgrunnlaget/tolkninga er endra",
+                "Info": null,
+                "Children": null
+            }
+    
+        ],
+
         "ArrivedCountryFrom": [
             {
                 "Id": "ArrivedCountryFrom",
@@ -6915,7 +6933,7 @@
                         {
                             "Id": null,
                             "Value": "notValid",
-                            "Text": "Geografisk  variasjon i risiko er kun aktuelt for arter i risikokategoriene PH, HI og SE.",
+                            "Text": "Geografisk  variasjon i risiko er kun aktuelt for arter i risikokategoriene PH, HI, SE, og LO med usikkerhet oppover til PH eller HI.",
                             "Info": null,
                             "Children": null
                         },

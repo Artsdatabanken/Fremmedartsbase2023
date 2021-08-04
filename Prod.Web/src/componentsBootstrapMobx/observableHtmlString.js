@@ -134,11 +134,11 @@ export default class ObservableHtmlString extends React.Component {
     }
     render() {
         const context = UserContext.getContext()
-        const {observableValue, label, disabled, editable, placeholder} = this.props;        
+        const {observableValue, label, disabled, editable, className, placeholder} = this.props;        
         const readonly = !!context.readonly
         const [obj, prop] = observableValue;
         const hasLabel = !!label;
-        return (<div>
+        return (<div className={className}>
             {hasLabel && <label htmlFor={prop}>{label}</label>}
             <HtmlEditor 
                         disabled={(readonly || disabled) && !editable }

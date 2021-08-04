@@ -115,8 +115,8 @@ export default class Assessment20ArtensStatus extends React.Component {
 
                     { assessment.riskAssessment.isAlienSpecies == 'true' ?
                     <div> 
-                        <div className="statusField"><b>{labels.SpeciesStatus.connectedToAnotherTaxon} </b> <Xcomp.Bool observableValue={[assessment.riskAssessment, "connectedToAnother"]} /></div>
-                        { assessment.riskAssessment.connectedToAnother == true ?
+                        <div className="statusField"><b>{labels.SpeciesStatus.connectedToAnotherTaxon} </b> <Xcomp.Bool observableValue={[assessment, "connectedToAnother"]} /></div>
+                        { assessment.connectedToAnother == true ?
                             <div>
                             <Xcomp.Radio value={"Connected"} observableValue={[assessment.riskAssessment, "connected"]} label={labels.SpeciesStatus.assessedWithAnotherTaxon}/>
                             {assessment.riskAssessment.connected == "Connected" && 
@@ -207,7 +207,7 @@ export default class Assessment20ArtensStatus extends React.Component {
                             </div> : null }
                     </div> : null}
 
-                    { assessment.riskAssessment.isAlienSpecies == 'true' && (assessment.riskAssessment.connectedToAnother == false || assessment.riskAssessment.connectedToAnother == null ) ? 
+                    { assessment.riskAssessment.isAlienSpecies == 'true' && (assessment.connectedToAnother == false || assessment.connectedToAnother == null ) ? 
                      <div>
                      <div className="statusField">
                          <b>{labels.SpeciesStatus.isProductionSpecies}</b> <Xcomp.Bool observableValue={[assessment, "productionSpecies"]} /> </div>
@@ -215,11 +215,35 @@ export default class Assessment20ArtensStatus extends React.Component {
                          <p>{labels.SpeciesStatus.highestCategoryPerToday}</p>
 
                          {assessment.alienSpeciesCategory == "DoorKnocker" ? assessment.productionSpecies == true ? 
-                            <Xcomp.StringEnum observableValue={[assessment, "speciesStatus"]} mode="radio" codes={codes.EstablishmentCategoryDoorKnockerProduction}/>
-                            :  <Xcomp.StringEnum observableValue={[assessment, "speciesStatus"]} mode="radio" codes={codes.EstablishmentCategoryDoorKnocker}/>
+                            <Xcomp.StringEnum observableValue={[assessment, "speciesStatus"]} mode="radio" 
+                            onChange = {action(e => {
+                                if(assessment.speciesStatus != "A" ) { 
+                                    assessment.wrongAssessed = false
+                                    }                                   
+                                })}
+                            codes={codes.EstablishmentCategoryDoorKnockerProduction}/>
+                            :  <Xcomp.StringEnum observableValue={[assessment, "speciesStatus"]}
+                            onChange = {action(e => {
+                                if(assessment.speciesStatus != "A" ) { 
+                                    assessment.wrongAssessed = false
+                                    }                                   
+                                })}
+                            mode="radio" codes={codes.EstablishmentCategoryDoorKnocker}/>
                             : assessment.productionSpecies == true ?
-                            <Xcomp.StringEnum observableValue={[assessment, "speciesStatus"]} mode="radio" codes={codes.EstablishmentCategory}/>
-                            : <Xcomp.StringEnum observableValue={[assessment, "speciesStatus"]} mode="radio" codes={codes.EstablishmentCategoryWithoutProduction}/>                             
+                            <Xcomp.StringEnum observableValue={[assessment, "speciesStatus"]} mode="radio" 
+                            onChange = {action(e => {
+                                if(assessment.speciesStatus != "A" ) { 
+                                    assessment.wrongAssessed = false
+                                    }                                   
+                                })}
+                            codes={codes.EstablishmentCategory}/>
+                            : <Xcomp.StringEnum observableValue={[assessment, "speciesStatus"]} mode="radio" 
+                            onChange = {action(e => {
+                                if(assessment.speciesStatus != "A" ) { 
+                                    assessment.wrongAssessed = false
+                                    }                                   
+                                })}
+                            codes={codes.EstablishmentCategoryWithoutProduction}/>                             
                         }
                        
 
@@ -235,31 +259,32 @@ export default class Assessment20ArtensStatus extends React.Component {
                      </div> : null}
 
                      { assessment.riskAssessment.isAlienSpecies == 'true'  && assessment.alienSpeciesCategory != "DoorKnocker" && assessment.speciesStatus == "A" &&
-                        (assessment.riskAssessment.connectedToAnother == false || assessment.riskAssessment.connectedToAnother == null) ? 
+                        (assessment.connectedToAnother == false || assessment.connectedToAnother == null) ? 
                         <div className="statusField">
                             <b> {labels.SpeciesStatus.wronglyAssessedBefore} </b>                
-                            <Xcomp.Bool observableValue={[assessment.riskAssessment, "wrongAssessed"]} />  
+                            <Xcomp.Bool observableValue={[assessment, "wrongAssessed"]} />  
                             
                         </div> : null }
                     
                     { assessment.riskAssessment.isAlienSpecies == 'false' ?
                     <div>
                         <b>{labels.SpeciesStatus.didSpecies} </b>
-                        <Xcomp.Radio kode={"VærtFremmed"} observableValue={[assessment.riskAssessment, "changedFromAlien"]} label={labels.SpeciesStatus.wasAlienButEstablishedNow} />
-                        <Xcomp.Radio kode={"VærtAntattFremmed"} observableValue={[assessment.riskAssessment, "changedFromAlien"]} label={labels.SpeciesStatus.wasThoughtToBeAlien} />
+                        <Xcomp.StringEnum observableValue={[assessment, "changedFromAlien"]} mode="radio" codes={codes.ChangedFromAlien}/>
+                       {/* <Xcomp.Radio kode={"VærtFremmed"} observableValue={[assessment, "changedFromAlien"]} label={labels.SpeciesStatus.wasAlienButEstablishedNow} />
+                        <Xcomp.Radio kode={"VærtAntattFremmed"} observableValue={[assessment, "changedFromAlien"]} label={labels.SpeciesStatus.wasThoughtToBeAlien} /> */}
                         <p>{labels.SpeciesStatus.reasonForChangingOfStatusDescription}</p>
-                        <Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'changedAssessment']}/>
+                        <Xcomp.HtmlString observableValue={[assessment, 'changedAssessment']}/>
                     </div> : null }
-                    
-                    
+                    </fieldset>
+                    <fieldset className="well">
                     {assessment.riskAssessment.isAlienSpecies == null ? null :                    
 
                     assessment.riskAssessment.isAlienSpecies == 'true' && 
-                        (assessment.riskAssessment.connectedToAnother == false || assessment.riskAssessment.connectedToAnother == null ) && 
+                        (assessment.connectedToAnother == false || assessment.connectedToAnother == null ) && 
                         (assessment.riskAssessment.estBefore1800 == false || assessment.riskAssessment.estBefore1800 == null ) &&
                         (assessment.alienSpeciesCategory == "DoorKnocker" || assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3") &&
                         assessment.speciesStatus != null && 
-                        (assessment.riskAssessment.connectedToAnother == false || assessment.riskAssessment.connectedToAnother == null) ? 
+                        (assessment.connectedToAnother == false || assessment.connectedToAnother == null) ? 
                     <div>
                         <h2>{labels.SpeciesStatus.conclusion}</h2>
                         <p>{labels.SpeciesStatus.willBeRiskAssessed}</p> 
@@ -272,8 +297,8 @@ export default class Assessment20ArtensStatus extends React.Component {
                  </fieldset>
 
                     { assessment.riskAssessment.isAlienSpecies == 'true' && 
-                        (assessment.riskAssessment.connectedToAnother == false || assessment.riskAssessment.connectedToAnother == null ) &&
-                        (assessment.riskAssessment.wrongAssessed == false || assessment.riskAssessment.wrongAssessed == null ) ?
+                        (assessment.connectedToAnother == false || assessment.connectedToAnother == null ) &&
+                        (assessment.wrongAssessed == false || assessment.wrongAssessed == null ) ?
                         <fieldset className="well">
                             {assessment.speciesStatus != null && assessment.speciesStatus != "A" &&
                                <> <h3>{labels.SpeciesStatus.firstObservationOfSpecies}</h3> 
@@ -392,12 +417,12 @@ export default class Assessment20ArtensStatus extends React.Component {
                             {assessment.speciesStatus == "A" && 
                                 <p>{labels.SpeciesStatus.foundInNorwayBefore}</p> }
                             {(assessment.speciesStatus == "B1" || assessment.speciesStatus == "B2" ) &&
-                                <p>{labels.SpeciesStatus.furtherInformationRegardingSpecies}</p>}
+                                <p className="furtherInfo">{labels.SpeciesStatus.furtherInformationRegardingSpecies}</p>}
                             {(assessment.speciesStatus == "C0" || assessment.speciesStatus == "C1" ) &&
-                                <p>{labels.SpeciesStatus.furtherInformationRegardingReproductionOfSpecies}</p>
+                                <p className="furtherInfo">{labels.SpeciesStatus.furtherInformationRegardingReproductionOfSpecies}</p>
                             }
                             {assessment.speciesStatus != "C3" && assessment.speciesStatus != "C2" && assessment.speciesStatus != null &&
-                                <Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'furtherInfo']}/> }
+                                <Xcomp.HtmlString className="furtherInfo" observableValue={[assessment.riskAssessment, 'furtherInfo']}/> }
                             </fieldset> : null }
                 
                {/* <Xcomp.Radio

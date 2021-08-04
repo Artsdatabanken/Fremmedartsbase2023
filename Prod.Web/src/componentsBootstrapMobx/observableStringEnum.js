@@ -13,12 +13,14 @@ export const Radio = (props) => <Observer>{() => {
         const criteria = props.criteria;
         const disabled = props.disabled || context.readonly
         const className = props.className
+        const onChange = props.onChange
         const defaultChecked = props.defaultChecked || obj[prop] === value
         //console.log(">" + prop + " (" + obj[prop] + ") " + value)
         return <div className={"radio " + className} key={value}>
             <label className={props.disabled ? "disabled" : ""}><input type="radio" name={"radio " + criteria+prop} value={value}
                                                                     defaultChecked={defaultChecked}
                                                                        disabled={disabled}
+                                                                       onChange={onChange}
                                                                        onClick={action(e => obj[prop] = e.target.value )}
                                                                       />{label}
             </label>
@@ -29,7 +31,7 @@ export const Radio = (props) => <Observer>{() => {
 const ObservableStringEnum = (props) => <Observer>{() => {
     const context = UserContext.getContext()
     //Note that radiobuttons requires unique 'name'. suply name prop if the object-'prop' is not unique
-    const {className, observableValue, codes, label, mode, name, forceSync, placeholder, disabled} = props;
+    const {className, onChange, observableValue, codes, label, mode, name, forceSync, placeholder, disabled} = props;
     const [obj, prop] = observableValue;
     if (obj[prop] === undefined) {
         console.error("ObservableStringEnum " + prop + " is undefined")
@@ -74,6 +76,7 @@ const ObservableStringEnum = (props) => <Observer>{() => {
                 {codes.map((kode) => <Radio kode={kode} 
                                             key={kode.value || kode.Value}
                                             observableValue={observableValue}
+                                            onChange={onChange}
                                             defaultChecked ={obj[prop] === kode.value || obj[prop] === kode.Value}
                                             id={prop} 
                                             name={name}

@@ -138,6 +138,10 @@ namespace Prod.Domain
 
         public bool ProductionSpecies { get; set; } = false;
 
+        public string ChangedFromAlien { get; set; }
+
+        public string ChangedAssessment { get; set; }
+
         public bool AlienSpecieUncertainIfEstablishedBefore1800 { get; set; } // lagt til: 19.10.2016 - renamed 15.11.2016
         public bool AlienSpecieUncertainAntropochor { get; set; } // lagt til: 19.10.2016
         public string AlienSpecieUncertainDescription { get; set; } // lagt til: 22.12.2016
