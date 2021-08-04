@@ -65,8 +65,6 @@ export default class SelectAssessment extends Component {
         // const {appState, appState:{assessment,roleincurrentgroup:rolle,codeLabels:labels,koder:{Children:koder}}} = this.props
         // const koder = appState.koder.Children
          
-        document.title = "Velg art - Fremmede arter"
-
 
      /*   let checkList = document.getElementById('list1');
         if (checkList) {checkList.getElementsByClassName('anchor')[0].onclick = function (evt) {
