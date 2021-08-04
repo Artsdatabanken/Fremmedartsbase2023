@@ -3362,21 +3362,21 @@
                         {
                             "Id": "CritD",
                             "Value": "1",
-                            "Text": "Liten effekt",
+                            "Text": "Svak styrke og begrenset omfang",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": "CritD",
                             "Value": "2",
-                            "Text": "Middels effekt",
+                            "Text": "Svak styrke og storskala omfang/Moderat styrke og begrenset omfang",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": "CritD",
                             "Value": "3",
-                            "Text": "Stor effekt",
+                            "Text": "Moderat styrke og storskala omfang ELLER fortrengning",
                             "Info": null,
                             "Children": null
                         }
@@ -3393,28 +3393,28 @@
                         {
                             "Id": "CritE",
                             "Value": "0",
-                            "Text": "Ingen kjent effekt",
+                            "Text": "Svak styrke/Moderat styrke og begrenset omfang",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": "CritE",
                             "Value": "1",
-                            "Text": "Liten effekt",
+                            "Text": "Moderat styrke og storskala omfang",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": "CritE",
                             "Value": "2",
-                            "Text": "Middels effekt",
+                            "Text": "Fortrengning i begrenset omfang",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": "CritE",
                             "Value": "3",
-                            "Text": "Stor effekt",
+                            "Text": "Fortrengning i storskala omfang",
                             "Info": null,
                             "Children": null
                         }

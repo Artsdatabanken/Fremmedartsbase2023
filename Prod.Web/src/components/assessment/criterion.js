@@ -17,6 +17,8 @@ export default class Criterion extends React.Component {
         const labels = appState.codeLabels
         const ntLabels = labels.NatureTypes
         const {id, value, uncertaintyValues, auto, codes, heading, info, uncertaintyDisabled } = criterion;
+        console.log(heading)
+        console.log(codes)
         const showHeading = !mode || mode.indexOf("noheading") < 0
         const setUncertainty = e => {
             // console.log("setUncertainty check: " + e.target.value + " | checked: " + e.target.checked)

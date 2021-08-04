@@ -5,7 +5,7 @@ import {observer, inject} from 'mobx-react';
 import {action, extendObservable, runInAction, toJS} from 'mobx'
 
 import config from '../../config';
-// import {loadData} from '../stores/apiService'; 
+import {loadData} from './../../apiService'; 
 import * as Xcomp from './observableComponents';
 import Criterion from './criterion'
 import {getCriterion} from '../../utils'
@@ -303,7 +303,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
 
         <b>curr{crit52D.Value}{crit52D.currentValueLabel}</b>
 
-                    <p><b>Verdier stemmer ikke! ^^</b></p>
+                   
                    {/* <ScoreUnsure appState={appState}
                                 critScores={koder.scoresD}
                                 firstValue={"scoreD"}
@@ -315,8 +315,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                     </fieldset>
                     <fieldset className="well">
                     <Criterion criterion={crit52E} hideInfo={true} />
-
-                    <p><b>Verdier stemmer ikke! ^^</b></p>
+                   
                    {/* <ScoreUnsure appState={appState}
                                 critScores={koder.scoresE}
                                 firstValue={"scoreE"}
