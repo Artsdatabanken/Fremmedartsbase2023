@@ -375,8 +375,8 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                     <p>{crit52I.info}</p>
                     <HostParasiteTable list={riskAssessment.hostParasiteInformations} newItem={this.newHPI} addNewItem={this.addHPI} koder={koder} labels={labels} showKeyStoneSpecie />
                     <hr/>
-                    <p>{ntLabels.score}</p>
-                    {/*<ScoreUnsure appState={appState}
+                   {/* <p>{ntLabels.score}</p>
+                    <ScoreUnsure appState={appState}
                                 critScores={koder.scoresI}
                                 firstValue={"scoreI"}
                                 secondValue={"unsureI"}/>*/}
