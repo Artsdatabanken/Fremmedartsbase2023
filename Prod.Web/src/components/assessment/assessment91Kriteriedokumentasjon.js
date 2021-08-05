@@ -58,7 +58,8 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                     ? <h3>{labels.critDocumentation.status}</h3>
                     : <br/>}
                     <div>
-                    <h3>{labels.critDocumentation.status}</h3>
+                    {/*<h3>{labels.critDocumentation.status}</h3>*/}
+                    <p>{critlabels.status}: {alienSpeciesCategoryLabel}</p>
                     {appState.skalVurderes ?
                         <fieldset className="well">
                             <Risikomatrise
@@ -83,25 +84,24 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                     <fieldset className="well">
                         <h4>{critlabels.speciesDescription}</h4>
                         {/* <b>Slekt: {viewModel.navnabaseGenus}</b> */}
-                        <p>{critlabels.status}: {alienSpeciesCategoryLabel}</p>
+                       
                         {hasEcology
                             ? <p>{critlabels.ecology}: {
                                 (kdi.limnic
                                 ? (`${ltml("limnic")}  `)
                                 : "") +
                                 (kdi.terrestrial
-                                ? (`${ltml("terrestrial")}  `)
+                                ? (`${ltml("terrestrial")} `)
                                 : "") +
                                 (kdi.marine
-                                ? (`${ltml("marine")}  `)
+                                ? (`${ltml("marine")} `)
                                 : "") +
                                 (kdi.brackishWater
                                 ? (`${ltml("brackishWater")}  `)
                                 : "")
                                 }</p>
                             : <b className="missingInfo">{critlabels.missingEcology}</b>}
-                        <br/>
-                        <br/>
+                        
                         <Xcomp.HtmlString
                             observableValue={[riskAssessment, 'criteriaDocumentationSpeciesStatus']}
                             style={{
@@ -249,14 +249,14 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                             observableValue={[assessment, 'reasonForChangeOfCategory']}/>
                         <Xcomp.Bool
                             label='Endret status (inkl. taksonomi, til/fra hjemlig)'
-                        observableValue={[assessment, 'reasonForChangeOfCategory']}/> */}
+                        observableValue={[assessment, 'reasonForChangeOfCategory']}/> 
 
                         <p className="reasonsForChange">{labels.critDocumentation.reasonForChangeFrom2018} {assessment.reasonForChangeOfCategory != null ? assessment.reasonForChangeOfCategory.map(reason =>                            
                                        
                                        <li style={{marginLeft: '20px'}}>                                            
                                             {changeLabel(reason)}
                                         </li>                
-                            ): null }</p>
+                            ): null }</p>*/}
 
                         <p>{labels.critDocumentation.detailedDescriptionOfTheReasons}</p>
                         <Xcomp.HtmlString

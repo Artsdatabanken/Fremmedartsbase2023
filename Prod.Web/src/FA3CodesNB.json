@@ -935,7 +935,7 @@
             {
                 "Id": "limnicTerrestrialMarine",
                 "Value": "marine",
-                "Text": "Marin",
+                "Text": "Marint",
                 "Info": null,
                 "Children": null
             },
@@ -6763,14 +6763,14 @@
                         {
                             "Id": null,
                             "Value": "ecology",
-                            "Text": "Artens økologi",
+                            "Text": "Livsmiljø",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "missingEcology",
-                            "Text": "Levevis er ikke oppgitt i 3.2 Artsegenskaper",
+                            "Text": "Livsmiljø er ikke oppgitt under Artsinformasjon",
                             "Info": null,
                             "Children": null
                         },
