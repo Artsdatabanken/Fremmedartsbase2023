@@ -59,9 +59,10 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                     : <br/>}
                     <div>
                     {/*<h3>{labels.critDocumentation.status}</h3>*/}
-                    <p>{critlabels.status}: {alienSpeciesCategoryLabel}</p>
+                   
                     {appState.skalVurderes ?
                         <fieldset className="well">
+                            <p>{critlabels.status}: {alienSpeciesCategoryLabel}</p>
                             <Risikomatrise
                                 labels={critlabels}
                                 invasjonspotensiale={riskAssessment.invasjonspotensialeLevel.level}
@@ -88,16 +89,28 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                         {hasEcology
                             ? <p>{critlabels.ecology}: {
                                 (kdi.limnic
-                                ? (`${ltml("limnic")}  `)
+                                ? (`${ltml("limnic")}`)
                                 : "") +
+
+                                (kdi.limnic && (kdi.terrestrial || kdi.marine || kdi.brackishWater)
+                                    ? ", "
+                                    : "") +
                                 (kdi.terrestrial
-                                ? (`${ltml("terrestrial")} `)
+                                ? (`${ltml("terrestrial")}`)
                                 : "") +
+
+                                (kdi.terrestrial && (kdi.marine || kdi.brackishWater)
+                                ? ", "
+                                    : "") +
                                 (kdi.marine
-                                ? (`${ltml("marine")} `)
+                                ? (`${ltml("marine")}`)
                                 : "") +
+
+                                (kdi.marine && kdi.brackishWater
+                                    ? ", "
+                                    : "") +
                                 (kdi.brackishWater
-                                ? (`${ltml("brackishWater")}  `)
+                                ? (`${ltml("brackishWater")}`)
                                 : "")
                                 }</p>
                             : <b className="missingInfo">{critlabels.missingEcology}</b>}
