@@ -676,12 +676,12 @@
             {
                 "Id": "KnownDistributionInNature",
                 "Value": "25-75",
-                "Text": "f.o.m. 25 % til 75 %"
+                "Text": "f.o.m. 25 % t.o.m. 75 %"
             },
             {
                 "Id": "KnownDistributionInNature",
                 "Value": "75-95",
-                "Text": "fra 75 % til 95 %"
+                "Text": "fra 75 % t.o.m. 95 %"
             },
             {
                 "Id": "KnownDistributionInNature",
