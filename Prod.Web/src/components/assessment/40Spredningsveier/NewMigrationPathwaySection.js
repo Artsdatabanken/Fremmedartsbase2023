@@ -5,14 +5,14 @@ import NewMigrationPathwayGroup from './NewMigrationPathwayGroup'
 @observer
 export default class NewMigrationPathwaySection extends React.Component {
     render() {
-        const {migrationPathway, onSave, koder, hideIntroductionSpread, labels, mainCodes} = this.props;
+        const {migrationPathway, onSave, koder, hideIntroductionSpread, labels, vurdering, mainCodes} = this.props;
         
         
         return(
             <div>
                 {/*<h4>{migrationPathway.name}</h4>*/}
                 {migrationPathway.children.map(child =>
-                    <NewMigrationPathwayGroup  key={child.name} migrationPathway={child} onSave={onSave} koder={koder} mainCodes={mainCodes} hideIntroductionSpread={hideIntroductionSpread} labels={labels}/>
+                    <NewMigrationPathwayGroup  key={child.name} migrationPathway={child} onSave={onSave} koder={koder} vurdering={vurdering} mainCodes={mainCodes} hideIntroductionSpread={hideIntroductionSpread} labels={labels}/>
                 )}
             </div>
         )}

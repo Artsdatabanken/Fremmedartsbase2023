@@ -58,15 +58,17 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                     ? <h3>{labels.critDocumentation.status}</h3>
                     : <br/>}
                     <div>
-                    <h3>{labels.critDocumentation.status}</h3>
+                    {/*<h3>{labels.critDocumentation.status}</h3>*/}
+                   
                     {appState.skalVurderes ?
                         <fieldset className="well">
+                            <p>{critlabels.status}: {alienSpeciesCategoryLabel}</p>
                             <Risikomatrise
                                 labels={critlabels}
-                                invasjonspotensiale={riskAssessment._invasjonspotensialeLevel.level}
-                                ecoeffect={riskAssessment._ecoeffectLevel.level}
-                                invasjonUncertaintyLevels={riskAssessment._invasjonspotensialeLevel.uncertaintyLevels}
-                                ecoeffectUncertaintyLevels={riskAssessment._ecoeffectLevel.uncertaintyLevels}/>
+                                invasjonspotensiale={riskAssessment.invasjonspotensialeLevel.level}
+                                ecoeffect={riskAssessment.ecoeffectLevel.level}
+                                invasjonUncertaintyLevels={riskAssessment.invasjonspotensialeLevel.uncertaintyLevels}
+                                ecoeffectUncertaintyLevels={riskAssessment.ecoeffectLevel.uncertaintyLevels}/>
                             <h3>{riskAssessment.riskLevelText} <b> {riskAssessment.riskLevelCode}</b></h3>
                             <h4>{critlabels.decisiveCriteria}:
                                 <b> {riskAssessment.decisiveCriteria}</b>
@@ -83,25 +85,36 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                     <fieldset className="well">
                         <h4>{critlabels.speciesDescription}</h4>
                         {/* <b>Slekt: {viewModel.navnabaseGenus}</b> */}
-                        <p>{critlabels.status}: {alienSpeciesCategoryLabel}</p>
+                       
                         {hasEcology
                             ? <p>{critlabels.ecology}: {
                                 (kdi.limnic
-                                ? (`${ltml("limnic")}  `)
+                                ? (`${ltml("limnic")}`)
                                 : "") +
+
+                                (kdi.limnic && (kdi.terrestrial || kdi.marine || kdi.brackishWater)
+                                    ? ", "
+                                    : "") +
                                 (kdi.terrestrial
-                                ? (`${ltml("terrestrial")}  `)
+                                ? (`${ltml("terrestrial")}`)
                                 : "") +
+
+                                (kdi.terrestrial && (kdi.marine || kdi.brackishWater)
+                                ? ", "
+                                    : "") +
                                 (kdi.marine
-                                ? (`${ltml("marine")}  `)
+                                ? (`${ltml("marine")}`)
                                 : "") +
+
+                                (kdi.marine && kdi.brackishWater
+                                    ? ", "
+                                    : "") +
                                 (kdi.brackishWater
-                                ? (`${ltml("brackishWater")}  `)
+                                ? (`${ltml("brackishWater")}`)
                                 : "")
                                 }</p>
                             : <b className="missingInfo">{critlabels.missingEcology}</b>}
-                        <br/>
-                        <br/>
+                        
                         <Xcomp.HtmlString
                             observableValue={[riskAssessment, 'criteriaDocumentationSpeciesStatus']}
                             style={{
@@ -249,14 +262,14 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                             observableValue={[assessment, 'reasonForChangeOfCategory']}/>
                         <Xcomp.Bool
                             label='Endret status (inkl. taksonomi, til/fra hjemlig)'
-                        observableValue={[assessment, 'reasonForChangeOfCategory']}/> */}
+                        observableValue={[assessment, 'reasonForChangeOfCategory']}/> 
 
                         <p className="reasonsForChange">{labels.critDocumentation.reasonForChangeFrom2018} {assessment.reasonForChangeOfCategory != null ? assessment.reasonForChangeOfCategory.map(reason =>                            
                                        
                                        <li style={{marginLeft: '20px'}}>                                            
                                             {changeLabel(reason)}
                                         </li>                
-                            ): null }</p>
+                            ): null }</p>*/}
 
                         <p>{labels.critDocumentation.detailedDescriptionOfTheReasons}</p>
                         <Xcomp.HtmlString

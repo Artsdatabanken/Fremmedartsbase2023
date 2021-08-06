@@ -9,6 +9,7 @@ import {action, computed, extendObservable, observable} from 'mobx';
 // const labels = config.labels
 
 import NewMigrationPathwayButton from './NewMigrationPathwayButton'
+import assessmentTabdefs from '../assessmentTabdefs';
 
 
 @observer
@@ -36,11 +37,11 @@ export default class NewMigrationPathwayGroup extends React.Component {
         this.expanded = !this.expanded
     }
     render() {
-        const {migrationPathway, onSave, koder, hideIntroductionSpread, labels, mainCodes} = this.props;
+        const {migrationPathway, onSave, koder, hideIntroductionSpread, labels, vurdering, mainCodes} = this.props;
         //  console.log("koder3" + koder.toString() )
 
         const hasChildren = migrationPathway.children && migrationPathway.children.length > 0 
-        
+        const disabled = (migrationPathway.name == "Rømning/forvilling" || migrationPathway.name =="Direkte import")
             // <div className="clearfix col-lg-4 col-md-6 col-sm-8 col-xs-12">
         //todo: fix data for "egenspredning". remove the invalid child
         return(
@@ -61,7 +62,7 @@ export default class NewMigrationPathwayGroup extends React.Component {
                             <ul>
                             {migrationPathway.children.map(child => {
                                 {/*child.parentValue = migrationPathway.value*/} 
-                                return <li  key={child.name}><NewMigrationPathwayButton migrationPathway={child} onSave={onSave} koder={koder} mainCodes={mainCodes} hideIntroductionSpread={hideIntroductionSpread} labels={labels}/></li>
+                                return <li key={child.name}><NewMigrationPathwayButton migrationPathway={child} disabled={disabled && child.name != "fra forskning" && child.name != "til forskning" && child.name != "fra botaniske/zoologiske hager / akvarier (ikke privat)" && child.name != "til botaniske/zoologiske hager / akvarier (ikke privat)" && !vurdering.productionSpecies}  onSave={onSave} koder={koder} mainCodes={mainCodes} vurdering={vurdering} hideIntroductionSpread={hideIntroductionSpread} labels={labels}/></li>
                             })}
                             </ul>
                         </div>

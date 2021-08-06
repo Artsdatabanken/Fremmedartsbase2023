@@ -113,6 +113,7 @@ export default class assessmentNew extends React.Component {
                                     <div className="vernacularName">{newAssessment.VernacularName}</div>
                                     <div className="scientificName">{newAssessment.ScientificName}</div>
                                     <div className="author">{newAssessment.ScientificNameAuthor && newAssessment.ScientificNameAuthor.startsWith('(') ? newAssessment.ScientificNameAuthor : '(' + newAssessment.ScientificNameAuthor + ')'}</div>
+                                    <span style={{cursor: 'pointer', fontWeight: 'bold', marginLeft:'20px'}}>X</span>
                                 </div> :
                                 <Xcomp.String observableValue={[newAssessment, 'taxonSearchString']} placeholder={labels.General.searchSpecies} />}
                                 {newAssessment.taxonSearchResult.length > 0 ?

@@ -4,10 +4,11 @@ import { toJS, observable } from 'mobx';
 import * as Xcomp from './observableComponents'
 import config from '../../config'
 import { action } from 'mobx';
-//import { loadData, postData } from '../apiService';
-import auth from '../authService'
+import { loadData, postData } from './../../apiService';
+import auth from './../authService'
 @inject('appState')
 @observer
+
 export default class AssessmentComments extends Component {
     baseUrl = config.apiUrl + "/api/AssessmentComments/"
     
@@ -17,19 +18,26 @@ export default class AssessmentComments extends Component {
         this.getComments() // henter første gangen
         
     }
-    
+
     assessmentId = "";
     @observable comments = []
     comment = observable({
         newComment: ""
     })
-    
+
     addComment = (newComment, appState) => {
         
         // alert('Kommentar er sendt! ' + this.comment.newComment);
         postData(this.baseUrl + this.assessmentId, {
+            // id: 1,
             assessmentId: this.assessmentId,
-            comment: newComment
+            comment: newComment,
+            // commentDate: "2020-03-24T00:00:00+01:00",
+            // user: auth.userName,
+            // closed: false,
+            // closedBy: null,
+            // closedDate: "0001-01-01T00:00:00",
+            // isDeleted: false
         }, ok => { if (ok) { 
             console.log('kommentert ')
             // clear new comment box
@@ -37,44 +45,29 @@ export default class AssessmentComments extends Component {
                 this.props.appState.newComment = ''
             })()
             this.getComments()
-            //this.updateCommentsView()
             
          } }
         , exception => { console.error(exception) });
         
         appState.loadCurrentExpertgroupAssessmentList()
     }
-
-    /*updateCommentsView = () => {
-        let count = 0
-        this.comments.forEach (entry => {
-            if (!entry.closed && !entry.isDeleted){
-                count ++
-            }
-        })
-        if (count === 1) {
-            this.props.appState.antallVurderinger +=1
-        }
-        console.log(this.props.appState.antallVurderinger)
-        console.log(this.props.appState.antallUbehandlede)
-    }*/
-
+    
     getComments = () => {
-        //loadData(this.baseUrl + this.assessmentId, this.updateCommentsList, exception => { console.error(exception) })        
+        loadData(this.baseUrl + this.assessmentId, this.updateCommentsList, exception => { console.error(exception) })        
         //console.log(this.comments.length)
     }
-
+    
     updateCommentsList = (item) => {
         action(() => {
             this.comments = item;
         })()
-        
+            
     }
-
+    
     deleteComment = (id, appState) => {
         // kun lov til å slette sine egne kommentarer
         // dette er id til kommentar - ikke assessmentid
-        /*loadData(this.baseUrl +'delete/' + id
+        loadData(this.baseUrl +'delete/' + id
         , ok => { if (ok) { 
             // kommentar = this.baseUrl + this.assessmentId.comments[id]
             // action(() => { kommentar.isDeleted = true })()
@@ -83,26 +76,24 @@ export default class AssessmentComments extends Component {
             
          } }
         , exception => { console.error(exception) })
-        //this.updateCommentsView()*/
+        //this.updateCommentsView()
         
         appState.loadCurrentExpertgroupAssessmentList()
     }   
-
+    
     closeComment = (id, appState) => {
         // kun skriver i ekspertgruppe og bedre kan lukke kommentarer
         // dette er id til kommentar - ikke assessmentid
-      /*  loadData(this.baseUrl + 'close/' + id
+        loadData(this.baseUrl + 'close/' + id
         , ok => { if (ok) { 
-            // kommentar = this.baseUrl + this.assessmentId.comments[id]
-            // action(() => { kommentar.closed = true })()
             console.log(id + ' lukket')
             this.getComments()
          } }
-        , exception => { console.error(exception) }) */
+        , exception => { console.error(exception) })
         
         appState.loadCurrentExpertgroupAssessmentList()
     }
-
+    
     linkify(text) {
         var urlRegex =/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;        
         var emailRegex = /(\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})/ig;
@@ -192,16 +183,7 @@ export default class AssessmentComments extends Component {
             if (!entry.closed && !entry.isDeleted){
                 antallKommentarer ++
             }
-        })
-        
-
-       {/* let editComment = this.isEditing
-        let idEditedComment = this.idEditedComment
-        console.log("UserId " + auth.user.profile.sub)
-        
-        if (this.comments.length == 1 ) {
-            appState.antallVurderinger +=1;
-        }*/}
+        })        
       
         return (
             <div className="page_container">

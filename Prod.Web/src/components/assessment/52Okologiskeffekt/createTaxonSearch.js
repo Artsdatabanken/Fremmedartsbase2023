@@ -1,10 +1,10 @@
 import {autorun, runInAction} from 'mobx';
-// import {loadData} from '../../stores/apiService'; 
+import {loadData} from '../../../apiService'; 
 import config from '../../../config';
 
 
 
-function loadData() { alert("loaddata Not implemented")}
+//function loadData() { alert("loaddata Not implemented")}
 
 
 

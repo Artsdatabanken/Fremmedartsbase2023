@@ -26,8 +26,8 @@ namespace Prod.Api.Controllers
         public async Task<string[]> Get()
         {
             var data = await _dbContext.Assessments
-                           .FromSqlRaw("SELECT Expertgroup FROM dbo.Assessments WITH (INDEX(IX_Assessments_Expertgroup))") // index hint - speeds up computed columns
-                           .Select(x => x.Expertgroup).Distinct().OrderBy(x => x).ToArrayAsync();  //_dataService.GetExpertGroups();
+                           .FromSqlRaw("SELECT Distinct Expertgroup FROM dbo.Assessments WITH (INDEX(IX_Assessments_Expertgroup))") // index hint - speeds up computed columns
+                           .Select(x => x.Expertgroup).OrderBy(x => x).ToArrayAsync();  //_dataService.GetExpertGroups();
             return data != null && data.Length > 0 ? data : null;
         }
 

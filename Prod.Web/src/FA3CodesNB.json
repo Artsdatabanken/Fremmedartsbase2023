@@ -246,6 +246,24 @@
             
         ],
 
+        "ChangedFromAlien": [
+            {
+                "Id": "ChangedFromAlien",
+                "Value": "wasAlienButEstablishedNow",
+                "Text": "vært fremmed, men har nå etablert minst én stedegen bestand",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "ChangedFromAlien",
+                "Value": "wasThoughtToBeAlien",
+                "Text": "vært antatt å være fremmed, men kunnskapsgrunnlaget/tolkninga er endra",
+                "Info": null,
+                "Children": null
+            }
+    
+        ],
+
         "ArrivedCountryFrom": [
             {
                 "Id": "ArrivedCountryFrom",
@@ -658,12 +676,12 @@
             {
                 "Id": "KnownDistributionInNature",
                 "Value": "25-75",
-                "Text": "f.o.m. 25 % til 75 %"
+                "Text": "f.o.m. 25 % t.o.m. 75 %"
             },
             {
                 "Id": "KnownDistributionInNature",
                 "Value": "75-95",
-                "Text": "fra 75 % til 95 %"
+                "Text": "fra 75 % t.o.m. 95 %"
             },
             {
                 "Id": "KnownDistributionInNature",
@@ -917,7 +935,7 @@
             {
                 "Id": "limnicTerrestrialMarine",
                 "Value": "marine",
-                "Text": "Marin",
+                "Text": "Marint",
                 "Info": null,
                 "Children": null
             },
@@ -2045,91 +2063,91 @@
             {
                 "Id": "tilstandsendringer",
                 "Value": "ER",
-                "Text": "Erosjonsutsatthet",
+                "text": "Erosjonsutsatthet",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "tilstandsendringer",
                 "Value": "OM",
-                "Text": "Oksygenmangel",
+                "text": "Oksygenmangel",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "tilstandsendringer",
                 "Value": "SS",
-                "Text": "Sandstabilisering",
+                "text": "Sandstabilisering",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "tilstandsendringer",
                 "Value": "VM",
-                "Text": "Vannmetning",
+                "text": "Vannmetning",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "tilstandsendringer",
                 "Value": "1AE",
-                "Text": "Enkeltarts-sammensetning",
+                "text": "Enkeltarts-sammensetning",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "tilstandsendringer",
                 "Value": "1AG",
-                "Text": "Artsgruppe-sammensetning",
+                "text": "Artsgruppe-sammensetning",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "tilstandsendringer",
                 "Value": "1AR",
-                "Text": "Relativ del-artsgruppe-sammensetning",
+                "text": "Relativ del-artsgruppe-sammensetning",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "tilstandsendringer",
                 "Value": "7EU",
-                "Text": "Eutrofiering",
+                "text": "Eutrofiering",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "tilstandsendringer",
                 "Value": "7RA",
-                "Text": "Rask suksesjon",
+                "text": "Rask suksesjon",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "tilstandsendringer",
                 "Value": "7SN",
-                "Text": "Naturlig bestandsreduksjon på tresatt areal",
+                "text": "Naturlig bestandsreduksjon på tresatt areal",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "tilstandsendringer",
                 "Value": "7UB",
-                "Text": "Ubalanse mellom trofiske nivåer",
+                "text": "Ubalanse mellom trofiske nivåer",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "tilstandsendringer",
                 "Value": "9TS",
-                "Text": "Tresjiktstruktur",
+                "text": "Tresjiktstruktur",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "tilstandsendringer",
                 "Value": "other",
-                "Text": "Annen tilstandsendring",
+                "text": "Annen tilstandsendring",
                 "Info": null,
                 "Children": null
             }
@@ -3344,21 +3362,21 @@
                         {
                             "Id": "CritD",
                             "Value": "1",
-                            "Text": "Liten effekt",
+                            "Text": "Svak styrke og begrenset omfang",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": "CritD",
                             "Value": "2",
-                            "Text": "Middels effekt",
+                            "Text": "Svak styrke og storskala omfang/Moderat styrke og begrenset omfang",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": "CritD",
                             "Value": "3",
-                            "Text": "Stor effekt",
+                            "Text": "Moderat styrke og storskala omfang ELLER fortrengning",
                             "Info": null,
                             "Children": null
                         }
@@ -3375,28 +3393,28 @@
                         {
                             "Id": "CritE",
                             "Value": "0",
-                            "Text": "Ingen kjent effekt",
+                            "Text": "Svak styrke/Moderat styrke og begrenset omfang",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": "CritE",
                             "Value": "1",
-                            "Text": "Liten effekt",
+                            "Text": "Moderat styrke og storskala omfang",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": "CritE",
                             "Value": "2",
-                            "Text": "Middels effekt",
+                            "Text": "Fortrengning i begrenset omfang",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": "CritE",
                             "Value": "3",
-                            "Text": "Stor effekt",
+                            "Text": "Fortrengning i storskala omfang",
                             "Info": null,
                             "Children": null
                         }
@@ -3489,28 +3507,28 @@
                         {
                             "Id": "CritH",
                             "Value": "0",
-                            "Text": "Ingen kjent effekt",
+                            "Text": "Ingen overføring",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": "CritH",
                             "Value": "1",
-                            "Text": "Liten effekt",
+                            "Text": "Begrenset til stedegen art",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": "CritH",
                             "Value": "2",
-                            "Text": "Middels effekt",
+                            "Text": "Storskala til stedegen art / Begrenset til truet art eller nøkkelart",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": "CritH",
                             "Value": "3",
-                            "Text": "Stor effekt",
+                            "Text": "Storskala til truet art eller nøkkelart"                            ,
                             "Info": null,
                             "Children": null
                         }
@@ -3527,28 +3545,28 @@
                         {
                             "Id": "CritI",
                             "Value": "0",
-                            "Text": "Ingen kjent effekt",
+                            "Text": "Ingen overføring / Begrenset til art som allerede er vert for denne parasitten",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": "CritI",
                             "Value": "1",
-                            "Text": "Liten effekt",
+                            "Text": "Storskala til art som allerede er vert for denne parasitten / Begrenset til ny vert",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": "CritI",
                             "Value": "2",
-                            "Text": "Middels effekt",
+                            "Text": "Storskala av stedegen parasitt til ny vert / Begrenset til ny truet verter",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": "CritI",
                             "Value": "3",
-                            "Text": "Stor effekt",
+                            "Text": "Storskala av stedegen til ny truet vert /Storskala eller begrenset av en fremmed parasitt",
                             "Info": null,
                             "Children": null
                         }
@@ -6745,14 +6763,14 @@
                         {
                             "Id": null,
                             "Value": "ecology",
-                            "Text": "Artens økologi",
+                            "Text": "Livsmiljø",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "missingEcology",
-                            "Text": "Levevis er ikke oppgitt i 3.2 Artsegenskaper",
+                            "Text": "Livsmiljø er ikke oppgitt under Artsinformasjon",
                             "Info": null,
                             "Children": null
                         },
@@ -6915,7 +6933,7 @@
                         {
                             "Id": null,
                             "Value": "notValid",
-                            "Text": "Geografisk  variasjon i risiko er kun aktuelt for arter i risikokategoriene PH, HI og SE.",
+                            "Text": "Geografisk  variasjon i risiko er kun aktuelt for arter i risikokategoriene PH, HI, SE, og LO med usikkerhet oppover til PH eller HI.",
                             "Info": null,
                             "Children": null
                         },

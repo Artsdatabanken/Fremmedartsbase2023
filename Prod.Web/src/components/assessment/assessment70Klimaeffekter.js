@@ -24,7 +24,7 @@ export default class Assessment70Klimaeffekter extends React.Component {
                     {riskAssessment.riskLevelCode == "NK" ? 
                     <p>{climatelabel("categoryNK")}</p> : 
                     <div>
-                    <p>{climatelabel("timePerspective")}</p>
+                    {/*<p>{climatelabel("timePerspective")}</p>*/}
 
                         <p>{climatelabel("partialCategoryInvasion")}</p>
                         <div className="climateChange">

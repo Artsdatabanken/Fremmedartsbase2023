@@ -85,7 +85,7 @@ export default class Vurdering34Spredningsveier extends React.Component {
                 <div className="import">
                 <div className="well">
                     <h4>Legg til spredningsvei</h4>
-                    <NewMigrationPathwaySelector migrationPathways={migrationPathwayKoder} onSave={mp => this.saveMigrationPathway(vurdering, mp)} mainCodes={koder} koder={importationCodes} labels={labels} />
+                    <NewMigrationPathwaySelector migrationPathways={migrationPathwayKoder} onSave={mp => this.saveMigrationPathway(vurdering, mp)} mainCodes={koder} koder={importationCodes} vurdering={vurdering} labels={labels} />
                 </div>
                 <div className="definitions">
                     <button className="btn btn-primary" onClick={this.toggleDefinitions}>Se definisjoner</button>

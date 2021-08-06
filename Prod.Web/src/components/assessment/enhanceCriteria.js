@@ -479,24 +479,38 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
 }
 
 function enhanceRiskAssessmentLevel(riskAssessment, labels) {
+    // extendObservable(riskAssessment, {
+    //     _invasjonspotensialeLevel: RiskLevel.invasjonspotensiale(riskAssessment)
+    // });
     extendObservable(riskAssessment, {
-        _invasjonspotensialeLevel: RiskLevel.invasjonspotensiale(riskAssessment)
+        get invasjonspotensialeLevel() {
+            const result = RiskLevel.invasjonspotensiale(riskAssessment)
+            return result;
+        }
     });
     autorun(() => {
         //try {
-        const {level, decisiveCriteria, uncertaintyLevels} = riskAssessment._invasjonspotensialeLevel
+        const {level, decisiveCriteria, uncertaintyLevels} = riskAssessment.invasjonspotensialeLevel
         console.log("_invasjonspotensialeLevel changed: " + level)
         riskAssessment.invationPotentialLevel = level
         riskAssessment.invationPotentialUncertaintyLevels = uncertaintyLevels
         //}
         //catch (e) {}
     });
+    // extendObservable(riskAssessment, {
+    //     _ecoeffectLevel: RiskLevel.ecoeffect(riskAssessment)
+    // });
+
     extendObservable(riskAssessment, {
-        _ecoeffectLevel: RiskLevel.ecoeffect(riskAssessment)
+        get ecoeffectLevel () {
+            const result = RiskLevel.ecoeffect(riskAssessment)
+            return result;
+        }
     });
+
     autorun(() => {
         //try {
-        const {level, decisiveCriteria, uncertaintyLevels} = riskAssessment._ecoeffectLevel
+        const {level, decisiveCriteria, uncertaintyLevels} = riskAssessment.ecoeffectLevel
         console.log("ecoeffectlevel changed: " + level)
         riskAssessment.ecoEffectLevel = level
         riskAssessment.ecoEffectUncertaintyLevels = uncertaintyLevels
@@ -507,7 +521,7 @@ function enhanceRiskAssessmentLevel(riskAssessment, labels) {
     delete riskAssessment.riskLevel  //todo: Check if necessary (or the correct way to do this) ?????  Basically: risklevel is observable from db data, but we want it to be a computed observable!
     extendObservable(riskAssessment, {
         get riskLevel() {
-            const result = RiskLevel.riskLevel(riskAssessment._invasjonspotensialeLevel, riskAssessment._ecoeffectLevel)
+            const result = RiskLevel.riskLevel(riskAssessment.invasjonspotensialeLevel, riskAssessment.ecoeffectLevel)
             return result;
         }
     });
