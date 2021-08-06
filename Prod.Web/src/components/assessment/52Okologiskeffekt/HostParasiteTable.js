@@ -120,7 +120,7 @@ const HostParasiteTable = observer((props) =>
                             <div className="scientificName">{props.newItem.scientificName}</div>
                             <div className="author">{"(" + props.newItem.scientificNameAuthor + ")"}</div>
                         </div> :
-                        <Xcomp.String observableValue={[props.newItem, 'taxonSearchString']} placeholder={labels.General.searchSpecies} />}
+                        <Xcomp.String observableValue={[props.newItem, 'taxonSearchString']} placeholder={labels.DEcrit.searchSpecies} />}
                         {props.newItem.taxonSearchResult.length > 0 ?
                         <div className="speciesSearchList" style={{position: 'absolute', top: "36px", left:"15px"}}>
                             <ul className="panel list-unstyled">
