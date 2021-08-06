@@ -32,7 +32,7 @@ export default class Fylkesliste extends React.Component {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {rows.map(row => <Fylke key={row.key} row={row} columns={columns}/>)}
+                                    {/*rows.map(row => <Fylke key={row.key} row={row} columns={columns}/>)*/}
                                 </tbody>
                             </table>
                         </td>

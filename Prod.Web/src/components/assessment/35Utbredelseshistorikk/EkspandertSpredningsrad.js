@@ -249,9 +249,11 @@ export default class EkspandertSpredningsrad extends React.Component {
                                                     values: detaljer.regionalPresenceAssumed
                                                 }
                                             ]}
-                                                rows={fabModel
-                                                .artskartModel
-                                                .regionListe()}/></td>
+                                               // rows={fabModel
+                                               // .artskartModel
+                                               // .regionListe()}
+                                               />
+                                               </td>
                                     </tr>
                                 </tbody >
                             </table>
