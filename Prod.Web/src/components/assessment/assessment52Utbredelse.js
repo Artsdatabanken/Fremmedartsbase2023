@@ -97,13 +97,15 @@ export default class Assessment52Utbredelse extends React.Component {
                     }
                     
                     <Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'historyAndAreaInNorway']}/>
+                </fieldset>
+                <fieldset className="well">
                     <h3>Annen informasjon</h3>
                     <div className="statusField">
                         <div className="labels">
                             <p>Kjent utbredelsesområde (km<sup>2</sup>)</p>
                             <p>Bestandsstørrelse</p>
                         </div>
-                        <div className="numbers">
+                        <div className="numbers otherInfo">
                             <Xcomp.Number                            
                                         observableValue={[assessment.riskAssessment, "yearFirstProductionOutdoors"]}
                                         integer
