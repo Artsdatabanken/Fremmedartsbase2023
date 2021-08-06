@@ -1,12 +1,6 @@
 ﻿import fetch from 'isomorphic-fetch'
 import config from '../config';
-import {
-    computed,
-    extendObservable,
-    observable,
-    toJS,
-    action
-} from 'mobx'
+import { computed, extendObservable, observable, toJS, action, makeObservable } from 'mobx';
 import {
     Log,
     User,
@@ -15,9 +9,27 @@ import {
 
 class AuthenticationStore {
     // @observable manager = null;
-    @observable user = null;
-    @observable access = null;
+    user = null;
+    access = null;
 constructor() {
+    makeObservable(this, {
+        user: observable,
+        access: observable,
+        isLoggedIn: computed,
+        userName: computed,
+        userId: computed,
+        hasAccess: computed,
+        isAdmin: computed,
+        hasApplication: computed,
+        getAuthToken: computed,
+        isInRole: action,
+        login: action,
+        completeLogin: action,
+        logout: action,
+        completeLogout: action,
+        handleError: action
+    });
+
     Log.logger = console;
     Log.level = Log.INFO;
     this.manager = new UserManager(config.authconfig);
@@ -28,14 +40,14 @@ constructor() {
             Log.warn("token expiring...");
             window.appInsights.trackEvent({ name: 'token expiring'})
         });
-        this.manager.events.addSilentRenewError(() => {
-            Log.warn("renew token failed...");
-            window.appInsights.trackException({exception: new Error('renew token failed')});//.trackEvent({ name: 'renew token failed'})
-        });
-        this.manager.events.addAccessTokenExpired(() => {
-            Log.warn("token expired...");
-            window.appInsights.trackException({exception: new Error('token expired')});//trackEvent({ name: 'token expired'})
-        });
+    this.manager.events.addSilentRenewError(() => {
+        Log.warn("renew token failed...");
+        window.appInsights.trackException({exception: new Error('renew token failed')});//.trackEvent({ name: 'renew token failed'})
+    });
+    this.manager.events.addAccessTokenExpired(() => {
+        Log.warn("token expired...");
+        window.appInsights.trackException({exception: new Error('token expired')});//trackEvent({ name: 'token expired'})
+    });
     this
         .manager
         .events
@@ -57,42 +69,35 @@ constructor() {
                 // window.appInsights.trackEvent({ name: 'new token loaded'})
             })()
         })
-        // window.setTimeout(
-        //     () => {this.manager.signinSilent()}      
-        // , 10000);
+    // window.setTimeout(
+    //     () => {this.manager.signinSilent()}      
+    // , 10000);
 }
 
-    @computed
     get isLoggedIn() {
         //        return true
         return this.user != null && this.user.access_token && !this.user.expired;
     }
-    @computed
     get userName() {
         //        return true
         return this.user != null && this.user.profile ? this.user.profile.preferred_username : '';
     }
-    @computed
     get userId() {
         //        return true
 
         return this.user != null && this.user.profile ? this.user.profile.sub : '';
     }
-    @computed
     get hasAccess() {
         //        return true
         return this.isLoggedIn && (this.isInRole("fab_administrator") || this.access != null && this.access.harTilgang); // || (this.access != null && this.access.HasAccess ));
     }
-    @computed
     get isAdmin() {
         //        return true
-        return this.isLoggedIn && (this.isInRole("fab_administrator") || (this.access != null && this.access.ErAdministrator)); // || (this.access != null && this.access.HasAccess ));
+        return this.isLoggedIn && (this.isInRole("fab_administrator") || (this.access != null && this.access.erAdministrator)); // || (this.access != null && this.access.HasAccess ));
     }
-    @computed
     get hasApplication() {
         return this.isLoggedIn && this.access != null && this.access.harSoktOmTilgang; // || (this.access != null && this.access.HasAccess ));
     }
-    @computed
     get getAuthToken() {
         return (this.user != null && this.user.access_token && !this.user.expired) ? this.user.access_token : "";
     }
@@ -172,7 +177,6 @@ constructor() {
         }
     }
 
-    @action
     isInRole = (role) => {
         if (!this.isLoggedIn) {
             return false
@@ -189,7 +193,7 @@ constructor() {
             });
         }
         return found;
-    }
+    };
 
     loadUser = () => {
         this.manager.getUser()
@@ -216,13 +220,11 @@ constructor() {
             );
     }
 
-    @action
     login = () => {
         this.manager.signinRedirect()
             .catch((error) => this.handleError(error));
-    }
+    };
 
-    @action
     completeLogin = (callback) => {
 
         this.manager.signinRedirectCallback()
@@ -234,15 +236,13 @@ constructor() {
                 }
             }))
             .catch((error) => this.handleError(error));
-    }
+    };
 
-    @action
     logout = () => {
         this.manager.signoutRedirect()
             .catch((error) => this.handleError(error));
-    }
+    };
 
-    @action
     completeLogout = () => {
         this.manager.signoutRedirectCallback()
             .then(() => {
@@ -252,9 +252,8 @@ constructor() {
                 this.user = null;
             })
             .catch((error) => this.handleError(error));
-    }
+    };
 
-    @action
     handleError(error) {
         console.error("Problem with authentication endpoint: ", error);
     }
