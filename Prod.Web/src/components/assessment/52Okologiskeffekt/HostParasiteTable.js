@@ -21,11 +21,11 @@ const HostParasiteTable = observer((props) =>
         <colgroup>
             <col style={{width: "10%"}} />
             <col style={{width: "5%"}} />
-            <col style={{width: "20%"}} />
+            <col style={{width: "35%"}} />
             <col style={{width: "10%"}} />
-            <col style={{width: "15%"}} />
-            <col style={{width: "15%"}} />
-            <col style={{width: "15%"}} />
+            <col style={{width: "10%"}} />
+            <col style={{width: "10%"}} />
+            <col style={{width: "10%"}} />
             {/*<col style={{width: "5%"}} />
             <col style={{width: "5%"}} />*/}
             <col style={{width: "5%"}} />
@@ -71,7 +71,7 @@ const HostParasiteTable = observer((props) =>
                     </div>
                 </td>
                 {props.showKeyStoneSpecie ? <td><Xcomp.Bool observableValue={[item, 'keyStoneSpecie']} /></td> : null}
-                <td>{item.ParasiteScientificName}</td>
+                <td style={{maxWidth: '160px'}}>{item.ParasiteScientificName}</td>
                 <td>
                     <Xcomp.StringEnum observableValue={[item, 'status']} forceSync codes={koder.ParasiteStatus}/>   
                 </td>
@@ -161,7 +161,7 @@ const HostParasiteTable = observer((props) =>
                 </td>
                {/* {props.showRedlist ? <td><Xcomp.String observableValue={[props.newItem, 'redListCategory']} /></td> : null}*/}
                 {props.showKeyStoneSpecie ? <td><Xcomp.Bool observableValue={[props.newItem, 'keyStoneSpecie']} /></td> : null}
-                <td><Xcomp.String observableValue={[props.newItem, 'parasiteScientificName']} /></td>
+                <td><Xcomp.String className="parasiteName" observableValue={[props.newItem, 'parasiteScientificName']} /></td>
                 <td>
                     <Xcomp.StringEnum observableValue={[props.newItem, 'status']}  codes={koder.ParasiteStatus}/>                
                 </td>
