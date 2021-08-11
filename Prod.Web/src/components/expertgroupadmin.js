@@ -56,9 +56,8 @@ export default class ExpertGroupAdmin extends React.Component {
                 <h2>Administrasjon av ekspertkomitéer</h2>
                 <h3>Ekspertkomité</h3>
                 <Xcomp.StringEnum 
-                            forceSync
-                            observableValue={[appState, 'expertgroup']} 
-                            codes={appState.expertgroups}/>
+                        observableValue={[expertGroupModel, 'valgtekspertgruppe']}
+                        codes={expertGroupModel.alleekspertgrupper} />
                 {/* <select type="select" label="Velg ekspertgruppe" placeholder="select" onChange={e =>
                 expertGroupModel.valgtekspertgruppe = e.target.value}>
                     {expertGroupModel.alleekspertgrupper
@@ -81,7 +80,6 @@ export default class ExpertGroupAdmin extends React.Component {
                             <td><span>{ega.navn}</span></td>
                             <td><span>{ega.leder ? 'X' : ''}</span></td>
                             <td><span>{ega.skriver ? 'X' : ''}</span></td>
-                            {/* <td><span>{ega.leser ? 'X' : ''}</span></td> */}
                             <td><Xcomp.Button primary xs onClick={e => fjernRettighet(ega.id) }>Slett</Xcomp.Button></td>
                         </tr>)}
 

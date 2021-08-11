@@ -6,6 +6,8 @@ import Tabs from '../tabs'
 import Assessment51Naturtyper from './assessment51Naturtyper'
 import DistributionTable from './distributionTable'
 import UtbredelseshistorikkInnenlands from './35Utbredelseshistorikk/UtbredelseshistorikkInnenlands'
+import UtbredelseIDag from './35Utbredelseshistorikk/UtbredelseIDag'
+import Utbredelseshistorikk from './35Utbredelseshistorikk/Utbredelseshistorikk'
 @inject('appState')
 @observer
 export default class Assessment52Utbredelse extends React.Component {
@@ -95,15 +97,18 @@ export default class Assessment52Utbredelse extends React.Component {
 
                         <p>Beskriv utbredelseshistorikk og dagens utbredelse i Norge <i>(overføres til oppsummeringen)</i></p>
                     }
-                    
-                    <Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'historyAndAreaInNorway']}/>
+                    <Xcomp.HtmlString
+                        observableValue={[assessment.riskAssessment, 'criteriaDocumentationDomesticSpread']}/>
+                    {/*<Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'historyAndAreaInNorway']}/>*/}
+                </fieldset>
+                <fieldset className="well">
                     <h3>Annen informasjon</h3>
                     <div className="statusField">
                         <div className="labels">
                             <p>Kjent utbredelsesområde (km<sup>2</sup>)</p>
                             <p>Bestandsstørrelse</p>
                         </div>
-                        <div className="numbers">
+                        <div className="numbers otherInfo">
                             <Xcomp.Number                            
                                         observableValue={[assessment.riskAssessment, "yearFirstProductionOutdoors"]}
                                         integer
@@ -118,7 +123,8 @@ export default class Assessment52Utbredelse extends React.Component {
                 </fieldset>
                 <fieldset className="well" id="spreadHistoryDomestic">
                     <h2>Utbredelseshistorikk 2018</h2>
-                   <h4>{labels.distributionHistory} {appState.evaluationContext.nameWithPreposition}</h4>
+                  {/* <h4>{labels.distributionHistory} {appState.evaluationContext.nameWithPreposition}</h4>*/}
+                   <UtbredelseshistorikkInnenlands vurdering={assessment} fabModel={appState}/>
                    {assessment.spreadHistoryDomesticDocumentation
                     ? <div>
                         <h4>{labels.previousInfo}. <b>{labels.mustTransfer}</b></h4>
@@ -137,8 +143,7 @@ export default class Assessment52Utbredelse extends React.Component {
                         <hr />
                       </div>
                     : null } 
-                    <Xcomp.HtmlString
-                        observableValue={[assessment.riskAssessment, 'criteriaDocumentationDomesticSpread']}/>
+                    
                         
                 </fieldset>
             
@@ -146,9 +151,9 @@ export default class Assessment52Utbredelse extends React.Component {
                     {config.showPageHeaders
                         ? <h3>{fabModel.kodeLabels.DistributionHistory.heading}</h3>
                         : <br/>}
-                    {/*<UtbredelseshistorikkInnenlands vurdering={vurdering} fabModel={fabModel}/>
-                    <UtbredelseIDag vurdering={vurdering} fabModel={fabModel}/>
-                    <Utbredelseshistorikk vurdering={vurdering} fabModel={fabModel}/>*/}
+                    
+                   {/* <UtbredelseIDag vurdering={assessment} fabModel={appState}/>
+                    <Utbredelseshistorikk vurdering={assessment} fabModel={appState}/>*/}
             </div>
                 
                 {/* <fieldset className="well" id="spreadHistoryForeign">

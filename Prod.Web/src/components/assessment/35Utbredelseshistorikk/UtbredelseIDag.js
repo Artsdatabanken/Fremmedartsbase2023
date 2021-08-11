@@ -8,7 +8,7 @@ import Spredningskart from './Spredningskart'
 export default class UtbredelseIDag extends React.Component {
     render() {
         const {vurdering, fabModel} = this.props
-        const labels=fabModel.kodeLabels.DistributionHistory
+        const labels=fabModel.codeLabels.DistributionHistory
         const artskartModel = fabModel.artskartModel
         const headerStyle = {
             textAlign: 'center',
@@ -195,7 +195,8 @@ export default class UtbredelseIDag extends React.Component {
                                         values: vurdering.potentialRegionalPresence
                                     }
                                 ]}
-                                    rows={artskartModel.regionListe()}/>
+                                    //rows={artskartModel.regionListe()}
+                                    />
                             </td>
                         </tr>
                     </tbody>
