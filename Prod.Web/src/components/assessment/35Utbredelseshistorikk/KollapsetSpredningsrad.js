@@ -44,7 +44,7 @@ export default class KollapsetSpredningsrad extends React.Component {
             <tr
                 className={classNames}
                 style={rowStyle}
-                key={e.Id}
+                key={e.id}
                 onClick={() => {
                 KollapsetSpredningsrad.redigerSpreadhistory(fabModel, e)
             }}>
@@ -54,11 +54,11 @@ export default class KollapsetSpredningsrad extends React.Component {
                         ? "down"
                         : "right"}`}/>
                 </td>
-                <td style={e.ObservationFromYear.toString().length === 0 ? {backgroundColor: "#F00" } :  style}>
-                    <span>{e.ObservationFromYear}</span>
+                <td style={e.observationFromYear.toString().length === 0 ? {backgroundColor: "#F00" } :  style}>
+                    <span>{e.observationFromYear}</span>
                 </td>
-                <td style={e.ObservationYear.toString().length === 0 ? {backgroundColor: "#F00" } :  style}>
-                    <span>{e.ObservationYear}</span>
+                <td style={e.observationYear.toString().length === 0 ? {backgroundColor: "#F00" } :  style}>
+                    <span>{e.obbservationYear}</span>
                 </td>
                 <td style={style}>
                     <span>{e.Location}</span>

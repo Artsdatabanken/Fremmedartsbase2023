@@ -209,8 +209,9 @@ export default class Assessment20ArtensStatus extends React.Component {
 
                     { assessment.riskAssessment.isAlienSpecies == 'true' && (assessment.connectedToAnother == false || assessment.connectedToAnother == null ) ? 
                      <div>
-                     <div className="statusField">
-                         <b>{labels.SpeciesStatus.isProductionSpecies}</b> <Xcomp.Bool observableValue={[assessment, "productionSpecies"]} /> </div>
+                     <div>
+                         <b>{labels.SpeciesStatus.isProductionSpecies}</b>                          
+                         <Xcomp.StringEnum observableValue={[assessment, "productionSpecies"]} mode="radio" codes={codes.yesNo}/> </div>
                          <b> {labels.SpeciesStatus.statusInNorway}</b>
                          <p>{labels.SpeciesStatus.highestCategoryPerToday}</p>
 
@@ -248,9 +249,9 @@ export default class Assessment20ArtensStatus extends React.Component {
                        
 
                         <p>{labels.SpeciesStatus.codesExplanation}</p>
-                        <div className="statusField">
+                        <div>
                             <b>{labels.SpeciesStatus.establishedBefore1800} </b>
-                            <Xcomp.Bool observableValue={[assessment.riskAssessment, "estBefore1800"]} />
+                            <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "estBefore1800"]} mode="radio" codes={codes.yesNo}/>
                         </div>
                         
                         <p>{labels.SpeciesStatus.probabilityUncertainity}</p>

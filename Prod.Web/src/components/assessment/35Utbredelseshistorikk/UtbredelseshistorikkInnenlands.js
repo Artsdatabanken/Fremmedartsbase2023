@@ -10,16 +10,18 @@ import Filliste from './Filliste'
 export default class UtbredelseshistorikkInnenlands extends React.Component {
     render() {
         const {vurdering, fabModel} = this.props
-        const labels = fabModel.kodeLabels.DistributionHistory
-        const history = vurdering.SpreadHistory
+        console.log(fabModel)
+        const labels = fabModel.codeLabels.DistributionHistory
+        const history = vurdering.spreadHistory
         return (
             <div>
-                <fieldset className="well" id="spreadHistories">
+                <div id="spreadHistories">
                     <h4>{labels.distributionHistory} {fabModel.evaluationContext.nameWithPreposition}</h4>
                     <div>{labels.domesticDescribe} {fabModel.evaluationContext.nameWithPreposition}</div>
                     <Button
                         disabled={this.context.readonly}
-                        bsStyle="primary"
+                        //bsStyle="primary"
+                        className="primary"
                         onClick={() => {
                         fabModel
                             .artskartModel
@@ -40,7 +42,7 @@ export default class UtbredelseshistorikkInnenlands extends React.Component {
                     </div>
                     : null}
 
-                </fieldset>
+                </div>
             </div>
         )
     }
