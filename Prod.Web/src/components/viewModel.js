@@ -243,7 +243,7 @@ class ViewModel {
                 // this.userContext.readonly = (
                 //     this.viewMode === "assessment" &&
                 //     (
-                //         (!this.assessment || this.assessment.lockedForEditByUser !== auth.userName ) ||
+                //         (!this.assessment || this.assessment.lockedForEditByUser !== auth.userId ) ||
                 //         (!this.assessment || this.assessment.evaluationStatus === "finished" )
                 //     )
                 // )
@@ -436,7 +436,7 @@ class ViewModel {
 
     @computed get isLockedByMe() {
         if (!this.assessment) return false;
-        return this.assessment.lockedForEditByUser === auth.userName;
+        return this.assessment.lockedForEditByUser === auth.userId;
     };
 
     @computed get isFinnished() {
@@ -532,7 +532,7 @@ class ViewModel {
             && (this.withComments ? (ega.commentOpen > 0 || ega.commentClosed > 0) ? true : false : true)
             && (this.withPotentialTaxonChanges ? (ega.taxonChange == 2) ? true : false : true)
             && (this.withAutomaticNameChanges ? (ega.taxonChange == 1) ? true : false : true)
-            && (this.kunMine ? (ega.lockedForEditByUser === auth.userName || ega.lastUpdatedBy === auth.userName) ? true : false : true)
+            && (this.kunMine ? (ega.lockedForEditByUser === auth.userId || ega.lastUpdatedBy === auth.userId) ? true : false : true)
 
             && (this.statusCheckboxFilter.length ? this.statusCheckboxFilter.some (s => ega.evaluationStatus === s && s != 'notStarted' ? true : (s === 'notStarted' && (ega.evaluationStatus === 'initial' || ega.evaluationStatus === 'created' || ega.evaluationStatus === 'createdbyloading')) ? true :false): true)
             && (this.expertgroupCategoryCheckboxFilter.length ? this.expertgroupCategoryCheckboxFilter.some(s => !ega.category && s != 'NL'? false : !ega.category && s === 'NL' ? true: s.indexOf(ega.category.substring(0,2)) > -1) : true)))
@@ -695,12 +695,12 @@ class ViewModel {
 
     @action finishassessment(statusaction, assessment) {
         let status = statusaction === "finish" ? "finished" : statusaction === "unfinish" ? "inprogress" : ""
-        let username = statusaction === "unfinish" ? auth.userName : null
+        let userId = statusaction === "unfinish" ? auth.userId : null
         let now = Date.now().toString()
         transaction(() => {
             assessment.evaluationStatus = status
             assessment.lockedForEditAt = now
-            assessment.lockedForEditByUser = username
+            assessment.lockedForEditByUser = userId
             assessment.lastUpdatedOn = now
         })
 

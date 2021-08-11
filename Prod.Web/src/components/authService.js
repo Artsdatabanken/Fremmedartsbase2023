@@ -58,7 +58,7 @@ constructor() {
                 this.user = e
                 Log.info("new token..." + e.access_token);
                 if (window.appInsights) {
-                    var validatedId = e.profile.preferred_username.replace(/[,;=| ]+/g, "_");
+                    var validatedId = e.profile.sub;
                     window.appInsights.setAuthenticatedUserContext(validatedId);
                     window.appInsights.trackPageView();
                     window.appInsights.trackEvent({
@@ -84,7 +84,6 @@ constructor() {
     }
     get userId() {
         //        return true
-
         return this.user != null && this.user.profile ? this.user.profile.sub : '';
     }
     get hasAccess() {
@@ -205,7 +204,7 @@ constructor() {
                         {
                         this.user = user
                         if (window.appInsights) {
-                            var validatedId = user.profile.preferred_username.replace(/[,;=| ]+/g, "_");
+                            var validatedId = user.profile.sub;
                             window.appInsights.setAuthenticatedUserContext(validatedId);
                             window.appInsights.trackPageView();
                             window.appInsights.trackEvent({

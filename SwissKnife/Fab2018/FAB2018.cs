@@ -115,7 +115,8 @@ namespace SwissKnife.Fab2018
         private string DumpFiles(string path, IEnumerable<FileHeader> items)
         {
             var count = 0;
-            foreach (var item in items)
+            var allItems = items.ToArray();
+            foreach (var item in allItems)
             {
                 count++;
                 var dest = path + "\\Files\\" + item.FullPath.Replace("/", "\\");

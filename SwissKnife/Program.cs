@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using McMaster.Extensions.CommandLineUtils;
 
 namespace SwissKnife
@@ -9,6 +10,10 @@ namespace SwissKnife
     {
         public static int Main(string[] args)
         {
+            var culture = new CultureInfo("nb-NO");
+            CultureInfo.DefaultThreadCurrentCulture = culture;
+            CultureInfo.DefaultThreadCurrentUICulture = culture;
+
             return CommandLineApplication.Execute<Program>(args);
         }
 

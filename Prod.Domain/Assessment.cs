@@ -9,9 +9,10 @@ namespace Prod.Domain
         public int Id { get; set; }
         public string Expertgroup { get; set; }
         public string EvaluationStatus { get; set; }
-        public string LastUpdatedBy { get; set; }
+        public User LastUpdatedByUser { get; set; }
+        public Guid LastUpdatedByUserId { get; set; }
         public DateTime LastUpdatedAt { get; set; }
-        public string LockedForEditBy { get; set; }
+        public User LockedForEditByUser { get; set; }
         public DateTime LockedForEditAt { get; set; }
         public string Doc { get; set; }
         public string ScientificName { get; set; }

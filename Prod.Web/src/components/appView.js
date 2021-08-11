@@ -101,9 +101,8 @@ export default class AppView extends React.Component {
                 }
         }
 
-        const isLockedByMe = appState.assessment && appState.assessment.lockedForEditByUser === auth.userName
+        const isLockedByMe = appState.assessment && appState.assessment.lockedForEditByUser === auth.userId
         const isFinished = appState.assessment && appState.assessment.evaluationStatus && appState.assessment.evaluationStatus === "finished"
-
         return (
             <div className="_container">
                 {/* <button onClick={action(() => {appState.userContext.readonly=!appState.userContext.readonly})}>readonlytest</button> */}
