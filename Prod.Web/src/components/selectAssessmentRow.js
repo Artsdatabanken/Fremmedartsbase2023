@@ -7,10 +7,10 @@ import {beskrivTidSiden} from '../formatting'
 @observer
 export default class selectAssessmentRow extends Component {
     render() {
-        const {assessment, rolle, labels, userName} = this.props
+        const {assessment, rolle, labels, userId} = this.props
         const isLocked = !!assessment.lockedForEditByUser
         const isSuperUser = rolle.leder
-        const isLockedByMe = assessment.lockedForEditByUser === userName
+        const isLockedByMe = assessment.lockedForEditByUser === userId
         
 // console.log("###" + assessment.lockedForEditByUser + "#" +  rolle.userName)
 

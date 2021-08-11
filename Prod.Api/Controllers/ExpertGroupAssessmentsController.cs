@@ -187,7 +187,7 @@ namespace Prod.Api.Controllers
         private async Task<List<AssessmentListItem>> GetExpertGroupAssessments(string expertgroupid, Guid brukerId)
         {
             var result = await _dbContext.Assessments
-                             .FromSqlRaw("SELECT Id, TaxonHierarcy, LockedForEditBy, LastUpdatedBy, Expertgroup, EvaluationStatus, Category, LockedForEditAt, LastUpdatedAt, ScientificName, ScientificNameId, PopularName, IsDeleted FROM dbo.Assessments WITH (INDEX(IX_Assessments_Expertgroup))") // index hint - speeds up computed columns
+                             //.FromSqlRaw("SELECT Id, TaxonHierarcy, LockedForEditBy, LastUpdatedBy, Expertgroup, EvaluationStatus, Category, LockedForEditAt, LastUpdatedAt, ScientificName, ScientificNameId, PopularName, IsDeleted FROM dbo.Assessments WITH (INDEX(IX_Assessments_Expertgroup))") // index hint - speeds up computed columns
                              .Where(x => x.Expertgroup == expertgroupid && x.IsDeleted == false).OrderBy(x => x.ScientificName)
                 .Select(x =>
                     new AssessmentListItem()
@@ -195,9 +195,11 @@ namespace Prod.Api.Controllers
                         Id = x.Id.ToString(),
                         Expertgroup = x.Expertgroup,
                         EvaluationStatus = x.EvaluationStatus,
-                        LastUpdatedBy = x.LastUpdatedBy,
+                        LastUpdatedBy = x.LastUpdatedByUser.Navn,
+                        LastUpdatedByUserId = x.LastUpdatedByUser.Id,
                         LastUpdatedAt = x.LastUpdatedAt,
-                        LockedForEditByUser = x.LockedForEditBy,
+                        LockedForEditByUser = x.LockedForEditByUser != null ? x.LockedForEditByUser.Navn : string.Empty,
+                        LockedForEditByUserId = x.LockedForEditByUser != null ? x.LockedForEditByUser.Id : Guid.Empty,
                         LockedForEditAt = x.LockedForEditAt,
                         ScientificName = x.ScientificName,
                         TaxonHierarcy = x.TaxonHierarcy,

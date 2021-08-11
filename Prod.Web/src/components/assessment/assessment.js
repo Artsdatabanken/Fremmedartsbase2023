@@ -61,7 +61,7 @@ class AssessmentRoot extends Component {
         const canEdit = !isFinished && appState.roleincurrentgroup.skriver && assessment.lockedForEditByUser == null    
         
         function sjekkForEndringerOgGiAdvarsel(){
-            // var isLockedByMe = appState.assessment && appState.assessment.lockedForEditByUser === auth.userName
+            // var isLockedByMe = appState.assessment && appState.assessment.lockedForEditByUser === auth.userId
             var isdirty = appState.isDirty
             var skriver = !!appState.roleincurrentgroup && appState.roleincurrentgroup.skriver
             var ok = true;
@@ -175,7 +175,7 @@ class AssessmentRoot extends Component {
     }
 
     isReadOnly() {
-        const isreadonly = this.props.appState.asssessment.lockedForEditByUser !== auth.userName
+        const isreadonly = this.props.appState.asssessment.lockedForEditByUser !== auth.userId
         return isreadonly || this.isFinished()
     }
 }

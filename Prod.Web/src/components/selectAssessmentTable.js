@@ -11,7 +11,7 @@ export default class SelectAssessmentTable extends Component {
     render() {
         const {assessmentList, rolle, appState} = this.props
         const labels = appState.codeLabels; 
-        const userName = auth.userName
+        const userId = auth.userId
 
         //console.log("ROLLE" + JSON.stringify(rolle))
         //console.log("* * * * USERNAME: " + userName + " * * * * *")
@@ -64,7 +64,8 @@ export default class SelectAssessmentTable extends Component {
                         // }).
                         
                         map(ega => <SelectAssessmentRow
-                            key={ega.id} userName={userName}
+                            key={ega.id} 
+                            userId={userId}
                             assessment={ega}
                             updatedAt={ega.lastUpdatedAt}
                             updatedBy={ega.lastUpdatedBy}

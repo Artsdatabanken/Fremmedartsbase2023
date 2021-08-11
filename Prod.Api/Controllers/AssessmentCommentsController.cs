@@ -26,7 +26,7 @@ namespace Prod.Api.Controllers
             public DateTime CommentDate { get; set; }
             public string User { get; set; }
             public bool Closed { get; set; }
-            public string ClosedBy { get; set; }
+            public Guid ClosedBy { get; set; }
             public DateTime? ClosedDate { get; set; }
             public bool IsDeleted { get; set; }
             public Guid UserId { get; internal set; }
@@ -46,7 +46,7 @@ namespace Prod.Api.Controllers
                     AssessmentId = x.AssessmentId,
                     Closed = x.Closed,
                     Id = x.Id,
-                    ClosedBy = x.ClosedBy.Brukernavn,
+                    ClosedBy = x.ClosedBy.Id,
                     CommentDate = x.CommentDate,
                     User = x.User.Navn,
                     UserId = x.User.Id,                   

@@ -101,9 +101,8 @@ export default class AppView extends React.Component {
                 }
         }
 
-        const isLockedByMe = appState.assessment && appState.assessment.lockedForEditByUser === auth.userName
+        const isLockedByMe = appState.assessment && appState.assessment.lockedForEditByUser === auth.userId
         const isFinished = appState.assessment && appState.assessment.evaluationStatus && appState.assessment.evaluationStatus === "finished"
-
         return (
             <div className="_container">
                 {/* <button onClick={action(() => {appState.userContext.readonly=!appState.userContext.readonly})}>readonlytest</button> */}
@@ -169,7 +168,7 @@ export default class AppView extends React.Component {
                     <li role="presentation" onClick={action(() => appState.viewMode = "administrasjon")}><b>Administrasjon</b></li>
                     <li role="presentation"><b>Retningslinjer</b></li>
                     {/* <li role="presentation" disabled={!auth.isLoggedIn} onClick={auth.logout}><b>&nbsp; {auth.user ? "Logg ut " : ""} {(auth.user ? auth.user.profile.name : "")} </b></li> */}
-                    <li role="presentation" disabled={!auth.isLoggedIn} onClick={auth.logout}><b>&nbsp; {auth.isLoggedIn ? "Logg ut " : ""} {auth.userName} </b></li>
+                    <li role="presentation" disabled={!auth.isLoggedIn} onClick={auth.logout}><b>&nbsp; {auth.isLoggedIn ? "Logg ut " : ""} {auth.user.profile.name} </b></li>
                     
                 </ul>
     }

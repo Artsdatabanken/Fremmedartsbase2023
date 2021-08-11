@@ -45,8 +45,22 @@ namespace Prod.Data.EFCore
                     e.Property(x => x.Soknad).HasMaxLength(2000);
                     e.Property(x => x.DatoOpprettet).HasDefaultValue(new DateTime(2020, 1, 1));
                     e.Property(x => x.DatoSistAktiv).HasDefaultValue(new DateTime(2020, 1, 1));
-                });
-                
+                })
+                ;
+            modelBuilder.Entity<User>().HasData(new User
+            {
+                Brukernavn = "import",
+                DatoForTilgang = DateTime.Today,
+                DatoOpprettet = DateTime.Today,
+                DatoSistAktiv = DateTime.Today,
+                Email = "noreply@nodomian.no",
+                ErAdministrator = false,
+                HarSoktOmTilgang = false,
+                HarTilgang = false,
+                Navn = "Import",
+                TilgangAvvist = true,
+                Id = new Guid("00000000-0000-0000-0000-000000000001")
+            }); 
 
 
             // EkspertgruppeRolle
@@ -68,10 +82,12 @@ namespace Prod.Data.EFCore
                 e.Property(x => x.Doc).IsRequired();
                 e.Property(x=>x.Expertgroup).HasComputedColumnSql(" isnull(cast(JSON_VALUE(Doc, '$.ExpertGroup') as nvarchar(150)),'mangler')");
                 e.Property(x => x.Expertgroup).HasMaxLength(ekspertgruppeIdSize).IsRequired();
-                e.HasIndex(x => x.Expertgroup).IncludeProperties(x=>new {x.ScientificName, x.PopularName, x.ScientificNameId, x.TaxonHierarcy, x.IsDeleted, x.EvaluationStatus, x.LastUpdatedAt,x.LastUpdatedBy, x.LockedForEditBy, x.LockedForEditAt, x.Category}); // hurtig tilgang til verdiene i ekspertgruppekontroller
-                e.Property(x => x.LockedForEditBy).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.LockedForEditBy') as nvarchar(100))");
+                e.HasIndex(x => x.Expertgroup).IncludeProperties(x=>new {x.ScientificName, x.PopularName, x.ScientificNameId, x.TaxonHierarcy, x.IsDeleted, x.EvaluationStatus, x.LastUpdatedAt, x.LockedForEditAt, x.Category}); // hurtig tilgang til verdiene i ekspertgruppekontroller
+                e.HasOne(x => x.LockedForEditByUser).WithMany().OnDelete(DeleteBehavior.NoAction).IsRequired(false);
+                //e.Property(x => x.LockedForEditBy)//.HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.LockedForEditBy') as nvarchar(100))");
                 e.Property(x => x.LockedForEditAt).HasComputedColumnSql("CONVERT(datetime2,JSON_VALUE(Doc, '$.LockedForEditAt'),112)");
-                e.Property(x => x.LastUpdatedBy).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.LastUpdatedBy') as nvarchar(100))");
+                e.HasOne(x => x.LastUpdatedByUser).WithMany().OnDelete(DeleteBehavior.NoAction).IsRequired();
+                //e.Property(x => x.LastUpdatedBy)//.HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.LastUpdatedBy') as nvarchar(100))");
                 e.Property(x => x.LastUpdatedAt).HasComputedColumnSql("CONVERT(datetime2,JSON_VALUE(Doc, '$.LastUpdatedAt'),112)");
                 e.Property(x => x.EvaluationStatus).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.EvaluationStatus') as nvarchar(100))");
 

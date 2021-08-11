@@ -26,6 +26,7 @@ namespace SwissKnife.Database
 
         public void Import(IConsole console, string inputFolder)
         {
+            _database.Database.EnsureDeleted();
             _database.Database.EnsureCreated();
             // serialization 
             var jsonSerializerOptions = new JsonSerializerOptions
@@ -62,6 +63,17 @@ namespace SwissKnife.Database
             foreach (var assessment in assessments)
             {
                 var entity = InitialTransformFrom2018to2023(assessment, jsonSerializerOptions, mapper);
+                if (string.IsNullOrWhiteSpace(assessment.SistOppdatertAv))
+                {
+                    entity.LastUpdatedByUserId = new Guid("00000000-0000-0000-0000-000000000001");
+                    entity.LastUpdatedAt = DateTime.Today;
+                }
+                else
+                {
+                    entity.LastUpdatedByUserId = users[assessment.SistOppdatertAv].Id;
+                    entity.LastUpdatedAt = assessment.SistOppdatert;
+                }
+                
                 _database.Assessments.Add(entity);
                 count++;
                 if (count > batchsize)
@@ -204,22 +216,22 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.natureAffectedAbroadF, opt => opt.Ignore())
                     .ForMember(dest => dest.natureAffectedAbroadG, opt => opt.Ignore())
 
-                    .ForMember(dest => dest.PopulationSize, opt => opt.MapFrom(src => src.SpreadRscriptSpeciesCount))
-                    .ForMember(dest => dest.GrowthRate, opt => opt.MapFrom(src => src.SpreadRscriptPopulationGrowth))
-                    .ForMember(dest => dest.EnvVariance, opt => opt.MapFrom(src => src.SpreadRscriptEnvironmantVariance))
-                    .ForMember(dest => dest.DemVariance, opt => opt.MapFrom(src => src.SpreadRscriptDemographicVariance))
-                    .ForMember(dest => dest.CarryingCapacity, opt => opt.MapFrom(src => src.SpreadRscriptSustainabilityK))
-                    .ForMember(dest => dest.ExtinctionThreshold, opt => opt.MapFrom(src => src.SpreadRscriptQuasiExtinctionThreshold))
-                    .ForMember(dest => dest.MedianLifetime, opt => opt.MapFrom(src => src.SpreadRscriptEstimatedSpeciesLongevity)) //ActiveSpreadRscriptEstimatedSpeciesLongevity?? ChosenSpreadMedanLifespan??
+                    .ForMember(dest => dest.PopulationSize, opt => opt.MapFrom(src => ParceLongFromNullableInt(src.SpreadRscriptSpeciesCount)))
+                    .ForMember(dest => dest.GrowthRate, opt => opt.MapFrom(src => double.Parse(src.SpreadRscriptPopulationGrowth, System.Globalization.CultureInfo.InvariantCulture)))
+                    .ForMember(dest => dest.EnvVariance, opt => opt.MapFrom(src => double.Parse(src.SpreadRscriptEnvironmantVariance, System.Globalization.CultureInfo.InvariantCulture)))
+                    .ForMember(dest => dest.DemVariance, opt => opt.MapFrom(src => double.Parse(src.SpreadRscriptDemographicVariance, System.Globalization.CultureInfo.InvariantCulture)))
+                    .ForMember(dest => dest.CarryingCapacity, opt => opt.MapFrom(src => ParceLong(src.SpreadRscriptSustainabilityK)))
+                    .ForMember(dest => dest.ExtinctionThreshold, opt => opt.MapFrom(src => ParceLong(src.SpreadRscriptQuasiExtinctionThreshold)))
+                    .ForMember(dest => dest.MedianLifetime, opt => opt.MapFrom(src => ParceLong(src.SpreadRscriptEstimatedSpeciesLongevity))) //ActiveSpreadRscriptEstimatedSpeciesLongevity?? ChosenSpreadMedanLifespan??
                     .ForMember(dest => dest.LifetimeLowerQ, opt => opt.Ignore())
                     .ForMember(dest => dest.LifetimeUpperQ, opt => opt.Ignore())
-                    .ForMember(dest => dest.Occurrences1Best, opt => opt.MapFrom(src => src.SpreadYearlyIncreaseObservations))
-                    .ForMember(dest => dest.Occurrences1Low, opt => opt.MapFrom(src => src.SpreadYearlyIncreaseObservationsLowerQuartile))
-                    .ForMember(dest => dest.Occurrences1High, opt => opt.MapFrom(src => src.SpreadYearlyIncreaseObservationsUpperQuartile))
+                    .ForMember(dest => dest.Occurrences1Best, opt => opt.MapFrom(src => ParceLong(src.SpreadYearlyIncreaseObservations)))
+                    .ForMember(dest => dest.Occurrences1Low, opt => opt.MapFrom(src => ParceLong(src.SpreadYearlyIncreaseObservationsLowerQuartile)))
+                    .ForMember(dest => dest.Occurrences1High, opt => opt.MapFrom(src => ParceLong(src.SpreadYearlyIncreaseObservationsUpperQuartile)))
                     .ForMember(dest => dest.IntroductionsBest, opt => opt.Ignore())
-                    .ForMember(dest => dest.ExpansionSpeed, opt => opt.MapFrom(src => src.SpreadYearlyIncreaseOccurrenceArea)) // ActiveSpreadYearlyIncreaseOccurrenceArea?? SpreadYearlyIncreaseCalculatedExpansionSpeed?? SpreadYearlyIncreaseObservations??
-                    .ForMember(dest => dest.ExpansionLowerQ, opt => opt.MapFrom(src => src.SpreadYearlyIncreaseOccurrenceAreaLowerQuartile))
-                    .ForMember(dest => dest.ExpansionUpperQ, opt => opt.MapFrom(src => src.SpreadYearlyIncreaseOccurrenceAreaUpperQuartile))
+                    .ForMember(dest => dest.ExpansionSpeed, opt => opt.MapFrom(src => ParceLong(src.SpreadYearlyIncreaseOccurrenceArea))) // ActiveSpreadYearlyIncreaseOccurrenceArea?? SpreadYearlyIncreaseCalculatedExpansionSpeed?? SpreadYearlyIncreaseObservations??
+                    .ForMember(dest => dest.ExpansionLowerQ, opt => opt.MapFrom(src => ParceLong(src.SpreadYearlyIncreaseOccurrenceAreaLowerQuartile)))
+                    .ForMember(dest => dest.ExpansionUpperQ, opt => opt.MapFrom(src => ParceLong(src.SpreadYearlyIncreaseOccurrenceAreaUpperQuartile)))
 
                     // følgende blir mappet fra FA3Legacy lenger nede
                     .ForMember(dest => dest.AOOknown, opt => opt.Ignore())
@@ -319,10 +331,34 @@ namespace SwissKnife.Database
             return mapper;
         }
 
+        private static long ParceLong(string spreadYearlyIncreaseObservations)
+        {
+            if (string.IsNullOrWhiteSpace(spreadYearlyIncreaseObservations))
+            {
+                return 0;
+            }
+            // todo : her kommer det og verdier som '> 100 år' inn
+            if (long.TryParse(spreadYearlyIncreaseObservations, out long test))
+            {
+                return test;
+            }
+            return 0;
+        }
+        private static long ParceLongFromNullableInt(int? spreadYearlyIncreaseObservations)
+        {
+            if (!spreadYearlyIncreaseObservations.HasValue)
+            {
+                return 0;
+            }
+            
+            return (long)spreadYearlyIncreaseObservations.Value;
+        }
+
         private static Assessment InitialTransformFrom2018to2023(FA3Legacy assessment,
             JsonSerializerOptions jsonSerializerOptions, Mapper mapper)
         {
-            return new Assessment {Doc = JsonSerializer.Serialize(mapper.Map<FA4>(assessment), jsonSerializerOptions)};
+            var newassesment = new Assessment { Doc = JsonSerializer.Serialize(mapper.Map<FA4>(assessment), jsonSerializerOptions) };
+            return newassesment;
         }
 
         private IEnumerable<FA3Legacy> GetAssessments(string inputFolder)

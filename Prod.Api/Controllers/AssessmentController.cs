@@ -331,8 +331,8 @@ namespace Prod.Api.Controllers
             {
                 if (role.Skriver)
                 {
-                    var userName = role.User.Brukernavn;
-                    var rlRodliste2019 = CreateNewAssessment(value.Ekspertgruppe, userName, scientificNameId);
+                    var userId = role.User.Id;
+                    var rlRodliste2019 = CreateNewAssessment(value.Ekspertgruppe, userId, scientificNameId);
                     rlRodliste2019.EvaluationStatus = "created";
                     rlRodliste2019.LastUpdatedAt = now;
                     var doc = JsonConvert.SerializeObject(rlRodliste2019);
@@ -549,15 +549,15 @@ namespace Prod.Api.Controllers
         //    return zipfile ;
         //}
 
-        private static FA4 CreateNewAssessment(string expertgroup, string userName, int scientificNameId)
+        private static FA4 CreateNewAssessment(string expertgroup, Guid userId, int scientificNameId)
         {
             if (string.IsNullOrWhiteSpace(expertgroup))
             {
                 throw new ArgumentNullException(nameof(expertgroup));
             }
-            if (string.IsNullOrWhiteSpace(userName))
+            if (userId == Guid.Empty)
             {
-                throw new ArgumentNullException(nameof(userName));
+                throw new ArgumentNullException(nameof(userId));
             }
             var vurderingscontext = expertgroup.Contains("Svalbard") ? "S" : "N";
             var vurderingsår = 2021;
