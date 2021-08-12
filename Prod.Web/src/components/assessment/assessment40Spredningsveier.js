@@ -30,7 +30,7 @@ export default class Assessment40Spredningsveier extends React.Component {
 
         return(
             <div> 
-                <Tabs  clName={"nav_menu submenu"} tabData={spredningsveierTabs} />
+                <Tabs clName={"nav_menu submenu"} tabData={spredningsveierTabs} />
                 <div className="content">
                     {
                     // artsinformasjonTabs.activeTab.id === 1  ?
