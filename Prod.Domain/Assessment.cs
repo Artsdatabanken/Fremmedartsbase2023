@@ -39,7 +39,8 @@ namespace Prod.Domain
         public DateTime HistoryAt { get; set; }
         public string Expertgroup { get; set; }
         public string EvaluationStatus { get; set; }
-        public Guid LastUpdatedBy { get; set; }
+        public User LastUpdatedByUser { get; set; }
+        public Guid LastUpdatedByUserId { get; set; }
         public DateTime LastUpdatedAt { get; set; }
         public Guid LockedForEditByUser { get; set; }
         public DateTime LockedForEditAt { get; set; }
