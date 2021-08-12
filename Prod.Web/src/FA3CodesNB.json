@@ -6428,7 +6428,7 @@
                         {
                             "Id": null,
                             "Value": "toYear",
-                            "Text": "t.o.m. år (t<sub>i</sub>)",
+                            "Text": "t.o.m. år",
                             "Info": null,
                             "Children": null
                         },
@@ -6449,7 +6449,7 @@
                         {
                             "Id": null,
                             "Value": "km2",
-                            "Text": "km<sup>2</sup>",
+                            "Text": "Kjent forekomstareal (km<sup>2</sup>)",
                             "Info": null,
                             "Children": null
                         },

@@ -495,8 +495,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                      __html: labels.Bcrit.fromYear }}></th>
                                                 <th dangerouslySetInnerHTML={{
                                                      __html: labels.Bcrit.toYear}}></th>
-                                                <th>{labels.Bcrit.knownExpansion}</th>
-                                                <th></th>
+                                                <th dangerouslySetInnerHTML={{
+                                                     __html: labels.Bcrit.km2}}></th>                                                
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -514,16 +514,14 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                     />
 
                                                 </td>
-                                                <td dangerouslySetInnerHTML={{
-                                                     __html: labels.Bcrit.km2 }}></td>
+                                               
                                             </tr>
                                             <tr>
                                                 <td>2</td>
                                                 <td>[overført fra utbr. fanen]</td>
                                                 <td>[overført fra utbr. fanen]</td>
                                                 <td>[overført fra utbr. fanen]</td>
-                                                <td dangerouslySetInnerHTML={{
-                                                     __html: labels.Bcrit.km2 }}></td>
+                                                
                                             </tr>
                                             </tbody>                            
                                         </table>
@@ -562,7 +560,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                 observableValue={[riskAssessment, "commentOrDescription"]}
                                                 label={labels.Bcrit.commentOrDescription}
                                             />                      
-                                    <p>{labels.BcritText.expansionSpeed}</p>
+                                    <p style={{marginTop: "20px", paddingTop: "20px", borderTop:'1px solid gray', fontWeight: 'bold', fontSize: 'larger'}}>{labels.BcritText.expansionSpeed}</p>
 
                                    {/* <p>{ntLabels.scoreSummary}</p>
                                     <ScoreUnsure appState={appState}
