@@ -477,10 +477,15 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                             <div>
                                 <p>{textASB} </p>
 
-                                        <span style={{paddingLeft: '40px'}}>{labels.Bcrit.choose}</span> <Xcomp.Button primary >{labels.Bcrit.getFromMap}</Xcomp.Button>
+                                <Xcomp.Radio value={'true'} observableValue={[assessment.riskAssessment, "manuallyAddArea"]} label={labels.Bcrit.useMap} />                    
+                                        { assessment.riskAssessment.manuallyAddArea == 'true' ? <Xcomp.Bool observableValue={[assessment.riskAssessment, "notUse2021AsEndYear"]} label={labels.Bcrit.notUse2021} /> : null } 
+                                <Xcomp.Radio value={'false'} observableValue={[assessment.riskAssessment, "manuallyAddArea"]} label={labels.Bcrit.addManually} />                    
+                                        { assessment.riskAssessment.manuallyAddArea == 'false' ? <Xcomp.Bool observableValue={[assessment.riskAssessment, "notUse2021AsEndYear"]} label={labels.Bcrit.notUse2021} /> : null }
+
+                                       {/* <span style={{paddingLeft: '40px'}}>{labels.Bcrit.choose}</span> <Xcomp.Button primary >{labels.Bcrit.getFromMap}</Xcomp.Button>
                                             <span>{labels.Bcrit.addManually}</span>
 
-                                        <Xcomp.Bool observableValue={[riskAssessment, "notUseExpansionInNorway"]} label={labels.BcritText.chooseNotToUseKnownArea} />
+                                            <Xcomp.Bool observableValue={[riskAssessment, "notUseExpansionInNorway"]} label={labels.BcritText.chooseNotToUseKnownArea} /> */}
 
                                         <table className="table BCritTable">
                                             <thead>
