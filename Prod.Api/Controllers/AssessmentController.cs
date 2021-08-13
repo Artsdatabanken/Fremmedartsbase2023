@@ -89,7 +89,7 @@ namespace Prod.Api.Controllers
                 if (role.Skriver)
                 {
                     doc.LockedForEditAt = DateTime.Now;
-                    doc.LockedForEditBy = role.User.Brukernavn;
+                    doc.LockedForEditByUserId = role.User.Id;
                     await StoreAssessment(id, doc, role.User, true);
                     await _dbContext.SaveChangesAsync();
                 }
