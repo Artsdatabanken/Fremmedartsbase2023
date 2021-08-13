@@ -502,26 +502,34 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             <tbody>
                                             <tr>
                                                 <td>1</td>
-                                                <td>[overført fra utbr. fanen]</td>
-                                                <td><Xcomp.Number                            
+                                                <td> <Xcomp.Number                            
+                                                        observableValue={[assessment.riskAssessment, "startYear"]}/> 
+                                                </td>
+                                                <td style={{display: 'flex'}}><Xcomp.Number                            
                                                         observableValue={[riskAssessment, "BCritToYear"]}
                                                         integer
                                                         yearRange={true}
-                                                    /> </td>
+                                                    /> <span style={{margin: '10px 10px 0'}}>(t1)</span>
+                                                    </td>
                                                 <td><Xcomp.Number                            
-                                                        observableValue={[riskAssessment, "BCritArea"]}
-                                                        
+                                                        observableValue={[riskAssessment, "BCritArea"]}                                                        
                                                     />
-
                                                 </td>
                                                
                                             </tr>
                                             <tr>
                                                 <td>2</td>
-                                                <td>[overført fra utbr. fanen]</td>
-                                                <td>[overført fra utbr. fanen]</td>
-                                                <td>[overført fra utbr. fanen]</td>
-                                                
+                                                <td> <Xcomp.Number                            
+                                                        observableValue={[assessment.riskAssessment, "startYear"]}
+                                                        yearRange={true}/> 
+                                                </td>
+                                                <td style={{display: 'flex'}}><Xcomp.Number                            
+                                                        observableValue={[assessment.riskAssessment, "endYear"]} 
+                                                        yearRange={true}/> <span style={{margin: '10px 10px 0'}}>(t2)</span>
+                                                </td>
+                                                <td><Xcomp.Number                            
+                                                         observableValue={[assessment.riskAssessment, "knownDistribution"]}/> 
+                                                </td>                                                
                                             </tr>
                                             </tbody>                            
                                         </table>
