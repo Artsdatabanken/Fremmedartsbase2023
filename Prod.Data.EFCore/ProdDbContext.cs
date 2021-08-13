@@ -17,7 +17,7 @@ namespace Prod.Data.EFCore
 
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Assessment> Assessments { get; set; }
-        //public virtual DbSet<AssessmentHistory> AssessmentHistories { get; set; }
+        public virtual DbSet<AssessmentHistory> AssessmentHistories { get; set; }
         //public virtual DbSet<Kode> Codes { get; set; }
 
         public virtual DbSet<AssessmentComment> Comments { get; set; }
@@ -109,18 +109,13 @@ namespace Prod.Data.EFCore
             // Assessment
             modelBuilder.Entity<AssessmentHistory>(e =>
             {
+                // todo: fix table name
+                e.ToTable("AssessmentHistory");
                 e.HasKey(x => new {x.Id, x.HistoryAt});
                 e.Property(x => x.Id).ValueGeneratedNever();
-                e.Property(x => x.Doc).IsRequired();
-                e.Property(x => x.Expertgroup).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.Ekspertgruppe') as nvarchar(150))");
-                e.HasIndex(x => x.Expertgroup);
-                e.Property(x => x.LockedForEditByUser).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.LockedForEditBy') as nvarchar(100))");
-                e.Property(x => x.LockedForEditAt).HasComputedColumnSql("CONVERT(datetime2,JSON_VALUE(Doc, '$.LockedForEditAt'),112)");
-                // e.Property(x => x.LastUpdatedBy).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.LastUpdatedBy') as nvarchar(100))");
-                e.HasOne(x => x.LastUpdatedByUser).WithMany().OnDelete(DeleteBehavior.NoAction).IsRequired();
-                e.Property(x => x.LastUpdatedAt).HasComputedColumnSql("CONVERT(datetime2,JSON_VALUE(Doc, '$.LastUpdatedOn'),112)");
-                e.Property(x => x.EvaluationStatus).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.EvaluationStatus') as nvarchar(100))");
                 e.HasIndex(x => x.HistoryAt);
+                e.Property(x => x.Doc).IsRequired();
+                e.HasOne(x => x.User).WithMany().OnDelete(DeleteBehavior.NoAction).IsRequired();
             });
 
             //// Koder

@@ -37,13 +37,8 @@ namespace Prod.Domain
     public class AssessmentHistory {
         public int Id { get; set; }
         public DateTime HistoryAt { get; set; }
-        public string Expertgroup { get; set; }
-        public string EvaluationStatus { get; set; }
-        public User LastUpdatedByUser { get; set; }
-        public Guid LastUpdatedByUserId { get; set; }
-        public DateTime LastUpdatedAt { get; set; }
-        public Guid LockedForEditByUser { get; set; }
-        public DateTime LockedForEditAt { get; set; }
+        public User User { get; set; }
+        public Guid UserId { get; set; }
         public string Doc { get; set; }
     }
     public class AssessmentComment

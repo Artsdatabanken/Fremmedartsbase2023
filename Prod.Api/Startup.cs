@@ -124,7 +124,9 @@ namespace Prod.Api
 
         private void StartupAddDependencies(IServiceCollection services)
         {
-            services.AddDbContext<ProdDbContext>(opt => opt.UseSqlServer(Configuration.GetValue<string>("FabDatabase")));
+            string connectionString = Configuration.GetValue<string>("FabDatabase");
+
+            services.AddDbContext<ProdDbContext>(opt => opt.UseSqlServer(connectionString));
             var options = new ReferenceServiceOptions()
             {
                 AuthAuthority = Configuration.GetValue("AuthAuthority", "https://demo.identityserver.io"),
