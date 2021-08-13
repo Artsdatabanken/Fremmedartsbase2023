@@ -287,6 +287,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.LockedForEditAt,
                         opt => opt.MapFrom(src => src.SistOppdatert)) // må ha dato - bruker en kjent en
                     .ForMember(dest => dest.LockedForEditBy, opt => opt.Ignore())
+                    .ForMember(dest => dest.LockedForEditByUserId, opt => opt.Ignore())
                     .ForMember(dest => dest.EvaluationStatus, opt => opt.Ignore())
                     .ForMember(dest => dest.TaxonHierarcy, opt => opt.Ignore())
                     .ForMember(dest => dest.IsDeleted, opt => opt.Ignore())
