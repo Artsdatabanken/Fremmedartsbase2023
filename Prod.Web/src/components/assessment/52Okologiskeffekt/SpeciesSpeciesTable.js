@@ -10,19 +10,28 @@ const SpeciesSpeciesTable = observer((props) =>
 {
     const labels = props.labels
     return <table className="table ecologicalEffect">
+        {!props.HCrit ? 
         <colgroup>
             <col style={{width: "20%"}} />
             <col style={{width: "5%"}} />
             <col style={{width: "10%"}} />
             <col style={{width: "10%"}} />
-
             <col style={{width: "20%"}} />
             <col style={{width: "20%"}} />
             <col style={{width: "15%"}} />
+        </colgroup>
+             :
+             <colgroup>
+             <col style={{width: "30%"}} />
+             <col style={{width: "10%"}} />
+             <col style={{width: "25%"}} />
+             <col style={{width: "25%"}} />
+             <col style={{width: "10%"}} />
+         </colgroup>
+              }
             {/*<col style={{width: "5%"}} />
             <col style={{width: "8%"}} />*/}
 
-        </colgroup>
 
         <thead>
             <tr>
@@ -100,7 +109,7 @@ const SpeciesSpeciesTable = observer((props) =>
                             <div className="scientificName">{props.newItem.scientificName}</div>
                             <div className="author">{"(" + props.newItem.scientificNameAuthor + ")"}</div>
                         </div> :
-                        <Xcomp.String observableValue={[props.newItem, 'taxonSearchString']} placeholder={labels.General.searchSpecies} />}
+                        <Xcomp.String className={props.HCrit ? "HCrit" : ""} observableValue={[props.newItem, 'taxonSearchString']} placeholder={labels.General.searchSpecies} />}
                         {props.newItem.taxonSearchResult.length > 0 ?
                         <div className="speciesSearchList" style={{position: 'absolute', top: "36px", left:"15px"}}>
                             <ul className="panel list-unstyled">
@@ -168,7 +177,7 @@ const SpeciesSpeciesTable = observer((props) =>
                     <div>
                         <Xcomp.Button primary xs 
                             onClick={props.addNewItem}
-                            disabled={!props.newItem.ScientificName}
+                            disabled={!props.newItem.scientificName}
                         >{labels.General.add}</Xcomp.Button>
                     </div>
                 </td>

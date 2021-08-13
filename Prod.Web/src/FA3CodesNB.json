@@ -5113,7 +5113,7 @@
                         {
                             "Id": null,
                             "Value": "SelfProducing",
-                            "Text": "Økningen i forekomstareal beregnes ut fra kjent forekomstareal ved to ulike år; år t1 og år t2 hvor t1 < t2. Forekomstarealet per år t1 (eller t2) regnes ut fra alle inkluderte forekomster fra og med et valgt startår (t0) til og med år t1 (eller t2). Startåret t0 er felles for t1 og t2. For t2 er i år satt som standardinnstilling og kjent forekomstareal i dag, tilhørende t0 og t2 er overført direkte fra Utbredelse i Norge. Valgt periode (antall år mellom t1 og t2) skal ikke overstige 20 år og skal representere den perioden økningen er størst (anbefaler å bruke minimum 10 år hvis tidsserien tillater det). ",
+                            "Text": "Økningen i forekomstareal beregnes ut fra kjent forekomstareal ved to ulike år; år t1 og år t2 hvor t1 < t2. Forekomstarealet per år t1 (eller t2) er basert på alle inkluderte forekomster fra og med et valgt startår t0 til og med år t1 (eller t2). Startåret t0 er felles for t1 og t2 og samsvarer med startår valgt i Artskart i basen. For t2 er år 2021 satt som standard og kjent forekomstareal (km2) i 2021 er overført fra Utbredelse i Norge. Valgt periode (antall år mellom t1 og t2) skal ikke overstige 20 år og skal representere den perioden økningen er størst. Hvis tidsserien tillater det anbefales en periode på minimum 10 år.",
                             "Info": null,
                             "Children": null
                         },
@@ -6393,7 +6393,21 @@
                         {
                             "Id": null,
                             "Value": "addManually",
-                            "Text": "eller legg inn manuelt",
+                            "Text": "Jeg ønsker å legge inn år t1 og tilhørende kjent forekomstareal (km2) manuelt.",
+                            "Info": null,
+                            "Children": null
+                        },                        
+                        {
+                            "Id": null,
+                            "Value": "useMap",
+                            "Text": "Jeg ønsker å bruke Artskart for å legge til år t1 og tilhørende kjent forekostareal (km2)",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "notUse2021",
+                            "Text": "Jeg ønsker ikke å bruke år 2021 som sluttår t2, med tilhørende forekomstareal hentet fra utbredelsesfanen.",
                             "Info": null,
                             "Children": null
                         },
@@ -6414,7 +6428,7 @@
                         {
                             "Id": null,
                             "Value": "toYear",
-                            "Text": "t.o.m. år (t<sub>i</sub>)",
+                            "Text": "t.o.m. år",
                             "Info": null,
                             "Children": null
                         },
@@ -6435,7 +6449,7 @@
                         {
                             "Id": null,
                             "Value": "km2",
-                            "Text": "km<sup>2</sup>",
+                            "Text": "Kjent forekomstareal (km<sup>2</sup>)",
                             "Info": null,
                             "Children": null
                         },

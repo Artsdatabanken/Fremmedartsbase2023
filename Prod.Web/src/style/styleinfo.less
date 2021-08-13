@@ -393,7 +393,8 @@ form.minMax .form-group div {
 }
 
 div .btn, div .form-control, .well .btn-primary, .btn-flat {
-  border-radius: 24px;
+  //border-radius: 24px;
+  border-radius: 0;
   background-color: #fff;
   color: #4c4a48;
   border: 1px solid #777;
@@ -1303,6 +1304,11 @@ table.table-hover,
   display: block;
 }
 
+ul.faner {
+  margin-bottom: 0;
+  background-color: #C9D6D9;
+}
+
 .selectFilter .nav_menu {
   justify-content: left;
 }
@@ -1330,11 +1336,14 @@ table.table-hover,
   padding-inline-start: 40px;
 }
 
-.submenu {
+.main .submenu {
   position: sticky;
   top: 141px;
   z-index: 100;
-  background-color: #fff;
+  padding: 10px 0 10px;
+  border-bottom: 2px solid gray;
+  border-top: 2px solid gray;
+  background-color: #C9D6D9;
 }
 
 .nav_menu .filters li.checkbox {
@@ -1717,8 +1726,11 @@ table.ecologicalEffect .btn-primary {
 }
 
 table.ecologicalEffect .form-control {
-
   max-width: 110px;
+}
+
+table.ecologicalEffect .HCrit .form-control {
+  max-width: 330px;
 }
 
 table.ecologicalEffect .parasiteName > .form-control {
@@ -1727,7 +1739,7 @@ table.ecologicalEffect .parasiteName > .form-control {
 
 table.ecologicalEffect td li.checkbox > label {
   white-space: break-spaces;
-  width: 145px;
+  //width: 145px;
 }
 
 .table-striped > tbody > tr > td > h1 {

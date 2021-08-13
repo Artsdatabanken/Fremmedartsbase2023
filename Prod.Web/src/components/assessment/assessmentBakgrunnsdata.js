@@ -18,7 +18,6 @@ export default class AssessmentBakgrunnsdata extends React.Component {
         const labels = appState.codeLabels.DistributionHistory
         return (
             <div>
-                    <br/>
                     <Tabs clName={"nav_menu submenu"} tabData={infoTabs}/>
                     {
                         infoTabs.activeTab.id === 2  ?
