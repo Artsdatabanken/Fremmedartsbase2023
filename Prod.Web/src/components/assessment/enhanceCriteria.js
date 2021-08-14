@@ -202,18 +202,20 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             }
         },
         get spreadRscriptEstimatedSpeciesLongevityValue () {
-            r.amethod = "numerisk estimering" 
-
-            r.ascore = 
-                medianLifetime >= 650 ? 4 :
-                medianLifetime >= 60 ? 3 :
-                medianLifetime >= 10 ? 2 :
-                medianLifetime < 10 ? 1 :
+            const r = riskAssessment
+            runInAction(() => {                
+                r.ascore = 
+                r.medianLifetime >= 650 ? 4 :
+                r.medianLifetime >= 60 ? 3 :
+                r.medianLifetime >= 10 ? 2 :
+                r.medianLifetime < 10 ? 1 :
                 NaN
             
-            // avrunding til to signifikante desimaler: 
-            r.medianLifetime = roundToSignificantDecimals(medianLifetime)
+                // avrunding til to signifikante desimaler: 
+                r.medianLifetime = roundToSignificantDecimals(r.medianLifetime)
+            })
             const result = {
+                method: "numerisk estimering",
                 level: r.ascore,
                 high: 3,
                 low: 1
@@ -222,10 +224,48 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             return result
         },
         get viableAnalysisValue () {
+            const r = riskAssessment
+
+            if (r.lifetimeLowerQ > r.medianLifetime) 
+                return {error: "Levetidens nedre kvartil må være mindre enn medianen."}
+            if (r.LifetimeUpperQ <= r.medianLifetime) 
+                return {error: "Levetidens øvre kvartil må være større enn medianen."}
+            
+            runInAction(() => {                
+                r.ascore = 
+                    r.medianLifetime >= 650 ? 4 :
+                    r.medianLifetime >= 60 ? 3 :
+                    r.medianLifetime >= 10 ? 2 :
+                    r.medianLifetime < 10 ? 1 :
+                    NaN
+                
+                r.alow = 
+                    r.lifetimeLowerQ >= 650 ? 4 :
+                    r.lifetimeLowerQ >= 60 ? 3 :
+                    r.lifetimeLowerQ >= 10 ? max(2, r.ascore - 1)  :
+                    r.lifetimeLowerQ < 10 ? max(1, r.ascore - 1)  :
+                    NaN
+                
+                r.ahigh = 
+                    r.lifetimeLowerQ >= 650 ? min(4, r.ascore + 1) :
+                    r.lifetimeLowerQ >= 60 ? min(3, r.ascore + 1) :
+                    r.lifetimeLowerQ >= 10 ? 2 :
+                    r.lifetimeLowerQ < 10 ? 1 :
+                    NaN
+                
+                // avrunding til to signifikante desimaler: 
+                r.medianLifetime = roundToSignificantDecimals(r.medianLifetime)
+                r.lifetimeLowerQ = roundToSignificantDecimals(r.lifetimeLowerQ)  // todo: check! denne forandrer inputvariablen!?
+                r.LifetimeUpperQ = roundToSignificantDecimals(r.LifetimeUpperQ)  // todo: check! denne forandrer inputvariablen!?
+            })
+            
+
+
             const result = {
-                level: 3,
-                high: 4,
-                low: 2
+                method: "levedyktighetsanalyse",
+                level: r.ascore,
+                high: r.ahigh,
+                low: r.alow
                 // text: "dummytext"
             }
             return result
@@ -278,9 +318,11 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         // // //     return result
         // // // },
 
-        medianLifetime: 0,
+        // medianLifetime: 0,
         amethod: null,
         ascore: 0,
+        ahigh: 0,
+        alow:0,
 
 
         get CalculatedCritALevel() {
@@ -347,9 +389,9 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 
     autorun(() => {
         const criterionA = getCriterion(riskAssessment, 0, "A")
-        console.log("Autorun criterionA: " + criterionA.value)
+        // console.log("Autorun criterionA: " + criterionA.value)
         const nv = riskAssessment.CalculatedCritALevel //ChosenSpreadMedanLifespanLevel
-        console.log("Autorun criterionA nv: " + nv)
+        // console.log("Autorun criterionA nv: " + JSON.stringify(nv))
         if (nv.amethod !== "AOOadjusted") { // only set criterion value (automatically) when certain amethods is used
             runInAction(() => {
                 criterionA.value = nv.level
@@ -361,7 +403,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         const criterionB = getCriterion(riskAssessment, 0, "B")
           console.log("Autorun criterionB: " + criterionB.value)
         const nv = riskAssessment.ChosenSpreadYearlyIncreaseLevel
-          console.log("Autorun criterionB nv: " + nv)
+          console.log("Autorun criterionB nv: " + JSON.stringify(nv))
         runInAction(() => {
             criterionB.value = nv
         })
