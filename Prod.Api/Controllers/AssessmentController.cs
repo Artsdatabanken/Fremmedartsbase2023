@@ -89,7 +89,7 @@ namespace Prod.Api.Controllers
                 if (role.Skriver)
                 {
                     doc.LockedForEditAt = DateTime.Now;
-                    doc.LockedForEditBy = role.User.Brukernavn;
+                    doc.LockedForEditByUserId = role.User.Id;
                     await StoreAssessment(id, doc, role.User, true);
                     await _dbContext.SaveChangesAsync();
                 }
@@ -391,103 +391,104 @@ namespace Prod.Api.Controllers
             return Ok();
         }
 
-        private async Task StoreAssessment(int id, FA4 doc, User user, bool notUpdateChangedBy, bool forceStore = false)
-        {
-            //todo: implement. see below 
-        }
-
-
         //private async Task StoreAssessment(int id, FA4 doc, User user, bool notUpdateChangedBy, bool forceStore = false)
         //{
-        //    //var dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
-        //    var now = DateTime.Now;
-        //    doc.LastUpdatedAt = now;
-
-        //    var assessment = _dbContext.Assessments.SingleOrDefault(x => x.Id == id);
-
-        //    if (!forceStore && (assessment.LockedForEditBy != null && assessment.LockedForEditBy != user.Brukernavn))
-        //    {
-        //        throw new Exception("IKKE SKRIVETILGANG TIL DENNE VURDERINGEN - Låst av annen bruker");
-        //    }
-
-
-        //    // check and update referenceUsages
-        //    var usedReferences = doc.References.Select(x => x.ReferenceId).ToArray();
-        //    if (!forceStore && usedReferences.Any())
-        //    {
-        //        bool ok = await _referenceService.SignalUsage(usedReferences, user.Id);
-        //    }
-
-        //    var curAss = JsonConvert.DeserializeObject<FA4>(assessment.Doc);
-
-        //    byte[] zipfile;
-        //    var fileName = "ArtskartData.zip";
-        //    const string name = "Datagrunnlag fra Artskart";
-        //    const string filetype = "application/zip";
-
-        //    if (!forceStore && doc.ArtskartSistOverført != curAss.ArtskartSistOverført)
-        //    {
-        //        try
-        //        {
-        //            zipfile = await TaskHelper.TimeoutAfter(GetZipDataFromArtskart(doc), TimeSpan.FromSeconds(10));
-        //        }
-        //        catch
-        //        {
-        //            // ok here
-        //            zipfile = Array.Empty<byte>();
-        //        }
-
-        //        if (zipfile.Length > 0)
-        //        {
-        //            var attach = await _dbContext.Attachments.Where(x =>
-        //                x.AssessmentId == assessment.Id && x.Name == name && x.Type == filetype &&
-        //                x.FileName == fileName).FirstOrDefaultAsync();
-        //            if (attach != null)
-        //            {
-        //                attach.File = zipfile;
-        //                attach.IsDeleted = false;
-        //                attach.Date = DateTime.Now;
-        //                attach.UserId = user.Id;
-        //            }
-        //            else
-        //            {
-        //                attach = new Attachment
-        //                {
-        //                    AssessmentId = assessment.Id,
-        //                    Date = DateTime.Now,
-        //                    File = zipfile,
-        //                    FileName = fileName,
-        //                    Name = name,
-        //                    Type = filetype,
-        //                    UserId = user.Id
-        //                };
-        //                _dbContext.Attachments.Add(attach);
-        //            }
-        //        }
-
-        //    }
-
-        //    var history = new AssessmentHistory()
-        //    {
-        //        Id = assessment.Id,
-        //        Doc = assessment.Doc,
-        //        HistoryAt = now
-        //    };
-
-        //    _dbContext.AssessmentHistories.Add(history);
-
-        //    if (!notUpdateChangedBy)
-        //    {
-        //        doc.EvaluationStatus = "inprogress";
-        //        doc.LastUpdatedOn = now;
-        //        doc.LastUpdatedBy = user.Brukernavn;
-        //    }
-
-        //    var assessmentString = Newtonsoft.Json.JsonConvert.SerializeObject(doc);
-        //    assessment.Doc = assessmentString;
-        //    await _dbContext.SaveChangesAsync().ConfigureAwait(false);
-
+        //    //todo: implement. see below 
         //}
+
+
+        private async Task StoreAssessment(int id, FA4 doc, User user, bool notUpdateChangedBy, bool forceStore = false)
+        {
+            //var dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
+            var now = DateTime.Now;
+            doc.LastUpdatedAt = now;
+
+            var assessment = _dbContext.Assessments.SingleOrDefault(x => x.Id == id);
+
+            if (!forceStore && (assessment.LockedForEditByUser != null && assessment.LockedForEditByUser != user))
+            {
+                throw new Exception("IKKE SKRIVETILGANG TIL DENNE VURDERINGEN - Låst av annen bruker");
+            }
+
+
+            //// check and update referenceUsages
+            //var usedReferences = doc.References.Select(x => x.ReferenceId).ToArray();
+            //if (!forceStore && usedReferences.Any())
+            //{
+            //    bool ok = await _referenceService.SignalUsage(usedReferences, user.Id);
+            //}
+
+            var curAss = JsonConvert.DeserializeObject<FA4>(assessment.Doc);
+
+            byte[] zipfile;
+            var fileName = "ArtskartData.zip";
+            const string name = "Datagrunnlag fra Artskart";
+            const string filetype = "application/zip";
+
+            //if (!forceStore && doc.ArtskartSistOverført != curAss.ArtskartSistOverført)
+            //{
+            //    try
+            //    {
+            //        zipfile = await TaskHelper.TimeoutAfter(GetZipDataFromArtskart(doc), TimeSpan.FromSeconds(10));
+            //    }
+            //    catch
+            //    {
+            //        // ok here
+            //        zipfile = Array.Empty<byte>();
+            //    }
+
+            //    if (zipfile.Length > 0)
+            //    {
+            //        var attach = await _dbContext.Attachments.Where(x =>
+            //            x.AssessmentId == assessment.Id && x.Name == name && x.Type == filetype &&
+            //            x.FileName == fileName).FirstOrDefaultAsync();
+            //        if (attach != null)
+            //        {
+            //            attach.File = zipfile;
+            //            attach.IsDeleted = false;
+            //            attach.Date = DateTime.Now;
+            //            attach.UserId = user.Id;
+            //        }
+            //        else
+            //        {
+            //            attach = new Attachment
+            //            {
+            //                AssessmentId = assessment.Id,
+            //                Date = DateTime.Now,
+            //                File = zipfile,
+            //                FileName = fileName,
+            //                Name = name,
+            //                Type = filetype,
+            //                UserId = user.Id
+            //            };
+            //            _dbContext.Attachments.Add(attach);
+            //        }
+            //    }
+
+            //}
+            //var test = _dbContext.AssessmentHistories.ToArray();
+            var history = new AssessmentHistory()
+            {
+                Id = assessment.Id,
+                Doc = assessment.Doc,
+                HistoryAt = now,
+                UserId = assessment.LastUpdatedByUserId
+            };
+
+            _dbContext.AssessmentHistories.Add(history);
+
+            if (!notUpdateChangedBy)
+            {
+                doc.EvaluationStatus = "inprogress";
+                doc.LastUpdatedAt = now;
+                doc.LastUpdatedBy = user.Brukernavn;
+            }
+
+            var assessmentString = Newtonsoft.Json.JsonConvert.SerializeObject(doc);
+            assessment.Doc = assessmentString;
+            await _dbContext.SaveChangesAsync().ConfigureAwait(false);
+
+        }
         //private static async Task<byte[]> GetZipDataFromArtskart(FA4 rlRodliste2019)
         //{
         //    // hent datasett fra artskart
@@ -546,7 +547,7 @@ namespace Prod.Api.Controllers
         //    using var client = new HttpClient();
 
         //    var zipfile = await client.GetByteArrayAsync(urlen);
-        //    return zipfile ;
+        //    return zipfile;
         //}
 
         private static FA4 CreateNewAssessment(string expertgroup, Guid userId, int scientificNameId)

@@ -239,14 +239,14 @@ class ViewModel {
             // ******************************************************************************
 
             runInAction(() => {
-                this.userContext.readonly = false
-                // this.userContext.readonly = (
-                //     this.viewMode === "assessment" &&
-                //     (
-                //         (!this.assessment || this.assessment.lockedForEditByUser !== auth.userId ) ||
-                //         (!this.assessment || this.assessment.evaluationStatus === "finished" )
-                //     )
-                // )
+                const emptyGuid = "00000000-0000-0000-0000-000000000000"
+                const isLockedForEdit = this.assessment.lockedForEditByUserId !== emptyGuid && this.assessment.lockedForEditByUserId !== auth.userId
+                this.userContext.readonly = (
+                    this.viewMode === "assessment" &&
+                    (
+                        !this.assessment || isLockedForEdit || this.assessment.evaluationStatus === "finished"
+                    )
+                )
             })
             if (this.expertgroupAssessmentList) {
                 let list = this.expertgroupAssessmentList

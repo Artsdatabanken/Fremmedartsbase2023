@@ -46,9 +46,25 @@ export default class Assessment52Utbredelse extends React.Component {
                          :
                         <div>
                             <span>{labels.goTo}</span> <Xcomp.Button primary >{labels.speciesMap}</Xcomp.Button>
-
+                            <p>Basert på periode:</p>
+                            <div style={{display: 'flex'}}>
+                                        <div style={{marginRight: '30px'}}>
+                                        <p> f.o.m. år (t0)</p>
+                                        <Xcomp.Number                            
+                                            observableValue={[assessment.riskAssessment, "startYear"]}
+                                            yearRange={true}/> 
+                                        </div>
+                                        <div>
+                                        <p>t.o.m. år (t2)</p>
+                                        <Xcomp.Number                            
+                                            observableValue={[assessment.riskAssessment, "endYear"]}
+                                            yearRange={true}/> 
+                                        </div> 
+                                    </div>
                             <div className="statusField">
                                 <div className="labels distribution">
+                                    
+                                
                                     <div style={{display: 'flex', marginTop: '40px', marginBottom: '150px'}}>
                                     <p>Forekomstareal <b>i dag</b> (km<sup>2</sup>):</p>
                                     {assessment.alienSpeciesCategory != "DoorKnocker" && 

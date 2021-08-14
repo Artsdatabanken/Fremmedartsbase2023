@@ -478,10 +478,15 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                             <div>
                                 <p>{textASB} </p>
 
-                                        <span style={{paddingLeft: '40px'}}>{labels.Bcrit.choose}</span> <Xcomp.Button primary >{labels.Bcrit.getFromMap}</Xcomp.Button>
+                                <Xcomp.Radio value={'true'} observableValue={[assessment.riskAssessment, "manuallyAddArea"]} label={labels.Bcrit.useMap} />                    
+                                        { assessment.riskAssessment.manuallyAddArea == 'true' ? <Xcomp.Bool observableValue={[assessment.riskAssessment, "notUse2021AsEndYear"]} label={labels.Bcrit.notUse2021} /> : null } 
+                                <Xcomp.Radio value={'false'} observableValue={[assessment.riskAssessment, "manuallyAddArea"]} label={labels.Bcrit.addManually} />                    
+                                        { assessment.riskAssessment.manuallyAddArea == 'false' ? <Xcomp.Bool observableValue={[assessment.riskAssessment, "notUse2021AsEndYear"]} label={labels.Bcrit.notUse2021} /> : null }
+
+                                       {/* <span style={{paddingLeft: '40px'}}>{labels.Bcrit.choose}</span> <Xcomp.Button primary >{labels.Bcrit.getFromMap}</Xcomp.Button>
                                             <span>{labels.Bcrit.addManually}</span>
 
-                                        <Xcomp.Bool observableValue={[riskAssessment, "notUseExpansionInNorway"]} label={labels.BcritText.chooseNotToUseKnownArea} />
+                                            <Xcomp.Bool observableValue={[riskAssessment, "notUseExpansionInNorway"]} label={labels.BcritText.chooseNotToUseKnownArea} /> */}
 
                                         <table className="table BCritTable">
                                             <thead>
@@ -491,35 +496,41 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                      __html: labels.Bcrit.fromYear }}></th>
                                                 <th dangerouslySetInnerHTML={{
                                                      __html: labels.Bcrit.toYear}}></th>
-                                                <th>{labels.Bcrit.knownExpansion}</th>
-                                                <th></th>
+                                                <th dangerouslySetInnerHTML={{
+                                                     __html: labels.Bcrit.km2}}></th>                                                
                                                 </tr>
                                             </thead>
                                             <tbody>
                                             <tr>
                                                 <td>1</td>
-                                                <td>[overført fra utbr. fanen]</td>
-                                                <td><Xcomp.Number                            
+                                                <td> <Xcomp.Number                            
+                                                        observableValue={[assessment.riskAssessment, "startYear"]}/> 
+                                                </td>
+                                                <td style={{display: 'flex'}}><Xcomp.Number                            
                                                         observableValue={[riskAssessment, "BCritToYear"]}
                                                         integer
                                                         yearRange={true}
-                                                    /> </td>
+                                                    /> <span style={{margin: '10px 10px 0'}}>(t1)</span>
+                                                    </td>
                                                 <td><Xcomp.Number                            
-                                                        observableValue={[riskAssessment, "BCritArea"]}
-                                                        
+                                                        observableValue={[riskAssessment, "BCritArea"]}                                                        
                                                     />
-
                                                 </td>
-                                                <td dangerouslySetInnerHTML={{
-                                                     __html: labels.Bcrit.km2 }}></td>
+                                               
                                             </tr>
                                             <tr>
                                                 <td>2</td>
-                                                <td>[overført fra utbr. fanen]</td>
-                                                <td>[overført fra utbr. fanen]</td>
-                                                <td>[overført fra utbr. fanen]</td>
-                                                <td dangerouslySetInnerHTML={{
-                                                     __html: labels.Bcrit.km2 }}></td>
+                                                <td> <Xcomp.Number                            
+                                                        observableValue={[assessment.riskAssessment, "startYear"]}
+                                                        yearRange={true}/> 
+                                                </td>
+                                                <td style={{display: 'flex'}}><Xcomp.Number                            
+                                                        observableValue={[assessment.riskAssessment, "endYear"]} 
+                                                        yearRange={true}/> <span style={{margin: '10px 10px 0'}}>(t2)</span>
+                                                </td>
+                                                <td><Xcomp.Number                            
+                                                         observableValue={[assessment.riskAssessment, "knownDistribution"]}/> 
+                                                </td>                                                
                                             </tr>
                                             </tbody>                            
                                         </table>
@@ -558,7 +569,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                 observableValue={[riskAssessment, "commentOrDescription"]}
                                                 label={labels.Bcrit.commentOrDescription}
                                             />                      
-                                    <p>{labels.BcritText.expansionSpeed}</p>
+                                    <p style={{marginTop: "20px", paddingTop: "20px", borderTop:'1px solid gray', fontWeight: 'bold', fontSize: 'larger'}}>{labels.BcritText.expansionSpeed}</p>
 
                                    {/* <p>{ntLabels.scoreSummary}</p>
                                     <ScoreUnsure appState={appState}
