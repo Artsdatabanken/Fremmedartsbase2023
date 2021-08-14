@@ -67,17 +67,17 @@ export default class DistributionTable extends React.Component {
             <tr>
                 <td>
                 <Xcomp.Number                            
-                    observableValue={[assessment.riskAssessment, "aOOtotalLow"]}
+                    observableValue={[assessment.riskAssessment, "AOOtotalLow"]}
                     integer />   
                 </td>                
                 <td>
                 <Xcomp.Number                            
-                    observableValue={[assessment.riskAssessment, "aOOtotalBest"]}
+                    observableValue={[assessment.riskAssessment, "AOOtotalBest"]}
                     integer />   
                 </td>
                <td>
                <Xcomp.Number                            
-                    observableValue={[assessment.riskAssessment, "aOOtotalHigh"]}
+                    observableValue={[assessment.riskAssessment, "AOOtotalHigh"]}
                     integer />   
                 </td>
                 {assessment.alienSpeciesCategory != "DoorKnocker" &&
@@ -88,17 +88,17 @@ export default class DistributionTable extends React.Component {
             <tr>
                 <td>
                 <Xcomp.Number                            
-                    observableValue={[assessment.riskAssessment, "aOO50yrLow"]}
+                    observableValue={[assessment.riskAssessment, "AOO50yrLow"]}
                     integer />   
                 </td>                
                 <td>
                 <Xcomp.Number                            
-                    observableValue={[assessment.riskAssessment, "aOO50yrBest"]}
+                    observableValue={[assessment.riskAssessment, "AOO50yrBest"]}
                     integer />   
                 </td>
                <td>
                <Xcomp.Number                            
-                    observableValue={[assessment.riskAssessment, "aOO50yrHigh"]}
+                    observableValue={[assessment.riskAssessment, "AOO50yrHigh"]}
                     integer />   
               </td>
               {assessment.alienSpeciesCategory != "DoorKnocker" &&
