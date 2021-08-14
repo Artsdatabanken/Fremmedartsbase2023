@@ -28,7 +28,21 @@ function roundToSignificantDecimals(num) {
         num 
     return result
 }
-
+function roundToSignificantDecimals2(num) {   // todo: spør om grenseverdiene (100 vs 99.5, og 2(?))
+    const result = 
+        // (num >= 9950000) ? round(num / 1000000) * 1000000 :
+        // (num >= 995000 ) ? round(num / 100000)  * 100000  :
+        // (num >= 99500  ) ? round(num / 10000)   * 10000   :
+        // (num >= 9950   ) ? round(num / 1000)    * 1000    :
+        // (num >= 995    ) ? round(num / 100)     * 100     :
+        // (num >= 100    ) ? round(num / 10)      * 10      :
+        (num >= 99.5    ) ? round(num / 10)      * 10      :
+        (num >= 9.95    ) ? round(num / 1)       * 1      :
+        (num >= 2    ) ? round(num / 0.1)      * 0.1      :
+        (num <  2    ) ? round(num / 0.01)      * 0.01      :
+        num 
+    return result
+}
 
 function yearlyIncreaseLevel(numMYear) {
     const num = numMYear // numKmYear * 1000
@@ -86,6 +100,7 @@ function d1(num) {
 
 function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
     const ec = observable({
+        // A1
         get lifespanA1aSimplifiedEstimateValue () {
             //amethod = "forekomstareal" 
             const r = riskAssessment
@@ -201,6 +216,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 console.error("lifespanA1aSimplifiedEstimateValue acceptOrAdjustCritA illegal value: " + r.acceptOrAdjustCritA)
             }
         },
+        // A2
         get spreadRscriptEstimatedSpeciesLongevityValue () {
             const r = riskAssessment
             runInAction(() => {                
@@ -223,6 +239,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             }
             return result
         },
+        // A3
         get viableAnalysisValue () {
             const r = riskAssessment
 
@@ -269,8 +286,40 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 // text: "dummytext"
             }
             return result
+        },
+
+        
+        get B1 () {
+            const r = riskAssessment
+           
+
+
+            const result = {
+                method: "",
+                level: r.ascore,
+                high: r.ahigh,
+                low: r.alow
+                // text: "dummytext"
+            }
+            return result
+        },
+
+        get B2 () {
+            const r = riskAssessment
+           
+
+
+            const result = {
+                method: "",
+                level: r.ascore,
+                high: r.ahigh,
+                low: r.alow
+                // text: "dummytext"
+            }
+            return result
         }
-    
+
+
     
     })
     
@@ -344,7 +393,20 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             const num = extractFloat(riskAssessment[riskAssessment.ChosenSpreadYearlyIncrease])
             const result = yearlyIncreaseLevel(num)
             return result
-        }
+        },
+        get CalculatedCritBLevel() {
+            const method = riskAssessment.chosenSpreadYearlyIncrease
+            const result = 
+                method === "a" 
+                ? ec.B1
+                : method === "b"
+                ? ec.B2
+                : NaN
+            return result
+        },
+
+        
+
 
     })
 
