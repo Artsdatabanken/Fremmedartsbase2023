@@ -129,16 +129,17 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     {/* <Xcomp.StringEnum observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]} mode="radio" codes={codes.HorizonEstablismentPotential}/> */}
                     
                     <hr />
+                    {/* <Xcomp.StringEnum mode="radio" observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]} codes={labels.AcritSelect} /> */}
                     <SelectableRadio
-                            label={labels.AcritSelect.a}
+                            label={labels.AcritSelect.LifespanA1aSimplifiedEstimate}
                             value={"LifespanA1aSimplifiedEstimate"}
                             observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]}/>
                     <SelectableRadio
-                            label={labels.AcritSelect.b}
+                            label={labels.AcritSelect.SpreadRscriptEstimatedSpeciesLongevity}
                             value={"SpreadRscriptEstimatedSpeciesLongevity"}
                             observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]}/>
                     <SelectableRadio
-                            label={labels.AcritSelect.c}
+                            label={labels.AcritSelect.ViableAnalysis}
                             value={"ViableAnalysis"}
                             observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]}/>
                     {riskAssessment.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" ? 
@@ -432,7 +433,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                         </div>
                                         <div className="fileDescriptions">
                                             <p><b>{labels.DistributionHistory.fileDescription}</b></p>
-                                            <Xcomp.HtmlString observableValue={[riskAssessment, 'fileDescription']} />
+                                            <Xcomp.String observableValue={[riskAssessment, 'fileDescription']} />
                                         </div>
                                     </div> 
                                     <FileUpload
