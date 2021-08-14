@@ -39,6 +39,12 @@
         const a = aCrit.value;
         const b = bCrit.value;
         const c = cCrit.value;
+
+
+        // console.log("========a: " + JSON.stringify(aCrit))
+        // console.log("========abc: " + a + " " + b + " " + c)
+
+
         const abAdjustment = [ 
                 // Crit B -->
                 [0,1,1,2], //  Crit A
