@@ -202,11 +202,22 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             }
         },
         get spreadRscriptEstimatedSpeciesLongevityValue () {
+            r.amethod = "numerisk estimering" 
+
+            r.ascore = 
+                medianLifetime >= 650 ? 4 :
+                medianLifetime >= 60 ? 3 :
+                medianLifetime >= 10 ? 2 :
+                medianLifetime < 10 ? 1 :
+                NaN
+            
+            // avrunding til to signifikante desimaler: 
+            r.medianLifetime = roundToSignificantDecimals(medianLifetime)
             const result = {
-                level: 2,
+                level: r.ascore,
                 high: 3,
-                low: 1,
-                text: "dummytext"
+                low: 1
+                // text: "dummytext"
             }
             return result
         },
@@ -214,8 +225,8 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             const result = {
                 level: 3,
                 high: 4,
-                low: 2,
-                text: "dummytext"
+                low: 2
+                // text: "dummytext"
             }
             return result
         }
@@ -266,6 +277,12 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         // // //     const result = medianLifespanLevel(num)
         // // //     return result
         // // // },
+
+        medianLifetime: 0,
+        amethod: null,
+        ascore: 0,
+
+
         get CalculatedCritALevel() {
             const method = riskAssessment.chosenSpreadMedanLifespan
             const result = 
