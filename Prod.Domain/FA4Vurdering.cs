@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+//using System.Text.Json.Serialization;
 
 namespace Prod.Domain
 {
@@ -568,9 +569,13 @@ namespace Prod.Domain
 
 
         //*************** Forekomstareal i dag ************************************
+        [System.Text.Json.Serialization.JsonPropertyName("AOOknown")]
         public Int64? AOOknown { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("AOOtotalBest")]
         public Int64? AOOtotalBest { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("AOOtotalLow")]
         public Int64? AOOtotalLow { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("AOOtotalHigh")]
         public Int64? AOOtotalHigh { get; set; }
         // -------- disse (forekomstareal i dag) er erstattet:  
         //todo: *sjekk konvertering fra FAB3 før sletting av utkommentert kode*
@@ -588,16 +593,23 @@ namespace Prod.Domain
 
 
         // *******  (B2a) Økning i forekomstareal – selvstendig reproduserende arter  **********
+        [System.Text.Json.Serialization.JsonPropertyName("AOOyear1")]
         public long AOOyear1 { get; set; } // årstallet for det første forekomstarealet 
+        [System.Text.Json.Serialization.JsonPropertyName("AOOyear2")]
         public long AOOyear2 { get; set; } // årstallet for det andre forekomstarealet 
+        [System.Text.Json.Serialization.JsonPropertyName("AAO1")]
         public long AAO1 { get; set; } // forekomstarealet i år 1 
+        [System.Text.Json.Serialization.JsonPropertyName("AAO2")]
         public long AAO2 { get; set; } // forekomstarealet i år 2 
         // ************************************************************************************
 
 
         //*************** Forekomstareal om 50år ************************************
+        [System.Text.Json.Serialization.JsonPropertyName("AOO50yrBest")]
         public Int64? AOO50yrBest { get; set; } // beste anslag på totalt forekomstareal om 50 år 
+        [System.Text.Json.Serialization.JsonPropertyName("AOO50yrLow")]
         public Int64? AOO50yrLow { get; set; } // lavt anslag på totalt forekomstareal om 50 år 
+        [System.Text.Json.Serialization.JsonPropertyName("AOO50yrHigh")]
         public Int64? AOO50yrHigh { get; set; }
         // -------- disse (forekomstareal om 50år) er erstattet:  
         //todo: *sjekk konvertering fra FAB3 før sletting av utkommentert kode*
