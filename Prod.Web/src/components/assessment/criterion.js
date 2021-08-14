@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import PropTypes from 'prop-types'
 import {observer, inject} from 'mobx-react';
-import {autorun , observable} from 'mobx';
+import {runInAction} from 'mobx';
 import * as Xcomp from './observableComponents';
 
 @inject("appState")
@@ -30,8 +30,17 @@ export default class Criterion extends React.Component {
                 }
             })
         }
+        // const setLevel = e => {
+        //     console.log("setLevel: " + e.target.value)
+        //     runInAction(() => {
+        //         criterion.value = parseInt(e.target.value)
+        //         console.log("setLevel value: " + criterion.value)
 
-        console.log("##info:" + JSON.stringify(criterion))
+        //     })
+        //     console.log("setLevel2: " + e.target.value)
+        // }
+
+        // console.log("##info:" + JSON.stringify(criterion))
 
 
         // console.log("head " + heading)
@@ -53,7 +62,11 @@ export default class Criterion extends React.Component {
                 const onChangeRadio = e => {
                     // console.log("radio2 change")
                     if (!auto) {
-                        criterion.value = parseInt(e.target.value)
+                        // setLevel(e)
+
+                        runInAction(() => {
+                            criterion.value = parseInt(e.target.value)
+                        })
                     }
                 } 
                 const onChangeCheckbox = e => {
