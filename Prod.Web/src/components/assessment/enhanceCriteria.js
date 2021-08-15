@@ -322,29 +322,58 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 r.expansionUpperQ = roundToSignificantDecimals(r.expansionUpperQ) // ???!
             })                   
 
+            const result = {
+                method: "modellering",
+                level: r.bscore,
+                high: r.bhigh,
+                low: r.blow
+            }
+            return result
+        },
+
+        get B2a () {
+            const r = riskAssessment
+            runInAction(() => {                
+                r.AOOdarkfigureBest = roundToSignificantDecimals2(r.AOOdarkfigureBest)
+                r.expansionSpeed = round(sqrt(r.AOOdarkfigureBest) * (sqrt(r.AOO2) - sqrt(r.AOO1)) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi))) 
+                r.bscore =
+                    (r.expansionSpeed >= 500) ? 4 :
+                    (r.expansionSpeed >= 160) ? 3 :
+                    (r.expansionSpeed >= 50) ? 2 :
+                    (r.expansionSpeed < 50) ? 1 :
+                    Nan
+                r.expansionSpeed = roundToSignificantDecimals(r.expansionSpeed)
+            })
+            // Utmating 
+            const b2aresulttext = `Ekspansjonshastigheten er beregnet til ${r.expansionSpeed}&nbsp;m/år basert på økningen i artens forekomstareal i perioden fra ${r.AOOyear1} til ${r.AOOyear2} og et mørketall på ${r.AOOdarkfigureBest}.`
+
+            const result = {
+                method: "modellering",
+                level: r.bscore,
+                high: r.bhigh,
+                low: r.blow,
+                text: b2aresulttext
+            }
+            return result
+        },
+
+        get B2b () {
+            const r = riskAssessment
+
+            
+
+
+
+
+
 
             const result = {
                 method: "modellering",
                 level: r.bscore,
                 high: r.bhigh,
                 low: r.blow
-                // text: "dummytext"
             }
             return result
-        },
-
-        get B2 () {
-            const r = riskAssessment
-           
-
-
-            const result = {
-                method: "",
-                level: r.ascore,
-                high: r.ahigh,
-                low: r.alow
-                // text: "dummytext"
-            }
             return result
         }
 
@@ -406,6 +435,14 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         bhigh: 0,
         blow:0,
 
+        bCritMCount: "",
+        bCritExact: "",
+        bCritP: "",
+        bCritNewObs: "",
+
+        AOOdarkfigureBest: 0,
+        AOOdarkfigureLow: 0,
+        AOOdarkfigureHigh: 0,	
 
 
         get CalculatedCritALevel() {
