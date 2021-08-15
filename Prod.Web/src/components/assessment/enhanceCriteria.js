@@ -291,14 +291,43 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         
         get B1 () {
             const r = riskAssessment
-           
+            if (r.expansionLowerQ > r.expansionSpeed)
+                return {error:  "Ekspansjonshastighetens nedre kvartil må være mindre enn medianen."}
+            if (r.expansionUpperQ <= r.expansionSpeed) 
+                return {error: "Ekspansjonshastighetens øvre kvartil må være større enn medianen."}
+            runInAction(() => {                
+                r.bscore = 
+                    (r.expansionSpeed >= 500) ? 4 :
+                    (r.expansionSpeed >= 160) ? 3 :
+                    (r.expansionSpeed >= 50) ? 2 :
+                    (r.expansionSpeed < 50) ? 1 :
+                    NaN
+            
+                r.blow =
+                    (r.expansionLowerQ >= 500) ? 4 :
+                    (r.expansionLowerQ >= 160) ? 3 :
+                    (r.expansionLowerQ >= 50) ? max(2, bscore - 1) :
+                    (r.expansionLowerQ < 50) ? max(1, bscore - 1) :
+                    NaN
+            
+                r.bhigh =
+                    (r.expansionUpperQ >= 500) ? min(4, bscore + 1) :
+                    (r.expansionUpperQ >= 160) ? min(3, bscore + 1) :
+                    (r.expansionUpperQ >= 50) ? 2 :
+                    (r.expansionUpperQ < 50) ? 1 :
+                    NaN
+                // avrunding til to signifikante desimaler: 
+                r.expansionSpeed = roundToSignificantDecimals(r.expansionSpeed) // ???!
+                r.expansionLowerQ = roundToSignificantDecimals(r.expansionLowerQ) // ???!
+                r.expansionUpperQ = roundToSignificantDecimals(r.expansionUpperQ) // ???!
+            })                   
 
 
             const result = {
-                method: "",
-                level: r.ascore,
-                high: r.ahigh,
-                low: r.alow
+                method: "modellering",
+                level: r.bscore,
+                high: r.bhigh,
+                low: r.blow
                 // text: "dummytext"
             }
             return result
@@ -372,6 +401,11 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         ascore: 0,
         ahigh: 0,
         alow:0,
+        bmethod: null,
+        bscore: 0,
+        bhigh: 0,
+        blow:0,
+
 
 
         get CalculatedCritALevel() {
