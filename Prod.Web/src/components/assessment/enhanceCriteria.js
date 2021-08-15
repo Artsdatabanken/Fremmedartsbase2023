@@ -359,26 +359,49 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 
         get B2b () {
             const r = riskAssessment
-
-            
-
-
-
-
-
+            runInAction(() => {                
+                r.expansionSpeed = round(200 * (sqrt(r.AOO10yrBest / 4) - 1) / sqrt(pi)) 
+                r.expansionLowerQ = round(200 * (sqrt(r.AOO10yrLow / 4) - 1) / sqrt(pi)) 
+                r.expansionUpperQ = round(200 * (sqrt(r.AOO10yrHigh / 4) - 1) / sqrt(pi)) 
+                r.bscore =
+                    (r.expansionSpeed >= 500) ? 4 :
+                    (r.expansionSpeed >= 160) ? 3 :
+                    (r.expansionSpeed >= 50) ? 2 :
+                    (r.expansionSpeed < 50) ? 1 :
+                    Nan
+                r.blow =
+                    (r.expansionLowerQ >= 500) ? 4 :
+                    (r.expansionLowerQ >= 160) ? 3 :
+                    (r.expansionLowerQ >= 50) ? max(2, r.bscore - 1) :
+                    (r.expansionLowerQ < 50) ? max(1, r.bscore - 1) :
+                    NaN
+                r.bhigh =  // todo: check with Hanno. his code sets blow here!! That must be wrong!!
+                    (r.expansionUpperQ >= 500) ? min(4, r.bscore + 1) :
+                    (r.expansionUpperQ >= 160) ? min(3, r.bscore + 1) :
+                    (r.expansionUpperQ >= 50) ? 2 :
+                    (r.expansionUpperQ < 50) ? 1 :
+                    NaN
+                r.expansionText =
+                    r.bscore === 1 ? "under 50&nbsp;m/år" :
+                    r.bscore === 2 ? "mellom 50&nbsp;m/år og 160&nbsp;m/år"  :
+                    r.bscore === 3 ? "mellom 160&nbsp;m/år og 500&nbsp;m/år" :
+                    r.bscore === 4 ? "over 500&nbsp;m/år" :
+                    null
+                // avrunding til to signifikante desimaler: 
+                r.expansionSpeed = roundToSignificantDecimals(r.expansionSpeed)
+            })
+            // Utmating 
+            const b2bresulttext = `Basert på det beste anslaget på ${r.occurrences1Best} forekomster i løpet av 10&nbsp;år og ${r.introductionsBest} introduksjoner innen 50&nbsp;år er B-kriteriet skåret som ${bscore} (med usikkerhet: £{blow}–${bhigh}). Dette innebærer at artens ekspansjonshastighet ligger ${expansionText} (beste anslag: ${expansionSpeed}&nbsp;m/år).`
 
             const result = {
-                method: "modellering",
+                method: "introduksjonspress",
                 level: r.bscore,
                 high: r.bhigh,
-                low: r.blow
+                low: r.blow,
+                text: b2bresulttext
             }
             return result
-            return result
         }
-
-
-    
     })
     
     const ACriteriaSectionNames = [
@@ -442,7 +465,11 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 
         AOOdarkfigureBest: 0,
         AOOdarkfigureLow: 0,
-        AOOdarkfigureHigh: 0,	
+        AOOdarkfigureHigh: 0,
+        AOO10yrBest: 0,
+        AOO10yrHigh: 0,
+        AOO10yrLow: 0,
+        
 
 
         get CalculatedCritALevel() {
@@ -471,19 +498,16 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 method === "a" 
                 ? ec.B1
                 : method === "b"
-                ? ec.B2
+                ? ec.B2a
+                : method === "c"
+                ? ec.B2b
                 : NaN
             return result
         },
-
-        
-
-
     })
 
-
     // observe the Selectable* observables to make shure that the chosen method/section does not point to a not selectable method/section
-   /* ACriteriaSectionNames.map(tag =>
+    /* ACriteriaSectionNames.map(tag =>
         observe(riskAssessment, "Selectable" + tag, (newValue, oldValue) => {
             if(!newValue) {
                 if (riskAssessment.ChosenSpreadMedanLifespan === tag) {
