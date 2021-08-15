@@ -381,21 +381,21 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                             </div>
                             <div className="numberFields">
                             <Xcomp.String                            
-                                            observableValue={[riskAssessment, "BCritMCount"]}
+                                            observableValue={[riskAssessment, "bCritMCount"]}
                                             placeholder={""}
                                         />  
                               <Xcomp.StringEnum                            
-                                            observableValue={[riskAssessment, "BCritExact"]}
+                                            observableValue={[riskAssessment, "bCritExact"]}
                                             //placeholder={"false"}
                                             codes={koder.TrueOrFalse}
                                         />  
                                 <Xcomp.StringEnum                            
-                                            observableValue={[riskAssessment, "BCritP"]}
+                                            observableValue={[riskAssessment, "bCritP"]}
                                             codes={koder.BCritP}
                                         />  
 
                                 <Xcomp.String                            
-                                            observableValue={[riskAssessment, "BCritNewObs"]}
+                                            observableValue={[riskAssessment, "bCritNewObs"]}
                                             placeholder={"True"}
                                         />                      
                                         
