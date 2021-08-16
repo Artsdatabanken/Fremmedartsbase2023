@@ -239,8 +239,7 @@ class ViewModel {
             // ******************************************************************************
 
             runInAction(() => {
-                const emptyGuid = "00000000-0000-0000-0000-000000000000"
-                const isLockedForEdit = this.assessment.lockedForEditByUserId !== emptyGuid && this.assessment.lockedForEditByUserId !== auth.userId
+                const isLockedForEdit = this.assessment.lockedForEditByUserId !== null && this.assessment.lockedForEditByUserId !== auth.userId
                 this.userContext.readonly = (
                     this.viewMode === "assessment" &&
                     (
