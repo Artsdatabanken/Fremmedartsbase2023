@@ -20,8 +20,8 @@ class ExpertGroupModel {
             valgtekspert: null,
             valgtekspertsrolleivalgtekspertgruppe: {
                 leder: false,
-                skriver: false,
-                leser: false
+                skriver: false
+                // leser: false
             },
             tilgangsoknader: [],
         });

@@ -48,7 +48,7 @@ namespace Prod.Api.Controllers
                     Id = x.Id,
                     ClosedBy = x.ClosedBy.Id,
                     CommentDate = x.CommentDate,
-                    User = x.User.Navn,
+                    User = x.User.FullName,
                     UserId = x.User.Id,                   
                     ClosedDate = x.ClosedDate,
                     Comment = x.Comment,
@@ -88,7 +88,7 @@ namespace Prod.Api.Controllers
                 return false;
             }
 
-            if (comment.UserId == user.Id || user.ErAdministrator)
+            if (comment.UserId == user.Id || user.IsAdmin)
             {
                 comment.IsDeleted = true;
                 await _dbContext.SaveChangesAsync();
@@ -109,11 +109,11 @@ namespace Prod.Api.Controllers
             }
 
             var roleInGroup = await base.GetRoleInGroup(comment.Assessment.Expertgroup);
-            if (roleInGroup.Skriver || user.ErAdministrator)
+            if (roleInGroup.WriteAccess || user.IsAdmin)
             {
                 comment.Closed = true;
                 comment.ClosedDate = DateTime.Now;
-                comment.ClosedById = roleInGroup.BrukerId;
+                comment.ClosedById = roleInGroup.UserId;
                 await _dbContext.SaveChangesAsync();
                 return true;
             }

@@ -40,7 +40,7 @@ namespace Prod.Api.Controllers
                     AssessmentId = x.AssessmentId,
                     Id = x.Id,
                     Date = x.Date.ToString("yyyy-dd-MM HH:mm"),
-                    User = x.User.Navn,
+                    User = x.User.FullName,
                     UserId = x.User.Id,
                     Name = x.Name,
                     FileName = x.FileName,
@@ -116,7 +116,7 @@ namespace Prod.Api.Controllers
             }
 
             var user = await base.GetRoleInGroup(value.Assessment.Expertgroup);
-            if (!user.Skriver && !user.Leder && !user.User.ErAdministrator) return false;
+            if (!user.WriteAccess && !user.Admin && !user.User.IsAdmin) return false;
             
             value.IsDeleted = true;
             await _dbContext.SaveChangesAsync();

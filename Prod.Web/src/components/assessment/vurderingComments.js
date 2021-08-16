@@ -226,7 +226,7 @@ export default class AssessmentComments extends Component {
                                     </td>}
                                     {item.isDeleted === false ? <td style={{display: 'flex', width: '100%', paddingTop: '10px'}}>
                                     <button className="btn btn-primary btn-xs" disabled={item.userId != auth.user.profile.sub} onClick={() => {this.deleteComment(item.id, appState)}}>Slett</button>                                   
-                                    { (rolle.leder || rolle.skriver) && <button className="btn btn-primary btn-xs" disabled={item.closed}  onClick={() => {this.closeComment(item.id, appState)}}>Behandlet</button> }                                                                       
+                                    { (rolle.admin || rolle.skriver) && <button className="btn btn-primary btn-xs" disabled={item.closed}  onClick={() => {this.closeComment(item.id, appState)}}>Behandlet</button> }                                                                       
                                 </td> : <td style={{display: 'flex', width: '100%', paddingTop: '10px'}}>                                    
                                 </td>}
                                 </tr>                             

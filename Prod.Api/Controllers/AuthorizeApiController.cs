@@ -48,40 +48,40 @@ namespace Prod.Api.Controllers
             var name = infuser.Claims.FirstOrDefault(x => x.Type == "name")?.Value;
             var email = infuser.Claims.FirstOrDefault(x => x.Type == "email")?.Value;
 
-            var user = _dbContext.Users.Include(x=>x.EkspertgruppeRoller).FirstOrDefault(x => x.Id == Guid.Parse(infuserId)) ?? new User
+            var user = _dbContext.Users.Include(x=>x.UserRoleInExpertGroups).FirstOrDefault(x => x.Id == Guid.Parse(infuserId)) ?? new User
             {
-                Id = Guid.Parse(infuserId), ErAdministrator = isAdmin, HarSoktOmTilgang = false, HarTilgang = false,
-                Brukernavn = userName, Navn = name, Email = email, DatoOpprettet = DateTime.Now
+                Id = Guid.Parse(infuserId), IsAdmin = isAdmin, HasAppliedForAccess = false, HasAccess = false,
+                UserName = userName, FullName = name, Email = email, DateCreated = DateTime.Now
             };
 
             // oppdater fra id
-            if (!user.ErAdministrator.Equals(isAdmin)) user.ErAdministrator = isAdmin;
+            if (!user.IsAdmin.Equals(isAdmin)) user.IsAdmin = isAdmin;
             if (email != null && (user.Email == null || !email.Equals(user.Email))) user.Email = email;
-            if (name != null && (user.Navn == null || !name.Equals(user.Navn))) user.Navn = name;
+            if (name != null && (user.FullName == null || !name.Equals(user.FullName))) user.FullName = name;
             return user;
         }
 
-        protected async Task<User.EkspertgruppeRolle> GetRoleInGroup(string id)
+        protected async Task<User.UserRoleInExpertGroup> GetRoleInGroup(string id)
         {
             var user = await GetUser();
-            var roleInGroup = user.EkspertgruppeRoller.Select(x=>new User.EkspertgruppeRolle()
+            var roleInGroup = user.UserRoleInExpertGroups.Select(x=>new User.UserRoleInExpertGroup()
                               {
-                                  EkspertgruppeId = x.EkspertgruppeId, 
-                                  Leder = x.Leder, 
-                                  Leser = x.Leser, 
-                                  Skriver = x.Skriver,
-                                  User = new User() { Brukernavn = user.Brukernavn, Id = user.Id, ErAdministrator = user.ErAdministrator}
-            }).FirstOrDefault(x => x.EkspertgruppeId == id);
+                                  ExpertGroupName = x.ExpertGroupName, 
+                                  Admin = x.Admin, 
+                                  //Leser = x.Leser, 
+                                  WriteAccess = x.WriteAccess,
+                                  User = new User() { UserName = user.UserName, Id = user.Id, IsAdmin = user.IsAdmin}
+            }).FirstOrDefault(x => x.ExpertGroupName == id);
             if (roleInGroup == null)
             {
-                roleInGroup = new User.EkspertgruppeRolle()
-                                  { EkspertgruppeId = id, Leder = false, Leser = false, Skriver = false, User = new User(){Brukernavn = user.Brukernavn, Id = user.Id, ErAdministrator = user.ErAdministrator } };
+                roleInGroup = new User.UserRoleInExpertGroup()
+                                  { ExpertGroupName = id, Admin = false, WriteAccess = false, User = new User(){UserName = user.UserName, Id = user.Id, IsAdmin = user.IsAdmin } };
             }
 
             // gi admin anledning til å låse opp vurderinger o.l.
-            if (user.ErAdministrator)
+            if (user.IsAdmin)
             {
-                roleInGroup.Leder = true;
+                roleInGroup.Admin = true;
             } 
             return roleInGroup;
         }

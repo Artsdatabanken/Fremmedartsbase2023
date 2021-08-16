@@ -9,13 +9,13 @@ export default class selectAssessmentRow extends Component {
     render() {
         const {assessment, rolle, labels, userId} = this.props
         const isLocked = !!assessment.lockedForEditByUser
-        const isSuperUser = rolle.leder
+        const isSuperUser = rolle.admin
         const isLockedByMe = assessment.lockedForEditByUser === userId
         
 // console.log("###" + assessment.lockedForEditByUser + "#" +  rolle.userName)
 
         const canUnlock = isLocked && (isLockedByMe || isSuperUser)
-        const canEdit = rolle.skriver && !isLocked
+        const canEdit = rolle.writeAccess && !isLocked
 
         // console.log("CANEDIT"+canEdit+rolle.skriver+isLocked)
 

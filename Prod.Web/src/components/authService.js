@@ -88,14 +88,14 @@ constructor() {
     }
     get hasAccess() {
         //        return true
-        return this.isLoggedIn && (this.isInRole("fab_administrator") || this.access != null && this.access.harTilgang); // || (this.access != null && this.access.HasAccess ));
+        return this.isLoggedIn && (this.isInRole("fab_administrator") || this.access != null && this.access.hasAccess); // || (this.access != null && this.access.HasAccess ));
     }
     get isAdmin() {
         //        return true
-        return this.isLoggedIn && (this.isInRole("fab_administrator") || (this.access != null && this.access.erAdministrator)); // || (this.access != null && this.access.HasAccess ));
+        return this.isLoggedIn && (this.isInRole("fab_administrator") || (this.access != null && this.access.isAdmin)); // || (this.access != null && this.access.HasAccess ));
     }
     get hasApplication() {
-        return this.isLoggedIn && this.access != null && this.access.harSoktOmTilgang; // || (this.access != null && this.access.HasAccess ));
+        return this.isLoggedIn && this.access != null && this.access.hasAppliedForAccess; // || (this.access != null && this.access.HasAccess ));
     }
     get getAuthToken() {
         return (this.user != null && this.user.access_token && !this.user.expired) ? this.user.access_token : "";

@@ -10,7 +10,7 @@ namespace Prod.Domain
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public User.EkspertgruppeRolle Rolle { get; set; }
+        public User.UserRoleInExpertGroup Rolle { get; set; }
        // public string EkspertgruppeLeder { get; set; }
         //public IEnumerable<TaxonSearchResult> Taxons { get; set; }
     }
@@ -53,39 +53,39 @@ namespace Prod.Domain
             //Region = default(Rødliste2015.Regioner);
         }
     }
-    public class GUIDEkspertgruppe
-    {
-        public string BrukerID { get; set; }
-        public int EkspertgruppeID { get; set; }
-        public string Brukernavn { get; set; }
-        private Ekspertgrupper m_EkspertgruppeID;
-        public bool Skrivetilgang { get; set; }
-        public bool ErLeder { get; set; }
+    //public class GUIDEkspertgruppe
+    //{
+    //    public string BrukerID { get; set; }
+    //    public int EkspertgruppeID { get; set; }
+    //    public string Brukernavn { get; set; }
+    //    private Ekspertgrupper m_EkspertgruppeID;
+    //    public bool Skrivetilgang { get; set; }
+    //    public bool ErLeder { get; set; }
 
-        public GUIDEkspertgruppe()
-        {
-            Brukernavn = "";
-        }
+    //    public GUIDEkspertgruppe()
+    //    {
+    //        Brukernavn = "";
+    //    }
 
-        public Ekspertgrupper Ekspertgruppe
-        {
-            get { return m_EkspertgruppeID; }
-            set
-            {
-                m_EkspertgruppeID = value;
-                if (value == null) return;
-                EkspertgruppeID = value.Id;
-            }
-        }
+    //    public Ekspertgrupper Ekspertgruppe
+    //    {
+    //        get { return m_EkspertgruppeID; }
+    //        set
+    //        {
+    //            m_EkspertgruppeID = value;
+    //            if (value == null) return;
+    //            EkspertgruppeID = value.Id;
+    //        }
+    //    }
 
-    }
-    public class EkspertgruppeTilgang
-    {
-        public Ekspertgrupper Ekspertgruppe { get; set; }
-        public int EkspertgruppeID { get; set; }
-        public string Kategori { get; set; }
-        public int LatinsknavnId { get; set; }
-        public string Taksanavn { get; set; }
-    }
+    //}
+    //public class EkspertgruppeTilgang
+    //{
+    //    public Ekspertgrupper Ekspertgruppe { get; set; }
+    //    public int EkspertgruppeID { get; set; }
+    //    public string Kategori { get; set; }
+    //    public int LatinsknavnId { get; set; }
+    //    public string Taksanavn { get; set; }
+    //}
 
 }

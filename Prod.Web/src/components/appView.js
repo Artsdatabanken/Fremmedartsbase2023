@@ -90,7 +90,7 @@ export default class AppView extends React.Component {
         }
         function sjekkForEndringerOgGiAdvarsel(){
                 var isdirty = appState.isDirty
-                var skriver = !!appState.roleincurrentgroup && appState.roleincurrentgroup.skriver
+                var skriver = !!appState.roleincurrentgroup && appState.roleincurrentgroup.writeAccess
                 var ok = true;
                 if (isdirty && skriver) {
                     ok = window.confirm("Det er endringer på vurderingen - ønsker du virkelig å gå bort fra den uten å lagre?")

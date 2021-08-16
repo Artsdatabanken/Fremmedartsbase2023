@@ -23,7 +23,7 @@ export default class Assessment40Spredningsveier extends React.Component {
 
         const {appState, appState:{assessment}, appState:{spredningsveierTabs}} = this.props
         const rolle = appState.roleincurrentgroup
-        const isSuperUser = rolle.leder
+        const isSuperUser = rolle.admin
         const isFinished = assessment.evaluationStatus && assessment.evaluationStatus === "finished"
         const canEdit = !isFinished && appState.roleincurrentgroup.skriver && assessment.lockedForEditByUser == null    
 

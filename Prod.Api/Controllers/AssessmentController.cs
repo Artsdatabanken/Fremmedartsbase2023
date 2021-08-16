@@ -86,7 +86,7 @@ namespace Prod.Api.Controllers
 
             try
             {
-                if (role.Skriver)
+                if (role.WriteAccess)
                 {
                     doc.LockedForEditAt = DateTime.Now;
                     doc.LockedForEditByUserId = role.User.Id;
@@ -113,13 +113,13 @@ namespace Prod.Api.Controllers
 
             var doc = JsonConvert.DeserializeObject<FA4>(data.Doc);
             var role = await base.GetRoleInGroup(doc.ExpertGroup);
-            var force = role.Leder || role.User.ErAdministrator;
+            var force = role.Admin || role.User.IsAdmin;
             try
             {
-                if (role.Skriver || force)
+                if (role.WriteAccess || force)
                 {
                     doc.LockedForEditAt = DateTime.Now;
-                    doc.LockedForEditBy = null;
+                    doc.LockedForEditByUserId = null;
                     await StoreAssessment(id, doc, role.User, true, force);
                     await _dbContext.SaveChangesAsync();
                 }
@@ -143,10 +143,10 @@ namespace Prod.Api.Controllers
 
             var doc = JsonConvert.DeserializeObject<FA4>(data.Doc);
             var role = await base.GetRoleInGroup(doc.ExpertGroup);
-            var force = role.Leder || role.User.ErAdministrator;
+            var force = role.Admin || role.User.IsAdmin;
             try
             {
-                if (force || role.Skriver)
+                if (force || role.WriteAccess)
                 {
                     doc.EvaluationStatus = "finished";
                     doc.LockedForEditAt = DateTime.Now;
@@ -224,7 +224,7 @@ namespace Prod.Api.Controllers
             //}
 
             var role = await base.GetRoleInGroup(doc.ExpertGroup);
-            var force = role.User.ErAdministrator;
+            var force = role.User.IsAdmin;
             if (force)
             {
                 doc.IsDeleted = true;
@@ -246,10 +246,10 @@ namespace Prod.Api.Controllers
 
             var doc = JsonConvert.DeserializeObject<FA4>(data.Doc);
             var role = await base.GetRoleInGroup(doc.ExpertGroup);
-            var force = role.Leder || role.User.ErAdministrator;
+            var force = role.Admin || role.User.IsAdmin;
             try
             {
-                if (role.Skriver || force)
+                if (role.WriteAccess || force)
                 {
                     doc.EvaluationStatus = "inprogress";
                     doc.LockedForEditAt = DateTime.Now;
@@ -287,7 +287,7 @@ namespace Prod.Api.Controllers
             var role = await base.GetRoleInGroup(value.ExpertGroup);
             try
             {
-                if (role.Skriver)
+                if (role.WriteAccess)
                 {
                     await StoreAssessment(int.Parse(id), value, role.User, false);
                 }
@@ -329,7 +329,7 @@ namespace Prod.Api.Controllers
             var scientificNameId = int.Parse(value.ScientificNameId);
             try
             {
-                if (role.Skriver)
+                if (role.WriteAccess)
                 {
                     var userId = role.User.Id;
                     var rlRodliste2019 = CreateNewAssessment(value.Ekspertgruppe, userId, scientificNameId);
@@ -361,7 +361,7 @@ namespace Prod.Api.Controllers
             var role = await base.GetRoleInGroup("Testarter");
             try
             {
-                if (role.Skriver)
+                if (role.WriteAccess)
                 {
                     var scientificnameid = assessment.EvaluatedScientificNameId; // .LatinsknavnId; // doc.VurdertVitenskapeligNavnId;
                     var existingAssessment = await _dbContext.Assessments.Where(x => x.Expertgroup == "Testarter").Where(x => x.ScientificNameId == scientificnameid).Select(x => x.Doc).FirstOrDefaultAsync();
@@ -481,8 +481,13 @@ namespace Prod.Api.Controllers
             {
                 doc.EvaluationStatus = "inprogress";
                 doc.LastUpdatedAt = now;
-                doc.LastUpdatedBy = user.Brukernavn;
+                doc.LastUpdatedBy = user.UserName;
+                assessment.LastUpdatedAt = doc.LastUpdatedAt;
+                assessment.LastUpdatedByUserId = user.Id;
             }
+
+            assessment.LockedForEditAt = doc.LockedForEditAt;
+            assessment.LockedForEditByUserId = doc.LockedForEditByUserId;
 
             var assessmentString = Newtonsoft.Json.JsonConvert.SerializeObject(doc);
             assessment.Doc = assessmentString;
@@ -709,7 +714,7 @@ namespace Prod.Api.Controllers
         //    var role = await base.GetRoleInGroup(doc.ExpertGroup);
         //    try
         //    {
-        //        //if (role.Skriver && (doc.LockedForEditBy == role.User.Brukernavn) && (doc.Ekspertgruppe == value.ExpertGroup))
+        //        //if (role.WriteAccess && (doc.LockedForEditBy == role.User.Brukernavn) && (doc.Ekspertgruppe == value.ExpertGroup))
         //        if (doc.Ekspertgruppe == value.ExpertGroup)
         //        {
         //            int scientificNameId = int.Parse(value.ScientificNameId);

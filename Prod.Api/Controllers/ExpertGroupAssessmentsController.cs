@@ -35,7 +35,7 @@ namespace Prod.Api.Controllers
         }
         public class ExpertgroupAssessments
         {
-            public User.EkspertgruppeRolle Rolle { get; set; }
+            public User.UserRoleInExpertGroup Rolle { get; set; }
             public List<AssessmentListItem> Assessments { get; set; }
         }
 
@@ -195,10 +195,10 @@ namespace Prod.Api.Controllers
                         Id = x.Id.ToString(),
                         Expertgroup = x.Expertgroup,
                         EvaluationStatus = x.EvaluationStatus,
-                        LastUpdatedBy = x.LastUpdatedByUser.Navn,
+                        LastUpdatedBy = x.LastUpdatedByUser.FullName,
                         LastUpdatedByUserId = x.LastUpdatedByUser.Id,
                         LastUpdatedAt = x.LastUpdatedAt,
-                        LockedForEditByUser = x.LockedForEditByUser != null ? x.LockedForEditByUser.Navn : string.Empty,
+                        LockedForEditByUser = x.LockedForEditByUser != null ? x.LockedForEditByUser.FullName : string.Empty,
                         LockedForEditByUserId = x.LockedForEditByUser != null ? x.LockedForEditByUser.Id : Guid.Empty,
                         LockedForEditAt = x.LockedForEditAt,
                         ScientificName = x.ScientificName,

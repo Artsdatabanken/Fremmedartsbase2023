@@ -1164,7 +1164,7 @@ namespace Prod.Domain
         }
 
         public string LockedForEditByUser { get; set; }
-        public Guid LockedForEditByUserId { get; set; }
+        public Guid? LockedForEditByUserId { get; set; }
         public string LockedForEditTimeStamp { get; set; }
     }
 
