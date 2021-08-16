@@ -230,7 +230,7 @@ export default class Assessment20ArtensStatus extends React.Component {
                                     }                                   
                                 })}
                             mode="radio" codes={codes.EstablishmentCategoryDoorKnocker}/>
-                            : assessment.productionSpecies == true ?
+                            : assessment.productionSpecies == "yes" ?
                             <Xcomp.StringEnum observableValue={[assessment, "speciesStatus"]} mode="radio" 
                             onChange = {action(e => {
                                 if(assessment.speciesStatus != "A" ) { 
@@ -316,11 +316,11 @@ export default class Assessment20ArtensStatus extends React.Component {
                                         {assessment.speciesStatus != "A" && assessment.speciesStatus != null &&
                                             <li> {labels.SpeciesStatus.reproductionOutdoorsIfRelevant}</li>
                                         }
-                                        {assessment.productionSpecies == true && assessment.speciesStatus != "A" && assessment.speciesStatus != "B1"
+                                        {assessment.productionSpecies == "yes" && assessment.speciesStatus != "A" && assessment.speciesStatus != "B1"
                                          && assessment.speciesStatus != null &&
                                             <li>{labels.SpeciesStatus.speciesInProductionAreaOutdoors}</li>
                                         }
-                                        {assessment.productionSpecies == true && (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3") &&
+                                        {assessment.productionSpecies == "yes" && (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3") &&
                                             <li>{labels.SpeciesStatus.speciesReproductionInProductionAreaOutdoors}</li>
                                         }
                                         {assessment.speciesStatus != null && assessment.speciesStatus.indexOf("C") > -1 &&
@@ -357,7 +357,7 @@ export default class Assessment20ArtensStatus extends React.Component {
                                         <Xcomp.Bool observableValue={[assessment.riskAssessment, "yearFirstReproductionIndoorsInsecure"]} /> 
                                         </li> }
     
-                                        {assessment.productionSpecies == true && assessment.speciesStatus != "A" && assessment.speciesStatus != "B1"
+                                        {assessment.productionSpecies == "yes" && assessment.speciesStatus != "A" && assessment.speciesStatus != "B1"
                                          && assessment.speciesStatus != null &&
                                         <li>
                                         <Xcomp.Number                            
@@ -367,7 +367,7 @@ export default class Assessment20ArtensStatus extends React.Component {
                                         />    
                                         <Xcomp.Bool observableValue={[assessment.riskAssessment, "yearFirstProductionOutdoorsInsecure"]} /> 
                                         </li>}
-                                        {assessment.productionSpecies == true && (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3") &&
+                                        {assessment.productionSpecies == "yes" && (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3") &&
                                         <li>
                                         <Xcomp.Number                            
                                             observableValue={[assessment.riskAssessment, "yearFirstReproductionOutdoors"]}
