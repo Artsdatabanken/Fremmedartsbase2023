@@ -719,6 +719,18 @@ namespace Prod.Domain
         public long LifetimeUpperQ { get; set; } // øvre kvartil for artens levetid i Norge i år 
         #endregion Median life time
 
+        // erstattet disse i 61 - 16.8.21
+        //PopulationSize ACritSpeciesCount
+        //GrowthRate ACritPopGrowth
+        //EnvVariance ACritEnvirVariance
+        //DemVariance ACritDemoVariance
+        //CarryingCapacity ACritSustainability
+        //ExtinctionThreshold ACritExtThreshold
+        //MedianLifetime ACritMedian
+
+
+
+
 
 
         #region (B) Ekspansjonshastighet
