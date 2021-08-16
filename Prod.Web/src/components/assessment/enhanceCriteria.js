@@ -1,4 +1,4 @@
-﻿import {action, autorun, computed, extendObservable, observable, observe, isObservableArray, runInAction, transaction, whyRun} from 'mobx';
+﻿import {action, autorun, computed, extendObservable, observable, observe, isObservableArray, runInAction, remove, set, whyRun} from 'mobx';
 import RiskLevel from './riskLevel';
 import {extractFloat, getCriterion} from '../../utils'
 
@@ -100,6 +100,8 @@ function d1(num) {
 
 function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
     const ec = observable({
+        warnings: [],
+
         // A1
         get lifespanA1aSimplifiedEstimateValue () {
             //amethod = "forekomstareal" 
@@ -543,6 +545,26 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             return result
         }
     })
+
+    // autorun(() => {
+    //     if (r.AOOtotalLow > r.AOOtotalBest) 
+    //         return {error: "Det nedre anslaget på forekomstarealet kan ikke være større enn det beste anslaget."} 
+    //     if (r.AOOtotalHigh < r.AOOtotalBest) 
+    //         return {error: "Det øvre anslaget på forekomstarealet kan ikke være mindre enn det beste anslaget."}
+    //     if (r.AOO50yrLow > r.AOO50yrBest) 
+    //         return {error: "Det nedre anslaget på forekomstarealet kan ikke være større enn det beste anslaget."}
+    //     if (r.AOO50yrHigh < r.AOO50yrBest) 
+    //         return {error: "Det øvre anslaget på forekomstarealet kan ikke være mindre enn det beste anslaget."}
+    //     if (r.AOOtotalLow == r.AOOknown) 
+    //         warnings.push("Er det realistisk at det ikke eksisterer noen uoppdagede forekomster av arten?") 
+    //     if (r.AOOtotalLow < r.AOOknown) 
+    //         warnings.push("Er det korrekt at artens totale nåværende forekomstareal kan være mindre enn det kjente?") 
+    //     if (AOO50yrBest < AOOtotalBest) 
+    //         warnings.push("Er det korrekt at det er forventet en nedgang i artens forekomstareal i løpet av de neste 50&nbsp;år?") 
+    
+
+    // })
+
 
     autorun(() => {
         const criterionA = getCriterion(riskAssessment, 0, "A")
@@ -1123,8 +1145,34 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                     crit.uncertaintyDisabled.replace(ud)
             })
             firstrun = false
-            // whyRun()
+            // whyRun()  // leave this line here! Se comments above to learn when to uncomment.
        })
+    }
+}
+
+function enhanceCriteriaAddErrorReportingForAutoMode(riskAssessment) {
+    for(const crit of riskAssessment.criteria) { 
+        extendObservable(crit, {
+            errors: {},
+            addError({id, errorText}) {
+                if(typeof(id) !== 'string' || typeof(id) !== 'string' ) {
+                    console.log("crit addError wrong data")
+                }
+                if (!(id in errors)) {
+                    set(error, id)
+                    //errors[id] = errorText
+                }
+            },
+            removeError(id) {
+                if(typeof(id) !== 'string') {
+                    console.log("crit removeError wrong data")
+                }
+                if (id in errors) {
+                    // errors[id] = undefined
+                    remove(errors, id)
+                }
+            }
+        })
     }
 }
 
@@ -1136,4 +1184,5 @@ export default function enhanceCriteria(riskAssessment, vurdering, codes, labels
     enhanceRiskAssessmentEcoEffect(riskAssessment)
     enhanceRiskAssessmentInvasjonspotensiale(riskAssessment)
     enhanceCriteriaAddUncertaintyRules(riskAssessment)
+    enhanceCriteriaAddErrorReportingForAutoMode(riskAssessment)
 }
