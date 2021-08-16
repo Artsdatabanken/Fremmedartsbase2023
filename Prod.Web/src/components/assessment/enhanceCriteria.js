@@ -1154,6 +1154,9 @@ function enhanceCriteriaAddErrorReportingForAutoMode(riskAssessment) {
     for(const crit of riskAssessment.criteria) { 
         extendObservable(crit, {
             errors: {},
+            get hasErrors() {
+                return Object.keys(errors).length > 0 
+            },
             addError({id, errorText}) {
                 if(typeof(id) !== 'string' || typeof(id) !== 'string' ) {
                     console.log("crit addError wrong data")
