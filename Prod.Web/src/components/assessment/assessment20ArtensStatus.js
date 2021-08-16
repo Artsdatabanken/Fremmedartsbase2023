@@ -251,7 +251,7 @@ export default class Assessment20ArtensStatus extends React.Component {
                         <p>{labels.SpeciesStatus.codesExplanation}</p>
                         <div>
                             <b>{labels.SpeciesStatus.establishedBefore1800} </b>
-                            <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "estBefore1800"]} mode="radio" codes={codes.yesNo}/>
+                            <Xcomp.StringEnum observableValue={[assessment, "alienSpecieUncertainIfEstablishedBefore1800"]} mode="radio" codes={codes.yesNo}/>
                         </div>
                         
                         <p>{labels.SpeciesStatus.probabilityUncertainity}</p>
@@ -282,7 +282,7 @@ export default class Assessment20ArtensStatus extends React.Component {
 
                     assessment.riskAssessment.isAlienSpecies == 'true' && 
                         (assessment.connectedToAnother == false || assessment.connectedToAnother == null ) && 
-                        (assessment.riskAssessment.estBefore1800 == false || assessment.riskAssessment.estBefore1800 == null ) &&
+                        (assessment.alienSpecieUncertainIfEstablishedBefore1800 == "no" || assessment.alienSpecieUncertainIfEstablishedBefore1800 == false ) &&
                         (assessment.alienSpeciesCategory == "DoorKnocker" || assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3") &&
                         assessment.speciesStatus != null && 
                         (assessment.connectedToAnother == false || assessment.connectedToAnother == null) ? 
