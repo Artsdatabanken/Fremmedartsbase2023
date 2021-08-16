@@ -216,33 +216,12 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                         
                    </div>
                    <div className="numberFields">
-                   <Xcomp.Number                            
-                                observableValue={[riskAssessment, "ACritSpeciesCount"]}
-                                integer
-                            />  
-                    <Xcomp.Number                            
-                                observableValue={[riskAssessment, "ACritPopGrowth"]}
-                                
-                            />  
-
-                    <Xcomp.Number                            
-                                observableValue={[riskAssessment, "ACritEnvirVariance"]}
-                                
-                            />  
-
-                    <Xcomp.Number                            
-                                observableValue={[riskAssessment, "ACritDemoVariance"]}
-                                
-                            />  
-                    <Xcomp.Number                            
-                                observableValue={[riskAssessment, "ACritSustainability"]}
-                                
-                            />  
-                            
-                   <Xcomp.Number                            
-                                observableValue={[riskAssessment, "ACritExtThreshold"]}
-                                
-                            />  
+                   <Xcomp.Number observableValue={[riskAssessment, "PopulationSize"]} integer />  
+                   <Xcomp.Number observableValue={[riskAssessment, "GrowthRate"]} />  
+                   <Xcomp.Number observableValue={[riskAssessment, "EnvVariance"]} />  
+                   <Xcomp.Number observableValue={[riskAssessment, "DemVariance"]} />  
+                   <Xcomp.Number observableValue={[riskAssessment, "CarryingCapacity"]} />  
+                   <Xcomp.Number observableValue={[riskAssessment, "ExtinctionThreshold"]} />  
                     
                             
                    </div>
@@ -254,10 +233,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                         <p>{labels.Acrit.median}</p> 
                        </div>
                        <div className="numberFields">
-                       <Xcomp.Number                            
-                                observableValue={[riskAssessment, "ACritMedian"]}
-                                
-                            />  
+                       <Xcomp.Number observableValue={[riskAssessment, "MedianLifetime"]}/>  
                        </div>
                    </div>
                    
