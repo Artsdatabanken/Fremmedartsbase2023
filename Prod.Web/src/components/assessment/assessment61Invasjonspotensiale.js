@@ -510,7 +510,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                         observableValue={[riskAssessment, "BCritToYear"]}
                                                         integer
                                                         yearRange={true}
-                                                    /> <span style={{margin: '10px 10px 0'}}>(t1)</span>
+                                                    /> <span style={{margin: '10px 10px 0'}}>(t<sub>1</sub>)</span>
                                                     </td>
                                                 <td><Xcomp.Number                            
                                                         observableValue={[riskAssessment, "BCritArea"]}                                                        
@@ -526,7 +526,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                 </td>
                                                 <td style={{display: 'flex'}}><Xcomp.Number                            
                                                         observableValue={[assessment.riskAssessment, "endYear"]} 
-                                                        yearRange={true}/> <span style={{margin: '10px 10px 0'}}>(t2)</span>
+                                                        yearRange={true}/> <span style={{margin: '10px 10px 0'}}>(t<sub>2</sub>)</span>
                                                 </td>
                                                 <td><Xcomp.Number                            
                                                          observableValue={[assessment.riskAssessment, "knownDistribution"]}/> 
