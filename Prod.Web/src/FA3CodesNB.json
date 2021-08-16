@@ -5025,21 +5025,21 @@
                     "AcritSelect": [
                         {
                             "Id": null,
-                            "Value": "a",
+                            "Value": "LifespanA1aSimplifiedEstimate",
                             "Text": "Forenklet anslag",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
-                            "Value": "b",
+                            "Value": "SpreadRscriptEstimatedSpeciesLongevity",
                             "Text": "Numerisk estimering",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
-                            "Value": "c",
+                            "Value": "ViableAnalysis",
                             "Text": "Levedyktighetsanalyse",
                             "Info": null,
                             "Children": null
