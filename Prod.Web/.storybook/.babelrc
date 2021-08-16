@@ -1,0 +1,17 @@
+// {
+//     "plugins": [
+//       ["@babel/plugin-proposal-decorators", { "legacy": true }, "p1"],
+//       ["@babel/plugin-proposal-class-properties", { "loose" : true }, "p2"]
+//     ],
+//     "presets": [
+//       ["babel-preset-react-app", {}, "p4"]
+//     ]
+//   }
+  {
+    "presets": [
+      "@babel/preset-env", "@babel/react"
+    ],
+    "plugins": [
+        ["@babel/plugin-proposal-decorators", { "legacy": true }]
+    ]
+  }
