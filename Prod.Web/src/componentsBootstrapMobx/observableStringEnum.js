@@ -69,6 +69,11 @@ const ObservableStringEnum = (props) => <Observer>{() => {
     if (!codes) {
         console.log("codes missing for " + prop)
     }
+    if (!Array.isArray(codes)) {
+        console.log("codes is not array (" + prop + "): " + JSON.stringify(codes))
+    }
+
+
     return (
         mode === 'radio' ?
             <div className={className}>
