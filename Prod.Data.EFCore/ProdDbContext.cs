@@ -36,43 +36,42 @@ namespace Prod.Data.EFCore
                 .Entity<User>(e =>
                 {
                     e.HasKey(x => x.Id);
-                    e.HasMany(x => x.EkspertgruppeRoller).WithOne(x => x.User).OnDelete(DeleteBehavior.Cascade);
+                    e.HasMany(x => x.UserRoleInExpertGroups).WithOne(x => x.User).OnDelete(DeleteBehavior.Cascade);
 
-                    e.Property(x => x.Id).HasMaxLength(brukerIdSize);
-                    e.Property(x => x.Brukernavn).HasMaxLength(brukerIdSize).IsRequired();
-                    e.Property(x => x.Navn).HasMaxLength(ekspertgruppeIdSize).IsRequired();
+                    e.Property(x => x.Id);//.HasMaxLength(brukerIdSize);
+                    e.Property(x => x.UserName).HasMaxLength(brukerIdSize).IsRequired();
+                    e.Property(x => x.FullName).HasMaxLength(ekspertgruppeIdSize).IsRequired();
                     e.Property(x => x.Email).HasMaxLength(ekspertgruppeIdSize).IsRequired();
-                    e.Property(x => x.Soknad).HasMaxLength(2000);
-                    e.Property(x => x.DatoOpprettet).HasDefaultValue(new DateTime(2020, 1, 1));
-                    e.Property(x => x.DatoSistAktiv).HasDefaultValue(new DateTime(2020, 1, 1));
+                    e.Property(x => x.Application).HasMaxLength(2000);
+                    e.Property(x => x.DateCreated).HasDefaultValue(new DateTime(2020, 1, 1));
+                    e.Property(x => x.DateLastActive).HasDefaultValue(new DateTime(2020, 1, 1));
                 })
                 ;
             modelBuilder.Entity<User>().HasData(new User
             {
-                Brukernavn = "import",
-                DatoForTilgang = DateTime.Today,
-                DatoOpprettet = DateTime.Today,
-                DatoSistAktiv = DateTime.Today,
+                UserName = "system",
+                DateGivenAccess = DateTime.Today,
+                DateCreated = DateTime.Today,
+                DateLastActive = DateTime.Today,
                 Email = "noreply@nodomian.no",
-                ErAdministrator = false,
-                HarSoktOmTilgang = false,
-                HarTilgang = false,
-                Navn = "Import",
-                TilgangAvvist = true,
+                IsAdmin = false,
+                HasAppliedForAccess = false,
+                HasAccess = false,
+                FullName = "System konto",
+                AccessDenied = true,
                 Id = new Guid("00000000-0000-0000-0000-000000000001")
             }); 
 
 
-            // EkspertgruppeRolle
-            modelBuilder.Entity<User.EkspertgruppeRolle>(e =>
+            // UserRoleInExpertGroup
+            modelBuilder.Entity<User.UserRoleInExpertGroup>(e =>
             {
                 e.HasKey(x => new
                 {
-                    x.BrukerId,
-                    x.EkspertgruppeId
+                    x.UserId, GroupName = x.ExpertGroupName
                 });
-                e.Property(x => x.EkspertgruppeId).HasMaxLength(ekspertgruppeIdSize).IsRequired();
-                e.Property(x => x.OpprettetAvBrukerId).HasMaxLength(brukerIdSize).IsRequired();
+                e.Property(x => x.ExpertGroupName).HasMaxLength(ekspertgruppeIdSize).IsRequired();
+                e.Property(x => x.RoleGivenByUserId).HasMaxLength(brukerIdSize).IsRequired();
             });
 
             // Assessment

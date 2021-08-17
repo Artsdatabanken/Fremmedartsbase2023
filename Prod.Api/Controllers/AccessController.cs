@@ -44,10 +44,10 @@ namespace Prod.Api.Controllers
         public async Task<SelectList[]> GetApprovedUsers()
         {
             var user = await base.GetUser();
-            if (user == null || !user.ErAdministrator) throw new HttpRequestException("Not admin");
+            if (user == null || !user.IsAdmin) throw new HttpRequestException("Not admin");
 
-            var apps = await _dbContext.Users.Where(x => x.HarTilgang || x.ErAdministrator)
-                .Select(x => new SelectList {Id = x.Id.ToString(), Value = x.Navn + " <" + x.Email + ">"}).ToArrayAsync();
+            var apps = await _dbContext.Users.Where(x => x.HasAccess || x.IsAdmin)
+                .Select(x => new SelectList {Id = x.Id.ToString(), Value = x.FullName + " <" + x.Email + ">"}).ToArrayAsync();
             return apps.OrderBy(x=>x.Value).ToArray();
 
         }
@@ -55,8 +55,8 @@ namespace Prod.Api.Controllers
         public async Task<User> Post([FromBody]string value)
         {
             var user = await base.GetUser();
-            user.HarSoktOmTilgang = true;
-            user.Soknad = value;
+            user.HasAppliedForAccess = true;
+            user.Application = value;
             await StoreUserInfo(user);
             return user;
         }
@@ -65,8 +65,8 @@ namespace Prod.Api.Controllers
         public async Task<User[]> GetApplications()
         {
             var user = await base.GetUser();
-            if (user == null || !user.ErAdministrator) throw new HttpRequestException("Not admin");
-            var apps = await _dbContext.Users.Where(x => x.HarSoktOmTilgang && x.HarTilgang == false).ToArrayAsync();
+            if (user == null || !user.IsAdmin) throw new HttpRequestException("Not admin");
+            var apps = await _dbContext.Users.Where(x => x.HasAppliedForAccess && x.HasAccess == false).ToArrayAsync();
             return apps;
 
         }
@@ -75,13 +75,13 @@ namespace Prod.Api.Controllers
         public async Task<bool> ApproveApplication(string id)
         {
             var user = await base.GetUser();
-            if (user == null || !user.ErAdministrator) throw new HttpRequestException("Not admin");
-            var dbUser = await _dbContext.Users.Where(x => x.Id == Guid.Parse(id) && x.HarSoktOmTilgang && x.HarTilgang == false)
+            if (user == null || !user.IsAdmin) throw new HttpRequestException("Not admin");
+            var dbUser = await _dbContext.Users.Where(x => x.Id == Guid.Parse(id) && x.HasAppliedForAccess && x.HasAccess == false)
                 .SingleOrDefaultAsync();
             if (dbUser == null) return false;
             
-            dbUser.HarTilgang = true;
-            dbUser.DatoForTilgang = DateTime.Now;
+            dbUser.HasAccess = true;
+            dbUser.DateGivenAccess = DateTime.Now;
             await _dbContext.SaveChangesAsync();
 
             return true;
@@ -91,13 +91,13 @@ namespace Prod.Api.Controllers
         public async Task<bool> NotApproveApplication(string id)
         {
             var user = await base.GetUser();
-            if (user == null || !user.ErAdministrator) throw new HttpRequestException("Not admin");
-            var dbUser = await _dbContext.Users.Where(x => x.Id == Guid.Parse(id) && x.HarSoktOmTilgang && x.HarTilgang == false)
+            if (user == null || !user.IsAdmin) throw new HttpRequestException("Not admin");
+            var dbUser = await _dbContext.Users.Where(x => x.Id == Guid.Parse(id) && x.HasAppliedForAccess && x.HasAccess == false)
                 .SingleOrDefaultAsync();
             if (dbUser == null) return false;
 
-            dbUser.TilgangAvvist = true;
-            dbUser.DatoForTilgang = DateTime.Now;
+            dbUser.AccessDenied = true;
+            dbUser.DateGivenAccess = DateTime.Now;
             await _dbContext.SaveChangesAsync();
 
             return true;
@@ -113,15 +113,15 @@ namespace Prod.Api.Controllers
             }
             else
             {
-                if (dbUser.Brukernavn == null || !dbUser.Brukernavn.Equals(user.Brukernavn))
-                    dbUser.Brukernavn = user.Brukernavn;
-                if (!dbUser.HarSoktOmTilgang.Equals(user.HarSoktOmTilgang))
-                    dbUser.HarSoktOmTilgang = user.HarSoktOmTilgang;
-                if (!dbUser.HarTilgang.Equals(user.HarTilgang)) dbUser.HarTilgang = user.HarTilgang;
-                if (!dbUser.ErAdministrator.Equals(user.ErAdministrator)) dbUser.ErAdministrator = user.ErAdministrator;
+                if (dbUser.UserName == null || !dbUser.UserName.Equals(user.UserName))
+                    dbUser.UserName = user.UserName;
+                if (!dbUser.HasAppliedForAccess.Equals(user.HasAppliedForAccess))
+                    dbUser.HasAppliedForAccess = user.HasAppliedForAccess;
+                if (!dbUser.HasAccess.Equals(user.HasAccess)) dbUser.HasAccess = user.HasAccess;
+                if (!dbUser.IsAdmin.Equals(user.IsAdmin)) dbUser.IsAdmin = user.IsAdmin;
                 if (dbUser.Email == null || !dbUser.Email.Equals(user.Email)) dbUser.Email = user.Email;
-                if (dbUser.Navn == null || !dbUser.Navn.Equals(user.Navn)) dbUser.Navn = user.Navn;
-                if (dbUser.Soknad == null || !dbUser.Soknad.Equals(user.Soknad)) dbUser.Soknad = user.Soknad;
+                if (dbUser.FullName == null || !dbUser.FullName.Equals(user.FullName)) dbUser.FullName = user.FullName;
+                if (dbUser.Application == null || !dbUser.Application.Equals(user.Application)) dbUser.Application = user.Application;
             }
 
             await _dbContext.SaveChangesAsync();

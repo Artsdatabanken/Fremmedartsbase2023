@@ -41,19 +41,19 @@ namespace SwissKnife.Database
                 _database.Users.Add(new User()
                 {
                     Id = Guid.Parse(bruker.GUID),
-                    Brukernavn = bruker.Brukernavn,
-                    DatoForTilgang = dummyDate,
-                    DatoOpprettet = dummyDate,
-                    DatoSistAktiv = dummyDate,
+                    UserName = bruker.Brukernavn,
+                    DateGivenAccess = dummyDate,
+                    DateCreated = dummyDate,
+                    DateLastActive = dummyDate,
                     Email = "",
-                    HarTilgang = false,
-                    Navn = bruker.Brukernavn,
-                    TilgangAvvist = true
+                    HasAccess = false,
+                    FullName = bruker.Brukernavn,
+                    AccessDenied = true
                 });
             }
 
             _database.SaveChanges();
-            var users = _database.Users.ToDictionary(x => x.Brukernavn, x => x);
+            var users = _database.Users.ToDictionary(x => x.UserName, x => x);
 
             // mapping
             var mapper = CreateMappingFromOldToNew();

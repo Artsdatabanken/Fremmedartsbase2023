@@ -201,13 +201,13 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                     {appState.assessment.vurderingsStatus !== 'finnished' 
                     && appState.ekspertgruppe !== null 
                     && appState.ekspertgruppeRolle 
-                    && appState.ekspertgruppeRolle.Leder
+                    && appState.ekspertgruppeRolle.admin
                     ? <div>{critlabels.assessmentUnderWork}<p/><Xcomp.Button onClick={() => this.setAssessmentComplete(appState)}>{critlabels.setComplete}</Xcomp.Button></div>
                     : null}
                     {appState.assessment.vurderingsStatus === 'finnished' 
                     && appState.ekspertgruppe !== null 
                     && appState.ekspertgruppeRolle 
-                    && appState.ekspertgruppeRolle.Leder
+                    && appState.ekspertgruppeRolle.admin
                     ? <div>{critlabels.assessmentComplete}<p/><Xcomp.Button onClick={() => this.resetAssessmentComplete(appState)}>{critlabels.resetComplete}</Xcomp.Button></div>
                     : null}
                 </div>

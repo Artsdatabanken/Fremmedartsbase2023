@@ -28,11 +28,11 @@ export default class ExpertGroupAdmin extends React.Component {
             postData(
                 config.getUrl("ExpertGroups/members"),
             {
-                EkspertgruppeId : expertGroupModel.valgtekspertgruppe,
+                ExpertGroupName : expertGroupModel.valgtekspertgruppe,
                 Id: expertGroupModel.valgtekspert,
-                Leder: expertGroupModel.valgtekspertsrolleivalgtekspertgruppe.leder,
-                Skriver: expertGroupModel.valgtekspertsrolleivalgtekspertgruppe.skriver,
-                Leser: expertGroupModel.valgtekspertsrolleivalgtekspertgruppe.leser
+                Admin: expertGroupModel.valgtekspertsrolleivalgtekspertgruppe.leder,
+                WriteAccess: expertGroupModel.valgtekspertsrolleivalgtekspertgruppe.skriver//,
+                // Leser: expertGroupModel.valgtekspertsrolleivalgtekspertgruppe.leser
             }, data => {
                 expertGroupModel.hentEkspertgruppeMedlemmer()
             }
@@ -77,9 +77,9 @@ export default class ExpertGroupAdmin extends React.Component {
                     <tbody >
                         {expertGroupModel.eksperterforvalgtgruppe.map(ega =>
                 <tr key={ega.id}>
-                            <td><span>{ega.navn}</span></td>
-                            <td><span>{ega.leder ? 'X' : ''}</span></td>
-                            <td><span>{ega.skriver ? 'X' : ''}</span></td>
+                            <td><span>{ega.fullName}</span></td>
+                            <td><span>{ega.admin ? 'X' : ''}</span></td>
+                            <td><span>{ega.writeAccess ? 'X' : ''}</span></td>
                             <td><Xcomp.Button primary xs onClick={e => fjernRettighet(ega.id) }>Slett</Xcomp.Button></td>
                         </tr>)}
 
@@ -130,6 +130,7 @@ export default class ExpertGroupAdmin extends React.Component {
                             <th>Navn</th>
                             <th>Epost</th>
                             <th>Dato</th>
+                            <th>Søknad</th>
                             <th>Gi tilgang</th>
                         </tr>
                     </thead>
@@ -137,10 +138,11 @@ export default class ExpertGroupAdmin extends React.Component {
                     {expertGroupModel.tilgangsoknader.map(ega =>
                             <tr key={ega.id}>
                              <td><span>{ega.id}</span></td>
-                            <td><span>{ega.brukernavn}</span></td>
-                            <td><span>{ega.navn}</span></td>
+                            <td><span>{ega.userName}</span></td>
+                            <td><span>{ega.fullName}</span></td>
                             <td><span>{ega.email}</span></td>
-                            <td><span>dato</span></td>
+                            <td><span>{ega.dateCreated}</span></td>
+                            <td><span>{ega.application}</span></td>
                             <td><Xcomp.Button primary xs onClick={e => gitilgang(ega.id) }>Gi tilgang</Xcomp.Button></td>
                         </tr>)}
                         {/* id: "4fe6f765-83c0-448a-a8dc-307629972949"

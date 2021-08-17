@@ -56,7 +56,7 @@ class AssessmentRoot extends Component {
     render() {
         const {appState, appState:{assessment}, appState:{assessmentTabs}} = this.props
         const rolle = appState.roleincurrentgroup
-        const isSuperUser = rolle.leder
+        const isSuperUser = rolle.admin
         const isFinished = assessment.evaluationStatus && assessment.evaluationStatus === "finished"
         const canEdit = !isFinished && appState.roleincurrentgroup.skriver && assessment.lockedForEditByUser == null    
         
