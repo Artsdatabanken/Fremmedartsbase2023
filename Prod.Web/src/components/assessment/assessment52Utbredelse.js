@@ -46,7 +46,7 @@ export default class Assessment52Utbredelse extends React.Component {
                          :
                         <div>
                             <span>{labels.goTo}</span> <Xcomp.Button primary >{labels.speciesMap}</Xcomp.Button>
-                            <p>Basert på periode:</p>
+                            <p style={{marginBottom: '0'}}>Basert på periode:</p>
                             <div style={{display: 'flex'}}>
                                         <div style={{marginRight: '30px'}}>
                                         <p> f.o.m. år (t<sub>0</sub>)</p>
