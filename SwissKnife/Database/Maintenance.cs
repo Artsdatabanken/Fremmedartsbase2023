@@ -258,7 +258,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.Bscore, opt => opt.Ignore())
                     .ForMember(dest => dest.Blow, opt => opt.Ignore())
                     .ForMember(dest => dest.Bhigh, opt => opt.Ignore())
-                    .ForMember(dest => dest.AAO2, opt => opt.Ignore())
+                    .ForMember(dest => dest.AAO1, opt => opt.Ignore())
                     .ForMember(dest => dest.AAO2, opt => opt.Ignore())
 
 
