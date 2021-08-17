@@ -243,8 +243,26 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.AOO50yrHigh, opt => opt.Ignore())
                     .ForMember(dest => dest.AOOyear1, opt => opt.Ignore())
                     .ForMember(dest => dest.AOOyear2, opt => opt.Ignore())
-                    .ForMember(dest => dest.AAO1, opt => opt.Ignore())
+                    .ForMember(dest => dest.AOOdarkfigureBest, opt => opt.Ignore())
+                    .ForMember(dest => dest.AOOdarkfigureLow, opt => opt.Ignore())
+                    .ForMember(dest => dest.AOOdarkfigureHigh, opt => opt.Ignore())
+                    .ForMember(dest => dest.AOO10yrBest, opt => opt.Ignore())
+                    .ForMember(dest => dest.AOO10yrLow, opt => opt.Ignore())
+                    .ForMember(dest => dest.AOO10yrHigh, opt => opt.Ignore())
+
+                    .ForMember(dest => dest.Amethod, opt => opt.Ignore())
+                    .ForMember(dest => dest.Ascore, opt => opt.Ignore())
+                    .ForMember(dest => dest.Alow, opt => opt.Ignore())
+                    .ForMember(dest => dest.Ahigh, opt => opt.Ignore())
+                    .ForMember(dest => dest.Bmethod, opt => opt.Ignore())
+                    .ForMember(dest => dest.Bscore, opt => opt.Ignore())
+                    .ForMember(dest => dest.Blow, opt => opt.Ignore())
+                    .ForMember(dest => dest.Bhigh, opt => opt.Ignore())
                     .ForMember(dest => dest.AAO2, opt => opt.Ignore())
+                    .ForMember(dest => dest.AAO2, opt => opt.Ignore())
+
+
+
                     .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes, opt => opt.Ignore())
                     .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesBest, opt => opt.Ignore())
                     .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesLow, opt => opt.Ignore())
