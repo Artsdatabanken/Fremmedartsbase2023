@@ -388,15 +388,15 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                 </div>
                                 <div className="numberFieldsB">
                                 <Xcomp.Number                            
-                                            observableValue={[riskAssessment, "BCritExpansion"]}
+                                            observableValue={[riskAssessment, "ExpansionSpeed"]}
                                             double
                                         />  
                                     <Xcomp.Number                            
-                                            observableValue={[riskAssessment, "BCritLower"]}
+                                            observableValue={[riskAssessment, "ExpansionLowerQ"]}
                                             double
                                         />  
                                     <Xcomp.Number                            
-                                            observableValue={[riskAssessment, "BCritHigher"]}
+                                            observableValue={[riskAssessment, "ExpansionUpperQ"]}
                                             double
                                         />  
                                     <h4>{labels.Bcrit.data}</h4>
@@ -479,16 +479,16 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             <tr>
                                                 <td> <Xcomp.Number       
                                                         disabled                     
-                                                        observableValue={[assessment.riskAssessment, "startYear"]}/> 
+                                                        observableValue={[riskAssessment, "AOOyear1"]}/> 
                                                 </td>
                                                 <td style={{display: 'flex'}}><Xcomp.Number                            
-                                                        observableValue={[riskAssessment, "BCritToYear"]}
+                                                        observableValue={[riskAssessment, "AOOendyear1"]}
                                                         integer
                                                         yearRange={true}
                                                     /> <span style={{margin: '10px 10px 0'}}>(t<sub>1</sub>)</span>
                                                     </td>
                                                 <td><Xcomp.Number                            
-                                                        observableValue={[riskAssessment, "BCritArea"]}                                                        
+                                                        observableValue={[riskAssessment, "AAO1"]}                                                        
                                                     />
                                                 </td>
                                                
@@ -496,16 +496,16 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             <tr>
                                                 <td> <Xcomp.Number   
                                                         disabled                         
-                                                        observableValue={[assessment.riskAssessment, "startYear"]}
+                                                        observableValue={[riskAssessment, "AOOyear2"]}
                                                         yearRange={true}/> 
                                                 </td>
                                                 <td style={{display: 'flex'}}><Xcomp.Number            
-                                                        disabled = {!assessment.riskAssessment.notUse2021AsEndYear}                
-                                                        observableValue={[assessment.riskAssessment, "endYear"]} 
+                                                        disabled = {!riskAssessment.notUse2021AsEndYear}                
+                                                        observableValue={[riskAssessment, "AOOendyear2"]} 
                                                         yearRange={true}/> <span style={{margin: '10px 10px 0'}}>(t<sub>2</sub>)</span>
                                                 </td>
                                                 <td><Xcomp.Number                            
-                                                         observableValue={[assessment.riskAssessment, "knownDistribution"]}/> 
+                                                         observableValue={[riskAssessment, "AAO2"]}/> 
                                                 </td>                                                
                                             </tr>
                                             </tbody>                            
