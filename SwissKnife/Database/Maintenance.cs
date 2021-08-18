@@ -251,17 +251,27 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.AOO10yrBest, opt => opt.Ignore())
                     .ForMember(dest => dest.AOO10yrLow, opt => opt.Ignore())
                     .ForMember(dest => dest.AOO10yrHigh, opt => opt.Ignore())
+                    .ForMember(dest => dest.AAO1, opt => opt.Ignore())
+                    .ForMember(dest => dest.AAO2, opt => opt.Ignore())
+                    .ForMember(dest => dest.AOOchangeBest, opt => opt.Ignore())
+                    .ForMember(dest => dest.AOOchangeLow, opt => opt.Ignore())
+                    .ForMember(dest => dest.AOOchangeHigh, opt => opt.Ignore())
 
                     .ForMember(dest => dest.Amethod, opt => opt.Ignore())
                     .ForMember(dest => dest.Ascore, opt => opt.Ignore())
                     .ForMember(dest => dest.Alow, opt => opt.Ignore())
                     .ForMember(dest => dest.Ahigh, opt => opt.Ignore())
+                    .ForMember(dest => dest.AdefaultBest, opt => opt.Ignore())
+                    .ForMember(dest => dest.AdefaultLow, opt => opt.Ignore())
+                    .ForMember(dest => dest.AdefaultHigh, opt => opt.Ignore())
+                    .ForMember(dest => dest.ApossibleLow, opt => opt.Ignore())
+                    .ForMember(dest => dest.ApossibleHigh, opt => opt.Ignore())
+
+
                     .ForMember(dest => dest.Bmethod, opt => opt.Ignore())
                     .ForMember(dest => dest.Bscore, opt => opt.Ignore())
                     .ForMember(dest => dest.Blow, opt => opt.Ignore())
                     .ForMember(dest => dest.Bhigh, opt => opt.Ignore())
-                    .ForMember(dest => dest.AAO1, opt => opt.Ignore())
-                    .ForMember(dest => dest.AAO2, opt => opt.Ignore())
 
 
 
