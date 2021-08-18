@@ -57,20 +57,21 @@ export default class NewNaturetype extends React.Component {
     }
 
     render() {
-        const {appState, addNaturtype, labels, codes, header} = this.props;        
+        const {appState, addNaturtype, labels, codes, header, superheader} = this.props;        
         //const nts = appState.naturtyper
         const nts =  codes
         const lms = appState.livsmediumCodes
         const doms = appState.dominansSkog
         const koder = appState.koder
-        console.log(nts)
+        //console.log(nts)
         // console.log("labels " + JSON.stringify(labels))
 
         return <div className="natureType">
             {/* {appState.language === "SV"
             ? <h3>Här kommer SVEN</h3> */}
             <div>
-                <h4>{header}</h4>
+                <h4>{superheader}</h4>
+                <h5>{header}</h5>
                 {nts
                     ? <NaturtypeSelector 
                         naturtyper={nts} 

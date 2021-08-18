@@ -5936,6 +5936,20 @@
                         },
                         {
                             "Id": null,
+                            "Value": "globalPrevalence",
+                            "Text": "Global utbredelse",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "habitat",
+                            "Text": "Livsmiljø",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "currentExistenceAria",
                             "Text": "Nåværende utbredelse",
                             "Info": null,
@@ -7085,6 +7099,27 @@
                             "Id": null,
                             "Value": "critCHeading",
                             "Text": "Kolonisert areal av naturtype (overføres til C-kriteriet)",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "redListEffects",
+                            "Text": "Effekter på rødlistede naturtyper",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "colonizedAreaAndEffects",
+                            "Text": "Kolonisert areal av naturtyper og effekter på naturtyper som ikke er rødlistede",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "colonizedAreaDescription",
+                            "Text": "Anslå kolonisert areal i de naturtypene arten er observert i, beskriv artens påvirkning i naturtypen og anslå hvor stor andel av naturtypen som blir påvirket. Det skal være sannsynlighetsovervekt for at valgt tilstandsendring skjer.",
                             "Info": null,
                             "Children": null
                         },

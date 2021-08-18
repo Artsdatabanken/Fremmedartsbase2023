@@ -38,10 +38,10 @@ export default class Assessment10Horisontskanning extends React.Component {
                
             </div>
             { (typeof assessment.horizonEstablismentPotential != "string" || typeof assessment.horizonEcologicalEffect != "string" )
-                    ? <b>{labels.SpeciesStatus.answerEstablishmentQuestionReminder}</b>
+                    ? <fieldset className="well"><b>{labels.SpeciesStatus.answerEstablishmentQuestionReminder}</b></fieldset>
                 : appState.horizonDoAssessment
-                ?    <p>{labels.SpeciesStatus.willBeAssessed}</p>
-                :    <p>{labels.SpeciesStatus.willNotBeAssessed}</p> }
+                ?    <fieldset className="well"><h2>{labels.SpeciesStatus.conclusion}</h2> {labels.SpeciesStatus.willBeAssessed}</fieldset>
+                :    <fieldset className="well"><h2>{labels.SpeciesStatus.conclusion}</h2> {labels.SpeciesStatus.willNotBeAssessed}</fieldset> }
 
         </div>
         );
