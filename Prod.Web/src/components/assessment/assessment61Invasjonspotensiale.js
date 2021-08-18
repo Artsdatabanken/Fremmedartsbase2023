@@ -496,7 +496,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             <tr>
                                                 <td> <Xcomp.Number   
                                                         disabled                         
-                                                        observableValue={[riskAssessment, "AOOyear2"]}
+                                                        //observableValue={[riskAssessment, "AOOyear2"]}
+                                                        observableValue={[riskAssessment, "AOOyear1"]}
                                                         yearRange={true}/> 
                                                 </td>
                                                 <td style={{display: 'flex'}}><Xcomp.Number            
