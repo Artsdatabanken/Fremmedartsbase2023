@@ -577,6 +577,26 @@ namespace Prod.Domain
         public Int64? AOOtotalLow { get; set; }
         [System.Text.Json.Serialization.JsonPropertyName("AOOtotalHigh")]
         public Int64? AOOtotalHigh { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("AOOchangeBest")]
+        public double? AOOchangeBest { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("AOOchangeLow")]
+        public double? AOOchangeLow { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("AOOchangeHigh")]
+        public double? AOOchangeHigh { get; set; }
+
+
+        public int? AdefaultBest { get; set; }
+        public int? AdefaultLow { get; set; }
+        public int? AdefaultHigh { get; set; }
+
+
+        public int? ApossibleLow { get; set; }
+        public int? ApossibleHigh { get; set; }
+
+
+
+
         // -------- disse (forekomstareal i dag) er erstattet:  
         //todo: *sjekk konvertering fra FAB3 før sletting av utkommentert kode*
         //public Int64? CurrentExistenceArea { get; set; }
