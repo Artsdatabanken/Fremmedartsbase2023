@@ -337,6 +337,8 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.AOOyear2, opt => opt.Ignore())
                     .ForMember(dest => dest.AAO1, opt => opt.Ignore())
                     .ForMember(dest => dest.AAO2, opt => opt.Ignore())
+                    .ForMember(dest => dest.StartYear, opt => opt.Ignore())
+                    .ForMember(dest => dest.EndYear, opt => opt.Ignore())
                     .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes, opt => opt.MapFrom(src => src.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes))
                     .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesBest, opt => opt.Ignore())
                     .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesLow, opt => opt.Ignore())
