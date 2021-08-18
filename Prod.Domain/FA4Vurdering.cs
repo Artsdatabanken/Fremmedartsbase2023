@@ -586,17 +586,12 @@ namespace Prod.Domain
         public double? AOOchangeHigh { get; set; }
 
 
-        [System.Text.Json.Serialization.JsonPropertyName("AdefaultBest")]
         public int? AdefaultBest { get; set; }
-        [System.Text.Json.Serialization.JsonPropertyName("AdefaultLow")]
         public int? AdefaultLow { get; set; }
-        [System.Text.Json.Serialization.JsonPropertyName("AdefaultHigh")]
         public int? AdefaultHigh { get; set; }
 
 
-        [System.Text.Json.Serialization.JsonPropertyName("ApossibleLow")]
         public int? ApossibleLow { get; set; }
-        [System.Text.Json.Serialization.JsonPropertyName("ApossibleHigh")]
         public int? ApossibleHigh { get; set; }
 
 
