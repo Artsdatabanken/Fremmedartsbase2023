@@ -595,8 +595,12 @@ namespace Prod.Domain
         // *******  (B2a) Økning i forekomstareal – selvstendig reproduserende arter  **********
         [System.Text.Json.Serialization.JsonPropertyName("AOOyear1")]
         public long? AOOyear1 { get; set; } // årstallet for det første forekomstarealet 
+        [System.Text.Json.Serialization.JsonPropertyName("AOOendyear1")]
+        public long? AOOendyear1 { get; set; } // årstallet for det første forekomstarealet 
         [System.Text.Json.Serialization.JsonPropertyName("AOOyear2")]
         public long? AOOyear2 { get; set; } // årstallet for det andre forekomstarealet 
+        [System.Text.Json.Serialization.JsonPropertyName("AOOendyear2")]
+        public long? AOOendyear2 { get; set; } // årstallet for det andre forekomstarealet 
         [System.Text.Json.Serialization.JsonPropertyName("AAO1")]
         public long? AAO1 { get; set; } // forekomstarealet i år 1 
         [System.Text.Json.Serialization.JsonPropertyName("AAO2")]
@@ -756,6 +760,9 @@ namespace Prod.Domain
         //CarryingCapacity ACritSustainability
         //ExtinctionThreshold ACritExtThreshold
         //MedianLifetime ACritMedian
+        //ExpansionSpeed BCritExpansion
+        //ExpansionLowerQ BCritLower
+        //ExpansionUpperQ BCritHigher
         //-----------------------------------------------------------------------
 
 

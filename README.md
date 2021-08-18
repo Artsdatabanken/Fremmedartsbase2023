@@ -11,6 +11,9 @@ Todo:
 * Automagisk Docker image - med klient og avhengigheter + sqllite - slik at 3'dje parter kan teste
 
 ## Docker
+
+(dokumentasjon må oppdateres... utdatert)
+
 [Docker image](https://hub.docker.com/r/artsdatabanken/fab4api)
 
 Bygges og publiseres på innsjekk - basert på følgende dockerfil:
