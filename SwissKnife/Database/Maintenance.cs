@@ -191,7 +191,8 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.AcceptOrAdjustCritA, opt => opt.Ignore())
                     .ForMember(dest => dest.Hovedøkosystem, opt => opt.Ignore())
 
-
+                    .ForMember(dest => dest.StartYear, opt => opt.Ignore())
+                    .ForMember(dest => dest.EndYear, opt => opt.Ignore())
                     // todo: delete this section when domain is fixed
                     //.ForMember(dest => dest.ScoreA, opt => opt.Ignore())
                     //.ForMember(dest => dest.UnsureA, opt => opt.Ignore())
@@ -351,6 +352,8 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.AOOendyear2, opt => opt.Ignore())
                     .ForMember(dest => dest.AAO1, opt => opt.Ignore())
                     .ForMember(dest => dest.AAO2, opt => opt.Ignore())
+                    .ForMember(dest => dest.StartYear, opt => opt.Ignore())
+                    .ForMember(dest => dest.EndYear, opt => opt.Ignore())
                     .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes, opt => opt.MapFrom(src => src.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes))
                     .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesBest, opt => opt.Ignore())
                     .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesLow, opt => opt.Ignore())

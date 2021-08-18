@@ -129,8 +129,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     {/* <Xcomp.StringEnum observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]} mode="radio" codes={codes.HorizonEstablismentPotential}/> */}
                     
                     <hr />
-                    {/* <Xcomp.StringEnum mode="radio" observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]} codes={labels.AcritSelect} /> */}
-                    <SelectableRadio
+                     <Xcomp.StringEnum mode="radio" observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]} codes={koder.AcritSelect} /> 
+                   {/* <SelectableRadio
                             label={labels.AcritSelect.LifespanA1aSimplifiedEstimate}
                             value={"LifespanA1aSimplifiedEstimate"}
                             observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]}/>
@@ -141,7 +141,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     <SelectableRadio
                             label={labels.AcritSelect.ViableAnalysis}
                             value={"ViableAnalysis"}
-                            observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]}/>
+                            observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]}/>*/}
                     {riskAssessment.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" ? 
                         <div>
 
@@ -496,7 +496,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             <tr>
                                                 <td> <Xcomp.Number   
                                                         disabled                         
-                                                        observableValue={[riskAssessment, "AOOyear2"]}
+                                                        //observableValue={[riskAssessment, "AOOyear2"]}
+                                                        observableValue={[riskAssessment, "AOOyear1"]}
                                                         yearRange={true}/> 
                                                 </td>
                                                 <td style={{display: 'flex'}}><Xcomp.Number            

@@ -296,6 +296,7 @@ export default class AssessmentReferences extends Component {
 
     removeReferenceFromAssessment = action((assessment, id) => {        
         const refs = assessment.referanser
+        console.log(refs)
         const ref = refs.find(r => r.referenceId === id)
         if(ref) {
             this.fjernReferanse(assessment, ref)
@@ -305,6 +306,7 @@ export default class AssessmentReferences extends Component {
         let refs = assessment.referanser
         let result = refs.slice().sort(this.compare)
         refs = result
+        console.log(refs)
         const ref = refs.find(r => r.referenceId === value.id)
         if(ref) {
             ref.type = value.referenceType
@@ -448,6 +450,7 @@ export default class AssessmentReferences extends Component {
         //console.log(JSON.stringify(referanser));
         const kodeTekst = (kodegruppe, id) => {
             const gr = koder[kodegruppe]
+            console.log(gr)
             if (!gr) return "no code group: " + kodegruppe
             const match = gr.find(kode => kode.value = id)
             return match && match.text ? match.text : id

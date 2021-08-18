@@ -752,6 +752,10 @@ namespace Prod.Domain
         public int Blow { get; set; } // nedre skår for B-kriteriet (inkludert usikkerhet) 
         public int Bhigh { get; set; } // øvre skår for B-kriteriet (inkludert usikkerhet) 
 
+        public int StartYear { get; set; } // startår for B-kriteriet / utbredelse
+
+        public int EndYear { get; set; } // sluttår for B-kriteriet / utbredelse
+
         [System.Text.Json.Serialization.JsonPropertyName("AOOdarkfigureBest")]
         public float? AOOdarkfigureBest { get; set; } // beste anslag på forekomstarealets mørketall 
         [System.Text.Json.Serialization.JsonPropertyName("AOOdarkfigureLow")]
