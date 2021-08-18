@@ -1674,6 +1674,29 @@
                 "text": "Artens økologiske effekt består utelukkende i interaksjoner med stedegne arter som har svært begrenset utbredelse"
             }
         ],
+        "AcritSelect": [
+            {
+                "Id": "AcritSelect",
+                "Value": "LifespanA1aSimplifiedEstimate",
+                "Text": "Forenklet anslag",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "AcritSelect",
+                "Value": "SpreadRscriptEstimatedSpeciesLongevity",
+                "Text": "Numerisk estimering",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "AcritSelect",
+                "Value": "ViableAnalysis",
+                "Text": "Levedyktighetsanalyse",
+                "Info": null,
+                "Children": null
+            }
+        ],
         "climateEffects": [
             {
                 "Id": "climateEffects",
