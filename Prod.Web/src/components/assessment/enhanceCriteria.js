@@ -77,7 +77,7 @@ function levelFloor(level) {
     return level === NaN
     ? NaN
     : typeof(level) === "number"
-    ? level - 1
+    ? Math.max(0, level - 1)
     : NaN
 }
 
@@ -780,7 +780,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         const nv = riskAssessment.CalculatedCritALevel // .ChosenSpreadYearlyIncreaseLevel
           console.log("Autorun criterionA CalculatedCritALevel nv: " + JSON.stringify(nv))
         runInAction(() => {
-            criterionA.value = nv
+            criterionA.value = nv.level
         })
     });
 
@@ -1063,10 +1063,10 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
 
     autorun(() => {
         const criterionF = getCriterion(riskAssessment, 1, "F")
-        //   console.log("Autorun criterionF .value: " + criterionF.value)
+          console.log("Autorun criterionF .value: " + criterionF.value)
         const nv = riskAssessment.effectOnThreathenedNaturetypesLevel
-        //   console.log("Autorun criterionF new value: " + nv)
-        //   console.log("Autorun criterionF not equal: " + (nv != criterionF.value))
+          console.log("Autorun criterionF new value: " + nv)
+          console.log("Autorun criterionF not equal: " + (nv != criterionF.value))
         runInAction(() => {
             criterionF.value = nv
         })
@@ -1074,10 +1074,10 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
 
     autorun(() => {
         const criterionG = getCriterion(riskAssessment, 1, "G")
-        //   console.log("Autorun criterionG .value: " + criterionG.value)
+          console.log("Autorun criterionG .value: " + criterionG.value)
         const nv = riskAssessment.effectOnOtherNaturetypesLevel
-        //   console.log("Autorun criterionG new value: " + nv)
-        //   console.log("Autorun criterionG not equal: " + (nv != criterionG.value))
+          console.log("Autorun criterionG new value: " + nv)
+          console.log("Autorun criterionG not equal: " + (nv != criterionG.value))
         runInAction(() => {
             criterionG.value = nv
         })
@@ -1158,6 +1158,8 @@ function enhanceRiskAssessmentLevel(riskAssessment, labels) {
         }
     });
     autorun(() => {
+        //todo: something must be wrong here (?)
+
         //try {
         const {level, decisiveCriteria, uncertaintyLevels} = riskAssessment.invasjonspotensialeLevel
         console.log("_invasjonspotensialeLevel changed: " + level)
