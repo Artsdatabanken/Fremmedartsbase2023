@@ -255,9 +255,9 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.GrowthRate, opt => opt.MapFrom(src => double.Parse(src.SpreadRscriptPopulationGrowth, System.Globalization.CultureInfo.InvariantCulture)))
                     .ForMember(dest => dest.EnvVariance, opt => opt.MapFrom(src => double.Parse(src.SpreadRscriptEnvironmantVariance, System.Globalization.CultureInfo.InvariantCulture)))
                     .ForMember(dest => dest.DemVariance, opt => opt.MapFrom(src => double.Parse(src.SpreadRscriptDemographicVariance, System.Globalization.CultureInfo.InvariantCulture)))
-                    .ForMember(dest => dest.CarryingCapacity, opt => opt.MapFrom(src => ParceLong(src.SpreadRscriptSustainabilityK)))
-                    .ForMember(dest => dest.ExtinctionThreshold, opt => opt.MapFrom(src => ParceLong(src.SpreadRscriptQuasiExtinctionThreshold)))
-                    .ForMember(dest => dest.MedianLifetimeInput, opt => opt.MapFrom(src => ParceLong(src.SpreadRscriptEstimatedSpeciesLongevity))) //ActiveSpreadRscriptEstimatedSpeciesLongevity?? ChosenSpreadMedanLifespan??
+                    .ForMember(dest => dest.CarryingCapacity, opt => opt.MapFrom(src => ParseLong(src.SpreadRscriptSustainabilityK)))
+                    .ForMember(dest => dest.ExtinctionThreshold, opt => opt.MapFrom(src => ParseLong(src.SpreadRscriptQuasiExtinctionThreshold)))
+                    .ForMember(dest => dest.MedianLifetimeInput, opt => opt.MapFrom(src => ParseLong(src.SpreadRscriptEstimatedSpeciesLongevity))) //ActiveSpreadRscriptEstimatedSpeciesLongevity?? ChosenSpreadMedanLifespan??
                     .ForMember(dest => dest.MedianLifetime, opt => opt.Ignore())
                     .ForMember(dest => dest.LifetimeLowerQ, opt => opt.Ignore())
                     .ForMember(dest => dest.LifetimeUpperQ, opt => opt.Ignore())
