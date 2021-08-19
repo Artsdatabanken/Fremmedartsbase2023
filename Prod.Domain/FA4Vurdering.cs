@@ -689,12 +689,12 @@ namespace Prod.Domain
 
 
         // ****************************  (A2) Numerisk estimering  ****************************
-        public long PopulationSize { get; set; } // bestandens nåværende størrelse (individtall) 
-        public double GrowthRate { get; set; } // bestandens multiplikative vekstrate 
-        public double EnvVariance { get; set; } // miljøvarians 
-        public double DemVariance { get; set; } // demografisk varians 
-        public long CarryingCapacity { get; set; } // bestandens bæreevne (individtall) 
-        public long ExtinctionThreshold { get; set; } // kvasiutdøingsterskel (individtall) 
+        public long? PopulationSize { get; set; } // bestandens nåværende størrelse (individtall) 
+        public double? GrowthRate { get; set; } // bestandens multiplikative vekstrate 
+        public double? EnvVariance { get; set; } // miljøvarians 
+        public double? DemVariance { get; set; } // demografisk varians 
+        public long? CarryingCapacity { get; set; } // bestandens bæreevne (individtall) 
+        public long? ExtinctionThreshold { get; set; } // kvasiutdøingsterskel (individtall) 
         // -------- disse ((A2) Numerisk estimering) er erstattet:  
         //todo: *sjekk konvertering fra FAB3 før sletting av utkommentert kode*
         //////public bool ActiveSpreadRscriptSpeciesCount { get; set; } // lagt til 27.09.2016
@@ -735,7 +735,7 @@ namespace Prod.Domain
         #endregion
 
         #region Median life time
-        public long MedianLifetimeInput { get; set; } // artens mediane levetid i Norge i år (brukerinput)
+        public long? MedianLifetimeInput { get; set; } // artens mediane levetid i Norge i år (brukerinput)
         public long MedianLifetime { get; set; } // artens mediane levetid i Norge i år (beregnet/avrundet)
         //
         //todo: check: MedianLifetime erstatter muligens ChosenSpreadMedanLifespan
@@ -800,10 +800,10 @@ namespace Prod.Domain
 
 
         // ********************** (b) Forekomstareal – dørstokkarter  ****************************
-        public long Occurrences1Best { get; set; }	// beste anslag på antall forekomster fra 1 introduksjon 
-        public long Occurrences1Low { get; set; }	// lavt anslag på antall forekomster fra 1 introduksjon 
-        public long Occurrences1High { get; set; }	// høyt anslag på antall forekomster fra 1 introduksjon 
-        public double IntroductionsBest { get; set; }	// beste anslag på antall introduksjoner i løpet av 10 år 
+        public long? Occurrences1Best { get; set; }	// beste anslag på antall forekomster fra 1 introduksjon 
+        public long? Occurrences1Low { get; set; }	// lavt anslag på antall forekomster fra 1 introduksjon 
+        public long? Occurrences1High { get; set; }	// høyt anslag på antall forekomster fra 1 introduksjon 
+        public long? IntroductionsBest { get; set; }	// beste anslag på antall introduksjoner i løpet av 10 år 
         // -------- disse (forekomstareal - dørstokkarter) er erstattet:  
         //todo: *sjekk konvertering fra FAB3 før sletting av utkommentert kode*
         //public string SpreadYearlyIncreaseObservations { get; set; } //lagt til 29.09.2016
@@ -813,9 +813,9 @@ namespace Prod.Domain
 
 
         // ********************** ((B1) ekspansjonshastighet  ****************************
-        public long ExpansionSpeed { get; set; }  // ekspansjonshastighet i meter per år 
-        public long ExpansionLowerQ { get; set; } // nedre kvartil for ekspansjonshastighet i meter per år 
-        public long ExpansionUpperQ { get; set; } // øvre kvartil for ekspansjonshastighet i meter per år 
+        public double? ExpansionSpeed { get; set; }  // ekspansjonshastighet i meter per år 
+        public double? ExpansionLowerQ { get; set; } // nedre kvartil for ekspansjonshastighet i meter per år 
+        public double? ExpansionUpperQ { get; set; } // øvre kvartil for ekspansjonshastighet i meter per år 
         // -------- disse ((B1) ekspansjonshastighet) er erstattet:  
         //todo: *sjekk konvertering fra FAB3 før sletting av utkommentert kode*
         //public bool ActiveSpreadYearlyIncreaseOccurrenceArea { get; set; } //lagt til 29.09.2016

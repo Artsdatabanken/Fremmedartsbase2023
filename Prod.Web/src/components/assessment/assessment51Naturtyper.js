@@ -75,7 +75,8 @@ export default class Assessment51Naturtyper extends React.Component {
                     addNaturtype={this.addNaturtype}
                     labels={labels}
                     codes={koder.redlistedNaturetypes}
-                    header={ntLabels.chooseRL2018}/> 
+                    header={ntLabels.chooseRL2018}
+                    superheader={ntLabels.redListEffects}/> 
                 </fieldset>
                 <fieldset className="well">               
                <NewNaturetype
@@ -83,7 +84,8 @@ export default class Assessment51Naturtyper extends React.Component {
                     addNaturtype={this.addNaturtype}
                     labels={labels}
                     codes={koder.naturtyperNIN2}
-                    header={ntLabels.chooseNT} />
+                    header={ntLabels.chooseNT}
+                    superheader={ntLabels.colonizedAreaAndEffects} />
                 </fieldset> 
                 <fieldset className="well">   
                 <NaturtypeTable
@@ -93,7 +95,7 @@ export default class Assessment51Naturtyper extends React.Component {
                     labels={labels}
                     codes={koder}
                     fabModel={appState}
-                    desc={"Anslå kolonisert areal i de naturtypene arten er observert i, beskriv artens påvirkning i naturtypen og anslå hvor stor andel av naturtypen som blir påvirket. Det skal være sannsynlighetsovervekt for at valgt tilstandsendring skjer."}/>
+                    desc={ntLabels.colonizedAreaDescription}/>
                 </fieldset>  
 
                 <fieldset className="well">

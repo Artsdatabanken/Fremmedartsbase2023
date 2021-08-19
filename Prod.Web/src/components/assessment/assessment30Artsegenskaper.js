@@ -54,7 +54,7 @@ export default class Assessment30Artsegenskaper extends React.Component {
         const vurdering = assessment
         const labels = appState.codeLabels
         const koder = appState.koder
-        console.log(assessment.naturalOrigins)
+        //console.log(assessment.naturalOrigins)
 
         // const {vurdering, viewModel, fabModel} = this.props;
         const nbsp = "\u00a0"
@@ -70,10 +70,10 @@ export default class Assessment30Artsegenskaper extends React.Component {
         const naturalOriginDisabled = (id, region) => koder.naturalOriginDisabled.find(code => code.Value === id).Text.indexOf(region) !== -1
 
         return(
-            
+            <>
             <fieldset className="well">
 
-                <h2>Global utbredelse og artsegenskaper</h2>
+                <h2>{labels.NaturalOrigin.globalPrevalence}</h2>
                 {config.showPageHeaders ? <h3>Artsegenskaper</h3> : null }
                 
                 {appState.imageUploadEnabled
@@ -85,7 +85,7 @@ export default class Assessment30Artsegenskaper extends React.Component {
                 {assessment.alienSpeciesCategory == "DoorKnocker" && assessment.speciesStatus == "A" ?
 
                 <div>
-                    <p>Livsmiljø</p>
+                    <p>{labels.NaturalOrigin.habitat}</p>
                     <Xcomp.Bool observableValue={[vurdering, 'limnic']} label={limnicTerrestrialMarinelabel("limnic")} />            
                     <Xcomp.Bool observableValue={[vurdering, 'terrestrial']} label={limnicTerrestrialMarinelabel("terrestrial")} />            
                     <Xcomp.Bool observableValue={[vurdering, 'marine']} label={limnicTerrestrialMarinelabel("marine")} />     
@@ -144,7 +144,7 @@ export default class Assessment30Artsegenskaper extends React.Component {
                         { vurdering.currentInternationalExistenceAreas.filter(
                                 row => row.europe || row.asia || row.africa || row.oceania || row.northAndCentralAmerica || row.southAmerica
                             ).length > 0 ?
-                            <Xcomp.HtmlString observableValue={[vurdering, 'currentInternationalExistenceAreasUnknownDocumentation']} label='Gi utdypende informasjon ved behov (påkrevd for "Ukjent" )' /> :
+                            <Xcomp.HtmlString observableValue={[vurdering, 'currentInternationalExistenceAreasUnknownDocumentation']} label={labels.NaturalOrigin.describe} /> :
                             null}
                         </div>
                     </div> :
@@ -206,7 +206,7 @@ export default class Assessment30Artsegenskaper extends React.Component {
                  : assessment.isRegionallyAlien == true ? 
 
                  <div>
-                     <p>Livsmiljø</p>
+                     <p>{labels.NaturalOrigin.habitat}</p>
                 <Xcomp.Bool observableValue={[vurdering, 'limnic']} label={limnicTerrestrialMarinelabel("limnic")} />            
                 <Xcomp.Bool observableValue={[vurdering, 'terrestrial']} label={limnicTerrestrialMarinelabel("terrestrial")} />            
                 <Xcomp.Bool observableValue={[vurdering, 'marine']} label={limnicTerrestrialMarinelabel("marine")} />     
@@ -265,7 +265,7 @@ export default class Assessment30Artsegenskaper extends React.Component {
                     { vurdering.currentInternationalExistenceAreas.filter(
                             row => row.europe || row.asia || row.africa || row.oceania || row.northAndCentralAmerica || row.southAmerica
                         ).length > 0 ?
-                        <Xcomp.HtmlString observableValue={[vurdering, 'currentInternationalExistenceAreasUnknownDocumentation']} label='Gi utdypende informasjon ved behov (påkrevd for "Ukjent" )' /> :
+                        <Xcomp.HtmlString observableValue={[vurdering, 'currentInternationalExistenceAreasUnknownDocumentation']} label={labels.NaturalOrigin.describe} /> :
                         null}
                     </div>
                 </div> :
@@ -335,7 +335,7 @@ export default class Assessment30Artsegenskaper extends React.Component {
                  </div> :
                  
                  <div>
-                     <p>Livsmiljø</p>
+                     <p>{labels.NaturalOrigin.habitat}</p>
                 <Xcomp.Bool observableValue={[vurdering, 'limnic']} label={limnicTerrestrialMarinelabel("limnic")} />            
                 <Xcomp.Bool observableValue={[vurdering, 'terrestrial']} label={limnicTerrestrialMarinelabel("terrestrial")} />            
                 <Xcomp.Bool observableValue={[vurdering, 'marine']} label={limnicTerrestrialMarinelabel("marine")} />     
@@ -394,7 +394,7 @@ export default class Assessment30Artsegenskaper extends React.Component {
                     { vurdering.currentInternationalExistenceAreas.filter(
                             row => row.europe || row.asia || row.africa || row.oceania || row.northAndCentralAmerica || row.southAmerica
                         ).length > 0 ?
-                        <Xcomp.HtmlString observableValue={[vurdering, 'currentInternationalExistenceAreasUnknownDocumentation']} label='Gi utdypende informasjon ved behov (påkrevd for "Ukjent" )' /> :
+                        <Xcomp.HtmlString observableValue={[vurdering, 'currentInternationalExistenceAreasUnknownDocumentation']} label={labels.NaturalOrigin.describe} /> :
                         null}
                     </div>
                 </div> :
@@ -418,24 +418,30 @@ export default class Assessment30Artsegenskaper extends React.Component {
                         <Xcomp.HtmlString observableValue={[vurdering, 'currentInternationalExistenceMarineAreasDetails']} label={labels.NaturalOrigin.describeMarine} /> 
                     </div> 
                 </div>:
-                null }
-                <div className="well">
-                    <div>
-                        <h4>{labels.NaturalOrigin.arrivedCountry}  {vurdering.expertGroup.indexOf("Svalbard") > -1 ? "Svalbard" : "Fastlands-Norge"} {labels.NaturalOrigin.arrivedCountryFrom}</h4>
-                        {/* <ArrivedCountryFrom vurdering={vurdering} fabModel={fabModel} /> */}
+                null }                
+                
+                 </div>
+                }                
+            </fieldset>
+
+            <fieldset className="well">
+                <div>
+                    <h4>{labels.NaturalOrigin.arrivedCountry}  {vurdering.expertGroup.indexOf("Svalbard") > -1 ? "Svalbard" : "Fastlands-Norge"} {labels.NaturalOrigin.arrivedCountryFrom}</h4>
+                    {/* <ArrivedCountryFrom vurdering={vurdering} fabModel={fabModel} /> */}
                         <ArrivedCountryFrom assessment={assessment} appState={appState}/>
                     </div>
-                    <label>{labels.NaturalOrigin.arrivedCountryFromDetails}</label>
-                    <Xcomp.HtmlString observableValue={[vurdering, 'arrivedCountryFromDetails']} /> {/* earlier named: 'NaturalOrigin' */}
-                </div>
-               <div className="well">
-                    <h4>{labels.Reproduction.reproduction}</h4>
-                    <Xcomp.Bool label={labels.Reproduction.sexual} observableValue={[vurdering, 'reproductionSexual']}/>
-                    <Xcomp.Bool label={labels.Reproduction.asexual} observableValue={[vurdering, 'reproductionAsexual']}/>
-                    <Xcomp.Number label={labels.Reproduction.generationTime} observableValue={[vurdering, 'reproductionGenerationTime']}/>
-                </div>
-                {appState.otherEffectsEnabled 
-                ? <div className="well">
+                <label>{labels.NaturalOrigin.arrivedCountryFromDetails}</label>
+                <Xcomp.HtmlString observableValue={[vurdering, 'arrivedCountryFromDetails']} /> {/* earlier named: 'NaturalOrigin' */}
+            </fieldset>
+            <fieldset className="well">
+                <h4>{labels.Reproduction.reproduction}</h4>
+                <Xcomp.Bool label={labels.Reproduction.sexual} observableValue={[vurdering, 'reproductionSexual']}/>
+                <Xcomp.Bool label={labels.Reproduction.asexual} observableValue={[vurdering, 'reproductionAsexual']}/>
+                <Xcomp.Number label={labels.Reproduction.generationTime} observableValue={[vurdering, 'reproductionGenerationTime']}/>
+            </fieldset>
+
+            {appState.otherEffectsEnabled 
+                ? <fieldset className="well">
                         <Xcomp.Button 
                             primary 
                             xs
@@ -459,13 +465,9 @@ export default class Assessment30Artsegenskaper extends React.Component {
                     </div>
                     <Xcomp.String label={labels.OtherEffects.positiveEffects} observableValue={[vurdering, 'positiveEcologicalEffects']}/>
                     <Xcomp.String label={labels.OtherEffects.effectsOnPopulationOfOrigin} observableValue={[vurdering, 'effectsOnPopulationOfOrigin']}/>
-                </div>
+                </fieldset>
                 : null}
-                 </div>
-                }
-                
-            </fieldset>
-
+            </>
         );
 	}
 }

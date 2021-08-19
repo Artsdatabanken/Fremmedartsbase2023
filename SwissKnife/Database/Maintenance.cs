@@ -60,22 +60,56 @@ namespace SwissKnife.Database
             var batchsize = 50;
             var count = 0;
             IEnumerable<Prod.Domain.Legacy.FA3Legacy> assessments = GetAssessments(inputFolder);
-            foreach (var assessment in assessments)
+            foreach (var oldAssessment in assessments)
             {
-                var entity = InitialTransformFrom2018to2023(assessment, jsonSerializerOptions, mapper);
-                if (string.IsNullOrWhiteSpace(assessment.SistOppdatertAv))
+                var newAssesment = InitialTransformFrom2018to2023(oldAssessment, jsonSerializerOptions, mapper);
+                var dbAssessment = new Assessment { Doc = JsonSerializer.Serialize(newAssesment, jsonSerializerOptions) };
+                if (string.IsNullOrWhiteSpace(oldAssessment.SistOppdatertAv))
                 {
-                    entity.LastUpdatedByUserId = new Guid("00000000-0000-0000-0000-000000000001");
-                    entity.LastUpdatedAt = DateTime.Today;
+                    dbAssessment.LastUpdatedByUserId = new Guid("00000000-0000-0000-0000-000000000001");
+                    dbAssessment.LastUpdatedAt = DateTime.Today;
                 }
                 else
                 {
-                    entity.LastUpdatedByUserId = users[assessment.SistOppdatertAv].Id;
-                    entity.LastUpdatedAt = assessment.SistOppdatert;
+                    dbAssessment.LastUpdatedByUserId = users[oldAssessment.SistOppdatertAv].Id;
+                    dbAssessment.LastUpdatedAt = oldAssessment.SistOppdatert;
                 }
                 
-                _database.Assessments.Add(entity);
+                _database.Assessments.Add(dbAssessment);
                 count++;
+
+                string assessmentCommentString(string oldFieldName, string newFieldName, string oldValue, string newValue) 
+                {
+                    return $"Verdi '{oldFieldName}' 2018 ('{oldValue}') er satt til '{newFieldName}': {newValue}. Vennligst endre til estimert verdi.";
+                }
+
+                dbAssessment.Comments = new List<AssessmentComment>();
+
+                if (oldAssessment.RiskAssessment.SpreadRscriptEstimatedSpeciesLongevity != null &&
+                    newAssesment.RiskAssessment.MedianLifetime != null &&
+                    oldAssessment.RiskAssessment.SpreadRscriptEstimatedSpeciesLongevity != newAssesment.RiskAssessment.MedianLifetime.ToString())
+                {
+                    dbAssessment.Comments.Add(new AssessmentComment()
+                    {
+                        Comment = assessmentCommentString("SpreadRscriptEstimatedSpeciesLongevity", "MedianLifetime", oldAssessment.RiskAssessment.SpreadRscriptEstimatedSpeciesLongevity, newAssesment.RiskAssessment.MedianLifetime.ToString()),
+                        CommentDate = DateTime.Now,
+                        UserId = new Guid("00000000-0000-0000-0000-000000000001"),
+                        ClosedById = new Guid("00000000-0000-0000-0000-000000000001"),
+                    });
+                }
+                if (oldAssessment.RiskAssessment.SpreadYearlyIncreaseObservations != null &&
+                    newAssesment.RiskAssessment.Occurrences1Best != null &&
+                    oldAssessment.RiskAssessment.SpreadYearlyIncreaseObservations != newAssesment.RiskAssessment.Occurrences1Best.ToString())
+                {
+                    dbAssessment.Comments.Add(new AssessmentComment()
+                    {
+                        Comment = assessmentCommentString("SpreadYearlyIncreaseObservations", "Occurrences1Best", oldAssessment.RiskAssessment.SpreadYearlyIncreaseObservations, newAssesment.RiskAssessment.Occurrences1Best.ToString()),
+                        CommentDate = DateTime.Now,
+                        UserId = new Guid("00000000-0000-0000-0000-000000000001"),
+                        ClosedById = new Guid("00000000-0000-0000-0000-000000000001"),
+                    });
+                }
+
                 if (count > batchsize)
                 {
                     _database.SaveChanges();
@@ -217,7 +251,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.natureAffectedAbroadF, opt => opt.Ignore())
                     .ForMember(dest => dest.natureAffectedAbroadG, opt => opt.Ignore())
 
-                    .ForMember(dest => dest.PopulationSize, opt => opt.MapFrom(src => ParceLongFromNullableInt(src.SpreadRscriptSpeciesCount)))
+                    .ForMember(dest => dest.PopulationSize, opt => opt.MapFrom(src => ParseLongFromNullableInt(src.SpreadRscriptSpeciesCount)))
                     .ForMember(dest => dest.GrowthRate, opt => opt.MapFrom(src => double.Parse(src.SpreadRscriptPopulationGrowth, System.Globalization.CultureInfo.InvariantCulture)))
                     .ForMember(dest => dest.EnvVariance, opt => opt.MapFrom(src => double.Parse(src.SpreadRscriptEnvironmantVariance, System.Globalization.CultureInfo.InvariantCulture)))
                     .ForMember(dest => dest.DemVariance, opt => opt.MapFrom(src => double.Parse(src.SpreadRscriptDemographicVariance, System.Globalization.CultureInfo.InvariantCulture)))
@@ -227,13 +261,13 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.MedianLifetime, opt => opt.Ignore())
                     .ForMember(dest => dest.LifetimeLowerQ, opt => opt.Ignore())
                     .ForMember(dest => dest.LifetimeUpperQ, opt => opt.Ignore())
-                    .ForMember(dest => dest.Occurrences1Best, opt => opt.MapFrom(src => ParceLong(src.SpreadYearlyIncreaseObservations)))
-                    .ForMember(dest => dest.Occurrences1Low, opt => opt.MapFrom(src => ParceLong(src.SpreadYearlyIncreaseObservationsLowerQuartile)))
-                    .ForMember(dest => dest.Occurrences1High, opt => opt.MapFrom(src => ParceLong(src.SpreadYearlyIncreaseObservationsUpperQuartile)))
+                    .ForMember(dest => dest.Occurrences1Best, opt => opt.MapFrom(src => ParseDouble(src.SpreadYearlyIncreaseObservations)))
+                    .ForMember(dest => dest.Occurrences1Low, opt => opt.MapFrom(src => ParseDouble(src.SpreadYearlyIncreaseObservationsLowerQuartile)))
+                    .ForMember(dest => dest.Occurrences1High, opt => opt.MapFrom(src => ParseDouble(src.SpreadYearlyIncreaseObservationsUpperQuartile)))
                     .ForMember(dest => dest.IntroductionsBest, opt => opt.Ignore())
-                    .ForMember(dest => dest.ExpansionSpeed, opt => opt.MapFrom(src => ParceLong(src.SpreadYearlyIncreaseOccurrenceArea))) // ActiveSpreadYearlyIncreaseOccurrenceArea?? SpreadYearlyIncreaseCalculatedExpansionSpeed?? SpreadYearlyIncreaseObservations??
-                    .ForMember(dest => dest.ExpansionLowerQ, opt => opt.MapFrom(src => ParceLong(src.SpreadYearlyIncreaseOccurrenceAreaLowerQuartile)))
-                    .ForMember(dest => dest.ExpansionUpperQ, opt => opt.MapFrom(src => ParceLong(src.SpreadYearlyIncreaseOccurrenceAreaUpperQuartile)))
+                    .ForMember(dest => dest.ExpansionSpeed, opt => opt.MapFrom(src => ParseDouble(src.SpreadYearlyIncreaseOccurrenceArea))) // ActiveSpreadYearlyIncreaseOccurrenceArea?? SpreadYearlyIncreaseCalculatedExpansionSpeed?? SpreadYearlyIncreaseObservations??
+                    .ForMember(dest => dest.ExpansionLowerQ, opt => opt.MapFrom(src => ParseDouble(src.SpreadYearlyIncreaseOccurrenceAreaLowerQuartile)))
+                    .ForMember(dest => dest.ExpansionUpperQ, opt => opt.MapFrom(src => ParseDouble(src.SpreadYearlyIncreaseOccurrenceAreaUpperQuartile)))
 
                     // følgende blir mappet fra FA3Legacy lenger nede
                     .ForMember(dest => dest.AOOknown, opt => opt.Ignore())
@@ -368,20 +402,69 @@ namespace SwissKnife.Database
             return mapper;
         }
 
-        private static long ParceLong(string spreadYearlyIncreaseObservations)
+        private static long? ParseLong(string str)
         {
-            if (string.IsNullOrWhiteSpace(spreadYearlyIncreaseObservations))
-            {
-                return 0;
-            }
-            // todo : her kommer det og verdier som '> 100 år' inn
-            if (long.TryParse(spreadYearlyIncreaseObservations, out long test))
+            if (long.TryParse(str, out long test))
             {
                 return test;
-            }
-            return 0;
+            } 
+            return null;
         }
-        private static long ParceLongFromNullableInt(int? spreadYearlyIncreaseObservations)
+
+        private static double? ParseDouble(string str)
+        {
+            if (double.TryParse(str, out double test))
+            {
+                return test;
+            } 
+
+            switch (str)
+            {
+                case "> 100 år":
+                    return 100;
+
+                case "271 millioner år":
+                    return 271000000;
+
+                case "1-2 år":
+                    return 1.5;
+                    
+                case "mer enn 1000 år":
+                    return 1000;
+                    
+                case "40 år":
+                    return 40;
+                    
+                case ">= 650 år":
+                    return 650;
+
+                case "60-649":
+                    return 354.5;
+                    
+                case "mer enn én billion år":
+                    return 1000000000000000000;
+
+                case ">=650":
+                    return 650;
+                    
+                case "1,5 år":
+                    return 1.5;
+
+                case ">1000 år":
+                    return 1000;
+                    
+                case "=> 50 m/år":
+                    return 50;
+
+                case ">= 500 m/år":
+                    return 500;
+                
+                default:
+                    return null;
+            }
+        }
+
+        private static long ParseLongFromNullableInt(int? spreadYearlyIncreaseObservations)
         {
             if (!spreadYearlyIncreaseObservations.HasValue)
             {
@@ -391,11 +474,12 @@ namespace SwissKnife.Database
             return (long)spreadYearlyIncreaseObservations.Value;
         }
 
-        private static Assessment InitialTransformFrom2018to2023(FA3Legacy assessment,
+        private static Prod.Domain.FA4 InitialTransformFrom2018to2023(FA3Legacy assessment,
             JsonSerializerOptions jsonSerializerOptions, Mapper mapper)
         {
-            var newassesment = new Assessment { Doc = JsonSerializer.Serialize(mapper.Map<FA4>(assessment), jsonSerializerOptions) };
-            return newassesment;
+            FA4 newAssesment = mapper.Map<FA4>(assessment);
+            
+            return newAssesment;
         }
 
         private IEnumerable<FA3Legacy> GetAssessments(string inputFolder)
