@@ -223,7 +223,8 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.DemVariance, opt => opt.MapFrom(src => double.Parse(src.SpreadRscriptDemographicVariance, System.Globalization.CultureInfo.InvariantCulture)))
                     .ForMember(dest => dest.CarryingCapacity, opt => opt.MapFrom(src => ParceLong(src.SpreadRscriptSustainabilityK)))
                     .ForMember(dest => dest.ExtinctionThreshold, opt => opt.MapFrom(src => ParceLong(src.SpreadRscriptQuasiExtinctionThreshold)))
-                    .ForMember(dest => dest.MedianLifetime, opt => opt.MapFrom(src => ParceLong(src.SpreadRscriptEstimatedSpeciesLongevity))) //ActiveSpreadRscriptEstimatedSpeciesLongevity?? ChosenSpreadMedanLifespan??
+                    .ForMember(dest => dest.MedianLifetimeInput, opt => opt.MapFrom(src => ParceLong(src.SpreadRscriptEstimatedSpeciesLongevity))) //ActiveSpreadRscriptEstimatedSpeciesLongevity?? ChosenSpreadMedanLifespan??
+                    .ForMember(dest => dest.MedianLifetime, opt => opt.Ignore())
                     .ForMember(dest => dest.LifetimeLowerQ, opt => opt.Ignore())
                     .ForMember(dest => dest.LifetimeUpperQ, opt => opt.Ignore())
                     .ForMember(dest => dest.Occurrences1Best, opt => opt.MapFrom(src => ParceLong(src.SpreadYearlyIncreaseObservations)))

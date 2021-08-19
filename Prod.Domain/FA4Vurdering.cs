@@ -735,11 +735,14 @@ namespace Prod.Domain
         #endregion
 
         #region Median life time
-        public long MedianLifetime { get; set; } // artens mediane levetid i Norge i år 
+        public long MedianLifetimeInput { get; set; } // artens mediane levetid i Norge i år (brukerinput)
+        public long MedianLifetime { get; set; } // artens mediane levetid i Norge i år (beregnet/avrundet)
         //
         //todo: check: MedianLifetime erstatter muligens ChosenSpreadMedanLifespan
         //
+        public long? LifetimeLowerQInput { get; set; } // nedre kvartil for artens levetid i Norge i år 
         public long LifetimeLowerQ { get; set; } // nedre kvartil for artens levetid i Norge i år 
+        public long? LifetimeUpperQInput { get; set; } // øvre kvartil for artens levetid i Norge i år 
         public long LifetimeUpperQ { get; set; } // øvre kvartil for artens levetid i Norge i år 
         #endregion Median life time
 
