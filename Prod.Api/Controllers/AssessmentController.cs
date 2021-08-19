@@ -78,10 +78,10 @@ namespace Prod.Api.Controllers
         [HttpGet("{id}/lock")]
         public async Task<IActionResult> Lock(int id)
         {
-            var data = await _dbContext.Assessments.Where(x => x.Id == id).FirstOrDefaultAsync();// _dataService.GetAssessmentString(id);
-            if (string.IsNullOrWhiteSpace(data.Doc)) return null;
+            var assessment = await _dbContext.Assessments.Where(x => x.Id == id).FirstOrDefaultAsync();// _dataService.GetAssessmentString(id);
+            if (string.IsNullOrWhiteSpace(assessment.Doc)) return null;
 
-            var doc = JsonConvert.DeserializeObject<FA4>(data.Doc);
+            var doc = JsonConvert.DeserializeObject<FA4>(assessment.Doc);
             var role = await base.GetRoleInGroup(doc.ExpertGroup);
 
             try
@@ -90,6 +90,8 @@ namespace Prod.Api.Controllers
                 {
                     doc.LockedForEditAt = DateTime.Now;
                     doc.LockedForEditByUserId = role.User.Id;
+                    assessment.LockedForEditAt = DateTime.Now;
+                    assessment.LockedForEditByUserId = role.User.Id;
                     await StoreAssessment(id, doc, role.User, true);
                     await _dbContext.SaveChangesAsync();
                 }

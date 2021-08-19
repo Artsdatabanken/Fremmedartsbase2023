@@ -13,6 +13,7 @@ namespace Prod.Domain
         public Guid LastUpdatedByUserId { get; set; }
         public DateTime LastUpdatedAt { get; set; }
         public User LockedForEditByUser { get; set; }
+        public Guid? LockedForEditByUserId { get; set; }
         public DateTime LockedForEditAt { get; set; }
         public string Doc { get; set; }
         public string ScientificName { get; set; }
