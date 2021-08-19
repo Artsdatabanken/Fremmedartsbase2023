@@ -41,19 +41,19 @@ namespace SwissKnife.Database
                 _database.Users.Add(new User()
                 {
                     Id = Guid.Parse(bruker.GUID),
-                    Brukernavn = bruker.Brukernavn,
-                    DatoForTilgang = dummyDate,
-                    DatoOpprettet = dummyDate,
-                    DatoSistAktiv = dummyDate,
+                    UserName = bruker.Brukernavn,
+                    DateGivenAccess = dummyDate,
+                    DateCreated = dummyDate,
+                    DateLastActive = dummyDate,
                     Email = "",
-                    HarTilgang = false,
-                    Navn = bruker.Brukernavn,
-                    TilgangAvvist = true
+                    HasAccess = false,
+                    FullName = bruker.Brukernavn,
+                    AccessDenied = true
                 });
             }
 
             _database.SaveChanges();
-            var users = _database.Users.ToDictionary(x => x.Brukernavn, x => x);
+            var users = _database.Users.ToDictionary(x => x.UserName, x => x);
 
             // mapping
             var mapper = CreateMappingFromOldToNew();
@@ -225,7 +225,8 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.AcceptOrAdjustCritA, opt => opt.Ignore())
                     .ForMember(dest => dest.Hovedøkosystem, opt => opt.Ignore())
 
-
+                    .ForMember(dest => dest.StartYear, opt => opt.Ignore())
+                    .ForMember(dest => dest.EndYear, opt => opt.Ignore())
                     // todo: delete this section when domain is fixed
                     //.ForMember(dest => dest.ScoreA, opt => opt.Ignore())
                     //.ForMember(dest => dest.UnsureA, opt => opt.Ignore())
@@ -276,9 +277,39 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.AOO50yrLow, opt => opt.Ignore())
                     .ForMember(dest => dest.AOO50yrHigh, opt => opt.Ignore())
                     .ForMember(dest => dest.AOOyear1, opt => opt.Ignore())
+                    .ForMember(dest => dest.AOOendyear1, opt => opt.Ignore())
                     .ForMember(dest => dest.AOOyear2, opt => opt.Ignore())
+                    .ForMember(dest => dest.AOOendyear2, opt => opt.Ignore())
+                    .ForMember(dest => dest.AOOdarkfigureBest, opt => opt.Ignore())
+                    .ForMember(dest => dest.AOOdarkfigureLow, opt => opt.Ignore())
+                    .ForMember(dest => dest.AOOdarkfigureHigh, opt => opt.Ignore())
+                    .ForMember(dest => dest.AOO10yrBest, opt => opt.Ignore())
+                    .ForMember(dest => dest.AOO10yrLow, opt => opt.Ignore())
+                    .ForMember(dest => dest.AOO10yrHigh, opt => opt.Ignore())
                     .ForMember(dest => dest.AAO1, opt => opt.Ignore())
                     .ForMember(dest => dest.AAO2, opt => opt.Ignore())
+                    .ForMember(dest => dest.AOOchangeBest, opt => opt.Ignore())
+                    .ForMember(dest => dest.AOOchangeLow, opt => opt.Ignore())
+                    .ForMember(dest => dest.AOOchangeHigh, opt => opt.Ignore())
+
+                    .ForMember(dest => dest.Amethod, opt => opt.Ignore())
+                    .ForMember(dest => dest.Ascore, opt => opt.Ignore())
+                    .ForMember(dest => dest.Alow, opt => opt.Ignore())
+                    .ForMember(dest => dest.Ahigh, opt => opt.Ignore())
+                    .ForMember(dest => dest.AdefaultBest, opt => opt.Ignore())
+                    .ForMember(dest => dest.AdefaultLow, opt => opt.Ignore())
+                    .ForMember(dest => dest.AdefaultHigh, opt => opt.Ignore())
+                    .ForMember(dest => dest.ApossibleLow, opt => opt.Ignore())
+                    .ForMember(dest => dest.ApossibleHigh, opt => opt.Ignore())
+
+
+                    .ForMember(dest => dest.Bmethod, opt => opt.Ignore())
+                    .ForMember(dest => dest.Bscore, opt => opt.Ignore())
+                    .ForMember(dest => dest.Blow, opt => opt.Ignore())
+                    .ForMember(dest => dest.Bhigh, opt => opt.Ignore())
+
+
+
                     .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes, opt => opt.Ignore())
                     .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesBest, opt => opt.Ignore())
                     .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesLow, opt => opt.Ignore())
@@ -350,9 +381,13 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.AOO50yrLow, opt => opt.MapFrom(src => src.PotentialExistenceAreaLowQuartile))
                     .ForMember(dest => dest.AOO50yrHigh, opt => opt.MapFrom(src => src.PotentialExistenceAreaHighQuartile))
                     .ForMember(dest => dest.AOOyear1, opt => opt.Ignore())
+                    .ForMember(dest => dest.AOOendyear1, opt => opt.Ignore())
                     .ForMember(dest => dest.AOOyear2, opt => opt.Ignore())
+                    .ForMember(dest => dest.AOOendyear2, opt => opt.Ignore())
                     .ForMember(dest => dest.AAO1, opt => opt.Ignore())
                     .ForMember(dest => dest.AAO2, opt => opt.Ignore())
+                    .ForMember(dest => dest.StartYear, opt => opt.Ignore())
+                    .ForMember(dest => dest.EndYear, opt => opt.Ignore())
                     .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes, opt => opt.MapFrom(src => src.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes))
                     .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesBest, opt => opt.Ignore())
                     .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesLow, opt => opt.Ignore())

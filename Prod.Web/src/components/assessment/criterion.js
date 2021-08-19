@@ -16,7 +16,7 @@ export default class Criterion extends React.Component {
         console.log("keys: " + JSON.stringify(Object.keys(criterion)))
         const labels = appState.codeLabels
         const ntLabels = labels.NatureTypes
-        const {id, value, uncertaintyValues, auto, codes, heading, info, uncertaintyDisabled } = criterion;
+        const {id, value, uncertaintyValues, auto, codes, heading, info, uncertaintyDisabled, errors } = criterion;
         console.log(heading)
         console.log(codes)
         const showHeading = !mode || mode.indexOf("noheading") < 0
@@ -118,7 +118,13 @@ export default class Criterion extends React.Component {
                         {...checkboxoptional} />
                         {kode.text}
                     </div>
-                   
+                    <div>
+                        <ul>
+                        {Object.keys(errors).map(key =>
+                            <li>{errors[key]}</li>
+                        )}
+                        </ul>
+                    </div>
                 
                 </div>})} 
                 <br/>

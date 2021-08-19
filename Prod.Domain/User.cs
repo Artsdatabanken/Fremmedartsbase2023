@@ -12,39 +12,40 @@ namespace Prod.Domain
     {
         public User()
         {
-            EkspertgruppeRoller = new List<EkspertgruppeRolle>();
+            UserRoleInExpertGroups = new List<UserRoleInExpertGroup>();
         }
 
         public Guid Id { get; set; }
-        public bool ErAdministrator { get; set; }
-        public string Brukernavn { get; set; }
-        public string Navn { get; set; }
+        public bool IsAdmin { get; set; }
+        public string UserName { get; set; }
+        public string FullName { get; set; }
         public string Email { get; set; }
-        public string Soknad { get; set; }
-        public bool HarTilgang { get; set; }
-        public bool HarSoktOmTilgang { get; set; }
+        public string Application { get; set; }
+        public bool HasAccess { get; set; }
+        public bool HasAppliedForAccess { get; set; }
 
-        public bool TilgangAvvist { get; set; }
-        public DateTime DatoForTilgang { get; set; }
-        public DateTime DatoOpprettet { get; set; }
-        public DateTime DatoSistAktiv { get; set; }
+        public bool AccessDenied { get; set; }
+        public DateTime DateGivenAccess { get; set; }
+        public DateTime DateCreated { get; set; }
+        public DateTime DateLastActive { get; set; }
 
-        public List<EkspertgruppeRolle> EkspertgruppeRoller { get; set; }
+        public List<UserRoleInExpertGroup> UserRoleInExpertGroups { get; set; }
 
-        public class EkspertgruppeRolle
+        public class UserRoleInExpertGroup
         {
-            public string EkspertgruppeId { get; set; }
-            public Guid BrukerId { get; set; }
+            public string ExpertGroupName { get; set; }
+
             [JsonIgnore]
             public User User { get; set; }
-            public bool Leder { get; set; }
+            public Guid UserId { get; set; }
+            public bool Admin { get; set; }
 
-            public bool Skriver { get; set; }
+            public bool WriteAccess { get; set; }
 
-            public bool Leser { get; set; }
+            //public bool Leser { get; set; }
 
-            public DateTime DatoOpprettet { get; set; }
-            public Guid OpprettetAvBrukerId { get; set; }
+            public DateTime DateCreated { get; set; }
+            public Guid RoleGivenByUserId { get; set; }
 
         }
 

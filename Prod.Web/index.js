@@ -58,8 +58,8 @@ else {
 
   window.onbeforeunload = (e) => {
     var isdirty = viewModel.isDirty
-    var skriver =  !!viewModel.roleincurrentgroup && viewModel.roleincurrentgroup.skriver
-    var flag = isdirty && skriver
+    var skriver =  !!viewModel.roleincurrentgroup && viewModel.roleincurrentgroup.writeAccess
+    var flag = isdirty && writeAccess
     if (flag) {
         // e.preventDefault()
         e.returnValue = "du lukker siden uten å ha lagret" 

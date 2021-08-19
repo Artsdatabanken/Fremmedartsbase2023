@@ -56,7 +56,7 @@ class AssessmentRoot extends Component {
     render() {
         const {appState, appState:{assessment}, appState:{assessmentTabs}} = this.props
         const rolle = appState.roleincurrentgroup
-        const isSuperUser = rolle.leder
+        const isSuperUser = rolle.admin
         const isFinished = assessment.evaluationStatus && assessment.evaluationStatus === "finished"
         const canEdit = !isFinished && appState.roleincurrentgroup.skriver && assessment.lockedForEditByUser == null    
         
@@ -161,7 +161,7 @@ class AssessmentRoot extends Component {
                 <AssessmentDiff/>
                 :<h1>Oooops?? artinfotab:{assessmentTabs.activeTab.id}</h1>}
                 {assessmentTabs.activeTab.id != 12 && assessmentTabs.activeTab.id != 11 && assessment && assessment.evaluationStatus !== 'finished' &&     
-                <Xcomp.Button primary style={{marginTop: '10px', marginBottom: '10px'}} onClick= {() => {
+                <Xcomp.Button primary disabled={assessmentTabs.activeTab.id === 7 && assessment.riskAssessment.riskLevelCode == "NK"} style={{marginTop: '10px', marginBottom: '10px'}} onClick= {() => {
                     console.log("Save assessment");
                     appState.saveCurrentAssessment();
                   }}>Lagre</Xcomp.Button>}

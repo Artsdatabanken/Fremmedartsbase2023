@@ -33,6 +33,7 @@ namespace Prod.Domain
 
         public List<AssessmentComment> Comments { get; set; }
         public List<Attachment> Attachments { get; set; }
+
     }
 
     public class AssessmentHistory {

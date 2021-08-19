@@ -31,69 +31,68 @@ namespace Prod.Api.Controllers
             return data != null && data.Length > 0 ? data : null;
         }
 
-        public class Tilgang
+        public class Access
         {
             public Guid Id { get; set; }
-            public string Navn { get; set; }
-            public bool Leder { get; set; }
-            public bool Skriver { get; set; }
-            public bool Leser { get; set; }
+            public string FullName { get; set; }
+            public bool Admin { get; set; }
+            public bool WriteAccess { get; set; }
+            //public bool Leser { get; set; }
         }
 
         [Authorize]
         [HttpGet("members/{id}")]
-        public async Task<Tilgang[]> GetMembers(string id)
+        public async Task<Access[]> GetMembers(string id)
         {
             var user = await base.GetUser();
-            if (user == null || !user.ErAdministrator) throw new HttpRequestException("Not admin");
-            var members = await _dbContext.Users.Where(x => x.EkspertgruppeRoller.Any(y => y.EkspertgruppeId == id))
-                .Select(x => new Tilgang
+            if (user == null || !user.IsAdmin) throw new HttpRequestException("Not admin");
+            var members = await _dbContext.Users.Where(x => x.UserRoleInExpertGroups.Any(y => y.ExpertGroupName == id))
+                .Select(x => new Access
                 {
-                    Id = x.Id, Navn = x.Navn + " <" + x.Email + ">", Leder = x.EkspertgruppeRoller.First(y => y.EkspertgruppeId == id).Leder,
-                    Skriver = x.EkspertgruppeRoller.First(y => y.EkspertgruppeId == id).Skriver,
-                    Leser = x.EkspertgruppeRoller.First(y => y.EkspertgruppeId == id).Leser
+                    Id = x.Id, FullName = x.FullName + " <" + x.Email + ">", Admin = x.UserRoleInExpertGroups.First(y => y.ExpertGroupName == id).Admin,
+                    WriteAccess = x.UserRoleInExpertGroups.First(y => y.ExpertGroupName == id).WriteAccess//,
+                    //Leser = x.UserRoleInExpertGroups.First(y => y.ExpertGroupName == id).Leser
                 }).ToArrayAsync();
-            return members.OrderBy(x=>x.Navn).ToArray();
+            return members.OrderBy(x=>x.FullName).ToArray();
             //var data = _dataService.GetExpertGroups();
             //return data != null && data.Length > 0 ? data : null;
         }
 
-        public class LeggTilgang
+        public class AddAccess
         {
-            public string EkspertgruppeId { get; set; }
+            public string ExpertGroupName { get; set; }
             public Guid Id { get; set; }
-            public bool Leder { get; set; }
-            public bool Skriver { get; set; }
-            public bool Leser { get; set; }
+            public bool Admin { get; set; }
+            public bool WriteAccess { get; set; }
         }
 
         [Authorize]
         [HttpPost("members")]
-        public async Task<bool> AddMembers([FromBody] LeggTilgang value)
+        public async Task<bool> AddMembers([FromBody] AddAccess value)
         {
             var user = await base.GetUser();
-            if (user == null || !user.ErAdministrator) throw new HttpRequestException("Not admin");
-            var bruker = await _dbContext.Users.Include(y => y.EkspertgruppeRoller).Where(x => x.Id == value.Id)
+            if (user == null || !user.IsAdmin) throw new HttpRequestException("Not admin");
+            var bruker = await _dbContext.Users.Include(y => y.UserRoleInExpertGroups).Where(x => x.Id == value.Id)
                 .FirstOrDefaultAsync();
             if (bruker == null)
             {
                 return false;
             }
 
-            var eid = value.EkspertgruppeId.Trim();
-            var medlem = bruker.EkspertgruppeRoller.FirstOrDefault(y => y.EkspertgruppeId == eid);
+            var eid = value.ExpertGroupName.Trim();
+            var medlem = bruker.UserRoleInExpertGroups.FirstOrDefault(y => y.ExpertGroupName == eid);
             if (medlem == null)
             {
-                medlem = new User.EkspertgruppeRolle {EkspertgruppeId = eid};
-                bruker.EkspertgruppeRoller.Add(medlem);
+                medlem = new User.UserRoleInExpertGroup {ExpertGroupName = eid};
+                bruker.UserRoleInExpertGroups.Add(medlem);
 
             }
 
-            medlem.DatoOpprettet = DateTime.Now;
-            medlem.OpprettetAvBrukerId = user.Id;
-            medlem.Leder = value.Leder;
-            medlem.Leser = value.Leser;
-            medlem.Skriver = value.Leder ? value.Leder : value.Skriver;
+            medlem.DateCreated = DateTime.Now;
+            medlem.RoleGivenByUserId = user.Id;
+            medlem.Admin = value.Admin;
+            //medlem.Leser = value.Leser;
+            medlem.WriteAccess = value.Admin ? value.Admin : value.WriteAccess;
             await _dbContext.SaveChangesAsync();
 
             return true;
@@ -104,8 +103,8 @@ namespace Prod.Api.Controllers
         public async Task<bool> RemoveMembers(Guid bid, string eid)
         {
             var user = await base.GetUser();
-            if (user == null || !user.ErAdministrator) throw new HttpRequestException("Not admin");
-            var bruker = await _dbContext.Users.Include(y => y.EkspertgruppeRoller).Where(x => x.Id == bid)
+            if (user == null || !user.IsAdmin) throw new HttpRequestException("Not admin");
+            var bruker = await _dbContext.Users.Include(y => y.UserRoleInExpertGroups).Where(x => x.Id == bid)
                 .FirstOrDefaultAsync();
             if (bruker == null)
             {
@@ -113,13 +112,13 @@ namespace Prod.Api.Controllers
             }
 
             eid = eid.Trim();
-            var medlem = bruker.EkspertgruppeRoller.FirstOrDefault(y => y.EkspertgruppeId == eid);
+            var medlem = bruker.UserRoleInExpertGroups.FirstOrDefault(y => y.ExpertGroupName == eid);
             if (medlem == null)
             {
                 return false;
             }
 
-            bruker.EkspertgruppeRoller.Remove(medlem);
+            bruker.UserRoleInExpertGroups.Remove(medlem);
             
             await _dbContext.SaveChangesAsync();
 

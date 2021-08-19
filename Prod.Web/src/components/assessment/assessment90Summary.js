@@ -209,12 +209,12 @@ export default class Assessment90Summary extends Component {
                                 && appState.expertgroup !== null 
                                 && appState.roleincurrentgroup 
                                 // && appState.roleincurrentgroup.leder
-                                ? <div>Vurderingen er under arbeid<p style={{marginTop: '10px'}}><Xcomp.Button alwaysEnabled={appState.roleincurrentgroup.leder} onClick={() => this.setAssessmentComplete(appState)}>Ferdigstill</Xcomp.Button></p></div>
+                                ? <div>Vurderingen er under arbeid<p style={{marginTop: '10px'}}><Xcomp.Button alwaysEnabled={appState.roleincurrentgroup.admin} onClick={() => this.setAssessmentComplete(appState)}>Ferdigstill</Xcomp.Button></p></div>
                                 : assessment.evaluationStatus === 'finished' 
                                 && appState.expertgroup !== null 
                                 && appState.roleincurrentgroup 
                                 // && appState.roleincurrentgroup.leder
-                                ? <div>Vurderingen er ferdigstilt<p style={{marginTop: '10px'}}><Xcomp.Button alwaysEnabled={appState.roleincurrentgroup.leder} onClick={() => this.resetAssessmentComplete(appState)}>Fortsett vurdering</Xcomp.Button></p></div>
+                                ? <div>Vurderingen er ferdigstilt<p style={{marginTop: '10px'}}><Xcomp.Button alwaysEnabled={appState.roleincurrentgroup.admin} onClick={() => this.resetAssessmentComplete(appState)}>Fortsett vurdering</Xcomp.Button></p></div>
                                 : null}
                     {/* {auth.isAdmin ? */}
                         <div style={{float: "right", backgroundColor: "#eee", width: 10, height: 10}} onClick={() => this.copyThisAssessmentToTestarter(appState)} />

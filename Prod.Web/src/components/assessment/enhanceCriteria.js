@@ -1,4 +1,4 @@
-﻿import {action, autorun, computed, extendObservable, observable, observe, isObservableArray, runInAction, transaction, whyRun} from 'mobx';
+﻿import {action, autorun, computed, extendObservable, observable, observe, isObservableArray, runInAction, remove, set, whyRun} from 'mobx';
 import RiskLevel from './riskLevel';
 import {extractFloat, getCriterion} from '../../utils'
 
@@ -100,124 +100,128 @@ function d1(num) {
 
 function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
     const ec = observable({
+        warnings: [],
+
         // A1
         get lifespanA1aSimplifiedEstimateValue () {
+            console.log("* * * run A1 * * * ")
             //amethod = "forekomstareal" 
             const r = riskAssessment
-
-            const AOOchangeBest = r.AOOtotalBest < 4 ? 1 : n0(r.AOO50yrBest) / d1(r.AOOtotalBest)
-            const AOOchangeLow = r.AOOtotalBest < 4 ? 1 : n0(r.AOO50yrLow) / d1(r.AOOtotalBest)
-            const AOOchangeHigh = r.AOOtotalBest >= 4 ? 1 : n0(r.AOO50yrHigh) / d1(r.AOOtotalBest)
-        
-            var adefaultBest = 0 // null
-            if (r.AOO50yrBest < 4) adefaultBest = 1 
-            if (r.AOO50yrBest >= 4) adefaultBest = 2 
-            if (r.AOO50yrBest >= 8 && AOOchangeBest > 0.2) adefaultBest = 3 
-            if (r.AOO50yrBest >= 20 && AOOchangeBest > 0.05) adefaultBest = 3 
-            if (r.AOO50yrBest >= 20 && AOOchangeBest > 0.2) adefaultBest = 4 
-        
-            var adefaultLow = 0 // null
-            if (r.AOO50yrLow < 4) adefaultLow = max(1, adefaultBest - 1) 
-            if (r.AOO50yrLow >= 4) adefaultLow = max(2, adefaultBest - 1) 
-            if (r.AOO50yrLow >= 8 && AOOchangeLow > 0.2) adefaultLow = 3 
-            if (r.AOO50yrLow >= 20 && AOOchangeLow > 0.05) adefaultLow = 3 
-            if (r.AOO50yrLow >= 20 && AOOchangeLow > 0.2) adefaultLow = 4 
-        
-            var adefaultHigh = 0 // null
-            if (r.AOO50yrHigh < 4) adefaultHigh = 1 
-            if (r.AOO50yrHigh >= 4) adefaultHigh = 2 
-            if (r.AOO50yrHigh >= 8 && AOOchangeHigh > 0.2) adefaultHigh = min(3, adefaultBest + 1) 
-            if (r.AOO50yrHigh >= 20 && AOOchangeHigh > 0.05) adefaultHigh = min(3, adefaultBest + 1) 
-            if (r.AOO50yrHigh >= 20 && AOOchangeHigh > 0.2) adefaultHigh = min(4, adefaultBest + 1) 
-        
-        
-            var lifetimeText = null
-            var extinctionText = null
-            if (r.adefaultBest == 1) {
-                lifetimeText = "under 10&nbsp;år" 
-                extinctionText = "over 97&nbsp;%" 
-            }
-            if (r.adefaultBest == 2) {
-                lifetimeText = "mellom 10&nbsp;år og 60&nbsp;år" 
-                extinctionText = "mellom 43&nbsp;% og 97&nbsp;%" 
-            }
-            if (r.adefaultBest == 3) {
-                lifetimeText = "mellom 60&nbsp;år og 650&nbsp;år" 
-                extinctionText = "mellom 5&nbsp;% og 43&nbsp;%" 
-            }
-            if (r.adefaultBest == 4) {
-                lifetimeText = "over 650&nbsp;år" 
-                extinctionText = "under 5&nbsp;%"
-            }
-        
-            var apossibleLow = null
-            apossibleLow = 
-                (r.AOO50yrBest > 80 && AOOchangeBest > 1) ? 4 :
-                (r.AOO50yrBest >= 20 & AOOchangeBest > 0.2) ? 3 :
-                (r.AOO50yrBest >= 4) ? 2 : 
-                1
-        
-            var apossibleHigh = null
-            apossibleHigh =
-                (r.AOO50yrBest < 4) ? 2 :
-                (r.AOO50yrBest < 20 & AOOchangeBest <= 0.05) ? 3 : 
-                4 
-        
-            // // // // Utmating 
-            // const a1aresulttext = `Basert på de Dummy xxx`
-            const a1aresulttext = `Basert på de beste anslagene på forekomstareal i dag (${r.AOOtotalBest}&nbsp;km²) og om 50&nbsp;år (${r.AOO50yrBest}&nbsp;km²) er A-kriteriet forhåndsskåret som ${adefaultBest} (med usikkerhet: ${adefaultLow}–${adefaultHigh}). Dette innebærer at artens mediane levetid ligger ${lifetimeText}, eller at sannsynligheten for utdøing innen 50&nbsp;år er på ${extinctionText}.`
-        
-
-
-            // Resten av beregninga er avhengig av radioknappen som velges nedenfor teksten: 
-            var ascore = adefaultBest 
-            var alow = adefaultLow 
-            var ahigh = adefaultHigh 
-            var medianLifetime = NaN
-            if( r.acceptOrAdjustCritA === "accept") { 
-                // amethod = "forekomstareal forenklet" 
-                medianLifetime = 
-                    ascore === 1 ? 3 :
-                    ascore === 2 ? 25 :
-                    ascore === 3 ? 200 :
-                    ascore === 4 ? 2000 :
-                    NaN
-                return {
-                    amethod: "AOOaccept", // "forekomstareal forenklet",
-                    level: levelFloor(ascore),
-                    high: levelFloor(ahigh),
-                    low: levelFloor(alow),
-                    text: a1aresulttext
+            runInAction(() => {
+                r.AOOchangeBest = r.AOOtotalBest < 4 ? 1 : n0(r.AOO50yrBest) / d1(r.AOOtotalBest)
+                r.AOOchangeLow = r.AOOtotalBest < 4 ? 1 : n0(r.AOO50yrLow) / d1(r.AOOtotalBest)
+                r.AOOchangeHigh = r.AOOtotalBest >= 4 ? 1 : n0(r.AOO50yrHigh) / d1(r.AOOtotalBest)
+            
+                r.adefaultBest = 0 // null
+                if (r.AOO50yrBest < 4) { r.adefaultBest = 1 }
+                if (r.AOO50yrBest >= 4) { r.adefaultBest = 2 }
+                if (r.AOO50yrBest >= 8 && r.AOOchangeBest > 0.2) { r.adefaultBest = 3 }
+                if (r.AOO50yrBest >= 20 && r.AOOchangeBest > 0.05) { r.adefaultBest = 3 }
+                if (r.AOO50yrBest >= 20 && r.AOOchangeBest > 0.2) { r.adefaultBest = 4 }
+            
+                r.adefaultLow = 0 // null
+                if (r.AOO50yrLow < 4) r.adefaultLow = max(1, r.adefaultBest - 1) 
+                if (r.AOO50yrLow >= 4) r.adefaultLow = max(2, r.adefaultBest - 1) 
+                if (r.AOO50yrLow >= 8 && r.AOOchangeLow > 0.2) r.adefaultLow = 3 
+                if (r.AOO50yrLow >= 20 && r.AOOchangeLow > 0.05) r.adefaultLow = 3 
+                if (r.AOO50yrLow >= 20 && r.AOOchangeLow > 0.2) r.adefaultLow = 4 
+            
+                r.adefaultHigh = 0 // null
+                if (r.AOO50yrHigh < 4) r.adefaultHigh = 1 
+                if (r.AOO50yrHigh >= 4) r.adefaultHigh = 2 
+                if (r.AOO50yrHigh >= 8 && r.AOOchangeHigh > 0.2) r.adefaultHigh = min(3, r.adefaultBest + 1) 
+                if (r.AOO50yrHigh >= 20 && r.AOOchangeHigh > 0.05) r.adefaultHigh = min(3, r.adefaultBest + 1) 
+                if (r.AOO50yrHigh >= 20 && r.AOOchangeHigh > 0.2) r.adefaultHigh = min(4, r.adefaultBest + 1) 
+            
+            
+                var lifetimeText = null
+                var extinctionText = null
+                if (r.adefaultBest == 1) {
+                    lifetimeText = "under 10&nbsp;år" 
+                    extinctionText = "over 97&nbsp;%" 
                 }
-            } else if (r.acceptOrAdjustCritA === "adjust") {
-                // amethod = "forekomstareal justert" 
-                // "Skårtabellen" åpnes for avkrysning, med ett mulig kryss for beste anslag og opptil tre kryss for usikkerhet, der ikke-valgbare bokser er grået ut. 
-                // Valgbare bokser for beste anslag er skårene fra og med apossibleLow til og med apossibleHigh. 
-                // Krysset i boksene bestemmer verdien til ascore (mellom 1 og 4). 
-                // Valgbare bokser for usikkerhet er skårene fra og med max(1, ascore - 1) til og med min(4, ascore + 1). 
-                // Det laveste krysset i boksene bestemmer verdien til alow (mellom 1 og 4). 
-                // Det høyeste krysset i boksene bestemmer verdien til ahigh (mellom 1 og 4). 
-        
-                medianLifetime = // Samme som i "forekomstareal forenklet"!
-                    ascore === 1 ? 3 :
-                    ascore === 2 ? 25 :
-                    ascore === 3 ? 200 :
-                    ascore === 4 ? 2000 :
-                    NaN
-                return {
-                        amethod: "AOOadjusted", // "forekomstareal justert",
-                        level: NaN,
-                        high: levelFloor(ahigh),
-                        low: levelFloor(alow),
+                if (r.adefaultBest == 2) {
+                    lifetimeText = "mellom 10&nbsp;år og 60&nbsp;år" 
+                    extinctionText = "mellom 43&nbsp;% og 97&nbsp;%" 
+                }
+                if (r.adefaultBest == 3) {
+                    lifetimeText = "mellom 60&nbsp;år og 650&nbsp;år" 
+                    extinctionText = "mellom 5&nbsp;% og 43&nbsp;%" 
+                }
+                if (r.adefaultBest == 4) {
+                    lifetimeText = "over 650&nbsp;år" 
+                    extinctionText = "under 5&nbsp;%"
+                }
+            
+                r.apossibleLow = 
+                    (r.AOO50yrBest > 80 && r.AOOchangeBest > 1) ? 4 :
+                    (r.AOO50yrBest >= 20 & r.AOOchangeBest > 0.2) ? 3 :
+                    (r.AOO50yrBest >= 4) ? 2 : 
+                    1
+            
+                r.apossibleHigh =
+                    (r.AOO50yrBest < 4) ? 2 :
+                    (r.AOO50yrBest < 20 & r.AOOchangeBest <= 0.05) ? 3 : 
+                    4 
+            
+                // // // // Utmating 
+                // const a1aresulttext = `Basert på de Dummy xxx`
+                const a1aresulttext = `Basert på de beste anslagene på forekomstareal i dag (${r.AOOtotalBest}&nbsp;km²) og om 50&nbsp;år (${r.AOO50yrBest}&nbsp;km²) er A-kriteriet forhåndsskåret som ${r.adefaultBest} (med usikkerhet: ${r.adefaultLow}–${r.adefaultHigh}). Dette innebærer at artens mediane levetid ligger ${lifetimeText}, eller at sannsynligheten for utdøing innen 50&nbsp;år er på ${extinctionText}.`
+            
+
+
+                // Resten av beregninga er avhengig av radioknappen som velges nedenfor teksten: 
+                r.ascore = r.adefaultBest 
+                r.alow = r.adefaultLow 
+                r.ahigh = r.adefaultHigh 
+                r.medianLifetime = NaN
+                if( r.acceptOrAdjustCritA === "accept") { 
+                    // amethod = "forekomstareal forenklet" 
+                    r.medianLifetime = 
+                        r.ascore === 1 ? 3 :
+                        r.ascore === 2 ? 25 :
+                        r.ascore === 3 ? 200 :
+                        r.ascore === 4 ? 2000 :
+                        NaN
+                    return {
+                        method: "AOOaccept", // "forekomstareal forenklet",
+                        level: levelFloor(r.ascore),
+                        high: levelFloor(r.ahigh),
+                        low: levelFloor(r.alow),
                         text: a1aresulttext
                     }
-        
-            } else {
-                console.error("lifespanA1aSimplifiedEstimateValue acceptOrAdjustCritA illegal value: " + r.acceptOrAdjustCritA)
-            }
+                } else if (r.acceptOrAdjustCritA === "adjust") {
+                    // amethod = "forekomstareal justert" 
+                    // "Skårtabellen" åpnes for avkrysning, med ett mulig kryss for beste anslag og opptil tre kryss for usikkerhet, der ikke-valgbare bokser er grået ut. 
+                    // Valgbare bokser for beste anslag er skårene fra og med apossibleLow til og med apossibleHigh. 
+                    // Krysset i boksene bestemmer verdien til ascore (mellom 1 og 4). 
+                    // Valgbare bokser for usikkerhet er skårene fra og med max(1, ascore - 1) til og med min(4, ascore + 1). 
+                    // Det laveste krysset i boksene bestemmer verdien til alow (mellom 1 og 4). 
+                    // Det høyeste krysset i boksene bestemmer verdien til ahigh (mellom 1 og 4). 
+            
+                    r.medianLifetime = // Samme som i "forekomstareal forenklet"!
+                        r.ascore === 1 ? 3 :
+                        r.ascore === 2 ? 25 :
+                        r.ascore === 3 ? 200 :
+                        r.ascore === 4 ? 2000 :
+                        NaN
+                    return {
+                            method: "AOOadjusted", // "forekomstareal justert",
+                            level: NaN,
+                            high: levelFloor(ahigh),
+                            low: levelFloor(alow),
+                            text: a1aresulttext
+                        }
+            
+                } else {
+                    console.error("lifespanA1aSimplifiedEstimateValue acceptOrAdjustCritA illegal value: " + r.acceptOrAdjustCritA)
+                }
+            })
         },
         // A2
         get spreadRscriptEstimatedSpeciesLongevityValue () {
+            console.log("* * * run A2 * * * ")
+
             const r = riskAssessment
             runInAction(() => {                
                 r.ascore = 
@@ -241,6 +245,8 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
         // A3
         get viableAnalysisValue () {
+            console.log("* * * run A3 * * * ")
+
             const r = riskAssessment
 
             if (r.lifetimeLowerQ > r.medianLifetime) 
@@ -290,6 +296,8 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 
         
         get B1 () {
+            console.log("* * * run B1 * * * ")
+
             const r = riskAssessment
             if (r.expansionLowerQ > r.expansionSpeed)
                 return {error:  "Ekspansjonshastighetens nedre kvartil må være mindre enn medianen."}
@@ -332,6 +340,8 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
 
         get B2a () {
+            console.log("* * * run B2a * * * ")
+
             const r = riskAssessment
             runInAction(() => {                
                 r.AOOdarkfigureBest = roundToSignificantDecimals2(r.AOOdarkfigureBest)
@@ -358,6 +368,8 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
 
         get B2b () {
+            console.log("* * * run B2b * * * ")
+
             const r = riskAssessment
             runInAction(() => {                
                 r.expansionSpeed = round(200 * (sqrt(r.AOO10yrBest / 4) - 1) / sqrt(pi)) 
@@ -449,31 +461,40 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         // // // },
 
         // medianLifetime: 0,
-        amethod: null,
-        ascore: 0,
-        ahigh: 0,
-        alow:0,
-        bmethod: null,
-        bscore: 0,
-        bhigh: 0,
-        blow:0,
+        // amethod: null,
+        // ascore: 0,
+        // ahigh: 0,
+        // alow:0,
+        // bmethod: null,
+        // bscore: 0,
+        // bhigh: 0,
+        // blow:0,
 
         bCritMCount: "",
         bCritExact: "",
         bCritP: "",
         bCritNewObs: "",
 
-        AOOdarkfigureBest: 0,
-        AOOdarkfigureLow: 0,
-        AOOdarkfigureHigh: 0,
-        AOO10yrBest: 0,
-        AOO10yrHigh: 0,
-        AOO10yrLow: 0,
+        // AOOdarkfigureBest: 0,
+        // AOOdarkfigureLow: 0,
+        // AOOdarkfigureHigh: 0,
+        // AOO10yrBest: 0,
+        // AOO10yrHigh: 0,
+        // AOO10yrLow: 0,
+
         
 
 
+        get ChosenSpreadYearlyIncreaseLevel() {
+            const num = extractFloat(riskAssessment[riskAssessment.ChosenSpreadYearlyIncrease])
+            const result = yearlyIncreaseLevel(num)
+            return result
+        },
+
         get CalculatedCritALevel() {
+            console.log("CalculatedCritALevel")
             const method = riskAssessment.chosenSpreadMedanLifespan
+            console.log("CalculatedCritALevel method " + method)
             const result = 
                 method === "LifespanA1aSimplifiedEstimate" 
                 ? ec.lifespanA1aSimplifiedEstimateValue
@@ -484,12 +505,8 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 : NaN
 
             // const result = aresult.level
+            console.log("CalculatedCritALevel result " + result)
 
-            return result
-        },
-        get ChosenSpreadYearlyIncreaseLevel() {
-            const num = extractFloat(riskAssessment[riskAssessment.ChosenSpreadYearlyIncrease])
-            const result = yearlyIncreaseLevel(num)
             return result
         },
         get CalculatedCritBLevel() {
@@ -544,12 +561,33 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         }
     })
 
+    // autorun(() => {
+    //     if (r.AOOtotalLow > r.AOOtotalBest) 
+    //         return {error: "Det nedre anslaget på forekomstarealet kan ikke være større enn det beste anslaget."} 
+    //     if (r.AOOtotalHigh < r.AOOtotalBest) 
+    //         return {error: "Det øvre anslaget på forekomstarealet kan ikke være mindre enn det beste anslaget."}
+    //     if (r.AOO50yrLow > r.AOO50yrBest) 
+    //         return {error: "Det nedre anslaget på forekomstarealet kan ikke være større enn det beste anslaget."}
+    //     if (r.AOO50yrHigh < r.AOO50yrBest) 
+    //         return {error: "Det øvre anslaget på forekomstarealet kan ikke være mindre enn det beste anslaget."}
+    //     if (r.AOOtotalLow == r.AOOknown) 
+    //         warnings.push("Er det realistisk at det ikke eksisterer noen uoppdagede forekomster av arten?") 
+    //     if (r.AOOtotalLow < r.AOOknown) 
+    //         warnings.push("Er det korrekt at artens totale nåværende forekomstareal kan være mindre enn det kjente?") 
+    //     if (AOO50yrBest < AOOtotalBest) 
+    //         warnings.push("Er det korrekt at det er forventet en nedgang i artens forekomstareal i løpet av de neste 50&nbsp;år?") 
+    
+
+    // })
+
+
     autorun(() => {
         const criterionA = getCriterion(riskAssessment, 0, "A")
-        // console.log("Autorun criterionA: " + criterionA.value)
+        console.log("Autorun criterionA level: " + criterionA.value + typeof(riskAssessment.CalculatedCritALevel));
+        console.log("CalculatedCritALevel: "); // + typeof(riskAssessment.CalculatedCritALevel))
         const nv = riskAssessment.CalculatedCritALevel //ChosenSpreadMedanLifespanLevel
-        // console.log("Autorun criterionA nv: " + JSON.stringify(nv))
-        if (nv.amethod !== "AOOadjusted") { // only set criterion value (automatically) when certain amethods is used
+        console.log("Autorun criterionA nv: " + JSON.stringify(nv))
+        if (nv.method !== "AOOadjusted") { // only set criterion value (automatically) when certain amethods is used
             runInAction(() => {
                 criterionA.value = nv.level
             })
@@ -1123,8 +1161,37 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                     crit.uncertaintyDisabled.replace(ud)
             })
             firstrun = false
-            // whyRun()
+            // whyRun()  // leave this line here! Se comments above to learn when to uncomment.
        })
+    }
+}
+
+function enhanceCriteriaAddErrorReportingForAutoMode(riskAssessment) {
+    for(const crit of riskAssessment.criteria) { 
+        extendObservable(crit, {
+            errors: {},
+            get hasErrors() {
+                return Object.keys(errors).length > 0 
+            },
+            addError({id, errorText}) {
+                if(typeof(id) !== 'string' || typeof(id) !== 'string' ) {
+                    console.log("crit addError wrong data")
+                }
+                if (!(id in errors)) {
+                    set(error, id)
+                    //errors[id] = errorText
+                }
+            },
+            removeError(id) {
+                if(typeof(id) !== 'string') {
+                    console.log("crit removeError wrong data")
+                }
+                if (id in errors) {
+                    // errors[id] = undefined
+                    remove(errors, id)
+                }
+            }
+        })
     }
 }
 
@@ -1136,4 +1203,5 @@ export default function enhanceCriteria(riskAssessment, vurdering, codes, labels
     enhanceRiskAssessmentEcoEffect(riskAssessment)
     enhanceRiskAssessmentInvasjonspotensiale(riskAssessment)
     enhanceCriteriaAddUncertaintyRules(riskAssessment)
+    enhanceCriteriaAddErrorReportingForAutoMode(riskAssessment)
 }

@@ -16,7 +16,7 @@ export default class Assessment80GeografiskVariasjon extends React.Component {
 		const geolabels = labels.geographicVariation
 		
 		
-		if (riskAssessment.riskLevelCode == "NK" || riskAssessment.riskLevelCode == "LO") {
+		if (riskAssessment.riskLevelCode == "NK") {
 			riskAssessment.possibleLowerCategory = "no";
 		} 
         
@@ -24,9 +24,21 @@ export default class Assessment80GeografiskVariasjon extends React.Component {
 			<div>
 				{config.showPageHeaders ? <h3>{geolabels.heading}</h3> : <br />}
 				<fieldset className="well">
-					<p dangerouslySetInnerHTML={{ __html: labels.geographicVariation.possibleLowerCategory }}></p>
-					<Xcomp.StringEnum observableValue={[riskAssessment, "possibleLowerCategory"]} disabled={riskAssessment.riskLevelCode == "NK" || riskAssessment.riskLevelCode == "LO"} mode="radio" codes={koder.yesNo}/>
-					{(riskAssessment.riskLevelCode == "NK" || riskAssessment.riskLevelCode == "LO") &&
+					{riskAssessment.riskLevelCode == "NK" ? 
+						<p dangerouslySetInnerHTML={{ __html: labels.geographicVariation.possibleLowerCategoryNK }}></p> :
+						riskAssessment.riskLevelCode == "SE" || riskAssessment.riskLevelCode == "HI"  ?
+						<p dangerouslySetInnerHTML={{ __html: labels.geographicVariation.possibleLowerCategorySEHI }}></p> :
+						riskAssessment.riskLevelCode == "PH"  ?
+						<p dangerouslySetInnerHTML={{ __html: labels.geographicVariation.possibleLowerCategoryPH }}></p> :
+						riskAssessment.riskLevelCode == "LO"  ?
+						<p dangerouslySetInnerHTML={{ __html: labels.geographicVariation.possibleLowerCategoryLO }}></p> :
+						null}
+					<Xcomp.StringEnum observableValue={[riskAssessment, "possibleLowerCategory"]} disabled={riskAssessment.riskLevelCode == "NK" 
+																										//|| riskAssessment.riskLevelCode == "LO"
+																										} mode="radio" codes={koder.yesNo}/>
+					{(riskAssessment.riskLevelCode == "NK" 
+						//|| riskAssessment.riskLevelCode == "LO"
+						) &&
 						<p>{labels.geographicVariation.notValid }</p> }
 					
 					{riskAssessment.possibleLowerCategory == "yes" ? 

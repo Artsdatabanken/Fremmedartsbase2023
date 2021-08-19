@@ -239,7 +239,7 @@ class ViewModel {
             // ******************************************************************************
 
             runInAction(() => {
-                const isLockedForEdit = this.assessment.lockedForEditByUserId !== null && this.assessment.lockedForEditByUserId !== auth.userId
+                const isLockedForEdit = this.assessment && this.assessment.lockedForEditByUserId !== null && this.assessment.lockedForEditByUserId !== auth.userId
                 this.userContext.readonly = (
                     this.viewMode === "assessment" &&
                     (
@@ -713,7 +713,7 @@ class ViewModel {
     }
 
     @action setAssessmentComplete(statusaction) {
-        if (!this.roleincurrentgroup.leder) {
+        if (!this.roleincurrentgroup.admin) {
             alert("setAssessmentComplete: 'Not allowed'")
             return
         }
@@ -1085,7 +1085,7 @@ class ViewModel {
     }
 
     @action copyThisAssessmentToTestarter() {
-        if (!this.roleincurrentgroup.leder) {
+        if (!this.roleincurrentgroup.admin) {
             console.warn("copyThisAssessmentToTestarter: 'Not allowed'")
             alert("copyThisAssessmentToTestarter: 'Not allowed'")
             return

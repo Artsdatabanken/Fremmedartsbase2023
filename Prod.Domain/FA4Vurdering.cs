@@ -577,6 +577,26 @@ namespace Prod.Domain
         public Int64? AOOtotalLow { get; set; }
         [System.Text.Json.Serialization.JsonPropertyName("AOOtotalHigh")]
         public Int64? AOOtotalHigh { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("AOOchangeBest")]
+        public double? AOOchangeBest { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("AOOchangeLow")]
+        public double? AOOchangeLow { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("AOOchangeHigh")]
+        public double? AOOchangeHigh { get; set; }
+
+
+        public int? AdefaultBest { get; set; }
+        public int? AdefaultLow { get; set; }
+        public int? AdefaultHigh { get; set; }
+
+
+        public int? ApossibleLow { get; set; }
+        public int? ApossibleHigh { get; set; }
+
+
+
+
         // -------- disse (forekomstareal i dag) er erstattet:  
         //todo: *sjekk konvertering fra FAB3 før sletting av utkommentert kode*
         //public Int64? CurrentExistenceArea { get; set; }
@@ -594,13 +614,17 @@ namespace Prod.Domain
 
         // *******  (B2a) Økning i forekomstareal – selvstendig reproduserende arter  **********
         [System.Text.Json.Serialization.JsonPropertyName("AOOyear1")]
-        public long AOOyear1 { get; set; } // årstallet for det første forekomstarealet 
+        public long? AOOyear1 { get; set; } // årstallet for det første forekomstarealet 
+        [System.Text.Json.Serialization.JsonPropertyName("AOOendyear1")]
+        public long? AOOendyear1 { get; set; } // årstallet for det første forekomstarealet 
         [System.Text.Json.Serialization.JsonPropertyName("AOOyear2")]
-        public long AOOyear2 { get; set; } // årstallet for det andre forekomstarealet 
+        public long? AOOyear2 { get; set; } // årstallet for det andre forekomstarealet 
+        [System.Text.Json.Serialization.JsonPropertyName("AOOendyear2")]
+        public long? AOOendyear2 { get; set; } // årstallet for det andre forekomstarealet 
         [System.Text.Json.Serialization.JsonPropertyName("AAO1")]
-        public long AAO1 { get; set; } // forekomstarealet i år 1 
+        public long? AAO1 { get; set; } // forekomstarealet i år 1 
         [System.Text.Json.Serialization.JsonPropertyName("AAO2")]
-        public long AAO2 { get; set; } // forekomstarealet i år 2 
+        public long? AAO2 { get; set; } // forekomstarealet i år 2 
         // ************************************************************************************
 
 
@@ -718,6 +742,51 @@ namespace Prod.Domain
         public long? LifetimeLowerQ { get; set; } // nedre kvartil for artens levetid i Norge i år 
         public long? LifetimeUpperQ { get; set; } // øvre kvartil for artens levetid i Norge i år 
         #endregion Median life time
+
+        public string Amethod { get; set; } // metode som ble brukt for å beregne A-kriteriet 
+        public int Ascore { get; set; } // skår for A-kriteriet 
+        public int Alow { get; set; } // nedre skår for A-kriteriet (inkludert usikkerhet) 
+        public int Ahigh { get; set; } // øvre skår for A-kriteriet (inkludert usikkerhet) 
+        public string Bmethod { get; set; } // metode som ble brukt for å beregne B-kriteriet 
+        public int Bscore { get; set; } // skår for B-kriteriet 
+        public int Blow { get; set; } // nedre skår for B-kriteriet (inkludert usikkerhet) 
+        public int Bhigh { get; set; } // øvre skår for B-kriteriet (inkludert usikkerhet) 
+
+        public int StartYear { get; set; } // startår for B-kriteriet / utbredelse
+
+        public int EndYear { get; set; } // sluttår for B-kriteriet / utbredelse
+
+        [System.Text.Json.Serialization.JsonPropertyName("AOOdarkfigureBest")]
+        public float? AOOdarkfigureBest { get; set; } // beste anslag på forekomstarealets mørketall 
+        [System.Text.Json.Serialization.JsonPropertyName("AOOdarkfigureLow")]
+        public float? AOOdarkfigureLow { get; set; } // lavt anslag på forekomstarealets mørketall 
+        [System.Text.Json.Serialization.JsonPropertyName("AOOdarkfigureHigh")]
+        public float? AOOdarkfigureHigh { get; set; } // høyt anslag på forekomstarealets mørketall 
+        [System.Text.Json.Serialization.JsonPropertyName("AOO10yrBest")]
+        public long? AOO10yrBest { get; set; } // beste anslag på totalt forekomstareal om 10 år
+        [System.Text.Json.Serialization.JsonPropertyName("AOO10yrLow")]
+        public long? AOO10yrLow { get; set; } // lavt anslag på totalt forekomstareal om 10 år
+        [System.Text.Json.Serialization.JsonPropertyName("AOO10yrHigh")]
+        public long? AOO10yrHigh { get; set; } // høyt anslag på totalt forekomstareal om 10 år
+
+
+        //-----------------------------------------------------------------------
+        // todo: slett dette (etter hvert)
+        // erstattet disse i 61 - 16.8.21 - dette er kun for referanse. 
+        //PopulationSize ACritSpeciesCount
+        //GrowthRate ACritPopGrowth
+        //EnvVariance ACritEnvirVariance
+        //DemVariance ACritDemoVariance
+        //CarryingCapacity ACritSustainability
+        //ExtinctionThreshold ACritExtThreshold
+        //MedianLifetime ACritMedian
+        //ExpansionSpeed BCritExpansion
+        //ExpansionLowerQ BCritLower
+        //ExpansionUpperQ BCritHigher
+        //-----------------------------------------------------------------------
+
+
+
 
 
 
@@ -1164,7 +1233,7 @@ namespace Prod.Domain
         }
 
         public string LockedForEditByUser { get; set; }
-        public Guid LockedForEditByUserId { get; set; }
+        public Guid? LockedForEditByUserId { get; set; }
         public string LockedForEditTimeStamp { get; set; }
     }
 
