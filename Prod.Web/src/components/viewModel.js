@@ -653,12 +653,13 @@ class ViewModel {
             const assessmentStringCopy = JSON.stringify(json)
             const jsoncopy = JSON.parse(assessmentStringCopy)
 
-             const assessment = observable.object(jsoncopy)
+            //  const assessment = observable.object(jsoncopy)
 
 
             // enhanceWithRiskEvaluation(assessment)
 
-            enhanceAssessment(assessment, this)
+            // enhanceAssessment(assessment, this)
+            const assessment = enhanceAssessment(jsoncopy, this)
 
             this.navigate(1)
             runInAction(() => {
