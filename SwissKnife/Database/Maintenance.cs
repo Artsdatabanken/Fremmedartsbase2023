@@ -259,7 +259,9 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.ExtinctionThreshold, opt => opt.MapFrom(src => ParseLong(src.SpreadRscriptQuasiExtinctionThreshold)))
                     .ForMember(dest => dest.MedianLifetimeInput, opt => opt.MapFrom(src => ParseLong(src.SpreadRscriptEstimatedSpeciesLongevity))) //ActiveSpreadRscriptEstimatedSpeciesLongevity?? ChosenSpreadMedanLifespan??
                     .ForMember(dest => dest.MedianLifetime, opt => opt.Ignore())
+                    .ForMember(dest => dest.LifetimeLowerQInput, opt => opt.Ignore())
                     .ForMember(dest => dest.LifetimeLowerQ, opt => opt.Ignore())
+                    .ForMember(dest => dest.LifetimeUpperQInput, opt => opt.Ignore())
                     .ForMember(dest => dest.LifetimeUpperQ, opt => opt.Ignore())
                     .ForMember(dest => dest.Occurrences1Best, opt => opt.MapFrom(src => ParseDouble(src.SpreadYearlyIncreaseObservations)))
                     .ForMember(dest => dest.Occurrences1Low, opt => opt.MapFrom(src => ParseDouble(src.SpreadYearlyIncreaseObservationsLowerQuartile)))
