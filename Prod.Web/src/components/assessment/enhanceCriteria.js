@@ -73,6 +73,38 @@ function d1(num) {
         : num
 }
 
+const errorhandler = {
+    errors: {},
+    get hasErrors() {
+        return Object.keys(this.errors).length > 0 
+    },
+    addError({id, errorText}) {
+        if(typeof(id) !== 'string' || typeof(id) !== 'string' ) {
+            console.warn("addError wrong data type")
+        }
+        if (!(id in this.errors)) {
+            set(this.errors, id)
+            // this.errors[id] = errorText
+        }
+    },
+    removeError(id) {
+        if(typeof(id) !== 'string') {
+            console.warn("removeError wrong data type")
+        }
+        if (id in this.errors) {
+            // this.errors[id] = undefined
+            remove(this.errors, id)
+        }
+    }
+}
+
+
+function enhanceRiskAssessmentAddErrorReportingHandler(riskAssessment) {
+        extendObservable(riskAssessment, errorhandler)
+}
+
+
+
 function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
     const r = riskAssessment
     extendObservable(riskAssessment, {
@@ -254,7 +286,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             return roundToSignificantDecimals(result)
         },
         get AOOdarkfigureBest() {
-            return roundToSignificantDecimals2(r.AOOdarkfigureBest)
+            return roundToSignificantDecimals2(r.AOOtotalBest / r.AOOknown )
         },
         get b2aresulttext() {
             return `Ekspansjonshastigheten er beregnet til ${r.expansionSpeed}&nbsp;m/år basert på økningen i artens forekomstareal i perioden fra ${r.AOOyear1} til ${r.AOOyear2} og et mørketall på ${r.AOOdarkfigureBest}.`
@@ -278,6 +310,38 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         console.log("ascore: " + r.ascore )
     })
         
+    autorun(() => {
+        if (r.lifetimeLowerQ > r.medianLifetime) {
+            r.addError("A3err1", "Levetidens nedre kvartil må være mindre enn medianen.")
+        } else {
+            r.removeError("A3err1")
+        }
+    })
+        
+    autorun(() => {
+        if (r.LifetimeUpperQ <= r.medianLifetime) {
+            r.addError("A3err2", "Levetidens nedre kvartil må være mindre enn medianen.")
+        } else {
+            r.removeError("A3err2")
+        }
+    })
+        
+    autorun(() => {
+        if (r.expansionLowerQ > r.expansionSpeed) {
+            r.addError("B1err1", "Ekspansjonshastighetens nedre kvartil må være mindre enn medianen.")
+        } else {
+            r.removeError("B1err1")
+        }
+    })
+        
+    autorun(() => {
+        if (r.expansionUpperQ <= r.expansionSpeed) {
+            r.addError("B1err2", "Ekspansjonshastighetens øvre kvartil må være større enn medianen.")
+        } else {
+            r.removeError("B1err2")
+        }
+    })
+
     const ec = observable({
         warnings: [],
 
@@ -332,10 +396,10 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 
             const r = riskAssessment
 
-            if (r.lifetimeLowerQ > r.medianLifetime) 
-                return {error: "Levetidens nedre kvartil må være mindre enn medianen."}
-            if (r.LifetimeUpperQ <= r.medianLifetime) 
-                return {error: "Levetidens øvre kvartil må være større enn medianen."}
+            // if (r.lifetimeLowerQ > r.medianLifetime) 
+            //     return {error: "Levetidens nedre kvartil må være mindre enn medianen."}
+            // if (r.LifetimeUpperQ <= r.medianLifetime) 
+            //     return {error: "Levetidens øvre kvartil må være større enn medianen."}
 
             const result = {
                 method: "levedyktighetsanalyse",
@@ -351,10 +415,10 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         get B1 () {
             console.log("* * * run B1 * * * ")
             const r = riskAssessment
-            if (r.expansionLowerQ > r.expansionSpeed)
-                return {error:  "Ekspansjonshastighetens nedre kvartil må være mindre enn medianen."}
-            if (r.expansionUpperQ <= r.expansionSpeed) 
-                return {error: "Ekspansjonshastighetens øvre kvartil må være større enn medianen."}
+            // if (r.expansionLowerQ > r.expansionSpeed)
+            //     return {error:  "Ekspansjonshastighetens nedre kvartil må være mindre enn medianen."}
+            // if (r.expansionUpperQ <= r.expansionSpeed) 
+            //     return {error: "Ekspansjonshastighetens øvre kvartil må være større enn medianen."}
             const result = {
                 method: "modellering",
                 level: r.bscore,
@@ -1157,40 +1221,18 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
 
 function enhanceCriteriaAddErrorReportingForAutoMode(riskAssessment) {
     for(const crit of riskAssessment.criteria) { 
-        extendObservable(crit, {
-            errors: {},
-            get hasErrors() {
-                return Object.keys(errors).length > 0 
-            },
-            addError({id, errorText}) {
-                if(typeof(id) !== 'string' || typeof(id) !== 'string' ) {
-                    console.log("crit addError wrong data")
-                }
-                if (!(id in errors)) {
-                    set(error, id)
-                    //errors[id] = errorText
-                }
-            },
-            removeError(id) {
-                if(typeof(id) !== 'string') {
-                    console.log("crit removeError wrong data")
-                }
-                if (id in errors) {
-                    // errors[id] = undefined
-                    remove(errors, id)
-                }
-            }
-        })
+        extendObservable(crit, errorhandler)
     }
 }
 
 
 export default function enhanceCriteria(riskAssessment, vurdering, codes, labels, artificialAndConstructedSites) {
+    enhanceRiskAssessmentAddErrorReportingHandler(riskAssessment)
+    enhanceCriteriaAddErrorReportingForAutoMode(riskAssessment)
     enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering, artificialAndConstructedSites)
     enhanceRiskAssessmentLevel(riskAssessment, labels)
     enhanceCriteriaAddLabelsAndAuto(riskAssessment, codes)
     enhanceRiskAssessmentEcoEffect(riskAssessment)
     enhanceRiskAssessmentInvasjonspotensiale(riskAssessment)
     enhanceCriteriaAddUncertaintyRules(riskAssessment)
-    enhanceCriteriaAddErrorReportingForAutoMode(riskAssessment)
 }
