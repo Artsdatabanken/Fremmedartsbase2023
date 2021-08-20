@@ -267,8 +267,11 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.Occurrences1Low, opt => opt.MapFrom(src => ParseDouble(src.SpreadYearlyIncreaseObservationsLowerQuartile)))
                     .ForMember(dest => dest.Occurrences1High, opt => opt.MapFrom(src => ParseDouble(src.SpreadYearlyIncreaseObservationsUpperQuartile)))
                     .ForMember(dest => dest.IntroductionsBest, opt => opt.Ignore())
+                    .ForMember(dest => dest.ExpansionSpeedInput, opt => opt.Ignore())
                     .ForMember(dest => dest.ExpansionSpeed, opt => opt.MapFrom(src => ParseDouble(src.SpreadYearlyIncreaseOccurrenceArea))) // ActiveSpreadYearlyIncreaseOccurrenceArea?? SpreadYearlyIncreaseCalculatedExpansionSpeed?? SpreadYearlyIncreaseObservations??
+                    .ForMember(dest => dest.ExpansionLowerQInput, opt => opt.Ignore())
                     .ForMember(dest => dest.ExpansionLowerQ, opt => opt.MapFrom(src => ParseDouble(src.SpreadYearlyIncreaseOccurrenceAreaLowerQuartile)))
+                    .ForMember(dest => dest.ExpansionUpperQInput, opt => opt.Ignore())
                     .ForMember(dest => dest.ExpansionUpperQ, opt => opt.MapFrom(src => ParseDouble(src.SpreadYearlyIncreaseOccurrenceAreaUpperQuartile)))
 
                     // følgende blir mappet fra FA3Legacy lenger nede

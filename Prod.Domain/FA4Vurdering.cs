@@ -813,8 +813,11 @@ namespace Prod.Domain
 
 
         // ********************** ((B1) ekspansjonshastighet  ****************************
+        public double? ExpansionSpeedInput { get; set; }  // ekspansjonshastighet i meter per år 
         public double? ExpansionSpeed { get; set; }  // ekspansjonshastighet i meter per år 
+        public double? ExpansionLowerQInput { get; set; } // nedre kvartil for ekspansjonshastighet i meter per år 
         public double? ExpansionLowerQ { get; set; } // nedre kvartil for ekspansjonshastighet i meter per år 
+        public double? ExpansionUpperQInput { get; set; } // øvre kvartil for ekspansjonshastighet i meter per år 
         public double? ExpansionUpperQ { get; set; } // øvre kvartil for ekspansjonshastighet i meter per år 
         // -------- disse ((B1) ekspansjonshastighet) er erstattet:  
         //todo: *sjekk konvertering fra FAB3 før sletting av utkommentert kode*
