@@ -110,14 +110,17 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
     extendObservable(riskAssessment, {
         get ametodkey() {
             const method = riskAssessment.chosenSpreadMedanLifespan
+            const a1submethod = r.acceptOrAdjustCritA
             const result = 
                 method === "LifespanA1aSimplifiedEstimate" 
-                ? "A1"
+                ? a1submethod === "accept" 
+                    ? "A1a" // "AOOaccept"  // "forekomstareal forenklet"
+                    : "A1b" // "AOOadjusted", // "forekomstareal justert"
                 : method === "SpreadRscriptEstimatedSpeciesLongevity"
                 ? "A2"
                 : method === "ViableAnalysis"
                 ? "A3"
-                : null
+                : ""
             return result
         },
         get bmetodkey() {
@@ -129,7 +132,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 ? "B2a"
                 : method === "c"
                 ? "B2b"
-                : null
+                : ""
             return result
         },
         get AOOchangeBest() { return r.AOOtotalBest < 4 ? 1 : n0(r.AOO50yrBest) / d1(r.AOOtotalBest) },
@@ -174,7 +177,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         get ascore() {
             const k = r.ametodkey
             console.log("ascore method: " + k)
-            return k === "A1" ? r.adefaultBest 
+            return k.startsWith("A1") ? r.adefaultBest 
             : r.medianLifetime >= 650 ? 4 
             : r.medianLifetime >= 60 ? 3 
             : r.medianLifetime >= 10 ? 2 
@@ -183,7 +186,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
         get alow() {
             const k = r.ametodkey
-            return k === "A1" ? r.adefaultLow 
+            return k.startsWith("A1") ? r.adefaultLow 
             : k === "A2" || k === "A3" ?
                 r.lifetimeLowerQ >= 650 ? 4 :
                 r.lifetimeLowerQ >= 60 ? 3 :
@@ -193,8 +196,8 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             : 0 // 1 / NaN?
         },
         get ahigh() {
-            const k = r.ametodkey
-            return k === "A1" ? r.adefaultHigh
+            const k = r.ametodkey 
+            return k.startsWith("A1") ? r.adefaultHigh
             : k === "A2" || k === "A3" ?
                 r.lifetimeLowerQ >= 650 ? min(4, r.ascore + 1) :
                 r.lifetimeLowerQ >= 60 ? min(3, r.ascore + 1) :
@@ -205,7 +208,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
         get medianLifetime() {
             const k = r.ametodkey
-            return k === "A1" ? 
+            return k.startsWith("A1") ? 
                 r.ascore === 1 ? 3
                 : r.ascore === 2 ? 25
                 : r.ascore === 3 ? 200
@@ -637,12 +640,15 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 
     autorun(() => {
         const criterionA = getCriterion(riskAssessment, 0, "A")
-          console.log("Autorun criterionA: " + criterionA.value)
-        const nv = riskAssessment.CalculatedCritALevel // .ChosenSpreadYearlyIncreaseLevel
-          console.log("Autorun criterionA CalculatedCritALevel nv: " + JSON.stringify(nv))
+          console.log("Autorun criterionA old value: " + criterionA.value)
+        // const nv = riskAssessment.CalculatedCritALevel // .ChosenSpreadYearlyIncreaseLevel
+        //   console.log("Autorun criterionA CalculatedCritALevel nv: " + JSON.stringify(nv))
+        const avalue = r.ascore - 1
         runInAction(() => {
-            criterionA.value = nv.level
+            criterionA.value = avalue
         })
+        console.log("Autorun criterionA new value: " + criterionA.value)
+
     });
 
     // autorun(() => {
