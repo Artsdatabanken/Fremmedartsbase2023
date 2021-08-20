@@ -407,7 +407,7 @@ namespace Prod.Api.Controllers
 
             var assessment = _dbContext.Assessments.SingleOrDefault(x => x.Id == id);
 
-            if (!forceStore && (assessment.LockedForEditByUser != null && assessment.LockedForEditByUser != user))
+            if (!forceStore && (assessment.LockedForEditByUser != null && assessment.LockedForEditByUser.Id != user.Id))
             {
                 throw new Exception("IKKE SKRIVETILGANG TIL DENNE VURDERINGEN - Låst av annen bruker");
             }
