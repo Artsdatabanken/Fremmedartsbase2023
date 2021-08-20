@@ -233,7 +233,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                         <p>{labels.Acrit.median}</p> 
                        </div>
                        <div className="numberFields">
-                       <Xcomp.Number observableValue={[riskAssessment, "MedianLifetime"]}/>  
+                       <Xcomp.Number observableValue={[riskAssessment, "medianLifetimeInput"]}/>  
                        </div>
                    </div>
                    
@@ -287,19 +287,9 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                    </div>
                    <div className="numberFields">                  
 
-                    <Xcomp.Number                            
-                                observableValue={[riskAssessment, "ACritMedianLifespan"]}
-                                
-                            />  
-                    <Xcomp.Number                            
-                                observableValue={[riskAssessment, "ACritLower"]}
-                                
-                            />  
-                            
-                   <Xcomp.Number                            
-                                observableValue={[riskAssessment, "ACritUpper"]}
-                                
-                            />                     
+                   <Xcomp.Number observableValue={[riskAssessment, "medianLifetimeInput"]} />  {/* ACritMedianLifespan */}
+                   <Xcomp.Number observableValue={[riskAssessment, "ACritLower"]} />  
+                   <Xcomp.Number observableValue={[riskAssessment, "ACritUpper"]} />                     
                             
                    </div>
                    </div>

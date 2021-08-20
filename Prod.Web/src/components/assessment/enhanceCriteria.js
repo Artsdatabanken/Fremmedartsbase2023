@@ -18,6 +18,7 @@ function max(num1,num2){return Math.max(num1,num2)}
 function sqrt(num){return Math.sqrt(num)}
 const pi = Math.PI
 function roundToSignificantDecimals(num) {
+    // console.log("run roundToSignificantDecimals")
     const result = 
         (num >= 9950000) ? round(num / 1000000) * 1000000 :
         (num >= 995000 ) ? round(num / 100000)  * 100000  :
@@ -111,6 +112,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 : method === "ViableAnalysis"
                 ? "A3"
                 : null
+            return result
         },
 
 
@@ -156,16 +158,27 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             : 4
         },
 
+        // get ascore() {
+        //     const k = r.ametodkey
+        //     console.log("ascore method: " + k)
+        //     return k === "A1" ? r.adefaultBest 
+        //     : k === "A2" || k === "A3" ?
+        //         r.medianLifetime >= 650 ? 4 :
+        //         r.medianLifetime >= 60 ? 3 :
+        //         r.medianLifetime >= 10 ? 2 :
+        //         r.medianLifetime < 10 ? 1 :
+        //         NaN
+        //     : 0 // 1 / NaN?
+        // },
         get ascore() {
             const k = r.ametodkey
+            console.log("ascore method: " + k)
             return k === "A1" ? r.adefaultBest 
-            : k === "A2" || k === "A3" ?
-                r.medianLifetime >= 650 ? 4 :
-                r.medianLifetime >= 60 ? 3 :
-                r.medianLifetime >= 10 ? 2 :
-                r.medianLifetime < 10 ? 1 :
-                NaN
-            : 0 // 1 / NaN?
+            : r.medianLifetime >= 650 ? 4 
+            : r.medianLifetime >= 60 ? 3 
+            : r.medianLifetime >= 10 ? 2 
+            : r.medianLifetime < 10 ? 1 
+            : 1
         },
         get alow() {
             const k = r.ametodkey
@@ -189,15 +202,25 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 NaN
             : 0 // 1 / NaN?
         },
+        // get medianLifetime() {
+        //     const k = r.ametodkey
+        //     const calc = 
+        //         r.ascore === 1 ? 3
+        //         : r.ascore === 2 ? 25
+        //         : r.ascore === 3 ? 200
+        //         : r.ascore === 4 ? 2000
+        //         : NaN // 0?
+        //     return k === "A1" ? calc
+        //     : roundToSignificantDecimals(r.medianLifetimeInput)
+        // },
         get medianLifetime() {
             const k = r.ametodkey
-            const calc = 
+            return k === "A1" ? 
                 r.ascore === 1 ? 3
                 : r.ascore === 2 ? 25
                 : r.ascore === 3 ? 200
                 : r.ascore === 4 ? 2000
-                : NaN // 0?
-            return k === "A1" ? calc
+                : 0
             : roundToSignificantDecimals(r.medianLifetimeInput)
         },
         get lifetimeLowerQ() {
@@ -226,6 +249,13 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 
 
     })
+    autorun(() => {
+        console.log("MedianLifetime: " + r.medianLifetime + " | " + r.medianLifetimeInput )
+    })
+    autorun(() => {
+        console.log("ascore: " + r.ascore )
+    })
+        
     const ec = observable({
         warnings: [],
 
