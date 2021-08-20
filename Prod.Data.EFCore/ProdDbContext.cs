@@ -137,7 +137,7 @@ namespace Prod.Data.EFCore
                 e.Property(x => x.CommentDate).IsRequired();
                 e.Property(x => x.ClosedDate);
                 e.HasOne(x => x.User).WithMany().OnDelete(DeleteBehavior.NoAction).IsRequired();
-                e.HasOne(x => x.ClosedBy).WithMany().OnDelete(DeleteBehavior.NoAction);
+                e.HasOne(x => x.ClosedBy).WithMany().OnDelete(DeleteBehavior.NoAction).IsRequired(false);
             });
 
             // attachemnts

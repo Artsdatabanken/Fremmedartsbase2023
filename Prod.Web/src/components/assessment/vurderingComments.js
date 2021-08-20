@@ -1,26 +1,27 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react';
-import { toJS, observable } from 'mobx';
+import { toJS, observable, makeObservable } from 'mobx';
 import * as Xcomp from './observableComponents'
 import config from '../../config'
 import { action } from 'mobx';
 import { loadData, postData } from './../../apiService';
 import auth from './../authService'
-@inject('appState')
-@observer
-
-export default class AssessmentComments extends Component {
+export default AssessmentComments = inject('appState')(observer(class AssessmentComments extends Component {
     baseUrl = config.apiUrl + "/api/AssessmentComments/"
     
     constructor(props) {
         super()
+
+        makeObservable(this, {
+            comments: observable
+        });
+
         this.assessmentId = props.appState.assessment.id
         this.getComments() // henter første gangen
-        
     }
 
     assessmentId = "";
-    @observable comments = []
+    comments = [];
     comment = observable({
         newComment: ""
     })
@@ -255,4 +256,4 @@ export default class AssessmentComments extends Component {
             </div>
         )
     }
-}
+}));
