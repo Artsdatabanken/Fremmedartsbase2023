@@ -260,8 +260,16 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             return `Ekspansjonshastigheten er beregnet til ${r.expansionSpeed}&nbsp;m/år basert på økningen i artens forekomstareal i perioden fra ${r.AOOyear1} til ${r.AOOyear2} og et mørketall på ${r.AOOdarkfigureBest}.`
         },
         get b2bresulttext() {
-            return `Basert på det beste anslaget på ${r.occurrences1Best} forekomster i løpet av 10&nbsp;år og ${r.introductionsBest} introduksjoner innen 50&nbsp;år er B-kriteriet skåret som ${bscore} (med usikkerhet: £{blow}–${bhigh}). Dette innebærer at artens ekspansjonshastighet ligger ${expansionText} (beste anslag: ${expansionSpeed}&nbsp;m/år).`
+            return `Basert på det beste anslaget på ${r.occurrences1Best} forekomster i løpet av 10&nbsp;år og ${r.introductionsBest} introduksjoner innen 50&nbsp;år er B-kriteriet skåret som ${r.bscore} (med usikkerhet: £{blow}–${r.bhigh}). Dette innebærer at artens ekspansjonshastighet ligger ${r.expansionText} (beste anslag: ${r.expansionSpeed}&nbsp;m/år).`
+        },
+        get expansionText() {
+            return r.bscore === 1 ? "under 50&nbsp;m/år"
+                : r.bscore === 2 ? "mellom 50&nbsp;m/år og 160&nbsp;m/år"  
+                : r.bscore === 3 ? "mellom 160&nbsp;m/år og 500&nbsp;m/år" 
+                : r.bscore === 4 ? "over 500&nbsp;m/år" 
+                : null
         }
+
     })
     autorun(() => {
         console.log("MedianLifetime: " + r.medianLifetime + " | " + r.medianLifetimeInput )
@@ -438,12 +446,12 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 //     (r.expansionUpperQ >= 50) ? 2 :
                 //     (r.expansionUpperQ < 50) ? 1 :
                 //     NaN
-                r.expansionText =
-                    r.bscore === 1 ? "under 50&nbsp;m/år" :
-                    r.bscore === 2 ? "mellom 50&nbsp;m/år og 160&nbsp;m/år"  :
-                    r.bscore === 3 ? "mellom 160&nbsp;m/år og 500&nbsp;m/år" :
-                    r.bscore === 4 ? "over 500&nbsp;m/år" :
-                    null
+                // r.expansionText =
+                //     r.bscore === 1 ? "under 50&nbsp;m/år" :
+                //     r.bscore === 2 ? "mellom 50&nbsp;m/år og 160&nbsp;m/år"  :
+                //     r.bscore === 3 ? "mellom 160&nbsp;m/år og 500&nbsp;m/år" :
+                //     r.bscore === 4 ? "over 500&nbsp;m/år" :
+                //     null
                 // avrunding til to signifikante desimaler: 
                 // r.expansionSpeed = roundToSignificantDecimals(r.expansionSpeed)
             })
