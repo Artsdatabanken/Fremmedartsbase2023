@@ -88,6 +88,18 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 : null
             return result
         },
+        get bmetodkey() {
+            const method = riskAssessment.chosenSpreadYearlyIncrease
+            const result = 
+                method === "a" 
+                ? "B1"
+                : method === "b"
+                ? "B2a"
+                : method === "c"
+                ? "B2b"
+                : null
+            return result
+        },
         get AOOchangeBest() { return r.AOOtotalBest < 4 ? 1 : n0(r.AOO50yrBest) / d1(r.AOOtotalBest) },
         get AOOchangeLow() { return r.AOOtotalBest < 4 ? 1 : n0(r.AOO50yrLow) / d1(r.AOOtotalBest) },
         get AOOchangeHigh() { return r.AOOtotalBest >= 4 ? 1 : n0(r.AOO50yrHigh) / d1(r.AOOtotalBest) },
@@ -191,6 +203,64 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
         get a1aresulttext() {
             return `Basert på de beste anslagene på forekomstareal i dag (${r.AOOtotalBest}&nbsp;km²) og om 50&nbsp;år (${r.AOO50yrBest}&nbsp;km²) er A-kriteriet forhåndsskåret som ${r.adefaultBest} (med usikkerhet: ${r.adefaultLow}–${r.adefaultHigh}). Dette innebærer at artens mediane levetid ligger ${r.lifetimeText}, eller at sannsynligheten for utdøing innen 50&nbsp;år er på ${r.extinctionText}.`
+        },
+
+        get bscore() {
+            return r.expansionSpeed >= 500 ? 4 
+            : r.expansionSpeed >= 160 ? 3 
+            : r.expansionSpeed >= 50 ? 2 
+            : r.expansionSpeed < 50 ? 1 
+            : 1 // ?
+        },
+
+        get blow() {
+            return r.expansionLowerQ >= 500 ? 4
+            : r.expansionLowerQ >= 160 ? 3 
+            : r.expansionLowerQ >= 50 ? max(2, bscore - 1)
+            : r.expansionLowerQ < 50 ? max(1, bscore - 1)
+            : 1 // ?
+        },
+
+        get bhigh() {
+            return r.expansionUpperQ >= 500 ? min(4, bscore + 1) 
+            : r.expansionUpperQ >= 160 ? min(3, bscore + 1) 
+            : r.expansionUpperQ >= 50 ? 2 
+            : r.expansionUpperQ < 50 ? 1 
+            : 1 // ?
+        },
+        get expansionSpeed() {
+            const k = r.bmetodkey
+            const result = 
+                k === "B1" ? r.expansionSpeedInput
+                : k === "B2a" ? round(sqrt(r.AOOdarkfigureBest) * (sqrt(r.AOO2) - sqrt(r.AOO1)) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi))) 
+                : k === "B2b" ? round(200 * (sqrt(r.AOO10yrBest / 4) - 1) / sqrt(pi))
+                : 0 // ?
+            return roundToSignificantDecimals(result)
+        },
+        get expansionLowerQ() {
+            const k = r.bmetodkey
+            const result = 
+                k === "B1" ? r.expansionLowerQInput
+                : k === "B2b" ? round(200 * (sqrt(r.AOO10yrLow / 4) - 1) / sqrt(pi)) 
+                : 0 // ?
+            return roundToSignificantDecimals(result)
+        },
+        get expansionUpperQ() {
+            const k = r.bmetodkey
+            const result = 
+                k === "B1" ? r.expansionUpperQInput
+                : k === "B2b" ? round(200 * (sqrt(r.AOO10yrHigh / 4) - 1) / sqrt(pi)) 
+                : 0 // ?
+            return roundToSignificantDecimals(result)
+        },
+        get AOOdarkfigureBest() {
+            return roundToSignificantDecimals2(r.AOOdarkfigureBest)
+        },
+        get b2aresulttext() {
+            return `Ekspansjonshastigheten er beregnet til ${r.expansionSpeed}&nbsp;m/år basert på økningen i artens forekomstareal i perioden fra ${r.AOOyear1} til ${r.AOOyear2} og et mørketall på ${r.AOOdarkfigureBest}.`
+        },
+        get b2bresulttext() {
+            return `Basert på det beste anslaget på ${r.occurrences1Best} forekomster i løpet av 10&nbsp;år og ${r.introductionsBest} introduksjoner innen 50&nbsp;år er B-kriteriet skåret som ${bscore} (med usikkerhet: £{blow}–${bhigh}). Dette innebærer at artens ekspansjonshastighet ligger ${expansionText} (beste anslag: ${expansionSpeed}&nbsp;m/år).`
         }
     })
     autorun(() => {
@@ -279,30 +349,30 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             if (r.expansionUpperQ <= r.expansionSpeed) 
                 return {error: "Ekspansjonshastighetens øvre kvartil må være større enn medianen."}
             runInAction(() => {                
-                r.bscore = 
-                    (r.expansionSpeed >= 500) ? 4 :
-                    (r.expansionSpeed >= 160) ? 3 :
-                    (r.expansionSpeed >= 50) ? 2 :
-                    (r.expansionSpeed < 50) ? 1 :
-                    NaN
+                // r.bscore = 
+                //     (r.expansionSpeed >= 500) ? 4 :
+                //     (r.expansionSpeed >= 160) ? 3 :
+                //     (r.expansionSpeed >= 50) ? 2 :
+                //     (r.expansionSpeed < 50) ? 1 :
+                //     NaN
             
-                r.blow =
-                    (r.expansionLowerQ >= 500) ? 4 :
-                    (r.expansionLowerQ >= 160) ? 3 :
-                    (r.expansionLowerQ >= 50) ? max(2, bscore - 1) :
-                    (r.expansionLowerQ < 50) ? max(1, bscore - 1) :
-                    NaN
+                // r.blow =
+                //     (r.expansionLowerQ >= 500) ? 4 :
+                //     (r.expansionLowerQ >= 160) ? 3 :
+                //     (r.expansionLowerQ >= 50) ? max(2, bscore - 1) :
+                //     (r.expansionLowerQ < 50) ? max(1, bscore - 1) :
+                //     NaN
             
-                r.bhigh =
-                    (r.expansionUpperQ >= 500) ? min(4, bscore + 1) :
-                    (r.expansionUpperQ >= 160) ? min(3, bscore + 1) :
-                    (r.expansionUpperQ >= 50) ? 2 :
-                    (r.expansionUpperQ < 50) ? 1 :
-                    NaN
+                // r.bhigh =
+                //     (r.expansionUpperQ >= 500) ? min(4, bscore + 1) :
+                //     (r.expansionUpperQ >= 160) ? min(3, bscore + 1) :
+                //     (r.expansionUpperQ >= 50) ? 2 :
+                //     (r.expansionUpperQ < 50) ? 1 :
+                //     NaN
                 // avrunding til to signifikante desimaler: 
-                r.expansionSpeed = roundToSignificantDecimals(r.expansionSpeed) // ???!
-                r.expansionLowerQ = roundToSignificantDecimals(r.expansionLowerQ) // ???!
-                r.expansionUpperQ = roundToSignificantDecimals(r.expansionUpperQ) // ???!
+                // r.expansionSpeed = roundToSignificantDecimals(r.expansionSpeed) // ???!
+                // r.expansionLowerQ = roundToSignificantDecimals(r.expansionLowerQ) // ???!
+                // r.expansionUpperQ = roundToSignificantDecimals(r.expansionUpperQ) // ???!
             })                   
 
             const result = {
@@ -319,25 +389,25 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 
             const r = riskAssessment
             runInAction(() => {                
-                r.AOOdarkfigureBest = roundToSignificantDecimals2(r.AOOdarkfigureBest)
-                r.expansionSpeed = round(sqrt(r.AOOdarkfigureBest) * (sqrt(r.AOO2) - sqrt(r.AOO1)) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi))) 
-                r.bscore =
-                    (r.expansionSpeed >= 500) ? 4 :
-                    (r.expansionSpeed >= 160) ? 3 :
-                    (r.expansionSpeed >= 50) ? 2 :
-                    (r.expansionSpeed < 50) ? 1 :
-                    Nan
-                r.expansionSpeed = roundToSignificantDecimals(r.expansionSpeed)
+                // r.AOOdarkfigureBest = roundToSignificantDecimals2(r.AOOdarkfigureBest)
+                // r.expansionSpeed = round(sqrt(r.AOOdarkfigureBest) * (sqrt(r.AOO2) - sqrt(r.AOO1)) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi))) 
+                // r.bscore =
+                //     (r.expansionSpeed >= 500) ? 4 :
+                //     (r.expansionSpeed >= 160) ? 3 :
+                //     (r.expansionSpeed >= 50) ? 2 :
+                //     (r.expansionSpeed < 50) ? 1 :
+                //     Nan
+                // r.expansionSpeed = roundToSignificantDecimals(r.expansionSpeed)
             })
             // Utmating 
-            const b2aresulttext = `Ekspansjonshastigheten er beregnet til ${r.expansionSpeed}&nbsp;m/år basert på økningen i artens forekomstareal i perioden fra ${r.AOOyear1} til ${r.AOOyear2} og et mørketall på ${r.AOOdarkfigureBest}.`
+            //const b2aresulttext = `Ekspansjonshastigheten er beregnet til ${r.expansionSpeed}&nbsp;m/år basert på økningen i artens forekomstareal i perioden fra ${r.AOOyear1} til ${r.AOOyear2} og et mørketall på ${r.AOOdarkfigureBest}.`
 
             const result = {
                 method: "modellering",
                 level: r.bscore,
                 high: r.bhigh,
                 low: r.blow,
-                text: b2aresulttext
+                text: r.b2aresulttext
             }
             return result
         },
@@ -347,27 +417,27 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 
             const r = riskAssessment
             runInAction(() => {                
-                r.expansionSpeed = round(200 * (sqrt(r.AOO10yrBest / 4) - 1) / sqrt(pi)) 
-                r.expansionLowerQ = round(200 * (sqrt(r.AOO10yrLow / 4) - 1) / sqrt(pi)) 
-                r.expansionUpperQ = round(200 * (sqrt(r.AOO10yrHigh / 4) - 1) / sqrt(pi)) 
-                r.bscore =
-                    (r.expansionSpeed >= 500) ? 4 :
-                    (r.expansionSpeed >= 160) ? 3 :
-                    (r.expansionSpeed >= 50) ? 2 :
-                    (r.expansionSpeed < 50) ? 1 :
-                    Nan
-                r.blow =
-                    (r.expansionLowerQ >= 500) ? 4 :
-                    (r.expansionLowerQ >= 160) ? 3 :
-                    (r.expansionLowerQ >= 50) ? max(2, r.bscore - 1) :
-                    (r.expansionLowerQ < 50) ? max(1, r.bscore - 1) :
-                    NaN
-                r.bhigh =  // todo: check with Hanno. his code sets blow here!! That must be wrong!!
-                    (r.expansionUpperQ >= 500) ? min(4, r.bscore + 1) :
-                    (r.expansionUpperQ >= 160) ? min(3, r.bscore + 1) :
-                    (r.expansionUpperQ >= 50) ? 2 :
-                    (r.expansionUpperQ < 50) ? 1 :
-                    NaN
+                // r.expansionSpeed = round(200 * (sqrt(r.AOO10yrBest / 4) - 1) / sqrt(pi)) 
+                // r.expansionLowerQ = round(200 * (sqrt(r.AOO10yrLow / 4) - 1) / sqrt(pi)) 
+                // r.expansionUpperQ = round(200 * (sqrt(r.AOO10yrHigh / 4) - 1) / sqrt(pi)) 
+                // r.bscore =
+                //     (r.expansionSpeed >= 500) ? 4 :
+                //     (r.expansionSpeed >= 160) ? 3 :
+                //     (r.expansionSpeed >= 50) ? 2 :
+                //     (r.expansionSpeed < 50) ? 1 :
+                //     Nan
+                // r.blow =
+                //     (r.expansionLowerQ >= 500) ? 4 :
+                //     (r.expansionLowerQ >= 160) ? 3 :
+                //     (r.expansionLowerQ >= 50) ? max(2, r.bscore - 1) :
+                //     (r.expansionLowerQ < 50) ? max(1, r.bscore - 1) :
+                //     NaN
+                // r.bhigh =  // todo: check with Hanno. his code sets blow here!! That must be wrong!!
+                //     (r.expansionUpperQ >= 500) ? min(4, r.bscore + 1) :
+                //     (r.expansionUpperQ >= 160) ? min(3, r.bscore + 1) :
+                //     (r.expansionUpperQ >= 50) ? 2 :
+                //     (r.expansionUpperQ < 50) ? 1 :
+                //     NaN
                 r.expansionText =
                     r.bscore === 1 ? "under 50&nbsp;m/år" :
                     r.bscore === 2 ? "mellom 50&nbsp;m/år og 160&nbsp;m/år"  :
@@ -375,17 +445,17 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                     r.bscore === 4 ? "over 500&nbsp;m/år" :
                     null
                 // avrunding til to signifikante desimaler: 
-                r.expansionSpeed = roundToSignificantDecimals(r.expansionSpeed)
+                // r.expansionSpeed = roundToSignificantDecimals(r.expansionSpeed)
             })
             // Utmating 
-            const b2bresulttext = `Basert på det beste anslaget på ${r.occurrences1Best} forekomster i løpet av 10&nbsp;år og ${r.introductionsBest} introduksjoner innen 50&nbsp;år er B-kriteriet skåret som ${bscore} (med usikkerhet: £{blow}–${bhigh}). Dette innebærer at artens ekspansjonshastighet ligger ${expansionText} (beste anslag: ${expansionSpeed}&nbsp;m/år).`
+            // const b2bresulttext = `Basert på det beste anslaget på ${r.occurrences1Best} forekomster i løpet av 10&nbsp;år og ${r.introductionsBest} introduksjoner innen 50&nbsp;år er B-kriteriet skåret som ${bscore} (med usikkerhet: £{blow}–${bhigh}). Dette innebærer at artens ekspansjonshastighet ligger ${expansionText} (beste anslag: ${expansionSpeed}&nbsp;m/år).`
 
             const result = {
                 method: "introduksjonspress",
                 level: r.bscore,
                 high: r.bhigh,
                 low: r.blow,
-                text: b2bresulttext
+                text: r.b2bresulttext
             }
             return result
         }

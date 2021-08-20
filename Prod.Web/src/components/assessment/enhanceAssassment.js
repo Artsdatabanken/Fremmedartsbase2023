@@ -25,6 +25,13 @@ export default function enhanceAssessment(json, appState) {
     delete ra.medianLifetime 
     delete ra.lifetimeLowerQ 
     delete ra.lifetimeUpperQ 
+    delete ra.bscore 
+    delete ra.blow 
+    delete ra.bhigh 
+    delete ra.expansionSpeed 
+    delete ra.expansionLowerQ 
+    delete ra.expansionUpperQ 
+    delete ra.AOOdarkfigureBest 
     
 
     
