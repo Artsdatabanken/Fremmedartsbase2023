@@ -53,7 +53,7 @@ namespace Prod.Domain
         public User User { get; set; }
         public Guid UserId { get; set; }
         public bool Closed { get; set; }
-        public Guid ClosedById { get; set; }
+        public Guid? ClosedById { get; set; }
         public User ClosedBy { get; set; }
         public DateTime? ClosedDate { get; set; }
         public bool IsDeleted { get; set; }
