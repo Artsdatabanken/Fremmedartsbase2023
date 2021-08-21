@@ -53,12 +53,12 @@ function medianLifespanLevel(num) {
     return result
 }
 
-function levelFloor(level) {
-    return level === NaN ? NaN
-    : typeof(level) === "number"
-    ? Math.max(0, level - 1)
-    : NaN
-}
+// function levelFloor(level) {
+//     return level === NaN ? NaN
+//     : typeof(level) === "number"
+//     ? Math.max(0, level - 1)
+//     : NaN
+// }
 
 // for nullableints: give 0 if null. (undefined and NaN is unchanged!)
 function n0(num) { 
