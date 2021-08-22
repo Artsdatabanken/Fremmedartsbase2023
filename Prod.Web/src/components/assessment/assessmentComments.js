@@ -6,7 +6,7 @@ import config from '../../config'
 import { action } from 'mobx';
 import { loadData, postData } from './../../apiService';
 import auth from './../authService'
-export default AssessmentComments = inject('appState')(observer(class AssessmentComments extends Component {
+export default inject('appState')(observer(class AssessmentComments extends Component {
     baseUrl = config.apiUrl + "/api/AssessmentComments/"
     
     constructor(props) {
