@@ -106,6 +106,28 @@ function enhanceRiskAssessmentAddErrorReportingHandler(riskAssessment) {
 
 
 function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
+// ---------------------------------------------------------------
+// --------  List of variables that comes from user input --------
+// ---------------------------------------------------------------
+// for variables market with "**" - this variable is not part of the criteria calculation - but is used for qa and presentation
+// types marked with "?" is nullable (but some are required in specific methods)
+//
+//chosenSpreadMedanLifespan	#radio (ametod)
+//acceptOrAdjustCritA 		#radio
+//AOOtotalBest 	#integer?	# beste anslag på totalt forekomstareal nå 
+//AOOtotalLow  **	#integer? 	# lavt anslag på totalt forekomstareal nå 
+//AOOtotalHigh **	#integer? 	# høyt anslag på totalt forekomstareal nå 
+//AOO50yrBest	#integer?	# beste anslag på totalt forekomstareal om 50 år 
+//AOO50yrLow	#integer?	# lavt anslag på totalt forekomstareal om 50 år 
+//AOO50yrHigh	#integer?	# høyt anslag på totalt forekomstareal om 50 år 
+//medianLifetimeInput	#integer?	# artens mediane levetid i Norge i år
+//lifetimeLowerQInput 	#integer?	# nedre kvartil for artens levetid i Norge i år 
+//LifetimeUpperQInput	#integer?	# øvre kvartil for artens levetid i Norge i år 
+//ascore 		#criteria 	(manual and auto!)
+
+
+
+
     const r = riskAssessment
     extendObservable(riskAssessment, {
         get ametodkey() {
@@ -135,6 +157,10 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 : ""
             return result
         },
+        get AOO10yrBest() {return 4 * ((1 + r.Occurrences1Best) * (1 + round(IntroductionsBest) / 2) - 1) },
+        get AOO10yrLow() { return 4 * ((1 + Occurrences1Low) * (1 + IntroductionsLow / 2) - 1) },
+        get AOO10yrHigh() {return 4 * ((1 + Occurrences1High) * (1 + IntroductionsHigh / 2) - 1) },
+
         get AOOchangeBest() { return r.AOOtotalBest < 4 ? 1 : n0(r.AOO50yrBest) / d1(r.AOOtotalBest) },
         get AOOchangeLow() { return r.AOOtotalBest < 4 ? 1 : n0(r.AOO50yrLow) / d1(r.AOOtotalBest) },
         get AOOchangeHigh() { return r.AOOtotalBest >= 4 ? 1 : n0(r.AOO50yrHigh) / d1(r.AOOtotalBest) },
