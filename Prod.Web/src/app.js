@@ -11,7 +11,7 @@ const mainView = ({appState, appState:{assessment, isServicesReady}, appState:{r
   <div className="page_padding">
     <div className="header_background">
         <div className="header_padding" style={{display: 'flex'}}>
-          <img src="https://artsdatabanken.no/Files/7809" className="top_image"/>
+          <img src="//artsdatabanken.no/Files/7809" className="top_image" crossOrigin="anonymous"/>
 {(assessment && assessment.evaluatedVernacularName) ? <h1 className="header_title" style={{width: '90%'}}>Fremmede arter 2023{assessment && ": "+ assessment.evaluatedScientificName + ", " + assessment.evaluatedVernacularName +". Kategori: " + assessment.riskAssessment.riskLevelCode}</h1>  : 
 <h1 className="header_title" style={{width: '90%'}}>Fremmede arter 2023{assessment && ": "+ assessment.evaluatedScientificName + ". Kategori: " + assessment.riskAssessment.riskLevelCode}</h1>}
 
