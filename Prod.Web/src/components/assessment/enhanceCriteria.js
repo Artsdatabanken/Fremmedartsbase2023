@@ -165,6 +165,13 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 //medianLifetimeInput	#integer?	# artens mediane levetid i Norge i år
 //lifetimeLowerQInput 	#integer?	# nedre kvartil for artens levetid i Norge i år 
 //LifetimeUpperQInput	#integer?	# øvre kvartil for artens levetid i Norge i år 
+//introductionsBest	    #double?	# beste anslag på antall introduksjoner i løpet av 10 år 
+//populationSize 	**!	#integer?	# bestandens nåværende størrelse (individtall) 
+//growthRate	    **	#double?	# bestandens multiplikative vekstrate 
+//envVariance	    **	#double?	# miljøvarians 
+//demVariance	    **	#double?	# demografisk varians 
+//carryingCapacity	**  #integer?	# bestandens bæreevne (individtall) 
+//extinctionThreshold **	#integer?	# kvasiutdøingsterskel (individtall) 
 //ascore 		#criteria 	(manual and auto!)
 //
 //chosenSpreadYearlyIncrease radio (bmetod)
