@@ -20,7 +20,7 @@ import Assessment80GeografiskVariasjon from './assessment80GeografiskVariasjon'
 import Assessment70Klimaeffekter from './assessment70Klimaeffekter'
 //import VurderingSummary from './vurderingSummary'
 import AssessmentReferences from './assessmentReferences'
-import VurderingComments from './vurderingComments'
+import AssessmentComments from './assessmentComments'
 import Assessment91Kriteriedokumentasjon from './assessment91Kriteriedokumentasjon'
 
 
@@ -143,7 +143,7 @@ class AssessmentRoot extends Component {
                 : assessmentTabs.activeTab.id === 9  ?
                 <AssessmentReferences/>
                 : assessmentTabs.activeTab.id === 10  ?
-                <VurderingComments/>
+                <AssessmentComments/>
                // : assessmentTabs.activeTab.id === 11  ?
                // <Vurdering55Kriteriedokumentasjon kritDocInfo={kritDocInfo}/>
                 // // kritDocInfo={{}}
