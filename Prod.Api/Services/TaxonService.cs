@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
+// using Newtonsoft.Json;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text.Json;
+
 // ReSharper disable AsyncConverter.ConfigureAwaitHighlighting
 
 
@@ -91,7 +93,7 @@ namespace Prod.Api.Services
             if (response.IsSuccessStatusCode)
             {
                 var taxonInfostring = await response.Content.ReadAsStringAsync();
-                List<TaxonInfo> taxonInfos = JsonConvert.DeserializeObject<List<TaxonInfo>>(taxonInfostring);
+                List<TaxonInfo> taxonInfos = JsonSerializer.Deserialize<List<TaxonInfo>>(taxonInfostring);
                 return taxonInfos;
             }
             else

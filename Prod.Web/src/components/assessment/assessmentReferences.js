@@ -6,9 +6,7 @@ import * as Xcomp from './observableComponents';
 import config from './../../config';
 import auth from './../authService'
 
-@inject('appState')
-@observer
-export default class AssessmentReferences extends Component {
+export default inject('appState')(observer(class AssessmentReferences extends Component {
 
     constructor(props) {
         super()
@@ -59,11 +57,7 @@ export default class AssessmentReferences extends Component {
             addNew: false,
             alreadySaved: false,
             contextVerdier: [],
-            theAssessment : null
-            //typeVerdier: [] // todo: fabModel.coder.... ?
-        })
-
-        extendObservable(this, {
+            theAssessment : null,
             kanLagres: () => {
                     const r = this.valgtReferanse
                     return !r.allowEdit 
@@ -192,7 +186,7 @@ export default class AssessmentReferences extends Component {
         r.referenceString = '',
         r.userId = auth.userId,
         // r.editDate = '',
-        r.applicationId = '',
+        r.applicationId = null,
 
         r.lastname = '',
         r.middlename = '',
@@ -684,4 +678,4 @@ export default class AssessmentReferences extends Component {
                     </div>}                    
                 </div>
             </div>
-        )}}
+        )}}));

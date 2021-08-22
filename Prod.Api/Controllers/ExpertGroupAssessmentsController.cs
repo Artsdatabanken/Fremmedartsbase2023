@@ -10,7 +10,7 @@ using CsvHelper;
 using IdentityModel.Client;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
+// using Newtonsoft.Json;
 using Prod.Api.Helpers;
 using Prod.Data.EFCore;
 using Prod.Domain;
@@ -148,7 +148,7 @@ namespace Prod.Api.Controllers
                 .OrderBy(x => x.ScientificName).ToList()
                 .Select(assessment =>
                 {
-                    var deserializeObject = JsonConvert.DeserializeObject<FA4WithComments>(assessment.Doc);
+                    var deserializeObject = System.Text.Json.JsonSerializer.Deserialize<FA4WithComments>(assessment.Doc);
                     deserializeObject.Id = deserializeObject.Id == 0 ? assessment.Id : deserializeObject.Id;
                     return deserializeObject;
                 })

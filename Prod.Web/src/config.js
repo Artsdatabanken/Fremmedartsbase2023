@@ -7,14 +7,14 @@ function apiUrl (anchor) {
           return 'https://fab4api.test.artsdatabanken.no/'
       default:
         //return relPath   // This does not currently work because api is not relative to ("under") app 
-        if (window.location.href.indexOf("test.") > 1) {return 'https://fab4api.test.artsdatabanken.no'}
+        if ((window.location.href).indexOf("test.") > -1) {return 'https://fab4api.test.artsdatabanken.no'}
         return  process.env.NODE_ENV === 'development' ? 'http://localhost:25808' : 'https://fab4api.test.artsdatabanken.no'
     }
   }
   function referenceApiUrl (anchor) {
         //return relPath   // This does not currently work because api is not relative to ("under") app 
-        if (window.location.href.indexOf("test.") > 1) {return 'https://referenceapi.test.artsdatabanken.no/'}
-        return  'https://referenceapi.artsdatabanken.no/'
+        if ((window.location.href).indexOf("test.") > -1) {return 'https://referenceapi.test.artsdatabanken.no/'}
+        return  process.env.NODE_ENV === 'development' ? 'https://referenceapi.test.artsdatabanken.no/' : 'https://referenceapi.artsdatabanken.no/'
     }
 
   function mapApiUrl (anchor) {

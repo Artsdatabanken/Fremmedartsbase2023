@@ -17,7 +17,9 @@
     "modulePaths": [
       "<rootDir>"
     ],
-    "setupFilesAfterEnv": ["./jestStartup.js"]
+    "setupFilesAfterEnv": [
+      "./jestStartup.js"
+    ]
   },
   "dependencies": {
     "@material-ui/core": "^4.11.3",

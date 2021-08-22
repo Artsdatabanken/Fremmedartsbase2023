@@ -14,11 +14,12 @@ namespace Prod.Api.Services
         public string ReferenceApiClientSecret { get; set; }
         public string ReferenceApiScope { get; set; }
         public string ReferenceApiClientId { get; set; }
+        public string ReferenceApiAuthAuthority { get; set; }
     }
 
     public class ReferenceService: IReferenceService
     {
-        public static int AppId = 25;
+        public static int AppId = 26; // id for fab4 in referencedb ....
         private static HttpClient _apiClient;
         private static DateTime _apiClientExpiresAt;
         private readonly ReferenceServiceOptions options;
@@ -31,7 +32,7 @@ namespace Prod.Api.Services
                 // discover endpoints from metadata
                 using (var client = new HttpClient())
                 {
-                    var discoveryDocument = client.GetDiscoveryDocumentAsync(options.AuthAuthority).ConfigureAwait(false).GetAwaiter().GetResult();
+                    var discoveryDocument = client.GetDiscoveryDocumentAsync(options.ReferenceApiAuthAuthority).ConfigureAwait(false).GetAwaiter().GetResult();
 
                     if (discoveryDocument.IsError)
                     {
@@ -76,7 +77,7 @@ namespace Prod.Api.Services
         public async Task<Reference> Store(Reference value)
         {
             var api = GetApiClient();
-            var reference = await api.ReferencesAsync(value);
+            var reference = await api.ReferencesPOSTAsync(value);
             return reference;
         }
 
@@ -88,7 +89,7 @@ namespace Prod.Api.Services
         public async Task<Reference> Get(Guid referenceReferenceId)
         {
             var api = GetApiClient();
-            var reference = await api.References2Async(referenceReferenceId);
+            var reference = await api.ReferencesGETAsync(referenceReferenceId);
             return reference;
         }
 
@@ -104,15 +105,15 @@ namespace Prod.Api.Services
         public async Task<bool> Delete(Guid id)
         {
             var api = GetApiClient();
-            await api.References4Async(id);
+            await api.ReferencesDELETEAsync(id);
             return true;
         }
 
         public async Task<Reference> Update(Reference reference)
         {
             var api = GetApiClient();
-            await api.References3Async(reference.Id, reference);
-            var refer = await api.References2Async(reference.Id);
+            await api.ReferencesPUTAsync(reference.Id, reference);
+            var refer = await api.ReferencesGETAsync(reference.Id);
             return refer;
         }
     }

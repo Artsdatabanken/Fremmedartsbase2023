@@ -2,11 +2,11 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 using IdentityModel.Client;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using Microsoft.EntityFrameworkCore;
 using Prod.Api.Services;
 using Prod.Data.EFCore;
@@ -14,9 +14,6 @@ using Prod.Domain;
 using Microsoft.AspNetCore.SignalR;
 using Prod.Api.Hubs;
 // ReSharper disable AsyncConverter.ConfigureAwaitHighlighting
-
-
-//using Raven.Client.Documents;
 
 namespace Prod.Api.Controllers
 {
@@ -49,7 +46,7 @@ namespace Prod.Api.Controllers
             var data = await _dbContext.Assessments.Where(x => x.Id == id).Select(x => x.Doc).FirstOrDefaultAsync();// _dataService.GetAssessmentString(id);
             if (string.IsNullOrWhiteSpace(data)) return null;
 
-            var doc = JsonConvert.DeserializeObject<FA4>(data);
+            var doc = JsonSerializer.Deserialize<FA4>(data);
             //if (doc.C2A2SannhetsverdiKode == null)
             //{
             //    doc.C2A2SannhetsverdiKode = "1";
@@ -81,7 +78,7 @@ namespace Prod.Api.Controllers
             var assessment = await _dbContext.Assessments.Where(x => x.Id == id).FirstOrDefaultAsync();// _dataService.GetAssessmentString(id);
             if (string.IsNullOrWhiteSpace(assessment.Doc)) return null;
 
-            var doc = JsonConvert.DeserializeObject<FA4>(assessment.Doc);
+            var doc = JsonSerializer.Deserialize<FA4>(assessment.Doc);
             var role = await base.GetRoleInGroup(doc.ExpertGroup);
 
             try
@@ -113,7 +110,7 @@ namespace Prod.Api.Controllers
             var data = await _dbContext.Assessments.Where(x => x.Id == id).FirstOrDefaultAsync();// _dataService.GetAssessmentString(id);
             if (string.IsNullOrWhiteSpace(data.Doc)) return null;
 
-            var doc = JsonConvert.DeserializeObject<FA4>(data.Doc);
+            var doc = JsonSerializer.Deserialize<FA4>(data.Doc);
             var role = await base.GetRoleInGroup(doc.ExpertGroup);
             var force = role.Admin || role.User.IsAdmin;
             try
@@ -143,7 +140,7 @@ namespace Prod.Api.Controllers
             var data = await _dbContext.Assessments.Where(x => x.Id == id).FirstOrDefaultAsync();// _dataService.GetAssessmentString(id);
             if (string.IsNullOrWhiteSpace(data.Doc)) return null;
 
-            var doc = JsonConvert.DeserializeObject<FA4>(data.Doc);
+            var doc = JsonSerializer.Deserialize<FA4>(data.Doc);
             var role = await base.GetRoleInGroup(doc.ExpertGroup);
             var force = role.Admin || role.User.IsAdmin;
             try
@@ -218,7 +215,7 @@ namespace Prod.Api.Controllers
             {
                 return false;
             }
-            var doc = JsonConvert.DeserializeObject<FA4>(data.Doc);
+            var doc = JsonSerializer.Deserialize<FA4>(data.Doc);
 
             //if (doc.Ekspertgruppe != "Testarter")
             //{
@@ -246,7 +243,7 @@ namespace Prod.Api.Controllers
                 .FirstOrDefaultAsync(); // _dataService.GetAssessmentString(id);
             if (string.IsNullOrWhiteSpace(data.Doc)) return null;
 
-            var doc = JsonConvert.DeserializeObject<FA4>(data.Doc);
+            var doc = JsonSerializer.Deserialize<FA4>(data.Doc);
             var role = await base.GetRoleInGroup(doc.ExpertGroup);
             var force = role.Admin || role.User.IsAdmin;
             try
@@ -337,7 +334,7 @@ namespace Prod.Api.Controllers
                     var rlRodliste2019 = CreateNewAssessment(value.Ekspertgruppe, userId, scientificNameId);
                     rlRodliste2019.EvaluationStatus = "created";
                     rlRodliste2019.LastUpdatedAt = now;
-                    var doc = JsonConvert.SerializeObject(rlRodliste2019);
+                    var doc = JsonSerializer.Serialize(rlRodliste2019);
                     var assessment = new Assessment();
                     assessment.Doc = doc;
                     _dbContext.Assessments.Add(assessment);
@@ -369,12 +366,12 @@ namespace Prod.Api.Controllers
                     var existingAssessment = await _dbContext.Assessments.Where(x => x.Expertgroup == "Testarter").Where(x => x.ScientificNameId == scientificnameid).Select(x => x.Doc).FirstOrDefaultAsync();
                     if (existingAssessment != null)
                     {
-                        var doc = JsonConvert.DeserializeObject<FA4>(existingAssessment);
+                        var doc = JsonSerializer.Deserialize<FA4>(existingAssessment);
                         //var existingid = doc.Id; // int.Parse(doc.Id);
                         // Just delete the existing assessment with same name (in Testarter)
                         await DeleteAssessment(doc.Id);
                     }
-                    var copiedassessment = JsonConvert.SerializeObject(assessment);
+                    var copiedassessment = JsonSerializer.Serialize(assessment);
                     var assessmentinfo = new Assessment();
                     assessmentinfo.Doc = copiedassessment;
                     _dbContext.Assessments.Add(assessmentinfo);
@@ -420,7 +417,7 @@ namespace Prod.Api.Controllers
             //    bool ok = await _referenceService.SignalUsage(usedReferences, user.Id);
             //}
 
-            var curAss = JsonConvert.DeserializeObject<FA4>(assessment.Doc);
+            var curAss = JsonSerializer.Deserialize<FA4>(assessment.Doc);
 
             byte[] zipfile;
             var fileName = "ArtskartData.zip";
@@ -491,7 +488,7 @@ namespace Prod.Api.Controllers
             assessment.LockedForEditAt = doc.LockedForEditAt;
             assessment.LockedForEditByUserId = doc.LockedForEditByUserId;
 
-            var assessmentString = Newtonsoft.Json.JsonConvert.SerializeObject(doc);
+            var assessmentString = JsonSerializer.Serialize(doc);
             assessment.Doc = assessmentString;
             await _dbContext.SaveChangesAsync().ConfigureAwait(false);
 

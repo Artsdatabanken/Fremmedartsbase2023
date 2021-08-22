@@ -2,9 +2,9 @@
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Reflection;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
 //using System.Text.Json.Serialization;
 
 namespace Prod.Domain
@@ -313,7 +313,7 @@ namespace Prod.Domain
         public int? RegenerationYears { get; set; } // fab: Regeneration_Years
         public string Reproduction { get; set; } // fab: Reproduction
         public bool? ReproductionAsexual { get; set; } // fab: Reproduction_Asexual
-        [JsonConverter(typeof(CustomDoubleFormatConverter))]
+        // [JsonConverter(typeof(CustomDoubleFormatConverter))]
         public double? ReproductionGenerationTime { get; set; } // fab: Reproduction_Geteration_Time
         public bool? ReproductionSexual { get; set; } // fab: Reproduction_Sexual
         //public string ReproductiveCapability { get; set; } // fab: Int64? Reproductive_Capability // removed 17.01.2017
@@ -649,7 +649,7 @@ namespace Prod.Domain
         //public Int64? SpeciesCount { get; set; } // fab: Species_Count  // ikke i bruk som egen attributt (ligger i spredningshistorikk item) i 2012
 
 
-        [JsonConverter(typeof(CustomDoubleFormatConverter))]
+        // [JsonConverter(typeof(CustomDoubleFormatConverter))]
         public double? SpreadHistoryDomesticAreaInStronglyChangedNatureTypes { get; set; }
         public double? SpreadHistoryDomesticAreaInStronglyChangedNatureTypesLow { get; set; }
         public double? SpreadHistoryDomesticAreaInStronglyChangedNatureTypesBest { get; set; }
@@ -855,7 +855,7 @@ namespace Prod.Domain
         #region unused ???????
         // -- spredningshastighet
 
-        [JsonConverter(typeof(CustomDoubleFormatConverter))]
+        // [JsonConverter(typeof(CustomDoubleFormatConverter))]
         public double? SpreadYearlyIncrease { get; set; }   // Spread_Yearly_Increase
         public string SpreadYearlyIncreaseMethod { get; set; }  // Spread_Yearly_Increase_EstimationMethod
         #endregion unused ???????
@@ -1283,51 +1283,45 @@ namespace Prod.Domain
         public int ObservationYear, ObservationFromYear;
         public int ObservationMonth, ObservationFromMonth;
         public Int64? SpeciesCount, ExistenceArea, ExistenceAreaCount, SpreadArea;
-        [JsonConverter(typeof(CustomDoubleFormatConverter))]
+        // [JsonConverter(typeof(CustomDoubleFormatConverter))]
         public double? SpeciesCountDarkFigure, ExistenceAreaDarkFigure, ExistenceAreaCountDarkFigure, SpreadAreaDarkFigure;
 
-        [JsonConverter(typeof(CustomDoubleFormatConverter))]
+        // [JsonConverter(typeof(CustomDoubleFormatConverter))]
         public double? SpeciesCountCalculated, ExistenceAreaCalculated, ExistenceAreaCountCalculated, SpreadAreaCalculated;
         public string SelectionGeometry;// = "{\\\"type\\\": \\\"Feature\\\",\\\"geometry\\\": {\\\"type\\\": \\\"Polygon\\\", \\\"coordinates\\\": [[[10.33, 63.45], [11.951, 63.451], [10.949, 64.45]]]}}";
     }
 
-    internal class CustomDoubleFormatConverter : JsonConverter
-    {
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-            writer.WriteValue(((double)value).ToString(CultureInfo.InvariantCulture));
-        }
-
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-        {
-            var value = reader.Value?.ToString();
-            
-            if (value != null && !string.IsNullOrEmpty(value))
-            {
-                if (objectType == typeof(double) || objectType == typeof(double?))
-                {
-                    double temp;
-                    var attempted = value.Replace(",", ".");
-                    if (double.TryParse(
-                        attempted,
-                        NumberStyles.Number,
-                        CultureInfo.InvariantCulture,
-                        out temp)
-                    )
-                    {
-                        return temp;
-                    }
-                }
-            }
-            return null;
-
-        }
-
-        public override bool CanConvert(Type objectType)
-        {
-            return objectType == typeof(double) || objectType == typeof(double?);
-        }
-    }
+    // internal class CustomDoubleFormatConverter : System.Text.Json.Serialization.JsonConverter<double?>
+    // {
+    //     public override bool CanConvert(Type objectType)
+    //     {
+    //         return objectType == typeof(double) || objectType == typeof(double?);
+    //     }
+    //
+    //     public override double? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    //     {
+    //         var value = reader.GetDouble();
+    //
+    //         if (value == null || string.IsNullOrEmpty(value)) return null;
+    //         double temp;
+    //         var attempted = value.Replace(",", ".");
+    //         if (double.TryParse(
+    //             attempted,
+    //             NumberStyles.Number,
+    //             CultureInfo.InvariantCulture,
+    //             out temp)
+    //         )
+    //         {
+    //             return temp;
+    //         }
+    //         return null;
+    //     }
+    //
+    //     public override void Write(Utf8JsonWriter writer, double? value, JsonSerializerOptions options)
+    //     {
+    //         writer.WriteStringValue(((double)value).ToString(CultureInfo.InvariantCulture));
+    //     }
+    // }
 
     public class RegionalPresence
     {

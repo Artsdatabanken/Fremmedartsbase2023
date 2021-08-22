@@ -124,12 +124,13 @@ namespace Prod.Api
 
         private void StartupAddDependencies(IServiceCollection services)
         {
-            string connectionString = Configuration.GetValue<string>("FabDatabase");
+            var connectionString = Configuration.GetValue<string>("FabDatabase");
 
             services.AddDbContext<ProdDbContext>(opt => opt.UseSqlServer(connectionString));
             var options = new ReferenceServiceOptions()
             {
                 AuthAuthority = Configuration.GetValue("AuthAuthority", "https://demo.identityserver.io"),
+                ReferenceApiAuthAuthority = Configuration.GetValue("ReferenceApiAuthAuthority", "https://demo.identityserver.io"),
                 ReferenceApiEndPoint = Configuration.GetValue(
                                       "ReferenceApiEndPoint",
                                       "https://referenceApiUrl.no/"),
