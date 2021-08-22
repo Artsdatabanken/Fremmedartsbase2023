@@ -53,6 +53,47 @@ function medianLifespanLevel(num) {
     return result
 }
 
+const introLowTable = {
+    1: 1,
+    5: 2,
+    13: 3,
+    26: 4,
+    43: 5,
+    65: 6,
+    91: 7,
+    121: 8,
+    156: 9,
+    195: 10
+}
+const introHighTable = {
+    1: 1,
+    6: 2,
+    15: 3,
+    29: 4,
+    47: 5,
+    69: 6,
+    96: 7,
+    127: 8,
+    163: 9,
+    204: 10
+}
+
+function introductionNum(table, best) {
+    const keys = Object.keys(table).reverse()
+    var i = 0
+    for(key of keys) {
+        if(best >= key) {
+            i = key
+            break
+        }
+    }
+    return i
+}
+
+
+
+
+
 // function levelFloor(level) {
 //     return level === NaN ? NaN
 //     : typeof(level) === "number"
@@ -106,6 +147,50 @@ function enhanceRiskAssessmentAddErrorReportingHandler(riskAssessment) {
 
 
 function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
+// ---------------------------------------------------------------
+// --------  List of variables that comes from user input --------
+// ---------------------------------------------------------------
+// for variables market with "**" - this variable is not part of the criteria calculation - but is used for qa and presentation
+// types marked with "?" is nullable (but some are required in specific methods)
+// note: all variable names ending with "Input" has a matching calculated value, without the "Input"-ending
+//
+//chosenSpreadMedanLifespan	#radio (ametod)
+//acceptOrAdjustCritA 		#radio
+//AOOtotalBest 	#integer?	# beste anslag på totalt forekomstareal nå 
+//AOOtotalLow  **	#integer? 	# lavt anslag på totalt forekomstareal nå 
+//AOOtotalHigh **	#integer? 	# høyt anslag på totalt forekomstareal nå 
+//AOO50yrBest	#integer?	# beste anslag på totalt forekomstareal om 50 år 
+//AOO50yrLow	#integer?	# lavt anslag på totalt forekomstareal om 50 år 
+//AOO50yrHigh	#integer?	# høyt anslag på totalt forekomstareal om 50 år 
+//medianLifetimeInput	#integer?	# artens mediane levetid i Norge i år
+//lifetimeLowerQInput 	#integer?	# nedre kvartil for artens levetid i Norge i år 
+//LifetimeUpperQInput	#integer?	# øvre kvartil for artens levetid i Norge i år 
+//introductionsBest	    #double?	# beste anslag på antall introduksjoner i løpet av 10 år 
+//populationSize 	**!	#integer?	# bestandens nåværende størrelse (individtall) 
+//growthRate	    **	#double?	# bestandens multiplikative vekstrate 
+//envVariance	    **	#double?	# miljøvarians 
+//demVariance	    **	#double?	# demografisk varians 
+//carryingCapacity	**  #integer?	# bestandens bæreevne (individtall) 
+//extinctionThreshold **	#integer?	# kvasiutdøingsterskel (individtall) 
+//ascore 		#criteria 	(manual and auto!)
+//
+//chosenSpreadYearlyIncrease radio (bmetod)
+//expansionSpeedInput	#integer?	# ekspansjonshastighet i meter per år 
+//expansionLowerQInput	#integer?	# nedre kvartil for ekspansjonshastighet i meter per år 
+//expansionUpperQInput	#integer?	# øvre kvartil for ekspansjonshastighet i meter per år 
+//AOO1		#integer?	# forekomstarealet i år 1
+//AOO2		#integer?	# forekomstarealet i år 2
+//AOOyear1	#integer?	# årstallet for det første forekomstarealet 
+//AOOyear2	#integer?	# årstallet for det andre forekomstarealet 
+//AOOknown	#integer?	# kjent forekomstareal 
+//Occurrences1Best	    #integer?	# beste anslag på antall forekomster fra 1 introduksjon 
+//Occurrences1Low		#integer?	# lavt anslag på antall forekomster fra 1 introduksjon 
+//Occurrences1High	    #integer?	# høyt anslag på antall forekomster fra 1 introduksjon 
+//bscore        #criteria   (manual and auto!)
+
+
+
+
     const r = riskAssessment
     extendObservable(riskAssessment, {
         get ametodkey() {
@@ -135,6 +220,18 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 : ""
             return result
         },
+        get introductionsLow() { 
+            const num = introductionNum(introLowTable, r.introductionsBest)
+            return num == 0 ? 0 : round(r.introductionsBest) - num
+        },
+        get introductionsHigh() {
+            const num = introductionNum(introHighTable, r.introductionsBest)
+            return num == 0 ? 0 : round(r.introductionsBest) + num
+        },
+        get AOO10yrBest() {return 4 * ((1 + r.Occurrences1Best) * (1 + round(r.IntroductionsBest) / 2) - 1) },
+        get AOO10yrLow() { return 4 * ((1 + r.Occurrences1Low) * (1 + r.IntroductionsLow / 2) - 1) },
+        get AOO10yrHigh() {return 4 * ((1 + r.Occurrences1High) * (1 + r.IntroductionsHigh / 2) - 1) },
+
         get AOOchangeBest() { return r.AOOtotalBest < 4 ? 1 : n0(r.AOO50yrBest) / d1(r.AOOtotalBest) },
         get AOOchangeLow() { return r.AOOtotalBest < 4 ? 1 : n0(r.AOO50yrLow) / d1(r.AOOtotalBest) },
         get AOOchangeHigh() { return r.AOOtotalBest >= 4 ? 1 : n0(r.AOO50yrHigh) / d1(r.AOOtotalBest) },
@@ -239,6 +336,8 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         get a1aresulttext() {
             return `Basert på de beste anslagene på forekomstareal i dag (${r.AOOtotalBest + 1}&nbsp;km²) og om 50&nbsp;år (${r.AOO50yrBest + 1}&nbsp;km²) er A-kriteriet forhåndsskåret som ${r.adefaultBest + 1} (med usikkerhet: ${r.adefaultLow}–${r.adefaultHigh}). Dette innebærer at artens mediane levetid ligger ${r.lifetimeText}, eller at sannsynligheten for utdøing innen 50&nbsp;år er på ${r.extinctionText}.`
         },
+
+
 
         get bscore() {
             return r.expansionSpeed >= 500 ? 3
@@ -652,6 +751,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
     });
 
     autorun(() => {
+        const criterionB = getCriterion(riskAssessment, 0, "B")
         console.log("Autorun criterionB old value: " + criterionB.value)
         const bvalue = r.bscore 
         runInAction(() => {
