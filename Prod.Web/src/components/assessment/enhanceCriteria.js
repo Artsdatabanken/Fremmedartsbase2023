@@ -111,6 +111,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 // ---------------------------------------------------------------
 // for variables market with "**" - this variable is not part of the criteria calculation - but is used for qa and presentation
 // types marked with "?" is nullable (but some are required in specific methods)
+// note: all variable names ending with "Input" has a matching calculated value, without the "Input"-ending
 //
 //chosenSpreadMedanLifespan	#radio (ametod)
 //acceptOrAdjustCritA 		#radio
@@ -124,6 +125,20 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 //lifetimeLowerQInput 	#integer?	# nedre kvartil for artens levetid i Norge i år 
 //LifetimeUpperQInput	#integer?	# øvre kvartil for artens levetid i Norge i år 
 //ascore 		#criteria 	(manual and auto!)
+//
+//chosenSpreadYearlyIncrease radio (bmetod)
+//expansionSpeedInput	#integer?	# ekspansjonshastighet i meter per år 
+//expansionLowerQInput	#integer?	# nedre kvartil for ekspansjonshastighet i meter per år 
+//expansionUpperQInput	#integer?	# øvre kvartil for ekspansjonshastighet i meter per år 
+//AOO1		#integer?	# forekomstarealet i år 1
+//AOO2		#integer?	# forekomstarealet i år 2
+//AOOyear1	#integer?	# årstallet for det første forekomstarealet 
+//AOOyear2	#integer?	# årstallet for det andre forekomstarealet 
+//AOOknown	#integer?	# kjent forekomstareal 
+//Occurrences1Best	    #integer?	# beste anslag på antall forekomster fra 1 introduksjon 
+//Occurrences1Low		#integer?	# lavt anslag på antall forekomster fra 1 introduksjon 
+//Occurrences1High	    #integer?	# høyt anslag på antall forekomster fra 1 introduksjon 
+//bscore        #criteria   (manual and auto!)
 
 
 
@@ -265,6 +280,8 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         get a1aresulttext() {
             return `Basert på de beste anslagene på forekomstareal i dag (${r.AOOtotalBest + 1}&nbsp;km²) og om 50&nbsp;år (${r.AOO50yrBest + 1}&nbsp;km²) er A-kriteriet forhåndsskåret som ${r.adefaultBest + 1} (med usikkerhet: ${r.adefaultLow}–${r.adefaultHigh}). Dette innebærer at artens mediane levetid ligger ${r.lifetimeText}, eller at sannsynligheten for utdøing innen 50&nbsp;år er på ${r.extinctionText}.`
         },
+
+
 
         get bscore() {
             return r.expansionSpeed >= 500 ? 3
