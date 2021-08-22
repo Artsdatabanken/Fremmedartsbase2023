@@ -53,6 +53,47 @@ function medianLifespanLevel(num) {
     return result
 }
 
+const introLowTable = {
+    1: 1,
+    5: 2,
+    13: 3,
+    26: 4,
+    43: 5,
+    65: 6,
+    91: 7,
+    121: 8,
+    156: 9,
+    195: 10
+}
+const introHighTable = {
+    1: 1,
+    6: 2,
+    15: 3,
+    29: 4,
+    47: 5,
+    69: 6,
+    96: 7,
+    127: 8,
+    163: 9,
+    204: 10
+}
+
+function introductionNum(table, best) {
+    const keys = Object.keys(table).reverse()
+    var i = 0
+    for(key of keys) {
+        if(best >= key) {
+            i = key
+            break
+        }
+    }
+    return i
+}
+
+
+
+
+
 // function levelFloor(level) {
 //     return level === NaN ? NaN
 //     : typeof(level) === "number"
@@ -172,9 +213,17 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 : ""
             return result
         },
-        get AOO10yrBest() {return 4 * ((1 + r.Occurrences1Best) * (1 + round(IntroductionsBest) / 2) - 1) },
-        get AOO10yrLow() { return 4 * ((1 + Occurrences1Low) * (1 + IntroductionsLow / 2) - 1) },
-        get AOO10yrHigh() {return 4 * ((1 + Occurrences1High) * (1 + IntroductionsHigh / 2) - 1) },
+        get introductionsLow() { 
+            const num = introductionNum(introLowTable, r.introductionsBest)
+            return num == 0 ? 0 : round(r.introductionsBest) - num
+        },
+        get introductionsHigh() {
+            const num = introductionNum(introHighTable, r.introductionsBest)
+            return num == 0 ? 0 : round(r.introductionsBest) + num
+        },
+        get AOO10yrBest() {return 4 * ((1 + r.Occurrences1Best) * (1 + round(r.IntroductionsBest) / 2) - 1) },
+        get AOO10yrLow() { return 4 * ((1 + r.Occurrences1Low) * (1 + r.IntroductionsLow / 2) - 1) },
+        get AOO10yrHigh() {return 4 * ((1 + r.Occurrences1High) * (1 + r.IntroductionsHigh / 2) - 1) },
 
         get AOOchangeBest() { return r.AOOtotalBest < 4 ? 1 : n0(r.AOO50yrBest) / d1(r.AOOtotalBest) },
         get AOOchangeLow() { return r.AOOtotalBest < 4 ? 1 : n0(r.AOO50yrLow) / d1(r.AOOtotalBest) },
@@ -695,6 +744,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
     });
 
     autorun(() => {
+        const criterionB = getCriterion(riskAssessment, 0, "B")
         console.log("Autorun criterionB old value: " + criterionB.value)
         const bvalue = r.bscore 
         runInAction(() => {

@@ -31,7 +31,13 @@ export default function enhanceAssessment(json, appState) {
     delete ra.expansionSpeed 
     delete ra.expansionLowerQ 
     delete ra.expansionUpperQ 
-    delete ra.AOOdarkfigureBest 
+    delete ra.AOOdarkfigureBest
+    delete ra.AOO10yrBest
+    delete ra.AOO10yrLow
+    delete ra.AOO10yrHigh
+    delete ra.introductionsLow
+    delete ra.introductionsHigh
+    AOO10yrBest 
     
 
     
