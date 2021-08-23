@@ -614,17 +614,17 @@ namespace Prod.Domain
 
         // *******  (B2a) Økning i forekomstareal – selvstendig reproduserende arter  **********
         [System.Text.Json.Serialization.JsonPropertyName("AOOyear1")]
-        public long? AOOyear1 { get; set; } // årstallet for det første forekomstarealet 
+        public long? AOOyear1 { get; set; } // fra-årstallet for det første forekomstarealet 
         [System.Text.Json.Serialization.JsonPropertyName("AOOendyear1")]
-        public long? AOOendyear1 { get; set; } // årstallet for det første forekomstarealet 
+        public long? AOOendyear1 { get; set; } // til-årstallet for det første forekomstarealet 
         [System.Text.Json.Serialization.JsonPropertyName("AOOyear2")]
-        public long? AOOyear2 { get; set; } // årstallet for det andre forekomstarealet 
+        public long? AOOyear2 { get; set; } // fra-årstallet for det andre forekomstarealet 
         [System.Text.Json.Serialization.JsonPropertyName("AOOendyear2")]
-        public long? AOOendyear2 { get; set; } // årstallet for det andre forekomstarealet 
-        [System.Text.Json.Serialization.JsonPropertyName("AAO1")]
-        public long? AAO1 { get; set; } // forekomstarealet i år 1 
-        [System.Text.Json.Serialization.JsonPropertyName("AAO2")]
-        public long? AAO2 { get; set; } // forekomstarealet i år 2 
+        public long? AOOendyear2 { get; set; } // til-årstallet for det andre forekomstarealet 
+        [System.Text.Json.Serialization.JsonPropertyName("AOO1")]
+        public long? AOO1 { get; set; } // forekomstarealet i år 1 
+        [System.Text.Json.Serialization.JsonPropertyName("AOO2")]
+        public long? AOO2 { get; set; } // forekomstarealet i år 2 
         // ************************************************************************************
 
 
@@ -663,8 +663,8 @@ namespace Prod.Domain
         // ikke i bruk i 2012 applikasjon (?)
         //public string SpreadingDescription { get; set; } //Spreading_Description
 
-        public string AcceptOrAdjustCritA { get; set; } = "accept";
-        public string ChosenSpreadMedanLifespan { get; set; } = "";  //lagt til 08.11.2016
+        public string AcceptOrAdjustCritA { get; set; } = "accept";  // ametod submetod (radio)
+        public string ChosenSpreadMedanLifespan { get; set; } = "";  // ametod (radio)
 
         public bool ActiveSpreadPVAAnalysisSpeciesLongevity { get; set; } // added 27.09.2016
 
@@ -737,9 +737,6 @@ namespace Prod.Domain
         #region Median life time
         public long? MedianLifetimeInput { get; set; } // artens mediane levetid i Norge i år (brukerinput)
         public long MedianLifetime { get; set; } // artens mediane levetid i Norge i år (beregnet/avrundet)
-        //
-        //todo: check: MedianLifetime erstatter muligens ChosenSpreadMedanLifespan
-        //
         public long? LifetimeLowerQInput { get; set; } // nedre kvartil for artens levetid i Norge i år 
         public long LifetimeLowerQ { get; set; } // nedre kvartil for artens levetid i Norge i år 
         public long? LifetimeUpperQInput { get; set; } // øvre kvartil for artens levetid i Norge i år 
@@ -795,7 +792,7 @@ namespace Prod.Domain
 
         #region (B) Ekspansjonshastighet
 
-        public string ChosenSpreadYearlyIncrease { get; set; } = "";  //lagt til 14.10.2016
+        public string ChosenSpreadYearlyIncrease { get; set; } = "";  // bmetod (radio)
         public bool ActiveSpreadYearlyIncreaseObservations { get; set; } //lagt til 29.09.2016
 
 
@@ -815,12 +812,12 @@ namespace Prod.Domain
 
 
         // ********************** ((B1) ekspansjonshastighet  ****************************
-        public double? ExpansionSpeedInput { get; set; }  // ekspansjonshastighet i meter per år 
-        public double? ExpansionSpeed { get; set; }  // ekspansjonshastighet i meter per år 
-        public double? ExpansionLowerQInput { get; set; } // nedre kvartil for ekspansjonshastighet i meter per år 
-        public double? ExpansionLowerQ { get; set; } // nedre kvartil for ekspansjonshastighet i meter per år 
-        public double? ExpansionUpperQInput { get; set; } // øvre kvartil for ekspansjonshastighet i meter per år 
-        public double? ExpansionUpperQ { get; set; } // øvre kvartil for ekspansjonshastighet i meter per år 
+        public long? ExpansionSpeedInput { get; set; }  // ekspansjonshastighet i meter per år 
+        public long? ExpansionSpeed { get; set; }  // ekspansjonshastighet i meter per år 
+        public long? ExpansionLowerQInput { get; set; } // nedre kvartil for ekspansjonshastighet i meter per år 
+        public long? ExpansionLowerQ { get; set; } // nedre kvartil for ekspansjonshastighet i meter per år 
+        public long? ExpansionUpperQInput { get; set; } // øvre kvartil for ekspansjonshastighet i meter per år 
+        public long? ExpansionUpperQ { get; set; } // øvre kvartil for ekspansjonshastighet i meter per år 
         // -------- disse ((B1) ekspansjonshastighet) er erstattet:  
         //todo: *sjekk konvertering fra FAB3 før sletting av utkommentert kode*
         //public bool ActiveSpreadYearlyIncreaseOccurrenceArea { get; set; } //lagt til 29.09.2016
