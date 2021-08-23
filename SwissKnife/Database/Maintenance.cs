@@ -267,6 +267,8 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.Occurrences1Low, opt => opt.MapFrom(src => ParseDouble(src.SpreadYearlyIncreaseObservationsLowerQuartile)))
                     .ForMember(dest => dest.Occurrences1High, opt => opt.MapFrom(src => ParseDouble(src.SpreadYearlyIncreaseObservationsUpperQuartile)))
                     .ForMember(dest => dest.IntroductionsBest, opt => opt.Ignore())
+                    .ForMember(dest => dest.IntroductionsLow, opt => opt.Ignore())
+                    .ForMember(dest => dest.IntroductionsHigh, opt => opt.Ignore())
                     .ForMember(dest => dest.ExpansionSpeedInput, opt => opt.Ignore())
                     .ForMember(dest => dest.ExpansionSpeed, opt => opt.MapFrom(src => ParseDouble(src.SpreadYearlyIncreaseOccurrenceArea))) // ActiveSpreadYearlyIncreaseOccurrenceArea?? SpreadYearlyIncreaseCalculatedExpansionSpeed?? SpreadYearlyIncreaseObservations??
                     .ForMember(dest => dest.ExpansionLowerQInput, opt => opt.Ignore())

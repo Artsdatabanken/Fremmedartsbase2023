@@ -804,6 +804,8 @@ namespace Prod.Domain
         public long? Occurrences1Low { get; set; }	// lavt anslag på antall forekomster fra 1 introduksjon 
         public long? Occurrences1High { get; set; }	// høyt anslag på antall forekomster fra 1 introduksjon 
         public long? IntroductionsBest { get; set; }	// beste anslag på antall introduksjoner i løpet av 10 år 
+        public long? IntroductionsLow { get; set; }	    // lavt anslag på antall introduksjoner i løpet av 10 år 
+        public long? IntroductionsHigh { get; set; }	// høyt anslag på antall introduksjoner i løpet av 10 år 
         // -------- disse (forekomstareal - dørstokkarter) er erstattet:  
         //todo: *sjekk konvertering fra FAB3 før sletting av utkommentert kode*
         //public string SpreadYearlyIncreaseObservations { get; set; } //lagt til 29.09.2016
