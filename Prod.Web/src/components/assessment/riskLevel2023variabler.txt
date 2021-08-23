@@ -96,3 +96,18 @@ ExpansionLowerQ	//integer	// nedre kvartil for ekspansjonshastighet i meter per 
 ExpansionUpperQ	//integer	// øvre kvartil for ekspansjonshastighet i meter per år 
 ExpansionText	//string	// tekstlig beskrivelse av ekspansjonshastighet 
 
+
+
+-------------
+
+Input-variabler brukt i kriterieberegningen som foreløpig ikke har input-felt i appen
+
+lifetimeLowerQInput 	integer		# nedre kvartil for artens levetid i Norge i år 
+lifetimeUpperQInput	integer		# øvre kvartil for artens levetid i Norge i år 
+introductionsBest	number		# beste anslag på antall introduksjoner i løpet av 10 år 
+AOOknown		integer		# kjent forekomstareal 
+occurrences1Best	integer		# beste anslag på antall forekomster fra 1 introduksjon 
+occurrences1Low		integer		# lavt anslag på antall forekomster fra 1 introduksjon 
+occurrences1High	integer		# høyt anslag på antall forekomster fra 1 introduksjon 
+
+
