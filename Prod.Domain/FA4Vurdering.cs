@@ -752,6 +752,12 @@ namespace Prod.Domain
         public int Blow { get; set; } // nedre skår for B-kriteriet (inkludert usikkerhet) 
         public int Bhigh { get; set; } // øvre skår for B-kriteriet (inkludert usikkerhet) 
 
+        public int BCritMCount { get; set; } = 0;
+        public string BCritExact { get; set; } = "true";
+        public string BCritP { get; set; } 
+        public string BCritNewObs { get; set; }
+
+
         public int StartYear { get; set; } // startår for B-kriteriet / utbredelse
 
         public int EndYear { get; set; } // sluttår for B-kriteriet / utbredelse

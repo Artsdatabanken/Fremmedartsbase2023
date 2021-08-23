@@ -316,7 +316,10 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.Blow, opt => opt.Ignore())
                     .ForMember(dest => dest.Bhigh, opt => opt.Ignore())
 
-
+                    .ForMember(dest => dest.BCritMCount, opt => opt.Ignore())
+                    .ForMember(dest => dest.BCritExact, opt => opt.Ignore())
+                    .ForMember(dest => dest.BCritP, opt => opt.Ignore())
+                    .ForMember(dest => dest.BCritNewObs, opt => opt.Ignore())
 
                     .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes, opt => opt.Ignore())
                     .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesBest, opt => opt.Ignore())
