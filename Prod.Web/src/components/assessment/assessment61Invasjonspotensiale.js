@@ -261,7 +261,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
 
                     </div>
                     <div className="numberFields">
-                        <Xcomp.HtmlString observableValue={[riskAssessment, 'PVAAnalysis']} />
+                        <Xcomp.HtmlString observableValue={[riskAssessment, 'spreadPVAAnalysis']} />
                        <h4>{labels.Acrit.data}</h4>
                         <p>{labels.DistributionHistory.noDocuments}.</p>
                         <span>{labels.General.upload}</span> 
@@ -288,8 +288,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                    <div className="numberFields">                  
 
                    <Xcomp.Number observableValue={[riskAssessment, "medianLifetimeInput"]} integer />  {/* ACritMedianLifespan */}
-                   <Xcomp.Number observableValue={[riskAssessment, "ACritLower"]} />  
-                   <Xcomp.Number observableValue={[riskAssessment, "ACritUpper"]} />                     
+                   <Xcomp.Number observableValue={[riskAssessment, "lifetimeLowerQInput"]} />  
+                   <Xcomp.Number observableValue={[riskAssessment, "lifetimeUpperQInput"]} />                     
                             
                    </div>
                    </div>
@@ -382,11 +382,11 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             integer
                                         />  
                                     <Xcomp.Number                            
-                                            observableValue={[riskAssessment, "expansionLowerQ"]}
+                                            observableValue={[riskAssessment, "expansionLowerQInput"]}
                                             integer
                                         />  
                                     <Xcomp.Number                            
-                                            observableValue={[riskAssessment, "expansionUpperQ"]}
+                                            observableValue={[riskAssessment, "expansionUpperQInput"]}
                                             integer
                                         />  
                                     <h4>{labels.Bcrit.data}</h4>
@@ -638,7 +638,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                 <hr/>
                             </div>
                         : null}
-                    {riskAssessment.ActiveSpreadYearlyLiteratureData
+                    {riskAssessment.activeSpreadYearlyLiteratureData
                         ? <div>
                                 <table className="formtable">
                                     <tbody>
@@ -696,7 +696,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                 <hr/>
                             </div>
                         : null}
-                    {riskAssessment.ActiveSpreadYearlyIncreaseCalculatedExpansionSpeed
+                    {riskAssessment.activeSpreadYearlyIncreaseCalculatedExpansionSpeed
                         ? <div>
                                 <table className="formtable">
                                     <tbody>
