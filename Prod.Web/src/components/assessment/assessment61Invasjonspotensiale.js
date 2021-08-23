@@ -216,12 +216,12 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                         
                    </div>
                    <div className="numberFields">
-                   <Xcomp.Number observableValue={[riskAssessment, "PopulationSize"]} integer />  
-                   <Xcomp.Number observableValue={[riskAssessment, "GrowthRate"]} />  
-                   <Xcomp.Number observableValue={[riskAssessment, "EnvVariance"]} />  
-                   <Xcomp.Number observableValue={[riskAssessment, "DemVariance"]} />  
-                   <Xcomp.Number observableValue={[riskAssessment, "CarryingCapacity"]} />  
-                   <Xcomp.Number observableValue={[riskAssessment, "ExtinctionThreshold"]} />  
+                   <Xcomp.Number observableValue={[riskAssessment, "populationSize"]} integer />  
+                   <Xcomp.Number observableValue={[riskAssessment, "growthRate"]} />  
+                   <Xcomp.Number observableValue={[riskAssessment, "envVariance"]} />  
+                   <Xcomp.Number observableValue={[riskAssessment, "demVariance"]} />  
+                   <Xcomp.Number observableValue={[riskAssessment, "carryingCapacity"]} integer />  
+                   <Xcomp.Number observableValue={[riskAssessment, "extinctionThreshold"]} integer />  
                     
                             
                    </div>
@@ -233,7 +233,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                         <p>{labels.Acrit.median}</p> 
                        </div>
                        <div className="numberFields">
-                       <Xcomp.Number observableValue={[riskAssessment, "medianLifetimeInput"]}/>  
+                       <Xcomp.Number observableValue={[riskAssessment, "medianLifetimeInput"]} integer />  
                        </div>
                    </div>
                    
@@ -287,7 +287,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                    </div>
                    <div className="numberFields">                  
 
-                   <Xcomp.Number observableValue={[riskAssessment, "medianLifetimeInput"]} />  {/* ACritMedianLifespan */}
+                   <Xcomp.Number observableValue={[riskAssessment, "medianLifetimeInput"]} integer />  {/* ACritMedianLifespan */}
                    <Xcomp.Number observableValue={[riskAssessment, "ACritLower"]} />  
                    <Xcomp.Number observableValue={[riskAssessment, "ACritUpper"]} />                     
                             
@@ -378,16 +378,16 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                 </div>
                                 <div className="numberFieldsB">
                                 <Xcomp.Number                            
-                                            observableValue={[riskAssessment, "ExpansionSpeed"]}
-                                            double
+                                            observableValue={[riskAssessment, "expansionSpeed"]} 
+                                            integer
                                         />  
                                     <Xcomp.Number                            
-                                            observableValue={[riskAssessment, "ExpansionLowerQ"]}
-                                            double
+                                            observableValue={[riskAssessment, "expansionLowerQ"]}
+                                            integer
                                         />  
                                     <Xcomp.Number                            
-                                            observableValue={[riskAssessment, "ExpansionUpperQ"]}
-                                            double
+                                            observableValue={[riskAssessment, "expansionUpperQ"]}
+                                            integer
                                         />  
                                     <h4>{labels.Bcrit.data}</h4>
                                     <div className="BCritFiles">
@@ -469,7 +469,9 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             <tr>
                                                 <td> <Xcomp.Number       
                                                         disabled                     
-                                                        observableValue={[riskAssessment, "AOOyear1"]}/> 
+                                                        observableValue={[riskAssessment, "AOOyear1"]} 
+                                                        integer 
+                                                    /> 
                                                 </td>
                                                 <td style={{display: 'flex'}}><Xcomp.Number                            
                                                         observableValue={[riskAssessment, "AOOendyear1"]}
@@ -478,7 +480,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                     /> <span style={{margin: '10px 10px 0'}}>(t<sub>1</sub>)</span>
                                                     </td>
                                                 <td><Xcomp.Number                            
-                                                        observableValue={[riskAssessment, "AAO1"]}                                                        
+                                                        observableValue={[riskAssessment, "AOO1"]}
+                                                        integer
                                                     />
                                                 </td>
                                                
@@ -488,6 +491,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                         disabled                         
                                                         //observableValue={[riskAssessment, "AOOyear2"]}
                                                         observableValue={[riskAssessment, "AOOyear1"]}
+                                                        integer
                                                         yearRange={true}/> 
                                                 </td>
                                                 <td style={{display: 'flex'}}><Xcomp.Number            
@@ -495,8 +499,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                         observableValue={[riskAssessment, "AOOendyear2"]} 
                                                         yearRange={true}/> <span style={{margin: '10px 10px 0'}}>(t<sub>2</sub>)</span>
                                                 </td>
-                                                <td><Xcomp.Number                            
-                                                         observableValue={[riskAssessment, "AAO2"]}/> 
+                                                <td><Xcomp.Number observableValue={[riskAssessment, "AOO2"]} integer /> 
                                                 </td>                                                
                                             </tr>
                                             </tbody>                            
