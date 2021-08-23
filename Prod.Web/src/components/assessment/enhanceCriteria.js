@@ -164,7 +164,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 //AOO50yrHigh	#integer?	# høyt anslag på totalt forekomstareal om 50 år 
 //medianLifetimeInput	#integer?	# artens mediane levetid i Norge i år
 //lifetimeLowerQInput 	#integer?	# nedre kvartil for artens levetid i Norge i år 
-//LifetimeUpperQInput	#integer?	# øvre kvartil for artens levetid i Norge i år 
+//lifetimeUpperQInput	#integer?	# øvre kvartil for artens levetid i Norge i år 
 //introductionsBest	    #number?	# beste anslag på antall introduksjoner i løpet av 10 år 
 //populationSize 	**!	#integer?	# bestandens nåværende størrelse (individtall) 
 //growthRate	    **	#number?	# bestandens multiplikative vekstrate 
@@ -172,7 +172,6 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 //demVariance	    **	#number?	# demografisk varians 
 //carryingCapacity	**  #integer?	# bestandens bæreevne (individtall) 
 //extinctionThreshold **	#integer?	# kvasiutdøingsterskel (individtall) 
-//ascore 		#criteria 	(manual and auto!)
 //
 //chosenSpreadYearlyIncrease radio (bmetod)
 //expansionSpeedInput	#integer?	# ekspansjonshastighet i meter per år 
@@ -183,10 +182,9 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 //AOOyear1	#integer?	# årstallet for det første forekomstarealet 
 //AOOyear2	#integer?	# årstallet for det andre forekomstarealet 
 //AOOknown	#integer?	# kjent forekomstareal 
-//Occurrences1Best	    #integer?	# beste anslag på antall forekomster fra 1 introduksjon 
-//Occurrences1Low		#integer?	# lavt anslag på antall forekomster fra 1 introduksjon 
-//Occurrences1High	    #integer?	# høyt anslag på antall forekomster fra 1 introduksjon 
-//bscore        #criteria   (manual and auto!)
+//occurrences1Best	    #integer?	# beste anslag på antall forekomster fra 1 introduksjon 
+//occurrences1Low		#integer?	# lavt anslag på antall forekomster fra 1 introduksjon 
+//occurrences1High	    #integer?	# høyt anslag på antall forekomster fra 1 introduksjon 
 
 
 
