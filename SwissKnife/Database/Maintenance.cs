@@ -78,20 +78,32 @@ namespace SwissKnife.Database
                 _database.Assessments.Add(dbAssessment);
                 count++;
 
-                string assessmentCommentString(string oldFieldName, string newFieldName, string oldValue, string newValue) 
+                string assessmentCommentString(string fieldName, string subFieldName, string oldValue, string newValue) 
                 {
-                    return $"Verdi '{oldFieldName}' 2018 ('{oldValue}') er satt til '{newFieldName}': {newValue}. Vennligst endre til estimert verdi.";
+                    string baseString = $"Verdi fra 2018 ('{oldValue}') på '{fieldName}' med valg {subFieldName} er satt til: {newValue}.";
+                    string notTrillions(string newValue) => oldValue != "mer enn én billion år" ? " Vennligst endre til estimert verdi." : "";
+                    return baseString + notTrillions(newValue);
                 }
 
-                dbAssessment.Comments = new List<AssessmentComment>();
+                Boolean valueHasChanged(string oldValue, double? newValue)
+                {
+                    if (double.TryParse(oldValue, out double test))
+                    {
+                        return false;
+                    }
+                    return oldValue != newValue.ToString();
+
+                }
+
+            dbAssessment.Comments = new List<AssessmentComment>();
 
                 if (oldAssessment.RiskAssessment.SpreadRscriptEstimatedSpeciesLongevity != null &&
-                    newAssesment.RiskAssessment.MedianLifetime != null &&
-                    oldAssessment.RiskAssessment.SpreadRscriptEstimatedSpeciesLongevity != newAssesment.RiskAssessment.MedianLifetime.ToString())
+                    newAssesment.RiskAssessment.MedianLifetimeInput != null &&
+                    valueHasChanged(oldAssessment.RiskAssessment.SpreadRscriptEstimatedSpeciesLongevity, newAssesment.RiskAssessment.MedianLifetimeInput))
                 {
                     dbAssessment.Comments.Add(new AssessmentComment()
                     {
-                        Comment = assessmentCommentString("SpreadRscriptEstimatedSpeciesLongevity", "MedianLifetime", oldAssessment.RiskAssessment.SpreadRscriptEstimatedSpeciesLongevity, newAssesment.RiskAssessment.MedianLifetime.ToString()),
+                        Comment = assessmentCommentString("Median levetid", "Numerisk estimering på A-kriteriet", oldAssessment.RiskAssessment.SpreadRscriptEstimatedSpeciesLongevity, newAssesment.RiskAssessment.MedianLifetimeInput.ToString()),
                         CommentDate = DateTime.Now,
                         UserId = new Guid("00000000-0000-0000-0000-000000000001"),
                         ClosedById = new Guid("00000000-0000-0000-0000-000000000001"),
@@ -99,7 +111,7 @@ namespace SwissKnife.Database
                 }
                 if (oldAssessment.RiskAssessment.SpreadYearlyIncreaseObservations != null &&
                     newAssesment.RiskAssessment.Occurrences1Best != null &&
-                    oldAssessment.RiskAssessment.SpreadYearlyIncreaseObservations != newAssesment.RiskAssessment.Occurrences1Best.ToString())
+                    valueHasChanged(oldAssessment.RiskAssessment.SpreadYearlyIncreaseObservations, newAssesment.RiskAssessment.Occurrences1Best))
                 {
                     dbAssessment.Comments.Add(new AssessmentComment()
                     {
@@ -257,7 +269,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.DemVariance, opt => opt.MapFrom(src => double.Parse(src.SpreadRscriptDemographicVariance, System.Globalization.CultureInfo.InvariantCulture)))
                     .ForMember(dest => dest.CarryingCapacity, opt => opt.MapFrom(src => ParseLong(src.SpreadRscriptSustainabilityK)))
                     .ForMember(dest => dest.ExtinctionThreshold, opt => opt.MapFrom(src => ParseLong(src.SpreadRscriptQuasiExtinctionThreshold)))
-                    .ForMember(dest => dest.MedianLifetimeInput, opt => opt.MapFrom(src => ParseLong(src.SpreadRscriptEstimatedSpeciesLongevity))) //ActiveSpreadRscriptEstimatedSpeciesLongevity?? ChosenSpreadMedanLifespan??
+                    .ForMember(dest => dest.MedianLifetimeInput, opt => opt.MapFrom(src => ParseDouble(src.SpreadRscriptEstimatedSpeciesLongevity))) //ActiveSpreadRscriptEstimatedSpeciesLongevity?? ChosenSpreadMedanLifespan??
                     .ForMember(dest => dest.MedianLifetime, opt => opt.Ignore())
                     .ForMember(dest => dest.LifetimeLowerQInput, opt => opt.Ignore())
                     .ForMember(dest => dest.LifetimeLowerQ, opt => opt.Ignore())

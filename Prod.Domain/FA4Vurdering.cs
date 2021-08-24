@@ -735,7 +735,7 @@ namespace Prod.Domain
         #endregion
 
         #region Median life time
-        public long? MedianLifetimeInput { get; set; } // artens mediane levetid i Norge i år (brukerinput)
+        public double? MedianLifetimeInput { get; set; } // artens mediane levetid i Norge i år (brukerinput)
         public long MedianLifetime { get; set; } // artens mediane levetid i Norge i år (beregnet/avrundet)
         public long? LifetimeLowerQInput { get; set; } // nedre kvartil for artens levetid i Norge i år 
         public long LifetimeLowerQ { get; set; } // nedre kvartil for artens levetid i Norge i år 
