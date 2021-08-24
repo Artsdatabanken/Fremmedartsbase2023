@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Kart from "./Kart";
+import KartOpenLayers from "./KartOpenLayers";
 import Loading from "../Loading";
 import useArtskart from "./useArtskart";
 import * as Xcomp from "../observableComponents";
@@ -189,14 +189,16 @@ const RedigerbartKart = ({
           )}
         </div>*/}
 
-      <Kart
-        geojson={observations}
-        style={mapstyle}
-        onAddPoint={handleAddPoint}
-        onClickPoint={handleClickPoint}
-        onEdit={handleEditSelection}
-        mapBounds={mapBounds}
-      ></Kart>
+      <div id='olmap' style={{height: '100%', cursor: 'crosshair'}}>
+        <KartOpenLayers
+          geojson={observations}
+          style={mapstyle}
+          onAddPoint={handleAddPoint}
+          onClickPoint={handleClickPoint}
+          onEdit={handleEditSelection}
+          mapBounds={mapBounds}
+        />
+      </div>
     </div>
   );
 };

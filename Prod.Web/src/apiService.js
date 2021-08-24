@@ -319,7 +319,7 @@ export function getArtskartUrl(
         : "svalbard";
     const excludeGbif = 
         kriterier.excludeGbif ? "&sourcedatabases[]=-40,-211" : "";   
-    let queryparams = `&fromYear=${kriterier.observationFromYear}&toYear=${kriterier.observationToYear}&fromMonth=${kriterier.fromMonth}&toMonth=${kriterier.toMonth}&type=${type}&region=${region}`;
+    let queryparams = `fromYear=${kriterier.observationFromYear}&toYear=${kriterier.observationToYear}&fromMonth=${kriterier.fromMonth}&toMonth=${kriterier.toMonth}&type=${type}&region=${region}`;
     queryparams += `&scientificNameId=${scientificNameId}${excludeGbif}`;
     if (selectionGeometry)
       queryparams += `&geojsonPolygon=${
