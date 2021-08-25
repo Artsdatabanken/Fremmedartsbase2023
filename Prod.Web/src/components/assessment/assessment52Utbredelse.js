@@ -8,6 +8,8 @@ import DistributionTable from './distributionTable'
 import UtbredelseshistorikkInnenlands from './35Utbredelseshistorikk/UtbredelseshistorikkInnenlands'
 import UtbredelseIDag from './35Utbredelseshistorikk/UtbredelseIDag'
 import Utbredelseshistorikk from './35Utbredelseshistorikk/Utbredelseshistorikk'
+import ModalArtskart from '../artskart/ModalArtskart';
+
 @inject('appState')
 @observer
 export default class Assessment52Utbredelse extends React.Component {
@@ -22,87 +24,85 @@ export default class Assessment52Utbredelse extends React.Component {
         return (
             <div>
                 <div>
-                <fieldset className="well">
+                    <fieldset className="well">
                         <h2>Utbredelse i Norge</h2>
                         <h3>Forekomstareal</h3>
-                    {assessment.alienSpeciesCategory == "DoorKnocker" ? 
+                        {assessment.alienSpeciesCategory == "DoorKnocker" ? 
                         <div>
-                        <div className="statusField">
-                            <div className="labels distribution">
-                                <p>Hvor mange 2 km x 2 km-ruter kan arten kolonisere i løpet av en 10 års-periode basert på én introduksjon til norsk natur? (Innenfor vurderingsperioden på 50 år)?</p>
-                                <p>Hvor mange slike introduksjoner til norsk natur antas arten å få i løpet av samme 10-års periode?</p>
-                                <p>Totalt forekomstareal <b> 10 år etter første introduksjon </b> (km<sup>2</sup>)</p>
-                                
+                            <div className="statusField">
+                                <div className="labels distribution">
+                                    <p>Hvor mange 2 x 2 km-ruter kan arten kolonisere i løpet av en 10 års-periode basert på én introduksjon til norsk natur? (Innenfor vurderingsperioden på 50 år)?</p>
+                                    <p>Hvor mange slike introduksjoner til norsk natur antas arten å få i løpet av samme 10-års periode?</p>
+                                    <p>Totalt forekomstareal <b> 10 år etter første introduksjon </b> (km<sup>2</sup>)</p>
+                                    
+                                </div>
+                                <div className="distribution">
+                                    <DistributionTable/>
+                                </div>
                             </div>
-                            <div className="distribution">
-                                <DistributionTable/>
+                            <div className="changedNature">
+                                <p>Andel av antatt forekomstareal i sterkt endra natur (%)</p>
+                                <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "speciesDistribution"]} codes={koder.KnownDistributionInNature}/> 
                             </div>
-                        </div>
-                        <div className="changedNature">
-                            <p>Andel av antatt forekomstareal i sterkt endra natur (%)</p>
-                             <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "speciesDistribution"]} codes={koder.KnownDistributionInNature}/> 
-                        </div>
-                        </div>
-                         :
-                        <div>
-                            <span>{labels.goTo}</span> <Xcomp.Button primary >{labels.speciesMap}</Xcomp.Button>
-                            <p style={{marginBottom: '0'}}>Basert på periode:</p>
-                            <div style={{display: 'flex'}}>
-                                        <div style={{marginRight: '30px'}}>
+                            </div>
+                            :
+                            <div>
+                                {/* <span>{labels.goTo}</span> <Xcomp.Button primary>{labels.speciesMap}</Xcomp.Button> */}
+                                <ModalArtskart taxonId={appState.assessmentSavedVersion.taxonId} scientificNameId={appState.assessmentSavedVersion.evaluatedScientificNameId} labels={labels}/>
+                                <p style={{marginBottom: '0'}}>Basert på periode:</p>
+                                <div style={{display: 'flex'}}>
+                                    <div style={{marginRight: '30px'}}>
                                         <p> f.o.m. år (t<sub>0</sub>)</p>
                                         <Xcomp.Number                            
                                             observableValue={[assessment.riskAssessment, "AOOyear1"]}
                                             yearRange={true}/> 
-                                        </div>
-                                        <div>
+                                    </div>
+                                    <div>
                                         <p>t.o.m. år (t<sub>2</sub>)</p>
                                         <Xcomp.Number                            
                                             observableValue={[assessment.riskAssessment, "AOOendyear2"]}
                                             yearRange={true}/> 
-                                        </div> 
-                                    </div>
-                            <div className="statusField">
-                                <div className="labels distribution">
-                                    
-                                
-                                    <div style={{display: 'flex', marginTop: '40px', marginBottom: '150px'}}>
-                                    <p>Forekomstareal <b>i dag</b> (km<sup>2</sup>):</p>
-                                    {assessment.alienSpeciesCategory != "DoorKnocker" && 
-                                    <div style={{width: '100px', marginTop: '50px'}}>
-                                        <b>Kjent</b>
-                                        <Xcomp.Number                            
-                                            observableValue={[assessment.riskAssessment, "knownDistribution"]}
-                                             /> 
-                                    </div>
-                                    }
-                                    </div>
-                                    <p>Forekomstareal <b>om 50 år </b> (km<sup>2</sup>)</p>
-                                    
+                                    </div> 
                                 </div>
-                                <div className="distribution">
-                                <DistributionTable/>
+                                <div className="statusField">
+                                    <div className="labels distribution">
+                                        <div style={{display: 'flex', marginTop: '40px', marginBottom: '150px'}}>
+                                            <p>Forekomstareal <b>i dag</b> (km<sup>2</sup>):</p>
+                                            {assessment.alienSpeciesCategory != "DoorKnocker" && 
+                                            <div style={{width: '100px', marginTop: '50px'}}>
+                                                <b>Kjent</b>
+                                                <Xcomp.Number                            
+                                                    observableValue={[assessment.riskAssessment, "knownDistribution"]}
+                                                    /> 
+                                            </div>
+                                            }
+                                        </div>
+                                        <p>Forekomstareal <b>om 50 år </b> (km<sup>2</sup>)</p>
+                                    </div>
+                                    <div className="distribution">
+                                        <DistributionTable/>
+                                    </div>
+                                </div>
+                                <div className="changedNature">
+                                    <p>Andel av kjent forekomstareal i sterkt endra natur (%) </p>
+                                    <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "speciesDistribution"]} codes={koder.KnownDistributionInNature}/>
+                                </div>
+                                <div style={{marginTop: '50px'}}>
+                                    <p>Med utgangspunkt <b>én introduksjon</b>, antas arten å være… </p>   
+                                    <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "speciesDistribution"]} mode="radio" codes={koder.DistributionOptions}/>  
+                                </div>             
+                                {/* <div style={{marginBottom: '20px'}}>
+                                    <span>{labels.goTo}</span> <Xcomp.Button primary >{labels.distributionHistory}</Xcomp.Button>
+                                </div> */}
                             </div>
+                        }
+                        <div>
+                                
+                            {/* <Xcomp.Radio kode={"BB–E"} observableValue={[assessment.riskAssessment, "speciesDistribution"]} label={"etablert og produsere levedyktig avkom i minst 10 forekomster i norsk natur [BB E]"} />
+                                <Xcomp.Radio kode={"BB-D2"} observableValue={[assessment.riskAssessment, "speciesDistribution"]} label={"etablert og produsere levedyktig avkom i 1 til 9 forekomster i norsk natur [BB D2]"} />
+                            <Xcomp.Radio kode={"BB-D1"} observableValue={[assessment.riskAssessment, "speciesDistribution"]} label={"etablert og i tillegg ha levedyktige individer i minst én forekomst i norsk natur [BB D1]"} />*/}
                         </div>
-                        <div className="changedNature">
-                            <p>Andel av kjent forekomstareal i sterkt endra natur (%) </p>
-                            <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "speciesDistribution"]} codes={koder.KnownDistributionInNature}/>
-                         </div>
-                         <div style={{marginTop: '50px'}}>
-                            <p>Med utgangspunkt <b>én introduksjon</b>, antas arten å være… </p>   
-                            <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "speciesDistribution"]} mode="radio" codes={koder.DistributionOptions}/>  
-                        </div>             
-                         {/* <div style={{marginBottom: '20px'}}>
-                            <span>{labels.goTo}</span> <Xcomp.Button primary >{labels.distributionHistory}</Xcomp.Button>
-                         </div> */}
-                        </div>
-                   }
-                    <div>
-                            
-                           {/* <Xcomp.Radio kode={"BB–E"} observableValue={[assessment.riskAssessment, "speciesDistribution"]} label={"etablert og produsere levedyktig avkom i minst 10 forekomster i norsk natur [BB E]"} />
-                            <Xcomp.Radio kode={"BB-D2"} observableValue={[assessment.riskAssessment, "speciesDistribution"]} label={"etablert og produsere levedyktig avkom i 1 til 9 forekomster i norsk natur [BB D2]"} />
-                        <Xcomp.Radio kode={"BB-D1"} observableValue={[assessment.riskAssessment, "speciesDistribution"]} label={"etablert og i tillegg ha levedyktige individer i minst én forekomst i norsk natur [BB D1]"} />*/}
-                        </div>
-                        </fieldset>
+                    </fieldset>
                 <fieldset className="well">
                     <h2>Fylkesvis utbredelse</h2>
                     <b>[Her kommer det et kart]</b>

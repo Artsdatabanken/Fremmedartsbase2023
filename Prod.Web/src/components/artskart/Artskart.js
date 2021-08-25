@@ -10,12 +10,16 @@ const mapBounds = {
     [83, 23]
   ],
   N: [
-    [58.5, 4.3],
-    [71, 31]
+    [57, 4.3],
+    [71.5, 32.5]
   ]
 };
 
 const Artskart = ({ taxonId, scientificNameId, vurderingsContext, utvalg, onOverførFraArtskart, artskartSelectionGeometry, artskartAdded, artskartRemoved, onCancel }) => {
+  if (vurderingsContext === undefined) {
+    vurderingsContext = 'N';
+  }
+  console.log('Artskart', taxonId, scientificNameId, vurderingsContext);
   return (
     <div className="artskartmodal">
       <div

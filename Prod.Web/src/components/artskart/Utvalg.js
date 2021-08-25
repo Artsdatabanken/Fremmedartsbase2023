@@ -13,7 +13,7 @@ const Utvalg = ({ utvalg }) => {
   const refUtvalg = useRef();
   const [isModalOpen, setModalOpen] = useState(false);
   const [refDropDown, setFocusUtvalg] = useFocus();
-  useEscapeKey(refDropDown, closeModal);
+  // useEscapeKey(refDropDown, closeModal);
   useOnClickOutside(refUtvalg, closeModal);
   return (
     <div ref={refUtvalg} style={{ float: "left" }}>
