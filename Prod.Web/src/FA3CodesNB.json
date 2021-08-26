@@ -7133,14 +7133,14 @@
                         {
                             "Id": null,
                             "Value": "redListEffects",
-                            "Text": "Effekter på rødlistede naturtyper",
+                            "Text": "Effekter på truede eller sjeldne naturtyper",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "colonizedAreaAndEffects",
-                            "Text": "Kolonisert areal av naturtyper og effekter på naturtyper som ikke er rødlistede",
+                            "Text": "Kolonisert areal av naturtyper og effekter på naturtyper som ikke er truede eller sjeldne",
                             "Info": null,
                             "Children": null
                         },
