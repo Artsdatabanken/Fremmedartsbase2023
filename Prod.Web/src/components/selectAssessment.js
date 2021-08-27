@@ -100,10 +100,10 @@ export default class SelectAssessment extends Component {
             <div>
                 {window.location.href.indexOf("test.") > 1 && <table className="table table-striped">
                     <tr style={{backgroundColor: '#f9f9f9'}}>
-                        <td style={{textAlign: 'center', color: 'red'}}><b>Dette er en testversjon. Driftversjonen finner du <a href="https://rl2021.artsdatabanken.no/">her</a>.</b></td>
+                        <td style={{textAlign: 'center', color: 'red'}}><b>{labels.SelectAssessment.testVersion}<a href="https://rl2021.artsdatabanken.no/">{labels.SelectAssessment.here}</a>.</b></td>
                     </tr>
                 </table>}                
-                <h4>Velg artsgruppe</h4>
+                <h4>{labels.SelectAssessment.chooseSpeciesGroup}</h4>
                 <div style={{display: 'flex'}}>
                     <div style={{float: 'left', width: '90%'}}>
                         <div className="selectAssessment">                   
@@ -124,7 +124,7 @@ export default class SelectAssessment extends Component {
                         
                         <div className="taxon">
                             <li>
-                                <span style={{marginRight: '10px', marginTop: '5px', width: '300px'}}>Søk på art, slekt eller høyere taksonomisk nivå (fra fullstendig artsliste):</span> 
+                                <span style={{marginRight: '10px', marginTop: '5px', width: '300px'}}>{labels.SelectAssessment.taxonSearch}</span> 
                                 <Xcomp.String observableValue={[appState, 'expertgroupAssessmentFilter']}/>
                                 {/*<button className="btn" style={{height: '35px', marginRight: '5px'}} title="Vis hjelpetekst" aria-label="Vis hjelpetekst" onClick= {action(() => {this.show == false ? this.show = true : this.show = false})}><HelpIcon /></button>
                                
@@ -158,8 +158,8 @@ export default class SelectAssessment extends Component {
                                 mode="check"/>                        
                     </div>
 
-                    {appState.filterType.indexOf('FL2018') > -1 &&  <div className="nav_menu">                        
-                        <div className="filters"><b>Artens status</b>
+                    {appState.filterType.indexOf('FL2018') > -1 && <div className="nav_menu">                        
+                        <div className="filters"><b>{labels.SelectAssessment.speciesStatus}</b>
                             <Xcomp.Bool observableValue={[appState, "vurdert"]} label={koder.statusCodes[0].text} />
                             <Xcomp.MultiselectArray
                                 observableValue={[appState, 'riskAssessedFilter']} 
@@ -173,13 +173,13 @@ export default class SelectAssessment extends Component {
                                 codes={koder.notAssessedTypes2018}
                                 mode="check"/>
                         </div>
-                        <div className="filters"><b>Risikokategori</b>
+                        <div className="filters"><b>{labels.SelectAssessment.riskLevelCategory}</b>
                         <Xcomp.MultiselectArray
                                 observableValue={[appState, 'riskCategoryFilter']} 
                                 codes={koder.riskCategory}                                
                                 mode="check"/>
                         </div>
-                        <div className="filters"><b>Utslagsgivende kriterium</b>
+                        <div className="filters"><b>{labels.SelectAssessment.criteria}</b>
                         <Xcomp.MultiselectArray
                                 observableValue={[appState, 'decisiveCriteriaFilter']} 
                                 codes={koder.decisiveCriteria}
@@ -188,7 +188,7 @@ export default class SelectAssessment extends Component {
                     
                 </div> }
                    {appState.filterType.indexOf('FL2023') > -1 &&  <div className="nav_menu">                        
-                        <div className="filters speciesStatus"><b>Artens status</b>
+                        <div className="filters speciesStatus"><b>{labels.SelectAssessment.speciesStatus}</b>
                             <Xcomp.Bool observableValue={[appState, "vurdert"]} label={koder.statusCodes[0].text} />
                             <Xcomp.MultiselectArray
                                 observableValue={[appState, 'riskAssessedFilter']} 
@@ -202,13 +202,13 @@ export default class SelectAssessment extends Component {
                                 codes={koder.notAssessedTypes}
                                 mode="check"/>
                         </div>
-                        <div className="filters"><b>Risikokategori</b>
+                        <div className="filters"><b>{labels.SelectAssessment.riskLevelCategory}</b>
                         <Xcomp.MultiselectArray
                                 observableValue={[appState, 'riskCategoryFilter']} 
                                 codes={koder.riskCategory}
                                 mode="check"/>
                         </div>
-                        <div className="filters"><b>Utslagsgivende kriterium</b>
+                        <div className="filters"><b>{labels.SelectAssessment.criteria}</b>
                         <Xcomp.MultiselectArray
                                 observableValue={[appState, 'decisiveCriteriaFilter']} 
                                 codes={koder.decisiveCriteria}
@@ -218,14 +218,14 @@ export default class SelectAssessment extends Component {
                 </div> }
 
                 {appState.filterType.indexOf('statusAndCommentFL2023') > -1 &&  <div className="nav_menu">
-                        <div className="filters"><b>Vurderingsstatus</b>                            
+                        <div className="filters"><b>{labels.SelectAssessment.assessmentStatus}</b>                            
                             <Xcomp.MultiselectArray
                                 observableValue={[appState, 'workStatus']} 
                                 codes={koder.workStatus}
                                 mode="check"/>                            
                         </div>
-                        <div className="filters"><b>Vurderinger med kommentarer fra ADB</b>
-                        <p>Nye kommentarer
+                        <div className="filters"><b>{labels.SelectAssessment.ADBComments}</b>
+                        <p>{labels.SelectAssessment.newComments}
                         <Xcomp.MultiselectArray
                                 observableValue={[appState, 'newComments']} 
                                 codes={koder.newComments}
@@ -236,7 +236,7 @@ export default class SelectAssessment extends Component {
                                 codes={koder.comments}
                                 mode="check"/>
                         </div>
-                        <div className="filters"><b>Vurderingsansvarlig</b>
+                        <div className="filters"><b>{labels.SelectAssessment.assessmentLeader}</b>
                         <Xcomp.MultiselectArray
                                 observableValue={[appState, 'responsible']} 
                                 codes={koder.responsible}
@@ -370,7 +370,7 @@ export default class SelectAssessment extends Component {
 
 
             
-            <div className="usedFilters"><span>Brukte filtre: </span> 
+            <div className="usedFilters"><span>{labels.SelectAssessment.usedFilters}</span> 
                             {appState.expertgroupCategoryCheckboxFilter && appState.expertgroupCategoryCheckboxFilter.length > 0 &&                             
                             appState.expertgroupCategoryCheckboxFilter.map ((category) => {
                                 return (<button key={category} onClick={() => this.removeCategory(appState, category)}><span>{category}</span><a href="#">x</a></button>) 
@@ -379,23 +379,23 @@ export default class SelectAssessment extends Component {
                             {appState.statusCheckboxFilter && appState.statusCheckboxFilter.length > 0 && 
                                 appState.statusCheckboxFilter.map ((status) => {
                                     return (<button key={status} onClick={() => this.removeStatus(appState, status)}>
-                                        {status === "notStarted" && <span>Ikke påbegynt</span>}   
-                                        {status === "inprogress" && <span>Påbegynt</span>}
-                                        {status === "finished" && <span>Ferdigstilt</span>}
+                                        {status === "notStarted" && <span>{labels.SelectAssessment.notStarted}</span>}   
+                                        {status === "inprogress" && <span>{labels.SelectAssessment.started}</span>}
+                                        {status === "finished" && <span>{labels.SelectAssessment.completed}</span>}
                                         <a href="#">x</a></button>)
                             })}
-                            {appState.withNewComments && <button onClick={() => this.resetOneFilter(appState, 'withNewComments')}>Nye kommentarer<a href="#">x</a></button>}                     
-                            {appState.withComments && <button onClick={() => this.resetOneFilter(appState, 'withComments')}>Alle kommentarer<a href="#">x</a></button>}
-                            {appState.kunMine && <button onClick={() => this.resetOneFilter(appState, 'kunMine')}>Mine vurderinger<a href="#">x</a></button>}
-                            {appState.kunUbehandlede && <button onClick={() => this.resetOneFilter(appState, 'kunUbehandlede')}>Ubehandlede kommentarer<a href="#">x</a></button>}
-                            {appState.withPotentialTaxonChanges && <button onClick={() => this.resetOneFilter(appState, 'withPotentialTaxonChanges')}>Taksonomiendring trenger avklaring<a href="#">x</a></button>}
-                            {appState.withAutomaticNameChanges && <button onClick={() => this.resetOneFilter(appState, 'withAutomaticNameChanges')}>Automatisk oppdatert taksonomiendring<a href="#">x</a></button>}
+                            {appState.withNewComments && <button onClick={() => this.resetOneFilter(appState, 'withNewComments')}>{labels.SelectAssessment.newComments}<a href="#">x</a></button>}                     
+                            {appState.withComments && <button onClick={() => this.resetOneFilter(appState, 'withComments')}>{labels.SelectAssessment.allComments}<a href="#">x</a></button>}
+                            {appState.kunMine && <button onClick={() => this.resetOneFilter(appState, 'kunMine')}>{labels.SelectAssessment.myAssessments}<a href="#">x</a></button>}
+                            {appState.kunUbehandlede && <button onClick={() => this.resetOneFilter(appState, 'kunUbehandlede')}>{labels.SelectAssessment.commentsToRead}<a href="#">x</a></button>}
+                            {appState.withPotentialTaxonChanges && <button onClick={() => this.resetOneFilter(appState, 'withPotentialTaxonChanges')}>{labels.SelectAssessment.potentialTaxonChange}<a href="#">x</a></button>}
+                            {appState.withAutomaticNameChanges && <button onClick={() => this.resetOneFilter(appState, 'withAutomaticNameChanges')}>{labels.SelectAssessment.automaticNameChange}<a href="#">x</a></button>}
                             
                 <button
                         style={{marginLeft: '20px'}} 
                         type="button"  
                         disabled={appState.expertgroupCategoryCheckboxFilter.length === 0 && appState.expertgroupAssessmentFilter === "" && appState.statusCheckboxFilter.length === 0 && !appState.kunMine &&!appState.withComments &&  !appState.kunUbehandlede && !appState.withAutomaticNameChanges && !appState.withPotentialTaxonChanges} 
-                        onClick={() => this.resetFilters(appState)}>Nullstill alle filtre</button>
+                        onClick={() => this.resetFilters(appState)}>{labels.SelectAssessment.resetAll}</button>
             </div>
             
                 <SelectAssessmentTable assessmentList={appState.expertgroupAssessmentFilteredList} rolle={rolle}/>

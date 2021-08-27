@@ -5392,8 +5392,64 @@
                         },
                         {
                             "Id": null,
+                            "Value": "testVersion",
+                            "Text": "Dette er en testversjon. Driftversjonen finner du ",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "here",
+                            "Text": "her ",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "startAssessment",
                             "Text": "Start vurdering",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "chooseSpeciesGroup",
+                            "Text": "Velg artsgruppe",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "taxonSearch",
+                            "Text": "Søk på art, slekt eller høyere taksonomisk nivå (fra fullstendig artsliste):",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "speciesStatus",
+                            "Text": "Artens status",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "riskLevelCategory",
+                            "Text": "Risikokategori",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "criteria",
+                            "Text": "Utslagsgivende kriterium",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "assessmentStatus",
+                            "Text": "Vurderingsstatus",
                             "Info": null,
                             "Children": null
                         },
@@ -5408,6 +5464,27 @@
                             "Id": null,
                             "Value": "releaseAssessment",
                             "Text": "Frigi vurdering",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "ADBComments",
+                            "Text": "Vurderinger med kommentarer fra ADB",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "newComments",
+                            "Text": "Nye kommentarer",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "assessmentLeader",
+                            "Text": "Vurderingsansvarlig",
                             "Info": null,
                             "Children": null
                         },
@@ -5513,6 +5590,55 @@
                             "Id": null,
                             "Value": "completed",
                             "Text": "Ferdigstilt",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "myAssessments",
+                            "Text": "Mine vurderinger",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "allComments",
+                            "Text": "Alle kommentarer",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "commentsToRead",
+                            "Text": "Ubehandlede kommentarer",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "potentialTaxonChange",
+                            "Text": "Taksonomiendring trenger avklaring",
+                            "Info": null,
+                            "Children": null
+                        }, 
+                        {
+                            "Id": null,
+                            "Value": "automaticNameChange",
+                            "Text": "Automatisk oppdatert taksonomiendring",
+                            "Info": null,
+                            "Children": null
+                        }, 
+                        {
+                            "Id": null,
+                            "Value": "usedFilters",
+                            "Text": "Brukte filtre:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "resetAll",
+                            "Text": "Nullstill alle filtre",
                             "Info": null,
                             "Children": null
                         },
