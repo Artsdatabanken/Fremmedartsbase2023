@@ -59,8 +59,8 @@ export default class selectAssessmentRow extends Component {
                 
                 <td>&nbsp;{isLocked && <span className='glyphicon glyphicon-lock'/>}</td>*/}   
                 <td style={{width: '15%'}}>
-                    <p>Totalt: {totalComments}{ assessment.commentOpen > 0 ? (' Nyeste:' + assessment.commentDate) : ''}</p>
-                   {assessment.commentOpen > 0 ? <p style={{color: 'red'}}>Ubehandlet: {assessment.commentOpen}</p> : <p>Ubehandlet: {assessment.commentOpen}</p>}
+                    <p>{labels.SelectAssessment.total} {totalComments}{ assessment.commentOpen > 0 ? (' Nyeste:' + assessment.commentDate) : ''}</p>
+                   {assessment.commentOpen > 0 ? <p style={{color: 'red'}}>{labels.SelectAssessment.notSeen} {assessment.commentOpen}</p> : <p>{labels.SelectAssessment.notSeen} {assessment.commentOpen}</p>}
                 </td> 
                 <td style={{color}}>
                     <Status onLock={(e) => this.handleLock(e, assessment)}
@@ -125,6 +125,6 @@ const Status = ({isLocked, isLockedByMe, canEdit, isFinished, assessment, onLock
     { canUnlock &&<Xcomp.Button onClick={(e) => onUnlock(e)}>{labels.SelectAssessment.releaseAssessment}</Xcomp.Button>} </div> </>
     : canEdit
     ? <Xcomp.Button onClick={(e) => onLock(e)}>{labels.SelectAssessment.startAssessment}</Xcomp.Button>
-    : <span>lesetilgang</span>
+    : <span>{labels.SelectAssessment.readOnly}</span>
 }
 

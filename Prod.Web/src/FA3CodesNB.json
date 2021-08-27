@@ -5497,6 +5497,41 @@
                         },
                         {
                             "Id": null,
+                            "Value": "popularName",
+                            "Text": "Populærnavn",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "horizonscanning",
+                            "Text": "Horisontskannes",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "cat2018",
+                            "Text": "Kategori 2018",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "cat2023",
+                            "Text": "Kategori 2023",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "comment",
+                            "Text": "Kommentar",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "duration",
                             "Text": "Varighet",
                             "Info": null,
@@ -5595,6 +5630,13 @@
                         },
                         {
                             "Id": null,
+                            "Value": "readOnly",
+                            "Text": "lesetilgang",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "myAssessments",
                             "Text": "Mine vurderinger",
                             "Info": null,
@@ -5611,6 +5653,13 @@
                             "Id": null,
                             "Value": "commentsToRead",
                             "Text": "Ubehandlede kommentarer",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "notSeen",
+                            "Text": "Ubehandlet: ",
                             "Info": null,
                             "Children": null
                         },
@@ -5642,10 +5691,11 @@
                             "Info": null,
                             "Children": null
                         },
+                       
                         {
                             "Id": null,
                             "Value": "total",
-                            "Text": "Totalt",
+                            "Text": "Totalt: ",
                             "Info": null,
                             "Children": null
                         },
