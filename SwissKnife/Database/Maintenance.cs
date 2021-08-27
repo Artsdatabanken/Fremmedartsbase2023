@@ -80,7 +80,7 @@ namespace SwissKnife.Database
 
                 string assessmentCommentString(string fieldName, string subFieldName, string oldValue, string newValue) 
                 {
-                    string baseString = $"Verdi fra 2018 ('{oldValue}') på '{fieldName}' med valg {subFieldName} er satt til: {newValue}.";
+                    string baseString = $"Verdi fra 2018 ('{oldValue}') på '{fieldName}' ved estimeringsmetode '{subFieldName}' er satt til: {newValue}.";
                     string notTrillions(string newValue) => oldValue != "mer enn én billion år" ? " Vennligst endre til estimert verdi." : "";
                     return baseString + notTrillions(newValue);
                 }
@@ -115,7 +115,7 @@ namespace SwissKnife.Database
                 {
                     dbAssessment.Comments.Add(new AssessmentComment()
                     {
-                        Comment = assessmentCommentString("SpreadYearlyIncreaseObservations", "Occurrences1Best", oldAssessment.RiskAssessment.SpreadYearlyIncreaseObservations, newAssesment.RiskAssessment.Occurrences1Best.ToString()),
+                        Comment = assessmentCommentString("Gjennomsnittlig ekspansjonshastighet (m/år)", "Datasett med tid- og stedfesta observasjoner på B-kriteriet", oldAssessment.RiskAssessment.SpreadYearlyIncreaseObservations, newAssesment.RiskAssessment.Occurrences1Best.ToString()),
                         CommentDate = DateTime.Now,
                         UserId = new Guid("00000000-0000-0000-0000-000000000001"),
                         ClosedById = new Guid("00000000-0000-0000-0000-000000000001"),
