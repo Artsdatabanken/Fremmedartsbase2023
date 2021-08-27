@@ -114,7 +114,13 @@ export default class SelectAssessment extends Component {
 
                             
                         </div> 
-                
+                        <Xcomp.StringEnum 
+                                    //forceSync
+                                    observableValue={[appState, 'assessmentType']} 
+                                    codes={koder.assessmentType}
+                                    mode="radio"/>
+                                    
+                        
                         <div className="taxon">
                             <li>
                                 <span style={{marginRight: '10px', marginTop: '5px', width: '300px'}}>Søk på art, slekt eller høyere taksonomisk nivå (fra fullstendig artsliste):</span> 
@@ -180,19 +186,7 @@ export default class SelectAssessment extends Component {
                         </div>
                     
                 </div> }
-                   {appState.filterType.indexOf('FL2023') > -1 &&  <div className="nav_menu">
-                        <div className="filters"><b>Type vurdering</b>
-                        <Xcomp.Radio
-                        // TO DO: change the observable value
-                            kode={koder.assessmentType[0].value}
-                            label={koder.assessmentType[0].text}
-                            observableValue={[appState, "assessmentType"]}/> 
-                        <Xcomp.Radio
-                        
-                            kode={koder.assessmentType[1].value}
-                            label={koder.assessmentType[1].text}
-                            observableValue={[appState, "assessmentType"]}/> 
-                        </div>
+                   {appState.filterType.indexOf('FL2023') > -1 &&  <div className="nav_menu">                        
                         <div className="filters speciesStatus"><b>Artens status</b>
                             <Xcomp.Bool observableValue={[appState, "vurdert"]} label={koder.statusCodes[0].text} />
                             <Xcomp.MultiselectArray
