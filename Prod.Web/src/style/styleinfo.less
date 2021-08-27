@@ -845,6 +845,15 @@ div.uncertainty {
   transition: all 0.2s ease-in-out;
 }
 
+table.vurderinger td {
+  text-align: center;
+}
+
+table.vurderinger tbody tr td:first-child {
+  text-align: left;
+  padding-left: 20px;
+}
+
 li.checkbox > label {
       white-space: nowrap; 
 }
@@ -1269,6 +1278,17 @@ table.table-hover,
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+.assessmentType {
+  padding: 5px;
+  width: 200px;
+  border: 1px solid #ddd;
+  background-color: #f5f5f5;
+}
+
+.assessmentType .radio {
+  margin-left: 10px;
 }
 
 .filters {

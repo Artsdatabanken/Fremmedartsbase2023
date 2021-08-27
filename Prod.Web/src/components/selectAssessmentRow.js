@@ -41,14 +41,14 @@ export default class selectAssessmentRow extends Component {
             <tr
                 key={assessment.VurderingId}
                 onClick={() => this.props.onOpen(assessment)}>
-                <td>{isLocked && <span className='glyphicon glyphicon-lock'/>}</td>                
+                {/*<td>{isLocked && <span className='glyphicon glyphicon-lock'/>}</td>     */}           
                 <td>
                     <span>{assessment.scientificName}</span>
                 </td> 
                 <td>
                     <span>{assessment.popularName}</span>
                 </td>
-                <td>Ja / Nei </td>
+                <td>{assessment.horizonDoScanning ? "Ja" : "Nei"}</td>
                 <td><span>{assessment.category}</span></td> 
                 <td><span>Kategori 2023</span></td>
                 <td>

@@ -31,11 +31,7 @@ export default class SelectAssessmentTable extends Component {
                 {appState.loadingExpertGroup === true && <div className="loader"></div>}
                 <table className="table table-striped vurderinger">
                     <thead>
-                        <tr>
-                            <th
-                                style={{
-                                width: '1%'
-                            }}/>
+                        <tr>                            
                             <th>{labels.SelectAssessment.scientificName}</th>
                             <th>Populærnavn</th>
                             <th>Horisontskannes</th>

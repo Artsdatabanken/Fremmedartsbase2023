@@ -116,7 +116,8 @@ export default class SelectAssessment extends Component {
                         </div> 
                         <Xcomp.StringEnum 
                                     //forceSync
-                                    observableValue={[appState, 'assessmentType']} 
+                                    className="assessmentType"
+                                    observableValue={[appState, 'assessmentTypeFilter']} 
                                     codes={koder.assessmentType}
                                     mode="radio"/>
                                     
