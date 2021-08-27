@@ -378,7 +378,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                 </div>
                                 <div className="numberFieldsB">
                                 <Xcomp.Number                            
-                                            observableValue={[riskAssessment, "expansionSpeed"]} 
+                                            observableValue={[riskAssessment, "expansionSpeedInput"]} 
                                             integer
                                         />  
                                     <Xcomp.Number                            
