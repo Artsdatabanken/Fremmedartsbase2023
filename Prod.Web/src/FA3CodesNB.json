@@ -7147,7 +7147,7 @@
                         {
                             "Id": null,
                             "Value": "colonizedAreaDescription",
-                            "Text": "Anslå kolonisert areal i de naturtypene arten er observert i, beskriv artens påvirkning i naturtypen og anslå hvor stor andel av naturtypen som blir påvirket. Det skal være sannsynlighetsovervekt for at valgt tilstandsendring skjer.",
+                            "Text": "Anslå kolonisert areal i de naturtypene arten er observert i eller regnes med å observeres i innen 50 år, beskriv artens (eventuelt framtidige) påvirkning i naturtypen og anslå hvor stor andel av naturtypen som blir (eventuelt vil bli) påvirket. Det skal være sannsynlighetsovervekt for at valgt tilstandsendring skjer.",
                             "Info": null,
                             "Children": null
                         },
