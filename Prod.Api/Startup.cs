@@ -28,6 +28,8 @@ namespace Prod.Api
 
     using Prod.Api.Services;
 
+    using Index = Nbic.Indexer.Index;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -125,8 +127,13 @@ namespace Prod.Api
         private void StartupAddDependencies(IServiceCollection services)
         {
             var connectionString = Configuration.GetValue<string>("FabDatabase");
+            //using (var db = new Prod.Data.EFCore.SqlServerProdDbContext(connectionString))
+            //{
+            //    db.Database.Migrate();
+            //}
 
             services.AddDbContext<ProdDbContext>(opt => opt.UseSqlServer(connectionString));
+            services.AddSingleton(new Index());
             var options = new ReferenceServiceOptions()
             {
                 AuthAuthority = Configuration.GetValue("AuthAuthority", "https://demo.identityserver.io"),

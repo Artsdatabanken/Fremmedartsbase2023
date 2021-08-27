@@ -18,8 +18,28 @@ namespace SwissKnife.Database
     public class Maintenance
     {
         private SqlServerProdDbContext _database;
+        private static Dictionary<string, string> expertGroupReplacements = new Dictionary<string, string>()
+        {
+            { "ExpertGroups/Fisker/S", "Fisker (Svalbard)" },
+            { "ExpertGroups/Marineinvertebrater/S", "Marine invertebrater (Svalbard)" },
+            { "ExpertGroups/Fugler/S", "Fugler (Svalbard)" },
+            { "ExpertGroups/Testedyr/N", "Testedyr" },
+            { "ExpertGroups/Karplanter/S", "Karplanter (Svalbard)" },
+            { "ExpertGroups/Pattedyr/S", "Pattedyr (Svalbard)" },
+            { "ExpertGroups/Fugler/N", "Fugler" },
+            { "ExpertGroups/Pattedyr/N", "Pattedyr" },
+            { "ExpertGroups/Rundormerogflatormer/N", "Rundormer og flatormer" },
+            { "ExpertGroups/Ikkemarineinvertebrater/N", "Ikke-marine invertebrater" },
+            { "ExpertGroups/Moser/N", "Moser" },
+            { "ExpertGroups/Marineinvertebrater/N", "Marine invertebrater" },
+            { "ExpertGroups/Sopper/N", "Sopper" },
+            { "ExpertGroups/Alger/N", "Alger" },
+            { "ExpertGroups/Karplanter/N", "Karplanter" },
+            { "ExpertGroups/Fisker/N", "Fisker" },
+            { "ExpertGroups/Amfibierogreptiler/N", "Amfibier og reptiler" }
+        };
 
-        public Maintenance(string connectionString)
+    public Maintenance(string connectionString)
         {
             _database = new Prod.Data.EFCore.SqlServerProdDbContext(connectionString);
         }
@@ -386,13 +406,16 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.HorizonEstablismentPotential, opt => opt.Ignore())
                     .ForMember(dest => dest.HorizonEstablismentPotentialDescription, opt => opt.Ignore())
                     .ForMember(dest => dest.Id, opt => opt.Ignore()) // primærnøkkel
-
                     .AfterMap((src, dest) =>
                     {
                         // set some standard values
                         dest.EvaluationStatus = "imported";
                         dest.TaxonHierarcy = "";
                         dest.IsDeleted = false;
+                        if (string.IsNullOrWhiteSpace(dest.ExpertGroup) && !string.IsNullOrWhiteSpace(src.ExpertGroupId) && expertGroupReplacements.ContainsKey(src.ExpertGroupId))
+                        {
+                            dest.ExpertGroup = expertGroupReplacements[src.ExpertGroupId];
+                        }
                     });
 
                 cfg.CreateMap<FA3Legacy, Prod.Domain.RiskAssessment>()

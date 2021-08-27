@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Nbic.Indexer\Nbic.Indexer.csproj" />
     <ProjectReference Include="..\Prod.Data.EFCore\Prod.Data.EFCore.csproj" />
     <ProjectReference Include="..\Prod.Domain\Prod.Domain.csproj" />
   </ItemGroup>
