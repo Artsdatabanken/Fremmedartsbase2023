@@ -64,10 +64,12 @@ export default class NewMigrationPathwayGroup extends React.Component {
                                 {/*child.parentValue = migrationPathway.value*/} 
                                 return <li key={child.name}><NewMigrationPathwayButton migrationPathway={child} disabled={
                                                                                                                 //disabled 
-                                                                                                            child.name != "fra forskning" &&
-                                                                                                            child.name != "til forskning" &&
-                                                                                                            child.name != "fra botaniske/zoologiske hager / akvarier (ikke privat)" &&
-                                                                                                            child.name != "til botaniske/zoologiske hager / akvarier (ikke privat)" &&
+                                                                                                           
+                                                                                                            (migrationPathway.name == "Direkte import" || migrationPathway.name == "Rømning/forvilling") &&
+                                                                                                            /*(child.name != "fra forskning" ||
+                                                                                                            child.name != "til forskning" ||
+                                                                                                            child.name != "fra botaniske/zoologiske hager / akvarier (ikke privat)" ||
+                                                                                                            child.name != "til botaniske/zoologiske hager / akvarier (ikke privat)") &&*/
                                                                                                              vurdering.productionSpecies != "yes"
                                                                                                             }  onSave={onSave} koder={koder} mainCodes={mainCodes} vurdering={vurdering} hideIntroductionSpread={hideIntroductionSpread} labels={labels}/></li>
                             })}
