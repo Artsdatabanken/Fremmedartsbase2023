@@ -643,11 +643,11 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                 <table className="formtable">
                                     <tbody>
                                         <tr>
-                                            <th colSpan="2">
-                                                {labels.BcritSelect.c}
+                                            <th colSpan="4">
+                                                {labels.BcritText.transferredFromB}
                                             </th>
                                         </tr>
-                                        <tr>
+                                       {/* <tr>
                                             <td>
                                                 <label htmlFor="spreadYearlyLiteratureDataExpansionSpeed">{labels.Bcrit.literatureDataExpansionSpeed}</label>
                                             </td>
@@ -681,15 +681,15 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             <td>
                                                 <b>{presentValue(riskAssessment.spreadYearlyLiteratureData)}</b>
                                             </td>
-                                        </tr>
+                                       </tr>*/}
                                         <tr>
-                                            <td>
+                                            
                                                 <label htmlFor="spreadYearlyLiteratureDataAssumptions">{labels.Bcrit.literatureDataAssumptions}</label>
-                                            </td>
-                                            <td>
+                                           
                                                 <Xcomp.HtmlString
+                                                     disabled={true}
                                                     observableValue={[riskAssessment, 'spreadYearlyLiteratureDataSource']}/>
-                                            </td>
+                                            
                                         </tr>
                                     </tbody>
                                 </table>
@@ -702,10 +702,10 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                     <tbody>
                                         <tr>
                                             <th colSpan="2">
-                                                {labels.BcritSelect.d}
+                                                {labels.BcritText.transferredFromC}
                                             </th>
                                         </tr>
-                                        <tr>
+                                        {/*<tr>
                                             <td>
                                                 <label>{labels.Bcrit.existenceArea}</label>
                                             </td>
@@ -716,15 +716,16 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                         style={{
                                                         color: "red"
                                                     }}>{labels.Bcrit.existenceAreaRef35}</b>
-}
+                                                }
                                             </td>
-                                        </tr>
+                                            </tr>*/}
                                         <tr>
                                             <td>
                                                 <label htmlFor="spreadYearlyIncreaseEstimate">{labels.Bcrit.yearlyIncrease}</label>
                                             </td>
                                             <td>
                                                 <Xcomp.String
+                                                    disabled={true}
                                                     observableValue={[riskAssessment, 'spreadYearlyIncreaseEstimate']}/>
                                             </td>
                                         </tr>
@@ -734,6 +735,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             </td>
                                             <td>
                                                 <Xcomp.HtmlString
+                                                    disabled={true}
                                                     observableValue={[riskAssessment, 'spreadYearlyIncreaseEstimateDescription']}/>
                                             </td>
                                         </tr>
@@ -742,6 +744,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                 <label>{labels.Bcrit.expansionSpeed}</label>
                                             </td>
                                             <td>
+                                                
                                                 <b>{presentValue(riskAssessment.spreadYearlyIncreaseCalculatedExpansionSpeed)}</b>
                                             </td>
                                         </tr>

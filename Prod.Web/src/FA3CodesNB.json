@@ -5117,7 +5117,21 @@
                     ],
 
                     "BcritText": [
-                        
+
+                        {
+                            "Id": null,
+                            "Value": "transferredFromB",
+                            "Text": "Overført fra estimeringsmetoden \"b) Literaturdata på spredningshastighet\"",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "transferredFromC",
+                            "Text": "Overført fra estimeringsmetode \"c) Anslått økning i forekomstareal siste året\"",
+                            "Info": null,
+                            "Children": null
+                        },
                         {
                             "Id": null,
                             "Value": "enterParameters",

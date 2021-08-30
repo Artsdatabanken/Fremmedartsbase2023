@@ -99,18 +99,18 @@ var HtmlEditor = createReactClass({
                 toolbarStyle = {marginBottom: '5px'};
             return (
                 React.createElement("div", {className: "input_field"},
-                    React.createElement("div", {className: "toolbar_styling", style: toolbarStyle},
+                    React.createElement("div", {className: this.props.disabled ? "toolbar_styling disabled" : "toolbar_styling", style: toolbarStyle},
 
                         /** feel free to customize buttons below.
                          for list of supported commands, please see https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand */
                         React.createElement("div", {className: "btn-group", style: buttonSpacing},
                             React.createElement("button", {
-                                    className: "btn btn-default btn-xs dropdown-toggle",
+                                    className: "btn btn-default btn-xs dropdown-toggle",                                   
                                     type: "button", "data-toggle": "dropdown",
                                     "aria-expanded": "true"
                                 },
                                 //React.createElement("i", {className: "fa fa-paragraph"}), " ", React.createElement("i", {className: "fa fa-caret-down"})
-                                React.createElement("i", {className: "fa fa-paragraph"}), " "
+                                React.createElement("i", {className: "fa fa-paragraph", disabled: this.props.disabled}), " "
                             ),
                             React.createElement("ul", {className: "dropdown-menu", role: "menu"},
                                 React.createElement("li", null,
@@ -121,7 +121,7 @@ var HtmlEditor = createReactClass({
                                         "Paragraph"
                                     )
                                 ),
-                                React.createElement("li", null,
+                                React.createElement("li", null, 
                                     React.createElement("a", {
                                             href: "javascript:;",
                                             onClick: this.execCommand.bind(this, 'formatBlock', 'BLOCKQUOTE')
@@ -294,6 +294,7 @@ var HtmlEditor = createReactClass({
                         React.createElement("div", {className: "btn-group", style: buttonSpacing},
                             React.createElement("button", {
                                     className: "btn btn-default btn-xs dropdown-toggle",
+                                    disabled: this.props.disabled,
                                     type: "button",
                                     "data-toggle": "dropdown",
                                     "aria-expanded": "false"
