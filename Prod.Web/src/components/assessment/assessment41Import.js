@@ -81,6 +81,8 @@ export default class Assessment41Import extends React.Component {
         const removeImportPathway = (mp) => this.removeImportPathway(vurdering, mp)
 
         return(
+        <div>
+            <br/>
             <fieldset className="well">
                 <p style={{marginLeft: '20px'}}>Kommer arten (utelukkende eller også) til norsk natur via innendørs- eller produksjonsareal?
                 <SelectableRadio
@@ -147,6 +149,7 @@ export default class Assessment41Import extends React.Component {
                     </div>
                 </div>} */}
             </fieldset>
+        </div>
         )
     }
 }

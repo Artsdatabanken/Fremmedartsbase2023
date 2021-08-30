@@ -70,7 +70,8 @@ export default class Assessment30Artsegenskaper extends React.Component {
         const naturalOriginDisabled = (id, region) => koder.naturalOriginDisabled.find(code => code.Value === id).Text.indexOf(region) !== -1
 
         return(
-            <>
+        <div>
+            <br/>
             <fieldset className="well">
 
                 <h2>{labels.NaturalOrigin.globalPrevalence}</h2>
@@ -467,7 +468,7 @@ export default class Assessment30Artsegenskaper extends React.Component {
                     <Xcomp.String label={labels.OtherEffects.effectsOnPopulationOfOrigin} observableValue={[vurdering, 'effectsOnPopulationOfOrigin']}/>
                 </fieldset>
                 : null}
-            </>
+            </div>
         );
 	}
 }
