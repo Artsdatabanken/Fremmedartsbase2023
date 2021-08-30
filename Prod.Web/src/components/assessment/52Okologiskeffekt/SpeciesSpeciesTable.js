@@ -66,11 +66,13 @@ const SpeciesSpeciesTable = observer((props) =>
                   {/*  <Xcomp.Bool observableValue={[item, 'effectLocalScale']} />*/}
                     </td>
                 {props.showInteractionType ? <td>
-                  {/* <Xcomp.StringEnum observableValue={[item, 'interactionType']} forceSync codes={props.koder.speciesSpeciesInteractionType} /> */}
-                    <Xcomp.MultiselectArray
+                  <Xcomp.StringEnum observableValue={[item, 'interactionType']}   
+                                    forceSync                                
+                                    codes={props.koder.speciesSpeciesInteractionType} />
+                    {/*<Xcomp.MultiselectArray
                                 observableValue={[item, 'interactionTypes']} 
-                                codes={props.koder.speciesSpeciesInteractionTypes}
-                    mode="check"/> 
+                    codes={props.koder.speciesSpeciesInteractionTypes}
+                    mode="check"/> */}
                     </td> : null}
                 <td>
                 <Xcomp.MultiselectArray
@@ -156,11 +158,11 @@ const SpeciesSpeciesTable = observer((props) =>
                   {/*  <Xcomp.Bool observableValue={[props.newItem, 'effectLocalScale']} /> */}
                 </td>
                 {props.showInteractionType ? <td>
-                    <Xcomp.MultiselectArray
+                    {/* <Xcomp.MultiselectArray
                                 observableValue={[props.newItem, 'interactionTypes']} 
                                 codes={props.koder.speciesSpeciesInteractionTypes}
-                                mode="check"/>
-                   {/* <Xcomp.StringEnum observableValue={[props.newItem, 'interactionType']} forceSync codes={props.koder.speciesSpeciesInteractionType} />*/}
+                                mode="check"/>*/}
+                   <Xcomp.StringEnum observableValue={[props.newItem, 'interactionType']} forceSync codes={props.koder.speciesSpeciesInteractionType} />
                     
                     
                     </td> : null}
