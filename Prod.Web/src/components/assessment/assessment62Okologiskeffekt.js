@@ -294,7 +294,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
 
                     <hr/>
 
-                    <Xcomp.HtmlString observableValue={[riskAssessment, 'speciesSpeciesInteractionsSupplementaryInformation']} label="Utfyllende informasjon (hvilke(n) artsgruppe i naturtypen påvirkes og hvordan blir disse generelt påvirket):" />
+                    <Xcomp.HtmlString observableValue={[riskAssessment, 'speciesSpeciesInteractionsSupplementaryInformation']} label="Utfyllende informasjon (f.eks. hvilke(n) artsgruppe i naturtypen påvirkes og hvordan blir disse generelt påvirket):" />
 
                     
                 </fieldset>
