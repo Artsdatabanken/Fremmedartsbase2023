@@ -19,8 +19,9 @@ export default class Assessment70Klimaeffekter extends React.Component {
         return(
             <div>
    				{config.showPageHeaders ? <h3>Klimaeffekter</h3> : <br />}
-                <h3>{climatelabel("heading")}</h3>
+                
                 <fieldset className="well">
+                <h3>{climatelabel("heading")}</h3>
                     {riskAssessment.riskLevelCode == "NK" ? 
                     <p>{climatelabel("categoryNK")}</p> : 
                     <div>

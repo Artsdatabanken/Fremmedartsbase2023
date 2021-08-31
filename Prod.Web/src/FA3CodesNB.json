@@ -1701,7 +1701,7 @@
             {
                 "Id": "climateEffects",
                 "Value": "heading",
-                "Text": "Klimaeffekter",
+                "Text": "Betydning av klimaendringer",
                 "Info": null,
                 "Children": null
             },
@@ -1729,7 +1729,7 @@
             {
                 "Id": "climateEffects",
                 "Value": "climateEffectsDocumentation",
-                "Text": "Betydningen av klimaendringer",
+                "Text": "Beskriv betydningen av klimaendringer",
                 "Info": null,
                 "Children": null
             },
