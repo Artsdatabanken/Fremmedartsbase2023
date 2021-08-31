@@ -316,7 +316,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                                 />
                         </fieldset>
 
-                        <Xcomp.Button>Vis oppsummering</Xcomp.Button>
+                        <Xcomp.Button>Vis artsrapport</Xcomp.Button>
                         {assessment.vurderingsStatus != "finnished" ? 
                         <div>
                             <p>Vurderingen er under arbeid.</p>

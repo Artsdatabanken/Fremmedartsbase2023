@@ -40,7 +40,15 @@ const SpeciesSpeciesTable = observer((props) =>
                 {props.showEffect ? <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.effect}} ></th> : null}
                 <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.scope}} ></th>
                 {props.showInteractionType ? <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.interactionType}} ></th> : null}
-                <th style={{textAlign: 'center'}} dangerouslySetInnerHTML={{ __html: labels.DEcrit.assessmentBasis}} ></th>
+                <th style={{textAlign: 'center'}} 
+                //dangerouslySetInnerHTML={{ __html: labels.DEcrit.assessmentBasis}} 
+                    > 
+                    <Xcomp.MultiselectArray
+                                observableValue={[props.newItem, 'basisOfAssessment']} 
+                                codes={props.koder.assessmentBackgrounds}
+                                heading={labels.DEcrit.assessmentBasis}
+                                //mode="check"
+                                /></th>
                 <th>&nbsp;</th>
                {/* <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.longDistanceEffect}} ></th>
                 {props.showConfirmedOrAssumed ? <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.documented}} ></th> : null}
@@ -79,6 +87,7 @@ const SpeciesSpeciesTable = observer((props) =>
                                 observableValue={[item, 'basisOfAssessment']} 
                                 codes={props.koder.assessmentBackgrounds}
                                 mode="check"/>
+                            
                     {/*<Xcomp.Bool observableValue={[item, 'longDistanceEffect']} />*/}
                     </td>
                 {/*{props.showConfirmedOrAssumed ? <td><Xcomp.Bool observableValue={[item, 'confirmedOrAssumed']} /></td> : null}
@@ -170,7 +179,42 @@ const SpeciesSpeciesTable = observer((props) =>
                 <Xcomp.MultiselectArray
                                 observableValue={[props.newItem, 'basisOfAssessment']} 
                                 codes={props.koder.assessmentBackgrounds}
-                                mode="check"/>
+                                mode="check"
+                                hideUnchecked={true}
+                                />
+
+                    {/*<div className="option" tabindex="0">
+                                <div class="row filter" style="margin: 0; padding-top: 5px" 
+                                //data-bind="click: function () {toggleArrow('svalbard', svalbardVisible)}"
+                                >
+                                    <span>@fbLabel("searchChooseArea")</span>
+                                    <span class="arrow_down" id="svalbard">
+                                        <img src="/Content/images/keyboard_arrow_down-24px.svg" alt="Arrow down"></img>
+                                    </span>
+                                </div>
+                                <div class="filter-group" style="cursor: pointer">
+                                    <ul style="padding-left: 0">
+                                        <li class="checkbox" style="margin-top: 0;" 
+                                        //data-bind="visible: svalbardFilter.indexOf('N') > -1 || svalbardVisible"
+                                        >
+                                            <label class="checkbox">
+                                                <input type="checkbox" name="vurderingsområde" value="N" 
+                                                //data-bind="checked: svalbardFilter" 
+                                                />Norge
+                                            </label>
+                                        </li>
+                                        <li class="checkbox" style="margin-top: 0;" 
+                                        //data-bind="visible: svalbardFilter.indexOf('S') > -1 || svalbardVisible"
+                                        >
+                                            <label class="checkbox">
+                                                <input type="checkbox" name="vurderingsområde" value="S" 
+                                                //data-bind="checked: svalbardFilter" 
+                                                />Svalbard
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>*/}
                     {/*<Xcomp.Bool observableValue={[props.newItem, 'longDistanceEffect']} />*/}
                 </td>
                {/* {props.showConfirmedOrAssumed ? <td><Xcomp.Bool observableValue={[props.newItem, 'confirmedOrAssumed']} /></td> : null}

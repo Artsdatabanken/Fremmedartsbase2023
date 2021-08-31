@@ -188,6 +188,7 @@ export default inject('appState')(observer(class AssessmentComments extends Comp
       
         return (
             <div className="page_container">
+                <br></br>
                 <div className="page_wrapper">
                  <div className="form_category">
                        <div className="form_item">

@@ -486,7 +486,7 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                             </table>            
                         </div>
                     </div>
-
+                    <Xcomp.Button>Vis oppsummering</Xcomp.Button>
                     <div className="form_category">
                         <h3>Søk referanser</h3>
                         <div className="form_item_search">                            
