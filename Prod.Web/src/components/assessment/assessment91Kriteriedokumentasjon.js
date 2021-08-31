@@ -118,7 +118,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                         <Xcomp.HtmlString
                             observableValue={[riskAssessment, 'criteriaDocumentationSpeciesStatus']}
                             style={{
-                            width: 800,
+                            //width: 800,
                             height: 150,
                             maxHeight: 150
                         }}/>
@@ -128,7 +128,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                         <Xcomp.HtmlString
                             observableValue={[riskAssessment, 'criteriaDocumentationDomesticSpread']}
                             style={{
-                            width: 800,
+                            //width: 800,
                             height: 150,
                             maxHeight: 150
                         }}/>
@@ -139,7 +139,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                         <Xcomp.HtmlString
                             observableValue={[riskAssessment, 'criteriaDocumentationMigrationPathways']}
                             style={{
-                            width: 800,
+                            //width: 800,
                             height: 150,
                             maxHeight: 150
                         }}/>
@@ -164,7 +164,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                         <Xcomp.HtmlString
                             observableValue={[riskAssessment, 'criteriaDocumentationInvationPotential']}
                             style={{
-                            width: 800,
+                           // width: 800,
                             height: 150,
                             maxHeight: 150
                         }}/>
@@ -174,7 +174,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                         <Xcomp.HtmlString
                             observableValue={[riskAssessment, 'criteriaDocumentationEcoEffect']}
                             style={{
-                            width: 800,
+                            //width: 800,
                             height: 150,
                             maxHeight: 150
                         }}/>
@@ -185,7 +185,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                         <Xcomp.HtmlString
                             observableValue={[riskAssessment, 'criteriaDocumentation']}
                             style={{
-                            width: 800,
+                           // width: 800,
                             height: 150,
                             maxHeight: 150
                         }}/>
@@ -275,7 +275,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                         <Xcomp.HtmlString
                             observableValue={[assessment, 'descriptionOfReasonsForChangeOfCategory']}
                             style={{
-                            width: 800,
+                           // width: 800,
                             height: 150,
                             maxHeight: 150
                         }}/>                        
