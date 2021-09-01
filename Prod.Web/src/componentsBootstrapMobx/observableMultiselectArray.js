@@ -23,7 +23,7 @@ export class ObservableMultiselectArrayCheckboxes extends React.Component {
         return(
             <ul className={className ? className : "" }  >
                 {codes.map(code => 
-                <li className="checkbox" key={code.value} style={(hideUnchecked && obj[prop].indexOf(code.value) < 0) ? {visibility: 'hidden'} : {visibility: 'visible'}} >
+                <li className="checkbox" key={code.value} style={(hideUnchecked && obj[prop].indexOf(code.value) < 0) ? {display: 'none'} : {display: 'block'}} >
                     <label style={{cursor: 'pointer'}}>
                         <input type="checkbox" label={code.text} checked={obj[prop].indexOf(code.value) !== -1} style={{cursor: 'pointer'}}
                             disabled={disabled}
@@ -59,7 +59,7 @@ export class ObservableMultiselectArrayDropdown extends React.Component {
     }
 
     render() {
-        const {observableValue, codes, labels, heading} = this.props;
+        const {observableValue, codes, labels, heading, hideUnchecked} = this.props;
         const [obj, prop] = observableValue;
 
         // console.log("------------" + JSON.stringify(labels))
@@ -73,8 +73,8 @@ export class ObservableMultiselectArrayDropdown extends React.Component {
         return(
             <div className={"btn-group" + (this.open ? " open" : "")}>
                 <button type="button" className="multiselect btn btn-default" onClick={() => this.open = !this.open} >
-                    {!heading ? 
-                        <span className="multiselect-selected-text">{buttonText}</span> : <span className="multiselect-selected-text">{heading}</span>} 
+                    {(!hideUnchecked || names.length === 0 )? 
+                        <span className="multiselect-selected-text">{buttonText}</span> : <span className="multiselect-selected-text">{"Vurderingsgrunnlag"}</span>} 
                     <b className="caret"></b>
                 </button>
                 <div className="dropdown-menu">
@@ -117,7 +117,7 @@ export default class ObservableMultiselectArray extends React.Component {
                     <ObservableMultiselectArrayDropdown observableValue={observableValue} codes={codes} disabled={disabled} labels={labels} />
                 </label>
             </div> :
-            <ObservableMultiselectArrayDropdown observableValue={observableValue} heading={heading} disabled={disabled} codes={codes} labels={labels} />
+            <ObservableMultiselectArrayDropdown observableValue={observableValue} heading={heading} hideUnchecked={hideUnchecked} disabled={disabled} codes={codes} labels={labels} />
         );
 	}
 }

@@ -41,14 +41,8 @@ const SpeciesSpeciesTable = observer((props) =>
                 <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.scope}} ></th>
                 {props.showInteractionType ? <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.interactionType}} ></th> : null}
                 <th style={{textAlign: 'center'}} 
-                //dangerouslySetInnerHTML={{ __html: labels.DEcrit.assessmentBasis}} 
-                    > 
-                    <Xcomp.MultiselectArray
-                                observableValue={[props.newItem, 'basisOfAssessment']} 
-                                codes={props.koder.assessmentBackgrounds}
-                                heading={labels.DEcrit.assessmentBasis}
-                                //mode="check"
-                                /></th>
+                    dangerouslySetInnerHTML={{ __html: labels.DEcrit.assessmentBasis}}> 
+                    </th>
                 <th>&nbsp;</th>
                {/* <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.longDistanceEffect}} ></th>
                 {props.showConfirmedOrAssumed ? <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.documented}} ></th> : null}
@@ -86,7 +80,14 @@ const SpeciesSpeciesTable = observer((props) =>
                 <Xcomp.MultiselectArray
                                 observableValue={[item, 'basisOfAssessment']} 
                                 codes={props.koder.assessmentBackgrounds}
-                                mode="check"/>
+                                //heading={props.koder.assessmentBackgrounds[0].text}
+                                //mode="check"
+                                />
+                <Xcomp.MultiselectArray
+                                observableValue={[item, 'basisOfAssessment']} 
+                                codes={props.koder.assessmentBackgrounds}
+                                mode="check"
+                                hideUnchecked/>
                             
                     {/*<Xcomp.Bool observableValue={[item, 'longDistanceEffect']} />*/}
                     </td>
@@ -176,6 +177,12 @@ const SpeciesSpeciesTable = observer((props) =>
                     
                     </td> : null}
                 <td>
+                <Xcomp.MultiselectArray
+                                observableValue={[props.newItem, 'basisOfAssessment']} 
+                                codes={props.koder.assessmentBackgrounds}
+                                heading={props.koder.assessmentBackgrounds[0].text}
+                                //mode="check"
+                                />
                 <Xcomp.MultiselectArray
                                 observableValue={[props.newItem, 'basisOfAssessment']} 
                                 codes={props.koder.assessmentBackgrounds}

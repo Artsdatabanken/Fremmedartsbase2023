@@ -65,7 +65,16 @@ const SpeciesNaturetypeTable = observer((props) =>
                 <Xcomp.MultiselectArray
                                 observableValue={[item, 'basisOfAssessment']} 
                                 codes={props.koder.assessmentBackgrounds}
-                                mode="check"/>
+                                hideUnchecked
+                                //heading={labels.DEcrit.assessmentBasis}
+                                //mode="check"
+                                />
+                <Xcomp.MultiselectArray
+                                observableValue={[item, 'basisOfAssessment']} 
+                                codes={props.koder.assessmentBackgrounds}
+                                mode="check"
+                                hideUnchecked
+                                />
                     {/*<Xcomp.Bool observableValue={[item, 'longDistanceEffect']} />*/}
                     
                  </td>
@@ -105,7 +114,16 @@ const SpeciesNaturetypeTable = observer((props) =>
                 <Xcomp.MultiselectArray
                                 observableValue={[props.newItem, 'basisOfAssessment']} 
                                 codes={props.koder.assessmentBackgrounds}
-                                mode="check"/>
+                                hideUnchecked
+                                //heading={labels.DEcrit.assessmentBasis}
+                                //mode="check"
+                                />
+                <Xcomp.MultiselectArray
+                                observableValue={[props.newItem, 'basisOfAssessment']} 
+                                codes={props.koder.assessmentBackgrounds}
+                                mode="check"
+                                hideUnchecked
+                                />
                     {/*<Xcomp.Bool observableValue={[props.newItem, 'longDistanceEffect']} />*/}
                     
                 </td>

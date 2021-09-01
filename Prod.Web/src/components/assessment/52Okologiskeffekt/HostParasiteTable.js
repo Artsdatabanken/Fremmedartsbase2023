@@ -84,8 +84,15 @@ const HostParasiteTable = observer((props) =>
                 <td>
                 <Xcomp.MultiselectArray
                                 observableValue={[item, 'basisOfAssessment']} 
+                                codes={props.koder.assessmentBackgrounds}
+                                heading={labels.DEcrit.assessmentBasis}
+                                //mode="check"
+                                />
+                <Xcomp.MultiselectArray
+                                observableValue={[item, 'basisOfAssessment']} 
                                 codes={koder.assessmentBackgrounds}
-                                mode="check"/>
+                                mode="check"
+                                hideUnchecked/>
                 </td>
                 {/*<td><Xcomp.StringEnum observableValue={[item, 'parasiteEcoEffect']} forceSync codes={koder.ParasiteEcoEffectCodes} /></td>
                 <td><Xcomp.Bool observableValue={[item, 'effectLocalScale']} /></td>
@@ -172,10 +179,20 @@ const HostParasiteTable = observer((props) =>
                     <Xcomp.StringEnum observableValue={[props.newItem, 'parasiteEcoEffect']} forceSync codes={koder.ParasiteEcoEffectCodes} />
                 </td>
                 <td>
+                
+                 <Xcomp.MultiselectArray
+                                observableValue={[props.newItem, 'basisOfAssessment']} 
+                                codes={props.koder.assessmentBackgrounds}
+                                heading={labels.DEcrit.assessmentBasis}
+                                //mode="check"
+                                />
                 <Xcomp.MultiselectArray
                                 observableValue={[props.newItem, 'basisOfAssessment']} 
-                                codes={koder.assessmentBackgrounds}
-                                mode="check"/>
+                                codes={props.koder.assessmentBackgrounds}
+                                mode="check"
+                                hideUnchecked
+                                />
+                                
                 </td>
                 {/*<td><Xcomp.StringEnum observableValue={[props.newItem, 'parasiteEcoEffect']} forceSync codes={koder.ParasiteEcoEffectCodes} /></td>
                 <td><Xcomp.Bool observableValue={[props.newItem, 'effectLocalScale']} /></td>
