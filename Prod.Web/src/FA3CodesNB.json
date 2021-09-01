@@ -7507,7 +7507,7 @@
                         {
                             "Id": null,
                             "Value": "timeHorizon",
-                            "Text": "Tid",
+                            "Text": "Tidshorisont",
                             "Info": null,
                             "Children": null
                         },
@@ -7521,14 +7521,14 @@
                         {
                             "Id": null,
                             "Value": "stateChange",
-                            "Text": "Tilstandsendring",
+                            "Text": "Tydelig tilstandsendring",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "affectedArea",
-                            "Text": "Påvirka areal (%)",
+                            "Text": "Tydelig påvirka areal (%)",
                             "Info": null,
                             "Children": null
                         },

@@ -78,6 +78,18 @@ export default class Assessment51Naturtyper extends React.Component {
                     header={ntLabels.chooseRL2018}
                     superheader={ntLabels.redListEffects}/> 
                 </fieldset>
+
+                {assessment.redlistedNatureTypes.length > 0 && <fieldset className="well">
+                <p>
+                    Oversikt over rødlistede naturtyper brukt i 2018 (basert på Rødlista for naturtyper 2011 og NiN 1.0):
+                </p>
+                <RedlistedNaturetypeTable
+                    naturetypes={assessment.redlistedNatureTypes}
+                    canRenderTable={canRenderTable}
+                    labels={labels}
+                    fabModel={appState}/>
+                </fieldset>}
+
                 <fieldset className="well">               
                <NewNaturetype
                     appState={appState}
@@ -215,6 +227,7 @@ export default class Assessment51Naturtyper extends React.Component {
                             observableValue={[riskAssessment, 'commonNatureTypesAffectedAbroadDescription']}/>
                    </div>*/}
                 </fieldset>
+                
                 
               {/* <h4>{ntLabels.effectOnThreatenedNatureTypes }</h4>
                 <br/>

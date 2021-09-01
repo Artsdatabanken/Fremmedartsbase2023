@@ -42,13 +42,13 @@ export class RedlistedNaturetypeRad extends React.Component {
         // const ntlabel = fabModel.naturtypeLabels[nt.NiNCode]
         return(
             <tr>
-                <td>{nt.RedlistedNatureTypeName}</td>
-                <td>{nt.Category}</td>
-                <td>{kodeTekst(koder.timeHorizon, nt.TimeHorizon)}</td>
-                <td>{kodeTekst(koder.colonizedArea, nt.ColonizedArea)}</td>
+                <td>{nt.redlistedNatureTypeName}</td>
+                <td>{nt.category}</td>
+                <td>{kodeTekst(koder.timeHorizon, nt.timeHorizon)}</td>
+                <td>{kodeTekst(koder.colonizedArea, nt.colonizedArea)}</td>
                 <td>{stateChangLabel}</td>
-                <td>{kodeTekst(koder.affectedArea, nt.AffectedArea)}</td>
-                <td>
+                <td>{kodeTekst(koder.affectedArea, nt.affectedArea)}</td>
+                {/*<td>
                     <Xcomp.Button primary xs onClick={() => this.showModal = true}>{gLabels.edit}</Xcomp.Button>
                     {this.showModal
                     ? <NaturtypeModal 
@@ -60,7 +60,7 @@ export class RedlistedNaturetypeRad extends React.Component {
                         labels={labels}/>
                     : null}
                 </td>
-                <td><Xcomp.Button primary xs onClick={deleteRow}>{gLabels.delete}</Xcomp.Button></td>
+                    <td><Xcomp.Button primary xs onClick={deleteRow}>{gLabels.delete}</Xcomp.Button></td>*/}
             </tr>
         );
     }
@@ -90,7 +90,7 @@ export default class RedlistedNaturetypeTable extends React.Component {
                     <th>{ntLabels.colonizedArea}</th>
                     <th>{ntLabels.stateChange}</th>
                     <th>{ntLabels.affectedArea}</th>
-                    <th>&nbsp;</th>
+                    {/*<th>&nbsp;</th>*/}
                 </tr>
             </thead>
             <tbody>
