@@ -7115,6 +7115,20 @@
                         },
                         {
                             "Id": null,
+                            "Value": "showAssessmentSummary",
+                            "Text": "Vis artsrapport",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "remove",
+                            "Text": "Slett",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "setComplete",
                             "Text": "Ferdigstill",
                             "Info": null,
@@ -7136,15 +7150,43 @@
                         },
                         {
                             "Id": null,
+                            "Value": "assessmentFiles",
+                            "Text": "Filvedlegg til vurderingen",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "fileDescription",
+                            "Text": "Filomtale",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "download",
+                            "Text": "Last ned",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "removeFile",
+                            "Text": "Slett vedlegg",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "assessmentCompleted",
-                            "Text": "Vurderingen er ferdigstilt",
+                            "Text": "Vurderingen er ferdigstilt.",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "assessmentUnderWork",
-                            "Text": "Vurderingen er under arbeid",
+                            "Text": "Vurderingen er under arbeid.",
                             "Info": null,
                             "Children": null
                         }
@@ -7210,6 +7252,218 @@
                             "Id": null,
                             "Value": "reasonForGeographicalVariation",
                             "Text": "Ettersom spørsmålet over er besvart positivt, bør geografisk variasjon beskrives nærmere: Hva kan forklare den geografiske variasjonen i risiko? (flere valg mulig)",
+                            "Info": null,
+                            "Children": null
+                        }
+                    ],
+                    "references": [
+                        {
+                            "Id": null,
+                            "Value": "heading",
+                            "Text": "Referanser",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "connectedReferences",
+                            "Text": "Referanser knyttet til vurderingen",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "type",
+                            "Text": "Type",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "remove",
+                            "Text": "Fjern",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "noReferences",
+                            "Text": "Ingen referanser knyttet til vurderingen",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "searchReferences",
+                            "Text": "Søk referanser",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "searchField",
+                            "Text": "Søkefelt:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "choose",
+                            "Text": "Velg",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "reference",
+                            "Text": "Referanse",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "showOrEdit",
+                            "Text": "Vis/rediger",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "add",
+                            "Text": "Legg til",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "showDetails",
+                            "Text": "Vis detaljer",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "previousPage",
+                            "Text": "Forrige side",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "nextPage",
+                            "Text": "Neste side",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "referenceType",
+                            "Text": "Referansetype",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "newReference",
+                            "Text": "Ny referanse",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "editOrAddNew",
+                            "Text": "Rediger referanse/Legge til ny referanse",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "freeReference",
+                            "Text": "Friformat referanse(r):",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "url",
+                            "Text": "URL/doi:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "author",
+                            "Text": "Forfatter(e):",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "year",
+                            "Text": "Årstall:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "title",
+                            "Text": "Tittel:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "journal",
+                            "Text": "Journal:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "volume",
+                            "Text": "Volum:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "pages",
+                            "Text": "Sider:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "bibliography",
+                            "Text": "Bibliografi:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "lastName",
+                            "Text": "Etternavn:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "middleName",
+                            "Text": "Mellomnavn:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "firstName",
+                            "Text": "Fornavn:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "URL",
+                            "Text": "URL:",
                             "Info": null,
                             "Children": null
                         }

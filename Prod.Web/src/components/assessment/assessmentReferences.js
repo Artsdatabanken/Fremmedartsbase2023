@@ -5,6 +5,7 @@ import {deleteData, loadData, postData, putData} from './../../apiService';
 import * as Xcomp from './observableComponents';
 import config from './../../config';
 import auth from './../authService'
+import { LabelSharp } from '@material-ui/icons';
 
 export default inject('appState')(observer(class AssessmentReferences extends Component {
 
@@ -339,12 +340,12 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                 .referanser
                 .push(reference);
         
-    } else {
-        assessment.referanser = [];
-        assessment
-                .referanser
-                .push(reference);
-    }        
+        } else {
+            assessment.referanser = [];
+            assessment
+                    .referanser
+                    .push(reference);
+        }        
         if (document.getElementById(value.id) != null) {
                 document.getElementById(value.id).setAttribute('disabled', 'true')
         }
@@ -441,6 +442,7 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
     render() {
         //const {vurdering, viewModel, labels, codes} = this.props;
         const {appState, appState:{assessment, assessment:{referanser}, koder, refcodes}} = this.props
+        const labels = appState.codeLabels
         //console.log(JSON.stringify(referanser));
         const kodeTekst = (kodegruppe, id) => {
             const gr = koder[kodegruppe]
@@ -455,7 +457,7 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
         return (
             <div className="page_container">
                 <div className="page_wrapper">
-                <h2>Referanser</h2>
+                <h2>{labels.references.heading}</h2>
                 <div className="form_category">
                         <div className="form_item">
                             
@@ -463,15 +465,15 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                             <table className="table table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Referanser knyttet til vurderingen</th>
-                                        <th>Type</th>
-                                        <th>Fjern</th>
+                                        <th>{labels.references.connectedReferences}</th>
+                                        <th>{labels.references.type}</th>
+                                        <th>{labels.references.remove}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                      <tr>
                                
-                                {sortedReferences ? <td> {null} </td> : <td>Ingen referanser knyttet til vurderingen</td>}
+                                {sortedReferences ? <td> {null} </td> : <td>{labels.references.noReferences}</td>}
                                 </tr>                                
                                     {sortedReferences != null && sortedReferences.map ((referanse) => {         
                                         return (<tr key={referanse.referenceId}>
@@ -479,26 +481,27 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                                          __html: this.linkify(referanse.formattedReference)
                                              }} style={{marginLeft: '30px', textIndent: '-30px'}}/> </td>
                                         <td><span>{referanse.type}</span> </td>
-                                        <td><Xcomp.Button className="btn btn-primary btn-xs" onClick={() => {this.removeReferenceFromAssessment(assessment, referanse.referenceId)}}>Fjern</Xcomp.Button></td>
+                                        <td><Xcomp.Button className="btn btn-primary btn-xs" onClick={() => {this.removeReferenceFromAssessment(assessment, referanse.referenceId)}}>{labels.references.remove}</Xcomp.Button></td>
                                      </tr>)
                                     })}
                                 </tbody>
                             </table>            
                         </div>
                     </div>
-                    <Xcomp.Button>Vis oppsummering</Xcomp.Button>
+                    <Xcomp.Button className={"summary"}>{labels.critDocumentation.showSummary}</Xcomp.Button>
+                    
                     <div className="form_category">
-                        <h3>Søk referanser</h3>
+                        <h3>{labels.references.searchReferences}</h3>
                         <div className="form_item_search">                            
-                            <div className="search"><label htmlFor="sokReferanse">Søkefelt:</label><br></br>
+                            <div className="search"><label htmlFor="sokReferanse">{labels.references.searchField}</label><br></br>
                             <Xcomp.String observableValue={[this, 'sokestreng']}/></div>                            
                       <table className="table table-striped">
                         <thead>
                             <tr>
-                                <th>Velg</th>
-                                <th>Referanse</th>
-                                <th>Type</th>
-                                <th>Vis/rediger</th>
+                                <th>{labels.references.choose}</th>
+                                <th>{labels.references.reference}</th>
+                                <th>{labels.references.type}</th>
+                                <th>{labels.references.showOrEdit}</th>
                             </tr>
                         </thead>
                         <tbody>                           
@@ -510,7 +513,7 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                                                  <button className="btn btn-primary btn-xs"
                                                     id={reference.id}                                                    
                                                     disabled={this.context.readonly}                                                     
-                                                    onClick={() => {this.leggTilReferanse(assessment, reference)}}>Legg til</button>
+                                                    onClick={() => {this.leggTilReferanse(assessment, reference)}}>{labels.references.add}</button>
                                              </td>
                                              <td dangerouslySetInnerHTML={{
                                          __html: this.linkify(reference.referencePresentation) }} />
@@ -520,7 +523,7 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                                             <td>
                                                  <Xcomp.Button primary xs
                                                      disabled={this.context.readonly}
-                                                     onClick={() => {this.visDetalj(reference)}}>Vis detaljer</Xcomp.Button>
+                                                     onClick={() => {this.visDetalj(reference)}}>{labels.references.showDetails}</Xcomp.Button>
                                       </td></tr>) 
                                     })}     
                         </tbody>
@@ -531,24 +534,24 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                             this.side--
                         }
                     })}
-                disabled={this.side <= 0}>Forrige side</Xcomp.Button>
+                disabled={this.side <= 0}>{labels.references.previousPage}</Xcomp.Button>
                     &nbsp;
                     <Xcomp.Button primary xs 
                         onClick={action(() => this.side++)}
                         disabled={this.side >= this.sokeresultat.length/this.pageSize-1}
-                        >Neste side</Xcomp.Button> </>}
+                        >{labels.references.nextPage}</Xcomp.Button> </>}
                        </div> 
                     </div>
                     
                     <div className="form_item row">                            
-                            <div><strong>Referansetype</strong></div><br></br>
+                            <div><strong>{labels.references.referenceType}</strong></div><br></br>
                                 <div style={{display:'flex', 'marginTop': '10px', 'marginBottom': '10px'}}><Xcomp.StringEnum observableValue={[this, 'redigeringsType']} disabled={!this.editMode} codes={this.typeVerdier}/>
-                                <div><Xcomp.Button primary onClick={() => {this.nyReferanse()}}>{"Ny referanse"}</Xcomp.Button></div>
+                                <div><Xcomp.Button primary onClick={() => {this.nyReferanse()}}>{labels.references.newReference}</Xcomp.Button></div>
                             </div>   
                         </div>
 
                     {this.editMode && <div className="form_category">
-                    <h3>Rediger referanse/Legge til ny referanse</h3>                       
+                    <h3>{labels.references.editOrAddNew}</h3>                       
                         {(this.redigeringsType == 'Reference' )&& 
                             <table className="table-striped ref">
                             <thead>                                
@@ -556,11 +559,11 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                                <tbody>
 
                                 <tr>
-                                    <td className="ref">Friformat referanse(r):</td>
+                                    <td className="ref">{labels.references.freeReference}</td>
                                     <td><Xcomp.String className="longRef" onFocus={action(() => {this.alreadySaved = false})} observableValue={[this.valgtReferanse, 'referenceString']}/></td>
                                </tr>  
                                <tr>
-                                <td className="ref">URL/doi:</td>
+                                <td className="ref">{labels.references.url}</td>
                                 <td><Xcomp.String className="longRef" onFocus={action(() => {this.alreadySaved = false})} observableValue={[this.valgtReferanse, 'url']}/></td>
                             </tr>                             
                                </tbody>
@@ -568,16 +571,16 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                         
                         
 
-                        {(this.redigeringsType == 'Publication' )&& <table className="table-striped ref">
+                        {(this.redigeringsType == 'Publication' ) && <table className="table-striped ref">
                                 <thead>                                
                                </thead>
                                <tbody>
                             <tr>
-                                <td className="ref"> Forfatter(e):</td> 
+                                <td className="ref">{labels.references.author}</td> 
                                 <td><Xcomp.String className="longRef" onFocus={action(() => {this.alreadySaved = false})} observableValue={[this.valgtReferanse, 'author']}/></td>
                             </tr>
                             <tr>
-                                <td className="ref">Årstall:</td>
+                                <td className="ref">{labels.references.year}</td>
                                 <td><Xcomp.String className="ref" onFocus={action(() => {this.alreadySaved = false})} observableValue={[this.valgtReferanse, 'year']}/></td>
                             </tr>
                             {/* <div className="form_item">
@@ -590,28 +593,28 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                             </div> */} 
                             
                             <tr>
-                                <td className="ref">Tittel:</td>
+                                <td className="ref">{labels.references.title}</td>
                                 <td><Xcomp.String className="longRef" onFocus={action(() => {this.alreadySaved = false})} observableValue={[this.valgtReferanse, 'title']}/></td>
                             </tr>
                             
                             <tr>
-                                <td className="ref">Journal:</td>
+                                <td className="ref">{labels.references.journal}</td>
                                 <td><Xcomp.String className="ref" onFocus={action(() => {this.alreadySaved = false})} observableValue={[this.valgtReferanse, 'journal']}/></td>
                             </tr>
                             <tr>
-                                <td className="ref">Volum:</td>
+                                <td className="ref">{labels.references.volume}</td>
                                 <td><Xcomp.String className="ref" onFocus={action(() => {this.alreadySaved = false})} observableValue={[this.valgtReferanse, 'volume']}/></td>
                             </tr>
                             <tr>
-                                <td className="ref">Sider:</td>
+                                <td className="ref">{labels.references.pages}</td>
                                 <td><Xcomp.String className="ref" onFocus={action(() => {this.alreadySaved = false})} observableValue={[this.valgtReferanse, 'pages']}/></td>
                             </tr> 
                             <tr>
-                                <td className="ref">URL/doi:</td>
+                                <td className="ref">{labels.references.url}</td>
                                 <td><Xcomp.String className="longRef" onFocus={action(() => {this.alreadySaved = false})} observableValue={[this.valgtReferanse, 'url']}/></td>
                             </tr>      
                             <tr>
-                                <td className="ref">Bibliografi:</td>
+                                <td className="ref">{labels.references.bibloigraphy}</td>
                                 <td><Xcomp.String className="longRef" onFocus={action(() => {this.alreadySaved = false})} observableValue={[this.valgtReferanse, 'bibliography']}/></td>
                             </tr>
                                                            
@@ -624,15 +627,15 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                                 </thead>
                                <tbody>
                             <tr>
-                                <td className="ref">Etternavn:</td>
+                                <td className="ref">{labels.references.lastName}</td>
                                 <td><Xcomp.String className="ref" onFocus={action(() => {this.alreadySaved = false})} observableValue={[this.valgtReferanse, 'lastname']}/></td>
                             </tr>
                             <tr>
-                                <td className="ref">Mellomnavn:</td>
+                                <td className="ref">{labels.references.middleName}</td>
                                 <td><Xcomp.String className="ref" onFocus={action(() => {this.alreadySaved = false})} observableValue={[this.valgtReferanse, 'middlename']}/></td>
                             </tr>
                             <tr>
-                                <td className="ref">Fornavn:</td>
+                                <td className="ref">{labels.references.firstName}</td>
                                 <td><Xcomp.String className="ref" onFocus={action(() => {this.alreadySaved = false})} observableValue={[this.valgtReferanse, 'firstname']}/></td>
                             </tr>
                             </tbody>
@@ -644,11 +647,11 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                                <tbody>
                             {this.redigeringsType == 'Url' &&
                             <tr>
-                                <td className="ref">Tittel:</td>
+                                <td className="ref">{labels.references.title}</td>
                                 <td><Xcomp.String className="longRef" onFocus={action(() => {this.alreadySaved = false})} observableValue={[this.valgtReferanse, 'title']}/></td>
                             </tr>} 
                             <tr>
-                                <td className="ref">URL:</td>
+                                <td className="ref">{labels.references.URL}</td>
                                 <td><Xcomp.String className="longRef" onFocus={action(() => {this.alreadySaved = false})} observableValue={[this.valgtReferanse, 'url']}/></td>
                             </tr>
                             </tbody>

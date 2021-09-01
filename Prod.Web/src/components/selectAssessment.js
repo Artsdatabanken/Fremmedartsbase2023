@@ -121,20 +121,22 @@ export default class SelectAssessment extends Component {
                                     codes={koder.assessmentType}
                                     mode="radio"/>
                                     
+                        <fieldset className="well">
+                            <div className="taxon">
+                                <li>
+                                    <span style={{marginRight: '10px', marginTop: '5px', width: '300px'}}>{labels.SelectAssessment.taxonSearch}</span> 
+                                    <Xcomp.String observableValue={[appState, 'expertgroupAssessmentFilter']}/>
+                                    {/*<button className="btn" style={{height: '35px', marginRight: '5px'}} title="Vis hjelpetekst" aria-label="Vis hjelpetekst" onClick= {action(() => {this.show == false ? this.show = true : this.show = false})}><HelpIcon /></button>
+                                
+                                    {this.show == true && 
+                                        <span style={{width: '60%', fontSize: 'small'}}>
+                                            Søk i alle taksonomiske nivå, søket returnerer alle navn som inneholder innskrevet bokstavkombinasjon. "/abc" returnerer alle navn som starter med abc, og "!abc" returnerer alle slekter som starter på abc (søket fungerer som før).
+                                        </span>
+                                    }    */}                   
+                                </li>                            
+                            </div> 
+                        </fieldset>
                         
-                        <div className="taxon">
-                            <li>
-                                <span style={{marginRight: '10px', marginTop: '5px', width: '300px'}}>{labels.SelectAssessment.taxonSearch}</span> 
-                                <Xcomp.String observableValue={[appState, 'expertgroupAssessmentFilter']}/>
-                                {/*<button className="btn" style={{height: '35px', marginRight: '5px'}} title="Vis hjelpetekst" aria-label="Vis hjelpetekst" onClick= {action(() => {this.show == false ? this.show = true : this.show = false})}><HelpIcon /></button>
-                               
-                                {this.show == true && 
-                                    <span style={{width: '60%', fontSize: 'small'}}>
-                                        Søk i alle taksonomiske nivå, søket returnerer alle navn som inneholder innskrevet bokstavkombinasjon. "/abc" returnerer alle navn som starter med abc, og "!abc" returnerer alle slekter som starter på abc (søket fungerer som før).
-                                    </span>
-                                }    */}                   
-                            </li>                            
-                        </div> 
                     </div> 
                    {/* <div style={{float: 'right'}}>
                         <img src={catimg} style={{width: '150px'}}></img>

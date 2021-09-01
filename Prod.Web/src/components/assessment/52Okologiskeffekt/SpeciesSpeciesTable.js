@@ -180,7 +180,7 @@ const SpeciesSpeciesTable = observer((props) =>
                                 observableValue={[props.newItem, 'basisOfAssessment']} 
                                 codes={props.koder.assessmentBackgrounds}
                                 mode="check"
-                                hideUnchecked={true}
+                                hideUnchecked
                                 />
 
                     {/*<div className="option" tabindex="0">
