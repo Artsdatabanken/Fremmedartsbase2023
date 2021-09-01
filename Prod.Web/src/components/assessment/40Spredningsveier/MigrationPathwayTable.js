@@ -28,7 +28,7 @@ export default class MigrationPathwayTable extends React.Component {
         // const labels = fabModel.kodeLabels
         const nbsp = "\u00a0"
         return(
-            <table className="table">
+            <table className="table migrationPathways">
                 <thead>
                 <tr>
                     <th>{labels.MigrationPathway.mainCategory}</th>
@@ -143,8 +143,9 @@ class MigrationPathwayTableRow extends React.Component {
                 ? <td><Xcomp.HtmlString observableValue={[mp, 'elaborateInformation']} /></td>
                 : <td dangerouslySetInnerHTML={{__html: elobTxt}} onClick={() => this.open = !this.open} />
                 }
-                <td><Xcomp.Button disabled={this.context.readonly} xs onClick={() => this.edit = !this.edit}>{this.edit ? labels.General.ok : labels.General.edit}</Xcomp.Button></td>
-                <td><Xcomp.Button disabled={this.context.readonly} xs onClick={() => removeMigrationPathway(mp)}>{labels.General.remove}</Xcomp.Button></td>
+                <td><Xcomp.Button disabled={this.context.readonly} xs onClick={() => this.edit = !this.edit}>{this.edit ? labels.General.ok : labels.General.edit}</Xcomp.Button>
+                    <Xcomp.Button disabled={this.context.readonly} xs onClick={() => removeMigrationPathway(mp)}>{labels.General.remove}</Xcomp.Button></td>
+                <td></td>
             </tr>
             
         )

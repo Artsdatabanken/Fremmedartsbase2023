@@ -485,14 +485,20 @@ a.btn-flat {
   width: 350px;
 }
 
-.btn-flat .modal-body div {
+//.btn-flat .modal-body div,
+  .import .modal-body > div > div label {
   white-space: break-spaces;
+  float: left;
+  text-align: left;
 }
 
-//.import > .well .modal-dialog,
 table.naturetype td .modal-dialog,
 .well > .naturetype .modal-dialog {
   max-width: 900px;
+}
+
+.import > .well .modal-dialog {
+  max-width: 1700px;
 }
 
 .modal-dialog > .modal-content > .modal-header {
@@ -500,8 +506,25 @@ table.naturetype td .modal-dialog,
 }
 
 .modal-body > div > div {
-
+  min-width: 150px;
   margin: 5px 10px 5px;
+}
+
+.import .modal-body > div > div {
+  min-width: 200px;
+  margin-right: 20px;
+}
+
+table.migrationPathways td > div select.form-control {
+  width: 100px;
+}
+
+table.migrationPathways button {
+  height: 30px;
+}
+
+.import .modal-body > div > div select.form-control {
+  width: 180px;
 }
 
 .modal-body > div > div select.form-control {
@@ -512,10 +535,24 @@ table.naturetype td .modal-dialog,
   margin-top: 10px;
 }
 
+.import .modal-body > div > div .toolbar_styling {
+  float: left;
+}
+
+.import .modal-body > div > div .btn-group {
+  margin-top: 0;
+}
+
 .modal-content > .modal-header > .btn-default.close {
   background-color: #f5f5f5;
   border: 1px solid black;
   margin: 10px 5px 0;
+}
+
+.modal-dialog .modal-header .modal-title,
+.modal-dialog .modal-content .modal-body {
+  color: #4c4a48;
+  cursor: default;
 }
 
 .modal-header > .btn-default.close:hover {
