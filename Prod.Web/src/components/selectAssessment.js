@@ -121,7 +121,7 @@ export default class SelectAssessment extends Component {
                                     codes={koder.assessmentType}
                                     mode="radio"/>
                                     
-                        <fieldset className="well">
+                        <fieldset className="well" style={{width: '720px', marginBottom: '5px'}}>
                             <div className="taxon">
                                 <li>
                                     <span style={{marginRight: '10px', marginTop: '5px', width: '300px'}}>{labels.SelectAssessment.taxonSearch}</span> 
@@ -143,9 +143,9 @@ export default class SelectAssessment extends Component {
                             </div> */}
                 </div>
                 {/*<h5 style={{fontWeight: 'bold', fontSize: '1rem'}}>Filtrer på:</h5>*/}
-                <div className="selectFilter" style={{display: 'flex'}}>
+                <div className="selectFilter" style={{display: 'flex', marginBottom: '20px'}}>
                     <div>
-                    <div className="filters"> 
+                    <div className="filters"  style={{width: '720px'}}> 
                     
                         {/*<span>Vurderinger med kommentar </span>
                         <div className="comment"><Xcomp.Bool observableValue={[appState, "withNewComments"]} label={"Nye kommentarer (på dine) (" + appState.antallNye + ")"}/></div>

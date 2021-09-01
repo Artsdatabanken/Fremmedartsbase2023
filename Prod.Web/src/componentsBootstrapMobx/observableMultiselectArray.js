@@ -80,8 +80,8 @@ export class ObservableMultiselectArrayDropdown extends React.Component {
                 <div className="dropdown-menu">
                     <div className="modal-backdrop" style={{zIndex: "1210", opacity: "0.00001"}} onClick={() => this.open = false }> </div>
                     <div style={{position: "relative", zIndex: "1220" }}>
-                        <div style={{ paddingRight: "25px" }}>
-                            <ObservableMultiselectArrayCheckboxes  observableValue={observableValue} codes={codes} />
+                        <div style={{marginLeft: "20px", marginRight: "10px"}}>                        
+                            <ObservableMultiselectArrayCheckboxes observableValue={observableValue} codes={codes} />
                         </div>
                     </div>
                 </div>
@@ -108,7 +108,7 @@ export default class ObservableMultiselectArray extends React.Component {
         //console.log("////" + prop +"-" + mode)
         return(
             mode === "check" ?
-            <ObservableMultiselectArrayCheckboxes observableValue={observableValue} codes={codes} disabled={disabled} className={className} hideUnchecked={hideUnchecked} />
+            <ObservableMultiselectArrayCheckboxes observableValue={observableValue} codes={codes} disabled={disabled} className={hideUnchecked ? "magicList" : className} hideUnchecked={hideUnchecked} />
             :
             hasLabel ?
             <div className="hasLabel">
