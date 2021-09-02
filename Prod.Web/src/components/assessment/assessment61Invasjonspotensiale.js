@@ -123,7 +123,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                 <Assessment62Okologiskeffekt/> :
                 <div> 
                 <fieldset className="well">
-                    <h4>{crit51A.heading}</h4>
+                    <h2>{labels.Acrit.mainHeading}</h2>
+                    <h3>{crit51A.heading}</h3>
                     <p>{crit51A.info}</p>
                     
                     {/* <Xcomp.StringEnum observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]} mode="radio" codes={codes.HorizonEstablismentPotential}/> */}
@@ -255,31 +256,39 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                 // {
                 riskAssessment.chosenSpreadMedanLifespan == "ViableAnalysis" ? 
                 <div>
-                    <div className="statusField"> 
-                   <div className="labels">
-                        <p>{labels.Acrit.PVAAnalysis}</p>
+                
+                    <p>{labels.Acrit.PVAAnalysis}</p>
+                    <Xcomp.HtmlString observableValue={[riskAssessment, 'spreadPVAAnalysis']} />
 
-                    </div>
-                    <div className="numberFields">
-                        <Xcomp.HtmlString observableValue={[riskAssessment, 'spreadPVAAnalysis']} />
+                    
+                    
+                   {/* <div className="numberFields">
+                        
                        <h4>{labels.Acrit.data}</h4>
                         <p>{labels.DistributionHistory.noDocuments}.</p>
-                        <span>{labels.General.upload}</span> 
-                        <FileUpload
-                               // onUploadComplete={this.getAttachments}
-                                />
-                       {/* <Xcomp.Button primary >{labels.General.chooseFiles}</Xcomp.Button>
+                        
+                        <p>{labels.General.upload}</p> 
+                        
+                       <Xcomp.Button primary >{labels.General.chooseFiles}</Xcomp.Button>
                         <span>{labels.General.noFileChosen}</span>
                           <Filliste
                                 //baseDirectory={`${appState.vurderingId.split('/').join('_')}/ViableAnalysis`}
                                 vurdering ={assessment}
                                  labels={labels.DistributionHistory}
                                  //{...appState.vurdering.Datasett}
-                                 />*/}
-                    </div>
-                    </div>
+                                 />
+                    </div>*/}
+                    <p>Velg datafil du ønsker å laste opp</p>
+                    <button className="btn btn-primary" 
+                            id="button" name="button"
+                            //disabled={this.selectedFile.name === ""} 
+                            style={{marginLeft: '30px', marginTop: '20px'}} 
+                            onClick={() => this.thisFileUpload()}>Velg fil</button>
+                   {/* <FileUpload
+                               // onUploadComplete={this.getAttachments}
+                   /> */}
                     <div className="statusField">
-                        <div className="labels">
+                        <div className="labels" style={{width: "100px"}}>
                         <p>{labels.Acrit.median}</p>
                         <p>{labels.Acrit.lower}</p>
                         <p>{labels.Acrit.upper}</p>
@@ -320,7 +329,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                 </fieldset>
                 <br/>
                 <fieldset className="well">
-                    <h4>{crit51B.heading}</h4>
+                    <h3>{crit51B.heading}</h3>
                     <p>{crit51B.info}</p>
 
                     <SelectableRadio
@@ -780,7 +789,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                 firstValue={"scoreC"}
                                 secondValue={"unsureC"}/>
                     */}
-                    <h4>{critC.heading}</h4>
+                    <h3>{critC.heading}</h3>
                     <p>{critC.info}</p>
                     <Criterion criterion={critC} mode="noheading" disabled={true} appState={appState}/>
                     </fieldset>

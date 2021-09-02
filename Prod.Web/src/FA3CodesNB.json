@@ -6436,8 +6436,15 @@
                     "Acrit": [
                         {
                             "Id": null,
+                            "Value": "mainHeading",
+                            "Text": "Artens invasjonspotensial",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "PVAAnalysis",
-                            "Text": "PVA-analyse beskrivelse",
+                            "Text": "Beskriv hvilke modeller og hvilken programvare som er brukt. Det er et krav at beregningene er etterprøvbare.",
                             "Info": null,
                             "Children": null
                         },

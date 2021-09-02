@@ -335,6 +335,9 @@ table.choice .form-control {
 
 table.formtable {
         tr {
+          label {
+            margin-left: 20px;
+          }
             td, th {
                 padding-top: 4px;
                 padding-bottom: 4px;
@@ -345,7 +348,7 @@ table.formtable {
                 }
             }
             td:first-child, th:first-child {
-              padding-left: 0;
+              padding-left: 20px;
             }
         }
 }
@@ -619,10 +622,11 @@ label{
 
 div.uncertainty {
   display: inline !important;
-  input {
+input {
     margin-right: 7px;
   }
 }
+
 
 .newRow {
   background-color: #D8D8D8;
@@ -1053,7 +1057,7 @@ ul.scores li.checkbox label input {
 }
 
 .criterion {
-  margin: 10px;
+  margin: 10px 25px 10px;
 }
 
 .uncertainty input[type="radio"] {
@@ -1417,7 +1421,7 @@ table.table-hover,
   margin-bottom: 20px;
 }
 
-h2, h3 {
+h2, h3, h4 {
   margin-left: 20px;
 }
 
@@ -1609,6 +1613,7 @@ div.geoVarInput > div > div.input_field > div.form-control {
 .statusField, .BCritFiles {
   display: flex;
   padding: 10px 0 10px;
+  margin-left: 20px;
 }
 
 .statusField input[type=checkbox] {
@@ -1928,6 +1933,7 @@ p.reasonsForChange {
 
 div.climateChange {
   padding: 5px 10px 10px;
+  margin: 10px 20px 10px;
   border: 1px solid gray;
   border-radius: 28px;
 }
