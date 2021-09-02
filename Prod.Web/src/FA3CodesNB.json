@@ -6791,6 +6791,13 @@
                     "DEcrit": [
                         {
                             "Id": null,
+                            "Value": "mainHeading",
+                            "Text": "Artens økologiske effekt",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "heading",
                             "Text": "D- og E-kriteriet: Effekter på stedegne arter",
                             "Info": null,

@@ -282,8 +282,10 @@ export default class Assessment62Okologiskeffekt extends React.Component {
         })
         return(
             <div>
+
                 {config.showPageHeaders ? <h3>Økologisk effekt</h3> : <br />}
                 <fieldset className="well">
+                    <h3>{labels.DEcrit.mainHeading}</h3>
                     <h4>{labels.DEcrit.heading}</h4>
                     <p>Beskriv artens interaksjon(er) med stedegne arter. Det skal være sannsynlighetsovervekt for interaksjonen</p>
                     <SpeciesSpeciesTable list={riskAssessment.speciesSpeciesInteractions} newItem={this.newSSITS} addNewItem={this.addSSITS} koder={koder} labels={labels} showRedlist showKeyStoneSpecie showEffect showInteractionType showConfirmedOrAssumed/>
