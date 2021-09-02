@@ -25,6 +25,11 @@
         "HorizonEcologicalEffect": [
             {
                 "Id": "HorizonEcologicalEffect",
+                "Value": "no",
+                "Text": "Nei"
+            },
+            {
+                "Id": "HorizonEcologicalEffect",
                 "Value": "yesWhilePresent",
                 "Text": "Ja, men bare så lenge arten er til stede "
             },
@@ -32,12 +37,8 @@
                 "Id": "HorizonEcologicalEffect",
                 "Value": "yesAfterGone",
                 "Text": "Ja, og effekten vedvarer også etter at arten er borte"
-            },
-            {
-                "Id": "HorizonEcologicalEffect",
-                "Value": "no",
-                "Text": "Nei"
             }
+            
         ],
 
         "EstablishmentCategory": [                       
@@ -4699,6 +4700,13 @@
                     "SpeciesStatus": [
                         {
                             "Id": null,
+                            "Value": "hskanning",
+                            "Text": "Horisontskanning av potensielle dørstokkarter",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "establishmentPotential",
                             "Text": "Etableringspotensial",
                             "Info": null,
@@ -4783,6 +4791,13 @@
                         },   
                         {
                             "Id": null,
+                            "Value": "statusHeading",
+                            "Text": "Artens status i dag",
+                            "Info": null,
+                            "Children": null
+                        },     
+                        {
+                            "Id": null,
                             "Value": "isAlienSpecies",
                             "Text": "Er arten fremmed?",
                             "Info": null,
@@ -4805,7 +4820,7 @@
                         {
                             "Id": null,
                             "Value": "connectedToAnotherTaxon",
-                            "Text": "Er taksonet omfatta av vurderinga til et annet takson? ",
+                            "Text": "Er taxonet inkludert i vurderingen av et annet taxon?",
                             "Info": null,
                             "Children": null
                         }, 

@@ -18,8 +18,11 @@ export default class Assessment10Horisontskanning extends React.Component {
         const codes = appState.koder
         return (
             <div>
+            
             <div style={{marginBottom: '20px'}}>
+            
                <div className="filters">
+               <h2>{labels.SpeciesStatus.hskanning}</h2>
                     <h3>{labels.SpeciesStatus.establishmentPotential}</h3>                    
                     <div className="scanning">
                         <p>{labels.SpeciesStatus.colonizationInformation}</p>
@@ -40,8 +43,8 @@ export default class Assessment10Horisontskanning extends React.Component {
             { (typeof assessment.horizonEstablismentPotential != "string" || typeof assessment.horizonEcologicalEffect != "string" )
                     ? <fieldset className="well"><b>{labels.SpeciesStatus.answerEstablishmentQuestionReminder}</b></fieldset>
                 : appState.horizonDoAssessment
-                ?    <fieldset className="well"><h2>{labels.SpeciesStatus.conclusion}</h2> {labels.SpeciesStatus.willBeAssessed}</fieldset>
-                :    <fieldset className="well"><h2>{labels.SpeciesStatus.conclusion}</h2> {labels.SpeciesStatus.willNotBeAssessed}</fieldset> }
+                ?    <fieldset className="well"><h2>{labels.SpeciesStatus.conclusion}</h2> <p>{labels.SpeciesStatus.willBeAssessed}</p></fieldset>
+                :    <fieldset className="well"><h2>{labels.SpeciesStatus.conclusion}</h2> <p>{labels.SpeciesStatus.willNotBeAssessed}</p></fieldset> }
 
         </div>
         );
