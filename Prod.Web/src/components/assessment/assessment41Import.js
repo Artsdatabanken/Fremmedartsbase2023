@@ -84,6 +84,7 @@ export default class Assessment41Import extends React.Component {
         <div>
             <br/>
             <fieldset className="well">
+                <h2>{labels.MigrationPathway.heading}</h2>
                 <p style={{marginLeft: '20px'}}>Kommer arten (utelukkende eller også) til norsk natur via innendørs- eller produksjonsareal?
                 <SelectableRadio
                             label={labels.indoorProduktionImport.a}
