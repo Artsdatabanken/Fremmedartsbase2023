@@ -70,8 +70,8 @@ export default class NewNaturetype extends React.Component {
             {/* {appState.language === "SV"
             ? <h3>Här kommer SVEN</h3> */}
             <div>
-                <h4>{superheader}</h4>
-                <h5>{header}</h5>
+                <h3>{superheader}</h3>
+                <h4>{header}</h4>
                 {nts
                     ? <NaturtypeSelector 
                         naturtyper={nts} 

@@ -285,8 +285,8 @@ export default class Assessment62Okologiskeffekt extends React.Component {
 
                 {config.showPageHeaders ? <h3>Økologisk effekt</h3> : <br />}
                 <fieldset className="well">
-                    <h3>{labels.DEcrit.mainHeading}</h3>
-                    <h4>{labels.DEcrit.heading}</h4>
+                    <h2>{labels.DEcrit.mainHeading}</h2>
+                    <h3>{labels.DEcrit.heading}</h3>
                     <p>Beskriv artens interaksjon(er) med stedegne arter. Det skal være sannsynlighetsovervekt for interaksjonen</p>
                     <SpeciesSpeciesTable list={riskAssessment.speciesSpeciesInteractions} newItem={this.newSSITS} addNewItem={this.addSSITS} koder={koder} labels={labels} showRedlist showKeyStoneSpecie showEffect showInteractionType showConfirmedOrAssumed/>
                     
@@ -347,7 +347,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                             secondValue={"unsureG"}/>*/}
                 </fieldset> 
                 <fieldset className="well">
-                    <h4>{crit52H.heading}</h4>
+                    <h3>{crit52H.heading}</h3>
                     <p>{crit52H.info}</p>
                     <SpeciesSpeciesTable list={riskAssessment.geneticTransferDocumented} newItem={this.newGTD} addNewItem={this.addGTD} koder={koder} labels={labels} showKeyStoneSpecie showInteractionType showConfirmedOrAssumed HCrit />
                     <hr/>
@@ -373,7 +373,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                     {/*<p>HGeneticTransferLevel: {riskAssessment.HGeneticTransferLevel}</p>*/}
                 </fieldset>
                 <fieldset className="well">
-                    <h4>{crit52I.heading} </h4>
+                    <h3>{crit52I.heading} </h3>
                     <p>{crit52I.info}</p>
                     <HostParasiteTable list={riskAssessment.hostParasiteInformations} newItem={this.newHPI} addNewItem={this.addHPI} koder={koder} labels={labels} showKeyStoneSpecie />
                     <hr/>

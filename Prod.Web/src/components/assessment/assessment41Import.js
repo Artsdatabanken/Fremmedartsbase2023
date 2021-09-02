@@ -15,7 +15,6 @@ class SelectableRadio extends React.Component {
     //     return true
     // }
     render() {
-        
         const [obj, prop] = this.props.observableValue
         // console.log("Selectable" + this.props.value) console.log(" - - " +
         // obj["Selectable" + this.props.value])
@@ -50,7 +49,7 @@ export default class Assessment41Import extends React.Component {
     }
     @action saveImportPathway(vurdering, mp) {
         const mps = vurdering.ImportPathways
-        const compstr = (mp) => `${mp.CodeItem}${mp.InfluenceFactor}${mp.Magnitude}${mp.TimeOfIncident}`
+        const compstr = (mp) => `${mp.codeItem}${mp.influenceFactor}${mp.magnitude}${mp.timeOfIncident}`
         const newMp = compstr(mp)
         const existing = mps.filter(oldMp =>  compstr(oldMp) === newMp
         )

@@ -104,7 +104,7 @@ export default class Assessment52Utbredelse extends React.Component {
                         </div>
                     </fieldset>
                 <fieldset className="well">
-                    <h2>Fylkesvis utbredelse</h2>
+                    <h3>Fylkesvis utbredelse</h3>
                     <b>[Her kommer det et kart]</b>
                     <p>Beskriv grunnlaget for anslagene (gjelder både forekomstareal og fylkesvis utbredelse)</p>
                     <Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'backgroundRegional']}/>
@@ -138,7 +138,7 @@ export default class Assessment52Utbredelse extends React.Component {
                         
                 </fieldset>
                 <fieldset className="well" id="spreadHistoryDomestic">
-                    <h2>Utbredelseshistorikk 2018</h2>
+                    <h3>Utbredelseshistorikk 2018</h3>
                   {/* <h4>{labels.distributionHistory} {appState.evaluationContext.nameWithPreposition}</h4>*/}
                    <UtbredelseshistorikkInnenlands vurdering={assessment} fabModel={appState}/>
                    {assessment.spreadHistoryDomesticDocumentation

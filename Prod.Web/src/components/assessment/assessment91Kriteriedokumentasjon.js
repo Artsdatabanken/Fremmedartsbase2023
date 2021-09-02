@@ -58,10 +58,12 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                     ? <h3>{critlabels.status}</h3>
                     : <br/>}
                     <div>
+                    
                     {/*<h3>{labels.critDocumentation.status}</h3>*/}
                    
                     {appState.skalVurderes ?
                         <fieldset className="well">
+                            <h2>{critlabels.heading}</h2>
                             <p>{critlabels.status}: {alienSpeciesCategoryLabel}</p>
                             <Risikomatrise
                                 labels={critlabels}

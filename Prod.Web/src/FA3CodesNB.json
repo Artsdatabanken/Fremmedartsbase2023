@@ -6996,6 +6996,13 @@
                     "critDocumentation": [
                         {
                             "Id": null,
+                            "Value": "heading",
+                            "Text": "Vurderingens oppsummering",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "decisiveCriteria",
                             "Text": "Utslagsgivende kriterier",
                             "Info": null,

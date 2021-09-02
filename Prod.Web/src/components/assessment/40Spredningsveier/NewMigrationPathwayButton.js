@@ -16,7 +16,7 @@ export default class NewMigrationPathwayButton extends React.Component {
             newMigrationPathway: {
                 // Category : props.migrationPathway.parentValue ? props.migrationPathway.parentValue : props.migrationPathway.value,
                 // CodeItem : props.migrationPathway.parentValue ? props.migrationPathway.value : null,
-                CodeItem : props.migrationPathway.value,
+                codeItem : props.migrationPathway.value,
                 introductionSpread : null,
                 influenceFactor : "unknown", 
                 magnitude : "unknown",
@@ -26,10 +26,10 @@ export default class NewMigrationPathwayButton extends React.Component {
         })
         extendObservable(this, {
             okEnabled: () => !(
-                this.newMigrationPathway.InfluenceFactor === "unknown" 
-                && this.newMigrationPathway.Magnitude === "unknown" 
-                && this.newMigrationPathway.TimeOfIncident === "unknown"
-                && !this.newMigrationPathway.ElaborateInformation 
+                this.newMigrationPathway.influenceFactor === "unknown" 
+                && this.newMigrationPathway.magnitude === "unknown" 
+                && this.newMigrationPathway.timeOfIncident === "unknown"
+                && !this.newMigrationPathway.elaborateInformation 
                 )
         })
        // this.showModal = () => this.visibleModal = true
@@ -42,11 +42,11 @@ export default class NewMigrationPathwayButton extends React.Component {
         }
       
 
-        this.hideModal = (e) => {e.stopPropagation(); this.visibleModal = false}
-        this.onOk = (e) => {
+        this.hideModal = action((e) => {e.stopPropagation(); this.visibleModal = false})
+        this.onOk = action((e) => {
             this.hideModal(e)
             props.onSave(this.newMigrationPathway)
-        }
+        })
     }
 
 

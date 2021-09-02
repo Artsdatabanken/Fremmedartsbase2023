@@ -29,8 +29,8 @@ export default class Vurdering34Spredningsveier extends React.Component {
     }
 
     @action saveMigrationPathway(vurdering, mp) {
-        const mps = vurdering.AssesmentVectors
-        const compstr = (mp) => ""+mp.CodeItem+mp.IntroductionSpread+mp.InfluenceFactor+mp.Magnitude+mp.TimeOfIncident
+        const mps = vurdering.assesmentVectors
+        const compstr = (mp) => ""+mp.codeItem+mp.introductionSpread+mp.influenceFactor+mp.magnitude+mp.timeOfIncident
         const newMp = compstr(mp)
         const existing = mps.filter(oldMp =>  compstr(oldMp) === newMp
         )

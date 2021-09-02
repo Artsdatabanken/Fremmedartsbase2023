@@ -191,6 +191,7 @@ export default inject('appState')(observer(class AssessmentComments extends Comp
                 <br></br>
                 <div className="page_wrapper">
                  <div className="form_category">
+                     <h2>Kommentarer</h2>
                        <div className="form_item">
                         <table className="table table-striped">
                                 <thead>

@@ -481,10 +481,11 @@ export default class AssessmentReferences extends Component {
         return (
             <div className="page_container">
                 <div className="page_wrapper">
-                <h2>Referanser</h2>
+                
                 <div className="form_category">
+                   
                         <div className="form_item">
-                            
+                    
                             {/*<div>Ingen referanser knyttet til vurderingen...</div>*/}
                             <table className="table table-striped">
                                 <thead>

@@ -457,8 +457,9 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
         return (
             <div className="page_container">
                 <div className="page_wrapper">
-                <h2>{labels.references.heading}</h2>
+                
                 <div className="form_category">
+                    <h2>{labels.references.heading}</h2>
                         <div className="form_item">
                             
                             {/*<div>Ingen referanser knyttet til vurderingen...</div>*/}

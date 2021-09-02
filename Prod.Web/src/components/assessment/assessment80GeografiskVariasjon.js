@@ -24,7 +24,7 @@ export default class Assessment80GeografiskVariasjon extends React.Component {
 			<div>
 				{config.showPageHeaders ? <h3>{geolabels.heading}</h3> :  <br />}
 				<fieldset className="well">
-				<h3>{geolabels.heading}</h3>
+				<h2>{geolabels.heading}</h2>
 					{riskAssessment.riskLevelCode == "NK" ? 
 						<p dangerouslySetInnerHTML={{ __html: labels.geographicVariation.possibleLowerCategoryNK }}></p> :
 						riskAssessment.riskLevelCode == "SE" || riskAssessment.riskLevelCode == "HI"  ?
