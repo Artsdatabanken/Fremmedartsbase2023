@@ -19,12 +19,12 @@ export class NaturtypeRad extends React.Component {
         this.updateNaturetype = action((upd) => {
             // console.log("upd nt: " + JSON.stringify(upd))
             const nt = naturtype
-            nt.DominanceForrest.replace(upd.DominanceForrest)
-            nt.TimeHorizon = upd.TimeHorizon
-            nt.ColonizedArea = upd.ColonizedArea
-            nt.StateChange.replace(upd.StateChange)
-            nt.AffectedArea = upd.AffectedArea            
-            nt.Background = upd.Background
+            nt.dominanceForrest.replace(upd.dominanceForrest)
+            nt.timeHorizon = upd.timeHorizon
+            nt.colonizedArea = upd.colonizedArea
+            nt.stateChange.replace(upd.stateChange)
+            nt.affectedArea = upd.affectedArea            
+            nt.background = upd.background
             this.showModal = false
 
         })
@@ -62,10 +62,10 @@ export class NaturtypeRad extends React.Component {
                 <td>{ntlabel}</td>
                 <td>{dominanceForrest}</td>
                 <td></td>
-                <td>{kodeTekst(koder.timeHorizon, nt.TimeHorizon)}</td>
-                <td>{kodeTekst(koder.colonizedArea, nt.ColonizedArea)}</td>
+                <td>{kodeTekst(koder.timeHorizon, nt.timeHorizon)}</td>
+                <td>{kodeTekst(koder.colonizedArea, nt.colonizedArea)}</td>
                 <td>{stateChangLabel}</td>
-                <td>{kodeTekst(koder.affectedArea, nt.AffectedArea)}</td>
+                <td>{kodeTekst(koder.affectedArea, nt.affectedArea)}</td>
                 <td>
                 <Xcomp.MultiselectArray
                                 observableValue={[nt, 'background']} 

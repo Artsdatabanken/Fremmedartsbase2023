@@ -1,5 +1,5 @@
 import React from 'react';
-import {autorun, extendObservable, observable, toJS} from 'mobx';
+import {autorun, extendObservable, observable, action, toJS} from 'mobx';
 import {observer, inject} from 'mobx-react';
 import * as Xcomp from '../observableComponents';
 import BsModal from '../../bootstrapModal'
@@ -61,13 +61,14 @@ export default class NaturetypeModal extends React.Component {
         // }
 
         // this.hideModal = () => this.showModal = false
-        this.hideModal = () => sm[smprop]  = false
-        this.onOk = () => {
+        this.hideModal  = action(() => sm[smprop]  = false)
+
+        this.onOk = action (() => {
             this.hideModal()
             console.log(this.editNatureype)
             const clone = toJS(this.editNaturtype) // clone once more to be sure...
             onOk(clone)
-        }
+        })
         autorun(() => {
             if (fabModel.naturtypeLabels && this.editNaturtype && this.editNaturtype.niNCode) {
                 this.naturtypeLabel = fabModel.naturtypeLabels[this.editNaturtype.niNCode]

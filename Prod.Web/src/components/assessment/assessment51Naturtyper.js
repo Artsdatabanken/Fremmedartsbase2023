@@ -2,7 +2,7 @@ import config from '../../config';
 import React from 'react';
 import PropTypes from 'prop-types'
 import {observer, inject} from 'mobx-react';
-import {autorun, extendObservable, observable} from 'mobx';
+import {autorun, extendObservable, observable, action} from 'mobx';
 import * as Xcomp from './observableComponents';
 import Criterion from './criterion'
 import {getCriterion} from '../../utils'
@@ -24,19 +24,19 @@ export default class Assessment51Naturtyper extends React.Component {
         const {appState:{assessment}, appState} = this.props;
         
         // extendObservable(this, { })
-        this.addNaturtype = (nyNt) => {
+        this.addNaturtype = action((nyNt) => {
             assessment
                 .impactedNatureTypes
                 .push(nyNt)
-        }
-        this.addRedlistedNaturetype = (nyNt) => {
+        })
+        this.addRedlistedNaturetype = action((nyNt) => {
             assessment
                 .redlistedNatureTypes
                 .push(nyNt)
 
             // alert("add new redlisted nature type: " + nyNt.RedlistedNatureTypeName + " -
             // " + nyNt.Category)
-        }
+        })
     }
 
     render() {
@@ -68,8 +68,10 @@ export default class Assessment51Naturtyper extends React.Component {
         const canRenderTable = !!appState.naturtypeLabels && (!!appState.dominansSkog || appState.language === "SV")
         return (
             <div>
+
               {/*  <h4>{ntLabels.colonizedAreaHeading}</h4>     */}     
-              <fieldset className="well">     
+              <fieldset className="well"> 
+              <h2>{ntLabels.heading}</h2>    
                 <NewNaturetype
                     appState={appState}
                     addNaturtype={this.addNaturtype}
@@ -249,9 +251,9 @@ export default class Assessment51Naturtyper extends React.Component {
                     <h4>{ntLabels.habitat}</h4>
                     <p>{ntLabels.chooseHabitat}</p>
                     <HabitatTable
-                     canRenderTable={canRenderTable}
-                     labels={labels}
-                     appState={appState}/>
+                        canRenderTable={canRenderTable}
+                        labels={labels}
+                        appState={appState}/>
                    {/* <div>
                         <Xcomp.Bool
                             label={ntLabels.usesLivingSpeciesAsHabitat}

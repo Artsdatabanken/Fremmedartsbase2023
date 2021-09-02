@@ -41,14 +41,14 @@ export default class NewNaturetype extends React.Component {
             this.showModal = true
         })
 
-        this.setSelectedNaturtype = (naturtypekode) => {
+        this.setSelectedNaturtype = action((naturtypekode) => {
             this.hideStateChange = false;
             this.setSelectedNT(naturtypekode)
-        }
-        this.setSelectedLivsmedium = (naturtypekode) => {
+        })
+        this.setSelectedLivsmedium = action((naturtypekode) => {
             this.hideStateChange = true;
             this.setSelectedNT(naturtypekode)
-        }
+        })
 
 
         // this.onOk = (obj) => {
