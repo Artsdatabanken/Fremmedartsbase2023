@@ -5132,11 +5132,17 @@
                     ],
 
                     "BcritText": [
-
+                        {
+                            "Id": null,
+                            "Value": "transferredFrom2018",
+                            "Text": "Overført fra FAB 2018",
+                            "Info": null,
+                            "Children": null
+                        },
                         {
                             "Id": null,
                             "Value": "transferredFromB",
-                            "Text": "Overført fra estimeringsmetoden \"b) Literaturdata på spredningshastighet\"",
+                            "Text": "Overført fra estimeringsmetode \"b) Literaturdata på spredningshastighet\"",
                             "Info": null,
                             "Children": null
                         },
