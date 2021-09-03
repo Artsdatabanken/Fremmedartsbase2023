@@ -65,6 +65,15 @@ export default class Assessment51Naturtyper extends React.Component {
         critG.auto = false
         const nts = appState.naturtyper
         const doms = appState.dominansSkog
+        var hasImpactAbroad = false 
+        if (assessment.impactedNatureTypes.length > 0) {
+            for (var i = 0; i < assessment.impactedNatureTypes.length; i++) {
+                if (assessment.impactedNatureTypes[i].background.indexOf("ObservationAbroad") > -1 || assessment.impactedNatureTypes[i].background.indexOf("WrittenDocumentationAbroad") > -1){
+                    hasImpactAbroad = true;
+                }
+            }
+        }
+
         const canRenderTable = !!appState.naturtypeLabels && (!!appState.dominansSkog || appState.language === "SV")
         return (
             <div>
@@ -143,11 +152,16 @@ export default class Assessment51Naturtyper extends React.Component {
                                 observableValue={[riskAssessment, 'backgroundF']} 
                                 codes={koder.assessmentBackgrounds}
                    mode="check"/>*/}
-
-                    {riskAssessment.backgroundF.indexOf("ObservationAbroad") > -1 || riskAssessment.backgroundF.indexOf("WrittenDocumentationAbroad") > -1 ? 
+                    <Criterion criterion={critF} hasImpactAbroad={hasImpactAbroad} mode="noheading"/>
+                    {hasImpactAbroad ? 
                     <div>
                         <p>{ntLabels.natureAffectedAbroad}</p>
                         <Xcomp.HtmlString observableValue={[riskAssessment, 'natureAffectedAbroadF']}/>
+
+                        <Xcomp.Button primary onClick= {() => {
+                            //console.log("Save assessment")
+                                appState.saveCurrentAssessment();
+                            }}>{labels.AppHeader.assessmentSave}</Xcomp.Button> 
                     </div> : null}
                    
                     
@@ -165,7 +179,7 @@ export default class Assessment51Naturtyper extends React.Component {
                             observableValue={[riskAssessment, 'threatenedNatureTypesAffectedDomesticDescription']}/>
                     </div>
                     <br/>*/}
-                    <Criterion criterion={critF} mode="noheading"/>
+                    
                     
                    {/* <div>
                         <span>{ntLabels.abroad}:
@@ -194,11 +208,15 @@ export default class Assessment51Naturtyper extends React.Component {
                                 observableValue={[riskAssessment, 'backgroundG']} 
                                 codes={koder.assessmentBackgrounds}
                 mode="check"/> */}
-
-                    {riskAssessment.backgroundG.indexOf("ObservationAbroad") > -1 || riskAssessment.backgroundG.indexOf("WrittenDocumentationAbroad") > -1 ? 
+                    <Criterion criterion={critG} hasImpactAbroad={hasImpactAbroad} mode="noheading"/>
+                    {hasImpactAbroad ? 
                     <div>
                         <p>{ntLabels.natureAffectedAbroad}</p>
                         <Xcomp.HtmlString observableValue={[riskAssessment, 'natureAffectedAbroadG']}/>
+                        <Xcomp.Button primary onClick= {() => {
+                            //console.log("Save assessment")
+                                appState.saveCurrentAssessment();
+                            }}>{labels.AppHeader.assessmentSave}</Xcomp.Button> 
                     </div> : null }
                     
                    {/* <div>
@@ -215,7 +233,7 @@ export default class Assessment51Naturtyper extends React.Component {
                             observableValue={[riskAssessment, 'commonNatureTypesAffectedDomesticDescription']}/>
                     </div>
                    <br/> */}
-                    <Criterion criterion={critG} mode="noheading"/>
+                    
                     
                    {/* <div>
                         <span>{ntLabels.abroad}:

@@ -62,7 +62,7 @@ export class NaturtypeRad extends React.Component {
                 <td>{ntlabel}</td>
                 <td>{dominanceForrest}</td>
                 <td></td>
-                <td>{kodeTekst(koder.timeHorizon, nt.timeHorizon)}</td>
+                <td>{assessment.alienSpeciesCategory == "DoorKnocker" ? koder.timeHorizon[1].Text : kodeTekst(koder.timeHorizon, nt.timeHorizon)}</td>
                 <td>{kodeTekst(koder.colonizedArea, nt.colonizedArea)}</td>
                 <td>{stateChangLabel}</td>
                 <td>{kodeTekst(koder.affectedArea, nt.affectedArea)}</td>
@@ -70,7 +70,13 @@ export class NaturtypeRad extends React.Component {
                 <Xcomp.MultiselectArray
                                 observableValue={[nt, 'background']} 
                                 codes={koder.assessmentBackgrounds}
-                                mode="check"/>
+                                //mode="check"
+                                hideUnchecked/>
+                <Xcomp.MultiselectArray
+                                observableValue={[nt, 'background']} 
+                                codes={koder.assessmentBackgrounds}
+                                mode="check"
+                                hideUnchecked/>
                 </td>
                 <td>
                     <Xcomp.Button 

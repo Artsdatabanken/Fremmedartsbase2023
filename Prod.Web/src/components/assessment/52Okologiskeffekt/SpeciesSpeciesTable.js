@@ -80,6 +80,7 @@ const SpeciesSpeciesTable = observer((props) =>
                 <Xcomp.MultiselectArray
                                 observableValue={[item, 'basisOfAssessment']} 
                                 codes={props.koder.assessmentBackgrounds}
+                                hideUnchecked
                                 //heading={props.koder.assessmentBackgrounds[0].text}
                                 //mode="check"
                                 />
@@ -180,7 +181,8 @@ const SpeciesSpeciesTable = observer((props) =>
                 <Xcomp.MultiselectArray
                                 observableValue={[props.newItem, 'basisOfAssessment']} 
                                 codes={props.koder.assessmentBackgrounds}
-                                heading={props.koder.assessmentBackgrounds[0].text}
+                                hideUnchecked
+                                //heading={props.koder.assessmentBackgrounds[0].text}
                                 //mode="check"
                                 />
                 <Xcomp.MultiselectArray

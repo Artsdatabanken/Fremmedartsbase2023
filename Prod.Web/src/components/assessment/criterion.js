@@ -11,7 +11,7 @@ export default class Criterion extends React.Component {
         super(props)
     }
     render() {
-        const {criterion, appState, mode, hideInfo, disabled} = this.props;
+        const {criterion, appState, mode, hideInfo, disabled, hasImpactAbroad} = this.props;
         
         console.log("keys: " + JSON.stringify(Object.keys(criterion)))
         const labels = appState.codeLabels
@@ -19,6 +19,7 @@ export default class Criterion extends React.Component {
         const {id, value, uncertaintyValues, auto, codes, heading, info, uncertaintyDisabled, errors } = criterion;
         //console.log(heading)
         //console.log(codes)
+        console.log(hasImpactAbroad)
         const showHeading = !mode || mode.indexOf("noheading") < 0
         const setUncertainty = e => {
             // console.log("setUncertainty check: " + e.target.value + " | checked: " + e.target.checked)
@@ -128,10 +129,10 @@ export default class Criterion extends React.Component {
                 
                 </div>})} 
                 <br/>
-                <Xcomp.Button primary onClick= {() => {
+               {!hasImpactAbroad && <Xcomp.Button primary onClick= {() => {
                     //console.log("Save assessment")
                         appState.saveCurrentAssessment();
-                    }}>{labels.AppHeader.assessmentSave}</Xcomp.Button> 
+                    }}>{labels.AppHeader.assessmentSave}</Xcomp.Button> }
             </div>
             </>
         );
