@@ -37,7 +37,8 @@ export default class NewMigrationPathwayButton extends React.Component {
        this.showModal = (e) => {
             action(() => {
                 e.stopPropagation();
-                this.visibleModal = !this.visibleModal
+                this.visibleModal = true;
+               // this.visibleModal = !this.visibleModal
             })()
         }
       
