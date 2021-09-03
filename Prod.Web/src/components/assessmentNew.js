@@ -83,9 +83,9 @@ export default class assessmentNew extends React.Component {
                 <fieldset className="well">
                     <div className="row">
                         <div className="col-md-6">
-                            <h3>{labels.SelectAssessment.createAssessment}</h3>
+                            <h2>{labels.SelectAssessment.createAssessment}</h2>
                             <br></br>
-                            <h4>{labels.SelectAssessment.expertgroup}</h4>
+                            <h3>{labels.SelectAssessment.expertgroup}</h3>
                             <Xcomp.StringEnum
                                     observableValue={[appState, 'expertgroup']}
                                     codes={appState.expertgroups} />

@@ -753,9 +753,9 @@ namespace Prod.Domain
         public int Bhigh { get; set; } // øvre skår for B-kriteriet (inkludert usikkerhet) 
 
         public int BCritMCount { get; set; } = 0;
-        public string BCritExact { get; set; } = "true";
-        public string BCritP { get; set; } 
-        public string BCritNewObs { get; set; }
+        public string BCritExact { get; set; } = "false";
+        public string BCritP { get; set; }
+        public string BCritNewObs { get; set; } = "True";
 
 
         public int StartYear { get; set; } // startår for B-kriteriet / utbredelse

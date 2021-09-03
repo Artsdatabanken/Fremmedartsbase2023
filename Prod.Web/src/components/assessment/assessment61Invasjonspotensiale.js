@@ -74,6 +74,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
 
         const existenceArea35 = assessment.CurrentExistenceAreaCalculated
 
+        const x1 = assessment.riskAssessment.AOOtotalBest
+        const x2 = assessment.riskAssessment.AOO50yrBest
 
         // const bassertpaValues = [
         //     {
@@ -279,14 +281,11 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                  />
                     </div>*/}
                     <p>Velg datafil du ønsker å laste opp</p>
-                    <button className="btn btn-primary" 
-                            id="button" name="button"
-                            //disabled={this.selectedFile.name === ""} 
-                            style={{marginLeft: '30px', marginTop: '20px'}} 
-                            onClick={() => this.thisFileUpload()}>Velg fil</button>
-                   {/* <FileUpload
-                               // onUploadComplete={this.getAttachments}
-                   /> */}
+                    
+                   <FileUpload
+                            onUploadComplete={this.getAttachments}
+                            showButtonOnly={true}
+                   /> 
                     <div className="statusField">
                         <div className="labels" style={{width: "100px"}}>
                         <p>{labels.Acrit.median}</p>
@@ -401,16 +400,15 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                     <h4>{labels.Bcrit.data}</h4>
                                     <div className="BCritFiles">
                                         <div className="filenames">
-                                            <p><b>{labels.DistributionHistory.filename}</b></p>
-
-                                            
+                                            <p><b>{labels.DistributionHistory.filename}</b></p>                                            
                                             
                                         </div>
                                         <div className="fileDescriptions">
                                             <p><b>{labels.DistributionHistory.fileDescription}</b></p>
-                                            <Xcomp.String observableValue={[riskAssessment, 'fileDescription']} />
+                                            <Xcomp.String observableValue={[riskAssessment, 'fileDescription']} placeholder={"Dette er beskrivelsen"}/>
                                         </div>
                                     </div> 
+                                    <hr></hr>
                                     <FileUpload
                                                         // onUploadComplete={this.getAttachments}
                                                     />
@@ -543,10 +541,9 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             </tr>
                                             </tbody>                            
                                                 </table>*/}
-
+                                    <p>{labels.Bcrit.commentOrDescription}</p>
                                     <Xcomp.HtmlString                            
-                                                observableValue={[riskAssessment, "commentOrDescription"]}
-                                                label={labels.Bcrit.commentOrDescription}
+                                                observableValue={[riskAssessment, "commentOrDescription"]}                                                
                                             />                      
                                     <p style={{marginTop: "20px", paddingTop: "20px", borderTop:'1px solid gray', fontWeight: 'bold', fontSize: 'larger'}}>{labels.BcritText.expansionSpeed}</p>
 

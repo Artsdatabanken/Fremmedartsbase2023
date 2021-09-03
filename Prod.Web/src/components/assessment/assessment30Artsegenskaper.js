@@ -100,7 +100,7 @@ export default class Assessment30Artsegenskaper extends React.Component {
                     <div>
                         <br/>
                         <div className="well">
-                        <h4><b>{labels.NaturalOrigin.naturalOrigin}</b></h4>
+                        <h4>{labels.NaturalOrigin.naturalOrigin}</h4>
                         <OriginTable 
                             origins={vurdering.naturalOrigins} 
                             climateZoneLabel={climateZoneLabel}

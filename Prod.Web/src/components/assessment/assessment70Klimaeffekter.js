@@ -29,14 +29,14 @@ export default class Assessment70Klimaeffekter extends React.Component {
 
                         <p>{climatelabel("partialCategoryInvasion")}</p>
                         <div className="climateChange">
-                            <p><b dangerouslySetInnerHTML={{
-                                                __html: climatelabel("climateChangeAffectsInvationPotential")}}></b></p>
+                            <p dangerouslySetInnerHTML={{
+                                                __html: climatelabel("climateChangeAffectsInvationPotential")}}></p>
                             <Xcomp.StringEnum observableValue={[riskAssessment, 'climateEffectsInvationpotential']} codes={koder.yesNo} mode="radio" />
                         </div>
                         <p>{climatelabel("partialCategoryEcoeffect")}</p>
                         <div className="climateChange">
-                            <p><b dangerouslySetInnerHTML={{
-                                            __html: climatelabel("climateChangeAffectsEcoeffect") }}></b></p>
+                            <p dangerouslySetInnerHTML={{
+                                            __html: climatelabel("climateChangeAffectsEcoeffect") }}></p>
                             <Xcomp.StringEnum observableValue={[riskAssessment, 'climateEffectsEcoEffect']} codes={koder.yesNo} mode="radio" />
                         </div>
                         <p>{climatelabel("climateEffectsDocumentation")}</p>
