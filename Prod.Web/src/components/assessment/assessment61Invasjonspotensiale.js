@@ -76,6 +76,13 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
 
         const x1 = assessment.riskAssessment.AOOtotalBest
         const x2 = assessment.riskAssessment.AOO50yrBest
+        const x3 = 0
+        const x4 = 0
+        const x5 = 0
+        const x6 = 0
+        const x7 = 0
+        const x8 = 0
+        const x9 = 0
 
         // const bassertpaValues = [
         //     {

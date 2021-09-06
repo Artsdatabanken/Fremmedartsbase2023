@@ -152,8 +152,8 @@ export default class Assessment51Naturtyper extends React.Component {
                                 observableValue={[riskAssessment, 'backgroundF']} 
                                 codes={koder.assessmentBackgrounds}
                    mode="check"/>*/}
-                    <Criterion criterion={critF} hasImpactAbroad={hasImpactAbroad} mode="noheading"/>
-                    {hasImpactAbroad ? 
+                    <Criterion criterion={critF} mode="noheading"/>
+                    {/*hasImpactAbroad ? 
                     <div>
                         <p>{ntLabels.natureAffectedAbroad}</p>
                         <Xcomp.HtmlString observableValue={[riskAssessment, 'natureAffectedAbroadF']}/>
@@ -162,7 +162,7 @@ export default class Assessment51Naturtyper extends React.Component {
                             //console.log("Save assessment")
                                 appState.saveCurrentAssessment();
                             }}>{labels.AppHeader.assessmentSave}</Xcomp.Button> 
-                    </div> : null}
+                        </div> : null*/}
                    
                     
                     {/*<div>
@@ -208,8 +208,8 @@ export default class Assessment51Naturtyper extends React.Component {
                                 observableValue={[riskAssessment, 'backgroundG']} 
                                 codes={koder.assessmentBackgrounds}
                 mode="check"/> */}
-                    <Criterion criterion={critG} hasImpactAbroad={hasImpactAbroad} mode="noheading"/>
-                    {hasImpactAbroad ? 
+                    <Criterion criterion={critG} mode="noheading"/>
+                    {/*hasImpactAbroad ? 
                     <div>
                         <p>{ntLabels.natureAffectedAbroad}</p>
                         <Xcomp.HtmlString observableValue={[riskAssessment, 'natureAffectedAbroadG']}/>
@@ -217,7 +217,7 @@ export default class Assessment51Naturtyper extends React.Component {
                             //console.log("Save assessment")
                                 appState.saveCurrentAssessment();
                             }}>{labels.AppHeader.assessmentSave}</Xcomp.Button> 
-                    </div> : null }
+                        </div> : null */}
                     
                    {/* <div>
                         <span>{appState.evaluationContext.name}:
