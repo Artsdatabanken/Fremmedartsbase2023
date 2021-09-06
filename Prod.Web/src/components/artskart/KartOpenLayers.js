@@ -62,7 +62,7 @@ const KartOpenLayers = ({
   onClosed
 }) => {
   const [isEditing, setIsEditing] = useState();
-  const epsg = 'EPSG:25833';
+  const epsg = 'EPSG:32633';
   const numZoomLevels = 18;
   const initialZoom = 3.7;
   const extent = [-2500000.0, 3500000.0, 3045984.0, 9045984.0];
@@ -158,7 +158,8 @@ const KartOpenLayers = ({
         lat: latlng[1]
       });
     } else {
-      const latlng = Proj4(epsg, 'EPSG:4326', coordinate);
+      // const latlng = Proj4(epsg, 'EPSG:4326', coordinate);
+      const latlng = coordinate;
       console.log('createMarker()', latlng);
       onAddPoint({
         latlng:
@@ -170,7 +171,8 @@ const KartOpenLayers = ({
     }
   };
   const removeMarker = (coordinate) => {
-    const latlng = Proj4(epsg, 'EPSG:4326', coordinate);
+    // const latlng = Proj4(epsg, 'EPSG:4326', coordinate);
+    const latlng = coordinate;
     console.log('removeMarker()', latlng);
 
     // return L.circleMarker(latlng).on("click", e => {
@@ -353,12 +355,14 @@ const KartOpenLayers = ({
       const latlng = [...geojsonfeature.geometry.coordinates];
       // console.log(geojsonfeature.geometry.coordinates);
       if (geojsonfeature.geometry.type === 'Point') {
-        const coordinate = transformCoordinate('EPSG:4326', epsg, geojsonfeature.geometry.coordinates);
+        // const coordinate = transformCoordinate('EPSG:4326', epsg, geojsonfeature.geometry.coordinates);
+        const coordinate = geojsonfeature.geometry.coordinates;
         geometry = new Point(coordinate);
       } else if (geojsonfeature.geometry.type === 'Polygon') {
         const coordinates = [[]];
         geojsonfeature.geometry.coordinates[0].forEach(coordinate => {
-          coordinates[0].push(transformCoordinate('EPSG:4326', epsg, coordinate));
+          // coordinates[0].push(transformCoordinate('EPSG:4326', epsg, coordinate));
+          coordinates[0].push(coordinate);
         });
         geometry = new Polygon(coordinates);
         const polygonFeature = new Feature({

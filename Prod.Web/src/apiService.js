@@ -304,7 +304,7 @@ export function getArtskartUrl(
     geojson = {features:[]})
   {
     const apibase =
-      "https://artskart.artsdatabanken.no/PublicApi/api/listhelper/";
+      "https://test.artsdatabanken.no/artskartpublicapi/api/listhelper/";
     const type =
       kriterier.includeObjects == kriterier.includeObservations
         ? "all"
@@ -320,7 +320,7 @@ export function getArtskartUrl(
     const excludeGbif = 
         kriterier.excludeGbif ? "&sourcedatabases[]=-40,-211" : "";   
     let queryparams = `fromYear=${kriterier.observationFromYear}&toYear=${kriterier.observationToYear}&fromMonth=${kriterier.fromMonth}&toMonth=${kriterier.toMonth}&type=${type}&region=${region}`;
-    queryparams += `&scientificNameId=${scientificNameId}${excludeGbif}`;
+    queryparams += `&scientificNameId=${scientificNameId}${excludeGbif}&crs=EPSG:32633`;
     if (selectionGeometry)
       queryparams += `&geojsonPolygon=${
         JSON.parse(selectionGeometry).geometry.coordinates
