@@ -3,6 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import {observer} from 'mobx-react';
 import * as Xcomp from '../observableComponents';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import {action, computed, extendObservable, observable} from 'mobx';
 // import * as Xcomp from '../observableComponents';
 // import BsModal from '../bootstrapModal'
@@ -10,6 +12,7 @@ import {action, computed, extendObservable, observable} from 'mobx';
 
 import NewMigrationPathwayButton from './NewMigrationPathwayButton'
 import assessmentTabdefs from '../assessmentTabdefs';
+import NavigateNext from '@material-ui/icons/NavigateNext';
 
 
 @observer
@@ -47,11 +50,18 @@ export default class NewMigrationPathwayGroup extends React.Component {
         return(
             <div style={{maxWidth: "600px"}}>
                 <div className="panel panel-default compact">
-                    <div className="panel-heading compact" onClick={migrationPathway.value === null ? ()=> this.expand() : null}>
-                        {hasChildren ? 
-                        <div style={{float: "right"}} onClick={ (e)=> {e.stopPropagation(); this.expand(); this.togglePathways()}}><span className={"glyphicon glyphicon-chevron-" + (this.expanded ? "up" : "down")}></span></div> : null}
+                    <div className="panel-heading compact migration" onClick={migrationPathway.value === null ? ()=> this.expand() : null}>
+                        
                        {/* {migrationPathway.value === null ? */}
-                        <Xcomp.Button onClick={()=> {this.togglePathways()}}>{migrationPathway.name} </Xcomp.Button>             
+                        <Xcomp.Button onClick={()=> {this.togglePathways()}}>{migrationPathway.name} 
+                        {hasChildren ? 
+                        <div style={{float: "right"}} onClick={ (e)=> {e.stopPropagation(); this.expand(); this.togglePathways()}}>
+                            <ExpandMoreIcon></ExpandMoreIcon>
+                            
+                            {/*
+                            {this.expanded ? <ExpandMoreIcon></ExpandMoreIcon> : <NavigateNextIcon></NavigateNextIcon>}
+                            <span className={"glyphicon glyphicon-chevron-" + (this.expanded ? "up" : "down")}></span>*/}
+                            </div> : null}</Xcomp.Button>             
                         {/* :  <NewMigrationPathwayButton migrationPathway={migrationPathway} onSave={onSave} koder={koder}  mainCodes={mainCodes} hideIntroductionSpread labels={labels}/>
                         } */}
                     </div>
@@ -59,7 +69,7 @@ export default class NewMigrationPathwayGroup extends React.Component {
                      aria-hidden="false"
                      >
                         <div className="panel-body">
-                            <ul>
+                            <ul className="migration">
                             {migrationPathway.children.map(child => {
                                 {/*child.parentValue = migrationPathway.value*/} 
                                 return <li key={child.name}><NewMigrationPathwayButton migrationPathway={child} disabled={

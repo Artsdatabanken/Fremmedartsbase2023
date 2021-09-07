@@ -77,8 +77,11 @@ export default class Vurdering34Spredningsveier extends React.Component {
 
         
         return(
-            <div style={{marginBottom: "30px"}}>
-               {/* { true || config.showPageHeaders ? <h4 style={{marginTop: "25px"}} >{labels.MigrationPathway.introductionSpread}</h4> : <br />} */}
+            <fieldset className="well">
+                
+               {/* 
+                    div style={{marginBottom: "30px"}}
+                { true || config.showPageHeaders ? <h4 style={{marginTop: "25px"}} >{labels.MigrationPathway.introductionSpread}</h4> : <br />} */}
                 <h3>{name}</h3>
                 <MPTable migrationPathways={migrationPathways} removeMigrationPathway={fjernSpredningsvei} showIntroductionSpread />
                 <hr/>
@@ -106,7 +109,7 @@ export default class Vurdering34Spredningsveier extends React.Component {
                                 //label={labels.DEcrit.insecurity}
                                 placeholder={labels.Import.furtherInfoComment}
                                 />
-            </div>
+            </fieldset>
         );
     }
 }

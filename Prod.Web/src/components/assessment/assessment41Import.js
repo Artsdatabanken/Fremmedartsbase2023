@@ -7,6 +7,7 @@ import * as Xcomp from './observableComponents';
 import Vurdering34Spredningsveier from './vurdering34Spredningsveier'
 import NewMigrationPathwaySelector from './40Spredningsveier/NewMigrationPathwaySelector'
 import MPTable from './40Spredningsveier/MigrationPathwayTable'
+import { DriveEtaRounded } from '@material-ui/icons';
 const labels = config.labels
 
 @observer
@@ -95,15 +96,16 @@ export default class Assessment41Import extends React.Component {
                             observableValue={[assessment, "indoorProduktion"]}/>
 
                 </p>
+                </fieldset>
                 
                     {assessment.indoorProduktion != null &&
-                    <fieldset className="well">
+                    <div>
                         {assessment.indoorProduktion == "positive" &&                    
                                 <Vurdering34Spredningsveier  name={"Til innendørs- eller produksjonsareal"} furtherInfo={labels.Import.furtherInfoIndoors}/>  
                         }
                             <Vurdering34Spredningsveier name={"Introduksjon til natur"} furtherInfo={labels.Import.furtherInfoIntro}/>
                             <Vurdering34Spredningsveier name={"Videre spredning i natur"} furtherInfo={labels.Import.furtherInfoNature}/>
-                     </fieldset>
+                     </div>
                     }
                 
                
@@ -148,7 +150,7 @@ export default class Assessment41Import extends React.Component {
                         <NewMigrationPathwaySelector migrationPathways={importPathwayKoder} onSave={mp => this.saveImportPathway(vurdering, mp)} koder={koder} hideIntroductionSpread labels={labels}/>
                     </div>
                 </div>} */}
-            </fieldset>
+            
         </div>
         )
     }

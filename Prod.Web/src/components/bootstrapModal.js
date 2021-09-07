@@ -26,9 +26,9 @@ export default class BootstrapModal extends React.Component {
                                 <span aria-hidden="true">×</span>
                             </Xcomp.Button>
                             {typeof this.heading === "string" ?
-                                <h4 className="modal-title">
+                                <h3 className="modal-title">
                                     {this.heading}                                 
-                                </h4> :
+                                </h3> :
                                 <div className="modal-title">
                                     {this.heading}
                                 </div>}
@@ -36,12 +36,16 @@ export default class BootstrapModal extends React.Component {
                         <div className="modal-body">
                             <div>
                                 {this.children}
+                                <Xcomp.Button  className={(okEnabled ? "" : " disabled" )} disabled={!okEnabled} onClick={this.onOk}>
+                                    {/*{this.labels.ok}*/}
+                                    Legg til
+                                </Xcomp.Button>
                             </div>
                         </div>
-                        <div className="modal-footer">
+                       {/* <div className="modal-footer">
                             <Xcomp.Button  onClick={this.onCancel}>{this.labels.cancel}</Xcomp.Button>
                             <Xcomp.Button  className={(okEnabled ? "" : " disabled" )} disabled={!okEnabled} onClick={this.onOk}>{this.labels.ok}</Xcomp.Button>
-                        </div>
+                        </div>*/}
                     </div>
                 </div>
             </div>
