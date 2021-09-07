@@ -540,11 +540,13 @@ div.btn-flat.migration {
   box-shadow: none;
   border: 1px solid lightgray;
   white-space: break-spaces;
+  text-align: left;
 }
 
 div.migration > button.btn-default {
   width: 300px;
   box-shadow: none;
+  text-align: left;
 }
 
 ul.migration {
@@ -1539,8 +1541,17 @@ ul.faner {
   text-align: left;
 }
 
+.main > div > .nav_menu li, .main .submenu li {
+  border-radius: 0;
+}
+
 .nav_menu li.disabled {
   opacity: 0.5;
+}
+
+.main .nav_menu > li.active:focus, .main .nav_menu > li.active {
+  background-color: #f5f5f5;
+  color: #4c4a48;
 }
 
 .nav_menu li.disabled:hover {
@@ -2007,9 +2018,6 @@ div.climateChange {
   border-radius: 28px;
 }
 
-.climateChange > p {
-  font-weight: bold;
-}
 
 /*.dropdown-check-list {
   display: inline-block;
