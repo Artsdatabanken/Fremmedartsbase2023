@@ -42,13 +42,14 @@ export default class Assessment52Utbredelse extends React.Component {
                             </div>
                             <div className="changedNature">
                                 <p>Andel av antatt forekomstareal i sterkt endra natur (%)</p>
-                                <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "speciesDistribution"]} codes={koder.KnownDistributionInNature}/> 
+                                {/* ToDo: Bug - speciesDistribution not found */}
+                                {/* <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "speciesDistribution"]} codes={koder.KnownDistributionInNature}/>  */}
                             </div>
                             </div>
                             :
                             <div>
                                 {/* <span>{labels.goTo}</span> <Xcomp.Button primary>{labels.speciesMap}</Xcomp.Button> */}
-                                <ModalArtskart taxonId={appState.assessmentSavedVersion.taxonId} scientificNameId={appState.assessmentSavedVersion.evaluatedScientificNameId} labels={labels}/>
+                                <ModalArtskart taxonId={appState.assessmentSavedVersion.taxonId} scientificNameId={appState.assessmentSavedVersion.evaluatedScientificNameId} labels={labels} utvalg={assessment.riskAssessment}/>
                                 <p style={{marginBottom: '0'}}>Basert på periode:</p>
                                 <div style={{display: 'flex'}}>
                                     <div style={{marginRight: '30px'}}>
@@ -86,11 +87,13 @@ export default class Assessment52Utbredelse extends React.Component {
                                 </div>
                                 <div className="changedNature">
                                     <p>Andel av kjent forekomstareal i sterkt endra natur (%) </p>
-                                    <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "speciesDistribution"]} codes={koder.KnownDistributionInNature}/>
+                                    {/* ToDo: Bug - speciesDistribution not found */}
+                                    {/* <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "speciesDistribution"]} codes={koder.KnownDistributionInNature}/> */}
                                 </div>
                                 <div style={{marginTop: '50px'}}>
                                     <p>Med utgangspunkt <b>én introduksjon</b>, antas arten å være… </p>   
-                                    <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "speciesDistribution"]} mode="radio" codes={koder.DistributionOptions}/>  
+                                    {/* ToDo: Bug - speciesDistribution not found */}
+                                    {/* <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "speciesDistribution"]} mode="radio" codes={koder.DistributionOptions}/>   */}
                                 </div>             
                                 {/* <div style={{marginBottom: '20px'}}>
                                     <span>{labels.goTo}</span> <Xcomp.Button primary >{labels.distributionHistory}</Xcomp.Button>

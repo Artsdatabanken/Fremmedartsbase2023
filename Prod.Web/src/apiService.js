@@ -303,8 +303,9 @@ export function getArtskartUrl(
     kriterier,
     geojson = {features:[]})
   {
-    const apibase =
-      "https://test.artsdatabanken.no/artskartpublicapi/api/listhelper/";
+    // const apibase = "http://localhost:16784/api/listhelper/";
+    // const apibase = "https://test.artsdatabanken.no/artskartpublicapi/api/listhelper/";
+    const apibase = "https://artskart.artsdatabanken.no/PublicApi/api/listhelper/";
     const type =
       kriterier.includeObjects == kriterier.includeObservations
         ? "all"
@@ -319,8 +320,9 @@ export function getArtskartUrl(
         : "svalbard";
     const excludeGbif = 
         kriterier.excludeGbif ? "&sourcedatabases[]=-40,-211" : "";   
-    let queryparams = `fromYear=${kriterier.observationFromYear}&toYear=${kriterier.observationToYear}&fromMonth=${kriterier.fromMonth}&toMonth=${kriterier.toMonth}&type=${type}&region=${region}`;
-    queryparams += `&scientificNameId=${scientificNameId}${excludeGbif}&crs=EPSG:32633`;
+    // let queryparams = `fromYear=${kriterier.observationFromYear}&toYear=${kriterier.observationToYear}&fromMonth=${kriterier.fromMonth}&toMonth=${kriterier.toMonth}&type=${type}&region=${region}`;
+    let queryparams = `fromYear=${kriterier.AOOyear1}&toYear=${kriterier.AOOendyear2}&fromMonth=${kriterier.fromMonth}&toMonth=${kriterier.toMonth}&type=${type}&region=${region}`;
+    queryparams += `&scientificNameId=${scientificNameId}${excludeGbif}&crs=EPSG:${config.mapEpsgCode}`;
     if (selectionGeometry)
       queryparams += `&geojsonPolygon=${
         JSON.parse(selectionGeometry).geometry.coordinates

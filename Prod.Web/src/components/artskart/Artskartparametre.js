@@ -32,13 +32,15 @@ const Artskartparametre = ({ utvalg }) => {
       <Xcomp.Number
         label="Fra og med år"
         width="5em"
-        observableValue={[utvalg, "observationFromYear"]}
+        // observableValue={[utvalg, "observationFromYear"]}
+        observableValue={[utvalg, "AOOyear1"]}
         integer
       />
       <Xcomp.Number
         label="Til og med år"
         width="5em"
-        observableValue={[utvalg, "observationToYear"]}
+        // observableValue={[utvalg, "observationToYear"]}
+        observableValue={[utvalg, "AOOendyear2"]}
         integer
       />
 
