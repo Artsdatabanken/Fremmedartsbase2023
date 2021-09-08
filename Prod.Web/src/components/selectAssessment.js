@@ -111,7 +111,7 @@ export default class SelectAssessment extends Component {
                                     heading={"Hva vil du gjøre?"}
                                     codes={koder.assessmentType}
                                     mode="radio"/>
-                <fieldset className="well" style={{width: '750px'}}>
+                <fieldset className="well">
                     <h4>{labels.SelectAssessment.chooseSpeciesGroup}</h4>
                     <div className="selectAssessment">                   
                                 <Xcomp.StringEnum 
@@ -122,8 +122,8 @@ export default class SelectAssessment extends Component {
                 </fieldset>
                 
                 <div style={{display: 'flex'}}>
-                    <div style={{float: 'left', width: '90%'}}>
-                        <fieldset className="well" style={{width: '750px', marginBottom: '5px'}}>
+                    <div style={{float: 'left', width: '100%'}}>
+                        <fieldset className="well" style={{marginBottom: '5px'}}>
                             <div className="taxon">
                                 <li>
                                     <span style={{marginRight: '10px', marginTop: '5px', width: '300px'}}>{labels.SelectAssessment.taxonSearch}</span> 
@@ -145,9 +145,9 @@ export default class SelectAssessment extends Component {
                             </div> */}
                 </div>
                 {/*<h5 style={{fontWeight: 'bold', fontSize: '1rem'}}>Filtrer på:</h5>*/}
-                <div className="selectFilter" style={{display: 'flex', marginBottom: '20px'}}>
+                <div className="selectFilter" style={{marginBottom: '20px'}}>
                     <div>
-                    <div className="filters"  style={{width: '750px'}}> 
+                    <div className="filters"> 
                     
                         {/*<span>Vurderinger med kommentar </span>
                         <div className="comment"><Xcomp.Bool observableValue={[appState, "withNewComments"]} label={"Nye kommentarer (på dine) (" + appState.antallNye + ")"}/></div>
