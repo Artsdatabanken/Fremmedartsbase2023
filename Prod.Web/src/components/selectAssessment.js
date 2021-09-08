@@ -102,26 +102,28 @@ export default class SelectAssessment extends Component {
                     <tr style={{backgroundColor: '#f9f9f9'}}>
                         <td style={{textAlign: 'center', color: 'red'}}><b>{labels.SelectAssessment.testVersion}<a href="https://rl2021.artsdatabanken.no/">{labels.SelectAssessment.here}</a>.</b></td>
                     </tr>
-                </table>}                
-                <h4>{labels.SelectAssessment.chooseSpeciesGroup}</h4>
-                <div style={{display: 'flex'}}>
-                    <div style={{float: 'left', width: '90%'}}>
-                        <div className="selectAssessment">                   
-                            <Xcomp.StringEnum 
-                                    forceSync
-                                    observableValue={[appState, 'expertgroup']} 
-                                    codes={appState.expertgroups}/>
+                </table>}              
 
-                            
-                        </div> 
-                        <Xcomp.StringEnum 
+                 <Xcomp.StringEnum 
                                     //forceSync
                                     className="assessmentType"
                                     observableValue={[appState, 'assessmentTypeFilter']} 
+                                    heading={"Hva vil du gjøre?"}
                                     codes={koder.assessmentType}
                                     mode="radio"/>
-                                    
-                        <fieldset className="well" style={{width: '720px', marginBottom: '5px'}}>
+                <fieldset className="well" style={{width: '750px'}}>
+                    <h4>{labels.SelectAssessment.chooseSpeciesGroup}</h4>
+                    <div className="selectAssessment">                   
+                                <Xcomp.StringEnum 
+                                        forceSync
+                                        observableValue={[appState, 'expertgroup']} 
+                                        codes={appState.expertgroups}/>                                
+                    </div> 
+                </fieldset>
+                
+                <div style={{display: 'flex'}}>
+                    <div style={{float: 'left', width: '90%'}}>
+                        <fieldset className="well" style={{width: '750px', marginBottom: '5px'}}>
                             <div className="taxon">
                                 <li>
                                     <span style={{marginRight: '10px', marginTop: '5px', width: '300px'}}>{labels.SelectAssessment.taxonSearch}</span> 
@@ -145,7 +147,7 @@ export default class SelectAssessment extends Component {
                 {/*<h5 style={{fontWeight: 'bold', fontSize: '1rem'}}>Filtrer på:</h5>*/}
                 <div className="selectFilter" style={{display: 'flex', marginBottom: '20px'}}>
                     <div>
-                    <div className="filters"  style={{width: '720px'}}> 
+                    <div className="filters"  style={{width: '750px'}}> 
                     
                         {/*<span>Vurderinger med kommentar </span>
                         <div className="comment"><Xcomp.Bool observableValue={[appState, "withNewComments"]} label={"Nye kommentarer (på dine) (" + appState.antallNye + ")"}/></div>

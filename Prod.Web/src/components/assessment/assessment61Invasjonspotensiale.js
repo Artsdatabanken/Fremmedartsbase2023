@@ -138,7 +138,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     
                     {/* <Xcomp.StringEnum observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]} mode="radio" codes={codes.HorizonEstablismentPotential}/> */}
                     
-                    <hr />
+                    
                      <Xcomp.StringEnum mode="radio" observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]} codes={koder.AcritSelect} /> 
                    {/* <SelectableRadio
                             label={labels.AcritSelect.LifespanA1aSimplifiedEstimate}

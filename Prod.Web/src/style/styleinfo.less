@@ -1006,7 +1006,7 @@ ul.scores li.checkbox label input {
 .selectAssessment > div {
    display: inline-block;
    padding: 2%;
-   margin: 5px;
+   margin: 0 20px 0;
    padding-left: 0;
 }
 
@@ -1416,14 +1416,14 @@ table.table-hover,
 
 .assessmentType {
   padding: 5px;
-  width: 720px;
+  width: 750px;
   margin-bottom: 20px;
   border: 1px solid #ddd;
   background-color: #f5f5f5;
 }
 
 .assessmentType .radio {
-  margin-left: 10px;
+  margin-left: 30px;
 }
 
 /*.well .radio {
@@ -1515,7 +1515,7 @@ ul.faner {
 }
 
 .filters ul {
-  padding-inline-start: 10px;
+  padding-inline-start: 40px;
 }
 
 .filters p ul {
@@ -1541,7 +1541,7 @@ ul.faner {
   text-align: left;
 }
 
-.main > div > .nav_menu li, .main .submenu li {
+._container .nav_menu li, .main > div > .nav_menu li, .main .submenu li {
   border-radius: 0;
 }
 
@@ -1552,6 +1552,11 @@ ul.faner {
 .main .nav_menu > li.active:focus, .main .nav_menu > li.active {
   background-color: #f5f5f5;
   color: #4c4a48;
+}
+
+._container ul.nav_menu li.active:focus, ._container ul.nav_menu li.active {
+  background-color: #4c4a48;
+  color: #fff;
 }
 
 .nav_menu li.disabled:hover {
@@ -1878,6 +1883,10 @@ div.modal-body > div {
 
 .natureTypes div .form-control, .natureTypes .btn-group {
   margin: 0 25px 0; 
+}
+
+.taxon {
+  margin-left: 20px;
 }
 
 .taxon div {

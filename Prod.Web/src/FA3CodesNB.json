@@ -240,7 +240,7 @@
             {
                 "Id": "SpeciesStatus",
                 "Value": "otherSpecies",
-                "Text": "Øvrige arter",
+                "Text": "Reproduserer selvstendig utendørs",
                 "Info": null,
                 "Children": null
             }
