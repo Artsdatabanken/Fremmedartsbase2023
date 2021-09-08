@@ -127,7 +127,7 @@ export default class Assessment30Artsegenskaper extends React.Component {
                             null}
                         </div>
                         <div className="well">
-                        <h4><b>{labels.NaturalOrigin.currentExistenceAria}</b></h4>
+                        <h4>{labels.NaturalOrigin.currentExistenceAria}</h4>
                         <OriginTable 
                             origins={vurdering.currentInternationalExistenceAreas} 
                             climateZoneLabel={climateZoneLabel}
@@ -159,12 +159,12 @@ export default class Assessment30Artsegenskaper extends React.Component {
                     {isMarine ?
                     <div>
                         <div className="well">
-                            <h4><b>{labels.NaturalOrigin.naturalOrigin}</b></h4>
+                            <h4>{labels.NaturalOrigin.naturalOrigin}</h4>
                             <Xcomp.MultiselectArray observableValue={[vurdering, 'naturalOriginMarine']} codes={koder.naturalOriginMarine} labels={labels.General} />
                             <Xcomp.HtmlString observableValue={[vurdering, 'naturalOriginMarineDetails']} label={labels.NaturalOrigin.describeMarine} /> 
                         </div>
                         <div className="well">
-                            <h4><b>{labels.NaturalOrigin.currentExistenceAria}</b></h4>
+                            <h4>{labels.NaturalOrigin.currentExistenceAria}</h4>
                             <Xcomp.MultiselectArray observableValue={[vurdering, 'currentInternationalExistenceMarineAreas']} codes={koder.naturalOriginMarine} labels={labels.General}/>
                             <Xcomp.HtmlString observableValue={[vurdering, 'currentInternationalExistenceMarineAreasDetails']} label={labels.NaturalOrigin.describeMarine} /> 
                         </div> 
@@ -221,7 +221,7 @@ export default class Assessment30Artsegenskaper extends React.Component {
                 <div>
                     <br/>
                     <div className="well">
-                    <h4><b>{labels.NaturalOrigin.naturalOrigin}</b></h4>
+                    <h4>{labels.NaturalOrigin.naturalOrigin}</h4>
                     <OriginTable 
                         origins={vurdering.naturalOrigins} 
                         climateZoneLabel={climateZoneLabel}
@@ -248,7 +248,7 @@ export default class Assessment30Artsegenskaper extends React.Component {
                         null}
                     </div>
                     <div className="well">
-                    <h4><b>{labels.NaturalOrigin.currentExistenceAria}</b></h4>
+                    <h4>{labels.NaturalOrigin.currentExistenceAria}</h4>
                     <OriginTable 
                         origins={vurdering.currentInternationalExistenceAreas} 
                         climateZoneLabel={climateZoneLabel}
@@ -280,12 +280,12 @@ export default class Assessment30Artsegenskaper extends React.Component {
                 {isMarine ?
                 <div>
                     <div className="well">
-                        <h4><b>{labels.NaturalOrigin.naturalOrigin}</b></h4>
+                        <h4>{labels.NaturalOrigin.naturalOrigin}</h4>
                         <Xcomp.MultiselectArray observableValue={[vurdering, 'naturalOriginMarine']} codes={koder.naturalOriginMarine} labels={labels.General} />
                         <Xcomp.HtmlString observableValue={[vurdering, 'naturalOriginMarineDetails']} label={labels.NaturalOrigin.describeMarine} /> 
                     </div>
                     <div className="well">
-                        <h4><b>{labels.NaturalOrigin.currentExistenceAria}</b></h4>
+                        <h4>{labels.NaturalOrigin.currentExistenceAria}</h4>
                         <Xcomp.MultiselectArray observableValue={[vurdering, 'currentInternationalExistenceMarineAreas']} codes={koder.naturalOriginMarine} labels={labels.General}/>
                         <Xcomp.HtmlString observableValue={[vurdering, 'currentInternationalExistenceMarineAreasDetails']} label={labels.NaturalOrigin.describeMarine} /> 
                     </div> 
@@ -350,7 +350,7 @@ export default class Assessment30Artsegenskaper extends React.Component {
                 <div>
                     <br/>
                     <div className="well">
-                    <h4><b>{labels.NaturalOrigin.naturalOrigin}</b></h4>
+                    <h4>{labels.NaturalOrigin.naturalOrigin}</h4>
                     <OriginTable 
                         origins={vurdering.naturalOrigins} 
                         climateZoneLabel={climateZoneLabel}
@@ -377,7 +377,7 @@ export default class Assessment30Artsegenskaper extends React.Component {
                         null}
                     </div>
                     <div className="well">
-                    <h4><b>{labels.NaturalOrigin.currentExistenceAria}</b></h4>
+                    <h4>{labels.NaturalOrigin.currentExistenceAria}</h4>
                     <OriginTable 
                         origins={vurdering.currentInternationalExistenceAreas} 
                         climateZoneLabel={climateZoneLabel}
@@ -409,12 +409,12 @@ export default class Assessment30Artsegenskaper extends React.Component {
                 {isMarine ?
                 <div>
                     <div className="well">
-                        <h4><b>{labels.NaturalOrigin.naturalOrigin}</b></h4>
+                        <h4>{labels.NaturalOrigin.naturalOrigin}</h4>
                         <Xcomp.MultiselectArray observableValue={[vurdering, 'naturalOriginMarine']} codes={koder.naturalOriginMarine} labels={labels.General} />
                         <Xcomp.HtmlString observableValue={[vurdering, 'naturalOriginMarineDetails']} label={labels.NaturalOrigin.describeMarine} /> 
                     </div>
                     <div className="well">
-                        <h4><b>{labels.NaturalOrigin.currentExistenceAria}</b></h4>
+                        <h4>{labels.NaturalOrigin.currentExistenceAria}</h4>
                         <Xcomp.MultiselectArray observableValue={[vurdering, 'currentInternationalExistenceMarineAreas']} codes={koder.naturalOriginMarine} labels={labels.General}/>
                         <Xcomp.HtmlString observableValue={[vurdering, 'currentInternationalExistenceMarineAreasDetails']} label={labels.NaturalOrigin.describeMarine} /> 
                     </div> 
