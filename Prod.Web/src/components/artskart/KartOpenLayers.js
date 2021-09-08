@@ -137,9 +137,9 @@ const KartOpenLayers = ({
       if (features.length > 0) {
         // features.forEach(feature => markerSource.removeFeature(feature));
         // drawInteraction.abortDrawing();
-        this.removeMarker(coordinate);
+        removeMarker(coordinate);
       } else {
-        this.createMarker(coordinate);
+        createMarker(coordinate);
       }
     });
     // map.addInteraction(drawInteraction);
@@ -159,7 +159,7 @@ const KartOpenLayers = ({
     if (mouseoverfeature) {
       console.log('mouseover', mouseoverfeature.getProperties());
       const latlng = mouseoverfeature.get('latlng');
-      this.removeMarker(latlng);
+      removeMarker(latlng);
     } else {
       console.log('createMarker()', coordinate);
       onAddPoint({
