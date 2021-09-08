@@ -13,6 +13,7 @@ import { OSM, Vector as VectorSource, WMTS as WmtsSource } from 'ol/source';
 import { Circle, Fill, Stroke, Style } from 'ol/style';
 import WMTSTileGrid from 'ol/tilegrid/WMTS';
 import Proj4 from 'proj4';
+import config from '../../config';
 
 const selectionDrawingOptions = {
   position: "bottomright",
@@ -62,14 +63,18 @@ const KartOpenLayers = ({
   onClosed
 }) => {
   const [isEditing, setIsEditing] = useState();
-  const epsg = 'EPSG:32633';
   const numZoomLevels = 18;
   const initialZoom = 3.7;
   const extent = [-2500000.0, 3500000.0, 3045984.0, 9045984.0];
   let mouseoverfeature = null;
 
   // console.log(style, geojson);
-  const transformCoordinate = (fromEpsg, toEpsg, coordinate) => {
+  const transformCoordinate = (fromEpsgCode, toEpsgCode, coordinate) => {
+    if (fromEpsgCode === toEpsgCode) {
+      // console.log('transformCoordinate unchanged', fromEpsgCode, toEpsgCode);
+      return coordinate;
+    }
+
     if (Array.isArray(coordinate) && typeof coordinate[0] !== 'number') {
       if(typeof coordinate[0] === 'string') {
         for (let i = 0; i < coordinate.length; ++i) {
@@ -79,7 +84,7 @@ const KartOpenLayers = ({
         console.error('unknown coordinate', coordinate[0]);
       }
     }
-    return Proj4(fromEpsg, toEpsg, coordinate);
+    return Proj4(`EPSG:${fromEpsgCode}`, `EPSG:${toEpsgCode}`, coordinate);
   };
   
   const createStyle = (geojsonfeature) => {
@@ -132,9 +137,9 @@ const KartOpenLayers = ({
       if (features.length > 0) {
         // features.forEach(feature => markerSource.removeFeature(feature));
         // drawInteraction.abortDrawing();
-        removeMarker(coordinate);
+        this.removeMarker(coordinate);
       } else {
-        createMarker(coordinate);
+        this.createMarker(coordinate);
       }
     });
     // map.addInteraction(drawInteraction);
@@ -152,36 +157,31 @@ const KartOpenLayers = ({
     //   onClickPoint(latlng);
     // });
     if (mouseoverfeature) {
+      console.log('mouseover', mouseoverfeature.getProperties());
       const latlng = mouseoverfeature.get('latlng');
-      onClickPoint({
-        lng: latlng[0],
-        lat: latlng[1]
-      });
+      this.removeMarker(latlng);
     } else {
-      // const latlng = Proj4(epsg, 'EPSG:4326', coordinate);
-      const latlng = coordinate;
-      console.log('createMarker()', latlng);
+      console.log('createMarker()', coordinate);
       onAddPoint({
         latlng:
         {
-          lng: latlng[0],
-          lat: latlng[1]
+          lng: coordinate[0],
+          lat: coordinate[1]
         }
       });
     }
   };
   const removeMarker = (coordinate) => {
     // const latlng = Proj4(epsg, 'EPSG:4326', coordinate);
-    const latlng = coordinate;
-    console.log('removeMarker()', latlng);
+    console.log('removeMarker()', coordinate);
 
     // return L.circleMarker(latlng).on("click", e => {
     //   L.DomEvent.stopPropagation(e);
     //   onClickPoint(latlng);
     // });
     onClickPoint({
-      lng: latlng[0],
-      lat: latlng[1]
+      lng: coordinate[0],
+      lat: coordinate[1]
     });
   };
 
@@ -210,18 +210,21 @@ const KartOpenLayers = ({
   };
 
   const initializeMap = () => {
-    if (Proj4.defs(epsg) === undefined){
-      Proj4.defs(epsg, '+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs');
+    if (Proj4.defs(`EPSG:${config.mapEpsgCode}`) === undefined) {
+      Proj4.defs(`EPSG:${config.mapEpsgCode}`, config.mapEpsgDef);
     }
+    // if (Proj4.defs(`urn:ogc:def:crs:EPSG::${config.mapEpsgCode}`) === undefined){
+    //   Proj4.defs(`urn:ogc:def:crs:EPSG::${config.mapEpsgCode}`, '+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs');
+    // }
 
     const projection = new Projection({
-      code: epsg,
+      code: `EPSG:${config.mapEpsgCode}`,
       extent: extent,
       units: 'm'
     });
     addProjection(projection);
   
-    const mapExtent = [transformCoordinate('EPSG:4326', epsg, [mapBounds[0][1], mapBounds[0][0]]), transformCoordinate('EPSG:4326', epsg, [mapBounds[1][1], mapBounds[1][0]])].flat();
+    const mapExtent = [transformCoordinate(4326, config.mapEpsgCode, [mapBounds[0][1], mapBounds[0][0]]), transformCoordinate(4326, config.mapEpsgCode, [mapBounds[1][1], mapBounds[1][0]])].flat();
     // const mapExtent1 = [transformCoordinate('EPSG:4326', epsg, [mapBounds[0][1], mapBounds[0][0]]), transformCoordinate('EPSG:4326', epsg, [mapBounds[1][1], mapBounds[1][0]])].flat();
     // const mapExtent2 = [transformCoordinate('EPSG:4326', epsg, [mapBounds[1][1], mapBounds[1][0]]), transformCoordinate('EPSG:4326', epsg, [mapBounds[0][1], mapBounds[0][0]])].flat();
     // const mapExtent = [
@@ -236,7 +239,7 @@ const KartOpenLayers = ({
     const view = new View({
       // center: [270673.29, 7039762.80],
       center: center,
-      projection: epsg,
+      projection: `EPSG:${config.mapEpsgCode}`,
       maxZoom: numZoomLevels,
       zoom: initialZoom
     });
@@ -259,10 +262,10 @@ const KartOpenLayers = ({
             // layer: 'europa',
             layer: 'europa_forenklet',
             attributions: 'Kartverket',
-            matrixSet: epsg,
+            matrixSet: `EPSG:${config.mapEpsgCode}`,
             format: 'image/png',
             projection: projection,
-            tileGrid: wmtsTileGrid(numZoomLevels, epsg, projection),
+            tileGrid: wmtsTileGrid(numZoomLevels, `EPSG:${config.mapEpsgCode}`, projection),
             style: 'default',
             wrapX: true,
             crossOrigin: 'anonymous'
@@ -278,10 +281,10 @@ const KartOpenLayers = ({
             // layer: 'europa',
             layer: 'norges_grunnkart',
             attributions: 'Kartverket',
-            matrixSet: epsg,
+            matrixSet: `EPSG:${config.mapEpsgCode}`,
             format: 'image/png',
             projection: projection,
-            tileGrid: wmtsTileGrid(numZoomLevels, epsg, projection),
+            tileGrid: wmtsTileGrid(numZoomLevels, `EPSG:${config.mapEpsgCode}`, projection),
             style: 'default',
             wrapX: true,
             crossOrigin: 'anonymous'
@@ -303,8 +306,14 @@ const KartOpenLayers = ({
     map.on('click', (e) => {
       const coordinate = map.getCoordinateFromPixel(e.pixel);
       console.log('click', coordinate, e.originalEvent);
+      // e.preventDefault();
+      // e.originalEvent.preventDefault();
+      e.stopPropagation();
+      // e.originalEvent.stopPropagation();
 
-      createMarker(coordinate);
+      setTimeout(() => {
+        createMarker(coordinate);
+      }, 500);
     });
 
     map.on('pointermove', (e) => {
@@ -348,21 +357,27 @@ const KartOpenLayers = ({
   }
   areaSource.clear();
   markerSource.clear();
-  if (geojson && geojson.features) {
+  if (geojson && geojson.features && geojson.features.length > 0) {
+    let geojsonCrsCode = 4326;
+    if (geojson.crs) {
+      let geojsonCrsMatch = geojson.crs.properties.name.match(/\d+/);
+      if (geojsonCrsMatch) {
+        geojsonCrsCode = parseInt(geojsonCrsMatch[0]);
+      }
+    }
+    // console.log('geojsonCrs', geojsonCrsCode);
     geojson.features.forEach(geojsonfeature => {
       // console.log('feature', geojsonfeature);
       let geometry = null;
       const latlng = [...geojsonfeature.geometry.coordinates];
       // console.log(geojsonfeature.geometry.coordinates);
       if (geojsonfeature.geometry.type === 'Point') {
-        // const coordinate = transformCoordinate('EPSG:4326', epsg, geojsonfeature.geometry.coordinates);
-        const coordinate = geojsonfeature.geometry.coordinates;
+        const coordinate = transformCoordinate(geojsonCrsCode, config.mapEpsgCode, geojsonfeature.geometry.coordinates);
         geometry = new Point(coordinate);
       } else if (geojsonfeature.geometry.type === 'Polygon') {
         const coordinates = [[]];
         geojsonfeature.geometry.coordinates[0].forEach(coordinate => {
-          // coordinates[0].push(transformCoordinate('EPSG:4326', epsg, coordinate));
-          coordinates[0].push(coordinate);
+          coordinates[0].push(transformCoordinate(geojsonCrsCode, config.mapEpsgCode, coordinate));
         });
         geometry = new Polygon(coordinates);
         const polygonFeature = new Feature({

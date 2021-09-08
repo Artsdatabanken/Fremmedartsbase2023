@@ -153,7 +153,7 @@ const RedigerbartKart = ({
           left: 25,
           zIndex: 1200
         }}> 
-         <span>Merk at ruter (2x2km) basert på funn med dårlig geografisk presisjon (> 1000 m) er ekskludert. </span>
+         <span>Merk at ruter (2x2km) basert på funn med dårlig geografisk presisjon (&gt; 1000 m) er ekskludert. </span>
           {taxonId ? (
           <a
             href={`https://artskart.artsdatabanken.no/app/#map/427864,7623020/3/background/greyMap/filter/${artskartFilter(taxonId, kriterier)}`}

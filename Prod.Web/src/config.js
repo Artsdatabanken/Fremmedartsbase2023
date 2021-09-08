@@ -8,6 +8,7 @@ function apiUrl (anchor) {
       default:
         //return relPath   // This does not currently work because api is not relative to ("under") app 
         if ((window.location.href).indexOf("test.") > -1) {return 'https://fab4api.test.artsdatabanken.no'}
+        // return 'https://fab4api.test.artsdatabanken.no'
         return  process.env.NODE_ENV === 'development' ? 'http://localhost:25808' : 'https://fab4api.test.artsdatabanken.no'
     }
   }
@@ -130,6 +131,8 @@ const config = {
     getUrl: resource => config.apiUrl + "/api/" + resource,
     getSignalRUrl: apiUrl(window.location.hash) + "/messageHub",
     mapApiUrl: mapApiUrl(window.location.hash),
+    mapEpsgCode: 32633,
+    mapEpsgDef: "+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs",
     overlayMapUrl: overlayMapUrl(window.location.hash),
     referenceApiUrl: referenceApiUrl(window.location.hash),
     authconfig: authconfig,
