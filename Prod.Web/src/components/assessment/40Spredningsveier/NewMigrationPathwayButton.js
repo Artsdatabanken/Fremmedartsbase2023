@@ -77,13 +77,15 @@ export default class NewMigrationPathwayButton extends React.Component {
                     
                     {/*<Xcomp.StringEnum observableValue={[this.newMigrationPathway, 'codeItem']} mode="radio" codes={migrationPathway.children}/>*/}
             
-               {/*hideIntroductionSpread ? null :
-                <Xcomp.StringEnum label={mplabels.introductionSpread} observableValue={[this.newMigrationPathway, 'introductionSpread']} forceSync codes={mainCodes.migrationPathwayIntroductionSpread}/>*/}
+               {hideIntroductionSpread ? null :
+                <Xcomp.StringEnum label={mplabels.introductionSpread} className="intro" observableValue={[this.newMigrationPathway, 'introductionSpread']} 
+                //style={{display: 'none'}} 
+                forceSync codes={mainCodes.migrationPathwayIntroductionSpread}/>}
                 
                 <Xcomp.StringEnum label={mplabels.influenceFactor} observableValue={[this.newMigrationPathway, 'influenceFactor']} forceSync codes={mainCodes.migrationPathwayFrequency}/>
                 <Xcomp.StringEnum label={mplabels.magnitude} observableValue={[this.newMigrationPathway, 'magnitude']} forceSync codes={mainCodes.migrationPathwayAbundance}/>
                 <Xcomp.StringEnum label={mplabels.timeOfIncident} observableValue={[this.newMigrationPathway, 'timeOfIncident']} forceSync codes={mainCodes.migrationPathwayTime}/>
-               {/* <Xcomp.HtmlString label={mplabels.elaborateInformation} observableValue={[this.newMigrationPathway, 'elaborateInformation']} /> */}
+               {/*<Xcomp.HtmlString label={mplabels.elaborateInformation} observableValue={[this.newMigrationPathway, 'elaborateInformation']} /> */}
             </BsModal> :
                 null}
                 

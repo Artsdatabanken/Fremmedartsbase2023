@@ -100,7 +100,7 @@ const ObservableStringEnum = (props) => <Observer>{() => {
                                             disabled={context.readonly || disabled} />)}                                               
             </div>                
             :
-            <div>
+            <div className={className}>
                 {hasLabel ? <label htmlFor={prop}>{label}</label> : null}
                 <select className="form-control" 
                         // multiple={true} 
