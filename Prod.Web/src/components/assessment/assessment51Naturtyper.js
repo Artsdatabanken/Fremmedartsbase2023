@@ -153,16 +153,16 @@ export default class Assessment51Naturtyper extends React.Component {
                                 codes={koder.assessmentBackgrounds}
                    mode="check"/>*/}
                     <Criterion criterion={critF} mode="noheading"/>
-                    {/*hasImpactAbroad ? 
+                    {hasImpactAbroad ? 
                     <div>
                         <p>{ntLabels.natureAffectedAbroad}</p>
                         <Xcomp.HtmlString observableValue={[riskAssessment, 'natureAffectedAbroadF']}/>
 
-                        <Xcomp.Button primary onClick= {() => {
+                        {/*<Xcomp.Button primary onClick= {() => {
                             //console.log("Save assessment")
                                 appState.saveCurrentAssessment();
-                            }}>{labels.AppHeader.assessmentSave}</Xcomp.Button> 
-                        </div> : null*/}
+                            }}>{labels.AppHeader.assessmentSave}</Xcomp.Button> */}
+                        </div> : null}
                    
                     
                     {/*<div>
@@ -209,15 +209,15 @@ export default class Assessment51Naturtyper extends React.Component {
                                 codes={koder.assessmentBackgrounds}
                 mode="check"/> */}
                     <Criterion criterion={critG} mode="noheading"/>
-                    {/*hasImpactAbroad ? 
+                   { hasImpactAbroad ? 
                     <div>
                         <p>{ntLabels.natureAffectedAbroad}</p>
                         <Xcomp.HtmlString observableValue={[riskAssessment, 'natureAffectedAbroadG']}/>
-                        <Xcomp.Button primary onClick= {() => {
+                        {/*<Xcomp.Button primary onClick= {() => {
                             //console.log("Save assessment")
                                 appState.saveCurrentAssessment();
-                            }}>{labels.AppHeader.assessmentSave}</Xcomp.Button> 
-                        </div> : null */}
+                            }}>{labels.AppHeader.assessmentSave}</Xcomp.Button> */}
+                        </div> : null }
                     
                    {/* <div>
                         <span>{appState.evaluationContext.name}:

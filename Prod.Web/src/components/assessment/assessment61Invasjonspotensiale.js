@@ -105,7 +105,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
             crit51B.auto = false
             critC.auto = false
         })
-        const textAS = stringFormat(labels.AcritText.SelfProducing)
+        const textAS = riskAssessment.a1aresulttext
+        //stringFormat(labels.AcritText.SelfProducing)
         const textDK = stringFormat(labels.AcritText.DoorKnocker)
         const textASB = stringFormat(labels.BcritText.SelfProducing)
         const textDKB = stringFormat(labels.BcritText.DoorKnocker)

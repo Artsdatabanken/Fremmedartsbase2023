@@ -233,7 +233,7 @@
             {
                 "Id": "SpeciesStatus",
                 "Value": "potentialDoorknocker",
-                "Text": "Potensiell dørstokkart",
+                "Text": "Potensiell dørstokkart (skal horisontskannes)",
                 "Info": null,
                 "Children": null
             },       
