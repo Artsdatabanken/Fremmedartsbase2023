@@ -49,21 +49,22 @@ export default class Assessment52Utbredelse extends React.Component {
                             :
                             <div>
                                 {/* <span>{labels.goTo}</span> <Xcomp.Button primary>{labels.speciesMap}</Xcomp.Button> */}
-                                <ModalArtskart taxonId={appState.assessmentSavedVersion.taxonId} scientificNameId={appState.assessmentSavedVersion.evaluatedScientificNameId} labels={labels} utvalg={assessment.riskAssessment}/>
+                                <p><ModalArtskart taxonId={appState.assessmentSavedVersion.taxonId} scientificNameId={appState.assessmentSavedVersion.evaluatedScientificNameId} labels={labels} utvalg={assessment.riskAssessment}/></p>
                                 <p style={{marginBottom: '0'}}>Basert på periode:</p>
                                 <div style={{display: 'flex'}}>
-                                    <div style={{marginRight: '30px'}}>
+                                    <p style={{marginRight: '30px'}}>
                                         <p> f.o.m. år (t<sub>0</sub>)</p>
-                                        <Xcomp.Number                            
+                                        <Xcomp.Number
+                                            style={{marginLeft: 20}}
                                             observableValue={[assessment.riskAssessment, "AOOyear1"]}
                                             yearRange={true}/> 
-                                    </div>
-                                    <div>
+                                    </p>
+                                    <p>
                                         <p>t.o.m. år (t<sub>2</sub>)</p>
                                         <Xcomp.Number                            
-                                            observableValue={[assessment.riskAssessment, "AOOendyear2"]}
+                                            observableValue={[assessment.riskAssessment, "AOOyear2"]}
                                             yearRange={true}/> 
-                                    </div> 
+                                    </p> 
                                 </div>
                                 <div className="statusField">
                                     <div className="labels distribution">
