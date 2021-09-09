@@ -48,7 +48,7 @@ export default class selectAssessmentRow extends Component {
                 <td>
                     <span>{assessment.popularName}</span>
                 </td>
-                <td>{assessment.horizonDoScanning ? "Ja" : "Nei"}</td>
+                {/*<td>{assessment.horizonDoScanning ? "Ja" : "Nei"}</td>*/}
                 <td><span>{assessment.category}</span></td> 
                 <td><span>Kategori 2023</span></td>
                 <td>
@@ -121,7 +121,7 @@ const Status = ({isLocked, isLockedByMe, canEdit, isFinished, assessment, onLock
     return isFinished
     ? <span style={{color:"red"}}>{labels.SelectAssessment.assessmentClosed}&nbsp;</span>
     : isLocked
-    ? <><div>{labels.SelectAssessment.assessedBy}&nbsp;<b>{isLockedByMe ? "meg" : assessment.lockedForEditByUser}</b>
+    ? <><div>{labels.SelectAssessment.assessedBy}&nbsp;<b>{isLockedByMe ? "meg" : assessment.lockedForEditByUser}</b><br></br>
     { canUnlock &&<Xcomp.Button onClick={(e) => onUnlock(e)}>{labels.SelectAssessment.releaseAssessment}</Xcomp.Button>} </div> </>
     : canEdit
     ? <Xcomp.Button onClick={(e) => onLock(e)}>{labels.SelectAssessment.startAssessment}</Xcomp.Button>
