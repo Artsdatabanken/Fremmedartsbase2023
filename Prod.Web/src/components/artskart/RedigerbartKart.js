@@ -110,7 +110,8 @@ const RedigerbartKart = ({
             className={artskart.error || artskart.isLoading ? "" : "elevated"}
           >
             ✓ Overfør kun arealer til vurderingen
-        </Xcomp.Button>
+          </Xcomp.Button>
+          <br/>
           <Xcomp.Button
             disabled={artskart.error || artskart.isLoading}
             onClick={e => {
@@ -149,7 +150,7 @@ const RedigerbartKart = ({
       <div
         style={{
           position: "absolute",
-          top: 200,
+          top: 240,
           left: 25,
           zIndex: 1200
         }}> 
@@ -204,8 +205,11 @@ const RedigerbartKart = ({
 };
 
 const artskartFilter = (taxonId, kriterier) => {
-  const f = `{"TaxonIds":[${taxonId}],"IncludeSubTaxonIds":true,"Found":[2],"NotRecovered":[2],"UnsureId":[2],"Spontan":[2],"Style":1,"YearFrom":${kriterier.observationFromYear},"YearTo":${kriterier.observationToYear},"CoordinatePrecisionTo":"1000"}`
-  return encodeURIComponent(f)
+  let f = `{"TaxonIds":[${taxonId}],"IncludeSubTaxonIds":true,"Found":[2],"NotRecovered":[2],"UnsureId":[2],"Spontan":[2],"Style":1`;
+  if (kriterier.AOOyear1 !== undefined) f += `,"YearFrom":"${kriterier.AOOyear1}"`;
+  if (kriterier.AOOyear2 !== undefined) f += `,"YearTo":"${kriterier.AOOyear2}"`;
+  f += `,"CoordinatePrecisionTo":"1000"}`;
+  return encodeURIComponent(f);
 }
 
 // Manuelt lagt til 4 ruter og manuelt fjernet 1 rute
