@@ -106,10 +106,15 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
             critC.auto = false
         })
         const textAS = riskAssessment.a1aresulttext
+        console.log(textAS)
         //stringFormat(labels.AcritText.SelfProducing)
-        const textDK = stringFormat(labels.AcritText.DoorKnocker)
-        const textASB = stringFormat(labels.BcritText.SelfProducing)
-        const textDKB = stringFormat(labels.BcritText.DoorKnocker)
+        const textDK = riskAssessment.a1bresulttext
+        
+        //stringFormat(labels.AcritText.DoorKnocker)
+        const textASB = riskAssessment.b2aresulttext
+        //stringFormat(labels.BcritText.SelfProducing)
+        const textDKB = riskAssessment.b2bresulttext
+        //stringFormat(labels.BcritText.DoorKnocker)
 
         const nbsp = "\u00a0"
 
@@ -159,8 +164,11 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                         {assessment.alienSpeciesCategory == "DoorKnocker" ? 
                         <p>{textDK}
                            </p> :
-                        <p>{textAS}
-                            </p>}
+                        <p 
+                        /*dangerouslySetInnerHTML={{
+                            __html: riskAssessment.a1aresulttext
+                        }}*/
+                         >  {riskAssessment.a1aresulttext}</p>}
 
                         <Xcomp.StringEnum observableValue={[riskAssessment, "acceptOrAdjustCritA"]} mode="radio" codes={koder.AcceptOrAdjust}/>   
                                          
