@@ -65,7 +65,20 @@ export default class Vurdering34Spredningsveier extends React.Component {
        const migrationPathwayKoder = name == "Til innendørs- eller produksjonsareal" ? appState.spredningsveier.children.filter(child => child.name == "Import") :
                                   name == "Videre spredning i natur" ? appState.spredningsveier.children.filter(child => child.name == "Videre spredning" || child.name == "Spredning")
                                    : appState.spredningsveier.children.filter(child => child.name != "Import" && child.name != "Videre spredning")
-       
+
+        var elaborateInformation = ""
+
+        if (migrationPathways != []) {
+
+            for (var i = 0; i < migrationPathways.length; i++) {
+                if (migrationPathways[i].elaborateInformation != "") {
+                    elaborateInformation += migrationPathways[i].codeItem + ": " + migrationPathways[i].elaborateInformation + "."
+                }
+                
+            }
+        }
+        console.log (elaborateInformation)
+       riskAssessment.furtherInfoAboutImport = elaborateInformation
         //console.log(appState.spredningsveier.children)
         // const labels = fabModel.kodeLabels
         // console.log("''''''''''''''''''''''")
@@ -107,7 +120,9 @@ export default class Vurdering34Spredningsveier extends React.Component {
                 <Xcomp.HtmlString                            
                                 observableValue={[riskAssessment, "furtherInfoAboutImport"]}
                                 //label={labels.DEcrit.insecurity}
-                                placeholder={labels.Import.furtherInfoComment}
+                                
+                               // value={elaborateInformation}
+                                //placeholder={labels.Import.furtherInfoComment}
                                 />
             </fieldset>
         );

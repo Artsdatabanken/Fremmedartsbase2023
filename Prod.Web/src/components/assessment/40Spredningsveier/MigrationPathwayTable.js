@@ -139,10 +139,11 @@ class MigrationPathwayTableRow extends React.Component {
                 ? <td><Xcomp.StringEnum observableValue={[mp, 'timeOfIncident']}  codes={codes.migrationPathwayTime}/></td>
                 : <td>{timeOfIncidentLabel(mp.timeOfIncident)}</td>
                 }
-                {this.edit
+                <td></td>
+                {/*this.edit
                 ? <td><Xcomp.HtmlString observableValue={[mp, 'elaborateInformation']} /></td>
                 : <td dangerouslySetInnerHTML={{__html: elobTxt}} onClick={() => this.open = !this.open} />
-                }
+                */}
                 <td><Xcomp.Button disabled={this.context.readonly} xs onClick={() => this.edit = !this.edit}>{this.edit ? labels.General.ok : labels.General.edit}</Xcomp.Button>
                     <Xcomp.Button disabled={this.context.readonly} xs onClick={() => removeMigrationPathway(mp)}>{labels.General.remove}</Xcomp.Button></td>
                 <td></td>
