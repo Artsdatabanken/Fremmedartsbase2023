@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import KartOpenLayers from "./KartOpenLayers";
+import MapOpenLayers from "../map/MapOpenLayers";
 import Loading from "../Loading";
 import useArtskart from "./useArtskart";
 import * as Xcomp from "../observableComponents";
+
 const RedigerbartKart = ({
   taxonId,
   scientificNameId,
@@ -32,6 +33,8 @@ const RedigerbartKart = ({
     artskartAdded,
     artskartRemoved,
   });
+  // console.log('RedigerbartKart', artskart, observations, taxonId, scientificNameId);
+  
 
   const handleEditSelection = e => {
     setSelectionGeometry(e);
@@ -189,17 +192,15 @@ const RedigerbartKart = ({
             </div>
           )}
         </div>*/}
-
-      <div id='olmap' style={{height: '100%', cursor: 'crosshair'}}>
-        <KartOpenLayers
-          geojson={observations}
-          style={mapstyle}
-          onAddPoint={handleAddPoint}
-          onClickPoint={handleClickPoint}
-          onEdit={handleEditSelection}
-          mapBounds={mapBounds}
-        />
-      </div>
+      
+      <MapOpenLayers
+        geojson={observations}
+        style={mapstyle}
+        onAddPoint={handleAddPoint}
+        onClickPoint={handleClickPoint}
+        onEdit={handleEditSelection}
+        mapBounds={mapBounds}
+      />
     </div>
   );
 };

@@ -67,6 +67,7 @@ const KartOpenLayers = ({
   const initialZoom = 3.7;
   const extent = [-2500000.0, 3500000.0, 3045984.0, 9045984.0];
   let mouseoverfeature = null;
+  console.log('KartOpenLayers', geojson);
 
   // console.log(style, geojson);
   const transformCoordinate = (fromEpsgCode, toEpsgCode, coordinate) => {
@@ -210,6 +211,7 @@ const KartOpenLayers = ({
   };
 
   const initializeMap = () => {
+    console.log('KartOpenLayers initializeMap');
     if (Proj4.defs(`EPSG:${config.mapEpsgCode}`) === undefined) {
       Proj4.defs(`EPSG:${config.mapEpsgCode}`, config.mapEpsgDef);
     }
@@ -305,15 +307,15 @@ const KartOpenLayers = ({
 
     map.on('click', (e) => {
       const coordinate = map.getCoordinateFromPixel(e.pixel);
-      console.log('click', coordinate, e.originalEvent);
+      console.log('click', geojson, coordinate, e.originalEvent);
       // e.preventDefault();
       // e.originalEvent.preventDefault();
       e.stopPropagation();
       // e.originalEvent.stopPropagation();
 
-      setTimeout(() => {
-        createMarker(coordinate);
-      }, 500);
+      // setTimeout(() => {
+      createMarker(coordinate);
+      // }, 500);
     });
 
     map.on('pointermove', (e) => {
@@ -333,7 +335,6 @@ const KartOpenLayers = ({
     });
 
     // addInteraction();
-
     console.log('created a map');
   };
 
@@ -349,7 +350,9 @@ const KartOpenLayers = ({
 
   // if (redrawEveryTime > 1 && map === null){
   if (map === null){
-    initializeMap();
+    // setTimeout(() => {
+      initializeMap();
+    // }, 500);
   } else if (map) {
   //   let size = map.getSize();
   //   console.log('size', size);
@@ -405,6 +408,11 @@ const KartOpenLayers = ({
       }
     });
   }
+  console.log('KartOpenLayers - end', geojson);
+  setTimeout(() => {
+    console.log('KartOpenLayers - end', geojson);
+  }, 1000);
+
   return null;
 }
 
