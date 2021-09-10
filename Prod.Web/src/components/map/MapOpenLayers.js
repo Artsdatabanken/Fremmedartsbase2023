@@ -5,13 +5,13 @@ import MapContext from "./MapContext";
 import { Feature, Map, View } from 'ol';
 import { defaults as defaultControls, MousePosition } from 'ol/control';
 import { Draw, Snap } from 'ol/interaction';
-import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
+import { Image as ImageLayer, Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
 import { getTopLeft,getWidth } from 'ol/extent';
 import { Point, Polygon } from "ol/geom";
 import Projection from 'ol/proj/Projection';
 import Proj4 from 'proj4';
 import { addProjection } from 'ol/proj';
-import { OSM, Vector as VectorSource, WMTS as WmtsSource } from 'ol/source';
+import { OSM, Vector as VectorSource, WMTS as WmtsSource, Image as ImageSource, ImageArcGISRest, TileArcGISRest } from 'ol/source';
 import { Circle, Fill, Stroke, Style } from 'ol/style';
 import WMTSTileGrid from 'ol/tilegrid/WMTS';
 import config from '../../config';
@@ -250,6 +250,35 @@ const MapOpenLayers = ({
                         tileGrid: wmtsTileGrid(numZoomLevels, `EPSG:${config.mapEpsgCode}`, projection),
                         style: 'default',
                         wrapX: true,
+                        crossOrigin: 'anonymous'
+                    }),
+                    visible: true
+                }),
+                new TileLayer({
+                    name: 'Vannområder',
+                    opacity: 1,
+                    extent: extent,
+                    source: new TileArcGISRest({
+                    // source: new ImageArcGISRest({
+                    // source: new ImageSource({
+                        //?dpi=96
+                        // &transparent=true
+                        // &format=png32
+                        // &layers=show%3A2%2C9
+                        // &bbox=330256.5513175976%2C7799000.9230466%2C1693893.1359247793%2C9446371.75664828
+                        // &bboxSR=102100
+                        // &imageSR=102100
+                        // &size=1115%2C1347
+                        // &f=image
+                        url: 'https://vann-nett.no/arcgis/rest/services/WFD/AdministrativeOmraader/MapServer/',
+                        params: {
+                            // BBOXSR: config.mapEpsgCode,
+                            // IMAGESR: config.mapEpsgCode,
+                            LAYERS: 'show:2,9'
+                        },
+                        projection: projection,
+                        tileGrid: wmtsTileGrid(numZoomLevels, `EPSG:${config.mapEpsgCode}`, projection),
+                        // imageLoadFunction: (a,b,c) => {console.log('imageLoadFunction', a, b, c);},
                         crossOrigin: 'anonymous'
                     }),
                     visible: true
