@@ -4729,7 +4729,7 @@
                         {
                             "Id": null,
                             "Value": "colonizationInformation",
-                            "Text": "Hvor mange 2 km x 2 km-ruter kan arten kolonisere i løpet av en 10 års-periode basert på én introduksjon til norsk natur? (Anta at selve introduksjonen skjer i perioden f.o.m. i dag og inntil 40 år fram i tid).",
+                            "Text": "Hvor mange 2 km x 2 km-ruter kan arten kolonisere i løpet av en 10 års-periode basert på én introduksjon til norsk natur? Anta at selve introduksjonen skjer i perioden f.o.m. i dag og inntil 40 år fram i tid.",
                             "Info": null,
                             "Children": null
                         },

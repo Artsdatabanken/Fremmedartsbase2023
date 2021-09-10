@@ -23,7 +23,7 @@ export default class Assessment10Horisontskanning extends React.Component {
             
                <div className="filters">
                <h2>{labels.SpeciesStatus.hskanning}</h2>
-                    <h3>{labels.SpeciesStatus.establishmentPotential}</h3>                    
+                    <h4>{labels.SpeciesStatus.establishmentPotential}</h4>                    
                     <div className="scanning">
                         <p>{labels.SpeciesStatus.colonizationInformation}</p>
                             <Xcomp.StringEnum observableValue={[assessment, "horizonEstablismentPotential"]} mode="radio" codes={codes.HorizonEstablismentPotential}/>
