@@ -458,19 +458,20 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                             <div>
                                 
                                 <p style={{marginTop: "20px", marginBottom: "20px", paddingTop: "20px", borderTop:'1px solid gray'}} dangerouslySetInnerHTML={{__html: labels.BcritText.SelfProducing}}></p>
-                                <Xcomp.Radio value={'true'} observableValue={[assessment.riskAssessment, "manuallyAddArea"]} label={labels.Bcrit.useMap} />                    
+                               {/*   <Xcomp.Radio value={'true'} observableValue={[assessment.riskAssessment, "manuallyAddArea"]} label={labels.Bcrit.useMap} />                    
                                         { assessment.riskAssessment.manuallyAddArea == 'true' ? <Xcomp.Bool observableValue={[assessment.riskAssessment, "notUse2021AsEndYear"]} label={labels.Bcrit.notUse2021} /> : null } 
-                                <Xcomp.Radio value={'false'} observableValue={[assessment.riskAssessment, "manuallyAddArea"]} label={labels.Bcrit.addManually} />                    
+                                     <Xcomp.Radio value={'false'} observableValue={[assessment.riskAssessment, "manuallyAddArea"]} label={labels.Bcrit.addManually} />                    
                                         { assessment.riskAssessment.manuallyAddArea == 'false' ? <Xcomp.Bool observableValue={[assessment.riskAssessment, "notUse2021AsEndYear"]} label={labels.Bcrit.notUse2021} /> : null }
 
-                                       {/* <span style={{paddingLeft: '40px'}}>{labels.Bcrit.choose}</span> <Xcomp.Button primary >{labels.Bcrit.getFromMap}</Xcomp.Button>
+                                      <span style={{paddingLeft: '40px'}}>{labels.Bcrit.choose}</span> <Xcomp.Button primary >{labels.Bcrit.getFromMap}</Xcomp.Button>
                                             <span>{labels.Bcrit.addManually}</span>
 
                                             <Xcomp.Bool observableValue={[riskAssessment, "notUseExpansionInNorway"]} label={labels.BcritText.chooseNotToUseKnownArea} /> */}
 
                                         <table className="table BCritTable">
                                             <thead>
-                                                <tr>                                                
+                                                <tr>     
+                                                <th></th>                                           
                                                 <th dangerouslySetInnerHTML={{
                                                      __html: labels.Bcrit.fromYear }}></th>
                                                 <th dangerouslySetInnerHTML={{
@@ -481,6 +482,9 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             </thead>
                                             <tbody>
                                             <tr>
+                                                <td>
+                                                    <Xcomp.Button primary>{labels.DistributionHistory.speciesMap}</Xcomp.Button>
+                                                </td>
                                                 <td> <Xcomp.Number       
                                                         disabled                     
                                                         observableValue={[riskAssessment, "AOOyear1"]} 
@@ -501,6 +505,9 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                
                                             </tr>
                                             <tr>
+                                                <td>
+                                                    <Xcomp.Button primary>{labels.DistributionHistory.speciesMap}</Xcomp.Button>
+                                                </td>
                                                 <td> <Xcomp.Number   
                                                         disabled                         
                                                         //observableValue={[riskAssessment, "AOOyear2"]}
