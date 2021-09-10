@@ -321,8 +321,15 @@ export function getArtskartUrl(
     const excludeGbif = 
         kriterier.excludeGbif ? "&sourcedatabases[]=-40,-211" : "";   
     // let queryparams = `fromYear=${kriterier.observationFromYear}&toYear=${kriterier.observationToYear}&fromMonth=${kriterier.fromMonth}&toMonth=${kriterier.toMonth}&type=${type}&region=${region}`;
-    let queryparams = `fromYear=${kriterier.AOOyear1}&toYear=${kriterier.AOOendyear2}&fromMonth=${kriterier.fromMonth}&toMonth=${kriterier.toMonth}&type=${type}&region=${region}`;
-    queryparams += `&scientificNameId=${scientificNameId}${excludeGbif}&crs=EPSG:${config.mapEpsgCode}`;
+    let queryparams = `fromYear=${kriterier.AOOyear1}&toYear=${kriterier.AOOyear2}`;
+    // queryparams += `&fromMonth=${kriterier.fromMonth}`;
+    // queryparams += `&toMonth=${kriterier.toMonth}`;
+    if (type !== undefined) queryparams += `&type=${type}`;
+    if (region !== undefined) queryparams += `&region=${region}`;
+    queryparams += `&scientificNameId=${scientificNameId}`;
+    if (excludeGbif !== undefined) queryparams += `&excludeGbif=${excludeGbif}`;
+    queryparams += `&crs=EPSG:${config.mapEpsgCode}`;
+    // console.log('getArtskartUrl', queryparams);
     if (selectionGeometry)
       queryparams += `&geojsonPolygon=${
         JSON.parse(selectionGeometry).geometry.coordinates

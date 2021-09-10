@@ -49,7 +49,9 @@ export default class Assessment52Utbredelse extends React.Component {
                             :
                             <div>
                                 {/* <span>{labels.goTo}</span> <Xcomp.Button primary>{labels.speciesMap}</Xcomp.Button> */}
-                                <p><ModalArtskart taxonId={appState.assessmentSavedVersion.taxonId} scientificNameId={appState.assessmentSavedVersion.evaluatedScientificNameId} labels={labels} utvalg={assessment.riskAssessment}/></p>
+                                <div style={{marginLeft: 20}}>
+                                    <ModalArtskart taxonId={assessment.taxonId} scientificNameId={assessment.evaluatedScientificNameId} labels={labels} utvalg={assessment.riskAssessment}/>
+                                </div>
                                 <p style={{marginBottom: '0'}}>Basert på periode:</p>
                                 <div style={{display: 'flex'}}>
                                     <p style={{marginRight: '30px'}}>
