@@ -74,16 +74,6 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
 
         const existenceArea35 = assessment.CurrentExistenceAreaCalculated
 
-        const x1 = assessment.riskAssessment.AOOtotalBest
-        const x2 = assessment.riskAssessment.AOO50yrBest
-        const x3 = 0
-        const x4 = 0
-        const x5 = 0
-        const x6 = 0
-        const x7 = 0
-        const x8 = 0
-        const x9 = 0
-
         // const bassertpaValues = [
         //     {
         //         Value: "Counting",
@@ -450,6 +440,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                         riskAssessment.chosenSpreadYearlyIncrease == "b" && assessment.alienSpeciesCategory == "DoorKnocker" ?
                             <div>
                             <p>{textDKB}</p>
+                            <p dangerouslySetInnerHTML={{ __html: labels.BcritText.DoorKnocker}}></p>
                                               {/*  <p>{ntLabels.scoreSummary}</p>
                                                 <ScoreUnsure appState={appState}
                                                             critScores={koder.scoresB}
@@ -465,8 +456,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                             </div> : 
                             riskAssessment.chosenSpreadYearlyIncrease == "b" ?
                             <div>
-                                <p>{textASB} </p>
-
+                                
+                                <p style={{marginTop: "20px", marginBottom: "20px", paddingTop: "20px", borderTop:'1px solid gray'}} dangerouslySetInnerHTML={{__html: labels.BcritText.SelfProducing}}></p>
                                 <Xcomp.Radio value={'true'} observableValue={[assessment.riskAssessment, "manuallyAddArea"]} label={labels.Bcrit.useMap} />                    
                                         { assessment.riskAssessment.manuallyAddArea == 'true' ? <Xcomp.Bool observableValue={[assessment.riskAssessment, "notUse2021AsEndYear"]} label={labels.Bcrit.notUse2021} /> : null } 
                                 <Xcomp.Radio value={'false'} observableValue={[assessment.riskAssessment, "manuallyAddArea"]} label={labels.Bcrit.addManually} />                    
@@ -557,12 +548,13 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             </tr>
                                             </tbody>                            
                                                 </table>*/}
+                                                
                                     <p>{labels.Bcrit.commentOrDescription}</p>
                                     <Xcomp.HtmlString                            
                                                 observableValue={[riskAssessment, "commentOrDescription"]}                                                
                                             />                      
-                                    <p style={{marginTop: "20px", paddingTop: "20px", borderTop:'1px solid gray', fontWeight: 'bold', fontSize: 'larger'}}>{labels.BcritText.expansionSpeed}</p>
-
+                                    
+                                    <p>{textASB} </p>
                                    {/* <p>{ntLabels.scoreSummary}</p>
                                     <ScoreUnsure appState={appState}
                                                 critScores={koder.scoresB}

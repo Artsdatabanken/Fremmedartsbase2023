@@ -480,11 +480,7 @@
 
                 "text": "Arten er ikke fremmed i Norge",
                 "value": "notAlienInNorway"
-            },
-            {
-                "text": "Dørstokkart som ikke skal vurderes",
-                "value": "notAssessedDoorKnocker"
-            },
+            },           
             {
                 "text": "Potensiell dørstokkart som \n ikke skal vurderes",
                 "value": "notAssessedPotentialDoorKnocker"
@@ -5171,14 +5167,14 @@
                         {
                             "Id": null,
                             "Value": "SelfProducing",
-                            "Text": "Økningen i forekomstareal beregnes ut fra kjent forekomstareal ved to ulike år; år t1 og år t2 hvor t1 < t2. Forekomstarealet per år t1 (eller t2) er basert på alle inkluderte forekomster fra og med et valgt startår t0 til og med år t1 (eller t2). Startåret t0 er felles for t1 og t2 og samsvarer med startår valgt i Artskart under Utbredelse i Norge. For t2 er år 2021 satt som standard og kjent forekomstareal (km2) i 2021 er overført fra Utbredelse i Norge. Valgt periode (antall år mellom t1 og t2) skal ikke overstige 20 år og skal representere den perioden økningen er størst. Hvis tidsserien tillater det anbefales en periode på minimum 10 år.",
+                            "Text": "Økningen i forekomstareal beregnes ut fra kjent forekomstareal ved to ulike år; år t<sub>1</sub> og år t<sub>2</sub> hvor t<sub>1</sub> < t<sub>2</sub>. Forekomstarealet per år t<sub>1</sub> (eller t<sub>2</sub>) er basert på alle inkluderte forekomster fra og med et valgt startår t<sub>0</sub> til og med år t<sub>1</sub> (eller t<sub>2</sub>). Startåret t<sub>0</sub> er felles for t<sub>1</sub> og t<sub>2</sub> og samsvarer med startår valgt i Artskart under Utbredelse i Norge. For t<sub>2</sub> er år 2021 satt som standard og kjent forekomstareal (km<sup>2</sup>) i 2021 er overført fra Utbredelse i Norge. Valgt periode (antall år mellom t<sub>1</sub> og t<sub>2</sub>) skal ikke overstige 20 år og skal representere den perioden økningen er størst. Hvis tidsserien tillater det anbefales en periode på minimum 10 år.",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "DoorKnocker",
-                            "Text": "Basert på det beste anslaget på [X1] forekomster i løpet av 10 år og [X2] introduksjoner i samme tidsperiode er B-kriteriet skåra som [X3] (med usikkerhet: [X4-X5]). Dette innebærer at artens ekspansjonshastighet ligger mellom [X6 m/år og X7 m/år]. Dersom denne verdien framstår som urealistisk, bør antatt forekomstareal om 50 år (se Utbredelse i Norge) vurderes justert.",
+                            "Text": "Dersom denne verdien framstår som urealistisk, bør antatt forekomstareal om 50 år (se <i>Utbredelse i Norge</i>) vurderes justert.",
                             "Info": null,
                             "Children": null
                         },
