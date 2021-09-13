@@ -129,7 +129,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                 <div> 
                 <fieldset className="well">
                     <h2>{labels.Acrit.mainHeading}</h2>
-                    <h3>{crit51A.heading}</h3>
+                    <h4>{crit51A.heading}</h4>
                     <p>{crit51A.info}</p>
                     
                     {/* <Xcomp.StringEnum observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]} mode="radio" codes={codes.HorizonEstablismentPotential}/> */}
@@ -334,7 +334,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                 </fieldset>
                 <br/>
                 <fieldset className="well">
-                    <h3>{crit51B.heading}</h3>
+                    <h4>{crit51B.heading}</h4>
                     <p>{crit51B.info}</p>
 
                     <SelectableRadio
@@ -806,7 +806,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                 firstValue={"scoreC"}
                                 secondValue={"unsureC"}/>
                     */}
-                    <h3>{critC.heading}</h3>
+                    <h4>{critC.heading}</h4>
                     <p>{critC.info}</p>
                     <Criterion criterion={critC} mode="noheading" disabled={true} appState={appState}/>
                     </fieldset>

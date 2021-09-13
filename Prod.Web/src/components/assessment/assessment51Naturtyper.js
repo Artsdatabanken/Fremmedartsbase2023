@@ -122,7 +122,7 @@ export default class Assessment51Naturtyper extends React.Component {
                 </fieldset>  
 
                 <fieldset className="well">
-                    <h3>{ntLabels.critCHeading}</h3>
+                    <h4>{ntLabels.critCHeading}</h4>
                    {/* <p>{ntLabels.score}</p>
                     <ScoreUnsure appState={appState}
                                 critScores={koder.scoresC}
@@ -140,7 +140,7 @@ export default class Assessment51Naturtyper extends React.Component {
   
 
                 <fieldset className="well">
-                    <h3>{ntLabels.critFHeading}</h3>
+                    <h4>{ntLabels.critFHeading}</h4>
                    {/* <p>{critF.info}</p>
                     <p>{ntLabels.score}</p>*/}
                    {/* <ScoreUnsure appState={appState}
@@ -195,7 +195,7 @@ export default class Assessment51Naturtyper extends React.Component {
                 </fieldset>
                 
                 <fieldset className="well">
-                    <h3>{ntLabels.critGHeading}</h3>
+                    <h4>{ntLabels.critGHeading}</h4>
                     
                     {/*<p>{critG.info}</p>
                     <p>{ntLabels.score}</p>*/}
@@ -266,7 +266,7 @@ export default class Assessment51Naturtyper extends React.Component {
                 <br/> */}
                 
                 <fieldset className="well">
-                    <h3>{ntLabels.habitat}</h3>
+                    <h4>{ntLabels.habitat}</h4>
                     <p>{ntLabels.chooseHabitat}</p>
                     <HabitatTable
                         canRenderTable={canRenderTable}
@@ -284,7 +284,7 @@ export default class Assessment51Naturtyper extends React.Component {
                         </div> */}
                 </fieldset>
                 <fieldset className="well">
-                    <h3>{ntLabels.mainEcosystem}</h3>     
+                    <h4>{ntLabels.mainEcosystem}</h4>     
                     <Xcomp.MultiselectArray
                                 className="mainEcosystem"
                                 observableValue={[riskAssessment, 'hovedøkosystem']} 

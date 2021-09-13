@@ -70,8 +70,8 @@ export default class NewNaturetype extends React.Component {
             {/* {appState.language === "SV"
             ? <h3>Här kommer SVEN</h3> */}
             <div>
-                <h3>{superheader}</h3>
-                <h4>{header}</h4>
+                <h4>{superheader}</h4>
+                <p>{header}</p>
                 {nts
                     ? <NaturtypeSelector 
                         naturtyper={nts} 
@@ -83,7 +83,7 @@ export default class NewNaturetype extends React.Component {
             {appState.livsmediumEnabled
                 ? <div>
                     <br />
-                    <h4>{labels.NatureTypes.chooseLM}:</h4>
+                    <p>{labels.NatureTypes.chooseLM}:</p>
                     {lms
                         ? <NaturtypeSelector
                             naturtyper={lms}

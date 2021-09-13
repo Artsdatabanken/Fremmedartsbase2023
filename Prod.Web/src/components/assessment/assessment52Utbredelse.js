@@ -26,7 +26,7 @@ export default class Assessment52Utbredelse extends React.Component {
                 <div>
                     <fieldset className="well">
                         <h2>Utbredelse i Norge</h2>
-                        <h3>Forekomstareal</h3>
+                        <h4>Forekomstareal</h4>
                         {assessment.alienSpeciesCategory == "DoorKnocker" ? 
                         <div>
                             <div className="statusField">
@@ -111,7 +111,7 @@ export default class Assessment52Utbredelse extends React.Component {
                         </div>
                     </fieldset>
                 <fieldset className="well">
-                    <h3>Fylkesvis utbredelse</h3>
+                    <h4>Fylkesvis utbredelse</h4>
                     <b>[Her kommer det et kart]</b>
                     <p>Beskriv grunnlaget for anslagene (gjelder både forekomstareal og fylkesvis utbredelse)</p>
                     <Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'backgroundRegional']}/>
@@ -125,7 +125,7 @@ export default class Assessment52Utbredelse extends React.Component {
                     {/*<Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'historyAndAreaInNorway']}/>*/}
                 </fieldset>
                 <fieldset className="well">
-                    <h3>Annen informasjon</h3>
+                    <h4>Annen informasjon</h4>
                     <div className="statusField">
                         <div className="labels">
                             <p>Kjent utbredelsesområde (km<sup>2</sup>)</p>
@@ -145,7 +145,7 @@ export default class Assessment52Utbredelse extends React.Component {
                         
                 </fieldset>
                 <fieldset className="well" id="spreadHistoryDomestic">
-                    <h3>Utbredelseshistorikk 2018</h3>
+                    <h4>Utbredelseshistorikk 2018</h4>
                   {/* <h4>{labels.distributionHistory} {appState.evaluationContext.nameWithPreposition}</h4>*/}
                    <UtbredelseshistorikkInnenlands vurdering={assessment} fabModel={appState}/>
                    {assessment.spreadHistoryDomesticDocumentation

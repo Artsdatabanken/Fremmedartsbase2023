@@ -95,7 +95,7 @@ export default class Vurdering34Spredningsveier extends React.Component {
                {/* 
                     div style={{marginBottom: "30px"}}
                 { true || config.showPageHeaders ? <h4 style={{marginTop: "25px"}} >{labels.MigrationPathway.introductionSpread}</h4> : <br />} */}
-                <h3>{name}</h3>
+                <h4>{name}</h4>
                 <MPTable migrationPathways={migrationPathways} removeMigrationPathway={fjernSpredningsvei} showIntroductionSpread />
                 <hr/>
                 <div className="import">

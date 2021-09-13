@@ -283,7 +283,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                         }}/>                        
                 </fieldset>
                 <fieldset className="well">
-                            <h3>{critlabels.assessmentFiles}</h3>
+                            <h4>{critlabels.assessmentFiles}</h4>
                             <div>
                                 {/*<h2>Filer for {assessment.id}</h2>*/}
                                 <table className="table table-striped">
