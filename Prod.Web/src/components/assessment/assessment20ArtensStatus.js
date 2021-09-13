@@ -124,7 +124,7 @@ export default class Assessment20ArtensStatus extends React.Component {
                             <div>
                             <Xcomp.Radio value={"Connected"} observableValue={[assessment.riskAssessment, "connected"]} label={labels.SpeciesStatus.assessedWithAnotherTaxon}/>
                             {assessment.riskAssessment.connected == "Connected" && 
-                               <div style={{marginLeft: '20px'}}> <p style={{marginLeft: '30px'}}>{labels.SpeciesStatus.enterTaxonName}</p>
+                               <div style={{marginLeft: '20px'}}> <p style={{marginLeft: '30px', marginBottom: '10px'}}>{labels.SpeciesStatus.enterTaxonName}</p>
                                 <Xcomp.String observableValue={[assessment, 'connectedTaxon1']} className="connectedTaxon" placeholder={labels.General.searchSpecies} /> 
                                 
                                 {connectedTaxon1.taxonSearchResult.length > 0 ?
@@ -171,7 +171,7 @@ export default class Assessment20ArtensStatus extends React.Component {
                             
                             <Xcomp.Radio value={"Shared"} observableValue={[assessment.riskAssessment, "connected"]} label={labels.SpeciesStatus.notAssessedButShared} />
                             {assessment.riskAssessment.connected == "Shared" && 
-                                <div style={{marginLeft: '20px'}}><p style={{marginLeft: '30px'}}>{labels.SpeciesStatus.enterTaxonName}</p>
+                                <div style={{marginLeft: '20px'}}><p style={{marginLeft: '30px', marginBottom: '10px'}}>{labels.SpeciesStatus.enterTaxonName}</p>
                                 <Xcomp.String observableValue={[assessment, 'connectedTaxon2']} className="connectedTaxon" placeholder={labels.General.searchSpecies} /> 
                                 
                                 {connectedTaxon2.taxonSearchResult.length > 0 ?

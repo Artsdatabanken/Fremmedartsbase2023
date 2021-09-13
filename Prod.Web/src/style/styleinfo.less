@@ -293,6 +293,10 @@ div.fileUpload div .form-control {
   width: 60%;
 }
 
+div.fileUpload > h5 {
+  margin-left: 20px;
+}
+
 .intervall .form-control {
   width: 100%;
 }
@@ -345,6 +349,9 @@ table.formtable {
                 div.form-group {
                     margin-bottom: 0;
 
+                }
+                input.form-control {
+                  margin-left: 20px;
                 }
             }
             td:first-child, th:first-child {
@@ -1029,8 +1036,12 @@ ul.scores li.checkbox label input {
   padding-left: 50px;
 }
 
-.well div.checkbox {
-  margin-left: 50px;
+.well > div > div.checkbox, .well > div > ul > li.checkbox {
+  margin-left: 20px;
+}
+
+.well > div.checkbox > label {
+  margin-left: 30px;
 }
 
 .input_container {
@@ -1592,6 +1603,11 @@ fieldset.well {
 fieldset.well table, fieldset.well h2, fieldset.well h3, fieldset.well h4 {
   margin-top: 10px;
   margin-bottom: 20px;
+  margin-left: 10px;
+}
+
+.well button.pull-left {
+  margin-left: 10px;
 }
 
 //fieldset.well > div, 
@@ -1608,7 +1624,7 @@ fieldset.well button.dropdown-toggle{
 }
 
 fieldset.well .dropdown-menu ul {
-  padding-inline-start: 0;
+  padding-inline-start: 10px;
 }
 
 fieldset.well ul.mainEcosystem {
@@ -1656,7 +1672,7 @@ div.well > .btn-group {
 }
 
 ul.geoVar {
-    padding-inline-start: 0;
+    padding-inline-start: 20px;
 }
 
 ul.geoVar label {
@@ -1977,8 +1993,9 @@ table.ecologicalEffect .form-control, table.naturetype .form-control {
 }
 
 table.ecologicalEffect .btn-primary {
-  width: 65px;
-  padding: 0;
+  width: auto;
+  height: auto;
+  padding: 5px;
   margin: 0; 
 }
 
