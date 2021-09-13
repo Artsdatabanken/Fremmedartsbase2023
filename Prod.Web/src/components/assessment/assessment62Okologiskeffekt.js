@@ -288,10 +288,12 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                     <h2>{labels.DEcrit.mainHeading}</h2>
                     <h3>{labels.DEcrit.heading}</h3>
                     <p>Beskriv artens interaksjon(er) med stedegne arter. Det skal være sannsynlighetsovervekt for interaksjonen</p>
+                    <b>Legg til enkeltarter</b>
                     <SpeciesSpeciesTable list={riskAssessment.speciesSpeciesInteractions} newItem={this.newSSITS} addNewItem={this.addSSITS} koder={koder} labels={labels} showRedlist showKeyStoneSpecie showEffect showInteractionType showConfirmedOrAssumed/>
                     
                     
                     <hr/>
+                    <b>Legg til grupper av arter</b>
                     <SpeciesNaturetypeTable list={riskAssessment.speciesNaturetypeInteractions} newItem={this.newSNITS} addNewItem={this.addSNITS}  koder={koder} labels={labels} naturtypeLabels={appState.naturtypeLabels } showKeyStoneSpecie showEffect showInteractionType />
 
                     <hr/>
