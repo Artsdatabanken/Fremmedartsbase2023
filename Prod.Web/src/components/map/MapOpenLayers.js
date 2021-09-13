@@ -7,13 +7,14 @@ import { defaults as defaultControls, MousePosition } from 'ol/control';
 import { Draw, Snap } from 'ol/interaction';
 import { Image as ImageLayer, Tile as TileLayer, Vector as VectorLayer, VectorTile as VectorTileLayer } from 'ol/layer';
 import { getTopLeft,getWidth } from 'ol/extent';
-import { Point, Polygon } from "ol/geom";
+import { GeometryCollection, Point, Polygon } from "ol/geom";
+import { fromExtent } from 'ol/geom/Polygon';
 import Projection from 'ol/proj/Projection';
 import { GeoJSON as GeoJSONFormat } from 'ol/format';
 import Proj4 from 'proj4';
 import { addProjection } from 'ol/proj';
 import { OSM, Vector as VectorSource, VectorTile as VectorTileSource, WMTS as WmtsSource, Image as ImageSource, ImageArcGISRest, TileArcGISRest } from 'ol/source';
-import { Circle, Fill, Stroke, Style } from 'ol/style';
+import { Circle, Fill, Stroke, Style, Text } from 'ol/style';
 import WMTSTileGrid from 'ol/tilegrid/WMTS';
 import config from '../../config';
 
@@ -34,7 +35,8 @@ const MapOpenLayers = ({
     const extent = [-2500000.0, 3500000.0, 3045984.0, 9045984.0];
     let mapCenter = [];
     let mouseoverfeature = null;
-    let tilePolygon = null;
+    let defaultStyles;
+    let lastName;
 
     if (!mapBounds) mapBounds = [[57, 4.3], [71.5, 32.5]];
 
@@ -153,7 +155,7 @@ const MapOpenLayers = ({
             lat: coordinate[1]
         });
     };
-    const wmtsTileGrid = (numZoomLevels,matrixSet,projection) => {
+    const wmtsTileGrid = (numZoomLevels,matrixSet,projection, startLevel) => {
         let resolutions = new Array(numZoomLevels);
         let matrixIds = new Array(numZoomLevels);
         
@@ -162,8 +164,8 @@ const MapOpenLayers = ({
 
         let size = getWidth(projectionExtent) / 256;
         
-
-        for (let z = 0; z < numZoomLevels; ++z) {
+        startLevel = startLevel ? startLevel : 0;
+        for (let z = startLevel; z < (numZoomLevels + startLevel); ++z) {
             resolutions[z] = size / Math.pow(2, z);
             matrixIds[z] = matrixSet + ':' + z;
         }
@@ -175,6 +177,60 @@ const MapOpenLayers = ({
         });
 
         return wmtsTileGrid;
+    };
+
+    const createTextStyleFunction = (feature) => {
+        return new Text({
+            text: feature.get('Name') ? feature.get('Name') : 'noname'
+        });
+    };
+
+    const styleFunction = (feature, resolution) => {
+        defaultStyles = null;
+        if (!defaultStyles) {
+            const fill = new Fill({
+                color: 'rgba(255,255,255,0.4)',
+            });
+            const stroke = new Stroke({
+                color: '#3399CC',
+                width: 1.25,
+            });
+            defaultStyles = [
+                new Style({
+                    image: new Circle({
+                        fill: fill,
+                        stroke: stroke,
+                        radius: 5,
+                    }),
+                    fill: fill,
+                    stroke: stroke
+                }),
+            ];
+        }
+
+        defaultStyles[0].setText(createTextStyleFunction(feature));
+
+        return defaultStyles;
+            const fill = new Fill({
+            // color: 'rgba(255,0,0,.4)'
+            // opacity: .4
+        });
+        const stroke = new Stroke({
+            // color: 'rgba(255,0,0,.9)',
+            // opacity: .9,
+            // width: 1
+        });
+        // if (geojsonfeature.geometry.type === 'Point'){
+        return new Style({
+            // opacity: style4feature.opacity,
+            // image: new Circle({
+            //     fill: fill,
+            //     radius: style4feature.radius,
+            //     stroke: stroke
+            // }),
+            fill: fill,
+            stroke: stroke
+        });
     };
 
 	// on component mount
@@ -298,93 +354,52 @@ const MapOpenLayers = ({
                             geometryName: 'geometry'
                         }),
                         url: 'https://vann-nett.no/arcgis/rest/services/WFD/AdministrativeOmraader/MapServer/?x={x}&y={y}&z={z}',
-                        // tileGrid: wmtsTileGrid(numZoomLevels, `EPSG:${config.mapEpsgCode}`, projection),
-                        tileLoadFunction: (tile, tileUrl) => {
-                            // console.log('tileUrl', tile, tileUrl);
-                            
-                            tile.setLoader((ext, res, proj) => {
-                                let url = 'https://vann-nett.no/arcgis/rest/services/WFD/AdministrativeOmraader/MapServer/';
-                                url += '2';
-                                url += '/query';
-                                url += '?where=';
-                                url += '&text=';
-                                url += '&objectIds=';
-                                url += '&time=';
-                                url += `&geometry=${ext.join(',')}`;
-                                url += '&geometryType=esriGeometryEnvelope';
-                                url += `&inSR=${config.mapEpsgCode}`;
-                                url += '&spatialRel=esriSpatialRelIntersects';
-                                url += '&relationParam=';
-                                url += '&outFields=';
-                                url += '&returnGeometry=true';
-                                url += '&returnTrueCurves=true';
-                                url += '&maxAllowableOffset=';
-                                url += '&geometryPrecision=';
-                                url += `&outSR=${config.mapEpsgCode}`;
-                                url += '&returnIdsOnly=false';
-                                url += '&returnCountOnly=false';
-                                url += '&orderByFields=';
-                                url += '&groupByFieldsForStatistics=';
-                                url += '&outStatistics=';
-                                url += '&returnZ=false';
-                                url += '&returnM=false';
-                                url += '&gdbVersion=';
-                                url += '&returnDistinctValues=false';
-                                url += '&resultOffset=';
-                                url += '&resultRecordCount=';
-                                url += '&queryByDistance=';
-                                url += '&returnExtentsOnly=true';
-                                url += '&datumTransformation=';
-                                url += '&parameterValues=';
-                                url += '&rangeValues=';
-                                url += '&f=geojson';
-
-                                // console.log('loader', tile, ext, proj, url);
-                                // console.log('loader', tile, ext);
-
-                                const xhr = new XMLHttpRequest();
-                                xhr.open('GET', url);
-                                const onError = () => {
-                                    console.log('onError');
-                                }
-                                xhr.onerror = onError;
-                                xhr.onload = () => {
-                                    if (xhr.status == 200) {
-                                        // if (!tilePolygon) {
-                                        //     // console.log('tileExtent', tile.extent, ext);
-                                        //     const coords = [[ext[0], ext[1]], [ext[2], ext[1]], [ext[2], ext[3]], [ext[0], ext[3]], [ext[0], ext[1]]];
-                                        //     console.log('coords', coords);
-                                        //     tilePolygon = new Polygon(coords);
-                                        // } else {
-
-                                        // }
-                                        // console.log(tilePolygon);
-                                        // validate JSON
-                                        const json = JSON.parse(xhr.responseText);
-                                        if (json.error) {
-                                            tile.setFeatures([]);
-                                            return;
-                                        }
-                                        if (json.features && json.features.length === 0) {
-                                            tile.setFeatures([]);
-                                            return;
-                                        }
-                                        // console.log('json', json);
-                                        // console.log('validate', JSON.parse(xhr.responseText), xhr.responseText);
-
-                                        const format = tile.getFormat();
-                                        // const features = format.readFeatures(xhr.responseText);
-                                        const features = format.readFeatures(json);
-                                        tile.setFeatures(features);
-                                    } else {
-                                        onError();
-                                    }
-                                };
-                                xhr.send();
-                            });
+                        tileGrid: wmtsTileGrid(1, `EPSG:${config.mapEpsgCode}`, projection, Math.floor(mapZoom)),
+                        tileLoadFunction: async (tile) => {
+                            let url = 'https://vann-nett.no/arcgis/rest/services/WFD/AdministrativeOmraader/MapServer/';
+                            url += '2';
+                            url += '/query';
+                            url += '?where=';
+                            url += '&text=';
+                            url += '&objectIds=';
+                            url += '&time=';
+                            url += `&geometry=${tile.extent.join(',')}`;
+                            url += '&geometryType=esriGeometryEnvelope';
+                            url += `&inSR=${config.mapEpsgCode}`;
+                            url += '&spatialRel=esriSpatialRelIntersects';
+                            url += '&relationParam=';
+                            url += '&outFields=';
+                            url += '&returnGeometry=true';
+                            url += '&returnTrueCurves=true';
+                            url += '&maxAllowableOffset=';
+                            url += '&geometryPrecision=';
+                            url += `&outSR=${config.mapEpsgCode}`;
+                            url += '&returnIdsOnly=false';
+                            url += '&returnCountOnly=false';
+                            url += '&orderByFields=';
+                            url += '&groupByFieldsForStatistics=';
+                            url += '&outStatistics=';
+                            url += '&returnZ=false';
+                            url += '&returnM=false';
+                            url += '&gdbVersion=';
+                            url += '&returnDistinctValues=false';
+                            url += '&resultOffset=';
+                            url += '&resultRecordCount=';
+                            url += '&queryByDistance=';
+                            url += '&returnExtentsOnly=true';
+                            url += '&datumTransformation=';
+                            url += '&parameterValues=';
+                            url += '&rangeValues=';
+                            url += '&f=geojson';
+                            const response = await fetch(url);
+                            const data = await response.json();
+                            if (data.error) return;
+                            const format = tile.getFormat();
+                            tile.setFeatures(format.readFeatures(data));
                         },
                         crossOrigin: 'anonymous'
                     }),
+                    style: styleFunction,
                     visible: true
                 }),
                 areaLayer,
@@ -412,6 +427,22 @@ const MapOpenLayers = ({
             // setTimeout(() => {
             createMarker(coordinate);
             // }, 500);
+        });
+
+        mapObject.on('pointermove', (e) => {
+            const vatnLayer = mapObject.getLayers().getArray().filter((layer) => layer.get('name') === 'Vatn' ? true : false)[0];
+            if (!vatnLayer) return;
+            const pointerCoordinate = mapObject.getCoordinateFromPixel([e.pixel[0], e.pixel[1]]);
+            const vatnSource = vatnLayer.getSource();
+            if (!vatnSource) return;
+            const extent = [pointerCoordinate[0], pointerCoordinate[1], pointerCoordinate[0], pointerCoordinate[1]];
+            const vatn = vatnSource.getFeaturesInExtent(extent);
+            if (vatn && vatn.length > 0) {
+                const name = vatn[0].get('Name');
+                if (lastName === name) return;
+                lastName = name
+                console.log(lastName);
+            }
         });
 
         mapObject.on('pointermove', (e) => {
