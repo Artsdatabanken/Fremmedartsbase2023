@@ -369,7 +369,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             const k = r.bmetodkey
             const result = 
                 k === "B1" ? r.expansionSpeedInput
-                : k === "B2a" ? round(sqrt(r.AOOdarkfigureBest) * (sqrt(r.AOO2) - sqrt(r.AOO1)) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi))) 
+                : k === "B2a" ? r.AOOOyear2 === 0 || r.AOOyear1 === 0 ? 0 : round(sqrt(r.AOOdarkfigureBest) * (sqrt(r.AOO2) - sqrt(r.AOO1)) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi))) 
                 : k === "B2b" ? round(200 * (sqrt(r.AOO10yrBest / 4) - 1) / sqrt(pi))
                 : 0 // ?
             return roundToSignificantDecimals(result)
@@ -390,8 +390,11 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 : 0 // ?
             return roundToSignificantDecimals(result)
         },
-        get AOOdarkfigureBest() {
-            return roundToSignificantDecimals2(r.AOOtotalBest / r.AOOknown )
+        get AOOdarkfigureBest() {            
+            const result = 
+                r.AOOknown === null || r.AOOknown === 0 ? 0 
+                : roundToSignificantDecimals2(r.AOOtotalBest / r.AOOknown )
+            return result
         },
         get b2aresulttext() {
             return `Ekspansjonshastigheten er beregnet til ${r.expansionSpeed} m/år basert på økningen i artens forekomstareal i perioden fra ${r.AOOyear1} til ${r.AOOyear2} og et mørketall på ${r.AOOdarkfigureBest}.`
