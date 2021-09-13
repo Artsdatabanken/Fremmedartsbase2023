@@ -369,7 +369,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             const k = r.bmetodkey
             const result = 
                 k === "B1" ? r.expansionSpeedInput
-                : k === "B2a" ? r.AOOOyear2 === 0 || r.AOOOyear2 === null || r.AOOyear1 === 0 || r.AOOOyear1 === null ? 0 : round(sqrt(r.AOOdarkfigureBest) * (sqrt(r.AOO2) - sqrt(r.AOO1)) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi))) 
+                : k === "B2a" ? r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null ? 0 : round(sqrt(r.AOOdarkfigureBest) * (sqrt(r.AOO2) - sqrt(r.AOO1)) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi))) 
                 : k === "B2b" ? round(200 * (sqrt(r.AOO10yrBest / 4) - 1) / sqrt(pi))
                 : 0 // ?
             return roundToSignificantDecimals(result)
