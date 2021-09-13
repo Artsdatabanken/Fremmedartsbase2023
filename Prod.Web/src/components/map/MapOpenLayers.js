@@ -5,13 +5,14 @@ import MapContext from "./MapContext";
 import { Feature, Map, View } from 'ol';
 import { defaults as defaultControls, MousePosition } from 'ol/control';
 import { Draw, Snap } from 'ol/interaction';
-import { Image as ImageLayer, Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
+import { Image as ImageLayer, Tile as TileLayer, Vector as VectorLayer, VectorTile as VectorTileLayer } from 'ol/layer';
 import { getTopLeft,getWidth } from 'ol/extent';
 import { Point, Polygon } from "ol/geom";
 import Projection from 'ol/proj/Projection';
+import { GeoJSON as GeoJSONFormat } from 'ol/format';
 import Proj4 from 'proj4';
 import { addProjection } from 'ol/proj';
-import { OSM, Vector as VectorSource, WMTS as WmtsSource, Image as ImageSource, ImageArcGISRest, TileArcGISRest } from 'ol/source';
+import { OSM, Vector as VectorSource, VectorTile as VectorTileSource, WMTS as WmtsSource, Image as ImageSource, ImageArcGISRest, TileArcGISRest } from 'ol/source';
 import { Circle, Fill, Stroke, Style } from 'ol/style';
 import WMTSTileGrid from 'ol/tilegrid/WMTS';
 import config from '../../config';
@@ -33,6 +34,7 @@ const MapOpenLayers = ({
     const extent = [-2500000.0, 3500000.0, 3045984.0, 9045984.0];
     let mapCenter = [];
     let mouseoverfeature = null;
+    let tilePolygon = null;
 
     if (!mapBounds) mapBounds = [[57, 4.3], [71.5, 32.5]];
 
@@ -279,6 +281,108 @@ const MapOpenLayers = ({
                         projection: projection,
                         tileGrid: wmtsTileGrid(numZoomLevels, `EPSG:${config.mapEpsgCode}`, projection),
                         // imageLoadFunction: (a,b,c) => {console.log('imageLoadFunction', a, b, c);},
+                        crossOrigin: 'anonymous'
+                    }),
+                    visible: false
+                }),
+                new VectorTileLayer({
+                    name: 'Vatn',
+                    opacity: 1,
+                    renderMode: 'vector',
+                    source: new VectorTileSource({
+                        extent: extent,
+                        projection: projection,
+                        format: new GeoJSONFormat({
+                            dataProjection: projection,
+                            featureProjection: projection,
+                            geometryName: 'geometry'
+                        }),
+                        url: 'https://vann-nett.no/arcgis/rest/services/WFD/AdministrativeOmraader/MapServer/?x={x}&y={y}&z={z}',
+                        // tileGrid: wmtsTileGrid(numZoomLevels, `EPSG:${config.mapEpsgCode}`, projection),
+                        tileLoadFunction: (tile, tileUrl) => {
+                            // console.log('tileUrl', tile, tileUrl);
+                            
+                            tile.setLoader((ext, res, proj) => {
+                                let url = 'https://vann-nett.no/arcgis/rest/services/WFD/AdministrativeOmraader/MapServer/';
+                                url += '2';
+                                url += '/query';
+                                url += '?where=';
+                                url += '&text=';
+                                url += '&objectIds=';
+                                url += '&time=';
+                                url += `&geometry=${ext.join(',')}`;
+                                url += '&geometryType=esriGeometryEnvelope';
+                                url += `&inSR=${config.mapEpsgCode}`;
+                                url += '&spatialRel=esriSpatialRelIntersects';
+                                url += '&relationParam=';
+                                url += '&outFields=';
+                                url += '&returnGeometry=true';
+                                url += '&returnTrueCurves=true';
+                                url += '&maxAllowableOffset=';
+                                url += '&geometryPrecision=';
+                                url += `&outSR=${config.mapEpsgCode}`;
+                                url += '&returnIdsOnly=false';
+                                url += '&returnCountOnly=false';
+                                url += '&orderByFields=';
+                                url += '&groupByFieldsForStatistics=';
+                                url += '&outStatistics=';
+                                url += '&returnZ=false';
+                                url += '&returnM=false';
+                                url += '&gdbVersion=';
+                                url += '&returnDistinctValues=false';
+                                url += '&resultOffset=';
+                                url += '&resultRecordCount=';
+                                url += '&queryByDistance=';
+                                url += '&returnExtentsOnly=true';
+                                url += '&datumTransformation=';
+                                url += '&parameterValues=';
+                                url += '&rangeValues=';
+                                url += '&f=geojson';
+
+                                // console.log('loader', tile, ext, proj, url);
+                                // console.log('loader', tile, ext);
+
+                                const xhr = new XMLHttpRequest();
+                                xhr.open('GET', url);
+                                const onError = () => {
+                                    console.log('onError');
+                                }
+                                xhr.onerror = onError;
+                                xhr.onload = () => {
+                                    if (xhr.status == 200) {
+                                        // if (!tilePolygon) {
+                                        //     // console.log('tileExtent', tile.extent, ext);
+                                        //     const coords = [[ext[0], ext[1]], [ext[2], ext[1]], [ext[2], ext[3]], [ext[0], ext[3]], [ext[0], ext[1]]];
+                                        //     console.log('coords', coords);
+                                        //     tilePolygon = new Polygon(coords);
+                                        // } else {
+
+                                        // }
+                                        // console.log(tilePolygon);
+                                        // validate JSON
+                                        const json = JSON.parse(xhr.responseText);
+                                        if (json.error) {
+                                            tile.setFeatures([]);
+                                            return;
+                                        }
+                                        if (json.features && json.features.length === 0) {
+                                            tile.setFeatures([]);
+                                            return;
+                                        }
+                                        // console.log('json', json);
+                                        // console.log('validate', JSON.parse(xhr.responseText), xhr.responseText);
+
+                                        const format = tile.getFormat();
+                                        // const features = format.readFeatures(xhr.responseText);
+                                        const features = format.readFeatures(json);
+                                        tile.setFeatures(features);
+                                    } else {
+                                        onError();
+                                    }
+                                };
+                                xhr.send();
+                            });
+                        },
                         crossOrigin: 'anonymous'
                     }),
                     visible: true
