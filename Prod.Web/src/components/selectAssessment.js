@@ -145,6 +145,7 @@ export default class SelectAssessment extends Component {
                             </div> */}
                 </div>
                 {/*<h5 style={{fontWeight: 'bold', fontSize: '1rem'}}>Filtrer på:</h5>*/}
+                {appState.assessmentTypeFilter == "riskAssessment" &&
                 <div className="selectFilter" style={{marginBottom: '20px'}}>
                     <div>
                     <div className="filters"> 
@@ -262,10 +263,8 @@ export default class SelectAssessment extends Component {
                                 mode="check"/>
                     </div> */}
                     
-                </div>
-                
-                            
-
+                </div>                           
+                }
                     {/* <div className="filters" style={{marginRight: 0}}>
                         <span>Vurderingsstatus</span>
                         <div style={{display: 'flex'}}>

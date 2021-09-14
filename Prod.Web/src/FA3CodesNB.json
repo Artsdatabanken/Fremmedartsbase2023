@@ -384,7 +384,7 @@
                 "value": "FL2023"
             },
             {
-                "text": "Filtrer på påbegynt/ferdigstilt, kommentarer og vurderingsansvarlig i nåværende risikovurdering",
+                "text": "Filtrer på framdrift, kommentarer og vurderingsansvarlig i nåværende risikovurdering",
                 "value": "statusAndCommentFL2023"
             }
         ],
@@ -5480,7 +5480,7 @@
                         {
                             "Id": null,
                             "Value": "assessmentStatus",
-                            "Text": "Vurderingsstatus",
+                            "Text": "Framdrift",
                             "Info": null,
                             "Children": null
                         },
