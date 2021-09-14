@@ -62,7 +62,7 @@ export default class Assessment52Utbredelse extends React.Component {
                                             yearRange={true}/> 
                                     </p>
                                     <p>
-                                        <p>t.o.m. år (t<sub>2</sub>)</p>
+                                        <p>t.o.m. år</p>
                                         <Xcomp.Number                            
                                             observableValue={[assessment.riskAssessment, "AOOyear2"]}
                                             yearRange={true}/> 
