@@ -659,11 +659,24 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                 <hr/>
                             </div>
                         : null}
+
+                        <div>
+                       
+                            {riskAssessment.chosenSpreadYearlyIncrease != "SpreadYearlyIncreaseCalculatedExpansionSpeed" && riskAssessment.chosenSpreadYearlyIncrease != "" && 
+                                <div
+                                    style={{
+                                    display: "inline-block"
+                                    }}>
+                                <Criterion criterion={crit51B} appState={appState} disabled= {riskAssessment.chosenSpreadYearlyIncrease == "a" || assessment.alienSpeciesCategory == "DoorKnocker"} mode="noheading"/>
+                            </div>
+                            }
+                           
+                       </div>
                        <hr></hr>
                     {riskAssessment.activeSpreadYearlyLiteratureData
                         ? <div>
                                 <table className="formtable">
-                                <h4>{labels.BcritText.transferredFrom2018}</h4>
+                                <h5>{labels.BcritText.transferredFrom2018}</h5>
                                     <tbody>
                                         <tr>
                                             <th colSpan="4">
@@ -723,7 +736,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                         ? <div>
                                 <table className="formtable">
                                 {!riskAssessment.activeSpreadYearlyLiteratureData && 
-                                    <h4>{labels.BcritText.transferredFrom2018}</h4>
+                                    <h5>{labels.BcritText.transferredFrom2018}</h5>
                                 }
                                     <tbody>
                                         <tr>
@@ -779,24 +792,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                 <hr/>
                             </div>
                         : null}
-                    <div>
-                       {/* <div
-                            style={{
-                            marginRight: "90px",
-                            display: "inline-block"
-                        }}>
-                            
-                    </div>*/}
-                    {riskAssessment.chosenSpreadYearlyIncrease != "SpreadYearlyIncreaseCalculatedExpansionSpeed" && riskAssessment.chosenSpreadYearlyIncrease != "" && 
-                        <div
-                            style={{
-                            display: "inline-block"
-                         }}>
-                        <Criterion criterion={crit51B} appState={appState} disabled= {riskAssessment.chosenSpreadYearlyIncrease == "a" || assessment.alienSpeciesCategory == "DoorKnocker"} mode="noheading"/>
-                    </div>
-                    }
-                        
-                    </div>
+                    
                 </fieldset>
                 <fieldset className="well">
                     {/* {/*<h4>{critC.heading} &nbsp;{labels.Ccrit.transferedFrom4}</h4>
