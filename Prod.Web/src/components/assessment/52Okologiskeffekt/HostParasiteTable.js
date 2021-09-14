@@ -85,7 +85,8 @@ const HostParasiteTable = observer((props) =>
                 <Xcomp.MultiselectArray
                                 observableValue={[item, 'basisOfAssessment']} 
                                 codes={props.koder.assessmentBackgrounds}
-                                heading={labels.DEcrit.assessmentBasis}
+                                //heading={labels.DEcrit.assessmentBasis}
+                                hideUnchecked
                                 //mode="check"
                                 />
                 <Xcomp.MultiselectArray
@@ -191,7 +192,8 @@ const HostParasiteTable = observer((props) =>
                  <Xcomp.MultiselectArray
                                 observableValue={[props.newItem, 'basisOfAssessment']} 
                                 codes={props.koder.assessmentBackgrounds}
-                                heading={labels.DEcrit.assessmentBasis}
+                                hideUnchecked
+                                //heading={labels.DEcrit.assessmentBasis}
                                 //mode="check"
                                 />
                 <Xcomp.MultiselectArray

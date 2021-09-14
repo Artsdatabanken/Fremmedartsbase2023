@@ -482,7 +482,7 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                                          __html: this.linkify(referanse.formattedReference)
                                              }} style={{marginLeft: '30px', textIndent: '-30px'}}/> </td>
                                         <td><span>{referanse.type}</span> </td>
-                                        <td><Xcomp.Button className="btn btn-primary btn-xs" onClick={() => {this.removeReferenceFromAssessment(assessment, referanse.referenceId)}}>
+                                        <td><Xcomp.Button className="btn btn-primary btn-xs"  title={labels.General.remove} onClick={() => {this.removeReferenceFromAssessment(assessment, referanse.referenceId)}}>
                                             {/*{labels.references.remove}*/}
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                                  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
@@ -681,9 +681,9 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                             || this.valgtReferanse.url
                             ) 
                             } onClick={() => {this.lagreReferanse()}}>{"Lagre/oppdatere referanse"} </Xcomp.Button>
-                            <Xcomp.Button primary disabled={(!(this.valgtReferanse.allowDelete && this.valgtReferanse.id != 'NY_REFERANSE')) }                                       
+                            <Xcomp.Button primary disabled={(!(this.valgtReferanse.allowDelete && this.valgtReferanse.id != 'NY_REFERANSE')) }                                      
                                         onClick={() => {this.slettReferanse()}}>{"Slett referanse"}</Xcomp.Button>
-                            <Xcomp.Button primary disabled={!this.addNew}                                       
+                            <Xcomp.Button primary disabled={!this.addNew}                                        
                                         onClick={() => {this.leggTilReferanse(assessment, this.valgtReferanse)}}>{"Legg til"}</Xcomp.Button>
                     </div>}                    
                 </div>
