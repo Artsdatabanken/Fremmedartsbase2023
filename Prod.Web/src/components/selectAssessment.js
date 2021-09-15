@@ -161,7 +161,7 @@ export default class SelectAssessment extends Component {
                                 observableValue={[appState, 'filterType']} 
                                 codes={koder.filterTypes}
                                 mode="check"/>                        
-                    </div>
+                    
 
                     {appState.filterType.indexOf('FL2018') > -1 && <div className="nav_menu">                        
                         <div className="filters"><b>{labels.SelectAssessment.speciesStatus}</b>
@@ -254,6 +254,8 @@ export default class SelectAssessment extends Component {
                             <Xcomp.Bool observableValue={[appState, "kunMine"]} label={"Vis mine vurderinger"} />
                             <input type="button" className="btn btn-primary" value="Last ned fil" onClick={() => window.open(config.apiUrl + '/api/ExpertGroupAssessments/export/' + appState.expertgroup)}></input>
                     </div>  */}
+
+                    </div>
              </div>
                     {/* <div className="filters">
                         <span>Kategori</span>
@@ -270,7 +272,7 @@ export default class SelectAssessment extends Component {
                 <div className="selectFilter">
                     <div className="filters">
                         <Xcomp.Bool observableValue={[appState, "horizonFilters"]} label={"Filtrer på framdrift, grupper av potensielle dørstokkarter og vurderingsansvarlig"} />
-                    </div>
+                    
                 {appState.horizonFilters == true &&
                 <div className="nav_menu">
                         <div className="filters"><b>{labels.SelectAssessment.assessmentStatus}</b>   
@@ -302,8 +304,10 @@ export default class SelectAssessment extends Component {
                                 mode="check"/>
                         </div>
                     </div>}
+                    </div>
                     
                 </div>     }
+                
                     {/* <div className="filters" style={{marginRight: 0}}>
                         <span>Vurderingsstatus</span>
                         <div style={{display: 'flex'}}>
