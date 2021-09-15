@@ -389,6 +389,30 @@
             }
         ],
 
+        "potentialDoorKnockers": [
+            {
+                "text": "Ny potensiell dørstokkart",
+                "value": "newPotentialDoorKnocker"
+            },
+            {
+
+                "text": "Ikke risikovurdert (NR) i 2018",
+                "value": "NR2018"
+            }
+        ],
+
+        "notAssessedDoorKnocker": [
+            {
+                "text": "Ikke-vurdert dørstokkart",
+                "value": "notAssessedDoorKnocker"
+            },
+            {
+
+                "text": "Ingen etablering innen 50 år",
+                "value": "notEstablishedWithin50Years"
+            }
+        ],
+
         "newComments": [
             {
                 "text": "på mine",
@@ -5502,6 +5526,13 @@
                             "Id": null,
                             "Value": "ADBComments",
                             "Text": "Vurderinger med kommentarer fra ADB",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "PotentialDoorKnockers",
+                            "Text": "Grupper av potensielle dørstokkarter",
                             "Info": null,
                             "Children": null
                         },
