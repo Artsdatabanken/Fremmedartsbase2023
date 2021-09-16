@@ -3,7 +3,7 @@ import 'ol/ol.css';
 import styles from '../artskart/KartOpenLayers.css';
 import MapContext from "./MapContext";
 import { Feature, Map, View } from 'ol';
-import { defaults as defaultControls, MousePosition } from 'ol/control';
+import { Control, defaults as defaultControls, MousePosition } from 'ol/control';
 import { Draw, Snap } from 'ol/interaction';
 import { Image as ImageLayer, Tile as TileLayer, Vector as VectorLayer, VectorTile as VectorTileLayer } from 'ol/layer';
 import { getTopLeft,getWidth } from 'ol/extent';
@@ -26,9 +26,11 @@ const MapOpenLayers = ({
     mapBounds,
     geojson,
     onClickPoint,
+    onHover,
     onClosed
 }) => {
     const mapRef = useRef();
+    const [visibleLegend, setVisibleLegend] = useState(false);
 	const [map, setMap] = useState(null);
     const numZoomLevels = 18;
     const mapZoom = 3.7;
@@ -36,7 +38,9 @@ const MapOpenLayers = ({
     let mapCenter = [];
     let mouseoverfeature = null;
     let defaultStyles;
-    let lastName;
+    let hoverStyles;
+    let featureOver;
+    const vectorFeatures = {};
 
     if (!mapBounds) mapBounds = [[57, 4.3], [71.5, 32.5]];
 
@@ -181,67 +185,160 @@ const MapOpenLayers = ({
 
     const createTextStyleFunction = (feature) => {
         return new Text({
-            text: feature.get('Name') ? feature.get('Name') : 'noname'
+            text: feature.get('Name') ? feature.get('Name') : undefined
         });
     };
 
-    const styleFunction = (feature, resolution) => {
-        defaultStyles = null;
-        if (!defaultStyles) {
-            const fill = new Fill({
-                color: 'rgba(255,255,255,0.4)',
-            });
-            const stroke = new Stroke({
-                color: '#3399CC',
-                width: 1.25,
-            });
-            defaultStyles = [
-                new Style({
-                    image: new Circle({
-                        fill: fill,
-                        stroke: stroke,
-                        radius: 5,
-                    }),
-                    fill: fill,
-                    stroke: stroke
-                }),
-            ];
-        }
-
-        defaultStyles[0].setText(createTextStyleFunction(feature));
-
-        return defaultStyles;
-            const fill = new Fill({
-            // color: 'rgba(255,0,0,.4)'
-            // opacity: .4
-        });
+    const internalStyleFunction = (hover) => {
         const stroke = new Stroke({
-            // color: 'rgba(255,0,0,.9)',
-            // opacity: .9,
-            // width: 1
+            // color: hover ? '#66CCFF' : '#3399CC',
+            // color: hover ? '#1177AA' : '#3399CC',
+            color: '#3399CC',
+            width: hover ? 2 : 1.25,
         });
-        // if (geojsonfeature.geometry.type === 'Point'){
+        const fill = new Fill({
+            // color: 'rgba(255,255,255,0.4)'
+            color: hover ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0)'
+        });
         return new Style({
-            // opacity: style4feature.opacity,
-            // image: new Circle({
-            //     fill: fill,
-            //     radius: style4feature.radius,
-            //     stroke: stroke
-            // }),
+            image: new Circle({
+                fill: fill,
+                stroke: stroke,
+                radius: 5,
+            }),
             fill: fill,
             stroke: stroke
         });
     };
 
+    const hoverStyleFunction = (feature, resolution) => {
+        if (!hoverStyles) {
+            hoverStyles = internalStyleFunction(true);
+        }
+        const style = hoverStyles.clone();
+        style.setText(createTextStyleFunction(feature));
+        return [style];
+    };
+
+    const styleFunction = (feature, resolution) => {
+        if (!defaultStyles) {
+            defaultStyles = internalStyleFunction(false);
+        }
+        const defaultStyle = defaultStyles.clone();
+        defaultStyle.setText(createTextStyleFunction(feature, false));
+        return [defaultStyle];
+    };
+
+    const createWaterLayer = (name, layerid, projection) => {
+        const source = new VectorTileSource({
+            extent: extent,
+            projection: projection,
+            format: new GeoJSONFormat({
+                dataProjection: projection,
+                featureProjection: projection,
+                geometryName: 'geometry'
+            }),
+            url: 'https://vann-nett.no/arcgis/rest/services/WFD/AdministrativeOmraader/MapServer/?x={x}&y={y}&z={z}',
+            tileGrid: wmtsTileGrid(1, `EPSG:${config.mapEpsgCode}`, projection, Math.floor(mapZoom)),
+            tileLoadFunction: async (tile) => {
+                let url = 'https://vann-nett.no/arcgis/rest/services/WFD/AdministrativeOmraader/MapServer/';
+                url += layerid;
+                url += '/query';
+                url += '?where=';
+                url += '&text=';
+                url += '&objectIds=';
+                url += '&time=';
+                url += `&geometry=${tile.extent.join(',')}`;
+                url += '&geometryType=esriGeometryEnvelope';
+                url += `&inSR=${config.mapEpsgCode}`;
+                url += '&spatialRel=esriSpatialRelIntersects';
+                url += '&relationParam=';
+                url += '&outFields=';
+                url += '&returnGeometry=true';
+                url += '&returnTrueCurves=true';
+                url += '&maxAllowableOffset=';
+                url += '&geometryPrecision=';
+                url += `&outSR=${config.mapEpsgCode}`;
+                url += '&returnIdsOnly=false';
+                url += '&returnCountOnly=false';
+                url += '&orderByFields=';
+                url += '&groupByFieldsForStatistics=';
+                url += '&outStatistics=';
+                url += '&returnZ=false';
+                url += '&returnM=false';
+                url += '&gdbVersion=';
+                url += '&returnDistinctValues=false';
+                url += '&resultOffset=';
+                url += '&resultRecordCount=';
+                url += '&queryByDistance=';
+                url += '&returnExtentsOnly=true';
+                url += '&datumTransformation=';
+                url += '&parameterValues=';
+                url += '&rangeValues=';
+                url += '&f=geojson';
+                const response = await fetch(url);
+                const data = await response.json();
+                if (data.error) return;
+                const format = tile.getFormat();
+                const features = format.readFeatures(data);
+                if (!vectorFeatures[name]) vectorFeatures[name] = [];
+                features.forEach((feature) => {
+                    feature.set('_layerName', name);
+                    vectorFeatures[name].push(feature);
+                });
+                tile.setFeatures(features);
+            },
+            crossOrigin: 'anonymous'
+        });
+        const layer = new VectorTileLayer({
+            name: name,
+            opacity: 1,
+            renderMode: 'vector',
+            source: source,
+            style: styleFunction,
+            visible: true
+        });
+
+        // window.setInterval(() => {
+        //     layer.getSource().dispatchEvent('change');
+        //   }, 3000);
+
+        return layer;
+    }
+
+    const toggleLegend = () => {
+        console.log('visible', visibleLegend);
+        var visible = visibleLegend ? false : true;
+        console.log('visible', visible);
+        setVisibleLegend(visible);
+    }
+
 	// on component mount
 	useEffect(() => {
-        // console.log('MapOpenLayers - creating map');
+        // console.log('MapOpenLayers - creating map', visibleLegend);
         // let options = {
 		// 	view: new View({ zoom: 9, center: [-94.9065, 38.9884] }),
 		// 	layers: [],
 		// 	controls: [],
 		// 	overlays: []
 		// };
+
+        const mapControls = [];
+        // const customElement = document.createElement('div');
+        // customElement.className = 'ol-legend ol-unselectable ol-control';
+
+        // const toggleLegendButton = document.createElement('button');
+        // toggleLegendButton.type = 'button';
+        // // icons from https://www.w3schools.com/bootstrap/bootstrap_ref_comp_glyphs.asp
+        // // toggleLegendButton.className = 'ol-legend-button';
+        // // toggleLegendButton.style = 'background-position: center; background-repeat: no-repeat;';
+        // toggleLegendButton.innerHTML = '&vert;&vert;&vert;';
+        // // toggleLegendButton.title = resource.res().olLegendButton;
+        // toggleLegendButton.addEventListener('click', toggleLegend, false);
+        // toggleLegendButton.addEventListener('touchstart', toggleLegend, false);
+        // customElement.appendChild(toggleLegendButton);
+
+        // mapControls.push(new Control({ element: customElement }));
 
 		// let mapObject = new Map(options);
 		// mapObject.setTarget(mapRef.current);
@@ -264,6 +361,11 @@ const MapOpenLayers = ({
         //     maxZoom: numZoomLevels,
         //     zoom: initialZoom
         // });
+        const hoverLayer = new VectorLayer({
+            name: 'hoverLayer',
+            source: new VectorSource({wrapX: false, _text: false}),
+            style: hoverStyleFunction
+        });
         const areaLayer = new VectorLayer({name: 'areaLayer', source: new VectorSource({wrapX: false})});
         const markerLayer = new VectorLayer({name: 'markerLayer', source: new VectorSource({wrapX: false})});
         let options = {
@@ -341,74 +443,15 @@ const MapOpenLayers = ({
                     }),
                     visible: false
                 }),
-                new VectorTileLayer({
-                    name: 'Vatn',
-                    opacity: 1,
-                    renderMode: 'vector',
-                    source: new VectorTileSource({
-                        extent: extent,
-                        projection: projection,
-                        format: new GeoJSONFormat({
-                            dataProjection: projection,
-                            featureProjection: projection,
-                            geometryName: 'geometry'
-                        }),
-                        url: 'https://vann-nett.no/arcgis/rest/services/WFD/AdministrativeOmraader/MapServer/?x={x}&y={y}&z={z}',
-                        tileGrid: wmtsTileGrid(1, `EPSG:${config.mapEpsgCode}`, projection, Math.floor(mapZoom)),
-                        tileLoadFunction: async (tile) => {
-                            let url = 'https://vann-nett.no/arcgis/rest/services/WFD/AdministrativeOmraader/MapServer/';
-                            url += '2';
-                            url += '/query';
-                            url += '?where=';
-                            url += '&text=';
-                            url += '&objectIds=';
-                            url += '&time=';
-                            url += `&geometry=${tile.extent.join(',')}`;
-                            url += '&geometryType=esriGeometryEnvelope';
-                            url += `&inSR=${config.mapEpsgCode}`;
-                            url += '&spatialRel=esriSpatialRelIntersects';
-                            url += '&relationParam=';
-                            url += '&outFields=';
-                            url += '&returnGeometry=true';
-                            url += '&returnTrueCurves=true';
-                            url += '&maxAllowableOffset=';
-                            url += '&geometryPrecision=';
-                            url += `&outSR=${config.mapEpsgCode}`;
-                            url += '&returnIdsOnly=false';
-                            url += '&returnCountOnly=false';
-                            url += '&orderByFields=';
-                            url += '&groupByFieldsForStatistics=';
-                            url += '&outStatistics=';
-                            url += '&returnZ=false';
-                            url += '&returnM=false';
-                            url += '&gdbVersion=';
-                            url += '&returnDistinctValues=false';
-                            url += '&resultOffset=';
-                            url += '&resultRecordCount=';
-                            url += '&queryByDistance=';
-                            url += '&returnExtentsOnly=true';
-                            url += '&datumTransformation=';
-                            url += '&parameterValues=';
-                            url += '&rangeValues=';
-                            url += '&f=geojson';
-                            const response = await fetch(url);
-                            const data = await response.json();
-                            if (data.error) return;
-                            const format = tile.getFormat();
-                            tile.setFeatures(format.readFeatures(data));
-                        },
-                        crossOrigin: 'anonymous'
-                    }),
-                    style: styleFunction,
-                    visible: true
-                }),
+                createWaterLayer('Vatn', 2, projection),
+                hoverLayer,
                 areaLayer,
                 markerLayer
             ],
-            controls: defaultControls({attribution: false}),
+            controls: defaultControls({attribution: false}).extend(mapControls),
         };
 
-		let mapObject = new Map(options);
+        let mapObject = new Map(options);
 
         mapObject.setTarget(mapRef.current);
 		setMap(mapObject);
@@ -427,22 +470,6 @@ const MapOpenLayers = ({
             // setTimeout(() => {
             createMarker(coordinate);
             // }, 500);
-        });
-
-        mapObject.on('pointermove', (e) => {
-            const vatnLayer = mapObject.getLayers().getArray().filter((layer) => layer.get('name') === 'Vatn' ? true : false)[0];
-            if (!vatnLayer) return;
-            const pointerCoordinate = mapObject.getCoordinateFromPixel([e.pixel[0], e.pixel[1]]);
-            const vatnSource = vatnLayer.getSource();
-            if (!vatnSource) return;
-            const extent = [pointerCoordinate[0], pointerCoordinate[1], pointerCoordinate[0], pointerCoordinate[1]];
-            const vatn = vatnSource.getFeaturesInExtent(extent);
-            if (vatn && vatn.length > 0) {
-                const name = vatn[0].get('Name');
-                if (lastName === name) return;
-                lastName = name
-                console.log(lastName);
-            }
         });
 
         mapObject.on('pointermove', (e) => {
@@ -465,6 +492,43 @@ const MapOpenLayers = ({
                 mouseoverfeature = null;
                 mapObject.getTargetElement().style.cursor = 'crosshair';
                 // document.getElementById('olmap').style.cursor = 'crosshair';
+            }
+        });
+
+        mapObject.on('pointermove', (e) => {
+            const layerName = 'Vatn';
+            const vatnLayer = mapObject.getLayers().getArray().filter((layer) => layer.get('name') === layerName ? true : false)[0];
+            if (!vatnLayer) return;
+            const vatnSource = vatnLayer.getSource();
+            if (!vatnSource) return;
+
+            const vatn = [];
+            mapObject.forEachFeatureAtPixel(e.pixel, (f) => {
+                const featureLayerName = f.get('_layerName');
+                if (featureLayerName && featureLayerName === layerName) {
+                    vatn.push(f);
+                    return true;
+                }
+                return false;
+            });
+
+            const hoverSource = hoverLayer.getSource();
+            if (vatn && vatn.length > 0) {
+                const name = vatn[0].get('Name');
+                if (featureOver && featureOver.get('Name') === name) return;
+                if (featureOver) hoverSource.clear();
+
+                featureOver = vatn[0];
+                vectorFeatures[layerName]
+                .filter((feature) => feature.get('Name') === name)
+                .forEach((sourceFeature) => {
+                    hoverSource.addFeature(sourceFeature);
+                });
+                onHover(name);
+            } else if (vectorFeatures[layerName] && vectorFeatures[layerName].length > 0) {
+                featureOver = undefined;
+                hoverSource.clear();
+                onHover();
             }
         });
 
@@ -548,11 +612,14 @@ const MapOpenLayers = ({
     useEffect(drawUtbredelse, [geojson]);
 
 	return (
-		<MapContext.Provider value={{ map }}>
-			<div ref={mapRef} className="ol-map" style={{cursor: 'crosshair'}}>
-				{children}
-			</div>
-		</MapContext.Provider>
+        <div>
+            <div>{visibleLegend && (<span>{"tegnforklaring"}</span>)}</div>
+            <MapContext.Provider value={{ map }}>
+                <div ref={mapRef} className="ol-map" style={{cursor: 'crosshair'}}>
+                    {children}
+                </div>
+    		</MapContext.Provider>
+        </div>
 	)
 }
 

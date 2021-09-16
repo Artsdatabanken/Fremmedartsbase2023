@@ -63,7 +63,7 @@ const Artskartparametre = ({ utvalg }) => {
         observableValue={[utvalg, "includeObservations"]}
       /> */}
       <Xcomp.Bool
-        label="ekskluder GBIF"
+        label="ekskluder GBIF-noder utenfor Norge"
         observableValue={[utvalg, "excludeGbif"]}
       />
     </div>
