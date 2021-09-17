@@ -6826,7 +6826,7 @@
                         {
                             "Id": null,
                             "Value": "heading",
-                            "Text": "D- og E-kriteriet: Effekter på stedegne arter",
+                            "Text": "D- og E-kriteriet: Effekter på rødlistevurderte arter",
                             "Info": null,
                             "Children": null
                         },
@@ -6840,7 +6840,7 @@
                         {
                             "Id": null,
                             "Value": "localSpecies",
-                            "Text": "Stedegen art",
+                            "Text": "Rødlistevurdert art",
                             "Info": null,
                             "Children": null
                         },
@@ -6931,7 +6931,7 @@
                         {
                             "Id": null,
                             "Value": "localSpecie",
-                            "Text": "Stedegen art",
+                            "Text": "Rødlistevurdert art",
                             "Info": null,
                             "Children": null
                         },
