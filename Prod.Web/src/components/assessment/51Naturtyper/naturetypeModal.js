@@ -151,6 +151,12 @@ export default class NaturetypeModal extends React.Component {
                             codes={koder.affectedArea}
                             forceSync
                             observableDisabled={hsc[hscprop] || [this, "hasStateChange"]}/>
+                        <Xcomp.MultiselectArray
+                                label={ntLabels.assessmentBackground}
+                                observableValue={[this.editNaturtype, 'background']} 
+                                codes={koder.assessmentBackgrounds}
+                               // mode="check"
+                                />
                     </BsModal>
                 : null}
         </div>
