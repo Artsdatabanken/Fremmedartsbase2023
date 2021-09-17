@@ -49,11 +49,11 @@ export default class Assessment52Utbredelse extends React.Component {
                             :
                             <div>
                                 {/* <span>{labels.goTo}</span> <Xcomp.Button primary>{labels.speciesMap}</Xcomp.Button> */}
-                                <div style={{marginLeft: 20}}>
+                                <div style={{marginLeft: 20, marginBottom: 30}}>
                                     <ModalArtskart taxonId={assessment.taxonId} scientificNameId={assessment.evaluatedScientificNameId} labels={labels} utvalg={assessment.riskAssessment}/>
                                 </div>
                                 <p style={{marginBottom: '0'}}>Basert på periode:</p>
-                                <div style={{display: 'flex'}}>
+                                <div className="distributionYears">
                                     <p style={{marginRight: '30px'}}>
                                         <p> f.o.m. år (t<sub>0</sub>)</p>
                                         <Xcomp.Number
@@ -73,7 +73,7 @@ export default class Assessment52Utbredelse extends React.Component {
                                         <div style={{display: 'flex', marginTop: '40px', marginBottom: '150px'}}>
                                             <p>Forekomstareal <b>i dag</b> (km<sup>2</sup>):</p>
                                             {assessment.alienSpeciesCategory != "DoorKnocker" && 
-                                            <div style={{width: '100px', marginTop: '50px'}}>
+                                            <div style={{width: '100px', marginTop: '44px'}}>
                                                 <b>Kjent</b>
                                                 <Xcomp.Number       
                                                     //observableValue={[assessment.riskAssessment, "knownDistribution"]}                     
