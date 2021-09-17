@@ -318,23 +318,28 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             return roundToSignificantDecimals(r.lifetimeUpperQInput)
         },
         get lifetimeText() {
-            return r.adefaultBest === 0 ? "under 10&nbsp;år" 
-            : r.adefaultBest == 1 ? "mellom 10&nbsp;år og 60&nbsp;år" 
-            : r.adefaultBest == 2 ? "mellom 60&nbsp;år og 650&nbsp;år" 
-            : r.adefaultBest == 3 ? "over 650&nbsp;år" 
+            return r.adefaultBest === 0 ? "under 10 år" 
+            : r.adefaultBest == 1 ? "mellom 10 år og 60 år" 
+            : r.adefaultBest == 2 ? "mellom 60 år og 650 år" 
+            : r.adefaultBest == 3 ? "over 650 år" 
             : "%%%%%"
         },
         get extinctionText() {
-            return r.adefaultBest === 0 ? "over 97&nbsp;%" 
-            : r.adefaultBest == 1 ? "mellom 43&nbsp;% og 97&nbsp;%" 
-            : r.adefaultBest == 2 ? "mellom 60&nbsp;år og 650&nbsp;år" 
-            : r.adefaultBest == 3 ? "under 5&nbsp;%"
+            return r.adefaultBest === 0 ? "over 97%" 
+            : r.adefaultBest == 1 ? "mellom 43 og 97" 
+            : r.adefaultBest == 2 ? "mellom 60 år og 650 år" 
+            : r.adefaultBest == 3 ? "under 5%"
             : "%%#%%"
         },
         get a1aresulttext() {
-            return `Basert på de beste anslagene på forekomstareal i dag (${r.AOOtotalBest + 1}&nbsp;km²) og om 50&nbsp;år (${r.AOO50yrBest + 1}&nbsp;km²) er A-kriteriet forhåndsskåret som ${r.adefaultBest + 1} (med usikkerhet: ${r.adefaultLow}–${r.adefaultHigh}). Dette innebærer at artens mediane levetid ligger ${r.lifetimeText}, eller at sannsynligheten for utdøing innen 50&nbsp;år er på ${r.extinctionText}.`
+            //return `Basert på de beste anslagene på forekomstareal i dag (${r.AOOtotalBest + 1}&nbsp;km²) og om 50&nbsp;år (${r.AOO50yrBest + 1}&nbsp;km²) er A-kriteriet forhåndsskåret som ${r.adefaultBest + 1} (med usikkerhet: ${r.adefaultLow}–${r.adefaultHigh}). Dette innebærer at artens mediane levetid ligger ${r.lifetimeText}, eller at sannsynligheten for utdøing innen 50&nbsp;år er på ${r.extinctionText}.`
+            return `Basert på de beste anslagene på forekomstareal i dag (${r.AOOtotalBest + 1} km²) og om 50 år (${r.AOO50yrBest + 1} km²) er A-kriteriet forhåndsskåret som ${r.adefaultBest + 1} (med usikkerhet: ${r.adefaultLow}–${r.adefaultHigh}). Dette innebærer at artens mediane levetid ligger ${r.lifetimeText}, eller at sannsynligheten for utdøing innen 50 år er på ${r.extinctionText}.`
         },
 
+        get a1bresulttext() {
+            //return `Basert på de beste anslagene på forekomstareal i dag (${r.AOOtotalBest + 1}&nbsp;km²) og om 50&nbsp;år (${r.AOO50yrBest + 1}&nbsp;km²) er A-kriteriet forhåndsskåret som ${r.adefaultBest + 1} (med usikkerhet: ${r.adefaultLow}–${r.adefaultHigh}). Dette innebærer at artens mediane levetid ligger ${r.lifetimeText}, eller at sannsynligheten for utdøing innen 50&nbsp;år er på ${r.extinctionText}.`
+            return `Basert på det beste anslaget på ${r.AOOtotalBest + 1} forekomst(er) i løpet av 10 år og ${r.AOO50yrBest + 1} introduksjon(er) i samme tidsperiode er A-kriteriet forhåndsskåret som ${r.adefaultBest + 1} (med usikkerhet: ${r.adefaultLow}–${r.adefaultHigh}). Dette innebærer at artens mediane levetid ligger ${r.lifetimeText}, eller at sannsynligheten for utdøing innen 50 år er på ${r.extinctionText}.`
+        },
 
 
         get bscore() {
@@ -348,14 +353,14 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         get blow() {
             return r.expansionLowerQ >= 500 ? 3
             : r.expansionLowerQ >= 160 ? 2
-            : r.expansionLowerQ >= 50 ? max(1, bscore - 1)
-            : r.expansionLowerQ < 50 ? max(0, bscore - 1)
+            : r.expansionLowerQ >= 50 ? max(1, r.bscore - 1)
+            : r.expansionLowerQ < 50 ? max(0, r.bscore - 1)
             : 1 // ?
         },
 
         get bhigh() {
-            return r.expansionUpperQ >= 500 ? min(3, bscore + 1) 
-            : r.expansionUpperQ >= 160 ? min(2, bscore + 1) 
+            return r.expansionUpperQ >= 500 ? min(3, r.bscore + 1) 
+            : r.expansionUpperQ >= 160 ? min(2, r.bscore + 1) 
             : r.expansionUpperQ >= 50 ? 1 
             : r.expansionUpperQ < 50 ? 0
             : 1 // ?
@@ -364,7 +369,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             const k = r.bmetodkey
             const result = 
                 k === "B1" ? r.expansionSpeedInput
-                : k === "B2a" ? round(sqrt(r.AOOdarkfigureBest) * (sqrt(r.AOO2) - sqrt(r.AOO1)) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi))) 
+                : k === "B2a" ? r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null ? 0 : round(sqrt(r.AOOdarkfigureBest) * (sqrt(r.AOO2) - sqrt(r.AOO1)) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi))) 
                 : k === "B2b" ? round(200 * (sqrt(r.AOO10yrBest / 4) - 1) / sqrt(pi))
                 : 0 // ?
             return roundToSignificantDecimals(result)
@@ -385,20 +390,23 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 : 0 // ?
             return roundToSignificantDecimals(result)
         },
-        get AOOdarkfigureBest() {
-            return roundToSignificantDecimals2(r.AOOtotalBest / r.AOOknown )
+        get AOOdarkfigureBest() {            
+            const result = 
+                r.AOOknown === null || r.AOOknown === 0 ? 0 
+                : roundToSignificantDecimals2(r.AOOtotalBest / r.AOOknown )
+            return result
         },
         get b2aresulttext() {
-            return `Ekspansjonshastigheten er beregnet til ${r.expansionSpeed}&nbsp;m/år basert på økningen i artens forekomstareal i perioden fra ${r.AOOyear1} til ${r.AOOyear2} og et mørketall på ${r.AOOdarkfigureBest}.`
+            return `Ekspansjonshastigheten er beregnet til ${r.expansionSpeed} m/år basert på økningen i artens forekomstareal i perioden fra ${r.AOOyear1} til ${r.AOOyear2} og et mørketall på ${r.AOOdarkfigureBest}.`
         },
         get b2bresulttext() {
-            return `Basert på det beste anslaget på ${r.occurrences1Best} forekomster i løpet av 10&nbsp;år og ${r.introductionsBest} introduksjoner innen 50&nbsp;år er B-kriteriet skåret som ${r.bscore + 1} (med usikkerhet: ${blow + 1}–${r.bhigh + 1}). Dette innebærer at artens ekspansjonshastighet ligger ${r.expansionText} (beste anslag: ${r.expansionSpeed}&nbsp;m/år).`
+            return `Basert på det beste anslaget på ${r.occurrences1Best} forekomst(er) i løpet av 10 år og ${r.introductionsBest} introduksjon(er) innen 50 år er B-kriteriet skåret som ${r.bscore + 1} (med usikkerhet: ${r.blow + 1}–${r.bhigh + 1}). Dette innebærer at artens ekspansjonshastighet ligger ${r.expansionText} (beste anslag: ${r.expansionSpeed} m/år).`
         },
         get expansionText() {
-            return r.bscore === 0 ? "under 50&nbsp;m/år"
-                : r.bscore === 1 ? "mellom 50&nbsp;m/år og 160&nbsp;m/år"  
-                : r.bscore === 2 ? "mellom 160&nbsp;m/år og 500&nbsp;m/år" 
-                : r.bscore === 3 ? "over 500&nbsp;m/år" 
+            return r.bscore === 0 ? "under 50 m/år"
+                : r.bscore === 1 ? "mellom 50 m/år og 160 m/år"  
+                : r.bscore === 2 ? "mellom 160 m/år og 500 m/år" 
+                : r.bscore === 3 ? "over 500 m/år" 
                 : null
         }
 

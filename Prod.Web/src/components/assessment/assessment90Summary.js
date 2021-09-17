@@ -240,7 +240,7 @@ export default class Assessment90Summary extends Component {
                             observableValue={[assessment, 'kommentarer']} />
                     </div>
                     {<div className="form_category">
-                        <h3>Filvedlegg til vurderingen</h3>
+                        <h4>Filvedlegg til vurderingen</h4>
                        {/* <Documents/> */}
                     </div>}
                 </div>

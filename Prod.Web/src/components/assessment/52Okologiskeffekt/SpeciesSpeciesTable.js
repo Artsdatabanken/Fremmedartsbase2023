@@ -40,7 +40,9 @@ const SpeciesSpeciesTable = observer((props) =>
                 {props.showEffect ? <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.effect}} ></th> : null}
                 <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.scope}} ></th>
                 {props.showInteractionType ? <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.interactionType}} ></th> : null}
-                <th style={{textAlign: 'center'}} dangerouslySetInnerHTML={{ __html: labels.DEcrit.assessmentBasis}} ></th>
+                <th style={{textAlign: 'center'}} 
+                    dangerouslySetInnerHTML={{ __html: labels.DEcrit.assessmentBasis}}> 
+                    </th>
                 <th>&nbsp;</th>
                {/* <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.longDistanceEffect}} ></th>
                 {props.showConfirmedOrAssumed ? <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.documented}} ></th> : null}
@@ -66,23 +68,40 @@ const SpeciesSpeciesTable = observer((props) =>
                   {/*  <Xcomp.Bool observableValue={[item, 'effectLocalScale']} />*/}
                     </td>
                 {props.showInteractionType ? <td>
-                  {/* <Xcomp.StringEnum observableValue={[item, 'interactionType']} forceSync codes={props.koder.speciesSpeciesInteractionType} /> */}
-                    <Xcomp.MultiselectArray
+                  <Xcomp.StringEnum observableValue={[item, 'interactionType']}   
+                                    forceSync                                
+                                    codes={props.koder.speciesSpeciesInteractionType} />
+                    {/*<Xcomp.MultiselectArray
                                 observableValue={[item, 'interactionTypes']} 
-                                codes={props.koder.speciesSpeciesInteractionTypes}
-                    mode="check"/> 
+                    codes={props.koder.speciesSpeciesInteractionTypes}
+                    mode="check"/> */}
                     </td> : null}
                 <td>
                 <Xcomp.MultiselectArray
                                 observableValue={[item, 'basisOfAssessment']} 
                                 codes={props.koder.assessmentBackgrounds}
-                                mode="check"/>
+                                hideUnchecked
+                                //heading={props.koder.assessmentBackgrounds[0].text}
+                                //mode="check"
+                                />
+                <Xcomp.MultiselectArray
+                                observableValue={[item, 'basisOfAssessment']} 
+                                codes={props.koder.assessmentBackgrounds}
+                                mode="check"
+                                hideUnchecked/>
+                            
                     {/*<Xcomp.Bool observableValue={[item, 'longDistanceEffect']} />*/}
                     </td>
                 {/*{props.showConfirmedOrAssumed ? <td><Xcomp.Bool observableValue={[item, 'confirmedOrAssumed']} /></td> : null}
                 <td><Xcomp.Bool observableValue={[item, 'domesticOrAbroad']} stringBool="True,False" /></td> */}
 
-                <td><Xcomp.Button primary xs onClick={() => props.list.remove(item) }>{labels.General.delete}</Xcomp.Button></td>
+                <td><Xcomp.Button primary xs onClick={() => props.list.remove(item) }>
+                    {/*{labels.General.delete}*/}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                        </svg>
+                    </Xcomp.Button></td>
             </tr>
             )}
             <tr className="newRow">
@@ -156,11 +175,11 @@ const SpeciesSpeciesTable = observer((props) =>
                   {/*  <Xcomp.Bool observableValue={[props.newItem, 'effectLocalScale']} /> */}
                 </td>
                 {props.showInteractionType ? <td>
-                    <Xcomp.MultiselectArray
+                    {/* <Xcomp.MultiselectArray
                                 observableValue={[props.newItem, 'interactionTypes']} 
                                 codes={props.koder.speciesSpeciesInteractionTypes}
-                                mode="check"/>
-                   {/* <Xcomp.StringEnum observableValue={[props.newItem, 'interactionType']} forceSync codes={props.koder.speciesSpeciesInteractionType} />*/}
+                                mode="check"/>*/}
+                   <Xcomp.StringEnum observableValue={[props.newItem, 'interactionType']} forceSync codes={props.koder.speciesSpeciesInteractionType} />
                     
                     
                     </td> : null}
@@ -168,7 +187,49 @@ const SpeciesSpeciesTable = observer((props) =>
                 <Xcomp.MultiselectArray
                                 observableValue={[props.newItem, 'basisOfAssessment']} 
                                 codes={props.koder.assessmentBackgrounds}
-                                mode="check"/>
+                                hideUnchecked
+                                //heading={props.koder.assessmentBackgrounds[0].text}
+                                //mode="check"
+                                />
+                <Xcomp.MultiselectArray
+                                observableValue={[props.newItem, 'basisOfAssessment']} 
+                                codes={props.koder.assessmentBackgrounds}
+                                mode="check"
+                                hideUnchecked
+                                />
+
+                    {/*<div className="option" tabindex="0">
+                                <div class="row filter" style="margin: 0; padding-top: 5px" 
+                                //data-bind="click: function () {toggleArrow('svalbard', svalbardVisible)}"
+                                >
+                                    <span>@fbLabel("searchChooseArea")</span>
+                                    <span class="arrow_down" id="svalbard">
+                                        <img src="/Content/images/keyboard_arrow_down-24px.svg" alt="Arrow down"></img>
+                                    </span>
+                                </div>
+                                <div class="filter-group" style="cursor: pointer">
+                                    <ul style="padding-left: 0">
+                                        <li class="checkbox" style="margin-top: 0;" 
+                                        //data-bind="visible: svalbardFilter.indexOf('N') > -1 || svalbardVisible"
+                                        >
+                                            <label class="checkbox">
+                                                <input type="checkbox" name="vurderingsområde" value="N" 
+                                                //data-bind="checked: svalbardFilter" 
+                                                />Norge
+                                            </label>
+                                        </li>
+                                        <li class="checkbox" style="margin-top: 0;" 
+                                        //data-bind="visible: svalbardFilter.indexOf('S') > -1 || svalbardVisible"
+                                        >
+                                            <label class="checkbox">
+                                                <input type="checkbox" name="vurderingsområde" value="S" 
+                                                //data-bind="checked: svalbardFilter" 
+                                                />Svalbard
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>*/}
                     {/*<Xcomp.Bool observableValue={[props.newItem, 'longDistanceEffect']} />*/}
                 </td>
                {/* {props.showConfirmedOrAssumed ? <td><Xcomp.Bool observableValue={[props.newItem, 'confirmedOrAssumed']} /></td> : null}

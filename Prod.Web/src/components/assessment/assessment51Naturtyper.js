@@ -2,7 +2,7 @@ import config from '../../config';
 import React from 'react';
 import PropTypes from 'prop-types'
 import {observer, inject} from 'mobx-react';
-import {autorun, extendObservable, observable} from 'mobx';
+import {autorun, extendObservable, observable, action} from 'mobx';
 import * as Xcomp from './observableComponents';
 import Criterion from './criterion'
 import {getCriterion} from '../../utils'
@@ -24,19 +24,19 @@ export default class Assessment51Naturtyper extends React.Component {
         const {appState:{assessment}, appState} = this.props;
         
         // extendObservable(this, { })
-        this.addNaturtype = (nyNt) => {
+        this.addNaturtype = action((nyNt) => {
             assessment
                 .impactedNatureTypes
                 .push(nyNt)
-        }
-        this.addRedlistedNaturetype = (nyNt) => {
+        })
+        this.addRedlistedNaturetype = action((nyNt) => {
             assessment
                 .redlistedNatureTypes
                 .push(nyNt)
 
             // alert("add new redlisted nature type: " + nyNt.RedlistedNatureTypeName + " -
             // " + nyNt.Category)
-        }
+        })
     }
 
     render() {
@@ -65,11 +65,22 @@ export default class Assessment51Naturtyper extends React.Component {
         critG.auto = false
         const nts = appState.naturtyper
         const doms = appState.dominansSkog
+        var hasImpactAbroad = false 
+        if (assessment.impactedNatureTypes.length > 0) {
+            for (var i = 0; i < assessment.impactedNatureTypes.length; i++) {
+                if (assessment.impactedNatureTypes[i].background.indexOf("ObservationAbroad") > -1 || assessment.impactedNatureTypes[i].background.indexOf("WrittenDocumentationAbroad") > -1){
+                    hasImpactAbroad = true;
+                }
+            }
+        }
+
         const canRenderTable = !!appState.naturtypeLabels && (!!appState.dominansSkog || appState.language === "SV")
         return (
             <div>
+
               {/*  <h4>{ntLabels.colonizedAreaHeading}</h4>     */}     
-              <fieldset className="well">     
+              <fieldset className="well"> 
+              <h2>{ntLabels.heading}</h2>    
                 <NewNaturetype
                     appState={appState}
                     addNaturtype={this.addNaturtype}
@@ -78,6 +89,18 @@ export default class Assessment51Naturtyper extends React.Component {
                     header={ntLabels.chooseRL2018}
                     superheader={ntLabels.redListEffects}/> 
                 </fieldset>
+
+                {assessment.redlistedNatureTypes.length > 0 && <fieldset className="well">
+                <h4>
+                    Data fra tidligere vurdering (basert på Rødlista for naturtyper 2011 og NiN 1.0):
+                </h4>
+                <RedlistedNaturetypeTable
+                    naturetypes={assessment.redlistedNatureTypes}
+                    canRenderTable={canRenderTable}
+                    labels={labels}
+                    fabModel={appState}/>
+                </fieldset>}
+
                 <fieldset className="well">               
                <NewNaturetype
                     appState={appState}
@@ -129,12 +152,17 @@ export default class Assessment51Naturtyper extends React.Component {
                                 observableValue={[riskAssessment, 'backgroundF']} 
                                 codes={koder.assessmentBackgrounds}
                    mode="check"/>*/}
-
-                    {riskAssessment.backgroundF.indexOf("ObservationAbroad") > -1 || riskAssessment.backgroundF.indexOf("WrittenDocumentationAbroad") > -1 ? 
+                    <Criterion criterion={critF} mode="noheading"/>
+                    {hasImpactAbroad ? 
                     <div>
                         <p>{ntLabels.natureAffectedAbroad}</p>
                         <Xcomp.HtmlString observableValue={[riskAssessment, 'natureAffectedAbroadF']}/>
-                    </div> : null}
+
+                        {/*<Xcomp.Button primary onClick= {() => {
+                            //console.log("Save assessment")
+                                appState.saveCurrentAssessment();
+                            }}>{labels.AppHeader.assessmentSave}</Xcomp.Button> */}
+                        </div> : null}
                    
                     
                     {/*<div>
@@ -151,7 +179,7 @@ export default class Assessment51Naturtyper extends React.Component {
                             observableValue={[riskAssessment, 'threatenedNatureTypesAffectedDomesticDescription']}/>
                     </div>
                     <br/>*/}
-                    <Criterion criterion={critF} mode="noheading"/>
+                    
                     
                    {/* <div>
                         <span>{ntLabels.abroad}:
@@ -180,12 +208,16 @@ export default class Assessment51Naturtyper extends React.Component {
                                 observableValue={[riskAssessment, 'backgroundG']} 
                                 codes={koder.assessmentBackgrounds}
                 mode="check"/> */}
-
-                    {riskAssessment.backgroundG.indexOf("ObservationAbroad") > -1 || riskAssessment.backgroundG.indexOf("WrittenDocumentationAbroad") > -1 ? 
+                    <Criterion criterion={critG} mode="noheading"/>
+                   { hasImpactAbroad ? 
                     <div>
                         <p>{ntLabels.natureAffectedAbroad}</p>
                         <Xcomp.HtmlString observableValue={[riskAssessment, 'natureAffectedAbroadG']}/>
-                    </div> : null }
+                        {/*<Xcomp.Button primary onClick= {() => {
+                            //console.log("Save assessment")
+                                appState.saveCurrentAssessment();
+                            }}>{labels.AppHeader.assessmentSave}</Xcomp.Button> */}
+                        </div> : null }
                     
                    {/* <div>
                         <span>{appState.evaluationContext.name}:
@@ -201,7 +233,7 @@ export default class Assessment51Naturtyper extends React.Component {
                             observableValue={[riskAssessment, 'commonNatureTypesAffectedDomesticDescription']}/>
                     </div>
                    <br/> */}
-                    <Criterion criterion={critG} mode="noheading"/>
+                    
                     
                    {/* <div>
                         <span>{ntLabels.abroad}:
@@ -215,6 +247,7 @@ export default class Assessment51Naturtyper extends React.Component {
                             observableValue={[riskAssessment, 'commonNatureTypesAffectedAbroadDescription']}/>
                    </div>*/}
                 </fieldset>
+                
                 
               {/* <h4>{ntLabels.effectOnThreatenedNatureTypes }</h4>
                 <br/>
@@ -236,9 +269,9 @@ export default class Assessment51Naturtyper extends React.Component {
                     <h4>{ntLabels.habitat}</h4>
                     <p>{ntLabels.chooseHabitat}</p>
                     <HabitatTable
-                     canRenderTable={canRenderTable}
-                     labels={labels}
-                     appState={appState}/>
+                        canRenderTable={canRenderTable}
+                        labels={labels}
+                        appState={appState}/>
                    {/* <div>
                         <Xcomp.Bool
                             label={ntLabels.usesLivingSpeciesAsHabitat}

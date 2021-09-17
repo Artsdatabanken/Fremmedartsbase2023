@@ -25,6 +25,7 @@ const artskartStringToFeatures = (csvPoints, source) => {
 }
 
 const makeFeatures = (added, removed) => {
+  console.log('makeFeatures', added, removed);
   let features = [
     ...artskartStringToFeatures(added, 'add'),
     ...artskartStringToFeatures(removed, 'remove')
@@ -59,7 +60,10 @@ const useArtskart = ({
   const [status3] = useRestApi(urls.countylist, setCountylist);
   const status = Object.assign({}, status1, status2, status3);
 
+  console.log('useArtskart', observations);
+
   const handleAddPoint = e => {
+    console.log('handleAddPoint ', observations, observations.features.length, e.latlng);
     const { lng, lat } = e.latlng;
     const point = {
       geometry: {
@@ -76,15 +80,29 @@ const useArtskart = ({
     setObservations({ features });
   };
 
-  const isVeryCloseBy = (d1, d2) => Math.abs(d1 - d2) < 1e-5;
+  // const isVeryCloseByGeographic = (d1, d2) => Math.abs(d1 - d2) < 1e-5;
+  const isVeryCloseBy = (d1, d2) => Math.abs(d1 - d2) < 1000;
+  // const isVeryCloseBy = (d1, d2) => {
+  //   console.log('isVeryCloseBy', d1, d2, Math.abs(d1 - d2), Math.abs(d1 - d2) < 1000);
+  //   Math.abs(d1 - d2) < 1000;
+  // };
 
   const handleClickPoint = latlng => {
-    const newFeatures = observations.features.filter(f => {
+    console.log('handleClickPoint pre - count', observations, observations.features.length, latlng);
+    
+    const newFeatures = observations.features.filter((f) => {
+      console.log('handleClickPoint - feature', f);
       if (f.geometry.type !== "Point") return true;
       const coords = f.geometry.coordinates;
       if (!isVeryCloseBy(coords[0], latlng.lng)) return true;
+      console.log('remove feature (lng)', f);
       if (!isVeryCloseBy(coords[1], latlng.lat)) return true;
-      if (f.source === "add") return false;
+      console.log('remove feature (lat)', f);
+      if (f.source === "add") {
+        console.log('remove feature', f);
+        return false;
+      }
+      console.log('??', f.source);
       if (f.source === "remove") {
         f.source = "org";
         return true;
@@ -92,6 +110,7 @@ const useArtskart = ({
       if (f.source === "org") f.source = "remove";
       return true;
     });
+    console.log('handleClickPoint post - count', observations.features.length, latlng);
     setObservations({ features: newFeatures });
   };
   return [

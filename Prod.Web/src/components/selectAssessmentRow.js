@@ -41,15 +41,15 @@ export default class selectAssessmentRow extends Component {
             <tr
                 key={assessment.VurderingId}
                 onClick={() => this.props.onOpen(assessment)}>
-                <td>{isLocked && <span className='glyphicon glyphicon-lock' />}</td>
+                {/*<td>{isLocked && <span className='glyphicon glyphicon-lock'/>}</td>     */}           
                 <td>
                     <span>{assessment.scientificName}</span>
                 </td>
                 <td>
                     <span>{assessment.popularName}</span>
                 </td>
-                <td>Ja / Nei </td>
-                <td><span>{assessment.category}</span></td>
+                {/*<td>{assessment.horizonDoScanning ? "Ja" : "Nei"}</td>*/}
+                <td><span>{assessment.category}</span></td> 
                 <td><span>Kategori 2023</span></td>
                 <td>
                     <span>{assessment.lastUpdatedAt.substring(0, 10) + " av " + assessment.lastUpdatedBy}</span>
@@ -57,12 +57,12 @@ export default class selectAssessmentRow extends Component {
                 {/*<td>{isLocked && <span className='glyphicon glyphicon-lock'/>}</td> 
                 <td>&nbsp;{isLocked && <span className='glyphicon glyphicon-lock'/>}</td>          
                 
-                <td>&nbsp;{isLocked && <span className='glyphicon glyphicon-lock'/>}</td>*/}
-                <td style={{ width: '15%' }}>
-                    <p>Totalt: {totalComments}{assessment.commentOpen > 0 ? (' Nyeste:' + assessment.commentDate) : ''}</p>
-                    {assessment.commentOpen > 0 ? <p style={{ color: 'red' }}>Ubehandlet: {assessment.commentOpen}</p> : <p>Ubehandlet: {assessment.commentOpen}</p>}
-                </td>
-                <td style={{ color }}>
+                <td>&nbsp;{isLocked && <span className='glyphicon glyphicon-lock'/>}</td>*/}   
+                <td style={{width: '15%'}}>
+                    <p>{labels.SelectAssessment.total} {totalComments}{ assessment.commentOpen > 0 ? (' Nyeste:' + assessment.commentDate) : ''}</p>
+                   {assessment.commentOpen > 0 ? <p style={{color: 'red'}}>{labels.SelectAssessment.notSeen} {assessment.commentOpen}</p> : <p>{labels.SelectAssessment.notSeen} {assessment.commentOpen}</p>}
+                </td> 
+                <td style={{color}}>
                     <Status onLock={(e) => this.handleLock(e, assessment)}
                         onUnlock={(e) => this.handleUnlock(e, assessment)}
                         canEdit={canEdit}
@@ -119,12 +119,12 @@ export default class selectAssessmentRow extends Component {
 const Status = ({ isLocked, isLockedByMe, canEdit, isFinished, assessment, onLock, onUnlock, canUnlock, labels }) => {
     // console.log("------"+isLocked+ isLockedByMe+ canEdit+ isFinished +canUnlock )
     return isFinished
-        ? <span style={{ color: "red" }}>{labels.SelectAssessment.assessmentClosed}&nbsp;</span>
-        : isLocked
-            ? <><div>{labels.SelectAssessment.assessedBy}&nbsp;<b>{isLockedByMe ? "meg" : assessment.lockedForEditByUser}</b>
-                {canUnlock && <Xcomp.Button onClick={(e) => onUnlock(e)}>{labels.SelectAssessment.releaseAssessment}</Xcomp.Button>} </div> </>
-            : canEdit
-                ? <Xcomp.Button onClick={(e) => onLock(e)}>{labels.SelectAssessment.startAssessment}</Xcomp.Button>
-                : <span>lesetilgang</span>
+    ? <span style={{color:"red"}}>{labels.SelectAssessment.assessmentClosed}&nbsp;</span>
+    : isLocked
+    ? <><div>{labels.SelectAssessment.assessedBy}&nbsp;<b>{isLockedByMe ? "meg" : assessment.lockedForEditByUser}</b><br></br>
+    { canUnlock &&<Xcomp.Button onClick={(e) => onUnlock(e)}>{labels.SelectAssessment.releaseAssessment}</Xcomp.Button>} </div> </>
+    : canEdit
+    ? <Xcomp.Button onClick={(e) => onLock(e)}>{labels.SelectAssessment.startAssessment}</Xcomp.Button>
+    : <span>{labels.SelectAssessment.readOnly}</span>
 }
 

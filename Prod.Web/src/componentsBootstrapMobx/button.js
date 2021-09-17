@@ -10,7 +10,7 @@ export default function Button(props) {
     // nb: bootstrap has (extra) disabled atribute for all collors
     // bootstrap sizes: lg, "", sm, xs
     const context = UserContext.getContext();
-    const {onClick, primary, style, lg, sm, xs, disabled, alwaysEnabled, ariaLabel, className, href} = props;
+    const {onClick, primary, style, lg, sm, xs, disabled, alwaysEnabled, ariaLabel, className, title, href} = props;
     const colorStyle = primary ? " btn-primary" :
                         " btn-default"
     const sizeStyle = lg ? " btn-lg" :
@@ -29,7 +29,7 @@ export default function Button(props) {
     }
 
     return (href
-    ? <a className={classString} {...params} href={href} target="blank">{ props.children }</a>
-    : <button className={classString} {...params} style={style} onClick={onClick}>{ props.children }</button> 
+    ? <a className={classString} {...params} title={title} href={href} target="blank">{ props.children }</a>
+    : <button className={classString} {...params} style={style} title={title} onClick={onClick}>{ props.children }</button> 
     )
 }

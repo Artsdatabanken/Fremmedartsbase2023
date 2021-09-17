@@ -105,23 +105,27 @@ export default class Assessment20ArtensStatus extends React.Component {
                     ? <h3>{labels.critDocumentation.status}</h3>
                     : <br/>}            
                 <fieldset className="well">
-                    <b>{labels.SpeciesStatus.isAlienSpecies} </b>
+                    <h2>{labels.SpeciesStatus.statusHeading}</h2>
+                    <p>{labels.SpeciesStatus.isAlienSpecies} </p>
                     <p>{labels.SpeciesStatus.unsureIfAlien} </p>
                     <Xcomp.Radio value={'true'} observableValue={[assessment, "isAlienSpecies"]} label={labels.General.yes} />                    
-                    { assessment.isAlienSpecies == 'true' && assessment.alienSpeciesCategory != "DoorKnocker" ? <Xcomp.Bool observableValue={[assessment, "isRegionallyAlien"]} label={labels.SpeciesStatus.regionallyAlien} /> : null }
+                    { assessment.isAlienSpecies == 'true' && assessment.alienSpeciesCategory != "DoorKnocker" ? 
+                            <Xcomp.Bool observableValue={[assessment, "isRegionallyAlien"]} label={labels.SpeciesStatus.regionallyAlien} /> : null }
                     <Xcomp.Radio value={'false'} observableValue={[assessment, "isAlienSpecies"]} label={labels.General.no} />
                     <p>{labels.SpeciesStatus.unsureAlienDescription}</p>
                     <Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'isAlien']}/>
 
                     { assessment.isAlienSpecies == 'true' ?
                     <div> 
-                        <div className="statusField"><b>{labels.SpeciesStatus.connectedToAnotherTaxon} </b> <Xcomp.Bool observableValue={[assessment, "connectedToAnother"]} /></div>
+                        <div className="statusField">
+                            <p>{labels.SpeciesStatus.connectedToAnotherTaxon} </p> 
+                            <Xcomp.Bool observableValue={[assessment, "connectedToAnother"]} style={{marginTop: "20px"}}/></div>
                         { assessment.connectedToAnother == true ?
                             <div>
                             <Xcomp.Radio value={"Connected"} observableValue={[assessment.riskAssessment, "connected"]} label={labels.SpeciesStatus.assessedWithAnotherTaxon}/>
                             {assessment.riskAssessment.connected == "Connected" && 
-                               <div style={{marginLeft: '20px'}}> <p>{labels.SpeciesStatus.enterTaxonName}</p>
-                                <Xcomp.String observableValue={[assessment, 'connectedTaxon1']} placeholder={labels.General.searchSpecies} /> 
+                               <div style={{marginLeft: '20px'}}> <p style={{marginLeft: '30px', marginBottom: '10px'}}>{labels.SpeciesStatus.enterTaxonName}</p>
+                                <Xcomp.String observableValue={[assessment, 'connectedTaxon1']} className="connectedTaxon" placeholder={labels.General.searchSpecies} /> 
                                 
                                 {connectedTaxon1.taxonSearchResult.length > 0 ?
                                 <div className="speciesSearchList" style={{position: 'absolute', top: "36px", left:"-10px", backgroundColor: "#fcfcfc" }}>
@@ -167,8 +171,8 @@ export default class Assessment20ArtensStatus extends React.Component {
                             
                             <Xcomp.Radio value={"Shared"} observableValue={[assessment.riskAssessment, "connected"]} label={labels.SpeciesStatus.notAssessedButShared} />
                             {assessment.riskAssessment.connected == "Shared" && 
-                                <div style={{marginLeft: '20px'}}><p>{labels.SpeciesStatus.enterTaxonName}</p>
-                                <Xcomp.String observableValue={[assessment, 'connectedTaxon2']} placeholder={labels.General.searchSpecies} /> 
+                                <div style={{marginLeft: '20px'}}><p style={{marginLeft: '30px', marginBottom: '10px'}}>{labels.SpeciesStatus.enterTaxonName}</p>
+                                <Xcomp.String observableValue={[assessment, 'connectedTaxon2']} className="connectedTaxon" placeholder={labels.General.searchSpecies} /> 
                                 
                                 {connectedTaxon2.taxonSearchResult.length > 0 ?
                                 <div className="speciesSearchList" style={{position: 'absolute', top: "36px", left:"-10px", backgroundColor: "#fcfcfc" }}>
@@ -210,9 +214,9 @@ export default class Assessment20ArtensStatus extends React.Component {
                     { assessment.isAlienSpecies == 'true' && (assessment.connectedToAnother == false || assessment.connectedToAnother == null ) ? 
                      <div>
                      <div>
-                         <b>{labels.SpeciesStatus.isProductionSpecies}</b>                          
+                         <p>{labels.SpeciesStatus.isProductionSpecies}</p>                          
                          <Xcomp.StringEnum observableValue={[assessment, "productionSpecies"]} mode="radio" codes={codes.yesNo}/> </div>
-                         <b> {labels.SpeciesStatus.statusInNorway}</b>
+                         <p> {labels.SpeciesStatus.statusInNorway}</p>
                          <p>{labels.SpeciesStatus.highestCategoryPerToday}</p>
 
                          {assessment.alienSpeciesCategory == "DoorKnocker" ? assessment.productionSpecies == true ? 
@@ -250,7 +254,7 @@ export default class Assessment20ArtensStatus extends React.Component {
 
                         <p>{labels.SpeciesStatus.codesExplanation}</p>
                         <div>
-                            <b>{labels.SpeciesStatus.establishedBefore1800} </b>
+                            <p>{labels.SpeciesStatus.establishedBefore1800} </p>
                             <Xcomp.StringEnum observableValue={[assessment, "alienSpecieUncertainIfEstablishedBefore1800"]} mode="radio" codes={codes.yesNo}/>
                         </div>
                         
@@ -287,11 +291,11 @@ export default class Assessment20ArtensStatus extends React.Component {
                         assessment.speciesStatus != null && 
                         (assessment.connectedToAnother == false || assessment.connectedToAnother == null) ? 
                     <div>
-                        <h2>{labels.SpeciesStatus.conclusion}</h2>
+                        <h3>{labels.SpeciesStatus.conclusion}</h3>
                         <p>{labels.SpeciesStatus.willBeRiskAssessed}</p> 
                     </div> :
                      <div>
-                     <h2>{labels.SpeciesStatus.conclusion}</h2>
+                     <h3>{labels.SpeciesStatus.conclusion}</h3>
                      <p>{labels.SpeciesStatus.willNotBeRiskAssessed}</p> 
                  </div>
                  }

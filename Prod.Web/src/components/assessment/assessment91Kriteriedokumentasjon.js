@@ -55,13 +55,15 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
         return (
             <div>
                 {config.showPageHeaders
-                    ? <h3>{labels.critDocumentation.status}</h3>
+                    ? <h3>{critlabels.status}</h3>
                     : <br/>}
                     <div>
+                    
                     {/*<h3>{labels.critDocumentation.status}</h3>*/}
                    
                     {appState.skalVurderes ?
                         <fieldset className="well">
+                            <h2>{critlabels.heading}</h2>
                             <p>{critlabels.status}: {alienSpeciesCategoryLabel}</p>
                             <Risikomatrise
                                 labels={critlabels}
@@ -118,7 +120,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                         <Xcomp.HtmlString
                             observableValue={[riskAssessment, 'criteriaDocumentationSpeciesStatus']}
                             style={{
-                            width: 800,
+                            //width: 800,
                             height: 150,
                             maxHeight: 150
                         }}/>
@@ -128,7 +130,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                         <Xcomp.HtmlString
                             observableValue={[riskAssessment, 'criteriaDocumentationDomesticSpread']}
                             style={{
-                            width: 800,
+                            //width: 800,
                             height: 150,
                             maxHeight: 150
                         }}/>
@@ -139,7 +141,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                         <Xcomp.HtmlString
                             observableValue={[riskAssessment, 'criteriaDocumentationMigrationPathways']}
                             style={{
-                            width: 800,
+                            //width: 800,
                             height: 150,
                             maxHeight: 150
                         }}/>
@@ -164,7 +166,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                         <Xcomp.HtmlString
                             observableValue={[riskAssessment, 'criteriaDocumentationInvationPotential']}
                             style={{
-                            width: 800,
+                           // width: 800,
                             height: 150,
                             maxHeight: 150
                         }}/>
@@ -174,7 +176,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                         <Xcomp.HtmlString
                             observableValue={[riskAssessment, 'criteriaDocumentationEcoEffect']}
                             style={{
-                            width: 800,
+                            //width: 800,
                             height: 150,
                             maxHeight: 150
                         }}/>
@@ -185,7 +187,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                         <Xcomp.HtmlString
                             observableValue={[riskAssessment, 'criteriaDocumentation']}
                             style={{
-                            width: 800,
+                           // width: 800,
                             height: 150,
                             maxHeight: 150
                         }}/>
@@ -240,10 +242,10 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                     }} />
                 </div>*/}
                 <fieldset className="well">
-                    <h3>{labels.critDocumentation.reasonForChangeHeading}</h3>
-                        <p> {labels.critDocumentation.cat2023} {assessment.riskAssessment.riskLevelCode}</p>
-                        <p> {labels.critDocumentation.cat2018} {assessment.riskAssessment.riskLevelCode}</p>
-                        <p>{labels.critDocumentation.reasonForChange}</p> 
+                    <h3>{critlabels.reasonForChangeHeading}</h3>
+                        <p> {critlabels.cat2023} {assessment.riskAssessment.riskLevelCode}</p>
+                        <p> {critlabels.cat2018} {assessment.riskAssessment.riskLevelCode}</p>
+                        <p>{critlabels.reasonForChange}</p> 
                         <Xcomp.MultiselectArray
                                 observableValue={[assessment, 'reasonForChangeOfCategory']}                                 
                                 codes={koder.reasonsForCategoryChange}
@@ -271,25 +273,25 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                                         </li>                
                             ): null }</p>*/}
 
-                        <p>{labels.critDocumentation.detailedDescriptionOfTheReasons}</p>
+                        <p>{critlabels.detailedDescriptionOfTheReasons}</p>
                         <Xcomp.HtmlString
                             observableValue={[assessment, 'descriptionOfReasonsForChangeOfCategory']}
                             style={{
-                            width: 800,
+                           // width: 800,
                             height: 150,
                             maxHeight: 150
                         }}/>                        
                 </fieldset>
                 <fieldset className="well">
-                            <h3>Filvedlegg til vurderingen</h3>
+                            <h4>{critlabels.assessmentFiles}</h4>
                             <div>
                                 {/*<h2>Filer for {assessment.id}</h2>*/}
                                 <table className="table table-striped">
                                     <thead>
                                         <tr>
-                                            <th>Filomtale</th>
-                                            <th>Last ned</th>
-                                            <th>Slett vedlegg</th>
+                                            <th>{critlabels.fileDescription}</th>
+                                            <th>{critlabels.download}</th>
+                                            <th>{critlabels.removeFile}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -303,11 +305,10 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                                                             <a href={config.getUrl('document/getfile/' + item.id)} download={item.fileName} target="_blank" >{item.fileName}</a>
                                                         </td>
                                                         <td>
-                                                        <button className="btn btn-primary btn-xs" onClick={() => {this.deleteAttachments(item.id)}}>Slett</button>
+                                                        <button className="btn btn-primary btn-xs" onClick={() => {this.deleteAttachments(item.id)}}>{critlabels.remove}</button>
                                                         </td></tr>
                                                         )
-                                                })}
-                                        
+                                                })}                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -316,13 +317,12 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                                 />
                         </fieldset>
 
-                        <Xcomp.Button>Vis oppsummering</Xcomp.Button>
+                        <Xcomp.Button>{critlabels.showAssessmentSummary}</Xcomp.Button>
                         {assessment.vurderingsStatus != "finnished" ? 
                         <div>
-                            <p>Vurderingen er under arbeid.</p>
-                            <Xcomp.Button>Ferdigstill</Xcomp.Button>
-                         </div>: <p>Vurderingen er ferdigstilt.</p>}
-                       
+                            <p>{critlabels.assessmentUnderWork}</p>
+                            <Xcomp.Button>{critlabels.setComplete}</Xcomp.Button>
+                         </div>: <p>{critlabels.assessmentCompleted}</p>}                       
                 </div>
             </div>
         );

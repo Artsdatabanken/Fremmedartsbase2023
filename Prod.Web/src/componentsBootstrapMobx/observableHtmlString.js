@@ -118,7 +118,7 @@ export default class ObservableHtmlString extends React.Component {
 
         const style = {
             overflow: 'auto',
-            width: '100%',
+            //width: '100%',
             borderRadius: '0'
         }
         this.pasteTransform = clip => {

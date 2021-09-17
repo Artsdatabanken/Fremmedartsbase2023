@@ -29,8 +29,8 @@ export default class Vurdering34Spredningsveier extends React.Component {
     }
 
     @action saveMigrationPathway(vurdering, mp) {
-        const mps = vurdering.AssesmentVectors
-        const compstr = (mp) => ""+mp.CodeItem+mp.IntroductionSpread+mp.InfluenceFactor+mp.Magnitude+mp.TimeOfIncident
+        const mps = vurdering.assesmentVectors
+        const compstr = (mp) => ""+mp.codeItem+mp.introductionSpread+mp.influenceFactor+mp.magnitude+mp.timeOfIncident
         const newMp = compstr(mp)
         const existing = mps.filter(oldMp =>  compstr(oldMp) === newMp
         )
@@ -65,7 +65,20 @@ export default class Vurdering34Spredningsveier extends React.Component {
        const migrationPathwayKoder = name == "Til innendørs- eller produksjonsareal" ? appState.spredningsveier.children.filter(child => child.name == "Import") :
                                   name == "Videre spredning i natur" ? appState.spredningsveier.children.filter(child => child.name == "Videre spredning" || child.name == "Spredning")
                                    : appState.spredningsveier.children.filter(child => child.name != "Import" && child.name != "Videre spredning")
-       
+
+        var elaborateInformation = ""
+
+        if (migrationPathways != []) {
+
+            for (var i = 0; i < migrationPathways.length; i++) {
+                if (migrationPathways[i].elaborateInformation != "") {
+                    elaborateInformation += migrationPathways[i].codeItem + ": " + migrationPathways[i].elaborateInformation + "."
+                }
+                
+            }
+        }
+        console.log (elaborateInformation)
+       riskAssessment.furtherInfoAboutImport = elaborateInformation
         //console.log(appState.spredningsveier.children)
         // const labels = fabModel.kodeLabels
         // console.log("''''''''''''''''''''''")
@@ -77,9 +90,12 @@ export default class Vurdering34Spredningsveier extends React.Component {
 
         
         return(
-            <div>
-               {/* { true || config.showPageHeaders ? <h4 style={{marginTop: "25px"}} >{labels.MigrationPathway.introductionSpread}</h4> : <br />} */}
-                <h3>{name}</h3>
+            <fieldset className="well">
+                
+               {/* 
+                    div style={{marginBottom: "30px"}}
+                { true || config.showPageHeaders ? <h4 style={{marginTop: "25px"}} >{labels.MigrationPathway.introductionSpread}</h4> : <br />} */}
+                <h4>{name}</h4>
                 <MPTable migrationPathways={migrationPathways} removeMigrationPathway={fjernSpredningsvei} showIntroductionSpread />
                 <hr/>
                 <div className="import">
@@ -104,9 +120,11 @@ export default class Vurdering34Spredningsveier extends React.Component {
                 <Xcomp.HtmlString                            
                                 observableValue={[riskAssessment, "furtherInfoAboutImport"]}
                                 //label={labels.DEcrit.insecurity}
-                                placeholder={labels.Import.furtherInfoComment}
+                                
+                               // value={elaborateInformation}
+                                //placeholder={labels.Import.furtherInfoComment}
                                 />
-            </div>
+            </fieldset>
         );
     }
 }

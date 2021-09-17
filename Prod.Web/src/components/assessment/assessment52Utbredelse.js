@@ -26,7 +26,7 @@ export default class Assessment52Utbredelse extends React.Component {
                 <div>
                     <fieldset className="well">
                         <h2>Utbredelse i Norge</h2>
-                        <h3>Forekomstareal</h3>
+                        <h4>Forekomstareal</h4>
                         {assessment.alienSpeciesCategory == "DoorKnocker" ? 
                         <div>
                             <div className="statusField">
@@ -42,27 +42,31 @@ export default class Assessment52Utbredelse extends React.Component {
                             </div>
                             <div className="changedNature">
                                 <p>Andel av antatt forekomstareal i sterkt endra natur (%)</p>
-                                <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "speciesDistribution"]} codes={koder.KnownDistributionInNature}/> 
+                                {/* ToDo: Bug - speciesDistribution not found */}
+                                {/* <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "speciesDistribution"]} codes={koder.KnownDistributionInNature}/>  */}
                             </div>
                             </div>
                             :
                             <div>
                                 {/* <span>{labels.goTo}</span> <Xcomp.Button primary>{labels.speciesMap}</Xcomp.Button> */}
-                                <ModalArtskart taxonId={appState.assessmentSavedVersion.taxonId} scientificNameId={appState.assessmentSavedVersion.evaluatedScientificNameId} labels={labels}/>
+                                <div style={{marginLeft: 20}}>
+                                    <ModalArtskart taxonId={assessment.taxonId} scientificNameId={assessment.evaluatedScientificNameId} labels={labels} utvalg={assessment.riskAssessment}/>
+                                </div>
                                 <p style={{marginBottom: '0'}}>Basert på periode:</p>
                                 <div style={{display: 'flex'}}>
-                                    <div style={{marginRight: '30px'}}>
+                                    <p style={{marginRight: '30px'}}>
                                         <p> f.o.m. år (t<sub>0</sub>)</p>
-                                        <Xcomp.Number                            
+                                        <Xcomp.Number
+                                            style={{marginLeft: 20}}
                                             observableValue={[assessment.riskAssessment, "AOOyear1"]}
                                             yearRange={true}/> 
-                                    </div>
-                                    <div>
-                                        <p>t.o.m. år (t<sub>2</sub>)</p>
+                                    </p>
+                                    <p>
+                                        <p>t.o.m. år</p>
                                         <Xcomp.Number                            
-                                            observableValue={[assessment.riskAssessment, "AOOendyear2"]}
+                                            observableValue={[assessment.riskAssessment, "AOOyear2"]}
                                             yearRange={true}/> 
-                                    </div> 
+                                    </p> 
                                 </div>
                                 <div className="statusField">
                                     <div className="labels distribution">
@@ -71,8 +75,9 @@ export default class Assessment52Utbredelse extends React.Component {
                                             {assessment.alienSpeciesCategory != "DoorKnocker" && 
                                             <div style={{width: '100px', marginTop: '50px'}}>
                                                 <b>Kjent</b>
-                                                <Xcomp.Number                            
-                                                    observableValue={[assessment.riskAssessment, "knownDistribution"]}
+                                                <Xcomp.Number       
+                                                    //observableValue={[assessment.riskAssessment, "knownDistribution"]}                     
+                                                    observableValue={[assessment.riskAssessment, "AOO2"]}
                                                     /> 
                                             </div>
                                             }
@@ -85,11 +90,13 @@ export default class Assessment52Utbredelse extends React.Component {
                                 </div>
                                 <div className="changedNature">
                                     <p>Andel av kjent forekomstareal i sterkt endra natur (%) </p>
-                                    <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "speciesDistribution"]} codes={koder.KnownDistributionInNature}/>
+                                    {/* ToDo: Bug - speciesDistribution not found */}
+                                    {/* <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "speciesDistribution"]} codes={koder.KnownDistributionInNature}/> */}
                                 </div>
                                 <div style={{marginTop: '50px'}}>
                                     <p>Med utgangspunkt <b>én introduksjon</b>, antas arten å være… </p>   
-                                    <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "speciesDistribution"]} mode="radio" codes={koder.DistributionOptions}/>  
+                                    {/* ToDo: Bug - speciesDistribution not found */}
+                                    {/* <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "speciesDistribution"]} mode="radio" codes={koder.DistributionOptions}/>   */}
                                 </div>             
                                 {/* <div style={{marginBottom: '20px'}}>
                                     <span>{labels.goTo}</span> <Xcomp.Button primary >{labels.distributionHistory}</Xcomp.Button>
@@ -104,7 +111,7 @@ export default class Assessment52Utbredelse extends React.Component {
                         </div>
                     </fieldset>
                 <fieldset className="well">
-                    <h2>Fylkesvis utbredelse</h2>
+                    <h4>Fylkesvis utbredelse</h4>
                     <b>[Her kommer det et kart]</b>
                     <p>Beskriv grunnlaget for anslagene (gjelder både forekomstareal og fylkesvis utbredelse)</p>
                     <Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'backgroundRegional']}/>
@@ -118,7 +125,7 @@ export default class Assessment52Utbredelse extends React.Component {
                     {/*<Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'historyAndAreaInNorway']}/>*/}
                 </fieldset>
                 <fieldset className="well">
-                    <h3>Annen informasjon</h3>
+                    <h4>Annen informasjon</h4>
                     <div className="statusField">
                         <div className="labels">
                             <p>Kjent utbredelsesområde (km<sup>2</sup>)</p>
@@ -138,7 +145,7 @@ export default class Assessment52Utbredelse extends React.Component {
                         
                 </fieldset>
                 <fieldset className="well" id="spreadHistoryDomestic">
-                    <h2>Utbredelseshistorikk 2018</h2>
+                    <h4>Utbredelseshistorikk 2018</h4>
                   {/* <h4>{labels.distributionHistory} {appState.evaluationContext.nameWithPreposition}</h4>*/}
                    <UtbredelseshistorikkInnenlands vurdering={assessment} fabModel={appState}/>
                    {assessment.spreadHistoryDomesticDocumentation

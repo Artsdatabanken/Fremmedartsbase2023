@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import KartOpenLayers from "./KartOpenLayers";
+import MapOpenLayers from "../map/MapOpenLayers";
 import Loading from "../Loading";
 import useArtskart from "./useArtskart";
 import * as Xcomp from "../observableComponents";
+
 const RedigerbartKart = ({
   taxonId,
   scientificNameId,
@@ -32,10 +33,16 @@ const RedigerbartKart = ({
     artskartAdded,
     artskartRemoved,
   });
+  // console.log('RedigerbartKart', artskart, observations, taxonId, scientificNameId);
 
   const handleEditSelection = e => {
     setSelectionGeometry(e);
   };
+
+  const [hoverInfo, setHoverInfo] = useState('');
+  const onHover = (info) => {
+    setHoverInfo(info);
+  }
 
   const [editStats, setEditStats] = useState({});
   useEffect(() => {
@@ -85,6 +92,13 @@ const RedigerbartKart = ({
         </div>
         <div>
           Fylker: <b>{beskrivFylker(countylist)}</b>
+          <div>
+            {hoverInfo ? (
+              <div>Vannområde:{" "}<span><b>{hoverInfo}</b></span></div>
+            ) : (
+              <div>&nbsp;</div>
+            )}
+          </div>
         </div>
        
         {artskart.error && (
@@ -110,7 +124,8 @@ const RedigerbartKart = ({
             className={artskart.error || artskart.isLoading ? "" : "elevated"}
           >
             ✓ Overfør kun arealer til vurderingen
-        </Xcomp.Button>
+          </Xcomp.Button>
+          <br/>
           <Xcomp.Button
             disabled={artskart.error || artskart.isLoading}
             onClick={e => {
@@ -142,70 +157,44 @@ const RedigerbartKart = ({
             Fjern avgrensende polygon
         </Xcomp.Button>}
         </div>
-        <div style={{ marginTop: 16 }}>
+        <div>
           {artskart.isLoading && <Loading style={{ left: 0, top: "100%" }} />}
         </div>
+        <div>
+          <span>Merk at ruter (2x2km) basert på funn med dårlig geografisk presisjon (&gt; 1000 m) er ekskludert. </span>
+            {taxonId ? (
+              <a
+                href={`https://artskart.artsdatabanken.no/app/#map/427864,7623020/3/background/greyMap/filter/${artskartFilter(taxonId, kriterier)}`}
+                target="_blank"
+              >
+              Se Artskart 🔗
+              </a>
+            ) : (
+              <div style={{ color: "red" }}>
+                Kan ikke lenke til Artskart fordi vurderingen mangler taxon id
+              </div>
+            )}
+        </div>
       </div>
-      <div
-        style={{
-          position: "absolute",
-          top: 200,
-          left: 25,
-          zIndex: 1200
-        }}> 
-         <span>Merk at ruter (2x2km) basert på funn med dårlig geografisk presisjon (> 1000 m) er ekskludert. </span>
-          {taxonId ? (
-          <a
-            href={`https://artskart.artsdatabanken.no/app/#map/427864,7623020/3/background/greyMap/filter/${artskartFilter(taxonId, kriterier)}`}
-            target="_blank"
-          >
-          Se Artskart 🔗
-          </a>
-        ) : (
-            <div style={{ color: "red" }}>
-              Kan ikke lenke til Artskart fordi vurderingen mangler taxon id
-            </div>
-          )}</div>
-      {/*<div
-        style={{
-          color: "red",
-          position: "absolute",
-          bottom: 24,
-          right: 24,
-          zIndex: 1200
-        }}
-      >
-        {taxonId ? (
-          <a
-            href={`https://artskart.artsdatabanken.no/app/#map/427864,7623020/3/background/greyMap/filter/${artskartFilter(taxonId, kriterier)}`}
-            target="top"
-          >
-            Åpne i Artskart 🔗
-          </a>
-        ) : (
-            <div style={{ color: "red" }}>
-              Kan ikke lenke til Artskart fordi vurderingen mangler taxon id
-            </div>
-          )}
-        </div>*/}
-
-      <div id='olmap' style={{height: '100%', cursor: 'crosshair'}}>
-        <KartOpenLayers
-          geojson={observations}
-          style={mapstyle}
-          onAddPoint={handleAddPoint}
-          onClickPoint={handleClickPoint}
-          onEdit={handleEditSelection}
-          mapBounds={mapBounds}
-        />
-      </div>
+      <MapOpenLayers
+        geojson={observations}
+        style={mapstyle}
+        onAddPoint={handleAddPoint}
+        onClickPoint={handleClickPoint}
+        onEdit={handleEditSelection}
+        mapBounds={mapBounds}
+        onHover={onHover}
+      />
     </div>
   );
 };
 
 const artskartFilter = (taxonId, kriterier) => {
-  const f = `{"TaxonIds":[${taxonId}],"IncludeSubTaxonIds":true,"Found":[2],"NotRecovered":[2],"UnsureId":[2],"Spontan":[2],"Style":1,"YearFrom":${kriterier.observationFromYear},"YearTo":${kriterier.observationToYear},"CoordinatePrecisionTo":"1000"}`
-  return encodeURIComponent(f)
+  let f = `{"TaxonIds":[${taxonId}],"IncludeSubTaxonIds":true,"Found":[2],"NotRecovered":[2],"UnsureId":[2],"Spontan":[2],"Style":1`;
+  if (kriterier.AOOyear1 !== undefined) f += `,"YearFrom":"${kriterier.AOOyear1}"`;
+  if (kriterier.AOOyear2 !== undefined) f += `,"YearTo":"${kriterier.AOOyear2}"`;
+  f += `,"CoordinatePrecisionTo":"1000"}`;
+  return encodeURIComponent(f);
 }
 
 // Manuelt lagt til 4 ruter og manuelt fjernet 1 rute

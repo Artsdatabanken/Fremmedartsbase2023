@@ -25,6 +25,11 @@
         "HorizonEcologicalEffect": [
             {
                 "Id": "HorizonEcologicalEffect",
+                "Value": "no",
+                "Text": "Nei"
+            },
+            {
+                "Id": "HorizonEcologicalEffect",
                 "Value": "yesWhilePresent",
                 "Text": "Ja, men bare så lenge arten er til stede "
             },
@@ -32,12 +37,8 @@
                 "Id": "HorizonEcologicalEffect",
                 "Value": "yesAfterGone",
                 "Text": "Ja, og effekten vedvarer også etter at arten er borte"
-            },
-            {
-                "Id": "HorizonEcologicalEffect",
-                "Value": "no",
-                "Text": "Nei"
             }
+            
         ],
 
         "EstablishmentCategory": [                       
@@ -232,14 +233,14 @@
             {
                 "Id": "SpeciesStatus",
                 "Value": "potentialDoorknocker",
-                "Text": "Potensiell dørstokkart",
+                "Text": "Potensiell dørstokkart (skal horisontskannes)",
                 "Info": null,
                 "Children": null
             },       
             {
                 "Id": "SpeciesStatus",
                 "Value": "otherSpecies",
-                "Text": "Øvrige arter",
+                "Text": "Reproduserer selvstendig utendørs",
                 "Info": null,
                 "Children": null
             }
@@ -383,8 +384,32 @@
                 "value": "FL2023"
             },
             {
-                "text": "Filtrer på påbegynt/ferdigstilt, kommentarer og vurderingsansvarlig i nåværende risikovurdering",
+                "text": "Filtrer på framdrift, kommentarer og vurderingsansvarlig i nåværende risikovurdering",
                 "value": "statusAndCommentFL2023"
+            }
+        ],
+
+        "potentialDoorKnockers": [
+            {
+                "text": "Ny potensiell dørstokkart",
+                "value": "newPotentialDoorKnocker"
+            },
+            {
+
+                "text": "Ikke risikovurdert (NR) i 2018",
+                "value": "NR2018"
+            }
+        ],
+
+        "notAssessedDoorKnocker": [
+            {
+                "text": "Ikke-vurdert dørstokkart",
+                "value": "notAssessedDoorKnocker"
+            },
+            {
+
+                "text": "Ingen etablering innen 50 år",
+                "value": "notEstablishedWithin50Years"
             }
         ],
 
@@ -479,11 +504,7 @@
 
                 "text": "Arten er ikke fremmed i Norge",
                 "value": "notAlienInNorway"
-            },
-            {
-                "text": "Dørstokkart som ikke skal vurderes",
-                "value": "notAssessedDoorKnocker"
-            },
+            },           
             {
                 "text": "Potensiell dørstokkart som \n ikke skal vurderes",
                 "value": "notAssessedPotentialDoorKnocker"
@@ -1701,7 +1722,7 @@
             {
                 "Id": "climateEffects",
                 "Value": "heading",
-                "Text": "Klimaeffekter",
+                "Text": "Betydning av klimaendringer",
                 "Info": null,
                 "Children": null
             },
@@ -1729,7 +1750,7 @@
             {
                 "Id": "climateEffects",
                 "Value": "climateEffectsDocumentation",
-                "Text": "Betydningen av klimaendringer",
+                "Text": "Beskriv betydningen av klimaendringer",
                 "Info": null,
                 "Children": null
             },
@@ -2085,91 +2106,91 @@
         "tilstandsendringer": [
             {
                 "Id": "tilstandsendringer",
-                "Value": "ER",
+                "value": "ER",
                 "text": "Erosjonsutsatthet",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "tilstandsendringer",
-                "Value": "OM",
+                "value": "OM",
                 "text": "Oksygenmangel",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "tilstandsendringer",
-                "Value": "SS",
+                "value": "SS",
                 "text": "Sandstabilisering",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "tilstandsendringer",
-                "Value": "VM",
+                "value": "VM",
                 "text": "Vannmetning",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "tilstandsendringer",
-                "Value": "1AE",
+                "value": "1AE",
                 "text": "Enkeltarts-sammensetning",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "tilstandsendringer",
-                "Value": "1AG",
+                "value": "1AG",
                 "text": "Artsgruppe-sammensetning",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "tilstandsendringer",
-                "Value": "1AR",
+                "value": "1AR",
                 "text": "Relativ del-artsgruppe-sammensetning",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "tilstandsendringer",
-                "Value": "7EU",
+                "value": "7EU",
                 "text": "Eutrofiering",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "tilstandsendringer",
-                "Value": "7RA",
+                "value": "7RA",
                 "text": "Rask suksesjon",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "tilstandsendringer",
-                "Value": "7SN",
+                "value": "7SN",
                 "text": "Naturlig bestandsreduksjon på tresatt areal",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "tilstandsendringer",
-                "Value": "7UB",
+                "value": "7UB",
                 "text": "Ubalanse mellom trofiske nivåer",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "tilstandsendringer",
-                "Value": "9TS",
+                "value": "9TS",
                 "text": "Tresjiktstruktur",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "tilstandsendringer",
-                "Value": "other",
+                "value": "other",
                 "text": "Annen tilstandsendring",
                 "Info": null,
                 "Children": null
@@ -4699,6 +4720,13 @@
                     "SpeciesStatus": [
                         {
                             "Id": null,
+                            "Value": "hskanning",
+                            "Text": "Horisontskanning av potensielle dørstokkarter",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "establishmentPotential",
                             "Text": "Etableringspotensial",
                             "Info": null,
@@ -4721,7 +4749,7 @@
                         {
                             "Id": null,
                             "Value": "colonizationInformation",
-                            "Text": "Hvor mange 2 km x 2 km-ruter kan arten kolonisere i løpet av en 10 års-periode basert på én introduksjon til norsk natur? (Anta at selve introduksjonen skjer i perioden f.o.m. i dag og inntil 40 år fram i tid).",
+                            "Text": "Hvor mange 2 km x 2 km-ruter kan arten kolonisere i løpet av en 10 års-periode basert på én introduksjon til norsk natur? Anta at selve introduksjonen skjer i perioden f.o.m. i dag og inntil 40 år fram i tid.",
                             "Info": null,
                             "Children": null
                         },
@@ -4783,6 +4811,13 @@
                         },   
                         {
                             "Id": null,
+                            "Value": "statusHeading",
+                            "Text": "Artens status i dag",
+                            "Info": null,
+                            "Children": null
+                        },     
+                        {
+                            "Id": null,
                             "Value": "isAlienSpecies",
                             "Text": "Er arten fremmed?",
                             "Info": null,
@@ -4805,7 +4840,7 @@
                         {
                             "Id": null,
                             "Value": "connectedToAnotherTaxon",
-                            "Text": "Er taksonet omfatta av vurderinga til et annet takson? ",
+                            "Text": "Er taxonet inkludert i vurderingen av et annet taxon?",
                             "Info": null,
                             "Children": null
                         }, 
@@ -5117,7 +5152,27 @@
                     ],
 
                     "BcritText": [
-                        
+                        {
+                            "Id": null,
+                            "Value": "transferredFrom2018",
+                            "Text": "Data fra tidligere vurdering",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "transferredFromB",
+                            "Text": "Overført fra estimeringsmetode \"b) Literaturdata på spredningshastighet\"",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "transferredFromC",
+                            "Text": "Overført fra estimeringsmetode \"c) Anslått økning i forekomstareal siste året\"",
+                            "Info": null,
+                            "Children": null
+                        },
                         {
                             "Id": null,
                             "Value": "enterParameters",
@@ -5136,14 +5191,14 @@
                         {
                             "Id": null,
                             "Value": "SelfProducing",
-                            "Text": "Økningen i forekomstareal beregnes ut fra kjent forekomstareal ved to ulike år; år t1 og år t2 hvor t1 < t2. Forekomstarealet per år t1 (eller t2) er basert på alle inkluderte forekomster fra og med et valgt startår t0 til og med år t1 (eller t2). Startåret t0 er felles for t1 og t2 og samsvarer med startår valgt i Artskart under Utbredelse i Norge. For t2 er år 2021 satt som standard og kjent forekomstareal (km2) i 2021 er overført fra Utbredelse i Norge. Valgt periode (antall år mellom t1 og t2) skal ikke overstige 20 år og skal representere den perioden økningen er størst. Hvis tidsserien tillater det anbefales en periode på minimum 10 år.",
+                            "Text": "Økningen i forekomstareal beregnes ut fra kjent forekomstareal ved to ulike år; år t<sub>1</sub> og år t<sub>2</sub> hvor t<sub>1</sub> < t<sub>2</sub>. Forekomstarealet per år t<sub>1</sub> (eller t<sub>2</sub>) er basert på alle inkluderte forekomster fra og med et valgt startår t<sub>0</sub> til og med år t<sub>1</sub> (eller t<sub>2</sub>). Startåret t<sub>0</sub> er felles for t<sub>1</sub> og t<sub>2</sub> og samsvarer med startår valgt i Artskart under Utbredelse i Norge. For t<sub>2</sub> er år 2021 satt som standard og kjent forekomstareal (km<sup>2</sup>) i 2021 er overført fra Utbredelse i Norge. Valgt periode (antall år mellom t<sub>1</sub> og t<sub>2</sub>) skal ikke overstige 20 år og skal representere den perioden økningen er størst. Hvis tidsserien tillater det anbefales en periode på minimum 10 år.",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "DoorKnocker",
-                            "Text": "Basert på det beste anslaget på [X1] forekomster i løpet av 10 år og [X2] introduksjoner i samme tidsperiode er B-kriteriet skåra som [X3] (med usikkerhet: [X4-X5]). Dette innebærer at artens ekspansjonshastighet ligger mellom [X6 m/år og X7 m/år]. Dersom denne verdien framstår som urealistisk, bør antatt forekomstareal om 50 år (se Utbredelse i Norge) vurderes justert.",
+                            "Text": "Dersom denne verdien framstår som urealistisk, bør antatt forekomstareal om 50 år (se <i>Utbredelse i Norge</i>) vurderes justert.",
                             "Info": null,
                             "Children": null
                         },
@@ -5392,8 +5447,64 @@
                         },
                         {
                             "Id": null,
+                            "Value": "testVersion",
+                            "Text": "Dette er en testversjon. Driftversjonen finner du ",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "here",
+                            "Text": "her ",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "startAssessment",
                             "Text": "Start vurdering",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "chooseSpeciesGroup",
+                            "Text": "Velg artsgruppe",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "taxonSearch",
+                            "Text": "Søk på art, slekt eller høyere taksonomisk nivå (fra fullstendig artsliste):",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "speciesStatus",
+                            "Text": "Artens status",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "riskLevelCategory",
+                            "Text": "Risikokategori",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "criteria",
+                            "Text": "Utslagsgivende kriterium",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "assessmentStatus",
+                            "Text": "Framdrift",
                             "Info": null,
                             "Children": null
                         },
@@ -5413,8 +5524,71 @@
                         },
                         {
                             "Id": null,
+                            "Value": "ADBComments",
+                            "Text": "Vurderinger med kommentarer fra ADB",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "PotentialDoorKnockers",
+                            "Text": "Grupper av potensielle dørstokkarter",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "newComments",
+                            "Text": "Nye kommentarer",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "assessmentLeader",
+                            "Text": "Vurderingsansvarlig",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "scientificName",
                             "Text": "Vitenskapelig navn",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "popularName",
+                            "Text": "Populærnavn",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "horizonscanning",
+                            "Text": "Horisontskannes",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "cat2018",
+                            "Text": "Kategori 2018",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "cat2023",
+                            "Text": "Kategori 2023",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "comment",
+                            "Text": "Kommentar",
                             "Info": null,
                             "Children": null
                         },
@@ -5518,8 +5692,72 @@
                         },
                         {
                             "Id": null,
+                            "Value": "readOnly",
+                            "Text": "lesetilgang",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "myAssessments",
+                            "Text": "Mine vurderinger",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "allComments",
+                            "Text": "Alle kommentarer",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "commentsToRead",
+                            "Text": "Ubehandlede kommentarer",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "notSeen",
+                            "Text": "Ubehandlet: ",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "potentialTaxonChange",
+                            "Text": "Taksonomiendring trenger avklaring",
+                            "Info": null,
+                            "Children": null
+                        }, 
+                        {
+                            "Id": null,
+                            "Value": "automaticNameChange",
+                            "Text": "Automatisk oppdatert taksonomiendring",
+                            "Info": null,
+                            "Children": null
+                        }, 
+                        {
+                            "Id": null,
+                            "Value": "usedFilters",
+                            "Text": "Brukte filtre:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "resetAll",
+                            "Text": "Nullstill alle filtre",
+                            "Info": null,
+                            "Children": null
+                        },
+                       
+                        {
+                            "Id": null,
                             "Value": "total",
-                            "Text": "Totalt",
+                            "Text": "Totalt: ",
                             "Info": null,
                             "Children": null
                         },
@@ -6167,7 +6405,7 @@
                         {
                             "Id": null,
                             "Value": "heading",
-                            "Text": "Spredningsveier",
+                            "Text": "Spredningsveier til og i norsk natur",
                             "Info": null,
                             "Children": null
                         },
@@ -6231,8 +6469,15 @@
                     "Acrit": [
                         {
                             "Id": null,
+                            "Value": "mainHeading",
+                            "Text": "Artens invasjonspotensial",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "PVAAnalysis",
-                            "Text": "PVA-analyse beskrivelse",
+                            "Text": "Beskriv hvilke modeller og hvilken programvare som er brukt. Det er et krav at beregningene er etterprøvbare.",
                             "Info": null,
                             "Children": null
                         },
@@ -6573,6 +6818,13 @@
                     "DEcrit": [
                         {
                             "Id": null,
+                            "Value": "mainHeading",
+                            "Text": "Artens økologiske effekt",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "heading",
                             "Text": "D- og E-kriteriet: Effekter på stedegne arter",
                             "Info": null,
@@ -6616,7 +6868,7 @@
                         {
                             "Id": null,
                             "Value": "scope",
-                            "Text": "Interaksjonens omfang",
+                            "Text": "Geografisk omfang",
                             "Info": null,
                             "Children": null
                         },
@@ -6769,6 +7021,13 @@
                         }
                     ],
                     "critDocumentation": [
+                        {
+                            "Id": null,
+                            "Value": "heading",
+                            "Text": "Vurderingens oppsummering",
+                            "Info": null,
+                            "Children": null
+                        },
                         {
                             "Id": null,
                             "Value": "decisiveCriteria",
@@ -6925,6 +7184,20 @@
                         },
                         {
                             "Id": null,
+                            "Value": "showAssessmentSummary",
+                            "Text": "Vis artsrapport",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "remove",
+                            "Text": "Slett",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "setComplete",
                             "Text": "Ferdigstill",
                             "Info": null,
@@ -6946,15 +7219,43 @@
                         },
                         {
                             "Id": null,
+                            "Value": "assessmentFiles",
+                            "Text": "Filvedlegg til vurderingen",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "fileDescription",
+                            "Text": "Filomtale",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "download",
+                            "Text": "Last ned",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "removeFile",
+                            "Text": "Slett vedlegg",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "assessmentCompleted",
-                            "Text": "Vurderingen er ferdigstilt",
+                            "Text": "Vurderingen er ferdigstilt.",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "assessmentUnderWork",
-                            "Text": "Vurderingen er under arbeid",
+                            "Text": "Vurderingen er under arbeid.",
                             "Info": null,
                             "Children": null
                         }
@@ -6963,7 +7264,7 @@
                         {
                             "Id": null,
                             "Value": "heading",
-                            "Text": "Geografisk Variasjon i risiko",
+                            "Text": "Geografisk variasjon i risiko",
                             "Info": null,
                             "Children": null
                         },
@@ -7024,7 +7325,226 @@
                             "Children": null
                         }
                     ],
+                    "references": [
+                        {
+                            "Id": null,
+                            "Value": "heading",
+                            "Text": "Referanser",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "connectedReferences",
+                            "Text": "Referanser knyttet til vurderingen",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "type",
+                            "Text": "Type",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "remove",
+                            "Text": "Fjern",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "noReferences",
+                            "Text": "Ingen referanser knyttet til vurderingen",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "searchReferences",
+                            "Text": "Søk referanser",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "searchField",
+                            "Text": "Søkefelt:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "choose",
+                            "Text": "Velg",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "reference",
+                            "Text": "Referanse",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "showOrEdit",
+                            "Text": "Vis/rediger",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "add",
+                            "Text": "Legg til",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "showDetails",
+                            "Text": "Vis detaljer",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "previousPage",
+                            "Text": "Forrige side",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "nextPage",
+                            "Text": "Neste side",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "referenceType",
+                            "Text": "Referansetype",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "newReference",
+                            "Text": "Ny referanse",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "editOrAddNew",
+                            "Text": "Rediger referanse/Legge til ny referanse",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "freeReference",
+                            "Text": "Friformat referanse(r):",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "url",
+                            "Text": "URL/doi:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "author",
+                            "Text": "Forfatter(e):",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "year",
+                            "Text": "Årstall:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "title",
+                            "Text": "Tittel:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "journal",
+                            "Text": "Journal:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "volume",
+                            "Text": "Volum:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "pages",
+                            "Text": "Sider:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "bibliography",
+                            "Text": "Bibliografi:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "lastName",
+                            "Text": "Etternavn:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "middleName",
+                            "Text": "Mellomnavn:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "firstName",
+                            "Text": "Fornavn:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "URL",
+                            "Text": "URL:",
+                            "Info": null,
+                            "Children": null
+                        }
+                    ],
                     "NatureTypes": [
+                        {
+                            "Id": null,
+                            "Value": "heading",
+                            "Text": "Naturtyper",
+                            "Info": null,
+                            "Children": null
+                        },
                         {
                             "Id": null,
                             "Value": "colonizedAreaHeading",
@@ -7063,7 +7583,7 @@
                         {
                             "Id": null,
                             "Value": "timeHorizon",
-                            "Text": "Tid",
+                            "Text": "Tidshorisont",
                             "Info": null,
                             "Children": null
                         },
@@ -7077,14 +7597,14 @@
                         {
                             "Id": null,
                             "Value": "stateChange",
-                            "Text": "Tilstandsendring",
+                            "Text": "Tydelig tilstandsendring",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "affectedArea",
-                            "Text": "Påvirka areal (%)",
+                            "Text": "Tydelig påvirka areal (%)",
                             "Info": null,
                             "Children": null
                         },

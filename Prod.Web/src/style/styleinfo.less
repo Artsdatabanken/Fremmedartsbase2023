@@ -251,7 +251,7 @@ This file will be imported into all other LESS files that uses this values
 .page_container > h1,
 .main div h1,
 .page_wrapper h2 {
-  text-align: center;
+  //text-align: center;
   padding: 5px;
 }
 
@@ -291,6 +291,11 @@ div.form-control:empty:not(:focus):before {
 
 div.fileUpload div .form-control {
   width: 60%;
+}
+
+div.fileUpload > h5,
+.subChoice {
+  margin-left: 20px;
 }
 
 .intervall .form-control {
@@ -335,6 +340,9 @@ table.choice .form-control {
 
 table.formtable {
         tr {
+          label {
+            margin-left: 20px;
+          }
             td, th {
                 padding-top: 4px;
                 padding-bottom: 4px;
@@ -343,9 +351,12 @@ table.formtable {
                     margin-bottom: 0;
 
                 }
+                input.form-control {
+                  margin-left: 20px;
+                }
             }
             td:first-child, th:first-child {
-              padding-left: 0;
+              padding-left: 20px;
             }
         }
 }
@@ -403,10 +414,30 @@ div .btn, div .form-control, .well .btn-primary, .btn-flat {
 
 
 div.well > .btn-group > button.multiselect:first-child:not(:last-child):not(.dropdown-toggle) {
-  border-top-right-radius: 24px;
-  border-bottom-right-radius: 24px;
+  //border-top-right-radius: 24px;
+  //border-bottom-right-radius: 24px;
   height: 30px;
   padding-bottom: 35px;
+}
+
+button.btn-default.multiselect {
+  height: auto;
+  display: flex;
+}
+
+.multiselect-selected-text {
+  font-size: smaller;
+  margin-top: 5px; 
+}
+
+.multiselect > b.caret {
+  margin-top: 12px;
+  margin-left: 10px;
+}
+
+// checkboxes in MultiselectArray that hide options that are not checked
+.magicList {
+  margin: 20px 0 10px;
 }
 
 div .btn:hover, div .btn:active {  
@@ -430,6 +461,10 @@ div .btn-flat:hover, div .btn:active *, div .btn-flat:active, td > button.btn-de
   background-color: #4c4a48;
   box-shadow: none;
   border: 2px solid #fff;
+}
+
+.btn-default.summary {
+  margin-bottom: 20px;
 }
 
 .btn-flat {
@@ -462,8 +497,111 @@ a.btn-flat {
   width: 350px;
 }
 
-.btn-flat .modal-body div {
+//.btn-flat .modal-body div,
+  .import .modal-body > div > div label {
   white-space: break-spaces;
+  float: left;
+  text-align: left;
+}
+
+table.naturetype td .modal-dialog,
+.well > .naturetype .modal-dialog {
+  max-width: 900px;
+}
+
+.import > .well .modal-dialog {
+  max-width: 1700px;
+}
+
+// hide introductionSpread menu
+.import > .well .intro {
+  display: none;
+}
+
+.modal-dialog > .modal-content > .modal-header {
+  display: block;
+}
+
+.modal-body > div > div {
+  min-width: 150px;
+  margin: 5px 10px 5px;
+}
+
+.import .modal-body > div > div {
+  min-width: 200px;
+  margin-right: 20px;
+}
+
+table.migrationPathways td > div select.form-control {
+  width: 100px;
+}
+
+table.migrationPathways button {
+  height: 30px;
+  padding: 0 10px 0;
+}
+
+table.migrationPathways .toolbar_styling {
+  display: none; 
+}
+
+.well table.migrationPathways .form-control {
+  width: 100px; 
+}
+
+div.btn-flat.migration {
+  width: 350px;
+  box-shadow: none;
+  border: 1px solid lightgray;
+  white-space: break-spaces;
+  text-align: left;
+}
+
+div.migration > button.btn-default {
+  width: 300px;
+  box-shadow: none;
+  text-align: left;
+}
+
+ul.migration {
+  padding-inline-start: 18px;
+}
+
+.import .modal-body > div > div select.form-control {
+  width: 180px;
+}
+
+.modal-body > div > div select.form-control {
+  float: none;
+}
+
+.modal-body > div > div .btn-group {
+  margin-top: 10px;
+}
+
+.import .modal-body > div > div .toolbar_styling {
+  float: left;
+}
+
+.import .modal-body > div > div .btn-group {
+  margin-top: 0;
+}
+
+.modal-content > .modal-header > .btn-default.close {
+  background-color: #f5f5f5;
+  border: 1px solid black;
+  margin: 10px 5px 0;
+}
+
+.modal-dialog .modal-header .modal-title,
+.modal-dialog .modal-content .modal-body {
+  color: #4c4a48;
+  cursor: default;
+  float: left;
+}
+
+.modal-header > .btn-default.close:hover {
+  background-color: #4c4a48;
 }
 
 a:active, a:hover {
@@ -483,13 +621,13 @@ button a:hover {
 }
 
 .panel-heading.compact {
-  padding: 5px 15px;
+  padding: 2px 15px;
   background-color: transparent;
 }
 
-.panel.compact {
+/*.panel.compact {
   margin-bottom: 10px;
-}
+}*/
 
 .well.sheet {
   background-color: #FDFCFC; 
@@ -525,10 +663,11 @@ label{
 
 div.uncertainty {
   display: inline !important;
-  input {
+input {
     margin-right: 7px;
   }
 }
+
 
 .newRow {
   background-color: #D8D8D8;
@@ -746,7 +885,7 @@ div.uncertainty {
 }
 
 .tree-view-children {
-    margin-left: 25px;
+    margin-left: 75px;
 }
 
 .tree-view-label .btn-flat {
@@ -770,9 +909,9 @@ div.uncertainty {
     cursor: pointer;
 }
 
-.hovedtype span {
+/*.hovedtype span {
   margin-left: 60px;
-}
+}*/
 .grunntype {
     // font-size: large;
     cursor: pointer;
@@ -780,6 +919,11 @@ div.uncertainty {
 
 .natureType {
   margin: 0 0 20px;
+}
+
+.natureType > div > div,
+.natureType > div > h5 {
+  margin-left: 20px;
 }
 .naturtype-kode {
   font-weight: 600;
@@ -845,6 +989,15 @@ div.uncertainty {
   transition: all 0.2s ease-in-out;
 }
 
+table.vurderinger td {
+  text-align: center;
+}
+
+table.vurderinger tbody tr td:first-child {
+  text-align: left;
+  padding-left: 20px;
+}
+
 li.checkbox > label {
       white-space: nowrap; 
 }
@@ -867,7 +1020,7 @@ ul.scores li.checkbox label input {
 .selectAssessment > div {
    display: inline-block;
    padding: 2%;
-   margin: 5px;
+   margin: 0 20px 0;
    padding-left: 0;
 }
 
@@ -881,7 +1034,15 @@ ul.scores li.checkbox label input {
 }
 
 .selectAssessment .checkbox {
-  padding-left: 40px;
+  padding-left: 50px;
+}
+
+.well > div > div.checkbox, .well > div > ul > li.checkbox {
+  margin-left: 20px;
+}
+
+.well > div.checkbox > label {
+  margin-left: 30px;
 }
 
 .input_container {
@@ -950,7 +1111,7 @@ ul.scores li.checkbox label input {
 }
 
 .criterion {
-  margin: 10px;
+  margin: 10px 25px 10px;
 }
 
 .uncertainty input[type="radio"] {
@@ -1056,9 +1217,13 @@ td > .radiohorizontal > .radio {
 }
 
 .input_field > div {
-  max-width: 900px;
+  //max-width: 900px;
   margin-top: 0;
   padding-top: 15px;
+}
+
+.input_field > div.toolbar_styling.disabled {
+  display: none;
 }
 
 .container_description > p,
@@ -1245,7 +1410,7 @@ table.table-hover,
 
 .usedFilters {
   display: block;
-  margin-top: 5px;
+  margin-top: 25px;
   padding: 5px;
   position: sticky;
   top: 35px;
@@ -1271,29 +1436,76 @@ table.table-hover,
   100% { transform: rotate(360deg); }
 }
 
+.assessmentType {
+  padding: 5px;
+  //width: 750px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  background-color: #f5f5f5;
+}
+
+.assessmentType .radio {
+  margin-left: 30px;
+}
+
+/*.well .radio {
+  margin-left: 10px;
+}*/
+
+.well .row .form-control {
+  margin-left: 20px;
+}
+
+.well > .col-md-6 > div {
+  margin-left: 20px;
+  margin-right: 10px;
+}
+
+.well .statusField > p {
+  margin-left: 0;
+  width: auto;
+}
+
+.row > div, .row > div > div, .row > div > div > div {
+  margin-left: 0;
+}
+
 .filters {
   width: auto;
   padding: 5px;
   margin-top: 15px;
-  margin-right: 5px;
+  //margin-right: 5px;
   border: 1px solid #ddd;
   background-color: #f5f5f5;
  // margin-right: 80px;
 }
+
 
 .filters .checkbox, .filters .radio {
   //margin: 0;
   margin-left: 10px;
 }
 
-.filters h3, div > h3 {
-  text-align: center;
+.selectFilter > .filters > div.checkbox {
+  margin-left: 40px;
 }
 
-.selectFilter .btn-primary {
-  margin-left: 180px;
-  margin-top: 20px;
-} 
+/*.filters h3, div > h3 {
+  text-align: center;
+}*/
+
+.filters h2 {
+  margin-bottom: 20px;
+}
+
+h2, h3, h4,
+.well > label,
+.well > div > label,
+.well > div > span, 
+.well > div > span > .form-control {
+  margin-left: 20px;
+}
+
 
 /* .filters > div > div,
 .filters > div > div > div {
@@ -1308,10 +1520,31 @@ ul.faner {
   margin-bottom: 0;
   background-color: #C9D6D9;
   border-radius: 0;
+  box-shadow: none;
+}
+
+.selectFilter .btn-primary {
+  margin-left: 180px;
+  margin-top: 20px;
+} 
+
+.selectFilter .nav_menu .filters {
+  width: 30%;
+  margin-right: 45px;
+}
+
+.selectFilter .nav_menu .filters:last-child {
+  margin-right: 0;
+}
+
+.selectFilter .nav_menu .filters label {  
+  white-space: break-spaces;
 }
 
 .selectFilter .nav_menu {
   justify-content: left;
+  margin-right: 15px;
+  margin-left: 20px;
 }
 .selectFilter span {
   margin-left: 10px;
@@ -1326,7 +1559,8 @@ ul.faner {
 }
 
 .filters ul {
-  padding-inline-start: 10px;
+  padding-inline-start: 20px;
+  margin-bottom: 0;
 }
 
 .filters p ul {
@@ -1338,23 +1572,36 @@ ul.faner {
 }
 
 .main .submenu {
-  // position: sticky;
   top: 141px;
-  z-index: 100;
   padding: 10px 0 10px;
   border-bottom: 2px solid gray;
   border-top: 2px solid gray;
   background-color: #C9D6D9;
   position: sticky;
+  z-index: 1;
 }
 
 .nav_menu .filters li.checkbox {
   text-align: left;
 }
 
+._container .nav_menu li, .main > div > .nav_menu li, .main .submenu li {
+  border-radius: 0;
+}
+
 .nav_menu li.disabled {
   opacity: 0.5;
 }
+
+.main .nav_menu > li.active:focus, .main .nav_menu > li.active {
+  background-color: #f5f5f5;
+  color: #4c4a48;
+}
+
+/*._container ul.nav_menu li.active:focus, ._container ul.nav_menu li.active {
+  background-color: #4c4a48;
+  color: #fff;
+}*/
 
 .nav_menu li.disabled:hover {
   background-color: transparent;
@@ -1379,9 +1626,15 @@ fieldset.well {
 fieldset.well table, fieldset.well h2, fieldset.well h3, fieldset.well h4 {
   margin-top: 10px;
   margin-bottom: 20px;
+  margin-left: 10px;
 }
 
-fieldset.well > div, div.well h4 {
+.well button.pull-left {
+  margin-left: 10px;
+}
+
+//fieldset.well > div, 
+div.well h4 {
   margin-top: 20px;
 }
 
@@ -1394,7 +1647,7 @@ fieldset.well button.dropdown-toggle{
 }
 
 fieldset.well .dropdown-menu ul {
-  padding-inline-start: 0;
+  padding-inline-start: 10px;
 }
 
 fieldset.well ul.mainEcosystem {
@@ -1403,17 +1656,20 @@ fieldset.well ul.mainEcosystem {
 
 div.well > .btn-group {
   margin-bottom: 30px; 
+  margin-left: 20px;
 }
 .well .radio label {
   padding-left: 40px;
 }
 
 .well .checkbox label {
-  padding-left: 60px;
+  padding-left: 28px;
+  margin-left: 0;
 }
 
 .well div .form-control {
   width: auto;
+  //margin-left: 30px;
 }
 
 .well div .input_field .form-control {  
@@ -1439,7 +1695,7 @@ div.well > .btn-group {
 }
 
 ul.geoVar {
-    padding-inline-start: 0;
+    padding-inline-start: 20px;
 }
 
 ul.geoVar label {
@@ -1453,20 +1709,43 @@ div.geoVarInput > div > div.input_field > div.form-control {
   min-height: 90px;
   height: 80%;
 }
-.well p {
-  margin: 10px 0 10px;
+.well > p, .well > b {
+  margin: 10px 20px 10px;
+}
+
+.well > div > p, .well > div > div > p {
+  margin-left: 20px;
+}
+
+.well > p, .well div > p,
+.well > label,
+.well > div > label {
+  margin-bottom: 0;
+}
+
+.well div div.input_field {
+  margin-top: 0;
+}
+
+.well div div.input_field .toolbar_styling {
+  padding-top: 5px;
+}
+
+.well div div.radio {
+  margin-left: 10px;
 }
 
 .well p.furtherInfo {
-  margin: 20px 0 0;
+  margin: 20px 20px 0;
 }
 .statusField, .BCritFiles {
   display: flex;
   padding: 10px 0 10px;
+  margin-left: 20px;
 }
 
 .statusField input[type=checkbox] {
-  margin: 10px 20px 0;
+  margin: 16px 10px 0;
 }
 
 .statusField .firstObs {
@@ -1511,6 +1790,9 @@ div.geoVarInput > div > div.input_field > div.form-control {
   margin: 5px 15px 5px;
 }
 
+.connectedTaxon input.form-control {
+  margin-left: 30px;
+}
 
 .statusField .labels {
   width: 250px;
@@ -1544,6 +1826,17 @@ div.geoVarInput > div > div.input_field > div.form-control {
   width: 100%;
   height: 60px;
   margin: 50px 0 0;
+}
+
+.labels.distribution > p > b,
+.labels.distribution > div > p > b,
+.well > div > div > p > b {
+  margin: 0;
+}
+
+#spreadHistories div, #spreadHistories table, #spreadHistories button {
+  margin-left: 20px;
+  margin-right: 10px;
 }
 
 .BCritTable {
@@ -1629,8 +1922,9 @@ table.distribution thead tr th {
   margin-bottom: 20px;
 }
 
-.scanning, .filters div div.input_field {
-  margin-left: 20px;
+.scanning, .filters div div.input_field,
+.well div.input_field {
+  margin: 10px 20px 10px;
 }
 
 div.modal-body > div {
@@ -1643,6 +1937,10 @@ div.modal-body > div {
 
 .natureTypes div .form-control, .natureTypes .btn-group {
   margin: 0 25px 0; 
+}
+
+.taxon {
+  margin-left: 20px;
 }
 
 .taxon div {
@@ -1722,8 +2020,9 @@ table.ecologicalEffect .form-control, table.naturetype .form-control {
 }
 
 table.ecologicalEffect .btn-primary {
-  width: 65px;
-  padding: 0;
+  width: auto;
+  height: auto;
+  padding: 5px;
   margin: 0; 
 }
 
@@ -1778,9 +2077,11 @@ p.reasonsForChange {
 
 div.climateChange {
   padding: 5px 10px 10px;
+  margin: 10px 20px 10px;
   border: 1px solid gray;
   border-radius: 28px;
 }
+
 
 /*.dropdown-check-list {
   display: inline-block;

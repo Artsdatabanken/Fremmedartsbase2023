@@ -1,4 +1,15 @@
-.ol-zoom {
+.ol-control {
     left: unset;
     right: .5em;
 }
+.ol-legend {
+    top: 64px;
+    transform: rotate(90deg);
+}
+.ol-legend>button {
+    padding-bottom: 5px;
+}
+/* .ol-legend-button {
+    background-position: center;
+    background-repeat: no-repeat;
+} */

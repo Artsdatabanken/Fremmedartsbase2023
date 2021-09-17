@@ -41,14 +41,14 @@ export default class NewNaturetype extends React.Component {
             this.showModal = true
         })
 
-        this.setSelectedNaturtype = (naturtypekode) => {
+        this.setSelectedNaturtype = action((naturtypekode) => {
             this.hideStateChange = false;
             this.setSelectedNT(naturtypekode)
-        }
-        this.setSelectedLivsmedium = (naturtypekode) => {
+        })
+        this.setSelectedLivsmedium = action((naturtypekode) => {
             this.hideStateChange = true;
             this.setSelectedNT(naturtypekode)
-        }
+        })
 
 
         // this.onOk = (obj) => {
@@ -71,7 +71,7 @@ export default class NewNaturetype extends React.Component {
             ? <h3>Här kommer SVEN</h3> */}
             <div>
                 <h4>{superheader}</h4>
-                <h5>{header}</h5>
+                <p>{header}</p>
                 {nts
                     ? <NaturtypeSelector 
                         naturtyper={nts} 
@@ -83,7 +83,7 @@ export default class NewNaturetype extends React.Component {
             {appState.livsmediumEnabled
                 ? <div>
                     <br />
-                    <h4>{labels.NatureTypes.chooseLM}:</h4>
+                    <p>{labels.NatureTypes.chooseLM}:</p>
                     {lms
                         ? <NaturtypeSelector
                             naturtyper={lms}

@@ -282,19 +282,23 @@ export default class Assessment62Okologiskeffekt extends React.Component {
         })
         return(
             <div>
+
                 {config.showPageHeaders ? <h3>Økologisk effekt</h3> : <br />}
                 <fieldset className="well">
+                    <h2>{labels.DEcrit.mainHeading}</h2>
                     <h4>{labels.DEcrit.heading}</h4>
                     <p>Beskriv artens interaksjon(er) med stedegne arter. Det skal være sannsynlighetsovervekt for interaksjonen</p>
+                    <b>Legg til enkeltarter</b>
                     <SpeciesSpeciesTable list={riskAssessment.speciesSpeciesInteractions} newItem={this.newSSITS} addNewItem={this.addSSITS} koder={koder} labels={labels} showRedlist showKeyStoneSpecie showEffect showInteractionType showConfirmedOrAssumed/>
                     
                     
                     <hr/>
+                    <b>Legg til grupper av arter</b>
                     <SpeciesNaturetypeTable list={riskAssessment.speciesNaturetypeInteractions} newItem={this.newSNITS} addNewItem={this.addSNITS}  koder={koder} labels={labels} naturtypeLabels={appState.naturtypeLabels } showKeyStoneSpecie showEffect showInteractionType />
 
                     <hr/>
 
-                    <Xcomp.HtmlString observableValue={[riskAssessment, 'speciesSpeciesInteractionsSupplementaryInformation']} label="Utfyllende informasjon (hvilke(n) artsgruppe i naturtypen påvirkes og hvordan blir disse generelt påvirket):" />
+                    <Xcomp.HtmlString observableValue={[riskAssessment, 'speciesSpeciesInteractionsSupplementaryInformation']} label="Utfyllende informasjon (f.eks. hvilke(n) artsgruppe i naturtypen påvirkes og hvordan blir disse generelt påvirket):" />
 
                     
                 </fieldset>
@@ -347,7 +351,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                 <fieldset className="well">
                     <h4>{crit52H.heading}</h4>
                     <p>{crit52H.info}</p>
-                    <SpeciesSpeciesTable list={riskAssessment.geneticTransferDocumented} newItem={this.newGTD} addNewItem={this.addGTD} koder={koder} labels={labels} showKeyStoneSpecie showConfirmedOrAssumed HCrit />
+                    <SpeciesSpeciesTable list={riskAssessment.geneticTransferDocumented} newItem={this.newGTD} addNewItem={this.addGTD} koder={koder} labels={labels} showKeyStoneSpecie showInteractionType showConfirmedOrAssumed HCrit />
                     <hr/>
 
                    {/* <p>{ntLabels.score}</p>

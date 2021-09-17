@@ -74,7 +74,6 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
 
         const existenceArea35 = assessment.CurrentExistenceAreaCalculated
 
-
         // const bassertpaValues = [
         //     {
         //         Value: "Counting",
@@ -96,10 +95,16 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
             crit51B.auto = false
             critC.auto = false
         })
-        const textAS = stringFormat(labels.AcritText.SelfProducing)
-        const textDK = stringFormat(labels.AcritText.DoorKnocker)
-        const textASB = stringFormat(labels.BcritText.SelfProducing)
-        const textDKB = stringFormat(labels.BcritText.DoorKnocker)
+        const textAS = riskAssessment.a1aresulttext
+        console.log(textAS)
+        //stringFormat(labels.AcritText.SelfProducing)
+        const textDK = riskAssessment.a1bresulttext
+        
+        //stringFormat(labels.AcritText.DoorKnocker)
+        const textASB = riskAssessment.b2aresulttext
+        //stringFormat(labels.BcritText.SelfProducing)
+        const textDKB = riskAssessment.b2bresulttext
+        //stringFormat(labels.BcritText.DoorKnocker)
 
         const nbsp = "\u00a0"
 
@@ -123,12 +128,13 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                 <Assessment62Okologiskeffekt/> :
                 <div> 
                 <fieldset className="well">
+                    <h2>{labels.Acrit.mainHeading}</h2>
                     <h4>{crit51A.heading}</h4>
                     <p>{crit51A.info}</p>
                     
                     {/* <Xcomp.StringEnum observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]} mode="radio" codes={codes.HorizonEstablismentPotential}/> */}
                     
-                    <hr />
+                    
                      <Xcomp.StringEnum mode="radio" observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]} codes={koder.AcritSelect} /> 
                    {/* <SelectableRadio
                             label={labels.AcritSelect.LifespanA1aSimplifiedEstimate}
@@ -148,8 +154,11 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                         {assessment.alienSpeciesCategory == "DoorKnocker" ? 
                         <p>{textDK}
                            </p> :
-                        <p>{textAS}
-                            </p>}
+                        <p 
+                        /*dangerouslySetInnerHTML={{
+                            __html: riskAssessment.a1aresulttext
+                        }}*/
+                         >  {riskAssessment.a1aresulttext}</p>}
 
                         <Xcomp.StringEnum observableValue={[riskAssessment, "acceptOrAdjustCritA"]} mode="radio" codes={koder.AcceptOrAdjust}/>   
                                          
@@ -255,31 +264,36 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                 // {
                 riskAssessment.chosenSpreadMedanLifespan == "ViableAnalysis" ? 
                 <div>
-                    <div className="statusField"> 
-                   <div className="labels">
-                        <p>{labels.Acrit.PVAAnalysis}</p>
+                
+                    <p>{labels.Acrit.PVAAnalysis}</p>
+                    <Xcomp.HtmlString observableValue={[riskAssessment, 'spreadPVAAnalysis']} />
 
-                    </div>
-                    <div className="numberFields">
-                        <Xcomp.HtmlString observableValue={[riskAssessment, 'spreadPVAAnalysis']} />
+                    
+                    
+                   {/* <div className="numberFields">
+                        
                        <h4>{labels.Acrit.data}</h4>
                         <p>{labels.DistributionHistory.noDocuments}.</p>
-                        <span>{labels.General.upload}</span> 
-                        <FileUpload
-                               // onUploadComplete={this.getAttachments}
-                                />
-                       {/* <Xcomp.Button primary >{labels.General.chooseFiles}</Xcomp.Button>
+                        
+                        <p>{labels.General.upload}</p> 
+                        
+                       <Xcomp.Button primary >{labels.General.chooseFiles}</Xcomp.Button>
                         <span>{labels.General.noFileChosen}</span>
                           <Filliste
                                 //baseDirectory={`${appState.vurderingId.split('/').join('_')}/ViableAnalysis`}
                                 vurdering ={assessment}
                                  labels={labels.DistributionHistory}
                                  //{...appState.vurdering.Datasett}
-                                 />*/}
-                    </div>
-                    </div>
+                                 />
+                    </div>*/}
+                    <p>Velg datafil du ønsker å laste opp</p>
+                    
+                   <FileUpload
+                            onUploadComplete={this.getAttachments}
+                            showButtonOnly={true}
+                   /> 
                     <div className="statusField">
-                        <div className="labels">
+                        <div className="labels" style={{width: "100px"}}>
                         <p>{labels.Acrit.median}</p>
                         <p>{labels.Acrit.lower}</p>
                         <p>{labels.Acrit.upper}</p>
@@ -392,16 +406,15 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                     <h4>{labels.Bcrit.data}</h4>
                                     <div className="BCritFiles">
                                         <div className="filenames">
-                                            <p><b>{labels.DistributionHistory.filename}</b></p>
-
-                                            
+                                            <p><b>{labels.DistributionHistory.filename}</b></p>                                            
                                             
                                         </div>
                                         <div className="fileDescriptions">
                                             <p><b>{labels.DistributionHistory.fileDescription}</b></p>
-                                            <Xcomp.String observableValue={[riskAssessment, 'fileDescription']} />
+                                            <Xcomp.String observableValue={[riskAssessment, 'fileDescription']} placeholder={"Dette er beskrivelsen"}/>
                                         </div>
                                     </div> 
+                                    <hr></hr>
                                     <FileUpload
                                                         // onUploadComplete={this.getAttachments}
                                                     />
@@ -427,6 +440,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                         riskAssessment.chosenSpreadYearlyIncrease == "b" && assessment.alienSpeciesCategory == "DoorKnocker" ?
                             <div>
                             <p>{textDKB}</p>
+                            <p dangerouslySetInnerHTML={{ __html: labels.BcritText.DoorKnocker}}></p>
                                               {/*  <p>{ntLabels.scoreSummary}</p>
                                                 <ScoreUnsure appState={appState}
                                                             critScores={koder.scoresB}
@@ -442,21 +456,22 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                             </div> : 
                             riskAssessment.chosenSpreadYearlyIncrease == "b" ?
                             <div>
-                                <p>{textASB} </p>
-
-                                <Xcomp.Radio value={'true'} observableValue={[assessment.riskAssessment, "manuallyAddArea"]} label={labels.Bcrit.useMap} />                    
+                                
+                                <p style={{marginTop: "20px", marginBottom: "20px", paddingTop: "20px", borderTop:'1px solid gray'}} dangerouslySetInnerHTML={{__html: labels.BcritText.SelfProducing}}></p>
+                               {/*   <Xcomp.Radio value={'true'} observableValue={[assessment.riskAssessment, "manuallyAddArea"]} label={labels.Bcrit.useMap} />                    
                                         { assessment.riskAssessment.manuallyAddArea == 'true' ? <Xcomp.Bool observableValue={[assessment.riskAssessment, "notUse2021AsEndYear"]} label={labels.Bcrit.notUse2021} /> : null } 
-                                <Xcomp.Radio value={'false'} observableValue={[assessment.riskAssessment, "manuallyAddArea"]} label={labels.Bcrit.addManually} />                    
+                                     <Xcomp.Radio value={'false'} observableValue={[assessment.riskAssessment, "manuallyAddArea"]} label={labels.Bcrit.addManually} />                    
                                         { assessment.riskAssessment.manuallyAddArea == 'false' ? <Xcomp.Bool observableValue={[assessment.riskAssessment, "notUse2021AsEndYear"]} label={labels.Bcrit.notUse2021} /> : null }
 
-                                       {/* <span style={{paddingLeft: '40px'}}>{labels.Bcrit.choose}</span> <Xcomp.Button primary >{labels.Bcrit.getFromMap}</Xcomp.Button>
+                                      <span style={{paddingLeft: '40px'}}>{labels.Bcrit.choose}</span> <Xcomp.Button primary >{labels.Bcrit.getFromMap}</Xcomp.Button>
                                             <span>{labels.Bcrit.addManually}</span>
 
                                             <Xcomp.Bool observableValue={[riskAssessment, "notUseExpansionInNorway"]} label={labels.BcritText.chooseNotToUseKnownArea} /> */}
 
                                         <table className="table BCritTable">
                                             <thead>
-                                                <tr>                                                
+                                                <tr>     
+                                                <th></th>                                           
                                                 <th dangerouslySetInnerHTML={{
                                                      __html: labels.Bcrit.fromYear }}></th>
                                                 <th dangerouslySetInnerHTML={{
@@ -467,6 +482,9 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             </thead>
                                             <tbody>
                                             <tr>
+                                                <td>
+                                                    <Xcomp.Button primary>{labels.DistributionHistory.speciesMap}</Xcomp.Button>
+                                                </td>
                                                 <td> <Xcomp.Number       
                                                         disabled                     
                                                         observableValue={[riskAssessment, "AOOyear1"]} 
@@ -487,6 +505,9 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                
                                             </tr>
                                             <tr>
+                                                <td>
+                                                    <Xcomp.Button primary>{labels.DistributionHistory.speciesMap}</Xcomp.Button>
+                                                </td>
                                                 <td> <Xcomp.Number   
                                                         disabled                         
                                                         //observableValue={[riskAssessment, "AOOyear2"]}
@@ -534,13 +555,13 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             </tr>
                                             </tbody>                            
                                                 </table>*/}
-
+                                                
+                                    <p>{labels.Bcrit.commentOrDescription}</p>
                                     <Xcomp.HtmlString                            
-                                                observableValue={[riskAssessment, "commentOrDescription"]}
-                                                label={labels.Bcrit.commentOrDescription}
+                                                observableValue={[riskAssessment, "commentOrDescription"]}                                                
                                             />                      
-                                    <p style={{marginTop: "20px", paddingTop: "20px", borderTop:'1px solid gray', fontWeight: 'bold', fontSize: 'larger'}}>{labels.BcritText.expansionSpeed}</p>
-
+                                    
+                                    <p>{textASB} </p>
                                    {/* <p>{ntLabels.scoreSummary}</p>
                                     <ScoreUnsure appState={appState}
                                                 critScores={koder.scoresB}
@@ -638,16 +659,31 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                 <hr/>
                             </div>
                         : null}
+
+                        <div>
+                       
+                            {riskAssessment.chosenSpreadYearlyIncrease != "SpreadYearlyIncreaseCalculatedExpansionSpeed" && riskAssessment.chosenSpreadYearlyIncrease != "" && 
+                                <div
+                                    style={{
+                                    display: "inline-block"
+                                    }}>
+                                <Criterion criterion={crit51B} appState={appState} disabled= {riskAssessment.chosenSpreadYearlyIncrease == "a" || assessment.alienSpeciesCategory == "DoorKnocker"} mode="noheading"/>
+                            </div>
+                            }
+                           
+                       </div>
+                       <hr></hr>
                     {riskAssessment.activeSpreadYearlyLiteratureData
                         ? <div>
                                 <table className="formtable">
+                                <h5>{labels.BcritText.transferredFrom2018}</h5>
                                     <tbody>
                                         <tr>
-                                            <th colSpan="2">
-                                                {labels.BcritSelect.c}
+                                            <th colSpan="4">
+                                                {labels.BcritText.transferredFromB}
                                             </th>
                                         </tr>
-                                        <tr>
+                                       {/* <tr>
                                             <td>
                                                 <label htmlFor="spreadYearlyLiteratureDataExpansionSpeed">{labels.Bcrit.literatureDataExpansionSpeed}</label>
                                             </td>
@@ -681,15 +717,15 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             <td>
                                                 <b>{presentValue(riskAssessment.spreadYearlyLiteratureData)}</b>
                                             </td>
-                                        </tr>
+                                       </tr>*/}
                                         <tr>
-                                            <td>
+                                            
                                                 <label htmlFor="spreadYearlyLiteratureDataAssumptions">{labels.Bcrit.literatureDataAssumptions}</label>
-                                            </td>
-                                            <td>
+                                           
                                                 <Xcomp.HtmlString
+                                                     disabled={true}
                                                     observableValue={[riskAssessment, 'spreadYearlyLiteratureDataSource']}/>
-                                            </td>
+                                            
                                         </tr>
                                     </tbody>
                                 </table>
@@ -699,13 +735,16 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     {riskAssessment.activeSpreadYearlyIncreaseCalculatedExpansionSpeed
                         ? <div>
                                 <table className="formtable">
+                                {!riskAssessment.activeSpreadYearlyLiteratureData && 
+                                    <h5>{labels.BcritText.transferredFrom2018}</h5>
+                                }
                                     <tbody>
                                         <tr>
                                             <th colSpan="2">
-                                                {labels.BcritSelect.d}
+                                                {labels.BcritText.transferredFromC}
                                             </th>
                                         </tr>
-                                        <tr>
+                                        {/*<tr>
                                             <td>
                                                 <label>{labels.Bcrit.existenceArea}</label>
                                             </td>
@@ -716,15 +755,16 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                         style={{
                                                         color: "red"
                                                     }}>{labels.Bcrit.existenceAreaRef35}</b>
-}
+                                                }
                                             </td>
-                                        </tr>
+                                            </tr>*/}
                                         <tr>
                                             <td>
                                                 <label htmlFor="spreadYearlyIncreaseEstimate">{labels.Bcrit.yearlyIncrease}</label>
                                             </td>
                                             <td>
                                                 <Xcomp.String
+                                                    disabled={true}
                                                     observableValue={[riskAssessment, 'spreadYearlyIncreaseEstimate']}/>
                                             </td>
                                         </tr>
@@ -734,6 +774,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             </td>
                                             <td>
                                                 <Xcomp.HtmlString
+                                                    disabled={true}
                                                     observableValue={[riskAssessment, 'spreadYearlyIncreaseEstimateDescription']}/>
                                             </td>
                                         </tr>
@@ -742,6 +783,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                 <label>{labels.Bcrit.expansionSpeed}</label>
                                             </td>
                                             <td>
+                                                
                                                 <b>{presentValue(riskAssessment.spreadYearlyIncreaseCalculatedExpansionSpeed)}</b>
                                             </td>
                                         </tr>
@@ -750,24 +792,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                 <hr/>
                             </div>
                         : null}
-                    <div>
-                       {/* <div
-                            style={{
-                            marginRight: "90px",
-                            display: "inline-block"
-                        }}>
-                            
-                    </div>*/}
-                    {riskAssessment.chosenSpreadYearlyIncrease != "SpreadYearlyIncreaseCalculatedExpansionSpeed" && riskAssessment.chosenSpreadYearlyIncrease != "" && 
-                        <div
-                            style={{
-                            display: "inline-block"
-                         }}>
-                        <Criterion criterion={crit51B} appState={appState} disabled= {riskAssessment.chosenSpreadYearlyIncrease == "a" || assessment.alienSpeciesCategory == "DoorKnocker"} mode="noheading"/>
-                    </div>
-                    }
-                        
-                    </div>
+                    
                 </fieldset>
                 <fieldset className="well">
                     {/* {/*<h4>{critC.heading} &nbsp;{labels.Ccrit.transferedFrom4}</h4>

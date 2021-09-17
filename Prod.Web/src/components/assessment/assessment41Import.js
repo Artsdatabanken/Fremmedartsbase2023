@@ -7,6 +7,7 @@ import * as Xcomp from './observableComponents';
 import Vurdering34Spredningsveier from './vurdering34Spredningsveier'
 import NewMigrationPathwaySelector from './40Spredningsveier/NewMigrationPathwaySelector'
 import MPTable from './40Spredningsveier/MigrationPathwayTable'
+import { DriveEtaRounded } from '@material-ui/icons';
 const labels = config.labels
 
 @observer
@@ -15,7 +16,6 @@ class SelectableRadio extends React.Component {
     //     return true
     // }
     render() {
-        
         const [obj, prop] = this.props.observableValue
         // console.log("Selectable" + this.props.value) console.log(" - - " +
         // obj["Selectable" + this.props.value])
@@ -50,7 +50,7 @@ export default class Assessment41Import extends React.Component {
     }
     @action saveImportPathway(vurdering, mp) {
         const mps = vurdering.ImportPathways
-        const compstr = (mp) => `${mp.CodeItem}${mp.InfluenceFactor}${mp.Magnitude}${mp.TimeOfIncident}`
+        const compstr = (mp) => `${mp.codeItem}${mp.influenceFactor}${mp.magnitude}${mp.timeOfIncident}`
         const newMp = compstr(mp)
         const existing = mps.filter(oldMp =>  compstr(oldMp) === newMp
         )
@@ -81,7 +81,10 @@ export default class Assessment41Import extends React.Component {
         const removeImportPathway = (mp) => this.removeImportPathway(vurdering, mp)
 
         return(
+        <div>
+            <br/>
             <fieldset className="well">
+                <h2>{labels.MigrationPathway.heading}</h2>
                 <p style={{marginLeft: '20px'}}>Kommer arten (utelukkende eller også) til norsk natur via innendørs- eller produksjonsareal?
                 <SelectableRadio
                             label={labels.indoorProduktionImport.a}
@@ -93,15 +96,16 @@ export default class Assessment41Import extends React.Component {
                             observableValue={[assessment, "indoorProduktion"]}/>
 
                 </p>
+                </fieldset>
                 
                     {assessment.indoorProduktion != null &&
-                    <fieldset className="well">
+                    <div>
                         {assessment.indoorProduktion == "positive" &&                    
                                 <Vurdering34Spredningsveier  name={"Til innendørs- eller produksjonsareal"} furtherInfo={labels.Import.furtherInfoIndoors}/>  
                         }
                             <Vurdering34Spredningsveier name={"Introduksjon til natur"} furtherInfo={labels.Import.furtherInfoIntro}/>
                             <Vurdering34Spredningsveier name={"Videre spredning i natur"} furtherInfo={labels.Import.furtherInfoNature}/>
-                     </fieldset>
+                     </div>
                     }
                 
                
@@ -146,7 +150,8 @@ export default class Assessment41Import extends React.Component {
                         <NewMigrationPathwaySelector migrationPathways={importPathwayKoder} onSave={mp => this.saveImportPathway(vurdering, mp)} koder={koder} hideIntroductionSpread labels={labels}/>
                     </div>
                 </div>} */}
-            </fieldset>
+            
+        </div>
         )
     }
 }
