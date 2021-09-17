@@ -894,14 +894,7 @@
                 "Children": null
             }
         ],
-        "migrationPathwayAbundance": [
-            {
-                "Id": "migrationPathwayAbundance",
-                "Value": "unknown",
-                "Text": "Ukjent",
-                "Info": null,
-                "Children": null
-            },
+        "migrationPathwayAbundance": [           
             {
                 "Id": "migrationPathwayAbundance",
                 "Value": "1",
@@ -934,6 +927,13 @@
                 "Id": "migrationPathwayAbundance",
                 "Value": "moreThan1000",
                 "Text": "> 1000",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "migrationPathwayAbundance",
+                "Value": "unknown",
+                "Text": "Ukjent",
                 "Info": null,
                 "Children": null
             }
@@ -6447,7 +6447,7 @@
                         {
                             "Id": null,
                             "Value": "timeOfIncident",
-                            "Text": "Tidspunkt",
+                            "Text": "Tidsrom",
                             "Info": null,
                             "Children": null
                         },
