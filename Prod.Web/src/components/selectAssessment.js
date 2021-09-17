@@ -280,8 +280,8 @@ export default class SelectAssessment extends Component {
                 {appState.horizonFilters == true &&
                 <div className="nav_menu">
                         <div className="filters"><b>{labels.SelectAssessment.assessmentStatus}</b>   
-                            <Xcomp.Bool observableValue={[appState, "hsNotStarted"]} label={koder.workStatus[0].text} />                         
-                            <Xcomp.Bool observableValue={[appState, "hsFinished"]} label={koder.workStatus[2].text} />
+                            <Xcomp.Bool observableValue={[appState, "hsNotStarted"]} label={koder.workStatus[0].text + "   ( ) %"} />                   
+                            <Xcomp.Bool observableValue={[appState, "hsFinished"]} label={koder.workStatus[2].text + "   ( ) %"} /> 
                             <div className="subChoice">
                                 <Xcomp.Bool observableValue={[appState, "toAssessment"]} label={" % videre til risikovurdering"} />                         
                                 <Xcomp.Bool observableValue={[appState, "notAssessed"]} label={" % ikke videre"} />  
