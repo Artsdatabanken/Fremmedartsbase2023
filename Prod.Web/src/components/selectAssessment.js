@@ -3,6 +3,7 @@ import {action, observable} from 'mobx';
 import { observer, inject } from 'mobx-react';
 import * as Xcomp from './observableComponents';
 import HelpIcon from '@material-ui/icons/Help';
+import ExpertGroupModel from './expertGroupModel'
 import SelectAssessmentTable from './selectAssessmentTable';
 // import SelectAssessmentStatistics from './selectAssessmentStatistics';
 // import auth from './authService';
@@ -64,7 +65,10 @@ export default class SelectAssessment extends Component {
         const {appState, appState:{assessment,roleincurrentgroup:rolle,codeLabels:labels,koder}} = this.props
         // const {appState, appState:{assessment,roleincurrentgroup:rolle,codeLabels:labels,koder:{Children:koder}}} = this.props
         // const koder = appState.koder.Children
-         
+
+        // find leaders in each expert group
+        var experts = ExpertGroupModel.eksperterforvalgtgruppe.filter(item => item.writeAccess == true)
+        console.log (experts)
 
      /*   let checkList = document.getElementById('list1');
         if (checkList) {checkList.getElementsByClassName('anchor')[0].onclick = function (evt) {
