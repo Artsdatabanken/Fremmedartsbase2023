@@ -62,10 +62,24 @@ export class NaturtypeRad extends React.Component {
                 <td>{ntlabel}</td>
                 <td>{dominanceForrest}</td>
                 <td></td>
-                <td>{assessment.alienSpeciesCategory == "DoorKnocker" ? koder.timeHorizon[1].Text : kodeTekst(koder.timeHorizon, nt.timeHorizon)}</td>
-                <td>{kodeTekst(koder.colonizedArea, nt.colonizedArea)}</td>
-                <td>{stateChangLabel}</td>
-                <td>{kodeTekst(koder.affectedArea, nt.affectedArea)}</td>
+                <td>{assessment.alienSpeciesCategory == "DoorKnocker" ? koder.timeHorizon[1].Text : 
+                        //kodeTekst(koder.timeHorizon, nt.timeHorizon)
+                        <Xcomp.StringEnum observableValue={[nt, 'timeHorizon']} forceSync codes={koder.timeHorizon} />
+                        }</td>
+                <td>
+                    {
+                    //kodeTekst(koder.colonizedArea, nt.colonizedArea)
+                        <Xcomp.StringEnum observableValue={[nt, 'colonizedArea']} forceSync codes={koder.colonizedArea} />
+                    }
+                    </td>
+                <td>{
+                        <Xcomp.StringEnum observableValue={[nt, 'stateChange']} forceSync codes={koder.tilstandsendringer} />
+                        }</td>
+                <td>{
+                
+                    //kodeTekst(koder.affectedArea, nt.affectedArea)
+                    <Xcomp.StringEnum observableValue={[nt, 'affectedArea']} forceSync codes={koder.affectedArea} />
+                    }</td>
                 <td>
                 <Xcomp.MultiselectArray
                                 observableValue={[nt, 'background']} 
@@ -79,7 +93,7 @@ export class NaturtypeRad extends React.Component {
                                 hideUnchecked/>
                 </td>
                 <td>
-                    <Xcomp.Button 
+                   {/* <Xcomp.Button 
                     style= {{marginBottom: '10px'}}
                         primary 
                         xs 
@@ -89,12 +103,11 @@ export class NaturtypeRad extends React.Component {
                             this.hideStateChange = nt.niNCode.startsWith("LI ")
                             })}
                         >
-                            {/*{gLabels.edit}*/}
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                 <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
                                 <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
                             </svg>
-                            </Xcomp.Button>
+                            </Xcomp.Button>*/}
                     {this.showModal
                     ? <NaturtypeModal 
                         naturtype={nt} 
@@ -136,10 +149,10 @@ export default class NaturtypeTable extends React.Component {
                 <col  style={{width: "15%"}}/>
                 <col  style={{width: "10%"}}/>
                 <col  style={{width: "15%"}}/>
-                <col  style={{width: "15%"}}/>
-                <col  style={{width: "25%"}}/>
-                <col  style={{width: "15%"}}/>
-                <col  style={{width: "15%"}}/>
+                <col  style={{width: "5%"}}/>
+                <col  style={{width: "10%"}}/>
+                <col  style={{width: "10%"}}/>
+                <col  style={{width: "5%"}}/>
             </colgroup>
             <thead>
                 <tr>

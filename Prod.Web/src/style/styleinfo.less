@@ -1475,7 +1475,7 @@ table.table-hover,
   padding: 5px;
   margin-top: 15px;
   //margin-right: 5px;
-  border: 1px solid #ddd;
+  //border: 1px solid #ddd;
   background-color: #f5f5f5;
  // margin-right: 80px;
 }
@@ -1486,7 +1486,7 @@ table.table-hover,
   margin-left: 10px;
 }
 
-.selectFilter > .filters > div.checkbox {
+.selectFilter > .filters > div.checkbox, .selectFilter > div > .filters > ul > li.checkbox {
   margin-left: 40px;
 }
 
@@ -1559,7 +1559,7 @@ ul.faner {
 }
 
 .filters ul {
-  padding-inline-start: 20px;
+  padding-inline-start: 10px;
   margin-bottom: 0;
 }
 
@@ -2017,6 +2017,10 @@ div.modal-body > div {
 table.ecologicalEffect, table.naturetype,
 table.ecologicalEffect .form-control, table.naturetype .form-control {
   font-size: 10pt;
+}
+
+table.naturetype .form-control {
+  width: 80px;
 }
 
 table.ecologicalEffect .btn-primary {

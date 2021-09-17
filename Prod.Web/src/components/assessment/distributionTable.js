@@ -1,6 +1,7 @@
 import React from 'react'
 import config from '../../config';
 import {observer, inject} from 'mobx-react'
+import {action} from 'mobx'
 import * as Xcomp from './observableComponents'
 import Tabs from '../tabs'
 import Assessment51Naturtyper from './assessment51Naturtyper'
@@ -18,6 +19,11 @@ export default class DistributionTable extends React.Component {
         // const labels = fabModel.codeLabels.DistributionHistory
         const koder = appState.koder
         const labels = appState.codeLabels.DistributionHistory
+
+    if (assessment.horizonEstablismentPotential == 1){
+        assessment.riskAssessment.AOOtotalBest = 1;
+    }
+        
        
     return (
     <>
@@ -73,7 +79,9 @@ export default class DistributionTable extends React.Component {
                 <td>
                 <Xcomp.Number                            
                     observableValue={[assessment.riskAssessment, "AOOtotalBest"]}
-                    integer />   
+                    integer
+                   // onChange={action (() => assessment.horizonEstablismentPotential == 1 && assessment.riskAssessment.AOOtotalBest != 1 ? alert("Dette stemmer ikke overens med vurdering på horisontskanningen. Er du sikker på at du vil endre?") : null)} 
+                   />   
                 </td>
                <td>
                <Xcomp.Number                            

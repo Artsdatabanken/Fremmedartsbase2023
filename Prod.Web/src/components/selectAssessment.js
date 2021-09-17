@@ -280,8 +280,10 @@ export default class SelectAssessment extends Component {
                             <Xcomp.Bool observableValue={[appState, "hsFinished"]} label={koder.workStatus[2].text} />
                             <div className="subChoice">
                                 <Xcomp.Bool observableValue={[appState, "toAssessment"]} label={" % videre til risikovurdering"} />                         
-                                <Xcomp.Bool observableValue={[appState, "notAssessed"]} label={" % ikke videre"} />                                                                        
+                                <Xcomp.Bool observableValue={[appState, "notAssessed"]} label={" % ikke videre"} />  
+                                <p>Totalt: {appState.expertgroupAssessmentFilteredList.length}</p>                                                                      
                             </div>
+
                         </div>
                         <div className="filters"><b>{labels.SelectAssessment.PotentialDoorKnockers}</b>
                         
