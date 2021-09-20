@@ -47,24 +47,24 @@ namespace Prod.Api.Controllers
             public List<AssessmentListItem> Assessments { get; set; }
         }
 
-        // GET api/assessment/5
+        //// GET api/assessment/5
+        //[HttpGet("{id}")]
+        //[Authorize]
+        //public async Task<ExpertgroupAssessments> Get(string id)
+        //{
+        //    var expertgroupid = id.Replace('_', '/');
+        //    var roleInGroup = await GetRoleInGroup(id);
+        //    var expertgroupAssessments = new ExpertgroupAssessments
+        //    {
+        //        Rolle = roleInGroup,
+        //        Assessments = await GetExpertGroupAssessments(expertgroupid,new IndexFilter(), roleInGroup.User.Id)
+        //    };
+        //    return expertgroupAssessments;
+
+        //}// GET api/assessment/5
         [HttpGet("{id}")]
         [Authorize]
-        public async Task<ExpertgroupAssessments> Get(string id)
-        {
-            var expertgroupid = id.Replace('_', '/');
-            var roleInGroup = await GetRoleInGroup(id);
-            var expertgroupAssessments = new ExpertgroupAssessments
-            {
-                Rolle = roleInGroup,
-                Assessments = await GetExpertGroupAssessments(expertgroupid,new IndexFilter(), roleInGroup.User.Id)
-            };
-            return expertgroupAssessments;
-
-        }// GET api/assessment/5
-        [HttpGet("{id}/{filter}")]
-        [Authorize]
-        public async Task<ExpertgroupAssessments> Get(string id, IndexFilter filter)
+        public async Task<ExpertgroupAssessments> Get(string id, [FromQuery] IndexFilter filter)
         {
             var expertgroupid = id.Replace('_', '/');
             var roleInGroup = await GetRoleInGroup(id);
@@ -229,7 +229,8 @@ namespace Prod.Api.Controllers
             }
 
             filter.Page = 0;
-            filter.PageSize = 10;
+            filter.PageSize = 1000;
+            //filter.HorizonScan = true;
             var query = IndexHelper.CreateDocumentQuery(expertgroupid, filter);
             var totalCount = _index.SearchTotalCount(query);
             var result = _index.SearchReference(query, filter.Page, filter.PageSize, IndexHelper.Field_ScientificNameAsTerm).Select(IndexHelper.GetAssessmentListItemFromIndex)

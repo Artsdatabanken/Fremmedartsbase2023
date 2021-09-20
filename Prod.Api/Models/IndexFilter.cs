@@ -8,6 +8,7 @@
         public HistoryFilter HistoryFilter { get; set; }
         public CurrentFilter CurrentFilter { get; set; }
         public ProgressFilter ProgressFilter { get; set; }
+        public bool HorizonScan { get; set; }
     }
 
     public class ProgressFilter

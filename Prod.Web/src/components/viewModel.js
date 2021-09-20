@@ -365,7 +365,7 @@ class ViewModel {
 
         // **** sett expert group ****
         reaction(
-            () => [this.expertgroup, auth.isLoggedIn],
+            () => [this.expertgroup, auth.isLoggedIn, this.assessmentTypeFilter],
             ([expertgroupId, isLoggedIn])  => {
                 //console.log("react to expertgroup: " + expertgroupId + "," + isLoggedIn)
                 if(isLoggedIn && expertgroupId) {
@@ -899,10 +899,23 @@ class ViewModel {
           );
     }
 
+    @action getAssessmentsForFilter() {
+        const påv = toJS(this.selectedPåvirkningsfaktor)
+        const existing = this.assessment.påvirkningsfaktorer.find(item =>
+            item.id == påv.id)
+        if(existing) {
+            // console.log("existing:" + JSON.stringify(existing))
+            this.assessment.påvirkningsfaktorer.remove(existing)
+        }
+        this.assessment.påvirkningsfaktorer.push(påv)
+        this.clearSelectedPåvirkningsfaktor()
+    }
+
     async loadExpertgroupAssessmentList(expertgroupId) {
         runInAction(() => this.loadingExpertGroup = true)
         const id = expertgroupId.replace('/','_')
-        const url = config.getUrl("expertgroupassessments/") + id
+
+        const url = config.getUrl("expertgroupassessments/") + id + "?page=1" + (this.assessmentTypeFilter == "horizonScanning" ? "&HorizonScan=true" : "&HorizonScan=false")
         const expertgroupAssessments = await auth.getJsonRequest(url)
 
         //console.log("------" + JSON.stringify(expertgroupAssessments))

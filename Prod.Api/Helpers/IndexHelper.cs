@@ -83,6 +83,8 @@ namespace Prod.Api.Helpers
         private const string Field_EndringKat = "ChangeCat";
 
         public const int IndexVersion = 3;
+        private const string Field_DoHorizonScanning = "DoHorizonScan";
+
         private static Document GetDocumentFromAssessment(Assessment assessment)
         {
             var ass = JsonSerializer.Deserialize<FA4>(assessment.Doc);
@@ -102,7 +104,8 @@ namespace Prod.Api.Helpers
                 //new StoredField(Field_TaxonHierarcy, ass.VurdertVitenskapeligNavnHierarki),
                 //new StringField(Field_Category, kategori, Field.Store.YES),
                 //new StringField(Field_AssessmentContext, ass.VurderingsContext, Field.Store.YES),
-                new TextField(Field_PopularName, ass.EvaluatedVernacularName??string.Empty, Field.Store.YES)
+                new TextField(Field_PopularName, ass.EvaluatedVernacularName??string.Empty, Field.Store.YES),
+                new StringField(Field_DoHorizonScanning, ass.HorizonDoScanning ? "1" : "0", Field.Store.YES)
             };
 
             //Kategori
@@ -232,6 +235,15 @@ namespace Prod.Api.Helpers
             if (!string.IsNullOrWhiteSpace(expertgroupid) && expertgroupid != "0")
             {
                 ((BooleanQuery)query).Add(GetFieldQuery(Field_Group, new[] { expertgroupid }), Occur.MUST);
+            }
+
+            if (filter.HorizonScan)
+            {
+                ((BooleanQuery)query).Add(GetFieldQuery(Field_DoHorizonScanning, new[] { "1" }), Occur.MUST);
+            }
+            else
+            {
+                ((BooleanQuery)query).Add(GetFieldQuery(Field_DoHorizonScanning, new[] { "0" }), Occur.MUST);
             }
             //if (!string.IsNullOrWhiteSpace(filter.Groups) && filter.Groups != "0")
             //{

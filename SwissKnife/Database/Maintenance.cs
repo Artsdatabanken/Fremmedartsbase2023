@@ -416,16 +416,23 @@ namespace SwissKnife.Database
                         {
                             dest.ExpertGroup = expertGroupReplacements[src.ExpertGroupId];
                         }
+
+                        ConvertHelper.SetHorizonScanningBasedOn2018Assessments(dest);
+
                     });
 
                 cfg.CreateMap<FA3Legacy, Prod.Domain.RiskAssessment>()
                     .ForMember(dest => dest.AOOknown, opt => opt.MapFrom(src => src.CurrentExistenceArea))
                     .ForMember(dest => dest.AOOtotalBest, opt => opt.MapFrom(src => src.CurrentExistenceAreaCalculated))
-                    .ForMember(dest => dest.AOOtotalLow, opt => opt.MapFrom(src => src.CurrentExistenceAreaLowCalculated))
-                    .ForMember(dest => dest.AOOtotalHigh, opt => opt.MapFrom(src => src.CurrentExistenceAreaHighCalculated))
+                    .ForMember(dest => dest.AOOtotalLow,
+                        opt => opt.MapFrom(src => src.CurrentExistenceAreaLowCalculated))
+                    .ForMember(dest => dest.AOOtotalHigh,
+                        opt => opt.MapFrom(src => src.CurrentExistenceAreaHighCalculated))
                     .ForMember(dest => dest.AOO50yrBest, opt => opt.MapFrom(src => src.PotentialExistenceArea))
-                    .ForMember(dest => dest.AOO50yrLow, opt => opt.MapFrom(src => src.PotentialExistenceAreaLowQuartile))
-                    .ForMember(dest => dest.AOO50yrHigh, opt => opt.MapFrom(src => src.PotentialExistenceAreaHighQuartile))
+                    .ForMember(dest => dest.AOO50yrLow,
+                        opt => opt.MapFrom(src => src.PotentialExistenceAreaLowQuartile))
+                    .ForMember(dest => dest.AOO50yrHigh,
+                        opt => opt.MapFrom(src => src.PotentialExistenceAreaHighQuartile))
                     .ForMember(dest => dest.AOOyear1, opt => opt.Ignore())
                     .ForMember(dest => dest.AOOendyear1, opt => opt.Ignore())
                     .ForMember(dest => dest.AOOyear2, opt => opt.Ignore())
@@ -434,10 +441,14 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.AOO2, opt => opt.Ignore())
                     .ForMember(dest => dest.StartYear, opt => opt.Ignore())
                     .ForMember(dest => dest.EndYear, opt => opt.Ignore())
-                    .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes, opt => opt.MapFrom(src => src.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes))
-                    .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesBest, opt => opt.Ignore())
-                    .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesLow, opt => opt.Ignore())
-                    .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesHigh, opt => opt.Ignore())
+                    .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes,
+                        opt => opt.MapFrom(src => src.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes))
+                    .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesBest,
+                        opt => opt.Ignore())
+                    .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesLow,
+                        opt => opt.Ignore())
+                    .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesHigh,
+                        opt => opt.Ignore())
                     .ForAllOtherMembers(opt => opt.Ignore());
 
 
