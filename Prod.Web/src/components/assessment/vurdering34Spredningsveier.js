@@ -76,7 +76,9 @@ export default class Vurdering34Spredningsveier extends React.Component {
 
             for (var i = 0; i < migrationPathways.length; i++) {
                 if (migrationPathways[i].elaborateInformation != "") {
-                    elaborateInformation += migrationPathways[i].codeItem + ": " + migrationPathways[i].elaborateInformation + "."
+                    elaborateInformation += 
+                        //migrationPathways[i].mainCategory + ": " + 
+                        migrationPathways[i].codeItem + ": " + migrationPathways[i].elaborateInformation + "."
                 }
                 
             }

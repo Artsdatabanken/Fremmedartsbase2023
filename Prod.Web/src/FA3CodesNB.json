@@ -6361,21 +6361,21 @@
                         {
                             "Id": null,
                             "Value": "furtherInfoIntro",
-                            "Text": "Utfyllende informasjon om introduksjon til naturen",
+                            "Text": "Utfyllende informasjon om introduksjon til naturen. Dersom informasjonen er knyttet til en bestemt spredningsvei, må dette angis.",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "furtherInfoNature",
-                            "Text": "Utfyllende informasjon om videre spredning i naturen",
+                            "Text": "Utfyllende informasjon om videre spredning i naturen. Dersom informasjonen er knyttet til en bestemt spredningsvei, må dette angis.",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "furtherInfoIndoors",
-                            "Text": "Utfyllende informasjon om spredning til innendørs- eller produksjonsareal",
+                            "Text": "Utfyllende informasjon om spredning til innendørs- eller produksjonsareal. Dersom informasjonen er knyttet til en bestemt spredningsvei, må dette angis.",
                             "Info": null,
                             "Children": null
                         },
