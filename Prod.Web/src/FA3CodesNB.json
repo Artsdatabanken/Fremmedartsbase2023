@@ -5503,6 +5503,13 @@
                         },
                         {
                             "Id": null,
+                            "Value": "status",
+                            "Text": "Vurderingsstatus",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "assessmentStatus",
                             "Text": "Framdrift",
                             "Info": null,

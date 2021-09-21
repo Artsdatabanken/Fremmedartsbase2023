@@ -72,9 +72,9 @@ export class ObservableMultiselectArrayDropdown extends React.Component {
         const buttonText = names.length === 0 ? noneSelectedLabel : names.length > maxListableElements ? multipleSelectedLabel + " (" + names.length + ")" : names.join(', ') 
         return(
             <div className={"btn-group" + (this.open ? " open" : "")}>
-                <button type="button" className="multiselect btn btn-default" onClick={() => this.open = !this.open} >
+                <button type="button" className="multiselect btn btn-default" title={"Velg"} onClick={() => this.open = !this.open} >
                     {(!hideUnchecked || names.length === 0 )? 
-                        <span className="multiselect-selected-text">{buttonText}</span> : <span className="multiselect-selected-text">{"Vurderingsgrunnlag"}</span>} 
+                        <span className="multiselect-selected-text">{buttonText}</span> : <span className="multiselect-selected-text">{" "}</span>} 
                     <b className="caret"></b>
                 </button>
                 <div className="dropdown-menu">

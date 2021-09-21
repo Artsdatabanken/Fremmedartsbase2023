@@ -16,7 +16,7 @@ export default class UtbredelseshistorikkInnenlands extends React.Component {
         return (
             <div>
                 <div id="spreadHistories">
-                    <h4>{labels.distributionHistory} {fabModel.evaluationContext.nameWithPreposition}</h4>
+                    <h5>{labels.distributionHistory} {fabModel.evaluationContext.nameWithPreposition}</h5>
                     {/*<div>{labels.domesticDescribe} {fabModel.evaluationContext.nameWithPreposition}</div>
                     <Button
                         disabled={this.context.readonly}

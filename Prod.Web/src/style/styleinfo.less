@@ -438,6 +438,9 @@ button.btn-default.multiselect {
 // checkboxes in MultiselectArray that hide options that are not checked
 .magicList {
   margin: 20px 0 10px;
+        li.checkbox > label {
+          white-space: break-spaces;
+        }
 }
 
 div .btn:hover, div .btn:active {  
@@ -510,12 +513,15 @@ table.naturetype td .modal-dialog,
             
 }
 .import > .well .modal-dialog {
-  max-width: 1700px;
+  max-width: 1300px;
 }
 
 .modal-dialog .modal-body > div > button.btn.btn-default {
-  height: 80px;
-  margin-left: 20px;
+  height: 30px;
+  margin-top: 40px;
+  font-size: 12px;
+  min-width: 80px;
+  padding: 1px 1px 1px;
 }
 
 // hide introductionSpread menu
@@ -528,17 +534,21 @@ table.naturetype td .modal-dialog,
 }
 
 .modal-body > div > div {
-  min-width: 150px;
+  min-width: 180px;
   margin: 5px 10px 5px;
 }
 
 .import .modal-body > div > div {
-  min-width: 200px;
+  min-width: 180px;
   margin-right: 20px;
 }
 
-table.migrationPathways td > div select.form-control {
-  width: 100px;
+table.migrationPathways td {
+  white-space: break-spaces;
+  max-width: 200px;
+      div select.form-control {
+         width: 100px;
+      }
 }
 
 table.migrationPathways button {
@@ -1656,7 +1666,7 @@ fieldset.well .dropdown-menu ul {
 }
 
 fieldset.well ul.mainEcosystem {
-  padding-inline-start: 0;
+  padding-inline-start: 10px;
 }
 
 div.well > .btn-group {

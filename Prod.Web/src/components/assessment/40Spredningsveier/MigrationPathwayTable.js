@@ -125,8 +125,10 @@ class MigrationPathwayTableRow extends React.Component {
         const elobTxt = this.open ? eloborateText : this.trunc(eloborateText)
         return(
             <tr >
-                <td>{codeItemLabel(mp.codeItem)}</td>
-                {showIntroductionSpread || !hideIntroductionSpread ? <td>{introductionSpreadLabel(mp.introductionSpread)}</td> : null}
+                {/*<td>{codeItemLabel(mp.codeItem)}</td>
+                showIntroductionSpread || !hideIntroductionSpread ? <td>{introductionSpreadLabel(mp.introductionSpread)}</td> : null*/}
+                <td>{mp.mainCategory}</td>
+                <td>{mp.category}</td>
                 {this.edit
                 ? <td><Xcomp.StringEnum observableValue={[mp, 'influenceFactor']}  codes={codes.migrationPathwayFrequency}/></td>
                 : <td>{frequencyLabel(mp.influenceFactor)}</td>

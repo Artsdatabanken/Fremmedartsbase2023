@@ -403,7 +403,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             observableValue={[riskAssessment, "expansionUpperQInput"]}
                                             integer
                                         />  
-                                    <h4>{labels.Bcrit.data}</h4>
+                                   {/* <h4>{labels.Bcrit.data}</h4>
                                     <div className="BCritFiles">
                                         <div className="filenames">
                                             <p><b>{labels.DistributionHistory.filename}</b></p>                                            
@@ -413,16 +413,17 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             <p><b>{labels.DistributionHistory.fileDescription}</b></p>
                                             <Xcomp.String observableValue={[riskAssessment, 'fileDescription']} placeholder={"Dette er beskrivelsen"}/>
                                         </div>
-                                    </div> 
-                                    <hr></hr>
-                                    <FileUpload
-                                                        // onUploadComplete={this.getAttachments}
-                                                    />
-                                       {/* <p>{labels.General.upload}</p> <Xcomp.Button primary >{labels.General.chooseFiles}</Xcomp.Button>
-                                        <span>{labels.General.noFilesChosen}</span> */}
+                                    </div> */}
+                                   
                                 </div>
                             </div>
-
+                            <hr></hr>
+                                    <p>Velg datafil du ønsker å laste opp</p>
+                    
+                                    <FileUpload
+                                                onUploadComplete={this.getAttachments}
+                                                showButtonOnly={true} /> 
+                            <br></br>
 
                               {/*   <p>{ntLabels.scoreSummary}</p>
                                <ScoreUnsure appState={appState}

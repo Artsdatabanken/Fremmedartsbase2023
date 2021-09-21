@@ -60,11 +60,11 @@ export default class Vurdering34Spredningsveier extends React.Component {
                                 name == "Introduksjon til natur" ? koder.migrationPathways[0].Children.mp[0].Children.mpimportation : 
                                 name == "Videre spredning i natur" ? koder.migrationPathways[0].Children.mp[0].Children.mpspread : null 
         // const {vurdering, viewModel, fabModel} = this.props;
-        const introductionSpread = name == "Introduksjon til natur" ? "introduction" : name == "Videre spredning i natur" ? "spread" : null
-        const migrationPathways = assessment.assesmentVectors.filter(pathway => pathway.introductionSpread == introductionSpread)
-       
-        console.log (migrationPathways)
-        
+       // const introductionSpread = name == "Introduksjon til natur" ? "introduction" : name == "Videre spredning i natur" ? "spread" : null
+       // const migrationPathways = assessment.assesmentVectors.filter(pathway => pathway.introductionSpread == introductionSpread)
+
+       const migrationPathways = assessment.assesmentVectors
+               
         //const migrationPathwayKoder = appState.spredningsveier.children.filter(child => child.name != "Import")
        const migrationPathwayKoder = name == "Til innendørs- eller produksjonsareal" ? appState.spredningsveier.children.filter(child => child.name == "Import") :
                                   name == "Videre spredning i natur" ? appState.spredningsveier.children.filter(child => child.name == "Videre spredning" || child.name == "Spredning")

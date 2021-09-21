@@ -16,8 +16,10 @@ export default class NewMigrationPathwayButton extends React.Component {
             newMigrationPathway: {
                 // Category : props.migrationPathway.parentValue ? props.migrationPathway.parentValue : props.migrationPathway.value,
                 // CodeItem : props.migrationPathway.parentValue ? props.migrationPathway.value : null,
+                mainCategory: props.mainCat,
+                category: props.migrationPathway.name,
                 codeItem : props.migrationPathway.value,
-                introductionSpread : null,
+                introductionSpread : null,                
                 influenceFactor : "unknown", 
                 magnitude : "unknown",
                 timeOfIncident : "unknown",
@@ -29,7 +31,7 @@ export default class NewMigrationPathwayButton extends React.Component {
                 this.newMigrationPathway.influenceFactor === "unknown" 
                 && this.newMigrationPathway.magnitude === "unknown" 
                 && this.newMigrationPathway.timeOfIncident === "unknown"
-                && !this.newMigrationPathway.elaborateInformation 
+                //&& !this.newMigrationPathway.elaborateInformation 
                 )
         })
        // this.showModal = () => this.visibleModal = true

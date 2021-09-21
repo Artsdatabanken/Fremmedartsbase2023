@@ -72,7 +72,7 @@ export default class NewMigrationPathwayGroup extends React.Component {
                             <ul className="migration">
                             {migrationPathway.children.map(child => {
                                 {/*child.parentValue = migrationPathway.value*/} 
-                                return <li key={child.name}><NewMigrationPathwayButton migrationPathway={child} disabled={
+                                return <li key={child.name}><NewMigrationPathwayButton migrationPathway={child} mainCat={migrationPathway.name} disabled={
                                                                                                                 //disabled 
                                                                                                            
                                                                                                             (migrationPathway.name == "Direkte import" || migrationPathway.name == "Rømning/forvilling") &&

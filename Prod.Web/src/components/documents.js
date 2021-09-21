@@ -69,7 +69,7 @@ export default class Documents extends Component {
                 </tbody>
             </table>
             <FileUpload 
-            //onUploadComplete={this.getAttachments}
+                onUploadComplete={this.getAttachments}
             />
         </div>)
     }
