@@ -399,13 +399,14 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.EvaluationStatus, opt => opt.Ignore())
                     .ForMember(dest => dest.TaxonHierarcy, opt => opt.Ignore())
                     .ForMember(dest => dest.IsDeleted, opt => opt.Ignore())
-                    .ForMember(dest => dest.VurderingId2018, opt => opt.MapFrom(src => src.Id))
+                    //.ForMember(dest => dest.VurderingId2018, opt => opt.MapFrom(src => src.Id))
                     .ForMember(dest => dest.HorizonDoScanning, opt => opt.Ignore())
                     .ForMember(dest => dest.HorizonEcologicalEffect, opt => opt.Ignore())
                     .ForMember(dest => dest.HorizonEcologicalEffectDescription, opt => opt.Ignore())
                     .ForMember(dest => dest.HorizonEstablismentPotential, opt => opt.Ignore())
                     .ForMember(dest => dest.HorizonEstablismentPotentialDescription, opt => opt.Ignore())
                     .ForMember(dest => dest.Id, opt => opt.Ignore()) // primærnøkkel
+                    .ForMember(dest =>dest.PreviousAssessments, opt => opt.Ignore()) // ny av året
                     .AfterMap((src, dest) =>
                     {
                         // set some standard values
@@ -417,8 +418,24 @@ namespace SwissKnife.Database
                             dest.ExpertGroup = expertGroupReplacements[src.ExpertGroupId];
                         }
 
-                        ConvertHelper.SetHorizonScanningBasedOn2018Assessments(dest);
+                        dest.PreviousAssessments.Add(new FA4.PreviousAssessment()
+                        {
+                            AssessmentId = src.Id,
+                            RevisionYear = 2018,
+                            RiskLevel = src.RiskAssessment.RiskLevel,
+                            EcologicalRiskLevel = src.RiskAssessment.EcoEffectLevel,
+                            SpreadRiskLevel = src.RiskAssessment.InvationPotentialLevel,
+                        });
+                        dest.PreviousAssessments.Add(new FA4.PreviousAssessment()
+                        {
+                            AssessmentId = src.VurderingId2012.ToString(),
+                            RevisionYear = 2012,
+                            RiskLevel = src.RiskLevel2012,
+                            EcologicalRiskLevel = src.EcologicalRiskLevel2012,
+                            SpreadRiskLevel = src.SpreadRiskLevel2012,
+                        });
 
+                        ConvertHelper.SetHorizonScanningBasedOn2018Assessments(dest);
                     });
 
                 cfg.CreateMap<FA3Legacy, Prod.Domain.RiskAssessment>()

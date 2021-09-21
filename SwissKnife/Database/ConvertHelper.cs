@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Prod.Domain;
 
 namespace SwissKnife.Database
@@ -8,11 +9,12 @@ namespace SwissKnife.Database
     {
         public static void SetHorizonScanningBasedOn2018Assessments(FA4 dest)
         {
-            if (terrestriskeInvertebraterIkkeVurdert.Contains(dest.VurderingId2018))
+            var id = dest.PreviousAssessments.Single(x => x.RevisionYear == 2018).AssessmentId;
+            if (terrestriskeInvertebraterIkkeVurdert.Contains(id))
             {
                 dest.ExpertGroup = "Terrestriske invertebrater";
             }
-            if (terrestriskeInvertebraterNRVurdert.Contains(dest.VurderingId2018))
+            if (terrestriskeInvertebraterNRVurdert.Contains(id))
             {
                 dest.ExpertGroup = "Terrestriske invertebrater";
             }

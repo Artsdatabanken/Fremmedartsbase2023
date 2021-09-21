@@ -30,7 +30,7 @@ namespace Prod.Api.Helpers
             var maxDate = DateTime.MinValue;
             while (true)
             {
-                 var result = await _dbContext.Assessments.Where(x => x.IsDeleted == false).OrderBy(x => x.Id).Skip(pointer).Take(batchSize)
+                 var result = await _dbContext.Assessments.Include(x=>x.LastUpdatedByUser).Where(x => x.IsDeleted == false).OrderBy(x => x.Id).Skip(pointer).Take(batchSize)
                      .ToArrayAsync();
                  if (result.Length == 0)
                  {
@@ -82,30 +82,36 @@ namespace Prod.Api.Helpers
         private const string Field_Year = "Year";
         private const string Field_EndringKat = "ChangeCat";
 
-        public const int IndexVersion = 3;
+        private const string Field_Category2018 = "Category";
+
+        public const int IndexVersion = 1;
         private const string Field_DoHorizonScanning = "DoHorizonScan";
+        //private const string Field_DateLastSave = "DateSave";
 
         private static Document GetDocumentFromAssessment(Assessment assessment)
         {
             var ass = JsonSerializer.Deserialize<FA4>(assessment.Doc);
             //string kategori = ass.Kategori; // string.IsNullOrWhiteSpace(ass.Kategori) ? "" : ass.Kategori.Substring(0,2);
+            var ass2018 = ass.PreviousAssessments.FirstOrDefault(x => x.RevisionYear == 2018);
             var document = new Document
             {
                 new StringField(Field_Id, assessment.Id.ToString(), Field.Store.YES),
                 // StringField indexes but doesn't tokenize - Case important
                 new StringField(Field_Group, ass.ExpertGroup, Field.Store.YES),
                 new StringField(Field_EvaluationStatus, ass.EvaluationStatus, Field.Store.YES),
-                //new StoredField(Field_LastUpdatedBy, ass.LastUpdatedBy),
+                new StoredField(Field_LastUpdatedBy, assessment.LastUpdatedByUser.FullName),
                 //new StoredField(Field_LastUpdatedAt, ass.LastUpdatedOn.ToString()),
                 //new StoredField(Field_LockedForEditByUser, ass.LockedForEditByUser?? string.Empty),
                 //new StoredField(Field_LockedForEditAt, ass.LockedForEditAt.ToString()),
                 new TextField(Field_ScientificName, ass.EvaluatedScientificName, Field.Store.YES), // textfield - ignore case
                 new StringField(Field_ScientificNameAsTerm, ass.EvaluatedScientificName.ToLowerInvariant(), Field.Store.NO), // textfield - ignore case
                 //new StoredField(Field_TaxonHierarcy, ass.VurdertVitenskapeligNavnHierarki),
-                //new StringField(Field_Category, kategori, Field.Store.YES),
+                new StringField(Field_Category, GetCategoryFromRiskLevel(ass.RiskAssessment.RiskLevel), Field.Store.YES),
+                new StringField(Field_Category2018, GetCategoryFromRiskLevel(ass2018?.RiskLevel ?? -1), Field.Store.YES),
                 //new StringField(Field_AssessmentContext, ass.VurderingsContext, Field.Store.YES),
                 new TextField(Field_PopularName, ass.EvaluatedVernacularName??string.Empty, Field.Store.YES),
-                new StringField(Field_DoHorizonScanning, ass.HorizonDoScanning ? "1" : "0", Field.Store.YES)
+                new StringField(Field_DoHorizonScanning, ass.HorizonDoScanning ? "1" : "0", Field.Store.NO),
+                new StringField(Field_LastUpdatedAt, assessment.LastUpdatedAt.Date.ToString("s"), Field.Store.YES)
             };
 
             //Kategori
@@ -207,6 +213,21 @@ namespace Prod.Api.Helpers
             return document;
         }
 
+        private static string GetCategoryFromRiskLevel(int riskLevel2012)
+        {
+            switch (riskLevel2012)
+            {
+                case 0: return "NK";
+                case 1: return "LO";
+                case 2: return "PH";
+                case 3: return "HI";
+                case 4: return "SE";
+                default:
+                    return "NR";
+            }
+
+        }
+
         public static AssessmentListItem GetAssessmentListItemFromIndex(Document doc)
         {
             return new AssessmentListItem()
@@ -221,6 +242,7 @@ namespace Prod.Api.Helpers
                 ScientificName = doc.Get(Field_ScientificName),
                 TaxonHierarcy = doc.Get(Field_TaxonHierarcy),
                 Category = doc.Get(Field_Category),
+                Category2018 = doc.Get(Field_Category),
                 Criteria = doc.Get(Field_CriteriaAll),
                 AssessmentContext = doc.Get(Field_AssessmentContext),
                 PopularName = doc.Get(Field_PopularName)
@@ -240,6 +262,10 @@ namespace Prod.Api.Helpers
             if (filter.HorizonScan)
             {
                 ((BooleanQuery)query).Add(GetFieldQuery(Field_DoHorizonScanning, new[] { "1" }), Occur.MUST);
+                if (filter.Horizon.NotStarted)
+                {
+                    ((BooleanQuery)query).Add(GetFieldQuery(Field_LastUpdatedAt, new[] { DateTime.MinValue.Date.ToString("s") }), Occur.MUST);
+                }
             }
             else
             {

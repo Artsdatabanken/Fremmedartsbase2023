@@ -130,16 +130,18 @@ class ViewModel {
             riskAssessedFilter: [],
             riskNotAssessedFilter: [],
             filterType: [],
-            horizonFilters: false,
-            hsNotStarted: false,
-            hsFinished: false,
             workStatus: [],
-            toAssessment: false,
-            notAssessed: false,
-            potentialDoorKnockers: [],
-            notAssessedDoorKnocker: [],
-            responsible: [],
-
+            
+            horizonScanFilter: {
+                horizonFilters: false,
+                hsNotStarted: false,
+                hsFinished: false,
+                toAssessment: false,
+                notAssessed: false,
+                potentialDoorKnockers: [],
+                notAssessedDoorKnocker: [],
+                responsible: []
+            },
             ekspertgruppeReport: null,
             lockedForEditByUser: null,
             assessmentIsSaving: false,
@@ -365,7 +367,10 @@ class ViewModel {
 
         // **** sett expert group ****
         reaction(
-            () => [this.expertgroup, auth.isLoggedIn, this.assessmentTypeFilter],
+            () => [this.expertgroup, auth.isLoggedIn, this.assessmentTypeFilter, 
+                this.horizonScanFilter.notAssessedDoorKnocker.length, 
+                this.horizonScanFilter.potentialDoorKnockers.length,
+                this.horizonScanFilter.hsNotStarted, this.horizonScanFilter.hsFinished, this.horizonScanFilter.toAssessment, this.horizonScanFilter.notAssessed],
             ([expertgroupId, isLoggedIn])  => {
                 //console.log("react to expertgroup: " + expertgroupId + "," + isLoggedIn)
                 if(isLoggedIn && expertgroupId) {
@@ -915,7 +920,20 @@ class ViewModel {
         runInAction(() => this.loadingExpertGroup = true)
         const id = expertgroupId.replace('/','_')
 
-        const url = config.getUrl("expertgroupassessments/") + id + "?page=1" + (this.assessmentTypeFilter == "horizonScanning" ? "&HorizonScan=true" : "&HorizonScan=false")
+        var filters=""
+        if (this.assessmentTypeFilter == "horizonScanning")
+        {
+            filters+="&HorizonScan=true"
+            if (this.horizonScanFilter.hsFinished) filters += "&Horizon.NotStarted=true"
+            // hsNotStarted: false,
+            //     hsFinished: false,
+            //     toAssessment: false,
+            //     notAssessed: false,
+            //     potentialDoorKnockers: [],
+            //     notAssessedDoorKnocker: [],
+            //     responsible: []
+        }
+        const url = config.getUrl("expertgroupassessments/") + id + "?page=1" + filters
         const expertgroupAssessments = await auth.getJsonRequest(url)
 
         //console.log("------" + JSON.stringify(expertgroupAssessments))

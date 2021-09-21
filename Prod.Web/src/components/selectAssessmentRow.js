@@ -49,8 +49,8 @@ export default class selectAssessmentRow extends Component {
                     <span>{assessment.popularName}</span>
                 </td>
                 {/*<td>{assessment.horizonDoScanning ? "Ja" : "Nei"}</td>*/}
-                <td><span>{assessment.category}</span></td> 
-                <td><span>Kategori 2023</span></td>
+                <td><span>{assessment.category2018}</span></td> 
+                <td><span>{assessment.category}</span></td>
                 <td>
                     <span>{assessment.lastUpdatedAt.substring(0, 10) + " av " + assessment.lastUpdatedBy}</span>
                 </td>
