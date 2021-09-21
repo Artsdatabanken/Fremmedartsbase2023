@@ -19,10 +19,13 @@ export default class NewMigrationPathwayButton extends React.Component {
                 mainCategory: props.mainCat,
                 category: props.migrationPathway.name,
                 codeItem : props.migrationPathway.value,
-                introductionSpread : null,                
-                influenceFactor : "unknown", 
+                introductionSpread : null, 
+                influenceFactor : null, 
+                magnitude : null,
+                timeOfIncident : null,               
+                /*influenceFactor : "unknown", 
                 magnitude : "unknown",
-                timeOfIncident : "unknown",
+                timeOfIncident : "unknown",*/
                 elaborateInformation : ""
             },
         })

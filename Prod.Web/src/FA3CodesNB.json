@@ -823,6 +823,13 @@
         "migrationPathwayTime": [
             {
                 "Id": "migrationPathwayTime",
+                "Value": null,
+                "Text": " ",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "migrationPathwayTime",
                 "Value": "historic",
                 "Text": "Kun historisk",
                 "Info": null,
@@ -860,6 +867,13 @@
         "migrationPathwayFrequency": [
             {
                 "Id": "migrationPathwayFrequency",
+                "Value": null,
+                "Text": " ",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "migrationPathwayFrequency",
                 "Value": "numerousYearly",
                 "Text": "Tallrike ganger pr. år",
                 "Info": null,
@@ -894,7 +908,14 @@
                 "Children": null
             }
         ],
-        "migrationPathwayAbundance": [           
+        "migrationPathwayAbundance": [       
+            {
+                "Id": "migrationPathwayAbundance",
+                "Value": null,
+                "Text": " ",
+                "Info": null,
+                "Children": null
+            },    
             {
                 "Id": "migrationPathwayAbundance",
                 "Value": "1",
