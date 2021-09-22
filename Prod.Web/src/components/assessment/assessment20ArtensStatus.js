@@ -273,7 +273,7 @@ export default class Assessment20ArtensStatus extends React.Component {
                     
                     { assessment.isAlienSpecies == 'false' ?
                     <div>
-                        <b>{labels.SpeciesStatus.didSpecies} </b>
+                        <p>{labels.SpeciesStatus.didSpecies} </p>
                         <Xcomp.StringEnum observableValue={[assessment, "changedFromAlien"]} mode="radio" codes={codes.ChangedFromAlien}/>
                        {/* <Xcomp.Radio kode={"VærtFremmed"} observableValue={[assessment, "changedFromAlien"]} label={labels.SpeciesStatus.wasAlienButEstablishedNow} />
                         <Xcomp.Radio kode={"VærtAntattFremmed"} observableValue={[assessment, "changedFromAlien"]} label={labels.SpeciesStatus.wasThoughtToBeAlien} /> */}
