@@ -26,11 +26,35 @@ export default class Vurdering34Spredningsveier extends React.Component {
                 console.log(this.visibleDefinitions)
             })()
         }
+
+    }
+    // searches through the code tree to find the category name and the main category name
+    getCategoryText(val, pathways) {
+        var text = ""
+        if (pathways != undefined) {
+            pathways.map (pathway => pathway.children.map(higherLevel => { 
+                higherLevel.children.map(lowerLevel => {if (lowerLevel.value === val) { 
+                                                                            text = higherLevel.name + " - " + lowerLevel.name + ": "
+                                                                            }})     
+            }))
+            
+        }
+        return text
+    }
+    // removes <br>-tag from elaborateInformation-field
+    removeBreaks (text) {
+        var br = new RegExp('<br>', 'ig');
+        text = text.replace(br, '');
+        return text
     }
 
+   
     @action saveMigrationPathway(vurdering, mp) {
         const mps = vurdering.assesmentVectors
         const compstr = (mp) => ""+mp.codeItem+mp.introductionSpread+mp.influenceFactor+mp.magnitude+mp.timeOfIncident
+
+       
+
         const newMp = compstr(mp)
         const existing = mps.filter(oldMp =>  compstr(oldMp) === newMp
         )
@@ -56,13 +80,14 @@ export default class Vurdering34Spredningsveier extends React.Component {
         const vurdering = assessment
         const labels = appState.codeLabels
         const koder = appState.koder
+        
         const importationCodes = name == "Til innendørs- eller produksjonsareal" ? koder.migrationPathways[0].Children.mp[0].Children.mpimport : 
                                 name == "Introduksjon til natur" ? koder.migrationPathways[0].Children.mp[0].Children.mpimportation : 
                                 name == "Videre spredning i natur" ? koder.migrationPathways[0].Children.mp[0].Children.mpspread : null 
         // const {vurdering, viewModel, fabModel} = this.props;
        // const introductionSpread = name == "Introduksjon til natur" ? "introduction" : name == "Videre spredning i natur" ? "spread" : null
        // const migrationPathways = assessment.assesmentVectors.filter(pathway => pathway.introductionSpread == introductionSpread)
-
+      
        const migrationPathways = assessment.assesmentVectors
                
         //const migrationPathwayKoder = appState.spredningsveier.children.filter(child => child.name != "Import")
@@ -70,20 +95,22 @@ export default class Vurdering34Spredningsveier extends React.Component {
                                   name == "Videre spredning i natur" ? appState.spredningsveier.children.filter(child => child.name == "Videre spredning" || child.name == "Spredning")
                                    : appState.spredningsveier.children.filter(child => child.name != "Import" && child.name != "Videre spredning")
 
+             
+        
+        
+        // sets the string composed of all elaborate information and related categories
         var elaborateInformation = ""
 
         if (migrationPathways != []) {
 
             for (var i = 0; i < migrationPathways.length; i++) {
                 if (migrationPathways[i].elaborateInformation != "") {
-                    elaborateInformation += 
-                        //migrationPathways[i].mainCategory + ": " + 
-                        migrationPathways[i].codeItem + ": " + migrationPathways[i].elaborateInformation + "."
+                    var categoryText = this.getCategoryText(migrationPathways[i].codeItem, appState.spredningsveier.children)
+                    elaborateInformation += categoryText + this.removeBreaks(migrationPathways[i].elaborateInformation) + "." + "<br>"                       
                 }
                 
             }
         }
-        console.log (elaborateInformation)
        riskAssessment.furtherInfoAboutImport = elaborateInformation
 
 
