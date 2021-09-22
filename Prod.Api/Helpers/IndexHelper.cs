@@ -30,7 +30,7 @@ namespace Prod.Api.Helpers
             var maxDate = DateTime.MinValue;
             while (true)
             {
-                 var result = await _dbContext.Assessments.Include(x=>x.LastUpdatedByUser).Where(x => x.IsDeleted == false).OrderBy(x => x.Id).Skip(pointer).Take(batchSize)
+                 var result = await _dbContext.Assessments.Include(x=>x.LastUpdatedByUser).Include(x => x.LockedForEditByUser).Where(x => x.IsDeleted == false).OrderBy(x => x.Id).Skip(pointer).Take(batchSize)
                      .ToArrayAsync();
                  if (result.Length == 0)
                  {
@@ -55,6 +55,12 @@ namespace Prod.Api.Helpers
             _index.SetIndexVersion(new IndexVersion() { Version = IndexHelper.IndexVersion, DateTime = maxDate });
 
             return maxDate;
+        }
+        public static void Index(Assessment assessment, Index index)
+        {
+            var doc = GetDocumentFromAssessment(assessment);
+            index.AddOrUpdate(doc);
+            index.SetIndexVersion(new IndexVersion() { Version = IndexHelper.IndexVersion, DateTime = assessment.LastUpdatedAt });
         }
 
         private const string Field_Id = "Id";
@@ -100,9 +106,9 @@ namespace Prod.Api.Helpers
                 new StringField(Field_Group, ass.ExpertGroup, Field.Store.YES),
                 new StringField(Field_EvaluationStatus, ass.EvaluationStatus, Field.Store.YES),
                 new StoredField(Field_LastUpdatedBy, assessment.LastUpdatedByUser.FullName),
-                //new StoredField(Field_LastUpdatedAt, ass.LastUpdatedOn.ToString()),
-                //new StoredField(Field_LockedForEditByUser, ass.LockedForEditByUser?? string.Empty),
-                //new StoredField(Field_LockedForEditAt, ass.LockedForEditAt.ToString()),
+                new StringField(Field_LastUpdatedAt, assessment.LastUpdatedAt.Date.ToString("s"), Field.Store.YES),
+                new StoredField(Field_LockedForEditByUser, assessment.LockedForEditByUser != null ? assessment.LockedForEditByUser.FullName : string.Empty),
+                new StoredField(Field_LockedForEditAt, assessment.LockedForEditAt.ToString("s")),
                 new TextField(Field_ScientificName, ass.EvaluatedScientificName, Field.Store.YES), // textfield - ignore case
                 new StringField(Field_ScientificNameAsTerm, ass.EvaluatedScientificName.ToLowerInvariant(), Field.Store.NO), // textfield - ignore case
                 //new StoredField(Field_TaxonHierarcy, ass.VurdertVitenskapeligNavnHierarki),
@@ -111,7 +117,7 @@ namespace Prod.Api.Helpers
                 //new StringField(Field_AssessmentContext, ass.VurderingsContext, Field.Store.YES),
                 new TextField(Field_PopularName, ass.EvaluatedVernacularName??string.Empty, Field.Store.YES),
                 new StringField(Field_DoHorizonScanning, ass.HorizonDoScanning ? "1" : "0", Field.Store.NO),
-                new StringField(Field_LastUpdatedAt, assessment.LastUpdatedAt.Date.ToString("s"), Field.Store.YES)
+
             };
 
             //Kategori
