@@ -10,6 +10,7 @@ const SpeciesSpeciesTable = observer((props) =>
 {
     const labels = props.labels
     return <table className="table ecologicalEffect">
+        
         {!props.HCrit ? 
         <colgroup>
             <col style={{width: "20%"}} />
@@ -32,10 +33,12 @@ const SpeciesSpeciesTable = observer((props) =>
             {/*<col style={{width: "5%"}} />
             <col style={{width: "8%"}} />*/}
 
-
+        
         <thead>
+        <p>Legg til enkeltarter</p>
             <tr>
-                <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.localSpecies}} ></th>
+            
+                <th dangerouslySetInnerHTML={{__html: labels.DEcrit.localSpecies}} ></th>
                 {props.showKeyStoneSpecie ? <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.keystoneSpecies}} ></th> : null}
                 {props.showEffect ? <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.effect}} ></th> : null}
                 <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.scope}} ></th>

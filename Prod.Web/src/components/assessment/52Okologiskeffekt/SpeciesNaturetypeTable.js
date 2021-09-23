@@ -10,6 +10,8 @@ const SpeciesNaturetypeTable = observer((props) =>
 {
     const labels = props.labels
     return <table className="table ecologicalEffect">
+        
+
         <colgroup>
             <col style={{width: "20%"}} />
             {/*<col style={{width: "8%"}} />*/}
@@ -25,7 +27,9 @@ const SpeciesNaturetypeTable = observer((props) =>
 
         </colgroup>
 
+        
         <thead>
+        <p>Legg til grupper av arter</p>
             <tr>
                 <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.speciesInNaturetype}} ></th>
                 {props.showKeyStoneSpecie ? <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.keystoneOrEndangeredSpecies}} ></th> : null}
