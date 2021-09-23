@@ -78,6 +78,7 @@ export default class assessmentNew extends React.Component {
         const labels = appState.codeLabels
         const codes = appState.koder
         const rolle = appState.roleincurrentgroup
+        
         return (
             <div>
                 <fieldset className="well">
@@ -169,8 +170,10 @@ export default class assessmentNew extends React.Component {
                         </div>
                         <div className="col-md-6" style={{display: 'flex'}}>
                             <div>{labels.SelectAssessment.NBWritingAccess}</div>
-                            <Xcomp.Button primary onClick={this.onNewAssessment} disabled={!rolle.skriver || (!newAssessment.ScientificName || checkForExistingAssessment(newAssessment.ScientificName + ' ' + newAssessment.ScientificNameAuthor))}>{labels.SelectAssessment.createAssessment}</Xcomp.Button>
-                            {(newAssessment.ScientificName.length > 0 && !rolle.skriver || ( checkForExistingAssessment(newAssessment.ScientificName + ' ' + newAssessment.ScientificNameAuthor))) ? <div style={{color: 'red'}}>{labels.SelectAssessment.alreadyOnTheList}</div>: null}
+                            <Xcomp.Button primary onClick={this.onNewAssessment} disabled={!rolle.writeAccess || (!newAssessment.ScientificName || checkForExistingAssessment(newAssessment.ScientificName + ' ' + newAssessment.ScientificNameAuthor))}>{labels.SelectAssessment.createAssessment}</Xcomp.Button>
+                            {(newAssessment.ScientificName.length > 0 && 
+                                !rolle.writeAccess || 
+                                ( checkForExistingAssessment(newAssessment.ScientificName + ' ' + newAssessment.ScientificNameAuthor))) ? <div style={{color: 'red'}}>{labels.SelectAssessment.alreadyOnTheList}</div>: null}
                         </div>
                 </fieldset>
             </div>

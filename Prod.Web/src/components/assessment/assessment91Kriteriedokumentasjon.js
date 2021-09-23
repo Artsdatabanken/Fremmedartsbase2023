@@ -200,13 +200,13 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                     : null}
                 </div>
                 <div>
-                    {appState.assessment.vurderingsStatus !== 'finnished' 
+                    {appState.assessment.evaluationStatus !== 'finnished' 
                     && appState.ekspertgruppe !== null 
                     && appState.ekspertgruppeRolle 
                     && appState.ekspertgruppeRolle.admin
                     ? <div>{critlabels.assessmentUnderWork}<p/><Xcomp.Button onClick={() => this.setAssessmentComplete(appState)}>{critlabels.setComplete}</Xcomp.Button></div>
                     : null}
-                    {appState.assessment.vurderingsStatus === 'finnished' 
+                    {appState.assessment.evaluationStatus === 'finnished' 
                     && appState.ekspertgruppe !== null 
                     && appState.ekspertgruppeRolle 
                     && appState.ekspertgruppeRolle.admin
@@ -318,7 +318,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                         </fieldset>
 
                         <Xcomp.Button>{critlabels.showAssessmentSummary}</Xcomp.Button>
-                        {assessment.vurderingsStatus != "finnished" ? 
+                        {assessment.evaluationStatus != "finnished" ? 
                         <div>
                             <p>{critlabels.assessmentUnderWork}</p>
                             <Xcomp.Button>{critlabels.setComplete}</Xcomp.Button>
