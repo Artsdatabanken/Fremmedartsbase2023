@@ -3451,8 +3451,8 @@
             {
                 "Id": "Criterion",
                 "Value": "E",
-                "Text": "E-kriteriet: Effekter på øvrige stedegne arter",
-                "Info": "Kan arten påvirke øvrige stedegne arter innen 50 år",
+                "Text": "E-kriteriet: Effekter på øvrige rødlistevurderte arter",
+                "Info": "Kan arten påvirke øvrige rødlistevurderte arter innen 50 år",
                 "Children": {
                     "CritE": [
                         {
@@ -3566,7 +3566,7 @@
                 "Id": "Criterion",
                 "Value": "H",
                 "Text": "H-kriteriet: Overføring av genetisk materiale",
-                "Info": "Beskriv overføring av genetisk materiale (introgresjon) til stedegen art. Det skal være sannsynlighetsovervekt for overføringen",
+                "Info": "Beskriv overføring av genetisk materiale (introgresjon) til rødlistevurdert art. Det skal være sannsynlighetsovervekt for overføringen",
                 "Children": {
                     "CritH": [
                         {
@@ -3579,21 +3579,21 @@
                         {
                             "Id": "CritH",
                             "Value": "1",
-                            "Text": "Begrenset til stedegen art",
+                            "Text": "Begrenset til rødlistevurdert art",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": "CritH",
                             "Value": "2",
-                            "Text": "Storskala til stedegen art / Begrenset til truet art eller nøkkelart",
+                            "Text": "Storskala til rødlistevurdert art / Begrenset til truet art eller nøkkelart",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": "CritH",
                             "Value": "3",
-                            "Text": "Storskala til truet art eller nøkkelart"                            ,
+                            "Text": "Storskala til truet art eller nøkkelart",
                             "Info": null,
                             "Children": null
                         }
@@ -3604,7 +3604,7 @@
                 "Id": "Criterion",
                 "Value": "I",
                 "Text": "I-kriteriet: Overføring av parasitter eller patogener",
-                "Info": "Beskriv overføring av parasitter eller patogener (bakterier og virus inkludert) til stedegen art. Det skal være sannsynlighetsovervekt for overføringen",
+                "Info": "Beskriv overføring av parasitter eller patogener (bakterier og virus inkludert) til stedegne og andre arter som har blitt vurdert for rødlisting. Det skal være sannsynlighetsovervekt for overføringen",
                 "Children": {
                     "CritI": [
                         {
@@ -3624,14 +3624,14 @@
                         {
                             "Id": "CritI",
                             "Value": "2",
-                            "Text": "Storskala av stedegen parasitt til ny vert / Begrenset til ny truet verter",
+                            "Text": "Storskala av rødlistevurdert parasitt til ny vert / Begrenset til ny truet verter",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": "CritI",
                             "Value": "3",
-                            "Text": "Storskala av stedegen til ny truet vert /Storskala eller begrenset av en fremmed parasitt",
+                            "Text": "Storskala av rødlistevurdert til ny truet vert /Storskala eller begrenset av en fremmed parasitt",
                             "Info": null,
                             "Children": null
                         }
