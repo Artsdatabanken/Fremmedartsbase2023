@@ -346,15 +346,19 @@ namespace Prod.Api.Controllers
                var doc = JsonSerializer.Deserialize<FA4>(it.Doc);
                if (value.potensiellDørstokkart == "potentialDoorknocker")
                {
+                   // til doorknocker
                    doc.HorizonDoScanning = true;
                    doc.HorizonScanningStatus = "notStarted";
+                   doc.AlienSpeciesCategory = "DoorKnocker";
                }
                else
                {
+                   // fra horizon til ordinær
                    doc.HorizonDoScanning = false;
-               }
+                   if (doc.AlienSpeciesCategory == "DoorKnocker") doc.AlienSpeciesCategory = "AlienSpecie";
+                }
 
-               doc.LastUpdatedAt = DateTime.Now;
+                doc.LastUpdatedAt = DateTime.Now;
                 it.Doc = JsonSerializer.Serialize(doc);
                 it.LastUpdatedAt = doc.LastUpdatedAt;
                 var timestamp = _dbContext.TimeStamp.Single();
