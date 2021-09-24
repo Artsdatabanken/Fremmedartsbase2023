@@ -212,7 +212,7 @@ namespace Prod.Api.Controllers
 
             return rodliste2019WithCommentses;
         }
-
+        private static readonly object _indexingLock = new object();
         private async Task<FilteredAssessments> GetExpertGroupAssessments(string expertgroupid, IndexFilter filter, Guid userId)
         {
             var doReturn = new FilteredAssessments();
@@ -226,7 +226,20 @@ namespace Prod.Api.Controllers
             {
                 // do full index
                 // må da hente alle vurderinger indeksere disse og lagre max dato
-                var maxDate= await IndexHelper.Index(true, _dbContext, _index);
+                lock (_indexingLock)
+                {
+                    indexVersion = _index.GetIndexVersion();
+                    dbTimestamp = _dbContext.TimeStamp.SingleOrDefault();
+                    dbTimestamp.DateTimeUpdated =
+                        dbTimestamp.DateTimeUpdated.AddMilliseconds(-dbTimestamp.DateTimeUpdated.Millisecond);
+                    if (dbTimestamp == null ||
+                        indexVersion.Version != IndexHelper.IndexVersion) // not indexed yet or index is different now
+                    {
+                        var maxDate = IndexHelper.Index(true, _dbContext, _index);
+                    }
+                }
+
+
                 // index should be complete now
             }
             else if (Math.Abs((indexVersion.DateTime - dbTimestamp.DateTimeUpdated).TotalSeconds) > 1)

@@ -21,7 +21,7 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Change this to force index rebuild!
         /// </summary>
-        public const int IndexVersion = 2;
+        public const int IndexVersion = 8;
 
         private const string Field_Id = "Id";
         private const string Field_Group = "Expertgroup";
@@ -96,7 +96,7 @@ namespace Prod.Api.Helpers
 
             return maxDate;
         }
-        public static async Task<DateTime> Index(bool clear, ProdDbContext _dbContext, Index _index)
+        public static DateTime Index(bool clear, ProdDbContext _dbContext, Index _index)
         {
             //if (_index.IndexCount() > 1 && _index.IndexCount() < 5000) return;
 
@@ -108,10 +108,10 @@ namespace Prod.Api.Helpers
             var maxDate = DateTime.MinValue;
             while (true)
             {
-                var result = await _dbContext.Assessments.Include(x => x.LastUpdatedByUser)
+                var result = _dbContext.Assessments.Include(x => x.LastUpdatedByUser)
                     .Include(x => x.LockedForEditByUser).Where(x => x.IsDeleted == false).OrderBy(x => x.Id)
                     .Skip(pointer).Take(batchSize)
-                    .ToArrayAsync();
+                    .ToArray();
                 if (result.Length == 0) break;
                 pointer += result.Length;
                 var tempDate = result.Max(x => x.LastUpdatedAt);
@@ -121,10 +121,10 @@ namespace Prod.Api.Helpers
                 _index.AddOrUpdate(docs);
             }
 
-            if (await _dbContext.TimeStamp.SingleOrDefaultAsync() == null)
+            if (_dbContext.TimeStamp.SingleOrDefault() == null)
             {
                 _dbContext.TimeStamp.Add(new TimeStamp { Id = 1, DateTimeUpdated = maxDate });
-                await _dbContext.SaveChangesAsync();
+                _dbContext.SaveChanges();
             }
 
             _index.SetIndexVersion(new IndexVersion { Version = IndexVersion, DateTime = maxDate });
