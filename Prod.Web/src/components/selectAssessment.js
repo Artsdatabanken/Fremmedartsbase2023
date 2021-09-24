@@ -285,7 +285,7 @@ export default class SelectAssessment extends Component {
                             <div className="subChoice">
                                     <Xcomp.Bool observableValue={[appState.horizonScanFilter, "toAssessment"]} label={" % videre til risikovurdering"} />
                                     <Xcomp.Bool observableValue={[appState.horizonScanFilter, "notAssessed"]} label={" % ikke videre"} />
-                                <p>Totalt: {appState.expertgroupAssessmentFilteredList.length}</p>                                                                      
+                                <p>Totalt: {appState.expertgroupAssessmentTotalCount}</p>                                                                      
                             </div>
 
                         </div>

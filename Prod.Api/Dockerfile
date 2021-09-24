@@ -27,6 +27,8 @@ COPY --from=publish /app/publish .
 COPY ["Prod.Web/dist/", "Frontend/"]
 ENV ASPNETCORE_URLS="http://+:3001"
 RUN groupadd -r --gid 1007 dockerrunner && useradd -r -g dockerrunner dockerrunner
+RUN mkdir -m 775 /app/Data
+RUN chown dockerrunner -R /app/Data
 USER dockerrunner
 EXPOSE 3001
 ENTRYPOINT ["dotnet", "Prod.Api.dll"]
