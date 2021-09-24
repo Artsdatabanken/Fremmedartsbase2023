@@ -353,3 +353,5 @@ MigrationBackup/
 .ionide/
 /SwissKnife/Dump
 Prod.Web/.parcel-cache
+/Prod.Api/Data/index
+/Prod.Api/Data/facets

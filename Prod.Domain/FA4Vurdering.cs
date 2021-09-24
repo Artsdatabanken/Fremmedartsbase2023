@@ -45,11 +45,11 @@ namespace Prod.Domain
         }
 
         public int Id { get; set; }
-        public string VurderingId2018 { get; set; }
-        public int VurderingId2012 { get; set; }
-        public int RiskLevel2012 { get; set; }
-        public int SpreadRiskLevel2012 { get; set; }
-        public int EcologicalRiskLevel2012 { get; set; }
+        //public string VurderingId2018 { get; set; }
+        //public int VurderingId2012 { get; set; } // sah 21-09-2021 - flyttet til PreviousAssessments.assessmentsid
+        //public int RiskLevel2012 { get; set; } // sah 21-09-2021 - flyttet til PreviousAssessments
+        //public int SpreadRiskLevel2012 { get; set; }// sah 21-09-2021 - flyttet til PreviousAssessments
+        //public int EcologicalRiskLevel2012 { get; set; }// sah 21-09-2021 - flyttet til PreviousAssessments
 
         public string EvaluationContext { get; set; }
 
@@ -69,7 +69,7 @@ namespace Prod.Domain
         //public string ScientificName { get; set; }
 
 
-        public string VurderingsStatus { get; set; }
+        //public string VurderingsStatus { get; set; }
 
         //public string SpeciesName { get; set; } // fab: SpeciesName // Brukes 'over alt' i 2012 - toooodo: bør kunne klare oss uten?
         public List<string> ReasonForChangeOfCategory { get; set; } = new List<string>();
@@ -112,6 +112,7 @@ namespace Prod.Domain
         public string HorizonEstablismentPotentialDescription { get; set; } = "";
         public string HorizonEcologicalEffect { get; set; }
         public string HorizonEcologicalEffectDescription { get; set; } = "";
+        public string HorizonScanningStatus { get; set; } = "notStarted";
     }
 
 
@@ -1145,6 +1146,9 @@ namespace Prod.Domain
     {
         public List<SimpleReference> References { get; set; } = new List<SimpleReference>();
     }
+    public partial class FA4 // History
+    { public List<PreviousAssessment> PreviousAssessments { get; set; } = new List<PreviousAssessment>();
+    }
 
 
     public partial class FA4 // Disse variablene er sjekket og var ikke i bruk i 2012 fab Prod
@@ -1204,6 +1208,19 @@ namespace Prod.Domain
         //    public List<string> NatureTypeVariation;
         //}
 
+        /// <summary>
+        /// Static copy of information from previous assesment - for historical purposes
+        /// </summary>
+        public class PreviousAssessment
+        {
+            public int RevisionYear { get; set; } = 2018;
+            public string AssessmentId { get; set; }
+            public int RiskLevel { get; set; }
+            public int SpreadRiskLevel { get; set; }
+            public int EcologicalRiskLevel { get; set; }
+            public string MainCategory { get; set; }
+            public string MainSubCategory { get; set; }
+        }
 
         public class ImpactedNatureType
         {

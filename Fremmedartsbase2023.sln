@@ -20,7 +20,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SwissKnife", "SwissKnife\SwissKnife.csproj", "{344F13F5-5A73-4B6C-A5AC-6A35CCE32D6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prod.Tests", "Prod.Tests\Prod.Tests.csproj", "{FB4D9B2B-485F-45E6-AEFD-12ECED349473}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Prod.Tests", "Prod.Tests\Prod.Tests.csproj", "{FB4D9B2B-485F-45E6-AEFD-12ECED349473}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nbic.Indexer", "Nbic.Indexer\Nbic.Indexer.csproj", "{18523A34-8A49-4312-A763-9480B2DFD8DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +83,16 @@ Global
 		{FB4D9B2B-485F-45E6-AEFD-12ECED349473}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FB4D9B2B-485F-45E6-AEFD-12ECED349473}.ReleaseDrift|Any CPU.ActiveCfg = Release|Any CPU
 		{FB4D9B2B-485F-45E6-AEFD-12ECED349473}.ReleaseDrift|Any CPU.Build.0 = Release|Any CPU
+		{18523A34-8A49-4312-A763-9480B2DFD8DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18523A34-8A49-4312-A763-9480B2DFD8DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18523A34-8A49-4312-A763-9480B2DFD8DA}.DebugRelease|Any CPU.ActiveCfg = Release|Any CPU
+		{18523A34-8A49-4312-A763-9480B2DFD8DA}.DebugRelease|Any CPU.Build.0 = Release|Any CPU
+		{18523A34-8A49-4312-A763-9480B2DFD8DA}.DebugRemote|Any CPU.ActiveCfg = Debug|Any CPU
+		{18523A34-8A49-4312-A763-9480B2DFD8DA}.DebugRemote|Any CPU.Build.0 = Debug|Any CPU
+		{18523A34-8A49-4312-A763-9480B2DFD8DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18523A34-8A49-4312-A763-9480B2DFD8DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18523A34-8A49-4312-A763-9480B2DFD8DA}.ReleaseDrift|Any CPU.ActiveCfg = Release|Any CPU
+		{18523A34-8A49-4312-A763-9480B2DFD8DA}.ReleaseDrift|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

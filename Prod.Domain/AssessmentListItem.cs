@@ -36,6 +36,7 @@ namespace Prod.Domain
         public int CommentNew { get; set; }
 
         public int TaxonChange { get; set; }
+        public string Category2018 { get; set; }
 
         //public List<string> Criteria { get; set; }
         //public List<string> SearchStrings { get; set; }

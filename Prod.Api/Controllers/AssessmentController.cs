@@ -12,7 +12,10 @@ using Prod.Api.Services;
 using Prod.Data.EFCore;
 using Prod.Domain;
 using Microsoft.AspNetCore.SignalR;
+using Prod.Api.Helpers;
 using Prod.Api.Hubs;
+using Index = Nbic.Indexer.Index;
+
 // ReSharper disable AsyncConverter.ConfigureAwaitHighlighting
 
 namespace Prod.Api.Controllers
@@ -25,13 +28,15 @@ namespace Prod.Api.Controllers
         private readonly ProdDbContext _dbContext;
         private readonly IReferenceService _referenceService;
         private readonly IHubContext<MessageHub> _hubContext;
+        private readonly Index _index;
 
-        public AssessmentController(IDiscoveryCache discoveryCache, ProdDbContext dbContext, IReferenceService referenceService, IHubContext<MessageHub> hubContext) : base(discoveryCache, dbContext)
+        public AssessmentController(IDiscoveryCache discoveryCache, ProdDbContext dbContext, IReferenceService referenceService, IHubContext<MessageHub> hubContext, Index index) : base(discoveryCache, dbContext)
         //public AssessmentController(IDiscoveryCache discoveryCache, ProdDbContext dbContext, IReferenceService referenceService) : base(discoveryCache, dbContext)
         {
             _dbContext = dbContext;
             _referenceService = referenceService;
             _hubContext = hubContext;
+            _index = index;
         }
 
         private Task SendMessage(string context, string message)
@@ -402,14 +407,14 @@ namespace Prod.Api.Controllers
             var now = DateTime.Now;
             doc.LastUpdatedAt = now;
 
-            var assessment = _dbContext.Assessments.SingleOrDefault(x => x.Id == id);
+            var assessment = await _dbContext.Assessments.Include(x=>x.LastUpdatedByUser).Include(x => x.LockedForEditByUser).SingleOrDefaultAsync(x => x.Id == id);
 
             if (!forceStore && (assessment.LockedForEditByUser != null && assessment.LockedForEditByUser.Id != user.Id))
             {
                 throw new Exception("IKKE SKRIVETILGANG TIL DENNE VURDERINGEN - Låst av annen bruker");
             }
 
-
+            var realUser = await _dbContext.Users.SingleOrDefaultAsync(x => x.Id == user.Id);
             //// check and update referenceUsages
             //var usedReferences = doc.References.Select(x => x.ReferenceId).ToArray();
             //if (!forceStore && usedReferences.Any())
@@ -480,18 +485,34 @@ namespace Prod.Api.Controllers
             {
                 doc.EvaluationStatus = "inprogress";
                 doc.LastUpdatedAt = now;
-                doc.LastUpdatedBy = user.UserName;
+                doc.LastUpdatedBy = realUser.FullName;
                 assessment.LastUpdatedAt = doc.LastUpdatedAt;
-                assessment.LastUpdatedByUserId = user.Id;
+                assessment.LastUpdatedByUserId = realUser.Id;
+                assessment.LastUpdatedByUser = realUser;
             }
 
             assessment.LockedForEditAt = doc.LockedForEditAt;
             assessment.LockedForEditByUserId = doc.LockedForEditByUserId;
+            if (assessment.LockedForEditByUserId.HasValue)
+            {
+                if (assessment.LockedForEditByUserId.Value == realUser.Id && assessment.LockedForEditByUser == null)
+                {
+                    assessment.LockedForEditByUser = realUser;
+                }
+                else if (assessment.LockedForEditByUserId.Value != realUser.Id &&
+                         assessment.LockedForEditByUser == null)
+                {
+                    assessment.LockedForEditByUser = await
+                        _dbContext.Users.SingleOrDefaultAsync(x => x.Id == assessment.LockedForEditByUserId.Value);
+                }
+            }
 
             var assessmentString = JsonSerializer.Serialize(doc);
             assessment.Doc = assessmentString;
+            var timestamp =_dbContext.TimeStamp.Single();
+            timestamp.DateTimeUpdated = assessment.LastUpdatedAt;
             await _dbContext.SaveChangesAsync().ConfigureAwait(false);
-
+            IndexHelper.Index(assessment, _index);
         }
         //private static async Task<byte[]> GetZipDataFromArtskart(FA4 rlRodliste2019)
         //{

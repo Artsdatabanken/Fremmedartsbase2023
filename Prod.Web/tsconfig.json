@@ -2,5 +2,6 @@
     "compilerOptions": {
         "experimentalDecorators": true,
         "allowJs": true
-    }
+    },
+    "exclude": ["node_modules", "dist", ".parcel-cache"]
 }

@@ -248,7 +248,7 @@ export default class SelectAssessment extends Component {
                         <div className="filters"><b>{labels.SelectAssessment.assessmentLeader}</b>
                         <Xcomp.MultiselectArray
                                 observableValue={[appState, 'responsible']} 
-                                codes={koder.responsible}
+                                codes={appState.expertgroupAssessmentAuthors}
                                 mode="check"/>
                         </div>
                     
@@ -275,16 +275,16 @@ export default class SelectAssessment extends Component {
                 {appState.assessmentTypeFilter == "horizonScanning" && 
                 <div className="selectFilter">
                     <div className="filters">
-                        <Xcomp.Bool observableValue={[appState, "horizonFilters"]} label={"Filtrer på framdrift, grupper av potensielle dørstokkarter og vurderingsansvarlig"} />
+                        <Xcomp.Bool observableValue={[appState.horizonScanFilter, "horizonFilters"]} label={"Filtrer på framdrift, grupper av potensielle dørstokkarter og vurderingsansvarlig"} />
                     
-                {appState.horizonFilters == true &&
+                {appState.horizonScanFilter.horizonFilters == true &&
                 <div className="nav_menu">
                         <div className="filters"><b>{labels.SelectAssessment.assessmentStatus}</b>   
-                            <Xcomp.Bool observableValue={[appState, "hsNotStarted"]} label={koder.workStatus[0].text + "   ( ) %"} />                   
-                            <Xcomp.Bool observableValue={[appState, "hsFinished"]} label={koder.workStatus[2].text + "   ( ) %"} /> 
+                                <Xcomp.Bool observableValue={[appState.horizonScanFilter, "hsNotStarted"]} label={koder.workStatus[0].text + "   ( ) %"} />
+                                <Xcomp.Bool observableValue={[appState.horizonScanFilter, "hsFinished"]} label={koder.workStatus[2].text + "   ( ) %"} />
                             <div className="subChoice">
-                                <Xcomp.Bool observableValue={[appState, "toAssessment"]} label={" % videre til risikovurdering"} />                         
-                                <Xcomp.Bool observableValue={[appState, "notAssessed"]} label={" % ikke videre"} />  
+                                    <Xcomp.Bool observableValue={[appState.horizonScanFilter, "toAssessment"]} label={" % videre til risikovurdering"} />
+                                    <Xcomp.Bool observableValue={[appState.horizonScanFilter, "notAssessed"]} label={" % ikke videre"} />
                                 <p>Totalt: {appState.expertgroupAssessmentFilteredList.length}</p>                                                                      
                             </div>
 
@@ -292,12 +292,12 @@ export default class SelectAssessment extends Component {
                         <div className="filters"><b>{labels.SelectAssessment.PotentialDoorKnockers}</b>
                         
                         <Xcomp.MultiselectArray
-                                observableValue={[appState, 'potentialDoorKnockers']} 
+                                observableValue={[appState.horizonScanFilter, 'potentialDoorKnockers']} 
                                 codes={koder.potentialDoorKnockers}
                                 mode="check"/>
                         <div className="subChoice">
                         <Xcomp.MultiselectArray
-                                observableValue={[appState, 'notAssessedDoorKnocker']} 
+                                observableValue={[appState.horizonScanFilter, 'notAssessedDoorKnocker']} 
                                 codes={koder.notAssessedDoorKnocker}
                                 mode="check"/>
                         </div>
@@ -306,7 +306,7 @@ export default class SelectAssessment extends Component {
                         <div className="filters"><b>{labels.SelectAssessment.assessmentLeader}</b>
                         <Xcomp.MultiselectArray
                                 observableValue={[appState, 'responsible']} 
-                                codes={koder.responsible}
+                                codes={appState.expertgroupAssessmentAuthors}
                                 mode="check"/>
                         </div>
                     </div>}

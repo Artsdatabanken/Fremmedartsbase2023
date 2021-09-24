@@ -2,7 +2,7 @@
   "profiles": {
     "SwissKnife": {
       "commandName": "Project",
-      "commandLineArgs": "olddb import --connectionstring \"Server=localhost;Database=FAB2023;Integrated Security=true;MultipleActiveResultSets=true\" --inputfolder .\\dump"
+      "commandLineArgs": "newdb import --connectionstring \"Server=localhost;Database=FAB2023;Integrated Security=true;MultipleActiveResultSets=true\" --inputfolder .\\dump"
     }
   }
 }

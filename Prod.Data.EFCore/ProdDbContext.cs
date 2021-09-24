@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Prod.Domain;
 
@@ -22,6 +23,7 @@ namespace Prod.Data.EFCore
 
         public virtual DbSet<AssessmentComment> Comments { get; set; }
         public virtual DbSet<Attachment> Attachments { get; set; }
+        public virtual DbSet<TimeStamp> TimeStamp { get; set; }
 
         //public virtual DbSet<UserFeedback> UserFeedbacks { get; set; } // later?
         
@@ -30,6 +32,13 @@ namespace Prod.Data.EFCore
 
             const int brukerIdSize = 100;
             const int ekspertgruppeIdSize = 200;
+
+            modelBuilder.Entity<TimeStamp>(e =>
+            {
+                e.HasKey(x => x.Id);
+                e.Property(x => x.Id).ValueGeneratedNever();
+                e.Property(x => x.DateTimeUpdated).IsRequired();
+            });
 
             // User
             modelBuilder
@@ -162,4 +171,9 @@ namespace Prod.Data.EFCore
         }
     }
 
+    public class TimeStamp
+    {
+        public int Id { get; set; }
+        public DateTime DateTimeUpdated { get; set; }
+    }
 }
