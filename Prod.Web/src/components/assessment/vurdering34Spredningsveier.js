@@ -88,7 +88,10 @@ export default class Vurdering34Spredningsveier extends React.Component {
        // const introductionSpread = name == "Introduksjon til natur" ? "introduction" : name == "Videre spredning i natur" ? "spread" : null
        // const migrationPathways = assessment.assesmentVectors.filter(pathway => pathway.introductionSpread == introductionSpread)
       
-       const migrationPathways = assessment.assesmentVectors
+       const migrationPathways = name == "Til innendørs- eller produksjonsareal" ? assessment.importPathways :        
+                                name == "Videre spredning i natur" ? assessment.assesmentVectors.filter(vector => vector.introductionSpread == "spread") : 
+                                name == "Introduksjon til natur" ? assessment.assesmentVectors.filter(vector => vector.introductionSpread == "introduction") : null
+
                
         //const migrationPathwayKoder = appState.spredningsveier.children.filter(child => child.name != "Import")
        const migrationPathwayKoder = name == "Til innendørs- eller produksjonsareal" ? appState.spredningsveier.children.filter(child => child.name == "Import") :
@@ -132,7 +135,7 @@ export default class Vurdering34Spredningsveier extends React.Component {
                 { true || config.showPageHeaders ? <h4 style={{marginTop: "25px"}} >{labels.MigrationPathway.introductionSpread}</h4> : <br />} */}
                 <h4>{name}</h4>
                 {migrationPathways.length > 0 &&
-                     <MPTable migrationPathways={migrationPathways} removeMigrationPathway={fjernSpredningsvei} showIntroductionSpread />
+                     <MPTable migrationPathways={migrationPathways} removeMigrationPathway={fjernSpredningsvei} showIntroductionSpread getCategoryText={this.getCategoryText} migrationPathwayCodes={appState.spredningsveier.children}/>
                 }
                 <hr/>
                 <div className="import">
