@@ -112,7 +112,7 @@ class ViewModel {
                 comment: null
             },
             artificialAndConstructedSites: ["F4", "F5", "H4", "L7", "L8", "M14", "M15", "T35", "T36", "T37", "T38", "T39", "T40", "T41", "T42", "T43", "T44", "T45", "V11", "V12", "V13"],
-            assessmentTypeFilter: "",
+            assessmentTypeFilter: "horizonScanning",
             vurdert: false,
             ikkevurdert: false,
 
@@ -121,6 +121,8 @@ class ViewModel {
             expertgroup: null,
             roleincurrentgroup: null,
             expertgroupAssessmentList: [],
+            expertgroupAssessmentTotalCount: 0,
+            expertgroupAssessmentAuthors: [],
             expertgroupAssessmentFilter: "",
             expertgroupCategoryFilter: "",
             expertgroupCategoryCheckboxFilter: [],
@@ -130,16 +132,19 @@ class ViewModel {
             riskAssessedFilter: [],
             riskNotAssessedFilter: [],
             filterType: [],
-            horizonFilters: false,
-            hsNotStarted: false,
-            hsFinished: false,
             workStatus: [],
-            toAssessment: false,
-            notAssessed: false,
-            potentialDoorKnockers: [],
-            notAssessedDoorKnocker: [],
-            responsible: [],
-
+            
+            horizonScanFilter: {
+                horizonFilters: false,
+                hsNotStarted: false,
+                hsFinished: false,
+                toAssessment: false,
+                notAssessed: false,
+                potentialDoorKnockers: [],
+                notAssessedDoorKnocker: []
+            },
+            
+            responsible: [], // list of lastupdatedbypeople
             ekspertgruppeReport: null,
             lockedForEditByUser: null,
             assessmentIsSaving: false,
@@ -365,7 +370,12 @@ class ViewModel {
 
         // **** sett expert group ****
         reaction(
-            () => [this.expertgroup, auth.isLoggedIn],
+            () => [this.expertgroup, auth.isLoggedIn, this.assessmentTypeFilter, 
+                this.horizonScanFilter.notAssessedDoorKnocker.length, 
+                this.horizonScanFilter.potentialDoorKnockers.length,
+                this.horizonScanFilter.hsNotStarted, this.horizonScanFilter.hsFinished, this.horizonScanFilter.toAssessment, this.horizonScanFilter.notAssessed,
+                this.responsible.length
+            ],
             ([expertgroupId, isLoggedIn])  => {
                 //console.log("react to expertgroup: " + expertgroupId + "," + isLoggedIn)
                 if(isLoggedIn && expertgroupId) {
@@ -899,10 +909,54 @@ class ViewModel {
           );
     }
 
+    @action getAssessmentsForFilter() {
+        const påv = toJS(this.selectedPåvirkningsfaktor)
+        const existing = this.assessment.påvirkningsfaktorer.find(item =>
+            item.id == påv.id)
+        if(existing) {
+            // console.log("existing:" + JSON.stringify(existing))
+            this.assessment.påvirkningsfaktorer.remove(existing)
+        }
+        this.assessment.påvirkningsfaktorer.push(påv)
+        this.clearSelectedPåvirkningsfaktor()
+    }
+
     async loadExpertgroupAssessmentList(expertgroupId) {
         runInAction(() => this.loadingExpertGroup = true)
         const id = expertgroupId.replace('/','_')
-        const url = config.getUrl("expertgroupassessments/") + id
+
+        var filters=""
+        if (this.assessmentTypeFilter == "horizonScanning")
+        {
+            filters=filters + "&HorizonScan=true"
+                        
+            if (this.horizonScanFilter.potentialDoorKnockers.some(x=> x == "newPotentialDoorKnocker")) filters =filters +  "&Horizon.NR2018=1"
+            if (this.horizonScanFilter.potentialDoorKnockers.some(x=> x == "NR2018")) filters =filters +  "&Horizon.NR2018=5"
+            if (this.horizonScanFilter.notAssessedDoorKnocker.some(x=> x == "notAssessedDoorKnocker")) filters =filters +  "&Horizon.NR2018=6"
+            if (this.horizonScanFilter.notAssessedDoorKnocker.some(x=> x == "notEstablishedWithin50Years")) filters =filters +  "&Horizon.NR2018=7"
+
+            if (this.horizonScanFilter.hsNotStarted) filters =filters +  "&Horizon.NotStarted=true"
+            if (this.horizonScanFilter.hsFinished) filters =filters +  "&Horizon.Finished=true"
+            if (this.horizonScanFilter.toAssessment) filters =filters +  "&Horizon.ToAssessment=true"
+            if (this.horizonScanFilter.notAssessed) filters =filters +  "&Horizon.NotAssessed=true"
+
+            if (this.responsible.length > 0){
+                filters = filters + this.responsible.map((x)=> "&Responsible=" + x ).join()
+            }
+        }else{
+            filters=filters + "&HorizonScan=false"
+        }
+        if (this.filterType == "FL2018"){
+
+        }
+        if (this.filterType == "FL2023"){
+
+        }
+        if (this.filterType == "statusAndCommentFL2023"){
+
+        }
+
+        const url = config.getUrl("expertgroupassessments/") + id + "?page=1" + filters
         const expertgroupAssessments = await auth.getJsonRequest(url)
 
         //console.log("------" + JSON.stringify(expertgroupAssessments))
@@ -917,11 +971,21 @@ class ViewModel {
 
 
         const assessments = observable.array(expertgroupAssessments.assessments)
+        const fixCode = function(author){
+            var parts = author.split(";");
+            return {
+            "text": (parts[0] + " (" +parts[1] +")"),
+            "value": parts[0]
+            }
+        }
+        const authors = expertgroupAssessments.authors.map((author) =>fixCode(author))
         console.log("loded " + assessments.length + " assessments")
         runInAction(() => {
             this.expertgroupAssessmentList = assessments
             this.roleincurrentgroup = role
             this.loadingExpertGroup = false
+            this.expertgroupAssessmentTotalCount = expertgroupAssessments.totalCount
+            this.expertgroupAssessmentAuthors = observable.array(authors)
         })
 
     }
@@ -964,7 +1028,7 @@ class ViewModel {
         console.log("opprett ny vurdering: " + taxinfo.ScientificName + " " + taxinfo.ScientificNameId + " " + taxinfo.Ekspertgruppe)
         const url = config.getUrl("assessment/createnew")
         fetch(url, {
-            method: 'POST',
+            method: 'PUT',
             // mode: 'no-cors',
             body: JSON.stringify(taxinfo),
             headers:{

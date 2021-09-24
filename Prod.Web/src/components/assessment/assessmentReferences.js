@@ -290,7 +290,7 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
     }
 
     removeReferenceFromAssessment = action((assessment, id) => {        
-        const refs = assessment.referanser
+        const refs = assessment.references
         console.log(refs)
         const ref = refs.find(r => r.referenceId === id)
         if(ref) {
@@ -298,7 +298,7 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
         }
     })
     updateReferenceFromAssessment = action((assessment, value) => {        
-        let refs = assessment.referanser
+        let refs = assessment.references
         let result = refs.slice().sort(this.compare)
         refs = result
         console.log(refs)
@@ -326,24 +326,24 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
     })
 
     fjernReferanse = action((assessment, ref) => {             
-        const result = assessment.referanser.remove(ref);
+        const result = assessment.references.remove(ref);
         console.log(`item removed : ${  result}`)
     })
 
     leggTilReferanse = action((assessment, value) => {
         const reference = observable({type: value.referenceType, referenceId: value.id, formattedReference: value.referencePresentation, url: value.url});       
-        const refs = assessment.referanser;
+        const refs = assessment.references;
         
         if (refs){
        
             assessment
-                .referanser
+                .references
                 .push(reference);
         
         } else {
-            assessment.referanser = [];
+            assessment.references = [];
             assessment
-                    .referanser
+                    .references
                     .push(reference);
         }        
         if (document.getElementById(value.id) != null) {
@@ -443,7 +443,7 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
         //const {vurdering, viewModel, labels, codes} = this.props;
         const {appState, appState:{assessment, assessment:{referanser}, koder, refcodes}} = this.props
         const labels = appState.codeLabels
-        //console.log(JSON.stringify(referanser));
+        //console.log(JSON.stringify(references));
         const kodeTekst = (kodegruppe, id) => {
             const gr = koder[kodegruppe]
             console.log(gr)

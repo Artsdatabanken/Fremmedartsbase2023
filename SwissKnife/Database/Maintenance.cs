@@ -18,8 +18,28 @@ namespace SwissKnife.Database
     public class Maintenance
     {
         private SqlServerProdDbContext _database;
+        private static Dictionary<string, string> expertGroupReplacements = new Dictionary<string, string>()
+        {
+            { "ExpertGroups/Fisker/S", "Fisker (Svalbard)" },
+            { "ExpertGroups/Marineinvertebrater/S", "Marine invertebrater (Svalbard)" },
+            { "ExpertGroups/Fugler/S", "Fugler (Svalbard)" },
+            { "ExpertGroups/Testedyr/N", "Testedyr" },
+            { "ExpertGroups/Karplanter/S", "Karplanter (Svalbard)" },
+            { "ExpertGroups/Pattedyr/S", "Pattedyr (Svalbard)" },
+            { "ExpertGroups/Fugler/N", "Fugler" },
+            { "ExpertGroups/Pattedyr/N", "Pattedyr" },
+            { "ExpertGroups/Rundormerogflatormer/N", "Rundormer og flatormer" },
+            { "ExpertGroups/Ikkemarineinvertebrater/N", "Ikke-marine invertebrater" },
+            { "ExpertGroups/Moser/N", "Moser" },
+            { "ExpertGroups/Marineinvertebrater/N", "Marine invertebrater" },
+            { "ExpertGroups/Sopper/N", "Sopper" },
+            { "ExpertGroups/Alger/N", "Alger" },
+            { "ExpertGroups/Karplanter/N", "Karplanter" },
+            { "ExpertGroups/Fisker/N", "Fisker" },
+            { "ExpertGroups/Amfibierogreptiler/N", "Amfibier og reptiler" }
+        };
 
-        public Maintenance(string connectionString)
+    public Maintenance(string connectionString)
         {
             _database = new Prod.Data.EFCore.SqlServerProdDbContext(connectionString);
         }
@@ -379,30 +399,66 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.EvaluationStatus, opt => opt.Ignore())
                     .ForMember(dest => dest.TaxonHierarcy, opt => opt.Ignore())
                     .ForMember(dest => dest.IsDeleted, opt => opt.Ignore())
-                    .ForMember(dest => dest.VurderingId2018, opt => opt.MapFrom(src => src.Id))
+                    //.ForMember(dest => dest.VurderingId2018, opt => opt.MapFrom(src => src.Id))
                     .ForMember(dest => dest.HorizonDoScanning, opt => opt.Ignore())
+                    .ForMember(dest => dest.HorizonScanningStatus, opt => opt.Ignore())
                     .ForMember(dest => dest.HorizonEcologicalEffect, opt => opt.Ignore())
                     .ForMember(dest => dest.HorizonEcologicalEffectDescription, opt => opt.Ignore())
                     .ForMember(dest => dest.HorizonEstablismentPotential, opt => opt.Ignore())
                     .ForMember(dest => dest.HorizonEstablismentPotentialDescription, opt => opt.Ignore())
                     .ForMember(dest => dest.Id, opt => opt.Ignore()) // primærnøkkel
-
+                    .ForMember(dest =>dest.PreviousAssessments, opt => opt.Ignore()) // ny av året
                     .AfterMap((src, dest) =>
                     {
                         // set some standard values
                         dest.EvaluationStatus = "imported";
+                        dest.HorizonScanningStatus = "notStarted";
                         dest.TaxonHierarcy = "";
                         dest.IsDeleted = false;
+                        if (string.IsNullOrWhiteSpace(dest.ExpertGroup) && !string.IsNullOrWhiteSpace(src.ExpertGroupId) && expertGroupReplacements.ContainsKey(src.ExpertGroupId))
+                        {
+                            dest.ExpertGroup = expertGroupReplacements[src.ExpertGroupId];
+                        }
+
+                        dest.PreviousAssessments.Add(new FA4.PreviousAssessment()
+                        {
+                            AssessmentId = src.Id,
+                            RevisionYear = 2018,
+                            RiskLevel = src.RiskAssessment.RiskLevel,
+                            EcologicalRiskLevel = src.RiskAssessment.EcoEffectLevel,
+                            SpreadRiskLevel = src.RiskAssessment.InvationPotentialLevel,
+                            MainCategory = src.AlienSpeciesCategory,
+                            MainSubCategory = src.AlienSpeciesCategory == "DoorKnocker" ? src.DoorKnockerCategory :
+                                src.AlienSpeciesCategory == "NotApplicable" ? src.NotApplicableCategory:
+                                    src.AlienSpeciesCategory == "RegionallyAlien" ? src.RegionallyAlienCategory:
+                                ""
+                        });
+                        dest.PreviousAssessments.Add(new FA4.PreviousAssessment()
+                        {
+                            AssessmentId = src.VurderingId2012.ToString(),
+                            RevisionYear = 2012,
+                            RiskLevel = src.RiskLevel2012,
+                            EcologicalRiskLevel = src.EcologicalRiskLevel2012,
+                            SpreadRiskLevel = src.SpreadRiskLevel2012,
+                            MainCategory = src.AlienSpeciesCategory2012,
+                            MainSubCategory = ""
+                        });
+
+                        ConvertHelper.SetHorizonScanningBasedOn2018Assessments(dest);
                     });
 
                 cfg.CreateMap<FA3Legacy, Prod.Domain.RiskAssessment>()
                     .ForMember(dest => dest.AOOknown, opt => opt.MapFrom(src => src.CurrentExistenceArea))
                     .ForMember(dest => dest.AOOtotalBest, opt => opt.MapFrom(src => src.CurrentExistenceAreaCalculated))
-                    .ForMember(dest => dest.AOOtotalLow, opt => opt.MapFrom(src => src.CurrentExistenceAreaLowCalculated))
-                    .ForMember(dest => dest.AOOtotalHigh, opt => opt.MapFrom(src => src.CurrentExistenceAreaHighCalculated))
+                    .ForMember(dest => dest.AOOtotalLow,
+                        opt => opt.MapFrom(src => src.CurrentExistenceAreaLowCalculated))
+                    .ForMember(dest => dest.AOOtotalHigh,
+                        opt => opt.MapFrom(src => src.CurrentExistenceAreaHighCalculated))
                     .ForMember(dest => dest.AOO50yrBest, opt => opt.MapFrom(src => src.PotentialExistenceArea))
-                    .ForMember(dest => dest.AOO50yrLow, opt => opt.MapFrom(src => src.PotentialExistenceAreaLowQuartile))
-                    .ForMember(dest => dest.AOO50yrHigh, opt => opt.MapFrom(src => src.PotentialExistenceAreaHighQuartile))
+                    .ForMember(dest => dest.AOO50yrLow,
+                        opt => opt.MapFrom(src => src.PotentialExistenceAreaLowQuartile))
+                    .ForMember(dest => dest.AOO50yrHigh,
+                        opt => opt.MapFrom(src => src.PotentialExistenceAreaHighQuartile))
                     .ForMember(dest => dest.AOOyear1, opt => opt.Ignore())
                     .ForMember(dest => dest.AOOendyear1, opt => opt.Ignore())
                     .ForMember(dest => dest.AOOyear2, opt => opt.Ignore())
@@ -411,10 +467,14 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.AOO2, opt => opt.Ignore())
                     .ForMember(dest => dest.StartYear, opt => opt.Ignore())
                     .ForMember(dest => dest.EndYear, opt => opt.Ignore())
-                    .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes, opt => opt.MapFrom(src => src.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes))
-                    .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesBest, opt => opt.Ignore())
-                    .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesLow, opt => opt.Ignore())
-                    .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesHigh, opt => opt.Ignore())
+                    .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes,
+                        opt => opt.MapFrom(src => src.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes))
+                    .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesBest,
+                        opt => opt.Ignore())
+                    .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesLow,
+                        opt => opt.Ignore())
+                    .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesHigh,
+                        opt => opt.Ignore())
                     .ForAllOtherMembers(opt => opt.Ignore());
 
 

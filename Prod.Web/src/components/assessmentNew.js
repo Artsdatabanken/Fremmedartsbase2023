@@ -52,7 +52,7 @@ export default class assessmentNew extends React.Component {
             props.onNewAssessment(clone)
         }
         autorun(() => 
-            newAssessment.ekspertgruppe = this.props.appState.expertgroup
+            newAssessment.Ekspertgruppe = this.props.appState.expertgroup
         )
 
 
@@ -170,10 +170,10 @@ export default class assessmentNew extends React.Component {
                         </div>
                         <div className="col-md-6" style={{display: 'flex'}}>
                             <div>{labels.SelectAssessment.NBWritingAccess}</div>
-                            <Xcomp.Button primary onClick={this.onNewAssessment} disabled={!rolle.writeAccess || (!newAssessment.ScientificName || checkForExistingAssessment(newAssessment.ScientificName + ' ' + newAssessment.ScientificNameAuthor))}>{labels.SelectAssessment.createAssessment}</Xcomp.Button>
+                            <Xcomp.Button primary onClick={this.onNewAssessment} disabled={!rolle.writeAccess || (!newAssessment.ScientificName || checkForExistingAssessment(newAssessment.ScientificName))}>{labels.SelectAssessment.createAssessment}</Xcomp.Button>
                             {(newAssessment.ScientificName.length > 0 && 
                                 !rolle.writeAccess || 
-                                ( checkForExistingAssessment(newAssessment.ScientificName + ' ' + newAssessment.ScientificNameAuthor))) ? <div style={{color: 'red'}}>{labels.SelectAssessment.alreadyOnTheList}</div>: null}
+                                ( checkForExistingAssessment(newAssessment.ScientificName))) ? <div style={{color: 'red'}}>{labels.SelectAssessment.alreadyOnTheList}</div>: null}
                         </div>
                 </fieldset>
             </div>

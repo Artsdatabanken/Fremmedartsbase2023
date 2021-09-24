@@ -25,7 +25,7 @@ const artskartStringToFeatures = (csvPoints, source) => {
 }
 
 const makeFeatures = (added, removed) => {
-  console.log('makeFeatures', added, removed);
+  // console.log('makeFeatures', added, removed);
   let features = [
     ...artskartStringToFeatures(added, 'add'),
     ...artskartStringToFeatures(removed, 'remove')
@@ -60,11 +60,19 @@ const useArtskart = ({
   const [status3] = useRestApi(urls.countylist, setCountylist);
   const status = Object.assign({}, status1, status2, status3);
 
-  console.log('useArtskart', observations);
+  // console.log('useArtskart', observations);
 
   const handleAddPoint = e => {
-    console.log('handleAddPoint ', observations, observations.features.length, e.latlng);
-    const { lng, lat } = e.latlng;
+    let { lng, lat } = e.latlng;
+
+    // Find 2x2km grid:
+    const eastAdd = 200000;
+    const eastSub = 199000;
+    
+    lng = parseInt((lng + eastAdd) / 2000) * 2000 - eastSub
+    lat = parseInt((lat) / 2000) * 2000 + 1000;
+    console.log('handleAddPoint ', observations, observations.features.length, e.latlng, {lng, lat});
+
     const point = {
       geometry: {
         type: "Point",
@@ -95,11 +103,12 @@ const useArtskart = ({
       if (f.geometry.type !== "Point") return true;
       const coords = f.geometry.coordinates;
       if (!isVeryCloseBy(coords[0], latlng.lng)) return true;
-      console.log('remove feature (lng)', f);
+      // console.log('remove feature (lng)', f);
       if (!isVeryCloseBy(coords[1], latlng.lat)) return true;
-      console.log('remove feature (lat)', f);
+      // console.log('remove feature (lat)', f);
       if (f.source === "add") {
         console.log('remove feature', f);
+        f.source = "remove";
         return false;
       }
       console.log('??', f.source);
