@@ -21,7 +21,7 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Change this to force index rebuild!
         /// </summary>
-        public const int IndexVersion = 3;
+        public const int IndexVersion = 2;
 
         private const string Field_Id = "Id";
         private const string Field_Group = "Expertgroup";
@@ -54,6 +54,7 @@ namespace Prod.Api.Helpers
 
         private const string Field_DoHorizonScanning = "DoHorizonScan";
         private const string Field_HsStatus = "HsStatus";
+        private const string Field_HsDone = "HsDone";
         private const string Field_HsResult = "HsStatus";
         private const string Field_Status = "Status";
 
@@ -62,6 +63,39 @@ namespace Prod.Api.Helpers
         private static readonly string Field_NR2018 = "NR2018";
         private static string[] _criterias = new[] { "A", "B", "C", "D", "E", "F", "G", "H", "I" };
 
+        public static async Task<DateTime> Index(DateTime indexVersionDateTime, ProdDbContext _dbContext, Index _index)
+        {
+            var batchSize = 1000;
+            var pointer = 0;
+            var maxDate = DateTime.MinValue;
+            var minDate = indexVersionDateTime;
+            while (true)
+            {
+                var result = await _dbContext.Assessments.Include(x => x.LastUpdatedByUser)
+                    .Include(x => x.LockedForEditByUser)
+                    .Where(x => x.IsDeleted == false && x.LastUpdatedAt > minDate)
+                    .OrderBy(x => x.Id)
+                    .Skip(pointer).Take(batchSize)
+                    .ToArrayAsync();
+                if (result.Length == 0) break;
+                pointer += result.Length;
+                var tempDate = result.Max(x => x.LastUpdatedAt);
+                if (maxDate < tempDate) maxDate = tempDate;
+
+                var docs = result.Select(GetDocumentFromAssessment).ToArray();
+                _index.AddOrUpdate(docs);
+            }
+
+            if (await _dbContext.TimeStamp.SingleOrDefaultAsync() == null)
+            {
+                _dbContext.TimeStamp.Add(new TimeStamp { Id = 1, DateTimeUpdated = maxDate });
+                await _dbContext.SaveChangesAsync();
+            }
+
+            _index.SetIndexVersion(new IndexVersion { Version = IndexVersion, DateTime = maxDate });
+
+            return maxDate;
+        }
         public static async Task<DateTime> Index(bool clear, ProdDbContext _dbContext, Index _index)
         {
             //if (_index.IndexCount() > 1 && _index.IndexCount() < 5000) return;
@@ -111,6 +145,7 @@ namespace Prod.Api.Helpers
             var ass = JsonSerializer.Deserialize<FA4>(assessment.Doc);
             //string kategori = ass.Kategori; // string.IsNullOrWhiteSpace(ass.Kategori) ? "" : ass.Kategori.Substring(0,2);
             var ass2018 = ass.PreviousAssessments.FirstOrDefault(x => x.RevisionYear == 2018);
+            var horizonScanResult = GetHorizonScanResult(ass);
             var document = new Document
             {
                 new StringField(Field_Id, assessment.Id.ToString(), Field.Store.YES),
@@ -136,7 +171,8 @@ namespace Prod.Api.Helpers
                 new StringField(Field_DoHorizonScanning, ass.HorizonDoScanning ? "1" : "0", Field.Store.NO),
                 new StringField(Field_NR2018, Get2018NotAssessed(ass).ToString(), Field.Store.NO),
                 new StringField(Field_HsStatus, ass.HorizonScanningStatus, Field.Store.YES),
-                new StringField(Field_HsResult, GetHorizonScanResult(ass) ? "1":"0", Field.Store.NO),
+                //new StringField(Field_HsDone, ass.HorizonScanningStatus, Field.Store.YES),
+                new StringField(Field_HsResult,  horizonScanResult.HasValue == true ? (horizonScanResult.Value ? "1" : "0") :"2", Field.Store.NO),
                 new StringField(Field_Status, ass.EvaluationStatus, Field.Store.YES),
                 // facets
                 new FacetField(Facet_Author, assessment.LastUpdatedByUser.FullName),
@@ -156,12 +192,18 @@ namespace Prod.Api.Helpers
             return document;
         }
 
-        private static bool GetHorizonScanResult(FA4 ass)
+        private static bool? GetHorizonScanResult(FA4 ass)
         {
-            switch (ass.HorizonEstablismentPotential)
+            var pot = ass.HorizonEstablismentPotential ?? string.Empty;
+            var effects = ass.HorizonEcologicalEffect ?? string.Empty;
+            if (pot == string.Empty || effects == string.Empty)
+            {
+                return null;
+            }
+            switch (pot)
             {
                 case "0":
-                    switch (ass.HorizonEcologicalEffect)
+                    switch (effects)
                     {
                         case "no":
                         case "yesWhilePresent": return false;
@@ -169,7 +211,7 @@ namespace Prod.Api.Helpers
                         default: return false;
                     }
                 case "1":
-                    switch (ass.HorizonEcologicalEffect)
+                    switch (effects)
                     {
                         case "no":return false;
                         case "yesWhilePresent": 
@@ -244,10 +286,10 @@ namespace Prod.Api.Helpers
                 ((BooleanQuery)query).Add(GetFieldQuery(Field_DoHorizonScanning, new[] { "1" }), Occur.MUST);
                 if (filter.Horizon.NotStarted)
                     ((BooleanQuery)query).Add(
-                        GetFieldQuery(Field_HsStatus, new[] { "notStarted" }), Occur.MUST);
+                        GetFieldQuery(Field_HsResult, new[] { "2" }), Occur.MUST);
                 if (filter.Horizon.Finished)
                     ((BooleanQuery)query).Add(
-                        GetFieldQuery(Field_HsStatus, new[] { "finished" }), Occur.MUST);
+                        GetFieldQuery(Field_HsResult, new[] { "1","0" }), Occur.MUST);
                 if (filter.Horizon.ToAssessment)
                     ((BooleanQuery)query).Add(
                         GetFieldQuery(Field_HsResult, new[] { "1" }), Occur.MUST);
@@ -435,5 +477,7 @@ namespace Prod.Api.Helpers
             CannotEstablish50Years = 7,
             TraditionalProductionSpecie = 8
         }
+
+
     }
 }

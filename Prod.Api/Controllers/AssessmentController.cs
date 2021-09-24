@@ -318,32 +318,71 @@ namespace Prod.Api.Controllers
 
         public class Taxinfo
         {
-            public string ScientificNameId { get; set; }
+            public int ScientificNameId { get; set; }
+            //public string ExpertGroup { get; set; }
             public string Ekspertgruppe { get; set; }
-            public string ExpertGroup { get; set; }
+            public string RedListCategory { get; set; }
+            public string ScientificName { get; set; }
+            public string ScientificNameAuthor { get; set; }
+            public int? TaxonId { get; set; }
+            public string TaxonRank { get; set; }
+            public string VernacularName { get; set; }
+            public string potensiellDørstokkart { get; set; } //: "potentialDoorknocker"
         }
 
 
 
-        [HttpPost("createnew")]
+        [HttpPut("createnew")]
         public async Task<IActionResult> CreateNewAssessment([FromBody] Taxinfo value)
         {
             var now = DateTime.Now;
-            var role = await base.GetRoleInGroup(value.ExpertGroup);
-            var scientificNameId = int.Parse(value.ScientificNameId);
+            var role = await base.GetRoleInGroup(value.Ekspertgruppe);
+            var scientificNameId = value.ScientificNameId;
+           var it = await _dbContext.Assessments
+                .Where(x => x.Expertgroup == value.Ekspertgruppe && x.ScientificNameId == scientificNameId)
+                .SingleOrDefaultAsync();
+           if (it != null)
+           {
+               var doc = JsonSerializer.Deserialize<FA4>(it.Doc);
+               if (value.potensiellDørstokkart == "potentialDoorknocker")
+               {
+                   doc.HorizonDoScanning = true;
+                   doc.HorizonScanningStatus = "notStarted";
+               }
+               else
+               {
+                   doc.HorizonDoScanning = false;
+               }
+
+               doc.LastUpdatedAt = DateTime.Now;
+                it.Doc = JsonSerializer.Serialize(doc);
+                it.LastUpdatedAt = doc.LastUpdatedAt;
+                var timestamp = _dbContext.TimeStamp.Single();
+                timestamp.DateTimeUpdated = doc.LastUpdatedAt;
+                await _dbContext.SaveChangesAsync();
+                return Ok();
+            }
+
             try
             {
                 if (role.WriteAccess)
                 {
-                    var userId = role.User.Id;
-                    var rlRodliste2019 = CreateNewAssessment(value.Ekspertgruppe, userId, scientificNameId);
-                    rlRodliste2019.EvaluationStatus = "created";
-                    rlRodliste2019.LastUpdatedAt = now;
-                    var doc = JsonSerializer.Serialize(rlRodliste2019);
-                    var assessment = new Assessment();
-                    assessment.Doc = doc;
+                    var userId = role.User;
+                    var fa4 = CreateNewAssessment(value.Ekspertgruppe, userId, scientificNameId, value.potensiellDørstokkart == "potentialDoorknocker");
+                    fa4.EvaluationStatus = "created";
+                    fa4.LastUpdatedAt = now;
+                    var doc = JsonSerializer.Serialize(fa4);
+                    var assessment = new Assessment
+                    {
+                        Doc = doc,
+                        LastUpdatedAt = fa4.LastUpdatedAt,
+                        LastUpdatedByUserId =userId.Id,
+                        ScientificNameId = fa4.EvaluatedScientificNameId.Value
+                    };
                     _dbContext.Assessments.Add(assessment);
-                    _dbContext.SaveChanges();
+                    var timestamp = _dbContext.TimeStamp.Single();
+                    timestamp.DateTimeUpdated = assessment.LastUpdatedAt;
+                    await _dbContext.SaveChangesAsync();
 
                 }
                 else
@@ -575,15 +614,15 @@ namespace Prod.Api.Controllers
         //    return zipfile;
         //}
 
-        private static FA4 CreateNewAssessment(string expertgroup, Guid userId, int scientificNameId)
+        private static FA4 CreateNewAssessment(string expertgroup, User user, int scientificNameId, bool DoorKnocker)
         {
             if (string.IsNullOrWhiteSpace(expertgroup))
             {
                 throw new ArgumentNullException(nameof(expertgroup));
             }
-            if (userId == Guid.Empty)
+            if (user == null)
             {
-                throw new ArgumentNullException(nameof(userId));
+                throw new ArgumentNullException(nameof(user));
             }
             var vurderingscontext = expertgroup.Contains("Svalbard") ? "S" : "N";
             var vurderingsår = 2021;
@@ -600,25 +639,30 @@ namespace Prod.Api.Controllers
                 throw new ArgumentException("supplied scientificNameId is not ValidScientificNameId");
             }
 
-            var rl = new FA4();
+            var rl = FA4.CreateNewFA4();
 
-            //rl.Ekspertgruppe = expertgroup;
-            //rl.VurderingsContext = vurderingscontext;
-            //rl.Slettet = false;
-            //rl.LastUpdatedOn = DateTime.Now;
-            //rl.LastUpdatedBy = userName;
+            rl.ExpertGroup = expertgroup;
+            rl.EvaluationContext = vurderingscontext;
+            rl.IsDeleted = false;
+            rl.LastUpdatedAt = DateTime.Now;
+            rl.LastUpdatedBy = user.FullName;
             //rl.Vurderingsår = vurderingsår;
             //rl.SistVurdertAr = vurderingsår;
-            //rl.EvaluationStatus = createdby;
+            rl.EvaluationStatus = "created";
+            if (DoorKnocker)
+            {
+                rl.HorizonDoScanning = true;
+                rl.HorizonScanningStatus = "notStarted";
+            }
             //rl.OverordnetKlassifiseringGruppeKode = "rodlisteVurdertArt";
             //rl.RodlisteVurdertArt = "etablertBestandINorge";
-            //rl.VurdertVitenskapeligNavn = ti.ValidScientificName;
-            //rl.VurdertVitenskapeligNavnId = ti.ValidScientificNameId;
-            //rl.VurdertVitenskapeligNavnAutor = ti.ValidScientificNameAuthorship;
-            //rl.VurdertVitenskapeligNavnHierarki = hierarcy;
-            //rl.TaxonId = ti.TaxonId;
+            rl.EvaluatedScientificName = ti.ValidScientificName;
+            rl.EvaluatedScientificNameId = ti.ValidScientificNameId;
+            rl.EvaluatedScientificNameAuthor = ti.ValidScientificNameAuthorship;
+            rl.TaxonHierarcy = hierarcy;
+            rl.TaxonId = ti.TaxonId;
             //rl.TaxonRank = rank;
-            //rl.PopularName = ti.PrefferedPopularname;
+            rl.EvaluatedVernacularName = ti.PrefferedPopularname;
 
             ////ekstra standardverdier
             //rl.ImportInfo.VurderingsId2015 = string.Empty;
@@ -826,4 +870,5 @@ namespace Prod.Api.Controllers
         //    }
         //}
     }
+
 }

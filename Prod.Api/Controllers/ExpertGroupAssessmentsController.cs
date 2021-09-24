@@ -221,6 +221,7 @@ namespace Prod.Api.Controllers
             
             // want to know if index is in sync with db - local index remote db
             var dbTimestamp = await _dbContext.TimeStamp.SingleOrDefaultAsync();
+            dbTimestamp.DateTimeUpdated = dbTimestamp.DateTimeUpdated.AddMilliseconds(-dbTimestamp.DateTimeUpdated.Millisecond);
             if (dbTimestamp == null || indexVersion.Version != IndexHelper.IndexVersion) // not indexed yet or index is different now
             {
                 // do full index
@@ -228,10 +229,11 @@ namespace Prod.Api.Controllers
                 var maxDate= await IndexHelper.Index(true, _dbContext, _index);
                 // index should be complete now
             }
-            else if (!indexVersion.DateTime.Equals(dbTimestamp.DateTimeUpdated))
+            else if (Math.Abs((indexVersion.DateTime - dbTimestamp.DateTimeUpdated).TotalSeconds) > 1)
             {
                 // index assessments with new date - changes
                 // må da hente nye endringer indeksere og lagre max dato
+                var maxDate = await IndexHelper.Index(indexVersion.DateTime, _dbContext, _index);
             }
 
             filter.Page = 0;
@@ -310,11 +312,11 @@ namespace Prod.Api.Controllers
             //}
             doReturn.assessmentList = result;
             doReturn.TotalCount = totalCount;
-            doReturn.Authors = facets.First(x => x.Dim == IndexHelper.Facet_Author).LabelValues.Select(x => x.Label + ";" + x.Value.ToString()).ToList();
+            doReturn.Authors = facets.First() != null ? facets.First(x => x.Dim == IndexHelper.Facet_Author).LabelValues.Select(x => x.Label + ";" + x.Value.ToString()).ToList() : new List<string>();
             return doReturn;
         }
         //[ServiceFilter(typeof(ClientIpCheckActionFilter))]
-        [Route("DropIndex")]
+        [HttpGet("DropIndex")]
         public async Task DoDeleteIndexAsync()
         {
             this.Response.StatusCode = 200;
@@ -336,7 +338,7 @@ namespace Prod.Api.Controllers
             await outputStream.FlushAsync();
         }
         //[ServiceFilter(typeof(ClientIpCheckActionFilter))]
-        [Route("Reindex")]
+        [HttpGet("Reindex")]
         public async Task DoReindexAsync()
         {
             this.Response.StatusCode = 200;

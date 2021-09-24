@@ -929,8 +929,7 @@ class ViewModel {
         if (this.assessmentTypeFilter == "horizonScanning")
         {
             filters=filters + "&HorizonScan=true"
-            if (this.horizonScanFilter.hsFinished) filters += "&Horizon.NotStarted=true"
-            
+                        
             if (this.horizonScanFilter.potentialDoorKnockers.some(x=> x == "newPotentialDoorKnocker")) filters =filters +  "&Horizon.NR2018=1"
             if (this.horizonScanFilter.potentialDoorKnockers.some(x=> x == "NR2018")) filters =filters +  "&Horizon.NR2018=5"
             if (this.horizonScanFilter.notAssessedDoorKnocker.some(x=> x == "notAssessedDoorKnocker")) filters =filters +  "&Horizon.NR2018=6"
@@ -1029,7 +1028,7 @@ class ViewModel {
         console.log("opprett ny vurdering: " + taxinfo.ScientificName + " " + taxinfo.ScientificNameId + " " + taxinfo.Ekspertgruppe)
         const url = config.getUrl("assessment/createnew")
         fetch(url, {
-            method: 'POST',
+            method: 'PUT',
             // mode: 'no-cors',
             body: JSON.stringify(taxinfo),
             headers:{

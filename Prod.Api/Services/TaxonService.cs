@@ -15,7 +15,7 @@ namespace Prod.Api.Services
     public class TaxonInfo
     {
         public int Id { get; set; } //taxonId
-        public string CategoryValue { get; set; } // "kingdom" || "phylum" || "class" || "order" || ....
+        public int CategoryValue { get; set; } // "kingdom" || "phylum" || "class" || "order" || ....
         public string Name { get; set; }
         public string ValidScientificName { get; set; }
         public int ValidScientificNameId { get; set; }
