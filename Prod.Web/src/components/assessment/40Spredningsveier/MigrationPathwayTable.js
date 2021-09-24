@@ -16,13 +16,13 @@ export default class MigrationPathwayTable extends React.Component {
     }
 
     render() {
-        const {migrationPathways, appState, removeMigrationPathway, showIntroductionSpread, hideIntroductionSpread} = this.props;
+        const {migrationPathways, appState, removeMigrationPathway, showIntroductionSpread, hideIntroductionSpread, getCategoryText, migrationPathwayCodes} = this.props;
         // const {appState:{assessment}, appState} = this.props;
         // const vurdering = assessment
         const labels = appState.codeLabels
         const koder = appState.koder
         const spredningsveier = koder.migrationPathways[0]
-
+        
 
         // const {migrationPathways, fabModel, removeMigrationPathway, showIntroductionSpread} = this.props;
         // const labels = fabModel.kodeLabels
@@ -61,6 +61,8 @@ export default class MigrationPathwayTable extends React.Component {
                         showIntroductionSpread={showIntroductionSpread}
                         removeMigrationPathway={removeMigrationPathway}
                         labels={labels}
+                        getCategoryText = {getCategoryText}
+                        migrationPathwayCodes = {migrationPathwayCodes}
                     />
                 )}
                 </tbody>                
@@ -76,6 +78,7 @@ MigrationPathwayTable.contextTypes = {
 
 
 @observer
+//@inject("appState")
 class MigrationPathwayTableRow extends React.Component {
     constructor(props) {
         super(props);
@@ -104,8 +107,16 @@ class MigrationPathwayTableRow extends React.Component {
         return s.substr(0, n-1) + (s.length > n ? '&hellip;' : '')
     }
 
+    getCategoryPart (s, level) {
+        s = s.split("-")
+        var result = null
+
+        s != null && s.length > 1 ? level == 1 ? result = s[0] : result = s[1].substr(1, s[1].length-2) : null
+        return result
+    }
+
     render() {
-        const {item, codes, migrationPathways, showIntroductionSpread, removeMigrationPathway, labels } = this.props;
+        const {appState, item, codes, migrationPathways, showIntroductionSpread, removeMigrationPathway, labels, getCategoryText, migrationPathwayCodes } = this.props;
         const mp = item
 
 
@@ -127,8 +138,8 @@ class MigrationPathwayTableRow extends React.Component {
             <tr >
                 {/*<td>{codeItemLabel(mp.codeItem)}</td>
                 showIntroductionSpread || !hideIntroductionSpread ? <td>{introductionSpreadLabel(mp.introductionSpread)}</td> : null*/}
-                <td>{mp.mainCategory}</td>
-                <td>{mp.category}</td>
+                <td>{mp.mainCategory ? mp.category : this.getCategoryPart(getCategoryText(mp.codeItem, migrationPathwayCodes), 1)}</td>
+                <td>{mp.category ? mp.category : this.getCategoryPart(getCategoryText(mp.codeItem, migrationPathwayCodes), 2)}</td>
                 {this.edit
                 ? <td><Xcomp.StringEnum observableValue={[mp, 'influenceFactor']}  codes={codes.migrationPathwayFrequency}/></td>
                 : <td>{frequencyLabel(mp.influenceFactor)}</td>
