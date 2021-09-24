@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Lucene.Net.Documents;
@@ -279,6 +280,30 @@ namespace Prod.Api.Helpers
             Query query = new BooleanQuery();
             if (!string.IsNullOrWhiteSpace(expertgroupid) && expertgroupid != "0")
                 ((BooleanQuery)query).Add(GetFieldQuery(Field_Group, new[] { expertgroupid }), Occur.MUST);
+
+            if (!string.IsNullOrWhiteSpace(filter.NameSearch))
+            {
+                var booleanQuery = new BooleanQuery();
+                var lowerInvariant = WebUtility.UrlDecode(filter.NameSearch.ToLowerInvariant())
+                    .Replace("×", "")
+                    .Replace("-", " ")
+                    .Split(" ", StringSplitOptions.RemoveEmptyEntries);
+                var booleanQuerySc = new BooleanQuery();
+                var booleanQueryP = new BooleanQuery();
+                foreach (var s in lowerInvariant)
+                {
+                    var text = "*" + s + "*";
+                    booleanQuerySc.Add(
+                        new BooleanClause(new WildcardQuery(new Term(Field_ScientificName, text)),
+                            Occur.MUST)); // lowercase - siden det er indeksert som textfield
+                    booleanQueryP.Add(new BooleanClause(new WildcardQuery(new Term(Field_PopularName, text)),
+                        Occur.MUST));
+                }
+
+                booleanQuery.Add(booleanQuerySc, Occur.SHOULD);
+                booleanQuery.Add(booleanQueryP, Occur.SHOULD);
+                ((BooleanQuery)query).Add(booleanQuery, Occur.MUST);
+            }
 
             // horizonscan filters
             if (filter.HorizonScan)

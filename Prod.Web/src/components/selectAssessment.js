@@ -450,7 +450,7 @@ export default class SelectAssessment extends Component {
                         onClick={() => this.resetFilters(appState)}>{labels.SelectAssessment.resetAll}</button>
             </div>
             
-                <SelectAssessmentTable assessmentList={appState.expertgroupAssessmentFilteredList} rolle={rolle}/>
+                <SelectAssessmentTable assessmentList={appState.expertgroupAssessmentList} rolle={rolle}/>
                  
             </div>
         )

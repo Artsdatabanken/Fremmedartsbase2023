@@ -15,6 +15,8 @@ namespace Prod.Api.Controllers
         public int PageSize { get; set; }
         public string[] Responsible { get; set; } = Array.Empty<string>();
 
+        public string NameSearch { get; set; } = string.Empty;
+
         public History History { get; set; }
         public Current Current { get; set; }
         public Progress Progress { get; set; }

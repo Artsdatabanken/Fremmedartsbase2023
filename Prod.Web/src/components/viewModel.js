@@ -370,7 +370,7 @@ class ViewModel {
 
         // **** sett expert group ****
         reaction(
-            () => [this.expertgroup, auth.isLoggedIn, this.assessmentTypeFilter, 
+            () => [this.expertgroup, auth.isLoggedIn, this.assessmentTypeFilter, this.expertgroupAssessmentFilter,
                 this.horizonScanFilter.notAssessedDoorKnocker.length, 
                 this.horizonScanFilter.potentialDoorKnockers.length,
                 this.horizonScanFilter.hsNotStarted, this.horizonScanFilter.hsFinished, this.horizonScanFilter.toAssessment, this.horizonScanFilter.notAssessed,
@@ -526,105 +526,105 @@ class ViewModel {
         this.loadExpertgroupAssessmentList(expertgroupId)
     }
 
-    @computed get expertgroupAssessmentFilteredList() {
-        const list = this.expertgroupAssessmentList
-        const originalFilter = this.expertgroupAssessmentFilter.toLowerCase()
-        const filter = this.expertgroupAssessmentFilter.toLowerCase().replace(" ", "/")
-        //console.log(filter)
-        // const katFilter = this.expertgroupCategoryFilter.toLowerCase().replace(" ", "/")
-       // const result = list.filter (ega =>
-         //   (filter === "" || (ega.taxonHierarcy.toLowerCase().indexOf(filter) > -1) ))
-        var bollefilter = function(item, bolle){
-            if (bolle === "!") return true;
-            var balle = bolle.substring(1); // ta bort utropstegn
-            var items = item.taxonHierarcy.toLowerCase().split("/"); // del opp sti i array
-            if (items[5].indexOf(balle) == 0) return true; // element 6 er slekt
-            return false;
-        }
-        const result = list.filter(ega =>
-            ((filter === "" || (filter.indexOf("!") > -1 ? bollefilter(ega, filter) : ((ega.taxonHierarcy.toLowerCase().indexOf(filter) > -1 || ega.scientificName.toLowerCase().indexOf(originalFilter) > -1))))
-            && (this.kunUbehandlede ? ega.commentOpen > 0 ? true : false : true)
-            && (this.withNewComments ? (ega.commentNew > 0) ? true : false : true)
-            && (this.withComments ? (ega.commentOpen > 0 || ega.commentClosed > 0) ? true : false : true)
-            && (this.withPotentialTaxonChanges ? (ega.taxonChange == 2) ? true : false : true)
-            && (this.withAutomaticNameChanges ? (ega.taxonChange == 1) ? true : false : true)
-            && (this.kunMine ? (ega.lockedForEditByUser === auth.userId || ega.lastUpdatedBy === auth.userId) ? true : false : true)
+    // @computed get expertgroupAssessmentFilteredList() {
+    //     const list = this.expertgroupAssessmentList
+    //     const originalFilter = this.expertgroupAssessmentFilter.toLowerCase()
+    //     const filter = this.expertgroupAssessmentFilter.toLowerCase().replace(" ", "/")
+    //     //console.log(filter)
+    //     // const katFilter = this.expertgroupCategoryFilter.toLowerCase().replace(" ", "/")
+    //    // const result = list.filter (ega =>
+    //      //   (filter === "" || (ega.taxonHierarcy.toLowerCase().indexOf(filter) > -1) ))
+    //     var bollefilter = function(item, bolle){
+    //         if (bolle === "!") return true;
+    //         var balle = bolle.substring(1); // ta bort utropstegn
+    //         var items = item.taxonHierarcy.toLowerCase().split("/"); // del opp sti i array
+    //         if (items[5].indexOf(balle) == 0) return true; // element 6 er slekt
+    //         return false;
+    //     }
+    //     const result = list.filter(ega =>
+    //         ((filter === "" || (filter.indexOf("!") > -1 ? bollefilter(ega, filter) : ((ega.taxonHierarcy.toLowerCase().indexOf(filter) > -1 || ega.scientificName.toLowerCase().indexOf(originalFilter) > -1))))
+    //         && (this.kunUbehandlede ? ega.commentOpen > 0 ? true : false : true)
+    //         && (this.withNewComments ? (ega.commentNew > 0) ? true : false : true)
+    //         && (this.withComments ? (ega.commentOpen > 0 || ega.commentClosed > 0) ? true : false : true)
+    //         && (this.withPotentialTaxonChanges ? (ega.taxonChange == 2) ? true : false : true)
+    //         && (this.withAutomaticNameChanges ? (ega.taxonChange == 1) ? true : false : true)
+    //         && (this.kunMine ? (ega.lockedForEditByUser === auth.userId || ega.lastUpdatedBy === auth.userId) ? true : false : true)
 
-            && (this.statusCheckboxFilter.length ? this.statusCheckboxFilter.some (s => ega.evaluationStatus === s && s != 'notStarted' ? true : (s === 'notStarted' && (ega.evaluationStatus === 'initial' || ega.evaluationStatus === 'created' || ega.evaluationStatus === 'createdbyloading')) ? true :false): true)
-            && (this.expertgroupCategoryCheckboxFilter.length ? this.expertgroupCategoryCheckboxFilter.some(s => !ega.category && s != 'NL'? false : !ega.category && s === 'NL' ? true: s.indexOf(ega.category.substring(0,2)) > -1) : true)))
-        //console.log (result)
-            //this.expertgroupCategoryCheckboxFilter.length ? this.expertgroupCategoryCheckboxFilter.some(s => !ega.category && s != 'NL' ? false : !ega.category && s === 'NL' ? true: s.indexOf(ega.category.substring(0,2)) > -1) : true))
-            //(this.expertgroupCategoryCheckboxFilter.length ? this.expertgroupCategoryCheckboxFilter.some(s => !ega.category && s != 'NL' ? false : !ega.category && s === 'NL' ? true: s.indexOf(ega.category.substring(0,2)) > -1) : true) ) )
-           // &&
-            //console.log(ega),
-            // ((!ega.category && this.expertgroupCategoryCheckboxFilter.length) ? false : this.expertgroupCategoryCheckboxFilter.length ? this.expertgroupCategoryCheckboxFilter.some(s => s.indexOf(ega.category.substring(0,2)) > -1) : true))
-            //this.expertgroupCategoryCheckboxFilter.length ? this.expertgroupCategoryCheckboxFilter.some(s => !ega.category && s != 'NL' ? false : !ega.category && s === 'NL' ? true: s.indexOf(ega.category.substring(0,2)) > -1) : true)
-           // this.expertgroupCategoryCheckboxFilter.length ? true : false )
-            //.searchStrings
-                 //.some(s => s.indexOf(filter) > -1))
-        return result
-    }
+    //         && (this.statusCheckboxFilter.length ? this.statusCheckboxFilter.some (s => ega.evaluationStatus === s && s != 'notStarted' ? true : (s === 'notStarted' && (ega.evaluationStatus === 'initial' || ega.evaluationStatus === 'created' || ega.evaluationStatus === 'createdbyloading')) ? true :false): true)
+    //         && (this.expertgroupCategoryCheckboxFilter.length ? this.expertgroupCategoryCheckboxFilter.some(s => !ega.category && s != 'NL'? false : !ega.category && s === 'NL' ? true: s.indexOf(ega.category.substring(0,2)) > -1) : true)))
+    //     //console.log (result)
+    //         //this.expertgroupCategoryCheckboxFilter.length ? this.expertgroupCategoryCheckboxFilter.some(s => !ega.category && s != 'NL' ? false : !ega.category && s === 'NL' ? true: s.indexOf(ega.category.substring(0,2)) > -1) : true))
+    //         //(this.expertgroupCategoryCheckboxFilter.length ? this.expertgroupCategoryCheckboxFilter.some(s => !ega.category && s != 'NL' ? false : !ega.category && s === 'NL' ? true: s.indexOf(ega.category.substring(0,2)) > -1) : true) ) )
+    //        // &&
+    //         //console.log(ega),
+    //         // ((!ega.category && this.expertgroupCategoryCheckboxFilter.length) ? false : this.expertgroupCategoryCheckboxFilter.length ? this.expertgroupCategoryCheckboxFilter.some(s => s.indexOf(ega.category.substring(0,2)) > -1) : true))
+    //         //this.expertgroupCategoryCheckboxFilter.length ? this.expertgroupCategoryCheckboxFilter.some(s => !ega.category && s != 'NL' ? false : !ega.category && s === 'NL' ? true: s.indexOf(ega.category.substring(0,2)) > -1) : true)
+    //        // this.expertgroupCategoryCheckboxFilter.length ? true : false )
+    //         //.searchStrings
+    //              //.some(s => s.indexOf(filter) > -1))
+    //     return result
+    // }
 
-    @computed get expertgroupAssessmentListStatistic() {
-        const arr = this.expertgroupAssessmentList
-        // const katFilter = this.expertgroupCategoryFilter.toLowerCase().replace(" ", "/")
-        var tot = 0, ini = 0, prog = 0, fin = 0, oth = 0;
-        for(var i = 0; i < arr.length; ++i){
-            if(this.expertgroupCategoryCheckboxFilter.length > 0) {
-                //if ((this.expertgroupCategoryCheckboxFilter.indexOf(arr[i].category) > -1) || (arr[i].category === null) || (arr[i].category === "")) {
-                if ((arr[i].category && this.expertgroupCategoryCheckboxFilter.indexOf(arr[i].category.substring(0,2)) > -1) || ((arr[i].category === null || arr[i].category === "") && this.expertgroupCategoryCheckboxFilter.indexOf('Ingen kategori') > -1)) {
-                //if ((arr[i].category && this.expertgroupCategoryCheckboxFilter.indexOf(arr[i].category.substring(0,2)) > -1) || (arr[i].category === null)) {
-                    tot++
-                    const stat = arr[i].evaluationStatus
-                    if(stat === "inprogress") {
-                        prog++
-                    } else if(stat === "finished") {
-                        fin++
-                    } else if(stat === "created" || stat === "initial" || stat === 'createdbyloading') {
-                        ini++
-                    } else {
-                        oth++
-                    }
-                }
-            }
+    // @computed get expertgroupAssessmentListStatistic() {
+    //     const arr = this.expertgroupAssessmentList
+    //     // const katFilter = this.expertgroupCategoryFilter.toLowerCase().replace(" ", "/")
+    //     var tot = 0, ini = 0, prog = 0, fin = 0, oth = 0;
+    //     for(var i = 0; i < arr.length; ++i){
+    //         if(this.expertgroupCategoryCheckboxFilter.length > 0) {
+    //             //if ((this.expertgroupCategoryCheckboxFilter.indexOf(arr[i].category) > -1) || (arr[i].category === null) || (arr[i].category === "")) {
+    //             if ((arr[i].category && this.expertgroupCategoryCheckboxFilter.indexOf(arr[i].category.substring(0,2)) > -1) || ((arr[i].category === null || arr[i].category === "") && this.expertgroupCategoryCheckboxFilter.indexOf('Ingen kategori') > -1)) {
+    //             //if ((arr[i].category && this.expertgroupCategoryCheckboxFilter.indexOf(arr[i].category.substring(0,2)) > -1) || (arr[i].category === null)) {
+    //                 tot++
+    //                 const stat = arr[i].evaluationStatus
+    //                 if(stat === "inprogress") {
+    //                     prog++
+    //                 } else if(stat === "finished") {
+    //                     fin++
+    //                 } else if(stat === "created" || stat === "initial" || stat === 'createdbyloading') {
+    //                     ini++
+    //                 } else {
+    //                     oth++
+    //                 }
+    //             }
+    //         }
 
-        /*if (!this.includeLC && !config.isRelease) {
-             if (arr[i].category != "LC" && arr[i].category != "NE" && arr[i].category != "NA") {
-                tot++
-                const stat = arr[i].evaluationStatus
-                if(stat === "inprogress") {
-                    prog++
-                } else if(stat === "finished") {
-                    fin++
-                } else if(stat === "created" || stat === "initial" || stat === 'createdbyloading') {
-                 ini++
-                } else {
-                    oth++
-                }
-            }
-       } */ else {
-            tot++
-                const stat = arr[i].evaluationStatus
-                if(stat === "inprogress") {
-                    prog++
-                } else if(stat === "finished") {
-                    fin++
-                } else if(stat === "created" || stat === "initial" || stat === 'createdbyloading') {
-                 ini++
-                } else {
-                    oth++
-                }
-        }
-    }
-        const result = {
-            total: tot,
-            initial: ini,
-            inprogress: prog,
-            finished: fin,
-            other: oth
-        }
-        return result
-    }
+    //     /*if (!this.includeLC && !config.isRelease) {
+    //          if (arr[i].category != "LC" && arr[i].category != "NE" && arr[i].category != "NA") {
+    //             tot++
+    //             const stat = arr[i].evaluationStatus
+    //             if(stat === "inprogress") {
+    //                 prog++
+    //             } else if(stat === "finished") {
+    //                 fin++
+    //             } else if(stat === "created" || stat === "initial" || stat === 'createdbyloading') {
+    //              ini++
+    //             } else {
+    //                 oth++
+    //             }
+    //         }
+    //    } */ else {
+    //         tot++
+    //             const stat = arr[i].evaluationStatus
+    //             if(stat === "inprogress") {
+    //                 prog++
+    //             } else if(stat === "finished") {
+    //                 fin++
+    //             } else if(stat === "created" || stat === "initial" || stat === 'createdbyloading') {
+    //              ini++
+    //             } else {
+    //                 oth++
+    //             }
+    //     }
+    // }
+    //     const result = {
+    //         total: tot,
+    //         initial: ini,
+    //         inprogress: prog,
+    //         finished: fin,
+    //         other: oth
+    //     }
+    //     return result
+    // }
     // ################ Start section expert groups ##################
 
 
@@ -954,6 +954,9 @@ class ViewModel {
         }
         if (this.filterType == "statusAndCommentFL2023"){
 
+        }
+        if ( this.expertgroupAssessmentFilter.length > 1){
+            filters =filters +  "&NameSearch=" + this.expertgroupAssessmentFilter
         }
 
         const url = config.getUrl("expertgroupassessments/") + id + "?page=1" + filters
