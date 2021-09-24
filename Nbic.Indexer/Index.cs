@@ -9,10 +9,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Documents;
+using Lucene.Net.Facet;
+using Lucene.Net.Facet.Taxonomy;
+using Lucene.Net.Facet.Taxonomy.Directory;
 using Lucene.Net.Index;
 using Lucene.Net.Search;
 using Lucene.Net.Store;
 using Lucene.Net.Util;
+using Directory = Lucene.Net.Store.Directory;
 
 namespace Nbic.Indexer
 {
@@ -22,6 +26,7 @@ namespace Nbic.Indexer
 
         private static readonly object _theLock = new();
         private readonly FSDirectory _dir;
+        private readonly FSDirectory _taxonomydir;
         private readonly bool _lockWasTaken;
 
         private HashSet<string> _stopwords = new()
@@ -33,7 +38,8 @@ namespace Nbic.Indexer
 
         //private const string Field_String = "Reference";
         private readonly IndexWriter _writer;
-
+        private readonly DirectoryTaxonomyWriter _taxonomyWriter;
+        private readonly FacetsConfig config = new FacetsConfig();
         public Index(bool waitForLockFile = false, bool deleteAndCreateIndex = false)
         {
             // Ensures index backwards compatibility
@@ -64,6 +70,7 @@ namespace Nbic.Indexer
 
 
             _dir = FSDirectory.Open(indexLocation);
+            _taxonomydir = FSDirectory.Open(indexLocation.Replace("index","facets"));
 
             //create an analyzer to process the text
             var analyzer = new StandardAnalyzer(AppLuceneVersion);
@@ -73,6 +80,9 @@ namespace Nbic.Indexer
             var indexConfig = new IndexWriterConfig(AppLuceneVersion, analyzer);
             if (deleteAndCreateIndex) indexConfig.OpenMode = OpenMode.CREATE;
             _writer = new IndexWriter(_dir, indexConfig);
+            config.SetIndexFieldName("LastUpdatedBy", "LastUpdatedBy");
+            _taxonomyWriter = new DirectoryTaxonomyWriter(_taxonomydir,
+                deleteAndCreateIndex ? OpenMode.CREATE : OpenMode.CREATE_OR_APPEND);
         }
 
         public bool FirstUse { get; set; } = true;
@@ -89,22 +99,42 @@ namespace Nbic.Indexer
             }
 
             if (_dir != null) _dir.Dispose();
+            if (_taxonomyWriter != null)
+            {
+                _taxonomyWriter.Commit();
+
+                _taxonomyWriter.Dispose();
+            }
+
+            if (_taxonomydir != null) _taxonomydir.Dispose();
 
             if (_lockWasTaken) Monitor.Exit(_theLock);
         }
 
         public void AddOrUpdate(Document doc)
         {
-            _writer.UpdateDocument(new Term(Field_Id, doc.Get(Field_Id)), doc);
-            _writer.Commit();
+            //using (DirectoryTaxonomyWriter taxoWriter = new DirectoryTaxonomyWriter(_taxonomydir))
+            //{
+                var taxdoc = config.Build(_taxonomyWriter, doc);
+                _writer.UpdateDocument(new Term(Field_Id, taxdoc.Get(Field_Id)), taxdoc);
+                _writer.Commit();
+                _taxonomyWriter.Commit();
+            //}
         }
 
 
         public void AddOrUpdate(IEnumerable<Document> refs)
         {
-            foreach (var doc in refs) _writer.UpdateDocument(new Term(Field_Id, doc.Get(Field_Id)), doc);
+            //using (DirectoryTaxonomyWriter taxoWriter = new DirectoryTaxonomyWriter(_taxonomydir))
+            //{
+                foreach (var doc in refs)
+                {
+                    var taxdoc = config.Build(_taxonomyWriter, doc);
+                    _writer.UpdateDocument(new Term(Field_Id, taxdoc.Get(Field_Id)), taxdoc);}
 
-            _writer.Commit();
+                _writer.Commit();
+                _taxonomyWriter.Commit();
+            //}
         }
 
         public IEnumerable<Document> SearchReference(Query query, int offset, int limit, string sortField = "")
@@ -124,6 +154,30 @@ namespace Nbic.Indexer
                 //found.Add(guid);
                 yield return foundDoc;
             }
+        }
+        
+        public IList<FacetResult> SearchFacetsReference(Query query, string facetField = "")
+        {
+            // Retrieve results
+            IList<FacetResult> results = new List<FacetResult>();
+            using (TaxonomyReader taxoReader = new DirectoryTaxonomyReader(_taxonomyWriter))
+            {
+                var searcher = new IndexSearcher(_writer.GetReader(true));
+                FacetsCollector fc = new FacetsCollector();
+
+                // MatchAllDocsQuery is for "browsing" (counts facets
+                // for all non-deleted docs in the index); normally
+                // you'd use a "normal" query:
+                FacetsCollector.Search(searcher, query, 10, fc);
+
+
+
+                // Count both "Publish Date" and "Author" dimensions
+                Facets facets = new FastTaxonomyFacetCounts(taxoReader, config, fc);
+                results.Add(facets.GetTopChildren(10, facetField));
+            }
+
+            return results;
         }
 
         public int SearchTotalCount(Query query)
@@ -151,6 +205,7 @@ namespace Nbic.Indexer
             _writer.DeleteAll();
             //_writer.Flush(true,true);
             _writer.Commit();
+            // todo: fix _taxonomywriter - mayde dispose - then recreate
         }
 
         public string GetApplicationRoot()

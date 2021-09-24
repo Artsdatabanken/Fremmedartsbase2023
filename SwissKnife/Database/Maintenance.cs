@@ -401,6 +401,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.IsDeleted, opt => opt.Ignore())
                     //.ForMember(dest => dest.VurderingId2018, opt => opt.MapFrom(src => src.Id))
                     .ForMember(dest => dest.HorizonDoScanning, opt => opt.Ignore())
+                    .ForMember(dest => dest.HorizonScanningStatus, opt => opt.Ignore())
                     .ForMember(dest => dest.HorizonEcologicalEffect, opt => opt.Ignore())
                     .ForMember(dest => dest.HorizonEcologicalEffectDescription, opt => opt.Ignore())
                     .ForMember(dest => dest.HorizonEstablismentPotential, opt => opt.Ignore())
@@ -411,6 +412,7 @@ namespace SwissKnife.Database
                     {
                         // set some standard values
                         dest.EvaluationStatus = "imported";
+                        dest.HorizonScanningStatus = "notStarted";
                         dest.TaxonHierarcy = "";
                         dest.IsDeleted = false;
                         if (string.IsNullOrWhiteSpace(dest.ExpertGroup) && !string.IsNullOrWhiteSpace(src.ExpertGroupId) && expertGroupReplacements.ContainsKey(src.ExpertGroupId))
@@ -425,6 +427,11 @@ namespace SwissKnife.Database
                             RiskLevel = src.RiskAssessment.RiskLevel,
                             EcologicalRiskLevel = src.RiskAssessment.EcoEffectLevel,
                             SpreadRiskLevel = src.RiskAssessment.InvationPotentialLevel,
+                            MainCategory = src.AlienSpeciesCategory,
+                            MainSubCategory = src.AlienSpeciesCategory == "DoorKnocker" ? src.DoorKnockerCategory :
+                                src.AlienSpeciesCategory == "NotApplicable" ? src.NotApplicableCategory:
+                                    src.AlienSpeciesCategory == "RegionallyAlien" ? src.RegionallyAlienCategory:
+                                ""
                         });
                         dest.PreviousAssessments.Add(new FA4.PreviousAssessment()
                         {
@@ -433,6 +440,8 @@ namespace SwissKnife.Database
                             RiskLevel = src.RiskLevel2012,
                             EcologicalRiskLevel = src.EcologicalRiskLevel2012,
                             SpreadRiskLevel = src.SpreadRiskLevel2012,
+                            MainCategory = src.AlienSpeciesCategory2012,
+                            MainSubCategory = ""
                         });
 
                         ConvertHelper.SetHorizonScanningBasedOn2018Assessments(dest);

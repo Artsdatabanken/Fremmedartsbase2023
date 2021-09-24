@@ -1,4 +1,6 @@
-﻿namespace Prod.Api.Controllers
+﻿using System;
+
+namespace Prod.Api.Controllers
 {
     public class IndexFilter
     {
@@ -11,6 +13,7 @@
         }
         public int Page { get; set; }
         public int PageSize { get; set; }
+        public string[] Responsible { get; set; } = Array.Empty<string>();
 
         public History History { get; set; }
         public Current Current { get; set; }
@@ -32,6 +35,10 @@
     }
     public class Horizon
     {
+        public string NR2018 { get; set; }
         public bool NotStarted { get; set; } = false;
+        public bool Finished { get; set; }
+        public bool ToAssessment { get; set; }
+        public bool NotAssessed { get; set; }
     }
 }

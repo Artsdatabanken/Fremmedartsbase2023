@@ -15,6 +15,7 @@ using Microsoft.Net.Http.Headers;
 using Nbic.Indexer;
 // using Newtonsoft.Json;
 using Prod.Api.Helpers;
+using Prod.Api.Models;
 using Prod.Data.EFCore;
 using Prod.Domain;
 using Prod.Feedback.Services;
@@ -45,6 +46,8 @@ namespace Prod.Api.Controllers
         {
             public User.UserRoleInExpertGroup Rolle { get; set; }
             public List<AssessmentListItem> Assessments { get; set; }
+            public List<string> Authors { get; set; }
+            public int TotalCount { get; set; }
         }
 
         //// GET api/assessment/5
@@ -69,11 +72,13 @@ namespace Prod.Api.Controllers
             var expertgroupid = id.Replace('_', '/');
             var roleInGroup = await GetRoleInGroup(id);
 
-
+            FilteredAssessments filteredAssessments = await GetExpertGroupAssessments(expertgroupid, filter, roleInGroup.User.Id);
             var expertgroupAssessments = new ExpertgroupAssessments
             {
                 Rolle = roleInGroup,
-                Assessments = await GetExpertGroupAssessments(expertgroupid, filter, roleInGroup.User.Id)
+                Assessments =filteredAssessments.assessmentList,
+                Authors = filteredAssessments.Authors,
+                TotalCount = filteredAssessments.TotalCount 
             };
             return expertgroupAssessments;
 
@@ -208,8 +213,9 @@ namespace Prod.Api.Controllers
             return rodliste2019WithCommentses;
         }
 
-        private async Task<List<AssessmentListItem>> GetExpertGroupAssessments(string expertgroupid, IndexFilter filter, Guid userId)
+        private async Task<FilteredAssessments> GetExpertGroupAssessments(string expertgroupid, IndexFilter filter, Guid userId)
         {
+            var doReturn = new FilteredAssessments();
             // want to know if index is correct - has the right stuff
             var indexVersion = _index.GetIndexVersion();
             
@@ -235,6 +241,7 @@ namespace Prod.Api.Controllers
             var totalCount = _index.SearchTotalCount(query);
             var result = _index.SearchReference(query, filter.Page, filter.PageSize, IndexHelper.Field_ScientificNameAsTerm).Select(IndexHelper.GetAssessmentListItemFromIndex)
                 .ToList();
+            var facets = _index.SearchFacetsReference(IndexHelper.CreateDocumentQuery(expertgroupid, new IndexFilter(){ HorizonScan = filter.HorizonScan}), IndexHelper.Facet_Author);
             //var result = await _dbContext.Assessments
             //    .FromSqlRaw("SELECT Id, TaxonHierarcy, LockedForEditBy, LastUpdatedBy, Expertgroup, EvaluationStatus, Category, LockedForEditAt, LastUpdatedAt, ScientificName, ScientificNameId, PopularName, IsDeleted FROM dbo.Assessments WITH (INDEX(IX_Assessments_Expertgroup))") // index hint - speeds up computed columns
             //    .Where(x => x.Expertgroup == expertgroupid && x.IsDeleted == false).OrderBy(x => x.ScientificName)
@@ -301,8 +308,10 @@ namespace Prod.Api.Controllers
             //        ali.SearchStrings = new List<string>();
             //    }
             //}
-
-            return result;
+            doReturn.assessmentList = result;
+            doReturn.TotalCount = totalCount;
+            doReturn.Authors = facets.First(x => x.Dim == IndexHelper.Facet_Author).LabelValues.Select(x => x.Label + ";" + x.Value.ToString()).ToList();
+            return doReturn;
         }
         //[ServiceFilter(typeof(ClientIpCheckActionFilter))]
         [Route("DropIndex")]

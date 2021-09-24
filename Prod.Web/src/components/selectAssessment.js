@@ -244,7 +244,7 @@ export default class SelectAssessment extends Component {
                         <div className="filters"><b>{labels.SelectAssessment.assessmentLeader}</b>
                         <Xcomp.MultiselectArray
                                 observableValue={[appState, 'responsible']} 
-                                codes={koder.responsible}
+                                codes={appState.expertgroupAssessmentAuthors}
                                 mode="check"/>
                         </div>
                     
@@ -299,8 +299,8 @@ export default class SelectAssessment extends Component {
                         </div>
                         <div className="filters"><b>{labels.SelectAssessment.assessmentLeader}</b>
                         <Xcomp.MultiselectArray
-                                observableValue={[appState.horizonScanFilter, 'responsible']} 
-                                codes={koder.responsible}
+                                observableValue={[appState, 'responsible']} 
+                                codes={appState.expertgroupAssessmentAuthors}
                                 mode="check"/>
                         </div>
                     </div>}

@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Lucene.Net.Documents;
+using Lucene.Net.Facet;
+using Lucene.Net.Facet.Taxonomy;
 using Lucene.Net.Index;
 using Lucene.Net.Search;
 using Microsoft.EntityFrameworkCore;
@@ -18,55 +18,15 @@ namespace Prod.Api.Helpers
 {
     public static class IndexHelper
     {
-        public static async Task<DateTime> Index(bool clear, ProdDbContext _dbContext, Index _index)
-        {
-            //if (_index.IndexCount() > 1 && _index.IndexCount() < 5000) return;
-
-
-            if (clear) _index.ClearIndex();
-
-            var batchSize = 1000;
-            var pointer = 0;
-            var maxDate = DateTime.MinValue;
-            while (true)
-            {
-                 var result = await _dbContext.Assessments.Include(x=>x.LastUpdatedByUser).Include(x => x.LockedForEditByUser).Where(x => x.IsDeleted == false).OrderBy(x => x.Id).Skip(pointer).Take(batchSize)
-                     .ToArrayAsync();
-                 if (result.Length == 0)
-                 {
-                     break;
-                 }
-                 pointer += result.Length;
-                 var tempDate = result.Max(x => x.LastUpdatedAt);
-                 if (maxDate < tempDate)
-                 {
-                     maxDate = tempDate;
-                 }
-                
-                 var docs = result.Select(GetDocumentFromAssessment).ToArray();
-                 _index.AddOrUpdate(docs);
-            }
-
-            if (await _dbContext.TimeStamp.SingleOrDefaultAsync() == null)
-            {
-                _dbContext.TimeStamp.Add(new TimeStamp() { Id = 1, DateTimeUpdated = maxDate });
-                await _dbContext.SaveChangesAsync();
-            }
-            _index.SetIndexVersion(new IndexVersion() { Version = IndexHelper.IndexVersion, DateTime = maxDate });
-
-            return maxDate;
-        }
-        public static void Index(Assessment assessment, Index index)
-        {
-            var doc = GetDocumentFromAssessment(assessment);
-            index.AddOrUpdate(doc);
-            index.SetIndexVersion(new IndexVersion() { Version = IndexHelper.IndexVersion, DateTime = assessment.LastUpdatedAt });
-        }
+        /// <summary>
+        ///     Change this to force index rebuild!
+        /// </summary>
+        public const int IndexVersion = 3;
 
         private const string Field_Id = "Id";
         private const string Field_Group = "Expertgroup";
         private const string Field_EvaluationStatus = "EvaluationStatus";
-        private const string Field_LastUpdatedBy = "LastUpdatedBy";
+        internal const string Field_LastUpdatedBy = "LastUpdatedBy";
         private const string Field_LastUpdatedAt = "LastUpdatedAt";
         private const string Field_LockedForEditByUser = "LockedForEditByUser";
         private const string Field_LockedForEditAt = "LockedForEditAt";
@@ -76,7 +36,9 @@ namespace Prod.Api.Helpers
         private const string Field_Category = "Category";
         private const string Field_Criteria = "Criteria";
         private const string Field_CriteriaAll = "CriteriaAll";
+
         private const string Field_AssessmentContext = "AssessmentContext";
+
         //MainCriteria = (x.Criteria ?? "").ToCharArray().Where(c => Char.IsLetter(c) && Char.IsUpper(c)).Select(c => c.ToString()).ToArray(),
         private const string Field_PopularName = "PopularName";
 
@@ -90,8 +52,58 @@ namespace Prod.Api.Helpers
 
         private const string Field_Category2018 = "Category";
 
-        public const int IndexVersion = 1;
         private const string Field_DoHorizonScanning = "DoHorizonScan";
+        private const string Field_HsStatus = "HsStatus";
+        private const string Field_HsResult = "HsStatus";
+        private const string Field_Status = "Status";
+
+        //facets - telle antall!!
+        public const string Facet_Author = "A";
+        private static readonly string Field_NR2018 = "NR2018";
+        private static string[] _criterias = new[] { "A", "B", "C", "D", "E", "F", "G", "H", "I" };
+
+        public static async Task<DateTime> Index(bool clear, ProdDbContext _dbContext, Index _index)
+        {
+            //if (_index.IndexCount() > 1 && _index.IndexCount() < 5000) return;
+
+
+            if (clear) _index.ClearIndex();
+
+            var batchSize = 1000;
+            var pointer = 0;
+            var maxDate = DateTime.MinValue;
+            while (true)
+            {
+                var result = await _dbContext.Assessments.Include(x => x.LastUpdatedByUser)
+                    .Include(x => x.LockedForEditByUser).Where(x => x.IsDeleted == false).OrderBy(x => x.Id)
+                    .Skip(pointer).Take(batchSize)
+                    .ToArrayAsync();
+                if (result.Length == 0) break;
+                pointer += result.Length;
+                var tempDate = result.Max(x => x.LastUpdatedAt);
+                if (maxDate < tempDate) maxDate = tempDate;
+
+                var docs = result.Select(GetDocumentFromAssessment).ToArray();
+                _index.AddOrUpdate(docs);
+            }
+
+            if (await _dbContext.TimeStamp.SingleOrDefaultAsync() == null)
+            {
+                _dbContext.TimeStamp.Add(new TimeStamp { Id = 1, DateTimeUpdated = maxDate });
+                await _dbContext.SaveChangesAsync();
+            }
+
+            _index.SetIndexVersion(new IndexVersion { Version = IndexVersion, DateTime = maxDate });
+
+            return maxDate;
+        }
+
+        public static void Index(Assessment assessment, Index index)
+        {
+            var doc = GetDocumentFromAssessment(assessment);
+            index.AddOrUpdate(doc);
+            index.SetIndexVersion(new IndexVersion { Version = IndexVersion, DateTime = assessment.LastUpdatedAt });
+        }
         //private const string Field_DateLastSave = "DateSave";
 
         private static Document GetDocumentFromAssessment(Assessment assessment)
@@ -105,118 +117,84 @@ namespace Prod.Api.Helpers
                 // StringField indexes but doesn't tokenize - Case important
                 new StringField(Field_Group, ass.ExpertGroup, Field.Store.YES),
                 new StringField(Field_EvaluationStatus, ass.EvaluationStatus, Field.Store.YES),
-                new StoredField(Field_LastUpdatedBy, assessment.LastUpdatedByUser.FullName),
+                new StringField(Field_LastUpdatedBy, assessment.LastUpdatedByUser.FullName, Field.Store.YES),
                 new StringField(Field_LastUpdatedAt, assessment.LastUpdatedAt.Date.ToString("s"), Field.Store.YES),
-                new StoredField(Field_LockedForEditByUser, assessment.LockedForEditByUser != null ? assessment.LockedForEditByUser.FullName : string.Empty),
+                new StoredField(Field_LockedForEditByUser,
+                    assessment.LockedForEditByUser != null ? assessment.LockedForEditByUser.FullName : string.Empty),
                 new StoredField(Field_LockedForEditAt, assessment.LockedForEditAt.ToString("s")),
-                new TextField(Field_ScientificName, ass.EvaluatedScientificName, Field.Store.YES), // textfield - ignore case
-                new StringField(Field_ScientificNameAsTerm, ass.EvaluatedScientificName.ToLowerInvariant(), Field.Store.NO), // textfield - ignore case
+                new TextField(Field_ScientificName, ass.EvaluatedScientificName,
+                    Field.Store.YES), // textfield - ignore case
+                new StringField(Field_ScientificNameAsTerm, ass.EvaluatedScientificName.ToLowerInvariant(),
+                    Field.Store.NO), // textfield - ignore case
                 //new StoredField(Field_TaxonHierarcy, ass.VurdertVitenskapeligNavnHierarki),
-                new StringField(Field_Category, GetCategoryFromRiskLevel(ass.RiskAssessment.RiskLevel), Field.Store.YES),
-                new StringField(Field_Category2018, GetCategoryFromRiskLevel(ass2018?.RiskLevel ?? -1), Field.Store.YES),
+                new StringField(Field_Category, GetCategoryFromRiskLevel(ass.RiskAssessment.RiskLevel),
+                    Field.Store.YES),
+                new StringField(Field_Category2018, GetCategoryFromRiskLevel(ass2018?.RiskLevel ?? -1),
+                    Field.Store.YES),
                 //new StringField(Field_AssessmentContext, ass.VurderingsContext, Field.Store.YES),
-                new TextField(Field_PopularName, ass.EvaluatedVernacularName??string.Empty, Field.Store.YES),
+                new TextField(Field_PopularName, ass.EvaluatedVernacularName ?? string.Empty, Field.Store.YES),
                 new StringField(Field_DoHorizonScanning, ass.HorizonDoScanning ? "1" : "0", Field.Store.NO),
-
+                new StringField(Field_NR2018, Get2018NotAssessed(ass).ToString(), Field.Store.NO),
+                new StringField(Field_HsStatus, ass.HorizonScanningStatus, Field.Store.YES),
+                new StringField(Field_HsResult, GetHorizonScanResult(ass) ? "1":"0", Field.Store.NO),
+                new StringField(Field_Status, ass.EvaluationStatus, Field.Store.YES),
+                // facets
+                new FacetField(Facet_Author, assessment.LastUpdatedByUser.FullName),
+                
             };
 
-            //Kategori
-            //if (ass.Kriterier.Contains("A", StringComparison.InvariantCulture))
-            //{
-            //    document.Add(new StringField(Field_Criteria, "A", Field.Store.YES));
-            //}
-            //if (ass.Kriterier.Contains("B", StringComparison.InvariantCulture))
-            //{
-            //    document.Add(new StringField(Field_Criteria, "B", Field.Store.YES));
-            //}
-            //if (ass.Kriterier.Contains("C", StringComparison.InvariantCulture))
-            //{
-            //    document.Add(new StringField(Field_Criteria, "C", Field.Store.YES));
-            //}
-            //if (ass.Kriterier.Contains("D", StringComparison.InvariantCulture))
-            //{
-            //    document.Add(new StringField(Field_Criteria, "D", Field.Store.YES));
-            //}
-            //if (ass.Kriterier.Contains("E", StringComparison.InvariantCulture))
-            //{
-            //    document.Add(new StringField(Field_Criteria, "E", Field.Store.YES));
-            //}
-            //document.Add(new StoredField(Field_CriteriaAll, ass.Kriterier));
+            if (!string.IsNullOrWhiteSpace(ass.RiskAssessment.DecisiveCriteria))
+            {
+                foreach (var criteria in _criterias)
+                {
+                    if (ass.RiskAssessment.DecisiveCriteria.Contains(criteria, StringComparison.InvariantCulture)) document.Add(new StringField(Field_Criteria, criteria, Field.Store.NO));
+                }
 
-            // naturtyper
-            //foreach (var hab in ass.NaturtypeHovedenhet)
-            //{
-            //    document.Add(new StringField(Field_Habitat, hab, Field.Store.NO));
-            //}
-
-            // Regioner
-            //foreach (var s in ass.Regioner)
-            //{
-            //    document.Add(new StringField(Field_Regioner, s, Field.Store.NO));
-            //}
-
-            // art underart
-            //if (ass.TaxonRank.ToLowerInvariant() == "Species".ToLowerInvariant())
-            //{
-            //    document.Add(new StringField(Field_Rank, "Art", Field.Store.NO));
-            //}
-            //else if (ass.TaxonRank.ToLowerInvariant() == "SubSpecies".ToLowerInvariant())
-            //{
-            //    document.Add(new StringField(Field_Rank, "UnderArt", Field.Store.NO));
-            //}
-
-            // utdødd
-            //if (ass.Kategori == "CR" && ass.TroligUtdodd == true)
-            //{
-            //    document.Add(new StringField(Field_Utdodd, "1", Field.Store.NO));
-            //}
-
-            // europeisk bestand
-            //if (ass.MaxAndelAvEuropeiskBestand == "< 1 %" || ass.MaxAndelAvEuropeiskBestand == "1 - 5 %" || ass.MaxAndelAvEuropeiskBestand == "< 5 %")
-            //{
-            //    document.Add(new StringField(Field_EurB, "5", Field.Store.NO));
-            //}
-            //if (ass.MaxAndelAvEuropeiskBestand == "5 - 25 %")
-            //{
-            //    document.Add(new StringField(Field_EurB, "5-25", Field.Store.NO));
-            //}
-            //if (ass.MaxAndelAvEuropeiskBestand == "25 - 50 %")
-            //{
-            //    document.Add(new StringField(Field_EurB, "25-50", Field.Store.NO));
-            //}
-            //if (ass.MaxAndelAvEuropeiskBestand == "> 50 %")
-            //{
-            //    document.Add(new StringField(Field_EurB, "50", Field.Store.NO));
-            //}
-
-            // year
-            //if (ass.Vurderingsår == 2010)
-            //{
-            //    document.Add(new StringField(Field_Year, "2010", Field.Store.NO));
-            //}
-            //else
-            //{
-            //    if (ass.Vurderingsår == 2021)
-            //    {
-            //        document.Add(new StringField(Field_Year, "2021", Field.Store.NO));
-            //    }
-
-            //    if (!string.IsNullOrWhiteSpace(ass.ImportInfo.Kategori2015))
-            //    {
-            //        document.Add(new StringField(Field_Year, "2015", Field.Store.NO));
-            //    }
-            //    if (!string.IsNullOrWhiteSpace(ass.ImportInfo.Kategori2010))
-            //    {
-            //        document.Add(new StringField(Field_Year, "2010", Field.Store.NO));
-            //    }
-            //}
-
-            //if (ass.ÅrsakTilEndringAvKategori != null && ass.KategoriFraForrigeListe != ass.Kategori)
-            //{
-            //    document.Add(new StringField(Field_EndringKat, "1", Field.Store.NO));
-            //}
+                document.Add(new StringField(Field_CriteriaAll, ass.RiskAssessment.DecisiveCriteria, Field.Store.YES));
+            }
 
             return document;
+        }
+
+        private static bool GetHorizonScanResult(FA4 ass)
+        {
+            switch (ass.HorizonEstablismentPotential)
+            {
+                case "0":
+                    switch (ass.HorizonEcologicalEffect)
+                    {
+                        case "no":
+                        case "yesWhilePresent": return false;
+                        case "yesAfterGone": return true;
+                        default: return false;
+                    }
+                case "1":
+                    switch (ass.HorizonEcologicalEffect)
+                    {
+                        case "no":return false;
+                        case "yesWhilePresent": 
+                        case "yesAfterGone": return true;
+                        default: return false;
+                    }
+                case "2":
+                    return true;
+            }
+
+            return false;
+        }
+
+        private static NR2018 Get2018NotAssessed(FA4 ass)
+        {
+            var ass2018 = ass.PreviousAssessments.FirstOrDefault(x => x.RevisionYear == 2018);
+            if (ass2018 == null) return NR2018.Not2018;
+
+            if (ass2018.MainCategory == "NotApplicable" && ass2018.MainSubCategory == "canNotEstablishWithin50years")
+                return NR2018.CannotEstablish50Years;
+            if (ass2018.MainCategory == "NotApplicable" && ass2018.MainSubCategory == "traditionalProductionSpecie")
+                return NR2018.TraditionalProductionSpecie;
+            if (ass2018.MainCategory == "DoorKnocker" && ass2018.MainSubCategory == "noRiskAssessment")
+                return NR2018.NotAssessedDoorKnocker;
+            return NR2018.Assessed;
         }
 
         private static string GetCategoryFromRiskLevel(int riskLevel2012)
@@ -231,12 +209,11 @@ namespace Prod.Api.Helpers
                 default:
                     return "NR";
             }
-
         }
 
         public static AssessmentListItem GetAssessmentListItemFromIndex(Document doc)
         {
-            return new AssessmentListItem()
+            return new AssessmentListItem
             {
                 Id = doc.Get(Field_Id),
                 Expertgroup = doc.Get(Field_Group),
@@ -252,8 +229,6 @@ namespace Prod.Api.Helpers
                 Criteria = doc.Get(Field_CriteriaAll),
                 AssessmentContext = doc.Get(Field_AssessmentContext),
                 PopularName = doc.Get(Field_PopularName)
-                //new TextField("favoritePhrase", source.FavoritePhrase, Field.Store.YES)
-                ,
             };
         }
 
@@ -261,16 +236,51 @@ namespace Prod.Api.Helpers
         {
             Query query = new BooleanQuery();
             if (!string.IsNullOrWhiteSpace(expertgroupid) && expertgroupid != "0")
-            {
                 ((BooleanQuery)query).Add(GetFieldQuery(Field_Group, new[] { expertgroupid }), Occur.MUST);
-            }
 
+            // horizonscan filters
             if (filter.HorizonScan)
             {
                 ((BooleanQuery)query).Add(GetFieldQuery(Field_DoHorizonScanning, new[] { "1" }), Occur.MUST);
                 if (filter.Horizon.NotStarted)
+                    ((BooleanQuery)query).Add(
+                        GetFieldQuery(Field_HsStatus, new[] { "notStarted" }), Occur.MUST);
+                if (filter.Horizon.Finished)
+                    ((BooleanQuery)query).Add(
+                        GetFieldQuery(Field_HsStatus, new[] { "finished" }), Occur.MUST);
+                if (filter.Horizon.ToAssessment)
+                    ((BooleanQuery)query).Add(
+                        GetFieldQuery(Field_HsResult, new[] { "1" }), Occur.MUST);
+                if (filter.Horizon.NotAssessed)
+                    ((BooleanQuery)query).Add(
+                        GetFieldQuery(Field_HsResult, new[] { "0" }), Occur.MUST);
+
+                if (!string.IsNullOrWhiteSpace(filter.Horizon.NR2018))
                 {
-                    ((BooleanQuery)query).Add(GetFieldQuery(Field_LastUpdatedAt, new[] { DateTime.MinValue.Date.ToString("s") }), Occur.MUST);
+                    var items = filter.Horizon.NR2018.Split();
+                    if (items.Length == 1 && (NR2018)int.Parse(items[0]) == NR2018.NotAssessed) // alle ikke nr 2018
+                    {
+                        ((BooleanQuery)query).Add(
+                            GetFieldQuery(Field_NR2018,
+                                new[]
+                                {
+                                    NR2018.NotAssessedDoorKnocker.ToString(),
+                                    NR2018.TraditionalProductionSpecie.ToString(),
+                                    NR2018.CannotEstablish50Years.ToString()
+                                }), Occur.MUST);
+                    }
+                    else
+                    {
+                        var toSearch = items.Select(item => (NR2018)int.Parse(item))
+                            .Where(theOne => theOne != NR2018.Not2018).ToList();
+                        var strings = toSearch.Select(x => x.ToString()).ToArray();
+                        ((BooleanQuery)query).Add(GetFieldQuery(Field_NR2018, strings), Occur.MUST);
+                    }
+                }
+
+                if (filter.Responsible.Length > 0)
+                {
+                    ((BooleanQuery)query).Add(GetFieldQuery(Field_LastUpdatedBy, filter.Responsible), Occur.MUST);
                 }
             }
             else
@@ -371,10 +381,7 @@ namespace Prod.Api.Helpers
             //    ((BooleanQuery)query).Add(booleanQuery, Occur.MUST);
             //}
 
-            if (((BooleanQuery)query).Clauses.Count == 0)
-            {
-                query = new MatchAllDocsQuery();
-            }
+            if (((BooleanQuery)query).Clauses.Count == 0) query = new MatchAllDocsQuery();
 
             return query;
         }
@@ -389,14 +396,12 @@ namespace Prod.Api.Helpers
             else
             {
                 que = new BooleanQuery();
-                foreach (var term in terms)
-                {
-                    ((BooleanQuery)que).Add(new TermQuery(new Term(field, term)), Occur.SHOULD);
-                }
+                foreach (var term in terms) ((BooleanQuery)que).Add(new TermQuery(new Term(field, term)), Occur.SHOULD);
             }
 
             return que;
         }
+
         private static Query GetPrefixFieldQuery(string field, string[] terms)
         {
             Query que;
@@ -408,12 +413,27 @@ namespace Prod.Api.Helpers
             {
                 que = new BooleanQuery();
                 foreach (var term in terms)
-                {
                     ((BooleanQuery)que).Add(new PrefixQuery(new Term(field, term)), Occur.SHOULD);
-                }
             }
 
             return que;
+        }
+
+        /// <summary>
+        ///     Categories of assessments
+        /// </summary>
+        private enum NR2018
+        {
+            Assessed = 0,
+            Not2018 = 1,
+
+            /// <summary>
+            ///     Only for gruping - not for index - use specific one below
+            /// </summary>
+            NotAssessed = 5,
+            NotAssessedDoorKnocker = 6,
+            CannotEstablish50Years = 7,
+            TraditionalProductionSpecie = 8
         }
     }
 }

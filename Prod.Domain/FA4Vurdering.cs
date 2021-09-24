@@ -69,7 +69,7 @@ namespace Prod.Domain
         //public string ScientificName { get; set; }
 
 
-        public string VurderingsStatus { get; set; }
+        //public string VurderingsStatus { get; set; }
 
         //public string SpeciesName { get; set; } // fab: SpeciesName // Brukes 'over alt' i 2012 - toooodo: bør kunne klare oss uten?
         public List<string> ReasonForChangeOfCategory { get; set; } = new List<string>();
@@ -112,6 +112,7 @@ namespace Prod.Domain
         public string HorizonEstablismentPotentialDescription { get; set; } = "";
         public string HorizonEcologicalEffect { get; set; }
         public string HorizonEcologicalEffectDescription { get; set; } = "";
+        public string HorizonScanningStatus { get; set; } = "notStarted";
     }
 
 
@@ -1217,6 +1218,8 @@ namespace Prod.Domain
             public int RiskLevel { get; set; }
             public int SpreadRiskLevel { get; set; }
             public int EcologicalRiskLevel { get; set; }
+            public string MainCategory { get; set; }
+            public string MainSubCategory { get; set; }
         }
 
         public class ImpactedNatureType
