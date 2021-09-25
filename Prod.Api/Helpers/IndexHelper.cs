@@ -24,7 +24,7 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Change this to force index rebuild!
         /// </summary>
-        public const int IndexVersion = 12;
+        public const int IndexVersion = 11;
 
         private const string Field_Id = "Id";
         private const string Field_Group = "Expertgroup";
@@ -64,8 +64,9 @@ namespace Prod.Api.Helpers
         //facets - telle antall!!
         public const string Facet_Author = "Author";
         public const string Facet_Progress = "Progress";
-        public const string Facet_Group = "Group";
-        private static readonly string Field_NR2018 = "NR2018";
+        public const string Facet_PotentialDoorKnocker = "PotentialDoorKnocker";
+        public const string Facet_NotAssessedDoorKnocker = "NotAssessedDoorKnocker";
+        private static readonly string Field_NR2018 = "S2018";
         private static string[] _criterias = new[] { "A", "B", "C", "D", "E", "F", "G", "H", "I" };
 
         public static async Task<DateTime> Index(DateTime indexVersionDateTime, ProdDbContext _dbContext, Index _index)
@@ -185,8 +186,8 @@ namespace Prod.Api.Helpers
                 // facets
                 new FacetField(Facet_Author, assessment.LastUpdatedByUser.FullName),
                 new FacetField(Facet_Progress, horResult),
-                new FacetField(Facet_Group, get2018NotAssessed.ToString()),
-
+                new FacetField(Facet_PotentialDoorKnocker, ExtractPotentialDoorKnocker(get2018NotAssessed).ToString()),
+                new FacetField(Facet_NotAssessedDoorKnocker, ExtractNotAssessedDoorKnocker(get2018NotAssessed).ToString())
             };
 
             if (!string.IsNullOrWhiteSpace(ass.RiskAssessment.DecisiveCriteria))
@@ -200,6 +201,31 @@ namespace Prod.Api.Helpers
             }
 
             return document;
+        }
+
+        private static S2018 ExtractPotentialDoorKnocker(S2018 s2018)
+        {
+            switch (s2018)
+            {
+                case S2018.notEstablishedWithin50Years:
+                case S2018.notAssessedDoorKnocker:
+                case S2018.traditionalProductionSpecie:
+                    return S2018.NR2018;
+                default:
+                    return S2018.newPotentialDoorKnocker;
+            }
+        }
+        private static S2018 ExtractNotAssessedDoorKnocker(S2018 s2018)
+        {
+            switch (s2018)
+            {
+                case S2018.notEstablishedWithin50Years:
+                case S2018.notAssessedDoorKnocker:
+                case S2018.traditionalProductionSpecie:
+                    return s2018;
+                default:
+                    return S2018.assessed;
+            }
         }
 
         private static bool? GetHorizonScanResult(FA4 ass)
@@ -235,18 +261,18 @@ namespace Prod.Api.Helpers
             return false;
         }
 
-        private static NR2018 Get2018NotAssessed(FA4 ass)
+        private static S2018 Get2018NotAssessed(FA4 ass)
         {
             var ass2018 = ass.PreviousAssessments.FirstOrDefault(x => x.RevisionYear == 2018);
-            if (ass2018 == null) return NR2018.Not2018;
+            if (ass2018 == null) return S2018.NR2018;
 
             if (ass2018.MainCategory == "NotApplicable" && ass2018.MainSubCategory == "canNotEstablishWithin50years")
-                return NR2018.CannotEstablish50Years;
+                return S2018.notEstablishedWithin50Years;
             if (ass2018.MainCategory == "NotApplicable" && ass2018.MainSubCategory == "traditionalProductionSpecie")
-                return NR2018.TraditionalProductionSpecie;
+                return S2018.traditionalProductionSpecie;
             if (ass2018.MainCategory == "DoorKnocker" && ass2018.MainSubCategory == "noRiskAssessment")
-                return NR2018.NotAssessedDoorKnocker;
-            return NR2018.Assessed;
+                return S2018.notAssessedDoorKnocker;
+            return S2018.assessed;
         }
 
         private static string GetCategoryFromRiskLevel(int riskLevel2012)
@@ -337,16 +363,16 @@ namespace Prod.Api.Helpers
                     queryElements = new List<BooleanClause>();
                     foreach (var s in filter.Horizon.NR2018)
                     {
-                        var nr2018 = (NR2018)int.Parse(s);
+                        var nr2018 = (S2018)int.Parse(s);
                         switch (nr2018)
                         {
-                            case NR2018.NotAssessed:
+                            case S2018.notAssessed:
                                 queryElements.Add(new BooleanClause(QueryGetFieldQuery(Field_NR2018,
                                     new[]
                                     {
-                                        NR2018.NotAssessedDoorKnocker.ToString(),
-                                        NR2018.TraditionalProductionSpecie.ToString(),
-                                        NR2018.CannotEstablish50Years.ToString()
+                                        S2018.notAssessedDoorKnocker.ToString(),
+                                        S2018.traditionalProductionSpecie.ToString(),
+                                        S2018.notEstablishedWithin50Years.ToString()
                                     }), Occur.SHOULD));
                                 break;
                             default:
@@ -524,18 +550,19 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Categories of assessments
         /// </summary>
-        private enum NR2018
+        private enum S2018
         {
-            Assessed = 0,
-            Not2018 = 1,
+            assessed = 0,
+            NR2018 = 1,
 
             /// <summary>
             ///     Only for gruping - not for index - use specific one below
             /// </summary>
-            NotAssessed = 5,
-            NotAssessedDoorKnocker = 6,
-            CannotEstablish50Years = 7,
-            TraditionalProductionSpecie = 8
+            notAssessed = 5,
+            notAssessedDoorKnocker = 6,
+            notEstablishedWithin50Years = 7,
+            traditionalProductionSpecie = 8,
+            newPotentialDoorKnocker
         }
 
 

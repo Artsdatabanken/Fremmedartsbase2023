@@ -280,11 +280,11 @@ export default class SelectAssessment extends Component {
                 {appState.horizonScanFilter.horizonFilters == true &&
                 <div className="nav_menu">
                         <div className="filters"><b>{labels.SelectAssessment.assessmentStatus}</b>   
-                                <Xcomp.Bool observableValue={[appState.horizonScanFilter, "hsNotStarted"]} label={koder.workStatus[0].text + "   ( ) %"} />
-                                <Xcomp.Bool observableValue={[appState.horizonScanFilter, "hsFinished"]} label={koder.workStatus[2].text + "   ( ) %"} />
+                                <Xcomp.Bool observableValue={[appState.horizonScanFilter, "hsNotStarted"]} label={koder.workStatus[0].text + "   (" + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','2') + ") %"} />
+                                <Xcomp.Bool observableValue={[appState.horizonScanFilter, "hsFinished"]} label={koder.workStatus[2].text + "   (" + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0') + ") %"} />
                             <div className="subChoice">
-                                    <Xcomp.Bool observableValue={[appState.horizonScanFilter, "toAssessment"]} label={" % videre til risikovurdering"} />
-                                    <Xcomp.Bool observableValue={[appState.horizonScanFilter, "notAssessed"]} label={" % ikke videre"} />
+                                    <Xcomp.Bool observableValue={[appState.horizonScanFilter, "toAssessment"]} label={" " + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1') + "% videre til risikovurdering"} />
+                                    <Xcomp.Bool observableValue={[appState.horizonScanFilter, "notAssessed"]} label={" " + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','0') + "% ikke videre"} />
                                 <p>Totalt: {appState.expertgroupAssessmentTotalCount}</p>                                                                      
                             </div>
 
@@ -294,11 +294,17 @@ export default class SelectAssessment extends Component {
                         <Xcomp.MultiselectArray
                                 observableValue={[appState.horizonScanFilter, 'potentialDoorKnockers']} 
                                 codes={koder.potentialDoorKnockers}
+                                facetFunction={appState.getStatisticsFor}
+                                facets={appState.assessmentsStatistics}
+                                facet="PotentialDoorKnocker"
                                 mode="check"/>
                         <div className="subChoice">
                         <Xcomp.MultiselectArray
                                 observableValue={[appState.horizonScanFilter, 'notAssessedDoorKnocker']} 
                                 codes={koder.notAssessedDoorKnocker}
+                                facetFunction={appState.getStatisticsFor}
+                                facets={appState.assessmentsStatistics}
+                                facet="NotAssessedDoorKnocker"
                                 mode="check"/>
                         </div>
                         

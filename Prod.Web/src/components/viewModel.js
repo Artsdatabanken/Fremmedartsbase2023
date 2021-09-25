@@ -418,7 +418,25 @@ class ViewModel {
 
     }  // ########### end constructor ###########
     //    #######################################
+    @computed getStatisticsFor(facets, facetname, facetitem) {
+        //const facets = this.assessmentsStatistics;
+        const facet = facets.find(element => element.name == facetname)
+        if (facet) // found
+        {
+            var count = 0;
+            var items = facetitem.split(",").forEach( harry => {
+                var item = facet.facetsItems.find(element => element.name == harry)
+                if (item)
+                {
+                    count+= item.count 
+                }
+                }
+            )
 
+            return count;
+        }
+        return 0
+    }
 
 
 
@@ -509,8 +527,6 @@ class ViewModel {
         const count = unresolvedComments.count
         return count
     }
-
-
 
     // ################ Start section expert groups ##################
     async loadExpertGroups() {
