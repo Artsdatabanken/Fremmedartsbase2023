@@ -10,6 +10,16 @@ namespace Prod.Api.Models
     {
         public List<AssessmentListItem> assessmentList { get; set; }
         public int TotalCount { get; set; }
-        public List<string> Authors { get; set; }
+        public List<Facet> Facets { get; set; }
+    }
+    public class Facet
+    {
+        public string Name { get; set; }
+        public List<FacetItem> FacetsItems { get; set; } = new List<FacetItem>();
+    }
+    public class FacetItem
+    {
+        public string Name { get; set; }
+        public int Count { get; set; }
     }
 }

@@ -123,6 +123,7 @@ class ViewModel {
             expertgroupAssessmentList: [],
             expertgroupAssessmentTotalCount: 0,
             expertgroupAssessmentAuthors: [],
+            assessmentsStatistics: observable,
             expertgroupAssessmentFilter: "",
             expertgroupCategoryFilter: "",
             expertgroupCategoryCheckboxFilter: [],
@@ -975,13 +976,13 @@ class ViewModel {
 
         const assessments = observable.array(expertgroupAssessments.assessments)
         const fixCode = function(author){
-            var parts = author.split(";");
+            //var parts = author.split(";");
             return {
-            "text": (parts[0] + " (" +parts[1] +")"),
-            "value": parts[0]
+            "text": (author.name + " (" +author.count +")"),
+            "value": author.name
             }
         }
-        const authors = expertgroupAssessments.authors.map((author) =>fixCode(author))
+        const authors = expertgroupAssessments.facets[0].facetsItems.map((author) =>fixCode(author))
         console.log("loded " + assessments.length + " assessments")
         runInAction(() => {
             this.expertgroupAssessmentList = assessments
@@ -989,6 +990,7 @@ class ViewModel {
             this.loadingExpertGroup = false
             this.expertgroupAssessmentTotalCount = expertgroupAssessments.totalCount
             this.expertgroupAssessmentAuthors = observable.array(authors)
+            this.assessmentsStatistics = observable(expertgroupAssessments.facets)
         })
 
     }

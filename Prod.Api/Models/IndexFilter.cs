@@ -37,7 +37,7 @@ namespace Prod.Api.Controllers
     }
     public class Horizon
     {
-        public string NR2018 { get; set; }
+        public string[] NR2018 { get; set; } = Array.Empty<string>();
         public bool NotStarted { get; set; } = false;
         public bool Finished { get; set; }
         public bool ToAssessment { get; set; }

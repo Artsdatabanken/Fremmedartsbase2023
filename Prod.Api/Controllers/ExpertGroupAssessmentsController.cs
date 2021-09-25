@@ -46,7 +46,7 @@ namespace Prod.Api.Controllers
         {
             public User.UserRoleInExpertGroup Rolle { get; set; }
             public List<AssessmentListItem> Assessments { get; set; }
-            public List<string> Authors { get; set; }
+            public List<Facet> Facets { get; set; }
             public int TotalCount { get; set; }
         }
 
@@ -77,7 +77,7 @@ namespace Prod.Api.Controllers
             {
                 Rolle = roleInGroup,
                 Assessments =filteredAssessments.assessmentList,
-                Authors = filteredAssessments.Authors,
+                Facets = filteredAssessments.Facets,
                 TotalCount = filteredAssessments.TotalCount 
             };
             return expertgroupAssessments;
@@ -252,11 +252,11 @@ namespace Prod.Api.Controllers
             filter.Page = 0;
             filter.PageSize = 1000;
             //filter.HorizonScan = true;
-            var query = IndexHelper.CreateDocumentQuery(expertgroupid, filter);
+            var query = IndexHelper.QueryGetDocumentQuery(expertgroupid, filter);
             var totalCount = _index.SearchTotalCount(query);
-            var result = _index.SearchReference(query, filter.Page, filter.PageSize, IndexHelper.Field_ScientificNameAsTerm).Select(IndexHelper.GetAssessmentListItemFromIndex)
+            var result = _index.SearchReference(query, filter.Page, filter.PageSize, IndexHelper.Field_ScientificNameAsTerm).Select(IndexHelper.GetDocumentFromIndex)
                 .ToList();
-            var facets = _index.SearchFacetsReference(IndexHelper.CreateDocumentQuery(expertgroupid, new IndexFilter(){ HorizonScan = filter.HorizonScan}), IndexHelper.Facet_Author);
+            var facets = _index.SearchFacetsReference(IndexHelper.QueryGetDocumentQuery(expertgroupid, new IndexFilter(){ HorizonScan = filter.HorizonScan}), new[] { IndexHelper.Facet_Author, IndexHelper.Facet_Group, IndexHelper.Facet_Progress });
             //var result = await _dbContext.Assessments
             //    .FromSqlRaw("SELECT Id, TaxonHierarcy, LockedForEditBy, LastUpdatedBy, Expertgroup, EvaluationStatus, Category, LockedForEditAt, LastUpdatedAt, ScientificName, ScientificNameId, PopularName, IsDeleted FROM dbo.Assessments WITH (INDEX(IX_Assessments_Expertgroup))") // index hint - speeds up computed columns
             //    .Where(x => x.Expertgroup == expertgroupid && x.IsDeleted == false).OrderBy(x => x.ScientificName)
@@ -325,7 +325,13 @@ namespace Prod.Api.Controllers
             //}
             doReturn.assessmentList = result;
             doReturn.TotalCount = totalCount;
-            doReturn.Authors = facets.First() != null ? facets.First(x => x.Dim == IndexHelper.Facet_Author).LabelValues.Select(x => x.Label + ";" + x.Value.ToString()).ToList() : new List<string>();
+            doReturn.Facets = facets.Select(x => new Facet()
+            {
+                Name = x.Dim,
+                FacetsItems = x.LabelValues.Select(y => new FacetItem() { Name = y.Label, Count = (int)y.Value })
+                    .ToList()
+            }).ToList();
+            
             return doReturn;
         }
         //[ServiceFilter(typeof(ClientIpCheckActionFilter))]

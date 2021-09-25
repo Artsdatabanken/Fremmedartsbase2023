@@ -156,7 +156,7 @@ namespace Nbic.Indexer
             }
         }
         
-        public IList<FacetResult> SearchFacetsReference(Query query, string facetField = "")
+        public IList<FacetResult> SearchFacetsReference(Query query, string[] facetField)
         {
             // Retrieve results
             IList<FacetResult> results = new List<FacetResult>();
@@ -174,7 +174,10 @@ namespace Nbic.Indexer
 
                 // Count both "Publish Date" and "Author" dimensions
                 Facets facets = new FastTaxonomyFacetCounts(taxoReader, config, fc);
-                results.Add(facets.GetTopChildren(10, facetField));
+                foreach (var s in facetField)
+                {
+                    results.Add(facets.GetTopChildren(10, s));
+                }
             }
 
             return results;

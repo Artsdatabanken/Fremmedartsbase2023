@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Lucene.Net.Documents;
@@ -22,7 +24,7 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Change this to force index rebuild!
         /// </summary>
-        public const int IndexVersion = 8;
+        public const int IndexVersion = 12;
 
         private const string Field_Id = "Id";
         private const string Field_Group = "Expertgroup";
@@ -60,7 +62,9 @@ namespace Prod.Api.Helpers
         private const string Field_Status = "Status";
 
         //facets - telle antall!!
-        public const string Facet_Author = "A";
+        public const string Facet_Author = "Author";
+        public const string Facet_Progress = "Progress";
+        public const string Facet_Group = "Group";
         private static readonly string Field_NR2018 = "NR2018";
         private static string[] _criterias = new[] { "A", "B", "C", "D", "E", "F", "G", "H", "I" };
 
@@ -147,6 +151,9 @@ namespace Prod.Api.Helpers
             //string kategori = ass.Kategori; // string.IsNullOrWhiteSpace(ass.Kategori) ? "" : ass.Kategori.Substring(0,2);
             var ass2018 = ass.PreviousAssessments.FirstOrDefault(x => x.RevisionYear == 2018);
             var horizonScanResult = GetHorizonScanResult(ass);
+            var get2018NotAssessed = Get2018NotAssessed(ass);
+            var horResult = horizonScanResult.HasValue == true ? (horizonScanResult.Value ? "1" : "0") :"2";
+
             var document = new Document
             {
                 new StringField(Field_Id, assessment.Id.ToString(), Field.Store.YES),
@@ -170,14 +177,16 @@ namespace Prod.Api.Helpers
                 //new StringField(Field_AssessmentContext, ass.VurderingsContext, Field.Store.YES),
                 new TextField(Field_PopularName, ass.EvaluatedVernacularName ?? string.Empty, Field.Store.YES),
                 new StringField(Field_DoHorizonScanning, ass.HorizonDoScanning ? "1" : "0", Field.Store.NO),
-                new StringField(Field_NR2018, Get2018NotAssessed(ass).ToString(), Field.Store.NO),
+                new StringField(Field_NR2018, get2018NotAssessed.ToString(), Field.Store.NO),
                 new StringField(Field_HsStatus, ass.HorizonScanningStatus, Field.Store.YES),
                 //new StringField(Field_HsDone, ass.HorizonScanningStatus, Field.Store.YES),
-                new StringField(Field_HsResult,  horizonScanResult.HasValue == true ? (horizonScanResult.Value ? "1" : "0") :"2", Field.Store.NO),
+                new StringField(Field_HsResult,  horResult, Field.Store.NO),
                 new StringField(Field_Status, ass.EvaluationStatus, Field.Store.YES),
                 // facets
                 new FacetField(Facet_Author, assessment.LastUpdatedByUser.FullName),
-                
+                new FacetField(Facet_Progress, horResult),
+                new FacetField(Facet_Group, get2018NotAssessed.ToString()),
+
             };
 
             if (!string.IsNullOrWhiteSpace(ass.RiskAssessment.DecisiveCriteria))
@@ -254,7 +263,7 @@ namespace Prod.Api.Helpers
             }
         }
 
-        public static AssessmentListItem GetAssessmentListItemFromIndex(Document doc)
+        public static AssessmentListItem GetDocumentFromIndex(Document doc)
         {
             return new AssessmentListItem
             {
@@ -275,11 +284,11 @@ namespace Prod.Api.Helpers
             };
         }
 
-        public static Query CreateDocumentQuery(string expertgroupid, IndexFilter filter)
+        public static Query QueryGetDocumentQuery(string expertgroupid, IndexFilter filter)
         {
             Query query = new BooleanQuery();
             if (!string.IsNullOrWhiteSpace(expertgroupid) && expertgroupid != "0")
-                ((BooleanQuery)query).Add(GetFieldQuery(Field_Group, new[] { expertgroupid }), Occur.MUST);
+                ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_Group, new[] { expertgroupid }), Occur.MUST);
 
             if (!string.IsNullOrWhiteSpace(filter.NameSearch))
             {
@@ -308,51 +317,60 @@ namespace Prod.Api.Helpers
             // horizonscan filters
             if (filter.HorizonScan)
             {
-                ((BooleanQuery)query).Add(GetFieldQuery(Field_DoHorizonScanning, new[] { "1" }), Occur.MUST);
+                ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_DoHorizonScanning, new[] { "1" }), Occur.MUST);
+                
+                // or between elements group with must then list of clauses with should
+                var queryElements = new List<BooleanClause>();
                 if (filter.Horizon.NotStarted)
-                    ((BooleanQuery)query).Add(
-                        GetFieldQuery(Field_HsResult, new[] { "2" }), Occur.MUST);
+                   queryElements.Add(new BooleanClause(QueryGetFieldQuery(Field_HsResult, new[] { "2" }), Occur.SHOULD));
                 if (filter.Horizon.Finished)
-                    ((BooleanQuery)query).Add(
-                        GetFieldQuery(Field_HsResult, new[] { "1","0" }), Occur.MUST);
+                    queryElements.Add(new BooleanClause(QueryGetFieldQuery(Field_HsResult, new[] { "1","0" }), Occur.SHOULD));
                 if (filter.Horizon.ToAssessment)
-                    ((BooleanQuery)query).Add(
-                        GetFieldQuery(Field_HsResult, new[] { "1" }), Occur.MUST);
+                    queryElements.Add(new BooleanClause(QueryGetFieldQuery(Field_HsResult, new[] { "1" }), Occur.SHOULD));
                 if (filter.Horizon.NotAssessed)
-                    ((BooleanQuery)query).Add(
-                        GetFieldQuery(Field_HsResult, new[] { "0" }), Occur.MUST);
+                    queryElements.Add(new BooleanClause(QueryGetFieldQuery(Field_HsResult, new[] { "0" }), Occur.SHOULD));
 
-                if (!string.IsNullOrWhiteSpace(filter.Horizon.NR2018))
+                QueryAddOrElements(queryElements, query);
+
+                if (filter.Horizon.NR2018.Any())
                 {
-                    var items = filter.Horizon.NR2018.Split();
-                    if (items.Length == 1 && (NR2018)int.Parse(items[0]) == NR2018.NotAssessed) // alle ikke nr 2018
+                    queryElements = new List<BooleanClause>();
+                    foreach (var s in filter.Horizon.NR2018)
                     {
-                        ((BooleanQuery)query).Add(
-                            GetFieldQuery(Field_NR2018,
-                                new[]
-                                {
-                                    NR2018.NotAssessedDoorKnocker.ToString(),
-                                    NR2018.TraditionalProductionSpecie.ToString(),
-                                    NR2018.CannotEstablish50Years.ToString()
-                                }), Occur.MUST);
+                        var nr2018 = (NR2018)int.Parse(s);
+                        switch (nr2018)
+                        {
+                            case NR2018.NotAssessed:
+                                queryElements.Add(new BooleanClause(QueryGetFieldQuery(Field_NR2018,
+                                    new[]
+                                    {
+                                        NR2018.NotAssessedDoorKnocker.ToString(),
+                                        NR2018.TraditionalProductionSpecie.ToString(),
+                                        NR2018.CannotEstablish50Years.ToString()
+                                    }), Occur.SHOULD));
+                                break;
+                            default:
+                                queryElements.Add(new BooleanClause(QueryGetFieldQuery(Field_NR2018,
+                                    new[]
+                                    {
+                                        nr2018.ToString()
+                                    }), Occur.SHOULD));
+                                break;
+
+                        }
                     }
-                    else
-                    {
-                        var toSearch = items.Select(item => (NR2018)int.Parse(item))
-                            .Where(theOne => theOne != NR2018.Not2018).ToList();
-                        var strings = toSearch.Select(x => x.ToString()).ToArray();
-                        ((BooleanQuery)query).Add(GetFieldQuery(Field_NR2018, strings), Occur.MUST);
-                    }
+                    QueryAddOrElements(queryElements, query);
+
                 }
 
                 if (filter.Responsible.Length > 0)
                 {
-                    ((BooleanQuery)query).Add(GetFieldQuery(Field_LastUpdatedBy, filter.Responsible), Occur.MUST);
+                    ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_LastUpdatedBy, filter.Responsible), Occur.MUST);
                 }
             }
             else
             {
-                ((BooleanQuery)query).Add(GetFieldQuery(Field_DoHorizonScanning, new[] { "0" }), Occur.MUST);
+                ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_DoHorizonScanning, new[] { "0" }), Occur.MUST);
             }
             //if (!string.IsNullOrWhiteSpace(filter.Groups) && filter.Groups != "0")
             //{
@@ -364,43 +382,43 @@ namespace Prod.Api.Helpers
             //        terms.Add("amfibier, reptiler");
             //    }
 
-            //    ((BooleanQuery)query).Add(GetFieldQuery(Field_Group, terms.ToArray()), Occur.MUST);
+            //    ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_Group, terms.ToArray()), Occur.MUST);
             //}
 
             //if (!string.IsNullOrWhiteSpace(filter.Category))
             //{
             //    var terms = filter.Category.Split(',', StringSplitOptions.RemoveEmptyEntries);
-            //    ((BooleanQuery)query).Add(GetPrefixFieldQuery(Field_Category, terms), Occur.MUST);
+            //    ((BooleanQuery)query).Add(QueryGetPrefixFieldQuery(Field_Category, terms), Occur.MUST);
             //}
 
             //if (!string.IsNullOrWhiteSpace(filter.Criteria))
             //{
             //    var terms = filter.Criteria.Split(',', StringSplitOptions.RemoveEmptyEntries);
-            //    ((BooleanQuery)query).Add(GetFieldQuery(Field_Criteria, terms), Occur.MUST);
+            //    ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_Criteria, terms), Occur.MUST);
             //}
 
             //if (!string.IsNullOrWhiteSpace(filter.AssessmentContext))
             //{
             //    var terms = filter.AssessmentContext.Split(',', StringSplitOptions.RemoveEmptyEntries);
-            //    ((BooleanQuery)query).Add(GetFieldQuery(Field_AssessmentContext, terms), Occur.MUST);
+            //    ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_AssessmentContext, terms), Occur.MUST);
             //}
 
             //if (!string.IsNullOrWhiteSpace(filter.Habitat))
             //{
             //    var terms = filter.Habitat.Split(',', StringSplitOptions.RemoveEmptyEntries);
-            //    ((BooleanQuery)query).Add(GetFieldQuery(Field_Habitat, terms), Occur.MUST);
+            //    ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_Habitat, terms), Occur.MUST);
             //}
 
             //if (!string.IsNullOrWhiteSpace(filter.Regions))
             //{
             //    var terms = filter.Regions.Split(',', StringSplitOptions.RemoveEmptyEntries);
-            //    ((BooleanQuery)query).Add(GetFieldQuery(Field_Regioner, terms), Occur.MUST);
+            //    ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_Regioner, terms), Occur.MUST);
             //}
 
             //if (!string.IsNullOrWhiteSpace(filter.Taxonrank))
             //{
             //    var terms = filter.Taxonrank.Split(',', StringSplitOptions.RemoveEmptyEntries);
-            //    ((BooleanQuery)query).Add(GetFieldQuery(Field_Rank, terms), Occur.MUST);
+            //    ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_Rank, terms), Occur.MUST);
             //}
 
             //if (!string.IsNullOrWhiteSpace(filter.Extinct) && filter.Extinct == "true")
@@ -416,13 +434,13 @@ namespace Prod.Api.Helpers
             //if (!string.IsNullOrWhiteSpace(filter.Portion))
             //{
             //    var terms = filter.Portion.Split(',', StringSplitOptions.RemoveEmptyEntries);
-            //    ((BooleanQuery)query).Add(GetFieldQuery(Field_EurB, terms), Occur.MUST);
+            //    ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_EurB, terms), Occur.MUST);
             //}
 
             //if (!string.IsNullOrWhiteSpace(filter.Year))
             //{
             //    var terms = filter.Year.Split(',', StringSplitOptions.RemoveEmptyEntries);
-            //    ((BooleanQuery)query).Add(GetFieldQuery(Field_Year, terms), Occur.MUST);
+            //    ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_Year, terms), Occur.MUST);
             //}
 
             //if (!string.IsNullOrWhiteSpace(filter.Search))
@@ -453,7 +471,24 @@ namespace Prod.Api.Helpers
             return query;
         }
 
-        private static Query GetFieldQuery(string field, string[] terms)
+        private static void QueryAddOrElements(List<BooleanClause> queryElements, Query query)
+        {
+            if (queryElements.Any())
+            {
+                var que = new BooleanQuery();
+                if (queryElements.Count == 1)
+                {
+                    ((BooleanQuery)query).Add(queryElements[0].Query, Occur.MUST);
+                }
+                else
+                {
+                    foreach (var clause in queryElements) ((BooleanQuery)que).Add(clause);
+                    ((BooleanQuery)query).Add(que, Occur.MUST);
+                }
+            }
+        }
+
+        private static Query QueryGetFieldQuery(string field, string[] terms)
         {
             Query que;
             if (terms.Length == 1)
@@ -469,7 +504,7 @@ namespace Prod.Api.Helpers
             return que;
         }
 
-        private static Query GetPrefixFieldQuery(string field, string[] terms)
+        private static Query QueryGetPrefixFieldQuery(string field, string[] terms)
         {
             Query que;
             if (terms.Length == 1)
