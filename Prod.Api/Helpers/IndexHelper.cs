@@ -13,6 +13,7 @@ using Lucene.Net.Search;
 using Microsoft.EntityFrameworkCore;
 using Nbic.Indexer;
 using Prod.Api.Controllers;
+using Prod.Api.Models;
 using Prod.Data.EFCore;
 using Prod.Domain;
 using Index = Nbic.Indexer.Index;

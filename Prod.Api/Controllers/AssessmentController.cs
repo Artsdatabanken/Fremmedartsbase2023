@@ -450,7 +450,7 @@ namespace Prod.Api.Controllers
             var now = DateTime.Now;
             doc.LastUpdatedAt = now;
 
-            var assessment = await _dbContext.Assessments.Include(x=>x.LastUpdatedByUser).Include(x => x.LockedForEditByUser).SingleOrDefaultAsync(x => x.Id == id);
+            var assessment = await _dbContext.Assessments.Include(x=>x.LastUpdatedByUser).Include(x => x.LockedForEditByUser).Include(x=>x.Comments).SingleOrDefaultAsync(x => x.Id == id);
 
             if (!forceStore && (assessment.LockedForEditByUser != null && assessment.LockedForEditByUser.Id != user.Id))
             {

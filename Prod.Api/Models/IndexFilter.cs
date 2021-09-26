@@ -1,7 +1,10 @@
 ﻿using System;
 
-namespace Prod.Api.Controllers
+namespace Prod.Api.Models
 {
+    /// <summary>
+    /// Filter to query assessments by. Used by Frontend via APi
+    /// </summary>
     public class IndexFilter
     {
         public IndexFilter()
@@ -13,14 +16,29 @@ namespace Prod.Api.Controllers
         }
         public int Page { get; set; }
         public int PageSize { get; set; }
+
+        /// <summary>
+        /// Authors by full name
+        /// </summary>
         public string[] Responsible { get; set; } = Array.Empty<string>();
 
+        /// <summary>
+        /// Full substring search in names
+        /// </summary>
         public string NameSearch { get; set; } = string.Empty;
 
         public History History { get; set; }
         public Current Current { get; set; }
         public Progress Progress { get; set; }
+
+        /// <summary>
+        /// Filters related to horizonScanning
+        /// </summary>
         public Horizon Horizon { get; set; }
+
+        /// <summary>
+        /// If mode is HorizonScan or full assessment 
+        /// </summary>
         public bool HorizonScan { get; set; }
     }
 
