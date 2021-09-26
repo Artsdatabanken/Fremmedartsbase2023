@@ -175,5 +175,6 @@ namespace Prod.Data.EFCore
     {
         public int Id { get; set; }
         public DateTime DateTimeUpdated { get; set; }
+        public DateTime CommentDateTimeUpdated { get; set; }
     }
 }

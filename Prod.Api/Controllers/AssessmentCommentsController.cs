@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Prod.Api.Helpers;
+
 // ReSharper disable AsyncConverter.ConfigureAwaitHighlighting
 
 namespace Prod.Api.Controllers
@@ -61,7 +63,7 @@ namespace Prod.Api.Controllers
         public async Task<bool> Post([FromBody] AssessmentCommentView value, int id)
         {
             var user = await base.GetUser();
-
+            var commentDate = DateTime.Now;
             await _dbContext.Comments.AddAsync(new AssessmentComment()
             {
                 AssessmentId = id,
@@ -70,11 +72,12 @@ namespace Prod.Api.Controllers
                 Comment = value.Comment,
                 //CommentDate = DateTime.Now,
                 // to avoid time zone issues
-                CommentDate = DateTime.UtcNow.AddHours(1),
+                CommentDate = commentDate,
                 UserId = user.Id
                 
             });
             await _dbContext.SaveChangesAsync();
+            IndexHelper.SetCommentTimeStamp(_dbContext, commentDate);
             return true;
         }
 
@@ -91,8 +94,11 @@ namespace Prod.Api.Controllers
 
             if (comment.UserId == user.Id || user.IsAdmin)
             {
+                var commentDate = DateTime.Now;
+                comment.CommentDate = commentDate;
                 comment.IsDeleted = true;
                 await _dbContext.SaveChangesAsync();
+                IndexHelper.SetCommentTimeStamp(_dbContext, commentDate);
                 return true;
             }
 
@@ -113,9 +119,12 @@ namespace Prod.Api.Controllers
             if (roleInGroup.WriteAccess || user.IsAdmin)
             {
                 comment.Closed = true;
-                comment.ClosedDate = DateTime.Now;
+                var commentClosedDate = DateTime.Now;
+                comment.ClosedDate = commentClosedDate;
+                comment.CommentDate = commentClosedDate;
                 comment.ClosedById = roleInGroup.UserId;
                 await _dbContext.SaveChangesAsync();
+                IndexHelper.SetCommentTimeStamp(_dbContext, commentClosedDate);
                 return true;
             }
 

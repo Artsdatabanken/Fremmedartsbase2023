@@ -24,7 +24,7 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Change this to force index rebuild!
         /// </summary>
-        public const int IndexVersion = 11;
+        public const int IndexVersion = 12;
 
         private const string Field_Id = "Id";
         private const string Field_Group = "Expertgroup";
@@ -68,40 +68,90 @@ namespace Prod.Api.Helpers
         public const string Facet_NotAssessedDoorKnocker = "NotAssessedDoorKnocker";
         private static readonly string Field_NR2018 = "S2018";
         private static string[] _criterias = new[] { "A", "B", "C", "D", "E", "F", "G", "H", "I" };
+        private static string Field_CommentsClosed = "CommentsClosed";
+        private static string Field_CommentsOpen = "CommentsOpen";
+        private static string Field_CommentsNew = "CommentsNew";
+        private static string Field_TaxonChange = "TaxonChange";
+        private const string Field_NewestComment = "NewestComment";
+        private const string PotensiellTaksonomiskEndring = "Potensiell taksonomisk endring: ";
+        private const string TaksonomiskEndring = "Automatisk endring av navn: ";
 
         public static async Task<DateTime> Index(DateTime indexVersionDateTime, ProdDbContext _dbContext, Index _index)
         {
             var batchSize = 1000;
             var pointer = 0;
-            var maxDate = DateTime.MinValue;
+            var maxDate = DateTime.MinValue; 
+            var maxCommentDate = DateTime.MinValue;
             var minDate = indexVersionDateTime;
             while (true)
             {
                 var result = await _dbContext.Assessments.Include(x => x.LastUpdatedByUser)
                     .Include(x => x.LockedForEditByUser)
-                    .Where(x => x.IsDeleted == false && x.LastUpdatedAt > minDate)
+                    .Include(x=>x.Comments)
+                    .Where(x => x.IsDeleted == false && (x.LastUpdatedAt > minDate || x.Comments.Any(y=>y.CommentDate > minDate) ) )
                     .OrderBy(x => x.Id)
                     .Skip(pointer).Take(batchSize)
                     .ToArrayAsync();
                 if (result.Length == 0) break;
                 pointer += result.Length;
                 var tempDate = result.Max(x => x.LastUpdatedAt);
+                var tempCommentDate = result.Max(x => x.Comments.Any() ? x.Comments.Max(y => y.CommentDate) : DateTime.MinValue);
                 if (maxDate < tempDate) maxDate = tempDate;
+                if (maxCommentDate < tempCommentDate) maxCommentDate = tempCommentDate;
 
                 var docs = result.Select(GetDocumentFromAssessment).ToArray();
                 _index.AddOrUpdate(docs);
             }
 
-            if (await _dbContext.TimeStamp.SingleOrDefaultAsync() == null)
-            {
-                _dbContext.TimeStamp.Add(new TimeStamp { Id = 1, DateTimeUpdated = maxDate });
-                await _dbContext.SaveChangesAsync();
-            }
-
-            _index.SetIndexVersion(new IndexVersion { Version = IndexVersion, DateTime = maxDate });
+            SetTimeStamps(_dbContext, _index, maxDate, maxCommentDate);
 
             return maxDate;
         }
+
+        private static void SetTimeStamps(ProdDbContext _dbContext, Index _index, DateTime maxDate,
+            DateTime maxCommentDate)
+        {
+            var stamp = _dbContext.TimeStamp.SingleOrDefault();
+            if (stamp == null)
+            {
+                _dbContext.TimeStamp.Add(new TimeStamp
+                    { Id = 1, DateTimeUpdated = maxDate, CommentDateTimeUpdated = maxCommentDate });
+            }
+            else
+            {
+                if (DateTimesSignificantlyDifferent(stamp.DateTimeUpdated, maxDate))
+                {
+                    stamp.DateTimeUpdated = maxDate;
+                }
+
+                if (DateTimesSignificantlyDifferent(stamp.CommentDateTimeUpdated, maxCommentDate))
+                {
+                    stamp.CommentDateTimeUpdated = maxCommentDate;
+                }
+            }
+
+            _dbContext.SaveChanges();
+
+            _index.SetIndexVersion(new IndexVersion
+                { Version = IndexVersion, DateTime = maxDate, CommentDateTime = maxCommentDate });
+        }
+
+        internal static void SetCommentTimeStamp(ProdDbContext _dbContext, 
+            DateTime maxCommentDate)
+        {
+            var stamp = _dbContext.TimeStamp.SingleOrDefault();
+            if (stamp != null)
+            {
+                if (DateTimesSignificantlyDifferent(stamp.CommentDateTimeUpdated, maxCommentDate))
+                {
+                    stamp.CommentDateTimeUpdated = maxCommentDate;
+                }
+            }
+
+            _dbContext.SaveChanges();
+            
+        }
+
         public static DateTime Index(bool clear, ProdDbContext _dbContext, Index _index)
         {
             //if (_index.IndexCount() > 1 && _index.IndexCount() < 5000) return;
@@ -112,10 +162,14 @@ namespace Prod.Api.Helpers
             var batchSize = 1000;
             var pointer = 0;
             var maxDate = DateTime.MinValue;
+            var maxCommentDate = DateTime.MinValue;
             while (true)
             {
-                var result = _dbContext.Assessments.Include(x => x.LastUpdatedByUser)
-                    .Include(x => x.LockedForEditByUser).Where(x => x.IsDeleted == false).OrderBy(x => x.Id)
+                var result = _dbContext.Assessments
+                    .Include(x => x.LastUpdatedByUser)
+                    .Include(x => x.LockedForEditByUser)
+                    .Include(x=>x.Comments)
+                    .Where(x => x.IsDeleted == false).OrderBy(x => x.Id)
                     .Skip(pointer).Take(batchSize)
                     .ToArray();
                 if (result.Length == 0) break;
@@ -127,13 +181,7 @@ namespace Prod.Api.Helpers
                 _index.AddOrUpdate(docs);
             }
 
-            if (_dbContext.TimeStamp.SingleOrDefault() == null)
-            {
-                _dbContext.TimeStamp.Add(new TimeStamp { Id = 1, DateTimeUpdated = maxDate });
-                _dbContext.SaveChanges();
-            }
-
-            _index.SetIndexVersion(new IndexVersion { Version = IndexVersion, DateTime = maxDate });
+            SetTimeStamps(_dbContext, _index, maxDate, maxCommentDate);
 
             return maxDate;
         }
@@ -199,6 +247,41 @@ namespace Prod.Api.Helpers
 
                 document.Add(new StringField(Field_CriteriaAll, ass.RiskAssessment.DecisiveCriteria, Field.Store.YES));
             }
+
+            //var ids = result.Select(x => int.Parse(x.Id)).ToArray();
+            var comments = assessment.Comments;
+            var latest = comments.Any() ? comments.Max(x => x.CommentDate) : DateTime.MinValue;
+            var closed = comments.Count(x => x.Closed);
+            var open = comments.Count(y =>
+                !y.Closed && !y.Comment.StartsWith(TaksonomiskEndring) &&
+                !y.Comment.StartsWith(PotensiellTaksonomiskEndring));
+            var newCommentsForUserId = (from commenter in comments.Where(y =>
+                    y.IsDeleted == false && y.Closed == false).Select(x=>x.UserId).ToArray()
+                let newones = comments.Count(y => y.IsDeleted == false && y.Closed == false && y.UserId != commenter && y.CommentDate > (comments.Any(y2 => y2.IsDeleted == false && y2.UserId == commenter)
+                    ? comments.Where(y2 => y2.IsDeleted == false && y2.UserId == commenter)
+                        .Max(z => z.CommentDate)
+                    : DateTime.Now))
+                select new Tuple<Guid, int>(commenter, newones)).ToList();
+
+            var taxonchange = comments.Any(y =>
+                y.Comment.StartsWith(PotensiellTaksonomiskEndring) && y.IsDeleted == false &&
+                y.Closed == false)
+                ? 2
+                : (comments.Any(y =>
+                    y.Comment.StartsWith(TaksonomiskEndring) && y.IsDeleted == false &&
+                    y.Closed == false)
+                    ? 1
+                    : 0);
+
+            document.Add(new StringField(Field_NewestComment, latest.ToString("yyyy-dd-MM HH:mm"), Field.Store.YES));
+            document.Add(new StringField(Field_CommentsClosed, closed.ToString(), Field.Store.YES));
+            foreach (var tuple in newCommentsForUserId)
+            {
+                document.Add(new StringField(Field_CommentsNew, tuple.Item1 + ";" + tuple.Item2, Field.Store.YES));
+            }
+            document.Add(new StringField(Field_CommentsOpen, open.ToString(), Field.Store.YES));
+            document.Add(new StringField(Field_TaxonChange, taxonchange.ToString(), Field.Store.YES));
+
 
             return document;
         }
@@ -306,7 +389,12 @@ namespace Prod.Api.Helpers
                 Category2018 = doc.Get(Field_Category),
                 Criteria = doc.Get(Field_CriteriaAll),
                 AssessmentContext = doc.Get(Field_AssessmentContext),
-                PopularName = doc.Get(Field_PopularName)
+                PopularName = doc.Get(Field_PopularName),
+                CommentDate = doc.Get(Field_NewestComment),
+                CommentClosed = int.Parse(doc.Get(Field_CommentsClosed)),
+                CommentOpen = int.Parse(doc.Get(Field_CommentsOpen)),
+                TaxonChange = int.Parse(doc.Get(Field_TaxonChange)),
+                CommentNew = 1
             };
         }
 
@@ -566,5 +654,9 @@ namespace Prod.Api.Helpers
         }
 
 
+        public static bool DateTimesSignificantlyDifferent(DateTime date1, DateTime date2)
+        {
+            return Math.Abs((date1 - date2).TotalSeconds) > 1;
+        }
     }
 }

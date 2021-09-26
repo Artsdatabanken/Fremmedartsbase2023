@@ -221,7 +221,9 @@ namespace Prod.Api.Controllers
             
             // want to know if index is in sync with db - local index remote db
             var dbTimestamp = await _dbContext.TimeStamp.SingleOrDefaultAsync();
-            dbTimestamp.DateTimeUpdated = dbTimestamp.DateTimeUpdated.AddMilliseconds(-dbTimestamp.DateTimeUpdated.Millisecond);
+
+            //var assesmentTimestamp = dbTimestamp.DateTimeUpdated.AddMilliseconds(-dbTimestamp.DateTimeUpdated.Millisecond);
+            //var commentTimestamp = dbTimestamp.CommentDateTimeUpdated = dbTimestamp.CommentDateTimeUpdated.AddMilliseconds(-dbTimestamp.DateTimeUpdated.Millisecond);
             if (dbTimestamp == null || indexVersion.Version != IndexHelper.IndexVersion) // not indexed yet or index is different now
             {
                 // do full index
@@ -230,8 +232,8 @@ namespace Prod.Api.Controllers
                 {
                     indexVersion = _index.GetIndexVersion();
                     dbTimestamp = _dbContext.TimeStamp.SingleOrDefault();
-                    dbTimestamp.DateTimeUpdated =
-                        dbTimestamp.DateTimeUpdated.AddMilliseconds(-dbTimestamp.DateTimeUpdated.Millisecond);
+                    //dbTimestamp.DateTimeUpdated =
+                    //    dbTimestamp.DateTimeUpdated.AddMilliseconds(-dbTimestamp.DateTimeUpdated.Millisecond);
                     if (dbTimestamp == null ||
                         indexVersion.Version != IndexHelper.IndexVersion) // not indexed yet or index is different now
                     {
@@ -242,7 +244,7 @@ namespace Prod.Api.Controllers
 
                 // index should be complete now
             }
-            else if (Math.Abs((indexVersion.DateTime - dbTimestamp.DateTimeUpdated).TotalSeconds) > 1)
+            else if (IndexHelper.DateTimesSignificantlyDifferent(indexVersion.DateTime, dbTimestamp.DateTimeUpdated) || IndexHelper.DateTimesSignificantlyDifferent(indexVersion.CommentDateTime,dbTimestamp.CommentDateTimeUpdated))
             {
                 // index assessments with new date - changes
                 // må da hente nye endringer indeksere og lagre max dato
@@ -278,36 +280,36 @@ namespace Prod.Api.Controllers
             //            PopularName = x.PopularName
             //        }).OrderBy(x => x.ScientificName).ToListAsync();
 
-            var ids = result.Select(x => int.Parse(x.Id)).ToArray();
-            var commentStats = _dbContext.Comments.Where(x => ids.Contains(x.AssessmentId) && x.IsDeleted == false).AsEnumerable()
-                .GroupBy(x => x.AssessmentId)
-                .Select(
-                    x => new
-                    {
-                        AssessmentId = x.Key,
-                        Latest = x.Max(y => y.CommentDate),
-                        Closed = x.Count(y => y.Closed),
-                        Open = x.Count(y => !y.Closed && !y.Comment.StartsWith(TaksonomiskEndring) && !y.Comment.StartsWith(PotensiellTaksonomiskEndring)),
-                        New = x.Count(y => y.IsDeleted == false && y.Closed == false && y.UserId != userId && y.CommentDate >
-                            (x.Any(y2 => y2.IsDeleted == false && y2.UserId == userId)
-                            ? x.Where(y2 => y2.IsDeleted == false && y2.UserId == userId).Max(z => z.CommentDate)
-                            : DateTime.Now)
-                                 ),// x.Where(y=>y.IsDeleted == false && y.Closed == false && y.UserId == brukerId).Max(z=>z.CommentDate),
-                        TaxonChange = x.Any(y => y.Comment.StartsWith(PotensiellTaksonomiskEndring) && y.IsDeleted == false && y.Closed == false) ? 2 : (x.Any(y => y.Comment.StartsWith(TaksonomiskEndring) && y.IsDeleted == false && y.Closed == false) ? 1 : 0)
-                    }).ToDictionary(x => x.AssessmentId);
-            foreach (var assessmentListItem in result)
-            {
-                var key = int.Parse(assessmentListItem.Id);
-                if (commentStats.ContainsKey(key))
-                {
-                    var stats = commentStats[key];
-                    assessmentListItem.CommentDate = stats.Latest.ToString("yyyy-dd-MM HH:mm");
-                    assessmentListItem.CommentClosed = stats.Closed;
-                    assessmentListItem.CommentOpen = stats.Open;
-                    assessmentListItem.CommentNew = stats.New;
-                    assessmentListItem.TaxonChange = stats.TaxonChange;
-                }
-            }
+            //var ids = result.Select(x => int.Parse(x.Id)).ToArray();
+            //var commentStats = _dbContext.Comments.Where(x => ids.Contains(x.AssessmentId) && x.IsDeleted == false).AsEnumerable()
+            //    .GroupBy(x => x.AssessmentId)
+            //    .Select(
+            //        x => new
+            //        {
+            //            AssessmentId = x.Key,
+            //            Latest = x.Max(y => y.CommentDate),
+            //            Closed = x.Count(y => y.Closed),
+            //            Open = x.Count(y => !y.Closed && !y.Comment.StartsWith(TaksonomiskEndring) && !y.Comment.StartsWith(PotensiellTaksonomiskEndring)),
+            //            New = x.Count(y => y.IsDeleted == false && y.Closed == false && y.UserId != userId && y.CommentDate >
+            //                (x.Any(y2 => y2.IsDeleted == false && y2.UserId == userId)
+            //                ? x.Where(y2 => y2.IsDeleted == false && y2.UserId == userId).Max(z => z.CommentDate)
+            //                : DateTime.Now)
+            //                     ),// x.Where(y=>y.IsDeleted == false && y.Closed == false && y.UserId == brukerId).Max(z=>z.CommentDate),
+            //            TaxonChange = x.Any(y => y.Comment.StartsWith(PotensiellTaksonomiskEndring) && y.IsDeleted == false && y.Closed == false) ? 2 : (x.Any(y => y.Comment.StartsWith(TaksonomiskEndring) && y.IsDeleted == false && y.Closed == false) ? 1 : 0)
+            //        }).ToDictionary(x => x.AssessmentId);
+            //foreach (var assessmentListItem in result)
+            //{
+            //    var key = int.Parse(assessmentListItem.Id);
+            //    if (commentStats.ContainsKey(key))
+            //    {
+            //        var stats = commentStats[key];
+            //        assessmentListItem.CommentDate = stats.Latest.ToString("yyyy-dd-MM HH:mm");
+            //        assessmentListItem.CommentClosed = stats.Closed;
+            //        assessmentListItem.CommentOpen = stats.Open;
+            //        assessmentListItem.CommentNew = stats.New;
+            //        assessmentListItem.TaxonChange = stats.TaxonChange;
+            //    }
+            //}
             //foreach (var ali in result)
             //{
             //    if (ali.TaxonHierarcy != null)
@@ -334,6 +336,7 @@ namespace Prod.Api.Controllers
             
             return doReturn;
         }
+
         //[ServiceFilter(typeof(ClientIpCheckActionFilter))]
         [HttpGet("DropIndex")]
         public async Task DoDeleteIndexAsync()

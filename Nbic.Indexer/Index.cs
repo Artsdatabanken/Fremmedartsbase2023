@@ -230,7 +230,7 @@ namespace Nbic.Indexer
 
             if (result == null)
             {
-                return new IndexVersion() { DateTime = DateTime.MinValue, Version = 0 };
+                return new IndexVersion() { DateTime = DateTime.MinValue, Version = 0, CommentDateTime = DateTime.MinValue};
             }
             //Fetch a document by index number. This index number is stored as an integer in result.Doc
             Document d = searcher.Doc(result.Doc);
@@ -239,7 +239,8 @@ namespace Nbic.Indexer
             return new IndexVersion()
             {
                 Version = Convert.ToInt32(d.GetField("Version").GetStringValue()),
-                DateTime = DateTime.Parse(d.GetField("Date").GetStringValue(), CultureInfo.InvariantCulture)
+                DateTime = DateTime.Parse(d.GetField("Date").GetStringValue(), CultureInfo.InvariantCulture),
+                CommentDateTime = d.GetField("CommentDate") != null ? DateTime.Parse(d.GetField("CommentDate").GetStringValue(), CultureInfo.InvariantCulture) : DateTime.MinValue
             };
         }
         /// <summary>
@@ -251,7 +252,8 @@ namespace Nbic.Indexer
             {
                 new StringField(Field_Id, "IndexVersion", Field.Store.NO),
                 new StringField("Version", version.Version.ToString(), Field.Store.YES ),
-                new StringField("Date", version.DateTime.ToString(CultureInfo.InvariantCulture), Field.Store.YES )
+                new StringField("Date", version.DateTime.ToString(CultureInfo.InvariantCulture), Field.Store.YES ),
+                new StringField("CommentDate", version.CommentDateTime.ToString(CultureInfo.InvariantCulture), Field.Store.YES )
             };
 
             _writer.UpdateDocument(new Term(Field_Id, doc.Get(Field_Id)), doc);
@@ -263,5 +265,6 @@ namespace Nbic.Indexer
     {
         public int Version { get; set; }
         public DateTime DateTime { get; set; }
+        public DateTime CommentDateTime { get; set; }
     }
 }
