@@ -9,10 +9,23 @@ import UtbredelseshistorikkInnenlands from './35Utbredelseshistorikk/Utbredelses
 import UtbredelseIDag from './35Utbredelseshistorikk/UtbredelseIDag'
 import Utbredelseshistorikk from './35Utbredelseshistorikk/Utbredelseshistorikk'
 import ModalArtskart from '../artskart/ModalArtskart';
+import { ContactsOutlined } from '@material-ui/icons';
 
 @inject('appState')
 @observer
 export default class Assessment52Utbredelse extends React.Component {
+
+    onOverførFraArtskart = (data) => {
+        // {
+        //     countylist,
+        //     selectionGeometry,
+        //     areadata,
+        //     observations,
+        //     editStats
+        // }
+        console.log('onOverførFraArtskart - Hvor skal data?!', data);
+    }
+
     render() {
         const {appState:{assessment}, appState, appState:{infoTabs}} = this.props
         // const {appState:{assessment}, vurdering, fabModel} = this.props
@@ -50,7 +63,13 @@ export default class Assessment52Utbredelse extends React.Component {
                             <div>
                                 {/* <span>{labels.goTo}</span> <Xcomp.Button primary>{labels.speciesMap}</Xcomp.Button> */}
                                 <div style={{marginLeft: 20, marginBottom: 30}}>
-                                    <ModalArtskart taxonId={assessment.taxonId} scientificNameId={assessment.evaluatedScientificNameId} labels={labels} utvalg={assessment.riskAssessment}/>
+                                    <ModalArtskart
+                                        taxonId={assessment.taxonId}
+                                        scientificNameId={assessment.evaluatedScientificNameId}
+                                        labels={labels}
+                                        utvalg={assessment.riskAssessment}
+                                        onOverførFraArtskart={this.onOverførFraArtskart}
+                                        />
                                 </div>
                                 <p style={{marginBottom: '0'}}>Basert på periode:</p>
                                 <div className="distributionYears">

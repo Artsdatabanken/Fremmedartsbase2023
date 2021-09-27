@@ -33,7 +33,7 @@ const RedigerbartKart = ({
     artskartAdded,
     artskartRemoved,
   });
-  // console.log('RedigerbartKart', artskart, observations, taxonId, scientificNameId);
+  // console.log('RedigerbartKart', kriterier, artskart, observations, taxonId, scientificNameId);
 
   const handleEditSelection = e => {
     setSelectionGeometry(e);
