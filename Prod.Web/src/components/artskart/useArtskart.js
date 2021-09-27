@@ -60,7 +60,7 @@ const useArtskart = ({
   const [status3] = useRestApi(urls.countylist, setCountylist);
   const status = Object.assign({}, status1, status2, status3);
 
-  // console.log('useArtskart', observations);
+  // console.log('useArtskart', kriterier);
 
   const handleAddPoint = e => {
     let { lng, lat } = e.latlng;
@@ -90,10 +90,6 @@ const useArtskart = ({
 
   // const isVeryCloseByGeographic = (d1, d2) => Math.abs(d1 - d2) < 1e-5;
   const isVeryCloseBy = (d1, d2) => Math.abs(d1 - d2) < 1000;
-  // const isVeryCloseBy = (d1, d2) => {
-  //   console.log('isVeryCloseBy', d1, d2, Math.abs(d1 - d2), Math.abs(d1 - d2) < 1000);
-  //   Math.abs(d1 - d2) < 1000;
-  // };
 
   const handleClickPoint = latlng => {
     // console.log('handleClickPoint pre - count', observations, observations.features.length, latlng);
@@ -115,12 +111,12 @@ const useArtskart = ({
     });
     if (newFeatures.length == observations.features.length && !orgFeature) {
       newFeatures.push({
-        source: 'remove',
         geometry: {
-          coordinates: [latlng.lng, latlng.lat],
-          type: 'Point'
+          type: "Point",
+          coordinates: [latlng.lng, latlng.lat]
         },
-        type: 'Feature'
+        type: "Feature",
+        source: "remove",
       });
     }
     // console.log('handleClickPoint post - count', newFeatures, newFeatures.length, latlng);
