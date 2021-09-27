@@ -14,6 +14,7 @@ import tabdefs from './tabdefs'
 import assessmentTabdefs from './assessment/assessmentTabdefs'
 
 import { any } from 'prop-types'
+import { Console } from 'console'
 // import { ConfigurationManager } from '../../dist/Prod.Web.e31bb0bc'
 
 
@@ -333,6 +334,12 @@ class ViewModel {
             console.log("skal vurderes: " + this.skalVurderes)
         });
 
+      /*  autorun(() => {
+            console.log("ASSESSMENT: " + this.assessment.horizonDoScanning)
+            this.assessment.horizonDoScanning ?  this.riskAssessmentTabs.activeTab.id = 0 :  this.riskAssessmentTabs.activeTab.id = 1     
+            console.log(this.riskAssessmentTabs.activeTab.id) 
+        })*/
+
         // **** set assessment and assessmentId ****
         reaction(() => this.assessmentId,
             assessmentId => {
@@ -451,7 +458,8 @@ class ViewModel {
 
     @action navigate(assessmentTabId, id) {
         console.log("navigate: " + assessmentTabId + " - " + id)
-        action(() => {
+        action(() => {          
+             
             this.assessmentTabs.activeTab.id = assessmentTabId
             // this.assessmentId = id
         })
@@ -649,12 +657,14 @@ class ViewModel {
     async setCurrentAssessment(id) {
         window.scrollTo(0,0)
         console.log("setCurrentAssessment: " + id)
+        
         const intid = Number(id)
         if(intid === this.assessmentId)
             return; // do not get or change assessment when unless id is different
         let json = null
         if (id) {
             json = await this.getAssessment(id)
+            
             if (json) {
                 this.updateCurrentAssessment(json)
             }
@@ -717,7 +727,9 @@ class ViewModel {
         // console.log("########################" + JSON.stringify(assessmentInfo))
         // console.log("########################" + assessmentInfo.id)
         this.setCurrentAssessment(assessmentInfo.id)
-        assessmentInfo.horizonDoScanning ?  this.riskAssessmentTabs.activeTab.id == 1 :  this.riskAssessmentTabs.activeTab.id == 0       
+        console.log("HSKANNING: " + this.horizonDoScanning)
+        this.assessmentTypeFilter == "horizonScanning" ?  this.assessmentTabs.activeTab.id = 0 :  this.assessmentTabs.activeTab.id = 1   
+         
     }
 
     checkForExistingAssessment = (sciName, assessmentId) => {
