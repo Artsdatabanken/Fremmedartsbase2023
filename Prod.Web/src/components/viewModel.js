@@ -717,6 +717,7 @@ class ViewModel {
         // console.log("########################" + JSON.stringify(assessmentInfo))
         // console.log("########################" + assessmentInfo.id)
         this.setCurrentAssessment(assessmentInfo.id)
+        assessmentInfo.horizonDoScanning ?  riskAssessmentTabs.activeTab.id == 1 :  riskAssessmentTabs.activeTab.id == 0       
     }
 
     checkForExistingAssessment = (sciName, assessmentId) => {
