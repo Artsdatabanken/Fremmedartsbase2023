@@ -132,11 +132,11 @@ const MapOpenLayers = ({
         //   onClickPoint(latlng);
         // });
         if (mouseoverfeature) {
-            console.log('mouseover', mouseoverfeature.getProperties());
+            // console.log('mouseover', mouseoverfeature.getProperties());
             const latlng = mouseoverfeature.get('latlng');
             removeMarker(latlng);
         } else {
-            console.log('createMarker()', coordinate);
+            // console.log('createMarker()', coordinate);
             onAddPoint({
             latlng:
             {
@@ -148,7 +148,7 @@ const MapOpenLayers = ({
     };
     const removeMarker = (coordinate) => {
         // const latlng = Proj4(epsg, 'EPSG:4326', coordinate);
-        console.log('removeMarker()', coordinate);
+        // console.log('removeMarker()', coordinate);
 
         // return L.circleMarker(latlng).on("click", e => {
         //   L.DomEvent.stopPropagation(e);
@@ -414,36 +414,36 @@ const MapOpenLayers = ({
                     }),
                     visible: true
                 }),
-                new TileLayer({
-                    name: 'Vannområder',
-                    opacity: 1,
-                    extent: extent,
-                    source: new TileArcGISRest({
-                    // source: new ImageArcGISRest({
-                    // source: new ImageSource({
-                        //?dpi=96
-                        // &transparent=true
-                        // &format=png32
-                        // &layers=show%3A2%2C9
-                        // &bbox=330256.5513175976%2C7799000.9230466%2C1693893.1359247793%2C9446371.75664828
-                        // &bboxSR=102100
-                        // &imageSR=102100
-                        // &size=1115%2C1347
-                        // &f=image
-                        url: 'https://vann-nett.no/arcgis/rest/services/WFD/AdministrativeOmraader/MapServer/',
-                        params: {
-                            // BBOXSR: config.mapEpsgCode,
-                            // IMAGESR: config.mapEpsgCode,
-                            LAYERS: 'show:2,9'
-                        },
-                        projection: projection,
-                        tileGrid: wmtsTileGrid(numZoomLevels, `EPSG:${config.mapEpsgCode}`, projection),
-                        // imageLoadFunction: (a,b,c) => {console.log('imageLoadFunction', a, b, c);},
-                        crossOrigin: 'anonymous'
-                    }),
-                    visible: false
-                }),
-                createWaterLayer('Vatn', 2, projection),
+                // new TileLayer({
+                //     name: 'Vannområder',
+                //     opacity: 1,
+                //     extent: extent,
+                //     source: new TileArcGISRest({
+                //     // source: new ImageArcGISRest({
+                //     // source: new ImageSource({
+                //         //?dpi=96
+                //         // &transparent=true
+                //         // &format=png32
+                //         // &layers=show%3A2%2C9
+                //         // &bbox=330256.5513175976%2C7799000.9230466%2C1693893.1359247793%2C9446371.75664828
+                //         // &bboxSR=102100
+                //         // &imageSR=102100
+                //         // &size=1115%2C1347
+                //         // &f=image
+                //         url: 'https://vann-nett.no/arcgis/rest/services/WFD/AdministrativeOmraader/MapServer/',
+                //         params: {
+                //             // BBOXSR: config.mapEpsgCode,
+                //             // IMAGESR: config.mapEpsgCode,
+                //             LAYERS: 'show:2,9'
+                //         },
+                //         projection: projection,
+                //         tileGrid: wmtsTileGrid(numZoomLevels, `EPSG:${config.mapEpsgCode}`, projection),
+                //         // imageLoadFunction: (a,b,c) => {console.log('imageLoadFunction', a, b, c);},
+                //         crossOrigin: 'anonymous'
+                //     }),
+                //     visible: false
+                // }),
+                // createWaterLayer('Vatn', 2, projection),
                 hoverLayer,
                 areaLayer,
                 markerLayer

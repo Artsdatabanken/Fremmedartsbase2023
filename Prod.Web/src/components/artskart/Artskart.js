@@ -19,7 +19,7 @@ const Artskart = ({ taxonId, scientificNameId, vurderingsContext, utvalg, onOver
   if (vurderingsContext === undefined) {
     vurderingsContext = 'N';
   }
-  console.log('Artskart', taxonId, scientificNameId, vurderingsContext);
+  // console.log('Artskart', taxonId, scientificNameId, vurderingsContext);
   return (
     <div className="artskartmodal">
       <div

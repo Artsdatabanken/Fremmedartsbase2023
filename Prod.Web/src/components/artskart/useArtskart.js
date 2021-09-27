@@ -71,7 +71,7 @@ const useArtskart = ({
     
     lng = parseInt((lng + eastAdd) / 2000) * 2000 - eastSub
     lat = parseInt((lat) / 2000) * 2000 + 1000;
-    console.log('handleAddPoint ', observations, observations.features.length, e.latlng, {lng, lat});
+    // console.log('handleAddPoint ', observations, observations.features.length, e.latlng, {lng, lat});
 
     const point = {
       geometry: {
@@ -96,31 +96,38 @@ const useArtskart = ({
   // };
 
   const handleClickPoint = latlng => {
-    console.log('handleClickPoint pre - count', observations, observations.features.length, latlng);
+    // console.log('handleClickPoint pre - count', observations, observations.features.length, latlng);
     
-    const newFeatures = observations.features.filter((f) => {
-      console.log('handleClickPoint - feature', f);
+    let orgFeature = false;
+    const newFeatures = observations.features.filter(f => {
       if (f.geometry.type !== "Point") return true;
       const coords = f.geometry.coordinates;
       if (!isVeryCloseBy(coords[0], latlng.lng)) return true;
-      // console.log('remove feature (lng)', f);
       if (!isVeryCloseBy(coords[1], latlng.lat)) return true;
-      // console.log('remove feature (lat)', f);
-      if (f.source === "add") {
-        console.log('remove feature', f);
-        f.source = "remove";
-        return false;
-      }
-      console.log('??', f.source);
+      if (f.source === "add") return false;
       if (f.source === "remove") {
         f.source = "org";
+        orgFeature = true;
         return true;
       }
       if (f.source === "org") f.source = "remove";
       return true;
     });
-    console.log('handleClickPoint post - count', observations.features.length, latlng);
-    setObservations({ features: newFeatures });
+    if (newFeatures.length == observations.features.length && !orgFeature) {
+      newFeatures.push({
+        source: 'remove',
+        geometry: {
+          coordinates: [latlng.lng, latlng.lat],
+          type: 'Point'
+        },
+        type: 'Feature'
+      });
+    }
+    // console.log('handleClickPoint post - count', newFeatures, newFeatures.length, latlng);
+    // setObservations({ features: newFeatures });
+    observations.features = newFeatures;
+    const features = observations.features;
+    setObservations({ features });
   };
   return [
     status,
