@@ -66,9 +66,16 @@ export default class Vurdering34Spredningsveier extends React.Component {
 
             // if the migration pathway is in "Til innendørs- eller produksjonsareal", then we have to add a matching pathway into "Introduksjon..."
             if (name == "Til innendørs- eller produksjonsareal") {
-                console.log(mp.codeItem)
-                const copy = toJS(mp)
-                vurdering.assesmentVectors.push(copy)
+                console.log(mp)
+                
+                const copy = mp
+                // setting influence factor, magnitude and time of incident of the new pathway as null
+                copy.influenceFactor = null
+                copy.magnitude = null
+                copy.timeOfIncident = null
+                
+                newCopy = toJS(copy)
+                vurdering.assesmentVectors.push(newCopy)
             }
             
         }
