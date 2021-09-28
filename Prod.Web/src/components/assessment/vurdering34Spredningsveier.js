@@ -48,8 +48,38 @@ export default class Vurdering34Spredningsveier extends React.Component {
         return text
     }
 
+    // changing the category of "Direkte import" til "Rømning/forvilling"
+    changeCategory (cat) {
+        switch (cat) {
+            case 'importAgriculture' : 
+                return 'agriculture';
+            case 'importAquaculture' : 
+                return 'aquaculture';
+            case 'importBotanicalGardenZooAquarium': 
+                return 'botanicalGardenZooAquarium';
+            case 'importPetShops' : 
+                return 'petAquariumTerrariumSpecies';
+            case 'importFarmedAnimals' :
+                return 'farmedAnimals';
+            case 'importForestry' :
+                return 'forestry';
+            case 'importFurFarms' :
+                return 'furFarms';
+            case 'importOrnamentalPurposeOther': 
+                return 'ornamentalPurposeOther';
+            case 'importResearch' :
+                return 'research';
+            case 'importLiveFoodLiveBait': 
+                return 'petAquariumTerrariumFood';
+            case 'importOtherEscape' :
+                return 'otherUnknownRelease'
+            default: 
+                return ""
+        }
+    }
+
    
-    @action saveMigrationPathway(vurdering, mp, name) {
+    @action saveMigrationPathway(vurdering, mp, name, migrationPathways) {
         const mps = name == "Til innendørs- eller produksjonsareal" ? vurdering.importPathways : vurdering.assesmentVectors
         const compstr = (mp) => ""+mp.codeItem+mp.introductionSpread+mp.influenceFactor+mp.magnitude+mp.timeOfIncident
 
@@ -67,15 +97,33 @@ export default class Vurdering34Spredningsveier extends React.Component {
             // if the migration pathway is in "Til innendørs- eller produksjonsareal", then we have to add a matching pathway into "Introduksjon..."
             if (name == "Til innendørs- eller produksjonsareal") {
                 console.log(mp)
+                if (mp.mainCategory != "Direkte import") {
+                    var copy = mp
+                    // setting influence factor, magnitude and time of incident of the new pathway as null
+                    copy.influenceFactor = null
+                    copy.magnitude = null
+                    copy.timeOfIncident = null
+                    
+                    newCopy = toJS(copy)
+                    vurdering.assesmentVectors.push(newCopy)
+                } else {
+                    var copy = mp
+                    // changing the main category
+                    copy.mainCategory = "Rømning/forvilling"
+
+                    copy.codeItem = this.changeCategory(mp.codeItem)
+
+                    var cat = this.getCategoryText(copy.codeItem, migrationPathways).split("-")
+                    copy.category = cat[1].substr(1, cat[1].length-3)
+                     // setting influence factor, magnitude and time of incident of the new pathway as null
+                     copy.influenceFactor = null
+                     copy.magnitude = null
+                     copy.timeOfIncident = null
+                     console.log(copy)
+                     newCopy = toJS(copy)
+                     vurdering.assesmentVectors.push(newCopy)
+                }
                 
-                const copy = mp
-                // setting influence factor, magnitude and time of incident of the new pathway as null
-                copy.influenceFactor = null
-                copy.magnitude = null
-                copy.timeOfIncident = null
-                
-                newCopy = toJS(copy)
-                vurdering.assesmentVectors.push(newCopy)
             }
             
         }
@@ -156,7 +204,7 @@ export default class Vurdering34Spredningsveier extends React.Component {
                 <div className="import">
                 <div className="well">
                     <h4>Legg til spredningsvei</h4>
-                    <NewMigrationPathwaySelector migrationPathways={migrationPathwayKoder} onSave={mp => this.saveMigrationPathway(vurdering, mp, name)} mainCodes={koder} koder={importationCodes} vurdering={vurdering} labels={labels} />
+                    <NewMigrationPathwaySelector migrationPathways={migrationPathwayKoder} onSave={mp => this.saveMigrationPathway(vurdering, mp, name, appState.spredningsveier.children)} mainCodes={koder} koder={importationCodes} vurdering={vurdering} labels={labels} />
                 </div>
                 <div className="definitions">
                     <button className="btn btn-primary" onClick={this.toggleDefinitions}>Se definisjoner</button>
