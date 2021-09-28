@@ -49,8 +49,8 @@ export default class Vurdering34Spredningsveier extends React.Component {
     }
 
    
-    @action saveMigrationPathway(vurdering, mp) {
-        const mps = vurdering.assesmentVectors
+    @action saveMigrationPathway(vurdering, mp, name) {
+        const mps = name == "Til innendørs- eller produksjonsareal" ? vurdering.importPathways : vurdering.assesmentVectors
         const compstr = (mp) => ""+mp.codeItem+mp.introductionSpread+mp.influenceFactor+mp.magnitude+mp.timeOfIncident
 
        
@@ -63,6 +63,14 @@ export default class Vurdering34Spredningsveier extends React.Component {
         } else {
             const clone = toJS(mp)
             mps.push(clone); // must use clone to avoid that multiple items in the list is the same instance! 
+
+            // if the migration pathway is in "Til innendørs- eller produksjonsareal", then we have to add a matching pathway into "Introduksjon..."
+            if (name == "Til innendørs- eller produksjonsareal") {
+                console.log(mp.codeItem)
+                const copy = toJS(mp)
+                vurdering.assesmentVectors.push(copy)
+            }
+            
         }
         // this.showEditMigrationPathway = false;
     }
@@ -70,8 +78,8 @@ export default class Vurdering34Spredningsveier extends React.Component {
     
    
 
-    @action fjernSpredningsvei = (vurdering, value) => {
-        const result = vurdering.assesmentVectors.remove(value);
+    @action fjernSpredningsvei = (vurdering, value, name) => {
+        const result = name == "Til innendørs- eller produksjonsareal" ?  vurdering.importPathways.remove(value) : vurdering.assesmentVectors.remove(value);
         // console.log("item removed : " + result)
     };
 
@@ -124,7 +132,7 @@ export default class Vurdering34Spredningsveier extends React.Component {
         const nbsp = "\u00a0"
         // console.log("fabModel" + fabModel.toString() )
         // console.log("koder" + fabModel.koder.toString() )
-        const fjernSpredningsvei = (mp) => this.fjernSpredningsvei(vurdering, mp)
+        const fjernSpredningsvei = (mp) => this.fjernSpredningsvei(vurdering, mp, name)
 
         
         return(
@@ -141,7 +149,7 @@ export default class Vurdering34Spredningsveier extends React.Component {
                 <div className="import">
                 <div className="well">
                     <h4>Legg til spredningsvei</h4>
-                    <NewMigrationPathwaySelector migrationPathways={migrationPathwayKoder} onSave={mp => this.saveMigrationPathway(vurdering, mp)} mainCodes={koder} koder={importationCodes} vurdering={vurdering} labels={labels} />
+                    <NewMigrationPathwaySelector migrationPathways={migrationPathwayKoder} onSave={mp => this.saveMigrationPathway(vurdering, mp, name)} mainCodes={koder} koder={importationCodes} vurdering={vurdering} labels={labels} />
                 </div>
                 <div className="definitions">
                     <button className="btn btn-primary" onClick={this.toggleDefinitions}>Se definisjoner</button>

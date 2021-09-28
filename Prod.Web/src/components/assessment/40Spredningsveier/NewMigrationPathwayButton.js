@@ -57,7 +57,7 @@ export default class NewMigrationPathwayButton extends React.Component {
 
 
     render() {
-        const {migrationPathway, onSave, koder, hideIntroductionSpread, disabled, labels, mainCodes} = this.props;
+        const {migrationPathway, onSave, koder, hideIntroductionSpread, disabled, labels, mainCodes, mainCat} = this.props;
         const mplabels = labels.MigrationPathway
         const disable = disabled && (migrationPathway.name != "fra forskning" && migrationPathway.name != "til forskning" && migrationPathway.name != "fra botaniske/zoologiske hager / akvarier (ikke privat)" && migrationPathway.name != "til botaniske/zoologiske hager / akvarier (ikke privat)")
         
