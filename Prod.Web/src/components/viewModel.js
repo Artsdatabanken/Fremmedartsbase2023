@@ -727,7 +727,6 @@ class ViewModel {
         // console.log("########################" + JSON.stringify(assessmentInfo))
         // console.log("########################" + assessmentInfo.id)
         this.setCurrentAssessment(assessmentInfo.id)
-        console.log("HSKANNING: " + this.horizonDoScanning)
         this.assessmentTypeFilter == "horizonScanning" ?  this.assessmentTabs.activeTab.id = 0 :  this.assessmentTabs.activeTab.id = 1   
          
     }

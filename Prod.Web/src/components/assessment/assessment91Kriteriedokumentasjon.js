@@ -51,6 +51,9 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
         const alienSpeciesCategoryLabel = _alienSpeciesCategoryLabel ? _alienSpeciesCategoryLabel[0] ? _alienSpeciesCategoryLabel[0].Text : "not set" : "net set"
 
         const changeLabel = (id) => koder.reasonsForCategoryChange.find(code => code.value === id).text
+       
+        const category2018 = (riskLevelCode) => labels.RiskLevelCode[riskLevelCode]
+
         // console.warn(appState.vurderingsStatus)
         return (
             <div>
@@ -241,10 +244,12 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                         __html: riskAssessment.criteriaDocumentation
                     }} />
                 </div>*/}
+                {assessment.riskAssessment.riskLevelCode != null && assessment.previousAssessments && category2018(assessment.previousAssessments[0].riskLevel) != assessment.riskAssessment.riskLevelCode &&
                 <fieldset className="well">
                     <h3>{critlabels.reasonForChangeHeading}</h3>
                         <p> {critlabels.cat2023} {assessment.riskAssessment.riskLevelCode}</p>
-                        <p> {critlabels.cat2018} {assessment.riskAssessment.riskLevelCode}</p>
+                        <p> {critlabels.cat2018} {category2018(assessment.previousAssessments[0].riskLevel)}</p>
+                       
                         <p>{critlabels.reasonForChange}</p> 
                         <Xcomp.MultiselectArray
                                 observableValue={[assessment, 'reasonForChangeOfCategory']}                                 
@@ -280,8 +285,11 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                            // width: 800,
                             height: 150,
                             maxHeight: 150
-                        }}/>                        
+                        }}/>                           
+                                     
                 </fieldset>
+                }
+
                 <fieldset className="well">
                             <h4>{critlabels.assessmentFiles}</h4>
                             <div>
