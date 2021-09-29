@@ -106,7 +106,7 @@ export default class Vurdering34Spredningsveier extends React.Component {
                     copy.magnitude = null
                     copy.timeOfIncident = null
                     
-                    newCopy = toJS(copy)
+                    const newCopy = toJS(copy)
                     vurdering.assesmentVectors.push(newCopy)
                 } else {
                     var copy = mp
@@ -122,7 +122,7 @@ export default class Vurdering34Spredningsveier extends React.Component {
                     } else {
                         copy.category = ""
                     }
-                    console.log(copy.category)
+                    
                      // setting influence factor, magnitude and time of incident of the new pathway as null
                      copy.influenceFactor = null
                      copy.magnitude = null
@@ -131,7 +131,7 @@ export default class Vurdering34Spredningsveier extends React.Component {
                      // if there is a matching category in "Rømning/forvilling", add the migration pathway to the "Introduction" table
                      if (copy.category != "") {
 
-                        newCopy = toJS(copy)          
+                        const newCopy = toJS(copy)          
                         console.log(newCopy)           
                         vurdering.assesmentVectors.push(newCopy)
                      }
