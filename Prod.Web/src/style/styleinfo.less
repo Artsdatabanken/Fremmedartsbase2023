@@ -454,7 +454,9 @@ div .btn:hover, div .btn:active {
   border: 1px solid #363635;
 }
 
-div .btn-flat:hover, div .btn:active *, div .btn-flat:active, td > button.btn-default:hover, td > button.btn-default:active {
+div .btn-flat:hover, 
+//div .btn:active *, 
+div .btn-flat:active, td > button.btn-default:hover, td > button.btn-default:active {
   color: #fff;
   background-color: #646464;
 }
@@ -571,6 +573,10 @@ div.btn-flat.migration {
   border: 1px solid lightgray;
   white-space: break-spaces;
   text-align: left;
+}
+
+div.btn-flat.migration:focus, div.btn-flat.migration:active {
+  background-color: transparent;
 }
 
 div.migration > button.btn-default {
