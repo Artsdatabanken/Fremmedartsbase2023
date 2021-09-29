@@ -130,7 +130,7 @@ export default class Assessment52Utbredelse extends React.Component {
                         </div>
                     </fieldset>
                 <fieldset className="well">
-                    <h4>Fylkesvis utbredelse</h4>
+                   {assessment.isRegionnalyAlien ? <h4>Fylkesvis utbredelse</h4> : <h4>Regionvis utbredelse</h4> } 
                     <b>[Her kommer det et kart]</b>
                     <p>Beskriv grunnlaget for anslagene (gjelder både forekomstareal og fylkesvis utbredelse)</p>
                     <Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'backgroundRegional']}/>
