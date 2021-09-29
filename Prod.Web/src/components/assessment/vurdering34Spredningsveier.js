@@ -55,6 +55,8 @@ export default class Vurdering34Spredningsveier extends React.Component {
                 return 'agriculture';
             case 'importAquaculture' : 
                 return 'aquaculture';
+            case 'importHorticulture' : 
+                return 'horticulture';
             case 'importBotanicalGardenZooAquarium': 
                 return 'botanicalGardenZooAquarium';
             case 'importPetShops' : 
@@ -72,7 +74,7 @@ export default class Vurdering34Spredningsveier extends React.Component {
             case 'importLiveFoodLiveBait': 
                 return 'petAquariumTerrariumFood';
             case 'importOtherEscape' :
-                return 'otherUnknownRelease'
+                return 'otherEscape'
             default: 
                 return ""
         }
@@ -96,7 +98,7 @@ export default class Vurdering34Spredningsveier extends React.Component {
 
             // if the migration pathway is in "Til innendørs- eller produksjonsareal", then we have to add a matching pathway into "Introduksjon..."
             if (name == "Til innendørs- eller produksjonsareal") {
-                console.log(mp)
+                
                 if (mp.mainCategory != "Direkte import") {
                     var copy = mp
                     // setting influence factor, magnitude and time of incident of the new pathway as null
@@ -112,16 +114,28 @@ export default class Vurdering34Spredningsveier extends React.Component {
                     copy.mainCategory = "Rømning/forvilling"
 
                     copy.codeItem = this.changeCategory(mp.codeItem)
+                    console.log(copy.codeItem)
 
-                    var cat = this.getCategoryText(copy.codeItem, migrationPathways).split("-")
-                    copy.category = cat[1].substr(1, cat[1].length-3)
+                    if (copy.codeItem != ""){
+                        var cat = this.getCategoryText(copy.codeItem, migrationPathways).split("-")
+                        copy.category = cat[1].substr(1, cat[1].length-3)
+                    } else {
+                        copy.category = ""
+                    }
+                    console.log(copy.category)
                      // setting influence factor, magnitude and time of incident of the new pathway as null
                      copy.influenceFactor = null
                      copy.magnitude = null
                      copy.timeOfIncident = null
-                     console.log(copy)
-                     newCopy = toJS(copy)
-                     vurdering.assesmentVectors.push(newCopy)
+                     
+                     // if there is a matching category in "Rømning/forvilling", add the migration pathway to the "Introduction" table
+                     if (copy.category != "") {
+
+                        newCopy = toJS(copy)          
+                        console.log(newCopy)           
+                        vurdering.assesmentVectors.push(newCopy)
+                     }
+                     
                 }
                 
             }

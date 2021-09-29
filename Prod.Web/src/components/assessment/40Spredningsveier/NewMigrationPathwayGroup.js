@@ -28,7 +28,7 @@ export default class NewMigrationPathwayGroup extends React.Component {
             action(() => {
                // e.stopPropagation();
                 this.expandPathways = !this.expandPathways
-                console.log(this.expandPathways)
+                //console.log(this.expandPathways)
             })()
         }
     }
