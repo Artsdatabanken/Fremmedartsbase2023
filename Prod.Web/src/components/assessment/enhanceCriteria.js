@@ -2,7 +2,7 @@
 import RiskLevel from './riskLevel';
 import {extractFloat, getCriterion} from '../../utils'
 import { EventNote } from '@material-ui/icons';
-import config from 'config';
+import config from '../../config';
 
 function round(num){return Math.round(num)}
 function min(num1,num2){return Math.min(num1,num2)}
