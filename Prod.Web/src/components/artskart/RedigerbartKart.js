@@ -63,7 +63,7 @@ const RedigerbartKart = ({
   return (
     <div style={{ height: "100%" }}>
       {children}
-      <div style={{ pointerEvents: 'none', position: "absolute", zIndex: 500, top: 24, left: 24 }}>
+      <div style={{ pointerEvents: 'none', position: "absolute", zIndex: 500, top: 24, left: 24, maxWidth: 777 }}>
         <h3>Arealer og fylker fra Artskart</h3>
         
         <div>
@@ -92,13 +92,9 @@ const RedigerbartKart = ({
         </div>
         <div>
           Fylker: <b>{beskrivFylker(countylist)}</b>
-          <div>
-            {hoverInfo ? (
+            {hoverInfo && (
               <div>Vannområde:{" "}<span><b>{hoverInfo}</b></span></div>
-            ) : (
-              <div>&nbsp;</div>
             )}
-          </div>
         </div>
        
         {artskart.error && (
@@ -163,7 +159,7 @@ const RedigerbartKart = ({
         <div>
           <span>Merk at ruter (2x2km) basert på funn med dårlig geografisk presisjon (&gt; 1000 m) er ekskludert. </span>
             {taxonId ? (
-              <a
+              <a style={{pointerEvents: 'auto'}}
                 href={`https://artskart.artsdatabanken.no/app/#map/427864,7623020/3/background/greyMap/filter/${artskartFilter(taxonId, kriterier)}`}
                 target="_blank"
               >
