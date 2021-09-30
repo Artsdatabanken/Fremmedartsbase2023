@@ -1,6 +1,8 @@
 ﻿import {action, autorun, computed, extendObservable, observable, observe, isObservableArray, runInAction, remove, set, trace} from 'mobx';
 import RiskLevel from './riskLevel';
 import {extractFloat, getCriterion} from '../../utils'
+import { EventNote } from '@material-ui/icons';
+import config from 'config';
 
 function round(num){return Math.round(num)}
 function min(num1,num2){return Math.min(num1,num2)}
@@ -1303,7 +1305,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                     crit.uncertaintyDisabled.replace(ud)
             })
             firstrun = false
-            trace()  // leave this line here! Se comments above to learn when to uncomment.
+            if (!config.isRelease) trace()  // leave this line here! Se comments above to learn when to uncomment.
        })
     }
 }
