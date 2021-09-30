@@ -281,25 +281,28 @@ export default class Assessment20ArtensStatus extends React.Component {
                         <Xcomp.HtmlString observableValue={[assessment, 'changedAssessment']}/>
                     </div> : null }
                     </fieldset>
-                    <fieldset className="well">
-                    {assessment.isAlienSpecies == null ? null :                    
+                    
+                    {(assessment.isAlienSpecies == 'true' || assessment.isAlienSpecies == 'false') &&
+                        <fieldset className="well">
+                                        
 
-                    assessment.isAlienSpecies == 'true' && 
-                        (assessment.connectedToAnother == false || assessment.connectedToAnother == null ) && 
-                        (assessment.alienSpecieUncertainIfEstablishedBefore1800 == "no" || assessment.alienSpecieUncertainIfEstablishedBefore1800 == false ) &&
-                        (assessment.alienSpeciesCategory == "DoorKnocker" || assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3") &&
-                        assessment.speciesStatus != null && 
-                        (assessment.connectedToAnother == false || assessment.connectedToAnother == null) ? 
-                    <div>
-                        <h3>{labels.SpeciesStatus.conclusion}</h3>
-                        <p>{labels.SpeciesStatus.willBeRiskAssessed}</p> 
-                    </div> :
-                     <div>
-                     <h3>{labels.SpeciesStatus.conclusion}</h3>
-                     <p>{labels.SpeciesStatus.willNotBeRiskAssessed}</p> 
-                 </div>
-                 }
-                 </fieldset>
+                               {assessment.isAlienSpecies == 'true' && 
+                                    (assessment.connectedToAnother == false || assessment.connectedToAnother == null ) && 
+                                    (assessment.alienSpecieUncertainIfEstablishedBefore1800 == "no" || assessment.alienSpecieUncertainIfEstablishedBefore1800 == false ) &&
+                                    (assessment.alienSpeciesCategory == "DoorKnocker" || assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3") &&
+                                    assessment.speciesStatus != null && 
+                                    (assessment.connectedToAnother == false || assessment.connectedToAnother == null) ? 
+                                <div>
+                                    <h3>{labels.SpeciesStatus.conclusion}</h3>
+                                    <p>{labels.SpeciesStatus.willBeRiskAssessed}</p> 
+                                </div> :
+                                <div>
+                                    <h3>{labels.SpeciesStatus.conclusion}</h3>
+                                    <p>{labels.SpeciesStatus.willNotBeRiskAssessed}</p> 
+                                </div>
+                                }
+                        </fieldset>
+                    }
 
                     {assessment.isAlienSpecies == 'true' && 
                         (assessment.connectedToAnother == false || assessment.connectedToAnother == null ) &&
