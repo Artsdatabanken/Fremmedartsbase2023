@@ -111,7 +111,7 @@ class MigrationPathwayTableRow extends React.Component {
         s = s.split("-")
         var result = null
 
-        s != null && s.length > 1 ? level == 1 ? result = s[0] : result = s[1].substr(1, s[1].length-2) : null
+        s != null && s.length > 1 ? level == 1 ? result = s[0] : result = s[1].substr(1, s[1].length-3) : null
         return result
     }
 

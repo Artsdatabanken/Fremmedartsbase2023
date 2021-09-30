@@ -122,6 +122,7 @@ const errorhandler = {
     addError({id, errorText}) {
         if(typeof(id) !== 'string' || typeof(id) !== 'string' ) {
             console.warn("addError wrong data type")
+            
         }
         if (!(id in this.errors)) {
             set(this.errors, id)
@@ -400,7 +401,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             return `Ekspansjonshastigheten er beregnet til ${r.expansionSpeed} m/år basert på økningen i artens forekomstareal i perioden fra ${r.AOOyear1} til ${r.AOOyear2} og et mørketall på ${r.AOOdarkfigureBest}.`
         },
         get b2bresulttext() {
-            return `Basert på det beste anslaget på ${r.occurrences1Best} forekomst(er) i løpet av 10 år og ${r.introductionsBest} introduksjon(er) innen 50 år er B-kriteriet skåret som ${r.bscore + 1} (med usikkerhet: ${r.blow + 1}–${r.bhigh + 1}). Dette innebærer at artens ekspansjonshastighet ligger ${r.expansionText} (beste anslag: ${r.expansionSpeed} m/år).`
+            return `Basert på det beste anslaget på ${r.occurrences1Best} forekomst(er) i løpet av 10 år og ${r.introductionsBest} introduksjon(er) i samme tidsperiode er B-kriteriet skåret som ${r.bscore + 1} (med usikkerhet: ${r.blow + 1}–${r.bhigh + 1}). Dette innebærer at artens ekspansjonshastighet ligger ${r.expansionText} (beste anslag: ${r.expansionSpeed} m/år).`
         },
         get expansionText() {
             return r.bscore === 0 ? "under 50 m/år"
@@ -1109,9 +1110,10 @@ function enhanceRiskAssessmentLevel(riskAssessment, labels) {
     });
     autorun(() => {
         //todo: something must be wrong here (?)
-
+        
         //try {
         const {level, decisiveCriteria, uncertaintyLevels} = riskAssessment.invasjonspotensialeLevel
+        //const {level, decisiveCriteria, uncertaintyLevels} = riskAssessment.invationPotentialLevel
         console.log("_invasjonspotensialeLevel changed: " + level)
         runInAction(() => {
             riskAssessment.invationPotentialLevel = level
@@ -1133,6 +1135,7 @@ function enhanceRiskAssessmentLevel(riskAssessment, labels) {
 
     autorun(() => {
         //try {
+        
         const {level, decisiveCriteria, uncertaintyLevels} = riskAssessment.ecoeffectLevel
         console.log("ecoeffectlevel changed: " + level)
         runInAction(() => {
@@ -1144,24 +1147,30 @@ function enhanceRiskAssessmentLevel(riskAssessment, labels) {
     });
 
     delete riskAssessment.riskLevel  //todo: Check if necessary (or the correct way to do this) ?????  Basically: risklevel is observable from db data, but we want it to be a computed observable!
+    
     extendObservable(riskAssessment, {
         get riskLevel() {
-            const result = RiskLevel.riskLevel(riskAssessment.invasjonspotensialeLevel, riskAssessment.ecoeffectLevel)
+            const result = RiskLevel.riskLevel(riskAssessment.invationPotentialLevel, riskAssessment.ecoEffectLevel, riskAssessment.decisiveCriteria)
+            
+            //const result = RiskLevel.riskLevel(riskAssessment.invasjonspotensialeLevel, riskAssessment.ecoeffectLevel)
             return result;
         }
     });
     
-    // autorun(() => {
-    //     const {level, decisiveCriteriaLabel} = riskAssessment.riskLevel
-    //     console.log("risklevel changed: " + level + " | " + decisiveCriteriaLabel)
-    //     const levtxt = level.toString()
-
-    //     riskAssessment.riskLevel = level
+     autorun(() => {
+        const level = riskAssessment.riskLevel
+        const decisiveCriteriaLabel = riskAssessment.decisiveCriteria
+        console.log("risklevel changed: " + level + " | " + decisiveCriteriaLabel)
+      /* 
         
-    //     riskAssessment.riskLevelCode = labels.RiskLevelCode[levtxt]
-    //     riskAssessment.riskLevelText = labels.RiskLevelText[levtxt]
-    //     riskAssessment.decisiveCriteria = decisiveCriteriaLabel
-    // });
+        const levtxt = level.toString()
+
+        riskAssessment.riskLevel = level
+        
+        riskAssessment.riskLevelCode = labels.RiskLevelCode[levtxt]
+        riskAssessment.riskLevelText = labels.RiskLevelText[levtxt]
+        riskAssessment.decisiveCriteria = decisiveCriteriaLabel*/
+     });
 }
 
 function enhanceCriteriaAddLabelsAndAuto(riskAssessment, codes) {
