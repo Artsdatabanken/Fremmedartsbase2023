@@ -250,7 +250,7 @@ export default class Assessment20ArtensStatus extends React.Component {
                                 })}
                             codes={codes.EstablishmentCategoryWithoutProduction}/>                             
                         }
-                       
+                       <br></br>
 
                         <p>{labels.SpeciesStatus.codesExplanation}</p>
                         <div>
