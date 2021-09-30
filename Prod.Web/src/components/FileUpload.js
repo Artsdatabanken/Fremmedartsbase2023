@@ -66,7 +66,7 @@ export default class FileUpload extends Component {
             <button className="btn btn-primary" 
                     id="button" name="button"
                     //disabled={this.selectedFile.name === ""} 
-                    style={{marginLeft: '30px', marginTop: '20px'}} 
+                    style={{marginLeft: '15px', marginTop: '20px'}} 
                     onClick={() => this.thisFileUpload()}>Velg fil</button>
         </div>);
     }
