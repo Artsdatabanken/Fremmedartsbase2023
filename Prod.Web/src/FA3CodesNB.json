@@ -334,7 +334,7 @@
         ],
         "workStatus": [
             {
-              "text": "Ikke påbegynt",
+              "text": "Ikke ferdigstilt",
               "value": "notStarted"
             },
             {

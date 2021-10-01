@@ -280,12 +280,12 @@ export default class SelectAssessment extends Component {
                 {appState.horizonScanFilter.horizonFilters == true &&
                 <div className="nav_menu">
                         <div className="filters"><b>{labels.SelectAssessment.assessmentStatus}</b>   
-                                <Xcomp.Bool observableValue={[appState.horizonScanFilter, "hsNotStarted"]} label={koder.workStatus[0].text + "   (" + (100*appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','2')/appState.expertgroupAssessmentTotalCount).toFixed() + "%)"} />
-                                <Xcomp.Bool observableValue={[appState.horizonScanFilter, "hsFinished"]} label={koder.workStatus[2].text + "   (" + (100*appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0')/appState.expertgroupAssessmentTotalCount).toFixed() + "%)"} />
+                                <Xcomp.Bool observableValue={[appState.horizonScanFilter, "hsNotStarted"]} label={koder.workStatus[0].text + "   (" + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','2') + ") " + (100*appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','2')/appState.expertgroupAssessmentTotalCount).toFixed() + "%"} />
+                                <Xcomp.Bool observableValue={[appState.horizonScanFilter, "hsFinished"]} label={koder.workStatus[2].text + " (" + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0') + ")   " + (100*appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0')/appState.expertgroupAssessmentTotalCount).toFixed() + "%"} />
                             <div className="subChoice">
-                                    <Xcomp.Bool observableValue={[appState.horizonScanFilter, "toAssessment"]} label={" " + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1').toFixed() + "% videre til risikovurdering"} />
-                                    <Xcomp.Bool observableValue={[appState.horizonScanFilter, "notAssessed"]} label={" " + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','0').toFixed() + "% ikke videre"} />
-                                <p>Totalt: {appState.expertgroupAssessmentTotalCount}</p>                                                                      
+                                    <Xcomp.Bool observableValue={[appState.horizonScanFilter, "toAssessment"]} label={" (" + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1').toFixed() + ") " +  (100*appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1')/appState.expertgroupAssessmentTotalCount).toFixed() + "% videre til risikovurdering"} />
+                                    <Xcomp.Bool observableValue={[appState.horizonScanFilter, "notAssessed"]} label={" (" + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','0').toFixed() + ") " + (100*appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','0')/appState.expertgroupAssessmentTotalCount).toFixed() + "% ikke videre"} />
+                               {/* <p>Totalt: {appState.expertgroupAssessmentTotalCount}</p>     */}                                                                 
                             </div>
 
                         </div>
