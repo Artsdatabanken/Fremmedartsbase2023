@@ -255,10 +255,12 @@ namespace Prod.Api.Controllers
             filter.PageSize = 1000;
             //filter.HorizonScan = true;
             var query = IndexHelper.QueryGetDocumentQuery(expertgroupid, filter);
-            var totalCount = _index.SearchTotalCount(query);
+            
             var result = _index.SearchReference(query, filter.Page, filter.PageSize, IndexHelper.Field_ScientificNameAsTerm).Select(IndexHelper.GetDocumentFromIndex)
                 .ToList();
-            var facets = _index.SearchFacetsReference(IndexHelper.QueryGetDocumentQuery(expertgroupid, new IndexFilter(){ HorizonScan = filter.HorizonScan}), new[] { IndexHelper.Facet_Author, IndexHelper.Facet_PotentialDoorKnocker, IndexHelper.Facet_NotAssessedDoorKnocker, IndexHelper.Facet_Progress });
+            var getAllQuery = IndexHelper.QueryGetDocumentQuery(expertgroupid, new IndexFilter(){ HorizonScan = filter.HorizonScan});
+            var facets = _index.SearchFacetsReference(getAllQuery, new[] { IndexHelper.Facet_Author, IndexHelper.Facet_PotentialDoorKnocker, IndexHelper.Facet_NotAssessedDoorKnocker, IndexHelper.Facet_Progress });
+            var totalCount = _index.SearchTotalCount(getAllQuery);
             //var result = await _dbContext.Assessments
             //    .FromSqlRaw("SELECT Id, TaxonHierarcy, LockedForEditBy, LastUpdatedBy, Expertgroup, EvaluationStatus, Category, LockedForEditAt, LastUpdatedAt, ScientificName, ScientificNameId, PopularName, IsDeleted FROM dbo.Assessments WITH (INDEX(IX_Assessments_Expertgroup))") // index hint - speeds up computed columns
             //    .Where(x => x.Expertgroup == expertgroupid && x.IsDeleted == false).OrderBy(x => x.ScientificName)

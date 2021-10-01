@@ -25,7 +25,7 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Change this to force index rebuild!
         /// </summary>
-        public const int IndexVersion = 12;
+        public const int IndexVersion = 13;
 
         private const string Field_Id = "Id";
         private const string Field_Group = "Expertgroup";
@@ -363,13 +363,13 @@ namespace Prod.Api.Helpers
         {
             switch (riskLevel2012)
             {
-                case 0: return "NK";
+                case 0: return "NR";
                 case 1: return "LO";
                 case 2: return "PH";
                 case 3: return "HI";
                 case 4: return "SE";
                 default:
-                    return "NR";
+                    return "NK";
             }
         }
 

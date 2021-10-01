@@ -4791,7 +4791,7 @@
                         {
                             "Id": null,
                             "Value": "willBeAssessed",
-                            "Text": "Arten skal risikovurderes som dørstokkart. Gå videre til Artens status.",
+                            "Text": "Arten skal risikovurderes som dørstokkart. Gå til Referanser for å legge til eventuelle kilder knyttet til horisontskanningen.",
                             "Info": null,
                             "Children": null
                         },
@@ -4896,7 +4896,7 @@
                         {
                             "Id": null,
                             "Value": "statusInNorway",
-                            "Text": "Hvilken status har arten i Norge?",
+                            "Text": "Hvilken etableringskategori har arten i Norge?",
                             "Info": null,
                             "Children": null
                         },
