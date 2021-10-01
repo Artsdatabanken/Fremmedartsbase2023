@@ -314,14 +314,15 @@ export function getArtskartUrl(
     const type = kriterier.excludeObjects
         ? "specimen"
         : "all";
+    const includeNorge = !kriterier.includeNorge ? false : kriterier.includeNorge;
+    const includeSvalbard = !kriterier.includeSvalbard ? false : kriterier.includeSvalbard;
     const region =
-      kriterier.includeNorge == kriterier.includeSvalbard
+      includeNorge === includeSvalbard
         ? "all"
-        : kriterier.includeNorge
-        ? "fastland"
-        : "svalbard";
-    const excludeGbif = 
-        kriterier.excludeGbif ? "&sourcedatabases[]=-40,-211" : "";   
+        : includeNorge
+            ? "fastland"
+            : "svalbard";
+    const excludeGbif = kriterier.excludeGbif ? "&sourcedatabases[]=-40,-211" : "";   
     // let queryparams = `fromYear=${kriterier.observationFromYear}&toYear=${kriterier.observationToYear}&fromMonth=${kriterier.fromMonth}&toMonth=${kriterier.toMonth}&type=${type}&region=${region}`;
     let queryparams = `fromYear=${kriterier.AOOyear1}&toYear=${kriterier.AOOyear2}`;
     // queryparams += `&fromMonth=${kriterier.fromMonth}`;
