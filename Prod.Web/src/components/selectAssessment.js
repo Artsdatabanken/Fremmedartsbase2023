@@ -5,6 +5,8 @@ import * as Xcomp from './observableComponents';
 import HelpIcon from '@material-ui/icons/Help';
 import ExpertGroupModel from './expertGroupModel'
 import SelectAssessmentTable from './selectAssessmentTable';
+import { createConfigItem } from '@babel/core';
+import config from '../config';
 // import SelectAssessmentStatistics from './selectAssessmentStatistics';
 // import auth from './authService';
 // import config from '../config';
@@ -111,6 +113,7 @@ export default class SelectAssessment extends Component {
                  <Xcomp.StringEnum 
                                     //forceSync
                                     className="assessmentType"
+                                    disabled={config.isRelease}                                                                        
                                     observableValue={[appState, 'assessmentTypeFilter']} 
                                     heading={"Hva vil du gjøre?"}
                                     codes={koder.assessmentType}
