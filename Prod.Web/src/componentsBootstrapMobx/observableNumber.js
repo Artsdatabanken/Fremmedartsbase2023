@@ -103,7 +103,7 @@ function filterNumericInput(s, integer = false) {
   if (decimalPointOffset < s.length)
     r = r.slice(0, decimalPointOffset) + ',' + r.slice(decimalPointOffset)
   if (decimalPointOffset === 0) r = '0' + r
-  return r
+  return integer ? parseInt(r) : parseFloat(r)
 }
 
 

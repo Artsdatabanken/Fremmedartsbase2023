@@ -35,6 +35,7 @@ const Artskartparametre = ({ utvalg }) => {
         // observableValue={[utvalg, "observationFromYear"]}
         observableValue={[utvalg, "AOOyear1"]}
         integer
+        yearRange
       />
       <Xcomp.Number
         label="Til og med år"
@@ -42,30 +43,16 @@ const Artskartparametre = ({ utvalg }) => {
         // observableValue={[utvalg, "observationToYear"]}
         observableValue={[utvalg, "AOOyear2"]}
         integer
+        yearRange
       />
 
-      <Xcomp.Bool label="I Norge" observableValue={[utvalg, "includeNorge"]} />
-      <Xcomp.Bool
-        label="På Svalbard"
-        observableValue={[utvalg, "includeSvalbard"]}
-      />
+      <Xcomp.Bool label="I Norge" observableValue={[utvalg, "includeNorge"]}/>
+      <Xcomp.Bool label="På Svalbard" observableValue={[utvalg, "includeSvalbard"]}/>
       <hr/>
-      <Xcomp.Bool
-        label="ekskluder funn uten belegg"
-        observableValue={[!utvalg, "includeObservations"]}
-      />
-      {/* <Xcomp.Bool
-        label="objekter"
-        observableValue={[utvalg, "includeObjects"]}
-      />
-      <Xcomp.Bool
-        label="observasjoner"
-        observableValue={[utvalg, "includeObservations"]}
-      /> */}
-      <Xcomp.Bool
-        label="ekskluder GBIF-noder utenfor Norge"
-        observableValue={[utvalg, "excludeGbif"]}
-      />
+      <Xcomp.Bool label="ekskluder funn uten belegg" observableValue={[utvalg, "excludeObjects"]}/>
+      {/* <Xcomp.Bool label="objekter" observableValue={[utvalg, "includeObjects"]}/>
+      <Xcomp.Boollabel="observasjoner" observableValue={[utvalg, "includeObservations"]}/> */}
+      <Xcomp.Bool label="ekskluder GBIF-noder utenfor Norge" observableValue={[utvalg, "excludeGbif"]}/>
     </div>
   );
 };

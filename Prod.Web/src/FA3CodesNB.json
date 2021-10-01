@@ -4896,7 +4896,7 @@
                         {
                             "Id": null,
                             "Value": "statusInNorway",
-                            "Text": "Hvilken status har arten i Norge?",
+                            "Text": "Hvilken etableringskategori har arten i Norge?",
                             "Info": null,
                             "Children": null
                         },

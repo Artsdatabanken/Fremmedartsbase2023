@@ -7,7 +7,7 @@ import { beskrivTidSiden } from '../formatting'
 @observer
 export default class selectAssessmentRow extends Component {
     render() {
-        const { assessment, rolle, labels, userId } = this.props
+        const { assessment, rolle, labels, userId, appState} = this.props
         const isLocked = !!assessment.lockedForEditByUser
         const isSuperUser = rolle.admin
         const isLockedByMe = assessment.lockedForEditByUser === userId
@@ -50,7 +50,7 @@ export default class selectAssessmentRow extends Component {
                 </td>
                 {/*<td>{assessment.horizonDoScanning ? "Ja" : "Nei"}</td>*/}
                 <td><span>{assessment.category2018}</span></td> 
-                <td><span>{assessment.category}</span></td>
+                {appState.assessmentTypeFilter == "riskAssessment" && <td><span>{assessment.category}</span></td>}
                 <td>
                     <span>{assessment.lastUpdatedAt.substring(0, 10) + " av " + assessment.lastUpdatedBy}</span>
                 </td>
