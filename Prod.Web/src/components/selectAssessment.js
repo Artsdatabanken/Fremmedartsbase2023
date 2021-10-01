@@ -63,6 +63,23 @@ export default class SelectAssessment extends Component {
         var newCatFilter = appState.expertgroupCategoryCheckboxFilter.filter (item => item != category)
         appState.expertgroupCategoryCheckboxFilter = newCatFilter
     })
+
+
+    findAmountOfAssessments = (appState) => {
+        var result = ""
+        if (appState.horizonScanFilter.hsNotStarted) {
+            result = appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','2')
+        } else if (
+            appState.horizonScanFilter.hsFinished || (appState.horizonScanFilter.toAssessment && appState.horizonScanFilter.notAssessed)) {
+                result = appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0')
+        } else if (appState.horizonScanFilter.toAssessment) {
+            result = appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1')
+        } else if (appState.horizonScanFilter.notAssessed) {
+            result = appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','0')
+        }
+        
+        return result
+    }
     render() {
         const {appState, appState:{assessment,roleincurrentgroup:rolle,codeLabels:labels,koder}} = this.props
         // const {appState, appState:{assessment,roleincurrentgroup:rolle,codeLabels:labels,koder:{Children:koder}}} = this.props
@@ -288,7 +305,6 @@ export default class SelectAssessment extends Component {
                             <div className="subChoice">
                                     <Xcomp.Bool observableValue={[appState.horizonScanFilter, "toAssessment"]} label={" (" + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1') + ") " +  (100*appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1')/appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0')).toFixed() + "% videre til risikovurdering"} />
                                     <Xcomp.Bool observableValue={[appState.horizonScanFilter, "notAssessed"]} label={" (" + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','0') + ") " + (100*appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','0')/appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0')).toFixed() + "% ikke videre"} />
-                               {/* <p>Totalt: {appState.expertgroupAssessmentTotalCount}</p>     */}                                                                 
                             </div>
 
                         </div>
@@ -429,7 +445,13 @@ export default class SelectAssessment extends Component {
             {/*<div><a target="_blank" href={config.apiUrl + '/api/ExpertGroupAssessments/export/' + appState.expertgroup} >Last ned CVS fil</a> </div><br />*/ }
 
 
-
+            {(!appState.horizonScanFilter.hsNotStarted && !appState.horizonScanFilter.hsFinished && !appState.horizonScanFilter.toAssessment && !appState.horizonScanFilter.notAssessed) || (appState.horizonScanFilter.hsNotStarted && appState.horizonScanFilter.hsFinished) ?
+                
+                <div className="usedFilters">Viser totalt {appState.expertgroupAssessmentTotalCount} vurderinger</div>
+                :            
+                <div className="usedFilters">Viser totalt {this.findAmountOfAssessments(appState)} vurderinger (filtrert fra {appState.expertgroupAssessmentTotalCount})</div>
+            }
+            
             
             <div className="usedFilters"><span>{labels.SelectAssessment.usedFilters}</span> 
                             {appState.expertgroupCategoryCheckboxFilter && appState.expertgroupCategoryCheckboxFilter.length > 0 &&                             
