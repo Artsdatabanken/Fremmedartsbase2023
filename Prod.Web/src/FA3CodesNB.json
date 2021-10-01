@@ -5657,6 +5657,20 @@
                         },
                         {
                             "Id": null,
+                            "Value": "moveAssessment",
+                            "Text": "Flytt vurderingen",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "createAssessmentHint",
+                            "Text": "Legg til ny art, eller flytt en art fra horisontskanning til risikovurdering (evt. motsatt). Flytting gjelder for arter hvor ny informasjon tilsier at arten (evt. ikke) reproduserer selvstendig utendørs i Norge likevel.",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "count",
                             "Text": "Antall",
                             "Info": null,

@@ -50,6 +50,8 @@ export default class SelectAssessment extends Component {
             appState.withAutomaticNameChanges = false
         } else if (name = 'expertgroupAssessmentFilter') {
             appState.expertgroupAssessmentFilter = ""
+        }else {
+            appState.name = false
         }
         //[appState, name] = false
     })
@@ -467,6 +469,10 @@ export default class SelectAssessment extends Component {
                                         {status === "finished" && <span>{labels.SelectAssessment.completed}</span>}
                                         <a href="#">x</a></button>)
                             })}
+                            {appState.horizonScanFilter.hsNotStarted && <button onClick={() => this.resetOneFilter(appState, 'horizonScanFilter.hsNotStarted')}>{koder.workStatus[0].text}<a href="#">x</a></button>}  
+                            {appState.horizonScanFilter.hsFinished && <button onClick={() => this.resetOneFilter(appState, 'horizonScanFilter.hsFinished')}>{koder.workStatus[2].text}<a href="#">x</a></button>}  
+                            {appState.horizonScanFilter.toAssessment && <button onClick={() => this.resetOneFilter(appState, 'horizonScanFilter.toAssessment')}>{"Videre til risikovurdering"}<a href="#">x</a></button>}  
+                            {appState.horizonScanFilter.notAssessed && <button onClick={() => this.resetOneFilter(appState, 'horizonScanFilter.notAssessed')}>{"Ikke videre"}<a href="#">x</a></button>}  
                             {appState.withNewComments && <button onClick={() => this.resetOneFilter(appState, 'withNewComments')}>{labels.SelectAssessment.newComments}<a href="#">x</a></button>}                     
                             {appState.withComments && <button onClick={() => this.resetOneFilter(appState, 'withComments')}>{labels.SelectAssessment.allComments}<a href="#">x</a></button>}
                             {appState.kunMine && <button onClick={() => this.resetOneFilter(appState, 'kunMine')}>{labels.SelectAssessment.myAssessments}<a href="#">x</a></button>}

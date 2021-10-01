@@ -17,6 +17,7 @@ const  newAssessment = observable({
     RedListCategory: "", 
     Ekspertgruppe: "",
     taxonSearchString: "",
+    potensiellDørstokkart: "",
     taxonSearchResult: []
     // taxonSearchWaitingForResult: false - should not be observable
 })
@@ -46,6 +47,7 @@ export default class assessmentNew extends React.Component {
                 newItem.RedListCategory = "" 
                 // newItem.Ekspertgruppe = props.ekspertgruppe
                 newItem.taxonSearchString = ""
+                newItem.potensiellDørstokkart = ""
                 newItem.taxonSearchResult.replace([])
                 newItem.taxonSearchWaitingForResult = false
             })()
@@ -70,6 +72,8 @@ export default class assessmentNew extends React.Component {
         this.props.appState.ekspertgruppe = e.target.value
     }
 
+   
+
     render(props) {
         if (window.appInsights) {
             window.appInsights.trackPageView({name: 'NewAssessment'});
@@ -78,13 +82,15 @@ export default class assessmentNew extends React.Component {
         const labels = appState.codeLabels
         const codes = appState.koder
         const rolle = appState.roleincurrentgroup
+        var buttonName = labels.SelectAssessment.createAssessment
         
         return (
             <div>
                 <fieldset className="well">
                     <div className="row">
-                        <div className="col-md-6">
+                        <div className="col-md-12">
                             <h2>{labels.SelectAssessment.createAssessment}</h2>
+                            <p>{labels.SelectAssessment.createAssessmentHint}</p>
                             <br></br>
                             <h3>{labels.SelectAssessment.expertgroup}</h3>
                             <Xcomp.StringEnum
@@ -106,6 +112,7 @@ export default class assessmentNew extends React.Component {
                                         newAssessment.ScientificNameAuthor = "";
                                         newAssessment.VernacularName = "";
                                         newAssessment.RedListCategory = "";
+                                        newAssessment.potensiellDørstokkart = "";
                                         newAssessment.taxonSearchResult.replace([]); 
                                         newAssessment.taxonSearchString = "" }) 
                                     }
@@ -132,6 +139,7 @@ export default class assessmentNew extends React.Component {
                                             newAssessment.VernacularName = item.popularName;
 
                                             newAssessment.RedListCategory = item.rlCategory;
+                                            newAssessment.potensiellDørstokkart = item.potensiellDørstokkart;
                                             newAssessment.taxonSearchResult.replace([]); 
                                             newAssessment.taxonSearchString = "" })} 
                                             key={item.scientificName}
@@ -163,14 +171,16 @@ export default class assessmentNew extends React.Component {
                     </div>
                     <div className="row">                            
                             <div className="col-md-6">
-                            <Xcomp.StringEnum observableValue={[newAssessment, "potensiellDørstokkart"]} mode="radio" codes={codes.SpeciesStatus}/>
+                            <Xcomp.StringEnum observableValue={[newAssessment, "potensiellDørstokkart"]} mode="radio" codes={codes.SpeciesStatus} onChange={() => { buttonName = labels.SelectAssessment.moveAssessment 
+                            console.log(buttonName)}}/>
                                {/* <Xcomp.Bool observableValue={[newAssessment, "potensiellDørstokkart"]} label={labels.SpeciesStatus.potentialDoorknocker} />
                                 <Xcomp.Bool observableValue={[newAssessment, "øvrigeArter"]} label={labels.SpeciesStatus.otherSpecies} /> */}
                             </div>
                         </div>
                         <div className="col-md-6" style={{display: 'flex'}}>
                             <div>{labels.SelectAssessment.NBWritingAccess}</div>
-                            <Xcomp.Button primary onClick={this.onNewAssessment} disabled={!rolle.writeAccess || (!newAssessment.ScientificName || checkForExistingAssessment(newAssessment.ScientificName))}>{labels.SelectAssessment.createAssessment}</Xcomp.Button>
+                            
+                            <Xcomp.Button primary onClick={this.onNewAssessment} disabled={!rolle.writeAccess || (!newAssessment.ScientificName || checkForExistingAssessment(newAssessment.ScientificName))}>{buttonName}</Xcomp.Button>
                             {(newAssessment.ScientificName.length > 0 && 
                                 !rolle.writeAccess || 
                                 ( checkForExistingAssessment(newAssessment.ScientificName))) ? <div style={{color: 'red'}}>{labels.SelectAssessment.alreadyOnTheList}</div>: null}
