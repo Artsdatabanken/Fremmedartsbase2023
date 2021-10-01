@@ -1146,7 +1146,7 @@ function enhanceRiskAssessmentLevel(riskAssessment, labels) {
         //catch (e) {}
     });
 
-    delete riskAssessment.riskLevel  //todo: Check if necessary (or the correct way to do this) ?????  Basically: risklevel is observable from db data, but we want it to be a computed observable!
+    // delete riskAssessment.riskLevel  //todo: Check if necessary (or the correct way to do this) ?????  Basically: risklevel is observable from db data, but we want it to be a computed observable!
     
     extendObservable(riskAssessment, {
         get riskLevel() {

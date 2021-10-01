@@ -11,6 +11,7 @@ import { observable} from 'mobx'
 export default function enhanceAssessment(json, appState) {
     // * * * remove properties that will be replaced with computed observables * * *
     const ra = json.riskAssessment
+    delete ra.riskLevel
     delete ra.AOOchangeBest
     delete ra.AOOchangeLow
     delete ra.AOOchangeHigh
