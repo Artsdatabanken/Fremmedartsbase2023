@@ -52,7 +52,7 @@ const Artskartparametre = ({ utvalg }) => {
       <hr/>
       <Xcomp.Bool
         label="ekskluder funn uten belegg"
-        observableValue={[!utvalg, "includeObservations"]}
+        observableValue={[utvalg, "excludeObjects"]}
       />
       {/* <Xcomp.Bool
         label="objekter"

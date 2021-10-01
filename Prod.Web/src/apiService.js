@@ -306,12 +306,14 @@ export function getArtskartUrl(
     // const apibase = "http://localhost:16784/api/listhelper/";
     // const apibase = "https://test.artsdatabanken.no/artskartpublicapi/api/listhelper/";
     const apibase = "https://artskart.artsdatabanken.no/PublicApi/api/listhelper/";
-    const type =
-      kriterier.includeObjects == kriterier.includeObservations
-        ? "all"
-        : kriterier.includeObjects
+    // const type = kriterier.includeObjects == kriterier.includeObservations
+    //     ? "all"
+    //     : kriterier.includeObjects
+    //         ? "specimen"
+    //         : "observations";
+    const type = kriterier.excludeObjects
         ? "specimen"
-        : "observations";
+        : "all";
     const region =
       kriterier.includeNorge == kriterier.includeSvalbard
         ? "all"
@@ -327,7 +329,7 @@ export function getArtskartUrl(
     if (type !== undefined) queryparams += `&type=${type}`;
     if (region !== undefined) queryparams += `&region=${region}`;
     queryparams += `&scientificNameId=${scientificNameId}`;
-    if (excludeGbif !== undefined) queryparams += `&excludeGbif=${excludeGbif}`;
+    if (excludeGbif) queryparams += `&excludeGbif=${kriterier.excludeGbif}${excludeGbif}`;
     queryparams += `&crs=EPSG:${config.mapEpsgCode}`;
     // console.log('getArtskartUrl', queryparams);
     if (selectionGeometry)
