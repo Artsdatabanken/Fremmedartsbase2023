@@ -39,6 +39,8 @@ export default class SelectAssessment extends Component {
         appState.horizonScanFilter.notAssessed = false
         appState.horizonScanFilter.toAssessment = false
         appState.responsible = []
+        appState.horizonScanFilter.notAssessedDoorKnocker = []
+        appState.horizonScanFilter.potentialDoorKnockers = []
 
     })
     resetOneFilter = action ((appState, name) => {
@@ -73,6 +75,20 @@ export default class SelectAssessment extends Component {
         //[appState, name] = false
     })
 
+    resetResponsible = action ((appState, name) => {
+            appState.responsible.remove(name)
+    })
+
+    resetDoorKnocker = action ((appState, name) => {
+        appState.horizonScanFilter.potentialDoorKnockers.remove(name)
+    })
+
+
+    resetNotAssessedDK = action ((appState, name) => {
+        appState.horizonScanFilter.notAssessedDoorKnocker.remove(name)
+    })
+
+
     removeStatus = action ((appState, status) =>{
         var newStatusFilter = appState.statusCheckboxFilter.filter (item => item != status)
         appState.statusCheckboxFilter = newStatusFilter
@@ -99,6 +115,15 @@ export default class SelectAssessment extends Component {
         
         return result
     }
+
+    findFilterText = (codes, value) => {
+        var result = ""
+
+        result = codes.find(code => code.value == value).text
+
+        return result
+
+    }
     render() {
         const {appState, appState:{assessment,roleincurrentgroup:rolle,codeLabels:labels,koder}} = this.props
         // const {appState, appState:{assessment,roleincurrentgroup:rolle,codeLabels:labels,koder:{Children:koder}}} = this.props
@@ -106,7 +131,7 @@ export default class SelectAssessment extends Component {
 
         // find leaders in each expert group
         var experts = ExpertGroupModel.eksperterforvalgtgruppe.filter(item => item.writeAccess == true)
-        console.log (experts)
+        
 
      /*   let checkList = document.getElementById('list1');
         if (checkList) {checkList.getElementsByClassName('anchor')[0].onclick = function (evt) {
@@ -491,7 +516,10 @@ export default class SelectAssessment extends Component {
                             {appState.horizonScanFilter.toAssessment && <button onClick={() => this.resetOneFilter(appState, 'toAssessment')}>{"Videre til risikovurdering"}<a href="#">x</a></button>}  
                             {appState.horizonScanFilter.notAssessed && <button onClick={() => this.resetOneFilter(appState, 'notAssessed')}>{"Ikke videre"}<a href="#">x</a></button>}  
                             
-                            {appState.responsible && appState.responsible.length > 0 && appState.responsible.map (r => <button>{r}</button>)}
+                            {appState.responsible && appState.responsible.length > 0 && appState.responsible.map (r => <button onClick={() => this.resetResponsible(appState, r)}>{r}<a href="#">x</a></button>)}
+
+                            {appState.horizonScanFilter.potentialDoorKnockers && appState.horizonScanFilter.potentialDoorKnockers.length > 0 && appState.horizonScanFilter.potentialDoorKnockers.map (pdk => <button onClick={() => this.resetDoorKnocker(appState, pdk)}>{this.findFilterText(koder.potentialDoorKnockers, pdk)}<a href="#">x</a></button>)}
+                            {appState.horizonScanFilter.notAssessedDoorKnocker && appState.horizonScanFilter.notAssessedDoorKnocker.length > 0 && appState.horizonScanFilter.notAssessedDoorKnocker.map (nadk => <button onClick={() => this.resetNotAssessedDK(appState, nadk)}>{this.findFilterText(koder.notAssessedDoorKnocker, nadk)}<a href="#">x</a></button>)}
                             
                             {appState.withNewComments && <button onClick={() => this.resetOneFilter(appState, 'withNewComments')}>{labels.SelectAssessment.newComments}<a href="#">x</a></button>}                     
                             {appState.withComments && <button onClick={() => this.resetOneFilter(appState, 'withComments')}>{labels.SelectAssessment.allComments}<a href="#">x</a></button>}
@@ -503,7 +531,7 @@ export default class SelectAssessment extends Component {
                 <button
                         style={{marginLeft: '20px'}} 
                         type="button"  
-                        disabled={appState.expertgroupCategoryCheckboxFilter.length === 0 && appState.expertgroupAssessmentFilter === "" && appState.statusCheckboxFilter.length === 0 && !appState.kunMine &&!appState.withComments &&  !appState.kunUbehandlede && !appState.withAutomaticNameChanges && !appState.withPotentialTaxonChanges && !appState.horizonScanFilter.hsNotStarted && !appState.horizonScanFilter.toAssessment && !appState.horizonScanFilter.hsFinished && !appState.horizonScanFilter.notAssessed && (!appState.responsible && appState.responsible.length == 0)} 
+                        disabled={appState.expertgroupCategoryCheckboxFilter.length === 0 && appState.expertgroupAssessmentFilter === "" && appState.statusCheckboxFilter.length === 0 && !appState.kunMine &&!appState.withComments &&  !appState.kunUbehandlede && !appState.withAutomaticNameChanges && !appState.withPotentialTaxonChanges && !appState.horizonScanFilter.hsNotStarted && !appState.horizonScanFilter.toAssessment && !appState.horizonScanFilter.hsFinished && !appState.horizonScanFilter.notAssessed && appState.responsible.length === 0 && appState.horizonScanFilter.notAssessedDoorKnocker.length === 0 && appState.horizonScanFilter.potentialDoorKnockers.length === 0} 
                         onClick={() => this.resetFilters(appState)}>{labels.SelectAssessment.resetAll}</button>
             </div>
             
