@@ -408,6 +408,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.HorizonEstablismentPotentialDescription, opt => opt.Ignore())
                     .ForMember(dest => dest.Id, opt => opt.Ignore()) // primærnøkkel
                     .ForMember(dest =>dest.PreviousAssessments, opt => opt.Ignore()) // ny av året
+                    .ForMember(dest => dest.Fylkesforekomster, opt => opt.Ignore())
                     .AfterMap((src, dest) =>
                     {
                         // set some standard values
