@@ -189,11 +189,7 @@ namespace Prod.Domain
     {
         public List<Fylkesforekomst> Fylkesforekomster
         {
-            get
-            {
-                if (Fylkesforekomster == null || Fylkesforekomster.Count == 0) Fylkesforekomster = GetInitialFylkesforekomster();
-                return Fylkesforekomster;
-            }
+            get => Fylkesforekomster == null || Fylkesforekomster.Count == 0 ? GetInitialFylkesforekomster() : Fylkesforekomster;
             set => Fylkesforekomster = value;
         }
 
@@ -202,7 +198,7 @@ namespace Prod.Domain
             Fylkesforekomster = GetInitialFylkesforekomster();
         }
 
-        private static List<Fylkesforekomst> GetInitialFylkesforekomster()
+        private List<Fylkesforekomst> GetInitialFylkesforekomster()
         {
             return new List<Fylkesforekomst>
             {
