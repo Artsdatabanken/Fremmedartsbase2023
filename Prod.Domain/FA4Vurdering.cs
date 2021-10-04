@@ -40,7 +40,7 @@ namespace Prod.Domain
         {
             var newfa = new FA4();
             newfa.initNaturalOrigins();
-            newfa.initFylkesforekomster();
+            newfa.InitFylkesforekomster();
             newfa.RiskAssessment.Criteria = RiskAssessment.CreateDefaultCriteria();
             return newfa;
         }
@@ -187,41 +187,54 @@ namespace Prod.Domain
 
     public partial class FA4 // Fylkesforekomster
     {
-        public List<Fylkesforekomst> Fylkesforekomster { get; set; }
-
-        private void initFylkesforekomster()
+        public List<Fylkesforekomst> Fylkesforekomster
         {
-            Fylkesforekomster = new List<Fylkesforekomst>
+            get
             {
-                new Fylkesforekomst { Fylke = "Øs", State = 2 },
-                new Fylkesforekomst { Fylke = "OsA", State = 2 },
-                new Fylkesforekomst { Fylke = "He", State = 2 },
-                new Fylkesforekomst { Fylke = "Op", State = 2 },
-                new Fylkesforekomst { Fylke = "Bu", State = 2 },
-                new Fylkesforekomst { Fylke = "Ve", State = 2 },
-                new Fylkesforekomst { Fylke = "Te", State = 2 },
-                new Fylkesforekomst { Fylke = "Aa", State = 2 },
-                new Fylkesforekomst { Fylke = "Va", State = 2 },
-                new Fylkesforekomst { Fylke = "Ro", State = 2 },
-                new Fylkesforekomst { Fylke = "Ho", State = 2 },
-                new Fylkesforekomst { Fylke = "Sf", State = 2 },
-                new Fylkesforekomst { Fylke = "Mr", State = 2 },
-                new Fylkesforekomst { Fylke = "Tø", State = 2 },
-                new Fylkesforekomst { Fylke = "No", State = 2 },
-                new Fylkesforekomst { Fylke = "Tr", State = 2 },
-                new Fylkesforekomst { Fylke = "Fi", State = 2 },
-                new Fylkesforekomst { Fylke = "Sv", State = 2 },
-                new Fylkesforekomst { Fylke = "Jm", State = 2 },
-                new Fylkesforekomst { Fylke = "Ns", State = 2 },
-                new Fylkesforekomst { Fylke = "Nh", State = 2 },
-                new Fylkesforekomst { Fylke = "Gh", State = 2 },
-                new Fylkesforekomst { Fylke = "Bn", State = 2 },
-                new Fylkesforekomst { Fylke = "Bs", State = 2 }
+                if (Fylkesforekomster == null || Fylkesforekomster.Count == 0) Fylkesforekomster = GetInitialFylkesforekomster();
+                return Fylkesforekomster;
+            }
+            set => Fylkesforekomster = value;
+        }
+
+        private void InitFylkesforekomster()
+        {
+            Fylkesforekomster = GetInitialFylkesforekomster();
+        }
+
+        private static List<Fylkesforekomst> GetInitialFylkesforekomster()
+        {
+            return new List<Fylkesforekomst>
+            {
+                new Fylkesforekomst { Fylke = "Øs" },
+                new Fylkesforekomst { Fylke = "OsA" },
+                new Fylkesforekomst { Fylke = "He" },
+                new Fylkesforekomst { Fylke = "Op" },
+                new Fylkesforekomst { Fylke = "Bu" },
+                new Fylkesforekomst { Fylke = "Ve" },
+                new Fylkesforekomst { Fylke = "Te" },
+                new Fylkesforekomst { Fylke = "Aa" },
+                new Fylkesforekomst { Fylke = "Va" },
+                new Fylkesforekomst { Fylke = "Ro" },
+                new Fylkesforekomst { Fylke = "Ho" },
+                new Fylkesforekomst { Fylke = "Sf" },
+                new Fylkesforekomst { Fylke = "Mr" },
+                new Fylkesforekomst { Fylke = "Tø" },
+                new Fylkesforekomst { Fylke = "No" },
+                new Fylkesforekomst { Fylke = "Tr" },
+                new Fylkesforekomst { Fylke = "Fi" },
+                new Fylkesforekomst { Fylke = "Sv" },
+                new Fylkesforekomst { Fylke = "Jm" },
+                new Fylkesforekomst { Fylke = "Ns" },
+                new Fylkesforekomst { Fylke = "Nh" },
+                new Fylkesforekomst { Fylke = "Gh" },
+                new Fylkesforekomst { Fylke = "Bn" },
+                new Fylkesforekomst { Fylke = "Bs" }
             };
         }
     }
 
-    public partial class FA4 // (3.2) Artsegenskaper
+public partial class FA4 // (3.2) Artsegenskaper
     {
         //public string LimnicTerrestrialMarine { get; set; } // lagt til 2.9.2016 // fjernet 26.09.2016
         public bool Limnic { get; set; } // lagt til 26.9.2016
