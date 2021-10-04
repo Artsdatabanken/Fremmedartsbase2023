@@ -76,9 +76,9 @@ namespace SwissKnife.Database
             {
 
                 var stamp = _database.TimeStamp.SingleOrDefault();
-                if (stamp != null)
+                if (stamp != null && stamp.DateTimeUpdated < commentdatetime)
                 {
-                    stamp.CommentDateTimeUpdated = commentdatetime;
+                    stamp.DateTimeUpdated = commentdatetime;
                 }
 
                 _database.SaveChanges();
@@ -248,9 +248,7 @@ namespace SwissKnife.Database
                     x.AssessmentId == context.DbAssessment.Id
                     // && x.Closed == false 
                     && x.IsDeleted == false &&
-                    (
-                        x.Comment.StartsWith(PotensiellTaksonomiskEndring) ||
-                        x.Comment.StartsWith(TaksonomiskEndring))).ToArray();
+                    (x.Type == CommentType.TaxonomicChange || x.Type == CommentType.PotentialTaxonomicChange)).ToArray();
                 if (eksistings.Length > 1)
                 {
                     // for mange - slett
@@ -275,7 +273,8 @@ namespace SwissKnife.Database
                         AssessmentId = context.DbAssessment.Id,
                         CommentDate = DateTime.Today,
                         // todo: put in config - think sweeden
-                        UserId = new Guid("00000000-0000-0000-0000-000000000001")
+                        UserId = new Guid("00000000-0000-0000-0000-000000000001"),
+                        Type = message.StartsWith(PotensiellTaksonomiskEndring) ? CommentType.PotentialTaxonomicChange : CommentType.TaxonomicChange
                 }; // siris id
                     context.dbcontext.Comments.Add(eksisting);
                     context.changes = true;
@@ -292,8 +291,8 @@ namespace SwissKnife.Database
             else
             {
                 var existing = context.dbcontext.Comments.SingleOrDefault(x =>
-                    x.AssessmentId == context.DbAssessment.Id && x.Closed == false && x.IsDeleted == false &&
-                    (x.Comment.StartsWith(PotensiellTaksonomiskEndring) || x.Comment.StartsWith(TaksonomiskEndring)));
+                    x.AssessmentId == context.DbAssessment.Id && x.Closed == false && x.IsDeleted == false && (x.Type == CommentType.TaxonomicChange || x.Type == CommentType.PotentialTaxonomicChange)
+                    );
                 if (existing != null)
                 {
                     context.dbcontext.Comments.Remove(existing);

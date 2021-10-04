@@ -56,3 +56,7 @@ Import content from 2018 Dump into new database:
 dotnet run -- newdb import --connectionstring "Server=localhost;Database=FAB20233;Integrated Security=true;MultipleActiveResultSets=true" --inputfolder ./Dump
 ```
 
+Do taxonomy wash
+```
+dotnet run -- maintenance taxonomywash --connectionstring "Server=localhost;Database=FAB2023;Integrated Security=true;MultipleActiveResultSets=true"
+```

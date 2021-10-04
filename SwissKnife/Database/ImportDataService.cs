@@ -127,6 +127,7 @@ namespace SwissKnife.Database
                         CommentDate = DateTime.Now,
                         UserId = new Guid("00000000-0000-0000-0000-000000000001"),
                         ClosedById = new Guid("00000000-0000-0000-0000-000000000001"),
+                        Type = CommentType.System
                     });
                 }
                 if (oldAssessment.RiskAssessment.SpreadYearlyIncreaseObservations != null &&
@@ -139,6 +140,7 @@ namespace SwissKnife.Database
                         CommentDate = DateTime.Now,
                         UserId = new Guid("00000000-0000-0000-0000-000000000001"),
                         ClosedById = new Guid("00000000-0000-0000-0000-000000000001"),
+                        Type = CommentType.System
                     });
                 }
 
@@ -408,6 +410,9 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.HorizonEstablismentPotentialDescription, opt => opt.Ignore())
                     .ForMember(dest => dest.Id, opt => opt.Ignore()) // primærnøkkel
                     .ForMember(dest =>dest.PreviousAssessments, opt => opt.Ignore()) // ny av året
+                    .ForMember(dest => dest.TaxonomicHistory, opt => opt.Ignore()) // ny av året
+                    .ForMember(dest => dest.ImportInfo, opt => opt.Ignore()) // ny av året
+                    .ForMember(dest => dest.EvaluatedScientificNameRank, opt => opt.Ignore()) // ny av året
                     .AfterMap((src, dest) =>
                     {
                         // set some standard values
@@ -476,6 +481,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesHigh,
                         opt => opt.Ignore())
                     .ForAllOtherMembers(opt => opt.Ignore());
+                    
 
 
             });
