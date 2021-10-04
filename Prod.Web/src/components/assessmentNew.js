@@ -26,6 +26,9 @@ const  newAssessment = observable({
 
 @observer
 export default class assessmentNew extends React.Component {
+    //if this is false, the button name is "Add assessment", otherwise "Move assessment"
+    @observable moveAssessment = false
+
     constructor(props) {
         super(props)
         const {evaluationContext} = props
@@ -53,6 +56,8 @@ export default class assessmentNew extends React.Component {
             })()
             props.onNewAssessment(clone)
         }
+
+       
         autorun(() => 
             newAssessment.Ekspertgruppe = this.props.appState.expertgroup
         )
@@ -82,7 +87,6 @@ export default class assessmentNew extends React.Component {
         const labels = appState.codeLabels
         const codes = appState.koder
         const rolle = appState.roleincurrentgroup
-        var buttonName = labels.SelectAssessment.createAssessment
         
         return (
             <div>
@@ -171,8 +175,7 @@ export default class assessmentNew extends React.Component {
                     </div>
                     <div className="row">                            
                             <div className="col-md-6">
-                            <Xcomp.StringEnum observableValue={[newAssessment, "potensiellDørstokkart"]} mode="radio" codes={codes.SpeciesStatus} onChange={() => { buttonName = labels.SelectAssessment.moveAssessment 
-                            console.log(buttonName)}}/>
+                            <Xcomp.StringEnum observableValue={[newAssessment, "potensiellDørstokkart"]} mode="radio" codes={codes.SpeciesStatus} onChange={() => { this.moveAssessment = true }}/>
                                {/* <Xcomp.Bool observableValue={[newAssessment, "potensiellDørstokkart"]} label={labels.SpeciesStatus.potentialDoorknocker} />
                                 <Xcomp.Bool observableValue={[newAssessment, "øvrigeArter"]} label={labels.SpeciesStatus.otherSpecies} /> */}
                             </div>
@@ -180,7 +183,7 @@ export default class assessmentNew extends React.Component {
                         <div className="col-md-6" style={{display: 'flex'}}>
                             <div>{labels.SelectAssessment.NBWritingAccess}</div>
                             
-                            <Xcomp.Button primary onClick={this.onNewAssessment} disabled={!rolle.writeAccess || (!newAssessment.ScientificName || checkForExistingAssessment(newAssessment.ScientificName))}>{buttonName}</Xcomp.Button>
+                            <Xcomp.Button primary onClick={this.onNewAssessment} disabled={!rolle.writeAccess || (!newAssessment.ScientificName || checkForExistingAssessment(newAssessment.ScientificName))}>{this.moveAssessment ? labels.SelectAssessment.moveAssessment : labels.SelectAssessment.createAssessment}</Xcomp.Button>
                             {(newAssessment.ScientificName.length > 0 && 
                                 !rolle.writeAccess || 
                                 ( checkForExistingAssessment(newAssessment.ScientificName))) ? <div style={{color: 'red'}}>{labels.SelectAssessment.alreadyOnTheList}</div>: null}

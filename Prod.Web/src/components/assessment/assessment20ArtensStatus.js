@@ -266,7 +266,7 @@ export default class Assessment20ArtensStatus extends React.Component {
                      { assessment.isAlienSpecies == 'true'  && assessment.alienSpeciesCategory != "DoorKnocker" && assessment.speciesStatus == "A" &&
                         (assessment.connectedToAnother == false || assessment.connectedToAnother == null) ? 
                         <div className="statusField">
-                            <b> {labels.SpeciesStatus.wronglyAssessedBefore} </b>                
+                            <p> {labels.SpeciesStatus.wronglyAssessedBefore} </p>                
                             <Xcomp.Bool observableValue={[assessment, "wrongAssessed"]} />  
                             
                         </div> : null }
