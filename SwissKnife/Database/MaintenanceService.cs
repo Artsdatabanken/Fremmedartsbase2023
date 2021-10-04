@@ -2,9 +2,13 @@
 using Prod.Domain;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CsvHelper;
+using CsvHelper.Configuration;
 
 namespace SwissKnife.Database
 {
@@ -216,6 +220,7 @@ namespace SwissKnife.Database
                         assessment.TaxonHierarcy =
                             TaksonService.GetFullPathScientificName(currentTaxonomy).Item1;
                         assessment.TaxonId = currentTaxonomy.TaxonId;
+                        assessment.EvaluatedScientificNameRank = currentTaxonomy.CategoryValue;
                         //assessment.LatinsknavnId = currentTaxonomy.ValidScientificNameId;
                         context.changes = true;
                         context.historyWorthyChanges = firstRun == false;
@@ -288,7 +293,7 @@ namespace SwissKnife.Database
                     Console.WriteLine(message);
                 }
             }
-            else
+            else if (context.DbAssessment != null)
             {
                 var existing = context.dbcontext.Comments.SingleOrDefault(x =>
                     x.AssessmentId == context.DbAssessment.Id && x.Closed == false && x.IsDeleted == false && (x.Type == CommentType.TaxonomicChange || x.Type == CommentType.PotentialTaxonomicChange)
@@ -311,9 +316,191 @@ namespace SwissKnife.Database
             public bool historyWorthyChanges { get; set; }
         }
 
-        public static void RunImportNewAssessments(SqlServerProdDbContext sqlServerProdDbContext, string speciesGroup, string inputFolder)
+
+        public class ImportFormat
         {
-            throw new NotImplementedException();
+            public int ScientificNameId { get; set; }
+            public string ScientificName { get; set; }
+            public string ScientificNameAuthor { get; set; }
+        }
+
+        public static void RunImportNewAssessments(SqlServerProdDbContext _database, string speciesGroup,
+            string inputFolder)
+        {
+            var theCsvConfiguration = new CsvConfiguration(new CultureInfo("nb-NO"))
+            {
+                Delimiter = "\t",
+                Encoding = Encoding.UTF8
+            };
+            var taxonService = new SwissKnife.Database.TaksonService();
+            using (var reader = new StreamReader(inputFolder))
+            using (var csv = new CsvReader(reader, theCsvConfiguration))
+            {
+                var records = csv.GetRecords<ImportFormat>();
+                foreach (var importFormat in records)
+                {
+                    Console.WriteLine(
+                        $"{importFormat.ScientificNameId} {importFormat.ScientificName} {importFormat.ScientificNameAuthor}");
+                    var user = _database.Users
+                        .Single(x => x.Id == new Guid("00000000-0000-0000-0000-000000000001"));
+                    var fa4 = CreateNewAssessment(speciesGroup, user, importFormat.ScientificNameId, true, taxonService);
+                    fa4.EvaluationStatus = "created";
+                    fa4.LastUpdatedAt = DateTime.Now;
+                    var doc = System.Text.Json.JsonSerializer.Serialize<FA4>(fa4);
+
+                    var prosessContext = new ProsessContext { assessment = fa4, changes = false, DbAssessment = null, dbcontext = _database, historyWorthyChanges = false };
+
+                    var result = prosessContext
+                        //.BatchSetAssessmentsToResult()
+                        .CheckTaxonomyForChanges(taxonService, true);
+                    var assessment = new Assessment
+                    {
+                        Doc = doc,
+                        LastUpdatedAt = fa4.LastUpdatedAt,
+                        LastUpdatedByUserId = user.Id,
+                        ScientificNameId = fa4.EvaluatedScientificNameId.Value,
+                        ChangedAt = fa4.LastUpdatedAt
+                    };
+                    if (fa4.EvaluatedScientificNameId != importFormat.ScientificNameId || fa4.EvaluatedScientificName != importFormat.ScientificName || fa4.EvaluatedScientificNameAuthor != importFormat.ScientificNameAuthor)
+                    {
+                        Console.WriteLine(
+                            $" ERRROR {fa4.EvaluatedScientificNameId} {fa4.EvaluatedScientificName} {fa4.EvaluatedScientificNameAuthor}");
+                    }
+                    _database.Assessments.Add(assessment);
+                    _database.SaveChanges();
+                }
+            }
+        }
+        private static FA4 CreateNewAssessment(string expertgroup, User user, int scientificNameId, bool DoorKnocker,
+            TaksonService ts)
+        {
+            if (string.IsNullOrWhiteSpace(expertgroup))
+            {
+                throw new ArgumentNullException(nameof(expertgroup));
+            }
+            if (user == null)
+            {
+                throw new ArgumentNullException(nameof(user));
+            }
+            var vurderingscontext = expertgroup.Contains("Svalbard") ? "S" : "N";
+            var vurderingsår = 2021;
+            var createdby = "createdbyloading";
+
+            //var ts = new Prod.Api.Services.TaxonService();
+            var titask = ts.getTaxonInfo(scientificNameId);
+            var ti = titask.GetAwaiter().GetResult();
+            var (hierarcy, rank) = GetFullPathScientificName(ti);
+
+
+            if (scientificNameId != ti.ValidScientificNameId)
+            {
+                throw new ArgumentException("supplied scientificNameId is not ValidScientificNameId");
+            }
+
+            var rl = FA4.CreateNewFA4();
+
+            rl.ExpertGroup = expertgroup;
+            rl.EvaluationContext = vurderingscontext;
+            rl.IsDeleted = false;
+            rl.LastUpdatedAt = DateTime.Now;
+            rl.LastUpdatedBy = user.FullName;
+            //rl.Vurderingsår = vurderingsår;
+            //rl.SistVurdertAr = vurderingsår;
+            rl.EvaluationStatus = "created";
+            if (DoorKnocker)
+            {
+                rl.HorizonDoScanning = true;
+                rl.HorizonScanningStatus = "notStarted";
+            }
+            //rl.OverordnetKlassifiseringGruppeKode = "rodlisteVurdertArt";
+            //rl.RodlisteVurdertArt = "etablertBestandINorge";
+            rl.EvaluatedScientificName = ti.ValidScientificName;
+            rl.EvaluatedScientificNameId = ti.ValidScientificNameId;
+            rl.EvaluatedScientificNameAuthor = ti.ValidScientificNameAuthorship;
+            rl.TaxonHierarcy = hierarcy;
+            rl.TaxonId = ti.TaxonId;
+            //rl.TaxonRank = rank;
+            rl.EvaluatedVernacularName = ti.PrefferedPopularname;
+
+            ////ekstra standardverdier
+            //rl.ImportInfo.VurderingsId2015 = string.Empty;
+            //rl.AndelNåværendeBestand = "-";
+            //rl.A1OpphørtOgReversibel = "-";
+            //rl.A2Forutgående10År = "-";
+            //rl.A3Kommende10År = "-";
+            //rl.A4Intervall10År = "-";
+            //rl.BA2FåLokaliteterProdukt = "";
+            //rl.B1BeregnetAreal = "";
+            //rl.B1UtbredelsesområdeKode = "-";
+            //rl.B2ForekomstarealKode = "-";
+            //rl.BA1KraftigFragmenteringKode = "-";
+            //rl.BA2FåLokaliteterKode = "-";
+            //rl.CVurdertpopulasjonsstørrelseProdukt = "";
+            //rl.C1PågåendePopulasjonsreduksjonKode = "-";
+            //rl.C2A1PågåendePopulasjonsreduksjonKode = "-";
+            //rl.D1FåReproduserendeIndividKode = "-";
+            //rl.D2MegetBegrensetForekomstarealKode = "-";
+            //rl.EKvantitativUtryddingsmodellKode = "-";
+
+            ////gudene vet om disse har betydning:
+            //rl.WktPolygon = "";
+            //rl.SistVurdertAr = 2021;
+            //rl.C2A2PågåendePopulasjonsreduksjonKode = "-";
+            //rl.C2BPågåendePopulasjonsreduksjonKode = "-";
+            //rl.CPopulasjonsstørrelseKode = "-";
+            //rl.B2ForekomstarealProdukt = "";
+            //rl.B1UtbredelsesområdeProdukt = "";
+            //rl.OppsummeringAKriterier = "";
+            //rl.OppsummeringBKriterier = "";
+            //rl.OppsummeringCKriterier = "";
+            //rl.OppsummeringDKriterier = "";
+            //rl.OppsummeringEKriterier = "";
+            //rl.B2BeregnetAreal = "";
+            //if (rl.Ekspertgruppe == "Leddormer") // special case - ville ha LC som standard
+            //{
+            //    rl.C2A2SannhetsverdiKode = "1";
+            //    rl.OverordnetKlassifiseringGruppeKode = "sikkerBestandLC";
+            //    rl.Kategori = "LC";
+            //}
+
+            //AddFylkeslister(rl);
+            //rl.NaturtypeHovedenhet = new List<string>();
+            //SetArtskartImportSettings(rl);
+            return rl;
+        }
+        public static (string, string) GetFullPathScientificName(TaxonInfo ti)
+        {
+            string[] ranks = {
+                "Kingdom",
+                "Phylum",
+                "Class",
+                "Order",
+                "Family",
+                "Genus",
+                "Species",
+                "SubSpecies"
+            };
+
+            var result = ti.Kingdom;
+            var names = new List<string>() {
+                ti.Phylum,
+                ti.Class,
+                ti.Order,
+                ti.Family,
+                ti.Genus,
+                ti.Species,
+                ti.SubSpecies
+            };
+            var n = 0; // 0 = "Kingdom"
+            foreach (var name in names)
+            {
+                if (name != null)
+                {
+                    n++;
+                    result += "/" + name;
+                }
+            }
+            return (result, ranks[n]);
         }
     }
 }
