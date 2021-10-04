@@ -1176,21 +1176,6 @@ function enhanceRiskAssessmentLevel(riskAssessment, labels) {
 
 
     });
-    
-    //  autorun(() => {
-    //     const level = riskAssessment.riskLevel
-    //     const decisiveCriteriaLabel = riskAssessment.decisiveCriteria
-    //     console.log("risklevel changed: " + level + " | " + decisiveCriteriaLabel)
-    //   /* 
-        
-    //     const levtxt = level.toString()
-
-    //     riskAssessment.riskLevel = level
-        
-    //     riskAssessment.riskLevelCode = labels.RiskLevelCode[levtxt]
-    //     riskAssessment.riskLevelText = labels.RiskLevelText[levtxt]
-    //     riskAssessment.decisiveCriteria = decisiveCriteriaLabel*/
-    //  });
 }
 
 function enhanceCriteriaAddLabelsAndAuto(riskAssessment, codes) {
