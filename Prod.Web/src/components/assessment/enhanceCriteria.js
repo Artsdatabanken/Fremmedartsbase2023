@@ -1156,23 +1156,48 @@ function enhanceRiskAssessmentLevel(riskAssessment, labels) {
             
             //const result = RiskLevel.riskLevel(riskAssessment.invasjonspotensialeLevel, riskAssessment.ecoeffectLevel)
             return result;
+        },
+        get riskLevelText() {
+            const levtxt = this.riskLevel.toString()
+            const result = labels.RiskLevelText[levtxt]
+            return result
         }
+
+
+    });
+    extendObservable(riskAssessment, {
+        get riskLevelText() {
+            const levtxt = this.riskLevel.toString()
+            const result = labels.RiskLevelText[levtxt]
+            return result
+        },
+        get riskLevelCode() {
+            const levtxt = this.riskLevel.toString()
+            const result = labels.RiskLevelCode[levtxt]
+            return result
+        },
+        // get decisiveCriteria() {
+        //     const decisiveCriteriaLabel = riskAssessment.decisiveCriteria
+        //     return decisiveCriteriaLabel
+        // }
+
+
     });
     
-     autorun(() => {
-        const level = riskAssessment.riskLevel
-        const decisiveCriteriaLabel = riskAssessment.decisiveCriteria
-        console.log("risklevel changed: " + level + " | " + decisiveCriteriaLabel)
-      /* 
+    //  autorun(() => {
+    //     const level = riskAssessment.riskLevel
+    //     const decisiveCriteriaLabel = riskAssessment.decisiveCriteria
+    //     console.log("risklevel changed: " + level + " | " + decisiveCriteriaLabel)
+    //   /* 
         
-        const levtxt = level.toString()
+    //     const levtxt = level.toString()
 
-        riskAssessment.riskLevel = level
+    //     riskAssessment.riskLevel = level
         
-        riskAssessment.riskLevelCode = labels.RiskLevelCode[levtxt]
-        riskAssessment.riskLevelText = labels.RiskLevelText[levtxt]
-        riskAssessment.decisiveCriteria = decisiveCriteriaLabel*/
-     });
+    //     riskAssessment.riskLevelCode = labels.RiskLevelCode[levtxt]
+    //     riskAssessment.riskLevelText = labels.RiskLevelText[levtxt]
+    //     riskAssessment.decisiveCriteria = decisiveCriteriaLabel*/
+    //  });
 }
 
 function enhanceCriteriaAddLabelsAndAuto(riskAssessment, codes) {
