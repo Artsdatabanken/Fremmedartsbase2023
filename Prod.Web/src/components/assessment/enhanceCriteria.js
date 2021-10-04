@@ -1156,14 +1156,7 @@ function enhanceRiskAssessmentLevel(riskAssessment, labels) {
             
             //const result = RiskLevel.riskLevel(riskAssessment.invasjonspotensialeLevel, riskAssessment.ecoeffectLevel)
             return result;
-        },
-        get riskLevelText() {
-            const levtxt = this.riskLevel.toString()
-            const result = labels.RiskLevelText[levtxt]
-            return result
         }
-
-
     });
     extendObservable(riskAssessment, {
         get riskLevelText() {
