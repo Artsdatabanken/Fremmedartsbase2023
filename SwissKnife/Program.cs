@@ -150,6 +150,7 @@ namespace SwissKnife
                 {
                     var maintenance = new Database.ImportDataService(ConnectionString);
                     maintenance.Import(console, InputFolder);
+                    Database.MaintenanceService.RunTaxonomyWash(new Prod.Data.EFCore.SqlServerProdDbContext(ConnectionString), true);
                 }
             }
         }

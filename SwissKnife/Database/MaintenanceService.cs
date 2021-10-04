@@ -19,7 +19,7 @@ namespace SwissKnife.Database
         //    _database = new Prod.Data.EFCore.SqlServerProdDbContext(connectionString);
         //}
 
-        internal static void RunTaxonomyWash(SqlServerProdDbContext _database)
+        internal static void RunTaxonomyWash(SqlServerProdDbContext _database, bool firstrun = false)
         {
             var ts = new TaksonService();
             var batchSize = 1000;
@@ -44,7 +44,7 @@ namespace SwissKnife.Database
 
                     var result = prosessContext
                         //.BatchSetAssessmentsToResult()
-                        .CheckTaxonomyForChanges(ts, false);
+                        .CheckTaxonomyForChanges(ts, firstrun);
                         //.CheckReferencesForChanges(refDict)
                         //.DownLoadArtskartDataIfMissing()
                         //;
