@@ -25,7 +25,7 @@ namespace SwissKnife
         }
 
         [Command("maintenance", Description = "Run tasks for maintaining database")]
-        [Subcommand(typeof(TaxonomyWash))]
+        [Subcommand(typeof(TaxonomyWash), typeof(ImportNames))]
         [HelpOption("--help")]
         internal class Maintenance {
             private int OnExecute(IConsole console)
@@ -34,16 +34,36 @@ namespace SwissKnife
                 return 1;
             }
 
-            [Command("taxonomywash", Description = "Check and update taxonomy on assessments")]
-            internal class TaxonomyWash
+            internal class MaintananceBase
             {
                 [Option("--connectionstring", Description = "connectionstring to database to establish and load data into")]
                 [Required]
                 public string ConnectionString { get; }
 
+            }
+
+            [Command("taxonomywash", Description = "Check and update taxonomy on assessments")]
+            internal class TaxonomyWash : MaintananceBase
+            {
                 private void OnExecute(IConsole console)
                 {
                     Database.MaintenanceService.RunTaxonomyWash(new Prod.Data.EFCore.SqlServerProdDbContext(ConnectionString));
+                }
+            }
+
+            [Command("importnames", Description = "Import and create assessments from names")]
+            internal class ImportNames : MaintananceBase
+            {
+                [Option("--speciesgroup", Description = "SpeciesGroup to put assessments in")]
+                [Required]
+                public string SpeciesGroup { get; }
+
+                [Option("--csvfile", Description = "CvsFile with path")]
+                [Required]
+                public string InputFolder { get; }
+                private void OnExecute(IConsole console)
+                {
+                    Database.MaintenanceService.RunImportNewAssessments(new Prod.Data.EFCore.SqlServerProdDbContext(ConnectionString), SpeciesGroup, InputFolder);
                 }
             }
         }

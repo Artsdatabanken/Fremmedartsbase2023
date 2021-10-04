@@ -311,5 +311,10 @@ namespace SwissKnife.Database
             public SqlServerProdDbContext dbcontext { get; set; }
             public bool historyWorthyChanges { get; set; }
         }
+
+        public static void RunImportNewAssessments(SqlServerProdDbContext sqlServerProdDbContext, string speciesGroup, string inputFolder)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
