@@ -187,10 +187,12 @@ namespace Prod.Domain
 
     public partial class FA4 // Fylkesforekomster
     {
+        private List<Fylkesforekomst> _fylkesforekomster;
+
         public List<Fylkesforekomst> Fylkesforekomster
         {
-            get => Fylkesforekomster == null || Fylkesforekomster.Count == 0 ? GetInitialFylkesforekomster() : Fylkesforekomster;
-            set => Fylkesforekomster = value;
+            get => _fylkesforekomster?.Count > 0 ? _fylkesforekomster : GetInitialFylkesforekomster();
+            set => _fylkesforekomster = value;
         }
 
         private void InitFylkesforekomster()
@@ -198,7 +200,7 @@ namespace Prod.Domain
             Fylkesforekomster = GetInitialFylkesforekomster();
         }
 
-        private List<Fylkesforekomst> GetInitialFylkesforekomster()
+        private static List<Fylkesforekomst> GetInitialFylkesforekomster()
         {
             return new List<Fylkesforekomst>
             {
