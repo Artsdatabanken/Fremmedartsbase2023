@@ -41,7 +41,7 @@ function apiUrl (anchor) {
   }
 
   function isRelease(){
-   return !window.location.href.indexOf("localhost") > 1
+   return !(window.location.href.indexOf("localhost") > 1)
   }
 
   const homeuri = window.location.protocol + "//" + window.location.host

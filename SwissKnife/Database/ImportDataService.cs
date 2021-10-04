@@ -15,7 +15,7 @@ using Prod.Domain.Legacy;
 
 namespace SwissKnife.Database
 {
-    public class Maintenance
+    public class ImportDataService
     {
         private SqlServerProdDbContext _database;
         private static Dictionary<string, string> expertGroupReplacements = new Dictionary<string, string>()
@@ -39,7 +39,7 @@ namespace SwissKnife.Database
             { "ExpertGroups/Amfibierogreptiler/N", "Amfibier og reptiler" }
         };
 
-    public Maintenance(string connectionString)
+    public ImportDataService(string connectionString)
         {
             _database = new Prod.Data.EFCore.SqlServerProdDbContext(connectionString);
         }

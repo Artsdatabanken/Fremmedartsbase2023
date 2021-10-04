@@ -33,7 +33,38 @@ namespace Prod.Domain
 
     //    //public Guid[] References { get; set; }
     //}
-
+    public class TaxonHistory
+    {
+        public DateTime date { get; set; }
+        public string username { get; set; } // The user that changed the name of the assesment to a new name (not this name)
+        public string VitenskapeligNavn { get; set; }
+        public string VitenskapeligNavnAutor { get; set; }
+        public string VitenskapeligNavnHierarki { get; set; }
+        public int VitenskapeligNavnId { get; set; }
+        public int TaxonId { get; set; }
+        public string TaxonRank { get; set; }   // "Species" or "SupSpecies"
+        public string Ekspertgruppe { get; set; }
+    }
+    public class TrackInfo
+    {
+        public string VurderingsId2015 { get; set; }
+        public int OrgVitenskapeligNavnId { get; set; }
+        public string OrgVitenskapeligNavn { get; set; }
+        public string Url2015 { get; set; }
+        public string Kategori2015 { get; set; }
+        public string Kriterier2015 { get; set; }
+        public int ScientificNameId2015 { get; set; }
+        public string ScientificName2015 { get; set; }
+        public string MultipleUrl2015 { get; set; }
+        public int VurderingsId2010 { get; set; }
+        public string Url2010 { get; set; }
+        public string Kategori2010 { get; set; }
+        public string Kriterier2010 { get; set; }
+        public int ScientificNameId2010 { get; set; }
+        public string ScientificName2010 { get; set; }
+        public string MultipleUrl2010 { get; set; }
+        public string VurderingsId2015Databank { get; set; }
+    }
     public partial class FA4 // () Id-informjosjon
     {
         public static FA4 CreateNewFA4()
@@ -43,7 +74,8 @@ namespace Prod.Domain
             newfa.RiskAssessment.Criteria = RiskAssessment.CreateDefaultCriteria();
             return newfa;
         }
-
+        public List<TaxonHistory> TaxonomicHistory { get; set; } = new List<TaxonHistory>();
+        public TrackInfo ImportInfo { get; set; } = new TrackInfo();
         public int Id { get; set; }
         //public string VurderingId2018 { get; set; }
         //public int VurderingId2012 { get; set; } // sah 21-09-2021 - flyttet til PreviousAssessments.assessmentsid
@@ -100,6 +132,7 @@ namespace Prod.Domain
         //        public string SynonymSpecies_________ { get; set; } // fab: Synonym_Species
 
         public Datasett Datasett { get; set; } = new Datasett();
+        public dynamic EvaluatedScientificNameRank { get; set; }
     }
 
     public partial class FA4 // Horisontskanning

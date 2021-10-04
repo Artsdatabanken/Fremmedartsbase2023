@@ -16,14 +16,14 @@ namespace Prod.Tests
         [Test]
         public void MapOldFormatToNewIsOk()
         {
-            SwissKnife.Database.Maintenance.CreateMappingFromOldToNew();
+            SwissKnife.Database.ImportDataService.CreateMappingFromOldToNew();
             Assert.Pass();
         }
 
         [Test]
         public void MapOldRealDocumentToNewIsOk()
         {
-            var mapper = SwissKnife.Database.Maintenance.CreateMappingFromOldToNew();
+            var mapper = SwissKnife.Database.ImportDataService.CreateMappingFromOldToNew();
             var jsonSerializerOptions = new JsonSerializerOptions
             {
                 Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping

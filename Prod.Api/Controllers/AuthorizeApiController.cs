@@ -75,7 +75,7 @@ namespace Prod.Api.Controllers
             if (roleInGroup == null)
             {
                 roleInGroup = new User.UserRoleInExpertGroup()
-                                  { ExpertGroupName = id, Admin = false, WriteAccess = false, User = new User(){UserName = user.UserName, Id = user.Id, IsAdmin = user.IsAdmin } };
+                                  { ExpertGroupName = id, Admin = false, WriteAccess = false, User = new User(){UserName = user.UserName, Id = user.Id, IsAdmin = user.IsAdmin }, UserId = user.Id };
             }
 
             // gi admin anledning til å låse opp vurderinger o.l.
