@@ -10,10 +10,17 @@ import UtbredelseIDag from './35Utbredelseshistorikk/UtbredelseIDag'
 import Utbredelseshistorikk from './35Utbredelseshistorikk/Utbredelseshistorikk'
 import ModalArtskart from '../artskart/ModalArtskart';
 import { ContactsOutlined } from '@material-ui/icons';
+import { computed } from 'mobx';
 
 @inject('appState')
 @observer
 export default class Assessment52Utbredelse extends React.Component {
+    @computed get isDirty() {
+        if (!this.props.appState.assessmentId) return false
+        const a = JSON.stringify(this.props.appState.assessment)
+        const b = this.props.appState.assessmentSavedVersionString
+        return a != b
+    }
 
     onOverførFraArtskart = (data) => {
         // {
@@ -29,9 +36,11 @@ export default class Assessment52Utbredelse extends React.Component {
     }
 
     render() {
-        const {appState:{assessment}, appState, appState:{infoTabs}} = this.props
+        // console.log('Assessment52Utbredelse');
+        const renderAgain = this.isDirty;
+        const {appState:{assessment}, appState, appState:{infoTabs}} = this.props;
         // const {appState:{assessment}, vurdering, fabModel} = this.props
-        //const labels = fabModel.kodeLabels.DistributionHistory
+        // const labels = fabModel.kodeLabels.DistributionHistory
         
         // const labels = fabModel.codeLabels.DistributionHistory
         const koder = appState.koder

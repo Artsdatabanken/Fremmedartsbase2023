@@ -334,7 +334,7 @@
         ],
         "workStatus": [
             {
-              "text": "Ikke påbegynt",
+              "text": "Ikke ferdigstilt",
               "value": "notStarted"
             },
             {
@@ -5652,6 +5652,20 @@
                             "Id": null,
                             "Value": "createAssessment",
                             "Text": "Legg til ny art",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "moveAssessment",
+                            "Text": "Flytt art",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "createAssessmentHint",
+                            "Text": "Legg til ny art, eller flytt en art fra horisontskanning til risikovurdering (evt. motsatt). Flytting gjelder for arter hvor ny informasjon tilsier at arten (evt. ikke) reproduserer selvstendig utendørs i Norge likevel.",
                             "Info": null,
                             "Children": null
                         },

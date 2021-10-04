@@ -71,6 +71,7 @@ namespace Prod.Domain
         {
             var newfa = new FA4();
             newfa.initNaturalOrigins();
+            newfa.InitFylkesforekomster();
             newfa.RiskAssessment.Criteria = RiskAssessment.CreateDefaultCriteria();
             return newfa;
         }
@@ -216,7 +217,55 @@ namespace Prod.Domain
         }
         public ObservedAndEstablishedInCountry ObservedAndEstablishedStatusInCountry { get; set; } = new ObservedAndEstablishedInCountry(); // lagt til 30.08.2016 //
     }
-    public partial class FA4 // (3.2) Artsegenskaper
+
+    public partial class FA4 // Fylkesforekomster
+    {
+        private List<Fylkesforekomst> _fylkesforekomster;
+
+        public List<Fylkesforekomst> Fylkesforekomster
+        {
+            get => _fylkesforekomster?.Count > 0 ? _fylkesforekomster : GetInitialFylkesforekomster();
+            set => _fylkesforekomster = value;
+        }
+
+        private void InitFylkesforekomster()
+        {
+            Fylkesforekomster = GetInitialFylkesforekomster();
+        }
+
+        private static List<Fylkesforekomst> GetInitialFylkesforekomster()
+        {
+            return new List<Fylkesforekomst>
+            {
+                new Fylkesforekomst { Fylke = "Øs" },
+                new Fylkesforekomst { Fylke = "OsA" },
+                new Fylkesforekomst { Fylke = "He" },
+                new Fylkesforekomst { Fylke = "Op" },
+                new Fylkesforekomst { Fylke = "Bu" },
+                new Fylkesforekomst { Fylke = "Ve" },
+                new Fylkesforekomst { Fylke = "Te" },
+                new Fylkesforekomst { Fylke = "Aa" },
+                new Fylkesforekomst { Fylke = "Va" },
+                new Fylkesforekomst { Fylke = "Ro" },
+                new Fylkesforekomst { Fylke = "Ho" },
+                new Fylkesforekomst { Fylke = "Sf" },
+                new Fylkesforekomst { Fylke = "Mr" },
+                new Fylkesforekomst { Fylke = "Tø" },
+                new Fylkesforekomst { Fylke = "No" },
+                new Fylkesforekomst { Fylke = "Tr" },
+                new Fylkesforekomst { Fylke = "Fi" },
+                new Fylkesforekomst { Fylke = "Sv" },
+                new Fylkesforekomst { Fylke = "Jm" },
+                new Fylkesforekomst { Fylke = "Ns" },
+                new Fylkesforekomst { Fylke = "Nh" },
+                new Fylkesforekomst { Fylke = "Gh" },
+                new Fylkesforekomst { Fylke = "Bn" },
+                new Fylkesforekomst { Fylke = "Bs" }
+            };
+        }
+    }
+
+public partial class FA4 // (3.2) Artsegenskaper
     {
         //public string LimnicTerrestrialMarine { get; set; } // lagt til 2.9.2016 // fjernet 26.09.2016
         public bool Limnic { get; set; } // lagt til 26.9.2016
@@ -1482,5 +1531,11 @@ namespace Prod.Domain
         public int CommentOpen { get; set; }
         //public int CommentNew { get; set; }
         public int TaxonChange { get; set; }
+    }
+    
+    public class Fylkesforekomst
+    {
+        public string Fylke { get; set; }
+        public int State { get; set; }
     }
 }

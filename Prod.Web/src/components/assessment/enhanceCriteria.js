@@ -1148,7 +1148,7 @@ function enhanceRiskAssessmentLevel(riskAssessment, labels) {
         //catch (e) {}
     });
 
-    delete riskAssessment.riskLevel  //todo: Check if necessary (or the correct way to do this) ?????  Basically: risklevel is observable from db data, but we want it to be a computed observable!
+    // delete riskAssessment.riskLevel  //todo: Check if necessary (or the correct way to do this) ?????  Basically: risklevel is observable from db data, but we want it to be a computed observable!
     
     extendObservable(riskAssessment, {
         get riskLevel() {
@@ -1158,21 +1158,39 @@ function enhanceRiskAssessmentLevel(riskAssessment, labels) {
             return result;
         }
     });
-    
-     autorun(() => {
-        const level = riskAssessment.riskLevel
-        const decisiveCriteriaLabel = riskAssessment.decisiveCriteria
-        console.log("risklevel changed: " + level + " | " + decisiveCriteriaLabel)
-      /* 
-        
-        const levtxt = level.toString()
+    extendObservable(riskAssessment, {
+        get riskLevelText() {
+            const levtxt = this.riskLevel.toString()
+            const result = labels.RiskLevelText[levtxt]
+            return result
+        },
+        get riskLevelCode() {
+            const levtxt = this.riskLevel.toString()
+            const result = labels.RiskLevelCode[levtxt]
+            return result
+        },
+        // get decisiveCriteria() {
+        //     const decisiveCriteriaLabel = riskAssessment.decisiveCriteria
+        //     return decisiveCriteriaLabel
+        // }
 
-        riskAssessment.riskLevel = level
+
+    });
+    
+    //  autorun(() => {
+    //     const level = riskAssessment.riskLevel
+    //     const decisiveCriteriaLabel = riskAssessment.decisiveCriteria
+    //     console.log("risklevel changed: " + level + " | " + decisiveCriteriaLabel)
+    //   /* 
         
-        riskAssessment.riskLevelCode = labels.RiskLevelCode[levtxt]
-        riskAssessment.riskLevelText = labels.RiskLevelText[levtxt]
-        riskAssessment.decisiveCriteria = decisiveCriteriaLabel*/
-     });
+    //     const levtxt = level.toString()
+
+    //     riskAssessment.riskLevel = level
+        
+    //     riskAssessment.riskLevelCode = labels.RiskLevelCode[levtxt]
+    //     riskAssessment.riskLevelText = labels.RiskLevelText[levtxt]
+    //     riskAssessment.decisiveCriteria = decisiveCriteriaLabel*/
+    //  });
 }
 
 function enhanceCriteriaAddLabelsAndAuto(riskAssessment, codes) {
