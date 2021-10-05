@@ -176,7 +176,7 @@ export default class SelectAssessment extends Component {
                  <Xcomp.StringEnum 
                                     //forceSync
                                     className="assessmentType"
-                                    disabled={config.isRelease}                                                                        
+                                    disabled={config.isNotTest}                                                                        
                                     observableValue={[appState, 'assessmentTypeFilter']} 
                                     heading={"Hva vil du gjøre?"}
                                     codes={koder.assessmentType}
@@ -499,7 +499,7 @@ export default class SelectAssessment extends Component {
                 
                 <div className="counter">Viser totalt {appState.expertgroupAssessmentTotalCount} vurderinger</div>
                 :            
-                <div className="counter">>Viser totalt {this.findAmountOfAssessments(appState)} vurderinger (filtrert fra {appState.expertgroupAssessmentTotalCount})</div>
+                <div className="counter">Viser totalt {this.findAmountOfAssessments(appState)} vurderinger (filtrert fra {appState.expertgroupAssessmentTotalCount})</div>
             }
             <div>
                 <span>{labels.SelectAssessment.usedFilters}</span> 
