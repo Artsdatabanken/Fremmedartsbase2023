@@ -4,7 +4,7 @@
     "title": "Kjent",
     "x": 0,
     "y": 0,
-    "tooltip": "Beskrivende tekst her?",
+    "tooltip": "Kjent",
     "normal": {
       "stroke": "hsl(22, 35%, 18%)",
       "strokeWidth": 1,
@@ -19,8 +19,8 @@
   },
   {
     "key": "assumed",
-    "title": "Antatt",
-    "tooltip": "Beskrivende tekst her?",
+    "title": "Antatt i dag",
+    "tooltip": "Antatt i dag",
     "x": 0,
     "y": 10,
     "normal": {
@@ -38,8 +38,8 @@
   {
     "title": "Ikke kjent",
     "x": 0,
-    "y": 20,
-    "tooltip": "Beskrivende tekst her?",
+    "y": 30,
+    "tooltip": "Ikke kjent",
     "normal": {
       "stroke": "hsl(10, 10%, 25%)",
       "strokeWidth": 1,
@@ -53,11 +53,11 @@
     }
   },
   {
-    "key": "assumed_extinct",
-    "title": "Antatt utdødd",
+    "key": "assumed_future",
+    "title": "Antatt om 50 år",
     "x": 0,
-    "y": 30,
-    "tooltip": "Arten er ....",
+    "y": 20,
+    "tooltip": "Antatt om 50 år",
     "normal": {
       "stroke": "hsl(26.7, 15%, 25%)",
       "strokeWidth": 1,
@@ -68,24 +68,6 @@
       "strokeWidth": 2,
       "filter": "url(#f2)",
       "fill": "HSL(26.7, 15%, 86.5%)"
-    }
-  },
-  {
-    "key": "extinct",
-    "title": "Utdødd",
-    "x": 0,
-    "y": 40,
-    "tooltip": "Arten er ikke observert de siste >30 år",
-    "normal": {
-      "stroke": "hsl(10, 0%, 25%)",
-      "strokeWidth": 1,
-      "fill": "url(#diagonalHatch)"
-    },
-    "highlight": {
-      "stroke": "hsl(10, 0%, 25%)",
-      "strokeWidth": 2,
-      "filter": "url(#f2)",
-      "fill": "url(#diagonalHatch)"
     }
   }
 ]

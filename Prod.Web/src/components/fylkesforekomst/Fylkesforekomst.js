@@ -74,7 +74,7 @@ const Fylkesforekomst = ({ fylkesforekomster }) => {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "max-content repeat(5, min-content)",
+            gridTemplateColumns: "max-content repeat(4, min-content)",
             columnGap: 8,
             marginLeft: 24,
             width: 450
@@ -85,7 +85,6 @@ const Fylkesforekomst = ({ fylkesforekomster }) => {
           <FylkeslisteLegend index={1} />
           <FylkeslisteLegend index={2} />
           <FylkeslisteLegend index={3} />
-          <FylkeslisteLegend index={4} />
           {regionSortering.map(k => {
             if (k)
               return (
@@ -177,16 +176,6 @@ const FylkeslisteElement = ({ id, value, onSwitchCategory }) => {
           onChange={e => onSwitchCategory(e, id, 3)}
         />
       </div>
-      <div>
-        <input
-          type="radio"
-          id={id}
-          name={id}
-          value={4}
-          checked={value == 4}
-          onChange={e => onSwitchCategory(e, id, 4)}
-        />
-      </div>
     </>
   );
 };
@@ -194,7 +183,6 @@ const FylkeslisteElement = ({ id, value, onSwitchCategory }) => {
 const Spacer = () => (
   <>
     <div style={{ height: 12 }} />
-    <div />
     <div />
     <div />
     <div />
