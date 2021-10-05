@@ -25,7 +25,7 @@ export default class Assessment52Utbredelse extends React.Component {
     }
 
     handleOverførFraArtskart = ({ selectionGeometry, countylist, areadata, observations, editStats }) => {
-        console.log('handleOverførFraArtskart', selectionGeometry, countylist, areadata, observations, editStats);
+        // console.log('handleOverførFraArtskart', selectionGeometry, countylist, areadata, observations, editStats);
         const aps = this.props.appState;
         const ass = aps.assessment;
         
