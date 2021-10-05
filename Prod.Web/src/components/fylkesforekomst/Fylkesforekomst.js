@@ -1,7 +1,7 @@
 import { action } from "mobx";
-import SvgShapeSelector from "svg-shape-selector/dist/SvgShapeSelector";
-import Legend from "svg-shape-selector/dist/Legend";
-import LegendItem from "svg-shape-selector/dist/LegendItem";
+import SvgShapeSelector from "./svg/SvgShapeSelector";
+import Legend from "./svg/Legend";
+import LegendItem from "./svg/LegendItem";
 import React from "react";
 import fylker from "./fylker";
 import boundary from "./map";
@@ -10,12 +10,13 @@ import DiagonalHatch from "./DiagonalHatch";
 import { UserContext } from "../observableComponents";
 
 const regionSortering = [
-  "Gh",
   "Bs",
   "Bn",
+  "Gh",
   "Nh",
   "Ns",
-  null,
+  "Jm",
+  "Sv",
   "Fi",
   "Tr",
   "No",
@@ -40,7 +41,6 @@ const Fylkesforekomst = ({ fylkesforekomster }) => {
     acc[e.fylke] = e.state;
     return acc;
   }, {});
-
   const context = UserContext.getContext();
 
   const handleSwitchCategory = (e, fylke, state) => {
@@ -109,8 +109,8 @@ const Fylkesforekomst = ({ fylkesforekomster }) => {
             states={forekomsterAsObject}
           >
             <DiagonalHatch />
-            <Legend size={37} categories={categories} />
-          </SvgShapeSelector>
+            <Legend size={7} categories={categories} />
+        </SvgShapeSelector>
         </div>
       </div>
     </>
@@ -120,7 +120,7 @@ const Fylkesforekomst = ({ fylkesforekomster }) => {
 const FylkeslisteLegend = ({ index }) => {
   const cat = categories[index];
   return (
-    <div style={{ _textAlign: "center", _width: 30, _height: 30 }}>
+    <div style={{ _textAlign: "center", _width: 10, _height: 10 }}>
       <LegendItem
         fill={cat.normal.fill}
         x={1}
