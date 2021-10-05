@@ -25,7 +25,7 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Change this to force index rebuild!
         /// </summary>
-        public const int IndexVersion = 55;
+        public const int IndexVersion = 1;
 
         private const string Field_Id = "Id";
         private const string Field_Group = "Expertgroup";
