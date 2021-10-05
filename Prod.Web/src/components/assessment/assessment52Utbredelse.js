@@ -9,7 +9,7 @@ import UtbredelseshistorikkInnenlands from './35Utbredelseshistorikk/Utbredelses
 import UtbredelseIDag from './35Utbredelseshistorikk/UtbredelseIDag'
 import Utbredelseshistorikk from './35Utbredelseshistorikk/Utbredelseshistorikk'
 import ModalArtskart from '../artskart/ModalArtskart';
-import { Fylkesforekomst } from '../Fylkesforekomst';
+import Fylkesforekomst from '../fylkesforekomst/Fylkesforekomst';
 import fylker from "../fylkesforekomst/fylker";
 import { ContactsOutlined } from '@material-ui/icons';
 import { action, computed } from 'mobx';

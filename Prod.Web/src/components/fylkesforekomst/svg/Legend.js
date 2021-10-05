@@ -5,7 +5,6 @@ const Legend = ({ categories, x = 0, y = 10, size = 40, style }) => (
   <svg x={x} y={y}>
     {Object.keys(categories).map(key => {
       const e = categories[key];
-      console.log('legend', key, e);
       return (
         <LegendItem
           key={key}
