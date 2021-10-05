@@ -1158,24 +1158,24 @@ function enhanceRiskAssessmentLevel(riskAssessment, labels) {
             return result;
         }
     });
-    extendObservable(riskAssessment, {
-        get riskLevelText() {
-            const levtxt = this.riskLevel.toString()
-            const result = labels.RiskLevelText[levtxt]
-            return result
-        },
-        get riskLevelCode() {
-            const levtxt = this.riskLevel.toString()
-            const result = labels.RiskLevelCode[levtxt]
-            return result
-        },
-        // get decisiveCriteria() {
-        //     const decisiveCriteriaLabel = riskAssessment.decisiveCriteria
-        //     return decisiveCriteriaLabel
-        // }
+    // extendObservable(riskAssessment, {
+    //     get riskLevelText() {
+    //         const levtxt = this.riskLevel.toString()
+    //         const result = labels.RiskLevelText[levtxt]
+    //         return result
+    //     },
+    //     get riskLevelCode() {
+    //         const levtxt = this.riskLevel.toString()
+    //         const result = labels.RiskLevelCode[levtxt]
+    //         return result
+    //     },
+    //     // get decisiveCriteria() {
+    //     //     const decisiveCriteriaLabel = riskAssessment.decisiveCriteria
+    //     //     return decisiveCriteriaLabel
+    //     // }
 
 
-    });
+    // });
 }
 
 function enhanceCriteriaAddLabelsAndAuto(riskAssessment, codes) {
