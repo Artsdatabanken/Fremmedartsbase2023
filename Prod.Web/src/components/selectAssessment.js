@@ -112,6 +112,8 @@ export default class SelectAssessment extends Component {
         } else if (appState.horizonScanFilter.notAssessed) {
             result = appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','0')
         }
+
+
         
         return result
     }
@@ -489,15 +491,18 @@ export default class SelectAssessment extends Component {
             {/*<div><a target="_blank" href={config.apiUrl + '/api/ExpertGroupAssessments/export/' + appState.expertgroup} >Last ned CVS fil</a> </div><br />*/ }
 
 
+            
+            
+            
+            <div className="usedFilters">
             {(!appState.horizonScanFilter.hsNotStarted && !appState.horizonScanFilter.hsFinished && !appState.horizonScanFilter.toAssessment && !appState.horizonScanFilter.notAssessed) || (appState.horizonScanFilter.hsNotStarted && appState.horizonScanFilter.hsFinished) ?
                 
-                <div className="usedFilters">Viser totalt {appState.expertgroupAssessmentTotalCount} vurderinger</div>
+                <div className="counter">Viser totalt {appState.expertgroupAssessmentTotalCount} vurderinger</div>
                 :            
-                <div className="usedFilters">Viser totalt {this.findAmountOfAssessments(appState)} vurderinger (filtrert fra {appState.expertgroupAssessmentTotalCount})</div>
+                <div className="counter">>Viser totalt {this.findAmountOfAssessments(appState)} vurderinger (filtrert fra {appState.expertgroupAssessmentTotalCount})</div>
             }
-            
-            
-            <div className="usedFilters"><span>{labels.SelectAssessment.usedFilters}</span> 
+            <div>
+                <span>{labels.SelectAssessment.usedFilters}</span> 
                             {appState.expertgroupCategoryCheckboxFilter && appState.expertgroupCategoryCheckboxFilter.length > 0 &&                             
                             appState.expertgroupCategoryCheckboxFilter.map ((category) => {
                                 return (<button key={category} onClick={() => this.removeCategory(appState, category)}><span>{category}</span><a href="#">x</a></button>) 
@@ -533,6 +538,7 @@ export default class SelectAssessment extends Component {
                         type="button"  
                         disabled={appState.expertgroupCategoryCheckboxFilter.length === 0 && appState.expertgroupAssessmentFilter === "" && appState.statusCheckboxFilter.length === 0 && !appState.kunMine &&!appState.withComments &&  !appState.kunUbehandlede && !appState.withAutomaticNameChanges && !appState.withPotentialTaxonChanges && !appState.horizonScanFilter.hsNotStarted && !appState.horizonScanFilter.toAssessment && !appState.horizonScanFilter.hsFinished && !appState.horizonScanFilter.notAssessed && appState.responsible.length === 0 && appState.horizonScanFilter.notAssessedDoorKnocker.length === 0 && appState.horizonScanFilter.potentialDoorKnockers.length === 0} 
                         onClick={() => this.resetFilters(appState)}>{labels.SelectAssessment.resetAll}</button>
+                </div>
             </div>
             
                 <SelectAssessmentTable assessmentList={appState.expertgroupAssessmentList} rolle={rolle}/>
