@@ -2,8 +2,8 @@
   {
     "key": "known",
     "title": "Kjent",
-    "x": 24,
-    "y": 14,
+    "x": 0,
+    "y": 0,
     "tooltip": "Beskrivende tekst her?",
     "normal": {
       "stroke": "hsl(22, 35%, 18%)",
@@ -21,8 +21,8 @@
     "key": "assumed",
     "title": "Antatt",
     "tooltip": "Beskrivende tekst her?",
-    "x": 24,
-    "y": 68,
+    "x": 0,
+    "y": 10,
     "normal": {
       "stroke": "hsl(35, 72%, 25%)",
       "strokeWidth": 1,
@@ -37,8 +37,8 @@
   },
   {
     "title": "Ikke kjent",
-    "x": 24,
-    "y": 120,
+    "x": 0,
+    "y": 20,
     "tooltip": "Beskrivende tekst her?",
     "normal": {
       "stroke": "hsl(10, 10%, 25%)",
@@ -55,8 +55,8 @@
   {
     "key": "assumed_extinct",
     "title": "Antatt utdødd",
-    "x": 24,
-    "y": 172,
+    "x": 0,
+    "y": 30,
     "tooltip": "Arten er ....",
     "normal": {
       "stroke": "hsl(26.7, 15%, 25%)",
@@ -73,8 +73,8 @@
   {
     "key": "extinct",
     "title": "Utdødd",
-    "x": 24,
-    "y": 224,
+    "x": 0,
+    "y": 40,
     "tooltip": "Arten er ikke observert de siste >30 år",
     "normal": {
       "stroke": "hsl(10, 0%, 25%)",
