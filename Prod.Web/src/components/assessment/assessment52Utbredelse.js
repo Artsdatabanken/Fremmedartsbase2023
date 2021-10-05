@@ -25,27 +25,26 @@ export default class Assessment52Utbredelse extends React.Component {
     }
 
     handleOverførFraArtskart = ({ selectionGeometry, countylist, areadata, observations, editStats }) => {
-        // console.log('handleOverførFraArtskart', selectionGeometry, countylist, areadata, observations, editStats);
-        const aps = this.props.appState
-        const ass = aps.assessment
-        // console.log('overfører', selectionGeometry, countylist, areadata, observations, editStats)
+        console.log('handleOverførFraArtskart', selectionGeometry, countylist, areadata, observations, editStats);
+        const aps = this.props.appState;
+        const ass = aps.assessment;
         
-        ass.b1UtbredelsesområdeKjentAndel = areadata.AreaExtentOfOccurrence
-        ass.artskartManuellAdd = editStats.add
-        ass.artskartManuellRemove = editStats.remove
-        ass.artskartSistOverført = new Date()
-        ass.artskartSelectionGeometry = selectionGeometry
+        ass.b1UtbredelsesområdeKjentAndel = areadata.AreaExtentOfOccurrence;
+        ass.artskartManuellAdd = editStats.add;
+        ass.artskartManuellRemove = editStats.remove;
+        ass.artskartSistOverført = new Date();
+        ass.artskartSelectionGeometry = selectionGeometry;
         if (ass.artskartSelectionGeometry != undefined) {
-            ass.b2ForekomstarealKjentAndel = areadata.ExcludedLocalities*4
+            ass.riskAssessment.AOO2 = areadata.ExcludedLocalities*4;
         } else {
-            ass.b2ForekomstarealKjentAndel = areadata.AreaOfOccupancy
+            ass.riskAssessment.AOO2 = areadata.AreaOfOccupancy;
         }
         // TODO: Fylkesoversikt - avventer data fra API
         if (countylist) {
             // ass.fylkesforekomster = countylist;
             let fo = countylist.reduce((acc, e) => {
-                acc[e.NAVN] = e.Status
-                return acc
+                acc[e.NAVN] = e.Status;
+                return acc;
             }, {});
             ass.fylkesforekomster.forEach(f => f.state = fo[fylker[f.fylke]] > 0 ? 0 : 2);
             // console.log('ass.fylkesforekomster', ass.fylkesforekomster);
@@ -58,8 +57,8 @@ export default class Assessment52Utbredelse extends React.Component {
                 .map(p => p.geometry.coordinates)
                 .map(p => p[0] + "," + p[1])
                 .join(",");
-        ass.artskartAdded = points2String("add")
-        ass.artskartRemoved = points2String("remove")
+        ass.artskartAdded = points2String("add");
+        ass.artskartRemoved = points2String("remove");
     }
 
     render() {
