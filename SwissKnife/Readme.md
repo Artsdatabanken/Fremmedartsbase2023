@@ -60,3 +60,6 @@ Do taxonomy wash
 ```
 dotnet run -- maintenance taxonomywash --connectionstring "Server=localhost;Database=FAB2023;Integrated Security=true;MultipleActiveResultSets=true"
 ```
+
+dotnet run -- maintenance importnames --connectionstring "Server=localhost;Database=FAB2023;Integrated Security=true;MultipleActiveResultSets=true" --speciesgroup "Alger" --csvfile ./Importfiler/Alger.txt
+dotnet run -- maintenance importnames --connectionstring "Server=localhost;Database=FAB2023;Integrated Security=true;MultipleActiveResultSets=true" --speciesgroup "Terrestriske invertebrater" --csvfile ./Importfiler/TerrestriskeInvertebrater.txt

@@ -1,0 +1,34 @@
+﻿ScientificNameId	ScientificName	ScientificNameAuthor
+216649	Acanthophora spicifera	(M.Vahl) Børgesen
+216651	Acrothamnion preissii	(Sonder) E.M.Wollaston
+106227	Aegagropila linnaei	Kützing
+216652	Amphistegina lobifera	Larsen, 1976
+216653	Antithamnion pectinatum	(Montagne) Brauner
+216654	Antithamnionella boergesenii	(Cormaci & G.Furnari) Athanasiadis
+216655	Asparagopsis taxiformis	(Delile) Trevisan
+216656	Botrytella pacifica	(Hollenberg) G.I.Hansen
+216657	Botrytella parva	(Takamatsu) H.S.Kim
+201809	Caulacanthus ustulatus	(Mertens ex Turner) Kützing
+216658	Caulerpa racemosa	(Forsskål) J.Agardh
+216659	Caulerpa taxifolia	(M.Vahl) C.Agardh
+216660	Caulerpa serrulata	(Forsskål) J.Agardh
+216661	Codium parvulum	(Bory ex Audouin) P.C.Silva
+216662	Codium textile	(Clemente) C.Agardh
+216664	Dictyosphaeria cavernosa	(Forsskål) Børgesen
+216666	Goniotrichopsis sublittoralis	G.M.Smith
+216667	Grateloupia doryphora	(Montagne) M.Howe
+202358	Grateloupia filicina	(J.V. Lamouroux) C. Agardh
+216668	Halimeda incrassata	(J.Ellis) J.V.Lamouroux
+216670	Kappaphycus alvarezii	(Doty) L.M.Liao
+216671	Melanothamnus sphaerocarpus	(Børgesen) Díaz-Tapia & Maggs
+216672	Myriactula areschougii	(P.Crouan & H.Crouan) Hamel
+216673	Myriactula clandestina	(P.Crouan & H.Crouan) Feldmann
+216675	Pachymeniopsis gargiuloi	S.Y.Kim, Manghisi, Morabito & S.M.Boo
+216676	Polysiphonia atlantica	Kapraun & J.N.Norris
+216678	Stypopodium schimperi	(Kützing) Verlaque & Boudouresque
+216679	Symphyocladia tanakae	(Uwai & Masuda) Savoie & G.W.Saunders
+216680	Ulva ohnoi	M.Hiraoka & S.Shimada
+148431	Ulvaria splendens	(Ruprecht) K.L.Vinogradova
+216682	Womersleyella setacea	(Hollenberg) R.E.Norris
+216683	Zostera japonica	Ascherson & Graebner
+217321	Fredericqia deveauniensis	Maggs, L.Le Gall, Mineur, Provan & G.W.Saunders, 2013

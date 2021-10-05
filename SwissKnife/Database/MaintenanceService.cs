@@ -327,6 +327,8 @@ namespace SwissKnife.Database
         public static void RunImportNewAssessments(SqlServerProdDbContext _database, string speciesGroup,
             string inputFolder)
         {
+            var existing = _database.Assessments.Where(x=>x.IsDeleted == false).Select(x => new { x.Expertgroup, x.ScientificNameId }).ToArray();
+
             var theCsvConfiguration = new CsvConfiguration(new CultureInfo("nb-NO"))
             {
                 Delimiter = "\t",
@@ -361,13 +363,25 @@ namespace SwissKnife.Database
                         ScientificNameId = fa4.EvaluatedScientificNameId.Value,
                         ChangedAt = fa4.LastUpdatedAt
                     };
-                    if (fa4.EvaluatedScientificNameId != importFormat.ScientificNameId || fa4.EvaluatedScientificName != importFormat.ScientificName || fa4.EvaluatedScientificNameAuthor != importFormat.ScientificNameAuthor)
+                    if (fa4.EvaluatedScientificNameId != importFormat.ScientificNameId || fa4.EvaluatedScientificName != importFormat.ScientificName || (fa4.EvaluatedScientificNameAuthor == null ? string.Empty : fa4.EvaluatedScientificNameAuthor.ToLowerInvariant()) != (importFormat.ScientificNameAuthor == null ? string.Empty : importFormat.ScientificNameAuthor.ToLowerInvariant()))
                     {
                         Console.WriteLine(
-                            $" ERRROR {fa4.EvaluatedScientificNameId} {fa4.EvaluatedScientificName} {fa4.EvaluatedScientificNameAuthor}");
+                            $" ERROR - not imported {fa4.EvaluatedScientificNameId} <> {importFormat.ScientificNameId}  {fa4.EvaluatedScientificName} {fa4.EvaluatedScientificNameAuthor} <> {importFormat.ScientificNameAuthor}");
                     }
-                    _database.Assessments.Add(assessment);
-                    _database.SaveChanges();
+                    else
+                    {
+                        if (existing.Any(x=>x.ScientificNameId == fa4.EvaluatedScientificNameId))
+                        {
+                            Console.WriteLine(
+                                $" Warn Existing Assessment {fa4.EvaluatedScientificNameId} {fa4.EvaluatedScientificName} {fa4.EvaluatedScientificNameAuthor}");
+                        }
+                        else
+                        {
+                            _database.Assessments.Add(assessment);
+                            _database.SaveChanges();
+                        }
+                    }
+
                 }
             }
         }

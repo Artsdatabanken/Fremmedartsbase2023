@@ -9,7 +9,7 @@ function apiUrl (anchor) {
         //return relPath   // This does not currently work because api is not relative to ("under") app 
         if ((window.location.href).indexOf("test.") > -1) {return 'https://fab4api.test.artsdatabanken.no'}
         // return 'https://fab4api.test.artsdatabanken.no'
-        return  process.env.NODE_ENV === 'development' ? 'http://localhost:25808' : 'https://fab4api.test.artsdatabanken.no'
+        return  process.env.NODE_ENV === 'development' ? 'http://localhost:25808' : 'https://fab4.artsdatabanken.no'
     }
   }
   function referenceApiUrl (anchor) {
