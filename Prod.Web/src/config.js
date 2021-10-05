@@ -44,6 +44,10 @@ function apiUrl (anchor) {
    return !(window.location.href.indexOf("localhost") > 1)
   }
 
+  function isNotTest(){
+    return !(window.location.href.indexOf("test") > 1) && !isRelease()
+   }
+
   const homeuri = window.location.protocol + "//" + window.location.host
   // const homeuri = 
   //   (process.env.NODE_ENV === 'development') ?
@@ -137,5 +141,6 @@ const config = {
     referenceApiUrl: referenceApiUrl(window.location.hash),
     authconfig: authconfig,
     isRelease: isRelease()
+    isNotTest: isNotTest()
   }
 export default config

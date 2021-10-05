@@ -176,7 +176,7 @@ export default class SelectAssessment extends Component {
                  <Xcomp.StringEnum 
                                     //forceSync
                                     className="assessmentType"
-                                    disabled={config.isRelease}                                                                        
+                                    disabled={config.isNotTest}                                                                        
                                     observableValue={[appState, 'assessmentTypeFilter']} 
                                     heading={"Hva vil du gjøre?"}
                                     codes={koder.assessmentType}
