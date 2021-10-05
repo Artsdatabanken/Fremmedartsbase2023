@@ -689,40 +689,6 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         }
     })
 
-    // autorun(() => {
-    //     if (r.AOOtotalLow > r.AOOtotalBest) 
-    //         return {error: "Det nedre anslaget på forekomstarealet kan ikke være større enn det beste anslaget."} 
-    //     if (r.AOOtotalHigh < r.AOOtotalBest) 
-    //         return {error: "Det øvre anslaget på forekomstarealet kan ikke være mindre enn det beste anslaget."}
-    //     if (r.AOO50yrLow > r.AOO50yrBest) 
-    //         return {error: "Det nedre anslaget på forekomstarealet kan ikke være større enn det beste anslaget."}
-    //     if (r.AOO50yrHigh < r.AOO50yrBest) 
-    //         return {error: "Det øvre anslaget på forekomstarealet kan ikke være mindre enn det beste anslaget."}
-    //     if (r.AOOtotalLow == r.AOOknown) 
-    //         warnings.push("Er det realistisk at det ikke eksisterer noen uoppdagede forekomster av arten?") 
-    //     if (r.AOOtotalLow < r.AOOknown) 
-    //         warnings.push("Er det korrekt at artens totale nåværende forekomstareal kan være mindre enn det kjente?") 
-    //     if (AOO50yrBest < AOOtotalBest) 
-    //         warnings.push("Er det korrekt at det er forventet en nedgang i artens forekomstareal i løpet av de neste 50&nbsp;år?") 
-    
-
-    // })
-
-
-    // autorun(() => {
-    //     const criterionA = getCriterion(riskAssessment, 0, "A")
-    //     console.log("Autorun criterionA : " + JSON.stringify(Object.keys(criterionA)));
-    //     //console.log("Autorun criterionA ra: " + JSON.stringify(Object.keys(riskAssessment)));
-    //     console.log("Autorun criterionA level: " + criterionA.value + typeof(riskAssessment) + typeof(riskAssessment.CalculatedCritALevel));
-    //     console.log("CalculatedCritALevel: "); // + typeof(riskAssessment.CalculatedCritALevel))
-    //     const nv = riskAssessment.CalculatedCritALevel //ChosenSpreadMedanLifespanLevel
-    //     console.log("Autorun criterionA nv: " + JSON.stringify(nv))
-    //     if (nv.method !== "AOOadjusted") { // only set criterion value (automatically) when certain amethods is used
-    //         runInAction(() => {
-    //             criterionA.value = nv.level
-    //         })
-    //     }
-    // });
 
     autorun(() => {
         const criterionA = getCriterion(riskAssessment, 0, "A")
@@ -1101,74 +1067,20 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
 }
 
 function enhanceRiskAssessmentLevel(riskAssessment, labels) {
-    // extendObservable(riskAssessment, {
-    //     _invasjonspotensialeLevel: RiskLevel.invasjonspotensiale(riskAssessment)
-    // });
-
     extendObservable(riskAssessment, {
         get invationpotential() {
             const result = RiskLevel.invasjonspotensiale(riskAssessment)
             return result;
-        }
-    });
-
-
-    // extendObservable(riskAssessment, {
-    //     get invasjonspotensialeLevel() {
-    //         const result = RiskLevel.invasjonspotensiale(riskAssessment)
-    //         return result;
-    //     }
-    // });
-
-
-
-    // autorun(() => {
-    //     //todo: something must be wrong here (?)
-        
-    //     //try {
-    //     const {level, decisiveCriteria, uncertaintyLevels} = riskAssessment.invasjonspotensialeLevel
-    //     //const {level, decisiveCriteria, uncertaintyLevels} = riskAssessment.invationPotentialLevel
-    //     console.log("_invasjonspotensialeLevel changed: " + level)
-    //     runInAction(() => {
-    //         riskAssessment.invationPotentialLevel = level
-    //         riskAssessment.invationPotentialUncertaintyLevels = uncertaintyLevels
-    //     })
-    //     //}
-    //     //catch (e) {}
-    // });
-    // extendObservable(riskAssessment, {
-    //     _ecoeffectLevel: RiskLevel.ecoeffect(riskAssessment)
-    // });
-
-    extendObservable(riskAssessment, {
-        // get ecoeffectLevel () {
+        },
         get ecoeffect () {
             const result = RiskLevel.ecoeffect(riskAssessment)
             return result;
         }
     });
 
-    // autorun(() => {
-    //     //try {
-        
-    //     const {level, decisiveCriteria, uncertaintyLevels} = riskAssessment.ecoeffectLevel
-    //     console.log("ecoeffectlevel changed: " + level)
-    //     runInAction(() => {
-    //         riskAssessment.ecoEffectLevel = level
-    //         riskAssessment.ecoEffectUncertaintyLevels = uncertaintyLevels
-    //     })
-    //     //}
-    //     //catch (e) {}
-    // });
-
-    // delete riskAssessment.riskLevel  //todo: Check if necessary (or the correct way to do this) ?????  Basically: risklevel is observable from db data, but we want it to be a computed observable!
-    
     extendObservable(riskAssessment, {
         get riskLevel() {
             const result = RiskLevel.riskLevel(this.invationpotential, this.ecoeffect)
-            // const result = RiskLevel.riskLevel(riskAssessment.invationPotential, riskAssessment.ecoEffect, riskAssessment.decisiveCriteria)
-            
-            //const result = RiskLevel.riskLevel(riskAssessment.invasjonspotensialeLevel, riskAssessment.ecoeffectLevel)
             return result;
         }
     });
