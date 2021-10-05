@@ -8,13 +8,13 @@
     "normal": {
       "stroke": "hsl(22, 35%, 18%)",
       "strokeWidth": 1,
-      "fill": "hsl(22, 98%, 40%)"
+      "fill": "hsl(42, 75%, 58%)"
     },
     "highlight": {
       "stroke": "hsl(22, 35%, 18%)",
       "strokeWidth": 2,
       "filter": "url(#f2)",
-      "fill": "hsl(22, 98%, 45%)"
+      "fill": "hsl(42, 75%, 63%)"
     }
   },
   {
@@ -26,13 +26,13 @@
     "normal": {
       "stroke": "hsl(35, 72%, 25%)",
       "strokeWidth": 1,
-      "fill": "hsl(32, 99%, 58%)"
+      "fill": "hsl(27, 15%, 76%)"
     },
     "highlight": {
       "stroke": "hsl(35, 72%, 25%)",
       "strokeWidth": 2,
       "filter": "url(#f2)",
-      "fill": "hsl(32, 99%, 63%)"
+      "fill": "hsl(27, 15%, 81%)"
     }
   },
   {
@@ -61,13 +61,13 @@
     "normal": {
       "stroke": "hsl(26.7, 15%, 25%)",
       "strokeWidth": 1,
-      "fill": "hsl(40, 98%, 78%)"
+      "fill": "hsl(24, 34%, 43%)"
     },
     "highlight": {
       "stroke": "hsl(26.7, 15%, 25%)",
       "strokeWidth": 2,
       "filter": "url(#f2)",
-      "fill": "hsl(40, 98%, 83%)"
+      "fill": "hsl(24, 34%, 48%)"
     }
   }
 ]

@@ -44,7 +44,7 @@ const Fylkesforekomst = ({ fylkesforekomster }) => {
   const context = UserContext.getContext();
 
   const handleSwitchCategory = (e, fylke, state) => {
-    console.log(e, fylke, state);
+    // console.log(e, fylke, state);
     if (context.readonly) return;
     for (var ff of fylkesforekomster)
       if (ff.fylke === fylke) {
@@ -83,8 +83,8 @@ const Fylkesforekomst = ({ fylkesforekomster }) => {
           <div style={{ _paddingBottom: 24 }}></div>
           <FylkeslisteLegend index={0} />
           <FylkeslisteLegend index={1} />
-          <FylkeslisteLegend index={2} />
           <FylkeslisteLegend index={3} />
+          <FylkeslisteLegend index={2} />
           {regionSortering.map(k => {
             if (k)
               return (
@@ -161,9 +161,9 @@ const FylkeslisteElement = ({ id, value, onSwitchCategory }) => {
           type="radio"
           id={id}
           name={id}
-          value={2}
-          checked={value == 2}
-          onChange={e => onSwitchCategory(e, id, 2)}
+          value={3}
+          checked={value == 3}
+          onChange={e => onSwitchCategory(e, id, 3)}
         />
       </div>
       <div>
@@ -171,9 +171,9 @@ const FylkeslisteElement = ({ id, value, onSwitchCategory }) => {
           type="radio"
           id={id}
           name={id}
-          value={3}
-          checked={value == 3}
-          onChange={e => onSwitchCategory(e, id, 3)}
+          value={2}
+          checked={value == 2}
+          onChange={e => onSwitchCategory(e, id, 2)}
         />
       </div>
     </>

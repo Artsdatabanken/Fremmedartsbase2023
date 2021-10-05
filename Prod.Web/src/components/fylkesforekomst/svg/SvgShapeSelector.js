@@ -47,7 +47,11 @@ const SvgShapeSelector = ({
         onMouseDown={e => {
           e.stopPropagation();
           if (readOnly) return;
-          const newState = (state + 1) % categories.length;
+          let offset = 0;
+          if (state == 1) offset = 1;
+          else if (state === 2) offset = -3;
+          else if (state == 3) offset = -2;
+          const newState = (state + 1 + offset) % categories.length;
           onSwitchCategory && onSwitchCategory(e, kode, newState);
           setColorForHoldAndDragPaint(newState);
         }}
