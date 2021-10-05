@@ -361,8 +361,9 @@ namespace Prod.Api.Controllers
                 doc.LastUpdatedAt = DateTime.Now;
                 it.Doc = JsonSerializer.Serialize(doc);
                 it.LastUpdatedAt = doc.LastUpdatedAt;
+                it.ChangedAt = DateTime.Now;
                 var timestamp = _dbContext.TimeStamp.Single();
-                timestamp.DateTimeUpdated = doc.LastUpdatedAt;
+                timestamp.DateTimeUpdated = it.ChangedAt;
                 await _dbContext.SaveChangesAsync();
                 return Ok();
             }
@@ -384,8 +385,9 @@ namespace Prod.Api.Controllers
                         ScientificNameId = fa4.EvaluatedScientificNameId.Value
                     };
                     _dbContext.Assessments.Add(assessment);
+                    assessment.ChangedAt = DateTime.Now;
                     var timestamp = _dbContext.TimeStamp.Single();
-                    timestamp.DateTimeUpdated = assessment.LastUpdatedAt;
+                    timestamp.DateTimeUpdated = assessment.ChangedAt;
                     await _dbContext.SaveChangesAsync();
 
                 }
@@ -448,7 +450,7 @@ namespace Prod.Api.Controllers
         {
             //var dateTimeFormat = "yyyy-MM-dd HH:mm:ss";
             var now = DateTime.Now;
-            doc.LastUpdatedAt = now;
+            //doc.LastUpdatedAt = now;
 
             var assessment = await _dbContext.Assessments.Include(x=>x.LastUpdatedByUser).Include(x => x.LockedForEditByUser).Include(x=>x.Comments).SingleOrDefaultAsync(x => x.Id == id);
 
@@ -552,8 +554,9 @@ namespace Prod.Api.Controllers
 
             var assessmentString = JsonSerializer.Serialize(doc);
             assessment.Doc = assessmentString;
+            assessment.ChangedAt = DateTime.Now;
             var timestamp =_dbContext.TimeStamp.Single();
-            timestamp.DateTimeUpdated = assessment.LastUpdatedAt;
+            timestamp.DateTimeUpdated = assessment.ChangedAt;
             await _dbContext.SaveChangesAsync().ConfigureAwait(false);
             IndexHelper.Index(assessment, _index);
         }

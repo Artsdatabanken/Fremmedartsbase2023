@@ -34,8 +34,8 @@ namespace Prod.Api.Controllers
 
         private readonly ProdDbContext _dbContext;
         private readonly Index _index;
-        private const string PotensiellTaksonomiskEndring = "Potensiell taksonomisk endring: ";
-        private const string TaksonomiskEndring = "Automatisk endring av navn: ";
+        //private const string PotensiellTaksonomiskEndring = "Potensiell taksonomisk endring: ";
+        //private const string TaksonomiskEndring = "Automatisk endring av navn: ";
 
         public ExpertGroupAssessmentsController(IDiscoveryCache discoveryCache, ProdDbContext dbContext, Nbic.Indexer.Index index) : base(discoveryCache, dbContext)
         {
@@ -162,27 +162,33 @@ namespace Prod.Api.Controllers
         {
             var result = _dbContext.Assessments
                 .FromSqlRaw(
-                    "SELECT Id, Expertgroup, Category, IsDeleted FROM dbo.Assessments WITH (INDEX(IX_Assessments_Expertgroup))"); // index hint - speeds up computed columns
+                    "SELECT Id, Expertgroup, IsDeleted FROM dbo.Assessments WITH (INDEX(IX_Assessments_Expertgroup))"); // index hint - speeds up computed columns
             result = !string.IsNullOrWhiteSpace(expertgroupid) ? result.Where(x => x.Expertgroup == expertgroupid) : result.Where(x => x.Expertgroup != "Testarter");
 
-            if (exlude.Length > 0)
-            {
-                result = result.Where(x => !exlude.Contains(x.Category));
-            }
+            //if (exlude.Length > 0)
+            //{
+            //    result = result.Where(x => !exlude.Contains(x.Category));
+            //}
 
             var rodlisteIds = result.Where(x => x.IsDeleted == false).Select(x => x.Id);
             var rodliste2019WithCommentses = _dbContext.Assessments.FromSqlRaw(
                     "SELECT * FROM dbo.Assessments WITH (INDEX(IX_Assessments_Expertgroup))").Where(x => rodlisteIds.Contains(x.Id))
             //result
             //    .Where(x => x.IsDeleted == false)
-                .OrderBy(x => x.ScientificName).ToList()
+                //.OrderBy(x => x.ScientificName)
+                .ToList()
                 .Select(assessment =>
                 {
                     var deserializeObject = System.Text.Json.JsonSerializer.Deserialize<FA4WithComments>(assessment.Doc);
                     deserializeObject.Id = deserializeObject.Id == 0 ? assessment.Id : deserializeObject.Id;
                     return deserializeObject;
                 })
-                .ToList();
+                .OrderBy(x=>x.EvaluatedScientificName)
+            .ToList();
+            if (exlude.Length > 0)
+            {
+                rodliste2019WithCommentses = rodliste2019WithCommentses.Where(x => !exlude.Contains(x.RiskAssessment.RiskLevelCode)).ToList();
+            }
             //var ids = rodliste2019WithCommentses.Select(x => int.Parse(x.Id)).ToArray();
 
             var commentStats = _dbContext.Comments.Where(x => rodlisteIds.Contains(x.AssessmentId) && x.IsDeleted == false).AsEnumerable()
@@ -193,8 +199,8 @@ namespace Prod.Api.Controllers
                             AssessmentId = x.Key,
                             Latest = x.Max(y => y.CommentDate),
                             Closed = x.Count(y => y.Closed),
-                            Open = x.Count(y => !y.Closed && !y.Comment.StartsWith(TaksonomiskEndring) && !y.Comment.StartsWith(PotensiellTaksonomiskEndring)),
-                            TaxonChange = x.Any(y => y.Comment.StartsWith(PotensiellTaksonomiskEndring) && y.IsDeleted == false && y.Closed == false) ? 2 : (x.Any(y => y.Comment.StartsWith(TaksonomiskEndring) && y.IsDeleted == false && y.Closed == false) ? 1 : 0)
+                            Open = x.Count(y => !y.Closed && y.Type == CommentType.Ordinary),
+                            TaxonChange = x.Any(y => y.Type == CommentType.PotentialTaxonomicChange && y.IsDeleted == false && y.Closed == false) ? 2 : (x.Any(y => y.Type == CommentType.TaxonomicChange && y.IsDeleted == false && y.Closed == false) ? 1 : 0)
                         }).ToDictionary(x => x.AssessmentId);
             foreach (var assessmentListItem in rodliste2019WithCommentses)
             {
@@ -244,7 +250,7 @@ namespace Prod.Api.Controllers
 
                 // index should be complete now
             }
-            else if (IndexHelper.DateTimesSignificantlyDifferent(indexVersion.DateTime, dbTimestamp.DateTimeUpdated) || IndexHelper.DateTimesSignificantlyDifferent(indexVersion.CommentDateTime,dbTimestamp.CommentDateTimeUpdated))
+            else if (IndexHelper.DateTimesSignificantlyDifferent(indexVersion.DateTime, dbTimestamp.DateTimeUpdated))
             {
                 // index assessments with new date - changes
                 // må da hente nye endringer indeksere og lagre max dato
@@ -389,75 +395,75 @@ namespace Prod.Api.Controllers
         //     Index(false);
         //     return true;
         // }
-        private async Task<List<AssessmentListItem>> GetExpertGroupAssessments(string expertgroupid, Guid brukerId)
-        {
-            var result = await _dbContext.Assessments
-                             //.FromSqlRaw("SELECT Id, TaxonHierarcy, LockedForEditBy, LastUpdatedBy, Expertgroup, EvaluationStatus, Category, LockedForEditAt, LastUpdatedAt, ScientificName, ScientificNameId, PopularName, IsDeleted FROM dbo.Assessments WITH (INDEX(IX_Assessments_Expertgroup))") // index hint - speeds up computed columns
-                             .Where(x => x.Expertgroup == expertgroupid && x.IsDeleted == false).OrderBy(x => x.ScientificName)
-                .Select(x =>
-                    new AssessmentListItem()
-                    {
-                        Id = x.Id.ToString(),
-                        Expertgroup = x.Expertgroup,
-                        EvaluationStatus = x.EvaluationStatus,
-                        LastUpdatedBy = x.LastUpdatedByUser.FullName,
-                        LastUpdatedByUserId = x.LastUpdatedByUser.Id,
-                        LastUpdatedAt = x.LastUpdatedAt,
-                        LockedForEditByUser = x.LockedForEditByUser != null ? x.LockedForEditByUser.FullName : string.Empty,
-                        LockedForEditByUserId = x.LockedForEditByUser != null ? x.LockedForEditByUser.Id : Guid.Empty,
-                        LockedForEditAt = x.LockedForEditAt,
-                        ScientificName = x.ScientificName,
-                        TaxonHierarcy = x.TaxonHierarcy,
-                        Category = x.Category,
-                        PopularName = x.PopularName
-                    }).OrderBy(x => x.ScientificName).ToListAsync();
-            var ids = result.Select(x => int.Parse(x.Id)).ToArray();
-            var commentStats = _dbContext.Comments.Where(x => ids.Contains(x.AssessmentId) && x.IsDeleted == false).AsEnumerable()
-                .GroupBy(x => x.AssessmentId)
-                .Select(
-                    x => new
-                    {
-                        AssessmentId = x.Key,
-                        Latest = x.Max(y => y.CommentDate),
-                        Closed = x.Count(y => y.Closed),
-                        Open = x.Count(y => !y.Closed && !y.Comment.StartsWith(TaksonomiskEndring) && !y.Comment.StartsWith(PotensiellTaksonomiskEndring)),
-                        New = x.Count(y => y.IsDeleted == false && y.Closed == false && y.UserId != brukerId && y.CommentDate >
-                            (x.Any(y2 => y2.IsDeleted == false && y2.UserId == brukerId)
-                            ? x.Where(y2 => y2.IsDeleted == false && y2.UserId == brukerId).Max(z => z.CommentDate)
-                            : DateTime.Now)
-                                 ),// x.Where(y=>y.IsDeleted == false && y.Closed == false && y.UserId == brukerId).Max(z=>z.CommentDate),
-                        TaxonChange = x.Any(y => y.Comment.StartsWith(PotensiellTaksonomiskEndring) && y.IsDeleted == false && y.Closed == false) ? 2 : (x.Any(y => y.Comment.StartsWith(TaksonomiskEndring) && y.IsDeleted == false && y.Closed == false) ? 1 : 0)
-                    }).ToDictionary(x => x.AssessmentId);
-            foreach (var assessmentListItem in result)
-            {
-                var key = int.Parse(assessmentListItem.Id);
-                if (commentStats.ContainsKey(key))
-                {
-                    var stats = commentStats[key];
-                    assessmentListItem.CommentDate = stats.Latest.ToString("yyyy-dd-MM HH:mm");
-                    assessmentListItem.CommentClosed = stats.Closed;
-                    assessmentListItem.CommentOpen = stats.Open;
-                    assessmentListItem.CommentNew = stats.New;
-                    assessmentListItem.TaxonChange = stats.TaxonChange;
-                }
-            }
-            //foreach (var ali in result)
-            //{
-            //    if (ali.TaxonHierarcy != null)
-            //    {
-            //        var s = ali.TaxonHierarcy.ToLower().Split('/');
-            //        //var t = s.Skip(Math.Max(0, s.Count() - 4));
-            //        var t = s.Skip(3);
-            //        //var u = t.Concat(new[] { ali.ScientificName });
-            //        ali.SearchStrings = t.ToList();
-            //    }
-            //    else
-            //    {
-            //        ali.SearchStrings = new List<string>();
-            //    }
-            //}
+        //private async Task<List<AssessmentListItem>> GetExpertGroupAssessments(string expertgroupid, Guid brukerId)
+        //{
+        //    var result = await _dbContext.Assessments
+        //                     //.FromSqlRaw("SELECT Id, TaxonHierarcy, LockedForEditBy, LastUpdatedBy, Expertgroup, EvaluationStatus, Category, LockedForEditAt, LastUpdatedAt, ScientificName, ScientificNameId, PopularName, IsDeleted FROM dbo.Assessments WITH (INDEX(IX_Assessments_Expertgroup))") // index hint - speeds up computed columns
+        //                     .Where(x => x.Expertgroup == expertgroupid && x.IsDeleted == false).OrderBy(x => x.ScientificName)
+        //        .Select(x =>
+        //            new AssessmentListItem()
+        //            {
+        //                Id = x.Id.ToString(),
+        //                Expertgroup = x.Expertgroup,
+        //                EvaluationStatus = x.EvaluationStatus,
+        //                LastUpdatedBy = x.LastUpdatedByUser.FullName,
+        //                LastUpdatedByUserId = x.LastUpdatedByUser.Id,
+        //                LastUpdatedAt = x.LastUpdatedAt,
+        //                LockedForEditByUser = x.LockedForEditByUser != null ? x.LockedForEditByUser.FullName : string.Empty,
+        //                LockedForEditByUserId = x.LockedForEditByUser != null ? x.LockedForEditByUser.Id : Guid.Empty,
+        //                LockedForEditAt = x.LockedForEditAt,
+        //                ScientificName = x.ScientificName,
+        //                TaxonHierarcy = x.TaxonHierarcy,
+        //                Category = x.Category,
+        //                PopularName = x.PopularName
+        //            }).OrderBy(x => x.ScientificName).ToListAsync();
+        //    var ids = result.Select(x => int.Parse(x.Id)).ToArray();
+        //    var commentStats = _dbContext.Comments.Where(x => ids.Contains(x.AssessmentId) && x.IsDeleted == false).AsEnumerable()
+        //        .GroupBy(x => x.AssessmentId)
+        //        .Select(
+        //            x => new
+        //            {
+        //                AssessmentId = x.Key,
+        //                Latest = x.Max(y => y.CommentDate),
+        //                Closed = x.Count(y => y.Closed),
+        //                Open = x.Count(y => !y.Closed && y.Type == CommentType.Ordinary),
+        //                New = x.Count(y => y.IsDeleted == false && y.Closed == false && y.UserId != brukerId && y.CommentDate >
+        //                    (x.Any(y2 => y2.IsDeleted == false && y2.UserId == brukerId)
+        //                    ? x.Where(y2 => y2.IsDeleted == false && y2.UserId == brukerId).Max(z => z.CommentDate)
+        //                    : DateTime.Now)
+        //                         ),// x.Where(y=>y.IsDeleted == false && y.Closed == false && y.UserId == brukerId).Max(z=>z.CommentDate),
+        //                TaxonChange = x.Any(y => y.Type == CommentType.PotentialTaxonomicChange && y.IsDeleted == false && y.Closed == false) ? 2 : (x.Any(y => y.Type == CommentType.TaxonomicChange && y.IsDeleted == false && y.Closed == false) ? 1 : 0)
+        //            }).ToDictionary(x => x.AssessmentId);
+        //    foreach (var assessmentListItem in result)
+        //    {
+        //        var key = int.Parse(assessmentListItem.Id);
+        //        if (commentStats.ContainsKey(key))
+        //        {
+        //            var stats = commentStats[key];
+        //            assessmentListItem.CommentDate = stats.Latest.ToString("yyyy-dd-MM HH:mm");
+        //            assessmentListItem.CommentClosed = stats.Closed;
+        //            assessmentListItem.CommentOpen = stats.Open;
+        //            assessmentListItem.CommentNew = stats.New;
+        //            assessmentListItem.TaxonChange = stats.TaxonChange;
+        //        }
+        //    }
+        //    //foreach (var ali in result)
+        //    //{
+        //    //    if (ali.TaxonHierarcy != null)
+        //    //    {
+        //    //        var s = ali.TaxonHierarcy.ToLower().Split('/');
+        //    //        //var t = s.Skip(Math.Max(0, s.Count() - 4));
+        //    //        var t = s.Skip(3);
+        //    //        //var u = t.Concat(new[] { ali.ScientificName });
+        //    //        ali.SearchStrings = t.ToList();
+        //    //    }
+        //    //    else
+        //    //    {
+        //    //        ali.SearchStrings = new List<string>();
+        //    //    }
+        //    //}
 
-            return result;
-        }
+        //    return result;
+        //}
     }
 }

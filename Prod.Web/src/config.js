@@ -9,7 +9,7 @@ function apiUrl (anchor) {
         //return relPath   // This does not currently work because api is not relative to ("under") app 
         if ((window.location.href).indexOf("test.") > -1) {return 'https://fab4api.test.artsdatabanken.no'}
         // return 'https://fab4api.test.artsdatabanken.no'
-        return  process.env.NODE_ENV === 'development' ? 'http://localhost:25808' : 'https://fab4api.test.artsdatabanken.no'
+        return  process.env.NODE_ENV === 'development' ? 'http://localhost:25808' : 'https://fab4.artsdatabanken.no'
     }
   }
   function referenceApiUrl (anchor) {
@@ -41,7 +41,7 @@ function apiUrl (anchor) {
   }
 
   function isRelease(){
-   return !window.location.href.indexOf("localhost") > 1
+   return !(window.location.href.indexOf("localhost") > 1)
   }
 
   const homeuri = window.location.protocol + "//" + window.location.host

@@ -26,7 +26,7 @@ namespace Prod.Data.EFCore
         public virtual DbSet<TimeStamp> TimeStamp { get; set; }
 
         //public virtual DbSet<UserFeedback> UserFeedbacks { get; set; } // later?
-        
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
@@ -88,26 +88,28 @@ namespace Prod.Data.EFCore
             {
                 e.HasKey(x => x.Id);
                 e.Property(x => x.Doc).IsRequired();
+                e.Property(x=>x.ChangedAt).IsRequired();
+                e.HasIndex(x => x.ChangedAt);
                 e.Property(x=>x.Expertgroup).HasComputedColumnSql(" isnull(cast(JSON_VALUE(Doc, '$.ExpertGroup') as nvarchar(150)),'mangler')");
                 e.Property(x => x.Expertgroup).HasMaxLength(ekspertgruppeIdSize).IsRequired();
-                e.HasIndex(x => x.Expertgroup).IncludeProperties(x=>new {x.ScientificName, x.PopularName, x.ScientificNameId, x.TaxonHierarcy, x.IsDeleted, x.EvaluationStatus, x.LastUpdatedAt, x.LockedForEditAt, x.Category}); // hurtig tilgang til verdiene i ekspertgruppekontroller
+                e.HasIndex(x => x.Expertgroup).IncludeProperties(x=>new {x.ScientificNameId, x.IsDeleted, x.LastUpdatedAt, x.LockedForEditAt}); // hurtig tilgang til verdiene i ekspertgruppekontroller
                 e.HasOne(x => x.LockedForEditByUser).WithMany().OnDelete(DeleteBehavior.NoAction).IsRequired(false);
                 //e.Property(x => x.LockedForEditBy)//.HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.LockedForEditBy') as nvarchar(100))");
-                e.Property(x => x.LockedForEditAt).HasComputedColumnSql("CONVERT(datetime2,JSON_VALUE(Doc, '$.LockedForEditAt'),112)");
+                e.Property(x => x.LockedForEditAt).IsRequired(true); //.HasComputedColumnSql("CONVERT(datetime2,JSON_VALUE(Doc, '$.LockedForEditAt'),112)");
                 e.HasOne(x => x.LastUpdatedByUser).WithMany().OnDelete(DeleteBehavior.NoAction).IsRequired();
                 //e.Property(x => x.LastUpdatedBy)//.HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.LastUpdatedBy') as nvarchar(100))");
-                e.Property(x => x.LastUpdatedAt).HasComputedColumnSql("CONVERT(datetime2,JSON_VALUE(Doc, '$.LastUpdatedAt'),112)");
-                e.Property(x => x.EvaluationStatus).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.EvaluationStatus') as nvarchar(100))");
+                e.Property(x => x.LastUpdatedAt).IsRequired(true);//.HasComputedColumnSql("CONVERT(datetime2,JSON_VALUE(Doc, '$.LastUpdatedAt'),112)");
+                //e.Property(x => x.EvaluationStatus).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.EvaluationStatus') as nvarchar(100))");
 
                 // json props
-                e.Property(x => x.ScientificName).HasComputedColumnSql("CONVERT([nvarchar](300),json_value([Doc],'$.EvaluatedScientificName')) + ISNULL(' ' + CONVERT([nvarchar](300),json_value([Doc],'$.EvaluatedScientificNameAuthor')), '')");
-                e.Property(x => x.PopularName).HasComputedColumnSql("CONVERT([nvarchar](300),json_value([Doc],'$.EvaluatedVernacularName'))");
-                e.Property(x => x.TaxonHierarcy).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.TaxonHierarcy') as nvarchar(1500))");
+                //e.Property(x => x.ScientificName).HasComputedColumnSql("CONVERT([nvarchar](300),json_value([Doc],'$.EvaluatedScientificName')) + ISNULL(' ' + CONVERT([nvarchar](300),json_value([Doc],'$.EvaluatedScientificNameAuthor')), '')");
+                //e.Property(x => x.PopularName).HasComputedColumnSql("CONVERT([nvarchar](300),json_value([Doc],'$.EvaluatedVernacularName'))");
+                //e.Property(x => x.TaxonHierarcy).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.TaxonHierarcy') as nvarchar(1500))");
                 e.Property(x => x.IsDeleted).HasComputedColumnSql("cast((case when JSON_VALUE(Doc,'$.IsDeleted') = 'true' then 1 else 0 end) as bit)");
-                e.Property(x => x.Category).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.RiskAssessment.RiskLevelCode') as nvarchar(5))");
+                //e.Property(x => x.Category).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.RiskAssessment.RiskLevelCode') as nvarchar(5))");
                 //e.Property(x => x.Criteria).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.Kriterier') as nvarchar(50))");
                 //e.Ignore(x => x.MainCriteria);
-                e.Property(x => x.ScientificNameId).HasComputedColumnSql("Convert(int,JSON_VALUE(Doc, '$.EvaluatedScientificNameId'))");
+                //e.Property(x => x.ScientificNameId).HasComputedColumnSql("Convert(int,JSON_VALUE(Doc, '$.EvaluatedScientificNameId'))");
                 //e.Property(x => x.AssessmentYear).HasComputedColumnSql("Convert(int,JSON_VALUE(Doc, '$.\"Vurderingsår\"'))");
                 //e.Property(x => x.CategoryLastRedList).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.KategoriFraForrigeListe') as nvarchar(100))");
                 //e.Property(x => x.NatureTypes).HasComputedColumnSql("cast(JSON_VALUE(Doc, '$.NaturtypeHovedenhet') as nvarchar(500))");
@@ -140,10 +142,12 @@ namespace Prod.Data.EFCore
             {
                 e.HasKey(x => x.Id);
                 e.HasOne(x => x.Assessment).WithMany(x => x.Comments).OnDelete(DeleteBehavior.NoAction).IsRequired();
+                e.Property(x => x.Type).IsRequired();
                 e.Property(x => x.IsDeleted).IsRequired();
                 e.Property(x => x.Closed).IsRequired();
                 e.Property(x => x.Comment).IsRequired().HasMaxLength(3900);
                 e.Property(x => x.CommentDate).IsRequired();
+                e.HasIndex(x => x.CommentDate);
                 e.Property(x => x.ClosedDate);
                 e.HasOne(x => x.User).WithMany().OnDelete(DeleteBehavior.NoAction).IsRequired();
                 e.HasOne(x => x.ClosedBy).WithMany().OnDelete(DeleteBehavior.NoAction).IsRequired(false);
@@ -175,6 +179,6 @@ namespace Prod.Data.EFCore
     {
         public int Id { get; set; }
         public DateTime DateTimeUpdated { get; set; }
-        public DateTime CommentDateTimeUpdated { get; set; }
+        //public DateTime CommentDateTimeUpdated { get; set; }
     }
 }
