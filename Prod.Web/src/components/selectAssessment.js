@@ -499,7 +499,7 @@ export default class SelectAssessment extends Component {
                 
                 <div className="counter">Viser totalt {appState.expertgroupAssessmentTotalCount} vurderinger</div>
                 :            
-                <div className="counter">>Viser totalt {this.findAmountOfAssessments(appState)} vurderinger (filtrert fra {appState.expertgroupAssessmentTotalCount})</div>
+                <div className="counter">Viser totalt {this.findAmountOfAssessments(appState)} vurderinger (filtrert fra {appState.expertgroupAssessmentTotalCount})</div>
             }
             <div>
                 <span>{labels.SelectAssessment.usedFilters}</span> 

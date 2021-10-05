@@ -143,7 +143,7 @@ export default class assessmentNew extends React.Component {
                                             newAssessment.VernacularName = item.popularName;
 
                                             newAssessment.RedListCategory = item.rlCategory;
-                                            newAssessment.potensiellDørstokkart = item.potensiellDørstokkart;
+                                            //newAssessment.potensiellDørstokkart = item.potensiellDørstokkart;
                                             newAssessment.taxonSearchResult.replace([]); 
                                             newAssessment.taxonSearchString = "" })} 
                                             key={item.scientificName}

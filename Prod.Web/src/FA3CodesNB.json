@@ -4778,7 +4778,7 @@
                         {
                             "Id": null,
                             "Value": "knownNegativeEffects",
-                            "Text": "Er det noen kjente (fra utlandet) eller antatte (i Norge) negative økologiske effekter knyttet til arten?",
+                            "Text": "Er det noen kjente (fra utlandet) eller antatte (i Norge) vesentlige negative økologiske effekter knyttet til arten?",
                             "Info": null,
                             "Children": null
                         },
