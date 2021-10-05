@@ -363,14 +363,15 @@
 
         "assessmentType": [
             {
-                "text": "Risikovurdering",
-                "value": "riskAssessment"
-              },
-              {
     
                 "text": "Horisontskanning",
                 "value": "horizonScanning"
+              },
+            {
+                "text": "Risikovurdering",
+                "value": "riskAssessment"
               }
+              
         ],
 
         "filterTypes": [
