@@ -1104,78 +1104,90 @@ function enhanceRiskAssessmentLevel(riskAssessment, labels) {
     // extendObservable(riskAssessment, {
     //     _invasjonspotensialeLevel: RiskLevel.invasjonspotensiale(riskAssessment)
     // });
+
     extendObservable(riskAssessment, {
-        get invasjonspotensialeLevel() {
+        get invationpotential() {
             const result = RiskLevel.invasjonspotensiale(riskAssessment)
             return result;
         }
     });
-    autorun(() => {
-        //todo: something must be wrong here (?)
+
+
+    // extendObservable(riskAssessment, {
+    //     get invasjonspotensialeLevel() {
+    //         const result = RiskLevel.invasjonspotensiale(riskAssessment)
+    //         return result;
+    //     }
+    // });
+
+
+
+    // autorun(() => {
+    //     //todo: something must be wrong here (?)
         
-        //try {
-        const {level, decisiveCriteria, uncertaintyLevels} = riskAssessment.invasjonspotensialeLevel
-        //const {level, decisiveCriteria, uncertaintyLevels} = riskAssessment.invationPotentialLevel
-        console.log("_invasjonspotensialeLevel changed: " + level)
-        runInAction(() => {
-            riskAssessment.invationPotentialLevel = level
-            riskAssessment.invationPotentialUncertaintyLevels = uncertaintyLevels
-        })
-        //}
-        //catch (e) {}
-    });
+    //     //try {
+    //     const {level, decisiveCriteria, uncertaintyLevels} = riskAssessment.invasjonspotensialeLevel
+    //     //const {level, decisiveCriteria, uncertaintyLevels} = riskAssessment.invationPotentialLevel
+    //     console.log("_invasjonspotensialeLevel changed: " + level)
+    //     runInAction(() => {
+    //         riskAssessment.invationPotentialLevel = level
+    //         riskAssessment.invationPotentialUncertaintyLevels = uncertaintyLevels
+    //     })
+    //     //}
+    //     //catch (e) {}
+    // });
     // extendObservable(riskAssessment, {
     //     _ecoeffectLevel: RiskLevel.ecoeffect(riskAssessment)
     // });
 
     extendObservable(riskAssessment, {
-        get ecoeffectLevel () {
+        // get ecoeffectLevel () {
+        get ecoeffect () {
             const result = RiskLevel.ecoeffect(riskAssessment)
             return result;
         }
     });
 
-    autorun(() => {
-        //try {
+    // autorun(() => {
+    //     //try {
         
-        const {level, decisiveCriteria, uncertaintyLevels} = riskAssessment.ecoeffectLevel
-        console.log("ecoeffectlevel changed: " + level)
-        runInAction(() => {
-            riskAssessment.ecoEffectLevel = level
-            riskAssessment.ecoEffectUncertaintyLevels = uncertaintyLevels
-        })
-        //}
-        //catch (e) {}
-    });
+    //     const {level, decisiveCriteria, uncertaintyLevels} = riskAssessment.ecoeffectLevel
+    //     console.log("ecoeffectlevel changed: " + level)
+    //     runInAction(() => {
+    //         riskAssessment.ecoEffectLevel = level
+    //         riskAssessment.ecoEffectUncertaintyLevels = uncertaintyLevels
+    //     })
+    //     //}
+    //     //catch (e) {}
+    // });
 
     // delete riskAssessment.riskLevel  //todo: Check if necessary (or the correct way to do this) ?????  Basically: risklevel is observable from db data, but we want it to be a computed observable!
     
     extendObservable(riskAssessment, {
         get riskLevel() {
-            const result = RiskLevel.riskLevel(riskAssessment.invationPotentialLevel, riskAssessment.ecoEffectLevel, riskAssessment.decisiveCriteria)
+            const result = RiskLevel.riskLevel(this.invationpotential, this.ecoeffect)
+            // const result = RiskLevel.riskLevel(riskAssessment.invationPotential, riskAssessment.ecoEffect, riskAssessment.decisiveCriteria)
             
             //const result = RiskLevel.riskLevel(riskAssessment.invasjonspotensialeLevel, riskAssessment.ecoeffectLevel)
             return result;
         }
     });
-    // extendObservable(riskAssessment, {
-    //     get riskLevelText() {
-    //         const levtxt = this.riskLevel.toString()
-    //         const result = labels.RiskLevelText[levtxt]
-    //         return result
-    //     },
-    //     get riskLevelCode() {
-    //         const levtxt = this.riskLevel.toString()
-    //         const result = labels.RiskLevelCode[levtxt]
-    //         return result
-    //     },
-    //     // get decisiveCriteria() {
-    //     //     const decisiveCriteriaLabel = riskAssessment.decisiveCriteria
-    //     //     return decisiveCriteriaLabel
-    //     // }
-
-
-    // });
+    extendObservable(riskAssessment, {
+        get riskLevelText() {
+            const levtxt = this.riskLevel.toString()
+            const result = labels.RiskLevelText[levtxt]
+            return result
+        },
+        get riskLevelCode() {
+            const levtxt = this.riskLevel.toString()
+            const result = labels.RiskLevelCode[levtxt]
+            return result
+        },
+        // get decisiveCriteria() {
+        //     const decisiveCriteriaLabel = riskAssessment.decisiveCriteria
+        //     return decisiveCriteriaLabel
+        // }
+    });
 }
 
 function enhanceCriteriaAddLabelsAndAuto(riskAssessment, codes) {
