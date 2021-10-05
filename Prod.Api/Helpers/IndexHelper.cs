@@ -359,7 +359,7 @@ namespace Prod.Api.Helpers
                 case 2: return "PH";
                 case 3: return "HI";
                 case 4: return "SE";
-                case -1: return "";
+                case -1: return "-";
                 default:
                     return "NR";
             }
