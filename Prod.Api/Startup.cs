@@ -19,6 +19,7 @@ using Microsoft.IdentityModel.Logging;
 using Microsoft.OpenApi.Models;
 using Prod.Api.Controllers;
 using Prod.Data.EFCore;
+using Microsoft.Extensions.Configuration;
 
 
 namespace Prod.Api

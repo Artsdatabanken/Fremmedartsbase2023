@@ -4,6 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <UserSecretsId>51e1a2be-0e91-4211-98e9-f32a362b922f</UserSecretsId>
+    <ApplicationInsightsResourceId>/subscriptions/1b2e1710-5766-4fa2-83ce-8c77c37d1190/resourcegroups/FAB4/providers/Microsoft.Insights/components/ProdApi</ApplicationInsightsResourceId>
   </PropertyGroup>
 
   <ItemGroup>
