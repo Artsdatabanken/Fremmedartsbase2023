@@ -5666,7 +5666,7 @@
                         {
                             "Id": null,
                             "Value": "createAssessmentHint",
-                            "Text": "Legg til ny art, eller flytt en art fra horisontskanning til risikovurdering (evt. motsatt). Flytting gjelder for arter hvor ny informasjon tilsier at arten (evt. ikke) reproduserer selvstendig utendørs i Norge likevel.",
+                            "Text": "Legg til ny art, eller flytt art fra horisontskanning til risikovurdering (ev. motsatt). Flytting gjelder for arter hvor ny informasjon tilsier at arten likevel (ev. ikke) reproduserer selvstendig utendørs i Norge.",
                             "Info": null,
                             "Children": null
                         },
