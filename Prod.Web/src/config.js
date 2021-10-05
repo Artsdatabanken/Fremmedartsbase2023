@@ -140,7 +140,7 @@ const config = {
     overlayMapUrl: overlayMapUrl(window.location.hash),
     referenceApiUrl: referenceApiUrl(window.location.hash),
     authconfig: authconfig,
-    isRelease: isRelease()
+    isRelease: isRelease(),
     isNotTest: isNotTest()
   }
 export default config
