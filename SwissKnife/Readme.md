@@ -56,3 +56,18 @@ Import content from 2018 Dump into new database:
 dotnet run -- newdb import --connectionstring "Server=localhost;Database=FAB20233;Integrated Security=true;MultipleActiveResultSets=true" --inputfolder ./Dump
 ```
 
+Do taxonomy wash
+```
+dotnet run -- maintenance taxonomywash --connectionstring "Server=localhost;Database=FAB2023;Integrated Security=true;MultipleActiveResultSets=true"
+```
+
+
+Fill empty database and import two new files:
+```
+dotnet run -- newdb import --connectionstring "Server=localhost;Database=FAB2023;Integrated Security=true;MultipleActiveResultSets=true" --inputfolder ./Dump
+
+dotnet run -- maintenance importnames --connectionstring "Server=localhost;Database=FAB2023;Integrated Security=true;MultipleActiveResultSets=true" --speciesgroup "Alger" --csvfile ./Importfiler/Alger.txt
+dotnet run -- maintenance importnames --connectionstring "Server=localhost;Database=FAB2023;Integrated Security=true;MultipleActiveResultSets=true" --speciesgroup "Terrestriske invertebrater" --csvfile ./Importfiler/TerrestriskeInvertebrater.txt
+
+
+```

@@ -9,8 +9,10 @@ import UtbredelseshistorikkInnenlands from './35Utbredelseshistorikk/Utbredelses
 import UtbredelseIDag from './35Utbredelseshistorikk/UtbredelseIDag'
 import Utbredelseshistorikk from './35Utbredelseshistorikk/Utbredelseshistorikk'
 import ModalArtskart from '../artskart/ModalArtskart';
+import Fylkesforekomst from '../fylkesforekomst/Fylkesforekomst';
+import fylker from "../fylkesforekomst/fylker";
 import { ContactsOutlined } from '@material-ui/icons';
-import { computed } from 'mobx';
+import { action, computed } from 'mobx';
 
 @inject('appState')
 @observer
@@ -22,17 +24,41 @@ export default class Assessment52Utbredelse extends React.Component {
         return a != b
     }
 
-    onOverførFraArtskart = (data) => {
-        // {
-        //     countylist,
-        //     selectionGeometry,
-        //     areadata,
-        //     observations,
-        //     editStats
-        // }
-        if (data && data.areadata && data.areadata.AreaOfOccupancy){
-            this.props.appState.assessment.riskAssessment.AOO2 = data.areadata.AreaOfOccupancy;
+    handleOverførFraArtskart = ({ selectionGeometry, countylist, areadata, observations, editStats }) => {
+        // console.log('handleOverførFraArtskart', selectionGeometry, countylist, areadata, observations, editStats);
+        const aps = this.props.appState;
+        const ass = aps.assessment;
+        
+        ass.b1UtbredelsesområdeKjentAndel = areadata.AreaExtentOfOccurrence;
+        ass.artskartManuellAdd = editStats.add;
+        ass.artskartManuellRemove = editStats.remove;
+        ass.artskartSistOverført = new Date();
+        ass.artskartSelectionGeometry = selectionGeometry;
+        if (ass.artskartSelectionGeometry != undefined) {
+            ass.riskAssessment.AOO2 = areadata.ExcludedLocalities*4;
+        } else {
+            ass.riskAssessment.AOO2 = areadata.AreaOfOccupancy;
         }
+        // TODO: Fylkesoversikt - avventer data fra API
+        if (countylist) {
+            // ass.fylkesforekomster = countylist;
+            let fo = countylist.reduce((acc, e) => {
+                acc[e.NAVN] = e.Status;
+                return acc;
+            }, {});
+            ass.fylkesforekomster.forEach(f => f.state = fo[fylker[f.fylke]] > 0 ? 0 : 2);
+            // console.log('ass.fylkesforekomster', ass.fylkesforekomster);
+        }
+
+        // Vi ønsker bare lagre redigeringer
+        const points2String = source =>
+            observations.features
+                .filter(p => p.source === source)
+                .map(p => p.geometry.coordinates)
+                .map(p => p[0] + "," + p[1])
+                .join(",");
+        ass.artskartAdded = points2String("add");
+        ass.artskartRemoved = points2String("remove");
     }
 
     render() {
@@ -79,7 +105,7 @@ export default class Assessment52Utbredelse extends React.Component {
                                         scientificNameId={assessment.evaluatedScientificNameId}
                                         labels={labels}
                                         utvalg={assessment.riskAssessment}
-                                        onOverførFraArtskart={this.onOverførFraArtskart}
+                                        onOverførFraArtskart={action(this.handleOverførFraArtskart)}
                                         />
                                 </div>
                                 <p style={{marginBottom: '0'}}>Basert på periode:</p>
@@ -142,7 +168,18 @@ export default class Assessment52Utbredelse extends React.Component {
                     </fieldset>
                 <fieldset className="well">
                     <h4>Fylkesvis utbredelse</h4>
-                    <b>[Her kommer det et kart]</b>
+                    {/* <b>[Her kommer det et kart]</b> */}
+                    {/* TODO: remove component refresh hack */ assessment.fylkesforekomster ? (assessment.fylkesforekomster.map(e => e.state ? '' : '')) : ''}
+                    <Fylkesforekomst
+                        vurderingsContext={assessment.vurderingsContext}
+                        taxonId={assessment.TaxonId}
+                        latinsknavnId={assessment.latinsknavnId}
+                        utvalg={assessment.artskartModel}
+                        {...assessment.artskartModel} // Rerender hack
+                        artskartModel={assessment.artskartModel}  // could replace this one?
+                        fylkesforekomster={assessment.fylkesforekomster}
+                        assessment={assessment}
+                        onOverførFraArtskart={action(this.handleOverførFraArtskart)} />
                     <p>Beskriv grunnlaget for anslagene (gjelder både forekomstareal og fylkesvis utbredelse)</p>
                     <Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'backgroundRegional']}/>
                     {assessment.alienSpeciesCategory == "DoorKnocker" ?
@@ -167,7 +204,8 @@ export default class Assessment52Utbredelse extends React.Component {
                                         integer
                                     />    
                              <Xcomp.Number                            
-                                    observableValue={[assessment.riskAssessment, "yearFirstProductionOutdoors"]}
+                                    //observableValue={[assessment.riskAssessment, "yearFirstProductionOutdoors"]}
+                                    observableValue={[assessment.riskAssessment, "populationSize"]}
                                     integer
                                 />
                         </div>

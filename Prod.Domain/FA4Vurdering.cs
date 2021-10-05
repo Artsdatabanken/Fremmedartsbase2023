@@ -33,7 +33,38 @@ namespace Prod.Domain
 
     //    //public Guid[] References { get; set; }
     //}
-
+    public class TaxonHistory
+    {
+        public DateTime date { get; set; }
+        public string username { get; set; } // The user that changed the name of the assesment to a new name (not this name)
+        public string VitenskapeligNavn { get; set; }
+        public string VitenskapeligNavnAutor { get; set; }
+        public string VitenskapeligNavnHierarki { get; set; }
+        public int VitenskapeligNavnId { get; set; }
+        public int TaxonId { get; set; }
+        public string TaxonRank { get; set; }   // "Species" or "SupSpecies"
+        public string Ekspertgruppe { get; set; }
+    }
+    public class TrackInfo
+    {
+        public string VurderingsId2015 { get; set; }
+        public int OrgVitenskapeligNavnId { get; set; }
+        public string OrgVitenskapeligNavn { get; set; }
+        public string Url2015 { get; set; }
+        public string Kategori2015 { get; set; }
+        public string Kriterier2015 { get; set; }
+        public int ScientificNameId2015 { get; set; }
+        public string ScientificName2015 { get; set; }
+        public string MultipleUrl2015 { get; set; }
+        public int VurderingsId2010 { get; set; }
+        public string Url2010 { get; set; }
+        public string Kategori2010 { get; set; }
+        public string Kriterier2010 { get; set; }
+        public int ScientificNameId2010 { get; set; }
+        public string ScientificName2010 { get; set; }
+        public string MultipleUrl2010 { get; set; }
+        public string VurderingsId2015Databank { get; set; }
+    }
     public partial class FA4 // () Id-informjosjon
     {
         public static FA4 CreateNewFA4()
@@ -44,7 +75,8 @@ namespace Prod.Domain
             newfa.RiskAssessment.Criteria = RiskAssessment.CreateDefaultCriteria();
             return newfa;
         }
-
+        public List<TaxonHistory> TaxonomicHistory { get; set; } = new List<TaxonHistory>();
+        public TrackInfo ImportInfo { get; set; } = new TrackInfo();
         public int Id { get; set; }
         //public string VurderingId2018 { get; set; }
         //public int VurderingId2012 { get; set; } // sah 21-09-2021 - flyttet til PreviousAssessments.assessmentsid
@@ -101,6 +133,7 @@ namespace Prod.Domain
         //        public string SynonymSpecies_________ { get; set; } // fab: Synonym_Species
 
         public Datasett Datasett { get; set; } = new Datasett();
+        public dynamic EvaluatedScientificNameRank { get; set; }
     }
 
     public partial class FA4 // Horisontskanning
@@ -204,30 +237,30 @@ namespace Prod.Domain
         {
             return new List<Fylkesforekomst>
             {
-                new Fylkesforekomst { Fylke = "Øs" },
-                new Fylkesforekomst { Fylke = "OsA" },
-                new Fylkesforekomst { Fylke = "He" },
-                new Fylkesforekomst { Fylke = "Op" },
-                new Fylkesforekomst { Fylke = "Bu" },
-                new Fylkesforekomst { Fylke = "Ve" },
-                new Fylkesforekomst { Fylke = "Te" },
-                new Fylkesforekomst { Fylke = "Aa" },
-                new Fylkesforekomst { Fylke = "Va" },
-                new Fylkesforekomst { Fylke = "Ro" },
-                new Fylkesforekomst { Fylke = "Ho" },
-                new Fylkesforekomst { Fylke = "Sf" },
-                new Fylkesforekomst { Fylke = "Mr" },
-                new Fylkesforekomst { Fylke = "Tø" },
-                new Fylkesforekomst { Fylke = "No" },
-                new Fylkesforekomst { Fylke = "Tr" },
-                new Fylkesforekomst { Fylke = "Fi" },
-                new Fylkesforekomst { Fylke = "Sv" },
-                new Fylkesforekomst { Fylke = "Jm" },
-                new Fylkesforekomst { Fylke = "Ns" },
-                new Fylkesforekomst { Fylke = "Nh" },
-                new Fylkesforekomst { Fylke = "Gh" },
-                new Fylkesforekomst { Fylke = "Bn" },
-                new Fylkesforekomst { Fylke = "Bs" }
+                new Fylkesforekomst { Fylke = "Øs", State = 2 },
+                new Fylkesforekomst { Fylke = "OsA", State = 2 },
+                new Fylkesforekomst { Fylke = "He", State = 2 },
+                new Fylkesforekomst { Fylke = "Op", State = 2 },
+                new Fylkesforekomst { Fylke = "Bu", State = 2 },
+                new Fylkesforekomst { Fylke = "Ve", State = 2 },
+                new Fylkesforekomst { Fylke = "Te", State = 2 },
+                new Fylkesforekomst { Fylke = "Aa", State = 2 },
+                new Fylkesforekomst { Fylke = "Va", State = 2 },
+                new Fylkesforekomst { Fylke = "Ro", State = 2 },
+                new Fylkesforekomst { Fylke = "Ho", State = 2 },
+                new Fylkesforekomst { Fylke = "Sf", State = 2 },
+                new Fylkesforekomst { Fylke = "Mr", State = 2 },
+                new Fylkesforekomst { Fylke = "Tø", State = 2 },
+                new Fylkesforekomst { Fylke = "No", State = 2 },
+                new Fylkesforekomst { Fylke = "Tr", State = 2 },
+                new Fylkesforekomst { Fylke = "Fi", State = 2 },
+                new Fylkesforekomst { Fylke = "Sv", State = 2 },
+                new Fylkesforekomst { Fylke = "Jm", State = 2 },
+                new Fylkesforekomst { Fylke = "Ns", State = 2 },
+                new Fylkesforekomst { Fylke = "Nh", State = 2 },
+                new Fylkesforekomst { Fylke = "Gh", State = 2 },
+                new Fylkesforekomst { Fylke = "Bn", State = 2 },
+                new Fylkesforekomst { Fylke = "Bs", State = 2 }
             };
         }
     }

@@ -85,6 +85,12 @@ var HtmlEditor = createReactClass({
         },
 
         shouldComponentUpdate: function (nextProps) {
+            // ToDo: Need this if we change content by code
+            // if (nextProps.content !== this.state.html || nextProps.disabled !== this.props.disabled) {
+            //     this.setState({html: nextProps.content});
+            //     return true;
+            // }
+            // return false;
             return nextProps.content !== this.state.html || 
                 nextProps.disabled !== this.props.disabled
         },

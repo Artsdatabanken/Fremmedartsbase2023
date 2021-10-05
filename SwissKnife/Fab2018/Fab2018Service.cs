@@ -17,12 +17,12 @@ using MigrationPathwayCode = Prod.Domain.MigrationPathwayCode;
 
 namespace SwissKnife.Fab2018
 {
-    internal class Fab2018
+    internal class Fab2018Service
     {
         private readonly IFilesStore _fileStore;
         private readonly IDocumentStore _store;
 
-        public Fab2018(string ravenDbUrl, string fab2018Db, string fab2018Dfs)
+        public Fab2018Service(string ravenDbUrl, string fab2018Db, string fab2018Dfs)
         {
             _store = new DocumentStore
             {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using Prod.Api.Helpers;
 
 // ReSharper disable AsyncConverter.ConfigureAwaitHighlighting
@@ -64,18 +65,22 @@ namespace Prod.Api.Controllers
         {
             var user = await base.GetUser();
             var commentDate = DateTime.Now;
-            await _dbContext.Comments.AddAsync(new AssessmentComment()
+            var assessment = await _dbContext.Assessments.Where(x => x.Id == id).Include(x => x.Comments)
+                .FirstOrDefaultAsync();
+            assessment.Comments.Add(new AssessmentComment()
             {
                 AssessmentId = id,
                 IsDeleted = false,
                 Closed = false,
                 Comment = value.Comment,
+                Type = CommentType.Ordinary,
                 //CommentDate = DateTime.Now,
                 // to avoid time zone issues
                 CommentDate = commentDate,
                 UserId = user.Id
                 
             });
+            assessment.ChangedAt = commentDate;
             await _dbContext.SaveChangesAsync();
             IndexHelper.SetCommentTimeStamp(_dbContext, commentDate);
             return true;
@@ -86,7 +91,7 @@ namespace Prod.Api.Controllers
         public async Task<bool> Delete(int id)
         {
             var user = await base.GetUser();
-            var comment = await _dbContext.Comments.Where(x => x.Id == id).FirstOrDefaultAsync();
+            var comment = await _dbContext.Comments.Where(x => x.Id == id).Include(y=>y.Assessment).FirstOrDefaultAsync();
             if (comment == null)
             {
                 return false;
@@ -97,6 +102,7 @@ namespace Prod.Api.Controllers
                 var commentDate = DateTime.Now;
                 comment.CommentDate = commentDate;
                 comment.IsDeleted = true;
+                comment.Assessment.ChangedAt = commentDate;
                 await _dbContext.SaveChangesAsync();
                 IndexHelper.SetCommentTimeStamp(_dbContext, commentDate);
                 return true;
@@ -123,6 +129,7 @@ namespace Prod.Api.Controllers
                 comment.ClosedDate = commentClosedDate;
                 comment.CommentDate = commentClosedDate;
                 comment.ClosedById = roleInGroup.UserId;
+                comment.Assessment.ChangedAt = commentClosedDate;
                 await _dbContext.SaveChangesAsync();
                 IndexHelper.SetCommentTimeStamp(_dbContext, commentClosedDate);
                 return true;

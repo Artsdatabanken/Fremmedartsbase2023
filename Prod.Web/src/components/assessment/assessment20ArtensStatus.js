@@ -250,9 +250,10 @@ export default class Assessment20ArtensStatus extends React.Component {
                                 })}
                             codes={codes.EstablishmentCategoryWithoutProduction}/>                             
                         }
-                       <br></br>
+                       
 
                         <p>{labels.SpeciesStatus.codesExplanation}</p>
+                        <br></br>
                         <div>
                             <p>{labels.SpeciesStatus.establishedBefore1800} </p>
                             <Xcomp.StringEnum observableValue={[assessment, "alienSpecieUncertainIfEstablishedBefore1800"]} mode="radio" codes={codes.yesNo}/>

@@ -15,7 +15,7 @@ using Prod.Domain.Legacy;
 
 namespace SwissKnife.Database
 {
-    public class Maintenance
+    public class ImportDataService
     {
         private SqlServerProdDbContext _database;
         private static Dictionary<string, string> expertGroupReplacements = new Dictionary<string, string>()
@@ -39,7 +39,7 @@ namespace SwissKnife.Database
             { "ExpertGroups/Amfibierogreptiler/N", "Amfibier og reptiler" }
         };
 
-    public Maintenance(string connectionString)
+    public ImportDataService(string connectionString)
         {
             _database = new Prod.Data.EFCore.SqlServerProdDbContext(connectionString);
         }
@@ -127,6 +127,7 @@ namespace SwissKnife.Database
                         CommentDate = DateTime.Now,
                         UserId = new Guid("00000000-0000-0000-0000-000000000001"),
                         ClosedById = new Guid("00000000-0000-0000-0000-000000000001"),
+                        Type = CommentType.System
                     });
                 }
                 if (oldAssessment.RiskAssessment.SpreadYearlyIncreaseObservations != null &&
@@ -139,6 +140,7 @@ namespace SwissKnife.Database
                         CommentDate = DateTime.Now,
                         UserId = new Guid("00000000-0000-0000-0000-000000000001"),
                         ClosedById = new Guid("00000000-0000-0000-0000-000000000001"),
+                        Type = CommentType.System
                     });
                 }
 
@@ -409,6 +411,9 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.Id, opt => opt.Ignore()) // primærnøkkel
                     .ForMember(dest =>dest.PreviousAssessments, opt => opt.Ignore()) // ny av året
                     .ForMember(dest => dest.Fylkesforekomster, opt => opt.Ignore())
+                    .ForMember(dest => dest.TaxonomicHistory, opt => opt.Ignore()) // ny av året
+                    .ForMember(dest => dest.ImportInfo, opt => opt.Ignore()) // ny av året
+                    .ForMember(dest => dest.EvaluatedScientificNameRank, opt => opt.Ignore()) // ny av året
                     .AfterMap((src, dest) =>
                     {
                         // set some standard values
@@ -477,6 +482,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesHigh,
                         opt => opt.Ignore())
                     .ForAllOtherMembers(opt => opt.Ignore());
+                    
 
 
             });

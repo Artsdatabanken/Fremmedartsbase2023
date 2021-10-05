@@ -25,7 +25,7 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Change this to force index rebuild!
         /// </summary>
-        public const int IndexVersion = 13;
+        public const int IndexVersion = 44;
 
         private const string Field_Id = "Id";
         private const string Field_Group = "Expertgroup";
@@ -74,15 +74,14 @@ namespace Prod.Api.Helpers
         private static string Field_CommentsNew = "CommentsNew";
         private static string Field_TaxonChange = "TaxonChange";
         private const string Field_NewestComment = "NewestComment";
-        private const string PotensiellTaksonomiskEndring = "Potensiell taksonomisk endring: ";
-        private const string TaksonomiskEndring = "Automatisk endring av navn: ";
+        //private const string PotensiellTaksonomiskEndring = "Potensiell taksonomisk endring: ";
+        //private const string TaksonomiskEndring = "Automatisk endring av navn: ";
 
         public static async Task<DateTime> Index(DateTime indexVersionDateTime, ProdDbContext _dbContext, Index _index)
         {
             var batchSize = 1000;
             var pointer = 0;
             var maxDate = DateTime.MinValue; 
-            var maxCommentDate = DateTime.MinValue;
             var minDate = indexVersionDateTime;
             while (true)
             {
@@ -96,27 +95,24 @@ namespace Prod.Api.Helpers
                 if (result.Length == 0) break;
                 pointer += result.Length;
                 var tempDate = result.Max(x => x.LastUpdatedAt);
-                var tempCommentDate = result.Max(x => x.Comments.Any() ? x.Comments.Max(y => y.CommentDate) : DateTime.MinValue);
                 if (maxDate < tempDate) maxDate = tempDate;
-                if (maxCommentDate < tempCommentDate) maxCommentDate = tempCommentDate;
 
                 var docs = result.Select(GetDocumentFromAssessment).ToArray();
                 _index.AddOrUpdate(docs);
             }
 
-            SetTimeStamps(_dbContext, _index, maxDate, maxCommentDate);
+            SetTimeStamps(_dbContext, _index, maxDate);
 
             return maxDate;
         }
 
-        private static void SetTimeStamps(ProdDbContext _dbContext, Index _index, DateTime maxDate,
-            DateTime maxCommentDate)
+        private static void SetTimeStamps(ProdDbContext _dbContext, Index _index, DateTime maxDate)
         {
             var stamp = _dbContext.TimeStamp.SingleOrDefault();
             if (stamp == null)
             {
                 _dbContext.TimeStamp.Add(new TimeStamp
-                    { Id = 1, DateTimeUpdated = maxDate, CommentDateTimeUpdated = maxCommentDate });
+                    { Id = 1, DateTimeUpdated = maxDate});
             }
             else
             {
@@ -125,16 +121,12 @@ namespace Prod.Api.Helpers
                     stamp.DateTimeUpdated = maxDate;
                 }
 
-                if (DateTimesSignificantlyDifferent(stamp.CommentDateTimeUpdated, maxCommentDate))
-                {
-                    stamp.CommentDateTimeUpdated = maxCommentDate;
-                }
             }
 
             _dbContext.SaveChanges();
 
             _index.SetIndexVersion(new IndexVersion
-                { Version = IndexVersion, DateTime = maxDate, CommentDateTime = maxCommentDate });
+                { Version = IndexVersion, DateTime = maxDate});
         }
 
         internal static void SetCommentTimeStamp(ProdDbContext _dbContext, 
@@ -143,9 +135,9 @@ namespace Prod.Api.Helpers
             var stamp = _dbContext.TimeStamp.SingleOrDefault();
             if (stamp != null)
             {
-                if (DateTimesSignificantlyDifferent(stamp.CommentDateTimeUpdated, maxCommentDate))
+                if (DateTimesSignificantlyDifferent(stamp.DateTimeUpdated, maxCommentDate))
                 {
-                    stamp.CommentDateTimeUpdated = maxCommentDate;
+                    stamp.DateTimeUpdated = maxCommentDate;
                 }
             }
 
@@ -163,7 +155,6 @@ namespace Prod.Api.Helpers
             var batchSize = 1000;
             var pointer = 0;
             var maxDate = DateTime.MinValue;
-            var maxCommentDate = DateTime.MinValue;
             while (true)
             {
                 var result = _dbContext.Assessments
@@ -182,7 +173,7 @@ namespace Prod.Api.Helpers
                 _index.AddOrUpdate(docs);
             }
 
-            SetTimeStamps(_dbContext, _index, maxDate, maxCommentDate);
+            SetTimeStamps(_dbContext, _index, maxDate);
 
             return maxDate;
         }
@@ -215,7 +206,7 @@ namespace Prod.Api.Helpers
                 new StoredField(Field_LockedForEditByUser,
                     assessment.LockedForEditByUser != null ? assessment.LockedForEditByUser.FullName : string.Empty),
                 new StoredField(Field_LockedForEditAt, assessment.LockedForEditAt.ToString("s")),
-                new TextField(Field_ScientificName, ass.EvaluatedScientificName,
+                new TextField(Field_ScientificName, ass.EvaluatedScientificName + (!string.IsNullOrWhiteSpace(ass.EvaluatedScientificNameAuthor) ? " " + ass.EvaluatedScientificNameAuthor : string.Empty ),
                     Field.Store.YES), // textfield - ignore case
                 new StringField(Field_ScientificNameAsTerm, ass.EvaluatedScientificName.ToLowerInvariant(),
                     Field.Store.NO), // textfield - ignore case
@@ -254,8 +245,8 @@ namespace Prod.Api.Helpers
             var latest = comments.Any() ? comments.Max(x => x.CommentDate) : DateTime.MinValue;
             var closed = comments.Count(x => x.Closed);
             var open = comments.Count(y =>
-                !y.Closed && !y.Comment.StartsWith(TaksonomiskEndring) &&
-                !y.Comment.StartsWith(PotensiellTaksonomiskEndring));
+                !y.Closed); // && !y.Comment.StartsWith(TaksonomiskEndring) &&
+                //!y.Comment.StartsWith(PotensiellTaksonomiskEndring));
             var newCommentsForUserId = (from commenter in comments.Where(y =>
                     y.IsDeleted == false && y.Closed == false).Select(x=>x.UserId).ToArray()
                 let newones = comments.Count(y => y.IsDeleted == false && y.Closed == false && y.UserId != commenter && y.CommentDate > (comments.Any(y2 => y2.IsDeleted == false && y2.UserId == commenter)
@@ -265,11 +256,11 @@ namespace Prod.Api.Helpers
                 select new Tuple<Guid, int>(commenter, newones)).ToList();
 
             var taxonchange = comments.Any(y =>
-                y.Comment.StartsWith(PotensiellTaksonomiskEndring) && y.IsDeleted == false &&
+                y.Type == CommentType.PotentialTaxonomicChange && y.IsDeleted == false &&
                 y.Closed == false)
                 ? 2
                 : (comments.Any(y =>
-                    y.Comment.StartsWith(TaksonomiskEndring) && y.IsDeleted == false &&
+                    y.Type == CommentType.TaxonomicChange && y.IsDeleted == false &&
                     y.Closed == false)
                     ? 1
                     : 0);
