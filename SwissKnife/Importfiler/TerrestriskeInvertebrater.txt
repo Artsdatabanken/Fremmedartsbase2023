@@ -1,0 +1,269 @@
+﻿ScientificNameId	ScientificName	ScientificNameAuthor
+216042	Allolobophoridella eiseni	(Levinsen, 1884)
+216068	Bimastos parvus	(Eisen, 1874)
+216047	Amynthas agrestis	(Goto & Hatai, 1899)
+216048	Amynthas corticis	(Kinberg, 1867)
+216411	Zilla diodia	(Walckenaer, 1802)
+216214	Mermessus denticulatus	(Banks, 1898)
+173294	Mermessus trilobatus	(Emerton, 1882)
+205012	Ero aphana	(Walckenaer, 1802)
+133861	Zora parallela	Simon, 1878
+205028	Cryptachaea blattea	(Urquhart, 1886)
+216190	Latrodectus hasselti	Thorell, 1870
+216113	Dermacentor variabilis	(Say, 1821)
+216324	Stenopelmus rufinasus	Gyllenhal, 1836
+216297	Rhopalapion longirostre	(Olivier, 1807)
+5365	Acupalpus brunnipes	(Sturm, 1825)
+216117	Elaphropus haemorrhoidalis	(Ponza, 1805)
+216647	Syntomus foveolatus	(Dejean, 1831)
+216235	Neoclytus acuminatus	(Fabricius, 1775)
+216265	Philus antennatus	(Gyllenhal, 1817)
+216284	Pronocera angusta	(Kriechbaumer, 1844)
+216344	Tetropium gracilicorne	Reitter, 1889
+216168	Trichoferus campestris	(Faldermann, 1835)
+6927	Bruchus rufimanus	Boheman, 1833
+216105	Dactylispa pallidipennis	(Motschulsky, 1861)
+216129	Epitrix subcrinita	(J.L. LeConte, 1857)
+216210	Megabruchidius dorsalis	(Fåhraeus, 1839)
+9455	Xylographus bostrychoides	(Dufour, 1843)
+216302	Rodolia cardinalis	(Mulsant, 1850)
+9175	Coccotrypes dactyliperda	(Fabricius, 1801)
+216147	Gnathotrichus retusus	(LeConte, 1868)
+9192	Hylastes ater	(Fabricius, 1792)
+216170	Hylastes tenuis	Eichhoff, 1868
+9219	Orthotomicus erosus	(Wollaston, 1857)
+216261	Pentarthrum confine	Broun, 1880
+8596	Pentarthrum huttoni	Wollaston, 1854
+9234	Pityokteines curvidens	(Germar, 1824)
+216275	Pityokteines spinidens	(Reitter, 1894)
+9260	Scolytus pygmaeus	(Fabricius, 1787)
+216625	Tomicus destruens	(Wollaston, 1865)
+127688	Xylosandrus germanus	(Blandford, 1894)
+6227	Trogoderma glabrum	(Herbst, 1783)
+216397	Trogoderma inclusum	LeConte, 1854
+216300	Rhynchophorus ferrugineus	(Olivier, 1790)
+11009	Cercyon laminatus	Sharp, 1873
+9595	Litargus balteatus	LeConte, 1856
+7968	Carpophilus mutilatus	Erichson, 1843
+7969	Carpophilus nepos	Murray, 1864
+216213	Meligethinus pallidulus	(Erichson, 1843)
+216322	Stelidota geminata	(Say, 1825)
+216403	Urophorus humeralis	(Fabricius, 1798)
+216290	Ptinella mekura	Kubota, 1943
+6366	Ptinus latro	Fabricius, 1775
+216279	Popillia japonica	Newman, 1841
+9714	Anaspis fasciata	(Forster, 1771)
+216043	Amischa forcipata	Mulsant & Rey, 1873
+11623	Atheta triangulum	(Kraatz, 1856)
+12667	Euplectus infirmus	Raffray, 1910
+216221	Micrearota vestigialis	(Erichson, 1839)
+12744	Othius laeviusculus	Stephens, 1833
+12878	Philonthus spinipes	Sharp, 1874
+12415	Platystethus capito	Heer, 1839
+12416	Platystethus cornutus	(Gravenhorst, 1802)
+12616	Proteinus ovalis	Stephens, 1832
+12710	Pseudoplectus perplexus	(Jacquelin du Val, 1854)
+12946	Quedius semiaeneus	(Stephens, 1833)
+216343	Tetralaucopora longitarsis	(Erichson, 1837)
+13000	Xantholinus longiventris	Heer, 1839
+19777	Rabdophaga strobilina	(Bremi, 1847)
+19512	Contarinia acerplicans	(Kieffer, 1889)
+19566	Dasineura alpestris	(Kieffer, 1909)
+127778	Dasineura gleditchiae	Osten Sacken, 1866
+19588	Dasineura ingeris	Sylvén & Lövgren, 1995
+19593	Dasineura leguminicola	(Lintner, 1879)
+19636	Didymomyia tiliacea	(Bremi, 1847)
+19727	Mayetiola destructor	(Say, 1817)
+19911	Mycophila speyeri	Barnes, 1926
+127760	Obolodiplosis robiniae	(Haldeman, 1847)
+19762	Prodiplosis violicola	(Coquillett, 1900)
+19764	Rabdophaga albipennis	(Loew, 1850)
+19766	Rabdophaga degeerii	(Bremi, 1847)
+216293	Rabdophaga marginemtorquens	(Bremi, 1847)
+19779	Rabdophaga viminalis	(Westwood, 1847)
+216108	Dasyhelea turficola	Kieffer, 1925
+216099	Culex modestus	Ficalbi, 1889
+216326	Stilpon subnubilus	Chvala, 1988
+216315	Schoenomyza dorsalis	Loew, 1872
+216071	Bradysia nomica	Mohrig & Rsschmann, 1996
+216040	Adelges cooleyi	(Gillette, 1907)
+135301	Dreyfusia nordmannianae	(Eckstein, 1890)
+216273	Pineus similis	(Gillette, 1807)
+216274	Pineus strobi	(Hartig, 1839)
+169147	Massilieurodes chittendeni	(Laing, 1928)
+135123	Trialeurodes vaporariorum	(Westwood, 1856)
+134775	Acyrthosiphon caraganae	(Cholodkovsky, 1908)
+216057	Aphis aurantii	Boyer de Fonscolombe, 1841
+134357	Aphis forbesi	Weed, 1889
+134362	Aphis gossypii	Glover, 1877
+134430	Aphis oenotherae	Oestlund, 1887
+134336	Aphis spiraecola	Patch, 1914
+134412	Aphis spiraephaga	F.P. Muller, 1961
+216061	Appendiseta robiniae	(Gillette, 1907)
+135029	Cinara cupressi	(Buckton, 1881)
+216088	Cinara pinimaritimae	(Dufour, 1833)
+134048	Colopha compressa	(Koch, 1856)
+134884	Illinoia azaleae	(Mason, 1925)
+134722	Impatientinum asiaticum	Nevsky, 1929
+134862	Macrosiphum albifrons	Essig, 1911
+216227	Myzocallis walshii	(Monell, 1879)
+134654	Myzus ornatus	Laing, 1932
+134661	Myzus persicae	Sulzer, 1776
+216231	Myzus varians	Davidson, 1912
+134832	Rhodobium porosum	(Sanderson, 1900)
+134289	Rhopalosiphum maidis	(Fitch, 1856)
+134292	Rhopalosiphum rufiabdominale	(Sasaki, 1899)
+216376	Tinocallis nevskyi	Remaudière, Quednau & Heie, 1988
+134951	Uroleucon erigeronense	(Thomas, 1878)
+216058	Aphrophora saratogensis	(Fitch, 1851)
+216151	Haematoloma dorsata	(Ahrens, 1812)
+111385	Balclutha calamagrostis	Ossiannilsson, 1961
+216183	Japananus hyalinus	(Osborn, 1900)
+216414	Zyginidia scutellaris	(Herrich-Schaffer, 1838)
+216082	Ceroplastes rubens	Maskell, 1839
+135222	Coccus hesperidum	Linnaeus, 1758
+135243	Parthenolecanium fletcheri	(Cockerell, 1893)
+216272	Physokermes inopinatus	Danzig & Kozár, 1973
+135247	Physokermes piceae	(Schrank, 1801)
+135250	Pulvinaria floccifera	(Westwood, 1870)
+216291	Pulvinaria regalis	Canard, 1968
+135252	Saissetia coffeae	(Walker, 1852)
+216307	Saissetia oleae	(Olivier, 1791)
+216380	Toumeyella parvicornis	(Cockerell, 1897)
+135254	Aspidiotus nerii	(Bouche, 1833)
+216083	Chionaspis pinifoliae	Fitch, 1856
+135257	Chrysomphalus aonidum	(Linnaeus, 1758)
+135282	Pinnaspis aspidistrae	(Signoret, 1869)
+135280	Pseudaulacaspis pentagona	(Targioni Tozzetti, 1886)
+216401	Unaspis euonymi	(Comstock, 1881)
+216230	Metcalfa pruinosa	(Say, 1830)
+216176	Icerya purchasi	Maskell, 1878
+216207	Marchalina hellenica	(Gennadius, 1883)
+216325	Stictocephala bisonia	Kopp & Yonke, 1977
+216198	Lygus hesperus	(Knight, 1917)
+216199	Lygus lineolaris	(Palisot de Beauvois, 1818)
+216178	Insignorthezia insignis	(Browne, 1887)
+216277	Podisus maculiventris	(Say, 1832)
+216295	Rhaphigaster nebulosa	(Poda, 1761)
+216107	Daktulosphaira vitifoliae	Fitch 1855
+135176	Planococcus citri	(Risso, 1813)
+216286	Pseudococcus longispinus	(Targioni Tozzetti, 1867)
+135195	Pseudococcus viburni	(Signoret, 1875)
+135181	Rhizoecus cacticans	(Hambleton, 1946)
+216320	Spartina patens	(Aiton) Muhl
+110430	Peritrechus nubilus	(Fallén, 1807)
+216095	Corythucha arcuata	(Say, 1832)
+143626	Aphelinus mali	(Haldeman, 1851)
+146541	Aphytis mytilaspidis	(Le Baron, 1870)
+136099	Aproceros leucopoda	Takeuchi, 1939
+216055	Aphidius gifuensis	Ashmead, xxxx
+216116	Dryocosmus kuriphilus	Yasumatsu, 1951
+216262	Pheidole megacephala	(Fabricius, 1793)
+216331	Tapinoma nigerrimum	Nylander, 1856
+136066	Sirex ermak	(Semenov, 1921)
+216180	Isodontia mexicana	(Saussure, 1867)
+216313	Sceliphron caementarium	(Drury, 1773)
+216314	Sceliphron curvatum	(Smith, 1870)
+112176	Nematus tibialis	Newman, 1837
+216211	Megastigmus wachtli	Seitner, 1916
+169117	Vespa velutina	
+216062	Argyresthia thuiella	(Packard, 1871)
+216092	Coccidiphila gerasimovi	Danilevsky, 1950
+216102	Cydalima perspectalis	(Walker, 1859)
+216167	Herpetogramma licarsisalis	(Walker, 1859)
+216132	Ethmia terminella	T.B. Fletcher, 1938
+216172	Hyphantria cunea	(Drury, 1773)
+137324	Lymantria dispar	
+216200	Lymantria mathura	Moore, 1866
+216245	Orgyia leucostigma	(J.E. Smith, 1797)
+216246	Orgyia pseudotsugata	(McDunnough, 1921)
+216094	Coleotechnites piceaella	(Kearfott, 1903)
+216267	Phthorimaea operculella	(Zeller, 1873)
+216069	Biston regalis	(Moore, 1888)
+216189	Lambdina fiscellaria	Guenée, 1857
+216241	Nepytia phantasmaria	(Strecker, 1899)
+216289	Pseudocoremia suavis	Butler, 1879
+216255	Parectopa robiniella	Clemens, 1863
+216268	Phyllonorycter issikii	(Kumata, 1963)
+216269	Phyllonorycter leucographella	(Zeller, 1850)
+216270	Phyllonorycter platani	Staudinger, 1870
+216271	Phyllonorycter robiniella	(Clemens, 1859)
+216184	Korscheltellus gracilis	(Grote, [1865])
+216111	Dendrolimus superans	(Butler, 1877)
+216202	Malacosoma disstria	Hübner, 1820
+216073	Cacyreus marshalli	Butler, 1897
+216333	Teia anartoides	Walker, 1855
+216347	Thaumetopoea pityocampa	(Denis & Schiffermüller, 1775)
+216348	Thaumetopoea processionea	(Linnaeus, 1758)
+216070	Borkhausenia nefrax	Hodges, 1974
+216131	Esperia sulphurella	(Fabricius, 1775)
+216373	Thyridopteryx ephemeraeformis	(Haworth, 1803)
+131378	Cadra figulilella	(Gregson, 1871)
+216114	Dioryctria amatella	(Hulst, 1887)
+216119	Elasmopalpus lignosellus	(Zeller, 1848)
+131383	Paralipsa gularis	(Zeller, 1877)
+216053	Antheraea yamamai	Guérin-Méneville, 1861
+216309	Samia cynthia	(Drury, 1773)
+216244	Opogona sacchari	(Bojer, 1856)
+216087	Choristoneura fumiferana	(Clemens, 1865)
+216097	Ctenopseustis obliquana	(Walker, 1863)
+216127	Epiphyas postvittana	(Walker, 1863)
+216640	Grapholita lobarzewskii	(Nowicki, 1860)
+216148	Grapholita molesta	(Busck, 1916)
+145900	Swammerdamia pyrella	(Villers, 1789)
+216205	Mantis religiosa	(Linnaeus, 1758)
+216065	Barbitistes constrictus	Brunner von Wattenwyl, 1878
+130714	Ectopsocus meridionalis	Ribaga, 1904
+141936	Laemobothrion chloropodis	(Schrank, 1803)
+142259	Laemobothrion maximum	(Scopoli, 1763)
+142314	Laemobothrion nocturnum	Giebel, 1874
+142481	Felicola spenceri	Hopkins, 1960
+126725	Nosopsyllus fasciatus	(Bosc, 1800)
+126751	Leptopsylla segnis	(Schönherr, 1811 )
+126345	Anaphothrips obscurus	(Müller)
+126347	Apterothrips secticornis	(Trybom)
+216154	Heliothrips haemorrhoidalis	(Bouché, 1833)
+216165	Hercinothrips femoralis	(Reuter, 1891)
+216193	Limothrips angulicornis	Jablonowski, 1894
+216260	Parthenothrips dracaenae	(Heeger, 1854)
+216371	Thrips simplex	Morison, 1930
+126464	Thrips tabaci	Lindeman
+216039	Achatina fulica	(Bowdich 1822)
+216258	Paropeas achatinaceum	(L. Pfeiffer, 1846)
+216305	Rumina decollata	(Linnaeus, 1758)
+216306	Rumina saharica	(Pallary, 1901)
+216328	Subulina octona	(Bruguière, 1789)
+216075	Camaena cicatricosa	(O.F. Müller, 1774)
+216138	Euhadra amaliae	(Kobelt, 1875)
+216050	Anguispira alternata	(Say, 1816)
+216051	Anguispira strongylodes	(Pfeiffer, 1854)
+216635	Cernuella virgata	(Da Costa, 1778)
+216639	Cochlicella barbara	(Linnaeus, 1758)
+216077	Cantareus apertus	(Born, 1778)
+216079	Caucasotachea calligera	(Dubois de Montpéreux, 1840)
+216080	Caucasotachea vindobonensis	(C. Pfeiffer, 1828)
+216155	Helix albescens	Rossmässler, 1839
+216156	Helix lucorum	Linnaeus, 1758
+216157	Helix lutescens	Linnaeus, 1758
+216158	Helix melanostoma	Draparnaud, 1801
+216159	Helix philibinensis	Rossmässler, 1839
+216160	Helix secernenda	Rossmässler, 1837
+216197	Loxana vondeli	(Pallary, 1928)
+216646	Massylaea vermiculata	(O.F.Müller, 1774)
+216248	Otala lactea	(Müller, 1774)
+216249	Otala punctata	(Müller, 1774)
+216367	Theba pisana	(Müller, 1774)
+216375	Tingitana shioum	(Pallary 1910)
+216642	Hygromia cinctella	(Draparnaud, 1801)
+216192	Leptaxis undata	(Lowe, 1831)
+216223	Monacha cantiana	(Montagu, 1803)
+216382	Trochulus striolatus	(Pfeiffer, 1828)
+216644	Limacus flavus	(Linnaeus, 1758)
+216330	Tandonia budapestensis	(Hazay, 1880)
+216238	Neohelix albolabris	(Say, 1817)
+216251	Paralaoma servilis	(Shuttleworth, 1852)
+216136	Euglandina rosea	(Ferrusac, 1821)
+216413	Zonites algirus	(Linnaeus, 1758)
+216187	Laevicaulis alte	(Férussac, 1822)
+216407	Veronicella sloanii	(Cuvier, 1817)
+216784	Krynickillus melanocephalus	Kaleniczenko, 1851

@@ -44,7 +44,13 @@ namespace Prod.Api
             // The following line enables Application Insights telemetry collection.
             //services.AddApplicationInsightsTelemetry();// "023396f1-285d-45cc-920c-eb957cdd6c01");
             StartupAddDependencies(services);
-            services.AddControllers().AddJsonOptions(x=>x.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase); //.AddNewtonsoftJson(); For å unngå camelcase - frem til klienten er camelcase.....
+            services.AddControllers().AddJsonOptions(x =>
+            {
+                x.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                x.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+
+            }
+                ); //.AddNewtonsoftJson(); For å unngå camelcase - frem til klienten er camelcase.....
 
             //services.AddMvc();
             services.AddSwaggerGen(c =>

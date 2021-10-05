@@ -2,7 +2,7 @@
   "profiles": {
     "SwissKnife": {
       "commandName": "Project",
-      "commandLineArgs": "newdb import --connectionstring \"Server=localhost;Database=FAB2023;Integrated Security=true;MultipleActiveResultSets=true\" --inputfolder .\\dump"
+      "commandLineArgs": "maintenance importnames --connectionstring \"Server=localhost;Database=FAB2023;Integrated Security=true;MultipleActiveResultSets=true\" --speciesgroup \"Terrestriske invertebrater\" --csvfile ../../../Importfiler/TerrestriskeInvertebrater.txt"
     }
   }
 }
