@@ -509,7 +509,8 @@ class ViewModel {
 
     @computed get isDirty() {
         if (!this.assessmentId) return false
-        const a = JSON.stringify(this.assessment)
+        // const a = JSON.stringify(this.assessment)
+        const a = this.assessment.toJSON
         const b = this.assessmentSavedVersionString
         return a != b
     }
@@ -673,7 +674,7 @@ class ViewModel {
 
     @action updateAssessmentSavedVersion(assessment) {
         if (assessment && assessment.id) {
-            const assessmentStringCopy = JSON.stringify(assessment)
+            const assessmentStringCopy = JSON.stringify(assessment,undefined,2)
             const jsoncopy = JSON.parse(assessmentStringCopy)
             transaction(() => {
                 this.assessmentSavedVersion = jsoncopy
@@ -694,7 +695,7 @@ class ViewModel {
         if (json && json.id) {
             const id = Number(json.id)
             // const assessment = observable.object(json)
-            const assessmentStringCopy = JSON.stringify(json)
+            const assessmentStringCopy = JSON.stringify(json,undefined,2)
             const jsoncopy = JSON.parse(assessmentStringCopy)
 
             //  const assessment = observable.object(jsoncopy)
@@ -910,16 +911,25 @@ class ViewModel {
         return url
     }
 
+    // addGetters(assessmentObject) {
+    //     console.log("addGetters")
+    //     console.log(JSON.stringify(Object.keys(assessmentObject)))
+    // }
+
     async saveCurrentAssessment() {
         events.trigger("saveAssessment", "savestart")
-        const data = toJS(this.assessment)
-        console.log("Y:" + JSON.stringify(data).length)
+        // const data = toJS(this.assessment)
+        // const json = JSON.stringify(data)
+        const json = this.assessment.toJSON
+        const data = JSON.parse(json)
+        // this.addGetters(data)
+        console.log("Y:" + json.length)
         const id = data.id
         const url = config.getUrl("assessment/") + id
         fetch(url, {
             method: 'POST',
             // mode: 'no-cors',
-            body: JSON.stringify(data), // data can be `string` or {object}! (cant get it to work with {object}...)
+            body: json, // data can be `string` or {object}! (cant get it to work with {object}...)
             headers:{
               'Accept': 'application/json',
               'Content-Type': 'application/json',

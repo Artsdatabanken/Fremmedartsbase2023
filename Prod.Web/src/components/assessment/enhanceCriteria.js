@@ -1067,6 +1067,7 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
 }
 
 function enhanceRiskAssessmentLevel(riskAssessment, labels) {
+    console.log("run enhanceRiskAssessmentLevel")
     extendObservable(riskAssessment, {
         get invationpotential() {
             const result = RiskLevel.invasjonspotensiale(riskAssessment)
@@ -1100,6 +1101,8 @@ function enhanceRiskAssessmentLevel(riskAssessment, labels) {
         //     return decisiveCriteriaLabel
         // }
     });
+    console.log("end run enhanceRiskAssessmentLevel")
+
 }
 
 function enhanceCriteriaAddLabelsAndAuto(riskAssessment, codes) {
