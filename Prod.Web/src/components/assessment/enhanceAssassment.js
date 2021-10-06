@@ -100,8 +100,8 @@ export default function enhanceAssessment(json, appState) {
             objra.AOO10yrBest = assra.AOO10yrBest
             objra.AOO10yrLow = assra.AOO10yrLow
             objra.AOO10yrHigh = assra.AOO10yrHigh
-            // objra.introductionsLow = assra.introductionsLow
-            // objra.introductionsHigh = assra.introductionsHigh
+            objra.introductionsLow = assra.introductionsLow
+            objra.introductionsHigh = assra.introductionsHigh
         
             const json = JSON.stringify(obj, undefined, 2)
             // console.log(JSON.stringify(Object.keys(obj)))

@@ -82,13 +82,15 @@ const introHighTable = {
 
 function introductionNum(table, best) {
     const keys = Object.keys(table).reverse()
+    // console.log("introductionNum keys: " + JSON.stringify(keys))
     var i = 0
-    for(key of keys) {
+    for(const key of keys) {
         if(best >= key) {
             i = key
             break
         }
     }
+    // console.log("introductionNum result: " + i)
     return i
 }
 
