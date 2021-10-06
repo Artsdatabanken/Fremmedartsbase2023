@@ -503,9 +503,9 @@ export default class SelectAssessment extends Component {
             <div className="usedFilters">
             {!appState.horizonScanFilter.hsNotStarted && !appState.horizonScanFilter.hsFinished && !appState.horizonScanFilter.toAssessment && !appState.horizonScanFilter.notAssessed && appState.responsible == [] ?
                 
-                <div className="counter">Viser totalt {appState.expertgroupAssessmentTotalCount} vurderinger</div>
+                <div className="counter">Viser totalt {appState.expertgroupAssessmentTotalCount} {appState.expertgroupAssessmentTotalCount == 1 ? " vurdering" : " vurderinger"} </div>
                 :            
-                <div className="counter">Viser totalt {appState.expertgroupAssessmentList.length} vurderinger (filtrert fra {appState.expertgroupAssessmentTotalCount})</div>
+                <div className="counter">Viser totalt {appState.expertgroupAssessmentList.length} {appState.expertgroupAssessmentTotalCount == 1 ? " vurdering" : " vurderinger"} (filtrert fra {appState.expertgroupAssessmentTotalCount})</div>
             }
             <div>
                 <span>{labels.SelectAssessment.usedFilters}</span> 

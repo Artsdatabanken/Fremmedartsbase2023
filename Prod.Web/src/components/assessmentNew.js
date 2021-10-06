@@ -104,7 +104,7 @@ export default class assessmentNew extends React.Component {
                                     codes={appState.expertgroups} />
                         </div>
                     </div>
-                    <div className="row" style={{marginTop: '30px' }}>
+                    <div className="row" style={{marginTop: '30px', marginLeft: '30px' }}>
                         <div className="col-md-6">
                             <div style={{position: 'relative'}}>
                                 {newAssessment.ScientificName.length > 0 ?
@@ -186,9 +186,9 @@ export default class assessmentNew extends React.Component {
                             <div>{labels.SelectAssessment.NBWritingAccess}</div>
                             
                             <Xcomp.Button primary onClick={this.onNewAssessment} disabled={!rolle.writeAccess || (!newAssessment.ScientificName || checkForExistingAssessment(newAssessment.ScientificName))}>{this.moveAssessment() ? labels.SelectAssessment.moveAssessment : labels.SelectAssessment.createAssessment}</Xcomp.Button>
-                            {(newAssessment.ScientificName.length > 0 && 
-                                !rolle.writeAccess || 
-                                ( checkForExistingAssessment(newAssessment.ScientificName))) ? <div style={{color: 'red'}}>{labels.SelectAssessment.alreadyOnTheList}</div>: null}
+                            {newAssessment.ScientificName.length > 0 && 
+                                !rolle.writeAccess ?  <div style={{color: 'red'}}>{"Du har ikke skrivetilgang i denne komitéen!"}</div> :
+                                 checkForExistingAssessment(newAssessment.ScientificName) ? <div style={{color: 'red'}}>{labels.SelectAssessment.alreadyOnTheList}</div>: null}
                         </div>
                 </fieldset>
             </div>
