@@ -73,9 +73,9 @@ export default function enhanceAssessment(json, appState) {
             const assra = assessment.riskAssessment
             const obj = toJS(assessment)
             const objra = obj.riskAssessment
-            // objra.riskLevel = assra.riskLevel
-            // objra.riskLevelText = assra.riskLevelText
-            // objra.riskLevelCode = assra.riskLevelCode
+            objra.riskLevel = assra.riskLevel
+            objra.riskLevelText = assra.riskLevelText
+            objra.riskLevelCode = assra.riskLevelCode
             objra.AOOchangeBest = assra.AOOchangeBest
             objra.AOOchangeLow = assra.AOOchangeLow
             objra.AOOchangeHigh = assra.AOOchangeHigh

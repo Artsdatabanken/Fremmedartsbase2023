@@ -1086,8 +1086,14 @@ function enhanceRiskAssessmentLevel(riskAssessment, labels) {
     });
 
     extendObservable(riskAssessment, {
-        get riskLevel() {
+        get riskLevelObj() {
             const result = RiskLevel.riskLevel(this.invationpotential, this.ecoeffect)
+            return result;
+        }
+    });
+    extendObservable(riskAssessment, {
+        get riskLevel() {
+            const result = this.riskLevelObj.level
             return result;
         }
     });
