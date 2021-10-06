@@ -505,7 +505,7 @@ export default class SelectAssessment extends Component {
                 
                 <div className="counter">Viser totalt {appState.expertgroupAssessmentTotalCount} {appState.expertgroupAssessmentTotalCount == 1 ? " vurdering" : " vurderinger"} </div>
                 :            
-                <div className="counter">Viser totalt {appState.expertgroupAssessmentList.length} {appState.expertgroupAssessmentTotalCount == 1 ? " vurdering" : " vurderinger"} (filtrert fra {appState.expertgroupAssessmentTotalCount})</div>
+                <div className="counter">Viser totalt {appState.expertgroupAssessmentList.length} {appState.expertgroupAssessmentList.length == 1 ? " vurdering" : " vurderinger"} (filtrert fra {appState.expertgroupAssessmentTotalCount})</div>
             }
             <div>
                 <span>{labels.SelectAssessment.usedFilters}</span> 

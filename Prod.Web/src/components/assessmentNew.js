@@ -187,7 +187,7 @@ export default class assessmentNew extends React.Component {
                             
                             <Xcomp.Button primary onClick={this.onNewAssessment} disabled={!rolle.writeAccess || (!newAssessment.ScientificName || checkForExistingAssessment(newAssessment.ScientificName))}>{this.moveAssessment() ? labels.SelectAssessment.moveAssessment : labels.SelectAssessment.createAssessment}</Xcomp.Button>
                             {newAssessment.ScientificName.length > 0 && 
-                                !rolle.writeAccess ?  <div style={{color: 'red'}}>{"Du har ikke skrivetilgang i denne komitéen!"}</div> :
+                                !rolle.writeAccess ?  <div style={{color: 'red'}}>{labels.SelectAssessment.accessDenied}</div> :
                                  checkForExistingAssessment(newAssessment.ScientificName) ? <div style={{color: 'red'}}>{labels.SelectAssessment.alreadyOnTheList}</div>: null}
                         </div>
                 </fieldset>
