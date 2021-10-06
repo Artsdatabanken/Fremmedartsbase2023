@@ -335,6 +335,7 @@ namespace SwissKnife.Database
                 Encoding = Encoding.UTF8
             };
             var taxonService = new SwissKnife.Database.TaksonService();
+            var datetime = DateTime.MinValue;
             using (var reader = new StreamReader(inputFolder))
             using (var csv = new CsvReader(reader, theCsvConfiguration))
             {
@@ -378,10 +379,18 @@ namespace SwissKnife.Database
                         else
                         {
                             _database.Assessments.Add(assessment);
+                            datetime = assessment.LastUpdatedAt;
                             _database.SaveChanges();
                         }
                     }
 
+                }
+
+                if (datetime>DateTime.MinValue)
+                {
+                    var timestamp = _database.TimeStamp.Single();
+                    timestamp.DateTimeUpdated = datetime;
+                    _database.SaveChanges();
                 }
             }
         }
