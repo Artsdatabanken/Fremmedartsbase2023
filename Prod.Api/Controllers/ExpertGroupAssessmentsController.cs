@@ -335,12 +335,27 @@ namespace Prod.Api.Controllers
             //}
             doReturn.assessmentList = result;
             doReturn.TotalCount = totalCount;
-            doReturn.Facets = facets.Select(x => new Facet()
+            if (doReturn.TotalCount > 0)
             {
-                Name = x.Dim,
-                FacetsItems = x.LabelValues.Select(y => new FacetItem() { Name = y.Label, Count = (int)y.Value })
-                    .ToList()
-            }).ToList();
+                doReturn.Facets = facets.Select(x => new Facet()
+                {
+                    Name = x.Dim,
+                    FacetsItems = x.LabelValues.Select(y => new FacetItem() { Name = y.Label, Count = (int)y.Value })
+                                    .ToList()
+                }).ToList();
+            }
+            else
+            {
+                doReturn.Facets = new List<Facet>
+                { 
+                    new Facet(){ Name  = "Author", FacetsItems = new List<FacetItem>() },
+                    new Facet(){ Name = "PotentialDoorKnocker", FacetsItems = new List<FacetItem>() },
+                    new Facet(){ Name = "NotAssessedDoorKnocker", FacetsItems = new List<FacetItem>() },
+                    new Facet(){ Name = "Progress" , FacetsItems = new List<FacetItem>() } 
+                };
+
+            }
+            
             
             return doReturn;
         }
