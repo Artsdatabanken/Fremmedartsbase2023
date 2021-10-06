@@ -70,10 +70,10 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                             <p>{critlabels.status}: {alienSpeciesCategoryLabel}</p>
                             <Risikomatrise
                                 labels={critlabels}
-                                invasjonspotensiale={riskAssessment.invasjonspotensialeLevel.level}
-                                ecoeffect={riskAssessment.ecoeffectLevel.level}
-                                invasjonUncertaintyLevels={riskAssessment.invasjonspotensialeLevel.uncertaintyLevels}
-                                ecoeffectUncertaintyLevels={riskAssessment.ecoeffectLevel.uncertaintyLevels}/>
+                                invasjonspotensiale={riskAssessment.invationpotential.level}
+                                ecoeffect={riskAssessment.ecoeffect.level}
+                                invasjonUncertaintyLevels={riskAssessment.invationpotential.uncertaintyLevels}
+                                ecoeffectUncertaintyLevels={riskAssessment.ecoeffect.uncertaintyLevels}/>
                             <h3>{riskAssessment.riskLevelText} <b> {riskAssessment.riskLevelCode}</b></h3>
                             <h4>{critlabels.decisiveCriteria}:
                                 <b> {riskAssessment.decisiveCriteria}</b>
