@@ -70,7 +70,8 @@ namespace Prod.Api.Controllers
                                   Admin = x.Admin, 
                                   //Leser = x.Leser, 
                                   WriteAccess = x.WriteAccess,
-                                  User = new User() { UserName = user.UserName, Id = user.Id, IsAdmin = user.IsAdmin}
+                                  User = new User() { UserName = user.UserName, Id = user.Id, IsAdmin = user.IsAdmin},
+                                  UserId = user.Id
             }).FirstOrDefault(x => x.ExpertGroupName == id);
             if (roleInGroup == null)
             {
