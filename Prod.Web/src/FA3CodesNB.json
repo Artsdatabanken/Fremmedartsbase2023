@@ -5686,6 +5686,13 @@
                         },
                         {
                             "Id": null,
+                            "Value": "accessDenied",
+                            "Text": "Du har ikke skrivetilgang i denne komitéen!",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "NBWritingAccess",
                             "Text": "NB! For å legge til ny art må du være leder eller ha skrivetilgang!",
                             "Info": null,
