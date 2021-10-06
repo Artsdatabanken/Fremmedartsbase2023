@@ -130,7 +130,8 @@ namespace Nbic.Indexer
                 foreach (var doc in refs)
                 {
                     var taxdoc = config.Build(_taxonomyWriter, doc);
-                    _writer.UpdateDocument(new Term(Field_Id, taxdoc.Get(Field_Id)), taxdoc);}
+                    _writer.UpdateDocument(new Term(Field_Id, taxdoc.Get(Field_Id)), taxdoc);
+                }
 
                 _writer.Commit();
                 _taxonomyWriter.Commit();

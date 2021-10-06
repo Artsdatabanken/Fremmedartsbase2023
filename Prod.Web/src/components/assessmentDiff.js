@@ -12,9 +12,10 @@ function Diff(props) {
     let first_entry = props.species;
     let new_entry = props.compare_species;
 
-    let stringified = JSON.stringify(first_entry,undefined,2);
-    let stringified2 = JSON.stringify(new_entry,undefined,2);
-    let list_array = diff(stringified,stringified2);
+    // let stringified = JSON.stringify(first_entry,undefined,2);
+    // let stringified2 = JSON.stringify(new_entry,undefined,2);
+    // let list_array = diff(stringified,stringified2);
+    let list_array = diff(first_entry,new_entry);
 
     let table_row = [];
     for(let i in list_array){        
@@ -57,7 +58,7 @@ export default class AssessmentDiff extends Component {
     }
 
     render() {
-        const {appState, appState:{assessment, assessmentSavedVersion, koder}} = this.props
+        const {appState, appState:{assessment, assessmentSavedVersionString, koder}} = this.props
         const kodeTekst = (kodegruppe, id) => {
             const gr = koder[kodegruppe]
             if (!gr) return "no code group: " + kodegruppe
@@ -65,6 +66,7 @@ export default class AssessmentDiff extends Component {
             return match && match.text ? match.text : id
             
         }
+        const assessmentString = assessment.toJSON
         window.scrollTo(0, 0);
         return (
             <div className="page_container">
@@ -85,8 +87,8 @@ export default class AssessmentDiff extends Component {
                     </thead>
                     <tbody>
                         <Diff 
-                            species={assessmentSavedVersion} 
-                            compare_species={assessment} 
+                            species={assessmentSavedVersionString} 
+                            compare_species={assessmentString} 
                         />
                         
                     </tbody>
