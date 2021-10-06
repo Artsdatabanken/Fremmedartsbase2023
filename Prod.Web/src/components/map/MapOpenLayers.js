@@ -42,7 +42,7 @@ const MapOpenLayers = ({
     let featureOver;
     const vectorFeatures = {};
 
-    if (!mapBounds) mapBounds = [[57, 4.3], [71.5, 32.5]];
+    //if (!mapBounds) mapBounds = [[57, 4.3], [71.5, 32.5]];
 
     // console.log('MapOpenLayers', geojson);
   
@@ -373,7 +373,7 @@ const MapOpenLayers = ({
                 center: mapCenter,
                 projection: `EPSG:${config.mapEpsgCode}`,
                 maxZoom: numZoomLevels,
-                zoom: mapZoom
+                zoom: 0// mapZoom
             }),
             layers: [
                 new TileLayer({
@@ -531,6 +531,9 @@ const MapOpenLayers = ({
                 onHover();
             }
         });
+
+        // Fit extent
+        mapObject.getView().fit(mapExtent);
 
 		return () => mapObject.setTarget(undefined);
 	}, []);

@@ -15,11 +15,8 @@ const mapBounds = {
   ]
 };
 
-const Artskart = ({ taxonId, scientificNameId, vurderingsContext, utvalg, onOverførFraArtskart, artskartSelectionGeometry, artskartAdded, artskartRemoved, onCancel }) => {
-  if (vurderingsContext === undefined) {
-    vurderingsContext = 'N';
-  }
-  // console.log('Artskart', taxonId, scientificNameId, vurderingsContext);
+const Artskart = ({ taxonId, scientificNameId, evaluationContext, utvalg, onOverførFraArtskart, artskartSelectionGeometry, artskartAdded, artskartRemoved, onCancel }) => {
+  // console.log('Artskart', taxonId, scientificNameId, evaluationContext);
   return (
     <div className="artskartmodal">
       <div
@@ -49,7 +46,7 @@ const Artskart = ({ taxonId, scientificNameId, vurderingsContext, utvalg, onOver
         scientificNameId={scientificNameId}
         kriterier={{ ...utvalg }}
         mapstyle={mapstyle}
-        mapBounds={mapBounds[vurderingsContext]}
+        mapBounds={mapBounds[evaluationContext]}
         onOverførFraArtskart={onOverførFraArtskart}
         artskartAdded={artskartAdded}
         artskartRemoved={artskartRemoved}
