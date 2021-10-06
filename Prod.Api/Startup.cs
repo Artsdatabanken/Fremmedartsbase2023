@@ -43,7 +43,7 @@ namespace Prod.Api
         public void ConfigureServices(IServiceCollection services)
         {
             // The following line enables Application Insights telemetry collection.
-            //services.AddApplicationInsightsTelemetry();// "023396f1-285d-45cc-920c-eb957cdd6c01");
+            services.AddApplicationInsightsTelemetry();// "023396f1-285d-45cc-920c-eb957cdd6c01");
             StartupAddDependencies(services);
             services.AddControllers().AddJsonOptions(x =>
             {

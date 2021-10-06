@@ -25,7 +25,7 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Change this to force index rebuild!
         /// </summary>
-        public const int IndexVersion = 2;
+        public const int IndexVersion = 7;
 
         private const string Field_Id = "Id";
         private const string Field_Group = "Expertgroup";
@@ -38,6 +38,9 @@ namespace Prod.Api.Helpers
         public const string Field_ScientificNameAsTerm = "ScientificNameTerm";
         private const string Field_TaxonHierarcy = "TaxonHierarcy";
         private const string Field_Category = "Category";
+        private const string Field_Category2018 = "Category2018";
+
+
         private const string Field_Criteria = "Criteria";
         private const string Field_CriteriaAll = "CriteriaAll";
 
@@ -54,7 +57,7 @@ namespace Prod.Api.Helpers
         private const string Field_Year = "Year";
         private const string Field_EndringKat = "ChangeCat";
 
-        private const string Field_Category2018 = "Category";
+        
 
         private const string Field_DoHorizonScanning = "DoHorizonScan";
         private const string Field_HsStatus = "HsStatus";
@@ -213,8 +216,7 @@ namespace Prod.Api.Helpers
                 //new StoredField(Field_TaxonHierarcy, ass.VurdertVitenskapeligNavnHierarki),
                 new StringField(Field_Category, GetCategoryFromRiskLevel(ass.RiskAssessment.RiskLevel),
                     Field.Store.YES),
-                new StringField(Field_Category2018, GetCategoryFromRiskLevel(ass2018?.RiskLevel ?? -1),
-                    Field.Store.YES),
+                
                 //new StringField(Field_AssessmentContext, ass.VurderingsContext, Field.Store.YES),
                 new TextField(Field_PopularName, ass.EvaluatedVernacularName ?? string.Empty, Field.Store.YES),
                 new StringField(Field_DoHorizonScanning, ass.HorizonDoScanning ? "1" : "0", Field.Store.NO),
@@ -229,7 +231,28 @@ namespace Prod.Api.Helpers
                 new FacetField(Facet_PotentialDoorKnocker, ExtractPotentialDoorKnocker(get2018NotAssessed).ToString()),
                 new FacetField(Facet_NotAssessedDoorKnocker, ExtractNotAssessedDoorKnocker(get2018NotAssessed).ToString())
             };
+            if (IsDocumentEvaluated(ass))
+            {
+                document.Add(new StringField(Field_Category, GetCategoryFromRiskLevel(ass.RiskAssessment.RiskLevel),
+                    Field.Store.YES));
+            }
+            else
+            {
+                    document.Add(new StringField(Field_Category, "NR", Field.Store.YES));
+            }
 
+            if (ass2018 != null)
+            {
+                if (IsDocumentEvaluated(ass2018.MainCategory, ass2018.MainSubCategory, ass2018.MainSubCategory))
+                {
+                    document.Add(new StringField(Field_Category2018, GetCategoryFromRiskLevel(ass2018?.RiskLevel ?? -1),
+                                        Field.Store.YES));
+                }
+                else
+                {
+                    document.Add(new StringField(Field_Category2018, "NR", Field.Store.YES));
+                }
+            }
             if (!string.IsNullOrWhiteSpace(ass.RiskAssessment.DecisiveCriteria))
             {
                 foreach (var criteria in _criterias)
@@ -359,10 +382,34 @@ namespace Prod.Api.Helpers
                 case 2: return "PH";
                 case 3: return "HI";
                 case 4: return "SE";
-                case -1: return "-";
+                //case -1: return "-";
                 default:
                     return "NR";
             }
+        }
+        private static bool IsDocumentEvaluated(FA4 vurdering)
+        {
+            if (vurdering.AlienSpeciesCategory == "AlienSpecie" || vurdering.AlienSpeciesCategory == "EcoEffectWithoutEstablishment")
+                return true;
+            if (vurdering.AlienSpeciesCategory == "DoorKnocker")
+                return vurdering.DoorKnockerCategory == "doRiskAssessment";
+            if (vurdering.AlienSpeciesCategory == "RegionallyAlien")
+                return (vurdering.RegionallyAlienCategory == "doRiskAssessment");
+            if (vurdering.AlienSpeciesCategory == "NotApplicable")
+                return false;
+            return false; // should not be reachable // todo: replace with exception
+        }
+        private static bool IsDocumentEvaluated(string alienSpeciesCategory, string doorKnockerCategory, string regionallyAlienCategory)
+        {
+            if (alienSpeciesCategory == "AlienSpecie" || alienSpeciesCategory == "EcoEffectWithoutEstablishment")
+                return true;
+            if (alienSpeciesCategory == "DoorKnocker")
+                return doorKnockerCategory == "doRiskAssessment";
+            if (alienSpeciesCategory == "RegionallyAlien")
+                return (regionallyAlienCategory == "doRiskAssessment");
+            if (alienSpeciesCategory == "NotApplicable")
+                return false;
+            return false; // should not be reachable // todo: replace with exception
         }
 
         public static AssessmentListItem GetDocumentFromIndex(Document doc)
@@ -379,7 +426,7 @@ namespace Prod.Api.Helpers
                 ScientificName = doc.Get(Field_ScientificName),
                 TaxonHierarcy = doc.Get(Field_TaxonHierarcy),
                 Category = doc.Get(Field_Category),
-                Category2018 = doc.Get(Field_Category),
+                Category2018 = doc.Get(Field_Category2018),
                 Criteria = doc.Get(Field_CriteriaAll),
                 AssessmentContext = doc.Get(Field_AssessmentContext),
                 PopularName = doc.Get(Field_PopularName),

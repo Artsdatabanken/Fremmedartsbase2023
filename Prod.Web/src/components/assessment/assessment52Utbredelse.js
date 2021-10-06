@@ -103,6 +103,7 @@ export default class Assessment52Utbredelse extends React.Component {
                                     <ModalArtskart
                                         taxonId={assessment.taxonId}
                                         scientificNameId={assessment.evaluatedScientificNameId}
+                                        evaluationContext={assessment.evaluationContext}
                                         labels={labels}
                                         utvalg={assessment.riskAssessment}
                                         onOverførFraArtskart={action(this.handleOverførFraArtskart)}
@@ -171,7 +172,7 @@ export default class Assessment52Utbredelse extends React.Component {
                     {/* <b>[Her kommer det et kart]</b> */}
                     {/* TODO: remove component refresh hack */ assessment.fylkesforekomster ? (assessment.fylkesforekomster.map(e => e.state ? '' : '')) : ''}
                     <Fylkesforekomst
-                        vurderingsContext={assessment.vurderingsContext}
+                        evaluationContext={assessment.evaluationContext}
                         taxonId={assessment.TaxonId}
                         latinsknavnId={assessment.latinsknavnId}
                         utvalg={assessment.artskartModel}
