@@ -555,6 +555,7 @@ namespace Prod.Api.Controllers
             var assessmentString = JsonSerializer.Serialize(doc);
             assessment.Doc = assessmentString;
             assessment.ChangedAt = DateTime.Now;
+            assessment.IsDeleted = doc.IsDeleted;
             var timestamp =_dbContext.TimeStamp.Single();
             timestamp.DateTimeUpdated = assessment.ChangedAt;
             await _dbContext.SaveChangesAsync().ConfigureAwait(false);
