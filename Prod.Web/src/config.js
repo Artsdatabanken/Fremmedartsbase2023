@@ -45,7 +45,7 @@ function apiUrl (anchor) {
   }
 
   function isNotTest(){
-    return !(window.location.href.indexOf("test") > 1) && !isRelease()
+    return !(window.location.href.indexOf("test") > 1) && isRelease()
    }
 
   const homeuri = window.location.protocol + "//" + window.location.host

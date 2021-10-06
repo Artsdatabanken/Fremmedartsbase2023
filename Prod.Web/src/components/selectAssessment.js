@@ -134,7 +134,7 @@ export default class SelectAssessment extends Component {
         // find leaders in each expert group
         var experts = ExpertGroupModel.eksperterforvalgtgruppe.filter(item => item.writeAccess == true)
         
-
+        console.log(appState.expertgroupAssessmentList.length)
      /*   let checkList = document.getElementById('list1');
         if (checkList) {checkList.getElementsByClassName('anchor')[0].onclick = function (evt) {
             if (checkList.classList.contains('visible'))
@@ -169,7 +169,7 @@ export default class SelectAssessment extends Component {
             <div>
                 {window.location.href.indexOf("test.") > 1 && <table className="table table-striped">
                     <tr style={{backgroundColor: '#f9f9f9'}}>
-                        <td style={{textAlign: 'center', color: 'red'}}><b>{labels.SelectAssessment.testVersion}<a href="https://rl2021.artsdatabanken.no/">{labels.SelectAssessment.here}</a>.</b></td>
+                        <td style={{textAlign: 'center', color: 'red'}}><b>{labels.SelectAssessment.testVersion}<a href="https://fab4.artsdatabanken.no/">{labels.SelectAssessment.here}</a>.</b></td>
                     </tr>
                 </table>}              
 
@@ -349,8 +349,8 @@ export default class SelectAssessment extends Component {
                                 <Xcomp.Bool observableValue={[appState.horizonScanFilter, "hsNotStarted"]} label={koder.workStatus[0].text + "   (" + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','2') + ") " + (100*appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','2')/appState.expertgroupAssessmentTotalCount).toFixed() + "%"} />
                                 <Xcomp.Bool observableValue={[appState.horizonScanFilter, "hsFinished"]} label={koder.workStatus[2].text + " (" + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0') + ")   " + (100*appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0')/appState.expertgroupAssessmentTotalCount).toFixed() + "%"} />
                             <div className="subChoice">
-                                    <Xcomp.Bool observableValue={[appState.horizonScanFilter, "toAssessment"]} label={" (" + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1') + ") " +  (100*appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1')/appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0')).toFixed() + "% videre til risikovurdering"} />
-                                    <Xcomp.Bool observableValue={[appState.horizonScanFilter, "notAssessed"]} label={" (" + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','0') + ") " + (100*appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','0')/appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0')).toFixed() + "% ikke videre"} />
+                                    <Xcomp.Bool observableValue={[appState.horizonScanFilter, "toAssessment"]} label={" (" + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1') + ") " + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0').toFixed() > 0 ? (100*appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1')/appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0')).toFixed() : "0" + "% videre til risikovurdering"} />
+                                    <Xcomp.Bool observableValue={[appState.horizonScanFilter, "notAssessed"]} label={" (" + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','0') + ") " + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0').toFixed() > 0 ? (100*appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','0')/appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0')).toFixed() : "0" + "% ikke videre"} />
                             </div>
 
                         </div>
@@ -495,11 +495,11 @@ export default class SelectAssessment extends Component {
             
             
             <div className="usedFilters">
-            {(!appState.horizonScanFilter.hsNotStarted && !appState.horizonScanFilter.hsFinished && !appState.horizonScanFilter.toAssessment && !appState.horizonScanFilter.notAssessed) || (appState.horizonScanFilter.hsNotStarted && appState.horizonScanFilter.hsFinished) ?
+            {!appState.horizonScanFilter.hsNotStarted && !appState.horizonScanFilter.hsFinished && !appState.horizonScanFilter.toAssessment && !appState.horizonScanFilter.notAssessed && appState.responsible == [] ?
                 
                 <div className="counter">Viser totalt {appState.expertgroupAssessmentTotalCount} vurderinger</div>
                 :            
-                <div className="counter">Viser totalt {this.findAmountOfAssessments(appState)} vurderinger (filtrert fra {appState.expertgroupAssessmentTotalCount})</div>
+                <div className="counter">Viser totalt {appState.expertgroupAssessmentList.length} vurderinger (filtrert fra {appState.expertgroupAssessmentTotalCount})</div>
             }
             <div>
                 <span>{labels.SelectAssessment.usedFilters}</span> 
