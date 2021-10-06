@@ -17,12 +17,12 @@ import { action, computed } from 'mobx';
 @inject('appState')
 @observer
 export default class Assessment52Utbredelse extends React.Component {
-    @computed get isDirty() {
-        if (!this.props.appState.assessmentId) return false
-        const a = JSON.stringify(this.props.appState.assessment)
-        const b = this.props.appState.assessmentSavedVersionString
-        return a != b
-    }
+    // @computed get isDirty() {
+    //     if (!this.props.appState.assessmentId) return false
+    //     const a = JSON.stringify(this.props.appState.assessment)
+    //     const b = this.props.appState.assessmentSavedVersionString
+    //     return a != b
+    // }
 
     handleOverførFraArtskart = ({ selectionGeometry, countylist, areadata, observations, editStats }) => {
         // console.log('handleOverførFraArtskart', selectionGeometry, countylist, areadata, observations, editStats);
