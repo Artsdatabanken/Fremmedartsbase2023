@@ -87,9 +87,9 @@ export default function enhanceAssessment(json, appState) {
             objra.ascore = assra.ascore
             objra.alow = assra.alow
             objra.ahigh = assra.ahigh
-            // objra.medianLifetime = assra.medianLifetime
-            // objra.lifetimeLowerQ = assra.lifetimeLowerQ
-            // objra.lifetimeUpperQ = assra.lifetimeUpperQ
+            objra.medianLifetime = assra.medianLifetime
+            objra.lifetimeLowerQ = assra.lifetimeLowerQ
+            objra.lifetimeUpperQ = assra.lifetimeUpperQ
             objra.bscore = assra.bscore
             objra.blow = assra.blow
             objra.bhigh = assra.bhigh

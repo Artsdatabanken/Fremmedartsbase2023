@@ -11,6 +11,7 @@ function sqrt(num){return Math.sqrt(num)}
 const pi = Math.PI
 function roundToSignificantDecimals(num) {
     // console.log("run roundToSignificantDecimals")
+    if (num === null) return 0;    
     const result = 
         (num >= 9950000) ? round(num / 1000000) * 1000000 :
         (num >= 995000 ) ? round(num / 100000)  * 100000  :
@@ -22,6 +23,7 @@ function roundToSignificantDecimals(num) {
     return result
 }
 function roundToSignificantDecimals2(num) {   // todo: spør om grenseverdiene (100 vs 99.5, og 2(?))
+    if (num === null) return 0;    
     const result = 
         // (num >= 9950000) ? round(num / 1000000) * 1000000 :
         // (num >= 995000 ) ? round(num / 100000)  * 100000  :
@@ -308,13 +310,15 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
         get medianLifetime() {
             const k = r.ametodkey
-            return k.startsWith("A1") ? 
+            console.log("medianLifetime methodkey: " + k)
+            const result = k.startsWith("A1") ? 
                 r.ascore === 0 ? 3
                 : r.ascore === 1 ? 25
                 : r.ascore === 2 ? 200
                 : r.ascore === 3 ? 2000
                 : 0
             : roundToSignificantDecimals(r.medianLifetimeInput)
+            console.log("medianLifetime result: " + result)
         },
         get lifetimeLowerQ() {
             return roundToSignificantDecimals(r.lifetimeLowerQInput)
