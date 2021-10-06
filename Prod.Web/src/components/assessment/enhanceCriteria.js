@@ -11,6 +11,7 @@ function sqrt(num){return Math.sqrt(num)}
 const pi = Math.PI
 function roundToSignificantDecimals(num) {
     // console.log("run roundToSignificantDecimals")
+    if (num === null) return 0;    
     const result = 
         (num >= 9950000) ? round(num / 1000000) * 1000000 :
         (num >= 995000 ) ? round(num / 100000)  * 100000  :
@@ -22,6 +23,7 @@ function roundToSignificantDecimals(num) {
     return result
 }
 function roundToSignificantDecimals2(num) {   // todo: spør om grenseverdiene (100 vs 99.5, og 2(?))
+    if (num === null) return 0;    
     const result = 
         // (num >= 9950000) ? round(num / 1000000) * 1000000 :
         // (num >= 995000 ) ? round(num / 100000)  * 100000  :
@@ -82,13 +84,15 @@ const introHighTable = {
 
 function introductionNum(table, best) {
     const keys = Object.keys(table).reverse()
+    // console.log("introductionNum keys: " + JSON.stringify(keys))
     var i = 0
-    for(key of keys) {
+    for(const key of keys) {
         if(best >= key) {
             i = key
             break
         }
     }
+    // console.log("introductionNum result: " + i)
     return i
 }
 
@@ -306,13 +310,15 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
         get medianLifetime() {
             const k = r.ametodkey
-            return k.startsWith("A1") ? 
+            console.log("medianLifetime methodkey: " + k)
+            const result = k.startsWith("A1") ? 
                 r.ascore === 0 ? 3
                 : r.ascore === 1 ? 25
                 : r.ascore === 2 ? 200
                 : r.ascore === 3 ? 2000
                 : 0
             : roundToSignificantDecimals(r.medianLifetimeInput)
+            console.log("medianLifetime result: " + result)
         },
         get lifetimeLowerQ() {
             return roundToSignificantDecimals(r.lifetimeLowerQInput)
@@ -1067,6 +1073,7 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
 }
 
 function enhanceRiskAssessmentLevel(riskAssessment, labels) {
+    console.log("run enhanceRiskAssessmentLevel")
     extendObservable(riskAssessment, {
         get invationpotential() {
             const result = RiskLevel.invasjonspotensiale(riskAssessment)
@@ -1079,8 +1086,14 @@ function enhanceRiskAssessmentLevel(riskAssessment, labels) {
     });
 
     extendObservable(riskAssessment, {
-        get riskLevel() {
+        get riskLevelObj() {
             const result = RiskLevel.riskLevel(this.invationpotential, this.ecoeffect)
+            return result;
+        }
+    });
+    extendObservable(riskAssessment, {
+        get riskLevel() {
+            const result = this.riskLevelObj.level
             return result;
         }
     });
@@ -1100,6 +1113,8 @@ function enhanceRiskAssessmentLevel(riskAssessment, labels) {
         //     return decisiveCriteriaLabel
         // }
     });
+    console.log("end run enhanceRiskAssessmentLevel")
+
 }
 
 function enhanceCriteriaAddLabelsAndAuto(riskAssessment, codes) {

@@ -1,5 +1,5 @@
 import enhanceCriteria from './enhanceCriteria'
-import { observable} from 'mobx'
+import { extendObservable, observable, toJS} from 'mobx'
 
 
 
@@ -40,7 +40,7 @@ export default function enhanceAssessment(json, appState) {
     delete ra.AOO10yrHigh
     delete ra.introductionsLow
     delete ra.introductionsHigh
-    AOO10yrBest 
+    
     
 
     
@@ -66,9 +66,49 @@ export default function enhanceAssessment(json, appState) {
     enhanceCriteria(riskAssessment, assessment, codes, labels, artificialAndConstructedSites)
 
 
-    if(assessment.horizonDoScanning !== false) {console.warn("horizonDoScanning should be false for now")}
+    //if(assessment.horizonDoScanning !== false) {console.warn("horizonDoScanning should be false for now")}
 
-    
+    extendObservable(assessment, {
+        get toJSON() {
+            const assra = assessment.riskAssessment
+            const obj = toJS(assessment)
+            const objra = obj.riskAssessment
+            objra.riskLevel = assra.riskLevel
+            objra.riskLevelText = assra.riskLevelText
+            objra.riskLevelCode = assra.riskLevelCode
+            objra.AOOchangeBest = assra.AOOchangeBest
+            objra.AOOchangeLow = assra.AOOchangeLow
+            objra.AOOchangeHigh = assra.AOOchangeHigh
+            objra.adefaultBest = assra.adefaultBest
+            objra.adefaultLow = assra.adefaultLow
+            objra.adefaultHigh = assra.adefaultHigh
+            objra.apossibleLow = assra.apossibleLow
+            objra.apossibleHigh = assra.apossibleHigh
+            objra.ascore = assra.ascore
+            objra.alow = assra.alow
+            objra.ahigh = assra.ahigh
+            objra.medianLifetime = assra.medianLifetime
+            objra.lifetimeLowerQ = assra.lifetimeLowerQ
+            objra.lifetimeUpperQ = assra.lifetimeUpperQ
+            objra.bscore = assra.bscore
+            objra.blow = assra.blow
+            objra.bhigh = assra.bhigh
+            objra.expansionSpeed = assra.expansionSpeed
+            objra.expansionLowerQ = assra.expansionLowerQ
+            objra.expansionUpperQ = assra.expansionUpperQ
+            objra.AOOdarkfigureBest = assra.AOOdarkfigureBest
+            objra.AOO10yrBest = assra.AOO10yrBest
+            objra.AOO10yrLow = assra.AOO10yrLow
+            objra.AOO10yrHigh = assra.AOO10yrHigh
+            objra.introductionsLow = assra.introductionsLow
+            objra.introductionsHigh = assra.introductionsHigh
+        
+            const json = JSON.stringify(obj, undefined, 2)
+            // console.log(JSON.stringify(Object.keys(obj)))
+            return json
+        }
+    });
+
     
     return assessment
 
