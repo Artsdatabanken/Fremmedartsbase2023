@@ -6,16 +6,39 @@ import {UserContext} from './components'
 
 const ObservableBool = (props) => <Observer>{() => {
     const context = UserContext.getContext()
-    const {observableValue, label, stringBool, disabled} = props;
-    const [obj,
-        prop] = observableValue;
+    const {observableValue, label, label2, stringBool, disabled, mode} = props;
+    const [obj, prop] = observableValue;
     
-    // eg: stringBool="True,False" (or "Yes,No...")
+    // eg: stringBool="True,False" (or "Yes,No...") (not for radio!)
     const flagStrings = !stringBool ? [] : stringBool.split(',');
     const isStringBool = flagStrings.length === 2
 
     const hasLabel = !!label;
-    return (hasLabel
+    const labelB1 = (mode === 'radio' && !label) ? "true" : label
+    const labelB2 = (mode === 'radio' && !label2) ? "false" : label2
+
+    return (
+        mode === "radio"
+        ? <div className={"radiobool"}>
+            <div className={"radiobooltrue"} key={"true"}>
+                <label className={props.disabled ? "disabled" : ""}>
+                    <input type="radio" name={"radio " + prop} value={value}
+                        disabled={disabled}
+                        onClick={action(e => obj[prop] = true )}
+                        />{labelB1}
+                </label>
+            </div>
+            <div className={"radioboolfalse"} key={"false"}>
+                <label className={props.disabled ? "disabled" : ""}>
+                    <input type="radio" name={"radio " + prop} value={value}
+                        disabled={disabled}
+                        onClick={action(e => obj[prop] = false )}
+                        />{labelB2}
+                </label>
+            </div>
+          </div>
+
+        : hasLabel
         ? <div className="checkbox">
                 <label>
                     <input
