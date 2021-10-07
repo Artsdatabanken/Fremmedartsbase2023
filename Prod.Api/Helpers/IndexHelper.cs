@@ -91,7 +91,9 @@ namespace Prod.Api.Helpers
                 var result = await _dbContext.Assessments.Include(x => x.LastUpdatedByUser)
                     .Include(x => x.LockedForEditByUser)
                     .Include(x=>x.Comments)
-                    .Where(x => x.IsDeleted == false && (x.LastUpdatedAt > minDate || x.Comments.Any(y=>y.CommentDate > minDate) ) )
+                    .Where(x => 
+                        //x.IsDeleted == false && 
+                        (x.LastUpdatedAt > minDate || x.Comments.Any(y=>y.CommentDate > minDate) ) )
                     .OrderBy(x => x.Id)
                     .Skip(pointer).Take(batchSize)
                     .ToArrayAsync();
@@ -100,8 +102,10 @@ namespace Prod.Api.Helpers
                 var tempDate = result.Max(x => x.LastUpdatedAt);
                 if (maxDate < tempDate) maxDate = tempDate;
 
-                var docs = result.Select(GetDocumentFromAssessment).ToArray();
+                var docs = result.Where(x=>x.IsDeleted == false).Select(GetDocumentFromAssessment).ToArray();
                 _index.AddOrUpdate(docs);
+                var deletedDocs = result.Where(x => x.IsDeleted).Select(x=>x.Id).ToArray();
+                _index.Delete(deletedDocs);
             }
 
             SetTimeStamps(_dbContext, _index, maxDate);
@@ -183,8 +187,16 @@ namespace Prod.Api.Helpers
 
         public static void Index(Assessment assessment, Index index)
         {
-            var doc = GetDocumentFromAssessment(assessment);
-            index.AddOrUpdate(doc);
+            if (assessment.IsDeleted)
+            {
+                index.Delete(new []{assessment.Id}.ToArray());
+            }
+            else
+            {
+                var doc = GetDocumentFromAssessment(assessment);
+                index.AddOrUpdate(doc);
+            }
+
             index.SetIndexVersion(new IndexVersion { Version = IndexVersion, DateTime = assessment.LastUpdatedAt });
         }
         //private const string Field_DateLastSave = "DateSave";
