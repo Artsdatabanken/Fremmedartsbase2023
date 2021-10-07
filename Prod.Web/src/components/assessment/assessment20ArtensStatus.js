@@ -219,7 +219,7 @@ export default class Assessment20ArtensStatus extends React.Component {
                          <p> {labels.SpeciesStatus.statusInNorway}</p>
                          <p>{labels.SpeciesStatus.highestCategoryPerToday}</p>
 
-                         {assessment.alienSpeciesCategory == "DoorKnocker" ? assessment.productionSpecies == true ? 
+                         {assessment.alienSpeciesCategory == "DoorKnocker" ? assessment.productionSpecies == "yes" ? 
                             <Xcomp.StringEnum observableValue={[assessment, "speciesStatus"]} mode="radio" 
                             onChange = {action(e => {
                                 if(assessment.speciesStatus != "A" ) { 

@@ -100,7 +100,7 @@ export default class SelectAssessment extends Component {
     })
 
 
-    findAmountOfAssessments = (appState) => {
+   /* findAmountOfAssessments = (appState) => {
         var result = ""
         if (appState.horizonScanFilter.hsNotStarted) {
             result = appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','2')
@@ -116,7 +116,7 @@ export default class SelectAssessment extends Component {
 
         
         return result
-    }
+    } */
 
     findFilterText = (codes, value) => {
         var result = ""
@@ -135,6 +135,11 @@ export default class SelectAssessment extends Component {
         var experts = ExpertGroupModel.eksperterforvalgtgruppe.filter(item => item.writeAccess == true)
         
         console.log(appState.expertgroupAssessmentList.length)
+        
+        if (appState.expertgroup == "" || appState.expertgroup == undefined) {
+            appState.expertgroup = "Karplanter"
+        }
+        //appState.expertgroup = "Karplanter"
      /*   let checkList = document.getElementById('list1');
         if (checkList) {checkList.getElementsByClassName('anchor')[0].onclick = function (evt) {
             if (checkList.classList.contains('visible'))
@@ -187,6 +192,7 @@ export default class SelectAssessment extends Component {
                                 <Xcomp.StringEnum 
                                         forceSync
                                         observableValue={[appState, 'expertgroup']} 
+                                        
                                         codes={appState.expertgroups}/>                                
                     </div> 
                 </fieldset>
@@ -497,9 +503,9 @@ export default class SelectAssessment extends Component {
             <div className="usedFilters">
             {!appState.horizonScanFilter.hsNotStarted && !appState.horizonScanFilter.hsFinished && !appState.horizonScanFilter.toAssessment && !appState.horizonScanFilter.notAssessed && appState.responsible == [] ?
                 
-                <div className="counter">Viser totalt {appState.expertgroupAssessmentTotalCount} vurderinger</div>
+                <div className="counter">Viser totalt {appState.expertgroupAssessmentTotalCount} {appState.expertgroupAssessmentTotalCount == 1 ? " vurdering" : " vurderinger"} </div>
                 :            
-                <div className="counter">Viser totalt {appState.expertgroupAssessmentList.length} vurderinger (filtrert fra {appState.expertgroupAssessmentTotalCount})</div>
+                <div className="counter">Viser totalt {appState.expertgroupAssessmentList.length} {appState.expertgroupAssessmentList.length == 1 ? " vurdering" : " vurderinger"} (filtrert fra {appState.expertgroupAssessmentTotalCount})</div>
             }
             <div>
                 <span>{labels.SelectAssessment.usedFilters}</span> 

@@ -2,7 +2,7 @@ import React from 'react';
 import {observer, inject} from 'mobx-react';
 import * as Xcomp from './observableComponents';
 // import LoadingHoc from './LoadingHoc'
-import {action, autorun, extendObservable, observable, toJS} from "mobx"
+import {action, autorun, extendObservable, observable, toJS, computed} from "mobx"
 import createTaxonSearch from './createTaxonSearch'
 
 
@@ -27,8 +27,7 @@ const  newAssessment = observable({
 @observer
 export default class assessmentNew extends React.Component {
     //if this is false, the button name is "Add assessment", otherwise "Move assessment"
-    @observable moveAssessment = false
-
+    
     constructor(props) {
         super(props)
         const {evaluationContext} = props
@@ -76,7 +75,10 @@ export default class assessmentNew extends React.Component {
     @action onSetEkspertgruppe(e) {
         this.props.appState.ekspertgruppe = e.target.value
     }
-
+    @computed moveAssessment() {
+        console.log(newAssessment)
+        return false;
+    }
    
 
     render(props) {
@@ -102,7 +104,7 @@ export default class assessmentNew extends React.Component {
                                     codes={appState.expertgroups} />
                         </div>
                     </div>
-                    <div className="row" style={{marginTop: '30px' }}>
+                    <div className="row" style={{marginTop: '30px', marginLeft: '30px' }}>
                         <div className="col-md-6">
                             <div style={{position: 'relative'}}>
                                 {newAssessment.ScientificName.length > 0 ?
@@ -175,7 +177,7 @@ export default class assessmentNew extends React.Component {
                     </div>
                     <div className="row">                            
                             <div className="col-md-6">
-                            <Xcomp.StringEnum observableValue={[newAssessment, "potensiellDørstokkart"]} mode="radio" codes={codes.SpeciesStatus} onChange={() => { this.moveAssessment = true }}/>
+                            <Xcomp.StringEnum observableValue={[newAssessment, "potensiellDørstokkart"]} mode="radio" codes={codes.SpeciesStatus}/>
                                {/* <Xcomp.Bool observableValue={[newAssessment, "potensiellDørstokkart"]} label={labels.SpeciesStatus.potentialDoorknocker} />
                                 <Xcomp.Bool observableValue={[newAssessment, "øvrigeArter"]} label={labels.SpeciesStatus.otherSpecies} /> */}
                             </div>
@@ -183,10 +185,10 @@ export default class assessmentNew extends React.Component {
                         <div className="col-md-6" style={{display: 'flex'}}>
                             <div>{labels.SelectAssessment.NBWritingAccess}</div>
                             
-                            <Xcomp.Button primary onClick={this.onNewAssessment} disabled={!rolle.writeAccess || (!newAssessment.ScientificName || checkForExistingAssessment(newAssessment.ScientificName))}>{this.moveAssessment ? labels.SelectAssessment.moveAssessment : labels.SelectAssessment.createAssessment}</Xcomp.Button>
-                            {(newAssessment.ScientificName.length > 0 && 
-                                !rolle.writeAccess || 
-                                ( checkForExistingAssessment(newAssessment.ScientificName))) ? <div style={{color: 'red'}}>{labels.SelectAssessment.alreadyOnTheList}</div>: null}
+                            <Xcomp.Button primary onClick={this.onNewAssessment} disabled={!rolle.writeAccess || (!newAssessment.ScientificName || checkForExistingAssessment(newAssessment.ScientificName))}>{this.moveAssessment() ? labels.SelectAssessment.moveAssessment : labels.SelectAssessment.createAssessment}</Xcomp.Button>
+                            {newAssessment.ScientificName.length > 0 && 
+                                !rolle.writeAccess ?  <div style={{color: 'red'}}>{labels.SelectAssessment.accessDenied}</div> :
+                                 checkForExistingAssessment(newAssessment.ScientificName) ? <div style={{color: 'red'}}>{labels.SelectAssessment.alreadyOnTheList}</div>: null}
                         </div>
                 </fieldset>
             </div>
