@@ -137,6 +137,19 @@ namespace Nbic.Indexer
                 _taxonomyWriter.Commit();
             //}
         }
+        public void Delete(IEnumerable<int> refs)
+        {
+            //using (DirectoryTaxonomyWriter taxoWriter = new DirectoryTaxonomyWriter(_taxonomydir))
+            //{
+            foreach (var doc in refs)
+            {
+                _writer.DeleteDocuments(new TermQuery(new Term(Field_Id, doc.ToString())));
+            }
+
+            _writer.Commit();
+            _taxonomyWriter.Commit();
+            //}
+        }
 
         public IEnumerable<Document> SearchReference(Query query, int offset, int limit, string sortField = "")
         {
