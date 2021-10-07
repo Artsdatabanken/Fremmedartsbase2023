@@ -707,12 +707,12 @@ class ViewModel {
             const jsonnew = JSON.parse(JSON.stringify(json))
 
             const assessment = enhanceAssessment(jsonnew, this)
-            const assessmentStringCopy = JSON.stringify(assessment,undefined,2)
-            const jsoncopy = JSON.parse(assessmentStringCopy)
+            const assessmentStringCopy = assessment.toJSON
+            const assessmentcopy = JSON.parse(assessmentStringCopy)
 
             this.navigate(1)
             runInAction(() => {
-                this.assessmentSavedVersion = json
+                this.assessmentSavedVersion = assessmentcopy
                 this.assessmentSavedVersionString = assessmentStringCopy
                 this.assessment = assessment
                 this.assessmentId = id
