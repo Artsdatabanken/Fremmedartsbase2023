@@ -694,22 +694,10 @@ class ViewModel {
 
         if (json && json.id) {
             const id = Number(json.id)
-            // const assessment = observable.object(json)
-            // const assessmentStringCopy = JSON.stringify(json,undefined,2)
-            // const jsoncopy = JSON.parse(assessmentStringCopy)
-
-            //  const assessment = observable.object(jsoncopy)
-
-
-            // enhanceWithRiskEvaluation(assessment)
-
-            // enhanceAssessment(assessment, this)
             const jsonnew = JSON.parse(JSON.stringify(json))
-
             const assessment = enhanceAssessment(jsonnew, this)
             const assessmentStringCopy = assessment.toJSON
             const assessmentcopy = JSON.parse(assessmentStringCopy)
-
             this.navigate(1)
             runInAction(() => {
                 this.assessmentSavedVersion = assessmentcopy
