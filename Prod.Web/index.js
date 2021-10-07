@@ -19,7 +19,7 @@ import { ApplicationInsights } from '@microsoft/applicationinsights-web'
 if (process.env.NODE_ENV !== 'development') {
   window.appInsights = new ApplicationInsights({
     config: {
-      instrumentationKey: window.location.href.indexOf("test.") > 1 ? '30685b0e-8736-4205-9839-99dd918f986f' : '023396f1-285d-45cc-920c-eb957cdd6c01'
+      instrumentationKey: window.location.href.indexOf("test.") > 1 ? '30685b0e-8736-4205-9839-99dd918f986f' : 'ab7c8c2e-7415-4db4-bcce-eed403f6f2b6'
       /* ...Other Configuration Options... */
     }
   });
