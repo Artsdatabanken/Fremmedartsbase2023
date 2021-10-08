@@ -85,7 +85,6 @@ class ViewModel {
             koder: null,
             codeLabels: null,
             naturtypeLabels: {},
-
             comments: [],
             newComment: null,
             newComments: [],
@@ -695,6 +694,12 @@ class ViewModel {
         if (json && json.id) {
             const id = Number(json.id)
             const jsonnew = JSON.parse(JSON.stringify(json))
+            //--------------------------------------------------------------
+            //Argh! this dirty trick make it possible to use observableStringEnum (radio) for the property
+            //The process must be reversed when saving
+            jsonnew.isAlienSpecies = jsonnew.isAlienSpecies ? "true" : "false"
+            //--------------------------------------------------------------
+
             const assessment = enhanceAssessment(jsonnew, this)
             const assessmentStringCopy = assessment.toJSON
             const assessmentcopy = JSON.parse(assessmentStringCopy)
@@ -913,7 +918,14 @@ class ViewModel {
         // const data = toJS(this.assessment)
         // const json = JSON.stringify(data)
         const json = this.assessment.toJSON
+
+        const currentdata = JSON.parse(json)
         const data = JSON.parse(json)
+        //--------------------------------------------------------------
+        //Argh! this reverses the trick when opening the assessment
+        data.isAlienSpecies = data.isAlienSpecies === "true" ? true : false
+        //--------------------------------------------------------------
+        const datastring = JSON.stringify(data)
         // this.addGetters(data)
         console.log("Y:" + json.length)
         const id = data.id
@@ -921,7 +933,7 @@ class ViewModel {
         fetch(url, {
             method: 'POST',
             // mode: 'no-cors',
-            body: json, // data can be `string` or {object}! (cant get it to work with {object}...)
+            body: datastring, // data can be `string` or {object}! (cant get it to work with {object}...)
             headers:{
               'Accept': 'application/json',
               'Content-Type': 'application/json',
@@ -932,7 +944,7 @@ class ViewModel {
         //   .then(res => res.json())
         //   .then(response => console.log('Success:', JSON.stringify(response)))
           .then(response => checkStatus(response))
-          .then(() => this.updateAssessmentSavedVersion(data))
+          .then(() => this.updateAssessmentSavedVersion(currentdata))
           .then(() => events.trigger("saveAssessment", "savesuccess"))
           .catch(error =>
             {events.trigger("saveAssessment", "savefailure")
