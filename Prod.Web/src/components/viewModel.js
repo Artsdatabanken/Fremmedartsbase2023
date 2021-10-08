@@ -1041,11 +1041,8 @@ class ViewModel {
             this.roleincurrentgroup = role
             this.loadingExpertGroup = false
             this.expertgroupAssessmentTotalCount = expertgroupAssessments.totalCount
-            this.expertgroupAssessmentAuthors = observable.array(authors)
-            
-            console.log("ACHTUNG!")
-            console.log(this.expertgroupAssessmentAuthors)
-            console.log(this.responsible)
+            this.expertgroupAssessmentAuthors = observable.array(authors)            
+           
             if (this.responsible.length > 0) {
                 for (var i = 0; i < this.responsible.length; i++) {
                     var isInGroup = false;
