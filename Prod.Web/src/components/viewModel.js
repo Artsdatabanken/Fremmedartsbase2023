@@ -85,7 +85,6 @@ class ViewModel {
             koder: null,
             codeLabels: null,
             naturtypeLabels: {},
-
             comments: [],
             newComment: null,
             newComments: [],
@@ -251,13 +250,13 @@ class ViewModel {
             this._assessment = this.assessment
             this._evaluationStatus = !this.assessment || this.assessment.evaluationStatus
             // ******************************************************************************
-
             runInAction(() => {
-                const isLockedForEdit = this.assessment && this.assessment.lockedForEditByUserId !== null && this.assessment.lockedForEditByUserId !== auth.userId
+                const lockedUserId = !this.assessment ? null : this.assessment.lockedForEditByUserId
+                const isLockedByMe = lockedUserId === auth.userId
                 this.userContext.readonly = (
                     this.viewMode === "assessment" &&
                     (
-                        !this.assessment || isLockedForEdit || this.assessment.evaluationStatus === "finished"
+                        !isLockedByMe || this.assessment.evaluationStatus === "finished"
                     )
                 )
             })
@@ -509,7 +508,8 @@ class ViewModel {
 
     @computed get isDirty() {
         if (!this.assessmentId) return false
-        const a = JSON.stringify(this.assessment)
+        // const a = JSON.stringify(this.assessment)
+        const a = this.assessment.toJSON
         const b = this.assessmentSavedVersionString
         return a != b
     }
@@ -673,7 +673,7 @@ class ViewModel {
 
     @action updateAssessmentSavedVersion(assessment) {
         if (assessment && assessment.id) {
-            const assessmentStringCopy = JSON.stringify(assessment)
+            const assessmentStringCopy = JSON.stringify(assessment,undefined,2)
             const jsoncopy = JSON.parse(assessmentStringCopy)
             transaction(() => {
                 this.assessmentSavedVersion = jsoncopy
@@ -693,21 +693,19 @@ class ViewModel {
 
         if (json && json.id) {
             const id = Number(json.id)
-            // const assessment = observable.object(json)
-            const assessmentStringCopy = JSON.stringify(json)
-            const jsoncopy = JSON.parse(assessmentStringCopy)
+            const jsonnew = JSON.parse(JSON.stringify(json))
+            //--------------------------------------------------------------
+            //Argh! this dirty trick make it possible to use observableStringEnum (radio) for the property
+            //The process must be reversed when saving
+            jsonnew.isAlienSpecies = jsonnew.isAlienSpecies ? "true" : "false"
+            //--------------------------------------------------------------
 
-            //  const assessment = observable.object(jsoncopy)
-
-
-            // enhanceWithRiskEvaluation(assessment)
-
-            // enhanceAssessment(assessment, this)
-            const assessment = enhanceAssessment(jsoncopy, this)
-
+            const assessment = enhanceAssessment(jsonnew, this)
+            const assessmentStringCopy = assessment.toJSON
+            const assessmentcopy = JSON.parse(assessmentStringCopy)
             this.navigate(1)
             runInAction(() => {
-                this.assessmentSavedVersion = json
+                this.assessmentSavedVersion = assessmentcopy
                 this.assessmentSavedVersionString = assessmentStringCopy
                 this.assessment = assessment
                 this.assessmentId = id
@@ -917,16 +915,32 @@ class ViewModel {
         return url
     }
 
+    // addGetters(assessmentObject) {
+    //     console.log("addGetters")
+    //     console.log(JSON.stringify(Object.keys(assessmentObject)))
+    // }
+
     async saveCurrentAssessment() {
         events.trigger("saveAssessment", "savestart")
-        const data = toJS(this.assessment)
-        console.log("Y:" + JSON.stringify(data).length)
+        // const data = toJS(this.assessment)
+        // const json = JSON.stringify(data)
+        const json = this.assessment.toJSON
+
+        const currentdata = JSON.parse(json)
+        const data = JSON.parse(json)
+        //--------------------------------------------------------------
+        //Argh! this reverses the trick when opening the assessment
+        data.isAlienSpecies = data.isAlienSpecies === "true" ? true : false
+        //--------------------------------------------------------------
+        const datastring = JSON.stringify(data)
+        // this.addGetters(data)
+        console.log("Y:" + json.length)
         const id = data.id
         const url = config.getUrl("assessment/") + id
         fetch(url, {
             method: 'POST',
             // mode: 'no-cors',
-            body: JSON.stringify(data), // data can be `string` or {object}! (cant get it to work with {object}...)
+            body: datastring, // data can be `string` or {object}! (cant get it to work with {object}...)
             headers:{
               'Accept': 'application/json',
               'Content-Type': 'application/json',
@@ -937,7 +951,7 @@ class ViewModel {
         //   .then(res => res.json())
         //   .then(response => console.log('Success:', JSON.stringify(response)))
           .then(response => checkStatus(response))
-          .then(() => this.updateAssessmentSavedVersion(data))
+          .then(() => this.updateAssessmentSavedVersion(currentdata))
           .then(() => events.trigger("saveAssessment", "savesuccess"))
           .catch(error =>
             {events.trigger("saveAssessment", "savefailure")
@@ -1123,7 +1137,6 @@ class ViewModel {
             data => {
                 // Now open the locked assessment
                 runInAction(()=>this.assessmentId = v.id)
-                
                 this.loadExpertgroupAssessmentList(this.expertgroup)
             },
             error => alert("Feil ved låsing:" +error)
