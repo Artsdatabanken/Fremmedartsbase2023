@@ -733,8 +733,15 @@ class ViewModel {
 
     checkForExistingAssessment = (sciName, assessmentId) => {
         //this.expertgroupAssessmentList.map(ega => console.log( ega.scientificName))
-        const result = this.expertgroupAssessmentList.some(ega => ega.scientificName == sciName && ega.id != assessmentId)
+        const result = this.expertgroupAssessmentList.some(ega => this.findSciName(ega.scientificName) == sciName && ega.id != assessmentId)
         //console.log("sciname:", sciName, result)
+
+        return result
+    }
+
+    findSciName = (name) => {
+        const dividedName = name.split(" ")
+        const result = dividedName[0] + " " + dividedName[1]
 
         return result
     }
