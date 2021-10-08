@@ -251,13 +251,13 @@ class ViewModel {
             this._assessment = this.assessment
             this._evaluationStatus = !this.assessment || this.assessment.evaluationStatus
             // ******************************************************************************
-
             runInAction(() => {
-                const isLockedForEdit = this.assessment && this.assessment.lockedForEditByUserId !== null && this.assessment.lockedForEditByUserId !== auth.userId
+                const lockedUserId = !this.assessment ? null : this.assessment.lockedForEditByUserId
+                const isLockedByMe = lockedUserId === auth.userId
                 this.userContext.readonly = (
                     this.viewMode === "assessment" &&
                     (
-                        !this.assessment || isLockedForEdit || this.assessment.evaluationStatus === "finished"
+                        !isLockedByMe || this.assessment.evaluationStatus === "finished"
                     )
                 )
             })
