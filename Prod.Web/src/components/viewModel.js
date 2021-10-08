@@ -548,7 +548,9 @@ class ViewModel {
     async loadCurrentExpertgroupAssessmentList() {
         const expertgroupId = this.expertgroup
         console.log("loadCurrentExpertgroupAssessmentList : " + expertgroupId)
+        
         this.loadExpertgroupAssessmentList(expertgroupId)
+        
     }
 
     // @computed get expertgroupAssessmentFilteredList() {
@@ -1040,7 +1042,23 @@ class ViewModel {
             this.loadingExpertGroup = false
             this.expertgroupAssessmentTotalCount = expertgroupAssessments.totalCount
             this.expertgroupAssessmentAuthors = observable.array(authors)
+            
+            console.log("ACHTUNG!")
             console.log(this.expertgroupAssessmentAuthors)
+            console.log(this.responsible)
+            if (this.responsible.length > 0) {
+                for (var i = 0; i < this.responsible.length; i++) {
+                    var isInGroup = false;
+                    for (var j = 0; j < this.expertgroupAssessmentAuthors.length; j++) {
+                        if (this.expertgroupAssessmentAuthors[j].value == this.responsible[i]) {
+                            isInGroup = true;
+                        }
+                    }
+                    if (!isInGroup) {
+                        this.responsible.remove(this.responsible[i])
+                    }
+                }
+            }
             this.assessmentsStatistics = observable(expertgroupAssessments.facets)
         })
 
