@@ -507,7 +507,7 @@ class ViewModel {
     }
 
     @computed get isDirty() {
-        if (!this.assessmentId) return false
+        if (!this.assessmentId || !this.assessment) return false
         // const a = JSON.stringify(this.assessment)
         const a = this.assessment.toJSON
         const b = this.assessmentSavedVersionString
@@ -693,10 +693,11 @@ class ViewModel {
 
         if (json && json.id) {
             const id = Number(json.id)
+            console.log("type of id : " + typeof(id))
             const jsonnew = JSON.parse(JSON.stringify(json))
             //--------------------------------------------------------------
             //Argh! this dirty trick make it possible to use observableStringEnum (radio) for the property
-            //The process must be reversed when saving
+            //This process must be reversed before saving to server!
             jsonnew.isAlienSpecies = jsonnew.isAlienSpecies ? "true" : "false"
             //--------------------------------------------------------------
 
@@ -1128,7 +1129,8 @@ class ViewModel {
         loadData(
             config.getUrl("assessment/"+v.id+ "/lock"),
             data => {
-                // Now open the locked assessment
+                // Now open the locked 
+                // const id = Number(v.id)
                 runInAction(()=>this.assessmentId = v.id)
                 this.loadExpertgroupAssessmentList(this.expertgroup)
             },
