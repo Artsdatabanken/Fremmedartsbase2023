@@ -1153,6 +1153,10 @@ class ViewModel {
             data => {
                 // Now open the locked 
                 // const id = Number(v.id)
+
+                //todo: there is something fishy going on here. The v.id must be string for this thing to work???!!
+                // so something must be wrong. this.assessmentId is Number!
+
                 runInAction(()=>this.assessmentId = v.id)
                 this.loadExpertgroupAssessmentList(this.expertgroup)
             },
