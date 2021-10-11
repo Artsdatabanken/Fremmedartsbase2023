@@ -548,7 +548,9 @@ class ViewModel {
     async loadCurrentExpertgroupAssessmentList() {
         const expertgroupId = this.expertgroup
         console.log("loadCurrentExpertgroupAssessmentList : " + expertgroupId)
+        
         this.loadExpertgroupAssessmentList(expertgroupId)
+        
     }
 
     // @computed get expertgroupAssessmentFilteredList() {
@@ -732,8 +734,15 @@ class ViewModel {
 
     checkForExistingAssessment = (sciName, assessmentId) => {
         //this.expertgroupAssessmentList.map(ega => console.log( ega.scientificName))
-        const result = this.expertgroupAssessmentList.some(ega => ega.scientificName == sciName && ega.id != assessmentId)
+        const result = this.expertgroupAssessmentList.some(ega => this.findSciName(ega.scientificName) == sciName && ega.id != assessmentId)
         //console.log("sciname:", sciName, result)
+
+        return result
+    }
+
+    findSciName = (name) => {
+        const dividedName = name.split(" ")
+        const result = dividedName[0] + " " + dividedName[1]
 
         return result
     }
@@ -1033,8 +1042,21 @@ class ViewModel {
             this.roleincurrentgroup = role
             this.loadingExpertGroup = false
             this.expertgroupAssessmentTotalCount = expertgroupAssessments.totalCount
-            this.expertgroupAssessmentAuthors = observable.array(authors)
-            console.log(this.expertgroupAssessmentAuthors)
+            this.expertgroupAssessmentAuthors = observable.array(authors)            
+           
+            if (this.responsible.length > 0) {
+                for (var i = 0; i < this.responsible.length; i++) {
+                    var isInGroup = false;
+                    for (var j = 0; j < this.expertgroupAssessmentAuthors.length; j++) {
+                        if (this.expertgroupAssessmentAuthors[j].value == this.responsible[i]) {
+                            isInGroup = true;
+                        }
+                    }
+                    if (!isInGroup) {
+                        this.responsible.remove(this.responsible[i])
+                    }
+                }
+            }
             this.assessmentsStatistics = observable(expertgroupAssessments.facets)
         })
 

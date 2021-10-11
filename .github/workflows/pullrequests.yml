@@ -1,7 +1,7 @@
-name: .NET
+name: Pull requests .NET
 
 on:
-  push:
+  pull_request:
     branches: [ main ]
 
 jobs:
@@ -29,13 +29,3 @@ jobs:
         cd Prod.Web    
         npm install
         npm run build
-    - name: Build and push Docker image api
-      uses: docker/build-push-action@v1
-      with:
-        username: ${{ secrets.ORG_DOCKER_USER }}
-        password: ${{ secrets.ORG_DOCKER_PASS }}
-        dockerfile: Prod.Api/Dockerfile
-        repository: artsdatabanken/fab4api
-        tags: latest
-    - name: Post to slack
-      run: .github/workflows/deploy.sh ${{ secrets.POST_SLACK }}
