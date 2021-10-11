@@ -88,8 +88,8 @@ export default class Criterion extends React.Component {
 
                 // console.log("VVV " + value + " " + value + " # " + radiooptional.checked)
                 // console.log("name " + name)
-                checkboxoptional.disabled = this.context.readonly || disabled || uncertaintyDisabled.indexOf(kode.value) > -1 
-                radiooptional.disabled = this.context.readonly || disabled || auto
+                checkboxoptional.disabled = (this.context.readonly || disabled || uncertaintyDisabled.indexOf(kode.value) > -1 )
+                radiooptional.disabled = (this.context.readonly || disabled || auto)
 
 
                 // if (logthis) {
