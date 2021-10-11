@@ -305,10 +305,12 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                 <fieldset className="well">
                     <Criterion criterion={crit52D} hideInfo={true} />
 
-        <b>curr{crit52D.Value}{crit52D.currentValueLabel}</b>
+        
 
                    
-                   {/* <ScoreUnsure appState={appState}
+                   {/* <b>curr{crit52D.Value}{crit52D.currentValueLabel}</b>
+                   
+                   <ScoreUnsure appState={appState}
                                 critScores={koder.scoresD}
                                 firstValue={"scoreD"}
                                 secondValue={"unsureD"}/> */}
