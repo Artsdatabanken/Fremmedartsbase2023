@@ -76,7 +76,7 @@ export default class Criterion extends React.Component {
                 }
                 const radiooptional = {};
                 const checkboxoptional = {};
-                const disabled = (kode.Text === null || this.props.disabled)
+                const disabled = (kode.Text === null || this.props.disabled || this.context.readonly)
                 
                 console.log(disabled)
                 if(value !== undefined) {
