@@ -96,14 +96,21 @@ function filterNumericInput(s, integer = false) {
   let decimalPointOffset = undefined
   for (const i in s) {
     const c = s[i]
-    if (digits.indexOf(c) >= 0) r += c
-    else if (!decimalPointOffset && decimalSeparators.indexOf(c) >= 0)
-      decimalPointOffset = r.length
+    if (digits.indexOf(c) >= 0 || decimalPointOffset == s.indexOf(c)) r += c
+    else if (decimalPointOffset == undefined && decimalSeparators.indexOf(c) >= 0) {     
+      decimalPointOffset = s.indexOf(c)
+     
+    } 
   }
-  if (decimalPointOffset < s.length)
+  if (decimalPointOffset <= s.length) {
     r = r.slice(0, decimalPointOffset) + ',' + r.slice(decimalPointOffset)
-  if (decimalPointOffset === 0) r = '0' + r
-  return integer ? parseInt(r) : parseFloat(r)
+    
+  }
+
+  if (decimalPointOffset === 0) r = '0' + r  
+  
+  //return integer ? parseInt(r) : parseFloat(r)
+  return integer ? parseInt(r) : r
 }
 
 
