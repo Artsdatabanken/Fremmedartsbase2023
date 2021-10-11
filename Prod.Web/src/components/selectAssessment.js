@@ -345,11 +345,13 @@ export default class SelectAssessment extends Component {
                 }
 
                 {appState.assessmentTypeFilter == "horizonScanning" && 
+                <>
                 <div className="selectFilter">
                     <div className="filters">
                         <Xcomp.Bool observableValue={[appState.horizonScanFilter, "horizonFilters"]} label={"Filtrer på framdrift, grupper av potensielle dørstokkarter og vurderingsansvarlig"} />
                     
                 {appState.horizonScanFilter.horizonFilters == true &&
+                
                 <div className="nav_menu">
                         <div className="filters"><b>{labels.SelectAssessment.assessmentStatus}</b>   
                                 <Xcomp.Bool observableValue={[appState.horizonScanFilter, "hsNotStarted"]} label={koder.workStatus[0].text + "   (" + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','2') + ") " + (100*appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','2')/appState.expertgroupAssessmentTotalCount).toFixed() + "%"} />
@@ -385,11 +387,16 @@ export default class SelectAssessment extends Component {
                                 observableValue={[appState, 'responsible']} 
                                 codes={appState.expertgroupAssessmentAuthors}
                                 mode="check"/>
-                        </div>
-                    </div>}
+                        </div>                      
+                    </div>}                           
+                   
                     </div>
                     
-                </div>     }
+                </div>
+                <div className="selectFilter">
+                    <div className="filters"><Xcomp.Bool observableValue={[appState, "kunUbehandlede"]} label={"Filtrer på kommentarer"}/></div>                        
+                </div>
+                </>}
                 
                     {/* <div className="filters" style={{marginRight: 0}}>
                         <span>Vurderingsstatus</span>
