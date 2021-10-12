@@ -134,8 +134,6 @@ export default class SelectAssessment extends Component {
         // find leaders in each expert group
         var experts = ExpertGroupModel.eksperterforvalgtgruppe.filter(item => item.writeAccess == true)
         
-        console.log(appState.expertgroupAssessmentList.length)
-        
         if (appState.expertgroup == "" || appState.expertgroup == undefined) {
             appState.expertgroup = "Karplanter"
         }

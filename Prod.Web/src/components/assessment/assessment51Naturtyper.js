@@ -47,7 +47,7 @@ export default class Assessment51Naturtyper extends React.Component {
         const fabModel = appState
         const labels = appState.codeLabels
         const koder = appState.koder
-
+        const disabled = appState.userContext.readonly
         
         // const labels = appState.kodeLabels
         const ntLabels = labels.NatureTypes
@@ -118,6 +118,7 @@ export default class Assessment51Naturtyper extends React.Component {
                     labels={labels}
                     codes={koder}
                     fabModel={appState}
+                    disabled={disabled}
                     desc={ntLabels.colonizedAreaDescription}/>
                 </fieldset>  
 
@@ -135,7 +136,7 @@ export default class Assessment51Naturtyper extends React.Component {
                     mode="check"/>*/}
 
                     
-                    <Criterion criterion={critC} mode="noheading"/>
+                    <Criterion criterion={critC} mode="noheading" disabled={disabled}/>
                 </fieldset>
   
 
@@ -152,7 +153,7 @@ export default class Assessment51Naturtyper extends React.Component {
                                 observableValue={[riskAssessment, 'backgroundF']} 
                                 codes={koder.assessmentBackgrounds}
                    mode="check"/>*/}
-                    <Criterion criterion={critF} mode="noheading"/>
+                    <Criterion criterion={critF} mode="noheading" disabled={disabled}/>
                     {hasImpactAbroad ? 
                     <div>
                         <p>{ntLabels.natureAffectedAbroad}</p>
@@ -208,7 +209,7 @@ export default class Assessment51Naturtyper extends React.Component {
                                 observableValue={[riskAssessment, 'backgroundG']} 
                                 codes={koder.assessmentBackgrounds}
                 mode="check"/> */}
-                    <Criterion criterion={critG} mode="noheading"/>
+                    <Criterion criterion={critG} mode="noheading" disabled={disabled}/>
                    { hasImpactAbroad ? 
                     <div>
                         <p>{ntLabels.natureAffectedAbroad}</p>
@@ -271,7 +272,8 @@ export default class Assessment51Naturtyper extends React.Component {
                     <HabitatTable
                         canRenderTable={canRenderTable}
                         labels={labels}
-                        appState={appState}/>
+                        appState={appState}
+                        disabled={disabled}/>
                    {/* <div>
                         <Xcomp.Bool
                             label={ntLabels.usesLivingSpeciesAsHabitat}
@@ -289,6 +291,7 @@ export default class Assessment51Naturtyper extends React.Component {
                                 className="mainEcosystem"
                                 observableValue={[riskAssessment, 'hovedøkosystem']} 
                                 codes={koder.hovedøkosystemer}
+                                disabled={disabled}
                                 mode="check"/>
           
                 </fieldset>

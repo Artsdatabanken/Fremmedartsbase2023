@@ -41,7 +41,7 @@ export class NaturtypeRad extends React.Component {
 
 
     render() {
-        const {naturtype, fabModel, deleteRow, labels, codes, appState:{assessment}} = this.props;
+        const {naturtype, fabModel, deleteRow, labels, disabled, codes, appState:{assessment}} = this.props;
         
         const riskAssessment = assessment.riskAssessment 
         const gLabels = labels.General
@@ -78,11 +78,13 @@ export class NaturtypeRad extends React.Component {
                         <Xcomp.MultiselectArray
                                 observableValue={[nt, 'stateChange']} 
                                 codes={koder.tilstandsendringer}
+                                disabled={disabled}
                                 //mode="check"
                                 hideUnchecked/>
                             <Xcomp.MultiselectArray
                                 observableValue={[nt, 'stateChange']} 
                                 codes={koder.tilstandsendringer}
+                                disabled={disabled}
                                 mode="check"
                                 hideUnchecked/>
                         </td>
@@ -96,11 +98,13 @@ export class NaturtypeRad extends React.Component {
                                 observableValue={[nt, 'background']} 
                                 codes={koder.assessmentBackgrounds}
                                 //mode="check"
+                                disabled={disabled}
                                 hideUnchecked/>
                 <Xcomp.MultiselectArray
                                 observableValue={[nt, 'background']} 
                                 codes={koder.assessmentBackgrounds}
                                 mode="check"
+                                disabled={disabled}
                                 hideUnchecked/>
                 </td>
                 <td>
@@ -146,7 +150,7 @@ export class NaturtypeRad extends React.Component {
 @observer
 export default class NaturtypeTable extends React.Component {
     render() {
-        const {naturetypes, labels, canRenderTable, fabModel, desc, codes} = this.props;
+        const {naturetypes, labels, canRenderTable, fabModel, desc, codes, disabled} = this.props;
         const ntLabels = labels.NatureTypes
         // console.log("naturtyperader#: " + naturetypes.length)
         return(
@@ -188,7 +192,7 @@ export default class NaturtypeTable extends React.Component {
                     //const key = nt.NiNCode + nt.TimeHorizon + nt.ColonizedArea
                     //console.log(nt)
                     const key = nt.niNCode
-                    return <NaturtypeRad key={key} naturtype={nt} deleteRow={deleteRow} codes={codes} fabModel={fabModel} labels={labels}/> }) :
+                    return <NaturtypeRad key={key} naturtype={nt} deleteRow={deleteRow} codes={codes} fabModel={fabModel} labels={labels} disabled={disabled}/> }) :
                     null
                 }
             </tbody>

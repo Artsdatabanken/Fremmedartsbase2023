@@ -254,6 +254,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                         <Xcomp.MultiselectArray
                                 observableValue={[assessment, 'reasonForChangeOfCategory']}                                 
                                 codes={koder.reasonsForCategoryChange}
+                                disabled={appState.userContext.readonly}
                                 mode="check"/>
                         {/*<Xcomp.Bool
                             label='Reell endring i utbredelse, forekomstareal og/eller økologiske effekter'

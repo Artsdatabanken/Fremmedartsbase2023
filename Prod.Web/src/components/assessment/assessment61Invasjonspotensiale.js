@@ -28,7 +28,8 @@ class SelectableRadio extends React.Component {
         const val = this.props.value
         // const activeVal =  disabled ? "" : val
         //const disabled = !obj["Selectable" + val] || this.context.readonly
-        const disabled = false
+        //const disabled = false
+        const disabled = this.props.disabled
         const label = this.props.label + (obj[val]
             ? "  (" + obj[val] + ")"
             : "")
@@ -69,7 +70,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
         // const labels = appState.kodeLabels
         const labels = appState.codeLabels
         const koder = appState.koder
-
+        const disabled = appState.userContext.readonly
         const ntLabels = labels.NatureTypes
 
         const existenceArea35 = assessment.CurrentExistenceAreaCalculated
@@ -340,11 +341,13 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     <SelectableRadio
                                 label={labels.BcritSelect.a}
                                 value={"a"}
+                                disabled={disabled}
                                 observableValue={[riskAssessment, "chosenSpreadYearlyIncrease"]}/>
                      
                     <SelectableRadio
                                 label={labels.BcritSelect.d}
                                 value={"b"}
+                                disabled={disabled}
                                 observableValue={[riskAssessment, "chosenSpreadYearlyIncrease"]}/>
 
                 {riskAssessment.chosenSpreadYearlyIncrease == "a" ? 
@@ -363,6 +366,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                             <Xcomp.String                            
                                             observableValue={[riskAssessment, "bCritMCount"]}
                                             placeholder={""}
+                                            disabled={disabled}
                                         />  
                               <Xcomp.StringEnum                            
                                             observableValue={[riskAssessment, "bCritExact"]}
@@ -377,6 +381,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                 <Xcomp.String                            
                                             observableValue={[riskAssessment, "bCritNewObs"]}
                                             placeholder={"True"}
+                                            disabled={disabled}
                                         />                      
                                         
                             </div>

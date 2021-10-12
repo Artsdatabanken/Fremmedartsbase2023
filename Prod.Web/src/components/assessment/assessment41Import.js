@@ -21,7 +21,7 @@ class SelectableRadio extends React.Component {
         // obj["Selectable" + this.props.value])
         const val = this.props.value
         // const activeVal =  disabled ? "" : val
-        const disabled = obj["Selectable" + val] || this.context.readonly
+        const disabled = obj["Selectable" + val] || this.context.readonly || this.props.disabled
         const label = this.props.label + (obj[val]
             ? "  (" + obj[val] + ")"
             : "")
@@ -72,7 +72,7 @@ export default class Assessment41Import extends React.Component {
         const vurdering = assessment
         const labels = appState.codeLabels
         const koder = appState.koder
-
+        const disabled = appState.userContext.readonly
         // const {vurdering, viewModel, fabModel} = this.props;
         // const labels = fabModel.kodeLabels
         const importPathways = vurdering.importPathways
@@ -89,10 +89,13 @@ export default class Assessment41Import extends React.Component {
                 <SelectableRadio
                             label={labels.indoorProduktionImport.a}
                             value={"positive"}
+                            disabled = {disabled}
                             observableValue={[assessment, "indoorProduktion"]}/>
+                            
                     <SelectableRadio
                             label={labels.indoorProduktionImport.b}
                             value={"negative"}
+                            disabled = {disabled}
                             observableValue={[assessment, "indoorProduktion"]}/>
 
                 </p>

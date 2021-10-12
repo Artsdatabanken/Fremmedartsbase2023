@@ -453,6 +453,7 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
         }
         this.theAssessment = assessment        
         var sortedReferences = assessment.references.slice().sort(this.compare)
+        const disabled = appState.userContext.readonly
                 
         return (
             <div className="page_container">
@@ -501,7 +502,7 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                         <h3>{labels.references.searchReferences}</h3>
                         <div className="form_item_search">                            
                             <div className="search"><label htmlFor="sokReferanse">{labels.references.searchField}</label><br></br>
-                            <Xcomp.String observableValue={[this, 'sokestreng']}/></div>                            
+                            <Xcomp.String observableValue={[this, 'sokestreng']} disabled={disabled}/></div>                            
                       <table className="table table-striped">
                         <thead>
                             <tr>
