@@ -9,6 +9,8 @@ const kodeTekst = (koder, verdi) => koder.filter(item => item.Value === verdi).m
 const SpeciesSpeciesTable = observer((props) => 
 {
     const labels = props.labels
+    const disabled = props.disabled
+    console.log("Disabled: " + disabled)
     return <table className="table ecologicalEffect">
         
         {!props.HCrit ? 
@@ -84,12 +86,14 @@ const SpeciesSpeciesTable = observer((props) =>
                                 observableValue={[item, 'basisOfAssessment']} 
                                 codes={props.koder.assessmentBackgrounds}
                                 hideUnchecked
+                                disabled={disabled}
                                 //heading={props.koder.assessmentBackgrounds[0].text}
                                 //mode="check"
                                 />
                 <Xcomp.MultiselectArray
                                 observableValue={[item, 'basisOfAssessment']} 
                                 codes={props.koder.assessmentBackgrounds}
+                                disabled={disabled}
                                 mode="check"
                                 hideUnchecked/>
                             
@@ -131,7 +135,7 @@ const SpeciesSpeciesTable = observer((props) =>
                             <div className="scientificName">{props.newItem.scientificName}</div>
                             <div className="author">{"(" + props.newItem.scientificNameAuthor + ")"}</div>
                         </div> :
-                        <Xcomp.String className={props.HCrit ? "HCrit" : ""} observableValue={[props.newItem, 'taxonSearchString']} placeholder={labels.General.searchSpecies} />}
+                        <Xcomp.String className={props.HCrit ? "HCrit" : ""}  disabled={disabled} observableValue={[props.newItem, 'taxonSearchString']} placeholder={labels.General.searchSpecies} />}
                         {props.newItem.taxonSearchResult.length > 0 ?
                         <div className="speciesSearchList" style={{position: 'absolute', top: "36px", left:"15px"}}>
                             <ul className="panel list-unstyled">
@@ -191,6 +195,7 @@ const SpeciesSpeciesTable = observer((props) =>
                                 observableValue={[props.newItem, 'basisOfAssessment']} 
                                 codes={props.koder.assessmentBackgrounds}
                                 hideUnchecked
+                                disabled={disabled}
                                 //heading={props.koder.assessmentBackgrounds[0].text}
                                 //mode="check"
                                 />
@@ -199,6 +204,7 @@ const SpeciesSpeciesTable = observer((props) =>
                                 codes={props.koder.assessmentBackgrounds}
                                 mode="check"
                                 hideUnchecked
+                                disabled={disabled}
                                 />
 
                     {/*<div className="option" tabindex="0">

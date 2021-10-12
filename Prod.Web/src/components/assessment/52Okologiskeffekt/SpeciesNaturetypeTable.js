@@ -9,6 +9,7 @@ const kodeTekst = (koder, verdi) => koder.filter(item => item.Value === verdi).m
 const SpeciesNaturetypeTable = observer((props) => 
 {
     const labels = props.labels
+    const disabled = props.disabled
     return <table className="table ecologicalEffect">
         
 
@@ -70,6 +71,7 @@ const SpeciesNaturetypeTable = observer((props) =>
                                 observableValue={[item, 'basisOfAssessment']} 
                                 codes={props.koder.assessmentBackgrounds}
                                 hideUnchecked
+                                disabled={disabled}
                                 //heading={labels.DEcrit.assessmentBasis}
                                 //mode="check"
                                 />
@@ -78,6 +80,7 @@ const SpeciesNaturetypeTable = observer((props) =>
                                 codes={props.koder.assessmentBackgrounds}
                                 mode="check"
                                 hideUnchecked
+                                disabled={disabled}
                                 />
                     {/*<Xcomp.Bool observableValue={[item, 'longDistanceEffect']} />*/}
                     
@@ -95,7 +98,7 @@ const SpeciesNaturetypeTable = observer((props) =>
             )}
             <tr className="newRow">
                 <td>
-                    <select className="form-control" placeholder="velg naturtype" value={props.newItem.niNCode}
+                    <select className="form-control"  disabled={disabled} placeholder="velg naturtype" value={props.newItem.niNCode}
                             onChange={action(e => props.newItem.niNCode = e.target.value)}
                             >
 
@@ -125,6 +128,7 @@ const SpeciesNaturetypeTable = observer((props) =>
                                 observableValue={[props.newItem, 'basisOfAssessment']} 
                                 codes={props.koder.assessmentBackgrounds}
                                 hideUnchecked
+                                disabled={disabled}
                                 //heading={labels.DEcrit.assessmentBasis}
                                 //mode="check"
                                 />
@@ -132,6 +136,7 @@ const SpeciesNaturetypeTable = observer((props) =>
                                 observableValue={[props.newItem, 'basisOfAssessment']} 
                                 codes={props.koder.assessmentBackgrounds}
                                 mode="check"
+                                disabled={disabled}
                                 hideUnchecked
                                 />
                     {/*<Xcomp.Bool observableValue={[props.newItem, 'longDistanceEffect']} />*/}

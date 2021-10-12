@@ -280,6 +280,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
         crit52H.auto = false
         crit52I.auto = false
         })
+        //console.log(appState.userContext.readonly)
         return(
             <div>
 
@@ -289,12 +290,12 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                     <h4>{labels.DEcrit.heading}</h4>
                     <p>Beskriv artens interaksjon(er) med stedegne og andre arter som har blitt vurdert for rødlisting. Det skal være sannsynlighetsovervekt for interaksjonen</p>
                     <hr/>
-                    <SpeciesSpeciesTable list={riskAssessment.speciesSpeciesInteractions} newItem={this.newSSITS} addNewItem={this.addSSITS} koder={koder} labels={labels} showRedlist showKeyStoneSpecie showEffect showInteractionType showConfirmedOrAssumed/>
+                    <SpeciesSpeciesTable list={riskAssessment.speciesSpeciesInteractions} newItem={this.newSSITS} addNewItem={this.addSSITS} koder={koder} labels={labels} disabled={appState.userContext.readonly} showRedlist showKeyStoneSpecie showEffect showInteractionType showConfirmedOrAssumed/>
                     
                     
                     <hr/>
                     
-                    <SpeciesNaturetypeTable list={riskAssessment.speciesNaturetypeInteractions} newItem={this.newSNITS} addNewItem={this.addSNITS}  koder={koder} labels={labels} naturtypeLabels={appState.naturtypeLabels } showKeyStoneSpecie showEffect showInteractionType />
+                    <SpeciesNaturetypeTable list={riskAssessment.speciesNaturetypeInteractions} newItem={this.newSNITS} addNewItem={this.addSNITS}  koder={koder} labels={labels} disabled={appState.userContext.readonly} naturtypeLabels={appState.naturtypeLabels } showKeyStoneSpecie showEffect showInteractionType />
 
                     <hr/>
 
@@ -303,7 +304,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                     
                 </fieldset>
                 <fieldset className="well">
-                    <Criterion criterion={crit52D} hideInfo={true} />
+                    <Criterion criterion={crit52D} hideInfo={true} disabled={appState.userContext.readonly}/>
 
         
 
@@ -320,7 +321,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                             />                      
                     </fieldset>
                     <fieldset className="well">
-                    <Criterion criterion={crit52E} hideInfo={true} />
+                    <Criterion criterion={crit52E} hideInfo={true} disabled={appState.userContext.readonly}/>
                    
                    {/* <ScoreUnsure appState={appState}
                                 critScores={koder.scoresE}
@@ -333,7 +334,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                 </fieldset>
                 <fieldset className="well">
                     
-                    <Criterion criterion={crit52F}  disabled={true}/>
+                    <Criterion criterion={crit52F} disabled={true}/>
                     
                    {/* 
                    <p>{ntLabels.scoreSummary}</p>
@@ -353,7 +354,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                 <fieldset className="well">
                     <h4>{crit52H.heading}</h4>
                     <p>{crit52H.info}</p>
-                    <SpeciesSpeciesTable list={riskAssessment.geneticTransferDocumented} newItem={this.newGTD} addNewItem={this.addGTD} koder={koder} labels={labels} showKeyStoneSpecie showInteractionType showConfirmedOrAssumed HCrit />
+                    <SpeciesSpeciesTable list={riskAssessment.geneticTransferDocumented} newItem={this.newGTD} addNewItem={this.addGTD} koder={koder} labels={labels} disabled={appState.userContext.readonly} showKeyStoneSpecie showInteractionType showConfirmedOrAssumed HCrit />
                     <hr/>
 
                    {/* <p>{ntLabels.score}</p>
@@ -362,7 +363,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                                 firstValue={"scoreH"}
                         secondValue={"unsureH"}/> */}
                    
-                    <Criterion criterion={crit52H} mode="noheading"/>
+                    <Criterion criterion={crit52H} mode="noheading" disabled={appState.userContext.readonly}/>
                      <Xcomp.HtmlString                            
                                 observableValue={[riskAssessment, "HCritInsecurity"]}
                                 label={labels.DEcrit.insecurity}
@@ -379,7 +380,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                 <fieldset className="well">
                     <h4>{crit52I.heading} </h4>
                     <p>{crit52I.info}</p>
-                    <HostParasiteTable list={riskAssessment.hostParasiteInformations} newItem={this.newHPI} addNewItem={this.addHPI} koder={koder} labels={labels} showKeyStoneSpecie />
+                    <HostParasiteTable list={riskAssessment.hostParasiteInformations} newItem={this.newHPI} addNewItem={this.addHPI} koder={koder} labels={labels} disabled={appState.userContext.readonly} showKeyStoneSpecie />
                     <hr/>
                    {/* <p>{ntLabels.score}</p>
                     <ScoreUnsure appState={appState}
@@ -388,7 +389,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                                 secondValue={"unsureI"}/>*/}
 
                     
-                    <Criterion criterion={crit52I} mode="noheading"/>
+                    <Criterion criterion={crit52I} mode="noheading" disabled={appState.userContext.readonly}/>
                      <Xcomp.HtmlString                            
                                 observableValue={[riskAssessment, "ICritInsecurity"]}
                                 label={labels.DEcrit.insecurity}

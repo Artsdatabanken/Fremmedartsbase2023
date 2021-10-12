@@ -13,6 +13,7 @@ const HostParasiteTable = observer((props) =>
     // const koder = appState.koder
     const labels = props.labels
     const koder = props.koder
+    const disabled = props.disabled
     // console.log("hostkoder: "  + JSON.stringify(Object.keys(koder)))
     // console.log("ParasiteEcoEffectCodes: "  + JSON.stringify(koder.ParasiteEcoEffectCodes))
 
@@ -87,12 +88,14 @@ const HostParasiteTable = observer((props) =>
                                 codes={props.koder.assessmentBackgrounds}
                                 //heading={labels.DEcrit.assessmentBasis}
                                 hideUnchecked
+                                disabled={disabled}
                                 //mode="check"
                                 />
                 <Xcomp.MultiselectArray
                                 observableValue={[item, 'basisOfAssessment']} 
                                 codes={koder.assessmentBackgrounds}
                                 mode="check"
+                                disabled={disabled}
                                 hideUnchecked/>
                 </td>
                 {/*<td><Xcomp.StringEnum observableValue={[item, 'parasiteEcoEffect']} forceSync codes={koder.ParasiteEcoEffectCodes} /></td>
@@ -119,6 +122,7 @@ const HostParasiteTable = observer((props) =>
                         {props.newItem.scientificName.length > 0 ?
                         <div 
                             className="speciesNewItem"
+                            disabled={disabled}
                             onClick={action(() => {
                                 props.newItem.taxonId = "";
                                 props.newItem.taxonRank = "";
@@ -136,7 +140,7 @@ const HostParasiteTable = observer((props) =>
                             <div className="scientificName">{props.newItem.scientificName}</div>
                             <div className="author">{"(" + props.newItem.scientificNameAuthor + ")"}</div>
                         </div> :
-                        <Xcomp.String observableValue={[props.newItem, 'taxonSearchString']} placeholder={labels.DEcrit.searchSpecies} />}
+                        <Xcomp.String observableValue={[props.newItem, 'taxonSearchString']}  disabled={disabled} placeholder={labels.DEcrit.searchSpecies} />}
                         {props.newItem.taxonSearchResult.length > 0 ?
                         <div className="speciesSearchList" style={{position: 'absolute', top: "36px", left:"15px"}}>
                             <ul className="panel list-unstyled">
@@ -177,7 +181,7 @@ const HostParasiteTable = observer((props) =>
                 </td>
                {/* {props.showRedlist ? <td><Xcomp.String observableValue={[props.newItem, 'redListCategory']} /></td> : null}*/}
                 {props.showKeyStoneSpecie ? <td><Xcomp.Bool observableValue={[props.newItem, 'keyStoneSpecie']} /></td> : null}
-                <td><Xcomp.String className="parasiteName" observableValue={[props.newItem, 'parasiteScientificName']} /></td>
+                <td><Xcomp.String className="parasiteName"  disabled={disabled} observableValue={[props.newItem, 'parasiteScientificName']} /></td>
                 <td>
                     <Xcomp.StringEnum observableValue={[props.newItem, 'status']}  codes={koder.ParasiteStatus}/>                
                 </td>
@@ -193,6 +197,7 @@ const HostParasiteTable = observer((props) =>
                                 observableValue={[props.newItem, 'basisOfAssessment']} 
                                 codes={props.koder.assessmentBackgrounds}
                                 hideUnchecked
+                                disabled={disabled}
                                 //heading={labels.DEcrit.assessmentBasis}
                                 //mode="check"
                                 />
@@ -200,6 +205,7 @@ const HostParasiteTable = observer((props) =>
                                 observableValue={[props.newItem, 'basisOfAssessment']} 
                                 codes={props.koder.assessmentBackgrounds}
                                 mode="check"
+                                disabled={disabled}
                                 hideUnchecked
                                 />
                                 
