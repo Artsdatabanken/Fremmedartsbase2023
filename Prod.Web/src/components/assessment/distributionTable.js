@@ -23,7 +23,9 @@ export default class DistributionTable extends React.Component {
     if (assessment.horizonEstablismentPotential == 1){
         assessment.riskAssessment.AOOtotalBest = 1;
     }
-        
+    if (assessment.alienSpeciesCategory != "DoorKnocker" && assessment.riskAssessment.AOOtotalBest == 0) {
+        alert("En selvstending reproduserende art må ha et forekomstareal på minst 4 km2!")
+    }
        
     return (
     <>
@@ -82,6 +84,7 @@ export default class DistributionTable extends React.Component {
                     integer
                    // onChange={action (() => assessment.horizonEstablismentPotential == 1 && assessment.riskAssessment.AOOtotalBest != 1 ? alert("Dette stemmer ikke overens med vurdering på horisontskanningen. Er du sikker på at du vil endre?") : null)} 
                    />   
+
                 </td>
                <td>
                <Xcomp.Number                            
