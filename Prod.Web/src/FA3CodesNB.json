@@ -3905,7 +3905,21 @@
                                                     "Text": "av frø (ikke mat eller fôr)",
                                                     "Info": null,
                                                     "Children": null
-                                                }                                                
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "transportationOfHabitatMaterial",
+                                                    "Text": "av habitatmateriale som sand, torv, jord og kompost",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "other/unknown contaminant",
+                                                    "Text": "øvrig forurensning",
+                                                    "Info": null,
+                                                    "Children": null
+                                                }                                                     
                                             ]
                                         }
                                     },
@@ -3926,35 +3940,42 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "vehicles",
-                                                    "Text": "med kjøretøy (biler, tog)",
+                                                    "Text": "med kjøretøy (ikke med last e.l.)",
                                                     "Info": null,
                                                     "Children": null
                                                 },
                                                 {
                                                     "Id": null,
                                                     "Value": "hitchhikersPlane",
-                                                    "Text": "med fly",
+                                                    "Text": "med fly (ikke med last e.l.)",
                                                     "Info": null,
                                                     "Children": null
                                                 },
                                                 {
                                                     "Id": null,
                                                     "Value": "hitchhikersShip",
-                                                    "Text": "med skip",
+                                                    "Text": "med fartøy (skip, båter o.l., unntatt last, ballastvann og påvekst e.l.)",
                                                     "Info": null,
                                                     "Children": null
                                                 },
                                                 {
                                                     "Id": null,
                                                     "Value": "ballastWater",
-                                                    "Text": "med ballastvann/sand",
+                                                    "Text": "med ballastvann",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "ballastSand",
+                                                    "Text": "med ballastsand/jord",
                                                     "Info": null,
                                                     "Children": null
                                                 },
                                                 {
                                                     "Id": null,
                                                     "Value": "hullFouling",
-                                                    "Text": "med påvekst på skip",
+                                                    "Text": "som påvekst på fartøy (skip, båter o.l.)",
                                                     "Info": null,
                                                     "Children": null
                                                 },
@@ -3975,14 +3996,14 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "organicPackagingMaterial",
-                                                    "Text": "med organisk emballasje",
+                                                    "Text": "med emballasje",
                                                     "Info": null,
                                                     "Children": null
                                                 },
                                                 {
                                                     "Id": null,
                                                     "Value": "fishingEquipment",
-                                                    "Text": "med fiske/akvakulturutstyr",
+                                                    "Text": "med fiskeutstyr",
                                                     "Info": null,
                                                     "Children": null
                                                 },
@@ -4012,14 +4033,7 @@
                                         "Text": "Tilsiktet utsetting",
                                         "Info": null,
                                         "Children": {
-                                            "mpimportationrelease": [
-                                                {
-                                                    "Id": null,
-                                                    "Value": "releaseForUseOther",
-                                                    "Text": "til kommersiell bruk (f.eks. produksjonsarter)",
-                                                    "Info": null,
-                                                    "Children": null
-                                                },
+                                            "mpimportationrelease": [                                                
                                                 {
                                                     "Id": null,
                                                     "Value": "biologicalControl",
@@ -4072,7 +4086,7 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "otherUnknownRelease",
-                                                    "Text": "øvrig/ukjent utsetting",
+                                                    "Text": "øvrig tilsiktet utsetting",
                                                     "Info": null,
                                                     "Children": null
                                                 }
@@ -4148,6 +4162,20 @@
                                                     "Text": "av frø (ikke mat eller fôr)",
                                                     "Info": null,
                                                     "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "transportationOfHabitatMaterial",
+                                                    "Text": "av habitatmateriale som sand, torv, jord og kompost",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "other/unknown contaminant",
+                                                    "Text": "øvrig forurensning",
+                                                    "Info": null,
+                                                    "Children": null
                                                 }                                                
                                             ]
                                         }
@@ -4169,35 +4197,42 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "vehicles",
-                                                    "Text": "med kjøretøy (biler, tog)",
+                                                    "Text": "med kjøretøy (ikke med last e.l.)",
                                                     "Info": null,
                                                     "Children": null
                                                 },
                                                 {
                                                     "Id": null,
                                                     "Value": "hitchhikersPlane",
-                                                    "Text": "med fly",
+                                                    "Text": "med fly (ikke med last e.l.)",
                                                     "Info": null,
                                                     "Children": null
                                                 },
                                                 {
                                                     "Id": null,
                                                     "Value": "hitchhikersShip",
-                                                    "Text": "med skip",
+                                                    "Text": "med fartøy (skip, båter o.l., unntatt last, ballastvann og påvekst e.l.)",
                                                     "Info": null,
                                                     "Children": null
                                                 },
                                                 {
                                                     "Id": null,
                                                     "Value": "ballastWater",
-                                                    "Text": "med ballastvann/sand",
+                                                    "Text": "med ballastvann",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "ballastSand",
+                                                    "Text": "med ballastsand/jord",
                                                     "Info": null,
                                                     "Children": null
                                                 },
                                                 {
                                                     "Id": null,
                                                     "Value": "hullFouling",
-                                                    "Text": "med påvekst på skip",
+                                                    "Text": "som påvekst på fartøy (skip, båter o.l.)",
                                                     "Info": null,
                                                     "Children": null
                                                 },
@@ -4218,14 +4253,14 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "organicPackagingMaterial",
-                                                    "Text": "med organisk emballasje",
+                                                    "Text": "med emballasje",
                                                     "Info": null,
                                                     "Children": null
                                                 },
                                                 {
                                                     "Id": null,
                                                     "Value": "fishingEquipment",
-                                                    "Text": "med fiske/akvakulturutstyr",
+                                                    "Text": "med fiskeutstyr",
                                                     "Info": null,
                                                     "Children": null
                                                 },
@@ -4425,7 +4460,7 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "importContaminantOnAnimals",
-                                                    "Text": "som annen smitte/forurensning på/med dyr",
+                                                    "Text": "som annen forurensning av dyr",
                                                     "Info": null,
                                                     "Children": null
                                                 },
@@ -4435,11 +4470,18 @@
                                                     "Text": "som smitte/parasitter på/i planter",
                                                     "Info": null,
                                                     "Children": null
+                                                },                                                
+                                                {
+                                                    "Id": null,
+                                                    "Value": "importContaminantOnPlantsCommercial",
+                                                    "Text": "som forurensning av planter eller medfølgende jord under kommersiell plantehandel",
+                                                    "Info": null,
+                                                    "Children": null
                                                 },
                                                 {
                                                     "Id": null,
                                                     "Value": "importContaminantOnPlants",
-                                                    "Text": "som annen smitte/forurensninger på/med planter",
+                                                    "Text": "som øvrig forurensning av planter",
                                                     "Info": null,
                                                     "Children": null
                                                 },
@@ -4480,15 +4522,8 @@
                                                 },
                                                 {
                                                     "Id": null,
-                                                    "Value": "importContaminantNurseryMaterial",
-                                                    "Text": "av hageavfall o.l.",
-                                                    "Info": null,
-                                                    "Children": null
-                                                },
-                                                {
-                                                    "Id": null,
                                                     "Value": "importOtherUnknownContaminant",
-                                                    "Text": "øvrig/ukjent",
+                                                    "Text": "øvrig forurensning",
                                                     "Info": null,
                                                     "Children": null
                                                 }
@@ -4553,7 +4588,7 @@
                                                 },
                                                 {
                                                     "Id": null,
-                                                    "Value": "importBallastWater",
+                                                    "Value": "importBallastSand",
                                                     "Text": "med ballastsand/jord",
                                                     "Info": null,
                                                     "Children": null
@@ -4561,7 +4596,7 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "importHullFouling",
-                                                    "Text": "som påvekst på fartøy (skip, båter o.l.",
+                                                    "Text": "som påvekst på fartøy (skip, båter o.l.)",
                                                     "Info": null,
                                                     "Children": null
                                                 },

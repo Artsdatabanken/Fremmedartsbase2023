@@ -104,7 +104,7 @@ export default class assessmentNew extends React.Component {
                                     codes={appState.expertgroups} />
                         </div>
                     </div>
-                    <div className="row" style={{marginTop: '30px', marginLeft: '30px' }}>
+                    <div className="row" style={{marginTop: '30px'}}>
                         <div className="col-md-6">
                             <div style={{position: 'relative'}}>
                                 {newAssessment.ScientificName.length > 0 ?
