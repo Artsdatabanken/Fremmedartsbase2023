@@ -5119,6 +5119,143 @@
                             "Children": null
                         }
                     ],
+
+                    "administration": [
+                        {
+                            "Id": null,
+                            "Value": "accessDenied",
+                            "Text": "Ingen adgang til administrasjon av ekspertkomitéer - Du kom hit p.g.a. en feil",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "administration",
+                            "Text": "Administrasjon av ekspertkomitéer",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "expertGroup",
+                            "Text": "Ekspertkomité",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "member",
+                            "Text": "Medlem",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "leader",
+                            "Text": "Leder",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "writer",
+                            "Text": "Skriver",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "removeFromGroup",
+                            "Text": "Slett fra gruppe",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "remove",
+                            "Text": "Slett",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "users",
+                            "Text": "Brukere",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "newRights",
+                            "Text": "Ny rettighet",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "addRight",
+                            "Text": "Legg til rettighet",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "accessApplicationAdministration",
+                            "Text": "Administrasjon av tilgangsøknader",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "id",
+                            "Text": "Id",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "username",
+                            "Text": "Brukernavn",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "name",
+                            "Text": "Navn",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "email",
+                            "Text": "Epost",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "date",
+                            "Text": "Dato",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "application",
+                            "Text": "Søknad",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "giveAccess",
+                            "Text": "Gi tilgang",
+                            "Info": null,
+                            "Children": null
+                        }
+
+                    ],
             
                     "indoorProduktionImport": [
                         {

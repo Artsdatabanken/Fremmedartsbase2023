@@ -16,7 +16,9 @@ export default class ExpertGroupAdmin extends React.Component {
     render() {
         const {appState} = this.props;
         const expertGroupModel = ExpertGroupModel
+        const labels = appState.codeLabels.administration
         
+
         function gitilgang(id){
             loadData(config.getUrl("Access/applications/approve/" + id),
             data => {
@@ -48,51 +50,55 @@ export default class ExpertGroupAdmin extends React.Component {
             );
         }
         if (!auth.isInRole("fab_administrator")) //())
-            return (<h3>Ingen adgang til administrasjon av ekspertkomitéer - Du kom hit p.g.a. en feil</h3>);
+            return (<h3>{labels.accessDenied}</h3>);
         return (
             <fieldset className="well">
 
             <section className="main adm">
-                <h2>Administrasjon av ekspertkomitéer</h2>
-                <h3>Ekspertkomité</h3>
+                <h2>{labels.administration}</h2>
+                <h3>{labels.expertGroup}</h3>
                 <Xcomp.StringEnum 
                         observableValue={[expertGroupModel, 'valgtekspertgruppe']}
                         codes={expertGroupModel.alleekspertgrupper} />
+                        
                 {/* <select type="select" label="Velg ekspertgruppe" placeholder="select" onChange={e =>
                 expertGroupModel.valgtekspertgruppe = e.target.value}>
                     {expertGroupModel.alleekspertgrupper
                 .map((eg) => <option key={eg} value={eg}>{eg}</option>)}
     </select> */}
-
+        {expertGroupModel.eksperterforvalgtgruppe.length > 0 ?
                 <table className="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>Medlem</th>
-                            <th>Leder</th>
-                            <th>Skriver</th>
+                            <th>{labels.member}</th>
+                            <th>{labels.leader}</th>
+                            <th>{labels.writer}</th>
                           {/*<th>Leser</th> */}
-                            <th>Slett fra gruppe</th>
+                            <th>{labels.removeFromGroup}</th>
                         </tr>
                     </thead>
                     <tbody >
                         {expertGroupModel.eksperterforvalgtgruppe.map(ega =>
-                <tr key={ega.id}>
+                        <tr key={ega.id}>
                             <td><span>{ega.fullName}</span></td>
                             <td><span>{ega.admin ? 'X' : ''}</span></td>
                             <td><span>{ega.writeAccess ? 'X' : ''}</span></td>
-                            <td><Xcomp.Button primary xs onClick={e => fjernRettighet(ega.id) }>Slett</Xcomp.Button></td>
+                            <td><Xcomp.Button primary xs onClick={e => fjernRettighet(ega.id) }>{labels.remove}</Xcomp.Button></td>
                         </tr>)}
 
                     </tbody>
-                </table>
-                        <h3>Brukere</h3>
+                </table> : 
+                // to make some space between the heading and next table
+                <div style={{height: "70px"}}></div>
+        }
+                <h3>{labels.users}</h3>
                  <table className="table table-striped table-hover">
                         <thead>
                         <tr><th />
-                            <th>Leder</th>
-                            <th>Skriver</th>
+                            <th>{labels.leader}</th>
+                            <th>{labels.writer}</th>
                            {/* <th>Leser</th> */}
-                            <th>Ny rettighet</th>
+                            <th>{labels.newRights}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -115,23 +121,24 @@ export default class ExpertGroupAdmin extends React.Component {
                 </td>
                 {/* <td>
                 <Xcomp.Bool observableValue={[expertGroupModel.valgtekspertsrolleivalgtekspertgruppe, 'leser']} /></td> */}
-                <td><Xcomp.Button primary xs onClick={lagreRettighet}>Legg til rettighet</Xcomp.Button></td>
+                <td><Xcomp.Button primary xs onClick={lagreRettighet}>{labels.addRight}</Xcomp.Button></td>
             </tr>
             </tbody>
             </table>
             </section>
+            {expertGroupModel.tilgangsoknader.length > 0 && 
             <section className="notmain">
-                <h2>Administrasjon av tilgangsøknader</h2>
+                <h2>{labels.accessApplicationAdministration}</h2>
                 <table className="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>Id</th>
-                            <th>Brukernavn</th>
-                            <th>Navn</th>
-                            <th>Epost</th>
-                            <th>Dato</th>
-                            <th>Søknad</th>
-                            <th>Gi tilgang</th>
+                            <th>{labels.id}</th>
+                            <th>{labels.username}</th>
+                            <th>{labels.name}</th>
+                            <th>{labels.email}</th>
+                            <th>{labels.date}</th>
+                            <th>{labels.application}</th>
+                            <th>{labels.giveAccess}</th>
                         </tr>
                     </thead>
                     <tbody >
@@ -143,7 +150,7 @@ export default class ExpertGroupAdmin extends React.Component {
                             <td><span>{ega.email}</span></td>
                             <td><span>{ega.dateCreated}</span></td>
                             <td><span>{ega.application}</span></td>
-                            <td><Xcomp.Button primary xs onClick={e => gitilgang(ega.id) }>Gi tilgang</Xcomp.Button></td>
+                            <td><Xcomp.Button primary xs onClick={e => gitilgang(ega.id) }>{labels.giveAccess}</Xcomp.Button></td>
                         </tr>)}
                         {/* id: "4fe6f765-83c0-448a-a8dc-307629972949"
 brukernavn: "steinho"
@@ -157,6 +164,7 @@ soknad: "Eg treng tilgang med ein gong" */}
                     </tbody>
                 </table>
             </section>
+            }
             </fieldset>);
     }
 }
