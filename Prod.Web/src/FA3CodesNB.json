@@ -5634,6 +5634,69 @@
                     "SelectAssessment": [
                         {
                             "Id": null,
+                            "Value": "whatDoYouWantToDo",
+                            "Text": "Hva vil du gjøre?",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "hsFilters",
+                            "Text": "Filtrer på framdrift, grupper av potensielle dørstokkarter og vurderingsansvarlig",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "further",
+                            "Text": "% videre til risikovurdering",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "notAssessed",
+                            "Text": "% ikke videre",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "commentFilter",
+                            "Text": "Filtrer på kommentarer",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "showingTotal",
+                            "Text": "Viser totalt ",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "assessment",
+                            "Text": " vurdering",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "assessments",
+                            "Text": " vurderinger",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "filteredFrom",
+                            "Text": "filtrert fra ",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "assessedBy",
                             "Text": "Vurderes av",
                             "Info": null,

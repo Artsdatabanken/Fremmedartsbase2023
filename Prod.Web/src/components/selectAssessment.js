@@ -43,8 +43,7 @@ export default class SelectAssessment extends Component {
         appState.horizonScanFilter.potentialDoorKnockers = []
 
     })
-    resetOneFilter = action ((appState, name) => {
-        //console.log(name)
+    resetOneFilter = action ((appState, name) => {        
         if (name === 'kunUbehandlede') {
             appState.kunUbehandlede = false
         } else if (name === 'kunMine'){
@@ -83,11 +82,9 @@ export default class SelectAssessment extends Component {
         appState.horizonScanFilter.potentialDoorKnockers.remove(name)
     })
 
-
     resetNotAssessedDK = action ((appState, name) => {
         appState.horizonScanFilter.notAssessedDoorKnocker.remove(name)
     })
-
 
     removeStatus = action ((appState, status) =>{
         var newStatusFilter = appState.statusCheckboxFilter.filter (item => item != status)
@@ -99,33 +96,14 @@ export default class SelectAssessment extends Component {
         appState.expertgroupCategoryCheckboxFilter = newCatFilter
     })
 
-
-   /* findAmountOfAssessments = (appState) => {
-        var result = ""
-        if (appState.horizonScanFilter.hsNotStarted) {
-            result = appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','2')
-        } else if (
-            appState.horizonScanFilter.hsFinished || (appState.horizonScanFilter.toAssessment && appState.horizonScanFilter.notAssessed)) {
-                result = appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0')
-        } else if (appState.horizonScanFilter.toAssessment) {
-            result = appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1')
-        } else if (appState.horizonScanFilter.notAssessed) {
-            result = appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','0')
-        }
-
-
-        
-        return result
-    } */
-
     findFilterText = (codes, value) => {
         var result = ""
 
         result = codes.find(code => code.value == value).text
 
         return result
-
     }
+
     render() {
         const {appState, appState:{assessment,roleincurrentgroup:rolle,codeLabels:labels,koder}} = this.props
         // const {appState, appState:{assessment,roleincurrentgroup:rolle,codeLabels:labels,koder:{Children:koder}}} = this.props
@@ -137,7 +115,7 @@ export default class SelectAssessment extends Component {
         if (appState.expertgroup == "" || appState.expertgroup == undefined) {
             appState.expertgroup = "Karplanter"
         }
-        //appState.expertgroup = "Karplanter"
+        
      /*   let checkList = document.getElementById('list1');
         if (checkList) {checkList.getElementsByClassName('anchor')[0].onclick = function (evt) {
             if (checkList.classList.contains('visible'))
@@ -170,9 +148,9 @@ export default class SelectAssessment extends Component {
 
         return (
             <div>
-                {window.location.href.indexOf("test.") > 1 && <table className="table table-striped">
-                    <tr style={{backgroundColor: '#f9f9f9'}}>
-                        <td style={{textAlign: 'center', color: 'red'}}><b>{labels.SelectAssessment.testVersion}<a href="https://fab4.artsdatabanken.no/">{labels.SelectAssessment.here}</a>.</b></td>
+                {!config.isNotTest && config.isRelease && <table className="table warning table-striped">
+                    <tr>
+                        <td><b>{labels.SelectAssessment.testVersion}<a href="https://fab4.artsdatabanken.no/">{labels.SelectAssessment.here}</a>.</b></td>
                     </tr>
                 </table>}              
 
@@ -181,7 +159,7 @@ export default class SelectAssessment extends Component {
                                     className="assessmentType"
                                     disabled={config.isNotTest}                                                                        
                                     observableValue={[appState, 'assessmentTypeFilter']} 
-                                    heading={"Hva vil du gjøre?"}
+                                    heading={labels.SelectAssessment.whatDoYouWantToDo}
                                     codes={koder.assessmentType}
                                     mode="radio"/>
                 <fieldset className="well">
@@ -189,15 +167,14 @@ export default class SelectAssessment extends Component {
                     <div className="selectAssessment">                   
                                 <Xcomp.StringEnum 
                                         forceSync
-                                        observableValue={[appState, 'expertgroup']} 
-                                        
+                                        observableValue={[appState, 'expertgroup']}                                         
                                         codes={appState.expertgroups}/>                                
                     </div> 
                 </fieldset>
                 
-                <div style={{display: 'flex'}}>
-                    <div style={{float: 'left', width: '100%'}}>
-                        <fieldset className="well" style={{marginBottom: '5px'}}>
+                <div className="chooseSpecies">
+                    <div>
+                        <fieldset className="well">
                             <div className="taxon">
                                 <li>
                                     <span style={{marginRight: '10px', marginTop: '5px', width: '300px'}}>{labels.SelectAssessment.taxonSearch}</span> 
@@ -220,7 +197,7 @@ export default class SelectAssessment extends Component {
                 </div>
                 {/*<h5 style={{fontWeight: 'bold', fontSize: '1rem'}}>Filtrer på:</h5>*/}
                 {appState.assessmentTypeFilter == "riskAssessment" &&
-                <div className="selectFilter" style={{marginBottom: '20px'}}>
+                <div className="selectFilter">
                     <div>
                     <div className="filters"> 
                     
@@ -346,7 +323,7 @@ export default class SelectAssessment extends Component {
                 <>
                 <div className="selectFilter">
                     <div className="filters">
-                        <Xcomp.Bool observableValue={[appState.horizonScanFilter, "horizonFilters"]} label={"Filtrer på framdrift, grupper av potensielle dørstokkarter og vurderingsansvarlig"} />
+                        <Xcomp.Bool observableValue={[appState.horizonScanFilter, "horizonFilters"]} label={labels.SelectAssessment.hsFilters} />
                     
                 {appState.horizonScanFilter.horizonFilters == true &&
                 
@@ -355,8 +332,8 @@ export default class SelectAssessment extends Component {
                                 <Xcomp.Bool observableValue={[appState.horizonScanFilter, "hsNotStarted"]} label={koder.workStatus[0].text + "   (" + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','2') + ") " + (100*appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','2')/appState.expertgroupAssessmentTotalCount).toFixed() + "%"} />
                                 <Xcomp.Bool observableValue={[appState.horizonScanFilter, "hsFinished"]} label={koder.workStatus[2].text + " (" + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0') + ")   " + (100*appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0')/appState.expertgroupAssessmentTotalCount).toFixed() + "%"} />
                             <div className="subChoice">
-                                    <Xcomp.Bool observableValue={[appState.horizonScanFilter, "toAssessment"]} label={" (" + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1') + ") " + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0').toFixed() > 0 ? (100*appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0')/appState.getStatisticsFor(expertgroupAssessmentTotalCount)) : "0" + "% videre til risikovurdering"} />
-                                    <Xcomp.Bool observableValue={[appState.horizonScanFilter, "notAssessed"]} label={" (" + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','0') + ") " + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0').toFixed() > 0 ? (100*appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','0')/appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0')).toFixed() : "0" + "% ikke videre"} />
+                                    <Xcomp.Bool observableValue={[appState.horizonScanFilter, "toAssessment"]} label={" (" + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1') + ") " + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0').toFixed() > 0 ? (100*appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0')/appState.getStatisticsFor(expertgroupAssessmentTotalCount)) : "0" + labels.SelectAssessment.further} />
+                                    <Xcomp.Bool observableValue={[appState.horizonScanFilter, "notAssessed"]} label={" (" + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','0') + ") " + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0').toFixed() > 0 ? (100*appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','0')/appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0')).toFixed() : "0" + labels.SelectAssessment.notAssessed} />
                             </div>
 
                         </div>
@@ -392,7 +369,7 @@ export default class SelectAssessment extends Component {
                     
                 </div>
                 <div className="selectFilter">
-                    <div className="filters"><Xcomp.Bool observableValue={[appState, "kunUbehandlede"]} label={"Filtrer på kommentarer"}/></div>                        
+                    <div className="filters"><Xcomp.Bool observableValue={[appState, "kunUbehandlede"]} label={labels.SelectAssessment.commentFilter}/></div>                        
                 </div>
                 </>}
                 
@@ -502,15 +479,14 @@ export default class SelectAssessment extends Component {
             {/*<div><a target="_blank" href={config.apiUrl + '/api/ExpertGroupAssessments/export/' + appState.expertgroup} >Last ned CVS fil</a> </div><br />*/ }
 
 
-            
-            
+                        
             
             <div className="usedFilters">
-            {!appState.horizonScanFilter.hsNotStarted && !appState.horizonScanFilter.hsFinished && !appState.horizonScanFilter.toAssessment && !appState.horizonScanFilter.notAssessed && appState.responsible == [] ?
+            {(!appState.kunUbehandlede && !appState.horizonScanFilter.hsNotStarted && !appState.horizonScanFilter.hsFinished && !appState.horizonScanFilter.toAssessment && !appState.horizonScanFilter.notAssessed && appState.responsible.length == 0) ?
                 
-                <div className="counter">Viser totalt {appState.expertgroupAssessmentTotalCount} {appState.expertgroupAssessmentTotalCount == 1 ? " vurdering" : " vurderinger"} </div>
+                <div className="counter">{labels.SelectAssessment.showingTotal} {appState.expertgroupAssessmentTotalCount} {appState.expertgroupAssessmentTotalCount == 1 ? labels.SelectAssessment.assessment : labels.SelectAssessment.assessments} </div>
                 :            
-                <div className="counter">Viser totalt {appState.expertgroupAssessmentList.length} {appState.expertgroupAssessmentList.length == 1 ? " vurdering" : " vurderinger"} (filtrert fra {appState.expertgroupAssessmentTotalCount})</div>
+                <div className="counter">{labels.SelectAssessment.showingTotal} {appState.expertgroupAssessmentList.length} {appState.expertgroupAssessmentList.length == 1 ? labels.SelectAssessment.assessment : labels.SelectAssessment.assessments} ({labels.SelectAssessment.filteredFrom} {appState.expertgroupAssessmentTotalCount})</div>
             }
             <div>
                 <span>{labels.SelectAssessment.usedFilters}</span> 
@@ -544,10 +520,9 @@ export default class SelectAssessment extends Component {
                             {appState.withPotentialTaxonChanges && <button onClick={() => this.resetOneFilter(appState, 'withPotentialTaxonChanges')}>{labels.SelectAssessment.potentialTaxonChange}<a href="#">x</a></button>}
                             {appState.withAutomaticNameChanges && <button onClick={() => this.resetOneFilter(appState, 'withAutomaticNameChanges')}>{labels.SelectAssessment.automaticNameChange}<a href="#">x</a></button>}
                             
-                <button
-                        style={{marginLeft: '20px'}} 
+                <button                        
                         type="button"  
-                        disabled={appState.expertgroupCategoryCheckboxFilter.length === 0 && appState.expertgroupAssessmentFilter === "" && appState.statusCheckboxFilter.length === 0 && !appState.kunMine &&!appState.withComments &&  !appState.kunUbehandlede && !appState.withAutomaticNameChanges && !appState.withPotentialTaxonChanges && !appState.horizonScanFilter.hsNotStarted && !appState.horizonScanFilter.toAssessment && !appState.horizonScanFilter.hsFinished && !appState.horizonScanFilter.notAssessed && appState.responsible.length === 0 && appState.horizonScanFilter.notAssessedDoorKnocker.length === 0 && appState.horizonScanFilter.potentialDoorKnockers.length === 0} 
+                        disabled={appState.expertgroupCategoryCheckboxFilter.length === 0 && appState.expertgroupAssessmentFilter === "" && appState.statusCheckboxFilter.length === 0 && !appState.kunMine &&!appState.withComments && !appState.kunUbehandlede && !appState.withAutomaticNameChanges && !appState.withPotentialTaxonChanges && !appState.horizonScanFilter.hsNotStarted && !appState.horizonScanFilter.toAssessment && !appState.horizonScanFilter.hsFinished && !appState.horizonScanFilter.notAssessed && appState.responsible.length === 0 && appState.horizonScanFilter.notAssessedDoorKnocker.length === 0 && appState.horizonScanFilter.potentialDoorKnockers.length === 0} 
                         onClick={() => this.resetFilters(appState)}>{labels.SelectAssessment.resetAll}</button>
                 </div>
             </div>

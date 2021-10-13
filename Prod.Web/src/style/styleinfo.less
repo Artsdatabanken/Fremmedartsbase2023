@@ -1056,8 +1056,17 @@ ul.scores li.checkbox label input {
   margin-left: 30px;
 }
 
-.selectAssessment {
+.selectAssessment, .chooseSpecies {
   display: flex;
+}
+
+.chooseSpecies > div {
+  float: left; 
+  width: 100%;
+  
+  fieldset.well {      
+    margin-bottom: 5px;
+  }
 }
 
 .selectAssessment > div {
@@ -1291,6 +1300,15 @@ ul > table > tr,
 
 .well table.table-striped {
   width: 95%;
+}
+
+table.table-striped.warning tr {
+  background-color: #f9f9f9;
+  
+  td {
+    text-align: center;
+    color: red;
+  }
 }
 
 .table-striped thead tr {
@@ -1550,6 +1568,7 @@ table.table-hover,
 
 .selectFilter {
   margin-top: 15px;
+  margin-bottom: 20px;
   border: 1px solid #e3e3e3;
 }
 
@@ -1596,8 +1615,10 @@ ul.faner {
 } 
 
 .selectFilter .nav_menu .filters {
-  width: 30%;
-  margin-right: 45px;
+  width: 295px;
+  margin: 10px;
+  padding: 5px;
+  justify-content: center;
 }
 
 .selectFilter .nav_menu .filters:last-child {
@@ -1610,7 +1631,6 @@ ul.faner {
 
 .selectFilter .nav_menu {
   justify-content: left;
-  margin-right: 15px;
   margin-left: 20px;
 }
 .selectFilter span {
