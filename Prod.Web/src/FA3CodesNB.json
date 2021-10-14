@@ -5273,6 +5273,79 @@
                             "Children": null
                         }
                     ],
+                    
+                    "assessmentComments": [
+                        {
+                            "Id": null,
+                            "Value": "heading",
+                            "Text": "Kommentarer",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "id",
+                            "Text": "ID",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "comments",
+                            "Text": "Kommentarer knyttet til vurderingen",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "author",
+                            "Text": "Autor",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "date",
+                            "Text": "Dato",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "delete",
+                            "Text": "Slett",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "isDeleted",
+                            "Text": "Kommentar er slettet!",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "processed",
+                            "Text": "Behandlet",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "writeCommentHere",
+                            "Text": "Her kan du skrive kommentar på vurderingen.",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "send",
+                            "Text": "Send",
+                            "Info": null,
+                            "Children": null
+                        }
+                    ],
                    
                     "AcritSelect": [
                         {

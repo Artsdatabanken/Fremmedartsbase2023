@@ -2072,6 +2072,45 @@ div.modal-body > div {
   margin-left: 0;
 }
 
+// rows and columns in comments table
+.form_category > .form_item > table.comments > tbody {
+  tr {
+    border-top: 1px solid black;
+
+    td:first-child {
+      width: 5%;
+      padding-top: 10px;
+      padding-right: 10px;
+    }
+    td:last-child {
+      display: flex; 
+      width: 100%; 
+      padding-top: 10px;
+    }
+    td.content {
+      width: 35%;
+    }
+    td {
+      width: 20%;
+      padding-top: 10px;
+      span {
+        color: red;
+      }
+     
+    }
+  }
+}
+
+div.commentField .form-control {
+  height: 35%;
+  font-family: Arial; 
+  font-size: 14px;
+}
+
+button.sendComment {
+  margin-top: 20px;
+}
+
 .vurderinger > tbody > tr > td.sciName {
   min-width: 200px;
 }
