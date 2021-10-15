@@ -681,8 +681,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                        <hr></hr>
                     {riskAssessment.activeSpreadYearlyLiteratureData
                         ? <div>
-                                <table className="formtable">
-                                <h5>{labels.BcritText.transferredFrom2018}</h5>
+                                <table className="formtable Bcrit">
+                                <p>{labels.BcritText.transferredFrom2018}</p>
                                     <tbody>
                                         <tr>
                                             <th colSpan="4">
@@ -742,7 +742,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                         ? <div>
                                 <table className="formtable">
                                 {!riskAssessment.activeSpreadYearlyLiteratureData && 
-                                    <h5>{labels.BcritText.transferredFrom2018}</h5>
+                                    <p>{labels.BcritText.transferredFrom2018}</p>
                                 }
                                     <tbody>
                                         <tr>
