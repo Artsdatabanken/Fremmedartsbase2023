@@ -7893,6 +7893,20 @@
                             "Text": "URL:",
                             "Info": null,
                             "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "saveOrUpdate",
+                            "Text": "Lagre/oppdatere referanse:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "removeReference",
+                            "Text": "Slett referanse:",
+                            "Info": null,
+                            "Children": null
                         }
                     ],
                     "NatureTypes": [
