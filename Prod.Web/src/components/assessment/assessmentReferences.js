@@ -496,7 +496,9 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                             </table>            
                         </div>
                     </div>
-                    <Xcomp.Button className={"summary"}>{labels.critDocumentation.showSummary}</Xcomp.Button>
+                    <div className="form_item">
+                        <Xcomp.Button className={"summary"}>{labels.critDocumentation.showSummary}</Xcomp.Button>
+                    </div>
                     
                     <div className="form_category">
                         <h3>{labels.references.searchReferences}</h3>

@@ -414,6 +414,7 @@ div .btn, div .form-control, .well .btn-primary, .btn-flat {
   background-color: #fff;
   color: #4c4a48;
   border: 1px solid #777;
+  box-shadow: none;
 }
 
 
@@ -443,6 +444,8 @@ button.btn-default.multiselect {
 // checkboxes in MultiselectArray that hide options that are not checked
 .magicList {
   margin: 20px 0 10px;
+  max-width: 1px;
+  font-size: smaller;
         li.checkbox > label {
           white-space: break-spaces;
         }
@@ -1554,31 +1557,6 @@ table.table-hover,
   margin-left: 0;
 }
 
-.filters {
-  width: auto;
-  padding: 5px;
-  //margin-right: 5px;
-  //border: 1px solid #ddd;
-  background-color: #f5f5f5;
- // margin-right: 80px;
-}
-
-
-.filters .checkbox, .filters .radio {
-  //margin: 0;
-  margin-left: 10px;
-}
-
-.filters > b {
-  margin-left: 5px;
-}
-
-.selectFilter {
-  margin-top: 15px;
-  margin-bottom: 20px;
-  border: 1px solid #e3e3e3;
-}
-
 .selectFilter > .filters > div.checkbox, .selectFilter > div > .filters > ul > li.checkbox {
   margin-left: 40px;
 }
@@ -1586,10 +1564,6 @@ table.table-hover,
 /*.filters h3, div > h3 {
   text-align: center;
 }*/
-
-.filters h2 {
-  margin-bottom: 20px;
-}
 
 h2, h3, h4,
 .well > label,
@@ -1616,53 +1590,84 @@ ul.faner {
   box-shadow: none;
 }
 
-.selectFilter .btn-primary {
-  margin-left: 180px;
-  margin-top: 20px;
-} 
+.selectFilter {
+  margin-top: 15px;
+  margin-bottom: 20px;
+  border: 1px solid #e3e3e3;
 
-.selectFilter .nav_menu .filters {
-  width: 295px;
-  margin: 10px;
+  .btn-primary {
+    margin-left: 180px;
+    margin-top: 20px;
+  } 
+
+  span {
+    margin-left: 10px;
+  }
+
+  .speciesStatus li label {
+    white-space: break-spaces;
+  }
+
+  .nav_menu {
+    justify-content: left;
+    margin-left: 20px;
+
+      .filters {
+      width: 295px;
+      margin: 10px;
+      padding: 5px;
+      justify-content: center;
+
+        label {  
+          white-space: break-spaces;
+        }
+    }
+
+}
+
+  .nav_menu .filters:last-child {
+    margin-right: 0;
+  }
+}
+
+
+.filters {
+  width: auto;
   padding: 5px;
-  justify-content: center;
-}
+  background-color: #f5f5f5;
 
-.selectFilter .nav_menu .filters:last-child {
-  margin-right: 0;
-}
+  h2 {
+    margin-bottom: 20px;
+  }
+  .checkbox, .radio {
+    margin-left: 10px;
+  }
+  b {
+    margin-left: 5px;
+  }
+  span {
+    font-weight: bold;
+  }
+  ul {
+    padding-inline-start: 10px;
+    margin-bottom: 0;
+  }
+  p ul {
+    padding-inline-start: 20px;
+  }
 
-.selectFilter .nav_menu .filters label {  
-  white-space: break-spaces;
-}
+  ul.status {
+    padding-inline-start: 40px;
+  }
 
-.selectFilter .nav_menu {
-  justify-content: left;
-  margin-left: 20px;
-}
-.selectFilter span {
-  margin-left: 10px;
-}
+  ul .checkbox label {
+    padding-left: 10px;
+  }
 
-.selectFilter .speciesStatus li label {
-  white-space: break-spaces;
-}
-
-.filters span {
-  font-weight: bold;
-}
-
-.filters ul {
-  padding-inline-start: 10px;
-  margin-bottom: 0;
-}
-
-.filters p ul {
-  padding-inline-start: 20px;
-}
-
-.filters ul.status {
-  padding-inline-start: 40px;
+  .form-control {
+    height: 100px;
+  }
+  
 }
 
 .main .submenu {
@@ -1702,23 +1707,32 @@ ul.faner {
   color: #5a5b5d;
 }
 
-.filters ul .checkbox label {
-  padding-left: 10px;
-}
-
-.filters .form-control {
-  height: 100px;
-}
-
 fieldset.well {
   border: 1px solid #e3e3e3;
   background-color: #f5f5f5;
   margin: 0 0 20px;
   padding: 10px 15px 20px;
-}
 
-fieldset.well table, fieldset.well h2, fieldset.well h3, fieldset.well h4 {  
-  margin: 10px 20px 20px;
+  table, h2, h3, h4 {  
+    margin: 10px 20px 20px;
+  }
+
+  div.furtherInfo {
+    margin-top: 0;
+  }
+
+  button.dropdown-toggle{
+    padding-top: 2px;
+  }
+
+  .dropdown-menu ul {
+    padding-inline-start: 10px;
+  }
+
+  ul.mainEcosystem {
+    padding-inline-start: 10px;
+  }
+
 }
 
 .well button.pull-left {
@@ -1728,22 +1742,6 @@ fieldset.well table, fieldset.well h2, fieldset.well h3, fieldset.well h4 {
 //fieldset.well > div, 
 div.well h4 {
   margin-top: 20px;
-}
-
-fieldset.well > div.furtherInfo {
-  margin-top: 0;
-}
-
-fieldset.well button.dropdown-toggle{
-  padding-top: 2px;
-}
-
-fieldset.well .dropdown-menu ul {
-  padding-inline-start: 10px;
-}
-
-fieldset.well ul.mainEcosystem {
-  padding-inline-start: 10px;
 }
 
 div.well > .btn-group {
@@ -1785,27 +1783,30 @@ div.well > .btn-group {
     width: 45%;
     margin-left: 150px;
     margin-top: 50px;
-}
 
-.import .definitions button {
-  box-shadow: none;
+    button {
+      box-shadow: none;
+    }
+    
 }
 
 ul.geoVar {
     padding-inline-start: 20px;
-}
 
-ul.geoVar label {
-  white-space: break-spaces;
+    label {
+      white-space: break-spaces;
+    }
 }
 
 .geoVarInput {
   height: 300px;
 }
+
 div.geoVarInput > div > div.input_field > div.form-control {
   min-height: 90px;
   height: 80%;
 }
+
 .well > p, .well > b {
   margin: 10px 20px 10px;
 }
@@ -1822,10 +1823,10 @@ div.geoVarInput > div > div.input_field > div.form-control {
 
 .well div div.input_field {
   margin-top: 0;
-}
 
-.well div div.input_field .toolbar_styling {
-  padding-top: 5px;
+  .toolbar_styling {
+    padding-top: 5px;
+  }
 }
 
 .well div div.radio {
@@ -1941,33 +1942,31 @@ div.geoVarInput > div > div.input_field > div.form-control {
   margin: 20px 0 20px;
 }
 
+table.Bcrit tr label {
+  padding-left: 20px;
+}
+
 .listOfYears p {
   text-align: center;
 }
 
 .changedNature {
   display: flex;
+  .form-control {
+    margin-left: 20px;
+  }
 }
 
-.changedNature .form-control {
-  margin-left: 20px;
-}
-
-.listOfYears > li > div {
-  width: 50%;
-}
-
-.listOfYears > li > div > span > .form-control {
-  width: 100%;
-}
-
-.listOfYears li {
+.listOfYears > li {
   display: flex;
   padding-bottom: 5px;
-}
-
-.listOfYears li div {
-  padding: 0 10px 0;
+   div {
+    width: 50%;
+    padding: 0 10px 0;
+    span > .form-control {
+      width: 100%;
+    }
+  }
 }
 
 .yearsAndCheckboxes > ul.listOfYears,
@@ -1989,14 +1988,12 @@ table tbody tr td ul {
 table.distribution {
   width: 50%;
   margin-left: 120px;
-}
-
-table.distribution tbody tr td div span .form-control, .statusField .distribution .form-control {  
-  max-width: 100px;
-}
-
-table.distribution thead tr th {
-  text-align: center;
+  thead tr th {
+    text-align: center;
+  }
+  tbody tr td div span .form-control, .statusField .distribution .form-control {  
+    max-width: 100px;
+  }
 }
 
 div.distribution > h5 {
@@ -2180,45 +2177,56 @@ button.sendComment {
   line-height: 1.42857143;
 }
 
-table.ecologicalEffect, table.naturetype,
 table.ecologicalEffect .form-control, table.naturetype .form-control {
   font-size: 10pt;
 }
 
-table.naturetype .form-control {
-  width: 80px;
+table.naturetype {
+  font-size: 10pt;
+  .form-control {
+    width: 80px;
+    }
+
+    tr {
+      padding-right: 5px;
+    }
 }
 
-table.ecologicalEffect .btn-primary {
-  width: auto;
-  height: auto;
-  padding: 5px;
-  margin: 0; 
-}
+table.ecologicalEffect {
+  font-size: 10pt;
 
-table.ecologicalEffect .form-control {
-  max-width: 110px;
-}
+  .btn-primary {
+    width: auto;
+    height: auto;
+    padding: 5px;
+    margin: 0; 
+  }
 
-table.ecologicalEffect .HCrit .form-control {
-  max-width: 330px;
-}
+  .form-control {
+    max-width: 110px;
+  }
 
-table.ecologicalEffect .parasiteName > .form-control {
-  max-width: 130px;
-}
+  .HCrit .form-control {
+    max-width: 330px;
+  }
 
-table.ecologicalEffect td li.checkbox > label {
-  white-space: break-spaces;
-  //width: 145px;
-}
+  .parasiteName > .form-control {
+    max-width: 130px;
+  }
 
-table.ecologicalEffect thead tr > th {
-  border-top: none;
-}
+  td li.checkbox > label {
+    white-space: break-spaces;
+    //width: 145px;
+  }
 
-table.ecologicalEffect p {
-  margin-bottom: 5px;
+  thead tr > th {
+    border-top: none;
+  }
+
+  p {
+    margin-bottom: 5px;
+  }
+
 }
 
 .table-striped > tbody > tr > td > h1 {

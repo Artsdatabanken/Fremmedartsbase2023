@@ -160,12 +160,12 @@ export default class Assessment30Artsegenskaper extends React.Component {
                     <div>
                         <div className="well">
                             <h4>{labels.NaturalOrigin.naturalOrigin}</h4>
-                            <Xcomp.MultiselectArray observableValue={[vurdering, 'naturalOriginMarine']} codes={koder.naturalOriginMarine} labels={labels.General} />
+                            <Xcomp.MultiselectArray observableValue={[vurdering, 'naturalOriginMarine']} disabled={appState.userContext.readonly} codes={koder.naturalOriginMarine} labels={labels.General} />
                             <Xcomp.HtmlString observableValue={[vurdering, 'naturalOriginMarineDetails']} label={labels.NaturalOrigin.describeMarine} /> 
                         </div>
                         <div className="well">
                             <h4>{labels.NaturalOrigin.currentExistenceAria}</h4>
-                            <Xcomp.MultiselectArray observableValue={[vurdering, 'currentInternationalExistenceMarineAreas']} codes={koder.naturalOriginMarine} labels={labels.General}/>
+                            <Xcomp.MultiselectArray observableValue={[vurdering, 'currentInternationalExistenceMarineAreas']} disabled={appState.userContext.readonly} codes={koder.naturalOriginMarine} labels={labels.General}/>
                             <Xcomp.HtmlString observableValue={[vurdering, 'currentInternationalExistenceMarineAreasDetails']} label={labels.NaturalOrigin.describeMarine} /> 
                         </div> 
                     </div>:
@@ -194,10 +194,10 @@ export default class Assessment30Artsegenskaper extends React.Component {
                     <Xcomp.String label={labels.OtherEffects.economicEffects} observableValue={[vurdering, 'economicEffects']}/>
                     <label>{labels.OtherEffects.ecosystemEffects}</label>
                     <div className="intent30">
-                        <Xcomp.MultiselectArray label={labels.OtherEffects.ecoBasic} labels={labels.General} observableValue={[vurdering, 'ecosystemServiceEffectsBasicLifeProcesses']} codes={koder.ecosystemServiceEffectsBasicLifeProcesses}/>
-                        <Xcomp.MultiselectArray label={labels.OtherEffects.ecoSupport} labels={labels.General} observableValue={[vurdering, 'ecosystemServiceEffectsProvisioningServices']} codes={koder.ecosystemServiceEffectsSupportingServices}/>
-                        <Xcomp.MultiselectArray label={labels.OtherEffects.ecoRegulating} labels={labels.General} observableValue={[vurdering, 'ecosystemServiceEffectsRegulatingServices']} codes={koder.ecosystemServiceEffectsRegulatingServices}/>
-                        <Xcomp.MultiselectArray label={labels.OtherEffects.ecoKnowledge} labels={labels.General} observableValue={[vurdering, 'ecosystemServiceEffectsHumanSpiritualServices']} codes={koder.ecosystemServiceEffectsHumanMindServices}/>
+                        <Xcomp.MultiselectArray label={labels.OtherEffects.ecoBasic} labels={labels.General} disabled={appState.userContext.readonly} observableValue={[vurdering, 'ecosystemServiceEffectsBasicLifeProcesses']} codes={koder.ecosystemServiceEffectsBasicLifeProcesses}/>
+                        <Xcomp.MultiselectArray label={labels.OtherEffects.ecoSupport} labels={labels.General} disabled={appState.userContext.readonly} observableValue={[vurdering, 'ecosystemServiceEffectsProvisioningServices']} codes={koder.ecosystemServiceEffectsSupportingServices}/>
+                        <Xcomp.MultiselectArray label={labels.OtherEffects.ecoRegulating} labels={labels.General} disabled={appState.userContext.readonly} observableValue={[vurdering, 'ecosystemServiceEffectsRegulatingServices']} codes={koder.ecosystemServiceEffectsRegulatingServices}/>
+                        <Xcomp.MultiselectArray label={labels.OtherEffects.ecoKnowledge} labels={labels.General} disabled={appState.userContext.readonly} observableValue={[vurdering, 'ecosystemServiceEffectsHumanSpiritualServices']} codes={koder.ecosystemServiceEffectsHumanMindServices}/>
                     </div>
                     <Xcomp.String label={labels.OtherEffects.positiveEffects} observableValue={[vurdering, 'positiveEcologicalEffects']}/>
                     <Xcomp.String label={labels.OtherEffects.effectsOnPopulationOfOrigin} observableValue={[vurdering, 'effectsOnPopulationOfOrigin']}/>
@@ -281,12 +281,12 @@ export default class Assessment30Artsegenskaper extends React.Component {
                 <div>
                     <div className="well">
                         <h4>{labels.NaturalOrigin.naturalOrigin}</h4>
-                        <Xcomp.MultiselectArray observableValue={[vurdering, 'naturalOriginMarine']} codes={koder.naturalOriginMarine} labels={labels.General} />
+                        <Xcomp.MultiselectArray observableValue={[vurdering, 'naturalOriginMarine']} disabled={appState.userContext.readonly} codes={koder.naturalOriginMarine} labels={labels.General} />
                         <Xcomp.HtmlString observableValue={[vurdering, 'naturalOriginMarineDetails']} label={labels.NaturalOrigin.describeMarine} /> 
                     </div>
                     <div className="well">
                         <h4>{labels.NaturalOrigin.currentExistenceAria}</h4>
-                        <Xcomp.MultiselectArray observableValue={[vurdering, 'currentInternationalExistenceMarineAreas']} codes={koder.naturalOriginMarine} labels={labels.General}/>
+                        <Xcomp.MultiselectArray observableValue={[vurdering, 'currentInternationalExistenceMarineAreas']} disabled={appState.userContext.readonly} codes={koder.naturalOriginMarine} labels={labels.General}/>
                         <Xcomp.HtmlString observableValue={[vurdering, 'currentInternationalExistenceMarineAreasDetails']} label={labels.NaturalOrigin.describeMarine} /> 
                     </div> 
                 </div>:
@@ -324,10 +324,10 @@ export default class Assessment30Artsegenskaper extends React.Component {
                     <Xcomp.String label={labels.OtherEffects.economicEffects} observableValue={[vurdering, 'economicEffects']}/>
                     <label>{labels.OtherEffects.ecosystemEffects}</label>
                     <div className="intent30">
-                        <Xcomp.MultiselectArray label={labels.OtherEffects.ecoBasic} labels={labels.General} observableValue={[vurdering, 'ecosystemServiceEffectsBasicLifeProcesses']} codes={koder.ecosystemServiceEffectsBasicLifeProcesses}/>
-                        <Xcomp.MultiselectArray label={labels.OtherEffects.ecoSupport} labels={labels.General} observableValue={[vurdering, 'ecosystemServiceEffectsProvisioningServices']} codes={koder.ecosystemServiceEffectsSupportingServices}/>
-                        <Xcomp.MultiselectArray label={labels.OtherEffects.ecoRegulating} labels={labels.General} observableValue={[vurdering, 'ecosystemServiceEffectsRegulatingServices']} codes={koder.ecosystemServiceEffectsRegulatingServices}/>
-                        <Xcomp.MultiselectArray label={labels.OtherEffects.ecoKnowledge} labels={labels.General} observableValue={[vurdering, 'ecosystemServiceEffectsHumanSpiritualServices']} codes={koder.ecosystemServiceEffectsHumanMindServices}/>
+                        <Xcomp.MultiselectArray label={labels.OtherEffects.ecoBasic} labels={labels.General} disabled={appState.userContext.readonly} observableValue={[vurdering, 'ecosystemServiceEffectsBasicLifeProcesses']} codes={koder.ecosystemServiceEffectsBasicLifeProcesses}/>
+                        <Xcomp.MultiselectArray label={labels.OtherEffects.ecoSupport} labels={labels.General} disabled={appState.userContext.readonly} observableValue={[vurdering, 'ecosystemServiceEffectsProvisioningServices']} codes={koder.ecosystemServiceEffectsSupportingServices}/>
+                        <Xcomp.MultiselectArray label={labels.OtherEffects.ecoRegulating} labels={labels.General} disabled={appState.userContext.readonly} observableValue={[vurdering, 'ecosystemServiceEffectsRegulatingServices']} codes={koder.ecosystemServiceEffectsRegulatingServices}/>
+                        <Xcomp.MultiselectArray label={labels.OtherEffects.ecoKnowledge} labels={labels.General} disabled={appState.userContext.readonly} observableValue={[vurdering, 'ecosystemServiceEffectsHumanSpiritualServices']} codes={koder.ecosystemServiceEffectsHumanMindServices}/>
                     </div>
                     <Xcomp.String label={labels.OtherEffects.positiveEffects} observableValue={[vurdering, 'positiveEcologicalEffects']}/>
                     <Xcomp.String label={labels.OtherEffects.effectsOnPopulationOfOrigin} observableValue={[vurdering, 'effectsOnPopulationOfOrigin']}/>
@@ -392,7 +392,7 @@ export default class Assessment30Artsegenskaper extends React.Component {
                         >{labels.NaturalOrigin.noKnown}</Xcomp.Button>
                     <br />
                     <br />
-                    { vurdering.currentInternationalExistenceAreas.filter(
+                    {vurdering.currentInternationalExistenceAreas.filter(
                             row => row.europe || row.asia || row.africa || row.oceania || row.northAndCentralAmerica || row.southAmerica
                         ).length > 0 ?
                         <Xcomp.HtmlString observableValue={[vurdering, 'currentInternationalExistenceAreasUnknownDocumentation']} label={labels.NaturalOrigin.describe} /> :
@@ -410,12 +410,12 @@ export default class Assessment30Artsegenskaper extends React.Component {
                 <div>
                     <div className="well">
                         <h4>{labels.NaturalOrigin.naturalOrigin}</h4>
-                        <Xcomp.MultiselectArray observableValue={[vurdering, 'naturalOriginMarine']} codes={koder.naturalOriginMarine} labels={labels.General} />
+                        <Xcomp.MultiselectArray observableValue={[vurdering, 'naturalOriginMarine']} disabled={appState.userContext.readonly} codes={koder.naturalOriginMarine} labels={labels.General} />
                         <Xcomp.HtmlString observableValue={[vurdering, 'naturalOriginMarineDetails']} label={labels.NaturalOrigin.describeMarine} /> 
                     </div>
                     <div className="well">
                         <h4>{labels.NaturalOrigin.currentExistenceAria}</h4>
-                        <Xcomp.MultiselectArray observableValue={[vurdering, 'currentInternationalExistenceMarineAreas']} codes={koder.naturalOriginMarine} labels={labels.General}/>
+                        <Xcomp.MultiselectArray observableValue={[vurdering, 'currentInternationalExistenceMarineAreas']} disabled={appState.userContext.readonly} codes={koder.naturalOriginMarine} labels={labels.General}/>
                         <Xcomp.HtmlString observableValue={[vurdering, 'currentInternationalExistenceMarineAreasDetails']} label={labels.NaturalOrigin.describeMarine} /> 
                     </div> 
                 </div>:
@@ -459,10 +459,10 @@ export default class Assessment30Artsegenskaper extends React.Component {
                     <Xcomp.String label={labels.OtherEffects.economicEffects} observableValue={[vurdering, 'economicEffects']}/>
                     <label>{labels.OtherEffects.ecosystemEffects}</label>
                     <div className="intent30">
-                        <Xcomp.MultiselectArray label={labels.OtherEffects.ecoBasic} labels={labels.General} observableValue={[vurdering, 'ecosystemServiceEffectsBasicLifeProcesses']} codes={koder.ecosystemServiceEffectsBasicLifeProcesses}/>
-                        <Xcomp.MultiselectArray label={labels.OtherEffects.ecoSupport} labels={labels.General} observableValue={[vurdering, 'ecosystemServiceEffectsProvisioningServices']} codes={koder.ecosystemServiceEffectsSupportingServices}/>
-                        <Xcomp.MultiselectArray label={labels.OtherEffects.ecoRegulating} labels={labels.General} observableValue={[vurdering, 'ecosystemServiceEffectsRegulatingServices']} codes={koder.ecosystemServiceEffectsRegulatingServices}/>
-                        <Xcomp.MultiselectArray label={labels.OtherEffects.ecoKnowledge} labels={labels.General} observableValue={[vurdering, 'ecosystemServiceEffectsHumanSpiritualServices']} codes={koder.ecosystemServiceEffectsHumanMindServices}/>
+                        <Xcomp.MultiselectArray label={labels.OtherEffects.ecoBasic} labels={labels.General} disabled={appState.userContext.readonly} observableValue={[vurdering, 'ecosystemServiceEffectsBasicLifeProcesses']} codes={koder.ecosystemServiceEffectsBasicLifeProcesses}/>
+                        <Xcomp.MultiselectArray label={labels.OtherEffects.ecoSupport} labels={labels.General} disabled={appState.userContext.readonly} observableValue={[vurdering, 'ecosystemServiceEffectsProvisioningServices']} codes={koder.ecosystemServiceEffectsSupportingServices}/>
+                        <Xcomp.MultiselectArray label={labels.OtherEffects.ecoRegulating} labels={labels.General} disabled={appState.userContext.readonly} observableValue={[vurdering, 'ecosystemServiceEffectsRegulatingServices']} codes={koder.ecosystemServiceEffectsRegulatingServices}/>
+                        <Xcomp.MultiselectArray label={labels.OtherEffects.ecoKnowledge} labels={labels.General} disabled={appState.userContext.readonly} observableValue={[vurdering, 'ecosystemServiceEffectsHumanSpiritualServices']} codes={koder.ecosystemServiceEffectsHumanMindServices}/>
                     </div>
                     <Xcomp.String label={labels.OtherEffects.positiveEffects} observableValue={[vurdering, 'positiveEcologicalEffects']}/>
                     <Xcomp.String label={labels.OtherEffects.effectsOnPopulationOfOrigin} observableValue={[vurdering, 'effectsOnPopulationOfOrigin']}/>
