@@ -29,6 +29,7 @@ jobs:
         cd Prod.Web    
         npm install
         npm run build
+        cp static/robots.txt dist/
     - name: Build and push Docker image api
       uses: docker/build-push-action@v1
       with:
