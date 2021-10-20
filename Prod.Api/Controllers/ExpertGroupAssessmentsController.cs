@@ -9,6 +9,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using CsvHelper;
+using CsvHelper.Configuration;
 using IdentityModel.Client;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -76,12 +77,12 @@ namespace Prod.Api.Controllers
 
 
         [HttpGet("export/{id}")]
-        //[Authorize]
+        [Authorize]
         public FileResult GetExport(string id)
         {
             var expertgroupid = id.Replace('_', '/');
 
-            var result = GetAssessmentsFromDb(expertgroupid, Array.Empty<string>());
+            var result = GetAssessmentsFromDb(expertgroupid, Array.Empty<string>()).Where(x=>x.HorizonDoScanning == true).ToList();
             var mem = CreateCvsMemoryStream(result);
 
             return new FileStreamResult(mem, "text/csv")
@@ -126,8 +127,10 @@ namespace Prod.Api.Controllers
             var mem = new MemoryStream();
             var writer = new StreamWriter(mem, Encoding.Unicode);
             //var csvConfiguration = new CsvConfiguration(new CultureInfo("nb-NO"));
-            var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
-            var config = csv.Configuration;
+            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                Delimiter = "\t"
+            };
             //config.Delimiter = "\t";
             //config.TypeConverterCache.RemoveConverter<string>();
             //config.TypeConverterCache.AddConverter<string>(new CsvHelpers.CustomStringConverter());
@@ -137,7 +140,10 @@ namespace Prod.Api.Controllers
             ////config.TypeConverterCache.AddConverter<List<Rodliste2019.Pavirkningsfaktor>>(new CsvHelpers.CustomPavirkningsfaktorListConverter());
             ////config.TypeConverterCache.AddConverter<Rodliste2019.MinMaxProbable>(new CustomMinMaxProbableConverter());
             ////config.TypeConverterCache.AddConverter<Rodliste2019.MinMaxProbableIntervall>(new CsvHelpers.CustomMinMaxProbableIntervallConverter());
-            //config.RegisterClassMap<CsvHelpers.RodlisteToCsvMap>();
+            //config. .RegisterClassMap<CsvHelpers.FremmedartToCsvMap>();
+            var csv = new CsvWriter(writer, config);
+            csv.Context.RegisterClassMap<CsvHelpers.FremmedartToCsvMap>();
+
 
             csv.WriteRecords(result);
             csv.Flush();
@@ -162,10 +168,10 @@ namespace Prod.Api.Controllers
             //    result = result.Where(x => !exlude.Contains(x.Category));
             //}
 
-            var rodlisteIds = result.Where(x => x.IsDeleted == false).Select(x => x.Id);
-            var rodliste2019WithCommentses = _dbContext.Assessments.FromSqlRaw(
+            var ids = result.Where(x => x.IsDeleted == false).Select(x => x.Id);
+            var fa4WithCommentsList = _dbContext.Assessments.FromSqlRaw(
                     "SELECT * FROM dbo.Assessments WITH (INDEX(IX_Assessments_Expertgroup))")
-                .Where(x => rodlisteIds.Contains(x.Id))
+                .Where(x => ids.Contains(x.Id))
                 //result
                 //    .Where(x => x.IsDeleted == false)
                 //.OrderBy(x => x.ScientificName)
@@ -180,12 +186,12 @@ namespace Prod.Api.Controllers
                 .OrderBy(x => x.EvaluatedScientificName)
                 .ToList();
             if (exlude.Length > 0)
-                rodliste2019WithCommentses = rodliste2019WithCommentses
+                fa4WithCommentsList = fa4WithCommentsList
                     .Where(x => !exlude.Contains(x.RiskAssessment.RiskLevelCode)).ToList();
             //var ids = rodliste2019WithCommentses.Select(x => int.Parse(x.Id)).ToArray();
 
             var commentStats = _dbContext.Comments
-                .Where(x => rodlisteIds.Contains(x.AssessmentId) && x.IsDeleted == false).AsEnumerable()
+                .Where(x => ids.Contains(x.AssessmentId) && x.IsDeleted == false).AsEnumerable()
                 .GroupBy(x => x.AssessmentId)
                 .Select(
                     x => new
@@ -200,7 +206,7 @@ namespace Prod.Api.Controllers
                             x.Any(y => y.Type == CommentType.TaxonomicChange && y.IsDeleted == false &&
                                        y.Closed == false) ? 1 : 0
                     }).ToDictionary(x => x.AssessmentId);
-            foreach (var assessmentListItem in rodliste2019WithCommentses)
+            foreach (var assessmentListItem in fa4WithCommentsList)
             {
                 var key = assessmentListItem.Id;
                 if (commentStats.ContainsKey(key))
@@ -214,7 +220,7 @@ namespace Prod.Api.Controllers
                 }
             }
 
-            return rodliste2019WithCommentses;
+            return fa4WithCommentsList;
         }
 
         private async Task<FilteredAssessments> GetExpertGroupAssessments(string expertgroupid, IndexFilter filter)

@@ -57,6 +57,7 @@
     "jest": "^26.6.3",
     "less": "^4.1.1",
     "parcel": "^2.0.0-beta.2",
+    "parcel-plugin-static-files-copy": "^2.6.0",
     "prop-types": "^15.7.2",
     "react-test-renderer": "^17.0.1"
   }

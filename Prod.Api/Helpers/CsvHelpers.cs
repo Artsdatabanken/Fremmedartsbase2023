@@ -13,14 +13,25 @@ namespace Prod.Api.Helpers
 {
     public class CsvHelpers
     {
-        public class RodlisteToCsvMap : ClassMap<FA4WithComments>
+        public class FremmedartToCsvMap : ClassMap<FA4WithComments>
         {
-            public RodlisteToCsvMap()
+            public FremmedartToCsvMap()
             {
                 var i = 0;
-                //Map(m => m.Id).Index(i++).Name("RødlisteID2021");
-                //Map(m => m.LastUpdatedOn).Index(i++).Name("SistOppdatertDato");
-                //Map(m => m.LastUpdatedBy).Index(i++).Name("SistOppdatertAv");
+                Map(m => m.Id).Index(i++).Name("Id");
+                Map(m => m.ExpertGroup).Index(i++);
+                Map(m => m.EvaluatedScientificNameId).Index(i++);
+                Map(m => m.EvaluatedScientificName).Index(i++);
+                Map(m => m.EvaluatedScientificNameAuthor).Index(i++);
+                //Map(m => m.EvaluatedScientificNameRank).Index(i++); -- bare tallverdi
+                //Map(m => m.EvaluatedVernacularName).Index(i++);
+                Map(m => m.LastUpdatedBy).Index(i++);
+                //Map(m => m.HorizonDoScanning).Index(i++);
+                Map(m => m.HorizonEstablismentPotential).Index(i++);
+                Map(m => m.HorizonEstablismentPotentialDescription).Index(i++);
+                Map(m => m.HorizonEcologicalEffect).Index(i++);
+                Map(m => m.HorizonEcologicalEffectDescription).Index(i++);
+                //Map(m => m.HorizonScanningStatus).Index(i++);
                 ////Map(m => m.LatinsknavnId).Index(i++);
                 //Map(m => m.Vurderingsår).Index(i++);
                 //Map(m => m.VurdertVitenskapeligNavn).Index(i++);

@@ -169,8 +169,9 @@ export default class SelectAssessment extends Component {
                                 <Xcomp.StringEnum 
                                         forceSync
                                         observableValue={[appState, 'expertgroup']}                                         
-                                        codes={appState.expertgroups}/>                                
-                    </div> 
+                                        codes={appState.expertgroups}/>  
+                                 <input type="button" className="btn btn-primary" value="Last ned fil" onClick={() => window.open(config.apiUrl + '/api/ExpertGroupAssessments/export/' + appState.expertgroup)}></input>                                      
+                    </div>
                 </fieldset>
                 
                 <div className="chooseSpecies">
@@ -197,6 +198,7 @@ export default class SelectAssessment extends Component {
                             </div> */}
                 </div>
                 {/*<h5 style={{fontWeight: 'bold', fontSize: '1rem'}}>Filtrer på:</h5>*/}
+                
                 {appState.assessmentTypeFilter == "riskAssessment" &&
                 <div className="selectFilter">
                     <div>
@@ -302,11 +304,6 @@ export default class SelectAssessment extends Component {
                     
                 </div> }
                         
-                     {/*   <div className="comment" style={{marginLeft: '10px', display: 'flex'}}>
-                            <Xcomp.Bool observableValue={[appState, "kunMine"]} label={"Vis mine vurderinger"} />
-                            <input type="button" className="btn btn-primary" value="Last ned fil" onClick={() => window.open(config.apiUrl + '/api/ExpertGroupAssessments/export/' + appState.expertgroup)}></input>
-                    </div>  */}
-
                     </div>
              </div>
                     {/* <div className="filters">
