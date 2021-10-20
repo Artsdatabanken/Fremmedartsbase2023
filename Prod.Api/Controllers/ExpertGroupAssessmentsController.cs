@@ -77,7 +77,7 @@ namespace Prod.Api.Controllers
 
 
         [HttpGet("export/{id}")]
-        //[Authorize]
+        [Authorize]
         public FileResult GetExport(string id)
         {
             var expertgroupid = id.Replace('_', '/');
