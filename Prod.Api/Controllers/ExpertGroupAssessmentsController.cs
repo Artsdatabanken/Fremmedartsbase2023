@@ -132,7 +132,7 @@ namespace Prod.Api.Controllers
                 Delimiter = "\t"
             };
             //config.Delimiter = "\t";
-            //config.TypeConverterCache.RemoveConverter<string>();
+            //config.TypeConverterCache.RemoveConverter<string>(); 
             //config.TypeConverterCache.AddConverter<string>(new CsvHelpers.CustomStringConverter());
             //config.TypeConverterOptionsCache.GetOptions<string>().NullValues.Add(string.Empty);
             //config.TypeConverterCache.AddConverter<string[]>(new CsvHelpers.CustomStringArrayConverter());
@@ -143,7 +143,9 @@ namespace Prod.Api.Controllers
             //config. .RegisterClassMap<CsvHelpers.FremmedartToCsvMap>();
             var csv = new CsvWriter(writer, config);
             csv.Context.RegisterClassMap<CsvHelpers.FremmedartToCsvMap>();
-
+            csv.Context.TypeConverterCache.RemoveConverter<string>();
+            csv.Context.TypeConverterCache.AddConverter<string>(new CsvHelpers.CustomStringConverter());
+            csv.Context.TypeConverterOptionsCache.GetOptions<string>().NullValues.Add(string.Empty);
 
             csv.WriteRecords(result);
             csv.Flush();
