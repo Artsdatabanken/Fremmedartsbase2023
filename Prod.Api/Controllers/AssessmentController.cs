@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Linq;
-using System.Collections.Generic;
-using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using IdentityModel.Client;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Prod.Api.Helpers;
+using Prod.Api.Hubs;
 using Prod.Api.Services;
 using Prod.Data.EFCore;
 using Prod.Domain;
-using Microsoft.AspNetCore.SignalR;
-using Prod.Api.Helpers;
-using Prod.Api.Hubs;
 using Index = Nbic.Indexer.Index;
 
 // ReSharper disable AsyncConverter.ConfigureAwaitHighlighting
@@ -24,13 +22,14 @@ namespace Prod.Api.Controllers
     [Authorize]
     public class AssessmentController : AuthorizeApiController
     {
-
         private readonly ProdDbContext _dbContext;
-        private readonly IReferenceService _referenceService;
         private readonly IHubContext<MessageHub> _hubContext;
         private readonly Index _index;
+        private readonly IReferenceService _referenceService;
 
-        public AssessmentController(IDiscoveryCache discoveryCache, ProdDbContext dbContext, IReferenceService referenceService, IHubContext<MessageHub> hubContext, Index index) : base(discoveryCache, dbContext)
+        public AssessmentController(IDiscoveryCache discoveryCache, ProdDbContext dbContext,
+            IReferenceService referenceService, IHubContext<MessageHub> hubContext, Index index) : base(discoveryCache,
+            dbContext)
         //public AssessmentController(IDiscoveryCache discoveryCache, ProdDbContext dbContext, IReferenceService referenceService) : base(discoveryCache, dbContext)
         {
             _dbContext = dbContext;
@@ -48,7 +47,8 @@ namespace Prod.Api.Controllers
         [HttpGet("{id}")]
         public async Task<FA4> Get(int id)
         {
-            var data = await _dbContext.Assessments.Where(x => x.Id == id).Select(x => x.Doc).FirstOrDefaultAsync();// _dataService.GetAssessmentString(id);
+            var data = await _dbContext.Assessments.Where(x => x.Id == id).Select(x => x.Doc)
+                .FirstOrDefaultAsync(); // _dataService.GetAssessmentString(id);
             if (string.IsNullOrWhiteSpace(data)) return null;
 
             var doc = JsonSerializer.Deserialize<FA4>(data);
@@ -62,29 +62,39 @@ namespace Prod.Api.Controllers
             //}
 
 
-
-
-            await this.SendMessage("assessment", "open");
+            await SendMessage("assessment", "open");
 
             // Safeguard
-            if(doc.Id != id && doc.Id != 0)
-            {
-                throw new Exception("Id is corrupt (" + id + "/" + doc.Id + ")");
-            }
+            if (doc.Id != id && doc.Id != 0) throw new Exception("Id is corrupt (" + id + "/" + doc.Id + ")");
 
             doc.Id = id;
 
             return doc;
         }
 
+        [AllowAnonymous()]
+        [HttpGet("ExistsByExpertgroupAndName/{expertgroupname}/{scientificNameId}")]
+        public async Task<bool> ExistsByNames(string expertgroupname, int scientificNameId)
+        {
+            var query = IndexHelper.QueryGetDocumentQuery(expertgroupname, scientificNameId);
+            var result = _index
+                .SearchReference(query, 0, 1, IndexHelper.Field_ScientificNameAsTerm)
+                .Select(IndexHelper.GetDocumentFromIndex)
+                .ToList();
+
+            return result.Any();
+        }
+
         [HttpGet("{id}/lock")]
         public async Task<IActionResult> Lock(int id)
         {
-            var assessment = await _dbContext.Assessments.Where(x => x.Id == id).FirstOrDefaultAsync();// _dataService.GetAssessmentString(id);
+            var assessment =
+                await _dbContext.Assessments.Where(x => x.Id == id)
+                    .FirstOrDefaultAsync(); // _dataService.GetAssessmentString(id);
             if (string.IsNullOrWhiteSpace(assessment.Doc)) return null;
 
             var doc = JsonSerializer.Deserialize<FA4>(assessment.Doc);
-            var role = await base.GetRoleInGroup(doc.ExpertGroup);
+            var role = await GetRoleInGroup(doc.ExpertGroup);
 
             try
             {
@@ -109,14 +119,16 @@ namespace Prod.Api.Controllers
 
             return Ok();
         }
+
         [HttpGet("{id}/unlock")]
         public async Task<IActionResult> UnLock(int id)
         {
-            var data = await _dbContext.Assessments.Where(x => x.Id == id).FirstOrDefaultAsync();// _dataService.GetAssessmentString(id);
+            var data = await _dbContext.Assessments.Where(x => x.Id == id)
+                .FirstOrDefaultAsync(); // _dataService.GetAssessmentString(id);
             if (string.IsNullOrWhiteSpace(data.Doc)) return null;
 
             var doc = JsonSerializer.Deserialize<FA4>(data.Doc);
-            var role = await base.GetRoleInGroup(doc.ExpertGroup);
+            var role = await GetRoleInGroup(doc.ExpertGroup);
             var force = role.Admin || role.User.IsAdmin;
             try
             {
@@ -139,14 +151,16 @@ namespace Prod.Api.Controllers
 
             return Ok();
         }
+
         [HttpGet("{id}/finish")]
         public async Task<IActionResult> Finish(int id)
         {
-            var data = await _dbContext.Assessments.Where(x => x.Id == id).FirstOrDefaultAsync();// _dataService.GetAssessmentString(id);
+            var data = await _dbContext.Assessments.Where(x => x.Id == id)
+                .FirstOrDefaultAsync(); // _dataService.GetAssessmentString(id);
             if (string.IsNullOrWhiteSpace(data.Doc)) return null;
 
             var doc = JsonSerializer.Deserialize<FA4>(data.Doc);
-            var role = await base.GetRoleInGroup(doc.ExpertGroup);
+            var role = await GetRoleInGroup(doc.ExpertGroup);
             var force = role.Admin || role.User.IsAdmin;
             try
             {
@@ -213,13 +227,12 @@ namespace Prod.Api.Controllers
 
             return Ok();
         }
+
         private async Task<bool> DeleteAssessment(int id)
         {
-            var data = await _dbContext.Assessments.Where(x => x.Id == id).FirstOrDefaultAsync();// _dataService.GetAssessmentString(id);
-            if (string.IsNullOrWhiteSpace(data.Doc))
-            {
-                return false;
-            }
+            var data = await _dbContext.Assessments.Where(x => x.Id == id)
+                .FirstOrDefaultAsync(); // _dataService.GetAssessmentString(id);
+            if (string.IsNullOrWhiteSpace(data.Doc)) return false;
             var doc = JsonSerializer.Deserialize<FA4>(data.Doc);
 
             //if (doc.Ekspertgruppe != "Testarter")
@@ -227,7 +240,7 @@ namespace Prod.Api.Controllers
             //    throw new Exception("KAN KUN SLETTE TESTARTER");  // for testing!. Fjern denne begrensningen når det blir behov.
             //}
 
-            var role = await base.GetRoleInGroup(doc.ExpertGroup);
+            var role = await GetRoleInGroup(doc.ExpertGroup);
             var force = role.User.IsAdmin;
             if (force)
             {
@@ -239,8 +252,10 @@ namespace Prod.Api.Controllers
             {
                 throw new Exception("IKKE SKRIVETILGANG TIL DENNE VURDERINGEN");
             }
+
             return true;
         }
+
         [HttpGet("{id}/unfinish")]
         public async Task<IActionResult> Unfinish(int id)
         {
@@ -249,7 +264,7 @@ namespace Prod.Api.Controllers
             if (string.IsNullOrWhiteSpace(data.Doc)) return null;
 
             var doc = JsonSerializer.Deserialize<FA4>(data.Doc);
-            var role = await base.GetRoleInGroup(doc.ExpertGroup);
+            var role = await GetRoleInGroup(doc.ExpertGroup);
             var force = role.Admin || role.User.IsAdmin;
             try
             {
@@ -288,17 +303,13 @@ namespace Prod.Api.Controllers
         [HttpPost("{id}")]
         public async Task<IActionResult> Post(string id, [FromBody] FA4 value)
         {
-            var role = await base.GetRoleInGroup(value.ExpertGroup);
+            var role = await GetRoleInGroup(value.ExpertGroup);
             try
             {
                 if (role.WriteAccess)
-                {
                     await StoreAssessment(int.Parse(id), value, role.User, false);
-                }
                 else
-                {
                     throw new Exception("IKKE SKRIVETILGANG TIL DENNE VURDERINGEN");
-                }
             }
             catch (Exception e)
             {
@@ -306,56 +317,37 @@ namespace Prod.Api.Controllers
             }
 
 
-
-
-            await this.SendMessage("assessment", "save");
-
-
+            await SendMessage("assessment", "save");
 
 
             return Ok();
         }
-
-        public class Taxinfo
-        {
-            public int ScientificNameId { get; set; }
-            //public string ExpertGroup { get; set; }
-            public string Ekspertgruppe { get; set; }
-            public string RedListCategory { get; set; }
-            public string ScientificName { get; set; }
-            public string ScientificNameAuthor { get; set; }
-            public int? TaxonId { get; set; }
-            public string TaxonRank { get; set; }
-            public string VernacularName { get; set; }
-            public string potensiellDørstokkart { get; set; } //: "potentialDoorknocker"
-        }
-
 
 
         [HttpPut("createnew")]
         public async Task<IActionResult> CreateNewAssessment([FromBody] Taxinfo value)
         {
             var now = DateTime.Now;
-            var role = await base.GetRoleInGroup(value.Ekspertgruppe);
+            var role = await GetRoleInGroup(value.Ekspertgruppe);
             var scientificNameId = value.ScientificNameId;
-           var it = await _dbContext.Assessments
+            var it = await _dbContext.Assessments
                 .Where(x => x.Expertgroup == value.Ekspertgruppe && x.ScientificNameId == scientificNameId)
                 .SingleOrDefaultAsync();
-           if (it != null)
-           {
-               var doc = JsonSerializer.Deserialize<FA4>(it.Doc);
-               if (value.potensiellDørstokkart == "potentialDoorknocker")
-               {
-                   // til doorknocker
-                   doc.HorizonDoScanning = true;
-                   doc.HorizonScanningStatus = "notStarted";
-                   doc.AlienSpeciesCategory = "DoorKnocker";
-               }
-               else
-               {
-                   // fra horizon til ordinær
-                   doc.HorizonDoScanning = false;
-                   if (doc.AlienSpeciesCategory == "DoorKnocker") doc.AlienSpeciesCategory = "AlienSpecie";
+            if (it != null)
+            {
+                var doc = JsonSerializer.Deserialize<FA4>(it.Doc);
+                if (value.potensiellDørstokkart == "potentialDoorknocker")
+                {
+                    // til doorknocker
+                    doc.HorizonDoScanning = true;
+                    doc.HorizonScanningStatus = "notStarted";
+                    doc.AlienSpeciesCategory = "DoorKnocker";
+                }
+                else
+                {
+                    // fra horizon til ordinær
+                    doc.HorizonDoScanning = false;
+                    if (doc.AlienSpeciesCategory == "DoorKnocker") doc.AlienSpeciesCategory = "AlienSpecie";
                 }
 
                 doc.LastUpdatedAt = DateTime.Now;
@@ -373,7 +365,8 @@ namespace Prod.Api.Controllers
                 if (role.WriteAccess)
                 {
                     var userId = role.User;
-                    var fa4 = CreateNewAssessment(value.Ekspertgruppe, userId, scientificNameId, value.potensiellDørstokkart == "potentialDoorknocker");
+                    var fa4 = CreateNewAssessment(value.Ekspertgruppe, userId, scientificNameId,
+                        value.potensiellDørstokkart == "potentialDoorknocker");
                     fa4.EvaluationStatus = "created";
                     fa4.LastUpdatedAt = now;
                     var doc = JsonSerializer.Serialize(fa4);
@@ -381,7 +374,7 @@ namespace Prod.Api.Controllers
                     {
                         Doc = doc,
                         LastUpdatedAt = fa4.LastUpdatedAt,
-                        LastUpdatedByUserId =userId.Id,
+                        LastUpdatedByUserId = userId.Id,
                         ScientificNameId = fa4.EvaluatedScientificNameId.Value
                     };
                     _dbContext.Assessments.Add(assessment);
@@ -389,7 +382,6 @@ namespace Prod.Api.Controllers
                     var timestamp = _dbContext.TimeStamp.Single();
                     timestamp.DateTimeUpdated = assessment.ChangedAt;
                     await _dbContext.SaveChangesAsync();
-
                 }
                 else
                 {
@@ -400,20 +392,24 @@ namespace Prod.Api.Controllers
             {
                 return Unauthorized(e.Message);
             }
+
             return Ok();
         }
+
         [HttpGet("{id}/copytotestarter")]
         public async Task<IActionResult> CopyToTestarter(int id)
         {
             var assessment = await Get(id);
             assessment.ExpertGroup = "Testarter"; // dont change any other property for this purpose
-            var role = await base.GetRoleInGroup("Testarter");
+            var role = await GetRoleInGroup("Testarter");
             try
             {
                 if (role.WriteAccess)
                 {
-                    var scientificnameid = assessment.EvaluatedScientificNameId; // .LatinsknavnId; // doc.VurdertVitenskapeligNavnId;
-                    var existingAssessment = await _dbContext.Assessments.Where(x => x.Expertgroup == "Testarter").Where(x => x.ScientificNameId == scientificnameid).Select(x => x.Doc).FirstOrDefaultAsync();
+                    var scientificnameid =
+                        assessment.EvaluatedScientificNameId; // .LatinsknavnId; // doc.VurdertVitenskapeligNavnId;
+                    var existingAssessment = await _dbContext.Assessments.Where(x => x.Expertgroup == "Testarter")
+                        .Where(x => x.ScientificNameId == scientificnameid).Select(x => x.Doc).FirstOrDefaultAsync();
                     if (existingAssessment != null)
                     {
                         var doc = JsonSerializer.Deserialize<FA4>(existingAssessment);
@@ -421,12 +417,12 @@ namespace Prod.Api.Controllers
                         // Just delete the existing assessment with same name (in Testarter)
                         await DeleteAssessment(doc.Id);
                     }
+
                     var copiedassessment = JsonSerializer.Serialize(assessment);
                     var assessmentinfo = new Assessment();
                     assessmentinfo.Doc = copiedassessment;
                     _dbContext.Assessments.Add(assessmentinfo);
                     _dbContext.SaveChanges();
-
                 }
                 else
                 {
@@ -437,6 +433,7 @@ namespace Prod.Api.Controllers
             {
                 return Unauthorized(e.Message);
             }
+
             return Ok();
         }
 
@@ -452,12 +449,11 @@ namespace Prod.Api.Controllers
             var now = DateTime.Now;
             //doc.LastUpdatedAt = now;
 
-            var assessment = await _dbContext.Assessments.Include(x=>x.LastUpdatedByUser).Include(x => x.LockedForEditByUser).Include(x=>x.Comments).SingleOrDefaultAsync(x => x.Id == id);
+            var assessment = await _dbContext.Assessments.Include(x => x.LastUpdatedByUser)
+                .Include(x => x.LockedForEditByUser).Include(x => x.Comments).SingleOrDefaultAsync(x => x.Id == id);
 
-            if (!forceStore && (assessment.LockedForEditByUser != null && assessment.LockedForEditByUser.Id != user.Id))
-            {
+            if (!forceStore && assessment.LockedForEditByUser != null && assessment.LockedForEditByUser.Id != user.Id)
                 throw new Exception("IKKE SKRIVETILGANG TIL DENNE VURDERINGEN - Låst av annen bruker");
-            }
 
             var realUser = await _dbContext.Users.SingleOrDefaultAsync(x => x.Id == user.Id);
             //// check and update referenceUsages
@@ -516,7 +512,7 @@ namespace Prod.Api.Controllers
 
             //}
             //var test = _dbContext.AssessmentHistories.ToArray();
-            var history = new AssessmentHistory()
+            var history = new AssessmentHistory
             {
                 Id = assessment.Id,
                 Doc = assessment.Doc,
@@ -541,22 +537,18 @@ namespace Prod.Api.Controllers
             if (assessment.LockedForEditByUserId.HasValue)
             {
                 if (assessment.LockedForEditByUserId.Value == realUser.Id && assessment.LockedForEditByUser == null)
-                {
                     assessment.LockedForEditByUser = realUser;
-                }
                 else if (assessment.LockedForEditByUserId.Value != realUser.Id &&
                          assessment.LockedForEditByUser == null)
-                {
                     assessment.LockedForEditByUser = await
                         _dbContext.Users.SingleOrDefaultAsync(x => x.Id == assessment.LockedForEditByUserId.Value);
-                }
             }
 
             var assessmentString = JsonSerializer.Serialize(doc);
             assessment.Doc = assessmentString;
             assessment.ChangedAt = DateTime.Now;
             assessment.IsDeleted = doc.IsDeleted;
-            var timestamp =_dbContext.TimeStamp.Single();
+            var timestamp = _dbContext.TimeStamp.Single();
             timestamp.DateTimeUpdated = assessment.ChangedAt;
             await _dbContext.SaveChangesAsync().ConfigureAwait(false);
             IndexHelper.Index(assessment, _index);
@@ -624,28 +616,20 @@ namespace Prod.Api.Controllers
 
         private static FA4 CreateNewAssessment(string expertgroup, User user, int scientificNameId, bool DoorKnocker)
         {
-            if (string.IsNullOrWhiteSpace(expertgroup))
-            {
-                throw new ArgumentNullException(nameof(expertgroup));
-            }
-            if (user == null)
-            {
-                throw new ArgumentNullException(nameof(user));
-            }
+            if (string.IsNullOrWhiteSpace(expertgroup)) throw new ArgumentNullException(nameof(expertgroup));
+            if (user == null) throw new ArgumentNullException(nameof(user));
             var vurderingscontext = expertgroup.Contains("Svalbard") ? "S" : "N";
             var vurderingsår = 2021;
             var createdby = "createdbyloading";
 
-            var ts = new Prod.Api.Services.TaxonService();
+            var ts = new TaxonService();
             var titask = ts.GetTaxonInfoAsync(scientificNameId);
             var ti = titask.GetAwaiter().GetResult();
             var (hierarcy, rank) = TaxonService.GetFullPathScientificName(ti);
 
 
             if (scientificNameId != ti.ValidScientificNameId)
-            {
                 throw new ArgumentException("supplied scientificNameId is not ValidScientificNameId");
-            }
 
             var rl = FA4.CreateNewFA4();
 
@@ -662,6 +646,7 @@ namespace Prod.Api.Controllers
                 rl.HorizonDoScanning = true;
                 rl.HorizonScanningStatus = "notStarted";
             }
+
             //rl.OverordnetKlassifiseringGruppeKode = "rodlisteVurdertArt";
             //rl.RodlisteVurdertArt = "etablertBestandINorge";
             rl.EvaluatedScientificName = ti.ValidScientificName;
@@ -719,6 +704,21 @@ namespace Prod.Api.Controllers
             return rl;
         }
 
+        public class Taxinfo
+        {
+            public int ScientificNameId { get; set; }
+
+            //public string ExpertGroup { get; set; }
+            public string Ekspertgruppe { get; set; }
+            public string RedListCategory { get; set; }
+            public string ScientificName { get; set; }
+            public string ScientificNameAuthor { get; set; }
+            public int? TaxonId { get; set; }
+            public string TaxonRank { get; set; }
+            public string VernacularName { get; set; }
+            public string potensiellDørstokkart { get; set; } //: "potentialDoorknocker"
+        }
+
         //private async Task<FA4> moveAssessment(ProdDbContext dbContext, string expertgroup, User user,
         //    int scientificNameId, FA4 assessment, int assessmentId) // change taxonomic info
         //{
@@ -735,7 +735,6 @@ namespace Prod.Api.Controllers
         //    {
         //        throw new ArgumentException("supplied scientificNameId already exists in database");
         //    }
-
 
 
         //    var ts = new Prod.Api.Services.TaxonService();
@@ -878,5 +877,4 @@ namespace Prod.Api.Controllers
         //    }
         //}
     }
-
 }

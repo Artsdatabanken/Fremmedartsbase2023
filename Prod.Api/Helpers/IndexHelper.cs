@@ -2,17 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Lucene.Net.Documents;
 using Lucene.Net.Facet;
-using Lucene.Net.Facet.Taxonomy;
 using Lucene.Net.Index;
 using Lucene.Net.Search;
 using Microsoft.EntityFrameworkCore;
 using Nbic.Indexer;
-using Prod.Api.Controllers;
 using Prod.Api.Models;
 using Prod.Data.EFCore;
 using Prod.Domain;
@@ -25,7 +22,7 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Change this to force index rebuild!
         /// </summary>
-        public const int IndexVersion = 7;
+        public const int IndexVersion = 8;
 
         private const string Field_Id = "Id";
         private const string Field_Group = "Expertgroup";
@@ -35,6 +32,7 @@ namespace Prod.Api.Helpers
         private const string Field_LockedForEditByUser = "LockedForEditByUser";
         private const string Field_LockedForEditAt = "LockedForEditAt";
         private const string Field_ScientificName = "ScientificName";
+        private const string Field_ScientificNameId = "ScientificNameId";
         public const string Field_ScientificNameAsTerm = "ScientificNameTerm";
         private const string Field_TaxonHierarcy = "TaxonHierarcy";
         private const string Field_Category = "Category";
@@ -57,7 +55,6 @@ namespace Prod.Api.Helpers
         private const string Field_Year = "Year";
         private const string Field_EndringKat = "ChangeCat";
 
-        
 
         private const string Field_DoHorizonScanning = "DoHorizonScan";
         private const string Field_HsStatus = "HsStatus";
@@ -70,13 +67,14 @@ namespace Prod.Api.Helpers
         public const string Facet_Progress = "Progress";
         public const string Facet_PotentialDoorKnocker = "PotentialDoorKnocker";
         public const string Facet_NotAssessedDoorKnocker = "NotAssessedDoorKnocker";
-        private static readonly string Field_NR2018 = "S2018";
-        private static string[] _criterias = new[] { "A", "B", "C", "D", "E", "F", "G", "H", "I" };
-        private static string Field_CommentsClosed = "CommentsClosed";
-        private static string Field_CommentsOpen = "CommentsOpen";
-        private static string Field_CommentsNew = "CommentsNew";
-        private static string Field_TaxonChange = "TaxonChange";
         private const string Field_NewestComment = "NewestComment";
+        private static readonly string Field_NR2018 = "S2018";
+        private static readonly string[] _criterias = { "A", "B", "C", "D", "E", "F", "G", "H", "I" };
+        private static readonly string Field_CommentsClosed = "CommentsClosed";
+        private static readonly string Field_CommentsOpen = "CommentsOpen";
+        private static readonly string Field_CommentsNew = "CommentsNew";
+
+        private static readonly string Field_TaxonChange = "TaxonChange";
         //private const string PotensiellTaksonomiskEndring = "Potensiell taksonomisk endring: ";
         //private const string TaksonomiskEndring = "Automatisk endring av navn: ";
 
@@ -84,16 +82,16 @@ namespace Prod.Api.Helpers
         {
             var batchSize = 1000;
             var pointer = 0;
-            var maxDate = DateTime.MinValue; 
+            var maxDate = DateTime.MinValue;
             var minDate = indexVersionDateTime;
             while (true)
             {
                 var result = await _dbContext.Assessments.Include(x => x.LastUpdatedByUser)
                     .Include(x => x.LockedForEditByUser)
-                    .Include(x=>x.Comments)
-                    .Where(x => 
+                    .Include(x => x.Comments)
+                    .Where(x =>
                         //x.IsDeleted == false && 
-                        (x.LastUpdatedAt > minDate || x.Comments.Any(y=>y.CommentDate > minDate) ) )
+                        x.LastUpdatedAt > minDate || x.Comments.Any(y => y.CommentDate > minDate))
                     .OrderBy(x => x.Id)
                     .Skip(pointer).Take(batchSize)
                     .ToArrayAsync();
@@ -102,9 +100,9 @@ namespace Prod.Api.Helpers
                 var tempDate = result.Max(x => x.LastUpdatedAt);
                 if (maxDate < tempDate) maxDate = tempDate;
 
-                var docs = result.Where(x=>x.IsDeleted == false).Select(GetDocumentFromAssessment).ToArray();
+                var docs = result.Where(x => x.IsDeleted == false).Select(GetDocumentFromAssessment).ToArray();
                 _index.AddOrUpdate(docs);
-                var deletedDocs = result.Where(x => x.IsDeleted).Select(x=>x.Id).ToArray();
+                var deletedDocs = result.Where(x => x.IsDeleted).Select(x => x.Id).ToArray();
                 _index.Delete(deletedDocs);
             }
 
@@ -119,37 +117,28 @@ namespace Prod.Api.Helpers
             if (stamp == null)
             {
                 _dbContext.TimeStamp.Add(new TimeStamp
-                    { Id = 1, DateTimeUpdated = maxDate});
+                    { Id = 1, DateTimeUpdated = maxDate });
             }
             else
             {
-                if (DateTimesSignificantlyDifferent(stamp.DateTimeUpdated, maxDate))
-                {
-                    stamp.DateTimeUpdated = maxDate;
-                }
-
+                if (DateTimesSignificantlyDifferent(stamp.DateTimeUpdated, maxDate)) stamp.DateTimeUpdated = maxDate;
             }
 
             _dbContext.SaveChanges();
 
             _index.SetIndexVersion(new IndexVersion
-                { Version = IndexVersion, DateTime = maxDate});
+                { Version = IndexVersion, DateTime = maxDate });
         }
 
-        internal static void SetCommentTimeStamp(ProdDbContext _dbContext, 
+        internal static void SetCommentTimeStamp(ProdDbContext _dbContext,
             DateTime maxCommentDate)
         {
             var stamp = _dbContext.TimeStamp.SingleOrDefault();
             if (stamp != null)
-            {
                 if (DateTimesSignificantlyDifferent(stamp.DateTimeUpdated, maxCommentDate))
-                {
                     stamp.DateTimeUpdated = maxCommentDate;
-                }
-            }
 
             _dbContext.SaveChanges();
-            
         }
 
         public static DateTime Index(bool clear, ProdDbContext _dbContext, Index _index)
@@ -167,7 +156,7 @@ namespace Prod.Api.Helpers
                 var result = _dbContext.Assessments
                     .Include(x => x.LastUpdatedByUser)
                     .Include(x => x.LockedForEditByUser)
-                    .Include(x=>x.Comments)
+                    .Include(x => x.Comments)
                     .Where(x => x.IsDeleted == false).OrderBy(x => x.Id)
                     .Skip(pointer).Take(batchSize)
                     .ToArray();
@@ -189,7 +178,7 @@ namespace Prod.Api.Helpers
         {
             if (assessment.IsDeleted)
             {
-                index.Delete(new []{assessment.Id}.ToArray());
+                index.Delete(new[] { assessment.Id }.ToArray());
             }
             else
             {
@@ -208,7 +197,7 @@ namespace Prod.Api.Helpers
             var ass2018 = ass.PreviousAssessments.FirstOrDefault(x => x.RevisionYear == 2018);
             var horizonScanResult = GetHorizonScanResult(ass);
             var get2018NotAssessed = Get2018NotAssessed(ass);
-            var horResult = horizonScanResult.HasValue == true ? (horizonScanResult.Value ? "1" : "0") :"2";
+            var horResult = horizonScanResult.HasValue ? horizonScanResult.Value ? "1" : "0" : "2";
 
             var document = new Document
             {
@@ -221,56 +210,53 @@ namespace Prod.Api.Helpers
                 new StoredField(Field_LockedForEditByUser,
                     assessment.LockedForEditByUser != null ? assessment.LockedForEditByUser.FullName : string.Empty),
                 new StoredField(Field_LockedForEditAt, assessment.LockedForEditAt.ToString("s")),
-                new TextField(Field_ScientificName, ass.EvaluatedScientificName + (!string.IsNullOrWhiteSpace(ass.EvaluatedScientificNameAuthor) ? " " + ass.EvaluatedScientificNameAuthor : string.Empty ),
+                new TextField(Field_ScientificName,
+                    ass.EvaluatedScientificName + (!string.IsNullOrWhiteSpace(ass.EvaluatedScientificNameAuthor)
+                        ? " " + ass.EvaluatedScientificNameAuthor
+                        : string.Empty),
                     Field.Store.YES), // textfield - ignore case
+                new StringField(Field_ScientificNameId, ass.EvaluatedScientificNameId.ToString(), Field.Store.NO),
                 new StringField(Field_ScientificNameAsTerm, ass.EvaluatedScientificName.ToLowerInvariant(),
                     Field.Store.NO), // textfield - ignore case
                 //new StoredField(Field_TaxonHierarcy, ass.VurdertVitenskapeligNavnHierarki),
                 new StringField(Field_Category, GetCategoryFromRiskLevel(ass.RiskAssessment.RiskLevel),
                     Field.Store.YES),
-                
+
                 //new StringField(Field_AssessmentContext, ass.VurderingsContext, Field.Store.YES),
                 new TextField(Field_PopularName, ass.EvaluatedVernacularName ?? string.Empty, Field.Store.YES),
                 new StringField(Field_DoHorizonScanning, ass.HorizonDoScanning ? "1" : "0", Field.Store.NO),
                 new StringField(Field_NR2018, get2018NotAssessed.ToString(), Field.Store.NO),
                 new StringField(Field_HsStatus, ass.HorizonScanningStatus, Field.Store.YES),
                 //new StringField(Field_HsDone, ass.HorizonScanningStatus, Field.Store.YES),
-                new StringField(Field_HsResult,  horResult, Field.Store.NO),
+                new StringField(Field_HsResult, horResult, Field.Store.NO),
                 new StringField(Field_Status, ass.EvaluationStatus, Field.Store.YES),
                 // facets
                 new FacetField(Facet_Author, assessment.LastUpdatedByUser.FullName),
                 new FacetField(Facet_Progress, horResult),
                 new FacetField(Facet_PotentialDoorKnocker, ExtractPotentialDoorKnocker(get2018NotAssessed).ToString()),
-                new FacetField(Facet_NotAssessedDoorKnocker, ExtractNotAssessedDoorKnocker(get2018NotAssessed).ToString())
+                new FacetField(Facet_NotAssessedDoorKnocker,
+                    ExtractNotAssessedDoorKnocker(get2018NotAssessed).ToString())
             };
             if (IsDocumentEvaluated(ass))
-            {
                 document.Add(new StringField(Field_Category, GetCategoryFromRiskLevel(ass.RiskAssessment.RiskLevel),
                     Field.Store.YES));
-            }
             else
-            {
-                    document.Add(new StringField(Field_Category, "NR", Field.Store.YES));
-            }
+                document.Add(new StringField(Field_Category, "NR", Field.Store.YES));
 
             if (ass2018 != null)
             {
                 if (IsDocumentEvaluated(ass2018.MainCategory, ass2018.MainSubCategory, ass2018.MainSubCategory))
-                {
                     document.Add(new StringField(Field_Category2018, GetCategoryFromRiskLevel(ass2018?.RiskLevel ?? -1),
-                                        Field.Store.YES));
-                }
+                        Field.Store.YES));
                 else
-                {
                     document.Add(new StringField(Field_Category2018, "NR", Field.Store.YES));
-                }
             }
+
             if (!string.IsNullOrWhiteSpace(ass.RiskAssessment.DecisiveCriteria))
             {
                 foreach (var criteria in _criterias)
-                {
-                    if (ass.RiskAssessment.DecisiveCriteria.Contains(criteria, StringComparison.InvariantCulture)) document.Add(new StringField(Field_Criteria, criteria, Field.Store.NO));
-                }
+                    if (ass.RiskAssessment.DecisiveCriteria.Contains(criteria, StringComparison.InvariantCulture))
+                        document.Add(new StringField(Field_Criteria, criteria, Field.Store.NO));
 
                 document.Add(new StringField(Field_CriteriaAll, ass.RiskAssessment.DecisiveCriteria, Field.Store.YES));
             }
@@ -281,31 +267,32 @@ namespace Prod.Api.Helpers
             var closed = comments.Count(x => x.Closed);
             var open = comments.Count(y =>
                 !y.Closed); // && !y.Comment.StartsWith(TaksonomiskEndring) &&
-                //!y.Comment.StartsWith(PotensiellTaksonomiskEndring));
+            //!y.Comment.StartsWith(PotensiellTaksonomiskEndring));
             var newCommentsForUserId = (from commenter in comments.Where(y =>
-                    y.IsDeleted == false && y.Closed == false).Select(x=>x.UserId).ToArray()
-                let newones = comments.Count(y => y.IsDeleted == false && y.Closed == false && y.UserId != commenter && y.CommentDate > (comments.Any(y2 => y2.IsDeleted == false && y2.UserId == commenter)
-                    ? comments.Where(y2 => y2.IsDeleted == false && y2.UserId == commenter)
-                        .Max(z => z.CommentDate)
-                    : DateTime.Now))
+                    y.IsDeleted == false && y.Closed == false).Select(x => x.UserId).ToArray()
+                let newones = comments.Count(y => y.IsDeleted == false && y.Closed == false && y.UserId != commenter &&
+                                                  y.CommentDate > (comments.Any(y2 =>
+                                                      y2.IsDeleted == false && y2.UserId == commenter)
+                                                      ? comments.Where(y2 =>
+                                                              y2.IsDeleted == false && y2.UserId == commenter)
+                                                          .Max(z => z.CommentDate)
+                                                      : DateTime.Now))
                 select new Tuple<Guid, int>(commenter, newones)).ToList();
 
             var taxonchange = comments.Any(y =>
                 y.Type == CommentType.PotentialTaxonomicChange && y.IsDeleted == false &&
                 y.Closed == false)
                 ? 2
-                : (comments.Any(y =>
+                : comments.Any(y =>
                     y.Type == CommentType.TaxonomicChange && y.IsDeleted == false &&
                     y.Closed == false)
                     ? 1
-                    : 0);
+                    : 0;
 
             document.Add(new StringField(Field_NewestComment, latest.ToString("yyyy-dd-MM HH:mm"), Field.Store.YES));
             document.Add(new StringField(Field_CommentsClosed, closed.ToString(), Field.Store.YES));
             foreach (var tuple in newCommentsForUserId)
-            {
                 document.Add(new StringField(Field_CommentsNew, tuple.Item1 + ";" + tuple.Item2, Field.Store.YES));
-            }
             document.Add(new StringField(Field_CommentsOpen, open.ToString(), Field.Store.YES));
             document.Add(new StringField(Field_TaxonChange, taxonchange.ToString(), Field.Store.YES));
 
@@ -325,6 +312,7 @@ namespace Prod.Api.Helpers
                     return S2018.newPotentialDoorKnocker;
             }
         }
+
         private static S2018 ExtractNotAssessedDoorKnocker(S2018 s2018)
         {
             switch (s2018)
@@ -342,10 +330,7 @@ namespace Prod.Api.Helpers
         {
             var pot = ass.HorizonEstablismentPotential ?? string.Empty;
             var effects = ass.HorizonEcologicalEffect ?? string.Empty;
-            if (pot == string.Empty || effects == string.Empty)
-            {
-                return null;
-            }
+            if (pot == string.Empty || effects == string.Empty) return null;
             switch (pot)
             {
                 case "0":
@@ -359,8 +344,8 @@ namespace Prod.Api.Helpers
                 case "1":
                     switch (effects)
                     {
-                        case "no":return false;
-                        case "yesWhilePresent": 
+                        case "no": return false;
+                        case "yesWhilePresent":
                         case "yesAfterGone": return true;
                         default: return false;
                     }
@@ -399,26 +384,30 @@ namespace Prod.Api.Helpers
                     return "NR";
             }
         }
+
         private static bool IsDocumentEvaluated(FA4 vurdering)
         {
-            if (vurdering.AlienSpeciesCategory == "AlienSpecie" || vurdering.AlienSpeciesCategory == "EcoEffectWithoutEstablishment")
+            if (vurdering.AlienSpeciesCategory == "AlienSpecie" ||
+                vurdering.AlienSpeciesCategory == "EcoEffectWithoutEstablishment")
                 return true;
             if (vurdering.AlienSpeciesCategory == "DoorKnocker")
                 return vurdering.DoorKnockerCategory == "doRiskAssessment";
             if (vurdering.AlienSpeciesCategory == "RegionallyAlien")
-                return (vurdering.RegionallyAlienCategory == "doRiskAssessment");
+                return vurdering.RegionallyAlienCategory == "doRiskAssessment";
             if (vurdering.AlienSpeciesCategory == "NotApplicable")
                 return false;
             return false; // should not be reachable // todo: replace with exception
         }
-        private static bool IsDocumentEvaluated(string alienSpeciesCategory, string doorKnockerCategory, string regionallyAlienCategory)
+
+        private static bool IsDocumentEvaluated(string alienSpeciesCategory, string doorKnockerCategory,
+            string regionallyAlienCategory)
         {
             if (alienSpeciesCategory == "AlienSpecie" || alienSpeciesCategory == "EcoEffectWithoutEstablishment")
                 return true;
             if (alienSpeciesCategory == "DoorKnocker")
                 return doorKnockerCategory == "doRiskAssessment";
             if (alienSpeciesCategory == "RegionallyAlien")
-                return (regionallyAlienCategory == "doRiskAssessment");
+                return regionallyAlienCategory == "doRiskAssessment";
             if (alienSpeciesCategory == "NotApplicable")
                 return false;
             return false; // should not be reachable // todo: replace with exception
@@ -448,6 +437,15 @@ namespace Prod.Api.Helpers
                 TaxonChange = int.Parse(doc.Get(Field_TaxonChange)),
                 CommentNew = 1
             };
+        }
+
+        public static Query QueryGetDocumentQuery(string expertgroupname, int scientificNameId)
+        {
+            Query query = new BooleanQuery();
+            ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_Group, new[] { expertgroupname }), Occur.MUST);
+            ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_ScientificNameId, new[] { scientificNameId.ToString() }),
+                Occur.MUST);
+            return query;
         }
 
         public static Query QueryGetDocumentQuery(string expertgroupid, IndexFilter filter)
@@ -484,17 +482,21 @@ namespace Prod.Api.Helpers
             if (filter.HorizonScan)
             {
                 ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_DoHorizonScanning, new[] { "1" }), Occur.MUST);
-                
+
                 // or between elements group with must then list of clauses with should
                 var queryElements = new List<BooleanClause>();
                 if (filter.Horizon.NotStarted)
-                   queryElements.Add(new BooleanClause(QueryGetFieldQuery(Field_HsResult, new[] { "2" }), Occur.SHOULD));
+                    queryElements.Add(
+                        new BooleanClause(QueryGetFieldQuery(Field_HsResult, new[] { "2" }), Occur.SHOULD));
                 if (filter.Horizon.Finished)
-                    queryElements.Add(new BooleanClause(QueryGetFieldQuery(Field_HsResult, new[] { "1","0" }), Occur.SHOULD));
+                    queryElements.Add(new BooleanClause(QueryGetFieldQuery(Field_HsResult, new[] { "1", "0" }),
+                        Occur.SHOULD));
                 if (filter.Horizon.ToAssessment)
-                    queryElements.Add(new BooleanClause(QueryGetFieldQuery(Field_HsResult, new[] { "1" }), Occur.SHOULD));
+                    queryElements.Add(
+                        new BooleanClause(QueryGetFieldQuery(Field_HsResult, new[] { "1" }), Occur.SHOULD));
                 if (filter.Horizon.NotAssessed)
-                    queryElements.Add(new BooleanClause(QueryGetFieldQuery(Field_HsResult, new[] { "0" }), Occur.SHOULD));
+                    queryElements.Add(
+                        new BooleanClause(QueryGetFieldQuery(Field_HsResult, new[] { "0" }), Occur.SHOULD));
 
                 QueryAddOrElements(queryElements, query);
 
@@ -522,115 +524,20 @@ namespace Prod.Api.Helpers
                                         nr2018.ToString()
                                     }), Occur.SHOULD));
                                 break;
-
                         }
                     }
-                    QueryAddOrElements(queryElements, query);
 
+                    QueryAddOrElements(queryElements, query);
                 }
 
                 if (filter.Responsible.Length > 0)
-                {
                     ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_LastUpdatedBy, filter.Responsible), Occur.MUST);
-                }
             }
             else
             {
                 ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_DoHorizonScanning, new[] { "0" }), Occur.MUST);
             }
-            //if (!string.IsNullOrWhiteSpace(filter.Groups) && filter.Groups != "0")
-            //{
-            //    var terms = filter.Groups.Replace("amfibier, reptiler", "amfibier_reptiler").ToLowerInvariant()
-            //        .Split(',', StringSplitOptions.RemoveEmptyEntries).ToList();
-            //    if (terms.Any(x => x == "amfibier_reptiler"))
-            //    {
-            //        terms.Remove("amfibier_reptiler");
-            //        terms.Add("amfibier, reptiler");
-            //    }
 
-            //    ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_Group, terms.ToArray()), Occur.MUST);
-            //}
-
-            //if (!string.IsNullOrWhiteSpace(filter.Category))
-            //{
-            //    var terms = filter.Category.Split(',', StringSplitOptions.RemoveEmptyEntries);
-            //    ((BooleanQuery)query).Add(QueryGetPrefixFieldQuery(Field_Category, terms), Occur.MUST);
-            //}
-
-            //if (!string.IsNullOrWhiteSpace(filter.Criteria))
-            //{
-            //    var terms = filter.Criteria.Split(',', StringSplitOptions.RemoveEmptyEntries);
-            //    ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_Criteria, terms), Occur.MUST);
-            //}
-
-            //if (!string.IsNullOrWhiteSpace(filter.AssessmentContext))
-            //{
-            //    var terms = filter.AssessmentContext.Split(',', StringSplitOptions.RemoveEmptyEntries);
-            //    ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_AssessmentContext, terms), Occur.MUST);
-            //}
-
-            //if (!string.IsNullOrWhiteSpace(filter.Habitat))
-            //{
-            //    var terms = filter.Habitat.Split(',', StringSplitOptions.RemoveEmptyEntries);
-            //    ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_Habitat, terms), Occur.MUST);
-            //}
-
-            //if (!string.IsNullOrWhiteSpace(filter.Regions))
-            //{
-            //    var terms = filter.Regions.Split(',', StringSplitOptions.RemoveEmptyEntries);
-            //    ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_Regioner, terms), Occur.MUST);
-            //}
-
-            //if (!string.IsNullOrWhiteSpace(filter.Taxonrank))
-            //{
-            //    var terms = filter.Taxonrank.Split(',', StringSplitOptions.RemoveEmptyEntries);
-            //    ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_Rank, terms), Occur.MUST);
-            //}
-
-            //if (!string.IsNullOrWhiteSpace(filter.Extinct) && filter.Extinct == "true")
-            //{
-            //    ((BooleanQuery)query).Add(new TermQuery(new Term(Field_Utdodd, "1")), Occur.MUST);
-            //}
-
-            //if (!string.IsNullOrWhiteSpace(filter.CategoryChange) && filter.CategoryChange == "true")
-            //{
-            //    ((BooleanQuery)query).Add(new TermQuery(new Term(Field_EndringKat, "1")), Occur.MUST);
-            //}
-
-            //if (!string.IsNullOrWhiteSpace(filter.Portion))
-            //{
-            //    var terms = filter.Portion.Split(',', StringSplitOptions.RemoveEmptyEntries);
-            //    ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_EurB, terms), Occur.MUST);
-            //}
-
-            //if (!string.IsNullOrWhiteSpace(filter.Year))
-            //{
-            //    var terms = filter.Year.Split(',', StringSplitOptions.RemoveEmptyEntries);
-            //    ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_Year, terms), Occur.MUST);
-            //}
-
-            //if (!string.IsNullOrWhiteSpace(filter.Search))
-            //{
-            //    var booleanQuery = new BooleanQuery();
-            //    var lowerInvariant = WebUtility.UrlDecode(filter.Search.ToLowerInvariant())
-            //        .Replace("×", "")
-            //        .Replace("-", " ")
-            //        .Split(" ", StringSplitOptions.RemoveEmptyEntries);
-            //    var booleanQuerySc = new BooleanQuery();
-            //    var booleanQueryP = new BooleanQuery();
-            //    foreach (var s in lowerInvariant)
-            //    {
-            //        var text = "*" + s + "*";
-            //        booleanQuerySc.Add(
-            //            new BooleanClause(new WildcardQuery(new Term(Field_ScientificName, text)),
-            //                Occur.MUST)); // lowercase - siden det er indeksert som textfield
-            //        booleanQueryP.Add(new BooleanClause(new WildcardQuery(new Term(Field_PopularName, text)), Occur.MUST));
-            //    }
-
-            //    booleanQuery.Add(booleanQuerySc, Occur.SHOULD);
-            //    booleanQuery.Add(booleanQueryP, Occur.SHOULD);
-            //    ((BooleanQuery)query).Add(booleanQuery, Occur.MUST);
-            //}
 
             if (((BooleanQuery)query).Clauses.Count == 0) query = new MatchAllDocsQuery();
 
@@ -648,7 +555,7 @@ namespace Prod.Api.Helpers
                 }
                 else
                 {
-                    foreach (var clause in queryElements) ((BooleanQuery)que).Add(clause);
+                    foreach (var clause in queryElements) que.Add(clause);
                     ((BooleanQuery)query).Add(que, Occur.MUST);
                 }
             }
@@ -687,6 +594,12 @@ namespace Prod.Api.Helpers
             return que;
         }
 
+
+        public static bool DateTimesSignificantlyDifferent(DateTime date1, DateTime date2)
+        {
+            return Math.Abs((date1 - date2).TotalSeconds) > 1;
+        }
+
         /// <summary>
         ///     Categories of assessments
         /// </summary>
@@ -703,12 +616,6 @@ namespace Prod.Api.Helpers
             notEstablishedWithin50Years = 7,
             traditionalProductionSpecie = 8,
             newPotentialDoorKnocker
-        }
-
-
-        public static bool DateTimesSignificantlyDifferent(DateTime date1, DateTime date2)
-        {
-            return Math.Abs((date1 - date2).TotalSeconds) > 1;
         }
     }
 }
