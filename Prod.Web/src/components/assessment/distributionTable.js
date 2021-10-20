@@ -75,12 +75,12 @@ export default class DistributionTable extends React.Component {
             <tr>
                 <td>
                 <Xcomp.Number                            
-                    observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "Occurences1Low"] : [assessment.riskAssessment, "AOOtotalLow"]}
+                    observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "occurrences1Low"] : [assessment.riskAssessment, "AOOtotalLow"]}
                     integer />   
                 </td>                
                 <td>
                 <Xcomp.Number                            
-                    observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "Occurences1Best"] :[assessment.riskAssessment, "AOOtotalBest"]}
+                    observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "occurrences1Best"] :[assessment.riskAssessment, "AOOtotalBest"]}
                     integer
                    // onChange={action (() => assessment.horizonEstablismentPotential == 1 && assessment.riskAssessment.AOOtotalBest != 1 ? alert("Dette stemmer ikke overens med vurdering på horisontskanningen. Er du sikker på at du vil endre?") : null)} 
                    />   
@@ -88,7 +88,7 @@ export default class DistributionTable extends React.Component {
                 </td>
                <td>
                <Xcomp.Number                            
-                    observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "Occurences1High"] :[assessment.riskAssessment, "AOOtotalHigh"]}
+                    observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "occurrences1High"] :[assessment.riskAssessment, "AOOtotalHigh"]}
                     integer />   
                 </td>
                 {assessment.alienSpeciesCategory != "DoorKnocker" &&
@@ -99,17 +99,17 @@ export default class DistributionTable extends React.Component {
             <tr>
                 <td>
                 <Xcomp.Number                            
-                    observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "IntroductionsLow"] : [assessment.riskAssessment, "AOOdarkfigureLow"]}
+                    observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "introductionsLow"] : [assessment.riskAssessment, "AOOdarkfigureLow"]}
                     integer />   
                 </td>                
                 <td>
                 <Xcomp.Number                            
-                    observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "IntroductionsBest"] : [assessment.riskAssessment, "AOOdarkfigureBest"]}
+                    observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "introductionsBest"] : [assessment.riskAssessment, "AOOdarkfigureBest"]}
                     integer />   
                 </td>
                <td>
                <Xcomp.Number                            
-                    observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "IntroductionsHigh"] : [assessment.riskAssessment, "AOOdarkfigureHigh"]}
+                    observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "introductionsHigh"] : [assessment.riskAssessment, "AOOdarkfigureHigh"]}
                     integer />   
               </td>
               {assessment.alienSpeciesCategory != "DoorKnocker" &&
