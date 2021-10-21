@@ -511,16 +511,6 @@ class ViewModel {
         return !!this.assessment
     }
 
-    @computed get skalVurderes() {
-         //return true 
-         
-         return !this.harVurdering ? false : this.assessment.horizonDoScanning === false ? true : this.horizonDoAssessment // todo: implement real!
-    }
-
-    @computed get horizonDoScanning() {
-        return !this.harVurdering ? false : this.assessment.horizonDoScanning
-    }
-
     @computed get horizonDoAssessment() {
         if (!this.assessment) return false;
         const result =
@@ -531,6 +521,17 @@ class ViewModel {
             || (this.assessment.horizonEstablismentPotential == "0" && this.assessment.horizonEcologicalEffect == "yesAfterGone")
         return result
     }
+
+    @computed get horizonDoScanning() {
+        return !this.harVurdering ? false : this.assessment.horizonDoScanning
+    }
+
+    @computed get skalVurderes() {
+        //return true 
+        
+        return !this.harVurdering ? false : this.assessment.horizonDoScanning === false ? true : this.horizonDoAssessment // todo: implement real!
+    }
+
 
 
 
