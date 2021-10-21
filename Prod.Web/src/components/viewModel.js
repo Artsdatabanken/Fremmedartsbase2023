@@ -496,6 +496,17 @@ class ViewModel {
         // return isLockedByMe() && !isFinished();
     };
 
+    @computed get isDirty() {
+        if (!this.assessmentId || !this.assessment) return false
+        // const a = JSON.stringify(this.assessment)
+        const a = this.assessment.toJSON
+        const b = this.assessmentSavedVersionString
+        return a != b
+    }
+
+
+
+
     @computed get harVurdering() {
         return !!this.assessment
     }
@@ -504,14 +515,6 @@ class ViewModel {
          //return true 
          
          return !this.harVurdering ? false : this.assessment.horizonDoScanning === false ? true : this.horizonDoAssessment // todo: implement real!
-    }
-
-    @computed get isDirty() {
-        if (!this.assessmentId || !this.assessment) return false
-        // const a = JSON.stringify(this.assessment)
-        const a = this.assessment.toJSON
-        const b = this.assessmentSavedVersionString
-        return a != b
     }
 
     @computed get horizonDoScanning() {
@@ -528,6 +531,8 @@ class ViewModel {
             || (this.assessment.horizonEstablismentPotential == "0" && this.assessment.horizonEcologicalEffect == "yesAfterGone")
         return result
     }
+
+
 
     @computed get unresolvedComments() {
         const comments = this.assessmentComments
