@@ -142,12 +142,14 @@ namespace Prod.Api.Controllers
             ////config.TypeConverterCache.AddConverter<Rodliste2019.MinMaxProbableIntervall>(new CsvHelpers.CustomMinMaxProbableIntervallConverter());
             //config. .RegisterClassMap<CsvHelpers.FremmedartToCsvMap>();
             var csv = new CsvWriter(writer, config);
-            csv.Context.RegisterClassMap<CsvHelpers.FremmedartToCsvMap>();
+            //csv.Context.RegisterClassMap<CsvHelpers.FremmedartToCsvMap>();
             csv.Context.TypeConverterCache.RemoveConverter<string>();
             csv.Context.TypeConverterCache.AddConverter<string>(new CsvHelpers.CustomStringConverter());
             csv.Context.TypeConverterOptionsCache.GetOptions<string>().NullValues.Add(string.Empty);
 
-            csv.WriteRecords(result);
+            var mapper = Helpers.ExportMapper.InitializeMapper();
+
+            csv.WriteRecords(mapper.Map<FA4HorizonScanExport[]>(result));
             csv.Flush();
             writer.Flush();
 
@@ -171,8 +173,7 @@ namespace Prod.Api.Controllers
             //}
 
             var ids = result.Where(x => x.IsDeleted == false).Select(x => x.Id);
-            var fa4WithCommentsList = _dbContext.Assessments.FromSqlRaw(
-                    "SELECT * FROM dbo.Assessments WITH (INDEX(IX_Assessments_Expertgroup))")
+            var fa4WithCommentsList = _dbContext.Assessments.Include(x=>x.LastUpdatedByUser)
                 .Where(x => ids.Contains(x.Id))
                 //result
                 //    .Where(x => x.IsDeleted == false)
@@ -183,6 +184,7 @@ namespace Prod.Api.Controllers
                     var deserializeObject = JsonSerializer.Deserialize<FA4WithComments>(assessment.Doc);
                     Debug.Assert(deserializeObject != null, nameof(deserializeObject) + " != null");
                     deserializeObject.Id = deserializeObject.Id == 0 ? assessment.Id : deserializeObject.Id;
+                    deserializeObject.LastUpdatedBy = assessment.LastUpdatedByUser.FullName;
                     return deserializeObject;
                 })
                 .OrderBy(x => x.EvaluatedScientificName)
