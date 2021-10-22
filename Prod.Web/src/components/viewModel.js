@@ -496,16 +496,6 @@ class ViewModel {
         // return isLockedByMe() && !isFinished();
     };
 
-    @computed get harVurdering() {
-        return !!this.assessment
-    }
-
-    @computed get skalVurderes() {
-         //return true 
-         
-         return !this.harVurdering ? false : this.assessment.horizonDoScanning === false ? true : this.horizonDoAssessment // todo: implement real!
-    }
-
     @computed get isDirty() {
         if (!this.assessmentId || !this.assessment) return false
         // const a = JSON.stringify(this.assessment)
@@ -514,8 +504,11 @@ class ViewModel {
         return a != b
     }
 
-    @computed get horizonDoScanning() {
-        return !this.harVurdering ? false : this.assessment.horizonDoScanning
+
+
+
+    @computed get harVurdering() {
+        return !!this.assessment
     }
 
     @computed get horizonDoAssessment() {
@@ -528,6 +521,27 @@ class ViewModel {
             || (this.assessment.horizonEstablismentPotential == "0" && this.assessment.horizonEcologicalEffect == "yesAfterGone")
         return result
     }
+
+    @computed get horizonDoScanning() {
+        return !this.harVurdering ? false : this.assessment.horizonDoScanning
+    }
+
+    @computed get skalVurderes() {
+        //return true 
+        
+        return !this.harVurdering ? false : this.assessment.horizonDoScanning === false ? true : this.horizonDoAssessment // todo: implement real!
+    }
+
+    @computed get doFullAssessment() {
+        return false
+        
+        /////////// return  this.skalVurderes    
+        //todo: her skal det komme funksjonalitet for å håndtere utvalg av hvilke av horisontskanningsvurderingene som skal vurderes
+        // - det skas komme en liste med de av hs-ene som får horizonDoAssessment == true som skal vurderes. (det vil gjøres et utvalg når hs er gjennomført)
+    }
+
+
+
 
     @computed get unresolvedComments() {
         const comments = this.assessmentComments

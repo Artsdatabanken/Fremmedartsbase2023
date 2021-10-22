@@ -233,9 +233,9 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             const num = introductionNum(introHighTable, r.introductionsBest)
             return num == 0 ? 0 : round(r.introductionsBest) + num
         },
-        get AOO10yrBest() {return 4 * ((1 + r.Occurrences1Best) * (1 + round(r.IntroductionsBest) / 2) - 1) },
-        get AOO10yrLow() { return 4 * ((1 + r.Occurrences1Low) * (1 + r.IntroductionsLow / 2) - 1) },
-        get AOO10yrHigh() {return 4 * ((1 + r.Occurrences1High) * (1 + r.IntroductionsHigh / 2) - 1) },
+        get AOO10yrBest() {return 4 * ((1 + r.occurrences1Best) * (1 + round(r.introductionsBest) / 2) - 1) },
+        get AOO10yrLow() { return 4 * ((1 + r.occurrences1Low) * (1 + r.introductionsLow / 2) - 1) },
+        get AOO10yrHigh() {return 4 * ((1 + r.occurrences1High) * (1 + r.introductionsHigh / 2) - 1) },
 
         get AOOchangeBest() { return r.AOOtotalBest < 4 ? 1 : n0(r.AOO50yrBest) / d1(r.AOOtotalBest) },
         get AOOchangeLow() { return r.AOOtotalBest < 4 ? 1 : n0(r.AOO50yrLow) / d1(r.AOOtotalBest) },
