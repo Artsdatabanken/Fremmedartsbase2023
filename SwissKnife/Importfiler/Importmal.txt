@@ -1,0 +1,4 @@
+﻿ScientificNameId	ScientificName	ScientificNameAuthor
+REM Tabulatorskilt slik under
+220008	Xylella fastidiosa	Wells et al., 1987
+220005	Ralstonia solanacearum	(Smith 1896) Yabuuchi et al., 1996 emend. Safni et al., 2014
