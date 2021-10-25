@@ -297,7 +297,9 @@ class ViewModel {
 
 
         // autorun(() => {
-        //     // if(this.assessmentTabs) {
+            
+
+        //     if(this.assessmentTabs) {
         //         const b = this.horizonDoAssessment
         //         const a = this.assessmentTabs ? JSON.stringify(this.assessmentTabs.tabinfos[2].enabled) : "not ready"
         //         console.log("aaaaaaaaaaaaaaa"  + a + b)
@@ -307,7 +309,7 @@ class ViewModel {
         //         console.log("aaaaaaaaaaaaaaad" + isObservable(this.assessmentTabs.tabinfos[2]))
         //         console.log("aaaaaaaaaaaaaaae" + isObservableProp(this.assessmentTabs.tabinfos[2], "enabled"))
         //         }
-        //     // }
+        //     }
         // })
     
 
@@ -327,17 +329,22 @@ class ViewModel {
             console.log("horizonDoAssessment: " + this.horizonDoAssessment)
         });
         autorun(() => {
+            if(this.assessmentTabs && this.assessmentTabs.activeTab ) {
+                console.log("current assessmentTab: " + this.assessmentTabs.activeTab.id )
+            }
+        });
+        autorun(() => {
             console.log("har vurdering: " + this.harVurdering)
         });
         autorun(() => {
             console.log("skal vurderes: " + this.skalVurderes)
         });
 
-      /*  autorun(() => {
-            console.log("ASSESSMENT: " + this.assessment.horizonDoScanning)
-            this.assessment.horizonDoScanning ?  this.riskAssessmentTabs.activeTab.id = 0 :  this.riskAssessmentTabs.activeTab.id = 1     
-            console.log(this.riskAssessmentTabs.activeTab.id) 
-        })*/
+        // autorun(() => {
+        //     console.log("ASSESSMENT: " + this.assessment.horizonDoScanning)
+        //     this.assessment.horizonDoScanning ?  this.riskAssessmentTabs.activeTab.id = 0 :  this.riskAssessmentTabs.activeTab.id = 1     
+        //     console.log(this.riskAssessmentTabs.activeTab.id) 
+        // })
 
         // **** set assessment and assessmentId ****
         reaction(() => this.assessmentId,
@@ -456,12 +463,15 @@ class ViewModel {
     }
 
     @action navigate(assessmentTabId, id) {
-        console.log("navigate: " + assessmentTabId + " - " + id)
+        console.log("navigate: " + this.assessmentTabs.activeTab.id + " to:" + assessmentTabId)
+        const that = this
         action(() => {          
              
-            this.assessmentTabs.activeTab.id = assessmentTabId
+            that.assessmentTabs.activeTab.id = assessmentTabId
             // this.assessmentId = id
         })
+        console.log("navigate set: " + this.assessmentTabs.activeTab.id)
+
     }
 
 
@@ -707,6 +717,7 @@ class ViewModel {
             throw "Codes not loaded" // Fail fast
         }
 
+
         if (json && json.id) {
             const id = Number(json.id)
             console.log("type of id : " + typeof(id))
@@ -720,21 +731,23 @@ class ViewModel {
             const assessment = enhanceAssessment(jsonnew, this)
             const assessmentStringCopy = assessment.toJSON
             const assessmentcopy = JSON.parse(assessmentStringCopy)
-            this.navigate(1)
             runInAction(() => {
                 this.assessmentSavedVersion = assessmentcopy
                 this.assessmentSavedVersionString = assessmentStringCopy
                 this.assessment = assessment
                 this.assessmentId = id
+                this.assessmentTabs.activeTab.id = assessment.horizonDoScanning ? 0 : 1
             })
+           // this.navigate(assessment.horizonDoScanning ? 0 : 1)
         } else {
-            this.navigate(1)
             runInAction(() => {
                 this.assessmentSavedVersion = null
                 this.assessmentSavedVersionString = ""
                 this.assessment = null
                 this.assessmentId = null
+                this.assessmentTabs.activeTab.id = assessment.horizonDoScanning ? 0 : 1
             })
+            // this.navigate(assessment.horizonDoScanning ? 0 : 1)
         }
     }
 
@@ -742,7 +755,7 @@ class ViewModel {
         // console.log("########################" + JSON.stringify(assessmentInfo))
         // console.log("########################" + assessmentInfo.id)
         this.setCurrentAssessment(assessmentInfo.id)
-        this.assessmentTypeFilter == "horizonScanning" ?  this.assessmentTabs.activeTab.id = 0 :  this.assessmentTabs.activeTab.id = 1   
+        //this.assessmentTypeFilter == "horizonScanning" ?  this.assessmentTabs.activeTab.id = 0 :  this.assessmentTabs.activeTab.id = 1   
          
     }
 

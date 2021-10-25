@@ -1,6 +1,6 @@
 
 function tabItems(tabinfos) {
-    console.log("##" + tabinfos.length)
+    // console.log("##" + tabinfos.length)
     return tabinfos.map(param => {return {
         id: param.id,
         name: param.label,
