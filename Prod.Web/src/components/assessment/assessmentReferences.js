@@ -349,8 +349,8 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
         if (document.getElementById(value.id) != null) {
                 document.getElementById(value.id).setAttribute('disabled', 'true')
         }
-        
-        this.addNew = false
+        this.addNew = true
+        //this.addNew = false
         console.log("Already saved: " + this.alreadySaved + " can add: " + this.addNew)
     })
 
@@ -688,7 +688,7 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                             } onClick={() => {this.lagreReferanse()}}> {labels.references.saveOrUpdate}</Xcomp.Button>
                             <Xcomp.Button primary disabled={(!(this.valgtReferanse.allowDelete && this.valgtReferanse.id != 'NY_REFERANSE')) }                                      
                                         onClick={() => {this.slettReferanse()}}>{labels.references.removeReference}</Xcomp.Button>
-                            <Xcomp.Button primary disabled={!this.addNew}                                        
+                            <Xcomp.Button primary disabled={this.context.readonly && !this.addNew}                                       
                                         onClick={() => {this.leggTilReferanse(assessment, this.valgtReferanse)}}>{labels.references.add}</Xcomp.Button>
                     </div>}                    
                 </div>
