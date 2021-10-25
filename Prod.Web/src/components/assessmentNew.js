@@ -89,6 +89,9 @@ export default class assessmentNew extends React.Component {
         const labels = appState.codeLabels
         const codes = appState.koder
         const rolle = appState.roleincurrentgroup
+
+        var url = "http://localhost:25808/api/Assessment/ExistsByExpertgroupAndName/" + appState.expertgroup + "/" + newAssessment.ScientificNameId
+        console.log(url)
         
         return (
             <div>
@@ -188,7 +191,7 @@ export default class assessmentNew extends React.Component {
                             <Xcomp.Button primary onClick={this.onNewAssessment} disabled={!rolle.writeAccess || (!newAssessment.ScientificName || checkForExistingAssessment(newAssessment.ScientificName, newAssessment.TaxonId))}>{this.moveAssessment() ? labels.SelectAssessment.moveAssessment : labels.SelectAssessment.createAssessment}</Xcomp.Button>
                             {newAssessment.ScientificName.length > 0 ? 
                                 !rolle.writeAccess ?  <div style={{color: 'red'}}>{labels.SelectAssessment.accessDenied}</div> :
-                                 checkForExistingAssessment(newAssessment.ScientificName, newAssessment.TaxonId) ? <div style={{color: 'red'}}>{labels.SelectAssessment.alreadyOnTheList}</div>: null: null}
+                                 (checkForExistingAssessment(newAssessment.ScientificName, newAssessment.TaxonId) && newAssessment.potensiellDørstokkart != "") ? <div style={{color: 'red'}}>{labels.SelectAssessment.alreadyOnTheList}</div>: null: null}
                         </div>
                 </fieldset>
             </div>
