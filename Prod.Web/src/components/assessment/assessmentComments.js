@@ -67,6 +67,15 @@ export default inject('appState')(observer(class AssessmentComments extends Comp
     
     deleteComment = (id, appState) => {
         // kun lov til å slette sine egne kommentarer
+
+        // behandle kommentar før man sletter den
+        loadData(this.baseUrl + 'close/' + id
+        , ok => { if (ok) { 
+            console.log(id + ' lukket')
+            this.getComments()
+         } }
+        , exception => { console.error(exception) })
+        console.log("Behandlet " + id)
         // dette er id til kommentar - ikke assessmentid
         loadData(this.baseUrl +'delete/' + id
         , ok => { if (ok) { 
@@ -78,6 +87,7 @@ export default inject('appState')(observer(class AssessmentComments extends Comp
          } }
         , exception => { console.error(exception) })
         //this.updateCommentsView()
+        //this.closeComment(id, appState)
         
         appState.loadCurrentExpertgroupAssessmentList()
     }   
