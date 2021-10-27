@@ -41,6 +41,7 @@ export function loadData(resourceId, callback, errorCallback) {
     const url = resourceId.startsWith('/') || resourceId.startsWith('http')
         ? resourceId
         : config.apiUrl + resourceId
+        // console.log("# " + config.apiUrl )
         console.log(url)
         fetch(url, {
             method: 'get',
@@ -53,7 +54,7 @@ export function loadData(resourceId, callback, errorCallback) {
         .then(response => checkStatus(response))
         .then(response => parseJSON(response))
         .then(data => {
-            console.log('request success', data ? data : " No data ");
+            console.log('request success', data || data === false  ? data : " No data ");
             callback(data);            
 
         })
