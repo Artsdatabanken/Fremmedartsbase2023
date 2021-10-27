@@ -759,14 +759,50 @@ class ViewModel {
          
     }
 
-    checkForExistingAssessment = (sciName, assessmentId) => {
-       
-        //this.expertgroupAssessmentList.map(ega => console.log( ega.scientificName))
-        const result = this.expertgroupAssessmentList.some(ega => this.findSciName(ega.scientificName) == sciName && ega.id != assessmentId)
-        //console.log("sciname:", sciName, result)
-        
-        return result
+
+    // assessmentExists(
+    //     expertgroup, 
+    //     scientificNameId, 
+    //     ) {
+    //     const url = "assessment/ExistsByExpertgroupAndName/" + expertgroup + "/" + scientificNameId
+    //     if (expertgroup  && scientificNameId) {
+    //         loadData(
+    //             config.getUrl(url),
+    //             (data) => {
+    //                 if (data) {
+    //                     console.log("----" + JSON.stringify(data, undefined, 2))
+    //                 } else {console.warn("----= nothing")}
+    //             }
+    //         )
+    //     }
+    // }
+
+    checkForExistingAssessment = (expertgroup, scientificNameId, ) => {
+        return new Promise((resolve, reject) => {
+            const url = "assessment/ExistsByExpertgroupAndName/" + expertgroup + "/" + scientificNameId
+            if (!expertgroup || !scientificNameId) {
+                reject("checkForExistingAssessment missing required parameter" )
+            }
+            loadData(
+                config.getUrl(url),
+                (data) => {
+                    if (typeof(data) === 'boolean') {
+                        console.log("----" + JSON.stringify(data, undefined, 2))
+                        resolve(data)
+                    } else {
+                        reject("ExistsByExpertgroupAndName - no data")
+                    }
+                }
+            )
+        })
     }
+
+    // checkForExistingAssessment = (sciName, assessmentId) => {
+    //     //this.expertgroupAssessmentList.map(ega => console.log( ega.scientificName))
+    //     const result = this.expertgroupAssessmentList.some(ega => this.findSciName(ega.scientificName) == sciName && ega.id != assessmentId)
+    //     //console.log("sciname:", sciName, result)
+    //     return result
+    // }
 
     findSciName = (name) => {
         const dividedName = name.split(" ")
