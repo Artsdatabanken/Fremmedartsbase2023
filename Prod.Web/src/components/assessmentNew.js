@@ -1,6 +1,9 @@
 import React from 'react';
 import {observer, inject} from 'mobx-react';
 import * as Xcomp from './observableComponents';
+import {loadData} from '../apiService'
+import config from '../config'
+
 // import LoadingHoc from './LoadingHoc'
 import {action, autorun, extendObservable, observable, toJS, computed} from "mobx"
 import createTaxonSearch from './createTaxonSearch'
@@ -18,8 +21,11 @@ const  newAssessment = observable({
     Ekspertgruppe: "",
     taxonSearchString: "",
     potensiellDørstokkart: "",
-    taxonSearchResult: []
+    taxonSearchResult: [],
     // taxonSearchWaitingForResult: false - should not be observable
+    
+    assessmentExists: false
+
 })
 
 @inject("appState")
@@ -66,11 +72,50 @@ export default class assessmentNew extends React.Component {
             console.log("api sciname : "  +            newAssessment.ScientificName)
            
         )
-
+        autorun(() => {
+            const expgroup =  this.props.appState.expertgroup
+            const sciid = newAssessment.ScientificNameId
+            if(expgroup && sciid) {
+                this.props.checkForExistingAssessment(expgroup, sciid).then(exists => {
+                    // console.log("¤¤¤¤¤¤¤¤ exsisterer -- " + exists)
+                    action(() => {
+                        newAssessment.assessmentExists = exists
+                    })()
+                },
+                err => {
+                    console.log("vurdering exsisterer error ")
+                }
+                )
+            }
+        })
+    
+        autorun(() => 
+            console.log("¤¤¤¤¤¤¤¤ vurdering exsisterer : "  +  newAssessment.assessmentExists)
+           
+        )
 
 
         createTaxonSearch(newAssessment, evaluationContext)
     }
+
+    // assessmentExists(
+    //     expertgroup, 
+    //     scientificNameId, 
+    //     ) {
+    //     const url = "assessment/ExistsByExpertgroupAndName/" + expertgroup + "/" + scientificNameId
+    //     if (expertgroup  && scientificNameId) {
+    //         loadData(
+    //             config.getUrl(url),
+    //             (data) => {
+    //                 if (data) {
+    //                     console.log("----" + JSON.stringify(data, undefined, 2))
+    //                 } else {console.warn("----= nothing")}
+    //             }
+    //         )
+    //     }
+    // }
+
+
 
     @action onSetEkspertgruppe(e) {
         this.props.appState.ekspertgruppe = e.target.value
@@ -79,6 +124,7 @@ export default class assessmentNew extends React.Component {
         console.log(newAssessment)
         return false;
     }
+
    
 
     render(props) {
@@ -90,8 +136,9 @@ export default class assessmentNew extends React.Component {
         const codes = appState.koder
         const rolle = appState.roleincurrentgroup
 
-        var url = "http://localhost:25808/api/Assessment/ExistsByExpertgroupAndName/" + appState.expertgroup + "/" + newAssessment.ScientificNameId
-        console.log(url)
+        //var url = "http://localhost:25808/api/Assessment/ExistsByExpertgroupAndName/" + appState.expertgroup + "/" + newAssessment.ScientificNameId
+        //console.log(url)
+        //this.getExisting(appState.expertgroup, newAssessment.ScientificNameId)
         
         return (
             <div>
@@ -188,10 +235,10 @@ export default class assessmentNew extends React.Component {
                         <div className="col-md-6" style={{display: 'flex'}}>
                             <div>{labels.SelectAssessment.NBWritingAccess}</div>
                             
-                            <Xcomp.Button primary onClick={this.onNewAssessment} disabled={!rolle.writeAccess || (!newAssessment.ScientificName || checkForExistingAssessment(newAssessment.ScientificName, newAssessment.TaxonId))}>{this.moveAssessment() ? labels.SelectAssessment.moveAssessment : labels.SelectAssessment.createAssessment}</Xcomp.Button>
+                            <Xcomp.Button primary onClick={this.onNewAssessment} disabled={!rolle.writeAccess || (!newAssessment.ScientificName || newAssessment.assessmentExists)}>{this.moveAssessment() ? labels.SelectAssessment.moveAssessment : labels.SelectAssessment.createAssessment}</Xcomp.Button>
                             {newAssessment.ScientificName.length > 0 ? 
                                 !rolle.writeAccess ?  <div style={{color: 'red'}}>{labels.SelectAssessment.accessDenied}</div> :
-                                 (checkForExistingAssessment(newAssessment.ScientificName, newAssessment.TaxonId) && newAssessment.potensiellDørstokkart != "") ? <div style={{color: 'red'}}>{labels.SelectAssessment.alreadyOnTheList}</div>: null: null}
+                                (newAssessment.assessmentExists && newAssessment.potensiellDørstokkart != "") ? <div style={{color: 'red'}}>{labels.SelectAssessment.alreadyOnTheList}</div>: null: null}
                         </div>
                 </fieldset>
             </div>

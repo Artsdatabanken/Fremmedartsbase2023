@@ -38,13 +38,13 @@ import {loadDataFromUrl} from '../apiService';
 
                 }).then((response) => {
                      return response.json();
-                 }).then((response) => {
-                    const t = JSON.stringify(response)
-                    console.log("$$:" + t)
-                    return response;
+                //  }).then((response) => {
+                //     const t = JSON.stringify(response)
+                //     console.log("$$:" + t)
+                //     return response;
                 }).then(data => {
                      const t = JSON.stringify(data)
-                     console.log("$:" + t)
+                    //  console.log("$:" + t)
 
                     const res = data.
                         filter(item => item.Species).  // item.ExistsInCountry && 
