@@ -462,6 +462,7 @@ class ViewModel {
         this.loadExpertGroups()
     }
 
+    // todo: of some unknown reason this does not seem to work. It is currently used only in routing, so it is not critical
     @action navigate(assessmentTabId, id) {
         console.log("navigate: " + this.assessmentTabs.activeTab.id + " to:" + assessmentTabId)
         const that = this
