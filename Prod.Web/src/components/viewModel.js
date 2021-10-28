@@ -746,7 +746,7 @@ class ViewModel {
                 this.assessmentSavedVersionString = ""
                 this.assessment = null
                 this.assessmentId = null
-                this.assessmentTabs.activeTab.id = assessment.horizonDoScanning ? 0 : 1
+                this.assessmentTabs.activeTab.id = 1 
             })
             // this.navigate(assessment.horizonDoScanning ? 0 : 1)
         }
