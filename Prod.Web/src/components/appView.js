@@ -9,6 +9,7 @@ import LoadingHoc from './LoadingHoc'
 import Assessment from './assessment/assessment';
 import AssessmentsView from './assessmentsView';
 import AssessmentNew from './assessmentNew'
+import AssessmentMove from './assessmentMove'
 import ExpertGroupAdmin from './expertgroupadmin';
 
 import Footer from './footer';
@@ -31,6 +32,8 @@ class AppViewMain extends React.Component {
             <section className="main">
                 {appState.viewMode === "assessment"
                 ? <Assessment appState={appState} isThingsLoaded={isThingsLoaded}/>
+                : appState.viewMode === "moveassessment"
+                ? <AssessmentMove appState={appState} checkForExistingAssessment={appState.checkForExistingAssessment} onMoveAssessment={e => {appState.moveAssessment(e)}}/>
                 : appState.viewMode === "choosespecie"
                 ? <AssessmentsView
                         appState={appState}
@@ -165,6 +168,8 @@ export default class AppView extends React.Component {
                <ul className="nav_menu">
                     <li onClick={action(() => {sjekkForEndringerOgGiAdvarsel()})} disabled={!auth.isLoggedIn}><b>Velg vurdering</b></li>                    
                     <li onClick={action(() => appState.viewMode = "newassessment")} disabled={!auth.isLoggedIn}><b>Legg til ny art</b></li>                     
+                    {/* {(auth.isInRole("fab_administrator") && appState.viewMode === "assessment") ? 
+                     <li onClick={action(() => appState.viewMode = "moveassessment")} disabled={(!auth.isLoggedIn || appState.isDirty)}><b>Flytt vurdering</b></li> : null} */}
                     {auth.isInRole("fab_administrator") && <li role="presentation" onClick={action(() => appState.viewMode = "administrasjon")}><b>Administrasjon</b></li>}
                     <li role="presentation"><b>Retningslinjer</b></li>
                     {/* <li role="presentation" disabled={!auth.isLoggedIn} onClick={auth.logout}><b>&nbsp; {auth.user ? "Logg ut " : ""} {(auth.user ? auth.user.profile.name : "")} </b></li> */}
