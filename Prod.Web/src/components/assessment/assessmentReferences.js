@@ -246,8 +246,8 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
         } else {
             console.log(config.getUrl("References/" + clone.id))
             putData(
-                config.getUrl("References/" + clone.id),
-                //config.referenceApiUrl+"api/References/" + clone.id,
+                //config.getUrl("References/" + clone.id),
+                config.referenceApiUrl +"api/References/" + clone.id,
                 clone,
                 data => {
                     this.updateValgtReferanse(data)
