@@ -7897,14 +7897,14 @@
                         {
                             "Id": null,
                             "Value": "saveOrUpdate",
-                            "Text": "Lagre/oppdatere referanse:",
+                            "Text": "Lagre/oppdatere referanse",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "removeReference",
-                            "Text": "Slett referanse:",
+                            "Text": "Slett referanse",
                             "Info": null,
                             "Children": null
                         }

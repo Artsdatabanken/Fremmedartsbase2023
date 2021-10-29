@@ -349,8 +349,8 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
         if (document.getElementById(value.id) != null) {
                 document.getElementById(value.id).setAttribute('disabled', 'true')
         }
-        this.addNew = true
-        //this.addNew = false
+        //this.addNew = true
+        this.addNew = false
         console.log("Already saved: " + this.alreadySaved + " can add: " + this.addNew)
     })
 
@@ -385,13 +385,17 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
         // r.kanLagres= false
     })
     compare(a, b) {
+        
         let bandA = ""
         let bandB = ""
+
         // Use toUpperCase() to ignore character casing
-        if (a.formattedReference && b.formattedReference) {
+        if (a.formattedReference && b.formattedReference) {            
             bandA = a.formattedReference.toUpperCase();
             bandB = b.formattedReference.toUpperCase();
-        } else {
+        } 
+            
+        else {
             bandA = a.referencePresentation.toUpperCase();
             bandB = b.referencePresentation.toUpperCase();
         }
@@ -688,7 +692,7 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                             } onClick={() => {this.lagreReferanse()}}> {labels.references.saveOrUpdate}</Xcomp.Button>
                             <Xcomp.Button primary disabled={(!(this.valgtReferanse.allowDelete && this.valgtReferanse.id != 'NY_REFERANSE')) }                                      
                                         onClick={() => {this.slettReferanse()}}>{labels.references.removeReference}</Xcomp.Button>
-                            <Xcomp.Button primary disabled={this.context.readonly && !this.addNew}                                       
+                            <Xcomp.Button primary disabled={!this.addNew}                                       
                                         onClick={() => {this.leggTilReferanse(assessment, this.valgtReferanse)}}>{labels.references.add}</Xcomp.Button>
                     </div>}                    
                 </div>
