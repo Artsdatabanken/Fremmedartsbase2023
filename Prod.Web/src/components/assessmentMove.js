@@ -8,7 +8,7 @@ import createTaxonSearch from './createTaxonSearch'
 import auth from './authService'
 
 
-
+// toxoninfo for the selected destination taxon
 const  newAssessment = observable({
     ScientificName: "",
     ScientificNameId: "",
@@ -19,8 +19,10 @@ const  newAssessment = observable({
     RedListCategory: "", 
     Ekspertgruppe: "",
     taxonSearchString: "",
-    taxonSearchResult: []
+    taxonSearchResult: [],
     // taxonSearchWaitingForResult: false - should not be observable
+    assessmentExists: false
+
 })
 
 
@@ -60,6 +62,27 @@ export default class assessmentMove extends React.Component {
 
         autorun(() => 
             console.log("api sciname : " + newAssessment.ScientificName)
+        )
+
+        autorun(() => {
+            const expgroup =  this.props.appState.expertgroup
+            const sciid = newAssessment.ScientificNameId
+            if(expgroup && sciid) {
+                this.props.checkForExistingAssessment(expgroup, sciid).then(exists => {
+                    // console.log("¤¤¤¤¤¤¤¤ exsisterer -- " + exists)
+                    action(() => {
+                        newAssessment.assessmentExists = exists
+                    })()
+                },
+                err => {
+                    console.log("vurdering exsisterer error ")
+                }
+                )
+            }
+        })
+
+        autorun(() => 
+            console.log("assessmentMove vurdering exsisterer : "  +  newAssessment.assessmentExists)
         )
 
         createTaxonSearch(newAssessment, evaluationContext)
@@ -156,10 +179,10 @@ export default class assessmentMove extends React.Component {
                         </div>
                         <div className="col-md-4" style={{display: 'flex', padding: '5px'}}>
                             
-                            <Xcomp.Button primary onClick={this.onMoveAssessment} alwaysEnabled={(auth.isAdmin && newAssessment.ScientificName && !checkForExistingAssessment(newAssessment.ScientificName + ' ' + newAssessment.ScientificNameAuthor, this.props.appState.assessmentId))}>{labels.SelectAssessment.moveAssessment}</Xcomp.Button>
+                            <Xcomp.Button primary onClick={this.onMoveAssessment} alwaysEnabled={(auth.isAdmin && newAssessment.ScientificName && !newAssessment.assessmentExists )}>{labels.SelectAssessment.moveAssessment}</Xcomp.Button>
                            {/*disabled={!auth.isAdmin || !rolle.skriver || (!newAssessment.ScientificName || checkForExistingAssessment(newAssessment.ScientificName + ' ' + newAssessment.ScientificNameAuthor))} */}
                            
-                            {(( checkForExistingAssessment(newAssessment.ScientificName + ' ' + newAssessment.ScientificNameAuthor, this.props.appState.assessmentId))) ? <div style={{color: 'red'}}>Arten er allerede i listen!</div>: null}
+                            {newAssessment.assessmentExists ? <div style={{color: 'red'}}>Arten er allerede i listen!</div>: null}
                         </div>
                     </div>
                 </div>

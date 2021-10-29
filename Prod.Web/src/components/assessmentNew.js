@@ -90,10 +90,8 @@ export default class assessmentNew extends React.Component {
         })
     
         autorun(() => 
-            console.log("¤¤¤¤¤¤¤¤ vurdering exsisterer : "  +  newAssessment.assessmentExists)
-           
+            console.log("assessmentNew vurdering exsisterer : "  +  newAssessment.assessmentExists)
         )
-
 
         createTaxonSearch(newAssessment, evaluationContext)
     }
