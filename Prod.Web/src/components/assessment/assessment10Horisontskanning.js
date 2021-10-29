@@ -23,11 +23,12 @@ export default class Assessment10Horisontskanning extends React.Component {
            
         
                <div className="filters">
-               <h2>{labels.SpeciesStatus.hskanning}</h2>
-                {/*((assessment.vurderingsår == '2015' && assessment.importInfo.url2015)||(assessment.vurderingsår == '2010' && assessment.importInfo.url2010)) &&
-                   <button className="btn"><a target="_blank" href={"#"
+               <h2>{labels.SpeciesStatus.hskanning}
+               <button className="btn btn-primary"><a target="_blank" href={"#"
                   //assessment.vurderingsår == '2015' ? assessment.importInfo.url2015 : assessment.importInfo.url2010
-                }>Se vurdering {assessment.vurderingsår}</a></button>*/}
+                        }>Se vurdering {assessment.vurderingsår}</a></button></h2>
+                {/*((assessment.vurderingsår == '2015' && assessment.importInfo.url2015)||(assessment.vurderingsår == '2010' && assessment.importInfo.url2010)) &&
+                   */}
               
                     <h4>{labels.SpeciesStatus.establishmentPotential}</h4>                    
                     <div className="scanning">

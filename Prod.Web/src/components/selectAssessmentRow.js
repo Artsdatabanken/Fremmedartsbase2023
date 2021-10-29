@@ -13,8 +13,10 @@ export default class selectAssessmentRow extends Component {
         const isLockedByMe = assessment.lockedForEditByUser === userId
 
         // console.log("###" + assessment.lockedForEditByUser + "#" +  rolle.userName)
+       
+        // users with write access in groups "Fisker" and "Fugler" can unlock assessments - issue #202 FAB 3.0
+        const canUnlock = isLocked && (isLockedByMe || isSuperUser || (rolle.writeAccess && (appState.expertgroup.indexOf("Fisk") > -1 || appState.expertgroup.indexOf("Fugl") > -1)))
 
-        const canUnlock = isLocked && (isLockedByMe || isSuperUser)
         const canEdit = rolle.writeAccess && !isLocked
 
         // console.log("CANEDIT"+canEdit+rolle.skriver+isLocked)
