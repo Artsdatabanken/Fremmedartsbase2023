@@ -230,7 +230,7 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
             clone.id = "00000000-0000-0000-0000-000000000000"
             postData(
                 //config.getUrl("Reference"),
-                config.referenceApiUrl+"References",
+                config.referenceApiUrl+"api/References",
                 clone,
                 data => {
                     this.updateValgtReferanse(data)
@@ -246,7 +246,7 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
         } else {
             putData(
                 //config.getUrl("Reference/" + clone.id),
-                config.referenceApiUrl+"References/" + clone.id,
+                config.referenceApiUrl+"api/References/" + clone.id,
                 clone,
                 data => {
                     this.updateValgtReferanse(data)
