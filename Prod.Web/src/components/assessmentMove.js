@@ -14,9 +14,9 @@ export default class AssessmentMove extends React.Component {
             <div>
                 <Tabs  clName={"nav_menu submenu"} tabData={moveAssessmentTabs} />
                 { moveAssessmentTabs.activeTab.id === 1 ?
-                <AssessmentMoveScientificName appState={appState} checkForExistingAssessment={appState.checkForExistingAssessment} onMoveAssessment={e => {appState.moveAssessment(e)}}/> 
+                <AssessmentMoveScientificName appState={appState} checkForExistingAssessment={appState.checkForExistingAssessment} onMoveAssessmentScientificName={e => {appState.moveAssessmentScientificName(e)}}/> 
                 : moveAssessmentTabs.activeTab.id === 2 ?
-                <AssessmentMoveHorizon appState={appState} onMoveAssessmentHorizon={appState.onMoveAssessmentHorizon}/>
+                <AssessmentMoveHorizon appState={appState} onMoveAssessmentHorizon={e => appState.moveAssessmentHorizon(e)}/>
                 : <h1>Oooops?? movetab:{moveAssessmentTabs.activeTab.id}</h1>}
             </div>
         )

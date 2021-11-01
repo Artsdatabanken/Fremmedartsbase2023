@@ -781,7 +781,7 @@ class ViewModel {
     //     }
     // }
 
-    onMoveAssessmentHorizon = (riskhorizon) => {
+    moveAssessmentHorizon = (riskhorizon) => {
         console.log("onMoveAssessmentHorizon: " + riskhorizon.potensiellDørstokkart)
     }
    
@@ -1193,7 +1193,7 @@ class ViewModel {
         );
     }
 
-    @action moveAssessment(taxinfo) {
+    @action moveAssessmentScientificName(taxinfo) {
         const id = this.assessmentId
         console.log("flytt vurdering til nytt navn: " + taxinfo.ScientificName + " " + taxinfo.ScientificNameId + " " + taxinfo.Ekspertgruppe)
         console.log(id + " - " + JSON.stringify(taxinfo))
