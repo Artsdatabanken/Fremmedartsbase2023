@@ -16,7 +16,7 @@ export default class AssessmentMove extends React.Component {
                 { moveAssessmentTabs.activeTab.id === 1 ?
                 <AssessmentMoveScientificName appState={appState} checkForExistingAssessment={appState.checkForExistingAssessment} onMoveAssessment={e => {appState.moveAssessment(e)}}/> 
                 : moveAssessmentTabs.activeTab.id === 2 ?
-                <AssessmentMoveHorizon appState={appState} />
+                <AssessmentMoveHorizon appState={appState} onMoveAssessmentHorizon={appState.onMoveAssessmentHorizon}/>
                 : <h1>Oooops?? movetab:{moveAssessmentTabs.activeTab.id}</h1>}
             </div>
         )
