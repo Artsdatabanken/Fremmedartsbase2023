@@ -230,10 +230,6 @@ export default class Assessment90Summary extends Component {
                             </div>
                         </div>
                     </div>
-                    {/* {false && auth.isAdmin ?
-                    <div className="form_category">
-                        <AssessmentMove appState={appState} checkForExistingAssessment={appState.checkForExistingAssessment} onMoveAssessment={e => {appState.moveAssessment(e)}}/>
-                    </div> : null} */}
                     <div className="form_category">
                         <h3>Kommentarer til intern bruk</h3>
                         <Xcomp.HtmlString 
