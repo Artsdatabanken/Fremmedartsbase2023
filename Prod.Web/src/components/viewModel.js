@@ -788,7 +788,7 @@ class ViewModel {
                 config.getUrl(url),
                 (data) => {
                     if (typeof(data) === 'boolean') {
-                        console.log("----" + JSON.stringify(data, undefined, 2))
+                        // console.log("----" + JSON.stringify(data, undefined, 2))
                         resolve(data)
                     } else {
                         reject("ExistsByExpertgroupAndName - no data")
