@@ -96,7 +96,24 @@ function assessmentTabdefs(appState) {
                 }
             })()
         }
+    },
+    moveAssessmentTabs: {
+        activeTab: {id: 1},
+        get tabinfos() {return [
+
+            {id: 1, label:"Nytt artsnavn", enabled:true},
+            {id: 2, label: "Horisontskanning/risikovurdering", enabled:true}
+        ]},
+        get tabList() { return tabItems(this.tabinfos) },
+        setActiveTab: (tab) => {
+            action(() => {
+                if(tab.enabled) {
+                    appState.moveAssessmentTabs.activeTab.id = tab.id
+                }
+            })()
+        }
     }
+
 })}
 
 export default assessmentTabdefs
