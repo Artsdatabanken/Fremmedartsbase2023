@@ -42,7 +42,7 @@ export function loadData(resourceId, callback, errorCallback) {
         ? resourceId
         : config.apiUrl + resourceId
         // console.log("# " + config.apiUrl )
-        console.log(url)
+        // console.log(url)
         fetch(url, {
             method: 'get',
             headers: {
@@ -54,7 +54,7 @@ export function loadData(resourceId, callback, errorCallback) {
         .then(response => checkStatus(response))
         .then(response => parseJSON(response))
         .then(data => {
-            console.log('request success', data || data === false  ? data : " No data ");
+            // console.log('request success', data || data === false  ? data : " No data ");
             callback(data);            
 
         })
