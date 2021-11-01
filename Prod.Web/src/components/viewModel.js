@@ -761,6 +761,9 @@ class ViewModel {
     }
 
 
+
+
+
     // assessmentExists(
     //     expertgroup, 
     //     scientificNameId, 
@@ -778,6 +781,10 @@ class ViewModel {
     //     }
     // }
 
+    onMoveAssessmentHorizon = (riskhorizon) => {
+        console.log("onMoveAssessmentHorizon: " + riskhorizon.potensiellDørstokkart)
+    }
+   
     checkForExistingAssessment = (expertgroup, scientificNameId, ) => {
         return new Promise((resolve, reject) => {
             const url = "assessment/ExistsByExpertgroupAndName/" + expertgroup + "/" + scientificNameId
