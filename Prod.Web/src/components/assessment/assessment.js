@@ -37,7 +37,7 @@ import Assessment91Kriteriedokumentasjon from './assessment91Kriteriedokumentasj
 import AssessmentDiff from '../assessmentDiff'
 // import AssessmentOverview from './assessmentOverview'
 // import AssessmentComments from './assessmentComments'
-import AssessmentMove from '../assessmentMove'
+// import AssessmentMove from '../assessmentMove'
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
 // import {Fylkesforekomst} from './fylkesforekomst'
 // import config from '../config'
@@ -110,9 +110,9 @@ class AssessmentRoot extends Component {
                     </h1>
                 }*/}
                 {/* auth.isAdmin  */}
-                   {this.move  &&  <div className="form_category">
+                   {/* {this.move  &&  <div className="form_category">
                         <AssessmentMove appState={appState} checkForExistingAssessment={appState.checkForExistingAssessment} onMoveAssessment={e => {appState.moveAssessment(e)}}/>            
-                    </div> }
+                    </div> } */}
                  {/*assessmentTabs.activeTab.id != 12 &&
                  <div style={{paddingBottom: '20px'}}>
                  <Xcomp.Button primary onClick= {() => {
