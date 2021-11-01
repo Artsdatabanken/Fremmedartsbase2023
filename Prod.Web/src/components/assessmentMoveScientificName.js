@@ -32,7 +32,8 @@ export default class AssessmentMoveScientificName extends React.Component {
     constructor(props) {
         super(props)
         const {evaluationContext} = props
-        this.onMoveAssessment = () => {
+        this.onMoveAssessmentScientificName = () => {
+            console.log("onMoveAssessmentScientificName run")
             const newItem = newAssessment;
             const clone = toJS(newItem);
             clone.taxonSearchString = undefined
@@ -53,7 +54,7 @@ export default class AssessmentMoveScientificName extends React.Component {
                 newItem.taxonSearchResult.replace([])
                 newItem.taxonSearchWaitingForResult = false
             })()
-            props.onMoveAssessment(clone)
+            props.onMoveAssessmentScientificName(clone)
         }
         autorun(() => 
             newAssessment.ekspertgruppe = this.props.appState.expertgroup
@@ -179,7 +180,7 @@ export default class AssessmentMoveScientificName extends React.Component {
                         </div>
                         <div className="col-md-4" style={{display: 'flex', padding: '5px'}}>
                             
-                            <Xcomp.Button primary onClick={this.onMoveAssessment} alwaysEnabled={(auth.isAdmin && newAssessment.ScientificName && !newAssessment.assessmentExists )}>{labels.SelectAssessment.moveAssessment}</Xcomp.Button>
+                            <Xcomp.Button primary onClick={this.onMoveAssessmentScientificName} alwaysEnabled={(auth.isAdmin && newAssessment.ScientificName && !newAssessment.assessmentExists )}>{labels.SelectAssessment.moveAssessment}</Xcomp.Button>
                            {/*disabled={!auth.isAdmin || !rolle.skriver || (!newAssessment.ScientificName || checkForExistingAssessment(newAssessment.ScientificName + ' ' + newAssessment.ScientificNameAuthor))} */}
                            
                             {newAssessment.assessmentExists ? <div style={{color: 'red'}}>Arten er allerede i listen!</div>: null}
