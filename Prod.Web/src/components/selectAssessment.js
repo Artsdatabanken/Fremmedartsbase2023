@@ -169,8 +169,7 @@ export default class SelectAssessment extends Component {
                                 <Xcomp.StringEnum 
                                         forceSync
                                         observableValue={[appState, 'expertgroup']}                                         
-                                        codes={appState.expertgroups}/>  
-                                 <input type="button" className="btn btn-primary" value="Last ned fil" onClick={() => window.open(config.apiUrl + '/api/ExpertGroupAssessments/export/' + appState.expertgroup)}></input>                                      
+                                        codes={appState.expertgroups}/>                                                                         
                     </div>
                 </fieldset>
                 
@@ -480,12 +479,16 @@ export default class SelectAssessment extends Component {
                         
             
             <div className="usedFilters">
+            <div className="counter">
             {(!appState.kunUbehandlede && !appState.horizonScanFilter.hsNotStarted && !appState.horizonScanFilter.hsFinished && !appState.horizonScanFilter.toAssessment && !appState.horizonScanFilter.notAssessed && appState.responsible.length == 0) ?
                 
-                <div className="counter">{labels.SelectAssessment.showingTotal} {appState.expertgroupAssessmentTotalCount} {appState.expertgroupAssessmentTotalCount == 1 ? labels.SelectAssessment.assessment : labels.SelectAssessment.assessments} </div>
+                <span>{labels.SelectAssessment.showingTotal} {appState.expertgroupAssessmentTotalCount} {appState.expertgroupAssessmentTotalCount == 1 ? labels.SelectAssessment.assessment : labels.SelectAssessment.assessments}</span>
                 :            
-                <div className="counter">{labels.SelectAssessment.showingTotal} {appState.expertgroupAssessmentList.length} {appState.expertgroupAssessmentList.length == 1 ? labels.SelectAssessment.assessment : labels.SelectAssessment.assessments} ({labels.SelectAssessment.filteredFrom} {appState.expertgroupAssessmentTotalCount})</div>
+                <span> {labels.SelectAssessment.showingTotal} {appState.expertgroupAssessmentList.length} {appState.expertgroupAssessmentList.length == 1 ? labels.SelectAssessment.assessment : labels.SelectAssessment.assessments} ({labels.SelectAssessment.filteredFrom} {appState.expertgroupAssessmentTotalCount})</span>
             }
+            <input type="button" className="btn btn-primary" value="Last ned fil" onClick={() => window.open(config.apiUrl + '/api/ExpertGroupAssessments/export/' + appState.expertgroup)}></input>
+            </div>
+            
             <div>
                 <span>{labels.SelectAssessment.usedFilters}</span> 
                             {appState.expertgroupCategoryCheckboxFilter && appState.expertgroupCategoryCheckboxFilter.length > 0 &&                             
