@@ -782,7 +782,10 @@ class ViewModel {
     // }
 
     moveAssessmentHorizon = (riskhorizon) => {
-        console.log("onMoveAssessmentHorizon: " + riskhorizon.potensiellDørstokkart)
+        const doorknockerstate = riskhorizon.potensiellDørstokkart
+        const id = this.assessmentId
+        console.log("onMoveAssessmentHorizon: " + doorknockerstate)
+        this.movehorizon(id, doorknockerstate)
     }
    
     checkForExistingAssessment = (expertgroup, scientificNameId, ) => {
@@ -1218,6 +1221,17 @@ class ViewModel {
              console.error('Error:', error)}
         );
     }
+
+    movehorizon(id, doorknockerstate) {
+        loadData(
+            config.getUrl("assessment/" + id + "/movehorizon/" + doorknockerstate),
+            data => {
+                this.loadExpertgroupAssessmentList(this.expertgroup)
+            },
+            error => alert("Feil ved flytting mellom horisontskanning og risikovurdering:" + error)
+        )
+    }
+
 
     lockFraHode(v) {
         loadData(

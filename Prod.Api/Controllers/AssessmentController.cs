@@ -330,35 +330,35 @@ namespace Prod.Api.Controllers
             var now = DateTime.Now;
             var role = await GetRoleInGroup(value.Ekspertgruppe);
             var scientificNameId = value.ScientificNameId;
-            var it = await _dbContext.Assessments
-                .Where(x => x.Expertgroup == value.Ekspertgruppe && x.ScientificNameId == scientificNameId)
-                .SingleOrDefaultAsync();
-            if (it != null)
-            {
-                var doc = JsonSerializer.Deserialize<FA4>(it.Doc);
-                if (value.potensiellDørstokkart == "potentialDoorknocker")
-                {
-                    // til doorknocker
-                    doc.HorizonDoScanning = true;
-                    doc.HorizonScanningStatus = "notStarted";
-                    doc.AlienSpeciesCategory = "DoorKnocker";
-                }
-                else
-                {
-                    // fra horizon til ordinær
-                    doc.HorizonDoScanning = false;
-                    if (doc.AlienSpeciesCategory == "DoorKnocker") doc.AlienSpeciesCategory = "AlienSpecie";
-                }
+            //var it = await _dbContext.Assessments
+            //    .Where(x => x.Expertgroup == value.Ekspertgruppe && x.ScientificNameId == scientificNameId)
+            //    .SingleOrDefaultAsync();
+            //if (it != null)
+            //{
+            //    var doc = JsonSerializer.Deserialize<FA4>(it.Doc);
+            //    if (value.potensiellDørstokkart == "potentialDoorknocker")
+            //    {
+            //        // til doorknocker
+            //        doc.HorizonDoScanning = true;
+            //        doc.HorizonScanningStatus = "notStarted";
+            //        doc.AlienSpeciesCategory = "DoorKnocker";
+            //    }
+            //    else
+            //    {
+            //        // fra horizon til ordinær
+            //        doc.HorizonDoScanning = false;
+            //        if (doc.AlienSpeciesCategory == "DoorKnocker") doc.AlienSpeciesCategory = "AlienSpecie";
+            //    }
 
-                doc.LastUpdatedAt = DateTime.Now;
-                it.Doc = JsonSerializer.Serialize(doc);
-                it.LastUpdatedAt = doc.LastUpdatedAt;
-                it.ChangedAt = DateTime.Now;
-                var timestamp = _dbContext.TimeStamp.Single();
-                timestamp.DateTimeUpdated = it.ChangedAt;
-                await _dbContext.SaveChangesAsync();
-                return Ok();
-            }
+            //    doc.LastUpdatedAt = DateTime.Now;
+            //    it.Doc = JsonSerializer.Serialize(doc);
+            //    it.LastUpdatedAt = doc.LastUpdatedAt;
+            //    it.ChangedAt = DateTime.Now;
+            //    var timestamp = _dbContext.TimeStamp.Single();
+            //    timestamp.DateTimeUpdated = it.ChangedAt;
+            //    await _dbContext.SaveChangesAsync();
+            //    return Ok();
+            //}
 
             try
             {
@@ -395,6 +395,59 @@ namespace Prod.Api.Controllers
 
             return Ok();
         }
+        [HttpGet("{id}/movehorizon/{doorknockerstate}")]
+        public async Task<IActionResult> MoveHorizon(int id, string doorknockerstate)
+        {
+            var data = await _dbContext.Assessments.Where(x => x.Id == id).FirstOrDefaultAsync();
+            if (string.IsNullOrWhiteSpace(data.Doc)) return null;
+
+            var doc = JsonSerializer.Deserialize<FA4>(data.Doc);
+            var role = await GetRoleInGroup(doc.ExpertGroup);
+            var force = role.Admin || role.User.IsAdmin;
+            try
+            {
+                if (role.WriteAccess || force)
+                {
+                    if (doorknockerstate == "potentialDoorknocker")
+                    {
+                        // til doorknocker
+                        doc.HorizonDoScanning = true;
+                        doc.HorizonScanningStatus = "notStarted";
+                        doc.AlienSpeciesCategory = "DoorKnocker";
+                    }
+                    else
+                    {
+                        // fra horizon til ordinær
+                        doc.HorizonDoScanning = false;
+                        if (doc.AlienSpeciesCategory == "DoorKnocker")
+                        {
+                            doc.AlienSpeciesCategory = "AlienSpecie";
+                        }
+                    }
+                    doc.LastUpdatedAt = DateTime.Now;
+                    data.Doc = JsonSerializer.Serialize(doc);
+                    data.LastUpdatedAt = doc.LastUpdatedAt;
+                    data.ChangedAt = DateTime.Now;
+                    var timestamp = _dbContext.TimeStamp.Single();
+                    timestamp.DateTimeUpdated = data.ChangedAt;
+                    await _dbContext.SaveChangesAsync();
+                    return Ok();
+
+                }
+                else
+                {
+                    throw new Exception("IKKE SKRIVETILGANG TIL DENNE VURDERINGEN");
+                }
+            }
+            catch (Exception e)
+            {
+                return Unauthorized(e.Message);
+            }
+
+            return Ok();
+        }
+
+
 
         [HttpGet("{id}/copytotestarter")]
         public async Task<IActionResult> CopyToTestarter(int id)
