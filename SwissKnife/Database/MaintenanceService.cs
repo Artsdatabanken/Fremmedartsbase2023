@@ -371,13 +371,19 @@ namespace SwissKnife.Database
                     }
                     else
                     {
-                        if (existing.Any(x=>x.ScientificNameId == fa4.EvaluatedScientificNameId))
+                        if (existing.Any(x=>x.ScientificNameId == fa4.EvaluatedScientificNameId && x.Expertgroup == fa4.ExpertGroup))
                         {
                             Console.WriteLine(
                                 $" Warn Existing Assessment {fa4.EvaluatedScientificNameId} {fa4.EvaluatedScientificName} {fa4.EvaluatedScientificNameAuthor}");
                         }
                         else
                         {
+                            var exst = existing.FirstOrDefault(x => x.ScientificNameId == fa4.EvaluatedScientificNameId);
+                            if (exst != null)
+                            {
+                                Console.WriteLine(
+                                    $" There is an existing Assessment for this name in expertgroup {exst.Expertgroup} {fa4.EvaluatedScientificNameId} {fa4.EvaluatedScientificName} {fa4.EvaluatedScientificNameAuthor}");
+                            }
                             _database.Assessments.Add(assessment);
                             datetime = assessment.LastUpdatedAt;
                             _database.SaveChanges();
