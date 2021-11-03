@@ -180,7 +180,9 @@ export default class AssessmentMoveScientificName extends React.Component {
                         </div>
                         <div className="col-md-4" style={{display: 'flex', padding: '5px'}}>
                             
-                            <Xcomp.Button primary onClick={this.onMoveAssessmentScientificName} alwaysEnabled={(auth.isAdmin && newAssessment.ScientificName && !newAssessment.assessmentExists )}>{labels.SelectAssessment.moveAssessment}</Xcomp.Button>
+                            {/* <Xcomp.Button primary onClick={this.onMoveAssessmentScientificName} alwaysEnabled={(auth.isAdmin && newAssessment.ScientificName && !newAssessment.assessmentExists )}>{labels.SelectAssessment.moveAssessment}</Xcomp.Button> */}
+                            <h3>Denne funksjonen er ikke ferdig implementert</h3>
+
                            {/*disabled={!auth.isAdmin || !rolle.skriver || (!newAssessment.ScientificName || checkForExistingAssessment(newAssessment.ScientificName + ' ' + newAssessment.ScientificNameAuthor))} */}
                            
                             {newAssessment.assessmentExists ? <div style={{color: 'red'}}>Arten er allerede i listen!</div>: null}
