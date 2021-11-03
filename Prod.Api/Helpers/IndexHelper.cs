@@ -22,7 +22,7 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Change this to force index rebuild!
         /// </summary>
-        public const int IndexVersion = 11;
+        public const int IndexVersion = 12;
 
         private const string Field_Id = "Id";
         private const string Field_Group = "Expertgroup";
@@ -244,7 +244,7 @@ namespace Prod.Api.Helpers
                 var elements = ass.TaxonHierarcy.Split(new[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var item in elements)
                 {
-                    document.Add(new StringField(Field_TaxonPath, item, Field.Store.NO));
+                    document.Add(new TextField(Field_TaxonPath, item, Field.Store.NO));
                 }
 
             }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31019.35
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31825.309
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Prod.Api", "Prod.Api\Prod.Api.csproj", "{2D4381EF-9825-42CA-A57F-5ECC4D994132}"
 EndProject
@@ -22,7 +22,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SwissKnife", "SwissKnife\Sw
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Prod.Tests", "Prod.Tests\Prod.Tests.csproj", "{FB4D9B2B-485F-45E6-AEFD-12ECED349473}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nbic.Indexer", "Nbic.Indexer\Nbic.Indexer.csproj", "{18523A34-8A49-4312-A763-9480B2DFD8DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nbic.Indexer", "Nbic.Indexer\Nbic.Indexer.csproj", "{18523A34-8A49-4312-A763-9480B2DFD8DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
