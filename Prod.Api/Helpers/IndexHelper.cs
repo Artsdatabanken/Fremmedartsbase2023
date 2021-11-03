@@ -22,7 +22,7 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Change this to force index rebuild!
         /// </summary>
-        public const int IndexVersion = 8;
+        public const int IndexVersion = 11;
 
         private const string Field_Id = "Id";
         private const string Field_Group = "Expertgroup";
@@ -32,6 +32,7 @@ namespace Prod.Api.Helpers
         private const string Field_LockedForEditByUser = "LockedForEditByUser";
         private const string Field_LockedForEditAt = "LockedForEditAt";
         private const string Field_ScientificName = "ScientificName";
+        private const string Field_TaxonPath = "TaxonPath";
         private const string Field_ScientificNameId = "ScientificNameId";
         public const string Field_ScientificNameAsTerm = "ScientificNameTerm";
         private const string Field_TaxonHierarcy = "TaxonHierarcy";
@@ -237,6 +238,17 @@ namespace Prod.Api.Helpers
                 new FacetField(Facet_NotAssessedDoorKnocker,
                     ExtractNotAssessedDoorKnocker(get2018NotAssessed).ToString())
             };
+
+            if (ass.TaxonHierarcy != null && ass.TaxonHierarcy.Length > 0)
+            {
+                var elements = ass.TaxonHierarcy.Split(new[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (var item in elements)
+                {
+                    document.Add(new StringField(Field_TaxonPath, item, Field.Store.NO));
+                }
+
+            }
+
             if (IsDocumentEvaluated(ass))
                 document.Add(new StringField(Field_Category, GetCategoryFromRiskLevel(ass.RiskAssessment.RiskLevel),
                     Field.Store.YES));
@@ -454,23 +466,35 @@ namespace Prod.Api.Helpers
             if (!string.IsNullOrWhiteSpace(expertgroupid) && expertgroupid != "0")
                 ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_Group, new[] { expertgroupid }), Occur.MUST);
 
-            if (!string.IsNullOrWhiteSpace(filter.NameSearch))
+            if (!string.IsNullOrWhiteSpace(filter.NameSearch) && filter.NameSearch != "/")
             {
+                var pathSearch = filter.NameSearch.StartsWith("/");
                 var booleanQuery = new BooleanQuery();
                 var lowerInvariant = WebUtility.UrlDecode(filter.NameSearch.ToLowerInvariant())
                     .Replace("×", "")
                     .Replace("-", " ")
+                    .Replace("/", "")
                     .Split(" ", StringSplitOptions.RemoveEmptyEntries);
                 var booleanQuerySc = new BooleanQuery();
                 var booleanQueryP = new BooleanQuery();
                 foreach (var s in lowerInvariant)
                 {
                     var text = "*" + s + "*";
-                    booleanQuerySc.Add(
-                        new BooleanClause(new WildcardQuery(new Term(Field_ScientificName, text)),
-                            Occur.MUST)); // lowercase - siden det er indeksert som textfield
-                    booleanQueryP.Add(new BooleanClause(new WildcardQuery(new Term(Field_PopularName, text)),
-                        Occur.MUST));
+                    if (pathSearch)
+                    {
+                        booleanQuerySc.Add(
+                            new BooleanClause(new WildcardQuery(new Term(Field_TaxonPath, text)),
+                                Occur.MUST)); // lowercase - siden det er indeksert som textfield
+                    }
+                    else
+                    {
+                        booleanQuerySc.Add(
+                            new BooleanClause(new WildcardQuery(new Term(Field_ScientificName, text)),
+                                Occur.MUST)); // lowercase - siden det er indeksert som textfield
+                        booleanQueryP.Add(new BooleanClause(new WildcardQuery(new Term(Field_PopularName, text)),
+                            Occur.MUST));
+
+                    }
                 }
 
                 booleanQuery.Add(booleanQuerySc, Occur.SHOULD);
