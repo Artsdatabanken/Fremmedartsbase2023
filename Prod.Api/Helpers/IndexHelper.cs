@@ -22,7 +22,7 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Change this to force index rebuild!
         /// </summary>
-        public const int IndexVersion = 10;
+        public const int IndexVersion = 11;
 
         private const string Field_Id = "Id";
         private const string Field_Group = "Expertgroup";
@@ -241,7 +241,7 @@ namespace Prod.Api.Helpers
 
             if (ass.TaxonHierarcy != null && ass.TaxonHierarcy.Length > 0)
             {
-                var elements = ass.TaxonHierarcy.Split(new[] { "\\" }, StringSplitOptions.RemoveEmptyEntries);
+                var elements = ass.TaxonHierarcy.Split(new[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var item in elements)
                 {
                     document.Add(new StringField(Field_TaxonPath, item, Field.Store.NO));
@@ -466,14 +466,14 @@ namespace Prod.Api.Helpers
             if (!string.IsNullOrWhiteSpace(expertgroupid) && expertgroupid != "0")
                 ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_Group, new[] { expertgroupid }), Occur.MUST);
 
-            if (!string.IsNullOrWhiteSpace(filter.NameSearch))
+            if (!string.IsNullOrWhiteSpace(filter.NameSearch) && filter.NameSearch != "/")
             {
-                var pathSearch = filter.NameSearch.StartsWith("\\");
+                var pathSearch = filter.NameSearch.StartsWith("/");
                 var booleanQuery = new BooleanQuery();
                 var lowerInvariant = WebUtility.UrlDecode(filter.NameSearch.ToLowerInvariant())
                     .Replace("×", "")
                     .Replace("-", " ")
-                    .Replace("\\", "")
+                    .Replace("/", "")
                     .Split(" ", StringSplitOptions.RemoveEmptyEntries);
                 var booleanQuerySc = new BooleanQuery();
                 var booleanQueryP = new BooleanQuery();
