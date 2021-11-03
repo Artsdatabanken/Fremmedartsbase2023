@@ -93,7 +93,7 @@ export default class Assessment52Utbredelse extends React.Component {
                             <div className="changedNature">
                                 <p>Andel av antatt forekomstareal i sterkt endra natur (%)</p>
                                 {/* ToDo: Bug - speciesDistribution not found */}
-                                {/* <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "speciesDistribution"]} codes={koder.KnownDistributionInNature}/>  */}
+                             <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "areaInChangedNature"]} codes={koder.KnownDistributionInNature}/> 
                             </div>
                             </div>
                             :
@@ -148,12 +148,12 @@ export default class Assessment52Utbredelse extends React.Component {
                                 <div className="changedNature">
                                     <p>Andel av kjent forekomstareal i sterkt endra natur (%) </p>
                                     {/* ToDo: Bug - speciesDistribution not found */}
-                                    {/* <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "speciesDistribution"]} codes={koder.KnownDistributionInNature}/> */}
+                                    <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "speciesDistribution"]} codes={koder.KnownDistributionInNature}/>
                                 </div>
                                 <div style={{marginTop: '50px'}}>
                                     <p>Med utgangspunkt <b>én introduksjon</b>, antas arten å være… </p>   
                                     {/* ToDo: Bug - speciesDistribution not found */}
-                                    {/* <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "speciesDistribution"]} mode="radio" codes={koder.DistributionOptions}/>   */}
+                                    <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "speciesDescripton"]} mode="radio" codes={koder.DistributionOptions}/>
                                 </div>             
                                 {/* <div style={{marginBottom: '20px'}}>
                                     <span>{labels.goTo}</span> <Xcomp.Button primary >{labels.distributionHistory}</Xcomp.Button>
