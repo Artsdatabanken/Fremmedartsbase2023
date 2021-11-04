@@ -150,12 +150,12 @@ export default class Assessment30Artsegenskaper extends React.Component {
                         </div>
                     </div> :
                     null}
-                    {isLimnic ?
+                    {/*isLimnic ?
                     <div>
                         <Xcomp.Bool observableValue={[vurdering, 'survivalBelow5c']} label={labels.NaturalOrigin.survivalBelow5c}/>
                         <hr/>
                     </div> :
-                    null }
+                    null */}
                     {isMarine ?
                     <div>
                         <div className="well">
@@ -271,12 +271,12 @@ export default class Assessment30Artsegenskaper extends React.Component {
                     </div>
                 </div> :
                 null}
-                {isLimnic ?
+                {/*isLimnic ?
                 <div>
                     <Xcomp.Bool observableValue={[vurdering, 'survivalBelow5c']} label={labels.NaturalOrigin.survivalBelow5c}/>
                     <hr/>
                 </div> :
-                null }
+                null */}
                 {isMarine ?
                 <div>
                     <div className="well">
@@ -400,12 +400,12 @@ export default class Assessment30Artsegenskaper extends React.Component {
                     </div>
                 </div> :
                 null}
-                {isLimnic ?
+                {/*isLimnic ?
                 <div>
                     <Xcomp.Bool observableValue={[vurdering, 'survivalBelow5c']} label={labels.NaturalOrigin.survivalBelow5c}/>
                     <hr/>
                 </div> :
-                null }
+                null */}
                 {isMarine ?
                 <div>
                     <div className="well">
