@@ -155,7 +155,7 @@ export default class Assessment52Utbredelse extends React.Component {
                                 <div style={{marginTop: '50px'}}>
                                     <p>Hvilken etableringskategori har arten i Norge? Merk av den høyeste (øverste) kategorien som oppfylles av arten i Norge i dag.</p>   
                                     {/* ToDo: Bug - speciesDistribution not found */}
-                                    <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "speciesEstablishmentCategory"]} mode="radio" codes={koder.DistributionOptions}/>
+                                    <Xcomp.StringEnum observableValue={[assessment, "speciesEstablishmentCategory"]} mode="radio" codes={koder.DistributionOptions}/>
                                 </div>             
                                 {/* <div style={{marginBottom: '20px'}}>
                                     <span>{labels.goTo}</span> <Xcomp.Button primary >{labels.distributionHistory}</Xcomp.Button>
@@ -174,7 +174,7 @@ export default class Assessment52Utbredelse extends React.Component {
                         </div>
                     </fieldset>
                 <fieldset className="well">
-                    <h4>Fylkesvis utbredelse</h4>
+                    <h4>Regionvis utbredelse</h4>
                     {/* <b>[Her kommer det et kart]</b> */}
                     {/* TODO: remove component refresh hack */ assessment.fylkesforekomster ? (assessment.fylkesforekomster.map(e => e.state ? '' : '')) : ''}
                     <Fylkesforekomst
