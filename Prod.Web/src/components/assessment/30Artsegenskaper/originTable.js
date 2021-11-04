@@ -11,12 +11,12 @@ const OriginRow = (props) =>
     <tr>
         <td>{props.climateZoneLabel(props.item.climateZone)}</td>
         <td>{props.subClimateZoneLabel(props.item.climateZone)}</td>
-        <td>{props.naturalOriginDisabled(props.item.climateZone, "europe") ? null : <Xcomp.Bool observableValue={[props.item, 'europe']} />}</td>
-        <td>{props.naturalOriginDisabled(props.item.climateZone, "asia") ? null : <Xcomp.Bool observableValue={[props.item, 'asia']} />}</td>
-        <td>{props.naturalOriginDisabled(props.item.climateZone, "africa") ? null : <Xcomp.Bool observableValue={[props.item, 'africa']} />}</td>
-        <td>{props.naturalOriginDisabled(props.item.climateZone, "oceania") ? null : <Xcomp.Bool observableValue={[props.item, 'oceania']} />}</td>
-        <td>{props.naturalOriginDisabled(props.item.climateZone, "northAndCentralAmerica") ? null : <Xcomp.Bool observableValue={[props.item, 'northAndCentralAmerica']} />}</td>
-        <td>{props.naturalOriginDisabled(props.item.climateZone, "southAmerica") ? null : <Xcomp.Bool observableValue={[props.item, 'southAmerica']} />}</td>
+        <td>{props.naturalOriginDisabled(props.item.climateZone, "Europe") ? null : <Xcomp.Bool observableValue={[props.item, 'europe']} />}</td>
+        <td>{props.naturalOriginDisabled(props.item.climateZone, "Asia") ? null : <Xcomp.Bool observableValue={[props.item, 'asia']} />}</td>
+        <td>{props.naturalOriginDisabled(props.item.climateZone, "Africa") ? null : <Xcomp.Bool observableValue={[props.item, 'africa']} />}</td>
+        <td>{props.naturalOriginDisabled(props.item.climateZone, "Oceania") ? null : <Xcomp.Bool observableValue={[props.item, 'oceania']} />}</td>
+        <td>{props.naturalOriginDisabled(props.item.climateZone, "NorthAndCentralAmerica") ? null : <Xcomp.Bool observableValue={[props.item, 'northAndCentralAmerica']} />}</td>
+        <td>{props.naturalOriginDisabled(props.item.climateZone, "SouthAmerica") ? null : <Xcomp.Bool observableValue={[props.item, 'southAmerica']} />}</td>
     </tr>
 
 

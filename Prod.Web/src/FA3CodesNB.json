@@ -669,18 +669,23 @@
         "DistributionOptions": [
             {
                 "Id": "DistributionOptions",
-                "Value": "BBE",
-                "Text": "… etablert og produsere levedyktig avkom i minst 10 forekomster i norsk natur [BB E]"
+                "Value": "E",
+                "Text": "Arten har minst ti etablerte bestander i norsk natur som ligger minst 2 km fra hverandre og fra alle steder som arten har blitt introdusert til (E)"
             },
             {
                 "Id": "DistributionOptions",
-                "Value": "BBD2",
-                "Text": "… etablert og produsere levedyktig avkom i 1 til 9 forekomster i norsk natur [BB D2]"
+                "Value": "D2",
+                "Text": "Arten har minst én etablert bestand i norsk natur som ligger minst 2 km fra alle steder som arten har blitt introdusert til (D2)"
             },
             {
                 "Id": "DistributionOptions",
-                "Value": "BBD1",
-                "Text": "… etablert og i tillegg ha levedyktige individer i minst én forekomst i norsk natur [BB D1]"
+                "Value": "D1",
+                "Text": "Arten er etablert i norsk natur og har levedyktige individer på minst ett sted som ligger 2 km fra alle steder som arten har blitt introdusert til (D1)"
+            },
+            {
+                "Id": "DistributionOptions",
+                "Value": "C3",
+                "Text": "Arten er etablert i norsk natur (C3)"
             }
         ],
 

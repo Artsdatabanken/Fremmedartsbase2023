@@ -10,6 +10,7 @@ import UtbredelseIDag from './35Utbredelseshistorikk/UtbredelseIDag'
 import Utbredelseshistorikk from './35Utbredelseshistorikk/Utbredelseshistorikk'
 import ModalArtskart from '../artskart/ModalArtskart';
 import Fylkesforekomst from '../fylkesforekomst/Fylkesforekomst';
+import FileUpload from '../FileUpload'
 import fylker from "../fylkesforekomst/fylker";
 import { ContactsOutlined } from '@material-ui/icons';
 import { action, computed } from 'mobx';
@@ -93,7 +94,7 @@ export default class Assessment52Utbredelse extends React.Component {
                             <div className="changedNature">
                                 <p>Andel av antatt forekomstareal i sterkt endra natur (%)</p>
                                 {/* ToDo: Bug - speciesDistribution not found */}
-                                {/* <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "speciesDistribution"]} codes={koder.KnownDistributionInNature}/>  */}
+                             <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "spreadAreaInChangedNature"]} codes={koder.KnownDistributionInNature}/> 
                             </div>
                             </div>
                             :
@@ -132,7 +133,8 @@ export default class Assessment52Utbredelse extends React.Component {
                                             {assessment.alienSpeciesCategory != "DoorKnocker" && 
                                             <div style={{width: '100px', marginTop: '44px'}}>
                                                 <b>Kjent</b>
-                                                <Xcomp.Number       
+                                                <Xcomp.Number      
+                                                    className={"knownDistribution"} 
                                                     //observableValue={[assessment.riskAssessment, "knownDistribution"]}                     
                                                     observableValue={[assessment.riskAssessment, "AOO2"]}
                                                     /> 
@@ -148,18 +150,22 @@ export default class Assessment52Utbredelse extends React.Component {
                                 <div className="changedNature">
                                     <p>Andel av kjent forekomstareal i sterkt endra natur (%) </p>
                                     {/* ToDo: Bug - speciesDistribution not found */}
-                                    {/* <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "speciesDistribution"]} codes={koder.KnownDistributionInNature}/> */}
+                                    <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "spreadAreaInChangedNature"]} codes={koder.KnownDistributionInNature}/>
                                 </div>
                                 <div style={{marginTop: '50px'}}>
-                                    <p>Med utgangspunkt <b>én introduksjon</b>, antas arten å være… </p>   
+                                    <p>Hvilken etableringskategori har arten i Norge? Merk av den høyeste (øverste) kategorien som oppfylles av arten i Norge i dag.</p>   
                                     {/* ToDo: Bug - speciesDistribution not found */}
-                                    {/* <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "speciesDistribution"]} mode="radio" codes={koder.DistributionOptions}/>   */}
+                                    <Xcomp.StringEnum observableValue={[assessment, "speciesEstablishmentCategory"]} mode="radio" codes={koder.DistributionOptions}/>
                                 </div>             
                                 {/* <div style={{marginBottom: '20px'}}>
                                     <span>{labels.goTo}</span> <Xcomp.Button primary >{labels.distributionHistory}</Xcomp.Button>
                                 </div> */}
                             </div>
                         }
+                        <p>Velg datafil du ønsker å laste opp</p>
+                         <FileUpload
+                                onUploadComplete={this.getAttachments}
+                                showButtonOnly={true} /> 
                         <div>
                                 
                             {/* <Xcomp.Radio kode={"BB–E"} observableValue={[assessment.riskAssessment, "speciesDistribution"]} label={"etablert og produsere levedyktig avkom i minst 10 forekomster i norsk natur [BB E]"} />
@@ -168,7 +174,7 @@ export default class Assessment52Utbredelse extends React.Component {
                         </div>
                     </fieldset>
                 <fieldset className="well">
-                    <h4>Fylkesvis utbredelse</h4>
+                    <h4>Regionvis utbredelse</h4>
                     {/* <b>[Her kommer det et kart]</b> */}
                     {/* TODO: remove component refresh hack */ assessment.fylkesforekomster ? (assessment.fylkesforekomster.map(e => e.state ? '' : '')) : ''}
                     <Fylkesforekomst

@@ -168,8 +168,8 @@ export default class AppView extends React.Component {
                <ul className="nav_menu">
                     <li onClick={action(() => {sjekkForEndringerOgGiAdvarsel()})} disabled={!auth.isLoggedIn}><b>Velg vurdering</b></li>                    
                     <li onClick={action(() => appState.viewMode = "newassessment")} disabled={!auth.isLoggedIn}><b>Legg til ny art</b></li>                     
-                    {/* {(auth.isInRole("fab_administrator") && appState.viewMode === "assessment") ? 
-                     <li onClick={action(() => appState.viewMode = "moveassessment")} disabled={(!auth.isLoggedIn || appState.isDirty)}><b>Flytt vurdering</b></li> : null} */}
+                    {(auth.isInRole("fab_administrator") && appState.viewMode === "assessment") ? 
+                     <li onClick={action(() => {if (auth.isLoggedIn && !appState.isDirty) { appState.viewMode = "moveassessment" }})} disabled={(!auth.isLoggedIn || appState.isDirty)} className={(!auth.isLoggedIn || appState.isDirty) ? " disabled " : " "}><b>Flytt vurdering</b></li> : null}
                     {auth.isInRole("fab_administrator") && <li role="presentation" onClick={action(() => appState.viewMode = "administrasjon")}><b>Administrasjon</b></li>}
                     <li role="presentation"><b>Retningslinjer</b></li>
                     {/* <li role="presentation" disabled={!auth.isLoggedIn} onClick={auth.logout}><b>&nbsp; {auth.user ? "Logg ut " : ""} {(auth.user ? auth.user.profile.name : "")} </b></li> */}

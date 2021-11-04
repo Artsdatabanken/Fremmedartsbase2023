@@ -468,6 +468,10 @@ public partial class FA4 // (3.2) Artsegenskaper
 
         public string CurrentPresenceComment { get; set; }
 
+        public string SpreadAreaInChangedNature { get; set; }
+
+        public string SpeciesEstablishmentCategory { get; set; }
+
     }
     public partial class FA4 // (4) Naturtyper
     {
