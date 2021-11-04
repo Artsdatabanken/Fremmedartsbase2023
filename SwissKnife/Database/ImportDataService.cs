@@ -259,6 +259,8 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.AcceptOrAdjustCritA, opt => opt.Ignore())
                     .ForMember(dest => dest.Hovedøkosystem, opt => opt.Ignore())
 
+                    
+
                     .ForMember(dest => dest.StartYear, opt => opt.Ignore())
                     .ForMember(dest => dest.EndYear, opt => opt.Ignore())
                     // todo: delete this section when domain is fixed
@@ -408,6 +410,8 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.HorizonEcologicalEffectDescription, opt => opt.Ignore())
                     .ForMember(dest => dest.HorizonEstablismentPotential, opt => opt.Ignore())
                     .ForMember(dest => dest.HorizonEstablismentPotentialDescription, opt => opt.Ignore())
+                    .ForMember(dest => dest.SpreadAreaInChangedNature, opt => opt.Ignore())
+                    .ForMember(dest => dest.SpeciesEstablishmentCategory, opt => opt.Ignore())
                     .ForMember(dest => dest.Id, opt => opt.Ignore()) // primærnøkkel
                     .ForMember(dest =>dest.PreviousAssessments, opt => opt.Ignore()) // ny av året
                     .ForMember(dest => dest.Fylkesforekomster, opt => opt.Ignore())
