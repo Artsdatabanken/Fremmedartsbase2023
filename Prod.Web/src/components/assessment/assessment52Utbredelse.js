@@ -133,7 +133,8 @@ export default class Assessment52Utbredelse extends React.Component {
                                             {assessment.alienSpeciesCategory != "DoorKnocker" && 
                                             <div style={{width: '100px', marginTop: '44px'}}>
                                                 <b>Kjent</b>
-                                                <Xcomp.Number       
+                                                <Xcomp.Number      
+                                                    className={"knownDistribution"} 
                                                     //observableValue={[assessment.riskAssessment, "knownDistribution"]}                     
                                                     observableValue={[assessment.riskAssessment, "AOO2"]}
                                                     /> 
