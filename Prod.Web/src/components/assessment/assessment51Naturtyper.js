@@ -92,7 +92,7 @@ export default class Assessment51Naturtyper extends React.Component {
 
                 {assessment.redlistedNatureTypes.length > 0 && <fieldset className="well">
                 <h4>
-                    Data fra tidligere vurdering (basert på Rødlista for naturtyper 2011 og NiN 1.0):
+                    Data fra tidligere vurdering (basert på Rødlista for naturtyper 2018 og NiN .0):
                 </h4>
                 <RedlistedNaturetypeTable
                     naturetypes={assessment.redlistedNatureTypes}
