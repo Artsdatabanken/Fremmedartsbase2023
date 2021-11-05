@@ -349,7 +349,7 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                     .push(reference);
         }        
         if (document.getElementById(value.id) != null) {
-                document.getElementById(value.id).setAttribute('disabled', 'true')
+                document.getElementById(value.id).setAttribute('visibility', 'hidden')
         }
         //this.addNew = true
         this.addNew = false
@@ -527,8 +527,10 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                                         return (<tr key={reference.id}> 
                                             <td>
                                                  <button className="btn btn-primary btn-xs"
-                                                    id={reference.id}                                                    
-                                                    disabled={this.context.readonly}                                                     
+                                                    id={reference.id}   
+                                                    //invisible unless the user has write access    
+                                                    style={{visibility: this.context.readonly ? "hidden" : "visible"}}                                               
+                                                    //visible={!this.context.readonly}                                                     
                                                     onClick={() => {this.leggTilReferanse(assessment, reference)}}>{labels.references.add}</button>
                                              </td>
                                              <td dangerouslySetInnerHTML={{
@@ -694,7 +696,9 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                             } onClick={() => {this.lagreReferanse()}}> {labels.references.saveOrUpdate}</Xcomp.Button>
                             <Xcomp.Button primary disabled={(!(this.valgtReferanse.allowDelete && this.valgtReferanse.id != 'NY_REFERANSE')) }                                      
                                         onClick={() => {this.slettReferanse()}}>{labels.references.removeReference}</Xcomp.Button>
-                            <Xcomp.Button primary disabled={!this.addNew}                                       
+                            <Xcomp.Button primary 
+                            // not visible until it's possible to add
+                                        style={{visibility: this.addNew ? "visible" : "hidden"}}                                       
                                         onClick={() => {this.leggTilReferanse(assessment, this.valgtReferanse)}}>{labels.references.add}</Xcomp.Button>
                     </div>}                    
                 </div>
