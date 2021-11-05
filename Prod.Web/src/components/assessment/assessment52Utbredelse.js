@@ -25,6 +25,11 @@ export default class Assessment52Utbredelse extends React.Component {
     //     return a != b
     // }
 
+    // a method to check if a given property is smaller than a given value
+    checkArea = (property, value) => {
+               return property < value;
+    }
+
     handleOverførFraArtskart = ({ selectionGeometry, countylist, areadata, observations, editStats }) => {
         // console.log('handleOverførFraArtskart', selectionGeometry, countylist, areadata, observations, editStats);
         const aps = this.props.appState;
@@ -93,8 +98,8 @@ export default class Assessment52Utbredelse extends React.Component {
                             </div>
                             <div className="changedNature">
                                 <p>Andel av antatt forekomstareal i sterkt endra natur (%)</p>
-                                {/* ToDo: Bug - speciesDistribution not found */}
-                             <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "spreadAreaInChangedNature"]} codes={koder.KnownDistributionInNature}/> 
+                                
+                             <Xcomp.StringEnum observableValue={[assessment, "spreadAreaInChangedNature"]} codes={koder.KnownDistributionInNature}/> 
                             </div>
                             </div>
                             :
@@ -150,12 +155,12 @@ export default class Assessment52Utbredelse extends React.Component {
                                 <div className="changedNature">
                                     <p>Andel av kjent forekomstareal i sterkt endra natur (%) </p>
                                     {/* ToDo: Bug - speciesDistribution not found */}
-                                    <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "spreadAreaInChangedNature"]} codes={koder.KnownDistributionInNature}/>
+                                    <Xcomp.StringEnum observableValue={[assessment, "spreadAreaInChangedNature"]} codes={koder.KnownDistributionInNature}/>
                                 </div>
                                 <div style={{marginTop: '50px'}}>
                                     <p>Hvilken etableringskategori har arten i Norge? Merk av den høyeste (øverste) kategorien som oppfylles av arten i Norge i dag.</p>   
                                     {/* ToDo: Bug - speciesDistribution not found */}
-                                    <Xcomp.StringEnum observableValue={[assessment, "speciesEstablishmentCategory"]} mode="radio" codes={koder.DistributionOptions}/>
+                                    <Xcomp.StringEnum observableValue={[assessment, "speciesEstablishmentCategory"]} mode="radio" option="E" optionHidden={this.checkArea(assessment.riskAssessment.AOOtotalBest, "40")} codes={koder.DistributionOptions}/>
                                 </div>             
                                 {/* <div style={{marginBottom: '20px'}}>
                                     <span>{labels.goTo}</span> <Xcomp.Button primary >{labels.distributionHistory}</Xcomp.Button>
