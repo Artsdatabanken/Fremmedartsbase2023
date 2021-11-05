@@ -349,7 +349,8 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                     .push(reference);
         }        
         if (document.getElementById(value.id) != null) {
-                document.getElementById(value.id).setAttribute('visibility', 'hidden')
+                document.getElementById(value.id).setAttribute('disabled', 'true')
+                document.getElementById(value.id).style.visibility = "hidden"
         }
         //this.addNew = true
         this.addNew = false
@@ -529,6 +530,7 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                                                  <button className="btn btn-primary btn-xs"
                                                     id={reference.id}   
                                                     //invisible unless the user has write access    
+                                                    // to do: disable if the reference is already added to the assessment
                                                     style={{visibility: this.context.readonly ? "hidden" : "visible"}}                                               
                                                     //visible={!this.context.readonly}                                                     
                                                     onClick={() => {this.leggTilReferanse(assessment, reference)}}>{labels.references.add}</button>
