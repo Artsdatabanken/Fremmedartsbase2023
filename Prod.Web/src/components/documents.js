@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { observer, inject } from 'mobx-react';
-import { toJS, observable, action } from 'mobx';
+import { toJS, observable, action, makeObservable } from 'mobx';
 import config from '../config'
 import FileUpload from "./FileUpload";
 import { deleteData, loadData, postData, putData } from '../apiService';
@@ -12,6 +12,7 @@ export default class Documents extends Component {
     
     constructor(props) {
         super()
+        makeObservable(this);
         this.assessmentId = props.appState.assessment.id
         this.getAttachments() // henter første gangen
     }
