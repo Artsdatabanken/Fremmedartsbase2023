@@ -85,6 +85,10 @@ class ViewModel {
             koder: null,
             codeLabels: null,
             naturtypeLabels: {},
+            livsmediumcodes: {},
+            livsmediumLabels: null,
+            livsmediumCodes: null,
+
             comments: [],
             newComment: null,
             newComments: [],
@@ -181,6 +185,17 @@ class ViewModel {
         const clabels =  codes2labels(this.koder.labels[0].Children)
         this.codeLabels = clabels
 
+
+        // load livsmedium codes ----
+        const ninlm = require('../nin-livsmedium.json')
+        const lm = this.livsmedium2nt(ninlm)
+        console.log(JSON.stringify(lm))
+        const lmlabels = this.livsmedium2labels(ninlm, {})
+        console.log(JSON.stringify(lmlabels))
+        const grupper = lm.children
+        this.livsmediumLabels = lmlabels
+        this.livsmediumCodes = grupper
+        // --------------------------
 
         // console.log("labels keys: " + JSON.stringify(Object.keys(clabels)))
         // console.log("codes keys: " + JSON.stringify(Object.keys(codes.Children)))
@@ -876,6 +891,34 @@ class ViewModel {
         }
         return r
     }
+
+    livsmedium2nt(mp) {
+        const r = {}
+        r.id = mp.Id
+        // console.log(r.name)
+        r.name = mp.navn
+        r.collapsed = true
+        r.children = []
+        if(mp.children) {
+            for ( var i = 0; i < mp.children.length; ++i )
+            {
+                r.children.push(this.livsmedium2nt(mp.children[i]));
+            }
+        }
+        return r
+    }
+
+    livsmedium2labels(mp, acc) {
+        acc[mp.Id] = mp.navn
+        if(mp.children) {
+            for ( var i = 0; i < mp.children.length; ++i )
+            {
+                this.livsmedium2labels(mp.children[i], acc)
+            }
+        }
+        return acc
+    }
+
 
 
 
