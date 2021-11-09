@@ -283,19 +283,21 @@ export default class Assessment20ArtensStatus extends React.Component {
                     </div> : null }
                     </fieldset>
                     
-                    {(assessment.isAlienSpecies == 'true' || assessment.isAlienSpecies == 'false') &&
+                    {((assessment.isAlienSpecies == 'true' || assessment.isAlienSpecies == 'false') && assessment.speciesStatus != null) &&
                         <fieldset className="well">
                                         
 
                                {assessment.isAlienSpecies == 'true' && 
                                     (assessment.connectedToAnother == false || assessment.connectedToAnother == null ) && 
                                     (assessment.alienSpecieUncertainIfEstablishedBefore1800 == "no" || assessment.alienSpecieUncertainIfEstablishedBefore1800 == false ) &&
-                                    (assessment.alienSpeciesCategory == "DoorKnocker" || assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3") &&
+                                    //(assessment.alienSpeciesCategory == "DoorKnocker" || assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3") &&
                                     assessment.speciesStatus != null && 
                                     (assessment.connectedToAnother == false || assessment.connectedToAnother == null) ? 
                                 <div>
                                     <h3>{labels.SpeciesStatus.conclusion}</h3>
-                                    <p>{labels.SpeciesStatus.willBeRiskAssessed}</p> 
+                                    {(assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3") ? 
+                                    <p>{labels.SpeciesStatus.willBeRiskAssessed}<b>{labels.SpeciesStatus.assessedSelfReproducing}</b></p> :
+                                    <p>{labels.SpeciesStatus.willBeRiskAssessed}<b>{labels.SpeciesStatus.assessedDoorknocker}</b></p> }
                                 </div> :
                                 <div>
                                     <h3>{labels.SpeciesStatus.conclusion}</h3>
