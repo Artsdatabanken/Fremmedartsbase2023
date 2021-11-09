@@ -140,8 +140,20 @@
         ],
 
         "EstablishmentCategoryDoorKnockerProduction": [                      
-
-            
+            {
+                "Id": "EstablishmentCategoryWithoutProduction",
+                "Value": "C3",
+                "Text": "Arten er etablert (C3–E)",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "EstablishmentCategoryWithoutProduction",
+                "Value": "C2",
+                "Text": "Arten produserer levedyktig avkom utendørs og uten hjelp og kan overleve vinteren (C2)",
+                "Info": null,
+                "Children": null
+            },            
             {
                 "Id": "EstablishmentCategoryDoorKnockerProduction",
                 "Value": "C1",
@@ -670,22 +682,22 @@
             {
                 "Id": "DistributionOptions",
                 "Value": "E",
-                "Text": "Arten har minst ti etablerte bestander i norsk natur som ligger minst 2 km fra hverandre og fra alle steder som arten har blitt introdusert til (E)"
+                "Text": "Arten har selv spredd seg fra ett eller flere introduksjonssted(er) og er etablert i minst ti av forekomstene (E)"
             },
             {
                 "Id": "DistributionOptions",
                 "Value": "D2",
-                "Text": "Arten har minst én etablert bestand i norsk natur som ligger minst 2 km fra alle steder som arten har blitt introdusert til (D2)"
+                "Text": "Arten har selv spredd seg fra ett eller flere introduksjonssted(er) og er etablert i minst én av forekomstene (D2)"
             },
             {
                 "Id": "DistributionOptions",
                 "Value": "D1",
-                "Text": "Arten er etablert i norsk natur og har levedyktige individer på minst ett sted som ligger 2 km fra alle steder som arten har blitt introdusert til (D1)"
+                "Text": "Arten har selv spredd seg fra ett eller flere introduksjonssted(er), men er kun etablert der den er introdusert (D1)"
             },
             {
                 "Id": "DistributionOptions",
                 "Value": "C3",
-                "Text": "Arten er etablert i norsk natur (C3)"
+                "Text": "Arten forekommer kun der den er introdusert (og er etablert der) (C3)"
             }
         ],
 
@@ -5021,7 +5033,21 @@
                         {
                             "Id": null,
                             "Value": "willBeRiskAssessed",
-                            "Text": "Arten skal risikovurderes.",
+                            "Text": "Arten skal risikovurderes som ",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "assessedDoorknocker",
+                            "Text": "dørstokkart",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "assessedSelfReproducing",
+                            "Text": "selvstendig reproduserende",
                             "Info": null,
                             "Children": null
                         },

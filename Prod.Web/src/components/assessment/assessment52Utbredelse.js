@@ -157,11 +157,13 @@ export default class Assessment52Utbredelse extends React.Component {
                                     {/* ToDo: Bug - speciesDistribution not found */}
                                     <Xcomp.StringEnum observableValue={[assessment, "spreadAreaInChangedNature"]} codes={koder.KnownDistributionInNature}/>
                                 </div>
+                                {assessment.speciesStatus == "C3" && 
                                 <div style={{marginTop: '50px'}}>
                                     <p>Hvilken etableringskategori har arten i Norge? Merk av den høyeste (øverste) kategorien som oppfylles av arten i Norge i dag.</p>   
                                     {/* ToDo: Bug - speciesDistribution not found */}
                                     <Xcomp.StringEnum observableValue={[assessment, "speciesEstablishmentCategory"]} mode="radio" option="E" optionHidden={this.checkArea(assessment.riskAssessment.AOOtotalBest, "40")} codes={koder.DistributionOptions}/>
-                                </div>             
+                                </div>    
+                                }         
                                 {/* <div style={{marginBottom: '20px'}}>
                                     <span>{labels.goTo}</span> <Xcomp.Button primary >{labels.distributionHistory}</Xcomp.Button>
                                 </div> */}
