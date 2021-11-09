@@ -105,6 +105,10 @@ export default class Assessment20ArtensStatus extends React.Component {
             assessment.alienSpeciesCategory = "DoorKnocker"
         }
 
+        if(assessment.speciesStatus == "C3") {
+            assessment.speciesEstablishmentCategory = "C3"
+        }
+
         return (
             <div>
                 {config.showPageHeaders
