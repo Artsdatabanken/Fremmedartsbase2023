@@ -31,7 +31,7 @@ export const Radio = (props) => <Observer>{() => {
 const ObservableStringEnum = (props) => <Observer>{() => {
     const context = UserContext.getContext()
     //Note that radiobuttons requires unique 'name'. suply name prop if the object-'prop' is not unique
-    const {className, heading, onChange, observableValue, codes, label, mode, name, forceSync, placeholder, disabled} = props;
+    const {className, heading, onChange, observableValue, codes, label, mode, name, forceSync, placeholder, disabled, option, optionHidden} = props;
     const [obj, prop] = observableValue;
     if (obj[prop] === undefined) {
         console.error("ObservableStringEnum " + prop + " is undefined")
@@ -86,7 +86,7 @@ const ObservableStringEnum = (props) => <Observer>{() => {
                                             defaultChecked ={obj[prop] === kode.value || obj[prop] === kode.Value}
                                             id={prop} 
                                             name={name}
-                                            disabled={context.readonly || disabled}/>)}
+                                            disabled={context.readonly || disabled || ((option == kode.Value || option == kode.value) && optionHidden)}/>)}
             </div>
             : mode === 'radiohorizontal' ?
             <div className="radiohorizontal">

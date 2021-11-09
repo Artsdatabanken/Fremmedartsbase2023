@@ -244,10 +244,10 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
             )
             this.addNew = true
         } else {
-            console.log(config.getUrl("References/" + clone.id))
+            // console.log(config.getUrl("References/" + clone.id))
             putData(
-                //config.getUrl("References/" + clone.id),
-                config.referenceApiUrl +"api/References/" + clone.id,
+                config.getUrl("Reference/" + clone.id),
+                // config.referenceApiUrl +"api/References/" + clone.id,
                 clone,
                 data => {
                     this.updateValgtReferanse(data)
@@ -350,6 +350,7 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
         }        
         if (document.getElementById(value.id) != null) {
                 document.getElementById(value.id).setAttribute('disabled', 'true')
+                document.getElementById(value.id).style.visibility = "hidden"
         }
         //this.addNew = true
         this.addNew = false
@@ -527,8 +528,11 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                                         return (<tr key={reference.id}> 
                                             <td>
                                                  <button className="btn btn-primary btn-xs"
-                                                    id={reference.id}                                                    
-                                                    disabled={this.context.readonly}                                                     
+                                                    id={reference.id}   
+                                                    //invisible unless the user has write access    
+                                                    // to do: disable if the reference is already added to the assessment
+                                                    style={{visibility: this.context.readonly ? "hidden" : "visible"}}                                               
+                                                    //visible={!this.context.readonly}                                                     
                                                     onClick={() => {this.leggTilReferanse(assessment, reference)}}>{labels.references.add}</button>
                                              </td>
                                              <td dangerouslySetInnerHTML={{
@@ -694,7 +698,9 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                             } onClick={() => {this.lagreReferanse()}}> {labels.references.saveOrUpdate}</Xcomp.Button>
                             <Xcomp.Button primary disabled={(!(this.valgtReferanse.allowDelete && this.valgtReferanse.id != 'NY_REFERANSE')) }                                      
                                         onClick={() => {this.slettReferanse()}}>{labels.references.removeReference}</Xcomp.Button>
-                            <Xcomp.Button primary disabled={!this.addNew}                                       
+                            <Xcomp.Button primary 
+                            // not visible until it's possible to add
+                                        style={{visibility: this.addNew ? "visible" : "hidden"}}                                       
                                         onClick={() => {this.leggTilReferanse(assessment, this.valgtReferanse)}}>{labels.references.add}</Xcomp.Button>
                     </div>}                    
                 </div>

@@ -47,7 +47,7 @@ export default class Utbredelseshistorikk extends React.Component {
 
                 </fieldset>
                 <fieldset>
-                    <h2>Fylkesvis utbredelse</h2>
+                    <h2>Regionvis utbredelse</h2>
                     <p>Beskriv grunnlaget for anslagene (gjelder både forekomstareal og fylkesvis utbredelse)</p>
                     <Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'backgroundRegional']}/>
                     <p>Beskriv utbredelseshistorikk og dagens utbredelse i Norge <i>(overføres til oppsummeringen)</i></p>

@@ -522,7 +522,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                         yearRange={true}/> 
                                                 </td>
                                                 <td style={{display: 'flex'}}><Xcomp.Number            
-                                                        disabled = {!riskAssessment.notUse2021AsEndYear}                
+                                                        //disabled = {!riskAssessment.notUse2021AsEndYear}                
                                                         observableValue={[riskAssessment, "AOOendyear2"]} 
                                                         yearRange={true}/> <span style={{margin: '10px 10px 0'}}>(t<sub>2</sub>)</span>
                                                 </td>

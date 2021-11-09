@@ -5,7 +5,7 @@ import {observer, inject} from 'mobx-react';
 import {autorun, extendObservable, observable} from 'mobx';
 import * as Xcomp from './observableComponents';
 import Risikomatrise from './risikomatrise';
-import FileUpload from '../FileUpload'
+import Documents from '../documents'
 
 @inject("appState")
 @observer
@@ -244,7 +244,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                         __html: riskAssessment.criteriaDocumentation
                     }} />
                 </div>*/}
-                {assessment.riskAssessment.riskLevelCode != null && assessment.previousAssessments && category2018(assessment.previousAssessments[0].riskLevel) != assessment.riskAssessment.riskLevelCode &&
+                {assessment.riskAssessment.riskLevelCode != null && assessment.previousAssessments != [] && category2018(assessment.previousAssessments[0].riskLevel) != assessment.riskAssessment.riskLevelCode &&
                 <fieldset className="well">
                     <h3>{critlabels.reasonForChangeHeading}</h3>
                         <p> {critlabels.cat2023} {assessment.riskAssessment.riskLevelCode}</p>
@@ -292,38 +292,10 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                 }
 
                 <fieldset className="well">
-                            <h4>{critlabels.assessmentFiles}</h4>
-                            <div>
-                                {/*<h2>Filer for {assessment.id}</h2>*/}
-                                <table className="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>{critlabels.fileDescription}</th>
-                                            <th>{critlabels.download}</th>
-                                            <th>{critlabels.removeFile}</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    {this.attachments &&
-                                                this.attachments.map((item) => {
-                                                    return (<tr key={item.id}>
-                                                        <td>
-                                                            {item.name}
-                                                        </td>
-                                                        <td>
-                                                            <a href={config.getUrl('document/getfile/' + item.id)} download={item.fileName} target="_blank" >{item.fileName}</a>
-                                                        </td>
-                                                        <td>
-                                                        <button className="btn btn-primary btn-xs" onClick={() => {this.deleteAttachments(item.id)}}>{critlabels.remove}</button>
-                                                        </td></tr>
-                                                        )
-                                                })}                                        
-                                    </tbody>
-                                </table>
-                            </div>
-                            <FileUpload
-                               // onUploadComplete={this.getAttachments}
-                                />
+                {<div className="form_category">
+                        <h3>Filvedlegg til vurderingen</h3>
+                        <Documents/>
+                    </div>}
                         </fieldset>
 
                         <Xcomp.Button>{critlabels.showAssessmentSummary}</Xcomp.Button>
