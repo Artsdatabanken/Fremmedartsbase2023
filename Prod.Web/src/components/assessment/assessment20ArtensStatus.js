@@ -306,8 +306,8 @@ export default class Assessment20ArtensStatus extends React.Component {
                                 <div>
                                     <h3>{labels.SpeciesStatus.conclusion}</h3>
                                     {(assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3") ? 
-                                    <p>{labels.SpeciesStatus.willBeRiskAssessed}<b>{labels.SpeciesStatus.assessedSelfReproducing}</b>"."</p> :
-                                    <p>{labels.SpeciesStatus.willBeRiskAssessed}<b>{labels.SpeciesStatus.assessedDoorknocker}</b>"."</p> }
+                                    <p>{labels.SpeciesStatus.willBeRiskAssessed}<b>{labels.SpeciesStatus.assessedSelfReproducing}</b>.</p> :
+                                    <p>{labels.SpeciesStatus.willBeRiskAssessed}<b>{labels.SpeciesStatus.assessedDoorknocker}</b>.</p> }
                                 </div> :
                                 <div>
                                     <h3>{labels.SpeciesStatus.conclusion}</h3>
