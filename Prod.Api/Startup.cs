@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using IdentityModel.Client;
 using IdentityServer4.AccessTokenValidation;
@@ -49,6 +51,7 @@ namespace Prod.Api
             {
                 x.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                 x.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+                //x.JsonSerializerOptions.Converters.Add(new BoolJsonConverter());
 
             }
                 ); //.AddNewtonsoftJson(); For å unngå camelcase - frem til klienten er camelcase.....
@@ -69,7 +72,32 @@ namespace Prod.Api
             services.AddResponseCompression();
             services.AddApplicationInsightsTelemetry();
         }
+        public class BoolJsonConverter : JsonConverter<bool>
+        {
+            public override bool Read(
+                ref Utf8JsonReader reader,
+                Type typeToConvert,
+                JsonSerializerOptions options)
+            {
+                if (reader.TokenType == JsonTokenType.False)
+                {
+                    return false;
+                }
 
+                if (reader.TokenType == JsonTokenType.True)
+                {
+                    return true;
+                }
+
+                var value = reader.GetString();
+                return value != null && (value.ToLowerInvariant() == "true");
+            }
+
+            public override void Write(Utf8JsonWriter writer, bool value, JsonSerializerOptions options)
+            {
+                writer.WriteBooleanValue(value);
+            }
+        }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
