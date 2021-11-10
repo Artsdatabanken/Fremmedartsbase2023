@@ -101,7 +101,6 @@ export default class Assessment30Artsegenskaper extends React.Component {
                     isLimnicTerrestrial ?
                     //vurdering.limnic || vurdering.terrestrial ?
                     <div>
-                        <br/>
                         <div className="well">                        
                         <h4>{labels.NaturalOrigin.naturalOrigin}</h4>
                         <OriginTable 
@@ -225,7 +224,6 @@ export default class Assessment30Artsegenskaper extends React.Component {
                 isLimnicTerrestrial ?
                 //vurdering.limnic || vurdering.terrestrial ?
                 <div>
-                    <br/>
                     <div className="well">
                     <h4>{labels.NaturalOrigin.naturalOrigin}</h4>
                     <OriginTable 
@@ -357,7 +355,6 @@ export default class Assessment30Artsegenskaper extends React.Component {
                 isLimnicTerrestrial ?
                 //vurdering.limnic || vurdering.terrestrial ?
                 <div>
-                    <br/>
                     <div className="well">
                     <h4>{labels.NaturalOrigin.naturalOrigin}</h4>
                     <OriginTable 

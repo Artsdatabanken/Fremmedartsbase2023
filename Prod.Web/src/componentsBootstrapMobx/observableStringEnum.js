@@ -16,7 +16,7 @@ export const Radio = (props) => <Observer>{() => {
         const onChange = props.onChange
         const defaultChecked = props.defaultChecked || obj[prop] === value
         const options = props.options
-        console.log (options)
+        
         //console.log(">" + prop + " (" + obj[prop] + ") " + value)
         return <div className={"radio " + (options && options != "" ? options.indexOf(value) > -1 ? className + " hidden " : className : className)} key={value}>
             <label className={props.disabled ? "disabled" : ""}><input type="radio" name={"radio " + criteria+prop} value={value}
