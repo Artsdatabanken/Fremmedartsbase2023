@@ -13,7 +13,7 @@ import Fylkesforekomst from '../fylkesforekomst/Fylkesforekomst';
 import FileUpload from '../FileUpload'
 import fylker from "../fylkesforekomst/fylker";
 import { ContactsOutlined } from '@material-ui/icons';
-import { action, computed } from 'mobx';
+import { action, computed, observable } from 'mobx';
 
 @inject('appState')
 @observer
@@ -26,8 +26,20 @@ export default class Assessment52Utbredelse extends React.Component {
     // }
 
     // a method to check if a given property is smaller than a given value
-    checkArea = (property, value) => {
-               return property < value;
+
+       
+    checkArea = (property) => {
+       // finds all the objects with id's that should be hidden 
+       if ( property < 8 ) {
+           
+           return "D1D2E"
+           
+       } else if (property < 40 ) {
+           return "E"
+       }
+       else {
+            return ""
+       }
     }
 
     handleOverførFraArtskart = ({ selectionGeometry, countylist, areadata, observations, editStats }) => {
@@ -77,6 +89,7 @@ export default class Assessment52Utbredelse extends React.Component {
         // const labels = fabModel.codeLabels.DistributionHistory
         const koder = appState.koder
         const labels = appState.codeLabels.DistributionHistory
+
         return (
             <div>
                 <div>
@@ -161,7 +174,7 @@ export default class Assessment52Utbredelse extends React.Component {
                                 <div style={{marginTop: '50px'}}>
                                     <p>Hvilken etableringskategori har arten i Norge? Merk av den høyeste (øverste) kategorien som oppfylles av arten i Norge i dag.</p>   
                                     {/* ToDo: Bug - speciesDistribution not found */}
-                                    <Xcomp.StringEnum observableValue={[assessment, "speciesEstablishmentCategory"]} mode="radio" option="E" optionHidden={this.checkArea(assessment.riskAssessment.AOOtotalBest, "40")} codes={koder.DistributionOptions}/>
+                                    <Xcomp.StringEnum observableValue={[assessment, "speciesEstablishmentCategory"]} mode="radio" options={this.checkArea(assessment.riskAssessment.AOOtotalBest)} codes={koder.DistributionOptions}/>
                                 </div>    
                                 }         
                                 {/* <div style={{marginBottom: '20px'}}>

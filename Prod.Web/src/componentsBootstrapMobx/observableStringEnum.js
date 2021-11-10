@@ -12,11 +12,13 @@ export const Radio = (props) => <Observer>{() => {
         const [obj, prop] = props.observableValue;
         const criteria = props.criteria;
         const disabled = props.disabled || context.readonly
-        const className = props.className
+        const className = props.className 
         const onChange = props.onChange
         const defaultChecked = props.defaultChecked || obj[prop] === value
+        const options = props.options
+        console.log (options)
         //console.log(">" + prop + " (" + obj[prop] + ") " + value)
-        return <div className={"radio " + className} key={value}>
+        return <div className={"radio " + (options && options != "" ? options.indexOf(value) > -1 ? className + " hidden " : className : className)} key={value}>
             <label className={props.disabled ? "disabled" : ""}><input type="radio" name={"radio " + criteria+prop} value={value}
                                                                     defaultChecked={defaultChecked}
                                                                        disabled={disabled}
@@ -31,13 +33,14 @@ export const Radio = (props) => <Observer>{() => {
 const ObservableStringEnum = (props) => <Observer>{() => {
     const context = UserContext.getContext()
     //Note that radiobuttons requires unique 'name'. suply name prop if the object-'prop' is not unique
-    const {className, heading, onChange, observableValue, codes, label, mode, name, forceSync, placeholder, disabled, option, optionHidden} = props;
+    const {className, heading, onChange, observableValue, codes, label, mode, name, forceSync, placeholder, disabled, options} = props;
     const [obj, prop] = observableValue;
     if (obj[prop] === undefined) {
         console.error("ObservableStringEnum " + prop + " is undefined")
         console.log("object keys: " + JSON.stringify(Object.keys(obj)) )
         console.log("object keys: " + JSON.stringify(obj, null, '  ') )
     }
+    
     if (codes === undefined) {
         console.error("ObservableStringEnum " + prop + " misses codes")
     }
@@ -85,8 +88,9 @@ const ObservableStringEnum = (props) => <Observer>{() => {
                                             onChange={onChange}
                                             defaultChecked ={obj[prop] === kode.value || obj[prop] === kode.Value}
                                             id={prop} 
-                                            name={name}
-                                            disabled={context.readonly || disabled || ((option == kode.Value || option == kode.value) && optionHidden)}/>)}
+                                            name={name}       
+                                            options={options}                                    
+                                            disabled={context.readonly || disabled}/>)}
             </div>
             : mode === 'radiohorizontal' ?
             <div className="radiohorizontal">
