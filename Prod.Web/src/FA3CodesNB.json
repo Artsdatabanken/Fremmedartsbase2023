@@ -53,7 +53,7 @@
             {
                 "Id": "EstablishmentCategory",
                 "Value": "C2",
-                "Text": "Arten produserer levedyktig avkom utendørs og uten hjelp og kan overleve vinteren (C2)",
+                "Text": "Arten er selvstendig reproduserende (utendørs) (C2)",
                 "Info": null,
                 "Children": null
             },
@@ -105,7 +105,7 @@
             {
                 "Id": "EstablishmentCategoryWithoutProduction",
                 "Value": "C2",
-                "Text": "Arten produserer levedyktig avkom utendørs og uten hjelp og kan overleve vinteren (C2)",
+                "Text": "Arten er selvstendig reproduserende (utendørs) (C2)",
                 "Info": null,
                 "Children": null
             },
@@ -150,7 +150,7 @@
             {
                 "Id": "EstablishmentCategoryWithoutProduction",
                 "Value": "C2",
-                "Text": "Arten produserer levedyktig avkom utendørs og uten hjelp og kan overleve vinteren (C2)",
+                "Text": "Arten er selvstendig reproduserende (utendørs) (C2)",
                 "Info": null,
                 "Children": null
             },            
