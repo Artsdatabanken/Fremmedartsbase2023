@@ -192,7 +192,20 @@
             }
         ],
         "EstablishmentCategoryDoorKnocker": [                      
-
+            {
+                "Id": "EstablishmentCategoryWithoutProduction",
+                "Value": "C3",
+                "Text": "Arten er etablert (C3–E)",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "EstablishmentCategoryWithoutProduction",
+                "Value": "C2",
+                "Text": "Arten er selvstendig reproduserende (utendørs) (C2)",
+                "Info": null,
+                "Children": null
+            },            
             
             {
                 "Id": "EstablishmentCategoryDoorKnocker",
