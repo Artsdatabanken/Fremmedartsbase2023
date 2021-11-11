@@ -292,11 +292,11 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                 }
 
                 <fieldset className="well">
-                {<div>
+                    <div>
                         <h3>Filvedlegg til vurderingen</h3>
                         <Documents/>
-                    </div>}
-                        </fieldset>
+                    </div>
+                </fieldset>
 
                         <Xcomp.Button>{critlabels.showAssessmentSummary}</Xcomp.Button>
                         {assessment.evaluationStatus != "finnished" ? 

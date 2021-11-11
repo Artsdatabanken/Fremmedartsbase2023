@@ -12,6 +12,7 @@ import config from '../../config'
 import {codes2labels, getCriterion} from '../../utils'
 import Filliste from './35Utbredelseshistorikk/Filliste'
 import FileUpload from '../FileUpload'
+import Documents from '../documents'
 import { KeyboardHideSharp } from '@material-ui/icons'
 import {stringFormat} from "../../utils"
 
@@ -287,12 +288,11 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                  //{...appState.vurdering.Datasett}
                                  />
                     </div>*/}
-                    <p>Velg datafil du ønsker å laste opp</p>
+                    <div>                       
+                        <Documents/>
+                    </div>
                     
-                   <FileUpload
-                            onUploadComplete={this.getAttachments}
-                            showButtonOnly={true}
-                   /> 
+
                     <div className="statusField">
                         <div className="labels" style={{width: "100px"}}>
                         <p>{labels.Acrit.median}</p>
@@ -422,12 +422,11 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                    
                                 </div>
                             </div>
-                            <hr></hr>
-                                    <p>Velg datafil du ønsker å laste opp</p>
-                    
-                                    <FileUpload
-                                                onUploadComplete={this.getAttachments}
-                                                showButtonOnly={true} /> 
+                            <hr></hr>                    
+                                    <div>
+                                        <Documents/>
+                                    </div>
+
                             <br></br>
 
                               {/*   <p>{ntLabels.scoreSummary}</p>

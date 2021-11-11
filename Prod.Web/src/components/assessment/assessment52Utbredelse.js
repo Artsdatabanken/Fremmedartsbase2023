@@ -12,6 +12,7 @@ import ModalArtskart from '../artskart/ModalArtskart';
 import Fylkesforekomst from '../fylkesforekomst/Fylkesforekomst';
 import FileUpload from '../FileUpload'
 import fylker from "../fylkesforekomst/fylker";
+import Documents from '../documents'
 import { ContactsOutlined } from '@material-ui/icons';
 import { action, computed, observable } from 'mobx';
 
@@ -183,10 +184,11 @@ export default class Assessment52Utbredelse extends React.Component {
                                 </div> */}
                             </div>
                         }
-                        <p>Velg datafil du ønsker å laste opp</p>
-                         <FileUpload
-                                onUploadComplete={this.getAttachments}
-                                showButtonOnly={true} /> 
+                            <div>
+                                <Documents/>
+                            </div>
+                        
+
                         <div>
                                 
                             {/* <Xcomp.Radio kode={"BB–E"} observableValue={[assessment.riskAssessment, "speciesDistribution"]} label={"etablert og produsere levedyktig avkom i minst 10 forekomster i norsk natur [BB E]"} />
