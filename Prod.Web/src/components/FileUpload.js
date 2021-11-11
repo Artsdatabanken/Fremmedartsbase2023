@@ -66,7 +66,7 @@ export default class FileUpload extends Component {
             <input type="file" id={"file"} style={{display:"none" }} onChange={(e) => this.startOpplastinger(e,assessment.id)} multiple/>
             <button className="btn btn-primary" 
                     id="button" name="button"
-                    disabled = {disabled}
+                    disabled = {disabled || this.selectedFile.name == ""}
                     //disabled={this.selectedFile.name === ""} 
                     style={{marginLeft: '15px', marginTop: '20px'}} 
                     onClick={() => this.thisFileUpload()}>Velg fil</button>

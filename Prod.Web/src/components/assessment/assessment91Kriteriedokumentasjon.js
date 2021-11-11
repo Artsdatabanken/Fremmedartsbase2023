@@ -292,7 +292,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                 }
 
                 <fieldset className="well">
-                {<div className="form_category">
+                {<div>
                         <h3>Filvedlegg til vurderingen</h3>
                         <Documents/>
                     </div>}
