@@ -45,7 +45,11 @@ namespace Prod.Api.Helpers
         public string DoorKnockerType { get; set; }
         
         public string EvaluatedScientificNameId { get; set; }
+
+        
         public string EvaluatedScientificName { get; set; }
+
+        public string EvaluatedVernacularName { get; set; }
         public string EvaluatedScientificNameAuthor { get; set; }
 
         public string HorizonEstablismentPotential { get; set; }

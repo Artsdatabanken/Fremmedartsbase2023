@@ -522,6 +522,8 @@ namespace Prod.Api.Helpers
                     queryElements.Add(
                         new BooleanClause(QueryGetFieldQuery(Field_HsResult, new[] { "0" }), Occur.SHOULD));
 
+                if (filter.Comments.KunUbehandlede)
+                    queryElements.Add(new BooleanClause(QueryGetFieldQuery(Field_CommentsOpen, new[] { "1" }), Occur.MUST));
                 QueryAddOrElements(queryElements, query);
 
                 if (filter.Horizon.NR2018.Any())
