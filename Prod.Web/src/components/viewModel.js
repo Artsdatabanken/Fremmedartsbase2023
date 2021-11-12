@@ -85,9 +85,10 @@ class ViewModel {
             koder: null,
             codeLabels: null,
             naturtypeLabels: {},
-            livsmediumcodes: {},
             livsmediumLabels: null,
             livsmediumCodes: null,
+            livsmediumEnabled: true,
+            naturtyperNIN2: null,
 
             comments: [],
             newComment: null,
@@ -188,14 +189,29 @@ class ViewModel {
 
         // load livsmedium codes ----
         const ninlm = require('../nin-livsmedium.json')
-        const lm = this.livsmedium2nt(ninlm)
-        console.log(JSON.stringify(lm))
-        const lmlabels = this.livsmedium2labels(ninlm, {})
+        const lm = this.transformlivsmedium(ninlm)
+        console.log("livsmedium2nt: " +  JSON.stringify(lm))
+        const lmlabels = this.transformlivsmediumlabels(ninlm, {})
         console.log(JSON.stringify(lmlabels))
-        const grupper = lm.children
+        const grupper = lm.Children
         this.livsmediumLabels = lmlabels
         this.livsmediumCodes = grupper
         // --------------------------
+
+        // load NiN2 codes ----
+        const nin2codes = this.koder.naturtyperNIN2
+        const nin2 = this.transformnaturtyperNIN2(nin2codes)
+        console.log("nin2 transformed: " +  JSON.stringify(nin2))
+        const nin2grupper = nin2.Children
+        this.naturtyperNIN2 = nin2grupper
+        // --------------------------
+
+
+
+
+
+
+
 
         // console.log("labels keys: " + JSON.stringify(Object.keys(clabels)))
         // console.log("codes keys: " + JSON.stringify(Object.keys(codes.Children)))
@@ -892,31 +908,48 @@ class ViewModel {
         return r
     }
 
-    livsmedium2nt(mp) {
+    transformlivsmedium(mp) {
         const r = {}
-        r.id = mp.Id
+        r.Id = mp.Id
+        r.Value = mp.Id
         // console.log(r.name)
-        r.name = mp.navn
-        r.collapsed = true
-        r.children = []
+        r.Text = mp.navn
+        r.Collapsed = true
+        r.Children = []
         if(mp.children) {
             for ( var i = 0; i < mp.children.length; ++i )
             {
-                r.children.push(this.livsmedium2nt(mp.children[i]));
+                r.Children.push(this.transformlivsmedium(mp.children[i]));
             }
         }
         return r
     }
 
-    livsmedium2labels(mp, acc) {
+    transformlivsmediumlabels(mp, acc) {
         acc[mp.Id] = mp.navn
         if(mp.children) {
             for ( var i = 0; i < mp.children.length; ++i )
             {
-                this.livsmedium2labels(mp.children[i], acc)
+                this.transformlivsmediumlabels(mp.children[i], acc)
             }
         }
         return acc
+    }
+
+    transformnaturtyperNIN2(nin2codes) {
+        const r = {}
+        r.Id = nin2codes.Id
+        r.Value = nin2codes.Id
+        r.Text = nin2codes.Text
+        r.Collapsed = true
+        r.Children = []
+        if(nin2codes.Children) {
+            for ( var i = 0; i < nin2codes.Children.length; ++i )
+            {
+                r.Children.push(this.livsmedium2nt(nin2codes.Children[i]));
+            }
+        }
+        return r
     }
 
 
