@@ -424,6 +424,8 @@ namespace Prod.Api.Controllers
                             doc.AlienSpeciesCategory = "AlienSpecie";
                         }
                     }
+                    doc.RiskAssessment.RiskLevelCode = "";
+                    doc.RiskAssessment.RiskLevelText = "";
                     doc.LastUpdatedAt = DateTime.Now;
                     data.Doc = JsonSerializer.Serialize(doc);
                     data.LastUpdatedAt = doc.LastUpdatedAt;
