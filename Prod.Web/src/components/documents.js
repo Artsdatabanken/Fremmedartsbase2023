@@ -3,6 +3,7 @@ import { observer, inject } from 'mobx-react';
 import { toJS, observable, action, makeObservable } from 'mobx';
 import config from '../config'
 import FileUpload from "./FileUpload";
+import * as Xcomp from './observableComponents';
 import { deleteData, loadData, postData, putData } from '../apiService';
 @inject('appState')
 @observer
@@ -40,15 +41,22 @@ export default class Documents extends Component {
 
     render() {
         const {appState, appState:{assessment, koder}} = this.props
+        const riskAssessment = assessment.riskAssessment
         return(
-        <div>
+        <div className="files">
+            <FileUpload 
+                onUploadComplete={this.getAttachments}
+            />
             {/*<h2>Filer for {assessment.id}</h2>*/}
+            {this.attachments != [] && 
+            <div>
+                <h5>Opplastede filer med beskrivelse</h5>
             <table className="table table-striped">
                 <thead>
                     <tr>
-                        <th>Filomtale</th>
-                        <th>Last ned</th>
-                        <th>Slett vedlegg</th>
+                        <th>Filnavn</th>
+                        <th>Beskrivelse</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -56,22 +64,32 @@ export default class Documents extends Component {
                             this.attachments.map((item) => {
                                 return (<tr key={item.id}>
                                     <td>
+                                        <a href={config.getUrl('document/getfile/' + item.id)} download={item.fileName} target="_blank" >{item.fileName}</a>                                        
+                                    </td>
+                                    <td>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
+                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                        <path fillRule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                                    </svg>
                                         {item.name}
                                     </td>
                                     <td>
-                                        <a href={config.getUrl('document/getfile/' + item.id)} download={item.fileName} target="_blank" >{item.fileName}</a>
-                                    </td>
-                                    <td>
-                                    <button className="btn btn-primary btn-xs" onClick={() => {this.deleteAttachments(item.id)}}>Slett</button>
+                                    <button className="btn btn-primary btn-xs" onClick={() => {this.deleteAttachments(item.id)}}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
+                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                        <path fillRule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                    </svg>
+                                    </button>
                                       </td></tr>
                                       )
                             })}
                     
                 </tbody>
             </table>
-            <FileUpload 
-                onUploadComplete={this.getAttachments}
-            />
+            <Xcomp.HtmlString observableValue={[riskAssessment, 'filesDescription']} />                
+            </div> 
+    }
+            
         </div>)
     }
 }

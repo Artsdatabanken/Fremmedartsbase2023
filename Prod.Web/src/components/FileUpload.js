@@ -59,14 +59,15 @@ export default class FileUpload extends Component {
         return (<div className="fileUpload">
             {!showButtonOnly &&
             <>
-            <h5>Last opp nytt filvedlegg</h5>
+            <h5>Velg datafil du ønsker å laste opp</h5>
+            {/*<h5>Last opp nytt filvedlegg</h5>*/}
             <Xcomp.String className="col-md-12" disabled = {disabled} observableValue={[this.selectedFile, 'name']} placeholder={"Beskrivende navn (obligatorisk)"}/></>}
             {/* <input style={{marginTop: '20px'}} onChange={(e) => this.startOpplastinger(e,assessment.id)} type="file" multiple />
             <Documents/> */}
             <input type="file" id={"file"} style={{display:"none" }} onChange={(e) => this.startOpplastinger(e,assessment.id)} multiple/>
             <button className="btn btn-primary" 
                     id="button" name="button"
-                    disabled = {disabled}
+                    disabled = {disabled || this.selectedFile.name == ""}
                     //disabled={this.selectedFile.name === ""} 
                     style={{marginLeft: '15px', marginTop: '20px'}} 
                     onClick={() => this.thisFileUpload()}>Velg fil</button>

@@ -763,6 +763,8 @@ public partial class FA4 // (3.2) Artsegenskaper
         public string SpreadPVAAnalysisEstimatedSpeciesLongevityLowerQuartile { get; set; }  // lagt til 07.09.2016
         public string SpreadPVAAnalysisEstimatedSpeciesLongevityUpperQuartile { get; set; }  // lagt til 07.09.2016 
 
+        public string FilesDescription { get; set; } //Spread_PVA_Analysis
+
 
         //todo: is this section in use???
         //Rødliste info

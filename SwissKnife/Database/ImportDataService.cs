@@ -259,7 +259,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.AcceptOrAdjustCritA, opt => opt.Ignore())
                     .ForMember(dest => dest.Hovedøkosystem, opt => opt.Ignore())
 
-                    
+                    .ForMember(dest => dest.FilesDescription, opt => opt.Ignore())
 
                     .ForMember(dest => dest.StartYear, opt => opt.Ignore())
                     .ForMember(dest => dest.EndYear, opt => opt.Ignore())

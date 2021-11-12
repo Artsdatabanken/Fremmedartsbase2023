@@ -10,30 +10,32 @@ import DiagonalHatch from "./DiagonalHatch";
 import { UserContext } from "../observableComponents";
 
 const regionSortering = [
-  "Bs",
-  "Bn",
-  "Gh",
-  "Nh",
-  "Ns",
-  "Jm",
-  "Sv",
-  "Fi",
-  "Tr",
-  "No",
-  "Tø",
-  "Mr",
-  "Sf",
-  "Ho",
-  "Ro",
-  "Va",
-  "Aa",
-  "Te",
-  "Ve",
-  "Bu",
-  "Op",
-  "He",
-  "OsA",
-  "Øs"
+  { "navn": "Bs" },
+  { "navn": "Bn" },
+  { "navn": "Gh" },
+  { "navn": "Nh" },
+  { "navn": "Ns" },
+  { },
+  { "navn": "Jm" },
+  { "navn": "Sv"},
+  { },
+  { "navn": "Fi" },
+  { "navn": "Tr" },
+  { "navn": "No" },
+  { "navn": "Tø" },
+  { "navn": "Mr" },
+  { "navn": "Sf" },
+  { "navn": "Ho" },
+  { "navn": "Ro" },
+  { "navn": "Va" },
+  { "navn": "Aa" },
+  { "navn": "Te" },
+  { "navn": "Ve" },
+  { "navn": "Bu" },
+  { "navn": "Op" },
+  { "navn": "He" },
+  { "navn": "OsA" },
+  { "navn": "Øs" }
 ];
 
 const Fylkesforekomst = ({ fylkesforekomster }) => {
@@ -85,18 +87,19 @@ const Fylkesforekomst = ({ fylkesforekomster }) => {
           <FylkeslisteLegend index={1} />
           <FylkeslisteLegend index={3} />
           <FylkeslisteLegend index={2} />
-          {regionSortering.map(k => {
-            if (k)
+          {regionSortering.map((k, index) => {
+            if (k.navn) {
               return (
                 <FylkeslisteElement
-                  key={k}
-                  id={k}
-                  value={forekomsterAsObject[k]}
+                  key={k.navn}
+                  id={k.navn}
+                  value={forekomsterAsObject[k.navn]}
                   onSwitchCategory={action(handleSwitchCategory)}
                   rerenderhack={forekomsterAsObject}
                 />
               );
-            return <Spacer />;
+            }
+            return <Spacer key={index} />;
           })}
         </div>
         <div style={{ _float: "left" }}>

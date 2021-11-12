@@ -89,7 +89,10 @@ export default class Assessment30Artsegenskaper extends React.Component {
                     <h4>{labels.NaturalOrigin.habitat}</h4>
                     <Xcomp.Bool observableValue={[vurdering, 'limnic']} label={limnicTerrestrialMarinelabel("limnic")} />            
                     <Xcomp.Bool observableValue={[vurdering, 'terrestrial']} label={limnicTerrestrialMarinelabel("terrestrial")} />            
-                    <Xcomp.Bool observableValue={[vurdering, 'marine']} label={limnicTerrestrialMarinelabel("marine")} />     
+                    <Xcomp.Bool observableValue={[vurdering, 'marine']} label={limnicTerrestrialMarinelabel("marine")} />    
+                    {(isLimnicTerrestrial || isMarine) && 
+                        <h2>{labels.NaturalOrigin.globalPrevalence}</h2>
+                    } 
                     {/* <Xcomp.Bool observableValue={[vurdering, 'brackishWater']} label={limnicTerrestrialMarinelabel("brackishWater")} />         
                    appState.showBrackishWater
                     ? <Xcomp.Bool observableValue={[vurdering, 'brackishWater']} label={limnicTerrestrialMarinelabel("brackishWater")} />            
@@ -98,9 +101,7 @@ export default class Assessment30Artsegenskaper extends React.Component {
                     isLimnicTerrestrial ?
                     //vurdering.limnic || vurdering.terrestrial ?
                     <div>
-                        <br/>
-                        <div className="well">
-                        <h2>{labels.NaturalOrigin.globalPrevalence}</h2>
+                        <div className="well">                        
                         <h4>{labels.NaturalOrigin.naturalOrigin}</h4>
                         <OriginTable 
                             origins={vurdering.naturalOrigins} 
@@ -128,7 +129,6 @@ export default class Assessment30Artsegenskaper extends React.Component {
                             null}
                         </div>
                         <div className="well">
-                        <h2>{labels.NaturalOrigin.globalPrevalence}</h2>
                         <h4>{labels.NaturalOrigin.currentExistenceAria}</h4>
                         <OriginTable 
                             origins={vurdering.currentInternationalExistenceAreas} 
@@ -161,13 +161,11 @@ export default class Assessment30Artsegenskaper extends React.Component {
                     {isMarine ?
                     <div>
                         <div className="well">
-                        <h2>{labels.NaturalOrigin.globalPrevalence}</h2>
                             <h4>{labels.NaturalOrigin.naturalOrigin}</h4>
                             <Xcomp.MultiselectArray observableValue={[vurdering, 'naturalOriginMarine']} disabled={appState.userContext.readonly} codes={koder.naturalOriginMarine} labels={labels.General} />
                             <Xcomp.HtmlString observableValue={[vurdering, 'naturalOriginMarineDetails']} label={labels.NaturalOrigin.describeMarine} /> 
                         </div>
                         <div className="well">
-                        <h2>{labels.NaturalOrigin.globalPrevalence}</h2>
                             <h4>{labels.NaturalOrigin.currentExistenceAria}</h4>
                             <Xcomp.MultiselectArray observableValue={[vurdering, 'currentInternationalExistenceMarineAreas']} disabled={appState.userContext.readonly} codes={koder.naturalOriginMarine} labels={labels.General}/>
                             <Xcomp.HtmlString observableValue={[vurdering, 'currentInternationalExistenceMarineAreasDetails']} label={labels.NaturalOrigin.describeMarine} /> 
@@ -219,13 +217,14 @@ export default class Assessment30Artsegenskaper extends React.Component {
                 appState.showBrackishWater
                 ? <Xcomp.Bool observableValue={[vurdering, 'brackishWater']} label={limnicTerrestrialMarinelabel("brackishWater")} />            
                 : null*/}
+                {(isLimnicTerrestrial || isMarine) && 
+                        <h2>{labels.NaturalOrigin.globalPrevalence}</h2>
+                    } 
                 {
                 isLimnicTerrestrial ?
                 //vurdering.limnic || vurdering.terrestrial ?
                 <div>
-                    <br/>
                     <div className="well">
-                    <h2>{labels.NaturalOrigin.globalPrevalence}</h2>
                     <h4>{labels.NaturalOrigin.naturalOrigin}</h4>
                     <OriginTable 
                         origins={vurdering.naturalOrigins} 
@@ -253,7 +252,6 @@ export default class Assessment30Artsegenskaper extends React.Component {
                         null}
                     </div>
                     <div className="well">
-                    <h2>{labels.NaturalOrigin.globalPrevalence}</h2>
                     <h4>{labels.NaturalOrigin.currentExistenceAria}</h4>
                     <OriginTable 
                         origins={vurdering.currentInternationalExistenceAreas} 
@@ -286,13 +284,11 @@ export default class Assessment30Artsegenskaper extends React.Component {
                 {isMarine ?
                 <div>
                     <div className="well">
-                        <h2>{labels.NaturalOrigin.globalPrevalence}</h2>
                         <h4>{labels.NaturalOrigin.naturalOrigin}</h4>
                         <Xcomp.MultiselectArray observableValue={[vurdering, 'naturalOriginMarine']} disabled={appState.userContext.readonly} codes={koder.naturalOriginMarine} labels={labels.General} />
                         <Xcomp.HtmlString observableValue={[vurdering, 'naturalOriginMarineDetails']} label={labels.NaturalOrigin.describeMarine} /> 
                     </div>
                     <div className="well">
-                    <h2>{labels.NaturalOrigin.globalPrevalence}</h2>
                         <h4>{labels.NaturalOrigin.currentExistenceAria}</h4>
                         <Xcomp.MultiselectArray observableValue={[vurdering, 'currentInternationalExistenceMarineAreas']} disabled={appState.userContext.readonly} codes={koder.naturalOriginMarine} labels={labels.General}/>
                         <Xcomp.HtmlString observableValue={[vurdering, 'currentInternationalExistenceMarineAreasDetails']} label={labels.NaturalOrigin.describeMarine} /> 
@@ -348,6 +344,9 @@ export default class Assessment30Artsegenskaper extends React.Component {
                 <Xcomp.Bool observableValue={[vurdering, 'limnic']} label={limnicTerrestrialMarinelabel("limnic")} />            
                 <Xcomp.Bool observableValue={[vurdering, 'terrestrial']} label={limnicTerrestrialMarinelabel("terrestrial")} />            
                 <Xcomp.Bool observableValue={[vurdering, 'marine']} label={limnicTerrestrialMarinelabel("marine")} />     
+                {(isLimnicTerrestrial || isMarine) && 
+                        <h2>{labels.NaturalOrigin.globalPrevalence}</h2>
+                    } 
                 {/*<Xcomp.Bool observableValue={[vurdering, 'brackishWater']} label={limnicTerrestrialMarinelabel("brackishWater")} />         
                 appState.showBrackishWater
                 ? <Xcomp.Bool observableValue={[vurdering, 'brackishWater']} label={limnicTerrestrialMarinelabel("brackishWater")} />            
@@ -356,9 +355,7 @@ export default class Assessment30Artsegenskaper extends React.Component {
                 isLimnicTerrestrial ?
                 //vurdering.limnic || vurdering.terrestrial ?
                 <div>
-                    <br/>
                     <div className="well">
-                    <h2>{labels.NaturalOrigin.globalPrevalence}</h2>
                     <h4>{labels.NaturalOrigin.naturalOrigin}</h4>
                     <OriginTable 
                         origins={vurdering.naturalOrigins} 
@@ -386,7 +383,6 @@ export default class Assessment30Artsegenskaper extends React.Component {
                         null}
                     </div>
                     <div className="well">
-                        <h2>{labels.NaturalOrigin.globalPrevalence}</h2>
                         <h4>{labels.NaturalOrigin.currentExistenceAria}</h4>
                         <OriginTable 
                             origins={vurdering.currentInternationalExistenceAreas} 
@@ -419,13 +415,11 @@ export default class Assessment30Artsegenskaper extends React.Component {
                 {isMarine ?
                 <div>
                     <div className="well">
-                        <h2>{labels.NaturalOrigin.globalPrevalence}</h2>
                         <h4>{labels.NaturalOrigin.naturalOrigin}</h4>
                         <Xcomp.MultiselectArray observableValue={[vurdering, 'naturalOriginMarine']} disabled={appState.userContext.readonly} codes={koder.naturalOriginMarine} labels={labels.General} />
                         <Xcomp.HtmlString observableValue={[vurdering, 'naturalOriginMarineDetails']} label={labels.NaturalOrigin.describeMarine} /> 
                     </div>
                     <div className="well">
-                        <h2>{labels.NaturalOrigin.globalPrevalence}</h2>
                         <h4>{labels.NaturalOrigin.currentExistenceAria}</h4>
                         <Xcomp.MultiselectArray observableValue={[vurdering, 'currentInternationalExistenceMarineAreas']} disabled={appState.userContext.readonly} codes={koder.naturalOriginMarine} labels={labels.General}/>
                         <Xcomp.HtmlString observableValue={[vurdering, 'currentInternationalExistenceMarineAreasDetails']} label={labels.NaturalOrigin.describeMarine} /> 

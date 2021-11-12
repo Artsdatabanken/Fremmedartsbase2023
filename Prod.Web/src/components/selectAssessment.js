@@ -480,7 +480,7 @@ export default class SelectAssessment extends Component {
             
             <div className="usedFilters">
             <div className="counter">
-            {(!appState.kunUbehandlede && !appState.horizonScanFilter.hsNotStarted && !appState.horizonScanFilter.hsFinished && !appState.horizonScanFilter.toAssessment && !appState.horizonScanFilter.notAssessed && appState.responsible.length == 0) ?
+            {(appState.expertgroupAssessmentFilter == "" && !appState.kunUbehandlede && !appState.horizonScanFilter.hsNotStarted && !appState.horizonScanFilter.hsFinished && !appState.horizonScanFilter.toAssessment && !appState.horizonScanFilter.notAssessed && appState.responsible.length == 0) ?
                 
                 <span>{labels.SelectAssessment.showingTotal} {appState.expertgroupAssessmentTotalCount} {appState.expertgroupAssessmentTotalCount == 1 ? labels.SelectAssessment.assessment : labels.SelectAssessment.assessments}</span>
                 :            
