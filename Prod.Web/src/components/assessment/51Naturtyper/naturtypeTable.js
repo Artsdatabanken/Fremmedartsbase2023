@@ -11,7 +11,7 @@ const kodeTekst = (koder, verdi) => koder.filter(item => item.Value === verdi).m
 export class NaturtypeRad extends React.Component {
     constructor(props) {
         super()
-        const {naturtype, fabModel, deleteRow} = props;
+        const {naturtype, appState, deleteRow} = props;
         extendObservable(this, {
             showModal: false,
             hideStateChange: false
@@ -41,7 +41,7 @@ export class NaturtypeRad extends React.Component {
 
 
     render() {
-        const {naturtype, fabModel, deleteRow, labels, disabled, codes, appState:{assessment}} = this.props;
+        const {naturtype, appState, deleteRow, labels, disabled, codes, appState:{assessment}} = this.props;
         
         const riskAssessment = assessment.riskAssessment 
         const gLabels = labels.General
@@ -51,11 +51,11 @@ export class NaturtypeRad extends React.Component {
         //const dominanceForrest = nt.DominanceForrest.join('\n')
         const dominanceForrest = nt.DominanceForrest
       /*  const ntlabel = (nt.NiNCode && nt.NiNCode.length > 3 && nt.NiNCode.startsWith("LI "))
-            ? fabModel.livsmediumLabels[nt.NiNCode]
-            : fabModel.naturtypeLabels[nt.NiNCode] */
+            ? appState.livsmediumLabels[nt.NiNCode]
+            : appState.naturtypeLabels[nt.NiNCode] */
        // const stateChangLabel = nt.StateChange.map(sc => kodeTekst(koder.tilstandsendringer, sc)).join('\n')
        const stateChangLabel = nt.stateChange
-        // console.log("row: " + JSON.stringify(nt))
+        console.log("NT row: " + JSON.stringify(nt))
         return(
             <tr>
                 <td>{nt.niNCode}</td>
@@ -129,7 +129,7 @@ export class NaturtypeRad extends React.Component {
                         showModal={[this, "showModal"]}
                         hideStateChange={[this, "hideStateChange"]} 
                         onOk={this.updateNaturetype} 
-                        fabModel={fabModel} 
+                        appState={appState} 
                         labels={labels}/>
                     : null}
                     
@@ -150,9 +150,12 @@ export class NaturtypeRad extends React.Component {
 @observer
 export default class NaturtypeTable extends React.Component {
     render() {
-        const {naturetypes, labels, canRenderTable, fabModel, desc, codes, disabled} = this.props;
+        const {naturetypes, labels, canRenderTable, appState, desc, codes, disabled} = this.props;
         const ntLabels = labels.NatureTypes
-        // console.log("naturtyperader#: " + naturetypes.length)
+        console.log("naturtyperader#: " + naturetypes.length)
+        console.log("nt table: " + JSON.stringify(naturetypes))
+        console.log("canRenderTable: " + canRenderTable)
+
         return(
             <div><p>{desc}</p>
             <table className="table naturetype">
@@ -185,14 +188,14 @@ export default class NaturtypeTable extends React.Component {
                 </tr>
             </thead>
             <tbody>
-                {!canRenderTable ? naturetypes.map(nt => { 
+                {canRenderTable ? naturetypes.map(nt => { 
                     const deleteRow = () => naturetypes.remove(nt)
                     
                     //const key = nt.NiNCode + nt.TimeHorizon + nt.ColonizedArea + nt.StateChange.join(';') + nt.AffectedArea
                     //const key = nt.NiNCode + nt.TimeHorizon + nt.ColonizedArea
-                    //console.log(nt)
+                    console.log("nt row: " + JSON.stringify(nt))
                     const key = nt.niNCode
-                    return <NaturtypeRad key={key} naturtype={nt} deleteRow={deleteRow} codes={codes} fabModel={fabModel} labels={labels} disabled={disabled}/> }) :
+                    return <NaturtypeRad key={key} naturtype={nt} deleteRow={deleteRow} codes={codes} appState={appState} labels={labels} disabled={disabled}/> }) :
                     null
                 }
             </tbody>

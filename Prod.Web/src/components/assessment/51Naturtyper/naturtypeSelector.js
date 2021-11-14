@@ -10,19 +10,25 @@ import { action } from 'mobx';
 @observer
 export default class NaturtypeSelector extends React.Component {
     constructor(props) {
+        console.log("nts: " + JSON.stringify(props.naturtyper, undefined))
         super(props)
+
     }
-    truncLI(kode) {
+    truncCode(kode) {
+        console.log("trunc: '" + kode + "'")
         return (kode && kode.length > 3 && kode.startsWith("LI ")) 
             ? kode.substring(3)
             : kode
     }
     render() {
         const {naturtyper, setSelected} = this.props;
+
+        // console.log("SELECTOR: " + JSON.stringify(naturtyper, undefined, 2))
+
         return(
             <div>
                 {naturtyper.map(hovedtypegruppe => 
-                    <div key={hovedtypegruppe.id}>
+                    <div key={hovedtypegruppe.Id}>
                         <div
                         className={"glyphicon glyphicon-chevron-down tree-view-arrow " }
                             //className={"glyphicon glyphicon-chevron-down tree-view-arrow " + (hovedtypegruppe.Collapsed ? "tree-view-arrow-collapsed" : "")}
@@ -32,9 +38,9 @@ export default class NaturtypeSelector extends React.Component {
                         </div>
                         <div className="tree-view-label">
                             <span className="hovedtypegruppe">
-                                <span className="naturtype-kode" style={{width: "30px"}}>{this.truncLI(hovedtypegruppe.id)}</span>
+                                <span className="naturtype-kode" style={{width: "30px"}}>{this.truncCode(hovedtypegruppe.Value)}</span>
                                {/* <span>{hovedtypegruppe.name}</span> */}
-                                <span>{hovedtypegruppe.Text}</span>
+                                <span>{hovedtypegruppe.Id}</span>
                             </span>
                         </div>
                         {
@@ -42,26 +48,28 @@ export default class NaturtypeSelector extends React.Component {
                         //hovedtypegruppe.Children ?
                         <div className="tree-view-children">
                         {hovedtypegruppe.Children.map(hovedtype =>
-                            <div key={hovedtype.Text}>
+                            <div key={hovedtype.Id}>
                                 <div
-                                    className={"glyphicon glyphicon-chevron-down tree-view-arrow " + (hovedtype.Collapsed ? "tree-view-arrow-collapsed" : "")}
+                                    className={"glyphicon glyphicon-chevron-down tree-view-arrow " + 
+                                        (hovedtype.Collapsed ? "tree-view-arrow-collapsed" : "")}
                                     onClick={() => hovedtype.Collapsed = !hovedtype.Collapsed}>
-                                    {/*▾*/}
+                                    {hovedtype.Collapsed == false ? <ExpandMoreIcon/> : <NavigateNextIcon/>}
                                 </div>
                                 <div className="tree-view-label" onClick={() => setSelected(hovedtype.Id) }>
                                     <Xcomp.Button className="hovedtype btn-flat">
-                                        {/*<span className="naturtype-kode">{this.truncLI(hovedtype.Id)}</span>
-                                        <span>{hovedtype.Name}</span>*/}
+                                        <span className="naturtype-kode">{this.truncCode(hovedtype.Id)}</span>
+                                        {/* <span>{hovedtype.name}</span> */}
                                         <span>{hovedtype.Text}</span>
                                     </Xcomp.Button>
                                 </div>
                                 {!hovedtype.Collapsed && hovedtype.Children ?
                                 <div className="tree-view-children">
                                 {hovedtype.Children.map(grunntype =>
-                                    <div key={grunntype.Text} onClick={() => setSelected(grunntype.Id)}>
+                                    <div key={grunntype.Id} onClick={() => setSelected(grunntype.Id)}>
                                         <span className="grunntype btn-flat">
-                                            <span className="naturtype-kode">{this.truncLI(grunntype.Id)}</span>
-                                            <span>{grunntype.name}</span>
+                                            <span className="naturtype-kode">{this.truncCode(grunntype.Id)}</span>
+                                            {/* <span>{grunntype.name}</span> */}
+                                            <span>{grunntype.Text}</span>
                                         </span>
                                     </div>
                                 )}

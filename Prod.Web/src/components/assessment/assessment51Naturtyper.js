@@ -44,7 +44,7 @@ export default class Assessment51Naturtyper extends React.Component {
         const riskAssessment = assessment.riskAssessment // fabModel.activeRegionalRiskAssessment
         // const labels = config.labels.NatureType
         
-        const fabModel = appState
+        // const fabModel = appState
         const labels = appState.codeLabels
         const koder = appState.koder
         const disabled = appState.userContext.readonly
@@ -60,9 +60,11 @@ export default class Assessment51Naturtyper extends React.Component {
         const critC = getCriterion(riskAssessment, 0, "C")
         const critF = getCriterion(riskAssessment, 1, "F")
         const critG = getCriterion(riskAssessment, 1, "G")
-        critC.auto = false
-        critF.auto = false
-        critG.auto = false
+        action(() => {
+            critC.auto = false
+            critF.auto = false
+            critG.auto = false
+        })
         const nts = appState.naturtyper
         const doms = appState.dominansSkog
         var hasImpactAbroad = false 
@@ -74,26 +76,30 @@ export default class Assessment51Naturtyper extends React.Component {
             }
         }
 
-        const canRenderTable = !!appState.naturtypeLabels && (!!appState.dominansSkog || appState.language === "SV")
+        // const canRenderTable = !!appState.naturtypeLabels && (!!appState.dominansSkog || appState.language === "SV")
+        const canRenderTable = !!appState.naturtypeLabels
         return (
             <div>
 
               {/*  <h4>{ntLabels.colonizedAreaHeading}</h4>     */}     
-              <fieldset className="well"> 
-              <h2>{ntLabels.heading}</h2>    
-                <NewNaturetype
+                <fieldset className="well"> 
+                    <h2>{ntLabels.heading}</h2>    
+                {/* <NewNaturetype
                     appState={appState}
                     addNaturtype={this.addNaturtype}
                     labels={labels}
                     codes={koder.redlistedNaturetypes}
                     header={ntLabels.chooseRL2018}
-                    superheader={ntLabels.redListEffects}/> 
-                </fieldset>
+                    superheader={ntLabels.redListEffects}/> */}
+                </fieldset> 
 
                 {assessment.redlistedNatureTypes.length > 0 && <fieldset className="well">
                 <h4>
                     Data fra tidligere vurdering (basert på Rødlista for naturtyper 2018 og NiN 2.0):
                 </h4>
+
+
+
                 <RedlistedNaturetypeTable
                     naturetypes={assessment.redlistedNatureTypes}
                     canRenderTable={canRenderTable}
@@ -102,6 +108,33 @@ export default class Assessment51Naturtyper extends React.Component {
                 </fieldset>}
 
                 <fieldset className="well">               
+                <hr />
+                <hr />
+                {true || appState.livsmediumEnabled
+                ? <div>
+                    <br />
+                    <p>{labels.NatureTypes.chooseLM}:</p>
+                    {appState.livsmediumCodes
+                        ? <NewNaturetype
+                        appState={appState}
+                        addNaturtype={this.addNaturtype}
+                        labels={labels}
+                        codes={appState.livsmediumCodes}
+                        header={ntLabels.chooseNT}
+                        hideStateChange={true}
+                        superheader={ntLabels.colonizedAreaAndEffects} />
+                        
+                        // <NaturtypeSelector
+                        //     naturtyper={appState.livsmediumCodes}
+                        //     mode={"livsmedium"}
+                        //     setSelected={this.setSelectedLivsmedium}/>
+                        : null}
+                </div>
+                : null}
+                <hr />
+                <hr />
+
+
                <NewNaturetype
                     appState={appState}
                     addNaturtype={this.addNaturtype}
@@ -117,7 +150,7 @@ export default class Assessment51Naturtyper extends React.Component {
                     canRenderTable={canRenderTable}
                     labels={labels}
                     codes={koder}
-                    fabModel={appState}
+                    appState={appState}
                     disabled={disabled}
                     desc={ntLabels.colonizedAreaDescription}/>
                 </fieldset>  
@@ -266,7 +299,7 @@ export default class Assessment51Naturtyper extends React.Component {
             
                 <br/> */}
                 
-                <fieldset className="well">
+                {/* <fieldset className="well">
                     <h4>{ntLabels.habitat}</h4>
                     <p>{ntLabels.chooseHabitat}</p>
                     <HabitatTable
@@ -283,8 +316,8 @@ export default class Assessment51Naturtyper extends React.Component {
                             label={ntLabels.usesLivingSpeciesAsHabitatScientificName}
                             observableValue={[assessment, 'usesLivingSpeciesAsHabitatScientificName']}/> :
                         null }
-                        </div> */}
-                </fieldset>
+                        </div> * /}
+                </fieldset> */}
                 <fieldset className="well">
                     <h4>{ntLabels.mainEcosystem}</h4>     
                     <Xcomp.MultiselectArray

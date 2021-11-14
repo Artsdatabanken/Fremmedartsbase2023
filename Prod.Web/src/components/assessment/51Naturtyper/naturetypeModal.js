@@ -136,6 +136,8 @@ export default class NaturetypeModal extends React.Component {
                             observableValue={[this.editNaturtype, 'colonizedArea']}
                             codes={koder.colonizedArea}
                             forceSync/>
+
+
                         {hsc[hscprop]
                             ? null
                             : <Xcomp.MultiselectArray
@@ -145,12 +147,16 @@ export default class NaturetypeModal extends React.Component {
                                 codes={koder.tilstandsendringer}
                                 forceSync
                                 formlayout/>}
-                        <StringEnum2
+
+
+
+
+                        {/* <StringEnum2
                             label={ntLabels.affectedArea}
                             observableValue={[this.editNaturtype, 'affectedArea']}
                             codes={koder.affectedArea}
                             forceSync
-                            observableDisabled={hsc[hscprop] || [this, "hasStateChange"]}/>
+                            observableDisabled={hsc[hscprop] || [this, "hasStateChange"]}/> */}
                         <Xcomp.MultiselectArray
                                 label={ntLabels.assessmentBackground}
                                 observableValue={[this.editNaturtype, 'background']} 

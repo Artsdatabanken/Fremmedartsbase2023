@@ -9,10 +9,10 @@ import NaturtypeModal from './naturetypeModal';
 export default class NewNaturetype extends React.Component {
     constructor(props) {
         super()
-        const {appState, addNaturtype} = props;
+        const {appState, addNaturtype, hideStateChange} = props;
         extendObservable(this, {
             showModal: false,
-            hideStateChange: false,
+            hideStateChange: hideStateChange,
             // hasStateChange: false,
             // naturtypeLabel: null,
             nyNaturtype: {
@@ -29,26 +29,26 @@ export default class NewNaturetype extends React.Component {
 
 
         this.setSelectedNT = action ((naturtypekode) => {
+            console.log("Nincode: " + naturtypekode)
             const nnt = this.nyNaturtype
-            // console.log("Nincode: " + naturtypekode)
             nnt.niNCode = naturtypekode
-            nnt.dominanceForrest.clear()
+            // nnt.dominanceForrest.clear()
             nnt.timeHorizon = null
             nnt.colonizedArea = null
-            nnt.stateChange.clear()
+            // nnt.stateChange.clear()
             nnt.affectedArea = null
-            nnt.background.clear()
+            // nnt.background.clear()
             this.showModal = true
         })
 
         this.setSelectedNaturtype = action((naturtypekode) => {
-            this.hideStateChange = false;
+            // this.hideStateChange = false;
             this.setSelectedNT(naturtypekode)
         })
-        this.setSelectedLivsmedium = action((naturtypekode) => {
-            this.hideStateChange = true;
-            this.setSelectedNT(naturtypekode)
-        })
+        // this.setSelectedLivsmedium = action((naturtypekode) => {
+        //     // this.hideStateChange = true;
+        //     this.setSelectedNT(naturtypekode)
+        // })
 
 
         // this.onOk = (obj) => {
@@ -63,8 +63,11 @@ export default class NewNaturetype extends React.Component {
         const lms = appState.livsmediumCodes
         const doms = appState.dominansSkog
         const koder = appState.koder
-        //console.log(nts)
+        // console.log("NTS: " + JSON.stringify(nts, undefined, 2))
         // console.log("labels " + JSON.stringify(labels))
+
+        console.log("lms" + lms)
+
 
         return <div className="natureType">
             {/* {appState.language === "SV"
@@ -80,7 +83,7 @@ export default class NewNaturetype extends React.Component {
                         />
                     : null}
             </div>
-            {appState.livsmediumEnabled
+            {/* {appState.livsmediumEnabled
                 ? <div>
                     <br />
                     <p>{labels.NatureTypes.chooseLM}:</p>
@@ -91,7 +94,7 @@ export default class NewNaturetype extends React.Component {
                             setSelected={this.setSelectedLivsmedium}/>
                         : null}
                 </div>
-                : null}
+                : null} */}
             {this.showModal
             ? <NaturtypeModal
                 
