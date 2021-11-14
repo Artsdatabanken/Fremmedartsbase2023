@@ -418,7 +418,7 @@ class ViewModel {
             () => [this.expertgroup, auth.isLoggedIn, this.assessmentTypeFilter, this.expertgroupAssessmentFilter,
                 this.horizonScanFilter.notAssessedDoorKnocker.length, 
                 this.horizonScanFilter.potentialDoorKnockers.length,
-                this.horizonScanFilter.hsNotStarted, this.horizonScanFilter.hsFinished, this.horizonScanFilter.toAssessment, this.horizonScanFilter.notAssessed,
+                this.horizonScanFilter.hsNotStarted, this.horizonScanFilter.hsFinished, this.horizonScanFilter.toAssessment, this.horizonScanFilter.notAssessed, this.comments.kunUbehandlede,
                 this.responsible.length
             ],
             ([expertgroupId, isLoggedIn])  => {
@@ -1148,6 +1148,8 @@ class ViewModel {
                 console.log(this.responsible)
                 filters = filters + this.responsible.map((x)=> "&Responsible=" + x ).join()
             }
+
+            if (this.kunUbehandlede) filters = filters + "&Comments.KunUbehandlede=true"
         }else{
             filters=filters + "&HorizonScan=false"
         }

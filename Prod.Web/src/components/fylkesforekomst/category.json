@@ -2,8 +2,8 @@
   {
     "key": "known",
     "title": "Kjent",
-    "x": 0,
-    "y": 0,
+    "x": 24,
+    "y": 14,
     "tooltip": "Kjent",
     "normal": {
       "stroke": "hsl(22, 35%, 18%)",
@@ -21,8 +21,8 @@
     "key": "assumed",
     "title": "Antatt i dag",
     "tooltip": "Antatt i dag",
-    "x": 0,
-    "y": 10,
+    "x": 24,
+    "y": 68,
     "normal": {
       "stroke": "hsl(35, 72%, 25%)",
       "strokeWidth": 1,
@@ -37,8 +37,8 @@
   },
   {
     "title": "Ikke kjent",
-    "x": 0,
-    "y": 30,
+    "x": 24,
+    "y": 120,
     "tooltip": "Ikke kjent",
     "normal": {
       "stroke": "hsl(10, 10%, 25%)",
@@ -55,8 +55,8 @@
   {
     "key": "assumed_future",
     "title": "Antatt om 50 år",
-    "x": 0,
-    "y": 20,
+    "x": 24,
+    "y": 172,
     "tooltip": "Antatt om 50 år",
     "normal": {
       "stroke": "hsl(26.7, 15%, 25%)",

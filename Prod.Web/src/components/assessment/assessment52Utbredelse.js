@@ -19,12 +19,14 @@ import { action, computed, observable } from 'mobx';
 @inject('appState')
 @observer
 export default class Assessment52Utbredelse extends React.Component {
-    // @computed get isDirty() {
-    //     if (!this.props.appState.assessmentId) return false
-    //     const a = JSON.stringify(this.props.appState.assessment)
-    //     const b = this.props.appState.assessmentSavedVersionString
-    //     return a != b
-    // }
+
+    // code looks unused, but it makes the Artskart-module listen to changes
+    @computed get isDirty() {
+        if (!this.props.appState.assessmentId) return false
+        const a = JSON.stringify(this.props.appState.assessment)
+        const b = this.props.appState.assessmentSavedVersionString
+        return a != b
+    }
 
     // a method to check if a given property is smaller than a given value
 

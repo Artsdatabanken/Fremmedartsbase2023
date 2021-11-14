@@ -13,6 +13,7 @@ namespace Prod.Api.Models
             Current = new Current();
             Progress = new Progress();
             Horizon = new Horizon();
+            Comments = new Comments();
         }
         public int Page { get; set; }
         public int PageSize { get; set; }
@@ -35,7 +36,7 @@ namespace Prod.Api.Models
         /// Filters related to horizonScanning
         /// </summary>
         public Horizon Horizon { get; set; }
-
+        public Comments Comments { get; set; }
         /// <summary>
         /// If mode is HorizonScan or full assessment 
         /// </summary>
@@ -60,5 +61,10 @@ namespace Prod.Api.Models
         public bool Finished { get; set; }
         public bool ToAssessment { get; set; }
         public bool NotAssessed { get; set; }
+    }
+
+    public class Comments
+    {
+        public bool KunUbehandlede { get; set; }
     }
 }
