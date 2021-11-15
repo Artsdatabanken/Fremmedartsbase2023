@@ -4962,7 +4962,7 @@
                         {
                             "Id": null,
                             "Value": "statusInNorway",
-                            "Text": "Hvilken etableringskategori har arten i Norge?",
+                            "Text": "Hvilken status har arten[s regionalt fremmede forekomster] i Norge?",
                             "Info": null,
                             "Children": null
                         },
@@ -4983,7 +4983,7 @@
                         {
                             "Id": null,
                             "Value": "establishedBefore1800",
-                            "Text": "Var arten etablert per 1800?",
+                            "Text": "Var arten[s regionalt fremmede forekomster] etablert per 1800?",
                             "Info": null,
                             "Children": null
                         },

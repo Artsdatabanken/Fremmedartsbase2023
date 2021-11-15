@@ -6,6 +6,7 @@ import HelpIcon from '@material-ui/icons/Help';
 import ExpertGroupModel from './expertGroupModel'
 import SelectAssessmentTable from './selectAssessmentTable';
 import { createConfigItem } from '@babel/core';
+import auth from './authService';
 import config from '../config';
 // import SelectAssessmentStatistics from './selectAssessmentStatistics';
 // import auth from './authService';
@@ -147,6 +148,10 @@ export default class SelectAssessment extends Component {
 
         // console.log("loaded" + appState.isServicesReady)
 
+        const isInternal = auth.user.profile.email.indexOf("artsdatabanken.no") > -1
+
+        //console.log(isInternal)
+
         return (
             <div>
                 {!config.isNotTest && config.isRelease && <table className="table warning table-striped">
@@ -158,7 +163,7 @@ export default class SelectAssessment extends Component {
                  <Xcomp.StringEnum 
                                     //forceSync
                                     className="assessmentType"
-                                    disabled={config.isNotTest}                                                                        
+                                    disabled={config.isNotTest && !isInternal}                                                                        
                                     observableValue={[appState, 'assessmentTypeFilter']} 
                                     heading={labels.SelectAssessment.whatDoYouWantToDo}
                                     codes={koder.assessmentType}

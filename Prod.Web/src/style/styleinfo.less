@@ -579,7 +579,7 @@ table.migrationPathways td {
       }
 }
 
-table.migrationPathways button {
+table.migrationPathways button, .files table button {
   height: 30px;
   padding: 0 10px 0;
   box-shadow:none;
@@ -1062,8 +1062,13 @@ ul.scores li.checkbox label input {
   margin-left: 30px;
 }
 
-.selectAssessment, .chooseSpecies, .files {
+.selectAssessment, .chooseSpecies {
   display: flex;
+}
+
+.files {
+  display: flex;
+  margin-top: 50px;
 }
 
 .fileUpload {
@@ -1757,6 +1762,14 @@ fieldset.well {
     padding-inline-start: 10px;
   }
 
+}
+
+fieldset.well .files table.table-striped {
+  margin-left: 0;
+  td {
+    padding: 10px;
+    background-color: #f5f5f5; 
+  }
 }
 
 .well button.pull-left {
