@@ -418,6 +418,8 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.TaxonomicHistory, opt => opt.Ignore()) // ny av året
                     .ForMember(dest => dest.ImportInfo, opt => opt.Ignore()) // ny av året
                     .ForMember(dest => dest.EvaluatedScientificNameRank, opt => opt.Ignore()) // ny av året
+                    .ForMember(dest => dest.ArtskartAdded, opt => opt.Ignore()) // ny av året
+                    .ForMember(dest => dest.ArtskartRemoved, opt => opt.Ignore()) // ny av året
                     .AfterMap((src, dest) =>
                     {
                         // set some standard values
