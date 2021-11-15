@@ -4969,14 +4969,14 @@
                         {
                             "Id": null,
                             "Value": "highestCategoryPerToday",
-                            "Text": "Merk av den høyeste (øverste) kategorien som oppfylles av arten i Norge i dag:",
+                            "Text": "Merk av den høyeste (øverste) klassen som oppfylles av arten i Norge i dag:",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "codesExplanation",
-                            "Text": "Koder i parentes angir «etableringskategoriene» ifølge internasjonal standardisering (Blackburn mfl. 2011).",
+                            "Text": "Koder i parentes angir «etableringsklassene» ifølge internasjonal standardisering (Blackburn mfl. 2011).",
                             "Info": null,
                             "Children": null
                         },

@@ -175,7 +175,7 @@ export default class Assessment52Utbredelse extends React.Component {
                                 </div>
                                 {assessment.speciesStatus == "C3" && 
                                 <div style={{marginTop: '50px'}}>
-                                    <p>Hvilken etableringskategori har arten i Norge? Merk av den høyeste (øverste) kategorien som oppfylles av arten i Norge i dag.</p>  
+                                    <p>Hvilken etableringsklasse har arten i Norge? Merk av den høyeste (øverste) klassen som oppfylles av arten i Norge i dag.</p>  
                                     <br/> 
                                     {/* ToDo: Bug - speciesDistribution not found */}
                                     <Xcomp.StringEnum observableValue={[assessment, "speciesEstablishmentCategory"]} mode="radio" options={this.checkArea(assessment.riskAssessment.AOOtotalBest)} codes={koder.DistributionOptions}/>
