@@ -1353,6 +1353,12 @@ public partial class FA4 // (3.2) Artsegenskaper
         public string LockedForEditTimeStamp { get; set; }
     }
 
+    public partial class FA4
+    {
+        public string ArtskartAdded { get; set; }
+        public string ArtskartRemoved { get; set; }
+    }
+
 
     // todo: Move into Fremmedart2012  (conflict with propertyname)
     public class SpreadHistory
