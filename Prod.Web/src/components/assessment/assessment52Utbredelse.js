@@ -80,11 +80,12 @@ export default class Assessment52Utbredelse extends React.Component {
                 .join(",");
         ass.artskartAdded = points2String("add");
         ass.artskartRemoved = points2String("remove");
+        // console.log('assessment52...', ass.artskartAdded, ass.artskartRemoved);
     }
 
     render() {
         // console.log('Assessment52Utbredelse');
-        const renderAgain = this.isDirty;
+        const renderAgain = this.isDirty; // code looks unused, but it makes the Artskart-module listen to changes
         const {appState:{assessment}, appState, appState:{infoTabs}} = this.props;
         // const {appState:{assessment}, vurdering, fabModel} = this.props
         // const labels = fabModel.kodeLabels.DistributionHistory
@@ -129,7 +130,9 @@ export default class Assessment52Utbredelse extends React.Component {
                                         labels={labels}
                                         utvalg={assessment.riskAssessment}
                                         onOverførFraArtskart={action(this.handleOverførFraArtskart)}
-                                        />
+                                        artskartAdded={assessment.artskartAdded}
+                                        artskartRemoved={assessment.artskartRemoved}
+                                    />
                                 </div>
                                 <p style={{marginBottom: '0'}}>Basert på periode:</p>
                                 <div className="distributionYears">
