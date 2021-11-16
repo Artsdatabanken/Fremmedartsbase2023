@@ -42,13 +42,14 @@ export default class Documents extends Component {
     render() {
         const {appState, appState:{assessment, koder}} = this.props
         const riskAssessment = assessment.riskAssessment
+        console.log(this.attachments)
         return(
         <div className="files">
             <FileUpload 
                 onUploadComplete={this.getAttachments}
             />
             {/*<h2>Filer for {assessment.id}</h2>*/}
-            {this.attachments && 
+            {this.attachments.length > 0 && 
             <div>
                 <h5>Opplastede filer med beskrivelse</h5>
             <table className="table table-striped">
@@ -60,8 +61,7 @@ export default class Documents extends Component {
                     </tr>
                 </thead>
                 <tbody>
-                {this.attachments &&
-                            this.attachments.map((item) => {
+                {this.attachments.map((item) => {
                                 return (<tr key={item.id}>
                                     <td>
                                         <a href={config.getUrl('document/getfile/' + item.id)} download={item.fileName} target="_blank" >{item.fileName}</a>                                        

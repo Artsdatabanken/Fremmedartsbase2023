@@ -405,7 +405,7 @@ export default class Assessment20ArtensStatus extends React.Component {
                                                     integer
                                                     yearRange={true}
                                                 />    
-                                                <Xcomp.Bool observableValue={[assessment.riskAssessment, "yearFirstEstablishmentProductionArea"]} /> 
+                                                <Xcomp.Bool observableValue={[assessment.riskAssessment, "yearFirstEstablishmentProductionAreaInsecure"]} /> 
                                                 </li>
                                         }
                                         
@@ -434,7 +434,7 @@ export default class Assessment20ArtensStatus extends React.Component {
                                                 integer
                                                 yearRange={true}
                                             />    
-                                            <Xcomp.Bool observableValue={[assessment.riskAssessment, "yearFirstEstablishedNature"]} /> 
+                                            <Xcomp.Bool observableValue={[assessment.riskAssessment, "yearFirstEstablishedNatureInsecure"]} /> 
                                             </li>}
                                     </ul>
                                     </div>
