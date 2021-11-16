@@ -80,17 +80,19 @@ export default class Assessment52Utbredelse extends React.Component {
                 .join(",");
         ass.artskartAdded = points2String("add");
         ass.artskartRemoved = points2String("remove");
+        // console.log('assessment52...', ass.artskartAdded, ass.artskartRemoved);
     }
 
     render() {
         // console.log('Assessment52Utbredelse');
-        const renderAgain = this.isDirty;
+        const renderAgain = this.isDirty; // code looks unused, but it makes the Artskart-module listen to changes
         const {appState:{assessment}, appState, appState:{infoTabs}} = this.props;
         // const {appState:{assessment}, vurdering, fabModel} = this.props
         // const labels = fabModel.kodeLabels.DistributionHistory
         
         // const labels = fabModel.codeLabels.DistributionHistory
         const koder = appState.koder
+        const generalLabels = appState.codeLabels 
         const labels = appState.codeLabels.DistributionHistory
 
         return (
@@ -129,7 +131,9 @@ export default class Assessment52Utbredelse extends React.Component {
                                         labels={labels}
                                         utvalg={assessment.riskAssessment}
                                         onOverførFraArtskart={action(this.handleOverførFraArtskart)}
-                                        />
+                                        artskartAdded={assessment.artskartAdded}
+                                        artskartRemoved={assessment.artskartRemoved}
+                                    />
                                 </div>
                                 <p style={{marginBottom: '0'}}>Basert på periode:</p>
                                 <div className="distributionYears">
@@ -175,7 +179,7 @@ export default class Assessment52Utbredelse extends React.Component {
                                 </div>
                                 {assessment.speciesStatus == "C3" && 
                                 <div style={{marginTop: '50px'}}>
-                                    <p>Hvilken etableringskategori har arten i Norge? Merk av den høyeste (øverste) kategorien som oppfylles av arten i Norge i dag.</p>  
+                                    <p> {assessment.isRegionallyAlien ? generalLabels.SpeciesStatus.statusInNorwayRegionallyAlien : generalLabels.SpeciesStatus.statusInNorway } {generalLabels.SpeciesStatus.highestCategoryPerToday}</p>  
                                     <br/> 
                                     {/* ToDo: Bug - speciesDistribution not found */}
                                     <Xcomp.StringEnum observableValue={[assessment, "speciesEstablishmentCategory"]} mode="radio" options={this.checkArea(assessment.riskAssessment.AOOtotalBest)} codes={koder.DistributionOptions}/>
@@ -186,6 +190,7 @@ export default class Assessment52Utbredelse extends React.Component {
                                 </div> */}
                             </div>
                         }
+                        <hr></hr>  
                             <div>
                                 <Documents/>
                             </div>

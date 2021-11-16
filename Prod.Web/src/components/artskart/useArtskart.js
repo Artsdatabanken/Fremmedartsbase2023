@@ -71,7 +71,6 @@ const useArtskart = ({
     
     lng = parseInt((lng + eastAdd) / 2000) * 2000 - eastSub
     lat = parseInt((lat) / 2000) * 2000 + 1000;
-    // console.log('handleAddPoint ', observations, observations.features.length, e.latlng, {lng, lat});
 
     const point = {
       geometry: {

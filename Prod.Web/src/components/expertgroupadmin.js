@@ -114,10 +114,10 @@ export default class ExpertGroupAdmin extends React.Component {
                 </select> */}
                 </td>
                 <td>
-                <Xcomp.Bool observableValue={[expertGroupModel.valgtekspertsrolleivalgtekspertgruppe, 'leder']} />
+                    <Xcomp.Bool observableValue={[expertGroupModel.valgtekspertsrolleivalgtekspertgruppe, 'leder']} />
                 </td>
                 <td>
-                <Xcomp.Bool observableValue={[expertGroupModel.valgtekspertsrolleivalgtekspertgruppe, 'skriver']} />
+                    <Xcomp.Bool observableValue={[expertGroupModel.valgtekspertsrolleivalgtekspertgruppe, 'skriver']} />
                 </td>
                 {/* <td>
                 <Xcomp.Bool observableValue={[expertGroupModel.valgtekspertsrolleivalgtekspertgruppe, 'leser']} /></td> */}

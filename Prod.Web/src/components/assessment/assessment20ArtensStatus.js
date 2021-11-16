@@ -142,7 +142,7 @@ export default class Assessment20ArtensStatus extends React.Component {
                                     <ul className="panel list-unstyled">
                                     {connectedTaxon1.taxonSearchResult.map(item =>
                                         <li onClick={action(e => {
-                                            console.log(JSON.stringify(item))
+                                            //console.log(JSON.stringify(item))
 
                                             assessment.connectedTaxon1.TaxonId = item.taxonId;
                                             assessment.connectedTaxon1.TaxonRank = item.taxonRank;
@@ -226,7 +226,7 @@ export default class Assessment20ArtensStatus extends React.Component {
                      <div>
                          <p>{labels.SpeciesStatus.isProductionSpecies}</p>                          
                          <Xcomp.StringEnum observableValue={[assessment, "productionSpecies"]} mode="radio" codes={codes.yesNo}/> </div>
-                         <p> {labels.SpeciesStatus.statusInNorway}</p>
+                         <p> { assessment.isRegionallyAlien ? labels.SpeciesStatus.statusInNorwayRegionallyAlien : labels.SpeciesStatus.statusInNorway }</p>
                          <p>{labels.SpeciesStatus.highestCategoryPerToday}</p>
 
                          {assessment.alienSpeciesCategory == "DoorKnocker" ? assessment.productionSpecies == "yes" ? 
@@ -265,7 +265,7 @@ export default class Assessment20ArtensStatus extends React.Component {
                         <p>{labels.SpeciesStatus.codesExplanation}</p>
                         <br></br>
                         <div>
-                            <p>{labels.SpeciesStatus.establishedBefore1800} </p>
+                            <p>{assessment.isRegionallyAlien ? labels.SpeciesStatus.establishedBefore1800RegionallyAlien : labels.SpeciesStatus.establishedBefore1800} </p>
                             <Xcomp.StringEnum observableValue={[assessment, "alienSpecieUncertainIfEstablishedBefore1800"]} mode="radio" codes={codes.yesNo}/>
                         </div>
                         
@@ -323,8 +323,7 @@ export default class Assessment20ArtensStatus extends React.Component {
                         <fieldset className="well">
                             {assessment.speciesStatus != "A" &&
                                <> <h3>{labels.SpeciesStatus.firstObservationOfSpecies}</h3> 
-                               <div className="statusField">
-                                    
+                               <div className="statusField">                                    
                                     <div className="firstObs">
                                     {assessment.speciesStatus != "A" &&
                                         <p>{labels.SpeciesStatus.enterYearOfTheFirstObservationInNorway}</p>	
@@ -343,14 +342,17 @@ export default class Assessment20ArtensStatus extends React.Component {
                                         {assessment.productionSpecies == "yes" && (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3") &&
                                             <li>{labels.SpeciesStatus.speciesReproductionInProductionAreaOutdoors}</li>
                                         }
+                                        {(assessment.productionSpecies == "yes" && assessment.speciesStatus == "C3") &&
+                                            <li>{labels.SpeciesStatus.speciesEstablishmentProductionArea}</li>
+                                        }
                                         {assessment.speciesStatus.indexOf("C") > -1 &&
-                                        <li>{labels.SpeciesStatus.speciesInNorwegianNature}</li> }
+                                            <li>{labels.SpeciesStatus.speciesInNorwegianNature}</li> }
     
                                         {(assessment.speciesStatus == "C3" || assessment.speciesStatus == "C2") &&
                                             <li>{labels.SpeciesStatus.reproductionInNorwegianNature}</li> }
     
                                         {assessment.speciesStatus == "C3" &&
-                                        <li> {labels.SpeciesStatus.establishmentInNorwegianNature}</li> }
+                                            <li> {labels.SpeciesStatus.establishmentInNorwegianNature}</li> }
                                     </ul>	
                                     </div>
                                     <div className="yearsAndCheckboxes">
@@ -396,6 +398,16 @@ export default class Assessment20ArtensStatus extends React.Component {
                                         />    
                                         <Xcomp.Bool observableValue={[assessment.riskAssessment, "yearFirstReproductionOutdoorsInsecure"]} /> 
                                         </li> }
+                                        {(assessment.productionSpecies == "yes" && assessment.speciesStatus == "C3") &&
+                                            <li>
+                                                <Xcomp.Number                            
+                                                    observableValue={[assessment.riskAssessment, "yearFirstEstablishmentProductionArea"]}
+                                                    integer
+                                                    yearRange={true}
+                                                />    
+                                                <Xcomp.Bool observableValue={[assessment.riskAssessment, "yearFirstEstablishmentProductionAreaInsecure"]} /> 
+                                                </li>
+                                        }
                                         
                                         {assessment.speciesStatus != null && assessment.speciesStatus.indexOf("C") > -1 && 
                                             <li>                                    
@@ -422,7 +434,7 @@ export default class Assessment20ArtensStatus extends React.Component {
                                                 integer
                                                 yearRange={true}
                                             />    
-                                            <Xcomp.Bool observableValue={[assessment.riskAssessment, "yearFirstEstablishedNature"]} /> 
+                                            <Xcomp.Bool observableValue={[assessment.riskAssessment, "yearFirstEstablishedNatureInsecure"]} /> 
                                             </li>}
                                     </ul>
                                     </div>
@@ -439,10 +451,10 @@ export default class Assessment20ArtensStatus extends React.Component {
                                 <p>{labels.SpeciesStatus.foundInNorwayBefore}</p> }
                             {(assessment.speciesStatus == "B1" || assessment.speciesStatus == "B2" ) &&
                                 <p className="furtherInfo">{labels.SpeciesStatus.furtherInformationRegardingSpecies}</p>}
-                            {(assessment.speciesStatus == "C0" || assessment.speciesStatus == "C1" ) &&
+                            {(assessment.speciesStatus == "C0" || assessment.speciesStatus == "C1" || assessment.speciesStatus == "C2") &&
                                 <p className="furtherInfo">{labels.SpeciesStatus.furtherInformationRegardingReproductionOfSpecies}</p>
                             }
-                            {assessment.speciesStatus != "C3" && assessment.speciesStatus != "C2" && assessment.speciesStatus != null &&
+                            {assessment.speciesStatus != "C3" && assessment.speciesStatus != null &&
                                 <Xcomp.HtmlString className="furtherInfo" observableValue={[assessment.riskAssessment, 'furtherInfo']}/> }
                             </fieldset> : null }
                 
