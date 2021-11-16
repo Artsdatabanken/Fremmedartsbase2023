@@ -92,6 +92,7 @@ export default class Assessment52Utbredelse extends React.Component {
         
         // const labels = fabModel.codeLabels.DistributionHistory
         const koder = appState.koder
+        const generalLabels = appState.codeLabels 
         const labels = appState.codeLabels.DistributionHistory
 
         return (
@@ -178,7 +179,7 @@ export default class Assessment52Utbredelse extends React.Component {
                                 </div>
                                 {assessment.speciesStatus == "C3" && 
                                 <div style={{marginTop: '50px'}}>
-                                    <p>Hvilken etableringsklasse har arten i Norge? Merk av den høyeste (øverste) klassen som oppfylles av arten i Norge i dag.</p>  
+                                    <p> {assessment.isRegionallyAlien ? generalLabels.SpeciesStatus.statusInNorwayRegionallyAlien : generalLabels.SpeciesStatus.statusInNorway } {generalLabels.SpeciesStatus.highestCategoryPerToday}</p>  
                                     <br/> 
                                     {/* ToDo: Bug - speciesDistribution not found */}
                                     <Xcomp.StringEnum observableValue={[assessment, "speciesEstablishmentCategory"]} mode="radio" options={this.checkArea(assessment.riskAssessment.AOOtotalBest)} codes={koder.DistributionOptions}/>
@@ -189,6 +190,7 @@ export default class Assessment52Utbredelse extends React.Component {
                                 </div> */}
                             </div>
                         }
+                        <hr></hr>  
                             <div>
                                 <Documents/>
                             </div>

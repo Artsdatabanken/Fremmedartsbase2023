@@ -226,7 +226,7 @@ export default class Assessment20ArtensStatus extends React.Component {
                      <div>
                          <p>{labels.SpeciesStatus.isProductionSpecies}</p>                          
                          <Xcomp.StringEnum observableValue={[assessment, "productionSpecies"]} mode="radio" codes={codes.yesNo}/> </div>
-                         <p> {labels.SpeciesStatus.statusInNorway}</p>
+                         <p> { assessment.isRegionallyAlien ? labels.SpeciesStatus.statusInNorwayRegionallyAlien : labels.SpeciesStatus.statusInNorway }</p>
                          <p>{labels.SpeciesStatus.highestCategoryPerToday}</p>
 
                          {assessment.alienSpeciesCategory == "DoorKnocker" ? assessment.productionSpecies == "yes" ? 
@@ -265,7 +265,7 @@ export default class Assessment20ArtensStatus extends React.Component {
                         <p>{labels.SpeciesStatus.codesExplanation}</p>
                         <br></br>
                         <div>
-                            <p>{labels.SpeciesStatus.establishedBefore1800} </p>
+                            <p>{assessment.isRegionallyAlien ? labels.SpeciesStatus.establishedBefore1800RegionallyAlien : labels.SpeciesStatus.establishedBefore1800} </p>
                             <Xcomp.StringEnum observableValue={[assessment, "alienSpecieUncertainIfEstablishedBefore1800"]} mode="radio" codes={codes.yesNo}/>
                         </div>
                         

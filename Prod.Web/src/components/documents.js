@@ -48,7 +48,7 @@ export default class Documents extends Component {
                 onUploadComplete={this.getAttachments}
             />
             {/*<h2>Filer for {assessment.id}</h2>*/}
-            {this.attachments != [] && 
+            {this.attachments && 
             <div>
                 <h5>Opplastede filer med beskrivelse</h5>
             <table className="table table-striped">
