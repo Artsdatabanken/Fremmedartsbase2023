@@ -439,10 +439,10 @@ export default class Assessment20ArtensStatus extends React.Component {
                                 <p>{labels.SpeciesStatus.foundInNorwayBefore}</p> }
                             {(assessment.speciesStatus == "B1" || assessment.speciesStatus == "B2" ) &&
                                 <p className="furtherInfo">{labels.SpeciesStatus.furtherInformationRegardingSpecies}</p>}
-                            {(assessment.speciesStatus == "C0" || assessment.speciesStatus == "C1" ) &&
+                            {(assessment.speciesStatus == "C0" || assessment.speciesStatus == "C1" || assessment.speciesStatus == "C2") &&
                                 <p className="furtherInfo">{labels.SpeciesStatus.furtherInformationRegardingReproductionOfSpecies}</p>
                             }
-                            {assessment.speciesStatus != "C3" && assessment.speciesStatus != "C2" && assessment.speciesStatus != null &&
+                            {assessment.speciesStatus != "C3" && assessment.speciesStatus != null &&
                                 <Xcomp.HtmlString className="furtherInfo" observableValue={[assessment.riskAssessment, 'furtherInfo']}/> }
                             </fieldset> : null }
                 
