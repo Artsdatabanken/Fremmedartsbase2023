@@ -817,6 +817,10 @@ class ViewModel {
         const id = this.assessmentId
         console.log("onMoveAssessmentHorizon: " + doorknockerstate)
         this.movehorizon(id, doorknockerstate)
+        action(() => {
+            this.viewMode = "choosespecie"
+            this.assessmentId = null
+        })()
     }
    
     checkForExistingAssessment = (expertgroup, scientificNameId, ) => {
