@@ -5129,6 +5129,13 @@
                         }, 
                         {
                             "Id": null,
+                            "Value": "speciesEstablishmentProductionArea",
+                            "Text": "etablering på artens eget produksjonsareal:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "speciesInNorwegianNature",
                             "Text": "individ i norsk natur:",
                             "Info": null,
