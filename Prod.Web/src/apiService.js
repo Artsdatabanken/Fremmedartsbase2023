@@ -353,6 +353,6 @@ export function getArtskartUrl(
     return {
         observations: `${apibase + taxonId}/observations?${queryparams}`,
         areadata: `${apibase + taxonId}/areadata?${queryparams}`,
-        countylist: `${apibase + taxonId}/countylist?${queryparams}`
+        countylist: `${apibase + taxonId}/countylist?countyYear=2017&${queryparams}`
     }
 }

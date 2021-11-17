@@ -1,4 +1,5 @@
 import enhanceCriteria from './enhanceCriteria'
+import fixFylker from './fixFylker'
 import { extendObservable, observable, toJS} from 'mobx'
 
 
@@ -65,6 +66,7 @@ export default function enhanceAssessment(json, appState) {
 
     enhanceCriteria(riskAssessment, assessment, codes, labels, artificialAndConstructedSites)
 
+    fixFylker(assessment);
 
     //if(assessment.horizonDoScanning !== false) {console.warn("horizonDoScanning should be false for now")}
 
