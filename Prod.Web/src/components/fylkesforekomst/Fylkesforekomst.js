@@ -113,7 +113,7 @@ const Fylkesforekomst = ({ fylkesforekomster }) => {
             states={forekomsterAsObject}
           >
             <DiagonalHatch />
-            <Legend size={37} categories={categories} />
+            <Legend size={30} categories={categories} />
         </SvgShapeSelector>
         </div>
       </div>
