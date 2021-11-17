@@ -288,6 +288,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                  //{...appState.vurdering.Datasett}
                                  />
                     </div>*/}
+                    <hr></hr>  
                     <div>                       
                         <Documents/>
                     </div>

@@ -15,8 +15,8 @@ function tabdefs(appState) {
         get tabList() { return tabItems(this.tabinfos) },
         setActiveTab: (tab) => {
             action(() => {
-                console.log('xxx', appState.selectAssessmentTabs.activeTab)
-                console.log('xxx', tab)
+                // console.log('xxx', appState.selectAssessmentTabs.activeTab)
+                // console.log('xxx', tab)
                 if(tab.enabled) {
                     appState.selectAssessmentTabs.activeTab.id = tab.id
                     appState.assessmentId = null

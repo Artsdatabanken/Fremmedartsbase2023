@@ -4962,7 +4962,14 @@
                         {
                             "Id": null,
                             "Value": "statusInNorway",
-                            "Text": "Hvilken status har arten[s regionalt fremmede forekomster] i Norge?",
+                            "Text": "Hvilken etableringsklasse har arten i Norge?",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "statusInNorwayRegionallyAlien",
+                            "Text": "Hvilken status har artens regionalt fremmede forekomster i Norge?",
                             "Info": null,
                             "Children": null
                         },
@@ -4983,7 +4990,14 @@
                         {
                             "Id": null,
                             "Value": "establishedBefore1800",
-                            "Text": "Var arten[s regionalt fremmede forekomster] etablert per 1800?",
+                            "Text": "Var arten etablert per 1800?",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "establishedBefore1800RegionallyAlien",
+                            "Text": "Var artens regionalt fremmede forekomster etablert per 1800?",
                             "Info": null,
                             "Children": null
                         },
@@ -5113,6 +5127,13 @@
                             "Info": null,
                             "Children": null
                         }, 
+                        {
+                            "Id": null,
+                            "Value": "speciesEstablishmentProductionArea",
+                            "Text": "etablering på artens eget produksjonsareal:",
+                            "Info": null,
+                            "Children": null
+                        },
                         {
                             "Id": null,
                             "Value": "speciesInNorwegianNature",
