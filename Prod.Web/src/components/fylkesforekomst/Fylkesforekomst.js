@@ -3,8 +3,8 @@ import SvgShapeSelector from "./svg/SvgShapeSelector";
 import Legend from "./svg/Legend";
 import LegendItem from "./svg/LegendItem";
 import React from "react";
-import fylker from "./fylker";
-import boundary from "./map";
+import fylker from "./fylker_2017";
+import boundary from "./map_2017";
 import categories from "./category";
 import DiagonalHatch from "./DiagonalHatch";
 import { UserContext } from "../observableComponents";
@@ -22,7 +22,9 @@ const regionSortering = [
   { "navn": "Fi" },
   { "navn": "Tr" },
   { "navn": "No" },
-  { "navn": "Tø" },
+  // { "navn": "Tø" },
+  { "navn": "Nt" },
+  { "navn": "St" },
   { "navn": "Mr" },
   { "navn": "Sf" },
   { "navn": "Ho" },
@@ -111,7 +113,7 @@ const Fylkesforekomst = ({ fylkesforekomster }) => {
             states={forekomsterAsObject}
           >
             <DiagonalHatch />
-            <Legend size={37} categories={categories} />
+            <Legend size={30} categories={categories} />
         </SvgShapeSelector>
         </div>
       </div>

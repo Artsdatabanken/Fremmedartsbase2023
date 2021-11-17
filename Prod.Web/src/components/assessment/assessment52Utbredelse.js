@@ -11,7 +11,7 @@ import Utbredelseshistorikk from './35Utbredelseshistorikk/Utbredelseshistorikk'
 import ModalArtskart from '../artskart/ModalArtskart';
 import Fylkesforekomst from '../fylkesforekomst/Fylkesforekomst';
 import FileUpload from '../FileUpload'
-import fylker from "../fylkesforekomst/fylker";
+import fylker from "../fylkesforekomst/fylker_2017";
 import Documents from '../documents'
 import { ContactsOutlined } from '@material-ui/icons';
 import { action, computed, observable } from 'mobx';
