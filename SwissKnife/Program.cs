@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using McMaster.Extensions.CommandLineUtils;
+using SwissKnife.Database;
 
 namespace SwissKnife
 {
@@ -151,6 +152,32 @@ namespace SwissKnife
                     var maintenance = new Database.ImportDataService(ConnectionString);
                     maintenance.Import(console, InputFolder);
                     Database.MaintenanceService.RunTaxonomyWash(new Prod.Data.EFCore.SqlServerProdDbContext(ConnectionString), true);
+                }
+            }
+        }
+
+        [Command("createjson", Description = "Run tasks for creating static json data files")]
+        [Subcommand(typeof(TruedeOgSjeldneNaturtyper))]
+        [HelpOption("--help")]
+        internal class CreateJSON
+        {
+            private int OnExecute(IConsole console)
+            {
+                console.Error.WriteLine("You must specify an action. See --help for more details.");
+                return 1;
+            }
+
+            internal class TruedeOgSjeldneNaturtyper
+            {
+                [Option("--truedeogsjeldnenaturtyper", Description = "Generate JSON file for truete og sjeldne naturtyper 2018")]
+                [Required]
+                public string outputFilename { get; }
+                private void OnExecute(IConsole console)
+                {
+                    const string outputdefaultfilename = "../../Prod.web/src/TrueteOgSjeldneNaturtyper2018.json";
+                    const string ifn = "../Importfiler/TrueteOgSjeldneNaturtyper2018.txt";
+                    string ofn = string.IsNullOrEmpty(outputFilename) ? outputdefaultfilename : outputFilename;
+                    Convert2JSONService.ConvertTruedeOgSjeldneNaturtyper2JSON(ifn, ofn);
                 }
             }
         }
