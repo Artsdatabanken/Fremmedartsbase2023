@@ -37,7 +37,7 @@ class SelectableRadio extends React.Component {
                 value={val}
                 checked={obj[prop] === val}
                 disabled={disabled}
-                onChange={(e) => obj[prop] = e.currentTarget.value}/>{label}</label>
+                onChange={action((e) => obj[prop] = e.currentTarget.value)}/>{label}</label>
         </div>
     }
 }
