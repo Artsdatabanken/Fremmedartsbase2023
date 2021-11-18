@@ -60,6 +60,8 @@ export default class Assessment52Utbredelse extends React.Component {
         } else {
             ass.riskAssessment.AOO2 = areadata.AreaOfOccupancy;
         }
+        ass.riskAssessment.yearFirstProductionOutdoors = areadata.AreaExtentOfOccurrence;
+        
         // TODO: Fylkesoversikt - avventer data fra API
         if (countylist) {
             // ass.fylkesforekomster = countylist;
