@@ -6,7 +6,7 @@ using SwissKnife.Database;
 namespace SwissKnife
 {
     [Command(Name = "SwissKnife", Description = "Toolkit for Alien species db")]
-    [Subcommand(typeof(OldDb), typeof(NewDb), typeof(Maintenance))]
+    [Subcommand(typeof(OldDb), typeof(NewDb), typeof(Maintenance), typeof(CreateJSON))]
     internal class Program
     {
         public static int Main(string[] args)
@@ -157,7 +157,7 @@ namespace SwissKnife
         }
 
         [Command("createjson", Description = "Run tasks for creating static json data files")]
-        [Subcommand(typeof(TruedeOgSjeldneNaturtyper))]
+        [Subcommand(typeof(Trueteogsjeldnenaturtyper))]
         [HelpOption("--help")]
         internal class CreateJSON
         {
@@ -167,17 +167,19 @@ namespace SwissKnife
                 return 1;
             }
 
-            internal class TruedeOgSjeldneNaturtyper
+            internal class Trueteogsjeldnenaturtyper
+            //internal class TrueteOgSjeldneNaturtyper
             {
-                [Option("--truedeogsjeldnenaturtyper", Description = "Generate JSON file for truete og sjeldne naturtyper 2018")]
-                [Required]
-                public string outputFilename { get; }
+                //[Option("--trueteogsjeldnenaturtyper", Description = "Generate JSON file for truete og sjeldne naturtyper 2018")]
+                [Option("--outputfilename", Description = "Generate JSON file for truete og sjeldne naturtyper 2018")]
+                //[Required]
+                public string outputfilename { get; }
                 private void OnExecute(IConsole console)
                 {
-                    const string outputdefaultfilename = "../../Prod.web/src/TrueteOgSjeldneNaturtyper2018.json";
-                    const string ifn = "../Importfiler/TrueteOgSjeldneNaturtyper2018.txt";
-                    string ofn = string.IsNullOrEmpty(outputFilename) ? outputdefaultfilename : outputFilename;
-                    Convert2JSONService.ConvertTruedeOgSjeldneNaturtyper2JSON(ifn, ofn);
+                    const string outputdefaultfilename = "../../../../Prod.web/src/TrueteOgSjeldneNaturtyper2018.json";
+                    const string ifn = "../../../Importfiler/TrueteOgSjeldneNaturtyper2018.txt";
+                    string ofn = string.IsNullOrEmpty(outputfilename) ? outputdefaultfilename : outputfilename;
+                    Convert2JSONService.ConvertTrueteOgSjeldneNaturtyper2JSON(ifn, ofn);
                 }
             }
         }
