@@ -13,6 +13,12 @@ import {processTree} from '../../../utils'
 export default class MigrationPathwayTable extends React.Component {
     constructor(props) {
         super(props);
+       
+    }
+    @observable editMode = false
+
+    @action toggleEdit = () => {
+        this.editMode = !this.editMode
     }
 
     render() {
@@ -61,7 +67,9 @@ export default class MigrationPathwayTable extends React.Component {
                         showIntroductionSpread={showIntroductionSpread}
                         removeMigrationPathway={removeMigrationPathway}
                         labels={labels}
+                        editMode={this.editMode}
                         getCategoryText = {getCategoryText}
+                        toggleEdit={this.toggleEdit}
                         migrationPathwayCodes = {migrationPathwayCodes}
                     />
                 )}
@@ -83,7 +91,7 @@ class MigrationPathwayTableRow extends React.Component {
     constructor(props) {
         super(props);
         extendObservable(this, {
-            edit: false,
+            edit: props.editMode,
             open: false
         })
     }
@@ -116,7 +124,7 @@ class MigrationPathwayTableRow extends React.Component {
     }
 
     render() {
-        const {appState, item, codes, migrationPathways, showIntroductionSpread, removeMigrationPathway, labels, getCategoryText, migrationPathwayCodes } = this.props;
+        const {appState, item, codes, migrationPathways, showIntroductionSpread, removeMigrationPathway, labels, getCategoryText, migrationPathwayCodes, editMode, toggleEdit } = this.props;
         const mp = item
 
 
@@ -135,7 +143,7 @@ class MigrationPathwayTableRow extends React.Component {
         const eloborateText = item.elaborateInformation
         const elobTxt = this.open ? eloborateText : this.trunc(eloborateText)
         return(
-            <tr >
+            <tr>
                 {/*<td>{codeItemLabel(mp.codeItem)}</td>
                 showIntroductionSpread || !hideIntroductionSpread ? <td>{introductionSpreadLabel(mp.introductionSpread)}</td> : null*/}
                 <td>{mp.mainCategory ? mp.mainCategory : this.getCategoryPart(getCategoryText(mp.codeItem, migrationPathwayCodes), 1)}</td>
@@ -157,7 +165,7 @@ class MigrationPathwayTableRow extends React.Component {
                 ? <td><Xcomp.HtmlString observableValue={[mp, 'elaborateInformation']} /></td>
                 : <td dangerouslySetInnerHTML={{__html: elobTxt}} onClick={() => this.open = !this.open} />
                 */}
-                <td><Xcomp.Button disabled={this.context.readonly} xs title={!this.edit ? labels.General.edit : labels.General.ok} onClick={() => this.edit = !this.edit}>{this.edit ? labels.General.ok : 
+                <td><Xcomp.Button disabled={this.context.readonly} xs title={!this.edit ? labels.General.edit : labels.General.ok} onClick={action(() => {this.edit = !this.edit; toggleEdit()})}>{this.edit ? labels.General.ok : 
                        // labels.General.edit
                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
                             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>

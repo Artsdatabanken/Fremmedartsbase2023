@@ -86,7 +86,9 @@ export default class Vurdering34Spredningsveier extends React.Component {
         const compstr = (mp) => ""+mp.codeItem+mp.introductionSpread+mp.influenceFactor+mp.magnitude+mp.timeOfIncident
 
        
-
+        const introSpread = name == "Videre spredning i natur" ? "spread" : "introduction"
+        mp.introductionSpread = introSpread
+        
         const newMp = compstr(mp)
         const existing = mps.filter(oldMp =>  compstr(oldMp) === newMp
         )
