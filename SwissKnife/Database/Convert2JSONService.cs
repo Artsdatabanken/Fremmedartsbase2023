@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CsvHelper;
 using CsvHelper.Configuration;
+using CsvHelper.Configuration.Attributes;
 
 namespace SwissKnife.Database
 {
@@ -22,23 +23,36 @@ namespace SwissKnife.Database
             public string Eksperttema { get; set; } 
             public string Vurderingsenhet { get; set; } 
             public string Kortnavn { get; set; } 
-            public string Typekode { get; set; } 
+            public string Typekode { get; set; }
+            [Name("Kilde til variasjon")]
             public string KildeTilVariasjon { get; set; } 
             public string Type { get; set; } 
+            [Name("Beskrivelse av vurderingsenheten")]
             public string BeskrivelseAvVurderingsenheten { get; set; } 
             public string Totalareal { get; set; } 
+            [Name("Totalareal, mørketall")]
             public string TotalarealMørketall { get; set; } 
+            [Name("Totalareal, beregnet")]
             public string TotalarealBeregnet { get; set; } 
             public string Utbredelsesareal { get; set; } 
+            [Name("Utbredelsesareal, mørketall")]
             public string UtbredelsesarealMørketall { get; set; } 
+            [Name("Utbredelsesareal, beregnet")]
             public string UtbredelsesarealBeregnet { get; set; } 
+            [Name("Forekomster, antall")]
             public string ForekomsterAntall { get; set; } 
+            [Name("Forekomster, mørketall")]
             public string ForekomsterMørketall { get; set; } 
+            [Name("Forekomster, beregnet")]
             public string ForekomsterBeregnet { get; set; } 
+            [Name("Kommentar, Arealinformasjon")]
             public string KommentarArealinformasjon { get; set; } 
+            [Name("Alle kategorier og kriterier")]
             public string AlleKategorierOgKriterier { get; set; } 
+            [Name("Gjeldene kategori og kriterie")]
             public string GjeldeneKategoriOgKriterie { get; set; } 
             public string Kriteriedokumentasjon { get; set; } 
+            [Name("Påvirkningsfaktorer, fritekst")]
             public string PåvirkningsfaktorerFritekst { get; set; } 
             public string Øs { get; set; } 
             public string OA { get; set; } 
@@ -68,7 +82,7 @@ namespace SwissKnife.Database
 
         }
 
-        public static void ConvertTruedeOgSjeldneNaturtyper2JSON( string inputfilename, string outputfilename)
+        public static void ConvertTrueteOgSjeldneNaturtyper2JSON( string inputfilename, string outputfilename)
         {
             var theCsvConfiguration = new CsvConfiguration(new CultureInfo("nb-NO"))
             {
@@ -85,6 +99,9 @@ namespace SwissKnife.Database
                     Console.WriteLine($"{importFormat.Id} {importFormat.Vurderingsenhet} {importFormat.Kortnavn} {importFormat.Typekode}");
                 }
             }
+
+            Console.WriteLine("ConvertTrueteOgSjeldneNaturtyper2JSON   ferdig!");
+
         }
     }
 }
