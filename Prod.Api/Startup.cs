@@ -51,7 +51,7 @@ namespace Prod.Api
             {
                 x.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                 x.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
-                //x.JsonSerializerOptions.Converters.Add(new BoolJsonConverter());
+                x.JsonSerializerOptions.Converters.Add(new BoolJsonConverter());
 
             }
                 ); //.AddNewtonsoftJson(); For å unngå camelcase - frem til klienten er camelcase.....
