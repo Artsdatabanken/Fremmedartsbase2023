@@ -83,16 +83,18 @@ export default class Assessment51Naturtyper extends React.Component {
 
               {/*  <h4>{ntLabels.colonizedAreaHeading}</h4>     */}     
                 <fieldset className="well"> 
-                    <h2>{ntLabels.heading}</h2>    
-                {/* <NewNaturetype
+                     
+                {/* 
+                <h2>{ntLabels.heading}</h2>   
+                <NewNaturetype
                     appState={appState}
                     addNaturtype={this.addNaturtype}
                     labels={labels}
                     codes={koder.redlistedNaturetypes}
                     header={ntLabels.chooseRL2018}
                     superheader={ntLabels.redListEffects}/> */}
-                </fieldset> 
-
+                
+                <h2>{ntLabels.heading}</h2>   
                 {assessment.redlistedNatureTypes.length > 0 && <fieldset className="well">
                 <h4>
                     Data fra tidligere vurdering (basert på Rødlista for naturtyper 2018 og NiN 2.0):
@@ -106,21 +108,18 @@ export default class Assessment51Naturtyper extends React.Component {
                     labels={labels}
                     fabModel={appState}/>
                 </fieldset>}
-
-                <fieldset className="well">               
-                <hr />
-                <hr />
+                
                 {true || appState.livsmediumEnabled
                 ? <div>
                     <br />
-                    <p>{labels.NatureTypes.chooseLM}:</p>
+                    {/*<p>{labels.NatureTypes.chooseLM}:</p>*/}
                     {appState.livsmediumCodes
                         ? <NewNaturetype
                         appState={appState}
                         addNaturtype={this.addNaturtype}
                         labels={labels}
                         codes={appState.livsmediumCodes}
-                        header={ntLabels.chooseNT}
+                        header={labels.NatureTypes.chooseLM}
                         hideStateChange={true}
                         superheader={ntLabels.colonizedAreaAndEffects} />
                         
@@ -131,8 +130,7 @@ export default class Assessment51Naturtyper extends React.Component {
                         : null}
                 </div>
                 : null}
-                <hr />
-                <hr />
+                
 
 
                <NewNaturetype
