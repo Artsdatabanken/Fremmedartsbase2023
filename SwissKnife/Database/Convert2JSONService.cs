@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.Configuration.Attributes;
+using System.Text.Json;
+using System.Text.Encodings.Web;
 
 namespace SwissKnife.Database
 {
@@ -82,26 +84,54 @@ namespace SwissKnife.Database
 
         }
 
-        public static void ConvertTrueteOgSjeldneNaturtyper2JSON( string inputfilename, string outputfilename)
+        public class jsonNT
+        {
+            public string Id { get; set; }
+            public string Value { get; set; }
+            public string Text { get; set; }
+            public List<jsonNT> Children { get; set; }
+        }
+
+
+            public static void ConvertTrueteOgSjeldneNaturtyper2JSON( string inputfilename, string outputfilename)
         {
             var theCsvConfiguration = new CsvConfiguration(new CultureInfo("nb-NO"))
             {
                 Delimiter = "\t",
                 Encoding = Encoding.UTF8
             };
-            var datetime = DateTime.MinValue;
+
+            var root = new jsonNT();
+            root.Id = "root";
+            root.Text = "root";
+            root.Value = "root";
+            root.Children = new List<jsonNT>();
+
             using (var reader = new StreamReader( inputfilename))
             using (var csv = new CsvReader(reader, theCsvConfiguration))
             {
                 var records = csv.GetRecords<ImportFormat>();
                 foreach (var importFormat in records)
                 {
-                    Console.WriteLine($"{importFormat.Id} {importFormat.Vurderingsenhet} {importFormat.Kortnavn} {importFormat.Typekode}");
+                    var nt = new jsonNT();
+                    nt.Id = importFormat.Id;
+                    nt.Text = importFormat.Kortnavn;
+                    nt.Value = importFormat.Typekode + " " + importFormat.KildeTilVariasjon;
+                    nt.Children = new List<jsonNT>();
+                    root.Children.Add(nt);
+                    //Console.WriteLine($"{importFormat.Id} {importFormat.Vurderingsenhet} {importFormat.Kortnavn} {importFormat.Typekode}");
                 }
             }
 
-            Console.WriteLine("ConvertTrueteOgSjeldneNaturtyper2JSON   ferdig!");
+            var jsonSerializerOptions = new JsonSerializerOptions
+            {
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                WriteIndented = true
+            };
+            string jsonString = JsonSerializer.Serialize(root, jsonSerializerOptions);
+            File.WriteAllTextAsync(outputfilename, jsonString);
 
+            Console.WriteLine("ConvertTrueteOgSjeldneNaturtyper2JSON   ferdig!");
         }
     }
 }
