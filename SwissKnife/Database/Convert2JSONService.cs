@@ -129,7 +129,7 @@ namespace SwissKnife.Database
                 WriteIndented = true
             };
             string jsonString = JsonSerializer.Serialize(root, jsonSerializerOptions);
-            File.WriteAllTextAsync(outputfilename, jsonString);
+            File.WriteAllText(outputfilename, jsonString);
 
             Console.WriteLine("ConvertTrueteOgSjeldneNaturtyper2JSON   ferdig!");
         }

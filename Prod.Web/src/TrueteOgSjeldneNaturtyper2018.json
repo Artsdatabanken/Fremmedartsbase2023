@@ -371,4 +371,99 @@
     },
     {
       "Id": "120",
-      "Value": "V
+      "Value": "V1-26, V1-29 ",
+      "Text": "Kalkrik permafrost-myrkant",
+      "Children": []
+    },
+    {
+      "Id": "276",
+      "Value": "V8-2 1AR-A-V",
+      "Text": "Rik vierstrandskog",
+      "Children": []
+    },
+    {
+      "Id": "105",
+      "Value": "V5 ",
+      "Text": "Varm kilde",
+      "Children": []
+    },
+    {
+      "Id": "130",
+      "Value": "V6 ",
+      "Text": "Våtsnøleie og snøleiekilde",
+      "Children": []
+    },
+    {
+      "Id": "133",
+      "Value": "V9 ",
+      "Text": "Semi-naturlig myr",
+      "Children": []
+    },
+    {
+      "Id": "277",
+      "Value": "V9 6SO_1,6SO_2,SP-a",
+      "Text": "Sørlig slåttemyr",
+      "Children": []
+    },
+    {
+      "Id": "200",
+      "Value": "3EL_ME ",
+      "Text": "Meander",
+      "Children": []
+    },
+    {
+      "Id": "207",
+      "Value": "3ER_JP ",
+      "Text": "Jordpyramide",
+      "Children": []
+    },
+    {
+      "Id": "209",
+      "Value": "3ER_RL ",
+      "Text": "Leirravine",
+      "Children": []
+    },
+    {
+      "Id": "231",
+      "Value": "3KJ_DR ",
+      "Text": "Dryppstein",
+      "Children": []
+    },
+    {
+      "Id": "232",
+      "Value": "3KJ_KG ",
+      "Text": "Kalkgrotte",
+      "Children": []
+    },
+    {
+      "Id": "234",
+      "Value": "3KJ_KT ",
+      "Text": "Kalktuff",
+      "Children": []
+    },
+    {
+      "Id": "256",
+      "Value": "3VI_FD ",
+      "Text": "Flygesanddyne",
+      "Children": []
+    },
+    {
+      "Id": "312",
+      "Value": "M5-4,M5-5,M5-14,M5-15 6KE_2",
+      "Text": "Dyp slambunn i Skagerrak",
+      "Children": []
+    },
+    {
+      "Id": "124",
+      "Value": "T12 ",
+      "Text": "Strandeng",
+      "Children": []
+    },
+    {
+      "Id": "223",
+      "Value": "3IK_KA ",
+      "Text": "Kalkrygg",
+      "Children": []
+    }
+  ]
+}
