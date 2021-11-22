@@ -57,7 +57,7 @@ export default class NewNaturetype extends React.Component {
     }
 
     render() {
-        const {appState, addNaturtype, labels, codes, header, superheader} = this.props;        
+        const {appState, addNaturtype, labels, codes, header, superheader, config} = this.props;        
         //const nts = appState.naturtyper
         const nts =  codes
         const lms = appState.livsmediumCodes
@@ -78,6 +78,7 @@ export default class NewNaturetype extends React.Component {
                 {nts
                     ? <NaturtypeSelector 
                         naturtyper={nts} 
+                        config={config}
                         mode={"naturetype"} 
                         setSelected={this.setSelectedNaturtype}
                         />

@@ -115,6 +115,14 @@ export default class Assessment51Naturtyper extends React.Component {
                     {/*<p>{labels.NatureTypes.chooseLM}:</p>*/}
                     {appState.livsmediumCodes
                         ? <NewNaturetype
+                        config={{
+                            codewidth: "30px",
+                            showdescription: (value) => {
+                                console.log("selector value: '" + value + "' " + (value.length < 3))
+                                return value.length < 3
+                            }
+
+                        }}
                         appState={appState}
                         addNaturtype={this.addNaturtype}
                         labels={labels}
@@ -131,9 +139,37 @@ export default class Assessment51Naturtyper extends React.Component {
                 </div>
                 : null}
                 
+                <div>
+                    <br />
+                    <br />
+                    {appState.trueteogsjeldneCodes
+                        ? <NewNaturetype
+                        config={{
+                            codewidth: "500px",
+                            showdescription: () => true
+                        }}
+                        appState={appState}
+                        addNaturtype={this.addNaturtype}
+                        labels={labels}
+                        codes={appState.trueteogsjeldneCodes}
+                        header={labels.NatureTypes.chooseTS}
+                        hideStateChange={false}
+                        superheader={ntLabels.colonizedAreaAndEffects} />
+                        
+                        // <NaturtypeSelector
+                        //     naturtyper={appState.livsmediumCodes}
+                        //     mode={"livsmedium"}
+                        //     setSelected={this.setSelectedLivsmedium}/>
+                        : null}
+                </div>
 
-
-               <NewNaturetype
+                
+                <NewNaturetype
+                    config={{
+                        codewidth: "30px",
+                        showdescription: () => true
+                    }}
+                    
                     appState={appState}
                     addNaturtype={this.addNaturtype}
                     labels={labels}
