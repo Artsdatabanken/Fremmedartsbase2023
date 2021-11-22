@@ -21,7 +21,7 @@ export default class NaturtypeSelector extends React.Component {
             : kode
     }
     render() {
-        const {naturtyper, setSelected} = this.props;
+        const {naturtyper, setSelected, config} = this.props;
 
         // console.log("SELECTOR: " + JSON.stringify(naturtyper, undefined, 2))
 
@@ -38,9 +38,10 @@ export default class NaturtypeSelector extends React.Component {
                         </div>
                         <div className="tree-view-label">
                             <span className="hovedtypegruppe">
-                                <span className="naturtype-kode" style={{width: "30px"}}>{this.truncCode(hovedtypegruppe.Value)}</span>
+                                <span className="naturtype-kode" style={{width: config.codewidth}}>{this.truncCode(hovedtypegruppe.Value)}</span>
                                 {/* to show the name for the highest level for those nature types that only have code*/}
-                                {this.truncCode(hovedtypegruppe.Value).length < 3 && <span>{hovedtypegruppe.Text}</span>}
+                                {/* {this.truncCode(hovedtypegruppe.Value).length < 3 && <span>{hovedtypegruppe.Text}</span>} */}
+                                {config.showdescription(this.truncCode(hovedtypegruppe.Value)) && <span>{hovedtypegruppe.Text}</span>}
                                {/* <span>{hovedtypegruppe.Id}</span> */}
                             </span>
                         </div>
