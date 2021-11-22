@@ -428,8 +428,8 @@ class ViewModel {
             () => [this.expertgroup, auth.isLoggedIn, this.assessmentTypeFilter, this.expertgroupAssessmentFilter,
                 this.horizonScanFilter.notAssessedDoorKnocker.length, 
                 this.horizonScanFilter.potentialDoorKnockers.length,
-                this.horizonScanFilter.hsNotStarted, this.horizonScanFilter.hsFinished, this.horizonScanFilter.toAssessment, this.horizonScanFilter.notAssessed, this.comments.kunUbehandlede,
-                this.responsible.length
+                this.horizonScanFilter.hsNotStarted, this.horizonScanFilter.hsFinished, this.horizonScanFilter.toAssessment, this.horizonScanFilter.notAssessed,
+                this.responsible.length, this.kunUbehandlede
             ],
             ([expertgroupId, isLoggedIn])  => {
                 //console.log("react to expertgroup: " + expertgroupId + "," + isLoggedIn)
