@@ -54,7 +54,7 @@ export default class NaturtypeSelector extends React.Component {
                                     className={"glyphicon glyphicon-chevron-down tree-view-arrow " + 
                                         (hovedtype.Collapsed ? "tree-view-arrow-collapsed" : "")}
                                     onClick={() => hovedtype.Collapsed = !hovedtype.Collapsed}>
-                                    {hovedtype.Collapsed == false ? <ExpandMoreIcon/> : <NavigateNextIcon/>}
+                                    {hovedtype.Children.length > 0 ? hovedtype.Collapsed == false? <ExpandMoreIcon/> : <NavigateNextIcon/> : <div style={{width: '24px'}}></div>} {/* <-- to align all the choice buttons even though they don't have an arrow to expand */}
                                 </div>
                                 <div className="tree-view-label" onClick={() => setSelected(hovedtype.Id) }>
                                     <Xcomp.Button className="hovedtype btn-flat">
