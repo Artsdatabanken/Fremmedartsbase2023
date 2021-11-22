@@ -8075,6 +8075,13 @@
                         },
                         {
                             "Id": null,
+                            "Value": "chooseTS",
+                            "Text": "Velg blant følgende truete og sjeldne naturtyper:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "chooseLM",
                             "Text": "Velg blant følgende livsmedium (NiN 1.0)",
                             "Info": null,
