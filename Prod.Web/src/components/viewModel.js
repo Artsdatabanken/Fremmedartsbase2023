@@ -88,6 +88,7 @@ class ViewModel {
             livsmediumLabels: null,
             livsmediumCodes: null,
             livsmediumEnabled: true,
+            trueteogsjeldneCodes: null,
             naturtyperNIN2: null,
 
             comments: [],
@@ -190,13 +191,22 @@ class ViewModel {
         // load livsmedium codes ----
         const ninlm = require('../nin-livsmedium.json')
         const lm = this.transformlivsmedium(ninlm)
-        console.log("livsmedium2nt: " +  JSON.stringify(lm))
+        // console.log("livsmedium2nt: " +  JSON.stringify(lm))
         const lmlabels = this.transformlivsmediumlabels(ninlm, {})
-        console.log(JSON.stringify(lmlabels))
+        // console.log(JSON.stringify(lmlabels))
         const grupper = lm.Children
         this.livsmediumLabels = lmlabels
         this.livsmediumCodes = grupper
         // --------------------------
+
+        // load livsmedium codes ----
+        const togsnt = require('../TrueteOgSjeldneNaturtyper2018.json')
+        const nt = this.transformtrueteogsjeldnenaturtyper(togsnt)
+        // console.log("trueteogsjeldnenaturtyper: " +  JSON.stringify(nt))
+        const tsgrupper = nt.Children
+        this.trueteogsjeldneCodes = tsgrupper
+        // --------------------------
+
 
         // load NiN2 codes ----
         const nin2codes = this.koder.naturtyperNIN2
@@ -938,6 +948,11 @@ class ViewModel {
             }
         }
         return acc
+    }
+
+
+    transformtrueteogsjeldnenaturtyper(nt) {
+        return nt
     }
 
     transformnaturtyperNIN2(nin2codes) {
