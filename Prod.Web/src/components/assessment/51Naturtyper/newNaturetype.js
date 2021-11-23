@@ -75,14 +75,15 @@ export default class NewNaturetype extends React.Component {
             <div>
                 <h4>{superheader}</h4>
                 <p>{header}</p>
-                {nts
+                {this.props.children}
+                {/* {nts
                     ? <NaturtypeSelector 
                         naturtyper={nts} 
                         config={config}
                         mode={"naturetype"} 
                         setSelected={this.setSelectedNaturtype}
                         />
-                    : null}
+                    : null} */}
             </div>
             {/* {appState.livsmediumEnabled
                 ? <div>
