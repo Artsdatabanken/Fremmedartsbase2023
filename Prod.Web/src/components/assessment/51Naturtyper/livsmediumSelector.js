@@ -12,7 +12,18 @@ export default class LivsmediumSelector extends React.Component {
     constructor(props) {
         console.log("nts: " + JSON.stringify(props.naturtyper, undefined))
         super(props)
-
+        this.setSelectedNT = action ((naturtypekode) => {
+            console.log("Nincode: " + naturtypekode)
+            const nnt = props.nyNaturtype
+            nnt.niNCode = naturtypekode
+            // nnt.dominanceForrest.clear()
+            nnt.timeHorizon = null
+            nnt.colonizedArea = null
+            // nnt.stateChange.clear()
+            nnt.affectedArea = null
+            // nnt.background.clear()
+            props.showModal()
+        })
     }
     truncCode(kode) {
         console.log("trunc: '" + kode + "'")
@@ -20,6 +31,9 @@ export default class LivsmediumSelector extends React.Component {
             ? kode.substring(3)
             : kode
     }
+
+
+    
     render() {
         const {naturtyper, setSelected} = this.props;
 
@@ -57,7 +71,7 @@ export default class LivsmediumSelector extends React.Component {
                                     onClick={() => hovedtype.Collapsed = !hovedtype.Collapsed}>
                                     {hovedtype.Children.length > 0 ? hovedtype.Collapsed == false? <ExpandMoreIcon/> : <NavigateNextIcon/> : <div style={{width: '24px'}}></div>} {/* <-- to align all the choice buttons even though they don't have an arrow to expand */}
                                 </div>
-                                <div className="tree-view-label" onClick={() => setSelected(hovedtype.Id) }>
+                                <div className="tree-view-label" onClick={() => this.setSelectedNT(hovedtype.Id) }>
                                     <Xcomp.Button className="hovedtype btn-flat">
                                         <span className="naturtype-kode">{this.truncCode(hovedtype.Id)}</span>
                                         {/* <span>{hovedtype.name}</span> */}
@@ -67,7 +81,7 @@ export default class LivsmediumSelector extends React.Component {
                                 {!hovedtype.Collapsed && hovedtype.Children ?
                                 <div className="tree-view-children">
                                 {hovedtype.Children.map(grunntype =>
-                                    <div key={grunntype.Id} onClick={() => setSelected(grunntype.Id)}>
+                                    <div key={grunntype.Id} onClick={() => this.setSelectedNT(grunntype.Id)}>
                                         <span className="grunntype btn-flat">
                                             <span className="naturtype-kode">{this.truncCode(grunntype.Id)}</span>
                                             {/* <span>{grunntype.name}</span> */}

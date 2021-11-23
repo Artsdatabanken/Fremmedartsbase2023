@@ -1,7 +1,8 @@
 import React from 'react';
-import {autorun, extendObservable, observable, toJS, action} from 'mobx';
+import {autorun, extendObservable, observable, toJS, action, runInAction} from 'mobx';
 import {observer, inject} from 'mobx-react';
 import NaturtypeSelector from './naturtypeSelector';
+import LivsmediumSelector from './livsmediumSelector';
 import NaturtypeModal from './naturetypeModal';
 // import * as Xcomp from '../observableComponents';
 @inject("appState")
@@ -28,18 +29,18 @@ export default class NewNaturetype extends React.Component {
 
 
 
-        this.setSelectedNT = action ((naturtypekode) => {
-            console.log("Nincode: " + naturtypekode)
-            const nnt = this.nyNaturtype
-            nnt.niNCode = naturtypekode
-            // nnt.dominanceForrest.clear()
-            nnt.timeHorizon = null
-            nnt.colonizedArea = null
-            // nnt.stateChange.clear()
-            nnt.affectedArea = null
-            // nnt.background.clear()
-            this.showModal = true
-        })
+        // this.setSelectedNT = action ((naturtypekode) => {
+        //     console.log("Nincode: " + naturtypekode)
+        //     const nnt = this.nyNaturtype
+        //     nnt.niNCode = naturtypekode
+        //     // nnt.dominanceForrest.clear()
+        //     nnt.timeHorizon = null
+        //     nnt.colonizedArea = null
+        //     // nnt.stateChange.clear()
+        //     nnt.affectedArea = null
+        //     // nnt.background.clear()
+        //     this.showModal = true
+        // })
 
         this.setSelectedNaturtype = action((naturtypekode) => {
             // this.hideStateChange = false;
@@ -75,7 +76,20 @@ export default class NewNaturetype extends React.Component {
             <div>
                 <h4>{superheader}</h4>
                 <p>{header}</p>
-                {this.props.children}
+                {/* {this.props.children} */}
+                {this.props.mode === "livsmedium" ?
+                    <LivsmediumSelector
+                        naturtyper={appState.livsmediumCodes} 
+                        nyNaturtype={this.nyNaturtype}
+                        showModal={() => runInAction(() => this.showModal = true)}
+                        // setSelected={() => console.log("setSelectedNaturtype")}
+                        setSelected={this.setSelectedNaturtype}
+                    /> :
+                    null
+                }
+
+
+
                 {/* {nts
                     ? <NaturtypeSelector 
                         naturtyper={nts} 
