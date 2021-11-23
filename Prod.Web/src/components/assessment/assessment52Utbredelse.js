@@ -19,6 +19,46 @@ import { action, computed, observable } from 'mobx';
 @inject('appState')
 @observer
 export default class Assessment52Utbredelse extends React.Component {
+    // constructor(props) {
+    //     super(props)
+    //     const state = this.props.appState.assessment.fylkesforekomster.find(f => f.state0);
+    //     if (state === undefined) {
+    //         // 2 - ikke kjent
+    //         // 3 - antatt om 50 år
+    //         // 1 - antatt i dag
+    //         // 0 - kjent
+    //         this.props.appState.assessment.fylkesforekomster.forEach((f) => {
+    //             if (f[`state${f.state}`] !== undefined) return;
+    //             switch (f.state) {
+    //                 case 0:
+    //                     f[`state${f.state}`] = 1;
+    //                     f['state1'] = 0;
+    //                     f['state2'] = 0;
+    //                     f['state3'] = 0;
+    //                     break;
+    //                 case 1:
+    //                     f['state0'] = 0;
+    //                     f[`state${f.state}`] = 1;
+    //                     f['state2'] = 0;
+    //                     f['state3'] = 0;
+    //                     break;
+    //                 case 2:
+    //                     f['state0'] = 0;
+    //                     f['state1'] = 0;
+    //                     f[`state${f.state}`] = 1;
+    //                     f['state3'] = 0;
+    //                     break;
+    //                 case 3:
+    //                     f['state0'] = 0;
+    //                     f['state1'] = 0;
+    //                     f['state2'] = 0;
+    //                     f[`state${f.state}`] = 1;
+    //             }
+    //             delete f.state;
+    //             // console.log("Fylke", f.fylke, f.state, f.states);
+    //         });
+    //     }
+    // }
 
     // code looks unused, but it makes the Artskart-module listen to changes
     @computed get isDirty() {
@@ -69,7 +109,16 @@ export default class Assessment52Utbredelse extends React.Component {
                 acc[e.NAVN] = e.Status;
                 return acc;
             }, {});
-            ass.fylkesforekomster.forEach(f => f.state = fo[fylker[f.fylke]] > 0 ? 0 : 2);
+            // ass.fylkesforekomster.forEach(f => f.state = fo[fylker[f.fylke]] > 0 ? 0 : 2);
+            ass.fylkesforekomster.forEach(f => {
+                console.log('fo', fo[fylker[f.fylke]]);
+                f.state0 = fo[fylker[f.fylke]] > 0 ? 1 : 0;
+                if (f.state0 === 1) {
+                    f.state2 = 0;
+                } else if ((parseInt(f.state0) + parseInt(f.state1) + parseInt(f.state3)) === 0) {
+                    f.state2 = 1;
+                }
+            });
             // console.log('ass.fylkesforekomster', ass.fylkesforekomster);
         }
 

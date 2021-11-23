@@ -8,6 +8,7 @@ const SvgShapeSelector = ({
   readOnly,
   regionDefs,
   states,
+  stateIndex,
   onSwitchCategory
 }) => {
   const offsetX = useRef();
@@ -21,7 +22,8 @@ const SvgShapeSelector = ({
   );
   const svgRegions = sortedHightlightedLast.map(regionDef => {
     const kode = regionDef.kode;
-    const state = states[kode] || 0;
+    // const state = states[kode] || 0;
+    const state = states[kode][`state${stateIndex}`] ? stateIndex : 2;
     const mainStyle = categories[state];
     let style = mainStyle.normal;
     if (hoveringOver === kode) style = mainStyle.highlight;
@@ -52,7 +54,7 @@ const SvgShapeSelector = ({
           else if (state === 2) offset = -3;
           else if (state == 3) offset = -2;
           const newState = (state + 1 + offset) % categories.length;
-          onSwitchCategory && onSwitchCategory(e, kode, newState);
+          onSwitchCategory && onSwitchCategory(e, kode, stateIndex, newState);
           setColorForHoldAndDragPaint(newState);
         }}
         onMouseLeave={e => {

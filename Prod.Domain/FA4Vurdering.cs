@@ -224,7 +224,9 @@ namespace Prod.Domain
 
         public List<Fylkesforekomst> Fylkesforekomster
         {
-            get => _fylkesforekomster?.Count > 0 ? _fylkesforekomster : GetInitialFylkesforekomster();
+            // live test, replace with line below after deleting Fylkesforekomst.State from model
+            get => _fylkesforekomster?.Count > 0 ? FixOldState() : GetInitialFylkesforekomster();
+            // get => _fylkesforekomster?.Count > 0 ? _fylkesforekomster : GetInitialFylkesforekomster();
             set => _fylkesforekomster = value;
         }
 
@@ -233,34 +235,72 @@ namespace Prod.Domain
             Fylkesforekomster = GetInitialFylkesforekomster();
         }
 
+        /// <summary>
+        /// live test, replace with '_fylkesforekomster' after deleting State from Fylkesforekomst
+        /// </summary>
+        /// <returns></returns>
+        private List<Fylkesforekomst> FixOldState()
+        {
+            foreach (var fylkesforekomst in _fylkesforekomster)
+            {
+                switch (fylkesforekomst.State)
+                {
+                    case 0:
+                        // 0 - kjent
+                        fylkesforekomst.State0 = 1;
+                        break;
+                    case 1:
+                        // 1 - antatt i dag
+                        fylkesforekomst.State1 = 1;
+                        break;
+                    case 2:
+                        // 2 - ikke kjent
+                        fylkesforekomst.State2 = 1;
+                        break;
+                    case 3:
+                        // 3 - antatt om 50 år
+                        fylkesforekomst.State3 = 1;
+                        break;
+                    default:
+                        // unused value - set to 2 - ikke kjent
+                        fylkesforekomst.State2 = 1;
+                        break;
+                }
+
+                fylkesforekomst.State = -1;
+            }
+
+            return _fylkesforekomster;
+        }
+
         private static List<Fylkesforekomst> GetInitialFylkesforekomster()
         {
             return new List<Fylkesforekomst>
             {
-                new Fylkesforekomst { Fylke = "Øs", State = 2 },
-                new Fylkesforekomst { Fylke = "OsA", State = 2 },
-                new Fylkesforekomst { Fylke = "He", State = 2 },
-                new Fylkesforekomst { Fylke = "Op", State = 2 },
-                new Fylkesforekomst { Fylke = "Bu", State = 2 },
-                new Fylkesforekomst { Fylke = "Ve", State = 2 },
-                new Fylkesforekomst { Fylke = "Te", State = 2 },
-                new Fylkesforekomst { Fylke = "Aa", State = 2 },
-                new Fylkesforekomst { Fylke = "Va", State = 2 },
-                new Fylkesforekomst { Fylke = "Ro", State = 2 },
-                new Fylkesforekomst { Fylke = "Ho", State = 2 },
-                new Fylkesforekomst { Fylke = "Sf", State = 2 },
-                new Fylkesforekomst { Fylke = "Mr", State = 2 },
-                new Fylkesforekomst { Fylke = "Tø", State = 2 },
-                new Fylkesforekomst { Fylke = "No", State = 2 },
-                new Fylkesforekomst { Fylke = "Tr", State = 2 },
-                new Fylkesforekomst { Fylke = "Fi", State = 2 },
-                new Fylkesforekomst { Fylke = "Sv", State = 2 },
-                new Fylkesforekomst { Fylke = "Jm", State = 2 },
-                new Fylkesforekomst { Fylke = "Ns", State = 2 },
-                new Fylkesforekomst { Fylke = "Nh", State = 2 },
-                new Fylkesforekomst { Fylke = "Gh", State = 2 },
-                new Fylkesforekomst { Fylke = "Bn", State = 2 },
-                new Fylkesforekomst { Fylke = "Bs", State = 2 }
+                new Fylkesforekomst { Fylke = "Øs", State2 = 1 },
+                new Fylkesforekomst { Fylke = "OsA", State2 = 1 },
+                new Fylkesforekomst { Fylke = "He", State2 = 1 },
+                new Fylkesforekomst { Fylke = "Op", State2 = 1 },
+                new Fylkesforekomst { Fylke = "Bu", State2 = 1 },
+                new Fylkesforekomst { Fylke = "Ve", State2 = 1 },
+                new Fylkesforekomst { Fylke = "Te", State2 = 1 },
+                new Fylkesforekomst { Fylke = "Aa", State2 = 1 },
+                new Fylkesforekomst { Fylke = "Va", State2 = 1 },
+                new Fylkesforekomst { Fylke = "Ro", State2 = 1 },
+                new Fylkesforekomst { Fylke = "Ho", State2 = 1 },
+                new Fylkesforekomst { Fylke = "Sf", State2 = 1 },
+                new Fylkesforekomst { Fylke = "Mr", State2 = 1 },
+                new Fylkesforekomst { Fylke = "Tø", State2 = 1 },
+                new Fylkesforekomst { Fylke = "No", State2 = 1 },
+                new Fylkesforekomst { Fylke = "Tr", State2 = 1 },
+                new Fylkesforekomst { Fylke = "Fi", State2 = 1 },
+                new Fylkesforekomst { Fylke = "Sv", State2 = 1 },
+                new Fylkesforekomst { Fylke = "Jm", State2 = 1 },
+                new Fylkesforekomst { Fylke = "Ns", State2 = 1 },
+                new Fylkesforekomst { Fylke = "Nh", State2 = 1 },
+                new Fylkesforekomst { Fylke = "Gh", State2 = 1 },
+                new Fylkesforekomst { Fylke = "Bn", State2 = 1 },
+                new Fylkesforekomst { Fylke = "Bs", State2 = 1 }
             };
         }
     }
@@ -1549,5 +1589,9 @@ public partial class FA4 // (3.2) Artsegenskaper
     {
         public string Fylke { get; set; }
         public int State { get; set; }
+        public int State0 { get; set; }
+        public int State1 { get; set; }
+        public int State2 { get; set; }
+        public int State3 { get; set; }
     }
 }
