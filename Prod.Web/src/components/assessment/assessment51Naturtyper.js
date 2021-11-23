@@ -9,6 +9,9 @@ import {getCriterion} from '../../utils'
 import NaturtypeTable from './51Naturtyper/naturtypeTable';
 import HabitatTable from './51Naturtyper/habitatTable';
 import NewNaturetype from './51Naturtyper/newNaturetype';
+import LivsmediumSelector from './51Naturtyper/livsmediumSelector';
+import TruetSelector from './51Naturtyper/truetSelector';
+import NaturtypeSelector from './51Naturtyper/naturtypeSelector';
 import ScoreUnsure from './51Naturtyper/scoreUnsure';
 // import NaturtypeSelector from './naturtypeSelector';
 import RedlistedNaturetypeTable from './51Naturtyper/redlistedNaturetypeTable';
@@ -129,7 +132,12 @@ export default class Assessment51Naturtyper extends React.Component {
                         codes={appState.livsmediumCodes}
                         header={labels.NatureTypes.chooseLM}
                         hideStateChange={true}
-                        superheader={ntLabels.colonizedAreaAndEffects} />
+                        superheader={ntLabels.colonizedAreaAndEffects} >
+                            <LivsmediumSelector 
+                                naturtyper={appState.livsmediumCodes} 
+                                setSelected={() => console.log("setSelectedNaturtype")}
+                            />
+                        </NewNaturetype>
                         
                         // <NaturtypeSelector
                         //     naturtyper={appState.livsmediumCodes}
@@ -154,12 +162,12 @@ export default class Assessment51Naturtyper extends React.Component {
                         codes={appState.trueteogsjeldneCodes}
                         header={labels.NatureTypes.chooseTS}
                         hideStateChange={false}
-                        superheader={ntLabels.colonizedAreaAndEffects} />
-                        
-                        // <NaturtypeSelector
-                        //     naturtyper={appState.livsmediumCodes}
-                        //     mode={"livsmedium"}
-                        //     setSelected={this.setSelectedLivsmedium}/>
+                        superheader={ntLabels.colonizedAreaAndEffects} >
+                            <TruetSelector 
+                                naturtyper={appState.trueteogsjeldneCodes} 
+                                setSelected={() => console.log("setSelectedNaturtype")}
+                            />
+                        </NewNaturetype>
                         : null}
                 </div>
 
@@ -175,7 +183,12 @@ export default class Assessment51Naturtyper extends React.Component {
                     labels={labels}
                     codes={koder.naturtyperNIN2}
                     header={ntLabels.chooseNT}
-                    superheader={ntLabels.colonizedAreaAndEffects} />
+                    superheader={ntLabels.colonizedAreaAndEffects} >
+                            <NaturtypeSelector 
+                                naturtyper={koder.naturtyperNIN2} 
+                                setSelected={() => console.log("setSelectedNaturtype")}
+                            />
+                        </NewNaturetype>
                 </fieldset> 
                 <fieldset className="well">   
                 <NaturtypeTable
