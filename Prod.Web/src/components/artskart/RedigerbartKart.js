@@ -5,6 +5,7 @@ import useArtskart from "./useArtskart";
 import * as Xcomp from "../observableComponents";
 
 const RedigerbartKart = ({
+  showWaterAreas,
   taxonId,
   scientificNameId,
   kriterier,
@@ -173,6 +174,7 @@ const RedigerbartKart = ({
         </div>
       </div>
       <MapOpenLayers
+        showWaterAreas={showWaterAreas}
         geojson={observations}
         style={mapstyle}
         onAddPoint={handleAddPoint}

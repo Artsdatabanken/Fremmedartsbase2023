@@ -19,6 +19,7 @@ import WMTSTileGrid from 'ol/tilegrid/WMTS';
 import config from '../../config';
 
 const MapOpenLayers = ({
+    showWaterAreas,
     children,
     onAddPoint,
     onEdit,
@@ -444,12 +445,19 @@ const MapOpenLayers = ({
                 //     visible: false
                 // }),
                 // createWaterLayer('Vatn', 2, projection),
-                hoverLayer,
-                areaLayer,
-                markerLayer
+                // hoverLayer,
+                // areaLayer,
+                // markerLayer
             ],
             controls: defaultControls({attribution: false}).extend(mapControls),
         };
+
+        if (showWaterAreas) {
+            options.layers.push(createWaterLayer('Vatn', 2, projection));
+        }
+        options.layers.push(hoverLayer);
+        options.layers.push(areaLayer);
+        options.layers.push(markerLayer);
 
         let mapObject = new Map(options);
 

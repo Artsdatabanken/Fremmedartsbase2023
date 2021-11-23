@@ -89,7 +89,11 @@ export default class Assessment52Utbredelse extends React.Component {
         // console.log('handleOverførFraArtskart', selectionGeometry, countylist, areadata, observations, editStats);
         const aps = this.props.appState;
         const ass = aps.assessment;
-        
+
+        if (ass.isAlienSpecies && ass.isRegionallyAlien) {
+            console.log('working with vannområder...');
+        }
+
         ass.b1UtbredelsesområdeKjentAndel = areadata.AreaExtentOfOccurrence;
         ass.artskartManuellAdd = editStats.add;
         ass.artskartManuellRemove = editStats.remove;
@@ -179,6 +183,7 @@ export default class Assessment52Utbredelse extends React.Component {
                                         taxonId={assessment.taxonId}
                                         scientificNameId={assessment.evaluatedScientificNameId}
                                         evaluationContext={assessment.evaluationContext}
+                                        showWaterAreas={assessment.isAlienSpecies && assessment.isRegionallyAlien}
                                         labels={labels}
                                         utvalg={assessment.riskAssessment}
                                         onOverførFraArtskart={action(this.handleOverførFraArtskart)}

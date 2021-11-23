@@ -6,6 +6,7 @@ import Artskart from "./Artskart";
 const ModalArtskart = ({
   labels,
   evaluationContext,
+  showWaterAreas,
   scientificNameId,
   taxonId,
   utvalg,
@@ -24,6 +25,7 @@ const ModalArtskart = ({
         evaluationContext={evaluationContext}
         onSave={resultat => this.handleSave(resultat)}
         onCancel={() => setVisArtskart(false)}
+        showWaterAreas={showWaterAreas}
         taxonId={taxonId || 0}
         scientificNameId={scientificNameId}
         utvalg={utvalg}
