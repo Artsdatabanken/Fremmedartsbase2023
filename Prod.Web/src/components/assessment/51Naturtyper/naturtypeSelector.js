@@ -1,11 +1,9 @@
-// import config from '../../../config';
 import React from 'react';
 import {observer} from 'mobx-react';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import * as Xcomp from './../observableComponents';
 import { action } from 'mobx';
-
 
 @observer
 export default class NaturtypeSelector extends React.Component {
@@ -14,14 +12,8 @@ export default class NaturtypeSelector extends React.Component {
         super(props)
 
     }
-    truncCode(kode) {
-        console.log("trunc: '" + kode + "'")
-        return (kode && kode.length > 3 && kode.startsWith("LI ")) 
-            ? kode.substring(3)
-            : kode
-    }
     render() {
-        const {naturtyper, setSelected, config} = this.props;
+        const {naturtyper, setSelected} = this.props;
 
         // console.log("SELECTOR: " + JSON.stringify(naturtyper, undefined, 2))
 
@@ -38,10 +30,10 @@ export default class NaturtypeSelector extends React.Component {
                         </div>
                         <div className="tree-view-label">
                             <span className="hovedtypegruppe">
-                                <span className="naturtype-kode" style={{width: config.codewidth}}>{this.truncCode(hovedtypegruppe.Value)}</span>
+                                <span className="naturtype-kode" style={{width: "300px"}}>{hovedtypegruppe.Value}</span>
                                 {/* to show the name for the highest level for those nature types that only have code*/}
                                 {/* {this.truncCode(hovedtypegruppe.Value).length < 3 && <span>{hovedtypegruppe.Text}</span>} */}
-                                {config.showdescription(this.truncCode(hovedtypegruppe.Value)) && <span>{hovedtypegruppe.Text}</span>}
+                                {<span>{hovedtypegruppe.Text}</span>}
                                {/* <span>{hovedtypegruppe.Id}</span> */}
                             </span>
                         </div>
@@ -59,7 +51,7 @@ export default class NaturtypeSelector extends React.Component {
                                 </div>
                                 <div className="tree-view-label" onClick={() => setSelected(hovedtype.Id) }>
                                     <Xcomp.Button className="hovedtype btn-flat">
-                                        <span className="naturtype-kode">{this.truncCode(hovedtype.Id)}</span>
+                                        <span className="naturtype-kode">{hovedtype.Id}</span>
                                         {/* <span>{hovedtype.name}</span> */}
                                         <span>{hovedtype.Text}</span>
                                     </Xcomp.Button>
@@ -69,7 +61,7 @@ export default class NaturtypeSelector extends React.Component {
                                 {hovedtype.Children.map(grunntype =>
                                     <div key={grunntype.Id} onClick={() => setSelected(grunntype.Id)}>
                                         <span className="grunntype btn-flat">
-                                            <span className="naturtype-kode">{this.truncCode(grunntype.Id)}</span>
+                                            <span className="naturtype-kode">{grunntype.Id}</span>
                                             {/* <span>{grunntype.name}</span> */}
                                             <span>{grunntype.Text}</span>
                                         </span>
