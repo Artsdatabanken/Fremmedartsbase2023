@@ -267,6 +267,11 @@ namespace Prod.Domain
                         break;
                 }
 
+                if (fylkesforekomst.State0 == 0 && fylkesforekomst.State1 == 0 && fylkesforekomst.State3 == 0)
+                    fylkesforekomst.State2 = 1;
+                else
+                    fylkesforekomst.State2 = 0;
+
                 fylkesforekomst.State = -1;
             }
 
