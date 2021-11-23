@@ -101,7 +101,8 @@ class ViewModel {
             withAutomaticNameChanges: false,
             kunUbehandlede: false,
             kunMine: false,
-            includeLC: false  ,
+            includeLC: false,
+            showTheCat: false,
 
 
             artskartModel: {},
@@ -826,6 +827,12 @@ class ViewModel {
         const doorknockerstate = riskhorizon.potensiellDørstokkart
         const id = this.assessmentId
         console.log("onMoveAssessmentHorizon: " + doorknockerstate)
+
+       
+        console.log("Show the cat")
+		action(() => this.showTheCat = true)()
+				savetimer = setTimeout(() => events.trigger("moveAssessment", "timeout"), 30000)
+				console.log("Move assessment starter -")
         this.movehorizon(id, doorknockerstate)
         action(() => {
             this.viewMode = "choosespecie"
