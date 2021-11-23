@@ -114,9 +114,9 @@ namespace SwissKnife.Database
                 foreach (var importFormat in records)
                 {
                     var nt = new jsonNT();
-                    nt.Id = importFormat.Id;
-                    nt.Text = importFormat.Kortnavn;
-                    nt.Value = importFormat.Typekode + " " + importFormat.KildeTilVariasjon;
+                    nt.Id = (importFormat.Id).Trim();
+                    nt.Text = (importFormat.Kortnavn).Trim();
+                    nt.Value = (importFormat.Typekode + " " + importFormat.KildeTilVariasjon).Trim();
                     nt.Children = new List<jsonNT>();
                     root.Children.Add(nt);
                     //Console.WriteLine($"{importFormat.Id} {importFormat.Vurderingsenhet} {importFormat.Kortnavn} {importFormat.Typekode}");
