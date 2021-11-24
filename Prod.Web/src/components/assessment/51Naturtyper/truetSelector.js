@@ -54,7 +54,8 @@ export default class TruetSelector extends React.Component {
                             <div key={hovedtype.Id} className="tree-view-label btn-flat" onClick={() => this.setSelectedNT(hovedtype.Id)}>
                                 <span className="hovedtypegruppe">
                                     <span className="naturtype-kode" style={{width: "350px"}}>{hovedtype.Text}</span>
-                                    {<span>{hovedtype.Value}</span>}
+                                    <span>{hovedtype.Value}</span>
+                                    <span>{hovedtype.Category}</span>
                                 </span>
                             </div>
                             )}
