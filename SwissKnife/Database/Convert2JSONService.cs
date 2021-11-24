@@ -89,6 +89,7 @@ namespace SwissKnife.Database
             public string Id { get; set; }
             public string Value { get; set; }
             public string Text { get; set; }
+            public string Category { get; set; }
             public bool Collapsed { get; set; }
             public List<jsonNT> Children { get; set; }
         }
@@ -130,6 +131,7 @@ namespace SwissKnife.Database
                         nt2.Id = (importFormat.Id).Trim();
                         nt2.Text = (importFormat.Kortnavn).Trim();
                         nt2.Value = (importFormat.Typekode + " " + importFormat.KildeTilVariasjon).Trim();
+                        nt2.Category = importFormat.GjeldeneKategoriOgKriterie;
                         nt2.Collapsed = true;
                         nt2.Children = new List<jsonNT>();
                         nt1.Children.Add(nt2);
