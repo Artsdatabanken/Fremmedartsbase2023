@@ -9,8 +9,8 @@ import {getCriterion} from '../../utils'
 import NaturtypeTable from './51Naturtyper/naturtypeTable';
 import HabitatTable from './51Naturtyper/habitatTable';
 import NewNaturetype from './51Naturtyper/newNaturetype';
-import LivsmediumSelector from './51Naturtyper/livsmediumSelector';
-import TruetSelector from './51Naturtyper/truetSelector';
+// import LivsmediumSelector from './51Naturtyper/livsmediumSelector';
+// import TruetSelector from './51Naturtyper/truetSelector';
 import NaturtypeSelector from './51Naturtyper/naturtypeSelector';
 import ScoreUnsure from './51Naturtyper/scoreUnsure';
 // import NaturtypeSelector from './naturtypeSelector';
@@ -175,21 +175,21 @@ export default class Assessment51Naturtyper extends React.Component {
 
                 
                 <NewNaturetype
-                    config={{
-                        codewidth: "30px",
-                        showdescription: () => true
-                    }}
-                    
+                    // config={{
+                    //     codewidth: "30px",
+                    //     showdescription: () => true
+                    // }}
+                    mode="nin"
                     appState={appState}
                     addNaturtype={this.addNaturtype}
                     labels={labels}
                     codes={koder.naturtyperNIN2}
                     header={ntLabels.chooseNT}
                     superheader={ntLabels.colonizedAreaAndEffects} >
-                            <NaturtypeSelector 
+                            {/* <NaturtypeSelector 
                                 naturtyper={koder.naturtyperNIN2} 
                                 setSelected={() => console.log("setSelectedNaturtype")}
-                            />
+                            /> */}
                         </NewNaturetype>
                 </fieldset> 
                 <fieldset className="well">   
