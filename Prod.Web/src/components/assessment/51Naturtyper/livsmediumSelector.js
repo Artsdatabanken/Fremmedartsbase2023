@@ -13,10 +13,9 @@ export default class LivsmediumSelector extends React.Component {
         console.log("nts: " + JSON.stringify(props.naturtyper, undefined))
         super(props)
         this.setSelectedNT = action ((naturtypekode) => {
-            console.log("Nincode: " + naturtypekode)
+            console.log("Livsmedium kode: " + naturtypekode)
             const nnt = props.nyNaturtype
             nnt.niNCode = naturtypekode
-            // nnt.dominanceForrest.clear()
             nnt.timeHorizon = null
             nnt.colonizedArea = null
             // nnt.stateChange.clear()

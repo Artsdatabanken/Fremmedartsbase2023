@@ -12,6 +12,17 @@ export default class TruetSelector extends React.Component {
     constructor(props) {
         console.log("nts: " + JSON.stringify(props.naturtyper, undefined))
         super(props)
+        this.setSelectedNT = action ((naturtypekode) => {
+            console.log("Truet kode: " + naturtypekode)
+            const nnt = props.nyNaturtype
+            nnt.niNCode = naturtypekode
+            nnt.timeHorizon = null
+            nnt.colonizedArea = null
+            // nnt.stateChange.clear()
+            nnt.affectedArea = null
+            // nnt.background.clear()
+            props.showModal()
+        })
 
     }
     render() {
@@ -23,13 +34,14 @@ export default class TruetSelector extends React.Component {
             <div>
                 {naturtyper.map(hovedtypegruppe => 
                     <div key={hovedtypegruppe.Id}>
-                        <div
+                        {/* <div
                         className={"glyphicon glyphicon-chevron-down tree-view-arrow " }
                             onClick={action(() => hovedtypegruppe.Collapsed = !hovedtypegruppe.Collapsed)} 
-                            > {hovedtypegruppe.Collapsed == false ? <ExpandMoreIcon/> : <NavigateNextIcon/>}
+                            > 
+                            {hovedtypegruppe.Collapsed == false ? <ExpandMoreIcon/> : <NavigateNextIcon/>}
                             
-                        </div>
-                        <div className="tree-view-label">
+                        </div> */}
+                        <div className="tree-view-label btn-flat" onClick={() => this.setSelectedNT(hovedtypegruppe.Id)}>
                             <span className="hovedtypegruppe">
                                 <span className="naturtype-kode" style={{width: "350px"}}>{hovedtypegruppe.Text}</span>
                                 {<span>{hovedtypegruppe.Value}</span>}
