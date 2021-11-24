@@ -18,7 +18,7 @@ export default class NewNaturetype extends React.Component {
             // naturtypeLabel: null,
             nyNaturtype: {
                 niNCode: null,
-                dominanceForrest: [],
+                // dominanceForrest: [],
                 timeHorizon: null,
                 colonizedArea: null,
                 stateChange: [],
@@ -42,10 +42,10 @@ export default class NewNaturetype extends React.Component {
         //     this.showModal = true
         // })
 
-        this.setSelectedNaturtype = action((naturtypekode) => {
-            // this.hideStateChange = false;
-            this.setSelectedNT(naturtypekode)
-        })
+        // this.setSelectedNaturtype = action((naturtypekode) => {
+        //     // this.hideStateChange = false;
+        //     this.setSelectedNT(naturtypekode)
+        // })
         // this.setSelectedLivsmedium = action((naturtypekode) => {
         //     // this.hideStateChange = true;
         //     this.setSelectedNT(naturtypekode)
@@ -83,7 +83,7 @@ export default class NewNaturetype extends React.Component {
                         nyNaturtype={this.nyNaturtype}
                         showModal={() => runInAction(() => this.showModal = true)}
                         // setSelected={() => console.log("setSelectedNaturtype")}
-                        setSelected={this.setSelectedNaturtype}
+                        // setSelected={this.setSelectedNaturtype}
                     /> :
                     null
                 }

@@ -35,7 +35,7 @@ export default class LivsmediumSelector extends React.Component {
 
     
     render() {
-        const {naturtyper, setSelected} = this.props;
+        const {naturtyper} = this.props;
 
         // console.log("SELECTOR: " + JSON.stringify(naturtyper, undefined, 2))
 
