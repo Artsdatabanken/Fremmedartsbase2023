@@ -4,466 +4,536 @@
   "Text": "root",
   "Children": [
     {
-      "Id": "26",
-      "Value": "H2-1 SA-+",
-      "Text": "Kaldtvannsbassenger",
-      "Children": []
-    },
-    {
-      "Id": "75",
-      "Value": "T12 ",
-      "Text": "Strandeng",
-      "Children": []
-    },
-    {
-      "Id": "69",
-      "Value": "T1-12,T1-16,T1-20,T1-29,T1-32,T1-52,T1-56,T1-60 6SE_5",
-      "Text": "Tørt kalkrikt berg i kontinentale områder",
-      "Children": []
-    },
-    {
-      "Id": "71",
-      "Value": "T31 ",
-      "Text": "Boreal hei",
-      "Children": []
-    },
-    {
-      "Id": "72",
-      "Value": "T32 ",
-      "Text": "Semi-naturlig eng",
-      "Children": []
-    },
-    {
-      "Id": "84",
-      "Value": "T4-1,T4-2,T4-3,T4-17 6SE_1,6SE_2,6SO_1,6SO_2,1AR-A-B,UE-0,UE-a",
-      "Text": "Boreonemoral regnskog",
-      "Children": []
-    },
-    {
-      "Id": "323",
-      "Value": "I2 ",
-      "Text": "Polar havis",
-      "Children": []
-    },
-    {
-      "Id": "83",
-      "Value": "T4-1,T4-2,T4-17,T4-18 6SE_1,6SE_2,6SO_3,1AR-A-B,UE-0,UE-a",
-      "Text": "Boreal regnskog",
-      "Children": []
-    },
-    {
-      "Id": "76",
-      "Value": "T32 SP-a",
-      "Text": "Slåttemark",
-      "Children": []
-    },
-    {
-      "Id": "66",
-      "Value": "T1-33,T1-34,T1-35,T1-36,T1-37,T1-38,T1-39,T1-40 6SO_6,6SO_7,6SE_4,6SE_5",
-      "Text": "Overrislingsberg i østlige høyfjellstrøk",
-      "Children": []
-    },
-    {
-      "Id": "68",
-      "Value": "T1-69,T1-70,T1-71,T1-72,T1-73,T1-74,T1-75,T1-76 ",
-      "Text": "Fosseberg",
-      "Children": []
-    },
-    {
-      "Id": "73",
-      "Value": "T33 ",
-      "Text": "Semi-naturlig strandeng",
-      "Children": []
-    },
-    {
-      "Id": "344",
-      "Value": "M1-3 6KS_2,6KS_3",
-      "Text": "Nordlig sukkertareskog",
-      "Children": []
-    },
-    {
-      "Id": "342",
-      "Value": "M1-3 6KS_1",
-      "Text": "Sørlig sukkertareskog",
-      "Children": []
-    },
-    {
-      "Id": "389",
-      "Value": "T4-18,T4-19 1AR-A-E",
-      "Text": "Høgstaude edelløvskog",
-      "Children": []
-    },
-    {
-      "Id": "311",
-      "Value": "M5-23 1AR-H-H",
-      "Text": "Grisehalekorallskogbunn",
-      "Children": []
-    },
-    {
-      "Id": "331",
-      "Value": "M1-29 ",
-      "Text": "Isskurt sublitoral fastbunn",
-      "Children": []
-    },
-    {
-      "Id": "74",
-      "Value": "T34 ",
-      "Text": "Kystlynghei",
-      "Children": []
-    },
-    {
-      "Id": "38",
-      "Value": "F2-13 ",
-      "Text": "Humøse dype innsjøer",
-      "Children": []
-    },
-    {
-      "Id": "11",
-      "Value": "M5-4,M5-5,M5-14,M5-15 1AR-H-H,6KS_1",
-      "Text": "Bambuskorallskogbunn",
-      "Children": []
-    },
-    {
-      "Id": "266",
-      "Value": "T2-7,T2-8 6SO_1",
-      "Text": "Åpen grunnlendt kalkrik mark i boreonemoral sone",
-      "Children": []
-    },
-    {
-      "Id": "39",
-      "Value": "F2-16 ",
-      "Text": "Humøse grunne innsjøer",
-      "Children": []
-    },
-    {
-      "Id": "24",
-      "Value": "M1-6 6KS_2,6KS_3",
-      "Text": "Nordlig fingertarebunn",
-      "Children": []
-    },
-    {
-      "Id": "269",
-      "Value": "T2-7,T2-8 6SO_2",
-      "Text": "Åpen grunnlendt kalkrik mark i sørboreal sone",
-      "Children": []
-    },
-    {
-      "Id": "85",
-      "Value": "T4-4 1AR-A-B",
-      "Text": "Kalkgranskog",
-      "Children": []
-    },
-    {
-      "Id": "169",
-      "Value": "3AR_DE ",
-      "Text": "Delta",
-      "Children": []
-    },
-    {
-      "Id": "365",
-      "Value": "T4-8,T4-12 1AR-A-E",
-      "Text": "Kalkedellauvskog",
-      "Children": []
-    },
-    {
-      "Id": "79",
-      "Value": "M3-19 ",
-      "Text": "Isskurt fjæresone-fastbunn",
-      "Children": []
-    },
-    {
-      "Id": "46",
-      "Value": "T7 ",
-      "Text": "Snøleie",
-      "Children": []
-    },
-    {
-      "Id": "366",
-      "Value": "T4-5,T4-6,T4-7,T4-8,T4-9,T4-10,T4-11,T4-12,T4-19,T4-20 BK-a",
-      "Text": "Olivinskog",
-      "Children": []
-    },
-    {
-      "Id": "145",
-      "Value": "3TO_HA ",
-      "Text": "Atlantisk høymyr",
-      "Children": []
-    },
-    {
-      "Id": "146",
-      "Value": "3TO_HE ",
-      "Text": "Eksentrisk høymyr",
-      "Children": []
-    },
-    {
-      "Id": "364",
-      "Value": "T4-6,T4-7,T4-10,T4-11 1AR-A-E",
-      "Text": "Lågurtedellauvskog",
-      "Children": []
-    },
-    {
-      "Id": "47",
-      "Value": "T8 ",
-      "Text": "Fuglefjell-eng og fugletopp",
-      "Children": []
-    },
-    {
-      "Id": "14",
-      "Value": "M3-6,M3-8,M3-9 ",
-      "Text": "Eksponert blåskjellbunn",
-      "Children": []
-    },
-    {
-      "Id": "392",
-      "Value": "T4-6,T4-7,T4-8,T4-10,T4-11,T4-12,T4-14,T4-15,T4-16,T4-19,T4-20 1AR-A-B",
-      "Text": "Kalk- og lågurtfuruskog",
-      "Children": []
-    },
-    {
-      "Id": "279",
-      "Value": "F2-6,F2-9,F2-18,F2-21 KA-h,KA-i",
-      "Text": "Sterkt kalkrike pytter, dammer og små innsjøer",
-      "Children": []
-    },
-    {
-      "Id": "104",
-      "Value": "T10 ",
-      "Text": "Arktisk steppe",
-      "Children": []
-    },
-    {
-      "Id": "147",
-      "Value": "3TO_HK ",
-      "Text": "Konsentrisk høymyr",
-      "Children": []
-    },
-    {
-      "Id": "349",
-      "Value": "M4-38,M4-40 ",
-      "Text": "Brakk sand- og grusbunn",
-      "Children": []
-    },
-    {
-      "Id": "149",
-      "Value": "3TO_HP ",
-      "Text": "Platåhøymyr",
-      "Children": []
-    },
-    {
-      "Id": "393",
-      "Value": "T30 ",
-      "Text": "Flomskogsmark",
-      "Children": []
-    },
-    {
-      "Id": "176",
-      "Value": "3BF_BB ",
-      "Text": "Botnbre",
-      "Children": []
-    },
-    {
-      "Id": "52",
-      "Value": "T15 ",
-      "Text": "Fosse-eng",
-      "Children": []
-    },
-    {
-      "Id": "177",
-      "Value": "3BF_DB ",
-      "Text": "Dalbre",
-      "Children": []
-    },
-    {
-      "Id": "150",
-      "Value": "3TO_PA ",
-      "Text": "Palsmyr",
-      "Children": []
-    },
-    {
-      "Id": "178",
-      "Value": "3BF_DS ",
-      "Text": "Dalsidebre",
-      "Children": []
-    },
-    {
-      "Id": "179",
-      "Value": "3BF_KB ",
-      "Text": "Kalvende bre",
-      "Children": []
-    },
-    {
-      "Id": "265",
-      "Value": "T17-4 ",
-      "Text": "Silt og leirskred",
-      "Children": []
-    },
-    {
-      "Id": "153",
-      "Value": "3TO_TE ",
-      "Text": "Terrengdekkende myr",
-      "Children": []
-    },
-    {
-      "Id": "180",
-      "Value": "3BF_PB ",
-      "Text": "Platåbre",
-      "Children": []
-    },
-    {
-      "Id": "37",
-      "Value": "L4-3 ",
-      "Text": "Kalkrik helofyttsump",
-      "Children": []
-    },
-    {
-      "Id": "181",
-      "Value": "3BF_RB ",
-      "Text": "Regenerert bre",
-      "Children": []
-    },
-    {
-      "Id": "154",
-      "Value": "V1-10,V1-11,V1-12,V1-13,V1-14,V1-15,V1-16,V1-17,V1-18,V1-19,V1-20,V1-25,V1-26,V1-27,V1-28,V1-29,V1-30,V1-31,V1-32 6SO_1,6SO_2",
-      "Text": "Rik åpen sørlig jordvannsmyr",
-      "Children": []
-    },
-    {
-      "Id": "182",
-      "Value": "3BF_SB ",
-      "Text": "Sammensatt bre",
-      "Children": []
-    },
-    {
-      "Id": "58",
-      "Value": "T21 ",
-      "Text": "Sanddynemark",
-      "Children": []
-    },
-    {
-      "Id": "271",
-      "Value": "T21-5,T21-6 6SO_1",
-      "Text": "Sørlig etablert sanddynemark",
-      "Children": []
-    },
-    {
-      "Id": "158",
-      "Value": "V2-3,V2-4,V2-5,V2-6 1AR-A-E",
-      "Text": "Rik svartorsumpskog",
-      "Children": []
-    },
-    {
-      "Id": "272",
-      "Value": "V2-3,V2-4,V2-5,V2-6,V2-7,V2-8 1AR-A-B",
-      "Text": "Rik gransumpskog",
-      "Children": []
-    },
-    {
-      "Id": "273",
-      "Value": "V2-7,V2-8 1AR-A-E",
-      "Text": "Kilde-edellauvskog",
-      "Children": []
-    },
-    {
-      "Id": "274",
-      "Value": "V4 6SO_1,6SO_2",
-      "Text": "Sørlig kaldkilde",
-      "Children": []
-    },
-    {
-      "Id": "120",
-      "Value": "V1-26, V1-29 ",
-      "Text": "Kalkrik permafrost-myrkant",
-      "Children": []
-    },
-    {
-      "Id": "276",
-      "Value": "V8-2 1AR-A-V",
-      "Text": "Rik vierstrandskog",
-      "Children": []
-    },
-    {
-      "Id": "105",
-      "Value": "V5 ",
-      "Text": "Varm kilde",
-      "Children": []
-    },
-    {
-      "Id": "130",
-      "Value": "V6 ",
-      "Text": "Våtsnøleie og snøleiekilde",
-      "Children": []
-    },
-    {
-      "Id": "133",
-      "Value": "V9 ",
-      "Text": "Semi-naturlig myr",
-      "Children": []
-    },
-    {
-      "Id": "277",
-      "Value": "V9 6SO_1,6SO_2,SP-a",
-      "Text": "Sørlig slåttemyr",
-      "Children": []
-    },
-    {
-      "Id": "200",
-      "Value": "3EL_ME ",
-      "Text": "Meander",
-      "Children": []
-    },
-    {
-      "Id": "207",
-      "Value": "3ER_JP ",
-      "Text": "Jordpyramide",
-      "Children": []
-    },
-    {
-      "Id": "209",
-      "Value": "3ER_RL ",
-      "Text": "Leirravine",
-      "Children": []
-    },
-    {
-      "Id": "231",
-      "Value": "3KJ_DR ",
-      "Text": "Dryppstein",
-      "Children": []
-    },
-    {
-      "Id": "232",
-      "Value": "3KJ_KG ",
-      "Text": "Kalkgrotte",
-      "Children": []
-    },
-    {
-      "Id": "234",
-      "Value": "3KJ_KT ",
-      "Text": "Kalktuff",
-      "Children": []
-    },
-    {
-      "Id": "256",
-      "Value": "3VI_FD ",
-      "Text": "Flygesanddyne",
-      "Children": []
-    },
-    {
-      "Id": "312",
-      "Value": "M5-4,M5-5,M5-14,M5-15 6KE_2",
-      "Text": "Dyp slambunn i Skagerrak",
-      "Children": []
-    },
-    {
-      "Id": "124",
-      "Value": "T12 ",
-      "Text": "Strandeng",
-      "Children": []
-    },
-    {
-      "Id": "223",
-      "Value": "3IK_KA ",
-      "Text": "Kalkrygg",
-      "Children": []
+      "Id": "Ferskvann",
+      "Value": "Ferskvann",
+      "Text": "Ferskvann",
+      "Children": [
+        {
+          "Id": "38",
+          "Value": "F2-13",
+          "Text": "Humøse dype innsjøer",
+          "Children": []
+        },
+        {
+          "Id": "39",
+          "Value": "F2-16",
+          "Text": "Humøse grunne innsjøer",
+          "Children": []
+        },
+        {
+          "Id": "279",
+          "Value": "F2-6,F2-9,F2-18,F2-21 KA-h,KA-i",
+          "Text": "Sterkt kalkrike pytter, dammer og små innsjøer",
+          "Children": []
+        },
+        {
+          "Id": "37",
+          "Value": "L4-3",
+          "Text": "Kalkrik helofyttsump",
+          "Children": []
+        }
+      ]
+    },
+    {
+      "Id": "Fjell og berg",
+      "Value": "Fjell og berg",
+      "Text": "Fjell og berg",
+      "Children": [
+        {
+          "Id": "69",
+          "Value": "T1-12,T1-16,T1-20,T1-29,T1-32,T1-52,T1-56,T1-60 6SE_5",
+          "Text": "Tørt kalkrikt berg i kontinentale områder",
+          "Children": []
+        },
+        {
+          "Id": "66",
+          "Value": "T1-33,T1-34,T1-35,T1-36,T1-37,T1-38,T1-39,T1-40 6SO_6,6SO_7,6SE_4,6SE_5",
+          "Text": "Overrislingsberg i østlige høyfjellstrøk",
+          "Children": []
+        },
+        {
+          "Id": "68",
+          "Value": "T1-69,T1-70,T1-71,T1-72,T1-73,T1-74,T1-75,T1-76",
+          "Text": "Fosseberg",
+          "Children": []
+        },
+        {
+          "Id": "266",
+          "Value": "T2-7,T2-8 6SO_1",
+          "Text": "Åpen grunnlendt kalkrik mark i boreonemoral sone",
+          "Children": []
+        },
+        {
+          "Id": "269",
+          "Value": "T2-7,T2-8 6SO_2",
+          "Text": "Åpen grunnlendt kalkrik mark i sørboreal sone",
+          "Children": []
+        },
+        {
+          "Id": "46",
+          "Value": "T7",
+          "Text": "Snøleie",
+          "Children": []
+        },
+        {
+          "Id": "47",
+          "Value": "T8",
+          "Text": "Fuglefjell-eng og fugletopp",
+          "Children": []
+        },
+        {
+          "Id": "52",
+          "Value": "T15",
+          "Text": "Fosse-eng",
+          "Children": []
+        },
+        {
+          "Id": "265",
+          "Value": "T17-4",
+          "Text": "Silt og leirskred",
+          "Children": []
+        },
+        {
+          "Id": "58",
+          "Value": "T21",
+          "Text": "Sanddynemark",
+          "Children": []
+        },
+        {
+          "Id": "271",
+          "Value": "T21-5,T21-6 6SO_1",
+          "Text": "Sørlig etablert sanddynemark",
+          "Children": []
+        },
+        {
+          "Id": "130",
+          "Value": "V6",
+          "Text": "Våtsnøleie og snøleiekilde",
+          "Children": []
+        }
+      ]
+    },
+    {
+      "Id": "Landform",
+      "Value": "Landform",
+      "Text": "Landform",
+      "Children": [
+        {
+          "Id": "169",
+          "Value": "3AR_DE",
+          "Text": "Delta",
+          "Children": []
+        },
+        {
+          "Id": "176",
+          "Value": "3BF_BB",
+          "Text": "Botnbre",
+          "Children": []
+        },
+        {
+          "Id": "177",
+          "Value": "3BF_DB",
+          "Text": "Dalbre",
+          "Children": []
+        },
+        {
+          "Id": "178",
+          "Value": "3BF_DS",
+          "Text": "Dalsidebre",
+          "Children": []
+        },
+        {
+          "Id": "179",
+          "Value": "3BF_KB",
+          "Text": "Kalvende bre",
+          "Children": []
+        },
+        {
+          "Id": "180",
+          "Value": "3BF_PB",
+          "Text": "Platåbre",
+          "Children": []
+        },
+        {
+          "Id": "181",
+          "Value": "3BF_RB",
+          "Text": "Regenerert bre",
+          "Children": []
+        },
+        {
+          "Id": "182",
+          "Value": "3BF_SB",
+          "Text": "Sammensatt bre",
+          "Children": []
+        },
+        {
+          "Id": "200",
+          "Value": "3EL_ME",
+          "Text": "Meander",
+          "Children": []
+        },
+        {
+          "Id": "207",
+          "Value": "3ER_JP",
+          "Text": "Jordpyramide",
+          "Children": []
+        },
+        {
+          "Id": "209",
+          "Value": "3ER_RL",
+          "Text": "Leirravine",
+          "Children": []
+        },
+        {
+          "Id": "231",
+          "Value": "3KJ_DR",
+          "Text": "Dryppstein",
+          "Children": []
+        },
+        {
+          "Id": "232",
+          "Value": "3KJ_KG",
+          "Text": "Kalkgrotte",
+          "Children": []
+        },
+        {
+          "Id": "234",
+          "Value": "3KJ_KT",
+          "Text": "Kalktuff",
+          "Children": []
+        },
+        {
+          "Id": "256",
+          "Value": "3VI_FD",
+          "Text": "Flygesanddyne",
+          "Children": []
+        },
+        {
+          "Id": "223",
+          "Value": "3IK_KA",
+          "Text": "Kalkrygg",
+          "Children": []
+        }
+      ]
+    },
+    {
+      "Id": "Marint dypvann",
+      "Value": "Marint dypvann",
+      "Text": "Marint dypvann",
+      "Children": [
+        {
+          "Id": "311",
+          "Value": "M5-23 1AR-H-H",
+          "Text": "Grisehalekorallskogbunn",
+          "Children": []
+        },
+        {
+          "Id": "11",
+          "Value": "M5-4,M5-5,M5-14,M5-15 1AR-H-H,6KS_1",
+          "Text": "Bambuskorallskogbunn",
+          "Children": []
+        },
+        {
+          "Id": "312",
+          "Value": "M5-4,M5-5,M5-14,M5-15 6KE_2",
+          "Text": "Dyp slambunn i Skagerrak",
+          "Children": []
+        }
+      ]
+    },
+    {
+      "Id": "Marint gruntvann",
+      "Value": "Marint gruntvann",
+      "Text": "Marint gruntvann",
+      "Children": [
+        {
+          "Id": "344",
+          "Value": "M1-3 6KS_2,6KS_3",
+          "Text": "Nordlig sukkertareskog",
+          "Children": []
+        },
+        {
+          "Id": "342",
+          "Value": "M1-3 6KS_1",
+          "Text": "Sørlig sukkertareskog",
+          "Children": []
+        },
+        {
+          "Id": "24",
+          "Value": "M1-6 6KS_2,6KS_3",
+          "Text": "Nordlig fingertarebunn",
+          "Children": []
+        },
+        {
+          "Id": "14",
+          "Value": "M3-6,M3-8,M3-9",
+          "Text": "Eksponert blåskjellbunn",
+          "Children": []
+        }
+      ]
+    },
+    {
+      "Id": "Marint gruntvann, Svalbard",
+      "Value": "Marint gruntvann, Svalbard",
+      "Text": "Marint gruntvann, Svalbard",
+      "Children": [
+        {
+          "Id": "26",
+          "Value": "H2-1 SA-+",
+          "Text": "Kaldtvannsbassenger",
+          "Children": []
+        },
+        {
+          "Id": "323",
+          "Value": "I2",
+          "Text": "Polar havis",
+          "Children": []
+        },
+        {
+          "Id": "331",
+          "Value": "M1-29",
+          "Text": "Isskurt sublitoral fastbunn",
+          "Children": []
+        },
+        {
+          "Id": "79",
+          "Value": "M3-19",
+          "Text": "Isskurt fjæresone-fastbunn",
+          "Children": []
+        },
+        {
+          "Id": "349",
+          "Value": "M4-38,M4-40",
+          "Text": "Brakk sand- og grusbunn",
+          "Children": []
+        }
+      ]
+    },
+    {
+      "Id": "Semi-naturlig",
+      "Value": "Semi-naturlig",
+      "Text": "Semi-naturlig",
+      "Children": [
+        {
+          "Id": "75",
+          "Value": "T12",
+          "Text": "Strandeng",
+          "Children": []
+        },
+        {
+          "Id": "71",
+          "Value": "T31",
+          "Text": "Boreal hei",
+          "Children": []
+        },
+        {
+          "Id": "72",
+          "Value": "T32",
+          "Text": "Semi-naturlig eng",
+          "Children": []
+        },
+        {
+          "Id": "76",
+          "Value": "T32 SP-a",
+          "Text": "Slåttemark",
+          "Children": []
+        },
+        {
+          "Id": "73",
+          "Value": "T33",
+          "Text": "Semi-naturlig strandeng",
+          "Children": []
+        },
+        {
+          "Id": "74",
+          "Value": "T34",
+          "Text": "Kystlynghei",
+          "Children": []
+        }
+      ]
+    },
+    {
+      "Id": "Skog",
+      "Value": "Skog",
+      "Text": "Skog",
+      "Children": [
+        {
+          "Id": "84",
+          "Value": "T4-1,T4-2,T4-3,T4-17 6SE_1,6SE_2,6SO_1,6SO_2,1AR-A-B,UE-0,UE-a",
+          "Text": "Boreonemoral regnskog",
+          "Children": []
+        },
+        {
+          "Id": "83",
+          "Value": "T4-1,T4-2,T4-17,T4-18 6SE_1,6SE_2,6SO_3,1AR-A-B,UE-0,UE-a",
+          "Text": "Boreal regnskog",
+          "Children": []
+        },
+        {
+          "Id": "389",
+          "Value": "T4-18,T4-19 1AR-A-E",
+          "Text": "Høgstaude edelløvskog",
+          "Children": []
+        },
+        {
+          "Id": "85",
+          "Value": "T4-4 1AR-A-B",
+          "Text": "Kalkgranskog",
+          "Children": []
+        },
+        {
+          "Id": "365",
+          "Value": "T4-8,T4-12 1AR-A-E",
+          "Text": "Kalkedellauvskog",
+          "Children": []
+        },
+        {
+          "Id": "366",
+          "Value": "T4-5,T4-6,T4-7,T4-8,T4-9,T4-10,T4-11,T4-12,T4-19,T4-20 BK-a",
+          "Text": "Olivinskog",
+          "Children": []
+        },
+        {
+          "Id": "364",
+          "Value": "T4-6,T4-7,T4-10,T4-11 1AR-A-E",
+          "Text": "Lågurtedellauvskog",
+          "Children": []
+        },
+        {
+          "Id": "392",
+          "Value": "T4-6,T4-7,T4-8,T4-10,T4-11,T4-12,T4-14,T4-15,T4-16,T4-19,T4-20 1AR-A-B",
+          "Text": "Kalk- og lågurtfuruskog",
+          "Children": []
+        },
+        {
+          "Id": "393",
+          "Value": "T30",
+          "Text": "Flomskogsmark",
+          "Children": []
+        }
+      ]
+    },
+    {
+      "Id": "Svalbard",
+      "Value": "Svalbard",
+      "Text": "Svalbard",
+      "Children": [
+        {
+          "Id": "104",
+          "Value": "T10",
+          "Text": "Arktisk steppe",
+          "Children": []
+        },
+        {
+          "Id": "120",
+          "Value": "V1-26, V1-29",
+          "Text": "Kalkrik permafrost-myrkant",
+          "Children": []
+        },
+        {
+          "Id": "105",
+          "Value": "V5",
+          "Text": "Varm kilde",
+          "Children": []
+        },
+        {
+          "Id": "124",
+          "Value": "T12",
+          "Text": "Strandeng",
+          "Children": []
+        }
+      ]
+    },
+    {
+      "Id": "Våtmark",
+      "Value": "Våtmark",
+      "Text": "Våtmark",
+      "Children": [
+        {
+          "Id": "145",
+          "Value": "3TO_HA",
+          "Text": "Atlantisk høymyr",
+          "Children": []
+        },
+        {
+          "Id": "146",
+          "Value": "3TO_HE",
+          "Text": "Eksentrisk høymyr",
+          "Children": []
+        },
+        {
+          "Id": "147",
+          "Value": "3TO_HK",
+          "Text": "Konsentrisk høymyr",
+          "Children": []
+        },
+        {
+          "Id": "149",
+          "Value": "3TO_HP",
+          "Text": "Platåhøymyr",
+          "Children": []
+        },
+        {
+          "Id": "150",
+          "Value": "3TO_PA",
+          "Text": "Palsmyr",
+          "Children": []
+        },
+        {
+          "Id": "153",
+          "Value": "3TO_TE",
+          "Text": "Terrengdekkende myr",
+          "Children": []
+        },
+        {
+          "Id": "154",
+          "Value": "V1-10,V1-11,V1-12,V1-13,V1-14,V1-15,V1-16,V1-17,V1-18,V1-19,V1-20,V1-25,V1-26,V1-27,V1-28,V1-29,V1-30,V1-31,V1-32 6SO_1,6SO_2",
+          "Text": "Rik åpen sørlig jordvannsmyr",
+          "Children": []
+        },
+        {
+          "Id": "158",
+          "Value": "V2-3,V2-4,V2-5,V2-6 1AR-A-E",
+          "Text": "Rik svartorsumpskog",
+          "Children": []
+        },
+        {
+          "Id": "272",
+          "Value": "V2-3,V2-4,V2-5,V2-6,V2-7,V2-8 1AR-A-B",
+          "Text": "Rik gransumpskog",
+          "Children": []
+        },
+        {
+          "Id": "273",
+          "Value": "V2-7,V2-8 1AR-A-E",
+          "Text": "Kilde-edellauvskog",
+          "Children": []
+        },
+        {
+          "Id": "274",
+          "Value": "V4 6SO_1,6SO_2",
+          "Text": "Sørlig kaldkilde",
+          "Children": []
+        },
+        {
+          "Id": "276",
+          "Value": "V8-2 1AR-A-V",
+          "Text": "Rik vierstrandskog",
+          "Children": []
+        },
+        {
+          "Id": "133",
+          "Value": "V9",
+          "Text": "Semi-naturlig myr",
+          "Children": []
+        },
+        {
+          "Id": "277",
+          "Value": "V9 6SO_1,6SO_2,SP-a",
+          "Text": "Sørlig slåttemyr",
+          "Children": []
+        }
+      ]
     }
   ]
 }
