@@ -153,10 +153,11 @@ export default class Assessment51Naturtyper extends React.Component {
                     <br />
                     {appState.trueteogsjeldneCodes
                         ? <NewNaturetype
-                        config={{
-                            codewidth: "500px",
-                            showdescription: () => true
-                        }}
+                        // config={{
+                        //     codewidth: "500px",
+                        //     showdescription: () => true
+                        // }}
+                        mode="truet"
                         appState={appState}
                         addNaturtype={this.addNaturtype}
                         labels={labels}
@@ -164,10 +165,10 @@ export default class Assessment51Naturtyper extends React.Component {
                         header={labels.NatureTypes.chooseTS}
                         hideStateChange={false}
                         superheader={ntLabels.colonizedAreaAndEffects} >
-                            <TruetSelector 
+                            {/* <TruetSelector 
                                 naturtyper={appState.trueteogsjeldneCodes} 
                                 setSelected={() => console.log("setSelectedNaturtype")}
-                            />
+                            /> */}
                         </NewNaturetype>
                         : null}
                 </div>

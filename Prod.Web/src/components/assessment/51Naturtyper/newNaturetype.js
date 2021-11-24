@@ -3,6 +3,7 @@ import {autorun, extendObservable, observable, toJS, action, runInAction} from '
 import {observer, inject} from 'mobx-react';
 import NaturtypeSelector from './naturtypeSelector';
 import LivsmediumSelector from './livsmediumSelector';
+import TruetSelector from './truetSelector';
 import NaturtypeModal from './naturetypeModal';
 // import * as Xcomp from '../observableComponents';
 @inject("appState")
@@ -78,14 +79,22 @@ export default class NewNaturetype extends React.Component {
                 <p>{header}</p>
                 {/* {this.props.children} */}
                 {this.props.mode === "livsmedium" ?
-                    <LivsmediumSelector
-                        naturtyper={appState.livsmediumCodes} 
-                        nyNaturtype={this.nyNaturtype}
-                        showModal={() => runInAction(() => this.showModal = true)}
-                        // setSelected={() => console.log("setSelectedNaturtype")}
-                        // setSelected={this.setSelectedNaturtype}
-                    /> :
-                    null
+                <LivsmediumSelector
+                    naturtyper={appState.livsmediumCodes} 
+                    nyNaturtype={this.nyNaturtype}
+                    showModal={() => runInAction(() => this.showModal = true)}
+                    // setSelected={() => console.log("setSelectedNaturtype")}
+                    // setSelected={this.setSelectedNaturtype}
+                /> :
+                this.props.mode === "truet" ?
+                <TruetSelector
+                    naturtyper={appState.trueteogsjeldneCodes}
+                    nyNaturtype={this.nyNaturtype}
+                    showModal={() => runInAction(() => this.showModal = true)}
+                    // setSelected={() => console.log("setSelectedNaturtype")}
+                    // setSelected={this.setSelectedNaturtype}
+                /> :
+                null
                 }
 
 
