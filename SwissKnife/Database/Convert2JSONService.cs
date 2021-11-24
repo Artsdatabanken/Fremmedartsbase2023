@@ -89,6 +89,7 @@ namespace SwissKnife.Database
             public string Id { get; set; }
             public string Value { get; set; }
             public string Text { get; set; }
+            public bool Collapsed { get; set; }
             public List<jsonNT> Children { get; set; }
         }
 
@@ -120,37 +121,21 @@ namespace SwissKnife.Database
                     nt1.Text = experttema;
                     nt1.Value = experttema;
                     nt1.Children = new List<jsonNT>();
+                    nt1.Collapsed = true;
                     root.Children.Add(nt1);
-                    //Console.WriteLine($"{importFormat.Id} {importFormat.Vurderingsenhet} {importFormat.Kortnavn} {importFormat.Typekode}");
-
                     var gr = g.Select(a => a);
-
-
-
                     foreach (var importFormat in gr)
                     {
                         var nt2 = new jsonNT();
                         nt2.Id = (importFormat.Id).Trim();
                         nt2.Text = (importFormat.Kortnavn).Trim();
                         nt2.Value = (importFormat.Typekode + " " + importFormat.KildeTilVariasjon).Trim();
+                        nt2.Collapsed = true;
                         nt2.Children = new List<jsonNT>();
                         nt1.Children.Add(nt2);
                         //Console.WriteLine($"{importFormat.Id} {importFormat.Vurderingsenhet} {importFormat.Kortnavn} {importFormat.Typekode}");
                     }
                 }
-
-
-
-                //foreach (var importFormat in records)
-                //{
-                //    var nt = new jsonNT();
-                //    nt.Id = (importFormat.Id).Trim();
-                //    nt.Text = (importFormat.Kortnavn).Trim();
-                //    nt.Value = (importFormat.Typekode + " " + importFormat.KildeTilVariasjon).Trim();
-                //    nt.Children = new List<jsonNT>();
-                //    root.Children.Add(nt);
-                //    //Console.WriteLine($"{importFormat.Id} {importFormat.Vurderingsenhet} {importFormat.Kortnavn} {importFormat.Typekode}");
-                //}
             }
 
             var jsonSerializerOptions = new JsonSerializerOptions
