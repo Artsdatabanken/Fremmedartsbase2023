@@ -125,7 +125,7 @@ export default class Assessment51Naturtyper extends React.Component {
                         addNaturtype={this.addNaturtype}
                         labels={labels}
                         codes={appState.trueteogsjeldneCodes}
-                        header={labels.NatureTypes.chooseTS}
+                        header={labels.NatureTypes.chooseRL2018}
                         hideStateChange={false}
                         superheader={ntLabels.redListEffects} >
                             {/* <TruetSelector 
@@ -155,7 +155,7 @@ export default class Assessment51Naturtyper extends React.Component {
                             /> */}
                         </NewNaturetype>
 
-                {true || appState.livsmediumEnabled
+                        {true || appState.livsmediumEnabled
                 ? <div>
                     {/*<p>{labels.NatureTypes.chooseLM}:</p>*/}
                     {appState.livsmediumCodes
@@ -366,6 +366,42 @@ export default class Assessment51Naturtyper extends React.Component {
                         null }
                         </div> * /}
                 </fieldset> */}
+
+            {true || appState.livsmediumEnabled
+                ? <fieldset className="well">
+                    {/*<p>{labels.NatureTypes.chooseLM}:</p>*/}
+                    {appState.livsmediumCodes
+                        ? <NewNaturetype
+                        // config={{
+                        //     codewidth: "30px",
+                        //     showdescription: (value) => {
+                        //         console.log("selector value: '" + value + "' " + (value.length < 3))
+                        //         return value.length < 3
+                        //     }
+
+                        // }}
+                        mode="livsmedium"
+                        appState={appState}
+                        addNaturtype={this.addNaturtype}
+                        labels={labels}
+                        codes={appState.livsmediumCodes}
+                        header={labels.NatureTypes.chooseLM}
+                        hideStateChange={true}
+                        superheader={"Livsmedium"}
+                         >
+                            {/* <LivsmediumSelector 
+                                naturtyper={appState.livsmediumCodes} 
+                                setSelected={() => console.log("setSelectedNaturtype")}
+                            /> */}
+                        </NewNaturetype>
+                        
+                        // <NaturtypeSelector
+                        //     naturtyper={appState.livsmediumCodes}
+                        //     mode={"livsmedium"}
+                        //     setSelected={this.setSelectedLivsmedium}/>
+                        : null}
+                </fieldset>
+                : null}
                 <fieldset className="well">
                     <h4>{ntLabels.mainEcosystem}</h4>     
                     <Xcomp.MultiselectArray
