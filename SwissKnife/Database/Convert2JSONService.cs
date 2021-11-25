@@ -19,7 +19,7 @@ namespace SwissKnife.Database
     {
         
 
-        public class ImportFormat
+        public class LivsmediumImportFormat
         {
             public string Id { get; set; } 
             public string Eksperttema { get; set; } 
@@ -112,7 +112,7 @@ namespace SwissKnife.Database
             using (var reader = new StreamReader( inputfilename))
             using (var csv = new CsvReader(reader, theCsvConfiguration))
             {
-                var records = csv.GetRecords<ImportFormat>();
+                var records = csv.GetRecords<LivsmediumImportFormat>();
                 var experttemas = records.GroupBy(r => r.Eksperttema.Trim());
                 foreach(var g in experttemas.OrderBy(g => g.Key))
                 {
@@ -150,5 +150,9 @@ namespace SwissKnife.Database
 
             Console.WriteLine("ConvertTrueteOgSjeldneNaturtyper2JSON   ferdig!");
         }
+
+        // link to nin2 code api (get all codes)
+        // https://nin-kode-api.artsdatabanken.no/api/v2.3/koder/allekoder
+
     }
 }
