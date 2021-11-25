@@ -212,7 +212,7 @@ const Fylkesforekomst = ({ fylkesforekomster }) => {
           gridTemplateColumns: "33% 33% 33%"
         }}
       >
-        <div style={{ _float: "left" }}>
+        <div style={{ marginRight: -80, _float: "left" }}>
           <SvgShapeSelector
             categories={categories}
             boundary={boundary}
@@ -225,7 +225,7 @@ const Fylkesforekomst = ({ fylkesforekomster }) => {
             <Legend size={30} categories={specificCategories(1)} />
           </SvgShapeSelector>
         </div>
-        <div style={{ _float: "middle" }}>
+        <div style={{ marginLeft: -40, marginRight: -40, _float: "middle" }}>
           <SvgShapeSelector
             categories={categories}
             boundary={boundary}
@@ -238,7 +238,7 @@ const Fylkesforekomst = ({ fylkesforekomster }) => {
             <Legend size={30} categories={specificCategories(0)} />
           </SvgShapeSelector>
         </div>
-        <div style={{ _float: "right" }}>
+        <div style={{ marginLeft: -80, _float: "right" }}>
           <SvgShapeSelector
             categories={categories}
             boundary={boundary}
