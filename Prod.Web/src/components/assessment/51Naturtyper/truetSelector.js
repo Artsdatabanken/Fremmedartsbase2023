@@ -32,6 +32,7 @@ export default class TruetSelector extends React.Component {
 
         return(
             <div>
+                <span>Her kan du </span><a href="https://www.artsdatabanken.no/rodlistefornaturtyper" target="_blank">lese mer om naturtyper</a>
                 {naturtyper.map(hovedtypegruppe => 
                     <div key={hovedtypegruppe.Id}>
                         <div
@@ -54,7 +55,7 @@ export default class TruetSelector extends React.Component {
                             <div key={hovedtype.Id} className="tree-view-label btn-flat" onClick={() => this.setSelectedNT(hovedtype.Id)}>
                                 <div className="hovedtypegruppe">
                                     <span className="naturtype-kode">{hovedtype.Text}</span>
-                                    <span className="nt-code">{"'"+hovedtype.Value+"'"}</span>
+                                    {/*<span className="nt-code">{"'"+hovedtype.Value+"'"}</span>*/}
                                     <span className="nt-category">{hovedtype.Category.substring(0,3)}</span>
                                 </div>
                             </div>

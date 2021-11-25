@@ -1,5 +1,5 @@
 import React from 'react';
-import {extendObservable, action} from 'mobx';
+import {extendObservable, observable, action} from 'mobx';
 import {observer, inject} from 'mobx-react';
 import * as Xcomp from '../observableComponents';
 
@@ -14,8 +14,10 @@ export class NaturtypeRad extends React.Component {
         const {naturtype, appState, deleteRow} = props;
         extendObservable(this, {
             showModal: false,
-            hideStateChange: false
+            hideStateChange: false,
+            edit: props.editMode,
         })
+        
         this.updateNaturetype = action((upd) => {
             // console.log("upd nt: " + JSON.stringify(upd))
             const nt = naturtype
@@ -41,7 +43,7 @@ export class NaturtypeRad extends React.Component {
 
 
     render() {
-        const {naturtype, appState, deleteRow, labels, disabled, codes, appState:{assessment}} = this.props;
+        const {naturtype, appState, deleteRow, labels, disabled, codes, toggleEdit, editMode, appState:{assessment}} = this.props;
         
         const riskAssessment = assessment.riskAssessment 
         const gLabels = labels.General
@@ -54,7 +56,12 @@ export class NaturtypeRad extends React.Component {
             ? appState.livsmediumLabels[nt.NiNCode]
             : appState.naturtypeLabels[nt.NiNCode] */
        // const stateChangLabel = nt.StateChange.map(sc => kodeTekst(koder.tilstandsendringer, sc)).join('\n')
-       const stateChangLabel = nt.stateChange
+       //const stateChangLabel = nt.stateChange
+
+       const timeHorizonLabel = (id) => codes.timeHorizon.find(code => code.Value === id).Text
+        const colonizedAreaLabel = (id) => codes.colonizedArea.find(code => code.Value === id).Text
+        const stateChangeLabel = (id) => codes.tilstandsendringer.find(code => code.Value === id).Text
+        const affectedAreaLabel = (id) => codes.affectedArea.find(code => code.Value === id).Text
         console.log("NT row: " + JSON.stringify(nt))
         return(
             <tr>
@@ -62,17 +69,29 @@ export class NaturtypeRad extends React.Component {
                 <td>{ntlabel}</td>
                 <td>{dominanceForrest}</td>
                 <td></td>
+                {this.edit
+                ?
                 <td>{assessment.alienSpeciesCategory == "DoorKnocker" ? koder.timeHorizon[1].Text : 
                         //kodeTekst(koder.timeHorizon, nt.timeHorizon)
                         <Xcomp.StringEnum observableValue={[nt, 'timeHorizon']} forceSync codes={koder.timeHorizon} />
                         }</td>
+                        :
                 <td>
+                    {timeHorizonLabel(nt.timeHorizon)}                
+                </td>}
+                {this.edit
+                ? <td>
                     {
                     //kodeTekst(koder.colonizedArea, nt.colonizedArea)
                         <Xcomp.StringEnum observableValue={[nt, 'colonizedArea']} forceSync codes={koder.colonizedArea} />
                     }
                     </td>
-                <td>
+                    :
+                    <td>
+                        {colonizedAreaLabel(nt.colonizedArea)}
+                    </td>}
+            {this.edit
+                ? <td>
                         {/*<Xcomp.StringEnum observableValue={[nt, 'stateChange']} forceSync codes={koder.tilstandsendringer} />*/}
 
                         <Xcomp.MultiselectArray
@@ -87,13 +106,22 @@ export class NaturtypeRad extends React.Component {
                                 disabled={disabled}
                                 mode="check"
                                 hideUnchecked/>
-                        </td>
-                <td>{
+                        </td> :
+                        <td>
+                            {nt.stateChange}
+                        </td>}
+               {this.edit
+                ? <td>{
                 
                     //kodeTekst(koder.affectedArea, nt.affectedArea)
                     <Xcomp.StringEnum observableValue={[nt, 'affectedArea']} forceSync codes={koder.affectedArea} />
                     }</td>
-                <td>
+                    : 
+                    <td>
+                        {affectedAreaLabel(nt.affectedArea)}
+                    </td>}
+               {this.edit
+                ? <td>
                 <Xcomp.MultiselectArray
                                 observableValue={[nt, 'background']} 
                                 codes={koder.assessmentBackgrounds}
@@ -106,7 +134,11 @@ export class NaturtypeRad extends React.Component {
                                 mode="check"
                                 disabled={disabled}
                                 hideUnchecked/>
-                </td>
+                                
+                </td>: 
+                 <td>
+                     {nt.background}
+                 </td>}
                 <td>
                    {/* <Xcomp.Button 
                     style= {{marginBottom: '10px'}}
@@ -132,7 +164,16 @@ export class NaturtypeRad extends React.Component {
                         appState={appState} 
                         labels={labels}/>
                     : null}
-                    
+                    <Xcomp.Button disabled={this.context.readonly} xs title={!this.edit ? labels.General.edit : labels.General.ok} 
+                        onClick={action(() => {this.edit = !this.edit; toggleEdit()})}
+                    >{this.edit ? labels.General.ok : 
+                       // labels.General.edit
+                       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
+                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                            <path fillRule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+                        </svg>
+                        
+                        }</Xcomp.Button>
                     <Xcomp.Button primary xs onClick={deleteRow} title={gLabels.delete}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
                         <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
@@ -149,6 +190,11 @@ export class NaturtypeRad extends React.Component {
 
 @observer
 export default class NaturtypeTable extends React.Component {
+    @observable editMode = false
+
+    @action toggleEdit = () => {
+        this.editMode = !this.editMode
+    }
     render() {
         const {naturetypes, labels, canRenderTable, appState, desc, codes, disabled} = this.props;
         const ntLabels = labels.NatureTypes
@@ -195,7 +241,7 @@ export default class NaturtypeTable extends React.Component {
                     //const key = nt.NiNCode + nt.TimeHorizon + nt.ColonizedArea
                     console.log("nt row: " + JSON.stringify(nt))
                     const key = nt.niNCode
-                    return <NaturtypeRad key={key} naturtype={nt} deleteRow={deleteRow} codes={codes} appState={appState} labels={labels} disabled={disabled}/> }) :
+                    return <NaturtypeRad key={key} naturtype={nt} deleteRow={deleteRow} codes={codes} appState={appState} labels={labels} toggleEdit={this.toggleEdit} editMode={this.editMode} disabled={disabled}/> }) :
                     null
                 }
             </tbody>
