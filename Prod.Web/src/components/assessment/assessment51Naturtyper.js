@@ -155,19 +155,10 @@ export default class Assessment51Naturtyper extends React.Component {
                             /> */}
                         </NewNaturetype>
 
-                        {true || appState.livsmediumEnabled
+                {/* {true || appState.livsmediumEnabled
                 ? <div>
-                    {/*<p>{labels.NatureTypes.chooseLM}:</p>*/}
                     {appState.livsmediumCodes
                         ? <NewNaturetype
-                        // config={{
-                        //     codewidth: "30px",
-                        //     showdescription: (value) => {
-                        //         console.log("selector value: '" + value + "' " + (value.length < 3))
-                        //         return value.length < 3
-                        //     }
-
-                        // }}
                         mode="livsmedium"
                         appState={appState}
                         addNaturtype={this.addNaturtype}
@@ -175,21 +166,11 @@ export default class Assessment51Naturtyper extends React.Component {
                         codes={appState.livsmediumCodes}
                         header={labels.NatureTypes.chooseLM}
                         hideStateChange={true}
-                        //superheader={ntLabels.colonizedAreaAndEffects}
                          >
-                            {/* <LivsmediumSelector 
-                                naturtyper={appState.livsmediumCodes} 
-                                setSelected={() => console.log("setSelectedNaturtype")}
-                            /> */}
                         </NewNaturetype>
-                        
-                        // <NaturtypeSelector
-                        //     naturtyper={appState.livsmediumCodes}
-                        //     mode={"livsmedium"}
-                        //     setSelected={this.setSelectedLivsmedium}/>
                         : null}
                 </div>
-                : null}
+                : null} */}
                 </fieldset> 
                 <fieldset className="well">   
                 <NaturtypeTable
@@ -369,17 +350,8 @@ export default class Assessment51Naturtyper extends React.Component {
 
             {true || appState.livsmediumEnabled
                 ? <fieldset className="well">
-                    {/*<p>{labels.NatureTypes.chooseLM}:</p>*/}
                     {appState.livsmediumCodes
                         ? <NewNaturetype
-                        // config={{
-                        //     codewidth: "30px",
-                        //     showdescription: (value) => {
-                        //         console.log("selector value: '" + value + "' " + (value.length < 3))
-                        //         return value.length < 3
-                        //     }
-
-                        // }}
                         mode="livsmedium"
                         appState={appState}
                         addNaturtype={this.addNaturtype}
@@ -389,16 +361,8 @@ export default class Assessment51Naturtyper extends React.Component {
                         hideStateChange={true}
                         superheader={"Livsmedium"}
                          >
-                            {/* <LivsmediumSelector 
-                                naturtyper={appState.livsmediumCodes} 
-                                setSelected={() => console.log("setSelectedNaturtype")}
-                            /> */}
                         </NewNaturetype>
                         
-                        // <NaturtypeSelector
-                        //     naturtyper={appState.livsmediumCodes}
-                        //     mode={"livsmedium"}
-                        //     setSelected={this.setSelectedLivsmedium}/>
                         : null}
                 </fieldset>
                 : null}
