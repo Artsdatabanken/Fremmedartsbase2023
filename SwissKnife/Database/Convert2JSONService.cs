@@ -184,6 +184,7 @@ namespace SwissKnife.Database
             root.Id = natursystem.Kode.Id;
             root.Text = natursystem.Navn;
             root.Value = natursystem.Kode.Id;
+            root.Collapsed = true;
             root.Children = new List<jsonNT>();
             var hovedtypegruppe = allekoder.Where(nt => nt.OverordnetKode != null && nt.OverordnetKode.Id == natursystem.Kode.Id).OrderBy(nt => nt.Kode.Id);
             foreach(var htg in hovedtypegruppe)
@@ -192,6 +193,7 @@ namespace SwissKnife.Database
                 nt.Id = htg.Kode.Id;
                 nt.Text = htg.Navn;
                 nt.Value = htg.Kode.Id;
+                nt.Collapsed = true;
                 nt.Children = new List<jsonNT>();
                 root.Children.Add(nt);
                 var hovedtype = allekoder.Where(nt => nt.OverordnetKode != null && nt.OverordnetKode.Id == htg.Kode.Id).OrderBy(nt => nt.Kode.Id);
@@ -201,9 +203,9 @@ namespace SwissKnife.Database
                     nt2.Id = ht.Kode.Id;
                     nt2.Text = ht.Navn;
                     nt2.Value = ht.Kode.Id;
+                    nt2.Collapsed = true;
                     nt2.Children = new List<jsonNT>();
                     nt.Children.Add(nt2);
-                    //var hovedtype = allekoder.Where(nt => nt.OverordnetKode != null && nt.OverordnetKode.Id == natursystem.Kode.Id);
                 }
             }
 
