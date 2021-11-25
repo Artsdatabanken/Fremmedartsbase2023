@@ -14,6 +14,7 @@ using System.Text.Json;
 using System.Text.Encodings.Web;
 using NinKode.Common.Models.Code;
 using System.Net;
+using System.Text.RegularExpressions;
 //using Newtonsoft.Json;
 
 namespace SwissKnife.Database
@@ -28,6 +29,10 @@ namespace SwissKnife.Database
                 try
                 {
                     jsonData = webClient.DownloadString(url);
+
+                    var a = jsonData.Substring(jsonData.Length - 200);
+                    Console.WriteLine("jsondata: " + jsonData.Length);
+                    Console.WriteLine("jsondata: " + a);
                 }
                 catch (Exception) { }
 
@@ -41,66 +46,66 @@ namespace SwissKnife.Database
 
         public class LivsmediumImportFormat
         {
-            public string Id { get; set; } 
-            public string Eksperttema { get; set; } 
-            public string Vurderingsenhet { get; set; } 
-            public string Kortnavn { get; set; } 
+            public string Id { get; set; }
+            public string Eksperttema { get; set; }
+            public string Vurderingsenhet { get; set; }
+            public string Kortnavn { get; set; }
             public string Typekode { get; set; }
             [Name("Kilde til variasjon")]
-            public string KildeTilVariasjon { get; set; } 
-            public string Type { get; set; } 
+            public string KildeTilVariasjon { get; set; }
+            public string Type { get; set; }
             [Name("Beskrivelse av vurderingsenheten")]
-            public string BeskrivelseAvVurderingsenheten { get; set; } 
-            public string Totalareal { get; set; } 
+            public string BeskrivelseAvVurderingsenheten { get; set; }
+            public string Totalareal { get; set; }
             [Name("Totalareal, mørketall")]
-            public string TotalarealMørketall { get; set; } 
+            public string TotalarealMørketall { get; set; }
             [Name("Totalareal, beregnet")]
-            public string TotalarealBeregnet { get; set; } 
-            public string Utbredelsesareal { get; set; } 
+            public string TotalarealBeregnet { get; set; }
+            public string Utbredelsesareal { get; set; }
             [Name("Utbredelsesareal, mørketall")]
-            public string UtbredelsesarealMørketall { get; set; } 
+            public string UtbredelsesarealMørketall { get; set; }
             [Name("Utbredelsesareal, beregnet")]
-            public string UtbredelsesarealBeregnet { get; set; } 
+            public string UtbredelsesarealBeregnet { get; set; }
             [Name("Forekomster, antall")]
-            public string ForekomsterAntall { get; set; } 
+            public string ForekomsterAntall { get; set; }
             [Name("Forekomster, mørketall")]
-            public string ForekomsterMørketall { get; set; } 
+            public string ForekomsterMørketall { get; set; }
             [Name("Forekomster, beregnet")]
-            public string ForekomsterBeregnet { get; set; } 
+            public string ForekomsterBeregnet { get; set; }
             [Name("Kommentar, Arealinformasjon")]
-            public string KommentarArealinformasjon { get; set; } 
+            public string KommentarArealinformasjon { get; set; }
             [Name("Alle kategorier og kriterier")]
-            public string AlleKategorierOgKriterier { get; set; } 
+            public string AlleKategorierOgKriterier { get; set; }
             [Name("Gjeldene kategori og kriterie")]
-            public string GjeldeneKategoriOgKriterie { get; set; } 
-            public string Kriteriedokumentasjon { get; set; } 
+            public string GjeldeneKategoriOgKriterie { get; set; }
+            public string Kriteriedokumentasjon { get; set; }
             [Name("Påvirkningsfaktorer, fritekst")]
-            public string PåvirkningsfaktorerFritekst { get; set; } 
-            public string Øs { get; set; } 
-            public string OA { get; set; } 
-            public string He { get; set; } 
-            public string Op { get; set; } 
-            public string Bu { get; set; } 
-            public string Ve { get; set; } 
-            public string Te { get; set; } 
-            public string Aa { get; set; } 
-            public string Va { get; set; } 
-            public string Ro { get; set; } 
-            public string Ho { get; set; } 
-            public string Sf { get; set; } 
-            public string Mr { get; set; } 
-            public string Tø { get; set; } 
-            public string No { get; set; } 
-            public string Tr { get; set; } 
-            public string Fi { get; set; } 
-            public string Sv { get; set; } 
-            public string Jm { get; set; } 
-            public string HPo { get; set; } 
-            public string HBa { get; set; } 
-            public string HNh { get; set; } 
-            public string HNs { get; set; } 
-            public string HSk { get; set; } 
-            public string Forfattere { get; set; } 
+            public string PåvirkningsfaktorerFritekst { get; set; }
+            public string Øs { get; set; }
+            public string OA { get; set; }
+            public string He { get; set; }
+            public string Op { get; set; }
+            public string Bu { get; set; }
+            public string Ve { get; set; }
+            public string Te { get; set; }
+            public string Aa { get; set; }
+            public string Va { get; set; }
+            public string Ro { get; set; }
+            public string Ho { get; set; }
+            public string Sf { get; set; }
+            public string Mr { get; set; }
+            public string Tø { get; set; }
+            public string No { get; set; }
+            public string Tr { get; set; }
+            public string Fi { get; set; }
+            public string Sv { get; set; }
+            public string Jm { get; set; }
+            public string HPo { get; set; }
+            public string HBa { get; set; }
+            public string HNh { get; set; }
+            public string HNs { get; set; }
+            public string HSk { get; set; }
+            public string Forfattere { get; set; }
 
         }
 
@@ -115,7 +120,7 @@ namespace SwissKnife.Database
         }
 
 
-        public static void ConvertTrueteOgSjeldneNaturtyper2JSON( string inputfilename, string outputfilename)
+        public static void ConvertTrueteOgSjeldneNaturtyper2JSON(string inputfilename, string outputfilename)
         {
             var theCsvConfiguration = new CsvConfiguration(new CultureInfo("nb-NO"))
             {
@@ -129,12 +134,12 @@ namespace SwissKnife.Database
             root.Value = "root";
             root.Children = new List<jsonNT>();
 
-            using (var reader = new StreamReader( inputfilename))
+            using (var reader = new StreamReader(inputfilename))
             using (var csv = new CsvReader(reader, theCsvConfiguration))
             {
                 var records = csv.GetRecords<LivsmediumImportFormat>();
                 var experttemas = records.GroupBy(r => r.Eksperttema.Trim());
-                foreach(var g in experttemas.OrderBy(g => g.Key))
+                foreach (var g in experttemas.OrderBy(g => g.Key))
                 {
                     var experttema = g.Key;
                     var nt1 = new jsonNT();
@@ -171,32 +176,91 @@ namespace SwissKnife.Database
             Console.WriteLine("ConvertTrueteOgSjeldneNaturtyper2JSON   ferdig!");
         }
 
+
+        public static string PadNumbers(string input)
+        {
+            return Regex.Replace(input, "[0-9]+", match => match.Value.PadLeft(4, '0'));
+        }
+
+        public static IOrderedEnumerable<Codes> getunderordnet(Codes code, List<Codes> all)
+        {
+            var underids = code.UnderordnetKoder.Select(acc => acc.Id);
+            var undercodes = all.Where(nt => underids.Contains(nt.Kode.Id)).OrderBy(nt => PadNumbers(nt.Kode.Id));
+
+            return undercodes;
+        }
+
+        public static IOrderedEnumerable<Codes> getkartleggingsenheter(Codes code, List<Codes> all)
+        {
+            if (code.Kartleggingsenheter != null && code.Kartleggingsenheter.ContainsKey("5000"))
+            {
+                var underids = code.Kartleggingsenheter["5000"].Select(acc => acc.Id);
+                var undercodes = all.Where(nt => underids.Contains(nt.Kode.Id)).OrderBy(nt => PadNumbers(nt.Kode.Id));
+
+                return undercodes;
+            } 
+            else
+            {
+                return all.Where(nt => false).OrderBy(nt => PadNumbers(nt.Kode.Id));
+            }
+        }
+
+
         // link to nin2 code api (get all codes)
         // https://nin-kode-api.artsdatabanken.no/api/v2.3/koder/allekoder
         public static void CreateNin2JSON(string outputfilename)
         {
-            const string apiurl = "https://nin-kode-api.artsdatabanken.no/api/v2.3/koder/allekoder";
+            //const string apiurl = "https://nin-kode-api.artsdatabanken.no/api/v2.3/koder/allekoder";
+            const string apiurl = "https://nin-kode-api.artsdatabanken.no/api/v2.2/koder/allekoder";
 
-            var allekoder = DownloadAndDeserializeJsonData<List<Codes>>(apiurl);
-            var natursystem = allekoder.First();
+            //var allekoder = DownloadAndDeserializeJsonData<List<Codes>>(apiurl);
+
+
+
+
+            var ifn = "../../../Importfiler/NiN2_2.txt";
+            var a = File.ReadAllText(ifn);
+            var allekoder = JsonSerializer.Deserialize<List<Codes>>(a);
+            //var ttt = allekoder.Where(nt => nt.Kode.Id == "NA T17");
+            //var t17 = ttt.First();
+            //var ke1 = t17.Kartleggingsenheter;
+            //var uk = t17.UnderordnetKoder;
+            //Console.WriteLine("Kartleggingsenheter:  " + ke1.Count());
+            //Console.WriteLine("UnderordnetKoder:  " + uk.Count());
+
+
+
+
+
+
+            //Console.WriteLine("¤¤¤" + allekoder.Count());
+
+            var na = allekoder.First();
 
             var root = new jsonNT();
-            root.Id = natursystem.Kode.Id;
-            root.Text = natursystem.Navn;
-            root.Value = natursystem.Kode.Id;
+            root.Id = na.Kode.Id;
+            root.Text = na.Navn;
+            root.Value = na.Kode.Id;
             root.Collapsed = true;
             root.Children = new List<jsonNT>();
-            var hovedtypegruppe = allekoder.Where(nt => nt.OverordnetKode != null && nt.OverordnetKode.Id == natursystem.Kode.Id).OrderBy(nt => nt.Kode.Id);
-            foreach(var htg in hovedtypegruppe)
+            //var hovedtypegruppe = allekoder.Where(nt => nt.OverordnetKode != null && nt.OverordnetKode.Id == na.Kode.Id).OrderBy(nt => nt.Kode.Id);
+            //var hovedtypegruppeids = na.UnderordnetKoder.Select(acc => acc.Id);
+            //var hovedtypegruppe = allekoder.Where(nt => hovedtypegruppeids.Contains(nt.Kode.Id)).OrderBy(nt => nt.Kode.Id);
+
+            var hovedtypegruppe = getunderordnet(na, allekoder);
+
+
+            foreach (var htg in hovedtypegruppe)
             {
-                var nt = new jsonNT();
-                nt.Id = htg.Kode.Id;
-                nt.Text = htg.Navn;
-                nt.Value = htg.Kode.Id;
-                nt.Collapsed = true;
-                nt.Children = new List<jsonNT>();
-                root.Children.Add(nt);
-                var hovedtype = allekoder.Where(nt => nt.OverordnetKode != null && nt.OverordnetKode.Id == htg.Kode.Id).OrderBy(nt => nt.Kode.Id);
+                var nt1 = new jsonNT();
+                nt1.Id = htg.Kode.Id;
+                nt1.Text = htg.Navn;
+                nt1.Value = htg.Kode.Id;
+                nt1.Collapsed = true;
+                nt1.Children = new List<jsonNT>();
+                root.Children.Add(nt1);
+                //var hovedtype = allekoder.Where(nt => nt.OverordnetKode != null && nt.OverordnetKode.Id == htg.Kode.Id).OrderBy(nt => nt.Kode.Id);
+                var hovedtype = getunderordnet(htg, allekoder);
                 foreach (var ht in hovedtype)
                 {
                     var nt2 = new jsonNT();
@@ -205,7 +269,24 @@ namespace SwissKnife.Database
                     nt2.Value = ht.Kode.Id;
                     nt2.Collapsed = true;
                     nt2.Children = new List<jsonNT>();
-                    nt.Children.Add(nt2);
+                    nt1.Children.Add(nt2);
+
+                    //var k1 = allekoder.Where(nt =>  (nt.Kategori == "Kartleggingsenhet"));
+                    var k1 = allekoder.Where(nt => nt.Kode.Id == "NA T4-E-5");
+                    Console.WriteLine("#######)))))" + k1.Count());
+                    //var kartleggingsenhet = allekoder.Where(nt => (nt.OverordnetKode != null) && (nt.OverordnetKode.Id == ht.Kode.Id) && (nt.Kategori == "Kartleggingsenhet")).OrderBy(nt => nt.Kode.Id);
+                    var kartleggingsenhet = getkartleggingsenheter(ht, allekoder); 
+                    //Console.WriteLine("#######" + kartleggingsenhet.Count());
+                    foreach (var ke in kartleggingsenhet)
+                    {
+                        var nt3 = new jsonNT();
+                        nt3.Id = ke.Kode.Id;
+                        nt3.Text = ke.Navn;
+                        nt3.Value = ke.Kode.Id;
+                        nt3.Collapsed = true;
+                        nt3.Children = new List<jsonNT>();
+                        nt2.Children.Add(nt3);
+                    }
                 }
             }
 
