@@ -1,0 +1,808 @@
+{
+  "Id": "NA",
+  "Value": "NA",
+  "Text": "Natursystem",
+  "Category": null,
+  "Collapsed": true,
+  "Children": [
+    {
+      "Id": "NA F",
+      "Value": "NA F",
+      "Text": "Limniske vannmasser",
+      "Category": null,
+      "Collapsed": true,
+      "Children": [
+        {
+          "Id": "NA F1",
+          "Value": "NA F1",
+          "Text": "Elvevannmasser",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA F2",
+          "Value": "NA F2",
+          "Text": "Sirkulerende innsjø-vannmasser",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA F3",
+          "Value": "NA F3",
+          "Text": "Ikke-sirkulerende innsjø-vannmasser",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA F4",
+          "Value": "NA F4",
+          "Text": "Sterkt endrete elvevannmasser",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA F5",
+          "Value": "NA F5",
+          "Text": "Sterkt endrete innsjøvannmasser",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        }
+      ]
+    },
+    {
+      "Id": "NA H",
+      "Value": "NA H",
+      "Text": "Marine vannmasser",
+      "Category": null,
+      "Collapsed": true,
+      "Children": [
+        {
+          "Id": "NA H1",
+          "Value": "NA H1",
+          "Text": "Havvannmasser",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA H2",
+          "Value": "NA H2",
+          "Text": "Sirkulerende vannmasser i fysisk avgrensete saltvannsforekomster",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA H3",
+          "Value": "NA H3",
+          "Text": "Ikke-sirkulerende marine vannmasser i fysisk avgrensete saltvannsforekomster",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA H4",
+          "Value": "NA H4",
+          "Text": "Sterkt endrete marine vannmasser",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        }
+      ]
+    },
+    {
+      "Id": "NA I",
+      "Value": "NA I",
+      "Text": "Snø- og issystemer",
+      "Category": null,
+      "Collapsed": true,
+      "Children": [
+        {
+          "Id": "NA I1",
+          "Value": "NA I1",
+          "Text": "Snø- og isdekt fastmark",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA I2",
+          "Value": "NA I2",
+          "Text": "Polar havis",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        }
+      ]
+    },
+    {
+      "Id": "NA L",
+      "Value": "NA L",
+      "Text": "Ferskvannsbunnsystemer",
+      "Category": null,
+      "Collapsed": true,
+      "Children": [
+        {
+          "Id": "NA L1",
+          "Value": "NA L1",
+          "Text": "Eufotisk fast ferskvannsbunn",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA L2",
+          "Value": "NA L2",
+          "Text": "Eufotisk limnisk sedimentbunn",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA L3",
+          "Value": "NA L3",
+          "Text": "Afotisk limnisk sedimentbunn",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA L4",
+          "Value": "NA L4",
+          "Text": "Helofytt-ferskvannssump",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA L5",
+          "Value": "NA L5",
+          "Text": "Ferskvannskildebunn",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA L6",
+          "Value": "NA L6",
+          "Text": "Afotisk limnisk sedimentbunn preget av oksygenmangel",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA L7",
+          "Value": "NA L7",
+          "Text": "Sterkt endret eller ny fast ferskvannsbunn",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA L8",
+          "Value": "NA L8",
+          "Text": "Sterkt endret eller ny limnisk sedimentbunn",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        }
+      ]
+    },
+    {
+      "Id": "NA M",
+      "Value": "NA M",
+      "Text": "Saltvannsbunnsystemer",
+      "Category": null,
+      "Collapsed": true,
+      "Children": [
+        {
+          "Id": "NA M1",
+          "Value": "NA M1",
+          "Text": "Eufotisk fast saltvannsbunn",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA M10",
+          "Value": "NA M10",
+          "Text": "Marin grotte og overheng",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA M11",
+          "Value": "NA M11",
+          "Text": "Kaldt gassoppkomme",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA M12",
+          "Value": "NA M12",
+          "Text": "Varm havkilde",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA M13",
+          "Value": "NA M13",
+          "Text": "Marin sedimentbunn preget av oksygenmangel",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA M14",
+          "Value": "NA M14",
+          "Text": "Sterkt endret eller ny fast saltvannsbunn",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA M15",
+          "Value": "NA M15",
+          "Text": "Sterkt endret eller ny marin sedimentbunn",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA M2",
+          "Value": "NA M2",
+          "Text": "Afotisk fast saltvannsbunn",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA M3",
+          "Value": "NA M3",
+          "Text": "Fast fjærebeltebunn",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA M4",
+          "Value": "NA M4",
+          "Text": "Eufotisk marin sedimentbunn",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA M5",
+          "Value": "NA M5",
+          "Text": "Afotisk marin sedimentbunn",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA M6",
+          "Value": "NA M6",
+          "Text": "Korallrev-bunn",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA M7",
+          "Value": "NA M7",
+          "Text": "Marin undervannseng",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA M8",
+          "Value": "NA M8",
+          "Text": "Helofytt-saltvannsump",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA M9",
+          "Value": "NA M9",
+          "Text": "Littoralbasseng-bunn",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        }
+      ]
+    },
+    {
+      "Id": "NA T",
+      "Value": "NA T",
+      "Text": "Fastmarkssystemer",
+      "Category": null,
+      "Collapsed": true,
+      "Children": [
+        {
+          "Id": "NA T1",
+          "Value": "NA T1",
+          "Text": "Nakent berg",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T10",
+          "Value": "NA T10",
+          "Text": "Arktisk steppe",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T11",
+          "Value": "NA T11",
+          "Text": "Saltanrikingsmark i fjæresonen",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T12",
+          "Value": "NA T12",
+          "Text": "Strandeng",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T13",
+          "Value": "NA T13",
+          "Text": "Rasmark",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T14",
+          "Value": "NA T14",
+          "Text": "Rabbe",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T15",
+          "Value": "NA T15",
+          "Text": "Fosse-eng",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T16",
+          "Value": "NA T16",
+          "Text": "Rasmarkhei og -eng",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T17",
+          "Value": "NA T17",
+          "Text": "Aktiv skredmark",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T18",
+          "Value": "NA T18",
+          "Text": "Åpen flomfastmark",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T19",
+          "Value": "NA T19",
+          "Text": "Oppfrysingsmark",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T2",
+          "Value": "NA T2",
+          "Text": "Åpen grunnlendt mark",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T20",
+          "Value": "NA T20",
+          "Text": "Isinnfrysingsmark",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T21",
+          "Value": "NA T21",
+          "Text": "Sanddynemark",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T22",
+          "Value": "NA T22",
+          "Text": "Fjellgrashei og grastundra",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T23",
+          "Value": "NA T23",
+          "Text": "Ferskvanns-driftvoll",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T24",
+          "Value": "NA T24",
+          "Text": "Driftvoll",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T25",
+          "Value": "NA T25",
+          "Text": "Historisk skredmark",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T26",
+          "Value": "NA T26",
+          "Text": "Breforland og snøavsmeltingsområde",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T27",
+          "Value": "NA T27",
+          "Text": "Blokkmark",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T28",
+          "Value": "NA T28",
+          "Text": "Polarørken",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T29",
+          "Value": "NA T29",
+          "Text": "Grus- og steindominert strand og strandlinje",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T3",
+          "Value": "NA T3",
+          "Text": "Fjellhei, leside og tundra",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T30",
+          "Value": "NA T30",
+          "Text": "Flomskogsmark",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T31",
+          "Value": "NA T31",
+          "Text": "Boreal hei",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T32",
+          "Value": "NA T32",
+          "Text": "Semi-naturlig eng",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T33",
+          "Value": "NA T33",
+          "Text": "Semi-naturlig strandeng",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T34",
+          "Value": "NA T34",
+          "Text": "Kystlynghei",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T35",
+          "Value": "NA T35",
+          "Text": "Sterkt endret åpen fastmark med løsmassedekke",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T36",
+          "Value": "NA T36",
+          "Text": "Ny fastmark på tidligere våtmark og ferskvannsbunn",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T37",
+          "Value": "NA T37",
+          "Text": "Ny fastmark på sterkt modifi-serte og syntetiske substrater, i rask suksesjon",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T38",
+          "Value": "NA T38",
+          "Text": "Treplantasje",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T39",
+          "Value": "NA T39",
+          "Text": "Sterkt endret eller ny fastmark i langsom suksesjon",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T4",
+          "Value": "NA T4",
+          "Text": "Fastmarksskogsmark",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T40",
+          "Value": "NA T40",
+          "Text": "Sterkt endret fastmark med preg av semi-naturlig eng",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T41",
+          "Value": "NA T41",
+          "Text": "Oppdyrket mark med preg av semi-naturlig eng",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T42",
+          "Value": "NA T42",
+          "Text": "Sterkt endret, hyppig bearbeidet fastmark med intensivt hevdpreg",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T43",
+          "Value": "NA T43",
+          "Text": "Sterkt endret, varig fastmark med intensivt hevdpreg",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T44",
+          "Value": "NA T44",
+          "Text": "Åker",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T45",
+          "Value": "NA T45",
+          "Text": "Oppdyrket varig eng",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T5",
+          "Value": "NA T5",
+          "Text": "Grotte og overheng",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T6",
+          "Value": "NA T6",
+          "Text": "Strandberg",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T7",
+          "Value": "NA T7",
+          "Text": "Snøleie",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T8",
+          "Value": "NA T8",
+          "Text": "Fuglefjell-eng og fugletopp",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA T9",
+          "Value": "NA T9",
+          "Text": "Mosetundra",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        }
+      ]
+    },
+    {
+      "Id": "NA V",
+      "Value": "NA V",
+      "Text": "Våtmarkssystemer",
+      "Category": null,
+      "Collapsed": true,
+      "Children": [
+        {
+          "Id": "NA V1",
+          "Value": "NA V1",
+          "Text": "Åpen jordvannsmyr",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA V10",
+          "Value": "NA V10",
+          "Text": "Semi-naturlig våteng",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA V11",
+          "Value": "NA V11",
+          "Text": "Torvtak",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA V12",
+          "Value": "NA V12",
+          "Text": "Grøftet torvmark",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA V13",
+          "Value": "NA V13",
+          "Text": "Ny våtmark",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA V2",
+          "Value": "NA V2",
+          "Text": "Myr- og sumpskogsmark",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA V3",
+          "Value": "NA V3",
+          "Text": "Nedbørsmyr",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA V4",
+          "Value": "NA V4",
+          "Text": "Kaldkilde",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA V5",
+          "Value": "NA V5",
+          "Text": "Varm kilde",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA V6",
+          "Value": "NA V6",
+          "Text": "Våtsnøleie og snøleiekilde",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA V7",
+          "Value": "NA V7",
+          "Text": "Arktisk permafrost-våtmark",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA V8",
+          "Value": "NA V8",
+          "Text": "Strandsumpskogsmark",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA V9",
+          "Value": "NA V9",
+          "Text": "Semi-naturlig myr",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        }
+      ]
+    }
+  ]
+}
