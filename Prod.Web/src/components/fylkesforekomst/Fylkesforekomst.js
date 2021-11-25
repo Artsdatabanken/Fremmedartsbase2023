@@ -9,16 +9,7 @@ import categories from "./category";
 import DiagonalHatch from "./DiagonalHatch";
 import { UserContext } from "../observableComponents";
 
-const regionSortering = [
-  { "navn": "Bs" },
-  { "navn": "Bn" },
-  { "navn": "Gh" },
-  { "navn": "Nh" },
-  { "navn": "Ns" },
-  { },
-  { "navn": "Jm" },
-  { "navn": "Sv"},
-  { },
+const regionSorteringA = [
   { "navn": "Fi" },
   { "navn": "Tr" },
   { "navn": "No" },
@@ -37,7 +28,30 @@ const regionSortering = [
   { "navn": "Op" },
   { "navn": "He" },
   { "navn": "OsA" },
-  { "navn": "Øs" }
+  { "navn": "Øs" },
+  { },
+];
+const regionSorteringB = [
+  { "navn": "Bs" },
+  { "navn": "Bn" },
+  { "navn": "Gh" },
+  { "navn": "Nh" },
+  { "navn": "Ns" },
+  { },
+  { "navn": "Jm" },
+  { "navn": "Sv"},
+  { },
+  { },
+  { },
+  { },
+  { },
+  { },
+  { },
+  { },
+  { },
+  { },
+  { },
+  { },
 ];
 
 const Fylkesforekomst = ({ fylkesforekomster }) => {
@@ -147,7 +161,36 @@ const Fylkesforekomst = ({ fylkesforekomster }) => {
           <FylkeslisteLegend index={1} />
           <FylkeslisteLegend index={3} />
           <FylkeslisteLegend index={2} />
-          {regionSortering.map((k, index) => {
+          {regionSorteringA.map((k, index) => {
+            if (k.navn) {
+              return (
+                <FylkeslisteElement
+                  key={k.navn}
+                  id={k.navn}
+                  values={forekomsterAsObject[k.navn]}
+                  onSwitchCategory={action(handleSwitchCategory)}
+                  rerenderhack={forekomsterAsObject}
+                />
+              );
+            }
+            return <Spacer key={index} />;
+          })}
+        </div>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "max-content repeat(4, min-content)",
+            columnGap: 8,
+            marginLeft: 24,
+            width: 450
+          }}
+        >
+          <div style={{ _paddingBottom: 24 }}></div>
+          <FylkeslisteLegend index={0} />
+          <FylkeslisteLegend index={1} />
+          <FylkeslisteLegend index={3} />
+          <FylkeslisteLegend index={2} />
+          {regionSorteringB.map((k, index) => {
             if (k.navn) {
               return (
                 <FylkeslisteElement
@@ -279,7 +322,7 @@ const FylkeslisteElement = ({ id, values, onSwitchCategory }) => {
 
 const Spacer = () => (
   <>
-    <div style={{ height: 12 }} />
+    <div style={{ height: 24 }} />
     <div />
     <div />
     <div />
