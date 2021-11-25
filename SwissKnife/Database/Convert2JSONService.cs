@@ -215,38 +215,16 @@ namespace SwissKnife.Database
 
             //var allekoder = DownloadAndDeserializeJsonData<List<Codes>>(apiurl);
 
-
-
-
             var ifn = "../../../Importfiler/NiN2_2.txt";
-            var a = File.ReadAllText(ifn);
-            var allekoder = JsonSerializer.Deserialize<List<Codes>>(a);
-            //var ttt = allekoder.Where(nt => nt.Kode.Id == "NA T17");
-            //var t17 = ttt.First();
-            //var ke1 = t17.Kartleggingsenheter;
-            //var uk = t17.UnderordnetKoder;
-            //Console.WriteLine("Kartleggingsenheter:  " + ke1.Count());
-            //Console.WriteLine("UnderordnetKoder:  " + uk.Count());
-
-
-
-
-
-
-            //Console.WriteLine("¤¤¤" + allekoder.Count());
-
+            var jsonData = File.ReadAllText(ifn);
+            var allekoder = JsonSerializer.Deserialize<List<Codes>>(jsonData);
             var na = allekoder.First();
-
             var root = new jsonNT();
             root.Id = na.Kode.Id;
             root.Text = na.Navn;
             root.Value = na.Kode.Id;
             root.Collapsed = true;
             root.Children = new List<jsonNT>();
-            //var hovedtypegruppe = allekoder.Where(nt => nt.OverordnetKode != null && nt.OverordnetKode.Id == na.Kode.Id).OrderBy(nt => nt.Kode.Id);
-            //var hovedtypegruppeids = na.UnderordnetKoder.Select(acc => acc.Id);
-            //var hovedtypegruppe = allekoder.Where(nt => hovedtypegruppeids.Contains(nt.Kode.Id)).OrderBy(nt => nt.Kode.Id);
-
             var hovedtypegruppe = getunderordnet(na, allekoder);
 
 
@@ -259,7 +237,6 @@ namespace SwissKnife.Database
                 nt1.Collapsed = true;
                 nt1.Children = new List<jsonNT>();
                 root.Children.Add(nt1);
-                //var hovedtype = allekoder.Where(nt => nt.OverordnetKode != null && nt.OverordnetKode.Id == htg.Kode.Id).OrderBy(nt => nt.Kode.Id);
                 var hovedtype = getunderordnet(htg, allekoder);
                 foreach (var ht in hovedtype)
                 {
@@ -270,13 +247,8 @@ namespace SwissKnife.Database
                     nt2.Collapsed = true;
                     nt2.Children = new List<jsonNT>();
                     nt1.Children.Add(nt2);
-
-                    //var k1 = allekoder.Where(nt =>  (nt.Kategori == "Kartleggingsenhet"));
                     var k1 = allekoder.Where(nt => nt.Kode.Id == "NA T4-E-5");
-                    Console.WriteLine("#######)))))" + k1.Count());
-                    //var kartleggingsenhet = allekoder.Where(nt => (nt.OverordnetKode != null) && (nt.OverordnetKode.Id == ht.Kode.Id) && (nt.Kategori == "Kartleggingsenhet")).OrderBy(nt => nt.Kode.Id);
                     var kartleggingsenhet = getkartleggingsenheter(ht, allekoder); 
-                    //Console.WriteLine("#######" + kartleggingsenhet.Count());
                     foreach (var ke in kartleggingsenhet)
                     {
                         var nt3 = new jsonNT();
@@ -290,16 +262,12 @@ namespace SwissKnife.Database
                 }
             }
 
-
             var jsonSerializerOptions = new JsonSerializerOptions
             {
                 Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
                 WriteIndented = true
             };
             string jsonString = JsonSerializer.Serialize(root, jsonSerializerOptions);
-
-
-            //var jsonString = "{}";
             File.WriteAllText(outputfilename, jsonString);
             Console.WriteLine("CreateNin2JSON   ferdig!");
         }
