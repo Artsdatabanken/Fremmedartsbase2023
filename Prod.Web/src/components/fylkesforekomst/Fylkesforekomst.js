@@ -9,16 +9,7 @@ import categories from "./category";
 import DiagonalHatch from "./DiagonalHatch";
 import { UserContext } from "../observableComponents";
 
-const regionSortering = [
-  { "navn": "Bs" },
-  { "navn": "Bn" },
-  { "navn": "Gh" },
-  { "navn": "Nh" },
-  { "navn": "Ns" },
-  { },
-  { "navn": "Jm" },
-  { "navn": "Sv"},
-  { },
+const regionSorteringA = [
   { "navn": "Fi" },
   { "navn": "Tr" },
   { "navn": "No" },
@@ -37,7 +28,30 @@ const regionSortering = [
   { "navn": "Op" },
   { "navn": "He" },
   { "navn": "OsA" },
-  { "navn": "Øs" }
+  { "navn": "Øs" },
+  { },
+];
+const regionSorteringB = [
+  { "navn": "Bs" },
+  { "navn": "Bn" },
+  { "navn": "Gh" },
+  { "navn": "Nh" },
+  { "navn": "Ns" },
+  { },
+  { "navn": "Jm" },
+  { "navn": "Sv"},
+  { },
+  { },
+  { },
+  { },
+  { },
+  { },
+  { },
+  { },
+  { },
+  { },
+  { },
+  { },
 ];
 
 const Fylkesforekomst = ({ fylkesforekomster }) => {
@@ -147,7 +161,7 @@ const Fylkesforekomst = ({ fylkesforekomster }) => {
           <FylkeslisteLegend index={1} />
           <FylkeslisteLegend index={3} />
           <FylkeslisteLegend index={2} />
-          {regionSortering.map((k, index) => {
+          {regionSorteringA.map((k, index) => {
             if (k.navn) {
               return (
                 <FylkeslisteElement
@@ -162,27 +176,43 @@ const Fylkesforekomst = ({ fylkesforekomster }) => {
             return <Spacer key={index} />;
           })}
         </div>
-        <div style={{ _float: "left" }}>
-          <SvgShapeSelector
-            categories={categories}
-            boundary={boundary}
-            onSwitchCategory={action(handleSwitchCategory)}
-            regionDefs={regionDefs}
-            states={forekomsterAsObject}
-            stateIndex={0}
-          >
-            <DiagonalHatch />
-            <Legend size={30} categories={specificCategories(0)} />
-          </SvgShapeSelector>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "max-content repeat(4, min-content)",
+            columnGap: 8,
+            marginLeft: 24,
+            width: 450
+          }}
+        >
+          <div style={{ _paddingBottom: 24 }}></div>
+          <FylkeslisteLegend index={0} />
+          <FylkeslisteLegend index={1} />
+          <FylkeslisteLegend index={3} />
+          <FylkeslisteLegend index={2} />
+          {regionSorteringB.map((k, index) => {
+            if (k.navn) {
+              return (
+                <FylkeslisteElement
+                  key={k.navn}
+                  id={k.navn}
+                  values={forekomsterAsObject[k.navn]}
+                  onSwitchCategory={action(handleSwitchCategory)}
+                  rerenderhack={forekomsterAsObject}
+                />
+              );
+            }
+            return <Spacer key={index} />;
+          })}
         </div>
       </div>
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "50% 50%"
+          gridTemplateColumns: "33% 33% 33%"
         }}
       >
-        <div style={{ _float: "left" }}>
+        <div style={{ marginRight: -80, _float: "left" }}>
           <SvgShapeSelector
             categories={categories}
             boundary={boundary}
@@ -195,7 +225,20 @@ const Fylkesforekomst = ({ fylkesforekomster }) => {
             <Legend size={30} categories={specificCategories(1)} />
           </SvgShapeSelector>
         </div>
-        <div style={{ _float: "right" }}>
+        <div style={{ marginLeft: -40, marginRight: -40, _float: "middle" }}>
+          <SvgShapeSelector
+            categories={categories}
+            boundary={boundary}
+            onSwitchCategory={action(handleSwitchCategory)}
+            regionDefs={regionDefs}
+            states={forekomsterAsObject}
+            stateIndex={0}
+          >
+            <DiagonalHatch />
+            <Legend size={30} categories={specificCategories(0)} />
+          </SvgShapeSelector>
+        </div>
+        <div style={{ marginLeft: -80, _float: "right" }}>
           <SvgShapeSelector
             categories={categories}
             boundary={boundary}
@@ -279,7 +322,7 @@ const FylkeslisteElement = ({ id, values, onSwitchCategory }) => {
 
 const Spacer = () => (
   <>
-    <div style={{ height: 12 }} />
+    <div style={{ height: 24 }} />
     <div />
     <div />
     <div />

@@ -1,7 +1,7 @@
 import React from "react";
 import LegendItem from './LegendItem'
 
-const Legend = ({ categories, x = 0, y = 10, size = 40, style }) => (
+const Legend = ({ categories, x = 10, y = 400, size = 40, style }) => (
   <svg x={x} y={y}>
     {Object.keys(categories).map(key => {
       const e = categories[key];
