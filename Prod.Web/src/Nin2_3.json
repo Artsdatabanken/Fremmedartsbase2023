@@ -72,7 +72,7 @@
         {
           "Id": "NA H2",
           "Value": "NA H2",
-          "Text": "Sirkulerende vannmasser i fysisk avgrensete saltvannsforekomster",
+          "Text": "Sirkulerende vannmasser i fysisk avgrensete saltvannsforekomster ",
           "Category": null,
           "Collapsed": true,
           "Children": []
@@ -108,7 +108,16 @@
           "Text": "Snø- og isdekt fastmark",
           "Category": null,
           "Collapsed": true,
-          "Children": []
+          "Children": [
+            {
+              "Id": "NA I1-C-1",
+              "Value": "NA I1-C-1",
+              "Text": "snø- og isdekt fastmark",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
         },
         {
           "Id": "NA I2",
@@ -130,7 +139,7 @@
         {
           "Id": "NA L1",
           "Value": "NA L1",
-          "Text": "Eufotisk fast ferskvannsbunn",
+          "Text": "Eufotisk fast ferskvannsbunn ",
           "Category": null,
           "Collapsed": true,
           "Children": []
@@ -157,7 +166,32 @@
           "Text": "Helofytt-ferskvannssump",
           "Category": null,
           "Collapsed": true,
-          "Children": []
+          "Children": [
+            {
+              "Id": "NA L4-C-1",
+              "Value": "NA L4-C-1",
+              "Text": "Kalkfattig helofyttsump ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA L4-C-2",
+              "Value": "NA L4-C-2",
+              "Text": "Litt kalkfattig til intermediær helofyttsump",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA L4-C-3",
+              "Value": "NA L4-C-3",
+              "Text": "Kalkrik helofyttsump",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
         },
         {
           "Id": "NA L5",
@@ -204,54 +238,6 @@
           "Id": "NA M1",
           "Value": "NA M1",
           "Text": "Eufotisk fast saltvannsbunn",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA M10",
-          "Value": "NA M10",
-          "Text": "Marin grotte og overheng",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA M11",
-          "Value": "NA M11",
-          "Text": "Kaldt gassoppkomme",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA M12",
-          "Value": "NA M12",
-          "Text": "Varm havkilde",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA M13",
-          "Value": "NA M13",
-          "Text": "Marin sedimentbunn preget av oksygenmangel",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA M14",
-          "Value": "NA M14",
-          "Text": "Sterkt endret eller ny fast saltvannsbunn",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA M15",
-          "Value": "NA M15",
-          "Text": "Sterkt endret eller ny marin sedimentbunn",
           "Category": null,
           "Collapsed": true,
           "Children": []
@@ -310,12 +296,78 @@
           "Text": "Helofytt-saltvannsump",
           "Category": null,
           "Collapsed": true,
-          "Children": []
+          "Children": [
+            {
+              "Id": "NA M8-C-1",
+              "Value": "NA M8-C-1",
+              "Text": "Helofytt-saltvannssump",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
         },
         {
           "Id": "NA M9",
           "Value": "NA M9",
           "Text": "Littoralbasseng-bunn",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA M9-C-1",
+              "Value": "NA M9-C-1",
+              "Text": "Litoralbasseng",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA M10",
+          "Value": "NA M10",
+          "Text": "Marin grotte og overheng",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA M11",
+          "Value": "NA M11",
+          "Text": "Kaldt gassoppkomme",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA M12",
+          "Value": "NA M12",
+          "Text": "Varm havkilde",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA M13",
+          "Value": "NA M13",
+          "Text": "Marin sedimentbunn preget av oksygenmangel",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA M14",
+          "Value": "NA M14",
+          "Text": "Sterkt endret eller ny fast saltvannsbunn",
+          "Category": null,
+          "Collapsed": true,
+          "Children": []
+        },
+        {
+          "Id": "NA M15",
+          "Value": "NA M15",
+          "Text": "Sterkt endret eller ny marin sedimentbunn ",
           "Category": null,
           "Collapsed": true,
           "Children": []
@@ -335,175 +387,177 @@
           "Text": "Nakent berg",
           "Category": null,
           "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA T10",
-          "Value": "NA T10",
-          "Text": "Arktisk steppe",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA T11",
-          "Value": "NA T11",
-          "Text": "Saltanrikingsmark i fjæresonen",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA T12",
-          "Value": "NA T12",
-          "Text": "Strandeng",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA T13",
-          "Value": "NA T13",
-          "Text": "Rasmark",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA T14",
-          "Value": "NA T14",
-          "Text": "Rabbe",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA T15",
-          "Value": "NA T15",
-          "Text": "Fosse-eng",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA T16",
-          "Value": "NA T16",
-          "Text": "Rasmarkhei og -eng",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA T17",
-          "Value": "NA T17",
-          "Text": "Aktiv skredmark",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA T18",
-          "Value": "NA T18",
-          "Text": "Åpen flomfastmark",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA T19",
-          "Value": "NA T19",
-          "Text": "Oppfrysingsmark",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
+          "Children": [
+            {
+              "Id": "NA T1-C-1",
+              "Value": "NA T1-C-1",
+              "Text": "lite tørkeutsatte svært og temmelig kalkfattige nakne berg ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T1-C-2",
+              "Value": "NA T1-C-2",
+              "Text": "uttørkingseksponerte svært og temmelig kalkfattige berg, bergvegger og knauser",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T1-C-3",
+              "Value": "NA T1-C-3",
+              "Text": "lite uttørkingseksponerte litt kalkfattige og svakt intermediære nakne berg ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T1-C-4",
+              "Value": "NA T1-C-4",
+              "Text": "uttørkingseksponerte litt kalkfattige og svakt intermediære berg, bergvegger og knauser",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T1-C-5",
+              "Value": "NA T1-C-5",
+              "Text": "lite uttørkingseksponerte sterkt og litt kalkrike intermediære nakne berg ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T1-C-6",
+              "Value": "NA T1-C-6",
+              "Text": "uttørkingseksponerte sterkt intermediære og litt kalkrike berg, bergvegger og knauser ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T1-C-7",
+              "Value": "NA T1-C-7",
+              "Text": "lite uttørkingseksponerte temmelig til ekstremt kalkrike nakne berg ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T1-C-8",
+              "Value": "NA T1-C-8",
+              "Text": "uttørkingseksponerte temmelig til ekstremt kalkrike berg, bergvegger og knauser ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T1-C-9",
+              "Value": "NA T1-C-9",
+              "Text": "svakt intermediært og kalkfattig forblåst berg",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T1-C-10",
+              "Value": "NA T1-C-10",
+              "Text": "sterkt intermediært til ekstremt kalkrikt forblåst berg",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T1-C-11",
+              "Value": "NA T1-C-11",
+              "Text": "svakt intermediært og kalkfattig snøleieberg",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T1-C-12",
+              "Value": "NA T1-C-12",
+              "Text": "sterkt intermediært til ekstremt kalkrikt snøleieberg",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
         },
         {
           "Id": "NA T2",
           "Value": "NA T2",
-          "Text": "Åpen grunnlendt mark",
+          "Text": "Åpen grunnlendt mark ",
           "Category": null,
           "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA T20",
-          "Value": "NA T20",
-          "Text": "Isinnfrysingsmark",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA T21",
-          "Value": "NA T21",
-          "Text": "Sanddynemark",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA T22",
-          "Value": "NA T22",
-          "Text": "Fjellgrashei og grastundra",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA T23",
-          "Value": "NA T23",
-          "Text": "Ferskvanns-driftvoll",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA T24",
-          "Value": "NA T24",
-          "Text": "Driftvoll",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA T25",
-          "Value": "NA T25",
-          "Text": "Historisk skredmark",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA T26",
-          "Value": "NA T26",
-          "Text": "Breforland og snøavsmeltingsområde",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA T27",
-          "Value": "NA T27",
-          "Text": "Blokkmark",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA T28",
-          "Value": "NA T28",
-          "Text": "Polarørken",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA T29",
-          "Value": "NA T29",
-          "Text": "Grus- og steindominert strand og strandlinje",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
+          "Children": [
+            {
+              "Id": "NA T2-C-1",
+              "Value": "NA T2-C-1",
+              "Text": "åpen kalkfattig grunnlendt lyngmark",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T2-C-2",
+              "Value": "NA T2-C-2",
+              "Text": "åpen kalkfattig grunnlendt lavmark",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T2-C-3",
+              "Value": "NA T2-C-3",
+              "Text": "åpen intermediær grunnlendt lyngmark",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T2-C-4",
+              "Value": "NA T2-C-4",
+              "Text": "åpen intermediær grunnlendt lavmark",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T2-C-5",
+              "Value": "NA T2-C-5",
+              "Text": "åpen svakt kalkrik grunnlendt lyngmark",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T2-C-6",
+              "Value": "NA T2-C-6",
+              "Text": "åpen svakt kalkrik grunnlendt lavmark",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T2-C-7",
+              "Value": "NA T2-C-7",
+              "Text": "åpen sterkt kalkrik grunnlendt lyngmark",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T2-C-8",
+              "Value": "NA T2-C-8",
+              "Text": "åpen sterkt kalkrik grunnlendt lavmark",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
         },
         {
           "Id": "NA T3",
@@ -511,87 +565,120 @@
           "Text": "Fjellhei, leside og tundra",
           "Category": null,
           "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA T30",
-          "Value": "NA T30",
-          "Text": "Flomskogsmark",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA T31",
-          "Value": "NA T31",
-          "Text": "Boreal hei",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA T32",
-          "Value": "NA T32",
-          "Text": "Semi-naturlig eng",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA T33",
-          "Value": "NA T33",
-          "Text": "Semi-naturlig strandeng",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA T34",
-          "Value": "NA T34",
-          "Text": "Kystlynghei",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA T35",
-          "Value": "NA T35",
-          "Text": "Sterkt endret åpen fastmark med løsmassedekke",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA T36",
-          "Value": "NA T36",
-          "Text": "Ny fastmark på tidligere våtmark og ferskvannsbunn",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA T37",
-          "Value": "NA T37",
-          "Text": "Ny fastmark på sterkt modifi-serte og syntetiske substrater, i rask suksesjon",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA T38",
-          "Value": "NA T38",
-          "Text": "Treplantasje",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA T39",
-          "Value": "NA T39",
-          "Text": "Sterkt endret eller ny fastmark i langsom suksesjon",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
+          "Children": [
+            {
+              "Id": "NA T3-C-1",
+              "Value": "NA T3-C-1",
+              "Text": "kalkfattig leside",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T3-C-2",
+              "Value": "NA T3-C-2",
+              "Text": "kalkfattig fjell-lynghei",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T3-C-3",
+              "Value": "NA T3-C-3",
+              "Text": "kalkfattig fjell-lavhei",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T3-C-4",
+              "Value": "NA T3-C-4",
+              "Text": "intermediær leside",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T3-C-5",
+              "Value": "NA T3-C-5",
+              "Text": "intermediær fjell-lynghei",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T3-C-6",
+              "Value": "NA T3-C-6",
+              "Text": "intermediær fjell-lavhei",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T3-C-7",
+              "Value": "NA T3-C-7",
+              "Text": "svakt kalkrik leside",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T3-C-8",
+              "Value": "NA T3-C-8",
+              "Text": "svakt kalkrik fjell-lynghei",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T3-C-9",
+              "Value": "NA T3-C-9",
+              "Text": "svakt kalkrik fjell-lavhei",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T3-C-10",
+              "Value": "NA T3-C-10",
+              "Text": "sterkt kalkrik leside",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T3-C-11",
+              "Value": "NA T3-C-11",
+              "Text": "sterkt kalkrik fjell-lynghei",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T3-C-12",
+              "Value": "NA T3-C-12",
+              "Text": "sterkt kalkrik fjell-lavhei",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T3-C-13",
+              "Value": "NA T3-C-13",
+              "Text": "intermediær kildepåvirket fjellhei",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T3-C-14",
+              "Value": "NA T3-C-14",
+              "Text": "kalkrik kildepåvirket fjellhei",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
         },
         {
           "Id": "NA T4",
@@ -599,55 +686,168 @@
           "Text": "Fastmarksskogsmark",
           "Category": null,
           "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA T40",
-          "Value": "NA T40",
-          "Text": "Sterkt endret fastmark med preg av semi-naturlig eng",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA T41",
-          "Value": "NA T41",
-          "Text": "Oppdyrket mark med preg av semi-naturlig eng",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA T42",
-          "Value": "NA T42",
-          "Text": "Sterkt endret, hyppig bearbeidet fastmark med intensivt hevdpreg",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA T43",
-          "Value": "NA T43",
-          "Text": "Sterkt endret, varig fastmark med intensivt hevdpreg",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA T44",
-          "Value": "NA T44",
-          "Text": "Åker",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA T45",
-          "Value": "NA T45",
-          "Text": "Oppdyrket varig eng",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
+          "Children": [
+            {
+              "Id": "NA T4-C-1",
+              "Value": "NA T4-C-1",
+              "Text": "blåbærskog",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T4-C-2",
+              "Value": "NA T4-C-2",
+              "Text": "svak lågurtskog",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T4-C-3",
+              "Value": "NA T4-C-3",
+              "Text": "lågurtskog",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T4-C-4",
+              "Value": "NA T4-C-4",
+              "Text": "kalklågurtskog",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T4-C-5",
+              "Value": "NA T4-C-5",
+              "Text": "bærlyngskog",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T4-C-6",
+              "Value": "NA T4-C-6",
+              "Text": "svak bærlyng-lågurtskog",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T4-C-7",
+              "Value": "NA T4-C-7",
+              "Text": "bærlyng-lågurtskog",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T4-C-8",
+              "Value": "NA T4-C-8",
+              "Text": "bærlyng-kalklågurtskog",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T4-C-9",
+              "Value": "NA T4-C-9",
+              "Text": "lyngskog",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T4-C-10",
+              "Value": "NA T4-C-10",
+              "Text": "svak lyng-lågurtskog",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T4-C-11",
+              "Value": "NA T4-C-11",
+              "Text": "lyng-lågurtskog",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T4-C-12",
+              "Value": "NA T4-C-12",
+              "Text": "lyng-kalklågurtskog",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T4-C-13",
+              "Value": "NA T4-C-13",
+              "Text": "lavskog",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T4-C-14",
+              "Value": "NA T4-C-14",
+              "Text": "svak lav-lågurtskog",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T4-C-15",
+              "Value": "NA T4-C-15",
+              "Text": "lav-lågurtskog",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T4-C-16",
+              "Value": "NA T4-C-16",
+              "Text": "lav-kalklågurtskog",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T4-C-17",
+              "Value": "NA T4-C-17",
+              "Text": "storbregneskog",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T4-C-18",
+              "Value": "NA T4-C-18",
+              "Text": "høgstaudeskog",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T4-C-19",
+              "Value": "NA T4-C-19",
+              "Text": "litt tørkeutsatt høgstaudeskog",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T4-C-20",
+              "Value": "NA T4-C-20",
+              "Text": "tørkeutsatt høgstaudeskog",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
         },
         {
           "Id": "NA T5",
@@ -655,7 +855,64 @@
           "Text": "Grotte og overheng",
           "Category": null,
           "Collapsed": true,
-          "Children": []
+          "Children": [
+            {
+              "Id": "NA T5-C-1",
+              "Value": "NA T5-C-1",
+              "Text": "kalkfattige til svakt kalkrike tørkeutsatte grotter og overheng ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T5-C-2",
+              "Value": "NA T5-C-2",
+              "Text": "sterkt kalkrike ikke tørkeutsatte grotter og overheng ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T5-C-3",
+              "Value": "NA T5-C-3",
+              "Text": "mindre kalkrikt grottedyp",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T5-C-4",
+              "Value": "NA T5-C-4",
+              "Text": "indre del av dyp karstgrotte",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T5-C-5",
+              "Value": "NA T5-C-5",
+              "Text": "tørt kalkfattig overheng",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T5-C-6",
+              "Value": "NA T5-C-6",
+              "Text": "tørt intermediært og svakt kalkrikt overheng",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T5-C-7",
+              "Value": "NA T5-C-7",
+              "Text": "tørt sterkt kalkrikt overheng",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
         },
         {
           "Id": "NA T6",
@@ -663,7 +920,24 @@
           "Text": "Strandberg",
           "Category": null,
           "Collapsed": true,
-          "Children": []
+          "Children": [
+            {
+              "Id": "NA T6-C-1",
+              "Value": "NA T6-C-1",
+              "Text": "kalkfattige strandberg",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T6-C-2",
+              "Value": "NA T6-C-2",
+              "Text": "kalkrik bergknaus i bølgesprutsonen",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
         },
         {
           "Id": "NA T7",
@@ -671,7 +945,120 @@
           "Text": "Snøleie",
           "Category": null,
           "Collapsed": true,
-          "Children": []
+          "Children": [
+            {
+              "Id": "NA T7-C-1",
+              "Value": "NA T7-C-1",
+              "Text": "svært kalkfattig moderat snøleie",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T7-C-2",
+              "Value": "NA T7-C-2",
+              "Text": "svakt kalkfattig moderat snøleie",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T7-C-3",
+              "Value": "NA T7-C-3",
+              "Text": "intermediært moderat snøleie",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T7-C-4",
+              "Value": "NA T7-C-4",
+              "Text": "intermediært seint snøleie",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T7-C-5",
+              "Value": "NA T7-C-5",
+              "Text": "intermediært ekstremsnøleie",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T7-C-6",
+              "Value": "NA T7-C-6",
+              "Text": "svakt kalkrikt moderat snøleie",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T7-C-7",
+              "Value": "NA T7-C-7",
+              "Text": "svakt kalkrikt seint snøleie",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T7-C-8",
+              "Value": "NA T7-C-8",
+              "Text": "sterkt kalkrikt moderat snøleie",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T7-C-9",
+              "Value": "NA T7-C-9",
+              "Text": "sterkt kalkrikt seint snøleie",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T7-C-10",
+              "Value": "NA T7-C-10",
+              "Text": "kalkrikt ekstremsnøleie",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T7-C-11",
+              "Value": "NA T7-C-11",
+              "Text": "vegetasjonsfritt snøleie",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T7-C-12",
+              "Value": "NA T7-C-12",
+              "Text": "kildepåvirket intermediært snøleie",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T7-C-13",
+              "Value": "NA T7-C-13",
+              "Text": "kildepåvirket svakt kalkrikt snøleie",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T7-C-14",
+              "Value": "NA T7-C-14",
+              "Text": "kildepåvirket kalksnøleie",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
         },
         {
           "Id": "NA T8",
@@ -679,7 +1066,32 @@
           "Text": "Fuglefjell-eng og fugletopp",
           "Category": null,
           "Collapsed": true,
-          "Children": []
+          "Children": [
+            {
+              "Id": "NA T8-C-1",
+              "Value": "NA T8-C-1",
+              "Text": "fuglefjell-høgstaude-enger     ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T8-C-2",
+              "Value": "NA T8-C-2",
+              "Text": "kildepåvirket fuglefjell-eng",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T8-C-3",
+              "Value": "NA T8-C-3",
+              "Text": "fugletopp",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
         },
         {
           "Id": "NA T9",
@@ -687,7 +1099,1508 @@
           "Text": "Mosetundra",
           "Category": null,
           "Collapsed": true,
-          "Children": []
+          "Children": [
+            {
+              "Id": "NA T9-C-1",
+              "Value": "NA T9-C-1",
+              "Text": "fattig-intermediær mosetundra",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T9-C-2",
+              "Value": "NA T9-C-2",
+              "Text": "kalkrik mosetundra",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA T10",
+          "Value": "NA T10",
+          "Text": "Arktisk steppe",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA T10-C-1",
+              "Value": "NA T10-C-1",
+              "Text": "arktiske stepper ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA T11",
+          "Value": "NA T11",
+          "Text": "Saltanrikingsmark i fjæresonen",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA T11-C-1",
+              "Value": "NA T11-C-1",
+              "Text": "saltanrikingsmarker i geolitoral ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T11-C-2",
+              "Value": "NA T11-C-2",
+              "Text": "øvre saltanrikingsmark på grus",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA T12",
+          "Value": "NA T12",
+          "Text": "Strandeng",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA T12-C-1",
+              "Value": "NA T12-C-1",
+              "Text": "strandenger i nedre og midtre geolitoral ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T12-C-2",
+              "Value": "NA T12-C-2",
+              "Text": "strandenger i øvre geolitoral og supralitoral ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA T13",
+          "Value": "NA T13",
+          "Text": "Rasmark",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA T13-C-1",
+              "Value": "NA T13-C-1",
+              "Text": "kalkfattig grov ur",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T13-C-2",
+              "Value": "NA T13-C-2",
+              "Text": "kalkfattig ur",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T13-C-3",
+              "Value": "NA T13-C-3",
+              "Text": "kalkfattig grus- og sanddominert rasmark",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T13-C-4",
+              "Value": "NA T13-C-4",
+              "Text": "intermediær og svakt kalkrik grov ur",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T13-C-5",
+              "Value": "NA T13-C-5",
+              "Text": "intermediær og svakt kalkrik ur",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T13-C-6",
+              "Value": "NA T13-C-6",
+              "Text": "intermediær og svakt kalkrik grus- og sanddominert rasmark",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T13-C-7",
+              "Value": "NA T13-C-7",
+              "Text": "sterkt kalkrik grov ur",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T13-C-8",
+              "Value": "NA T13-C-8",
+              "Text": "sterkt kalkrik ur",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T13-C-9",
+              "Value": "NA T13-C-9",
+              "Text": "sterkt kalkrik grus- og sanddominert rasmark",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T13-C-10",
+              "Value": "NA T13-C-10",
+              "Text": "kalkfattig fuktig grov ur",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T13-C-11",
+              "Value": "NA T13-C-11",
+              "Text": "kalkfattig fuktig ur",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T13-C-12",
+              "Value": "NA T13-C-12",
+              "Text": "intermediær og svakt kalkrik fuktig grov ur",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T13-C-13",
+              "Value": "NA T13-C-13",
+              "Text": "intermediær og svakt kalkrik fuktig ur",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T13-C-14",
+              "Value": "NA T13-C-14",
+              "Text": "sterkt kalkrik fuktig grov ur",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T13-C-15",
+              "Value": "NA T13-C-15",
+              "Text": "sterkt kalkrik fuktig ur",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA T14",
+          "Value": "NA T14",
+          "Text": "Rabbe",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA T14-C-1",
+              "Value": "NA T14-C-1",
+              "Text": "kalkfattig og intermediær rabbe",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T14-C-2",
+              "Value": "NA T14-C-2",
+              "Text": "kalkrik rabbe",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA T15",
+          "Value": "NA T15",
+          "Text": "Fosse-eng",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA T15-C-1",
+              "Value": "NA T15-C-1",
+              "Text": "kalkfattig og intermediær fosse-eng",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T15-C-2",
+              "Value": "NA T15-C-2",
+              "Text": "kalkrik fosse-eng",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA T16",
+          "Value": "NA T16",
+          "Text": "Rasmarkhei og -eng",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA T16-C-1",
+              "Value": "NA T16-C-1",
+              "Text": "kalkfattig rasmarkeng og -hei",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T16-C-2",
+              "Value": "NA T16-C-2",
+              "Text": "intermediær rasmarkeng og -hei",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T16-C-3",
+              "Value": "NA T16-C-3",
+              "Text": "svakt kalkrik rasmarkeng og -hei",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T16-C-4",
+              "Value": "NA T16-C-4",
+              "Text": "sterkt kalkrik rasmarkeng og -hei",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T16-C-5",
+              "Value": "NA T16-C-5",
+              "Text": "kildepåvirket intermediær rasmarkeng og -hei",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T16-C-6",
+              "Value": "NA T16-C-6",
+              "Text": "kildepåvirket kalkrik rasmarkeng og -hei",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T16-C-7",
+              "Value": "NA T16-C-7",
+              "Text": "sterkt raspreget rasmarkeng og -hei",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA T17",
+          "Value": "NA T17",
+          "Text": "Aktiv skredmark",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA T17-C-1",
+              "Value": "NA T17-C-1",
+              "Text": "jordskred",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T17-C-2",
+              "Value": "NA T17-C-2",
+              "Text": "grus- og sandskred ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T17-C-3",
+              "Value": "NA T17-C-3",
+              "Text": "silt- og leirskred",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA T18",
+          "Value": "NA T18",
+          "Text": "Åpen flomfastmark",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA T18-C-1",
+              "Value": "NA T18-C-1",
+              "Text": "åpne flomfastmarker på sand, grus og stein    ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T18-C-2",
+              "Value": "NA T18-C-2",
+              "Text": "åpen flomfastmark på silt og leire",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T18-C-3",
+              "Value": "NA T18-C-3",
+              "Text": "åpen flomfastmark på kalkrik grus og stein",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T18-C-4",
+              "Value": "NA T18-C-4",
+              "Text": "åpen flomfastmark på sand med klart erosjonspreg",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA T19",
+          "Value": "NA T19",
+          "Text": "Oppfrysingsmark",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA T19-C-1",
+              "Value": "NA T19-C-1",
+              "Text": "kalkfattige finjordsflekker",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T19-C-2",
+              "Value": "NA T19-C-2",
+              "Text": "kalkrike finjordsflekker",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA T20",
+          "Value": "NA T20",
+          "Text": "Isinnfrysingsmark",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA T20-C-1",
+              "Value": "NA T20-C-1",
+              "Text": "kalkfattig og intermediær isinnfrysingsmark",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T20-C-2",
+              "Value": "NA T20-C-2",
+              "Text": "kalkrik isinnfrysingsmark",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA T21",
+          "Value": "NA T21",
+          "Text": "Sanddynemark",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA T21-C-1",
+              "Value": "NA T21-C-1",
+              "Text": "forstrand og primærdyner  ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T21-C-2",
+              "Value": "NA T21-C-2",
+              "Text": "kvite og grå dyner  ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T21-C-3",
+              "Value": "NA T21-C-3",
+              "Text": "brune dyner og dynehei ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T21-C-4",
+              "Value": "NA T21-C-4",
+              "Text": "dynetrau",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA T22",
+          "Value": "NA T22",
+          "Text": "Fjellgrashei og grastundra",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA T22-C-1",
+              "Value": "NA T22-C-1",
+              "Text": "kalkfattig og intermediær fjellgrashei",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T22-C-2",
+              "Value": "NA T22-C-2",
+              "Text": "kalkfattig og intermediært grassnøleie",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T22-C-3",
+              "Value": "NA T22-C-3",
+              "Text": "kalkrik fjellgrashei",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T22-C-4",
+              "Value": "NA T22-C-4",
+              "Text": "kalkrikt grassnøleie",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA T23",
+          "Value": "NA T23",
+          "Text": "Ferskvanns-driftvoll",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA T23-C-1",
+              "Value": "NA T23-C-1",
+              "Text": "ferskvannsdriftvoll",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA T24",
+          "Value": "NA T24",
+          "Text": "Driftvoll",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA T24-C-1",
+              "Value": "NA T24-C-1",
+              "Text": "beskyttede og moderat eksponerte driftvoller  ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T24-C-2",
+              "Value": "NA T24-C-2",
+              "Text": "ettårsdriftvoll",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA T25",
+          "Value": "NA T25",
+          "Text": "Historisk skredmark",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA T25-C-1",
+              "Value": "NA T25-C-1",
+              "Text": "historisk jordskred",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T25-C-2",
+              "Value": "NA T25-C-2",
+              "Text": "historiske grus- og sandskred ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T25-C-3",
+              "Value": "NA T25-C-3",
+              "Text": "historisk silt- og leirskred",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA T26",
+          "Value": "NA T26",
+          "Text": "Breforland og snøavsmeltingsområde",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA T26-C-1",
+              "Value": "NA T26-C-1",
+              "Text": "fjellhei-initialer ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T26-C-2",
+              "Value": "NA T26-C-2",
+              "Text": "snøleie-initialer ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T26-C-3",
+              "Value": "NA T26-C-3",
+              "Text": "grus- og steindominert breforland i pionerfasen",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T26-C-4",
+              "Value": "NA T26-C-4",
+              "Text": "breforland og snøavsmeltingsområder i pionérfase, dominert av fin grus, sand, silt til leire ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA T27",
+          "Value": "NA T27",
+          "Text": "Blokkmark",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA T27-C-1",
+              "Value": "NA T27-C-1",
+              "Text": "kalkfattig og intermediær blokkmark",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T27-C-2",
+              "Value": "NA T27-C-2",
+              "Text": "kalkfattig og intermediær snøleie-blokkmark",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T27-C-3",
+              "Value": "NA T27-C-3",
+              "Text": "kalkrik blokkmark",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T27-C-4",
+              "Value": "NA T27-C-4",
+              "Text": "kalkrik snøleie-blokkmark",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T27-C-5",
+              "Value": "NA T27-C-5",
+              "Text": "blokkmark i vegetasjonsfritt snøleie",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T27-C-6",
+              "Value": "NA T27-C-6",
+              "Text": "kalkfattig og intermediær rabbepreget blokkmark",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T27-C-7",
+              "Value": "NA T27-C-7",
+              "Text": "kalkrik rabbepreget blokkmark",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA T28",
+          "Value": "NA T28",
+          "Text": "Polarørken",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA T28-C-1",
+              "Value": "NA T28-C-1",
+              "Text": "kalkfattig polarørken",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T28-C-2",
+              "Value": "NA T28-C-2",
+              "Text": "intermediær og svakt kalkrik polarørken",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T28-C-3",
+              "Value": "NA T28-C-3",
+              "Text": "sterkt kalkrik polarørken",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA T29",
+          "Value": "NA T29",
+          "Text": "Grus- og steindominert strand og strandlinje",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA T29-C-1",
+              "Value": "NA T29-C-1",
+              "Text": "stein- og grusstrender og strandlinjer i pionérfase på epilitoral fastmark ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T29-C-2",
+              "Value": "NA T29-C-2",
+              "Text": "stein- og grusstrender og strandlinjer i etablerings- og konsolideringsfase på epilitoral fastmark ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T29-C-3",
+              "Value": "NA T29-C-3",
+              "Text": "øvre skjellsandstrand med pionervegetasjon",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T29-C-4",
+              "Value": "NA T29-C-4",
+              "Text": "øvre skjellsandstrand uten pionervegetasjon",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T29-C-5",
+              "Value": "NA T29-C-5",
+              "Text": "stein- og grusstrender og strandlinjer i pionérfase i supralitoral ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T29-C-6",
+              "Value": "NA T29-C-6",
+              "Text": "nedre skjellsandstrand med pionervegetasjon",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA T30",
+          "Value": "NA T30",
+          "Text": "Flomskogsmark",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA T30-C-1",
+              "Value": "NA T30-C-1",
+              "Text": "flomskogsmarker på grus og stein    ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T30-C-2",
+              "Value": "NA T30-C-2",
+              "Text": "flomskogsmarker på finmateriale ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T30-C-3",
+              "Value": "NA T30-C-3",
+              "Text": "kildepåvirkede flomskogsmarker på finmateriale ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T30-C-4",
+              "Value": "NA T30-C-4",
+              "Text": "erosjonspreget flomskogsmark",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA T31",
+          "Value": "NA T31",
+          "Text": "Boreal hei",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA T31-C-1",
+              "Value": "NA T31-C-1",
+              "Text": "kalkfattig boreal frisk hei",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T31-C-2",
+              "Value": "NA T31-C-2",
+              "Text": "kalkfattig boreal lynghei",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T31-C-3",
+              "Value": "NA T31-C-3",
+              "Text": "kalkfattig boreal lavhei",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T31-C-4",
+              "Value": "NA T31-C-4",
+              "Text": "intermediær boreal frisk hei",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T31-C-5",
+              "Value": "NA T31-C-5",
+              "Text": "intermediær boreal lynghei",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T31-C-6",
+              "Value": "NA T31-C-6",
+              "Text": "intermediær boreal lavhei",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T31-C-7",
+              "Value": "NA T31-C-7",
+              "Text": "svakt kalkrik boreal frisk hei",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T31-C-8",
+              "Value": "NA T31-C-8",
+              "Text": "svakt kalkrik boreal lynghei",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T31-C-9",
+              "Value": "NA T31-C-9",
+              "Text": "svakt kalkrik boreal lavhei",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T31-C-10",
+              "Value": "NA T31-C-10",
+              "Text": "sterkt kalkrik boreal frisk hei",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T31-C-11",
+              "Value": "NA T31-C-11",
+              "Text": "sterkt kalkrik boreal lynghei",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T31-C-12",
+              "Value": "NA T31-C-12",
+              "Text": "sterkt kalkrik boreal lavhei",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T31-C-13",
+              "Value": "NA T31-C-13",
+              "Text": "intermediær kildepåvirket boreal frisk hei",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T31-C-14",
+              "Value": "NA T31-C-14",
+              "Text": "kalkrik kildepåvirket boreal frisk hei",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA T32",
+          "Value": "NA T32",
+          "Text": "Semi-naturlig eng",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA T32-C-1",
+              "Value": "NA T32-C-1",
+              "Text": "kalkfattig eng med mindre hevdpreg",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T32-C-2",
+              "Value": "NA T32-C-2",
+              "Text": "kalkfattig eng med klart hevdpreg",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T32-C-3",
+              "Value": "NA T32-C-3",
+              "Text": "intermediær eng med mindre hevdpreg",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T32-C-4",
+              "Value": "NA T32-C-4",
+              "Text": "intermediær eng med klart hevdpreg",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T32-C-5",
+              "Value": "NA T32-C-5",
+              "Text": "svakt kalkrik eng med mindre hevdpreg",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T32-C-6",
+              "Value": "NA T32-C-6",
+              "Text": "intermediær eng med svakt preg av gjødsling",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T32-C-7",
+              "Value": "NA T32-C-7",
+              "Text": "sterkt kalkrik eng med mindre hevdpreg",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T32-C-8",
+              "Value": "NA T32-C-8",
+              "Text": "sterkt kalkrik eng med klart hevdpreg",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T32-C-9",
+              "Value": "NA T32-C-9",
+              "Text": "kalkrik fukteng med mindre hevdpreg",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T32-C-10",
+              "Value": "NA T32-C-10",
+              "Text": "kalkrik fukteng med klart hevdpreg og svakt preg av gjødsling",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T32-C-11",
+              "Value": "NA T32-C-11",
+              "Text": "kalkfattig tørreng med mindre hevdpreg",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T32-C-12",
+              "Value": "NA T32-C-12",
+              "Text": "kalkfattig tørreng med klart hevdpreg",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T32-C-13",
+              "Value": "NA T32-C-13",
+              "Text": "intermediær tørreng med mindre hevdpreg",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T32-C-14",
+              "Value": "NA T32-C-14",
+              "Text": "intermediær tørreng med klart hevdpreg eller svakt preg av gjødsling",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T32-C-15",
+              "Value": "NA T32-C-15",
+              "Text": "svakt kalkrik tørreng med mindre hevdpreg",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T32-C-16",
+              "Value": "NA T32-C-16",
+              "Text": "svakt kalkrik tørreng med klart hevdpreg eller svakt preg av gjødsling",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T32-C-17",
+              "Value": "NA T32-C-17",
+              "Text": "sterkt kalkrik tørreng med mindre hevdpreg",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T32-C-18",
+              "Value": "NA T32-C-18",
+              "Text": "sterkt kalkrik tørreng med klart hevdpreg",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T32-C-19",
+              "Value": "NA T32-C-19",
+              "Text": "sanddyne-eng med klart hevdpreg eller svakt preg av gjødsling",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T32-C-20",
+              "Value": "NA T32-C-20",
+              "Text": "svakt kalkrik eng med klart hevdpreg",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T32-C-21",
+              "Value": "NA T32-C-21",
+              "Text": "svakt kalkrik eng med svakt preg av gjødsling",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA T33",
+          "Value": "NA T33",
+          "Text": "Semi-naturlig strandeng",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA T33-C-1",
+              "Value": "NA T33-C-1",
+              "Text": "nedre semi-naturlig strandeng",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T33-C-2",
+              "Value": "NA T33-C-2",
+              "Text": "øvre semi-naturlig strandeng",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA T34",
+          "Value": "NA T34",
+          "Text": "Kystlynghei",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA T34-C-1",
+              "Value": "NA T34-C-1",
+              "Text": "kalkfattig bakli-hei",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T34-C-2",
+              "Value": "NA T34-C-2",
+              "Text": "kalkfattige kystlyngheier   ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T34-C-3",
+              "Value": "NA T34-C-3",
+              "Text": "intermediær bakli-hei",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T34-C-4",
+              "Value": "NA T34-C-4",
+              "Text": "intermediære kystlyngheier   ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T34-C-5",
+              "Value": "NA T34-C-5",
+              "Text": "svakt kalkrike kystlyngheier   ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T34-C-6",
+              "Value": "NA T34-C-6",
+              "Text": "sterkt kalkrike kystlyngheier   ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA T35",
+          "Value": "NA T35",
+          "Text": "Sterkt endret åpen fastmark med løsmassedekke",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA T35-C-1",
+              "Value": "NA T35-C-1",
+              "Text": "sterkt endret fastmark med jorddekke",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T35-C-2",
+              "Value": "NA T35-C-2",
+              "Text": "sterkt endrede fastmarker med dekke av sand eller grus ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T35-C-3",
+              "Value": "NA T35-C-3",
+              "Text": "sterkt endret fastmark med dekke av silt og leire",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA T36",
+          "Value": "NA T36",
+          "Text": "Ny fastmark på tidligere våtmark og ferskvannsbunn",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA T36-C-1",
+              "Value": "NA T36-C-1",
+              "Text": "sterkt endret tidligere våtmark",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T36-C-2",
+              "Value": "NA T36-C-2",
+              "Text": "tørrlagt elvebunn",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T36-C-3",
+              "Value": "NA T36-C-3",
+              "Text": "tørrlagt innsjøbunn",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA T37",
+          "Value": "NA T37",
+          "Text": "Ny fastmark på sterkt modifi-serte og syntetiske substrater, i rask suksesjon",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA T37-C-1",
+              "Value": "NA T37-C-1",
+              "Text": "slagghauger og deponier for fast kjemisk avfall",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T37-C-2",
+              "Value": "NA T37-C-2",
+              "Text": "asfalt, løs betong o.l.",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T37-C-3",
+              "Value": "NA T37-C-3",
+              "Text": "avfallsdeponi o.l.",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA T38",
+          "Value": "NA T38",
+          "Text": "Treplantasje",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA T38-C-1",
+              "Value": "NA T38-C-1",
+              "Text": "plantasjeskog",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA T39",
+          "Value": "NA T39",
+          "Text": "Sterkt endret eller ny fastmark i langsom suksesjon",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA T39-C-1",
+              "Value": "NA T39-C-1",
+              "Text": "blokkdeponier   ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T39-C-2",
+              "Value": "NA T39-C-2",
+              "Text": "blottlagt fast fjell   ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T39-C-3",
+              "Value": "NA T39-C-3",
+              "Text": "fast fjell blottlagt ved tørrlegging eller nedtapping ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T39-C-4",
+              "Value": "NA T39-C-4",
+              "Text": "sterkt modifiserte eller syntetiske, overveiende uorganisk faste substrater ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA T40",
+          "Value": "NA T40",
+          "Text": "Sterkt endret fastmark med preg av semi-naturlig eng",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA T40-C-1",
+              "Value": "NA T40-C-1",
+              "Text": "eng-aktig sterkt endret fastmark",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA T41",
+          "Value": "NA T41",
+          "Text": "Oppdyrket mark med preg av semi-naturlig eng",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA T41-C-1",
+              "Value": "NA T41-C-1",
+              "Text": "eng-aktig oppdyrket mark",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA T42",
+          "Value": "NA T42",
+          "Text": "Sterkt endret, hyppig bearbeidet fastmark med intensivt hevdpreg",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA T42-C-1",
+              "Value": "NA T42-C-1",
+              "Text": "blomsterbed og liknende",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA T43",
+          "Value": "NA T43",
+          "Text": "Sterkt endret, varig fastmark med intensivt hevdpreg",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA T43-C-1",
+              "Value": "NA T43-C-1",
+              "Text": "plener, parker og liknende",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA T44",
+          "Value": "NA T44",
+          "Text": "Åker",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA T44-C-1",
+              "Value": "NA T44-C-1",
+              "Text": "åker",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA T45",
+          "Value": "NA T45",
+          "Text": "Oppdyrket varig eng",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA T45-C-1",
+              "Value": "NA T45-C-1",
+              "Text": "oppdyrkede varige enger med lite intensivt hevdpreg ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T45-C-2",
+              "Value": "NA T45-C-2",
+              "Text": "oppdyrket intensiv slåtteeng",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA T45-C-3",
+              "Value": "NA T45-C-3",
+              "Text": "oppdyrket svært intensiv slåtteeng",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
         }
       ]
     },
@@ -704,39 +2617,80 @@
           "Text": "Åpen jordvannsmyr",
           "Category": null,
           "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA V10",
-          "Value": "NA V10",
-          "Text": "Semi-naturlig våteng",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA V11",
-          "Value": "NA V11",
-          "Text": "Torvtak",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA V12",
-          "Value": "NA V12",
-          "Text": "Grøftet torvmark",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
-        },
-        {
-          "Id": "NA V13",
-          "Value": "NA V13",
-          "Text": "Ny våtmark",
-          "Category": null,
-          "Collapsed": true,
-          "Children": []
+          "Children": [
+            {
+              "Id": "NA V1-C-1",
+              "Value": "NA V1-C-1",
+              "Text": "svært og temmelig kalkfattige myrflater",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V1-C-2",
+              "Value": "NA V1-C-2",
+              "Text": "litt kalkfattige og svakt intermediære myrflater",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V1-C-3",
+              "Value": "NA V1-C-3",
+              "Text": "sterkt intermediære og litt kalkrike myrflater ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V1-C-4",
+              "Value": "NA V1-C-4",
+              "Text": "temmelig til ekstremt kalkrike myrflater ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V1-C-5",
+              "Value": "NA V1-C-5",
+              "Text": "svært og temmelig kalkfattige myrkanter ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V1-C-6",
+              "Value": "NA V1-C-6",
+              "Text": "litt kalkfattige og svakt intermediære myrkanter ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V1-C-7",
+              "Value": "NA V1-C-7",
+              "Text": "sterkt intermediære og litt kalkrike myrkanter ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V1-C-8",
+              "Value": "NA V1-C-8",
+              "Text": "temmelig til ekstremt kalkrike myrkanter",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V1-C-9",
+              "Value": "NA V1-C-9",
+              "Text": "saltpåvirket myrkant",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
         },
         {
           "Id": "NA V2",
@@ -744,15 +2698,57 @@
           "Text": "Myr- og sumpskogsmark",
           "Category": null,
           "Collapsed": true,
-          "Children": []
+          "Children": [
+            {
+              "Id": "NA V2-C-1",
+              "Value": "NA V2-C-1",
+              "Text": "kalkfattige og svakt intermediære myr- og sumpskogsmarker     ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V2-C-2",
+              "Value": "NA V2-C-2",
+              "Text": "sterkt intermediære litt kalkrike myr- og sumpskog-marker ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V2-C-3",
+              "Value": "NA V2-C-3",
+              "Text": "temmelig til ekstremt kalkrike myr- og sumpskogsmarker     ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
         },
         {
           "Id": "NA V3",
           "Value": "NA V3",
-          "Text": "Nedbørsmyr",
+          "Text": "Nedbørsmyr ",
           "Category": null,
           "Collapsed": true,
-          "Children": []
+          "Children": [
+            {
+              "Id": "NA V3-C-1",
+              "Value": "NA V3-C-1",
+              "Text": "ombrotrofe myrflater",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V3-C-2",
+              "Value": "NA V3-C-2",
+              "Text": "ombrotrof myrkant",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
         },
         {
           "Id": "NA V4",
@@ -760,7 +2756,48 @@
           "Text": "Kaldkilde",
           "Category": null,
           "Collapsed": true,
-          "Children": []
+          "Children": [
+            {
+              "Id": "NA V4-C-1",
+              "Value": "NA V4-C-1",
+              "Text": "litt kalkfattig og svakt intermediær svakkilde",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V4-C-2",
+              "Value": "NA V4-C-2",
+              "Text": "sterkt intermediære og litt kalkrike kilder    ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V4-C-3",
+              "Value": "NA V4-C-3",
+              "Text": "temmelig til ekstremt kalkrike kilder    ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V4-C-4",
+              "Value": "NA V4-C-4",
+              "Text": "sterkt intermediære og litt kalkrike torvmarkskilder",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V4-C-5",
+              "Value": "NA V4-C-5",
+              "Text": "temmelig til ekstremt kalkrike torvmarkskilder    ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
         },
         {
           "Id": "NA V5",
@@ -768,7 +2805,24 @@
           "Text": "Varm kilde",
           "Category": null,
           "Collapsed": true,
-          "Children": []
+          "Children": [
+            {
+              "Id": "NA V5-C-1",
+              "Value": "NA V5-C-1",
+              "Text": "svak varmkilde",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V5-C-2",
+              "Value": "NA V5-C-2",
+              "Text": "klar varmkilde",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
         },
         {
           "Id": "NA V6",
@@ -776,7 +2830,80 @@
           "Text": "Våtsnøleie og snøleiekilde",
           "Category": null,
           "Collapsed": true,
-          "Children": []
+          "Children": [
+            {
+              "Id": "NA V6-C-1",
+              "Value": "NA V6-C-1",
+              "Text": "kalkfattig og intermediært moderat våtsnøleie",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V6-C-2",
+              "Value": "NA V6-C-2",
+              "Text": "kalkrikt moderat våtsnøleie",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V6-C-3",
+              "Value": "NA V6-C-3",
+              "Text": "kalkfattig og intermediært seint våtsnøleie",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V6-C-4",
+              "Value": "NA V6-C-4",
+              "Text": "kalkrikt seint våtsnøleie",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V6-C-5",
+              "Value": "NA V6-C-5",
+              "Text": "kalkfattig og intermediært ekstrem-våtsnøleie",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V6-C-6",
+              "Value": "NA V6-C-6",
+              "Text": "kalkrikt ekstrem-våtsnøleie",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V6-C-7",
+              "Value": "NA V6-C-7",
+              "Text": "kalkfattig og intermediært seint kildesnøleie",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V6-C-8",
+              "Value": "NA V6-C-8",
+              "Text": "kalkrikt seint kildesnøleie",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V6-C-9",
+              "Value": "NA V6-C-9",
+              "Text": "ekstrem-kildesnøleie",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
         },
         {
           "Id": "NA V7",
@@ -784,7 +2911,24 @@
           "Text": "Arktisk permafrost-våtmark",
           "Category": null,
           "Collapsed": true,
-          "Children": []
+          "Children": [
+            {
+              "Id": "NA V7-C-1",
+              "Value": "NA V7-C-1",
+              "Text": "kalkfattig og intermediær permafrost-våtmark",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V7-C-2",
+              "Value": "NA V7-C-2",
+              "Text": "kalkrik permafrost-våtmark",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
         },
         {
           "Id": "NA V8",
@@ -792,15 +2936,197 @@
           "Text": "Strandsumpskogsmark",
           "Category": null,
           "Collapsed": true,
-          "Children": []
+          "Children": [
+            {
+              "Id": "NA V8-C-1",
+              "Value": "NA V8-C-1",
+              "Text": "kalkfattig og intermediær strand- og sumpskogsmark",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V8-C-2",
+              "Value": "NA V8-C-2",
+              "Text": "kalkrik strand- og sumpskogsmark",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V8-C-3",
+              "Value": "NA V8-C-3",
+              "Text": "saltpåvirket strand- og sumpskogsmark",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
         },
         {
           "Id": "NA V9",
           "Value": "NA V9",
-          "Text": "Semi-naturlig myr",
+          "Text": "Semi-naturlig myr ",
           "Category": null,
           "Collapsed": true,
-          "Children": []
+          "Children": [
+            {
+              "Id": "NA V9-C-1",
+              "Value": "NA V9-C-1",
+              "Text": "kalkfattig semi-naturlig myr",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V9-C-2",
+              "Value": "NA V9-C-2",
+              "Text": "intermediær semi-naturlig myr",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V9-C-3",
+              "Value": "NA V9-C-3",
+              "Text": "kalkrik semi-naturlig myr",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA V10",
+          "Value": "NA V10",
+          "Text": "Semi-naturlig våteng",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA V10-C-1",
+              "Value": "NA V10-C-1",
+              "Text": "intermediær våteng",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V10-C-2",
+              "Value": "NA V10-C-2",
+              "Text": "kalkrik våteng",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V10-C-3",
+              "Value": "NA V10-C-3",
+              "Text": "kildevannspåvirket våteng",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA V11",
+          "Value": "NA V11",
+          "Text": "Torvtak",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA V11-C-1",
+              "Value": "NA V11-C-1",
+              "Text": "kalkfattig torvtak",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V11-C-2",
+              "Value": "NA V11-C-2",
+              "Text": "kalkrikt torvtak",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA V12",
+          "Value": "NA V12",
+          "Text": "Grøftet torvmark",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA V12-C-1",
+              "Value": "NA V12-C-1",
+              "Text": "grøftet kalkfattig jordvannsmyr",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V12-C-2",
+              "Value": "NA V12-C-2",
+              "Text": "grøftet kalkrik jordvannsmyr",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V12-C-3",
+              "Value": "NA V12-C-3",
+              "Text": "grøftet nedbørsmyr",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
+        },
+        {
+          "Id": "NA V13",
+          "Value": "NA V13",
+          "Text": "Ny våtmark",
+          "Category": null,
+          "Collapsed": true,
+          "Children": [
+            {
+              "Id": "NA V13-C-1",
+              "Value": "NA V13-C-1",
+              "Text": "nye våtmarker med opprinnelse i sterkt endrede fastmarkssystemer ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V13-C-2",
+              "Value": "NA V13-C-2",
+              "Text": "nye våtmarker med opprinnelse i jordbruksmark på fastmark ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V13-C-3",
+              "Value": "NA V13-C-3",
+              "Text": "nye våtmarker med opprinnelse i neddemt skogsmark ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            },
+            {
+              "Id": "NA V13-C-4",
+              "Value": "NA V13-C-4",
+              "Text": "nye våtmarker med opprinnelse i ferskvannsbunn   ",
+              "Category": null,
+              "Collapsed": true,
+              "Children": []
+            }
+          ]
         }
       ]
     }
