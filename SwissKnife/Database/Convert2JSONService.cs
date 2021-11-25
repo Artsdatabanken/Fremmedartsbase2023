@@ -12,12 +12,32 @@ using CsvHelper.Configuration;
 using CsvHelper.Configuration.Attributes;
 using System.Text.Json;
 using System.Text.Encodings.Web;
+using NinKode.Common.Models.Code;
+using System.Net;
+//using Newtonsoft.Json;
 
 namespace SwissKnife.Database
 {
     internal static class Convert2JSONService
     {
-        
+        private static T DownloadAndDeserializeJsonData<T>(string url) where T : new()
+        {
+            using (var webClient = new WebClient())
+            {
+                var jsonData = string.Empty;
+                try
+                {
+                    jsonData = webClient.DownloadString(url);
+                }
+                catch (Exception) { }
+
+                return string.IsNullOrEmpty(jsonData)
+                   ? new T()
+                   : JsonSerializer.Deserialize<T>(jsonData);
+            }
+        }
+
+
 
         public class LivsmediumImportFormat
         {
@@ -95,7 +115,7 @@ namespace SwissKnife.Database
         }
 
 
-            public static void ConvertTrueteOgSjeldneNaturtyper2JSON( string inputfilename, string outputfilename)
+        public static void ConvertTrueteOgSjeldneNaturtyper2JSON( string inputfilename, string outputfilename)
         {
             var theCsvConfiguration = new CsvConfiguration(new CultureInfo("nb-NO"))
             {
@@ -153,6 +173,52 @@ namespace SwissKnife.Database
 
         // link to nin2 code api (get all codes)
         // https://nin-kode-api.artsdatabanken.no/api/v2.3/koder/allekoder
+        public static void CreateNin2JSON(string outputfilename)
+        {
+            const string apiurl = "https://nin-kode-api.artsdatabanken.no/api/v2.3/koder/allekoder";
 
+            var allekoder = DownloadAndDeserializeJsonData<List<Codes>>(apiurl);
+            var natursystem = allekoder.First();
+
+            var root = new jsonNT();
+            root.Id = natursystem.Kode.Id;
+            root.Text = natursystem.Navn;
+            root.Value = natursystem.Kode.Id;
+            root.Children = new List<jsonNT>();
+            var hovedtypegruppe = allekoder.Where(nt => nt.OverordnetKode != null && nt.OverordnetKode.Id == natursystem.Kode.Id).OrderBy(nt => nt.Kode.Id);
+            foreach(var htg in hovedtypegruppe)
+            {
+                var nt = new jsonNT();
+                nt.Id = htg.Kode.Id;
+                nt.Text = htg.Navn;
+                nt.Value = htg.Kode.Id;
+                nt.Children = new List<jsonNT>();
+                root.Children.Add(nt);
+                var hovedtype = allekoder.Where(nt => nt.OverordnetKode != null && nt.OverordnetKode.Id == htg.Kode.Id).OrderBy(nt => nt.Kode.Id);
+                foreach (var ht in hovedtype)
+                {
+                    var nt2 = new jsonNT();
+                    nt2.Id = ht.Kode.Id;
+                    nt2.Text = ht.Navn;
+                    nt2.Value = ht.Kode.Id;
+                    nt2.Children = new List<jsonNT>();
+                    nt.Children.Add(nt2);
+                    //var hovedtype = allekoder.Where(nt => nt.OverordnetKode != null && nt.OverordnetKode.Id == natursystem.Kode.Id);
+                }
+            }
+
+
+            var jsonSerializerOptions = new JsonSerializerOptions
+            {
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                WriteIndented = true
+            };
+            string jsonString = JsonSerializer.Serialize(root, jsonSerializerOptions);
+
+
+            //var jsonString = "{}";
+            File.WriteAllText(outputfilename, jsonString);
+            Console.WriteLine("CreateNin2JSON   ferdig!");
+        }
     }
 }
