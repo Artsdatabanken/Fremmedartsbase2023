@@ -7985,7 +7985,7 @@
                         {
                             "Id": null,
                             "Value": "colonizedAreaHeading",
-                            "Text": "Kolonisert areal av naturtyper og effekter på naturtyper som ikke er truete, sjeldne eller sterkt endret",
+                            "Text": "Kolonisert areal av naturtyper og effekter på naturtyper som ikke er truede, sjeldne eller sterkt endret",
                             "Info": null,
                             "Children": null
                         },
@@ -8076,7 +8076,7 @@
                         {
                             "Id": null,
                             "Value": "chooseTS",
-                            "Text": "Velg blant følgende truete og sjeldne naturtyper:",
+                            "Text": "Velg blant følgende truede og sjeldne naturtyper:",
                             "Info": null,
                             "Children": null
                         },

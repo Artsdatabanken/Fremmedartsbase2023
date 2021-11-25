@@ -161,6 +161,8 @@ export default class NaturetypeModal extends React.Component {
                                 label={ntLabels.assessmentBackground}
                                 observableValue={[this.editNaturtype, 'background']} 
                                 codes={koder.assessmentBackgrounds}
+                                forceSync
+                                formlayout
                                // mode="check"
                                 />
                     </BsModal>

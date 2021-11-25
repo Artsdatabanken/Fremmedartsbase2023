@@ -1171,7 +1171,7 @@ class ViewModel {
             if (this.horizonScanFilter.notAssessed) filters =filters +  "&Horizon.NotAssessed=true"
 
             if (this.responsible.length > 0){
-                console.log(this.responsible)
+                //console.log(this.responsible)
                 filters = filters + this.responsible.map((x)=> "&Responsible=" + x ).join()
             }
 
