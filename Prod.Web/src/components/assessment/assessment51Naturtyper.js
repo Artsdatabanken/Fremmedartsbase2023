@@ -98,7 +98,7 @@ export default class Assessment51Naturtyper extends React.Component {
                     superheader={ntLabels.redListEffects}/> */}
                 
                 <h2>{ntLabels.heading}</h2>   
-                {assessment.redlistedNatureTypes.length > 0 && <fieldset className="well">
+                {assessment.redlistedNatureTypes.length > 0 && <div className="well">
                 <h4>
                     Data fra tidligere vurdering (basert på Rødlista for naturtyper 2018 og NiN 2.0):
                 </h4>
@@ -110,42 +110,8 @@ export default class Assessment51Naturtyper extends React.Component {
                     canRenderTable={canRenderTable}
                     labels={labels}
                     fabModel={appState}/>
-                </fieldset>}
+                </div>}
                 
-                {true || appState.livsmediumEnabled
-                ? <div>
-                    {/*<p>{labels.NatureTypes.chooseLM}:</p>*/}
-                    {appState.livsmediumCodes
-                        ? <NewNaturetype
-                        // config={{
-                        //     codewidth: "30px",
-                        //     showdescription: (value) => {
-                        //         console.log("selector value: '" + value + "' " + (value.length < 3))
-                        //         return value.length < 3
-                        //     }
-
-                        // }}
-                        mode="livsmedium"
-                        appState={appState}
-                        addNaturtype={this.addNaturtype}
-                        labels={labels}
-                        codes={appState.livsmediumCodes}
-                        header={labels.NatureTypes.chooseLM}
-                        hideStateChange={true}
-                        superheader={ntLabels.colonizedAreaAndEffects} >
-                            {/* <LivsmediumSelector 
-                                naturtyper={appState.livsmediumCodes} 
-                                setSelected={() => console.log("setSelectedNaturtype")}
-                            /> */}
-                        </NewNaturetype>
-                        
-                        // <NaturtypeSelector
-                        //     naturtyper={appState.livsmediumCodes}
-                        //     mode={"livsmedium"}
-                        //     setSelected={this.setSelectedLivsmedium}/>
-                        : null}
-                </div>
-                : null}
                 
                 <div>
                     {appState.trueteogsjeldneCodes
@@ -161,7 +127,7 @@ export default class Assessment51Naturtyper extends React.Component {
                         codes={appState.trueteogsjeldneCodes}
                         header={labels.NatureTypes.chooseTS}
                         hideStateChange={false}
-                        superheader={ntLabels.colonizedAreaAndEffects} >
+                        superheader={ntLabels.redListEffects} >
                             {/* <TruetSelector 
                                 naturtyper={appState.trueteogsjeldneCodes} 
                                 setSelected={() => console.log("setSelectedNaturtype")}
@@ -188,6 +154,42 @@ export default class Assessment51Naturtyper extends React.Component {
                                 setSelected={() => console.log("setSelectedNaturtype")}
                             /> */}
                         </NewNaturetype>
+
+                        {true || appState.livsmediumEnabled
+                ? <div>
+                    {/*<p>{labels.NatureTypes.chooseLM}:</p>*/}
+                    {appState.livsmediumCodes
+                        ? <NewNaturetype
+                        // config={{
+                        //     codewidth: "30px",
+                        //     showdescription: (value) => {
+                        //         console.log("selector value: '" + value + "' " + (value.length < 3))
+                        //         return value.length < 3
+                        //     }
+
+                        // }}
+                        mode="livsmedium"
+                        appState={appState}
+                        addNaturtype={this.addNaturtype}
+                        labels={labels}
+                        codes={appState.livsmediumCodes}
+                        header={labels.NatureTypes.chooseLM}
+                        hideStateChange={true}
+                        //superheader={ntLabels.colonizedAreaAndEffects}
+                         >
+                            {/* <LivsmediumSelector 
+                                naturtyper={appState.livsmediumCodes} 
+                                setSelected={() => console.log("setSelectedNaturtype")}
+                            /> */}
+                        </NewNaturetype>
+                        
+                        // <NaturtypeSelector
+                        //     naturtyper={appState.livsmediumCodes}
+                        //     mode={"livsmedium"}
+                        //     setSelected={this.setSelectedLivsmedium}/>
+                        : null}
+                </div>
+                : null}
                 </fieldset> 
                 <fieldset className="well">   
                 <NaturtypeTable

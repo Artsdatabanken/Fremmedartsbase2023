@@ -71,6 +71,7 @@ export default class RedlistedNaturetypeTable extends React.Component {
     render() {
         const {naturetypes, labels, canRenderTable, fabModel} = this.props;
         const ntLabels = labels.NatureTypes
+        console.log(naturetypes)
         return(
             <table className="table">
             <colgroup>
@@ -94,7 +95,7 @@ export default class RedlistedNaturetypeTable extends React.Component {
                 </tr>
             </thead>
             <tbody>
-                {!canRenderTable ? naturetypes.map(nt => { 
+                {canRenderTable ? naturetypes.map(nt => { 
                     const deleteRow = () => naturetypes.remove(nt)
                     const key = nt.redlistedNatureTypeName + nt.timeHorizon + nt.colonizedArea + nt.stateChange.join(';') + nt.affectedArea
                     return <RedlistedNaturetypeRad key={key} naturtype={nt} deleteRow={deleteRow} fabModel={fabModel} labels={labels}/> }) :
