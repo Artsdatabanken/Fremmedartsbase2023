@@ -162,24 +162,11 @@ const Fylkesforekomst = ({ fylkesforekomster }) => {
             return <Spacer key={index} />;
           })}
         </div>
-        <div style={{ _float: "left" }}>
-          <SvgShapeSelector
-            categories={categories}
-            boundary={boundary}
-            onSwitchCategory={action(handleSwitchCategory)}
-            regionDefs={regionDefs}
-            states={forekomsterAsObject}
-            stateIndex={0}
-          >
-            <DiagonalHatch />
-            <Legend size={30} categories={specificCategories(0)} />
-          </SvgShapeSelector>
-        </div>
       </div>
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "50% 50%"
+          gridTemplateColumns: "33% 33% 33%"
         }}
       >
         <div style={{ _float: "left" }}>
@@ -193,6 +180,19 @@ const Fylkesforekomst = ({ fylkesforekomster }) => {
           >
             <DiagonalHatch />
             <Legend size={30} categories={specificCategories(1)} />
+          </SvgShapeSelector>
+        </div>
+        <div style={{ _float: "middle" }}>
+          <SvgShapeSelector
+            categories={categories}
+            boundary={boundary}
+            onSwitchCategory={action(handleSwitchCategory)}
+            regionDefs={regionDefs}
+            states={forekomsterAsObject}
+            stateIndex={0}
+          >
+            <DiagonalHatch />
+            <Legend size={30} categories={specificCategories(0)} />
           </SvgShapeSelector>
         </div>
         <div style={{ _float: "right" }}>
