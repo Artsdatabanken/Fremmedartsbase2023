@@ -363,9 +363,9 @@
       ]
     },
     {
-      "Id": "Marint gruntvann, Svalbard",
-      "Value": "Marint gruntvann, Svalbard",
-      "Text": "Marint gruntvann, Svalbard",
+      "Id": "Svalbard, kystvann",
+      "Value": "Svalbard, kystvann",
+      "Text": "Svalbard, kystvann",
       "Category": null,
       "Collapsed": true,
       "Children": [
@@ -550,9 +550,9 @@
       ]
     },
     {
-      "Id": "Svalbard",
-      "Value": "Svalbard",
-      "Text": "Svalbard",
+      "Id": "Svalbard terrestrisk",
+      "Value": "Svalbard terrestrisk",
+      "Text": "Svalbard terrestrisk",
       "Category": null,
       "Collapsed": true,
       "Children": [

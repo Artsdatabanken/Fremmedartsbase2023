@@ -52,11 +52,11 @@ export default class TruetSelector extends React.Component {
                             {hovedtypegruppe.Children.map(hovedtype =>
 
                             <div key={hovedtype.Id} className="tree-view-label btn-flat" onClick={() => this.setSelectedNT(hovedtype.Id)}>
-                                <span className="hovedtypegruppe">
-                                    <span className="naturtype-kode" style={{width: "350px"}}>{hovedtype.Text}</span>
-                                    <span>{hovedtype.Value}</span>
-                                    <span>{hovedtype.Category}</span>
-                                </span>
+                                <div className="hovedtypegruppe">
+                                    <span className="naturtype-kode">{hovedtype.Text}</span>
+                                    <span className="nt-code">{"'"+hovedtype.Value+"'"}</span>
+                                    <span className="nt-category">{hovedtype.Category.substring(0,3)}</span>
+                                </div>
                             </div>
                             )}
                         </div> :

@@ -114,7 +114,6 @@ export default class Assessment51Naturtyper extends React.Component {
                 
                 {true || appState.livsmediumEnabled
                 ? <div>
-                    <br />
                     {/*<p>{labels.NatureTypes.chooseLM}:</p>*/}
                     {appState.livsmediumCodes
                         ? <NewNaturetype
@@ -149,8 +148,6 @@ export default class Assessment51Naturtyper extends React.Component {
                 : null}
                 
                 <div>
-                    <br />
-                    <br />
                     {appState.trueteogsjeldneCodes
                         ? <NewNaturetype
                         // config={{

@@ -518,7 +518,7 @@ a.btn-flat {
   text-align: left;
 }
 
-table.naturetype td .modal-dialog,
+div.naturetype .modal-dialog,
 .well > .naturetype .modal-dialog {
   max-width: 1200px;
             
@@ -938,6 +938,10 @@ input {
     border-radius: 3px;
 }
 
+.natureType .btn-flat {
+  display: block;
+}
+
 .panel-collapse .panel-body ul li {
   display: block;
   margin: 5px 0 10px;
@@ -962,7 +966,24 @@ input {
     cursor: default;
     //font-size: 120%;
     font-weight: 600;
+    display: flex;
+    span {
+      cursor: pointer;
+    }
+    span.nt-code {
+      font-weight: normal;
+      width: 450px;
+      margin-left: 15px;
+    }
+    span.naturtype-kode {
+      width: 350px;
+    }
+
+    span.nt-category {
+      margin-left: 20px; 
+    }
 }
+
 .hovedtype {
     font-size: 120%;
     cursor: pointer;
@@ -987,7 +1008,7 @@ input {
 .naturtype-kode {
   font-weight: 600;
   display: inline-block;
-  width: 70px;
+  //width: 70px;
 }
 
 .fabfooter {
