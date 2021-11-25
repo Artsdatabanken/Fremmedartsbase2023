@@ -157,7 +157,7 @@ namespace SwissKnife
         }
 
         [Command("createjson", Description = "Run tasks for creating static json data files")]
-        [Subcommand(typeof(Trueteogsjeldnenaturtyper))]
+        [Subcommand(typeof(Trueteogsjeldnenaturtyper), typeof(Nin2))]
         [HelpOption("--help")]
         internal class CreateJSON
         {
@@ -180,6 +180,20 @@ namespace SwissKnife
                     const string ifn = "../../../Importfiler/TrueteOgSjeldneNaturtyper2018.txt";
                     string ofn = string.IsNullOrEmpty(outputfilename) ? outputdefaultfilename : outputfilename;
                     Convert2JSONService.ConvertTrueteOgSjeldneNaturtyper2JSON(ifn, ofn);
+                }
+            }
+
+            internal class Nin2
+            {
+                [Option("--outputfilename", Description = "Generate JSON file for NiN2")]
+                //[Required]
+                public string outputfilename { get; }
+                private void OnExecute(IConsole console)
+                {
+                    //const string outputdefaultfilename = "../../../../Prod.web/src/Nin2_3.json";
+                    const string outputdefaultfilename = "../../../../Prod.web/src/Nin2_2.json";
+                    string ofn = string.IsNullOrEmpty(outputfilename) ? outputdefaultfilename : outputfilename;
+                    Convert2JSONService.CreateNin2JSON(ofn);
                 }
             }
         }
