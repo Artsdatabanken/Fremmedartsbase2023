@@ -146,7 +146,7 @@ export default class Assessment51Naturtyper extends React.Component {
                     appState={appState}
                     addNaturtype={this.addNaturtype}
                     labels={labels}
-                    codes={koder.naturtyperNIN2}
+                    codes={appState.naturtyperNIN2}
                     header={ntLabels.chooseNT}
                     superheader={ntLabels.colonizedAreaAndEffects} >
                             {/* <NaturtypeSelector 
@@ -155,7 +155,7 @@ export default class Assessment51Naturtyper extends React.Component {
                             /> */}
                         </NewNaturetype>
 
-                        {true || appState.livsmediumEnabled
+                {true || appState.livsmediumEnabled
                 ? <div>
                     {/*<p>{labels.NatureTypes.chooseLM}:</p>*/}
                     {appState.livsmediumCodes

@@ -96,7 +96,7 @@ export default class NewNaturetype extends React.Component {
                 /> :
                 this.props.mode === "nin" ?
                 <NaturtypeSelector
-                    naturtyper={koder.naturtyperNIN2} 
+                    naturtyper={appState.naturtyperNIN2} 
                     nyNaturtype={this.nyNaturtype}
                     showModal={() => runInAction(() => this.showModal = true)}
                     // setSelected={() => console.log("setSelectedNaturtype")}
