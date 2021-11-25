@@ -210,11 +210,16 @@ class ViewModel {
 
 
         // load NiN2 codes ----
-        const nin2codes = this.koder.naturtyperNIN2
-        const nin2 = this.transformnaturtyperNIN2(nin2codes)
-        console.log("nin2 transformed: " +  JSON.stringify(nin2))
-        const nin2grupper = nin2.Children
+        const nin2root = require('../Nin2_3.json')
+        // console.log("nin2naturtyper: " +  JSON.stringify(nin2root))
+        const nin2grupper = nin2root.Children
         this.naturtyperNIN2 = nin2grupper
+
+        // const nin2codes = this.koder.naturtyperNIN2
+        // const nin2 = this.transformnaturtyperNIN2(nin2codes)
+        // console.log("nin2 transformed: " +  JSON.stringify(nin2))
+        // const nin2grupper = nin2.Children
+        // this.naturtyperNIN2 = nin2grupper
         // --------------------------
 
 
