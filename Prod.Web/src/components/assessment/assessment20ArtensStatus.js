@@ -70,7 +70,16 @@ export default class Assessment20ArtensStatus extends React.Component {
 //         super(props)
 
 //     }
-
+checkStatus = (production) => {
+    // finds all the objects with id's that should be hidden 
+    if ( production != "yes" ) {
+        
+        return "B2"
+    }   
+    else {
+         return ""
+    }
+ }
     render() {
         const {appState:{assessment}, appState} = this.props;
        // const vurdering = assessment
@@ -223,9 +232,26 @@ export default class Assessment20ArtensStatus extends React.Component {
                          <Xcomp.StringEnum observableValue={[assessment, "productionSpecies"]} mode="radio" codes={codes.yesNo}/> </div>
                          <p> { assessment.isRegionallyAlien ? labels.SpeciesStatus.statusInNorwayRegionallyAlien : labels.SpeciesStatus.statusInNorway }</p>
                          <p>{labels.SpeciesStatus.highestCategoryPerToday}</p>
+                         <Xcomp.StringEnum observableValue={[assessment, "speciesStatus"]} mode="radio" 
+                            // checks if the species is a door knocker or not and if it is a production species to determine the available options to choose
+                            options={this.checkStatus(assessment.productionSpecies)}
+                            onChange = {action(e => {
+                                if(assessment.speciesStatus != "A" ) { 
+                                    assessment.wrongAssessed = false
+                                    };
+                                    if(assessment.speciesStatus != null && (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3")) {
+                                        assessment.alienSpeciesCategory = "AlienSpecie"
+                                        if(assessment.speciesStatus == "C3") {
+                                            assessment.speciesEstablishmentCategory = "C3"
+                                        }
+                                    } else if (assessment.speciesStatus != null) {
+                                        assessment.alienSpeciesCategory = "DoorKnocker"
+                                    }                                  
+                                })}
+                            codes={codes.EstablishmentCategory}/>        
 
-                         {(assessment.alienSpeciesCategory == "DoorKnocker" && assessment.productionSpecies != "yes") ? 
-                            /*<Xcomp.StringEnum observableValue={[assessment, "speciesStatus"]} mode="radio" 
+                         {/*(assessment.alienSpeciesCategory == "DoorKnocker" && assessment.productionSpecies != "yes") ? 
+                            <Xcomp.StringEnum observableValue={[assessment, "speciesStatus"]} mode="radio" 
                             onChange = {action(e => {
                                 if(assessment.speciesStatus != "A" ) { 
                                     assessment.wrongAssessed = false
@@ -240,7 +266,7 @@ export default class Assessment20ArtensStatus extends React.Component {
                                     }                                  
                                 })}
                             codes={codes.EstablishmentCategoryDoorKnockerProduction}/>
-                            :  */
+                            :  
                             // door knocker without production
                             <Xcomp.StringEnum observableValue={[assessment, "speciesStatus"]}
                             onChange = {action(e => {
@@ -278,6 +304,8 @@ export default class Assessment20ArtensStatus extends React.Component {
                             : 
                             // self-reproducing with production or door knockers without production
                             <Xcomp.StringEnum observableValue={[assessment, "speciesStatus"]} mode="radio" 
+                            // checks if the species is a door knocker or not and if it is a production species to determine the available options to choose
+                            //options={this.checkStatus(assessment.alienSpeciesCategory, assessment.productionSpecies)}
                             onChange = {action(e => {
                                 if(assessment.speciesStatus != "A" ) { 
                                     assessment.wrongAssessed = false
@@ -292,7 +320,7 @@ export default class Assessment20ArtensStatus extends React.Component {
                                     }                                  
                                 })}
                             codes={codes.EstablishmentCategory}/>                         
-                        }
+                        }*/}
                        
 
                         <p>{labels.SpeciesStatus.codesExplanation}</p>
