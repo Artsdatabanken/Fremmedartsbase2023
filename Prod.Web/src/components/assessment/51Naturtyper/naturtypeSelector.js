@@ -60,19 +60,40 @@ export default class NaturetypeSelector extends React.Component {
                                 </div>
                                 {!hovedtype.Collapsed && hovedtype.Children ?
                                 <div className="tree-view-children">
-                                {hovedtype.Children.map(grunntype =>
-                                    <div key={grunntype.Id} onClick={() => this.setSelectedNT(grunntype.Id)}>
-                                        <span className="grunntype btn-flat">
-                                            <span className="naturtype-kode">{grunntype.Id}</span>
-                                            {/* <span>{grunntype.name}</span> */}
-                                            <span>{grunntype.Text}</span>
-                                        </span>
+                                    {hovedtype.Children.map(grunntype =>
+                                    <div key={grunntype.Id}>
+                                        <div
+                                            className={"glyphicon glyphicon-chevron-down tree-view-arrow " + 
+                                                (grunntype.Collapsed ? "tree-view-arrow-collapsed" : "")}
+                                            onClick={() => grunntype.Collapsed = !grunntype.Collapsed}>
+                                            {grunntype.Children.length > 0 ? grunntype.Collapsed == false? <ExpandMoreIcon/> : <NavigateNextIcon/> : <div style={{width: '24px'}}></div>} {/* <-- to align all the choice buttons even though they don't have an arrow to expand */}
+                                        </div>
+                                        <div className="grunntype tree-view-label btn-flat"  onClick={() => this.setSelectedNT(hovedtype.Id)}>
+                                            <span className="naturtype-kode">{grunntype.Text}</span>
+                                            <span className="nt-code">{"'" + grunntype.Value + "'"}</span>
+                                        </div>
+                                        {!grunntype.Collapsed && grunntype.Children ?
+                                        <div className="tree-view-children">
+                                        {grunntype.Children.map(kegrtype =>
+                                            <div key={kegrtype.Id} onClick={() => this.setSelectedNT(kegrtype.Id)}>
+                                                <span className="grunntype btn-flat">
+                                                    <span className="naturtype-kode">{kegrtype.Id}</span>
+                                                    {/* <span>{ke_grtype.name}</span> */}
+                                                    <span>{kegrtype.Text}</span>
+                                                </span>
+                                            </div>
+                                        )}
+                                        </div> :
+                                        null }
+
+
+
+
                                     </div>
-                                )}
+                                    )}
                                 </div> :
-                                null }
-
-
+                                null 
+                                }
 
 
                             </div>
