@@ -774,6 +774,7 @@ class ViewModel {
             //Argh! this dirty trick make it possible to use observableStringEnum (radio) for the property
             //This process must be reversed before saving to server!
             jsonnew.isAlienSpecies = jsonnew.isAlienSpecies ? "true" : "false"
+            jsonnew.connectedToAnother = jsonnew.connectedToAnother ? "true" : "false"
             //--------------------------------------------------------------
 
             const assessment = enhanceAssessment(jsonnew, this)
@@ -1116,6 +1117,7 @@ class ViewModel {
         //--------------------------------------------------------------
         //Argh! this reverses the trick when opening the assessment
         data.isAlienSpecies = data.isAlienSpecies === "true" ? true : false
+        data.connectedToAnother = data.connectedToAnother === "true" ? true : false
         //--------------------------------------------------------------
         const datastring = JSON.stringify(data)
         // this.addGetters(data)
