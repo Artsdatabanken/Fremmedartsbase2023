@@ -115,7 +115,6 @@ export default class Assessment52Utbredelse extends React.Component {
             }, {});
             // ass.fylkesforekomster.forEach(f => f.state = fo[fylker[f.fylke]] > 0 ? 0 : 2);
             ass.fylkesforekomster.forEach(f => {
-                console.log('fo', fo[fylker[f.fylke]]);
                 f.state0 = fo[fylker[f.fylke]] > 0 ? 1 : 0;
                 if (f.state0 === 1) {
                     f.state2 = 0;

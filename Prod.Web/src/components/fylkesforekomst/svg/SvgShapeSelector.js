@@ -9,10 +9,12 @@ const SvgShapeSelector = ({
   regionDefs,
   states,
   stateIndex,
-  onSwitchCategory
+  onSwitchCategory,
+  onSwitchOtherCategory
 }) => {
   const offsetX = useRef();
   const offsetY = useRef();
+  const [cursor, setCursor] = useState();
   const [hoveringOver, setHoveringOver] = useState();
   const [colorForHoldAndDragPaint, setColorForHoldAndDragPaint] = useState();
 
@@ -31,6 +33,7 @@ const SvgShapeSelector = ({
       <Region
         key={kode}
         kode={kode}
+        stateIndex={stateIndex}
         title={regionDef.title}
         boundaryPath={boundary.regions[kode]}
         style={style}
@@ -63,6 +66,43 @@ const SvgShapeSelector = ({
       />
     );
   });
+  const specialHoverItems = [];
+
+  const clearElements = () => {
+    while (specialHoverItems.length > 0) {
+      const ele = specialHoverItems.pop();
+      ele.element.setAttribute("stroke", ele.style.stroke);
+      ele.element.setAttribute("strokeWidth", ele.style.strokeWidth);
+      ele.element.setAttribute("filter", ele.style.filter);
+      ele.element.setAttribute("fill", ele.style.fill);
+      setCursor("default");
+    }
+  };
+
+  const clickElement = (element) => {
+    if (!element && !element.attributes && element.attributes["stateIndex"] === undefined) return;
+    if (element.attributes["kode"].nodeValue === "Fi" && element.attributes["stateIndex"].nodeValue !== "3") {
+      // console.log('clickElement', element.attributes["stateIndex"].nodeValue, element.attributes["kode"].nodeValue);
+      onSwitchOtherCategory &&
+        onSwitchOtherCategory(element.attributes["stateIndex"].nodeValue, element.attributes["kode"].nodeValue);
+    }
+  };
+
+  const hoverElement = (element) => {
+    if (!element && !element.attributes && element.attributes["stateIndex"] === undefined) return
+    if (element.attributes["kode"].nodeValue === "Fi" && element.attributes["stateIndex"].nodeValue !== "3") {
+      // console.log('hover', element.attributes, element.attributes["stateIndex"]);
+      // console.log('events', i, element.nodeName, element.attributes["kode"].nodeValue);
+      const tmpstate = states[element.attributes["kode"].nodeValue][`state${element.attributes["stateIndex"].nodeValue}`] ? parent.attributes["stateIndex"].nodeValue : 2;
+      const tmpmainStyle = categories[tmpstate];
+      specialHoverItems.push({element: element, style: tmpmainStyle.normal});
+      element.setAttribute("stroke", tmpmainStyle.highlight.stroke);
+      element.setAttribute("strokeWidth", tmpmainStyle.highlight.strokeWidth);
+      element.setAttribute("filter", tmpmainStyle.highlight.filter);
+      element.setAttribute("fill", tmpmainStyle.highlight.fill);
+      setCursor("pointer");
+    }
+  };
 
   return (
     <svg
@@ -71,7 +111,8 @@ const SvgShapeSelector = ({
         left: 0,
         top: 0,
         width: "100%",
-        height: "auto"
+        height: "auto",
+        cursor: cursor
       }}
       preserveAspectRatio="none"
       viewBox={boundary.viewbox}
@@ -79,18 +120,48 @@ const SvgShapeSelector = ({
         e.stopPropagation();
         setHoveringOver(null);
         setColorForHoldAndDragPaint(null);
+        clearElements();
       }}
       onMouseUp={e => {
         e.stopPropagation();
         if (readOnly) return;
         setColorForHoldAndDragPaint(null);
       }}
+      onMouseDown={e => {
+        e.stopPropagation();
+        if (readOnly) return;
+        setColorForHoldAndDragPaint(null);
+        clearElements();
+        const elements = document.elementsFromPoint(e.clientX, e.clientY);
+        elements.forEach((element) => {
+          if (element.nodeName === "path") {
+            clickElement(element.parentElement.parentElement);
+          }
+        });
+      }}
       onMouseEnter={e => {
         e.stopPropagation();
         setColorForHoldAndDragPaint(null);
+        const elements = document.elementsFromPoint(e.clientX, e.clientY);
+        elements.forEach((element) => {
+          if (element.nodeName === "path") {
+            try {
+              hoverElement(element.parentElement.parentElement);
+            } catch(err) {}
+          }
+        });
       }}
       onMouseMove={e => {
         e.stopPropagation();
+        clearElements();
+        const elements = document.elementsFromPoint(e.clientX, e.clientY);
+        elements.forEach((element) => {
+          if (element.nodeName === "path") {
+            try {
+              hoverElement(element.parentElement.parentElement);
+            } catch(err) {}
+          }
+        });
       }}
     >
       <defs>

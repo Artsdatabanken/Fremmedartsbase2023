@@ -54,7 +54,7 @@ const regionSorteringB = [
   { },
 ];
 
-const Fylkesforekomst = ({ fylkesforekomster }) => {
+const Fylkesforekomst = ({ assessment, fylkesforekomster }) => {
   const forekomsterAsObject = fylkesforekomster.reduce((acc, e) => {
     acc[e.fylke] = {
       // state: e.state,
@@ -67,37 +67,44 @@ const Fylkesforekomst = ({ fylkesforekomster }) => {
   }, {});
   const context = UserContext.getContext();
 
+  const handleSwitchOtherCategory = (state, fylke) => {
+    for (var ff of assessment.fylkesforekomster) {
+      if (ff.fylke !== fylke) continue;
+      setFylkeState(ff, parseInt(state), ff[`state${state}`] === 1);
+    }
+  };
+
   const handleSwitchCategory = (e, fylke, state, value) => {
     if (context.readonly) return;
     for (var ff of fylkesforekomster)
       if (ff.fylke === fylke) {
-        switch (state) {
-          case 0:
-            ff.state0 = value ? 0 : 1;
-            if (ff.state0 === 1 && ff.state2 === 1) ff.state2 = 0;
-            break;
-          case 1:
-            ff.state1 = value ? 0 : 1;
-            if (ff.state1 === 1 && ff.state2 === 1) ff.state2 = 0;
-            break;
-          case 2:
-            ff.state2 = value ? 0 : 1;
-            if (ff.state2 === 0) break;
-            ff.state0 = 0;
-            ff.state1 = 0;
-            ff.state3 = 0;
-            break;
-          case 3:
-            ff.state3 = value ? 0 : 1;
-            if (ff.state3 === 1 && ff.state2 === 1) ff.state2 = 0;
-            break
-        }
-        if ((parseInt(ff.state0) + parseInt(ff.state1) + parseInt(ff.state3)) > 0) ff.state2 = 0
-        else ff.state2 = 1
+        setFylkeState(ff, state, value);
         break;
       }
   };
 
+  const setFylkeState = (ff, state, value) => {
+    switch (state) {
+      case 0:
+      case 1:
+      case 3:
+        ff[`state${state}`] = value ? 0 : 1;
+        if (ff[`state${state}`] === 1 && ff.state2 === 1) ff.state2 = 0;
+        break;
+      case 2:
+        ff[`state${state}`] = value ? 0 : 1;
+        if (ff[`state${state}`] === 0) break;
+        ff.state0 = 0;
+        ff.state1 = 0;
+        ff.state3 = 0;
+        break;
+      default:
+        console.log('unknown', state);
+    }
+    if ((parseInt(ff.state0) + parseInt(ff.state1) + parseInt(ff.state3)) > 0) ff.state2 = 0;
+    else ff.state2 = 1;
+  };
+  
   const specificCategories = (state) => {
     switch (state) {
       case 0:
@@ -217,19 +224,7 @@ const Fylkesforekomst = ({ fylkesforekomster }) => {
             categories={categories}
             boundary={boundary}
             onSwitchCategory={action(handleSwitchCategory)}
-            regionDefs={regionDefs}
-            states={forekomsterAsObject}
-            stateIndex={1}
-          >
-            <DiagonalHatch />
-            <Legend size={30} categories={specificCategories(1)} />
-          </SvgShapeSelector>
-        </div>
-        <div style={{ marginLeft: -40, marginRight: -40, _float: "middle" }}>
-          <SvgShapeSelector
-            categories={categories}
-            boundary={boundary}
-            onSwitchCategory={action(handleSwitchCategory)}
+            onSwitchOtherCategory={action(handleSwitchOtherCategory)}
             regionDefs={regionDefs}
             states={forekomsterAsObject}
             stateIndex={0}
@@ -238,11 +233,26 @@ const Fylkesforekomst = ({ fylkesforekomster }) => {
             <Legend size={30} categories={specificCategories(0)} />
           </SvgShapeSelector>
         </div>
+        <div style={{ marginLeft: -40, marginRight: -40, _float: "middle" }}>
+          <SvgShapeSelector
+            categories={categories}
+            boundary={boundary}
+            onSwitchCategory={action(handleSwitchCategory)}
+            onSwitchOtherCategory={action(handleSwitchOtherCategory)}
+            regionDefs={regionDefs}
+            states={forekomsterAsObject}
+            stateIndex={1}
+          >
+            <DiagonalHatch />
+            <Legend size={30} categories={specificCategories(1)} />
+          </SvgShapeSelector>
+        </div>
         <div style={{ marginLeft: -80, _float: "right" }}>
           <SvgShapeSelector
             categories={categories}
             boundary={boundary}
             onSwitchCategory={action(handleSwitchCategory)}
+            onSwitchOtherCategory={action(handleSwitchOtherCategory)}
             regionDefs={regionDefs}
             states={forekomsterAsObject}
             stateIndex={3}

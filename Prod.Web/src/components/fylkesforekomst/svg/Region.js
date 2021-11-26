@@ -3,6 +3,7 @@ import React from "react";
 const Region = ({
   kode,
   title,
+  stateIndex,
   boundaryPath,
   style,
   readonly,
@@ -13,7 +14,9 @@ const Region = ({
   return (
     <g
       key={kode}
+      kode={kode}
       {...style}
+      stateIndex={stateIndex}
       style={{ cursor: readonly ? "arrow" : "hand" }}
       onMouseDown={onMouseDown}
       onMouseOver={onMouseOver}
