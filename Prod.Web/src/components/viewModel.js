@@ -210,7 +210,7 @@ class ViewModel {
 
 
         // load NiN2 codes ----
-        const nin2root = require('../Nin2_3.json')
+        const nin2root = require('../Nin2_2.json')
         // console.log("nin2naturtyper: " +  JSON.stringify(nin2root))
         const nin2grupper = nin2root.Children
         this.naturtyperNIN2 = nin2grupper
