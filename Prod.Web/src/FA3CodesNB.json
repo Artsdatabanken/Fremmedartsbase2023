@@ -8062,7 +8062,7 @@
                         {
                             "Id": null,
                             "Value": "chooseNT",
-                            "Text": "Velg blant øvrige naturtyper fra NIN 2:",
+                            "Text": "Velg blant øvrige naturtyper og regional naturvariasjon:",
                             "Info": null,
                             "Children": null
                         },
@@ -8076,7 +8076,7 @@
                         {
                             "Id": null,
                             "Value": "chooseTS",
-                            "Text": "Velg blant følgende truede og sjeldne naturtyper:",
+                            "Text": "Velg blant følgende truede og sjeldne naturtyper (<a href=\"https://www.artsdatabanken.no/rodlistefornaturtyper\" target=\"_blank\">mer om Rødlista for naturtyper</a>):",
                             "Info": null,
                             "Children": null
                         },
@@ -8097,7 +8097,28 @@
                         {
                             "Id": null,
                             "Value": "redListEffects",
-                            "Text": "Effekter på truede eller sjeldne naturtyper",
+                            "Text": "Effekter på truede eller sjeldne naturtyper fra Rødlista for naturtyper 2018",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "chosenNatureTypes",
+                            "Text": "Valgte truede, sjeldne og øvrige naturtyper",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "dataFromPreviousAssessment",
+                            "Text": "Data fra tidligere vurdering",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "redlistedNaturetypes2011",
+                            "Text": "Overførte sjeldne og truede naturtyper basert på Rødliste for naturtyper 2011 og NiN 1.0",
                             "Info": null,
                             "Children": null
                         },
@@ -8110,8 +8131,36 @@
                         },
                         {
                             "Id": null,
+                            "Value": "effectsNiN23",
+                            "Text": "Effekter på naturtyper fra NiN 2.3",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "colonizedAreaDescription",
                             "Text": "Anslå kolonisert areal i de naturtypene arten er observert i eller regnes med å observeres i innen 50 år, beskriv artens (eventuelt framtidige) påvirkning i naturtypen og anslå hvor stor andel av naturtypen som blir (eventuelt vil bli) påvirket. Det skal være sannsynlighetsovervekt for at valgt tilstandsendring skjer.",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "criteriumC",
+                            "Text": "Andel av forekomstarealet til minst én naturtype som vil være kolonisert etter 50 år, med usikkerhet",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "criteriumF",
+                            "Text": "Andel av naturtypeareal som gjennomgår tilstandsendring innen 50 år, med usikkerhet",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "criteriumG",
+                            "Text": "Andel av naturtypeareal som gjennomgår tilstandsendring innen 50 år, med usikkerhet",
                             "Info": null,
                             "Children": null
                         },

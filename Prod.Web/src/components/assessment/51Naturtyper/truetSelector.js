@@ -32,7 +32,7 @@ export default class TruetSelector extends React.Component {
 
         return(
             <div>
-                <span>Her kan du </span><a href="https://www.artsdatabanken.no/rodlistefornaturtyper" target="_blank">lese mer om naturtyper</a>
+                
                 {naturtyper.map(hovedtypegruppe => 
                     <div key={hovedtypegruppe.Id}>
                         <div
