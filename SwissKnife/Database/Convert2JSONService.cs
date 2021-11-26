@@ -247,7 +247,6 @@ namespace SwissKnife.Database
                     nt2.Collapsed = true;
                     nt2.Children = new List<jsonNT>();
                     nt1.Children.Add(nt2);
-                    var k1 = allekoder.Where(nt => nt.Kode.Id == "NA T4-E-5");
                     var kartleggingsenhet = getkartleggingsenheter(ht, allekoder); 
                     foreach (var ke in kartleggingsenhet)
                     {
