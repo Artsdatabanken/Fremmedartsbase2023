@@ -184,10 +184,17 @@ namespace SwissKnife.Database
 
         public static IOrderedEnumerable<Codes> getunderordnet(Codes code, List<Codes> all)
         {
-            var underids = code.UnderordnetKoder.Select(acc => acc.Id);
-            var undercodes = all.Where(nt => underids.Contains(nt.Kode.Id)).OrderBy(nt => PadNumbers(nt.Kode.Id));
+            if (code.UnderordnetKoder != null)
+            { 
+                var underids = code.UnderordnetKoder.Select(acc => acc.Id);
+                var undercodes = all.Where(nt => underids.Contains(nt.Kode.Id)).OrderBy(nt => PadNumbers(nt.Kode.Id));
 
-            return undercodes;
+                return undercodes;
+            }
+            else
+            {
+                return all.Where(nt => false).OrderBy(nt => PadNumbers(nt.Kode.Id));
+            }
         }
 
         public static IOrderedEnumerable<Codes> getkartleggingsenheter(Codes code, List<Codes> all)
@@ -205,24 +212,34 @@ namespace SwissKnife.Database
             }
         }
 
+        public static Codes getgrunntypefrakartleggingsenhet(Codes code, List<Codes> all)
+        {
+            var kartleggingskode = code.Kode.Id;
+            var grunntypekode = kartleggingskode.Replace("-A-", "-").Replace("-B-", "-").Replace("-C-", "-").Replace("-D-", "-").Replace("-E-", "-");
+            var grunntype = all.Where(nt => nt.Kode.Id == grunntypekode).FirstOrDefault();
+            return grunntype;
+        }
+
 
         // link to nin2 code api (get all codes)
         // https://nin-kode-api.artsdatabanken.no/api/v2.3/koder/allekoder
         public static void CreateNin2JSON(string outputfilename)
         {
             //const string apiurl = "https://nin-kode-api.artsdatabanken.no/api/v2.3/koder/allekoder";
-            const string apiurl = "https://nin-kode-api.artsdatabanken.no/api/v2.2/koder/allekoder";
+            //const string apiurl = "https://nin-kode-api.artsdatabanken.no/api/v2.2/koder/allekoder";
 
             //var allekoder = DownloadAndDeserializeJsonData<List<Codes>>(apiurl);
 
             var ifn = "../../../Importfiler/NiN2_2.txt";
             var jsonData = File.ReadAllText(ifn);
             var allekoder = JsonSerializer.Deserialize<List<Codes>>(jsonData);
+
             var na = allekoder.First();
             var root = new jsonNT();
             root.Id = na.Kode.Id;
             root.Text = na.Navn;
             root.Value = na.Kode.Id;
+            root.Category = "Naturmangfoldnivå";
             root.Collapsed = true;
             root.Children = new List<jsonNT>();
             var hovedtypegruppe = getunderordnet(na, allekoder);
@@ -234,6 +251,7 @@ namespace SwissKnife.Database
                 nt1.Id = htg.Kode.Id;
                 nt1.Text = htg.Navn;
                 nt1.Value = htg.Kode.Id;
+                nt1.Category = "Hovedtypegruppe";
                 nt1.Collapsed = true;
                 nt1.Children = new List<jsonNT>();
                 root.Children.Add(nt1);
@@ -244,19 +262,48 @@ namespace SwissKnife.Database
                     nt2.Id = ht.Kode.Id;
                     nt2.Text = ht.Navn;
                     nt2.Value = ht.Kode.Id;
+                    nt2.Category = "Hovedtype";
                     nt2.Collapsed = true;
                     nt2.Children = new List<jsonNT>();
                     nt1.Children.Add(nt2);
-                    var kartleggingsenhet = getkartleggingsenheter(ht, allekoder); 
+                    var kartleggingsenhet = getkartleggingsenheter(ht, allekoder);
                     foreach (var ke in kartleggingsenhet)
                     {
                         var nt3 = new jsonNT();
                         nt3.Id = ke.Kode.Id;
                         nt3.Text = ke.Navn;
                         nt3.Value = ke.Kode.Id;
+                        nt3.Category = "Kartleggingsenhet";
                         nt3.Collapsed = true;
                         nt3.Children = new List<jsonNT>();
                         nt2.Children.Add(nt3);
+                        var gt = getgrunntypefrakartleggingsenhet(ke, allekoder);
+                        if (gt != null)
+                        {
+                            var nt4 = new jsonNT();
+                            nt4.Id = gt.Kode.Id;
+                            nt4.Text = gt.Navn;
+                            nt4.Value = gt.Kode.Id;
+                            nt4.Category = "Grunntype";
+                            nt4.Collapsed = true;
+                            nt4.Children = new List<jsonNT>();
+                            nt3.Children.Add(nt4);
+                        }
+                    }
+                    if (kartleggingsenhet.Count() == 0)
+                    {
+                        var grunntype = getunderordnet(ht, allekoder);
+                        foreach (var gt in grunntype)
+                        {
+                            var nt3 = new jsonNT();
+                            nt3.Id = gt.Kode.Id;
+                            nt3.Text = gt.Navn;
+                            nt3.Value = gt.Kode.Id;
+                            nt3.Category = "Grunntype";
+                            nt3.Collapsed = true;
+                            nt3.Children = new List<jsonNT>();
+                            nt2.Children.Add(nt3);
+                        }
                     }
                 }
             }
