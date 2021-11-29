@@ -35,7 +35,7 @@ class SelectableRadio extends React.Component {
                 type="radio"
                 name={"radio" + prop}
                 value={val}
-                checked={obj[prop] === val}
+                checked={obj[prop] === val || this.props.defaultChecked}
                 disabled={disabled}
                 onChange={action((e) => obj[prop] = e.currentTarget.value)}/>{label}</label>
         </div>
@@ -89,6 +89,7 @@ export default class Assessment41Import extends React.Component {
                 <SelectableRadio
                             label={labels.indoorProduktionImport.a}
                             value={"positive"}
+                            defaultChecked = {assessment.importedToIndoorOrProductionArea}
                             disabled = {disabled}
                             observableValue={[assessment, "indoorProduktion"]}/>
                             
