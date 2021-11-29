@@ -13,9 +13,11 @@ export default class NaturetypeSelector extends React.Component {
         console.log("nts: " + JSON.stringify(props.naturtyper, undefined))
         super(props)
         this.setSelectedNT = action ((naturtypekode) => {
-            console.log("Truet kode: " + naturtypekode)
+           
+            console.log("Truet kode: " + naturtypekode.Id)
             const nnt = props.nyNaturtype
-            nnt.niNCode = naturtypekode
+            nnt.niNCode = naturtypekode.Id
+            nnt.name = naturtypekode.Text
             nnt.timeHorizon = null
             nnt.colonizedArea = null
             // nnt.stateChange.clear()
@@ -54,7 +56,7 @@ export default class NaturetypeSelector extends React.Component {
                                     onClick={() => hovedtype.Collapsed = !hovedtype.Collapsed}>
                                     {hovedtype.Children.length > 0 ? hovedtype.Collapsed == false? <ExpandMoreIcon/> : <NavigateNextIcon/> : <div style={{width: '24px'}}></div>} {/* <-- to align all the choice buttons even though they don't have an arrow to expand */}
                                 </div>
-                                <div className="hovedtype tree-view-label btn-flat"  onClick={() => this.setSelectedNT(hovedtype.Id)}>
+                                <div className="hovedtype tree-view-label btn-flat"  onClick={() => this.setSelectedNT(hovedtype)}>
                                     <span className="naturtype-kode">{hovedtype.Text}</span>
                                     <span className="nt-code">{"'"+hovedtype.Value+"'"}</span>
                                 </div>
@@ -68,14 +70,14 @@ export default class NaturetypeSelector extends React.Component {
                                             onClick={() => grunntype.Collapsed = !grunntype.Collapsed}>
                                             {grunntype.Children.length > 0 ? grunntype.Collapsed == false? <ExpandMoreIcon/> : <NavigateNextIcon/> : <div style={{width: '24px'}}></div>} {/* <-- to align all the choice buttons even though they don't have an arrow to expand */}
                                         </div>
-                                        <div className="grunntype tree-view-label btn-flat"  onClick={() => this.setSelectedNT(hovedtype.Id)}>
+                                        <div className="grunntype tree-view-label btn-flat"  onClick={() => this.setSelectedNT(hovedtype)}>
                                             <span className="naturtype-kode">{grunntype.Text}</span>
                                             <span className="nt-code">{"'" + grunntype.Value + "'"}</span>
                                         </div>
                                         {!grunntype.Collapsed && grunntype.Children ?
                                         <div className="tree-view-children">
                                         {grunntype.Children.map(kegrtype =>
-                                            <div key={kegrtype.Id} onClick={() => this.setSelectedNT(kegrtype.Id)}>
+                                            <div key={kegrtype.Id} onClick={() => this.setSelectedNT(kegrtype)}>
                                                 <span className="grunntype btn-flat">
                                                     <span className="naturtype-kode">{kegrtype.Id}</span>
                                                     {/* <span>{ke_grtype.name}</span> */}

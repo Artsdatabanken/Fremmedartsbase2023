@@ -66,7 +66,8 @@ export class NaturtypeRad extends React.Component {
         return(
             <tr>
                 <td>{nt.niNCode}</td>
-                <td>{ntlabel}</td>
+                {/*<td>ntlabel</td>*/}
+                <td>{nt.name}</td>
                 <td>{dominanceForrest}</td>
                 <td></td>
                 {this.edit
@@ -100,19 +101,18 @@ export class NaturtypeRad extends React.Component {
                                 disabled={disabled}
                                 //mode="check"
                                 hideUnchecked/>
+                            
+                        </td> :
+                        <td>
                             <Xcomp.MultiselectArray
                                 observableValue={[nt, 'stateChange']} 
                                 codes={koder.tilstandsendringer}
-                                disabled={disabled}
+                                disabled={true}
                                 mode="check"
                                 hideUnchecked/>
-                        </td> :
-                        <td>
-                            {nt.stateChange}
                         </td>}
                {this.edit
                 ? <td>{
-                
                     //kodeTekst(koder.affectedArea, nt.affectedArea)
                     <Xcomp.StringEnum observableValue={[nt, 'affectedArea']} forceSync codes={koder.affectedArea} />
                     }</td>
@@ -128,16 +128,16 @@ export class NaturtypeRad extends React.Component {
                                 //mode="check"
                                 disabled={disabled}
                                 hideUnchecked/>
-                <Xcomp.MultiselectArray
-                                observableValue={[nt, 'background']} 
-                                codes={koder.assessmentBackgrounds}
-                                mode="check"
-                                disabled={disabled}
-                                hideUnchecked/>
+                
                                 
                 </td>: 
                  <td>
-                     {nt.background}
+                     {nt.background.length > 0 ? <Xcomp.MultiselectArray
+                                observableValue={[nt, 'background']} 
+                                codes={koder.assessmentBackgrounds}
+                                mode="check"
+                                disabled={true}
+                                hideUnchecked/> : "Ingen valgt"}
                  </td>}
                 <td>
                    {/* <Xcomp.Button 

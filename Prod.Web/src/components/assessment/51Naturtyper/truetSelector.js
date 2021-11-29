@@ -13,9 +13,10 @@ export default class TruetSelector extends React.Component {
         console.log("nts: " + JSON.stringify(props.naturtyper, undefined))
         super(props)
         this.setSelectedNT = action ((naturtypekode) => {
-            console.log("Truet kode: " + naturtypekode)
+            console.log("Truet kode: " + naturtypekode.Id)
             const nnt = props.nyNaturtype
-            nnt.niNCode = naturtypekode
+            nnt.niNCode = naturtypekode.Id
+            nnt.name = naturtypekode.Text
             nnt.timeHorizon = null
             nnt.colonizedArea = null
             // nnt.stateChange.clear()
@@ -52,7 +53,7 @@ export default class TruetSelector extends React.Component {
                         <div className="tree-view-children">
                             {hovedtypegruppe.Children.map(hovedtype =>
 
-                            <div key={hovedtype.Id} className="tree-view-label btn-flat" onClick={() => this.setSelectedNT(hovedtype.Id)}>
+                            <div key={hovedtype.Id} className="tree-view-label btn-flat" onClick={() => this.setSelectedNT(hovedtype)}>
                                 <div className="hovedtypegruppe">
                                     <span className="naturtype-kode">{hovedtype.Text + " ("+hovedtype.Category.substring(0,2)+")"}</span>
                                     {/*<span className="nt-code">{"'"+hovedtype.Value+"'"}</span>

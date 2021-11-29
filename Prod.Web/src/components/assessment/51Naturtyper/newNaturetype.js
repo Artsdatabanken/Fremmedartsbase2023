@@ -19,6 +19,7 @@ export default class NewNaturetype extends React.Component {
             // naturtypeLabel: null,
             nyNaturtype: {
                 niNCode: null,
+                name: null,
                 // dominanceForrest: [],
                 timeHorizon: null,
                 colonizedArea: null,
