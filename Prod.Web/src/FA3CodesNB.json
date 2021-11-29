@@ -3736,7 +3736,7 @@
                                                 },
                                                 {
                                                     "Id": null,
-                                                    "Value": "otherIntentionalRelease",
+                                                    "Value": "releaseForUseOther",
                                                     "Text": "øvrig utsetting av nyttearter",
                                                     "Info": null,
                                                     "Children": null
@@ -4108,7 +4108,7 @@
                                                 },
                                                 {
                                                     "Id": null,
-                                                    "Value": "otherIntentionalRelease",
+                                                    "Value": "releaseForUseOther",
                                                     "Text": "øvrig utsetting av nyttearter",
                                                     "Info": null,
                                                     "Children": null
