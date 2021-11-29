@@ -283,6 +283,9 @@ export default class Assessment51Naturtyper extends React.Component {
                                 appState.saveCurrentAssessment();
                             }}>{labels.AppHeader.assessmentSave}</Xcomp.Button> */}
                         </div> : null }
+
+                        <Xcomp.HtmlString
+                            observableValue={[riskAssessment, 'commonNatureTypesAffectedDomesticDescription']}/>
                     
                    {/* <div>
                         <span>{appState.evaluationContext.name}:
