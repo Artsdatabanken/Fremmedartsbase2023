@@ -22,7 +22,7 @@ export default class BootstrapModal extends React.Component {
                 <div className="modal-dialog">
                     <div className="modal-content" role="document">
                         <div className="modal-header">
-                            <Xcomp.Button className="close" ariaLabel="Close" onClick={this.onCancel}>
+                            <Xcomp.Button className="close" ariaLabel="Close" alwaysEnabled={true} onClick={this.onCancel}>
                                 <span aria-hidden="true">×</span>
                             </Xcomp.Button>
                             {typeof this.heading === "string" ?

@@ -61,7 +61,7 @@ export class ObservableMultiselectArrayDropdown extends React.Component {
     render() {
         const {observableValue, codes, labels, heading, hideUnchecked, disabled} = this.props;
         const [obj, prop] = observableValue;
-
+        const context = UserContext.getContext()
         // console.log("------------" + JSON.stringify(labels))
 
         const maxListableElements = 4
@@ -105,19 +105,20 @@ export default class ObservableMultiselectArray extends React.Component {
         const {observableValue, className, codes, label, labels, mode, formlayout, disabled, heading, hideUnchecked, facetFunction, facets, facet} = this.props;
         const [obj, prop] = observableValue;
         const hasLabel = !!label;
+        const context = UserContext.getContext()
         //console.log("////" + prop +"-" + mode)
         return(
             mode === "check" ?
-            <ObservableMultiselectArrayCheckboxes observableValue={observableValue} codes={codes} disabled={disabled} className={hideUnchecked ? "magicList" : className} hideUnchecked={hideUnchecked} facetFunction={facetFunction} facets={facets} facet={facet}/>
+            <ObservableMultiselectArrayCheckboxes observableValue={observableValue} codes={codes} disabled={context.readonly || disabled} className={hideUnchecked ? "magicList" : className} hideUnchecked={hideUnchecked} facetFunction={facetFunction} facets={facets} facet={facet}/>
             :
             hasLabel ?
             <div className="hasLabel">
                 <label htmlFor={prop}>{label}
                     {formlayout ? <br /> : null}
-                    <ObservableMultiselectArrayDropdown observableValue={observableValue} codes={codes} disabled={disabled} labels={labels} facetFunction={facetFunction} facets={facets} facet={facet}/>
+                    <ObservableMultiselectArrayDropdown observableValue={observableValue} codes={codes} disabled={context.readonly || disabled} labels={labels} facetFunction={facetFunction} facets={facets} facet={facet}/>
                 </label>
             </div> :
-            <ObservableMultiselectArrayDropdown observableValue={observableValue} heading={heading} hideUnchecked={hideUnchecked} disabled={disabled} codes={codes} labels={labels} facetFunction={facetFunction} facets={facets} facet={facet}/>
+            <ObservableMultiselectArrayDropdown observableValue={observableValue} heading={heading} hideUnchecked={hideUnchecked} disabled={context.readonly || disabled} codes={codes} labels={labels} facetFunction={facetFunction} facets={facets} facet={facet}/>
         );
 	}
 }
