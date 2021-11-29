@@ -5592,7 +5592,7 @@
                         {
                             "Id": null,
                             "Value": "dominanceForrest",
-                            "Text": "Dominans",
+                            "Text": "Regional naturvariasjon",
                             "Info": null,
                             "Children": null
                         },
@@ -8006,7 +8006,7 @@
                         {
                             "Id": null,
                             "Value": "dominanceForrest",
-                            "Text": "Dominans",
+                            "Text": "Regional naturvariasjon",
                             "Info": null,
                             "Children": null
                         },

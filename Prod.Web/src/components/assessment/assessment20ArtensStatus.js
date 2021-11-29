@@ -229,13 +229,14 @@ checkStatus = (production) => {
                      <div>
                      <div>
                          <p>{labels.SpeciesStatus.isProductionSpecies}</p>                          
-                         <Xcomp.StringEnum observableValue={[assessment, "productionSpecies"]} mode="radio" codes={codes.yesNo}/> </div>
+                         <Xcomp.StringEnum observableValue={[assessment, "productionSpecies"]} mode="radio" codes={codes.yesNo}/> 
+                    </div>
                          <p> { assessment.isRegionallyAlien ? labels.SpeciesStatus.statusInNorwayRegionallyAlien : labels.SpeciesStatus.statusInNorway }</p>
                          <p>{labels.SpeciesStatus.highestCategoryPerToday}</p>
                          <Xcomp.StringEnum observableValue={[assessment, "speciesStatus"]} mode="radio" 
                             // checks if the species is a door knocker or not and if it is a production species to determine the available options to choose
                             options={this.checkStatus(assessment.productionSpecies)}
-                            onChange = {action(e => {
+                            onChange = {action(_e => {
                                 if(assessment.speciesStatus != "A" ) { 
                                     assessment.wrongAssessed = false
                                     };

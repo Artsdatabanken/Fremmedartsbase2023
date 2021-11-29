@@ -272,8 +272,10 @@ export default class Assessment52Utbredelse extends React.Component {
                         fylkesforekomster={assessment.fylkesforekomster}
                         assessment={assessment}
                         onOverførFraArtskart={action(this.handleOverførFraArtskart)} />
-                    <p>Beskriv grunnlaget for anslagene (gjelder både forekomstareal og fylkesvis utbredelse)</p>
-                    <Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'backgroundRegional']}/>
+                        <label htmlFor="CurrentPresenceComment">{labels.describeAsumption}</label>
+                        <Xcomp.HtmlString observableValue={[assessment, 'currentPresenceComment']}/>
+                   {/* <p>Beskriv grunnlaget for anslagene (gjelder både forekomstareal og fylkesvis utbredelse)</p>
+                    <Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'backgroundRegional']}/>*/}
                     {assessment.alienSpeciesCategory == "DoorKnocker" ?
                         <p>Beskriv antatt utbredelse <i>(overføres til oppsummeringen)</i></p> :
 
