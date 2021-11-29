@@ -233,9 +233,36 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             const num = introductionNum(introHighTable, r.introductionsBest)
             return num == 0 ? 0 : round(r.introductionsBest) + num
         },
-        get AOO10yrBest() {return 4 * ((1 + r.occurrences1Best) * (1 + round(r.introductionsBest) / 2) - 1) },
-        get AOO10yrLow() { return 4 * ((1 + r.occurrences1Low) * (1 + r.introductionsLow / 2) - 1) },
-        get AOO10yrHigh() {return 4 * ((1 + r.occurrences1High) * (1 + r.introductionsHigh / 2) - 1) },
+        // get AOO10yrBest() {return 4 * ((1 + r.occurrences1Best) * (1 + round(r.introductionsBest) / 2) - 1) },
+        // get AOO10yrLow() { return 4 * ((1 + r.occurrences1Low) * (1 + r.introductionsLow / 2) - 1) },
+        // get AOO10yrHigh() {return 4 * ((1 + r.occurrences1High) * (1 + r.introductionsHigh / 2) - 1) },
+        get AOO10yrBest() {
+            const result =
+                r.occurrences1Best === 0 && r.introductionsBest
+                ? 0
+                : r.occurrences1Best === 0
+                ? 4 * round(0.64 + 0.36 * r.introductionsBest)
+                : 4 * round(r.occurrences1Best + r.introductionsBest^((r.occurrences1Best + 9)/10))
+            return result
+        },
+        get AOO10yrLow() {
+            const result =
+                r.occurrences1Low === 0 && r.introductionsLow
+                ? 0
+                : r.occurrences1Low === 0
+                ? 4 * round(0.64 + 0.36 * r.introductionsLow)
+                : 4 * round(r.occurrences1Low + r.introductionsLow^((r.occurrences1Low + 9)/10))
+            return result
+        },
+        get AOO10yrHigh() {
+            const result =
+                r.occurrences1High === 0 && r.introductionsHigh
+                ? 0
+                : r.occurrences1High === 0
+                ? 4 * round(0.64 + 0.36 * r.introductionsHigh)
+                : 4 * round(r.occurrences1High + r.introductionsHigh^((r.occurrences1High + 9)/10))
+            return result
+        },
 
         get AOOchangeBest() { return r.AOOtotalBest < 4 ? 1 : n0(r.AOO50yrBest) / d1(r.AOOtotalBest) },
         get AOOchangeLow() { return r.AOOtotalBest < 4 ? 1 : n0(r.AOO50yrLow) / d1(r.AOOtotalBest) },
