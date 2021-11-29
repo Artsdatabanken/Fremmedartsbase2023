@@ -76,7 +76,7 @@ export default class NewNaturetype extends React.Component {
             ? <h3>Här kommer SVEN</h3> */}
             <div>
                 <h4>{superheader}</h4>
-                <p>{header}</p>
+                <p dangerouslySetInnerHTML={{ __html: header }}></p>
                 {/* {this.props.children} */}
                 {this.props.mode === "livsmedium" ?
                 <LivsmediumSelector

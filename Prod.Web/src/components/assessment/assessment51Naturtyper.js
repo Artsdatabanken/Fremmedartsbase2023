@@ -98,21 +98,7 @@ export default class Assessment51Naturtyper extends React.Component {
                     superheader={ntLabels.redListEffects}/> */}
                 
                 <h2>{ntLabels.heading}</h2>   
-                {assessment.redlistedNatureTypes.length > 0 && <div className="well">
-                <h4>
-                    Data fra tidligere vurdering (basert på Rødlista for naturtyper 2018 og NiN 2.0):
-                </h4>
 
-
-
-                <RedlistedNaturetypeTable
-                    naturetypes={assessment.redlistedNatureTypes}
-                    canRenderTable={canRenderTable}
-                    labels={labels}
-                    fabModel={appState}/>
-                </div>}
-                
-                
                 <div>
                     {appState.trueteogsjeldneCodes
                         ? <NewNaturetype
@@ -125,7 +111,7 @@ export default class Assessment51Naturtyper extends React.Component {
                         addNaturtype={this.addNaturtype}
                         labels={labels}
                         codes={appState.trueteogsjeldneCodes}
-                        header={labels.NatureTypes.chooseRL2018}
+                        header={labels.NatureTypes.chooseTS}
                         hideStateChange={false}
                         superheader={ntLabels.redListEffects} >
                             {/* <TruetSelector 
@@ -136,7 +122,6 @@ export default class Assessment51Naturtyper extends React.Component {
                         : null}
                 </div>
 
-                
                 <NewNaturetype
                     // config={{
                     //     codewidth: "30px",
@@ -148,12 +133,38 @@ export default class Assessment51Naturtyper extends React.Component {
                     labels={labels}
                     codes={appState.naturtyperNIN2}
                     header={ntLabels.chooseNT}
-                    superheader={ntLabels.colonizedAreaAndEffects} >
+                    superheader={ntLabels.effectsNiN23} >
                             {/* <NaturtypeSelector 
                                 naturtyper={koder.naturtyperNIN2} 
                                 setSelected={() => console.log("setSelectedNaturtype")}
                             /> */}
                         </NewNaturetype>
+                <h4>{ntLabels.chosenNatureTypes}</h4>
+                <NaturtypeTable
+                    naturetypes={assessment.impactedNatureTypes}
+                    appState={appState}
+                    canRenderTable={canRenderTable}
+                    labels={labels}
+                    codes={koder}
+                    appState={appState}
+                    disabled={disabled}
+                    desc={ntLabels.colonizedAreaDescription}/>
+
+                {assessment.redlistedNatureTypes.length > 0 && <div>
+                <hr></hr>
+                <h4>
+                    {ntLabels.dataFromPreviousAssessment}
+                </h4>
+
+
+                <p>{ntLabels.redlistedNaturetypes2011}</p>
+                <RedlistedNaturetypeTable
+                    naturetypes={assessment.redlistedNatureTypes}
+                    canRenderTable={canRenderTable}
+                    labels={labels}
+                    fabModel={appState}/>
+                </div>}
+                </fieldset> 
 
                 {/* {true || appState.livsmediumEnabled
                 ? <div>
@@ -171,21 +182,11 @@ export default class Assessment51Naturtyper extends React.Component {
                         : null}
                 </div>
                 : null} */}
-                </fieldset> 
-                <fieldset className="well">   
-                <NaturtypeTable
-                    naturetypes={assessment.impactedNatureTypes}
-                    appState={appState}
-                    canRenderTable={canRenderTable}
-                    labels={labels}
-                    codes={koder}
-                    appState={appState}
-                    disabled={disabled}
-                    desc={ntLabels.colonizedAreaDescription}/>
-                </fieldset>  
-
+                
+                
                 <fieldset className="well">
                     <h4>{ntLabels.critCHeading}</h4>
+                    <p>{ntLabels.criteriumC}</p>
                    {/* <p>{ntLabels.score}</p>
                     <ScoreUnsure appState={appState}
                                 critScores={koder.scoresC}
@@ -204,6 +205,7 @@ export default class Assessment51Naturtyper extends React.Component {
 
                 <fieldset className="well">
                     <h4>{ntLabels.critFHeading}</h4>
+                    <p>{ntLabels.criteriumF}</p>
                    {/* <p>{critF.info}</p>
                     <p>{ntLabels.score}</p>*/}
                    {/* <ScoreUnsure appState={appState}
@@ -259,7 +261,7 @@ export default class Assessment51Naturtyper extends React.Component {
                 
                 <fieldset className="well">
                     <h4>{ntLabels.critGHeading}</h4>
-                    
+                    <p>{ntLabels.criteriumG}</p>
                     {/*<p>{critG.info}</p>
                     <p>{ntLabels.score}</p>*/}
                     {/*<ScoreUnsure appState={appState}
