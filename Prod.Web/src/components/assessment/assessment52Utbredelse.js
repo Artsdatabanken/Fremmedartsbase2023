@@ -192,19 +192,19 @@ export default class Assessment52Utbredelse extends React.Component {
                                 </div>
                                 <p style={{marginBottom: '0'}}>Basert på periode:</p>
                                 <div className="distributionYears">
-                                    <p style={{marginRight: '30px'}}>
-                                        <p> f.o.m. år (t<sub>0</sub>)</p>
+                                    <div style={{marginRight: '30px'}}>
+                                        <p> f.o.m. år (t<sub>0</sub>)</p> 
                                         <Xcomp.Number
                                             style={{marginLeft: 20}}
                                             observableValue={[assessment.riskAssessment, "AOOyear1"]}
                                             yearRange={true}/> 
-                                    </p>
-                                    <p>
+                                    </div>
+                                    <div>
                                         <p>t.o.m. år</p>
                                         <Xcomp.Number                            
                                             observableValue={[assessment.riskAssessment, "AOOyear2"]}
                                             yearRange={true}/> 
-                                    </p> 
+                                    </div> 
                                 </div>
                                 <div className="statusField">
                                     <div className="labels distribution">
