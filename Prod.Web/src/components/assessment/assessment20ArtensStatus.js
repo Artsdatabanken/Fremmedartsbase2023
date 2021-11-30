@@ -70,6 +70,8 @@ export default class Assessment20ArtensStatus extends React.Component {
 //         super(props)
 
 //     }
+
+@observable statusChange = false
 checkStatus = (production) => {
     // finds all the objects with id's that should be hidden 
     if ( production != "yes" ) {
@@ -119,9 +121,9 @@ checkStatus = (production) => {
                     <h2>{labels.SpeciesStatus.statusHeading}</h2>
                     <p>{labels.SpeciesStatus.isAlienSpecies} </p>
                     <p>{labels.SpeciesStatus.unsureIfAlien} </p>
-                    <Xcomp.Radio value={'true'} observableValue={[assessment, "isAlienSpecies"]} label={labels.General.yes} />                    
+                    <Xcomp.Radio value={'true'} observableValue={[assessment, "isAlienSpecies"]} defaultChecked={assessment.alienSpeciesCategory == "RegionallyAlien"} label={labels.General.yes} />                    
                     { assessment.isAlienSpecies == 'true' && assessment.alienSpeciesCategory != "DoorKnocker" ? 
-                            <Xcomp.Bool observableValue={[assessment, "isRegionallyAlien"]} label={labels.SpeciesStatus.regionallyAlien} /> : null }
+                            <Xcomp.Bool observableValue={[assessment, "isRegionallyAlien"]} checked={assessment.alienSpeciesCategory == "RegionallyAlien"} label={labels.SpeciesStatus.regionallyAlien} /> : null }
                     <Xcomp.Radio value={'false'} observableValue={[assessment, "isAlienSpecies"]} label={labels.General.no} />
                     <p>{labels.SpeciesStatus.unsureAlienDescription}</p>
                     <Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'isAlien']}/>
@@ -233,96 +235,34 @@ checkStatus = (production) => {
                     </div>
                          <p> { assessment.isRegionallyAlien ? labels.SpeciesStatus.statusInNorwayRegionallyAlien : labels.SpeciesStatus.statusInNorway }</p>
                          <p>{labels.SpeciesStatus.highestCategoryPerToday}</p>
-                         <Xcomp.StringEnum observableValue={[assessment, "speciesStatus"]} mode="radio" 
+                         <div style={{display: "flex"}}>
+                         <Xcomp.StringEnum className="statusChoice" observableValue={[assessment, "speciesStatus"]} mode="radio" 
                             // checks if the species is a door knocker or not and if it is a production species to determine the available options to choose
                             options={this.checkStatus(assessment.productionSpecies)}
                             onChange = {action(_e => {
                                 if(assessment.speciesStatus != "A" ) { 
                                     assessment.wrongAssessed = false
                                     };
-                                    if(assessment.speciesStatus != null && (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3")) {
+                                    if (assessment.alienSpeciesCategory == "DoorKnocker" && (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3")) {
+                                        this.statusChange = true
                                         assessment.alienSpeciesCategory = "AlienSpecie"
                                         if(assessment.speciesStatus == "C3") {
                                             assessment.speciesEstablishmentCategory = "C3"
                                         }
-                                    } else if (assessment.speciesStatus != null) {
+                                    }
+                                    else if (assessment.alienSpeciesCategory == "AlienSpecie" && assessment.speciesStatus != "C2" && assessment.speciesStatus != "C3"){
+                                        this.statusChange = true
                                         assessment.alienSpeciesCategory = "DoorKnocker"
-                                    }                                  
+                                    }
+                                     else {
+                                        this.statusChange = false                                     
+                                    }   
+                                                                  
                                 })}
                             codes={codes.EstablishmentCategory}/>        
-
-                         {/*(assessment.alienSpeciesCategory == "DoorKnocker" && assessment.productionSpecies != "yes") ? 
-                            <Xcomp.StringEnum observableValue={[assessment, "speciesStatus"]} mode="radio" 
-                            onChange = {action(e => {
-                                if(assessment.speciesStatus != "A" ) { 
-                                    assessment.wrongAssessed = false
-                                    };
-                                    if(assessment.speciesStatus != null && (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3")) {
-                                        assessment.alienSpeciesCategory = "AlienSpecie"
-                                        if(assessment.speciesStatus == "C3") {
-                                            assessment.speciesEstablishmentCategory = "C3"
-                                        }
-                                    } else if (assessment.speciesStatus != null) {
-                                        assessment.alienSpeciesCategory = "DoorKnocker"
-                                    }                                  
-                                })}
-                            codes={codes.EstablishmentCategoryDoorKnockerProduction}/>
-                            :  
-                            // door knocker without production
-                            <Xcomp.StringEnum observableValue={[assessment, "speciesStatus"]}
-                            onChange = {action(e => {
-                                if(assessment.speciesStatus != "A" ) { 
-                                    assessment.wrongAssessed = false
-                                    };
-                                    if(assessment.speciesStatus != null && (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3")) {
-                                        assessment.alienSpeciesCategory = "AlienSpecie"
-                                        if(assessment.speciesStatus == "C3") {
-                                            assessment.speciesEstablishmentCategory = "C3"
-                                        }
-                                    } else if (assessment.speciesStatus != null) {
-                                        assessment.alienSpeciesCategory = "DoorKnocker"
-                                    }                                  
-                                })}
-                            mode="radio" codes={codes.EstablishmentCategoryDoorKnocker}/> 
-                            
-                            : (assessment.alienSpeciesCategory == "AlienSpecie" && assessment.productionSpecies == "no") ?
-                            // self-reproducing without production
-                            <Xcomp.StringEnum observableValue={[assessment, "speciesStatus"]} mode="radio" 
-                            onChange = {action(e => {
-                                if(assessment.speciesStatus != "A" ) { 
-                                    assessment.wrongAssessed = false
-                                    };
-                                    if(assessment.speciesStatus != null && (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3")) {
-                                        assessment.alienSpeciesCategory = "AlienSpecie"
-                                        if(assessment.speciesStatus == "C3") {
-                                            assessment.speciesEstablishmentCategory = "C3"
-                                        }
-                                    } else if (assessment.speciesStatus != null) {
-                                        assessment.alienSpeciesCategory = "DoorKnocker"
-                                    }                                    
-                                })}
-                            codes={codes.EstablishmentCategoryWithoutProduction}/> 
-                            : 
-                            // self-reproducing with production or door knockers without production
-                            <Xcomp.StringEnum observableValue={[assessment, "speciesStatus"]} mode="radio" 
-                            // checks if the species is a door knocker or not and if it is a production species to determine the available options to choose
-                            //options={this.checkStatus(assessment.alienSpeciesCategory, assessment.productionSpecies)}
-                            onChange = {action(e => {
-                                if(assessment.speciesStatus != "A" ) { 
-                                    assessment.wrongAssessed = false
-                                    };
-                                    if(assessment.speciesStatus != null && (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3")) {
-                                        assessment.alienSpeciesCategory = "AlienSpecie"
-                                        if(assessment.speciesStatus == "C3") {
-                                            assessment.speciesEstablishmentCategory = "C3"
-                                        }
-                                    } else if (assessment.speciesStatus != null) {
-                                        assessment.alienSpeciesCategory = "DoorKnocker"
-                                    }                                  
-                                })}
-                            codes={codes.EstablishmentCategory}/>                         
-                        }*/}
-                       
+                            <span className="statusWarning">{this.statusChange ? assessment.alienSpeciesCategory == "DoorKnocker" ? "Arten har nå endret status fra å være selvstendig reproduserende til å være en dørstokkart. Er dette riktig?" :
+                                    "Arten har nå endret status fra å være en dørstokkart til å være selvstendig reproduserende i norsk natur." : null}</span>
+                            </div>
 
                         <p>{labels.SpeciesStatus.codesExplanation}</p>
                         <br></br>
