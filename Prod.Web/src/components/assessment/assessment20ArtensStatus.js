@@ -276,13 +276,24 @@ checkStatus = (production) => {
                         <Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'establishedBefore1800']}/>
                      </div> : null}
 
-                     { assessment.isAlienSpecies == 'true'  && assessment.alienSpeciesCategory != "DoorKnocker" && assessment.speciesStatus == "A" &&
+                     { assessment.isAlienSpecies == 'true'  && 
+                       assessment.alienSpeciesCategory != "DoorKnocker" && 
+                        assessment.speciesStatus == "A" &&
                         (assessment.connectedToAnother == "no" || assessment.connectedToAnother == "false") ? 
                         <div className="statusField">
                             <p> {labels.SpeciesStatus.wronglyAssessedBefore} </p>                
                             <Xcomp.Bool observableValue={[assessment, "wrongAssessed"]} />  
                             
                         </div> : null }
+                        {(this.statusChange && assessment.alienSpecieUncertainIfEstablishedBefore1800 != "yes") &&
+                            <div>
+                            <p> {labels.SpeciesStatus.wronglyAssessedBefore} </p>                
+                            <Xcomp.StringEnum observableValue={[assessment, "wrongAssessed"]} mode="radio" codes={codes.yesNo}/>  
+                            
+                        </div>
+                        }
+
+                        
                     
                     { assessment.isAlienSpecies == 'false' ?
                     <div>
@@ -321,7 +332,7 @@ checkStatus = (production) => {
 
                     {assessment.isAlienSpecies == 'true' && 
                         (assessment.connectedToAnother == "no" || assessment.connectedToAnother == "false" ) &&
-                        (assessment.wrongAssessed == false || assessment.wrongAssessed == null ) && assessment.speciesStatus != null ?
+                        (assessment.wrongAssessed == false || assessment.wrongAssessed == null ) && assessment.speciesStatus != null && assessment.wrongAssessed != "yes" ?
                         <fieldset className="well">
                             {assessment.speciesStatus != "A" &&
                                <> <h3>{labels.SpeciesStatus.firstObservationOfSpecies}</h3> 

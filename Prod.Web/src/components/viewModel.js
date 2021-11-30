@@ -586,8 +586,8 @@ class ViewModel {
 
     @computed get skalVurderes() {
         //return true 
-        
-        return !this.harVurdering ? false : this.assessment.horizonDoScanning === false ? true : this.horizonDoAssessment // todo: implement real!
+        return !this.harVurdering ? false : this.assessment.alienSpeciesCategory == "DoorKnocker" && this.assessment.skalVurderes ? true : false
+        //return !this.harVurdering ? false : this.assessment.horizonDoScanning === false ? true : this.horizonDoAssessment // todo: implement real!
     }
 
     @computed get doFullAssessment() {
@@ -774,7 +774,7 @@ class ViewModel {
             const alien = jsonnew.alienSpeciesCategory =="AlienSpecie" || jsonnew.notApplicableCategory == "establishedBefore1800"
             
             //--------------------------------------------------------------
-            //Argh! this dirty trick make it possible to use observableStringEnum (radio) for the property
+            //Argh! this dirty trick makes it possible to use observableStringEnum (radio) for the property
             //This process must be reversed before saving to server!
             jsonnew.isAlienSpecies = alien ? "true" : "false"
             // if the species was established before 1800, set it as default
