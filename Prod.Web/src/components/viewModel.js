@@ -771,15 +771,15 @@ class ViewModel {
             console.log("type of id : " + typeof(id))
             const jsonnew = JSON.parse(JSON.stringify(json))
             // find out if the species is alien
-            const alien = jsonnew.notApplicableCategory == "establishedBefore1800"
+            const alien = jsonnew.alienSpeciesCategory =="AlienSpecie" || jsonnew.notApplicableCategory == "establishedBefore1800"
             
             //--------------------------------------------------------------
             //Argh! this dirty trick make it possible to use observableStringEnum (radio) for the property
             //This process must be reversed before saving to server!
             jsonnew.isAlienSpecies = alien ? "true" : "false"
             // if the species was established before 1800, set it as default
-            jsonnew.alienSpecieUncertainIfEstablishedBefore1800 = jsonnew.notApplicableCategory == "establishedBefore1800" ? "yes" : "no"
-            jsonnew.connectedToAnother = jsonnew.connectedToAnother ? "true" : "false"
+            jsonnew.alienSpecieUncertainIfEstablishedBefore1800 = jsonnew.notApplicableCategory == "establishedBefore1800" ? "yes" :  jsonnew.alienSpeciesCategory == "AlienSpecie" ? "no" : null
+            jsonnew.connectedToAnother = jsonnew.alienSpeciesCategory == "AlienSpecie" ? "no" : jsonnew.connectedToAnother ? "true" : "false" 
             //--------------------------------------------------------------
 
             const assessment = enhanceAssessment(jsonnew, this)
