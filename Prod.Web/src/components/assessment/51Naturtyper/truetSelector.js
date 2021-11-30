@@ -15,7 +15,9 @@ export default class TruetSelector extends React.Component {
         this.setSelectedNT = action ((naturtypekode) => {
             console.log("Truet kode: " + naturtypekode.Id)
             const nnt = props.nyNaturtype
-            nnt.niNCode = naturtypekode.Id
+            //nnt.niNCode = naturtypekode.Id
+            // set the code as null because the codes are too long (see Eveliina's comment in issue #250)
+            nnt.niNCode = null
             nnt.name = naturtypekode.Text
             nnt.timeHorizon = null
             nnt.colonizedArea = null
