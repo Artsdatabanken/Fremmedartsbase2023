@@ -2279,14 +2279,25 @@ table.ecologicalEffect .form-control, table.naturetype .form-control {
   font-size: 10pt;
 }
 
-table.naturetype {
+fieldset.well table.naturetype {
   font-size: 10pt;
+  margin: 0;
   .form-control {
     width: 80px;
     }
 
     tr {
       padding-right: 5px;
+      td {
+        padding: 0;
+        button.btn-xs {
+          padding: 5px;
+        }
+
+        select.form-control {
+          margin-bottom: 0;
+        }
+      } 
     }
 }
 

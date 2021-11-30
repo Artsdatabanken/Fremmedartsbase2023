@@ -44,7 +44,8 @@ export class NaturtypeRad extends React.Component {
 
     render() {
         const {naturtype, appState, deleteRow, labels, disabled, codes, toggleEdit, editMode, appState:{assessment}} = this.props;
-        
+        const natureTypeCodes = require('./../../../Nin2_2.json')
+        console.log(natureTypeCodes)
         const riskAssessment = assessment.riskAssessment 
         const gLabels = labels.General
         const nt = naturtype
@@ -58,16 +59,40 @@ export class NaturtypeRad extends React.Component {
        // const stateChangLabel = nt.StateChange.map(sc => kodeTekst(koder.tilstandsendringer, sc)).join('\n')
        //const stateChangLabel = nt.stateChange
 
-       const timeHorizonLabel = (id) => codes.timeHorizon.find(code => code.Value === id).Text
+        const timeHorizonLabel = (id) => codes.timeHorizon.find(code => code.Value === id).Text
         const colonizedAreaLabel = (id) => codes.colonizedArea.find(code => code.Value === id).Text
         const stateChangeLabel = (id) => codes.tilstandsendringer.find(code => code.Value === id).Text
         const affectedAreaLabel = (id) => codes.affectedArea.find(code => code.Value === id).Text
+        const findNTName = (id) => {
+            var name = "";
+            if (id.length == 1) {
+                name = natureTypeCodes.Children.find(code => code.Id.indexOf(id) > -1).Text
+            } else if (id.length == 2) {
+                // search for the name on the second level of nature type groups                
+                var firstSubLevel = natureTypeCodes.Children
+                for (var i = 0; i < firstSubLevel.length; i++) {
+                    if (firstSubLevel[i].Id.indexOf(id.substring(0,1)) > -1) {
+                        name = firstSubLevel[i].Children.find(code => code.Id.indexOf(id.substring(0,1)) > -1).Text
+                    }
+                }
+            } else if (id.length > 2) {
+                // search for the name on the third level of nature type groups                
+                var firstSubLevel = natureTypeCodes.Children
+                for (var i = 0; i < firstSubLevel.length; i++) {
+                    if (firstSubLevel[i].Id.indexOf(id.substring(0,1)) > -1) {
+                        var secondSubLevel = firstSubLevel[i].Children.find(code => code.Id.indexOf(id.substring(0,1)) > -1).Children
+                        name = secondSubLevel.find(code => code.Id.indexOf(id) > -1).Text                        
+                    }
+                }
+            }           
+            return name
+        } 
         console.log("NT row: " + JSON.stringify(nt))
         return(
             <tr>
                 <td>{nt.niNCode}</td>
                 {/*<td>ntlabel</td>*/}
-                <td>{nt.name}</td>
+                <td>{nt.name ? nt.name : findNTName(nt.niNCode)}</td>
                 <td>{dominanceForrest}</td>
                 <td></td>
                 {this.edit
