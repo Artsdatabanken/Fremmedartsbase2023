@@ -140,6 +140,7 @@ export default class Assessment51Naturtyper extends React.Component {
                             /> */}
                         </NewNaturetype>
                 <h4>{ntLabels.chosenNatureTypes}</h4>
+                {assessment.impactedNatureTypes.length > 0 && 
                 <NaturtypeTable
                     naturetypes={assessment.impactedNatureTypes}
                     appState={appState}
@@ -149,6 +150,7 @@ export default class Assessment51Naturtyper extends React.Component {
                     appState={appState}
                     disabled={disabled}
                     desc={ntLabels.colonizedAreaDescription}/>
+                }
 
                 {assessment.redlistedNatureTypes.length > 0 && <div>
                 <hr></hr>

@@ -129,12 +129,13 @@ export class NaturtypeRad extends React.Component {
                             
                         </td> :
                         <td>
+                        {nt.tilstandsendringer ? 
                             <Xcomp.MultiselectArray
                                 observableValue={[nt, 'stateChange']} 
                                 codes={koder.tilstandsendringer}
                                 disabled={true}
                                 mode="check"
-                                hideUnchecked/>
+                                hideUnchecked/> : "Ingen valgt"}
                         </td>}
                {this.edit
                 ? <td>{
@@ -157,7 +158,9 @@ export class NaturtypeRad extends React.Component {
                                 
                 </td>: 
                  <td>
-                     {nt.background.length > 0 ? <Xcomp.MultiselectArray
+                     {nt.background.length > 0 ? 
+                     
+                     <Xcomp.MultiselectArray
                                 observableValue={[nt, 'background']} 
                                 codes={koder.assessmentBackgrounds}
                                 mode="check"
