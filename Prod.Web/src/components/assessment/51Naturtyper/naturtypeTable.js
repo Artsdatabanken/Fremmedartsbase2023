@@ -63,31 +63,34 @@ export class NaturtypeRad extends React.Component {
         const stateChangeLabel = (id) => codes.tilstandsendringer.find(code => code.Value === id).Text
         const affectedAreaLabel = (id) => codes.affectedArea.find(code => code.Value === id).Text
         const findNTName = (id) => {
-            console.log("Id " + id)
-            console.log("Length " + id.length)
-            var name = "";
             
-            if (id.length == 1) {
-                name = natureTypeCodes.Children.find(code => code.Id.indexOf(id) > -1).Text
-            } else if (id.length == 2) {
-                // search for the name on the second level of nature type groups                
-                var firstSubLevel = natureTypeCodes.Children
-                for (var i = 0; i < firstSubLevel.length; i++) {
-                    if (firstSubLevel[i].Id.indexOf(id.substring(0,1)) > -1) {
-                        name = firstSubLevel[i].Children.find(code => code.Id.indexOf(id.substring(0,1)) > -1).Text
+            var name = "";
+            if (!id.startsWith("LI")) {
+                 
+                if (id.length == 1) {
+                    name = natureTypeCodes.Children.find(code => code.Id.indexOf(id) > -1).Text
+                } else if (id.length == 2) {
+                    // search for the name on the second level of nature type groups                
+                    var firstSubLevel = natureTypeCodes.Children
+                    for (var i = 0; i < firstSubLevel.length; i++) {
+                        if (firstSubLevel[i].Id.indexOf(id.substring(0,1)) > -1) {
+                            name = firstSubLevel[i].Children.find(code => code.Id.indexOf(id.substring(0,1)) > -1).Text
+                        }
                     }
-                }
-            } else if (id.length > 2) {
-                // search for the name on the third level of nature type groups                
-                var firstSubLevel = natureTypeCodes.Children
-                console.log(firstSubLevel)
-                for (var i = 0; i < firstSubLevel.length; i++) {
-                    if (firstSubLevel[i].Id.indexOf(id.substring(0,1)) > -1) {
-                        var secondSubLevel = firstSubLevel[i].Children.find(code => code.Id.indexOf(id.substring(0,2)) > -1).Children
-                        name = secondSubLevel.find(code => code.Id.indexOf(id) > -1).Text                        
+                } else if (id.length > 2) {
+                    // search for the name on the third level of nature type groups                
+                    var firstSubLevel = natureTypeCodes.Children
+                    console.log(firstSubLevel)
+                    for (var i = 0; i < firstSubLevel.length; i++) {
+                        if (firstSubLevel[i].Id.indexOf(id.substring(0,1)) > -1) {
+                            var secondSubLevel = firstSubLevel[i].Children.find(code => code.Id.indexOf(id.substring(0,2)) > -1).Children
+                            name = secondSubLevel.find(code => code.Id.indexOf(id) > -1).Text                        
+                        }
                     }
-                }
-            }           
+                } 
+            }
+            
+                      
             return name
         } 
         console.log("NT row: " + JSON.stringify(nt))
