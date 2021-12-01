@@ -65,7 +65,7 @@ export class NaturtypeRad extends React.Component {
         const findNTName = (id) => {
             
             var name = "";
-            if (!id.startsWith("LI")) {
+            if (id.startsWith("NA")) {
                  console.log(id)
                 if (id.length == 1) {
                     name = natureTypeCodes.Children.find(code => code.Id.indexOf(id) > -1).Text
