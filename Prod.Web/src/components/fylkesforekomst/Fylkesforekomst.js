@@ -56,16 +56,30 @@ const regionSorteringB = [
 
 const Fylkesforekomst = ({ assessment, fylkesforekomster }) => {
   const forekomsterAsObject = fylkesforekomster.reduce((acc, e) => {
-    acc[e.fylke] = {
-      // state: e.state,
-      state0: e.state0,
-      state1: e.state1,
-      state2: e.state2,
-      state3: e.state3,
-    };
+    if (assessment.alienSpeciesCategory == "DoorKnocker") {
+      acc[e.fylke] = {
+        // state: e.state,
+        //state0: e.state0,
+       // state1: e.state1,
+        state2: e.state2,
+        state3: e.state3,
+      };
+      
+    } else {
+      acc[e.fylke] = {
+        // state: e.state,
+        state0: e.state0,
+        state1: e.state1,
+        state2: e.state2,
+        state3: e.state3,
+      };
+    }
+    
     return acc;
   }, {});
   const context = UserContext.getContext();
+
+  const doorKnocker = assessment.alienSpeciesCategory == "DoorKnocker";
 
   const handleSwitchOtherCategory = (state, fylke) => {
     for (var ff of assessment.fylkesforekomster) {
@@ -157,17 +171,21 @@ const Fylkesforekomst = ({ assessment, fylkesforekomster }) => {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "max-content repeat(4, min-content)",
+            gridTemplateColumns: doorKnocker ? "max-content repeat(2, min-content)" : "max-content repeat(4, min-content)",
             columnGap: 8,
             marginLeft: 24,
             width: 450
           }}
         >
           <div style={{ _paddingBottom: 24 }}></div>
+          {!doorKnocker && <>
           <FylkeslisteLegend index={0} />
           <FylkeslisteLegend index={1} />
+          </>
+           }
           <FylkeslisteLegend index={3} />
           <FylkeslisteLegend index={2} />
+          
           {regionSorteringA.map((k, index) => {
             if (k.navn) {
               return (
@@ -175,6 +193,7 @@ const Fylkesforekomst = ({ assessment, fylkesforekomster }) => {
                   key={k.navn}
                   id={k.navn}
                   values={forekomsterAsObject[k.navn]}
+                  doorKnocker={doorKnocker}
                   onSwitchCategory={action(handleSwitchCategory)}
                   rerenderhack={forekomsterAsObject}
                 />
@@ -186,39 +205,53 @@ const Fylkesforekomst = ({ assessment, fylkesforekomster }) => {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "max-content repeat(4, min-content)",
+            gridTemplateColumns: doorKnocker ? "max-content repeat(2, min-content)" : "max-content repeat(4, min-content)",
             columnGap: 8,
             marginLeft: 24,
             width: 450
           }}
         >
           <div style={{ _paddingBottom: 24 }}></div>
+          {!doorKnocker && <>
           <FylkeslisteLegend index={0} />
           <FylkeslisteLegend index={1} />
+          </>
+           }
           <FylkeslisteLegend index={3} />
           <FylkeslisteLegend index={2} />
+          
           {regionSorteringB.map((k, index) => {
             if (k.navn) {
               return (
                 <FylkeslisteElement
                   key={k.navn}
                   id={k.navn}
+                  doorKnocker={doorKnocker}
                   values={forekomsterAsObject[k.navn]}
                   onSwitchCategory={action(handleSwitchCategory)}
                   rerenderhack={forekomsterAsObject}
                 />
               );
             }
-            return <Spacer key={index} />;
+
+            if(doorKnocker) {
+              return <DoorKnockerSpacer key={index} />;
+            } else {
+              return <Spacer key={index} />;
+            }
+            
           })}
         </div>
       </div>
       <div
+      className = {doorKnocker ? "doorKnockerSpread" : ""}
         style={{
           display: "grid",
           gridTemplateColumns: "33% 33% 33%"
         }}
       >
+        {!doorKnocker && <>
+        
         <div style={{ marginRight: -80, _float: "left" }}>
           <SvgShapeSelector
             categories={categories}
@@ -247,6 +280,9 @@ const Fylkesforekomst = ({ assessment, fylkesforekomster }) => {
             <Legend size={30} categories={specificCategories(1)} />
           </SvgShapeSelector>
         </div>
+
+        </>
+        }
         <div style={{ marginLeft: -80, _float: "right" }}>
           <SvgShapeSelector
             categories={categories}
@@ -282,10 +318,11 @@ const FylkeslisteLegend = ({ index }) => {
   );
 };
 
-const FylkeslisteElement = ({ id, values, onSwitchCategory }) => {
+const FylkeslisteElement = ({ id, values, onSwitchCategory, doorKnocker}) => {
   return (
     <>
       <div>{fylker[id]}</div>
+      {!doorKnocker && <>
       <div>
         <input
           type="checkbox"
@@ -306,6 +343,7 @@ const FylkeslisteElement = ({ id, values, onSwitchCategory }) => {
           onChange={e => onSwitchCategory(e, id, 1, values.state1 == 1)}
         />
       </div>
+      </>}
       <div>
         <input
           type="checkbox"
@@ -330,13 +368,21 @@ const FylkeslisteElement = ({ id, values, onSwitchCategory }) => {
   );
 };
 
-const Spacer = () => (
+const Spacer = () => (    
   <>
     <div style={{ height: 24 }} />
     <div />
     <div />
     <div />
+    <div />      
+  </>
+);
+
+const DoorKnockerSpacer = () => (    
+  <>
+    <div style={{ height: 24 }} />
     <div />
+    <div />     
   </>
 );
 

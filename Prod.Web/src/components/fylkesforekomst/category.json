@@ -36,10 +36,10 @@
     }
   },
   {
-    "title": "Ikke kjent",
+    "title": "Ingen",
     "x": 24,
     "y": 120,
-    "tooltip": "Ikke kjent",
+    "tooltip": "Ingen",
     "normal": {
       "stroke": "hsl(10, 10%, 25%)",
       "strokeWidth": 1,
