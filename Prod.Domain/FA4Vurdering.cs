@@ -525,6 +525,7 @@ public partial class FA4 // (3.2) Artsegenskaper
 
         public List<RedlistedNatureType> RedlistedNatureTypes { get; set; } = new List<RedlistedNatureType>(); //lagt til 18.11.2016
 
+        public List<Habitat> Habitats { get; set; } = new List<Habitat>();
 
         //public string SpeciesNatureTypesDetails { get; set; } // fab: SpeciesNatureTypesDetails // removed 03.11.2016
 
@@ -1369,6 +1370,19 @@ public partial class FA4 // (3.2) Artsegenskaper
         }
 
         public class RedlistedNatureType
+        {
+            public string RedlistedNatureTypeName { get; set; }
+            public string Category { get; set; }
+            //public List<string> NiNVariation { get; set; } = new List<string>();
+            //public List<string> DominanceForrest { get; set; } = new List<string>(); 
+            public List<string> Background { get; set; } = new List<string>();
+            public string TimeHorizon { get; set; }
+            public string ColonizedArea { get; set; }
+            public List<string> StateChange { get; set; } = new List<string>(); // changed datatype from string 19.12.2016
+            public string AffectedArea { get; set; }
+        }
+
+        public class Habitat
         {
             public string RedlistedNatureTypeName { get; set; }
             public string Category { get; set; }
