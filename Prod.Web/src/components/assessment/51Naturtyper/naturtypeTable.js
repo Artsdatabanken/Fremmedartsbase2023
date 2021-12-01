@@ -43,9 +43,8 @@ export class NaturtypeRad extends React.Component {
 
 
     render() {
-        const {naturtype, appState, deleteRow, labels, disabled, codes, toggleEdit, editMode, appState:{assessment}} = this.props;
+        const {naturtype, appState, deleteRow, labels, disabled, codes, toggleEdit, showNatureTypeArea, editMode, appState:{assessment}} = this.props;
         const natureTypeCodes = require('./../../../Nin2_2.json')
-        console.log(natureTypeCodes)
         const riskAssessment = assessment.riskAssessment 
         const gLabels = labels.General
         const nt = naturtype
@@ -64,7 +63,10 @@ export class NaturtypeRad extends React.Component {
         const stateChangeLabel = (id) => codes.tilstandsendringer.find(code => code.Value === id).Text
         const affectedAreaLabel = (id) => codes.affectedArea.find(code => code.Value === id).Text
         const findNTName = (id) => {
+            console.log("Id " + id)
+            console.log("Length " + id.length)
             var name = "";
+            
             if (id.length == 1) {
                 name = natureTypeCodes.Children.find(code => code.Id.indexOf(id) > -1).Text
             } else if (id.length == 2) {
@@ -78,9 +80,10 @@ export class NaturtypeRad extends React.Component {
             } else if (id.length > 2) {
                 // search for the name on the third level of nature type groups                
                 var firstSubLevel = natureTypeCodes.Children
+                console.log(firstSubLevel)
                 for (var i = 0; i < firstSubLevel.length; i++) {
                     if (firstSubLevel[i].Id.indexOf(id.substring(0,1)) > -1) {
-                        var secondSubLevel = firstSubLevel[i].Children.find(code => code.Id.indexOf(id.substring(0,1)) > -1).Children
+                        var secondSubLevel = firstSubLevel[i].Children.find(code => code.Id.indexOf(id.substring(0,2)) > -1).Children
                         name = secondSubLevel.find(code => code.Id.indexOf(id) > -1).Text                        
                     }
                 }
@@ -92,9 +95,9 @@ export class NaturtypeRad extends React.Component {
             <tr>
                 <td>{nt.niNCode}</td>
                 {/*<td>ntlabel</td>*/}
-                <td>{nt.name ? nt.name : findNTName(nt.niNCode)}</td>
+                <td>{nt.name ? nt.name : nt.niNCode ? findNTName(nt.niNCode) : ""}</td>
                 <td>{dominanceForrest}</td>
-                <td></td>
+                {showNatureTypeArea && <td></td> }
                 {this.edit
                 ?
                 <td>{assessment.alienSpeciesCategory == "DoorKnocker" ? koder.timeHorizon[1].Text : 
@@ -226,6 +229,8 @@ export default class NaturtypeTable extends React.Component {
     render() {
         const {naturetypes, labels, canRenderTable, appState, desc, codes, disabled} = this.props;
         const ntLabels = labels.NatureTypes
+        const noRedListTypes = naturetypes.find(ntype => ntype.niNCode == null)
+        console.log(noRedListTypes)
         console.log("naturtyperader#: " + naturetypes.length)
         console.log("nt table: " + JSON.stringify(naturetypes))
         console.log("canRenderTable: " + canRenderTable)
@@ -237,8 +242,8 @@ export default class NaturtypeTable extends React.Component {
             <colgroup>
                 <col  style={{width: "10%"}}/>
                 <col  style={{width: "10%"}}/>
-                <col  style={{width: "10%"}}/>                
-                <col  style={{width: "15%"}}/>
+                <col  style={{width: noRedListTypes ? "10%" : "25%"}}/>                
+                {noRedListTypes && <col  style={{width: "15%"}}/> }
                 <col  style={{width: "10%"}}/>
                 <col  style={{width: "15%"}}/>
                 <col  style={{width: "5%"}}/>
@@ -251,7 +256,7 @@ export default class NaturtypeTable extends React.Component {
                     <th>{ntLabels.code}</th>
                     <th>{ntLabels.name}</th>
                     <th>{ntLabels.dominanceForrest}</th>
-                    <th>{ntLabels.natureTypeArea}</th>
+                    {noRedListTypes && <th>{ntLabels.natureTypeArea}</th>}
                     <th>{ntLabels.timeHorizon}</th>
                     <th>{ntLabels.colonizedArea}</th>
                     <th>{ntLabels.stateChange}</th>
@@ -269,7 +274,7 @@ export default class NaturtypeTable extends React.Component {
                     //const key = nt.NiNCode + nt.TimeHorizon + nt.ColonizedArea
                     console.log("nt row: " + JSON.stringify(nt))
                     const key = nt.niNCode
-                    return <NaturtypeRad key={key} naturtype={nt} deleteRow={deleteRow} codes={codes} appState={appState} labels={labels} toggleEdit={this.toggleEdit} editMode={this.editMode} disabled={disabled}/> }) :
+                    return <NaturtypeRad key={key} naturtype={nt} deleteRow={deleteRow} codes={codes} appState={appState} labels={labels} showNatureTypeArea={noRedListTypes != undefined} toggleEdit={this.toggleEdit} editMode={this.editMode} disabled={disabled}/> }) :
                     null
                 }
             </tbody>
