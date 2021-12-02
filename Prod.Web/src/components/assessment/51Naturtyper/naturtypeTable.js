@@ -63,36 +63,58 @@ export class NaturtypeRad extends React.Component {
         const stateChangeLabel = (id) => codes.tilstandsendringer.find(code => code.Value === id).Text
         const affectedAreaLabel = (id) => codes.affectedArea.find(code => code.Value === id).Text
         const findNTName = (id) => {
-            
+            // check that the id does not contain only numbers
+            var reg = /^\d+$/;
             var name = "";
-            if (id.startsWith("NA")) {
-                 console.log(id)
+            if (id && !reg.test(id)) {
+                if (id.startsWith("NA")) {
+                    // taking only the last part of the code
+                    id = id.substring(3)
+
+                }
                 if (id.length == 1) {
                     name = natureTypeCodes.Children.find(code => code.Id.indexOf(id) > -1).Text
                 } else if (id.length == 2) {
-                    // search for the name on the second level of nature type groups                
-                    var firstSubLevel = natureTypeCodes.Children
+                    // search for the name on the second level of nature type groups     
+                    
+                    var firstSubLevel = natureTypeCodes.Children 
+                   
                     for (var i = 0; i < firstSubLevel.length; i++) {
+                        console.log(firstSubLevel[i].Id)
                         if (firstSubLevel[i].Id.indexOf(id.substring(0,1)) > -1) {
-                            name = firstSubLevel[i].Children.find(code => code.Id.indexOf(id) > -1).Text
                             
+                            name = firstSubLevel[i].Children.find(code => code.Id.indexOf(id) > -1).Text                            
                         }
                     }
                 } else if (id.length > 2) {
+                    console.log(id)
+                    var firstPart = id.split("-")[0]
+                    console.log(firstPart)
                     // search for the name on the third level of nature type groups                
                     var firstSubLevel = natureTypeCodes.Children
-                    
+                    console.log("ACHTUNG!!!")
+                    console.log(firstSubLevel)
                     for (var i = 0; i < firstSubLevel.length; i++) {
+                       
                         if (firstSubLevel[i].Id.indexOf(id.substring(0,1)) > -1) {
-                            // var secondSubLevel = firstSubLevel[i].Children.find(code => code.Id.indexOf(id.substring(0,2)) > -1).Children
-                            var secondSubLevel = firstSubLevel[i].Children.find(code => code.Id.indexOf(id) > -1).Children
-                            name = secondSubLevel.find(code => code.Id.indexOf(id) > -1).Text  
-                                          
+                            var secondSubLevel = firstSubLevel[i].Children
+                            console.log(secondSubLevel)
+                             
+                            for (var j = 0; j < secondSubLevel.length; j++) {
+                                
+                                if (secondSubLevel[j].Id == firstPart || secondSubLevel[j].Id == "NA "+ firstPart) {
+                                    console.log("Success! " + secondSubLevel[j].Text)
+                                    var thirdSubLevel = secondSubLevel[j].Children
+                                    name = thirdSubLevel.find(code => code.Id.indexOf(id) > -1).Text
+                                }
+                            }
+                            //var secondSubLevel = firstSubLevel[i].Children.find(code => code.Id.indexOf(id) > -1)
+                            //console.log(secondSubLevel)  
+                            //                                            
                         }
                     }
                 } 
             }
-            
                       
             return name
         } 
@@ -279,7 +301,7 @@ export default class NaturtypeTable extends React.Component {
                     //const key = nt.NiNCode + nt.TimeHorizon + nt.ColonizedArea + nt.StateChange.join(';') + nt.AffectedArea
                     //const key = nt.NiNCode + nt.TimeHorizon + nt.ColonizedArea
                     console.log("nt row: " + JSON.stringify(nt))
-                    const key = nt.niNCode
+                    const key = nt.niNCode+nt.timeHorizon
                     return <NaturtypeRad key={key} naturtype={nt} deleteRow={deleteRow} codes={codes} appState={appState} labels={labels} showNatureTypeArea={noRedListTypes != undefined} toggleEdit={this.toggleEdit} editMode={this.editMode} disabled={disabled}/> }) :
                     null
                 }
