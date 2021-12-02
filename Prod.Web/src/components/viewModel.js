@@ -771,7 +771,7 @@ class ViewModel {
             console.log("type of id : " + typeof(id))
             const jsonnew = JSON.parse(JSON.stringify(json))
             // find out if the species is alien
-            const alien = jsonnew.alienSpeciesCategory =="AlienSpecie" || jsonnew.notApplicableCategory == "establishedBefore1800"
+            const alien = jsonnew.alienSpeciesCategory =="AlienSpecie" || jsonnew.notApplicableCategory == "establishedBefore1800" ||jsonnew.alienSpeciesCategory == "RegionallyAlien"
             
             //--------------------------------------------------------------
             //Argh! this dirty trick makes it possible to use observableStringEnum (radio) for the property
@@ -780,6 +780,7 @@ class ViewModel {
             // if the species was established before 1800, set it as default
             jsonnew.alienSpecieUncertainIfEstablishedBefore1800 = jsonnew.notApplicableCategory == "establishedBefore1800" ? "yes" :  jsonnew.alienSpeciesCategory == "AlienSpecie" ? "no" : null
             jsonnew.connectedToAnother = jsonnew.alienSpeciesCategory == "AlienSpecie" ? "no" : jsonnew.connectedToAnother ? "true" : "false" 
+            jsonnew.alienSpeciesCategory = "RegionallyAlien" ? jsonnew.isRegionallyAlien = true : jsonnew.isRegionallyAlien = false
             //--------------------------------------------------------------
 
             const assessment = enhanceAssessment(jsonnew, this)
