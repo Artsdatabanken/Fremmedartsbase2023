@@ -45,6 +45,7 @@ export class NaturtypeRad extends React.Component {
     render() {
         const {naturtype, appState, deleteRow, labels, disabled, codes, toggleEdit, showNatureTypeArea, editMode, appState:{assessment}} = this.props;
         const natureTypeCodes = require('./../../../Nin2_2.json')
+        const redListCodes = require('./../../../TrueteOgSjeldneNaturtyper2018.json')
         const riskAssessment = assessment.riskAssessment 
         const gLabels = labels.General
         const nt = naturtype
@@ -66,54 +67,57 @@ export class NaturtypeRad extends React.Component {
             // check that the id does not contain only numbers
             var reg = /^\d+$/;
             var name = "";
-            if (id && !reg.test(id)) {
-                if (id.startsWith("NA")) {
-                    // taking only the last part of the code
-                    id = id.substring(3)
+            if (id) {
 
-                }
-                if (id.length == 1) {
-                    name = natureTypeCodes.Children.find(code => code.Id.indexOf(id) > -1).Text
-                } else if (id.length == 2) {
-                    // search for the name on the second level of nature type groups     
-                    
-                    var firstSubLevel = natureTypeCodes.Children 
-                   
-                    for (var i = 0; i < firstSubLevel.length; i++) {
-                        console.log(firstSubLevel[i].Id)
-                        if (firstSubLevel[i].Id.indexOf(id.substring(0,1)) > -1) {
-                            
-                            name = firstSubLevel[i].Children.find(code => code.Id.indexOf(id) > -1).Text                            
-                        }
+                if(!reg.test(id)){
+                    if (id.startsWith("NA")) {
+                        // taking only the last part of the code
+                        id = id.substring(3)
+    
                     }
-                } else if (id.length > 2) {
-                    console.log(id)
-                    var firstPart = id.split("-")[0]
-                    console.log(firstPart)
-                    // search for the name on the third level of nature type groups                
-                    var firstSubLevel = natureTypeCodes.Children
-                    console.log("ACHTUNG!!!")
-                    console.log(firstSubLevel)
-                    for (var i = 0; i < firstSubLevel.length; i++) {
+                    if (id.length == 1) {
+                        name = natureTypeCodes.Children.find(code => code.Id.indexOf(id) > -1).Text
+                    } else if (id.length == 2) {
+                        // search for the name on the second level of nature type groups     
+                        
+                        var firstSubLevel = natureTypeCodes.Children 
                        
-                        if (firstSubLevel[i].Id.indexOf(id.substring(0,1)) > -1) {
-                            var secondSubLevel = firstSubLevel[i].Children
-                            console.log(secondSubLevel)
-                             
-                            for (var j = 0; j < secondSubLevel.length; j++) {
+                        for (var i = 0; i < firstSubLevel.length; i++) {
+                            if (firstSubLevel[i].Id.indexOf(id.substring(0,1)) > -1) {
                                 
-                                if (secondSubLevel[j].Id == firstPart || secondSubLevel[j].Id == "NA "+ firstPart) {
-                                    console.log("Success! " + secondSubLevel[j].Text)
-                                    var thirdSubLevel = secondSubLevel[j].Children
-                                    name = thirdSubLevel.find(code => code.Id.indexOf(id) > -1).Text
-                                }
+                                name = firstSubLevel[i].Children.find(code => code.Id.indexOf(id) > -1).Text                            
                             }
-                            //var secondSubLevel = firstSubLevel[i].Children.find(code => code.Id.indexOf(id) > -1)
-                            //console.log(secondSubLevel)  
-                            //                                            
+                        }
+                    } else if (id.length > 2) {
+                        var firstPart = id.split("-")[0]
+                        // search for the name on the third level of nature type groups                
+                        var firstSubLevel = natureTypeCodes.Children
+                        for (var i = 0; i < firstSubLevel.length; i++) {
+                           
+                            if (firstSubLevel[i].Id.indexOf(id.substring(0,1)) > -1) {
+                                var secondSubLevel = firstSubLevel[i].Children
+                                 
+                                for (var j = 0; j < secondSubLevel.length; j++) {
+                                    
+                                    if (secondSubLevel[j].Id == firstPart || secondSubLevel[j].Id == "NA "+ firstPart) {
+                                        var thirdSubLevel = secondSubLevel[j].Children
+                                        name = thirdSubLevel.find(code => code.Id.indexOf(id) > -1).Text
+                                    }
+                                }                                           
+                            }
                         }
                     }
-                } 
+
+                } else {
+                    console.log(redListCodes)
+                    for (var i = 0; i < redListCodes.Children.length; i++) {
+                        for (var j = 0; j < redListCodes.Children[i].Children.length; j++) {
+                            if (redListCodes.Children[i].Children[j].Id == id) {
+                                name = redListCodes.Children[i].Children[j].Text
+                            }
+                        }
+                    }
+                }
             }
                       
             return name
