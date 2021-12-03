@@ -4,6 +4,7 @@
   "Text": "root",
   "Category": null,
   "Collapsed": false,
+  "Area": 0,
   "Children": [
     {
       "Id": "Ferskvann",
@@ -11,6 +12,7 @@
       "Text": "Ferskvann",
       "Category": null,
       "Collapsed": true,
+      "Area": 0,
       "Children": [
         {
           "Id": "38",
@@ -18,6 +20,7 @@
           "Text": "Humøse dype innsjøer",
           "Category": "EN B2",
           "Collapsed": true,
+          "Area": 26,
           "Children": []
         },
         {
@@ -26,6 +29,7 @@
           "Text": "Humøse grunne innsjøer",
           "Category": "VU B2",
           "Collapsed": true,
+          "Area": 69,
           "Children": []
         },
         {
@@ -34,6 +38,7 @@
           "Text": "Sterkt kalkrike pytter, dammer og små innsjøer",
           "Category": "VU A+C1",
           "Collapsed": true,
+          "Area": 103,
           "Children": []
         },
         {
@@ -42,6 +47,7 @@
           "Text": "Kalkrik helofyttsump",
           "Category": "VU A+C1",
           "Collapsed": true,
+          "Area": 2,
           "Children": []
         }
       ]
@@ -52,6 +58,7 @@
       "Text": "Fjell og berg",
       "Category": null,
       "Collapsed": true,
+      "Area": 0,
       "Children": [
         {
           "Id": "69",
@@ -59,6 +66,7 @@
           "Text": "Tørt kalkrikt berg i kontinentale områder",
           "Category": "VU B2+D1",
           "Collapsed": true,
+          "Area": 4,
           "Children": []
         },
         {
@@ -67,6 +75,7 @@
           "Text": "Overrislingsberg i østlige høyfjellstrøk",
           "Category": "EN C2a",
           "Collapsed": true,
+          "Area": 0,
           "Children": []
         },
         {
@@ -75,6 +84,7 @@
           "Text": "Fosseberg",
           "Category": "VU C1",
           "Collapsed": true,
+          "Area": 0,
           "Children": []
         },
         {
@@ -83,6 +93,7 @@
           "Text": "Åpen grunnlendt kalkrik mark i boreonemoral sone",
           "Category": "EN A+D1",
           "Collapsed": true,
+          "Area": 2,
           "Children": []
         },
         {
@@ -91,6 +102,7 @@
           "Text": "Åpen grunnlendt kalkrik mark i sørboreal sone",
           "Category": "VU A+B2+D1",
           "Collapsed": true,
+          "Area": 2,
           "Children": []
         },
         {
@@ -99,6 +111,7 @@
           "Text": "Snøleie",
           "Category": "VU C2a",
           "Collapsed": true,
+          "Area": 23544,
           "Children": []
         },
         {
@@ -107,6 +120,7 @@
           "Text": "Fuglefjell-eng og fugletopp",
           "Category": "VU D2a",
           "Collapsed": true,
+          "Area": 0,
           "Children": []
         },
         {
@@ -115,6 +129,7 @@
           "Text": "Fosse-eng",
           "Category": "VU C1",
           "Collapsed": true,
+          "Area": 0,
           "Children": []
         },
         {
@@ -123,6 +138,7 @@
           "Text": "Silt og leirskred",
           "Category": "EN A+C1",
           "Collapsed": true,
+          "Area": 0,
           "Children": []
         },
         {
@@ -131,6 +147,7 @@
           "Text": "Sanddynemark",
           "Category": "VU C1+D2a",
           "Collapsed": true,
+          "Area": 60,
           "Children": []
         },
         {
@@ -139,6 +156,7 @@
           "Text": "Sørlig etablert sanddynemark",
           "Category": "EN A+C1",
           "Collapsed": true,
+          "Area": 3,
           "Children": []
         },
         {
@@ -147,6 +165,7 @@
           "Text": "Våtsnøleie og snøleiekilde",
           "Category": "VU C2a+C2b",
           "Collapsed": true,
+          "Area": 450,
           "Children": []
         }
       ]
@@ -157,6 +176,7 @@
       "Text": "Landform",
       "Category": null,
       "Collapsed": true,
+      "Area": 0,
       "Children": [
         {
           "Id": "169",
@@ -164,6 +184,7 @@
           "Text": "Delta",
           "Category": "VU A+C1",
           "Collapsed": true,
+          "Area": 771,
           "Children": []
         },
         {
@@ -172,6 +193,7 @@
           "Text": "Botnbre",
           "Category": "VU A+E",
           "Collapsed": true,
+          "Area": 0,
           "Children": []
         },
         {
@@ -180,6 +202,7 @@
           "Text": "Dalbre",
           "Category": "VU A+E",
           "Collapsed": true,
+          "Area": 0,
           "Children": []
         },
         {
@@ -188,6 +211,7 @@
           "Text": "Dalsidebre",
           "Category": "VU A+E",
           "Collapsed": true,
+          "Area": 0,
           "Children": []
         },
         {
@@ -196,6 +220,7 @@
           "Text": "Kalvende bre",
           "Category": "VU A+E",
           "Collapsed": true,
+          "Area": 0,
           "Children": []
         },
         {
@@ -204,6 +229,7 @@
           "Text": "Platåbre",
           "Category": "VU A+E",
           "Collapsed": true,
+          "Area": 0,
           "Children": []
         },
         {
@@ -212,6 +238,7 @@
           "Text": "Regenerert bre",
           "Category": "VU A+E",
           "Collapsed": true,
+          "Area": 0,
           "Children": []
         },
         {
@@ -220,6 +247,7 @@
           "Text": "Sammensatt bre",
           "Category": "VU A+E",
           "Collapsed": true,
+          "Area": 0,
           "Children": []
         },
         {
@@ -228,6 +256,7 @@
           "Text": "Meander",
           "Category": "VU C1",
           "Collapsed": true,
+          "Area": 0,
           "Children": []
         },
         {
@@ -236,6 +265,7 @@
           "Text": "Jordpyramide",
           "Category": "CR B1",
           "Collapsed": true,
+          "Area": 0,
           "Children": []
         },
         {
@@ -244,6 +274,7 @@
           "Text": "Leirravine",
           "Category": "VU A",
           "Collapsed": true,
+          "Area": 900,
           "Children": []
         },
         {
@@ -252,6 +283,7 @@
           "Text": "Dryppstein",
           "Category": "EN C1",
           "Collapsed": true,
+          "Area": 0,
           "Children": []
         },
         {
@@ -260,6 +292,7 @@
           "Text": "Kalkgrotte",
           "Category": "VU C1+C2a+C2b",
           "Collapsed": true,
+          "Area": 2,
           "Children": []
         },
         {
@@ -268,6 +301,7 @@
           "Text": "Kalktuff",
           "Category": "CR B1+B2",
           "Collapsed": true,
+          "Area": 0,
           "Children": []
         },
         {
@@ -276,6 +310,7 @@
           "Text": "Flygesanddyne",
           "Category": "VU A",
           "Collapsed": true,
+          "Area": 1,
           "Children": []
         },
         {
@@ -284,6 +319,7 @@
           "Text": "Kalkrygg",
           "Category": "NT B1+C1",
           "Collapsed": true,
+          "Area": 1148,
           "Children": []
         }
       ]
@@ -294,6 +330,7 @@
       "Text": "Marint dypvann",
       "Category": null,
       "Collapsed": true,
+      "Area": 0,
       "Children": [
         {
           "Id": "311",
@@ -301,6 +338,7 @@
           "Text": "Grisehalekorallskogbunn",
           "Category": "EN B2",
           "Collapsed": true,
+          "Area": 408,
           "Children": []
         },
         {
@@ -309,6 +347,7 @@
           "Text": "Bambuskorallskogbunn",
           "Category": "EN B2",
           "Collapsed": true,
+          "Area": 1500,
           "Children": []
         },
         {
@@ -317,6 +356,7 @@
           "Text": "Dyp slambunn i Skagerrak",
           "Category": "NT B1+C1",
           "Collapsed": true,
+          "Area": 17000,
           "Children": []
         }
       ]
@@ -327,6 +367,7 @@
       "Text": "Marint gruntvann",
       "Category": null,
       "Collapsed": true,
+      "Area": 0,
       "Children": [
         {
           "Id": "344",
@@ -334,6 +375,7 @@
           "Text": "Nordlig sukkertareskog",
           "Category": "EN A+D1",
           "Collapsed": true,
+          "Area": 900,
           "Children": []
         },
         {
@@ -342,6 +384,7 @@
           "Text": "Sørlig sukkertareskog",
           "Category": "EN A+C2a",
           "Collapsed": true,
+          "Area": 1100,
           "Children": []
         },
         {
@@ -350,6 +393,7 @@
           "Text": "Nordlig fingertarebunn",
           "Category": "VU A",
           "Collapsed": true,
+          "Area": 0,
           "Children": []
         },
         {
@@ -358,16 +402,18 @@
           "Text": "Eksponert blåskjellbunn",
           "Category": "VU A+C1",
           "Collapsed": true,
+          "Area": 0,
           "Children": []
         }
       ]
     },
     {
-      "Id": "Svalbard, kystvann",
-      "Value": "Svalbard, kystvann",
-      "Text": "Svalbard, kystvann",
+      "Id": "Marint gruntvann, Svalbard",
+      "Value": "Marint gruntvann, Svalbard",
+      "Text": "Marint gruntvann, Svalbard",
       "Category": null,
       "Collapsed": true,
+      "Area": 0,
       "Children": [
         {
           "Id": "26",
@@ -375,6 +421,7 @@
           "Text": "Kaldtvannsbassenger",
           "Category": "EN B2+C2a",
           "Collapsed": true,
+          "Area": 0,
           "Children": []
         },
         {
@@ -383,6 +430,7 @@
           "Text": "Polar havis",
           "Category": "CR A",
           "Collapsed": true,
+          "Area": 14000,
           "Children": []
         },
         {
@@ -391,6 +439,7 @@
           "Text": "Isskurt sublitoral fastbunn",
           "Category": "VU A+C1+C2a",
           "Collapsed": true,
+          "Area": 8,
           "Children": []
         },
         {
@@ -399,6 +448,7 @@
           "Text": "Isskurt fjæresone-fastbunn",
           "Category": "VU A+C1+C2a",
           "Collapsed": true,
+          "Area": 3,
           "Children": []
         },
         {
@@ -407,6 +457,7 @@
           "Text": "Brakk sand- og grusbunn",
           "Category": "VU B2",
           "Collapsed": true,
+          "Area": 312,
           "Children": []
         }
       ]
@@ -417,6 +468,7 @@
       "Text": "Semi-naturlig",
       "Category": null,
       "Collapsed": true,
+      "Area": 0,
       "Children": [
         {
           "Id": "75",
@@ -424,6 +476,7 @@
           "Text": "Strandeng",
           "Category": "VU A+C1+C2a",
           "Collapsed": true,
+          "Area": 0,
           "Children": []
         },
         {
@@ -432,6 +485,7 @@
           "Text": "Boreal hei",
           "Category": "VU A+D1+D2a+D2b",
           "Collapsed": true,
+          "Area": 0,
           "Children": []
         },
         {
@@ -440,6 +494,7 @@
           "Text": "Semi-naturlig eng",
           "Category": "VU A+D1+D2a",
           "Collapsed": true,
+          "Area": 0,
           "Children": []
         },
         {
@@ -448,6 +503,7 @@
           "Text": "Slåttemark",
           "Category": "CR A+D1",
           "Collapsed": true,
+          "Area": 0,
           "Children": []
         },
         {
@@ -456,6 +512,7 @@
           "Text": "Semi-naturlig strandeng",
           "Category": "EN A+D1+D2a",
           "Collapsed": true,
+          "Area": 0,
           "Children": []
         },
         {
@@ -464,6 +521,7 @@
           "Text": "Kystlynghei",
           "Category": "EN D2a+D2b",
           "Collapsed": true,
+          "Area": 4620,
           "Children": []
         }
       ]
@@ -474,6 +532,7 @@
       "Text": "Skog",
       "Category": null,
       "Collapsed": true,
+      "Area": 0,
       "Children": [
         {
           "Id": "84",
@@ -481,6 +540,7 @@
           "Text": "Boreonemoral regnskog",
           "Category": "VU B1",
           "Collapsed": true,
+          "Area": 16,
           "Children": []
         },
         {
@@ -489,6 +549,7 @@
           "Text": "Boreal regnskog",
           "Category": "VU B1+D1",
           "Collapsed": true,
+          "Area": 73,
           "Children": []
         },
         {
@@ -497,6 +558,7 @@
           "Text": "Høgstaude edelløvskog",
           "Category": "VU A+D2a",
           "Collapsed": true,
+          "Area": 99,
           "Children": []
         },
         {
@@ -505,6 +567,7 @@
           "Text": "Kalkgranskog",
           "Category": "VU D1",
           "Collapsed": true,
+          "Area": 500,
           "Children": []
         },
         {
@@ -513,6 +576,7 @@
           "Text": "Kalkedellauvskog",
           "Category": "EN B1+B2",
           "Collapsed": true,
+          "Area": 4,
           "Children": []
         },
         {
@@ -521,6 +585,7 @@
           "Text": "Olivinskog",
           "Category": "EN B2",
           "Collapsed": true,
+          "Area": 10,
           "Children": []
         },
         {
@@ -529,6 +594,7 @@
           "Text": "Lågurtedellauvskog",
           "Category": "VU D1+D2a+D2b",
           "Collapsed": true,
+          "Area": 100,
           "Children": []
         },
         {
@@ -537,6 +603,7 @@
           "Text": "Kalk- og lågurtfuruskog",
           "Category": "VU D1",
           "Collapsed": true,
+          "Area": 1200,
           "Children": []
         },
         {
@@ -545,16 +612,18 @@
           "Text": "Flomskogsmark",
           "Category": "VU C1+D1",
           "Collapsed": true,
+          "Area": 0,
           "Children": []
         }
       ]
     },
     {
-      "Id": "Svalbard terrestrisk",
-      "Value": "Svalbard terrestrisk",
-      "Text": "Svalbard terrestrisk",
+      "Id": "Svalbard",
+      "Value": "Svalbard",
+      "Text": "Svalbard",
       "Category": null,
       "Collapsed": true,
+      "Area": 0,
       "Children": [
         {
           "Id": "104",
@@ -562,6 +631,7 @@
           "Text": "Arktisk steppe",
           "Category": "CR B1",
           "Collapsed": true,
+          "Area": 64,
           "Children": []
         },
         {
@@ -570,6 +640,7 @@
           "Text": "Kalkrik permafrost-myrkant",
           "Category": "CR B1",
           "Collapsed": true,
+          "Area": 3,
           "Children": []
         },
         {
@@ -578,6 +649,7 @@
           "Text": "Varm kilde",
           "Category": "CR B1",
           "Collapsed": true,
+          "Area": 1,
           "Children": []
         },
         {
@@ -586,6 +658,7 @@
           "Text": "Strandeng",
           "Category": "NT A+B1",
           "Collapsed": true,
+          "Area": 0,
           "Children": []
         }
       ]
@@ -596,6 +669,7 @@
       "Text": "Våtmark",
       "Category": null,
       "Collapsed": true,
+      "Area": 0,
       "Children": [
         {
           "Id": "145",
@@ -603,6 +677,7 @@
           "Text": "Atlantisk høymyr",
           "Category": "EN C1+C2b",
           "Collapsed": true,
+          "Area": 200,
           "Children": []
         },
         {
@@ -611,6 +686,7 @@
           "Text": "Eksentrisk høymyr",
           "Category": "EN C1+C2b",
           "Collapsed": true,
+          "Area": 100,
           "Children": []
         },
         {
@@ -619,6 +695,7 @@
           "Text": "Konsentrisk høymyr",
           "Category": "EN B1+C1+C2a+C2b",
           "Collapsed": true,
+          "Area": 7,
           "Children": []
         },
         {
@@ -627,6 +704,7 @@
           "Text": "Platåhøymyr",
           "Category": "EN C1+C2b",
           "Collapsed": true,
+          "Area": 40,
           "Children": []
         },
         {
@@ -635,6 +713,7 @@
           "Text": "Palsmyr",
           "Category": "EN C2a+C2b",
           "Collapsed": true,
+          "Area": 160,
           "Children": []
         },
         {
@@ -643,6 +722,7 @@
           "Text": "Terrengdekkende myr",
           "Category": "VU A+C2a+C2b",
           "Collapsed": true,
+          "Area": 450,
           "Children": []
         },
         {
@@ -651,6 +731,7 @@
           "Text": "Rik åpen sørlig jordvannsmyr",
           "Category": "EN A+C1+C2a+C2b",
           "Collapsed": true,
+          "Area": 90,
           "Children": []
         },
         {
@@ -659,6 +740,7 @@
           "Text": "Rik svartorsumpskog",
           "Category": "VU A+C1",
           "Collapsed": true,
+          "Area": 12,
           "Children": []
         },
         {
@@ -667,6 +749,7 @@
           "Text": "Rik gransumpskog",
           "Category": "EN D1+D2b",
           "Collapsed": true,
+          "Area": 12,
           "Children": []
         },
         {
@@ -675,6 +758,7 @@
           "Text": "Kilde-edellauvskog",
           "Category": "VU A+C1+D1+D2b",
           "Collapsed": true,
+          "Area": 6,
           "Children": []
         },
         {
@@ -683,6 +767,7 @@
           "Text": "Sørlig kaldkilde",
           "Category": "VU A+C1+C2b+D1+D2b",
           "Collapsed": true,
+          "Area": 1,
           "Children": []
         },
         {
@@ -691,6 +776,7 @@
           "Text": "Rik vierstrandskog",
           "Category": "VU B2",
           "Collapsed": true,
+          "Area": 1,
           "Children": []
         },
         {
@@ -699,6 +785,7 @@
           "Text": "Semi-naturlig myr",
           "Category": "EN A+D1+D2a+D2b",
           "Collapsed": true,
+          "Area": 3000,
           "Children": []
         },
         {
@@ -707,6 +794,7 @@
           "Text": "Sørlig slåttemyr",
           "Category": "CR D1+D2a+D2b",
           "Collapsed": true,
+          "Area": 2,
           "Children": []
         }
       ]
