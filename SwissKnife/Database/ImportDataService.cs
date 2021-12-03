@@ -381,7 +381,8 @@ namespace SwissKnife.Database
                 cfg.CreateMap<Prod.Domain.Legacy.RegionalPresence, Prod.Domain.RegionalPresence>();
                 cfg.CreateMap<Prod.Domain.Legacy.RegionalPresenceWithPotential, Prod.Domain.RegionalPresenceWithPotential>();
                 cfg.CreateMap<FA3Legacy.ImpactedNatureType, FA4.ImpactedNatureType>()
-                    .ForMember(dest => dest.Background, opt => opt.Ignore());
+                    .ForMember(dest => dest.Background, opt => opt.Ignore())
+                    .ForMember(dest => dest.NatureTypeArea, opt => opt.Ignore());
                 cfg.CreateMap<FA3Legacy.TimeAndPlace, FA4.TimeAndPlace>();
                 cfg.CreateMap<FA3Legacy.ObservedAndEstablished, FA4.ObservedAndEstablished>();
                 cfg.CreateMap<FA3Legacy.ObservedAndEstablishedInCountry, FA4.ObservedAndEstablishedInCountry>();
