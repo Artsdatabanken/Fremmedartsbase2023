@@ -10,7 +10,7 @@ export default class HistorikkTabell extends React.Component {
         const labels = fabModel.codeLabels.DistributionHistory
         const vurdering = fabModel.assessment
         const scientificNameId = vurdering.evaluatedScientificNameId
-        const taxonId = vurdering.TaxonId
+        const taxonId = vurdering.taxonId
         const list = historikk
         return (
             <table className="table table-striped table-hover">
@@ -46,10 +46,10 @@ export default class HistorikkTabell extends React.Component {
                 detaljer={sh}
                 expanded={expanded}
                 fabModel={fabModel} />)*/
-            if (expanded) 
+            if (!expanded) 
                 rows.push(<EkspandertSpredningsrad
-                    id={sh.Id}
-                    key={`Expanded${sh.Id}`}
+                    id={sh.id}
+                    key={`Expanded${sh.id}`}
                     detaljer={sh}
                     fabModel={fabModel}
                     taxonId={taxonId}
