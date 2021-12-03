@@ -133,7 +133,7 @@ namespace Prod.Domain
         //        public string SynonymSpecies_________ { get; set; } // fab: Synonym_Species
 
         public Datasett Datasett { get; set; } = new Datasett();
-        public dynamic EvaluatedScientificNameRank { get; set; }
+        public string EvaluatedScientificNameRank { get; set; }
     }
 
     public partial class FA4 // Horisontskanning
@@ -1362,7 +1362,7 @@ public partial class FA4 // (3.2) Artsegenskaper
             public string NiNCode { get; set; }
             public List<string> NiNVariation { get; set; } = new List<string>();
             public List<string> DominanceForrest { get; set; } = new List<string>(); // changed datatype from string 18.11.2016
-
+            public long? NatureTypeArea { get; set; }
             public List<string> Background { get; set; } = new List<string>();
             public string TimeHorizon { get; set; }
             public string ColonizedArea { get; set; }

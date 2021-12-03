@@ -25,7 +25,16 @@ export class NaturtypeRad extends React.Component {
             nt.timeHorizon = upd.timeHorizon
             nt.colonizedArea = upd.colonizedArea
             nt.stateChange.replace(upd.stateChange)
-            nt.affectedArea = upd.affectedArea            
+            nt.affectedArea = upd.affectedArea
+            if  (upd.natureTypeArea > 0)
+            {
+                nt.natureTypeArea = upd.natureTypeArea
+            }
+            else
+            {
+                nt.natureTypeArea = null
+            }   
+            nt.natureTypeArea = upd.natureTypeArea            
             nt.background = upd.background
             this.showModal = false
 
