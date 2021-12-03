@@ -1281,7 +1281,8 @@ public partial class FA4 // (3.2) Artsegenskaper
         public List<SimpleReference> References { get; set; } = new List<SimpleReference>();
     }
     public partial class FA4 // History
-    { public List<PreviousAssessment> PreviousAssessments { get; set; } = new List<PreviousAssessment>();
+    { 
+        public List<PreviousAssessment> PreviousAssessments { get; set; } = new List<PreviousAssessment>();
     }
 
 
@@ -1449,21 +1450,49 @@ public partial class FA4 // (3.2) Artsegenskaper
     };*/
         }
 
-        public Guid Id;
-        public string Location, Comment; //, SpeciesCount, ExistenceArea, ExistenceAreaCount, SpreadArea;
-        public string Regions ="";
-        public string RegionsAssumed ="";
+        public Guid Id { get; set; }
+        public string Location { get; set; }
+        public string Comment { get; set; } //, SpeciesCount, ExistenceArea, ExistenceAreaCount, SpreadArea;
+        public string Regions { get; set; } = "";
+
+        public string RegionsAssumed { get; set; } = "";
+
         //public DateTime? ObservationSortDate;
         //public DateTime? ObservationFromDate, ObservationDate;
-        public int ObservationYear, ObservationFromYear;
-        public int ObservationMonth, ObservationFromMonth;
-        public Int64? SpeciesCount, ExistenceArea, ExistenceAreaCount, SpreadArea;
-        [JsonConverter(typeof(CustomDoubleFormatConverter))]
-        public double? SpeciesCountDarkFigure, ExistenceAreaDarkFigure, ExistenceAreaCountDarkFigure, SpreadAreaDarkFigure;
+        public int ObservationYear { get; set; }
+        public int ObservationFromYear { get; set; }
+        public int ObservationMonth { get; set; }
+        public int ObservationFromMonth { get; set; }
+        public Int64? SpeciesCount { get; set; }
+        public Int64? ExistenceArea { get; set; }
+        public Int64? ExistenceAreaCount { get; set; }
+        public Int64? SpreadArea { get; set; }
 
         [JsonConverter(typeof(CustomDoubleFormatConverter))]
-        public double? SpeciesCountCalculated, ExistenceAreaCalculated, ExistenceAreaCountCalculated, SpreadAreaCalculated;
-        public string SelectionGeometry;// = "{\\\"type\\\": \\\"Feature\\\",\\\"geometry\\\": {\\\"type\\\": \\\"Polygon\\\", \\\"coordinates\\\": [[[10.33, 63.45], [11.951, 63.451], [10.949, 64.45]]]}}";
+        public double? SpeciesCountDarkFigure { get; set; }
+
+        [JsonConverter(typeof(CustomDoubleFormatConverter))]
+        public double? ExistenceAreaDarkFigure { get; set; }
+
+        [JsonConverter(typeof(CustomDoubleFormatConverter))]
+        public double? ExistenceAreaCountDarkFigure { get; set; }
+
+        [JsonConverter(typeof(CustomDoubleFormatConverter))]
+        public double? SpreadAreaDarkFigure { get; set; }
+
+        [JsonConverter(typeof(CustomDoubleFormatConverter))]
+        public double? SpeciesCountCalculated { get; set; }
+
+        [JsonConverter(typeof(CustomDoubleFormatConverter))]
+        public double? ExistenceAreaCalculated { get; set; }
+
+        [JsonConverter(typeof(CustomDoubleFormatConverter))]
+        public double? ExistenceAreaCountCalculated { get; set; }
+
+        [JsonConverter(typeof(CustomDoubleFormatConverter))]
+        public double? SpreadAreaCalculated { get; set; }
+
+        public string SelectionGeometry { get; set; }// = "{\\\"type\\\": \\\"Feature\\\",\\\"geometry\\\": {\\\"type\\\": \\\"Polygon\\\", \\\"coordinates\\\": [[[10.33, 63.45], [11.951, 63.451], [10.949, 64.45]]]}}";
     }
 
     internal class CustomDoubleFormatConverter : System.Text.Json.Serialization.JsonConverter<double?>

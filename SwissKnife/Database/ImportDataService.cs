@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -458,37 +459,50 @@ namespace SwissKnife.Database
                         });
 
                         ConvertHelper.SetHorizonScanningBasedOn2018Assessments(dest);
+
+                        // hentet fra det under - slik mapping fungerer ikke - da de blir kallt via convention - og det er ingen tilfeller der den har behov for å mappe fra FA3Legacy til Prod.Domain.RiskAssessment - koden blir ikke kallt
+                        dest.RiskAssessment.AOOknown = src.CurrentExistenceArea;
+                        dest.RiskAssessment.AOOtotalBest = src.CurrentExistenceAreaCalculated;
+                        dest.RiskAssessment.AOOtotalLow = src.CurrentExistenceAreaLowCalculated;
+                        dest.RiskAssessment.AOOtotalHigh = src.CurrentExistenceAreaHighCalculated;
+                        dest.RiskAssessment.AOO50yrBest = src.PotentialExistenceArea;
+                        dest.RiskAssessment.AOO50yrLow = src.PotentialExistenceAreaLowQuartile;
+                        dest.RiskAssessment.AOO50yrHigh = src.PotentialExistenceAreaHighQuartile;
+
+                        dest.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes = src.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes;
+                        // alt annet ser ut til å bli ignorert
                     });
 
-                cfg.CreateMap<FA3Legacy, Prod.Domain.RiskAssessment>()
-                    .ForMember(dest => dest.AOOknown, opt => opt.MapFrom(src => src.CurrentExistenceArea))
-                    .ForMember(dest => dest.AOOtotalBest, opt => opt.MapFrom(src => src.CurrentExistenceAreaCalculated))
-                    .ForMember(dest => dest.AOOtotalLow,
-                        opt => opt.MapFrom(src => src.CurrentExistenceAreaLowCalculated))
-                    .ForMember(dest => dest.AOOtotalHigh,
-                        opt => opt.MapFrom(src => src.CurrentExistenceAreaHighCalculated))
-                    .ForMember(dest => dest.AOO50yrBest, opt => opt.MapFrom(src => src.PotentialExistenceArea))
-                    .ForMember(dest => dest.AOO50yrLow,
-                        opt => opt.MapFrom(src => src.PotentialExistenceAreaLowQuartile))
-                    .ForMember(dest => dest.AOO50yrHigh,
-                        opt => opt.MapFrom(src => src.PotentialExistenceAreaHighQuartile))
-                    .ForMember(dest => dest.AOOyear1, opt => opt.Ignore())
-                    .ForMember(dest => dest.AOOendyear1, opt => opt.Ignore())
-                    .ForMember(dest => dest.AOOyear2, opt => opt.Ignore())
-                    .ForMember(dest => dest.AOOendyear2, opt => opt.Ignore())
-                    .ForMember(dest => dest.AOO1, opt => opt.Ignore())
-                    .ForMember(dest => dest.AOO2, opt => opt.Ignore())
-                    .ForMember(dest => dest.StartYear, opt => opt.Ignore())
-                    .ForMember(dest => dest.EndYear, opt => opt.Ignore())
-                    .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes,
-                        opt => opt.MapFrom(src => src.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes))
-                    .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesBest,
-                        opt => opt.Ignore())
-                    .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesLow,
-                        opt => opt.Ignore())
-                    .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesHigh,
-                        opt => opt.Ignore())
-                    .ForAllOtherMembers(opt => opt.Ignore());
+                // - slik mapping fungerer ikke - da de blir kallt via convention - og det er ingen tilfeller der den har behov for å mappe fra FA3Legacy til Prod.Domain.RiskAssessment - koden blir ikke kallt
+                //cfg.CreateMap<FA3Legacy, Prod.Domain.RiskAssessment>()
+                //    .ForMember(dest => dest.AOOknown, opt => opt.MapFrom(src => src.CurrentExistenceArea))
+                //    .ForMember(dest => dest.AOOtotalBest, opt => opt.MapFrom(src => src.CurrentExistenceAreaCalculated))
+                //    .ForMember(dest => dest.AOOtotalLow,
+                //        opt => opt.MapFrom(src => src.CurrentExistenceAreaLowCalculated))
+                //    .ForMember(dest => dest.AOOtotalHigh,
+                //        opt => opt.MapFrom(src => src.CurrentExistenceAreaHighCalculated))
+                //    .ForMember(dest => dest.AOO50yrBest, opt => opt.MapFrom(src => src.PotentialExistenceArea))
+                //    .ForMember(dest => dest.AOO50yrLow,
+                //        opt => opt.MapFrom(src => src.PotentialExistenceAreaLowQuartile))
+                //    .ForMember(dest => dest.AOO50yrHigh,
+                //        opt => opt.MapFrom(src => src.PotentialExistenceAreaHighQuartile))
+                //    .ForMember(dest => dest.AOOyear1, opt => opt.Ignore())
+                //    .ForMember(dest => dest.AOOendyear1, opt => opt.Ignore())
+                //    .ForMember(dest => dest.AOOyear2, opt => opt.Ignore())
+                //    .ForMember(dest => dest.AOOendyear2, opt => opt.Ignore())
+                //    .ForMember(dest => dest.AOO1, opt => opt.Ignore())
+                //    .ForMember(dest => dest.AOO2, opt => opt.Ignore())
+                //    .ForMember(dest => dest.StartYear, opt => opt.Ignore())
+                //    .ForMember(dest => dest.EndYear, opt => opt.Ignore())
+                //    .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes,
+                //        opt => opt.MapFrom(src => src.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes))
+                //    .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesBest,
+                //        opt => opt.Ignore())
+                //    .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesLow,
+                //        opt => opt.Ignore())
+                //    .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesHigh,
+                //        opt => opt.Ignore())
+                //    .ForAllOtherMembers(opt => opt.Ignore());
                     
 
 
@@ -617,6 +631,70 @@ namespace SwissKnife.Database
                 }
 
             } while (hasLine);
+        }
+
+        public void PatchImport(IConsole console, string inputFolder)
+        {
+            var jsonSerializerOptions = new JsonSerializerOptions
+            {
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+            };
+
+            var existing = _database.Assessments.ToDictionary(x => x.Id, x => JsonSerializer.Deserialize<FA4>(x.Doc));
+
+            // mapping
+            var mapper = CreateMappingFromOldToNew();
+            var batchsize = 50;
+            var count = 0;
+            IEnumerable<Prod.Domain.Legacy.FA3Legacy> assessments = GetAssessments(inputFolder);
+            foreach (var oldAssessment in assessments)
+            {
+                var newAssesment = InitialTransformFrom2018to2023(oldAssessment, jsonSerializerOptions, mapper);
+                var previd = newAssesment.PreviousAssessments
+                    .Single(y => y.RevisionYear == 2018).AssessmentId;
+                var theMatchingAssessment = existing.SingleOrDefault(x =>
+                    x.Value.PreviousAssessments.Any(y => y.RevisionYear == 2018 && y.AssessmentId == previd));
+
+                if (theMatchingAssessment.Value == null)
+                {
+                    continue;
+                }
+                var real = _database.Assessments.Single(x => x.Id == theMatchingAssessment.Key);
+
+                // todo: overfør manglende morro
+                var exAssessment = JsonSerializer.Deserialize<FA4>(real.Doc);
+                
+                // FieldsFix
+                Debug.Assert(exAssessment != null, nameof(exAssessment) + " != null");
+                exAssessment.SpreadHistory = newAssesment.SpreadHistory;
+
+                exAssessment.RegionalPresenceKnown = newAssesment.RegionalPresenceKnown;
+                exAssessment.RegionalPresenceAssumed = newAssesment.RegionalPresenceAssumed;
+                exAssessment.RegionalPresencePotential = newAssesment.RegionalPresencePotential;
+
+                //map fix
+
+                exAssessment.RiskAssessment.AOOknown = newAssesment.RiskAssessment.AOOknown;
+                exAssessment.RiskAssessment.AOOtotalBest = newAssesment.RiskAssessment.AOOtotalBest;
+                exAssessment.RiskAssessment.AOOtotalLow = newAssesment.RiskAssessment.AOOtotalLow;
+                exAssessment.RiskAssessment.AOOtotalHigh = newAssesment.RiskAssessment.AOOtotalHigh;
+                exAssessment.RiskAssessment.AOO50yrBest = newAssesment.RiskAssessment.AOO50yrBest;
+                exAssessment.RiskAssessment.AOO50yrLow = newAssesment.RiskAssessment.AOO50yrLow;
+                exAssessment.RiskAssessment.AOO50yrHigh = newAssesment.RiskAssessment.AOO50yrHigh;
+                exAssessment.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes = newAssesment.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes;
+
+                real.Doc = JsonSerializer.Serialize<FA4>(exAssessment);
+                //               _database.Assessments.Add(dbAssessment);
+                count++;
+
+                if (count > batchsize)
+                {
+                    _database.SaveChanges();
+                    count = 0;
+                }
+            }
+
+            _database.SaveChanges();
         }
     }
 }
