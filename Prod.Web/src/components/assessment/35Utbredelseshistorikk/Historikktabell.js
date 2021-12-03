@@ -39,14 +39,14 @@ export default class HistorikkTabell extends React.Component {
         const rows = []
         list.forEach((sh) => {
             console.log(sh)
-            const expanded = fabModel.artskartModel.expandedSpreadHistory == sh
+            //const expanded = fabModel.artskartModel.expandedSpreadHistory == sh
            /* rows.push(<KollapsetSpredningsrad
                 id={sh.id}
                 key={sh.id}
                 detaljer={sh}
                 expanded={expanded}
                 fabModel={fabModel} />)*/
-            if (!expanded) 
+            //if (expanded) 
                 rows.push(<EkspandertSpredningsrad
                     id={sh.id}
                     key={`Expanded${sh.id}`}

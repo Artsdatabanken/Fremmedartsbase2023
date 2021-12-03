@@ -69,12 +69,12 @@ export default class EkspandertSpredningsrad extends React.Component {
         this.visArtskart = false
         const artskartModel = this.props.fabModel.artskartModel
         const detaljer = this.props.detaljer
-        detaljer.Observations = artskartRespons.observations
-        detaljer.ExistenceArea = artskartRespons.existenceArea
-        detaljer.SpeciesCount = artskartRespons.speciesCount
-        detaljer.SpreadArea = artskartRespons.spreadArea
-        detaljer.Regions = artskartModel.mapRegionalPresenceFromArtskart(artskartRespons.regionalPresence)
-        detaljer.RegionsAssumed = detaljer.Regions
+        detaljer.observations = artskartRespons.observations
+        detaljer.existenceArea = artskartRespons.existenceArea
+        detaljer.speciesCount = artskartRespons.speciesCount
+        detaljer.spreadArea = artskartRespons.spreadArea
+        detaljer.regions = artskartModel.mapRegionalPresenceFromArtskart(artskartRespons.regionalPresence)
+        detaljer.regionsAssumed = detaljer.Regions
         detaljer.regionalPresenceKnown = artskartModel.enhanceRegionalPresence(detaljer.Regions)
         detaljer.regionalPresenceAssumed = artskartModel.enhanceRegionalPresence(detaljer.RegionsAssumed)
     }
@@ -88,6 +88,7 @@ export default class EkspandertSpredningsrad extends React.Component {
         return (
            
                     <>
+                        <td />
                         <td> {detaljer.observationFromYear}</td>
                         <td> {detaljer.observationYear}</td>
                         <td> {detaljer.location}</td>
@@ -112,11 +113,8 @@ export default class EkspandertSpredningsrad extends React.Component {
                                                // .regionListe()}
                                         />*/}
                         </td>
-                        
-                    </>
-                    
-                           
-                              
+                        <td>&nbsp;</td>
+                    </>   
                        /* <td
                             style={{
                             width: "33%"
