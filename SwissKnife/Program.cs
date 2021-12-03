@@ -26,7 +26,7 @@ namespace SwissKnife
         }
 
         [Command("maintenance", Description = "Run tasks for maintaining database")]
-        [Subcommand(typeof(TaxonomyWash), typeof(ImportNames))]
+        [Subcommand(typeof(TaxonomyWash), typeof(ImportNames), typeof(PatchMigration))]
         [HelpOption("--help")]
         internal class Maintenance {
             private int OnExecute(IConsole console)
@@ -65,6 +65,20 @@ namespace SwissKnife
                 private void OnExecute(IConsole console)
                 {
                     Database.MaintenanceService.RunImportNewAssessments(new Prod.Data.EFCore.SqlServerProdDbContext(ConnectionString), SpeciesGroup, InputFolder);
+                }
+            }
+
+            [Command("patchmigration", Description = "Patch migrated assessments from original json dump")]
+            internal class PatchMigration : MaintananceBase
+            {
+                [Option("--inputfolder", Description = "folder to read json file source and files from")]
+                [Required]
+                public string InputFolder { get; }
+                private void OnExecute(IConsole console)
+                {
+                    var maintenance = new Database.ImportDataService(ConnectionString);
+                    maintenance.PatchImport(console, InputFolder);
+                    
                 }
             }
         }
@@ -124,7 +138,7 @@ namespace SwissKnife
             }
         }
 
-        [Command("newDb", Description = "Interact with old 2018 RavenDb instance")]
+        [Command("newDb", Description = "Interact with new sql database instance")]
         [Subcommand(typeof(Import))]
         [HelpOption("--help")]
         internal class NewDb

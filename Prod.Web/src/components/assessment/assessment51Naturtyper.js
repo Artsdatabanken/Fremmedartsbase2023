@@ -32,6 +32,14 @@ export default class Assessment51Naturtyper extends React.Component {
                 .impactedNatureTypes
                 .push(nyNt)
         })
+
+
+        this.addLivsmedium = action((nyLm) => {
+            assessment
+                .habitats
+                .push(nyLm)
+        })
+
         this.addRedlistedNaturetype = action((nyNt) => {
             assessment
                 .redlistedNatureTypes
@@ -364,7 +372,7 @@ export default class Assessment51Naturtyper extends React.Component {
                         ? <NewNaturetype
                         mode="livsmedium"
                         appState={appState}
-                        addNaturtype={this.addNaturtype}
+                        addNaturtype={this.addLivsmedium}
                         labels={labels}
                         codes={appState.livsmediumCodes}
                         header={labels.NatureTypes.chooseLM}
@@ -374,6 +382,16 @@ export default class Assessment51Naturtyper extends React.Component {
                         </NewNaturetype>
                         
                         : null}
+                {assessment.habitats.length > 0 && 
+                    <HabitatTable
+                    canRenderTable={canRenderTable}
+                    naturetypes={assessment.habitats}
+                    labels={labels}
+                    fabModel={appState}
+                    //disabled={disabled}
+                    />
+                }
+
                 </fieldset>
                 : null}
                 <fieldset className="well">

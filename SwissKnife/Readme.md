@@ -5,13 +5,17 @@ Tool for batchtasks, import, export and similar stuff.
 dotnet run:
 
 ```
+Toolkit for Alien species db
+
 Usage: SwissKnife [command] [options]
 
 Options:
   -?|-h|--help  Show help information.
 
 Commands:
-  newDb         Interact with old 2018 RavenDb instance
+  createjson    Run tasks for creating static json data files
+  maintenance   Run tasks for maintaining database
+  newDb         Interact with new sql database instance
   oldDb         Interact with old 2018 RavenDb instance
 
 Run 'SwissKnife [command] -?|-h|--help' for more information about a command.
@@ -19,6 +23,10 @@ Run 'SwissKnife [command] -?|-h|--help' for more information about a command.
 
 
 Info / statistics from old db
+```
+
+```
+
 ```
 dotnet run -- olddb info --url http://localhost:8080 --db fab3 --fs fab3fs
 Livsmedium:
@@ -70,4 +78,22 @@ dotnet run -- maintenance importnames --connectionstring "Server=localhost;Datab
 dotnet run -- maintenance importnames --connectionstring "Server=localhost;Database=FAB2023;Integrated Security=true;MultipleActiveResultSets=true" --speciesgroup "Terrestriske invertebrater" --csvfile ./Importfiler/TerrestriskeInvertebrater.txt
 
 
+```
+
+
+## Maintenance
+```
+dotnet run -- maintenance --help
+
+Run tasks for maintaining database
+
+Usage: SwissKnife maintenance [command] [options]
+
+Options:
+  --help          Show help information.
+
+Commands:
+  importnames     Import and create assessments from names
+  patchmigration  Patch migrated assessments from original json dump
+  taxonomywash    Check and update taxonomy on assessments
 ```

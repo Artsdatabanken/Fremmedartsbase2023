@@ -355,3 +355,4 @@ MigrationBackup/
 Prod.Web/.parcel-cache
 /Prod.Api/Data/index
 /Prod.Api/Data/facets
+/SwissKnife/Dump2
