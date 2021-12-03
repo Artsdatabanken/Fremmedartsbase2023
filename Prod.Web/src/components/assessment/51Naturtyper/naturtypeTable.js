@@ -72,9 +72,9 @@ export class NaturtypeRad extends React.Component {
         const colonizedAreaLabel = (id) => codes.colonizedArea.find(code => code.Value === id).Text
         const stateChangeLabel = (id) => codes.tilstandsendringer.find(code => code.Value === id).Text
         const affectedAreaLabel = (id) => codes.affectedArea.find(code => code.Value === id).Text
+         // regular expression to check that the id does not contain only numbers
+        const reg = /^\d+$/;
         const findNTName = (id) => {
-            // check that the id does not contain only numbers
-            var reg = /^\d+$/;
             var name = "";
             if (id) {
 
@@ -118,7 +118,7 @@ export class NaturtypeRad extends React.Component {
                     }
 
                 } else {
-                    console.log(redListCodes)
+                    
                     for (var i = 0; i < redListCodes.Children.length; i++) {
                         for (var j = 0; j < redListCodes.Children[i].Children.length; j++) {
                             if (redListCodes.Children[i].Children[j].Id == id) {
@@ -131,6 +131,23 @@ export class NaturtypeRad extends React.Component {
                       
             return name
         } 
+
+        const findNTArea = (id) => {
+            var area = "";
+            if (id) {
+
+                if(reg.test(id)){
+                    for (var i = 0; i < redListCodes.Children.length; i++) {
+                        for (var j = 0; j < redListCodes.Children[i].Children.length; j++) {
+                            if (redListCodes.Children[i].Children[j].Id == id) {
+                                area = redListCodes.Children[i].Children[j].Area
+                            }
+                        }
+                    }
+                }
+        }
+        return area
+    }
         console.log("NT row: " + JSON.stringify(nt))
         return(
             <tr>
@@ -138,7 +155,7 @@ export class NaturtypeRad extends React.Component {
                 {/*<td>ntlabel</td>*/}
                 <td>{nt.name ? nt.name : nt.niNCode ? findNTName(nt.niNCode) : ""}</td>
                 <td>{dominanceForrest}</td>
-                {showNatureTypeArea && <td></td> }
+                {showNatureTypeArea && <td><td>{nt.niNCode ? findNTArea(nt.niNCode) : ""}</td></td> }
                 {this.edit
                 ?
                 <td>{assessment.alienSpeciesCategory == "DoorKnocker" ? koder.timeHorizon[1].Text : 
@@ -273,7 +290,7 @@ export default class NaturtypeTable extends React.Component {
         // check if there are any red list nature types in the table - they have only numbers in id's
         const reg = /^\d+$/;
         const noRedListTypes = !naturetypes.find(ntype => reg.test(ntype.niNCode))
-        console.log(noRedListTypes)
+        
         console.log("naturtyperader#: " + naturetypes.length)
         console.log("nt table: " + JSON.stringify(naturetypes))
         console.log("canRenderTable: " + canRenderTable)
