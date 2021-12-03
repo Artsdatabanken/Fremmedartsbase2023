@@ -47,9 +47,9 @@ export default class EkspandertSpredningsrad extends React.Component {
                     key={this.props.id}
                     taxonId={this.props.taxonId}
                     scientificnameId={this.props.scientificNameId}
-                    observationFromYear={detaljer.ObservationFromYear}
-                    observationYear={detaljer.ObservationYear}
-                    SelectionGeometry={detaljer.SelectionGeometry}
+                    observationFromYear={detaljer.observationFromYear}
+                    observationYear={detaljer.observationYear}
+                    SelectionGeometry={detaljer.selectionGeometry}
                     utvalgsparametre={artskartModel.utvalgsparametre}/>}
             </tr>
         )
@@ -77,6 +77,7 @@ export default class EkspandertSpredningsrad extends React.Component {
 @observer export class EkspandertSpredningsradDetaljer extends React.Component {
     render() {
         const {fabModel, detaljer} = this.props
+        console.log(detaljer)
         const labels = fabModel.kodeLabels.DistributionHistory
         return (
             <table style={{
@@ -98,7 +99,7 @@ export default class EkspandertSpredningsrad extends React.Component {
                                         <td>{labels.historyFrom}</td>
                                         <td colSpan="2"><Xcomp.Number
                                             width="4.5em"
-                                            observableValue={[detaljer, 'ObservationFromYear']}
+                                            observableValue={[detaljer, 'observationFromYear']}
                                             validate={(val) => val.toString().length > 0}
                                             integer
                                             />
@@ -126,7 +127,7 @@ export default class EkspandertSpredningsrad extends React.Component {
                                         <td colSpan="3">
                                             <Xcomp.Number
                                                 width="4.5em"
-                                                observableValue={[detaljer, 'ObservationYear']}
+                                                observableValue={[detaljer, 'observationYear']}
                                                 validate={(val) => val.toString().length > 0}
                                                 integer
                                             />
@@ -134,7 +135,7 @@ export default class EkspandertSpredningsrad extends React.Component {
                                     </tr>
                                     <tr>
                                         <td>{labels.historyLocation}</td>
-                                        <td width="100%" colSpan="4"><Xcomp.String observableValue={[detaljer, 'Location']}/></td>
+                                        <td width="100%" colSpan="4"><Xcomp.String observableValue={[detaljer, 'location']}/></td>
                                     </tr>
                                     <tr>
                                         <td>&nbsp;</td>
@@ -156,22 +157,22 @@ export default class EkspandertSpredningsrad extends React.Component {
                                             <Xcomp.Number
                                                 width="6em"
                                                 integer
-                                                observableValue={[detaljer, 'SpeciesCount']}/>
+                                                observableValue={[detaljer, 'speciesCount']}/>
                                         </td>
                                         <td>&nbsp;*&nbsp;</td>
                                         <td><Xcomp.Number
                                             width="4em"
                                             integer
-                                            observableValue={[detaljer, 'SpeciesCountDarkFigure']}/></td>
+                                            observableValue={[detaljer, 'speciesCountDarkFigure']}/></td>
                                         <td>{detaljer.SpeciesCountCalculated && `= ${detaljer.SpeciesCountCalculated}`}</td>
                                     </tr>
                                     <tr>
                                         <td>{labels.historyAreaOccupancy}</td>
-                                        <td><Xcomp.Number integer width="6em" observableValue={[detaljer, 'ExistenceArea']}/></td>
+                                        <td><Xcomp.Number integer width="6em" observableValue={[detaljer, 'existenceArea']}/></td>
                                         <td>&nbsp;*&nbsp;</td>
                                         <td><Xcomp.Number
                                             width="4em"
-                                            observableValue={[detaljer, 'ExistenceAreaCountDarkFigure']}/></td>
+                                            observableValue={[detaljer, 'existenceAreaCountDarkFigure']}/></td>
                                         <td>{detaljer.ExistenceAreaCalculated && `= ${detaljer.ExistenceAreaCalculated}`}&nbsp;km&#178;</td>
                                     </tr>
                                     <tr>
@@ -182,7 +183,7 @@ export default class EkspandertSpredningsrad extends React.Component {
                                         }}>
                                             <Xcomp.Number
                                                 integer
-                                                observableValue={[detaljer, 'SpreadArea']}
+                                                observableValue={[detaljer, 'spreadArea']}
                                             />
                                         </td>
                                         <td colSpan="2">&nbsp;km&#178;</td>
@@ -192,7 +193,7 @@ export default class EkspandertSpredningsrad extends React.Component {
                                     </tr>
                                     <tr>
                                         <td>{labels.historyComment}</td>
-                                        <td colSpan="4"><Xcomp.HtmlString observableValue={[detaljer, 'Comment']}/></td>
+                                        <td colSpan="4"><Xcomp.HtmlString observableValue={[detaljer, 'comment']}/></td>
                                     </tr>
                                 </tbody>
                             </table>
