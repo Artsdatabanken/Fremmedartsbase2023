@@ -6,8 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
+using KellermanSoftware.CompareNetObjects;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.EntityFrameworkCore;
 using Prod.Data.EFCore;
@@ -469,7 +472,55 @@ namespace SwissKnife.Database
                         dest.RiskAssessment.AOO50yrLow = src.PotentialExistenceAreaLowQuartile;
                         dest.RiskAssessment.AOO50yrHigh = src.PotentialExistenceAreaHighQuartile;
 
+                        dest.RiskAssessment.AOOdarkfigureBest = ParseFloat(src.CurrentExistenceAreaMultiplier);
+                        dest.RiskAssessment.AOOdarkfigureHigh = ParseFloat(src.CurrentExistenceAreaHighMultiplier);
+                        dest.RiskAssessment.AOOdarkfigureLow = ParseFloat(src.CurrentExistenceAreaLowMultiplier);
+
                         dest.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes = src.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes;
+
+
+                        switch (src.AlienSpeciesCategory)
+                        {
+                            case "AlienSpecie":
+                            case "DoorKnocker":
+                            case "RegionallyAlien":
+                            case "EcoEffectWithoutEstablishment":
+                                dest.IsAlienSpecies = true;
+                                break;
+                            case "NotApplicable":
+                                if (src.NotApplicableCategory != "notAlienSpecie")
+                                {
+                                    dest.IsAlienSpecies = true;
+                                }
+
+                                if (src.NotApplicableCategory == "taxonIsEvaluatedInHigherRank")
+                                {
+                                    dest.ConnectedToAnother = true;
+                                }
+
+                                if (src.NotApplicableCategory == "traditionalProductionSpecie")
+                                {
+                                    dest.ProductionSpecies = true;
+                                }
+
+                                if (src.NotApplicableCategory == "establishedBefore1800")
+                                {
+                                    dest.AlienSpecieUncertainIfEstablishedBefore1800 = true;
+                                }
+
+                                break;
+                        }
+
+                        if (src.AlienSpeciesCategory == "AlienSpecie" || src.AlienSpeciesCategory == "DoorKnocker")
+                        {
+                            dest.AlienSpecieUncertainIfEstablishedBefore1800 = false;
+                        }
+
+                        if (src.AlienSpeciesCategory == "RegionallyAlien")
+                        {
+                            dest.IsRegionallyAlien = true;
+                        }
+
                         // alt annet ser ut til å bli ignorert
                     });
 
@@ -521,8 +572,16 @@ namespace SwissKnife.Database
             return null;
         }
 
+        
+
         private static double? ParseDouble(string str)
         {
+            if (string.IsNullOrWhiteSpace(str))
+            {
+                return null;
+            }
+            var currencyDecimalSeparator = Thread.CurrentThread.CurrentCulture.NumberFormat.CurrencyDecimalSeparator;
+            str = str.Replace(",", currencyDecimalSeparator).Replace(".", currencyDecimalSeparator);
             if (double.TryParse(str, out double test))
             {
                 return test;
@@ -573,7 +632,21 @@ namespace SwissKnife.Database
                     return null;
             }
         }
+        private static float? ParseFloat(string str)
+        {
+            if (string.IsNullOrWhiteSpace(str))
+            {
+                return null;
+            }
+            var currencyDecimalSeparator = Thread.CurrentThread.CurrentCulture.NumberFormat.CurrencyDecimalSeparator;
+            str = str.Replace(",", currencyDecimalSeparator).Replace(".", currencyDecimalSeparator);
+            if (float.TryParse(str, out float test))
+            {
+                return test;
+            }
 
+            return null;
+        }
         private static long ParseLongFromNullableInt(int? spreadYearlyIncreaseObservations)
         {
             if (!spreadYearlyIncreaseObservations.HasValue)
@@ -632,15 +705,86 @@ namespace SwissKnife.Database
 
             } while (hasLine);
         }
+        public class BoolJsonConverter : JsonConverter<bool>
+        {
+            public override bool Read(
+                ref Utf8JsonReader reader,
+                Type typeToConvert,
+                JsonSerializerOptions options)
+            {
+                if (reader.TokenType == JsonTokenType.False)
+                {
+                    return false;
+                }
 
+                if (reader.TokenType == JsonTokenType.True)
+                {
+                    return true;
+                }
+
+                if (reader.TokenType == JsonTokenType.Null)
+                {
+                    return false;
+                }
+
+                var value = reader.GetString();
+                return value != null && (value.ToLowerInvariant() == "true");
+            }
+
+            public override void Write(Utf8JsonWriter writer, bool value, JsonSerializerOptions options)
+            {
+                writer.WriteBooleanValue(value);
+            }
+        }
+        public class BoolNullableJsonConverter : JsonConverter<bool?>
+        {
+            public override bool? Read(
+                ref Utf8JsonReader reader,
+                Type typeToConvert,
+                JsonSerializerOptions options)
+            {
+                if (reader.TokenType == JsonTokenType.False)
+                {
+                    return false;
+                }
+
+                if (reader.TokenType == JsonTokenType.True)
+                {
+                    return true;
+                }
+
+                if (reader.TokenType == JsonTokenType.Null)
+                {
+                    return null;
+                }
+
+                var value = reader.GetString();
+                return value != null && (value.ToLowerInvariant() == "true");
+            }
+
+            public override void Write(Utf8JsonWriter writer, bool? value, JsonSerializerOptions options)
+            {
+                if (value.HasValue) writer.WriteBooleanValue(value.Value);
+                writer.WriteNullValue();
+            }
+        }
         public void PatchImport(IConsole console, string inputFolder)
         {
             var jsonSerializerOptions = new JsonSerializerOptions
             {
-                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
             };
+            jsonSerializerOptions.Converters.Add(new BoolJsonConverter());
+            jsonSerializerOptions.Converters.Add(new BoolNullableJsonConverter());
 
-            var existing = _database.Assessments.ToDictionary(x => x.Id, x => JsonSerializer.Deserialize<FA4>(x.Doc));
+            var comparer = new KellermanSoftware.CompareNetObjects.CompareLogic(new ComparisonConfig()
+            {
+                IgnoreUnknownObjectTypes = true,
+                TreatStringEmptyAndNullTheSame = true
+            });
+
+            var existing = _database.Assessments.ToDictionary(x => x.Id, x => JsonSerializer.Deserialize<FA4>(x.Doc, jsonSerializerOptions));
 
             // mapping
             var mapper = CreateMappingFromOldToNew();
@@ -662,8 +806,9 @@ namespace SwissKnife.Database
                 var real = _database.Assessments.Single(x => x.Id == theMatchingAssessment.Key);
 
                 // todo: overfør manglende morro
-                var exAssessment = JsonSerializer.Deserialize<FA4>(real.Doc);
-                
+                var exAssessment = JsonSerializer.Deserialize<FA4>(real.Doc, jsonSerializerOptions);
+                var orgCopy = JsonSerializer.Deserialize<FA4>(real.Doc, jsonSerializerOptions);
+
                 // FieldsFix
                 Debug.Assert(exAssessment != null, nameof(exAssessment) + " != null");
                 exAssessment.SpreadHistory = newAssesment.SpreadHistory;
@@ -683,7 +828,27 @@ namespace SwissKnife.Database
                 exAssessment.RiskAssessment.AOO50yrHigh = newAssesment.RiskAssessment.AOO50yrHigh;
                 exAssessment.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes = newAssesment.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes;
 
-                real.Doc = JsonSerializer.Serialize<FA4>(exAssessment);
+                exAssessment.RiskAssessment.AOOdarkfigureBest = newAssesment.RiskAssessment.AOOdarkfigureBest;
+                exAssessment.RiskAssessment.AOOdarkfigureHigh = newAssesment.RiskAssessment.AOOdarkfigureHigh;
+                exAssessment.RiskAssessment.AOOdarkfigureLow = newAssesment.RiskAssessment.AOOdarkfigureLow;
+
+
+                exAssessment.IsAlienSpecies = newAssesment.IsAlienSpecies;
+                exAssessment.ConnectedToAnother = newAssesment.ConnectedToAnother;
+                exAssessment.ProductionSpecies = newAssesment.ProductionSpecies;
+                exAssessment.AlienSpecieUncertainIfEstablishedBefore1800 = newAssesment.AlienSpecieUncertainIfEstablishedBefore1800;
+                exAssessment.IsRegionallyAlien = newAssesment.IsRegionallyAlien;
+
+                var comparisonResult = comparer.Compare(orgCopy, exAssessment);
+                if (comparisonResult.AreEqual == false)
+                {
+                   real.Doc = JsonSerializer.Serialize<FA4>(exAssessment); 
+                }
+                //else
+                //{
+                //     real.Doc = JsonSerializer.Serialize<FA4>(exAssessment); 
+                //}
+                
                 //               _database.Assessments.Add(dbAssessment);
                 count++;
 
