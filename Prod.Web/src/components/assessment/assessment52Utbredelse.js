@@ -306,31 +306,34 @@ export default class Assessment52Utbredelse extends React.Component {
                     </div>
                         
                 </fieldset>
-                <fieldset className="well" id="spreadHistoryDomestic">
-                    <h4>Utbredelseshistorikk 2018</h4>
-                  {/* <h4>{labels.distributionHistory} {appState.evaluationContext.nameWithPreposition}</h4>*/}
-                   <UtbredelseshistorikkInnenlands vurdering={assessment} fabModel={appState}/>
-                   {assessment.spreadHistoryDomesticDocumentation
-                    ? <div>
-                        <h4>{labels.previousInfo}. <b>{labels.mustTransfer}</b></h4>
-                        <p
-                            dangerouslySetInnerHTML={{
-                                __html: assessment.spreadHistoryDomesticDocumentation
-                            }} />
-                        <Xcomp.Button onClick={() => {
-                            const existing = assessment.riskAssessment.criteriaDocumentationDomesticSpread
-                            const newstring = !existing
-                                ? assessment.spreadHistoryDomesticDocumentation
-                                : existing + assessment.spreadHistoryDomesticDocumentation
-                                assessment.riskAssessment.criteriaDocumentationDomesticSpread = newstring
-                            assessment.spreadHistoryDomesticDocumentation = null
-                        }}>{labels.transfer}</Xcomp.Button>
-                        <hr />
-                      </div>
-                    : null } 
-                    
+
+                {assessment.spreadHistory.length > 0 && 
+                    <fieldset className="well" id="spreadHistoryDomestic">
+                        <h4>Utbredelseshistorikk 2018</h4>
+                    {/* <h4>{labels.distributionHistory} {appState.evaluationContext.nameWithPreposition}</h4>*/}
+                    <UtbredelseshistorikkInnenlands vurdering={assessment} fabModel={appState}/>
+                    {assessment.spreadHistoryDomesticDocumentation
+                        ? <div>
+                            <h4>{labels.previousInfo}. <b>{labels.mustTransfer}</b></h4>
+                            <p
+                                dangerouslySetInnerHTML={{
+                                    __html: assessment.spreadHistoryDomesticDocumentation
+                                }} />
+                            <Xcomp.Button onClick={() => {
+                                const existing = assessment.riskAssessment.criteriaDocumentationDomesticSpread
+                                const newstring = !existing
+                                    ? assessment.spreadHistoryDomesticDocumentation
+                                    : existing + assessment.spreadHistoryDomesticDocumentation
+                                    assessment.riskAssessment.criteriaDocumentationDomesticSpread = newstring
+                                assessment.spreadHistoryDomesticDocumentation = null
+                            }}>{labels.transfer}</Xcomp.Button>
+                            <hr />
+                        </div>
+                        : null } 
                         
-                </fieldset>
+                            
+                    </fieldset>
+                }
             
                     
                     {config.showPageHeaders

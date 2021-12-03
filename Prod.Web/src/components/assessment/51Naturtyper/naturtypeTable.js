@@ -261,7 +261,9 @@ export default class NaturtypeTable extends React.Component {
     render() {
         const {naturetypes, labels, canRenderTable, appState, desc, codes, disabled} = this.props;
         const ntLabels = labels.NatureTypes
-        const noRedListTypes = naturetypes.find(ntype => ntype.niNCode == null)
+        // check if there are any red list nature types in the table - they have only numbers in id's
+        const reg = /^\d+$/;
+        const noRedListTypes = !naturetypes.find(ntype => reg.test(ntype.niNCode))
         console.log(noRedListTypes)
         console.log("naturtyperader#: " + naturetypes.length)
         console.log("nt table: " + JSON.stringify(naturetypes))
@@ -275,7 +277,7 @@ export default class NaturtypeTable extends React.Component {
                 <col  style={{width: "10%"}}/>
                 <col  style={{width: "10%"}}/>
                 <col  style={{width: noRedListTypes ? "10%" : "25%"}}/>                
-                {noRedListTypes && <col  style={{width: "15%"}}/> }
+                {!noRedListTypes && <col  style={{width: "15%"}}/> }
                 <col  style={{width: "10%"}}/>
                 <col  style={{width: "15%"}}/>
                 <col  style={{width: "5%"}}/>
@@ -288,7 +290,7 @@ export default class NaturtypeTable extends React.Component {
                     <th>{ntLabels.code}</th>
                     <th>{ntLabels.name}</th>
                     <th>{ntLabels.dominanceForrest}</th>
-                    {noRedListTypes && <th>{ntLabels.natureTypeArea}</th>}
+                    {!noRedListTypes && <th>{ntLabels.natureTypeArea}</th>}
                     <th>{ntLabels.timeHorizon}</th>
                     <th>{ntLabels.colonizedArea}</th>
                     <th>{ntLabels.stateChange}</th>
