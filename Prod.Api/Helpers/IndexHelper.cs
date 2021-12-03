@@ -22,7 +22,7 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Change this to force index rebuild!
         /// </summary>
-        public const int IndexVersion = 12;
+        public const int IndexVersion = 14;
 
         private const string Field_Id = "Id";
         private const string Field_Group = "Expertgroup";
@@ -206,10 +206,10 @@ namespace Prod.Api.Helpers
                 // StringField indexes but doesn't tokenize - Case important
                 new StringField(Field_Group, ass.ExpertGroup, Field.Store.YES),
                 new StringField(Field_EvaluationStatus, ass.EvaluationStatus, Field.Store.YES),
-                new StringField(Field_LastUpdatedBy, assessment.LastUpdatedByUser.FullName, Field.Store.YES),
+                new StringField(Field_LastUpdatedBy, assessment.LastUpdatedByUser.FullName.Trim(), Field.Store.YES),
                 new StringField(Field_LastUpdatedAt, assessment.LastUpdatedAt.Date.ToString("s"), Field.Store.YES),
                 new StoredField(Field_LockedForEditByUser,
-                    assessment.LockedForEditByUser != null ? assessment.LockedForEditByUser.FullName : string.Empty),
+                    assessment.LockedForEditByUser != null ? assessment.LockedForEditByUser.FullName.Trim() : string.Empty),
                 new StoredField(Field_LockedForEditAt, assessment.LockedForEditAt.ToString("s")),
                 new TextField(Field_ScientificName,
                     ass.EvaluatedScientificName + (!string.IsNullOrWhiteSpace(ass.EvaluatedScientificNameAuthor)

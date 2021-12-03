@@ -770,8 +770,8 @@ class ViewModel {
             const id = Number(json.id)
             console.log("type of id : " + typeof(id))
             const jsonnew = JSON.parse(JSON.stringify(json))
-            // find out if the species is alien. NB: does not check if the species is going to be assessed or not (skalVurderes()), this should be done!
-            const alien = jsonnew.alienSpeciesCategory =="AlienSpecie"|| jsonnew.alienSpeciesCategory == "DoorKnocker" || jsonnew.notApplicableCategory == "establishedBefore1800" || jsonnew.alienSpeciesCategory == "RegionallyAlien"
+            // // // find out if the species is alien
+            // // const alien = jsonnew.alienSpeciesCategory =="AlienSpecie" || jsonnew.notApplicableCategory == "establishedBefore1800"
             
             //--------------------------------------------------------------
             //Argh! this dirty trick makes it possible to use observableStringEnum (radio) for the property
@@ -779,8 +779,9 @@ class ViewModel {
             jsonnew.isAlienSpecies = alien ? "true" : "false"
             // if the species was established before 1800, set it as default
             jsonnew.alienSpecieUncertainIfEstablishedBefore1800 = jsonnew.notApplicableCategory == "establishedBefore1800" ? "yes" :  jsonnew.alienSpeciesCategory == "AlienSpecie" ? "no" : null
-            jsonnew.connectedToAnother = (jsonnew.alienSpeciesCategory == "AlienSpecie" || jsonnew.alienSpeciesCategory == "DoorKnocker") ? "no" : jsonnew.connectedToAnother ? "true" : "false" 
-            jsonnew.isRegionallyAlien = jsonnew.alienSpeciesCategory = "RegionallyAlien" ? true : false
+            jsonnew.connectedToAnother = jsonnew.alienSpeciesCategory == "AlienSpecie" ? "no" : jsonnew.connectedToAnother ? "true" : "false" 
+            jsonnew.alienSpeciesCategory = "RegionallyAlien" ? jsonnew.isRegionallyAlien = true : jsonnew.isRegionallyAlien = false
+            //--------------------------------------------------------------
 
             const assessment = enhanceAssessment(jsonnew, this)
             const assessmentStringCopy = assessment.toJSON
@@ -1119,11 +1120,11 @@ class ViewModel {
 
         const currentdata = JSON.parse(json)
         const data = JSON.parse(json)
-        //--------------------------------------------------------------
-        //Argh! this reverses the trick when opening the assessment
-        data.isAlienSpecies = data.isAlienSpecies === "true" ? true : false
-        data.connectedToAnother = data.connectedToAnother === "true" ? true : false
-        //--------------------------------------------------------------
+        // // //--------------------------------------------------------------
+        // // //Argh! this reverses the trick when opening the assessment
+        // // data.isAlienSpecies = data.isAlienSpecies === "true" ? true : false
+        // // data.connectedToAnother = data.connectedToAnother === "true" ? true : false
+        // // //--------------------------------------------------------------
         const datastring = JSON.stringify(data)
         // this.addGetters(data)
         console.log("Y:" + json.length)

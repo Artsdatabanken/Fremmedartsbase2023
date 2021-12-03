@@ -121,22 +121,22 @@ checkStatus = (production) => {
                     <h2>{labels.SpeciesStatus.statusHeading}</h2>
                     <p>{labels.SpeciesStatus.isAlienSpecies} </p>
                     <p>{labels.SpeciesStatus.unsureIfAlien} </p>
-                    <Xcomp.Radio value={'true'} observableValue={[assessment, "isAlienSpecies"]} defaultChecked={assessment.alienSpeciesCategory == "RegionallyAlien"} label={labels.General.yes} />                    
-                    { assessment.isAlienSpecies == 'true' && assessment.alienSpeciesCategory != "DoorKnocker" ? 
+                    <Xcomp.Radio value={'true'} observableValue={[assessment, "isAlienSpeciesString"]} defaultChecked={assessment.alienSpeciesCategory == "RegionallyAlien"} label={labels.General.yes} />                    
+                    { assessment.isAlienSpeciesString == 'true' && assessment.alienSpeciesCategory != "DoorKnocker" ? 
                             <Xcomp.Bool observableValue={[assessment, "isRegionallyAlien"]} checked={assessment.alienSpeciesCategory == "RegionallyAlien"} label={labels.SpeciesStatus.regionallyAlien} /> : null }
-                    <Xcomp.Radio value={'false'} observableValue={[assessment, "isAlienSpecies"]} label={labels.General.no} />
+                    <Xcomp.Radio value={'false'} observableValue={[assessment, "isAlienSpeciesString"]} label={labels.General.no} />
                     <p>{labels.SpeciesStatus.unsureAlienDescription}</p>
                     <Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'isAlien']}/>
 
-                    { assessment.isAlienSpecies == 'true' ?
+                    { assessment.isAlienSpeciesString == 'true' ?
                     <div>                     
                         <p>{labels.SpeciesStatus.connectedToAnotherTaxon} </p> 
-                        <Xcomp.StringEnum mode="radiohorizontal" observableValue={[assessment, "connectedToAnother"]} 
+                        <Xcomp.StringEnum mode="radiohorizontal" observableValue={[assessment, "connectedToAnotherString"]} 
                                 style={{marginTop: "20px"}}
                                 codes={codes.yesNo}
                                 />
                         
-                        { assessment.connectedToAnother == "yes" ?
+                        { assessment.connectedToAnotherString == "yes" ?
                             <div style={{border: '1px solid lightgray', padding: '10px'}}>
                             <Xcomp.Radio value={"Connected"} observableValue={[assessment.riskAssessment, "connected"]} label={labels.SpeciesStatus.assessedWithAnotherTaxon}/>
                             {assessment.riskAssessment.connected == "Connected" && 
@@ -227,7 +227,7 @@ checkStatus = (production) => {
                             </div> : null }
                     </div> : null}
 
-                    { assessment.isAlienSpecies == 'true' && (assessment.connectedToAnother == "no" || assessment.connectedToAnother == "false" ) ? 
+                    { assessment.isAlienSpeciesString == 'true' && (assessment.connectedToAnotherString == "no" || assessment.connectedToAnotherString == "false" ) ? 
                      <div>
                      <div>
                          <p>{labels.SpeciesStatus.isProductionSpecies}</p>                          
@@ -268,7 +268,7 @@ checkStatus = (production) => {
                         <br></br>
                         <div>
                             <p>{assessment.isRegionallyAlien ? labels.SpeciesStatus.establishedBefore1800RegionallyAlien : labels.SpeciesStatus.establishedBefore1800} </p>
-                            <Xcomp.StringEnum observableValue={[assessment, "alienSpecieUncertainIfEstablishedBefore1800"]} mode="radio" codes={codes.yesNo}/>
+                            <Xcomp.StringEnum observableValue={[assessment, "alienSpecieUncertainIfEstablishedBefore1800String"]} mode="radio" codes={codes.yesNo}/>
                         </div>
                         
                         <p>{labels.SpeciesStatus.probabilityUncertainity}</p>
@@ -276,16 +276,16 @@ checkStatus = (production) => {
                         <Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'establishedBefore1800']}/>
                      </div> : null}
 
-                     { assessment.isAlienSpecies == 'true'  && 
+                     { assessment.isAlienSpeciesString == 'true'  && 
                        assessment.alienSpeciesCategory != "DoorKnocker" && 
                         assessment.speciesStatus == "A" &&
-                        (assessment.connectedToAnother == "no" || assessment.connectedToAnother == "false") ? 
+                        (assessment.connectedToAnotherString == "no" || assessment.connectedToAnotherString == "false") ? 
                         <div className="statusField">
                             <p> {labels.SpeciesStatus.wronglyAssessedBefore} </p>                
                             <Xcomp.Bool observableValue={[assessment, "wrongAssessed"]} />  
                             
                         </div> : null }
-                        {(this.statusChange && assessment.alienSpecieUncertainIfEstablishedBefore1800 != "yes") &&
+                        {(this.statusChange && assessment.alienSpecieUncertainIfEstablishedBefore1800String != "yes") &&
                             <div>
                             <p> {labels.SpeciesStatus.wronglyAssessedBefore} </p>                
                             <Xcomp.StringEnum observableValue={[assessment, "wrongAssessed"]} mode="radio" codes={codes.yesNo}/>  
@@ -295,7 +295,7 @@ checkStatus = (production) => {
 
                         
                     
-                    { assessment.isAlienSpecies == 'false' ?
+                    { assessment.isAlienSpeciesString == 'false' ?
                     <div>
                         <p>{labels.SpeciesStatus.didSpecies} </p>
                         <Xcomp.StringEnum observableValue={[assessment, "changedFromAlien"]} mode="radio" codes={codes.ChangedFromAlien}/>
@@ -306,16 +306,17 @@ checkStatus = (production) => {
                     </div> : null }
                     </fieldset>
                     
-                    {((assessment.isAlienSpecies == 'true' || assessment.isAlienSpecies == 'false') && assessment.speciesStatus != null) &&
+                    {((assessment.isAlienSpeciesString == 'true' || assessment.isAlienSpeciesString == 'false') && assessment.speciesStatus != null) &&
                         <fieldset className="well">
                                         
 
-                               {assessment.isAlienSpecies == 'true' && 
-                                    (assessment.connectedToAnother == "no" || assessment.connectedToAnother == "false" ) && 
-                                    (assessment.alienSpecieUncertainIfEstablishedBefore1800 == "no" || assessment.alienSpecieUncertainIfEstablishedBefore1800 == false ) &&
+                               {assessment.isAlienSpeciesString == 'true' && 
+                                    (assessment.connectedToAnotherString == "no" || assessment.connectedToAnotherString == "false" ) && 
+                                    (assessment.alienSpecieUncertainIfEstablishedBefore1800String == "no" ) &&
+                                    //|| assessment.alienSpecieUncertainIfEstablishedBefore1800 == false ) &&
                                     //(assessment.alienSpeciesCategory == "DoorKnocker" || assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3") &&
                                     assessment.speciesStatus != null && 
-                                    (assessment.connectedToAnother == "no" || assessment.connectedToAnother == "false") ? 
+                                    (assessment.connectedToAnotherString == "no" || assessment.connectedToAnotherString == "false") ? 
                                 <div>
                                     <h3>{labels.SpeciesStatus.conclusion}</h3>
                                     {(assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3") ? 
@@ -330,8 +331,8 @@ checkStatus = (production) => {
                         </fieldset>
                     }
 
-                    {assessment.isAlienSpecies == 'true' && 
-                        (assessment.connectedToAnother == "no" || assessment.connectedToAnother == "false" ) &&
+                    {assessment.isAlienSpeciesString == 'true' && 
+                        (assessment.connectedToAnotherString == "no" || assessment.connectedToAnotherString == "false" ) &&
                         (assessment.wrongAssessed == false || assessment.wrongAssessed == null ) && assessment.speciesStatus != null && assessment.wrongAssessed != "yes" ?
                         <fieldset className="well">
                             {assessment.speciesStatus != "A" &&
@@ -479,7 +480,7 @@ checkStatus = (production) => {
                     <div className="well">
                         <Xcomp.Bool
                             label={labels.StatusUncertainty.uncertainIfEstablishedBefore1800}
-                            observableValue={[vurdering, 'alienSpecieUncertainIfEstablishedBefore1800']}/>
+                            observableValue={[vurdering, 'alienSpecieUncertainIfEstablishedBefore1800String']}/>
                         <Xcomp.Bool
                             label={labels.StatusUncertainty.uncertainAntropochor}
                             observableValue={[vurdering, 'alienSpecieUncertainAntropochor']}/> 
