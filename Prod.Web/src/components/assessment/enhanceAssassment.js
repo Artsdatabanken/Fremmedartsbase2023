@@ -56,12 +56,15 @@ export default function enhanceAssessment(json, appState) {
 
     const artificialAndConstructedSites = appState.artificialAndConstructedSites
 
-    // todo: Remove this section before launch! 
-    // Code/statechange to help with developement/debugging is placed here
-    console.log("RUN ENHANCEMENTS HERE")
-    riskAssessment.chosenSpreadMedanLifespan = "ViableAnalysis"
-    //assessment.horizonDoScanning = true;  //todo: remove this (It is here for testing purposes)
-    // ----------------------------------
+    // // todo: Remove this section before launch! 
+    // // Code/statechange to help with developement/debugging is placed here
+    // console.log("RUN ENHANCEMENTS HERE")
+    // riskAssessment.chosenSpreadMedanLifespan = "ViableAnalysis"
+    // //assessment.horizonDoScanning = true;  //todo: remove this (It is here for testing purposes)
+    // // ----------------------------------
+
+
+
 
 
     enhanceCriteria(riskAssessment, assessment, codes, labels, artificialAndConstructedSites)
@@ -110,6 +113,33 @@ export default function enhanceAssessment(json, appState) {
             return json
         }
     });
+
+    extendObservable(assessment, {
+        // this value is note part of the domain object
+        get isAlienSpeciesString() {
+            // const alien = assessment.alienSpeciesCategory =="AlienSpecie" || assessment.notApplicableCategory == "establishedBefore1800"
+            return assessment.isAlienSpecies ? "true" : "false"
+        },
+        set isAlienSpeciesString(s) {
+            assessment.isAlienSpecies = s === "true"
+        },
+        // this value is note part of the domain object
+        get alienSpecieUncertainIfEstablishedBefore1800String() {
+            // const value = assessment.notApplicableCategory == "establishedBefore1800" ? "yes" :  assessment.alienSpeciesCategory == "AlienSpecie" ? "no" : null
+            return assessment.alienSpecieUncertainIfEstablishedBefore1800 ? "yes" : "no"
+        },
+        set alienSpecieUncertainIfEstablishedBefore1800String(s) {
+            assessment.alienSpecieUncertainIfEstablishedBefore1800 = s === "yes"
+        },
+        // this value is note part of the domain object
+        get connectedToAnotherString() {
+            // const value assessment.alienSpeciesCategory == "AlienSpecie" ? "no" : assessment.connectedToAnother ? "true" : "false" 
+            return assessment.connectedToAnother ? "true" : "false"
+        },
+        set connectedToAnotherString(s) {
+            assessment.connectedToAnother = s === "true"
+        }
+    })
 
     
     return assessment
