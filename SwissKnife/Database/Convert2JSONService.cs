@@ -116,6 +116,7 @@ namespace SwissKnife.Database
             public string Text { get; set; }
             public string Category { get; set; }
             public bool Collapsed { get; set; }
+            public long Area { get; set; }
             public List<jsonNT> Children { get; set; }
         }
 
@@ -159,6 +160,7 @@ namespace SwissKnife.Database
                         nt2.Category = importFormat.GjeldeneKategoriOgKriterie;
                         nt2.Collapsed = true;
                         nt2.Children = new List<jsonNT>();
+                        nt2.Area = Convert.ToInt64(importFormat.TotalarealBeregnet);
                         nt1.Children.Add(nt2);
                         //Console.WriteLine($"{importFormat.Id} {importFormat.Vurderingsenhet} {importFormat.Kortnavn} {importFormat.Typekode}");
                     }
