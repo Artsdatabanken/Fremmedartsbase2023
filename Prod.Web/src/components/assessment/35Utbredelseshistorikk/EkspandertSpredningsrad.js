@@ -23,7 +23,13 @@ export default class EkspandertSpredningsrad extends React.Component {
                 borderTopColor: "transparent",
                 boxShadow: "rgba(0, 0, 0, 0.0470588) 6px 6px 4px 0px"
             }}>
-                <td colSpan="11">
+                <EkspandertSpredningsradDetaljer
+                                        { ...this.props }
+                                        onShowArtskart={() => {
+                                        this.visArtskart = true;
+                                        return null
+                                    }}/>
+               {/* <td colSpan="11">
                     <table style={{width:"100%"}}>
                         <tbody>
                             <tr>
@@ -38,7 +44,7 @@ export default class EkspandertSpredningsrad extends React.Component {
                             </tr>
                         </tbody>
                     </table>
-                </td>
+                                </td> */}
                 {this.visArtskart && <Artskart
                     fabModel={this.props.fabModel}
                     onSave={(resultat) => this.handleSave(resultat)}
@@ -78,14 +84,40 @@ export default class EkspandertSpredningsrad extends React.Component {
     render() {
         const {fabModel, detaljer} = this.props
         console.log(detaljer)
-        const labels = fabModel.kodeLabels.DistributionHistory
+        const labels = fabModel.codeLabels.DistributionHistory
         return (
-            <table style={{
-                width: "100%"
-            }}>
-                <tbody>
-                    <tr>
-                        <td
+           
+                    <>
+                        <td> {detaljer.observationFromYear}</td>
+                        <td> {detaljer.observationYear}</td>
+                        <td> {detaljer.location}</td>
+                        <td> {detaljer.speciesCount}</td>
+                        <td> {detaljer.existenceArea}</td>
+                        <td> {detaljer.spreadArea}</td>
+                        <td> {detaljer.comment}</td>
+                        <td>
+                            {/* <Fylkesliste
+                                    countyLabel={labels.distributionCounty}
+                                        columns={[
+                                                {
+                                                 title: labels.distributionKnown,
+                                                 values: detaljer.regionalPresenceKnown
+                                                }, {
+                                                    title: labels.distributionAssumed,
+                                                    values: detaljer.regionalPresenceAssumed
+                                                }
+                                            ]}
+                                               // rows={fabModel
+                                               // .artskartModel
+                                               // .regionListe()}
+                                        />*/}
+                        </td>
+                        
+                    </>
+                    
+                           
+                              
+                       /* <td
                             style={{
                             width: "33%"
                         }}>
@@ -269,10 +301,9 @@ export default class EkspandertSpredningsrad extends React.Component {
                             <Button
                                 onClick={() => this.copyToCurrentAndPotential(detaljer)}
                                 bsStyle="primary">⇓ {labels.expandCopyTo} ⇓</Button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                        </td>*/
+                    
+               
         )
     }
     copyToCurrentAndPotential(row) {
