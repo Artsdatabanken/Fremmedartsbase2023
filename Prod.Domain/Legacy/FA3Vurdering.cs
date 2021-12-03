@@ -2,9 +2,7 @@
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Reflection;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace Prod.Domain.Legacy
 {
@@ -308,9 +306,9 @@ namespace Prod.Domain.Legacy
         public string EffectsOnPopulationOfOrigin { get; set; } // lagt til 31.08.2016
 
         // OsA, He, Fi
-        public string RegionalPresenceKnown;
-        public string RegionalPresenceAssumed;
-        public string RegionalPresencePotential;
+        public string RegionalPresenceKnown { get; set; }
+        public string RegionalPresenceAssumed { get; set; }
+        public string RegionalPresencePotential { get; set; }
     }
     public partial class FA3Legacy // (3.3) Import
     {
@@ -1040,21 +1038,49 @@ namespace Prod.Domain.Legacy
     };*/
         }
 
-        public Guid Id;
-        public string Location, Comment; //, SpeciesCount, ExistenceArea, ExistenceAreaCount, SpreadArea;
-        public string Regions ="";
-        public string RegionsAssumed ="";
+        public Guid Id { get; set; }
+        public string Location { get; set; }
+        public string Comment { get; set; } //, SpeciesCount, ExistenceArea, ExistenceAreaCount, SpreadArea;
+        public string Regions { get; set; } = "";
+
+        public string RegionsAssumed { get; set; } = "";
+
         //public DateTime? ObservationSortDate;
         //public DateTime? ObservationFromDate, ObservationDate;
-        public int ObservationYear, ObservationFromYear;
-        public int ObservationMonth, ObservationFromMonth;
-        public Int64? SpeciesCount, ExistenceArea, ExistenceAreaCount, SpreadArea;
-        [JsonConverter(typeof(CustomDoubleFormatConverter))]
-        public double? SpeciesCountDarkFigure, ExistenceAreaDarkFigure, ExistenceAreaCountDarkFigure, SpreadAreaDarkFigure;
+        public int ObservationYear { get; set; }
+        public int ObservationFromYear { get; set; }
+        public int ObservationMonth { get; set; }
+        public int ObservationFromMonth { get; set; }
+        public Int64? SpeciesCount { get; set; }
+        public Int64? ExistenceArea { get; set; }
+        public Int64? ExistenceAreaCount { get; set; }
+        public Int64? SpreadArea { get; set; }
 
         [JsonConverter(typeof(CustomDoubleFormatConverter))]
-        public double? SpeciesCountCalculated, ExistenceAreaCalculated, ExistenceAreaCountCalculated, SpreadAreaCalculated;
-        public string SelectionGeometry;// = "{\\\"type\\\": \\\"Feature\\\",\\\"geometry\\\": {\\\"type\\\": \\\"Polygon\\\", \\\"coordinates\\\": [[[10.33, 63.45], [11.951, 63.451], [10.949, 64.45]]]}}";
+        public double? SpeciesCountDarkFigure { get; set; }
+
+        [JsonConverter(typeof(CustomDoubleFormatConverter))]
+        public double? ExistenceAreaDarkFigure { get; set; }
+
+        [JsonConverter(typeof(CustomDoubleFormatConverter))]
+        public double? ExistenceAreaCountDarkFigure { get; set; }
+
+        [JsonConverter(typeof(CustomDoubleFormatConverter))]
+        public double? SpreadAreaDarkFigure { get; set; }
+
+        [JsonConverter(typeof(CustomDoubleFormatConverter))]
+        public double? SpeciesCountCalculated { get; set; }
+
+        [JsonConverter(typeof(CustomDoubleFormatConverter))]
+        public double? ExistenceAreaCalculated { get; set; }
+
+        [JsonConverter(typeof(CustomDoubleFormatConverter))]
+        public double? ExistenceAreaCountCalculated { get; set; }
+
+        [JsonConverter(typeof(CustomDoubleFormatConverter))]
+        public double? SpreadAreaCalculated { get; set; }
+
+        public string SelectionGeometry { get; set; } // = "{\\\"type\\\": \\\"Feature\\\",\\\"geometry\\\": {\\\"type\\\": \\\"Polygon\\\", \\\"coordinates\\\": [[[10.33, 63.45], [11.951, 63.451], [10.949, 64.45]]]}}";
     }
 
     internal class CustomDoubleFormatConverter : JsonConverter
@@ -1097,22 +1123,22 @@ namespace Prod.Domain.Legacy
 
     public class RegionalPresence
     {
-        public string Id;
+        public string Id { get; set; }
 
-        public bool Known;
+        public bool Known { get; set; }
     }
 
     public class RegionalPresenceWithPotential
     {
-        public string Id;
-        public bool Assumed;
-        public bool Known;
-        public bool Potential;
+        public string Id { get; set; }
+        public bool Assumed { get; set; }
+        public bool Known { get; set; }
+        public bool Potential { get; set; }
     }
 
     public class RegionalPresenseWithAssumed : RegionalPresence
     {
-        public bool Assumed;
+        public bool Assumed { get; set; }
         //private string v;
 
         public RegionalPresenseWithAssumed()

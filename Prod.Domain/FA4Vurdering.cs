@@ -461,9 +461,9 @@ public partial class FA4 // (3.2) Artsegenskaper
         public string EffectsOnPopulationOfOrigin { get; set; } // lagt til 31.08.2016
 
         // OsA, He, Fi
-        public string RegionalPresenceKnown;
-        public string RegionalPresenceAssumed;
-        public string RegionalPresencePotential;
+        public string RegionalPresenceKnown { get; set; }
+        public string RegionalPresenceAssumed { get; set; }
+        public string RegionalPresencePotential { get; set; }
     }
     public partial class FA4 // (3.3) Import
     {
@@ -1516,22 +1516,22 @@ public partial class FA4 // (3.2) Artsegenskaper
 
     public class RegionalPresence
     {
-        public string Id;
+        public string Id { get; set; }
 
-        public bool Known;
+        public bool Known { get; set; }
     }
 
     public class RegionalPresenceWithPotential
     {
-        public string Id;
-        public bool Assumed;
-        public bool Known;
-        public bool Potential;
+        public string Id { get; set; }
+        public bool Assumed { get; set; }
+        public bool Known { get; set; }
+        public bool Potential { get; set; }
     }
 
     public class RegionalPresenseWithAssumed : RegionalPresence
     {
-        public bool Assumed;
+        public bool Assumed { get; set; }
         //private string v;
 
         public RegionalPresenseWithAssumed()
