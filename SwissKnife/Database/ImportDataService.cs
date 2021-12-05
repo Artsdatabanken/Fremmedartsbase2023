@@ -479,6 +479,65 @@ namespace SwissKnife.Database
 
                         dest.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes = src.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes;
 
+                        if (!string.IsNullOrWhiteSpace(src.RegionalPresenceKnown))
+                        {
+                            var elements = src.RegionalPresenceKnown.Split(",", StringSplitOptions.RemoveEmptyEntries);
+                            foreach (var item in elements)
+                            {
+                                var match = dest.Fylkesforekomster.SingleOrDefault(x => x.Fylke.ToLowerInvariant() == item.ToLowerInvariant());
+                                if (match != null)
+                                {
+                                    match.State0 = 1;
+                                }
+                                else
+                                {
+                                    throw new Exception("No match not good");
+                                }
+                            }
+                        }
+                        if (!string.IsNullOrWhiteSpace(src.RegionalPresenceAssumed))
+                        {
+                            var elements = src.RegionalPresenceKnown.Split(",", StringSplitOptions.RemoveEmptyEntries);
+                            foreach (var item in elements)
+                            {
+                                var match = dest.Fylkesforekomster.SingleOrDefault(x => x.Fylke.ToLowerInvariant() == item.ToLowerInvariant());
+                                if (match != null)
+                                {
+                                    match.State1 = 1;
+                                }
+                                else
+                                {
+                                    throw new Exception("No match not good");
+                                }
+                            }
+                        }
+                        if (!string.IsNullOrWhiteSpace(src.RegionalPresencePotential))
+                        {
+                            var elements = src.RegionalPresenceKnown.Split(",", StringSplitOptions.RemoveEmptyEntries);
+                            foreach (var item in elements)
+                            {
+                                var match = dest.Fylkesforekomster.SingleOrDefault(x => x.Fylke.ToLowerInvariant() == item.ToLowerInvariant());
+                                if (match != null)
+                                {
+                                    match.State3 = 1;
+                                }
+                                else
+                                {
+                                    throw new Exception("No match not good");
+                                }
+                            }
+                        }
+                        foreach (var item in dest.Fylkesforekomster)
+                        {
+                            if (item.State0 == 0 && item.State1 == 00 && item.State3 == 0)
+                            {
+                                item.State2 = 1;
+                            }
+                        }
+                        //                    "RegionalPresenceKnown": "St",
+                        //"RegionalPresenceAssumed": "",
+                        //"RegionalPresencePotential": "Ro,Ho,Sf,Mr,St",
+
 
                         switch (src.AlienSpeciesCategory)
                         {
@@ -817,6 +876,7 @@ namespace SwissKnife.Database
                 exAssessment.RegionalPresenceKnown = newAssesment.RegionalPresenceKnown;
                 exAssessment.RegionalPresenceAssumed = newAssesment.RegionalPresenceAssumed;
                 exAssessment.RegionalPresencePotential = newAssesment.RegionalPresencePotential;
+                exAssessment.Fylkesforekomster = newAssesment.Fylkesforekomster;
 
                 //map fix
 

@@ -225,8 +225,8 @@ namespace Prod.Domain
         public List<Fylkesforekomst> Fylkesforekomster
         {
             // live test, replace with line below after deleting Fylkesforekomst.State from model
-            get => _fylkesforekomster?.Count > 0 ? FixOldState() : GetInitialFylkesforekomster();
-            // get => _fylkesforekomster?.Count > 0 ? _fylkesforekomster : GetInitialFylkesforekomster();
+            // get => _fylkesforekomster?.Count > 0 ? FixOldState() : GetInitialFylkesforekomster();
+            get => _fylkesforekomster?.Count > 0 ? _fylkesforekomster : GetInitialFylkesforekomster();
             set => _fylkesforekomster = value;
         }
 
@@ -235,48 +235,48 @@ namespace Prod.Domain
             Fylkesforekomster = GetInitialFylkesforekomster();
         }
 
-        /// <summary>
-        /// live test, replace with '_fylkesforekomster' after deleting State from Fylkesforekomst
-        /// </summary>
-        /// <returns></returns>
-        private List<Fylkesforekomst> FixOldState()
-        {
-            foreach (var fylkesforekomst in _fylkesforekomster)
-            {
-                switch (fylkesforekomst.State)
-                {
-                    case 0:
-                        // 0 - kjent
-                        fylkesforekomst.State0 = 1;
-                        break;
-                    case 1:
-                        // 1 - antatt i dag
-                        fylkesforekomst.State1 = 1;
-                        break;
-                    case 2:
-                        // 2 - ikke kjent
-                        fylkesforekomst.State2 = 1;
-                        break;
-                    case 3:
-                        // 3 - antatt om 50 år
-                        fylkesforekomst.State3 = 1;
-                        break;
-                    default:
-                        // unused value - set to 2 - ikke kjent
-                        fylkesforekomst.State2 = 1;
-                        break;
-                }
+        ///// <summary>
+        ///// live test, replace with '_fylkesforekomster' after deleting State from Fylkesforekomst
+        ///// </summary>
+        ///// <returns></returns>
+        //private List<Fylkesforekomst> FixOldState()
+        //{
+        //    foreach (var fylkesforekomst in _fylkesforekomster)
+        //    {
+        //        switch (fylkesforekomst.State)
+        //        {
+        //            case 0:
+        //                // 0 - kjent
+        //                fylkesforekomst.State0 = 1;
+        //                break;
+        //            case 1:
+        //                // 1 - antatt i dag
+        //                fylkesforekomst.State1 = 1;
+        //                break;
+        //            case 2:
+        //                // 2 - ikke kjent
+        //                fylkesforekomst.State2 = 1;
+        //                break;
+        //            case 3:
+        //                // 3 - antatt om 50 år
+        //                fylkesforekomst.State3 = 1;
+        //                break;
+        //            default:
+        //                // unused value - set to 2 - ikke kjent
+        //                fylkesforekomst.State2 = 1;
+        //                break;
+        //        }
 
-                if (fylkesforekomst.State0 == 0 && fylkesforekomst.State1 == 0 && fylkesforekomst.State3 == 0)
-                    fylkesforekomst.State2 = 1;
-                else
-                    fylkesforekomst.State2 = 0;
+        //        if (fylkesforekomst.State0 == 0 && fylkesforekomst.State1 == 0 && fylkesforekomst.State3 == 0)
+        //            fylkesforekomst.State2 = 1;
+        //        else
+        //            fylkesforekomst.State2 = 0;
 
-                fylkesforekomst.State = -1;
-            }
+        //        fylkesforekomst.State = -1;
+        //    }
 
-            return _fylkesforekomster;
-        }
+        //    return _fylkesforekomster;
+        //}
 
         private static List<Fylkesforekomst> GetInitialFylkesforekomster()
         {
@@ -295,7 +295,9 @@ namespace Prod.Domain
                 new Fylkesforekomst { Fylke = "Ho", State2 = 1 },
                 new Fylkesforekomst { Fylke = "Sf", State2 = 1 },
                 new Fylkesforekomst { Fylke = "Mr", State2 = 1 },
-                new Fylkesforekomst { Fylke = "Tø", State2 = 1 },
+                //new Fylkesforekomst { Fylke = "Tø", State2 = 1 }, // er dette bestemt?
+                new Fylkesforekomst { Fylke = "St", State2 = 1 },
+                new Fylkesforekomst { Fylke = "Nt", State2 = 1 },
                 new Fylkesforekomst { Fylke = "No", State2 = 1 },
                 new Fylkesforekomst { Fylke = "Tr", State2 = 1 },
                 new Fylkesforekomst { Fylke = "Fi", State2 = 1 },
@@ -1637,9 +1639,24 @@ public partial class FA4 // (3.2) Artsegenskaper
     {
         public string Fylke { get; set; }
         public int State { get; set; }
-        public int State0 { get; set; }
-        public int State1 { get; set; }
-        public int State2 { get; set; }
-        public int State3 { get; set; }
+        /// <summary>
+        /// Kjent
+        /// </summary>
+        public int State0 { get; set; } = 0;
+
+        /// <summary>
+        /// Antatt nå
+        /// </summary>
+        public int State1 { get; set; } = 0;
+
+        /// <summary>
+        /// Ukjent
+        /// </summary>
+        public int State2 { get; set; } = 0;
+
+        /// <summary>
+        /// Antatt om 50 år
+        /// </summary>
+        public int State3 { get; set; } = 0;
     }
 }
