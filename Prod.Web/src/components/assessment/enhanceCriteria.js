@@ -346,6 +346,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 : 0
             : roundToSignificantDecimals(r.medianLifetimeInput)
             console.log("medianLifetime result: " + result)
+            return result
         },
         get lifetimeLowerQ() {
             return roundToSignificantDecimals(r.lifetimeLowerQInput)
@@ -452,6 +453,9 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
     })
     autorun(() => {
         console.log("ascore: " + r.ascore )
+
+
+
     })
         
     autorun(() => {
