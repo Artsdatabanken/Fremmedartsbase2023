@@ -497,7 +497,7 @@ namespace SwissKnife.Database
                         }
                         if (!string.IsNullOrWhiteSpace(src.RegionalPresenceAssumed))
                         {
-                            var elements = src.RegionalPresenceKnown.Split(",", StringSplitOptions.RemoveEmptyEntries);
+                            var elements = src.RegionalPresenceAssumed.Split(",", StringSplitOptions.RemoveEmptyEntries);
                             foreach (var item in elements)
                             {
                                 var match = dest.Fylkesforekomster.SingleOrDefault(x => x.Fylke.ToLowerInvariant() == item.ToLowerInvariant());
@@ -513,7 +513,7 @@ namespace SwissKnife.Database
                         }
                         if (!string.IsNullOrWhiteSpace(src.RegionalPresencePotential))
                         {
-                            var elements = src.RegionalPresenceKnown.Split(",", StringSplitOptions.RemoveEmptyEntries);
+                            var elements = src.RegionalPresencePotential.Split(",", StringSplitOptions.RemoveEmptyEntries);
                             foreach (var item in elements)
                             {
                                 var match = dest.Fylkesforekomster.SingleOrDefault(x => x.Fylke.ToLowerInvariant() == item.ToLowerInvariant());
