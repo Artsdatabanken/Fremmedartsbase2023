@@ -778,9 +778,9 @@ class ViewModel {
             //This process must be reversed before saving to server!
             //jsonnew.isAlienSpecies = alien ? "true" : "false"
             // if the species was established before 1800, set it as default
-            jsonnew.alienSpecieUncertainIfEstablishedBefore1800 = jsonnew.notApplicableCategory == "establishedBefore1800" ? "yes" :  jsonnew.alienSpeciesCategory == "AlienSpecie" ? "no" : null
-            jsonnew.connectedToAnother = jsonnew.alienSpeciesCategory == "AlienSpecie" ? "no" : jsonnew.connectedToAnother ? "true" : "false" 
-            jsonnew.alienSpeciesCategory = "RegionallyAlien" ? jsonnew.isRegionallyAlien = true : jsonnew.isRegionallyAlien = false
+            //jsonnew.alienSpecieUncertainIfEstablishedBefore1800 = jsonnew.notApplicableCategory == "establishedBefore1800" ? "yes" :  jsonnew.alienSpeciesCategory == "AlienSpecie" ? "no" : null
+            //jsonnew.connectedToAnother = jsonnew.alienSpeciesCategory == "AlienSpecie" ? "no" : jsonnew.connectedToAnother ? "true" : "false" 
+            //jsonnew.alienSpeciesCategory = "RegionallyAlien" ? jsonnew.isRegionallyAlien = true : jsonnew.isRegionallyAlien = false
             //--------------------------------------------------------------
 
             const assessment = enhanceAssessment(jsonnew, this)
@@ -1285,6 +1285,7 @@ class ViewModel {
         });
 
         const json = await response.json()
+        
         return json
     }
 
