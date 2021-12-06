@@ -299,7 +299,6 @@ namespace Prod.Domain
                 new Fylkesforekomst { Fylke = "Ho", State2 = 1 },
                 new Fylkesforekomst { Fylke = "Sf", State2 = 1 },
                 new Fylkesforekomst { Fylke = "Mr", State2 = 1 },
-                //new Fylkesforekomst { Fylke = "Tø", State2 = 1 }, // er dette bestemt?
                 new Fylkesforekomst { Fylke = "St", State2 = 1 },
                 new Fylkesforekomst { Fylke = "Nt", State2 = 1 },
                 new Fylkesforekomst { Fylke = "No", State2 = 1 },
