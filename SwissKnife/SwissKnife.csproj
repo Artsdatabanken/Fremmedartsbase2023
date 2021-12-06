@@ -8,7 +8,8 @@
   <ItemGroup>
     <PackageReference Include="Antlr" Version="3.5.0.2" />
     <PackageReference Include="AutoMapper" Version="10.1.1" />
-    <PackageReference Include="CsvHelper" Version="27.1.1" />
+    <PackageReference Include="CompareNETObjects" Version="4.74.0" />
+    <PackageReference Include="CsvHelper" Version="27.2.1" />
     <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="3.1.0" />
     <PackageReference Include="RavenDB.Client" Version="3.5.9" />
     <PackageReference Include="System.Text.Json" Version="6.0.0" />
@@ -17,6 +18,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Prod.Data.EFCore\Prod.Data.EFCore.csproj" />
     <ProjectReference Include="..\Prod.Domain\Prod.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Dump2\" />
   </ItemGroup>
 
 </Project>
