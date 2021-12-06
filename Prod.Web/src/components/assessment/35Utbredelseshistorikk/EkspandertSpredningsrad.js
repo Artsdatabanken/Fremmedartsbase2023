@@ -83,7 +83,6 @@ export default class EkspandertSpredningsrad extends React.Component {
 @observer export class EkspandertSpredningsradDetaljer extends React.Component {
     render() {
         const {fabModel, detaljer} = this.props
-        console.log(detaljer)
         const labels = fabModel.codeLabels.DistributionHistory
         return (
            

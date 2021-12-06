@@ -115,7 +115,7 @@ export default function enhanceAssessment(json, appState) {
     });
 
     extendObservable(assessment, {
-        // this value is note part of the domain object
+        // this value is not a part of the domain object
         get isAlienSpeciesString() {
             // const alien = assessment.alienSpeciesCategory =="AlienSpecie" || assessment.notApplicableCategory == "establishedBefore1800"
             return assessment.isAlienSpecies ? "true" : "false"
@@ -123,7 +123,7 @@ export default function enhanceAssessment(json, appState) {
         set isAlienSpeciesString(s) {
             assessment.isAlienSpecies = s === "true"
         },
-        // this value is note part of the domain object
+        // this value is not a part of the domain object
         get alienSpecieUncertainIfEstablishedBefore1800String() {
             // const value = assessment.notApplicableCategory == "establishedBefore1800" ? "yes" :  assessment.alienSpeciesCategory == "AlienSpecie" ? "no" : null
             return assessment.alienSpecieUncertainIfEstablishedBefore1800 ? "yes" : "no"
@@ -131,13 +131,13 @@ export default function enhanceAssessment(json, appState) {
         set alienSpecieUncertainIfEstablishedBefore1800String(s) {
             assessment.alienSpecieUncertainIfEstablishedBefore1800 = s === "yes"
         },
-        // this value is note part of the domain object
+        // this value is not a part of the domain object
         get connectedToAnotherString() {
             // const value assessment.alienSpeciesCategory == "AlienSpecie" ? "no" : assessment.connectedToAnother ? "true" : "false" 
-            return assessment.connectedToAnother ? "true" : "false"
+            return assessment.connectedToAnother ? "yes" : "no"
         },
         set connectedToAnotherString(s) {
-            assessment.connectedToAnother = s === "true"
+            assessment.connectedToAnother = s === "yes"
         }
     })
 
