@@ -20,4 +20,8 @@
     <ProjectReference Include="..\Prod.Domain\Prod.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Dump2\" />
+  </ItemGroup>
+
 </Project>
