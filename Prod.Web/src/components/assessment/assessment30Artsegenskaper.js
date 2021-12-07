@@ -180,12 +180,12 @@ export default class Assessment30Artsegenskaper extends React.Component {
                         </div> 
                     </div>:
                     null }                
-               <div className="well">
+               {/*<div className="well">
                     <h4>{labels.Reproduction.reproduction}</h4>
                     <Xcomp.Bool label={labels.Reproduction.sexual} observableValue={[vurdering, 'reproductionSexual']}/>
                     <Xcomp.Bool label={labels.Reproduction.asexual} observableValue={[vurdering, 'reproductionAsexual']}/>
                     <Xcomp.Number label={labels.Reproduction.generationTime} observableValue={[vurdering, 'reproductionGenerationTime']}/>
-                </div>
+                    </div>*/}
                 {appState.otherEffectsEnabled 
                 ? <div className="well">
                         <Xcomp.Button 
@@ -342,7 +342,7 @@ export default class Assessment30Artsegenskaper extends React.Component {
                 : null}
             </div> :
                  
-                 <div>
+            <div>
                      {/*<h4>{labels.NaturalOrigin.habitat}</h4>
                     <Xcomp.Bool observableValue={[vurdering, 'limnic']} label={limnicTerrestrialMarinelabel("limnic")} />            
                     <Xcomp.Bool observableValue={[vurdering, 'terrestrial']} label={limnicTerrestrialMarinelabel("terrestrial")} />            
