@@ -394,7 +394,7 @@ export default class Assessment51Naturtyper extends React.Component {
 
                 </fieldset>
                 : null}
-                <fieldset className="well">
+                {/*<fieldset className="well">
                     <h4>{ntLabels.mainEcosystem}</h4>     
                     <Xcomp.MultiselectArray
                                 className="mainEcosystem"
@@ -403,7 +403,7 @@ export default class Assessment51Naturtyper extends React.Component {
                                 disabled={disabled}
                                 mode="check"/>
           
-                </fieldset>
+            </fieldset>*/}
                 <br/>
             </div>
         );
