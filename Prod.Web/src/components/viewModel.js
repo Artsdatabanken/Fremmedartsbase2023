@@ -786,6 +786,15 @@ class ViewModel {
             const assessment = enhanceAssessment(jsonnew, this)
             const assessmentStringCopy = assessment.toJSON
             const assessmentcopy = JSON.parse(assessmentStringCopy)
+            var shda = assessment.riskAssessment.spreadHistoryDomesticAreaInStronglyChangedNatureTypes == null ? 0 : 
+                       assessment.riskAssessment.spreadHistoryDomesticAreaInStronglyChangedNatureTypes > 95 ? 95 :
+                       assessment.riskAssessment.spreadHistoryDomesticAreaInStronglyChangedNatureTypes > 75 ? 75 :
+                       assessment.riskAssessment.spreadHistoryDomesticAreaInStronglyChangedNatureTypes > 25 ? 25 :
+                       assessment.riskAssessment.spreadHistoryDomesticAreaInStronglyChangedNatureTypes > 4 ? 5 : 0
+            
+            assessment.riskAssessment.spreadHistoryDomesticAreaInStronglyChangedNatureTypes = shda
+            
+            console.log(assessment.riskAssessment.spreadHistoryDomesticAreaInStronglyChangedNatureTypes)
             runInAction(() => {
                 this.assessmentSavedVersion = assessmentcopy
                 this.assessmentSavedVersionString = assessmentStringCopy

@@ -139,24 +139,6 @@ export default function enhanceAssessment(json, appState) {
         },
         set connectedToAnotherString(s) {
             assessment.connectedToAnother = s === "yes"
-        },
-        // this value is not a part of the domain object
-        get hasSpreadHistoryDomesticAreaInStronglyChangedNatureTypes() {
-            console.log(assessment.riskAssessment.spreadHistoryDomesticAreaInStronglyChangedNatureTypes)
-            return assessment.riskAssessment.spreadHistoryDomesticAreaInStronglyChangedNatureTypes = s != null ? s > 95 ? 95 :
-                                                                                                     s > 75 ? 75 :
-                                                                                                     s > 25 ? 25 :
-                                                                                                     s > 4 ? 5 : 0 : 0
-        },
-         // if spreadHistoryDomesticAreaInStronglyChangedNatureTypes is not defined, set it as < 5
-        set hasSpreadHistoryDomesticAreaInStronglyChangedNatureTypes(s) {
-
-            assessment.riskAssessment.spreadHistoryDomesticAreaInStronglyChangedNatureTypes = s != null ? s > 95 ? 95 :
-                                                           s > 75 ? 75 :
-                                                           s > 25 ? 25 :
-                                                           s > 4 ? 5 : 0 : 0
-
-            console.log(assessment.riskAssessment.spreadHistoryDomesticAreaInStronglyChangedNatureTypes)
         }
     })
 
