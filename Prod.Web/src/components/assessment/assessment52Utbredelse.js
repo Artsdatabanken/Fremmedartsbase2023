@@ -170,6 +170,7 @@ export default class Assessment52Utbredelse extends React.Component {
                             </div>
                             <div className="changedNature">
                                 <p>Andel av antatt forekomstareal i sterkt endra natur (%)</p>
+                                <span>{assessment.riskAssessment.spreadHistoryDomesticAreaInStronglyChangedNatureTypes}</span>
                                 <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "spreadHistoryDomesticAreaInStronglyChangedNatureTypes"]} codes={koder.KnownDistributionInNature}/>
                              {/*<Xcomp.StringEnum observableValue={[assessment, "spreadAreaInChangedNature"]} codes={koder.KnownDistributionInNature}/> */}
                             </div>
@@ -229,6 +230,7 @@ export default class Assessment52Utbredelse extends React.Component {
                                 </div>
                                 <div className="changedNature">
                                     <p>Andel av kjent forekomstareal i sterkt endra natur (%) </p>
+                                    <span>{assessment.riskAssessment.spreadHistoryDomesticAreaInStronglyChangedNatureTypes}</span>
                                     {/* ToDo: Bug - speciesDistribution not found 
                                     <Xcomp.StringEnum observableValue={[assessment, "spreadAreaInChangedNature"]} codes={koder.KnownDistributionInNature}/>*/}
                                     <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "spreadHistoryDomesticAreaInStronglyChangedNatureTypes"]} codes={koder.KnownDistributionInNature}/>
