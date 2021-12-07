@@ -619,7 +619,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             </td>
                                             <td>
                                                 <Xcomp.String
-                                                    observableValue={[riskAssessment, 'spreadYearlyIncreaseObservations']}/>
+                                                    //observableValue={[riskAssessment, 'spreadYearlyIncreaseObservations']}/>
+                                                    observableValue={[riskAssessment, 'occurrences1Best']}/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -628,7 +629,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             </td>
                                             <td>
                                                 <Xcomp.String
-                                                    observableValue={[riskAssessment, 'spreadYearlyIncreaseObservationsLowerQuartile']}/>
+                                                    //observableValue={[riskAssessment, 'spreadYearlyIncreaseObservationsLowerQuartile']}/>
+                                                    observableValue={[riskAssessment, 'occurrences1Low']}/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -637,7 +639,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             </td>
                                             <td>
                                                 <Xcomp.String
-                                                    observableValue={[riskAssessment, 'spreadYearlyIncreaseObservationsUpperQuartile']}/>
+                                                    //observableValue={[riskAssessment, 'spreadYearlyIncreaseObservationsUpperQuartile']}/>
+                                                    observableValue={[riskAssessment, 'occurrences1High']}/>
                                             </td>
                                         </tr>
                                        
