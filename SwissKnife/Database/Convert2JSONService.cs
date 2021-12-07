@@ -21,26 +21,46 @@ namespace SwissKnife.Database
 {
     internal static class Convert2JSONService
     {
+        //private static T DownloadAndDeserializeJsonData<T>(string url) where T : new()
+        //{
+        //    using (var webClient = new WebClient())
+        //    {
+        //        var jsonData = string.Empty;
+        //        try
+        //        {
+        //            jsonData = webClient.DownloadString(url);
+
+        //            var a = jsonData.Substring(jsonData.Length - 200);
+        //            //Console.WriteLine("jsondata: " + jsonData.Length);
+        //            //Console.WriteLine("jsondata: " + a);
+        //        }
+        //        catch (Exception) { }
+
+        //        return string.IsNullOrEmpty(jsonData)
+        //           ? new T()
+        //           : JsonSerializer.Deserialize<T>(jsonData);
+        //    }
+        //}
+
         private static T DownloadAndDeserializeJsonData<T>(string url) where T : new()
         {
-            using (var webClient = new WebClient())
+            WebRequest request = WebRequest.Create(url);
+            WebResponse response = request.GetResponse();
+            var jsonData = string.Empty;
+            using (Stream dataStream = response.GetResponseStream())
             {
-                var jsonData = string.Empty;
-                try
-                {
-                    jsonData = webClient.DownloadString(url);
-
-                    var a = jsonData.Substring(jsonData.Length - 200);
-                    Console.WriteLine("jsondata: " + jsonData.Length);
-                    Console.WriteLine("jsondata: " + a);
-                }
-                catch (Exception) { }
-
-                return string.IsNullOrEmpty(jsonData)
-                   ? new T()
-                   : JsonSerializer.Deserialize<T>(jsonData);
+                StreamReader reader = new StreamReader(dataStream);
+                jsonData = reader.ReadToEnd();
+                //Console.WriteLine(responseFromServer);
             }
+            response.Close();
+            var result = string.IsNullOrEmpty(jsonData)
+                ? new T()
+                : JsonSerializer.Deserialize<T>(jsonData);
+            return result;
         }
+
+
 
 
 
@@ -227,14 +247,24 @@ namespace SwissKnife.Database
         // https://nin-kode-api.artsdatabanken.no/api/v2.3/koder/allekoder
         public static void CreateNin2JSON(string outputfilename)
         {
-            //const string apiurl = "https://nin-kode-api.artsdatabanken.no/api/v2.3/koder/allekoder";
+            const string apiurl = "https://nin-kode-api.artsdatabanken.no/api/v2.3/koder/allekoder";
             //const string apiurl = "https://nin-kode-api.artsdatabanken.no/api/v2.2/koder/allekoder";
 
-            //var allekoder = DownloadAndDeserializeJsonData<List<Codes>>(apiurl);
+            //var _allekoder = DownloadAndDeserializeJsonData<List<Codes>>(apiurl);
+            //Console.WriteLine("_allekoder items: " + _allekoder.Count());
 
-            var ifn = "../../../Importfiler/NiN2_2.txt";
+
+
+
+            var ifn = "../../../Importfiler/NiN2_3.txt";
             var jsonData = File.ReadAllText(ifn);
             var allekoder = JsonSerializer.Deserialize<List<Codes>>(jsonData);
+
+            Console.WriteLine("allekoder items: " + allekoder.Count());
+
+
+
+
 
             var na = allekoder.First();
             var root = new jsonNT();
