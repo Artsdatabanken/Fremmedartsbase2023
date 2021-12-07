@@ -574,27 +574,27 @@
         "KnownDistributionInNature": [
             {
                 "Id": "KnownDistributionInNature",
-                "Value": "5",
+                "Value": 0,
                 "Text": "< 5 % "
             },
             {
                 "Id": "KnownDistributionInNature",
-                "Value": "5-25",
+                "Value": 5,
                 "Text": "f.o.m. 5 til 25 %"
             },
             {
                 "Id": "KnownDistributionInNature",
-                "Value": "25-75",
+                "Value": 25,
                 "Text": "f.o.m. 25 % t.o.m. 75 %"
             },
             {
                 "Id": "KnownDistributionInNature",
-                "Value": "75-95",
+                "Value": 75,
                 "Text": "fra 75 % t.o.m. 95 %"
             },
             {
                 "Id": "KnownDistributionInNature",
-                "Value": "95",
+                "Value": 95,
                 "Text": "> 95 % "
             }
         ],

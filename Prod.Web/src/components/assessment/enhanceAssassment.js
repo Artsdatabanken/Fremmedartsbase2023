@@ -109,11 +109,11 @@ export default function enhanceAssessment(json, appState) {
             objra.introductionsHigh = assra.introductionsHigh
             // if assra.spreadHistoryDomesticAreaInStronglyChangedNatureTypes is not defined, set it as < 5
             objra.spreadHistoryDomesticAreaInStronglyChangedNatureTypes = assra.spreadHistoryDomesticAreaInStronglyChangedNatureTypes ? 
-                                                                        parseInt(assra.spreadHistoryDomesticAreaInStronglyChangedNatureTypes) > 95 ? "95" :
-                                                                        parseInt(assra.spreadHistoryDomesticAreaInStronglyChangedNatureTypes) > 75 ? "75-95" :
-                                                                        parseInt(assra.spreadHistoryDomesticAreaInStronglyChangedNatureTypes) > 25 ? "25-75" :
-                                                                        parseInt(assra.spreadHistoryDomesticAreaInStronglyChangedNatureTypes) > 4 ? "5-25" :
-                                                                        parseInt(assra.spreadHistoryDomesticAreaInStronglyChangedNatureTypes) : "5"
+                                                                        assra.spreadHistoryDomesticAreaInStronglyChangedNatureTypes > 95 ? 95 :
+                                                                        assra.spreadHistoryDomesticAreaInStronglyChangedNatureTypes > 75 ? 75 :
+                                                                        assra.spreadHistoryDomesticAreaInStronglyChangedNatureTypes > 25 ? 25 :
+                                                                        assra.spreadHistoryDomesticAreaInStronglyChangedNatureTypes > 4 ? 5 :
+                                                                        assra.spreadHistoryDomesticAreaInStronglyChangedNatureTypes : 0
         
             const json = JSON.stringify(obj, undefined, 2)
             // console.log(JSON.stringify(Object.keys(obj)))
