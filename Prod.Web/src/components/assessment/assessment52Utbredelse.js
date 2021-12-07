@@ -171,7 +171,7 @@ export default class Assessment52Utbredelse extends React.Component {
                             <div className="changedNature">
                                 <p>Andel av antatt forekomstareal i sterkt endra natur (%)</p>
                                 <span>{assessment.riskAssessment.spreadHistoryDomesticAreaInStronglyChangedNatureTypes}</span>
-                                <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "hasSpreadHistoryDomesticAreaInStronglyChangedNatureTypes"]} codes={koder.KnownDistributionInNature}/>
+                                <Xcomp.StringEnum observableValue={[assessment, "hasSpreadHistoryDomesticAreaInStronglyChangedNatureTypes"]} codes={koder.KnownDistributionInNature}/>
                              {/*<Xcomp.StringEnum observableValue={[assessment, "spreadAreaInChangedNature"]} codes={koder.KnownDistributionInNature}/> */}
                             </div>
                             </div>
@@ -233,7 +233,7 @@ export default class Assessment52Utbredelse extends React.Component {
                                     <span>{assessment.riskAssessment.spreadHistoryDomesticAreaInStronglyChangedNatureTypes}</span>
                                     {/* ToDo: Bug - speciesDistribution not found 
                                     <Xcomp.StringEnum observableValue={[assessment, "spreadAreaInChangedNature"]} codes={koder.KnownDistributionInNature}/>*/}
-                                    <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "hasSpreadHistoryDomesticAreaInStronglyChangedNatureTypes"]} codes={koder.KnownDistributionInNature}/>
+                                    <Xcomp.StringEnum observableValue={[assessment, "hasSpreadHistoryDomesticAreaInStronglyChangedNatureTypes"]} codes={koder.KnownDistributionInNature}/>
                                 </div>
                                 {assessment.speciesStatus == "C3" && 
                                 <div style={{marginTop: '50px'}}>

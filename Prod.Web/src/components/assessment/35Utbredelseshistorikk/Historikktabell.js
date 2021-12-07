@@ -38,7 +38,7 @@ export default class HistorikkTabell extends React.Component {
     static renderRows(list, fabModel, taxonId, scientificNameId) {
         const rows = []
         list.forEach((sh) => {
-            console.log(sh)
+            //console.log(sh)
             //const expanded = fabModel.artskartModel.expandedSpreadHistory == sh
            /* rows.push(<KollapsetSpredningsrad
                 id={sh.id}
