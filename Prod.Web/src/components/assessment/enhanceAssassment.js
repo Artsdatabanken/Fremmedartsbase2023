@@ -1,6 +1,7 @@
 import enhanceCriteria from './enhanceCriteria'
 import fixFylker from './fixFylker'
 import { extendObservable, observable, toJS} from 'mobx'
+import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils'
 
 
 
@@ -141,15 +142,21 @@ export default function enhanceAssessment(json, appState) {
         },
         // this value is not a part of the domain object
         get hasSpreadHistoryDomesticAreaInStronglyChangedNatureTypes() {
-            // const value assessment.alienSpeciesCategory == "AlienSpecie" ? "no" : assessment.connectedToAnother ? "true" : "false" 
-            return assessment.riskAssessment.spreadHistoryDomesticAreaInStronglyChangedNatureTypes 
+            console.log(assessment.riskAssessment.spreadHistoryDomesticAreaInStronglyChangedNatureTypes)
+            return assessment.riskAssessment.spreadHistoryDomesticAreaInStronglyChangedNatureTypes = s != null ? s > 95 ? 95 :
+                                                                                                     s > 75 ? 75 :
+                                                                                                     s > 25 ? 25 :
+                                                                                                     s > 4 ? 5 : 0 : 0
         },
          // if spreadHistoryDomesticAreaInStronglyChangedNatureTypes is not defined, set it as < 5
         set hasSpreadHistoryDomesticAreaInStronglyChangedNatureTypes(s) {
-            assessment.riskAssessment.spreadHistoryDomesticAreaInStronglyChangedNatureTypes = s ? s > 95 ? 95 :
+
+            assessment.riskAssessment.spreadHistoryDomesticAreaInStronglyChangedNatureTypes = s != null ? s > 95 ? 95 :
                                                            s > 75 ? 75 :
                                                            s > 25 ? 25 :
                                                            s > 4 ? 5 : 0 : 0
+
+            console.log(assessment.riskAssessment.spreadHistoryDomesticAreaInStronglyChangedNatureTypes)
         }
     })
 
