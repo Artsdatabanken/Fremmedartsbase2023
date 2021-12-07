@@ -170,8 +170,8 @@ export default class Assessment52Utbredelse extends React.Component {
                             </div>
                             <div className="changedNature">
                                 <p>Andel av antatt forekomstareal i sterkt endra natur (%)</p>
-                                
-                             <Xcomp.StringEnum observableValue={[assessment, "spreadAreaInChangedNature"]} codes={koder.KnownDistributionInNature}/> 
+                                <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "spreadHistoryDomesticAreaInStronglyChangedNatureTypes"]} codes={koder.KnownDistributionInNature}/>
+                             {/*<Xcomp.StringEnum observableValue={[assessment, "spreadAreaInChangedNature"]} codes={koder.KnownDistributionInNature}/> */}
                             </div>
                             </div>
                             :
@@ -229,8 +229,9 @@ export default class Assessment52Utbredelse extends React.Component {
                                 </div>
                                 <div className="changedNature">
                                     <p>Andel av kjent forekomstareal i sterkt endra natur (%) </p>
-                                    {/* ToDo: Bug - speciesDistribution not found */}
-                                    <Xcomp.StringEnum observableValue={[assessment, "spreadAreaInChangedNature"]} codes={koder.KnownDistributionInNature}/>
+                                    {/* ToDo: Bug - speciesDistribution not found 
+                                    <Xcomp.StringEnum observableValue={[assessment, "spreadAreaInChangedNature"]} codes={koder.KnownDistributionInNature}/>*/}
+                                    <Xcomp.StringEnum observableValue={[assessment, "spreadHistoryDomesticAreaInStronglyChangedNatureTypes"]} codes={koder.KnownDistributionInNature}/>
                                 </div>
                                 {assessment.speciesStatus == "C3" && 
                                 <div style={{marginTop: '50px'}}>
