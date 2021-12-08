@@ -205,7 +205,7 @@ export default class NaturetypeModal extends React.Component {
                                 </ul>
                             </div> :
                             null}
-                            {this.taxonSearchString != "" ?
+                            {this.taxonSearchString != "" || this.taxonSearchWaitingForResult ?
                             <div style={{zIndex: 10000}}>
                                 <div  className={"three-bounce"}>
                                     <div className="bounce1" />
