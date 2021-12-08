@@ -1422,6 +1422,7 @@ public partial class FA4 // (3.2) Artsegenskaper
     {
         public string ArtskartAdded { get; set; }
         public string ArtskartRemoved { get; set; }
+        public string ArtskartSelectionGeometry { get; set; }
     }
 
 
