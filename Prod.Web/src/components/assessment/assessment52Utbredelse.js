@@ -302,7 +302,7 @@ export default class Assessment52Utbredelse extends React.Component {
                              <Xcomp.Number                            
                                     //observableValue={[assessment.riskAssessment, "yearFirstProductionOutdoors"]}
                                     //observableValue={[assessment.riskAssessment, "populationSize"]}
-                                    observableValue={[assessment.riskAssessment, "currentIndividualCount"]}
+                                    observableValue={[assessment, "currentIndividualCount"]}
                                     
                                     integer
                                 />
