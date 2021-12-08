@@ -68,7 +68,8 @@ export default class NewNaturetype extends React.Component {
         const koder = appState.koder
         // console.log("NTS: " + JSON.stringify(nts, undefined, 2))
         // console.log("labels " + JSON.stringify(labels))
-
+        // to determine if the modal pop-up will be for a nature type or for a habitat
+        const livsmedium = superheader === "Livsmedium"
         console.log("lms" + lms)
 
 
@@ -82,7 +83,7 @@ export default class NewNaturetype extends React.Component {
                 {this.props.mode === "livsmedium" ?
                 <LivsmediumSelector
                     naturtyper={appState.livsmediumCodes} 
-                    nyNaturtype={this.nyNaturtype}
+                    nyNaturtype={this.nyNaturtype}                    
                     showModal={() => runInAction(() => this.showModal = true)}
                     // setSelected={() => console.log("setSelectedNaturtype")}
                     // setSelected={this.setSelectedNaturtype}
@@ -135,6 +136,7 @@ export default class NewNaturetype extends React.Component {
                 hideStateChange={[this, "hideStateChange"]}
                 naturtype={this.nyNaturtype}
                 fabModel={appState}
+                livsmedium={livsmedium}
                 showModal={[this, "showModal"]}
                 onOk={addNaturtype}
                 appState={appState}

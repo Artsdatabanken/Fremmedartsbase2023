@@ -8044,6 +8044,13 @@
                         },
                         {
                             "Id": null,
+                            "Value": "speciesOrTaxon",
+                            "Text": "Art/takson",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "critGHeading",
                             "Text": "Påvirket areal i en «øvrig» naturtype (overføres til G-kriteriet)",
                             "Info": null,
@@ -8164,7 +8171,7 @@
                         {
                             "Id": null,
                             "Value": "hosts",
-                            "Text": "Vert(er)",
+                            "Text": "Art/takson",
                             "Info": null,
                             "Children": null
                         },

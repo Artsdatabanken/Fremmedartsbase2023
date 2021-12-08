@@ -31,6 +31,9 @@ export default class NaturetypeModal extends React.Component {
         const [sm, smprop] = showModal
         extendObservable(this, {
             // showModal: true,
+            taxonSearchString: "",
+            taxonSearchResult: [],
+            taxonSearchWaitingForResult: true,
             hasStateChange: false,
             // hideStateChange: false,
             naturtypeLabel: null,
@@ -94,7 +97,7 @@ export default class NaturetypeModal extends React.Component {
     }
 
     render() {
-        const {fabModel, naturtype, labels, showModal, hideStateChange} = this.props;
+        const {fabModel, naturtype, labels, showModal, hideStateChange, livsmedium} = this.props;
         const [sm, smprop] = showModal
         const [hsc, hscprop] = hideStateChange
         this.hideStateChange = hsc[hscprop]
@@ -131,11 +134,11 @@ export default class NaturetypeModal extends React.Component {
                             observableValue={[this.editNaturtype, 'timeHorizon']}
                             codes={koder.timeHorizon}
                             forceSync/>
-                        <Xcomp.StringEnum
+                        {!livsmedium && <Xcomp.StringEnum
                             label={ntLabels.colonizedArea}
                             observableValue={[this.editNaturtype, 'colonizedArea']}
                             codes={koder.colonizedArea}
-                            forceSync/>
+                            forceSync/>}
 
 
                         {hsc[hscprop]
@@ -157,14 +160,62 @@ export default class NaturetypeModal extends React.Component {
                             codes={koder.affectedArea}
                             forceSync
                             observableDisabled={hsc[hscprop] || [this, "hasStateChange"]}/> */}
-                        <Xcomp.MultiselectArray
+                       {!livsmedium && <Xcomp.MultiselectArray
                                 label={ntLabels.assessmentBackground}
                                 observableValue={[this.editNaturtype, 'background']} 
                                 codes={koder.assessmentBackgrounds}
                                 forceSync
                                 formlayout
                                // mode="check"
-                                />
+                                />}
+
+                        {livsmedium &&                         
+                          <div>
+                          <Xcomp.String 
+                          label={ntLabels.speciesOrTaxon}
+                          observableValue={[this, 'taxonSearchString']} placeholder={labels.General.searchSpecies} />
+                            {this.taxonSearchResult.length > 0 ?
+                            <div className="speciesSearchList" 
+                                //style={{position: 'absolute', top: "36px", left:"15px"}}
+                            >
+                                <ul className="panel list-unstyled">
+                                {this.taxonSearchResult.map(item =>
+                                    <li 
+                                    /*onClick={action(e => {
+                                        props.newItem.taxonId = item.taxonId;
+                                        props.newItem.taxonRank = item.taxonRank;
+                                        props.newItem.scientificName = item.scientificName;
+                                        props.newItem.scientificNameId = item.scientificNameId;
+                                        props.newItem.scientificNameAuthor = item.author;
+                                        props.newItem.vernacularName = item.popularName;
+
+                                        props.newItem.redListCategory = item.rlCategory;
+                                        props.newItem.taxonSearchResult.replace([]); 
+                                        props.newItem.taxonSearchString = "" })} 
+                                        key={item.scientificName}*/
+                                    >
+                                        <div className="speciesSearchItem">
+                                            <div className={"rlCategory " + item.rlCategory}>{item.rlCategory}</div>
+                                            <div className="vernacularName">{item.popularName}</div>
+                                            <div className="scientificName">{item.scientificName}</div>
+                                            <div className="author">{"(" + item.author + ")"}</div>
+                                        </div>
+                                    </li>
+                                )}
+                                </ul>
+                            </div> :
+                            null}
+                            {this.taxonSearchString != "" ?
+                            <div style={{zIndex: 10000}}>
+                                <div  className={"three-bounce"}>
+                                    <div className="bounce1" />
+                                    <div className="bounce2" />
+                                    <div className="bounce3" />
+                                </div>
+                            </div> :
+                            null}
+                          </div>
+                        }
                     </BsModal>
                 : null}
         </div>
