@@ -26,6 +26,7 @@ const MapOpenLayers = ({
     style,
     mapBounds,
     geojson,
+    selectionGeometry,
     onClickPoint,
     onHover,
     onClosed
@@ -36,16 +37,19 @@ const MapOpenLayers = ({
     const numZoomLevels = 18;
     const mapZoom = 3.7;
     const extent = [-2500000.0, 3500000.0, 3045984.0, 9045984.0];
+    let mapObject;
     let mapCenter = [];
     let mouseoverfeature = null;
     let defaultStyles;
     let hoverStyles;
     let featureOver;
+    let drawInteraction;
+    let drawPolygonInteraction;
     const vectorFeatures = {};
 
     //if (!mapBounds) mapBounds = [[57, 4.3], [71.5, 32.5]];
 
-    // console.log('MapOpenLayers', geojson);
+    // console.log('MapOpenLayers', geojson, selectionGeometry);
   
     const transformCoordinate = (fromEpsgCode, toEpsgCode, coordinate) => {
         if (fromEpsgCode === toEpsgCode) {
@@ -99,26 +103,26 @@ const MapOpenLayers = ({
         // }
     };
     const addInteraction = () => {
-        drawInteraction = new Draw({
-            source: markerSource,
-            type: 'Point'
-        });
-        drawInteraction.on('change', (e) => {
-            // console.log('change drawInteraction');
-        });
-        drawInteraction.on('drawend', (e) => {
-            // console.log('drawend', e);
-            const coordinate = e.feature.getGeometry().getCoordinates();
-            const features = markerSource.getFeaturesAtCoordinate(coordinate);
-            // console.log('features', features);
-            if (features.length > 0) {
-                // features.forEach(feature => markerSource.removeFeature(feature));
-                // drawInteraction.abortDrawing();
-                removeMarker(coordinate);
-            } else {
-                createMarker(coordinate);
-            }
-        });
+        // drawInteraction = new Draw({
+        //     source: markerSource,
+        //     type: 'Point'
+        // });
+        // drawInteraction.on('change', (e) => {
+        //     // console.log('change drawInteraction');
+        // });
+        // drawInteraction.on('drawend', (e) => {
+        //     // console.log('drawend', e);
+        //     const coordinate = e.feature.getGeometry().getCoordinates();
+        //     const features = markerSource.getFeaturesAtCoordinate(coordinate);
+        //     // console.log('features', features);
+        //     if (features.length > 0) {
+        //         // features.forEach(feature => markerSource.removeFeature(feature));
+        //         // drawInteraction.abortDrawing();
+        //         removeMarker(coordinate);
+        //     } else {
+        //         createMarker(coordinate);
+        //     }
+        // });
         // map.addInteraction(drawInteraction);
         snapInteraction = new Snap({
             // pixelTolerance: 3,
@@ -314,35 +318,77 @@ const MapOpenLayers = ({
         setVisibleLegend(visible);
     }
 
+    const cancelDrawPolygon = () => {
+        if (!mapObject) return;
+        // console.log('remove interaction');
+        mapObject.removeInteraction(drawPolygonInteraction);
+        drawPolygonInteraction = null;
+    }
+
+    const drawPolygon = () => {
+        if (!mapObject) return;
+        if (drawPolygonInteraction) {
+            // console.log('remove drawPolygonInteraction');
+            cancelDrawPolygon();
+            return;
+        }
+        // console.log('add drawPolygonInteraction');
+        const markerLayer = mapObject.getLayers().getArray().filter((layer) => layer.get('name') === 'markerLayer' ? true : false)[0];
+        if (!markerLayer) return;
+        const markerSource = markerLayer.getSource();
+        if (!markerSource) return;
+
+        drawPolygonInteraction = new Draw({
+            source: markerSource,
+            type: 'Polygon'
+        });
+        // drawPolygonInteraction.on('change', (e) => {
+        //     console.log('change drawPolygonInteraction');
+        // });
+        drawPolygonInteraction.on('drawend', (e) => {
+            // console.log('drawend', e.feature);
+            // const polygon = (new GeoJSONFormat()).writeFeature(e.feature);
+            // console.log('polygon', polygon);
+            setTimeout(() => {
+                cancelDrawPolygon();
+                onEdit((new GeoJSONFormat()).writeFeature(e.feature));
+            }, 0);
+        });
+        mapObject.addInteraction(drawPolygonInteraction);
+    }
+
+    const createButton = (options) => {
+        const button = document.createElement('button');
+        // button.className = 'ol-polygon-button';
+        button.type = 'button';
+        button.innerHTML = options.innerHTML;
+        if (options.style) button.style = options.style;
+        if (options.click) {
+            button.addEventListener('click', options.click, false);
+            button.addEventListener('touchstart', options.click, false);
+        }
+        return button;
+    }
+
 	// on component mount
 	useEffect(() => {
-        // console.log('MapOpenLayers - creating map', visibleLegend);
-        // let options = {
-		// 	view: new View({ zoom: 9, center: [-94.9065, 38.9884] }),
-		// 	layers: [],
-		// 	controls: [],
-		// 	overlays: []
-		// };
-
         const mapControls = [];
-        // const customElement = document.createElement('div');
-        // customElement.className = 'ol-legend ol-unselectable ol-control';
+        const customElement = document.createElement('div');
+        customElement.className = 'ol-legend ol-unselectable ol-control';
 
-        // const toggleLegendButton = document.createElement('button');
-        // toggleLegendButton.type = 'button';
-        // // icons from https://www.w3schools.com/bootstrap/bootstrap_ref_comp_glyphs.asp
-        // // toggleLegendButton.className = 'ol-legend-button';
-        // // toggleLegendButton.style = 'background-position: center; background-repeat: no-repeat;';
-        // toggleLegendButton.innerHTML = '&vert;&vert;&vert;';
-        // // toggleLegendButton.title = resource.res().olLegendButton;
-        // toggleLegendButton.addEventListener('click', toggleLegend, false);
-        // toggleLegendButton.addEventListener('touchstart', toggleLegend, false);
-        // customElement.appendChild(toggleLegendButton);
+        // customElement.appendChild(createButton({
+        //     click: toggleLegend,
+        //     innerHTML: '&vert;&vert;&vert;',
+        //     style: 'transform: rotate(90deg);'
+        // }));
 
-        // mapControls.push(new Control({ element: customElement }));
+        customElement.appendChild(createButton({
+            click: drawPolygon,
+            innerHTML: '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="22" height="22" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32"><path d="M14 4c-1.105 0-2 .895-2 2v.063L6.937 9.25A2.009 2.009 0 0 0 6 9c-1.105 0-2 .895-2 2c0 .738.402 1.371 1 1.719V24.28c-.598.348-1 .98-1 1.719c0 1.105.895 2 2 2c.738 0 1.371-.402 1.719-1H20.28c.348.598.98 1 1.719 1c1.105 0 2-.895 2-2c0-.398-.11-.781-.313-1.094L26.125 20a2.005 2.005 0 0 0 .25-3.969l-1.906-5.718C24.785 9.957 25 9.511 25 9c0-1.105-.895-2-2-2c-.512 0-.957.215-1.313.531L15.97 5.594A2.012 2.012 0 0 0 14 4zm1.313 3.5l5.718 1.875c.153.805.79 1.441 1.594 1.594l1.906 5.687A1.99 1.99 0 0 0 24 18c0 .414.129.805.344 1.125L21.875 24a1.988 1.988 0 0 0-1.594 1H7.72A1.981 1.981 0 0 0 7 24.281V12.72c.598-.348 1-.98 1-1.719v-.063l5.063-3.187c.28.148.597.25.937.25c.504 0 .96-.191 1.313-.5z" fill="currentColor"/></svg>'
+        }));
 
-		// let mapObject = new Map(options);
-		// mapObject.setTarget(mapRef.current);
+        mapControls.push(new Control({ element: customElement }));
+
         if (Proj4.defs(`EPSG:${config.mapEpsgCode}`) === undefined) {
             Proj4.defs(`EPSG:${config.mapEpsgCode}`, config.mapEpsgDef);
         }
@@ -355,13 +401,6 @@ const MapOpenLayers = ({
       
         const mapExtent = [transformCoordinate(4326, config.mapEpsgCode, [mapBounds[0][1], mapBounds[0][0]]), transformCoordinate(4326, config.mapEpsgCode, [mapBounds[1][1], mapBounds[1][0]])].flat();
         mapCenter = [mapExtent[0] + (mapExtent[2] - mapExtent[0]) / 2, mapExtent[1] + (mapExtent[3] - mapExtent[1]) / 2];
-        // console.log('mapCenter', center, mapCenter);
-        // const view = new View({
-        //     center: center,
-        //     projection: `EPSG:${config.mapEpsgCode}`,
-        //     maxZoom: numZoomLevels,
-        //     zoom: initialZoom
-        // });
         const hoverLayer = new VectorLayer({
             name: 'hoverLayer',
             source: new VectorSource({wrapX: false, _text: false}),
@@ -459,7 +498,7 @@ const MapOpenLayers = ({
         options.layers.push(areaLayer);
         options.layers.push(markerLayer);
 
-        let mapObject = new Map(options);
+        mapObject = new Map(options);
 
         mapObject.setTarget(mapRef.current);
 		setMap(mapObject);
@@ -468,6 +507,7 @@ const MapOpenLayers = ({
         // mapObject.updateSize();
 
         mapObject.on('click', (e) => {
+            if (drawPolygonInteraction) return;
             const coordinate = mapObject.getCoordinateFromPixel(e.pixel);
             // console.log('click', geojson, coordinate, e);
             // e.preventDefault();
@@ -481,6 +521,7 @@ const MapOpenLayers = ({
         });
 
         mapObject.on('pointermove', (e) => {
+            if (drawPolygonInteraction) return;
             const markerLayer = mapObject.getLayers().getArray().filter((layer) => layer.get('name') === 'markerLayer' ? true : false)[0];
             if (!markerLayer) return;
             const markerSource = markerLayer.getSource();
@@ -611,15 +652,16 @@ const MapOpenLayers = ({
                     markerSource.addFeature(pointFeature);
                 }
             });
-
             // console.log('summary', areaSource.getFeatures(), markerSource.getFeatures());
+        }
+        if (selectionGeometry) {
+            // console.log('selectionGeometry', selectionGeometry);
+            const selectionFeature = (new GeoJSONFormat()).readFeature(selectionGeometry);
+            // console.log(selectionFeature);
+            areaSource.addFeature(selectionFeature);
         }
     };
 
-    // geojson change handler
-    // useEffect(() => {
-    //     drawUtbredelse();
-    // }, [geojson]);
     useEffect(drawUtbredelse, [geojson]);
 
 	return (

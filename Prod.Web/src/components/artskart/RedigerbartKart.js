@@ -176,6 +176,7 @@ const RedigerbartKart = ({
       <MapOpenLayers
         showWaterAreas={showWaterAreas}
         geojson={observations}
+        selectionGeometry={selectionGeometry}
         style={mapstyle}
         onAddPoint={handleAddPoint}
         onClickPoint={handleClickPoint}

@@ -4,7 +4,6 @@
 }
 .ol-legend {
     top: 64px;
-    transform: rotate(90deg);
 }
 .ol-legend>button {
     padding-bottom: 5px;

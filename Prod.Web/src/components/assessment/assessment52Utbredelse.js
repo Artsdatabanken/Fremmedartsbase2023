@@ -186,6 +186,7 @@ export default class Assessment52Utbredelse extends React.Component {
                                         labels={labels}
                                         utvalg={assessment.riskAssessment}
                                         onOverførFraArtskart={action(this.handleOverførFraArtskart)}
+                                        artskartSelectionGeometry={assessment.artskartSelectionGeometry}
                                         artskartAdded={assessment.artskartAdded}
                                         artskartRemoved={assessment.artskartRemoved}
                                     />
