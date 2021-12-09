@@ -94,15 +94,15 @@ export default class Assessment52Utbredelse extends React.Component {
             console.log('working with vannområder...');
         }
 
-        ass.b1UtbredelsesområdeKjentAndel = areadata.AreaExtentOfOccurrence;
+        ass.riskAssessment.AOOknown = areadata.AreaExtentOfOccurrence;
         ass.artskartManuellAdd = editStats.add;
         ass.artskartManuellRemove = editStats.remove;
         ass.artskartSistOverført = new Date();
         ass.artskartSelectionGeometry = selectionGeometry;
         if (ass.artskartSelectionGeometry != undefined) {
-            ass.riskAssessment.AOOknown = areadata.ExcludedLocalities*4;
+            ass.riskAssessment.AOO2 = areadata.ExcludedLocalities*4;
         } else {
-            ass.riskAssessment.AOOknown = areadata.AreaOfOccupancy;
+            ass.riskAssessment.AOO2 = areadata.AreaOfOccupancy;
         }
         ass.riskAssessment.yearFirstProductionOutdoors = areadata.AreaExtentOfOccurrence;
         
