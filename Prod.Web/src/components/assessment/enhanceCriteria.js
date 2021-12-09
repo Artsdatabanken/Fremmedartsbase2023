@@ -1266,7 +1266,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                         // NB! Careless changes to the application may cause this code to run multiple times during page load 
                         // Take care this does not happen! (uncomment the trace() function to trace the problem if necassary)
 
-                        // console.log("nextrun: " + crit.criteriaLetter + " : " + crit.value)
+                        console.log("#uncertainty nextrun: " + crit.criteriaLetter + " : " + crit.value)
                         
                         crit.uncertaintyValues.replace(uv)
                     } else {
@@ -1277,7 +1277,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                         // This functionality is also dependent on a well working "firstrun"; se comment above
                         // e.g. the criteria must not have a default value that is updated from db after the first run!
 
-                        // console.log("firstrun: " + crit.criteriaLetter + " : " + crit.value + " - " + JSON.stringify(crit.uncertaintyValues))
+                        console.log("#uncertainty firstrun: " + crit.criteriaLetter + " : " + crit.value + " - " + JSON.stringify(crit.uncertaintyValues))
                         if (crit.uncertaintyValues.indexOf(value) <= -1 ) {
                             // console.log("rectify uncertainties")
                             crit.uncertaintyValues.replace(uv)
