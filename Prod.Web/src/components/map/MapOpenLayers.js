@@ -1,19 +1,18 @@
 import React, { useRef, useState, useEffect } from "react"
 import 'ol/ol.css';
-import styles from '../artskart/KartOpenLayers.css';
+import styles from './MapOpenLayers.css'; // don't delete. it's used to move buttons to the right side
 import MapContext from "./MapContext";
 import { Feature, Map, View } from 'ol';
-import { Control, defaults as defaultControls, MousePosition } from 'ol/control';
+import { Control, defaults as defaultControls } from 'ol/control';
 import { Draw, Snap } from 'ol/interaction';
-import { Image as ImageLayer, Tile as TileLayer, Vector as VectorLayer, VectorTile as VectorTileLayer } from 'ol/layer';
+import { Tile as TileLayer, Vector as VectorLayer, VectorTile as VectorTileLayer } from 'ol/layer';
 import { getTopLeft,getWidth } from 'ol/extent';
-import { GeometryCollection, Point, Polygon } from "ol/geom";
-import { fromExtent } from 'ol/geom/Polygon';
+import { Point, Polygon } from "ol/geom";
 import Projection from 'ol/proj/Projection';
 import { GeoJSON as GeoJSONFormat } from 'ol/format';
 import Proj4 from 'proj4';
 import { addProjection } from 'ol/proj';
-import { OSM, Vector as VectorSource, VectorTile as VectorTileSource, WMTS as WmtsSource, Image as ImageSource, ImageArcGISRest, TileArcGISRest } from 'ol/source';
+import { Vector as VectorSource, VectorTile as VectorTileSource, WMTS as WmtsSource } from 'ol/source';
 import { Circle, Fill, Stroke, Style, Text } from 'ol/style';
 import WMTSTileGrid from 'ol/tilegrid/WMTS';
 import config from '../../config';
@@ -43,7 +42,6 @@ const MapOpenLayers = ({
     let defaultStyles;
     let hoverStyles;
     let featureOver;
-    let drawInteraction;
     let drawPolygonInteraction;
     const vectorFeatures = {};
 
@@ -83,7 +81,6 @@ const MapOpenLayers = ({
             color: style4feature.color,
             width: style4feature.weight
         });
-        // if (geojsonfeature.geometry.type === 'Point'){
         return new Style({
             // opacity: style4feature.opacity,
             image: new Circle({
@@ -94,48 +91,8 @@ const MapOpenLayers = ({
             fill: fill,
             stroke: stroke
         });
-        // } else if (geojsonfeature.geometry.type === 'Polygon') {
-        //   return new Style({
-        //     opacity: style4feature.opacity,
-        //     fill: fill,
-        //     stroke: stroke
-        //   });
-        // }
-    };
-    const addInteraction = () => {
-        // drawInteraction = new Draw({
-        //     source: markerSource,
-        //     type: 'Point'
-        // });
-        // drawInteraction.on('change', (e) => {
-        //     // console.log('change drawInteraction');
-        // });
-        // drawInteraction.on('drawend', (e) => {
-        //     // console.log('drawend', e);
-        //     const coordinate = e.feature.getGeometry().getCoordinates();
-        //     const features = markerSource.getFeaturesAtCoordinate(coordinate);
-        //     // console.log('features', features);
-        //     if (features.length > 0) {
-        //         // features.forEach(feature => markerSource.removeFeature(feature));
-        //         // drawInteraction.abortDrawing();
-        //         removeMarker(coordinate);
-        //     } else {
-        //         createMarker(coordinate);
-        //     }
-        // });
-        // map.addInteraction(drawInteraction);
-        snapInteraction = new Snap({
-            // pixelTolerance: 3,
-            source: markerSource
-        });
-        // snapInteraction.on('propertychange', e => console.log('snap change', e));
-        mapObject.addInteraction(snapInteraction);
     };
     const createMarker = (coordinate) => {
-        // return L.circleMarker(latlng).on("click", e => {
-        //   L.DomEvent.stopPropagation(e);
-        //   onClickPoint(latlng);
-        // });
         if (mouseoverfeature) {
             // console.log('mouseover', mouseoverfeature.getProperties());
             const latlng = mouseoverfeature.get('latlng');
@@ -152,13 +109,6 @@ const MapOpenLayers = ({
         }
     };
     const removeMarker = (coordinate) => {
-        // const latlng = Proj4(epsg, 'EPSG:4326', coordinate);
-        // console.log('removeMarker()', coordinate);
-
-        // return L.circleMarker(latlng).on("click", e => {
-        //   L.DomEvent.stopPropagation(e);
-        //   onClickPoint(latlng);
-        // });
         onClickPoint({
             lng: coordinate[0],
             lat: coordinate[1]
@@ -453,45 +403,23 @@ const MapOpenLayers = ({
                         crossOrigin: 'anonymous'
                     }),
                     visible: true
-                }),
-                // new TileLayer({
-                //     name: 'Vannområder',
-                //     opacity: 1,
-                //     extent: extent,
-                //     source: new TileArcGISRest({
-                //     // source: new ImageArcGISRest({
-                //     // source: new ImageSource({
-                //         //?dpi=96
-                //         // &transparent=true
-                //         // &format=png32
-                //         // &layers=show%3A2%2C9
-                //         // &bbox=330256.5513175976%2C7799000.9230466%2C1693893.1359247793%2C9446371.75664828
-                //         // &bboxSR=102100
-                //         // &imageSR=102100
-                //         // &size=1115%2C1347
-                //         // &f=image
-                //         url: 'https://vann-nett.no/arcgis/rest/services/WFD/AdministrativeOmraader/MapServer/',
-                //         params: {
-                //             // BBOXSR: config.mapEpsgCode,
-                //             // IMAGESR: config.mapEpsgCode,
-                //             LAYERS: 'show:2,9'
-                //         },
-                //         projection: projection,
-                //         tileGrid: wmtsTileGrid(numZoomLevels, `EPSG:${config.mapEpsgCode}`, projection),
-                //         // imageLoadFunction: (a,b,c) => {console.log('imageLoadFunction', a, b, c);},
-                //         crossOrigin: 'anonymous'
-                //     }),
-                //     visible: false
-                // }),
-                // createWaterLayer('Vatn', 2, projection),
-                // hoverLayer,
-                // areaLayer,
-                // markerLayer
+                })
             ],
             controls: defaultControls({attribution: false}).extend(mapControls),
         };
 
         if (showWaterAreas) {
+            // 0: Kommune (0)
+            // 1: REGINE (1)
+            // 2: Vannområde (2)
+            // 3: Vannregion (3)
+            // 4: Vannregionmyndighet (4)
+            // 5: Vassdragsområde (5)
+            // 6: Økoregion kyst (6)
+            // 7: Økoregion fastland (7)
+            // 8: Klimasone (8)
+            // 9: Fylke (9)
+
             options.layers.push(createWaterLayer('Vatn', 2, projection));
         }
         options.layers.push(hoverLayer);
