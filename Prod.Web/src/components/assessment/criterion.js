@@ -76,7 +76,7 @@ export default class Criterion extends React.Component {
                 }
                 const radiooptional = {};
                 const checkboxoptional = {};
-                const disabled = (kode.Text === null || this.props.disabled)
+                const disabled = (kode.text === null || this.props.disabled)
                 
                 if(value !== undefined) {
                     radiooptional.checked = (kode.value === value)
@@ -94,6 +94,8 @@ export default class Criterion extends React.Component {
                 // if (logthis) {
                 //     console.log("level " + kode.value + "/\\" + value + "#" + radiooptional.checked)
                 // }
+                // console.log("unclevel " + kode.value + "/\\" + value + "#" + checkboxoptional.disabled)
+                //console.log("unclevel " + criterion.criteriaLetter + "&" + kode.value + "/" + this.context.readonly  + "/text: " + kode.text + "!props dis:" + this.props.disabled  + "#" + (uncertaintyDisabled.indexOf(kode.value) > -1))
 
 
                 return <div key={kode.value} className="uncertainty">      
@@ -103,7 +105,6 @@ export default class Criterion extends React.Component {
                             <div className={"criteriaCheck" + (radiooptional.checked ? " glyphicon glyphicon-ok" : "")}>&nbsp;</div> :
                             <>{parseInt(kode.value)+1}
                             <input                            
-                            disabled={disabled}
                             value={kode.value}
                             type="radio"
                             onChange={onChangeRadio}
@@ -111,11 +112,11 @@ export default class Criterion extends React.Component {
                             </>
                         }
                         <input
-                        disabled={disabled}
                         value={kode.value}
                         type="checkbox"
                         onChange={onChangeCheckbox}
-                        {...checkboxoptional} />
+                        {...checkboxoptional} 
+                        />
                         {kode.text}
                     </div>
                     <div>
