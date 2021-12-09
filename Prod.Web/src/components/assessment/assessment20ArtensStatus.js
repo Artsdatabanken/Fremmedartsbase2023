@@ -126,8 +126,12 @@ checkStatus = (production) => {
                             <Xcomp.Bool observableValue={[assessment, "isRegionallyAlien"]} checked={assessment.alienSpeciesCategory == "RegionallyAlien"} label={labels.SpeciesStatus.regionallyAlien} /> : null }
                     <Xcomp.Radio value={'false'} observableValue={[assessment, "isAlienSpeciesString"]} label={labels.General.no} />
                     <p>{labels.SpeciesStatus.unsureAlienDescription}</p>
-                    <Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'isAlien']}/>
 
+                    {assessment.notApplicableCategory == "notAlienSpecie" ? 
+                    // transfer "notApplicableDescription" from FAB3
+                    <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/> 
+                    : <Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'isAlien']}/>}
+                    
                     { assessment.isAlienSpeciesString == 'true' ?
                     <div>                     
                         <p>{labels.SpeciesStatus.connectedToAnotherTaxon} </p> 
@@ -138,6 +142,11 @@ checkStatus = (production) => {
                         
                         { assessment.connectedToAnotherString == "yes" ?
                             <div style={{border: '1px solid lightgray', padding: '10px'}}>
+                           {assessment.notApplicableCategory == "taxonIsEvaluatedInHigherRank" ? 
+                            // transfer "notApplicableDescription" from FAB3
+                            <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/> 
+                            : null
+                           }
                             <Xcomp.Radio value={"Connected"} observableValue={[assessment.riskAssessment, "connected"]} label={labels.SpeciesStatus.assessedWithAnotherTaxon}/>
                             {assessment.riskAssessment.connected == "Connected" && 
                                <div style={{marginLeft: '20px'}}> <p style={{marginLeft: '30px', marginBottom: '10px'}}>{labels.SpeciesStatus.enterTaxonName}</p>
@@ -232,6 +241,11 @@ checkStatus = (production) => {
                      <div>
                          <p>{labels.SpeciesStatus.isProductionSpecies}</p>                          
                          <Xcomp.StringEnum observableValue={[assessment, "productionSpecies"]} mode="radio" codes={codes.yesNo}/> 
+                         {(assessment.productionSpecies == "yes" && assessment.notApplicableCategory == "traditionalProductionSpecie") ? 
+                            // transfer "notApplicableDescription" from FAB3
+                            <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/> 
+                            : null
+                        }
                     </div>
                          <p> { assessment.isRegionallyAlien ? labels.SpeciesStatus.statusInNorwayRegionallyAlien : labels.SpeciesStatus.statusInNorway }</p>
                          <p>{labels.SpeciesStatus.highestCategoryPerToday}</p>
@@ -273,7 +287,12 @@ checkStatus = (production) => {
                         
                         <p>{labels.SpeciesStatus.probabilityUncertainity}</p>
                         <p>{labels.SpeciesStatus.uncertainityEstablishmentTimeDescription}</p>
-                        <Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'establishedBefore1800']}/>
+                        {assessment.notApplicableCategory == "establishedBefore1800" ? 
+                            // transfer "notApplicableDescription" from FAB3
+                            <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/> 
+                            : <Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'establishedBefore1800']}/>
+                        }
+                        
                      </div> : null}
 
                      { assessment.isAlienSpeciesString == 'true'  && 
