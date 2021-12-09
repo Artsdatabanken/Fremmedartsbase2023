@@ -95,7 +95,7 @@ export default class Criterion extends React.Component {
                 //     console.log("level " + kode.value + "/\\" + value + "#" + radiooptional.checked)
                 // }
                 // console.log("unclevel " + kode.value + "/\\" + value + "#" + checkboxoptional.disabled)
-                //console.log("unclevel " + criterion.criteriaLetter + "&" + kode.value + "/" + this.context.readonly  + "/text: " + kode.text + "!props dis:" + this.props.disabled  + "#" + (uncertaintyDisabled.indexOf(kode.value) > -1))
+                console.log("unclevel " + criterion.criteriaLetter + "&" + kode.value + "/" + this.context.readonly  + "/text: " + kode.text + "!props dis:" + this.props.disabled  + "#" + (uncertaintyDisabled.indexOf(kode.value) > -1))
 
 
                 return <div key={kode.value} className="uncertainty">      
