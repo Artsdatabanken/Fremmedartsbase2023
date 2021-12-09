@@ -100,9 +100,9 @@ export default class Assessment52Utbredelse extends React.Component {
         ass.artskartSistOverført = new Date();
         ass.artskartSelectionGeometry = selectionGeometry;
         if (ass.artskartSelectionGeometry != undefined) {
-            ass.riskAssessment.AOO2 = areadata.ExcludedLocalities*4;
+            ass.riskAssessment.AOOknown = areadata.ExcludedLocalities*4;
         } else {
-            ass.riskAssessment.AOO2 = areadata.AreaOfOccupancy;
+            ass.riskAssessment.AOOknown = areadata.AreaOfOccupancy;
         }
         ass.riskAssessment.yearFirstProductionOutdoors = areadata.AreaExtentOfOccurrence;
         
