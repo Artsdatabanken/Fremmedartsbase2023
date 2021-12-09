@@ -388,7 +388,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                             </div>
                             </div>
 
-                            <a href="http://www.evol.no/hanno/16/ekspan.htm" target="_blank">{labels.Bcrit.rScriptExpansion}</a>
+                            <a href="https://view.nina.no/expansion/" target="_blank">{labels.Bcrit.rScriptExpansion}</a>
                             <div className="statusField">
                                 <div className="labelsB">
                                     
@@ -609,7 +609,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                         <tr>
                                             <td colSpan="2">
                                                 <br/>
-                                                <a href="http://www.evol.no/hanno/16/ekspan.htm" target="_blank">{labels.Bcrit.rScriptExpansion}</a>
+                                                <a href="https://view.nina.no/expansion/" target="_blank">{labels.Bcrit.rScriptExpansion}</a>
                                                 <br/>
                                             </td>
                                         </tr>
