@@ -6878,7 +6878,7 @@
                         {
                             "Id": null,
                             "Value": "rScriptExpansion",
-                            "Text": "R-script for estimering av ekspansjonshastighet",
+                            "Text": "Nettapplikasjon for estimering av ekspansjonshastighet",
                             "Info": null,
                             "Children": null
                         },
