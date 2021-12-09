@@ -93,7 +93,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
         const crit51B = getCriterion(riskAssessment, 0, "B")
         const critC = getCriterion(riskAssessment, 0, "C")
         runInAction(() => {
-            crit51A.auto = false
+            // crit51A.auto = false
             crit51B.auto = false
             critC.auto = false
         })
@@ -327,7 +327,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     <Criterion criterion={crit51A} 
                     appState={appState}
                     mode="noheading"
-                    disabled = {riskAssessment.chosenSpreadMedanLifespan == "ViableAnalysis" ||
+                    auto = {riskAssessment.chosenSpreadMedanLifespan == "ViableAnalysis" ||
                              riskAssessment.chosenSpreadMedanLifespan == "SpreadRscriptEstimatedSpeciesLongevity" ||
                              (riskAssessment.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && riskAssessment.acceptOrAdjustCritA != "adjust") 
                             
