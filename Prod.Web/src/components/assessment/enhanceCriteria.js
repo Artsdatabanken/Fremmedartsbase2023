@@ -1202,22 +1202,25 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
         const valuenum =  extractFloat(riskAssessment[baseAttributeName])        
         const value =  levelfunc(valuenum)
 
-        const lowstr = riskAssessment[baseAttributeName + "LowerQuartile"]
-        const highstr = riskAssessment[baseAttributeName + "UpperQuartile"]
-        const lownum = lowstr ? extractFloat(lowstr) : valuenum
-        const highnum = highstr ? extractFloat(highstr) : valuenum
+        // const lowstr = riskAssessment[baseAttributeName + "LowerQuartile"]
+        const lownum = riskAssessment[baseAttributeName + "LowerQ"]
+        // const highstr = riskAssessment[baseAttributeName + "UpperQuartile"]
+        const highnum = riskAssessment[baseAttributeName + "UpperQ"]
+        // const lownum = lowstr ? extractFloat(lowstr) : valuenum
+        // const highnum = highstr ? extractFloat(highstr) : valuenum
         const lowlevel = levelfunc(lownum)
         const highlevel = levelfunc(highnum)
         const lowadjusted = Math.min(value, Math.max(value - maxDistanecFromValue, lowlevel ))
         const highadjusted = Math.max(value, Math.min(value + maxDistanecFromValue, highlevel ))
-        // console.log("B uncertaintylevel:" + lowlevel + "|" + highlevel)
-        // console.log("B adjuncertaintylevel:" + lowadjusted + "|" + highadjusted)
+         console.log("B__ baseAttributeName:" + baseAttributeName)
+         console.log("B__ uncertaintylevel:" + lowlevel + "|" + highlevel)
+         console.log("B__ adjuncertaintylevel:" + lowadjusted + "|" + highadjusted)
 
         const uncertainties = [];
         for (var i = lowadjusted; i <= highadjusted; i++) {
             uncertainties.push(i);
         }
-        // console.log("B uncertainties:" + JSON.stringify(uncertainties))
+         console.log("B__ uncertainties:" + JSON.stringify(uncertainties))
 
         return uncertainties
 
