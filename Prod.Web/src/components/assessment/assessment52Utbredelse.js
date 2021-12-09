@@ -94,7 +94,7 @@ export default class Assessment52Utbredelse extends React.Component {
             console.log('working with vannområder...');
         }
 
-        ass.b1UtbredelsesområdeKjentAndel = areadata.AreaExtentOfOccurrence;
+        ass.riskAssessment.AOOknown = areadata.AreaExtentOfOccurrence;
         ass.artskartManuellAdd = editStats.add;
         ass.artskartManuellRemove = editStats.remove;
         ass.artskartSistOverført = new Date();
