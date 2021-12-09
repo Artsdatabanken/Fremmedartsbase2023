@@ -94,6 +94,7 @@ export class HabitatTableRow extends React.Component {
                         showModal={[this, "showModal"]}
                         hideStateChange={[this, "hideStateChange"]} 
                         onOk={this.updateNaturetype} 
+                        livsmedium ={true}
                         fabModel={fabModel} 
                         labels={labels}/>
                     : null}
