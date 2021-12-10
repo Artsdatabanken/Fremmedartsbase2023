@@ -161,20 +161,20 @@ export default class DistributionTable extends React.Component {
             <td>
             <Xcomp.Number                            
                 observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "AOO10yrLow"] : [assessment.riskAssessment, "AOO50yrLow"]}
-                //integer 
+                integer 
                 />   
             </td>            
             <td>
             <Xcomp.Number                            
                 observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "AOO10yrBest"] : [assessment.riskAssessment, "AOO50yrBest"]}
-                //integer 
+                integer 
                 
                 />   
             </td>
            <td>
            <Xcomp.Number                            
                 observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "AOO10yrHigh"] :[assessment.riskAssessment, "AOO50yrHigh"]}
-                //integer 
+                integer 
                 />   
           </td>
           {assessment.alienSpeciesCategory != "DoorKnocker" && 
