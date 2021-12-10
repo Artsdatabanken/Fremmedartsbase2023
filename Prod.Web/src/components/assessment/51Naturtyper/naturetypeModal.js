@@ -172,6 +172,7 @@ export default class NaturetypeModal extends React.Component {
                         {livsmedium &&                         
                           <div>
                           <Xcomp.String 
+                          disabled={fabModel.userContext.readonly}
                           label={ntLabels.speciesOrTaxon}
                           observableValue={[this, 'taxonSearchString']} placeholder={labels.General.searchSpecies} />
                             {this.taxonSearchResult.length > 0 ?
@@ -205,7 +206,7 @@ export default class NaturetypeModal extends React.Component {
                                 </ul>
                             </div> :
                             null}
-                            {this.taxonSearchString != "" || this.taxonSearchWaitingForResult ?
+                            {(this.taxonSearchString != "" || this.taxonSearchWaitingForResult) && !fabModel.userContext.readonly ?
                             <div style={{zIndex: 10000}}>
                                 <div  className={"three-bounce"}>
                                     <div className="bounce1" />
