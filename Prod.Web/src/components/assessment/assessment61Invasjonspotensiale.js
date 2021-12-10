@@ -304,8 +304,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                    <div className="numberFields">                  
 
                    <Xcomp.Number observableValue={[riskAssessment, "medianLifetimeInput"]} integer />  {/* ACritMedianLifespan */}
-                   <Xcomp.Number observableValue={[riskAssessment, "lifetimeLowerQInput"]} />  
-                   <Xcomp.Number observableValue={[riskAssessment, "lifetimeUpperQInput"]} />                     
+                   <Xcomp.Number observableValue={[riskAssessment, "lifetimeLowerQInput"]} integer />  
+                   <Xcomp.Number observableValue={[riskAssessment, "lifetimeUpperQInput"]} integer />                     
                             
                    </div>
                    </div>
