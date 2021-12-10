@@ -139,7 +139,14 @@ export default function enhanceAssessment(json, appState) {
         },
         set connectedToAnotherString(s) {
             assessment.connectedToAnother = s === "yes"
-        }
+        },
+        get productionSpeciesString() {
+            // const value = assessment.notApplicableCategory == "establishedBefore1800" ? "yes" :  assessment.alienSpeciesCategory == "AlienSpecie" ? "no" : null
+            return assessment.productionSpecies ? "yes" : "no"
+        },
+        set productionSpeciesString(s) {
+            assessment.productionSpecies = s === "yes"
+        },
     })
 
     

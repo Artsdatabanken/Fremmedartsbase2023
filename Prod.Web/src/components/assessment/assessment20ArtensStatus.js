@@ -74,7 +74,7 @@ export default class Assessment20ArtensStatus extends React.Component {
 @observable statusChange = false
 checkStatus = (production) => {
     // finds all the objects with id's that should be hidden 
-    if ( production != "yes" ) {
+    if ( production != true ) {
         
         return "B2"
     }   
@@ -240,8 +240,8 @@ checkStatus = (production) => {
                      <div>
                      <div>
                          <p>{labels.SpeciesStatus.isProductionSpecies}</p>                          
-                         <Xcomp.StringEnum observableValue={[assessment, "productionSpecies"]} mode="radio" codes={codes.yesNo}/> 
-                         {(assessment.productionSpecies == "yes" && assessment.notApplicableCategory == "traditionalProductionSpecie") ? 
+                         <Xcomp.StringEnum observableValue={[assessment, "productionSpeciesString"]} mode="radio" codes={codes.yesNo}/> 
+                         {(assessment.productionSpecies == true && assessment.notApplicableCategory == "traditionalProductionSpecie") ? 
                             // transfer "notApplicableDescription" from FAB3
                             <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/> 
                             : null
@@ -368,14 +368,14 @@ checkStatus = (production) => {
                                         {assessment.speciesStatus != "A" &&
                                             <li> {labels.SpeciesStatus.reproductionOutdoorsIfRelevant}</li>
                                         }
-                                        {assessment.productionSpecies == "yes" && assessment.speciesStatus != "A" && assessment.speciesStatus != "B1"
+                                        {assessment.productionSpecies == true && assessment.speciesStatus != "A" && assessment.speciesStatus != "B1"
                                          && assessment.speciesStatus != null &&
                                             <li>{labels.SpeciesStatus.speciesInProductionAreaOutdoors}</li>
                                         }
-                                        {assessment.productionSpecies == "yes" && (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3") &&
+                                        {assessment.productionSpecies == true && (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3") &&
                                             <li>{labels.SpeciesStatus.speciesReproductionInProductionAreaOutdoors}</li>
                                         }
-                                        {(assessment.productionSpecies == "yes" && assessment.speciesStatus == "C3") &&
+                                        {(assessment.productionSpecies == true && assessment.speciesStatus == "C3") &&
                                             <li>{labels.SpeciesStatus.speciesEstablishmentProductionArea}</li>
                                         }
                                         {assessment.speciesStatus.indexOf("C") > -1 &&
@@ -412,7 +412,7 @@ checkStatus = (production) => {
                                         <Xcomp.Bool observableValue={[assessment.riskAssessment, "yearFirstReproductionIndoorsInsecure"]} /> 
                                         </li> }
     
-                                        {assessment.productionSpecies == "yes" && assessment.speciesStatus != "A" && assessment.speciesStatus != "B1"
+                                        {assessment.productionSpecies == true && assessment.speciesStatus != "A" && assessment.speciesStatus != "B1"
                                          && assessment.speciesStatus != null &&
                                         <li>
                                         <Xcomp.Number                            
@@ -422,7 +422,7 @@ checkStatus = (production) => {
                                         />    
                                         <Xcomp.Bool observableValue={[assessment.riskAssessment, "yearFirstProductionOutdoorsInsecure"]} /> 
                                         </li>}
-                                        {assessment.productionSpecies == "yes" && (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3") &&
+                                        {assessment.productionSpecies == true && (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3") &&
                                         <li>
                                         <Xcomp.Number                            
                                             observableValue={[assessment.riskAssessment, "yearFirstReproductionOutdoors"]}
@@ -431,7 +431,7 @@ checkStatus = (production) => {
                                         />    
                                         <Xcomp.Bool observableValue={[assessment.riskAssessment, "yearFirstReproductionOutdoorsInsecure"]} /> 
                                         </li> }
-                                        {(assessment.productionSpecies == "yes" && assessment.speciesStatus == "C3") &&
+                                        {(assessment.productionSpecies == true && assessment.speciesStatus == "C3") &&
                                             <li>
                                                 <Xcomp.Number                            
                                                     observableValue={[assessment.riskAssessment, "yearFirstEstablishmentProductionArea"]}
