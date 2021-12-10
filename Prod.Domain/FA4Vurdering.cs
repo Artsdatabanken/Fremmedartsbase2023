@@ -446,7 +446,6 @@ public partial class FA4 // (3.2) Artsegenskaper
         public int? RegenerationYears { get; set; } // fab: Regeneration_Years
         public string Reproduction { get; set; } // fab: Reproduction
         public bool? ReproductionAsexual { get; set; } // fab: Reproduction_Asexual
-        [JsonConverter(typeof(CustomDoubleFormatConverter))]
         public double? ReproductionGenerationTime { get; set; } // fab: Reproduction_Geteration_Time
         public bool? ReproductionSexual { get; set; } // fab: Reproduction_Sexual
         //public string ReproductiveCapability { get; set; } // fab: Int64? Reproductive_Capability // removed 17.01.2017
@@ -786,8 +785,7 @@ public partial class FA4 // (3.2) Artsegenskaper
 
         //public Int64? SpeciesCount { get; set; } // fab: Species_Count  // ikke i bruk som egen attributt (ligger i spredningshistorikk item) i 2012
 
-
-        [JsonConverter(typeof(CustomDoubleFormatConverter))]
+        
         public double? SpreadHistoryDomesticAreaInStronglyChangedNatureTypes { get; set; }
         public double? SpreadHistoryDomesticAreaInStronglyChangedNatureTypesLow { get; set; }
         public double? SpreadHistoryDomesticAreaInStronglyChangedNatureTypesBest { get; set; }
@@ -999,8 +997,7 @@ public partial class FA4 // (3.2) Artsegenskaper
 
         #region unused ???????
         // -- spredningshastighet
-
-        [JsonConverter(typeof(CustomDoubleFormatConverter))]
+        
         public double? SpreadYearlyIncrease { get; set; }   // Spread_Yearly_Increase
         public string SpreadYearlyIncreaseMethod { get; set; }  // Spread_Yearly_Increase_EstimationMethod
         #endregion unused ???????
@@ -1473,80 +1470,24 @@ public partial class FA4 // (3.2) Artsegenskaper
         public Int64? ExistenceArea { get; set; }
         public Int64? ExistenceAreaCount { get; set; }
         public Int64? SpreadArea { get; set; }
-
-        [JsonConverter(typeof(CustomDoubleFormatConverter))]
+        
         public double? SpeciesCountDarkFigure { get; set; }
-
-        [JsonConverter(typeof(CustomDoubleFormatConverter))]
+        
         public double? ExistenceAreaDarkFigure { get; set; }
-
-        [JsonConverter(typeof(CustomDoubleFormatConverter))]
+        
         public double? ExistenceAreaCountDarkFigure { get; set; }
-
-        [JsonConverter(typeof(CustomDoubleFormatConverter))]
+        
         public double? SpreadAreaDarkFigure { get; set; }
-
-        [JsonConverter(typeof(CustomDoubleFormatConverter))]
+        
         public double? SpeciesCountCalculated { get; set; }
-
-        [JsonConverter(typeof(CustomDoubleFormatConverter))]
+        
         public double? ExistenceAreaCalculated { get; set; }
-
-        [JsonConverter(typeof(CustomDoubleFormatConverter))]
+        
         public double? ExistenceAreaCountCalculated { get; set; }
-
-        [JsonConverter(typeof(CustomDoubleFormatConverter))]
+        
         public double? SpreadAreaCalculated { get; set; }
 
         public string SelectionGeometry { get; set; }// = "{\\\"type\\\": \\\"Feature\\\",\\\"geometry\\\": {\\\"type\\\": \\\"Polygon\\\", \\\"coordinates\\\": [[[10.33, 63.45], [11.951, 63.451], [10.949, 64.45]]]}}";
-    }
-
-    internal class CustomDoubleFormatConverter : System.Text.Json.Serialization.JsonConverter<double?>
-    {
-        public override bool CanConvert(Type objectType)
-        {
-            return objectType == typeof(double) || objectType == typeof(double?);
-        }
-    
-        public override double? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-        {
-            switch (reader.TokenType)
-            {
-                case JsonTokenType.Number:
-                    return reader.GetDouble();
-                case JsonTokenType.String:
-                {
-                    double temp;
-                    var attempted = reader.GetString().Replace(",", ".");
-                    if (double.TryParse(
-                        attempted,
-                        NumberStyles.Number,
-                        CultureInfo.InvariantCulture,
-                        out temp)
-                    )
-                    {
-                        return temp;
-                    }
-
-                    break;
-                }
-            }
-
-            return null;
-        }
-    
-        public override void Write(Utf8JsonWriter writer, double? value, JsonSerializerOptions options)
-        {
-            if (value.HasValue)
-            {
-                writer.WriteNumberValue(value.Value);
-            }
-            else
-            {
-                writer.WriteNullValue();
-            }
-            
-        }
     }
 
     public class RegionalPresence
