@@ -15,6 +15,7 @@ import FileUpload from '../FileUpload'
 import Documents from '../documents'
 import { KeyboardHideSharp } from '@material-ui/icons'
 import {stringFormat} from "../../utils"
+import ModalArtskart from '../artskart/ModalArtskart';
 
 @observer
 class SelectableRadio extends React.Component {
@@ -65,11 +66,20 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
     // getCriterion(riskAssessment, akse, letter) {     const result =
     // riskAssessment.criteria.filter(c => c.akse === akse && c.criteriaLetter ===
     // letter)[0];     return result; }
+    handleDateFromArtskart0 = (data) => {
+        console.log('ToDo: data from Artskart - 0', data);
+    }
+    handleDateFromArtskart1 = (data) => {
+        console.log('ToDo: data from Artskart - 1', data);
+    }
     render() {
         const {appState:{assessment, assessment:{riskAssessment}}, appState:{riskAssessmentTabs}, appState, } = this.props;
 
         // const labels = appState.kodeLabels
         const labels = appState.codeLabels
+        const labelsArtskart = appState.codeLabels.DistributionHistory
+        labelsArtskart.goTo = '';
+        console.log('labels', labelsArtskart)
         const koder = appState.koder
         const disabled = appState.userContext.readonly
         const ntLabels = labels.NatureTypes
@@ -489,7 +499,21 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             <tbody>
                                             <tr>
                                                 <td>
-                                                    <Xcomp.Button primary>{labels.DistributionHistory.speciesMap}</Xcomp.Button>
+                                                    {/* <Xcomp.Button primary>{labels.DistributionHistory.speciesMap}</Xcomp.Button> */}
+                                                    <div style={{marginBottom: 10}}>
+                                                        <ModalArtskart
+                                                            taxonId={assessment.taxonId}
+                                                            scientificNameId={assessment.evaluatedScientificNameId}
+                                                            evaluationContext={assessment.evaluationContext}
+                                                            showWaterAreas={assessment.isAlienSpecies && assessment.isRegionallyAlien}
+                                                            labels={labelsArtskart}
+                                                            utvalg={assessment.riskAssessment}
+                                                            onOverførFraArtskart={action(this.handleDateFromArtskart0)}
+                                                            artskartSelectionGeometry={assessment.artskartSelectionGeometry}
+                                                            artskartAdded={assessment.artskartAdded}
+                                                            artskartRemoved={assessment.artskartRemoved}
+                                                        />
+                                                    </div>
                                                 </td>
                                                 <td> <Xcomp.Number       
                                                         disabled                     
@@ -512,7 +536,21 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <Xcomp.Button primary>{labels.DistributionHistory.speciesMap}</Xcomp.Button>
+                                                    {/* <Xcomp.Button primary>{labels.DistributionHistory.speciesMap}</Xcomp.Button> */}
+                                                    <div style={{marginBottom: 10}}>
+                                                        <ModalArtskart
+                                                            taxonId={assessment.taxonId}
+                                                            scientificNameId={assessment.evaluatedScientificNameId}
+                                                            evaluationContext={assessment.evaluationContext}
+                                                            showWaterAreas={assessment.isAlienSpecies && assessment.isRegionallyAlien}
+                                                            labels={labelsArtskart}
+                                                            utvalg={assessment.riskAssessment}
+                                                            onOverførFraArtskart={action(this.handleDateFromArtskart1)}
+                                                            artskartSelectionGeometry={assessment.artskartSelectionGeometry}
+                                                            artskartAdded={assessment.artskartAdded}
+                                                            artskartRemoved={assessment.artskartRemoved}
+                                                        />
+                                                    </div>
                                                 </td>
                                                 <td> <Xcomp.Number   
                                                         disabled                         

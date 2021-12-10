@@ -80,7 +80,7 @@ export default class NewMigrationPathwayGroup extends React.Component {
                                                                                                             child.name != "til forskning" ||
                                                                                                             child.name != "fra botaniske/zoologiske hager / akvarier (ikke privat)" ||
                                                                                                             child.name != "til botaniske/zoologiske hager / akvarier (ikke privat)") &&*/
-                                                                                                             vurdering.productionSpecies != "yes"
+                                                                                                             vurdering.productionSpecies != true
                                                                                                             }  onSave={onSave} koder={koder} mainCodes={mainCodes} vurdering={vurdering} hideIntroductionSpread={hideIntroductionSpread} labels={labels}/></li>
                             })}
                             </ul>
