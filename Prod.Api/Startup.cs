@@ -22,6 +22,7 @@ using Microsoft.OpenApi.Models;
 using Prod.Api.Controllers;
 using Prod.Data.EFCore;
 using Microsoft.Extensions.Configuration;
+using Prod.Api.Helpers;
 
 
 namespace Prod.Api
@@ -51,7 +52,9 @@ namespace Prod.Api
             {
                 x.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                 x.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
-                x.JsonSerializerOptions.Converters.Add(new BoolJsonConverter());
+                x.JsonSerializerOptions.Converters.Add(new JsonHelpers.BoolJsonConverter());
+                x.JsonSerializerOptions.Converters.Add(new JsonHelpers.BoolNullableJsonConverter());
+                x.JsonSerializerOptions.Converters.Add(new JsonHelpers.DoubleJsonConverter());
 
             }
                 ); //.AddNewtonsoftJson(); For å unngå camelcase - frem til klienten er camelcase.....
@@ -72,69 +75,7 @@ namespace Prod.Api
             services.AddResponseCompression();
             services.AddApplicationInsightsTelemetry();
         }
-        public class BoolJsonConverter : JsonConverter<bool>
-        {
-            public override bool Read(
-                ref Utf8JsonReader reader,
-                Type typeToConvert,
-                JsonSerializerOptions options)
-            {
-                if (reader.TokenType == JsonTokenType.False)
-                {
-                    return false;
-                }
 
-                if (reader.TokenType == JsonTokenType.True)
-                {
-                    return true;
-                }
-
-                if (reader.TokenType == JsonTokenType.Null)
-                {
-                    return false;
-                }
-
-                var value = reader.GetString();
-                return value != null && (value.ToLowerInvariant() == "true");
-            }
-
-            public override void Write(Utf8JsonWriter writer, bool value, JsonSerializerOptions options)
-            {
-                writer.WriteBooleanValue(value);
-            }
-        }
-        public class BoolNullableJsonConverter : JsonConverter<bool?>
-        {
-            public override bool? Read(
-                ref Utf8JsonReader reader,
-                Type typeToConvert,
-                JsonSerializerOptions options)
-            {
-                if (reader.TokenType == JsonTokenType.False)
-                {
-                    return false;
-                }
-
-                if (reader.TokenType == JsonTokenType.True)
-                {
-                    return true;
-                }
-
-                if (reader.TokenType == JsonTokenType.Null)
-                {
-                    return null;
-                }
-
-                var value = reader.GetString();
-                return value != null && (value.ToLowerInvariant() == "true");
-            }
-
-            public override void Write(Utf8JsonWriter writer, bool? value, JsonSerializerOptions options)
-            {
-                if (value.HasValue) writer.WriteBooleanValue(value.Value);
-                writer.WriteNullValue();
-            }
-        }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
