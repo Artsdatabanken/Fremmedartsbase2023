@@ -157,6 +157,26 @@ function uncertaintyArray(low, high) {
     return arr
 }
 
+function criterionLow(criterion) {
+    const unc = criterion.uncertaintyValues
+    const value = criterion.Value
+    console.log("crit_low: " + value + JSON.stringify(unc))
+    const result = 
+        unc.length === 0
+        ? value
+        : Math.min(...unc)
+    return result
+}
+function criterionHigh(criterion) {
+    const unc = criterion.uncertaintyValues
+    const value = criterion.Value
+    console.log("crit_high: " + value + JSON.stringify(unc))
+    const result = 
+        unc.length === 0
+        ? value
+        : Math.max(...unc)
+    return result
+}
 
 function enhanceRiskAssessmentAddErrorReportingHandler(riskAssessment) {
         extendObservable(riskAssessment, errorhandler)
@@ -327,7 +347,9 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         get alow() {
             const k = r.ametodkey
             return k.startsWith("A1") ? r.adefaultLow 
-            : k === "A2" || k === "A3" ?
+            : k === "A2" ?
+                criterionLow(getCriterion(riskAssessment, 0, "A"))
+            : k === "A3" ?
                 r.lifetimeLowerQ >= 650 ? 3 :
                 r.lifetimeLowerQ >= 60 ? 2 :
                 r.lifetimeLowerQ >= 10 ? max(1, r.ascore - 1)  :
@@ -338,7 +360,9 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         get ahigh() {
             const k = r.ametodkey 
             return k.startsWith("A1") ? r.adefaultHigh
-            : k === "A2" || k === "A3" ?
+            : k === "A2" ?
+                criterionHigh(getCriterion(riskAssessment, 0, "A"))
+            : k === "A3" ?
                 r.lifetimeUpperQ >= 650 ? min(3, r.ascore + 1) :
                 r.lifetimeUpperQ >= 60 ? min(2, r.ascore + 1) :
                 r.lifetimeUpperQ >= 10 ? 1 :
