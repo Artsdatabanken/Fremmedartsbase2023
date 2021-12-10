@@ -146,6 +146,17 @@ const errorhandler = {
     }
 }
 
+function uncertaintyArray(low, high) {
+    const arr = []
+    for (let n = 0; n < 4 ; n++) {
+        //if(low >= n && high <= n) {
+        if(!(low >= n && high <= n)) {
+            arr.push(n)
+        }
+    }
+    return arr
+}
+
 
 function enhanceRiskAssessmentAddErrorReportingHandler(riskAssessment) {
         extendObservable(riskAssessment, errorhandler)
@@ -328,12 +339,21 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             const k = r.ametodkey 
             return k.startsWith("A1") ? r.adefaultHigh
             : k === "A2" || k === "A3" ?
-                r.lifetimeLowerQ >= 650 ? min(3, r.ascore + 1) :
-                r.lifetimeLowerQ >= 60 ? min(2, r.ascore + 1) :
-                r.lifetimeLowerQ >= 10 ? 1 :
-                r.lifetimeLowerQ < 10 ? 0 :
+                r.lifetimeUpperQ >= 650 ? min(3, r.ascore + 1) :
+                r.lifetimeUpperQ >= 60 ? min(2, r.ascore + 1) :
+                r.lifetimeUpperQ >= 10 ? 1 :
+                r.lifetimeUpperQ < 10 ? 0 :
                 0
             : 0 // 1 / NaN?
+        },
+
+
+        get aDisabledUncertaintyValues() {
+            // console.log("uncarr A")
+
+            const result = uncertaintyArray(r.alow, r.ahigh)
+            console.log("uncarr A: " + r.ametodkey + "!"   + r.alow + "!"  + r.ahigh + "¤"+ r.lifetimeUpperQ + "!"  + JSON.stringify(result))
+            return result
         },
         get medianLifetime() {
             const k = r.ametodkey
@@ -401,6 +421,14 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             : r.expansionUpperQ >= 50 ? 1 
             : r.expansionUpperQ < 50 ? 0
             : 1 // ?
+        },
+        get bDisabledUncertaintyValues() {
+            // console.log("uncarr B")
+            // return uncertaintyArray(r.blow, r.bhigh)
+            const result = uncertaintyArray(r.blow, r.bhigh)
+            console.log("uncarr B: " + r.blow + "!"  + r.bhigh + "!"  + JSON.stringify(result))
+            return result
+
         },
         get expansionSpeed() {
             const k = r.bmetodkey
@@ -1194,37 +1222,37 @@ function enhanceCriteriaAddLabelsAndAuto(riskAssessment, codes) {
 
 
 function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
-    function uncertaintylevelsFor(baseAttributeName, levelfunc) {
-        // medianLifespanLevel
-        // yearlyIncreaseLevel
-        const maxDistanecFromValue = 1
+    // function uncertaintylevelsFor(baseAttributeName, levelfunc) {
+    //     // medianLifespanLevel
+    //     // yearlyIncreaseLevel
+    //     const maxDistanecFromValue = 1
 
-        const valuenum =  extractFloat(riskAssessment[baseAttributeName])        
-        const value =  levelfunc(valuenum)
+    //     const valuenum =  extractFloat(riskAssessment[baseAttributeName])        
+    //     const value =  levelfunc(valuenum)
 
-        // const lowstr = riskAssessment[baseAttributeName + "LowerQuartile"]
-        const lownum = riskAssessment[baseAttributeName + "LowerQ"]
-        // const highstr = riskAssessment[baseAttributeName + "UpperQuartile"]
-        const highnum = riskAssessment[baseAttributeName + "UpperQ"]
-        // const lownum = lowstr ? extractFloat(lowstr) : valuenum
-        // const highnum = highstr ? extractFloat(highstr) : valuenum
-        const lowlevel = levelfunc(lownum)
-        const highlevel = levelfunc(highnum)
-        const lowadjusted = Math.min(value, Math.max(value - maxDistanecFromValue, lowlevel ))
-        const highadjusted = Math.max(value, Math.min(value + maxDistanecFromValue, highlevel ))
-         console.log("B__ baseAttributeName:" + baseAttributeName)
-         console.log("B__ uncertaintylevel:" + lowlevel + "|" + highlevel)
-         console.log("B__ adjuncertaintylevel:" + lowadjusted + "|" + highadjusted)
+    //     // const lowstr = riskAssessment[baseAttributeName + "LowerQuartile"]
+    //     const lownum = riskAssessment[baseAttributeName + "LowerQ"]
+    //     // const highstr = riskAssessment[baseAttributeName + "UpperQuartile"]
+    //     const highnum = riskAssessment[baseAttributeName + "UpperQ"]
+    //     // const lownum = lowstr ? extractFloat(lowstr) : valuenum
+    //     // const highnum = highstr ? extractFloat(highstr) : valuenum
+    //     const lowlevel = levelfunc(lownum)
+    //     const highlevel = levelfunc(highnum)
+    //     const lowadjusted = Math.min(value, Math.max(value - maxDistanecFromValue, lowlevel ))
+    //     const highadjusted = Math.max(value, Math.min(value + maxDistanecFromValue, highlevel ))
+    //      console.log("B__ baseAttributeName:" + baseAttributeName)
+    //      console.log("B__ uncertaintylevel:" + lowlevel + "|" + highlevel)
+    //      console.log("B__ adjuncertaintylevel:" + lowadjusted + "|" + highadjusted)
 
-        const uncertainties = [];
-        for (var i = lowadjusted; i <= highadjusted; i++) {
-            uncertainties.push(i);
-        }
-         console.log("B__ uncertainties:" + JSON.stringify(uncertainties))
+    //     const uncertainties = [];
+    //     for (var i = lowadjusted; i <= highadjusted; i++) {
+    //         uncertainties.push(i);
+    //     }
+    //      console.log("B__ uncertainties:" + JSON.stringify(uncertainties))
 
-        return uncertainties
+    //     return uncertainties
 
-    }
+    // }
 
     for(const crit of riskAssessment.criteria) { 
         let firstrun = true
@@ -1235,24 +1263,33 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
         autorun(() => {
             const maxDistanecFromValue = 1
             const value = crit.value
+            console.log("uncarr crit value: " + value)
             let ud
             let uv
-            if (crit.criteriaLetter === "A" && 
-                    riskAssessment.chosenSpreadMedanLifespan === 'LifespanA1aSimplifiedEstimate' 
-            ) {
-                const ulevels = uncertaintylevelsFor(riskAssessment.chosenSpreadMedanLifespan, medianLifespanLevel)
-                uv = ulevels
-                ud = [0,1,2,3]
-            } else if (crit.criteriaLetter === "B" && 
-                    (riskAssessment.chosenSpreadYearlyIncrease === 'SpreadYearlyIncreaseOccurrenceArea' || 
-                    riskAssessment.chosenSpreadYearlyIncrease === 'SpreadYearlyIncreaseObservations')
-            ) {
-                const ulevels = uncertaintylevelsFor(riskAssessment.chosenSpreadYearlyIncrease, yearlyIncreaseLevel)
-                uv = ulevels
-                ud = [0,1,2,3]
-            } else {    
+            // if (crit.criteriaLetter === "A" && 
+            //         riskAssessment.chosenSpreadMedanLifespan === 'LifespanA1aSimplifiedEstimate' 
+            // ) {
+            //     const ulevels = uncertaintylevelsFor(riskAssessment.chosenSpreadMedanLifespan, medianLifespanLevel)
+            //     uv = ulevels
+            //     ud = [0,1,2,3]
+            // } else if (crit.criteriaLetter === "B" && 
+            //         (riskAssessment.chosenSpreadYearlyIncrease === 'SpreadYearlyIncreaseOccurrenceArea' || 
+            //         riskAssessment.chosenSpreadYearlyIncrease === 'SpreadYearlyIncreaseObservations')
+            // ) {
+            //     const ulevels = uncertaintylevelsFor(riskAssessment.chosenSpreadYearlyIncrease, yearlyIncreaseLevel)
+            //     uv = ulevels
+            //     ud = [0,1,2,3]
 
-                ud = []
+            if (crit.criteriaLetter === "A" && riskAssessment.ametodkey === "A3") {
+                ud = riskAssessment.aDisabledUncertaintyValues
+                uv = [value]
+            } else if (crit.criteriaLetter === "B") {
+                ud = riskAssessment.bDisabledUncertaintyValues
+                uv = [value]
+
+            } else {    
+    
+                    ud = []
                 for (let n = 0; n < 4 ; n++) {
                     if (Math.abs(n - value) > maxDistanecFromValue || n === value) {
                         ud.push(n)
