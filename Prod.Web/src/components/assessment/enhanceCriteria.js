@@ -546,118 +546,9 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         }
     })
 
-    const ec = observable({
-        warnings: [],
-
-        // A1
-        // get lifespanA1aSimplifiedEstimateValue () {
-        //     console.log("* * * run A1 * * * ")
-        //     //amethod = "forekomstareal" 
-        //     const r = riskAssessment
-        //     runInAction(() => {
-        //         if( r.acceptOrAdjustCritA === "accept") { 
-        //         } else if (r.acceptOrAdjustCritA === "adjust") {
-        //             // amethod = "forekomstareal justert" 
-        //             // "Skårtabellen" åpnes for avkrysning, med ett mulig kryss for beste anslag og opptil tre kryss for usikkerhet, der ikke-valgbare bokser er grået ut. 
-        //             // Valgbare bokser for beste anslag er skårene fra og med apossibleLow til og med apossibleHigh. 
-        //             // Krysset i boksene bestemmer verdien til ascore (mellom 1 og 4). 
-        //             // Valgbare bokser for usikkerhet er skårene fra og med max(1, ascore - 1) til og med min(4, ascore + 1). 
-        //             // Det laveste krysset i boksene bestemmer verdien til alow (mellom 1 og 4). 
-        //             // Det høyeste krysset i boksene bestemmer verdien til ahigh (mellom 1 og 4). 
-            
-            
-        //         } else {
-        //             console.error("lifespanA1aSimplifiedEstimateValue acceptOrAdjustCritA illegal value: " + r.acceptOrAdjustCritA)
-        //         }
-        //     })
-        //     return {
-        //         method: r.acceptOrAdjustCritA === "accept" 
-        //             ? ""  // "forekomstareal forenklet",
-        //             :  "AOOadjusted", // "forekomstareal justert",
-        //         level: levelFloor(r.ascore),
-        //         high: levelFloor(r.ahigh),
-        //         low: levelFloor(r.alow),
-        //         text: r.a1aresulttext
-        //     }
-        // },
-        // A2
-        // get spreadRscriptEstimatedSpeciesLongevityValue () {
-        //     console.log("* * * run A2 * * * ")
-
-        //     const r = riskAssessment
-        //     const result = {
-        //         method: "numerisk estimering",
-        //         level: r.ascore,
-        //         high: 3,
-        //         low: 1
-        //         // text: "dummytext"
-        //     }
-        //     return result
-        // },
-        // A3
-        // get viableAnalysisValue () {
-        //     console.log("* * * run A3 * * * ")
-
-        //     const r = riskAssessment
-
-        //     // if (r.lifetimeLowerQ > r.medianLifetime) 
-        //     //     return {error: "Levetidens nedre kvartil må være mindre enn medianen."}
-        //     // if (r.LifetimeUpperQ <= r.medianLifetime) 
-        //     //     return {error: "Levetidens øvre kvartil må være større enn medianen."}
-
-        //     const result = {
-        //         method: "levedyktighetsanalyse",
-        //         level: r.ascore,
-        //         high: r.ahigh,
-        //         low: r.alow
-        //         // text: "dummytext"
-        //     }
-        //     return result
-        // },
-
-        
-        // get B1 () {
-        //     console.log("* * * run B1 * * * ")
-        //     const r = riskAssessment
-        //     // if (r.expansionLowerQ > r.expansionSpeed)
-        //     //     return {error:  "Ekspansjonshastighetens nedre kvartil må være mindre enn medianen."}
-        //     // if (r.expansionUpperQ <= r.expansionSpeed) 
-        //     //     return {error: "Ekspansjonshastighetens øvre kvartil må være større enn medianen."}
-        //     const result = {
-        //         method: "modellering",
-        //         level: r.bscore,
-        //         high: r.bhigh,
-        //         low: r.blow
-        //     }
-        //     return result
-        // },
-
-        // get B2a () {
-        //     console.log("* * * run B2a * * * ")
-        //     const r = riskAssessment
-        //     const result = {
-        //         method: "modellering",
-        //         level: r.bscore,
-        //         high: r.bhigh,
-        //         low: r.blow,
-        //         text: r.b2aresulttext
-        //     }
-        //     return result
-        // },
-
-        // get B2b () {
-        //     console.log("* * * run B2b * * * ")
-        //     const r = riskAssessment
-        //     const result = {
-        //         method: "introduksjonspress",
-        //         level: r.bscore,
-        //         high: r.bhigh,
-        //         low: r.blow,
-        //         text: r.b2bresulttext
-        //     }
-        //     return result
-        // }
-    })
+    // const ec = observable({
+    //     warnings: [],
+    // })
     
     const ACriteriaSectionNames = [
         "LifespanA1aSimplifiedEstimate", // changed from  "SpreadPVAAnalysisEstimatedSpeciesLongevity" 11.07.21
@@ -695,78 +586,12 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 
 
     extendObservable(riskAssessment, {
-        // SpreadYearlyLiteratureDataExpansionSpeed: "", // todo: remove this when domain is updated
-        // SpreadYearlyIncreaseCalculatedExpansionSpeed: "", // todo: remove this when domain is updated
-        // // // get ChosenSpreadMedanLifespanLevel() {
-        // // //     const num = extractFloat(riskAssessment[riskAssessment.ChosenSpreadMedanLifespan])
-        // // //     const result = medianLifespanLevel(num)
-        // // //     return result
-        // // // },
-
-        
-
-
         get ChosenSpreadYearlyIncreaseLevel() {
             const num = extractFloat(riskAssessment[riskAssessment.ChosenSpreadYearlyIncrease])
             const result = yearlyIncreaseLevel(num)
             return result
         },
-
-        // get CalculatedCritALevel() {
-        //     console.log("CalculatedCritALevel")
-        //     const method = riskAssessment.chosenSpreadMedanLifespan
-        //     console.log("CalculatedCritALevel method " + method)
-        //     const result = 
-        //         method === "LifespanA1aSimplifiedEstimate" 
-        //         ? ec.lifespanA1aSimplifiedEstimateValue
-        //         : method === "SpreadRscriptEstimatedSpeciesLongevity"
-        //         ? ec.spreadRscriptEstimatedSpeciesLongevityValue
-        //         : method === "ViableAnalysis"
-        //         ? ec.viableAnalysisValue
-        //         : NaN
-
-        //     // const result = aresult.level
-        //     console.log("CalculatedCritALevel result " + JSON.stringify(result))
-
-        //     return result
-        // },
-        // get CalculatedCritBLevel() {
-        //     const method = riskAssessment.chosenSpreadYearlyIncrease
-        //     const result = 
-        //         method === "a" 
-        //         ? ec.B1
-        //         : method === "b"
-        //         ? ec.B2a
-        //         : method === "c"
-        //         ? ec.B2b
-        //         : NaN
-        //     return result
-        // },
     })
-
-    // observe the Selectable* observables to make shure that the chosen method/section does not point to a not selectable method/section
-    /* ACriteriaSectionNames.map(tag =>
-        observe(riskAssessment, "Selectable" + tag, (newValue, oldValue) => {
-            if(!newValue) {
-                if (riskAssessment.ChosenSpreadMedanLifespan === tag) {
-                    setTimeout(action(() => {
-                        riskAssessment.ChosenSpreadMedanLifespan = ""
-                    }), 100) 
-                }
-            }
-        })
-    )
-    BCriteriaSectionNames.map(tag =>
-        observe(riskAssessment, "Selectable" + tag, (newValue, oldValue) => {
-            if(!newValue) {
-                if (riskAssessment.ChosenSpreadYearlyIncrease === tag) {
-                    setTimeout(action(() => {
-                        riskAssessment.ChosenSpreadYearlyIncrease = ""
-                    }), 100) 
-                }
-            }
-        })
-    )*/
 
     extendObservable(riskAssessment, {
         get RedListCategoryLevel() {  //todo: should this be called "ViableAnalysisLevel"?
@@ -781,7 +606,6 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             return result
         }
     })
-
 
     autorun(() => {
         const criterionA = getCriterion(riskAssessment, 0, "A")
