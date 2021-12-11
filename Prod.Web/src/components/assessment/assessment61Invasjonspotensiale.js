@@ -410,14 +410,17 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                 <Xcomp.Number                            
                                             observableValue={[riskAssessment, "expansionSpeedInput"]} 
                                             integer
+                                            disabled={disabled}
                                         />  
                                     <Xcomp.Number                            
                                             observableValue={[riskAssessment, "expansionLowerQInput"]}
                                             integer
+                                            disabled={disabled}
                                         />  
                                     <Xcomp.Number                            
                                             observableValue={[riskAssessment, "expansionUpperQInput"]}
                                             integer
+                                            disabled={disabled}
                                         />  
                                    {/* <h4>{labels.Bcrit.data}</h4>
                                     <div className="BCritFiles">
@@ -657,8 +660,10 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             </td>
                                             <td>
                                                 <Xcomp.String
+                                                    disabled={disabled}
                                                     //observableValue={[riskAssessment, 'spreadYearlyIncreaseObservations']}/>
                                                     observableValue={[riskAssessment, 'occurrences1Best']}/>
+                                                    
                                             </td>
                                         </tr>
                                         <tr>
@@ -667,6 +672,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             </td>
                                             <td>
                                                 <Xcomp.String
+                                                    disabled={disabled}
                                                     //observableValue={[riskAssessment, 'spreadYearlyIncreaseObservationsLowerQuartile']}/>
                                                     observableValue={[riskAssessment, 'occurrences1Low']}/>
                                             </td>
@@ -677,6 +683,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             </td>
                                             <td>
                                                 <Xcomp.String
+                                                    disabled={disabled}
                                                     //observableValue={[riskAssessment, 'spreadYearlyIncreaseObservationsUpperQuartile']}/>
                                                     observableValue={[riskAssessment, 'occurrences1High']}/>
                                             </td>
@@ -714,7 +721,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                     style={{
                                     display: "inline-block"
                                     }}>
-                                <Criterion criterion={crit51B} appState={appState} auto={riskAssessment.chosenSpreadYearlyIncrease == "a" || assessment.alienSpeciesCategory == "DoorKnocker"} mode="noheading"/>
+                                <Criterion criterion={crit51B} appState={appState} disabled={disabled} auto={riskAssessment.chosenSpreadYearlyIncrease == "a" || assessment.alienSpeciesCategory == "DoorKnocker"} mode="noheading"/>
                             </div>
                             }
                            

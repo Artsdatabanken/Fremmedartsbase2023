@@ -151,9 +151,9 @@ export default class Assessment52Utbredelse extends React.Component {
                                         artskartRemoved={assessment.artskartRemoved}
                                     />
                                 </div>
-                                <p style={{marginBottom: '0'}}>Basert på periode:</p>
+                                <p>Basert på periode:</p>
                                 <div className="distributionYears">
-                                    <div style={{marginRight: '30px'}}>
+                                    <div>
                                         <p> f.o.m. år (t<sub>0</sub>)</p> 
                                         <Xcomp.Number
                                             style={{marginLeft: 20}}
@@ -234,6 +234,7 @@ export default class Assessment52Utbredelse extends React.Component {
                         artskartModel={assessment.artskartModel}  // could replace this one?
                         fylkesforekomster={assessment.fylkesforekomster}
                         assessment={assessment}
+                        disabled={appState.userContext.readonly}
                         onOverførFraArtskart={action(this.handleOverførFraArtskart)} />
                         <label htmlFor="CurrentPresenceComment">{labels.describeAsumption}</label>
                         <Xcomp.HtmlString observableValue={[assessment, 'currentPresenceComment']}/>

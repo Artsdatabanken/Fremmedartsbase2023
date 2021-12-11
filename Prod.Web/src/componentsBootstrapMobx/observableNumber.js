@@ -116,6 +116,7 @@ function filterNumericInput(s, integer = false) {
 
 const ObservableNumber = (props) => <Observer>{() => {
   const context = UserContext.getContext()
+  
   const { observableValue, validate, integer, label, width, disabled, displayed, className, yearRange } = props
   const [obj, prop] = observableValue
   // const obstype = typeof(obj[prop])
@@ -140,8 +141,8 @@ const ObservableNumber = (props) => <Observer>{() => {
               integer
             )
           })}
-          disabled={context.readonly || disabled}
-          style={{ width }}
+          
+          
         />
       </span>
     </div>
