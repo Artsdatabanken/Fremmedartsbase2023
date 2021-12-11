@@ -251,12 +251,15 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         get bmetodkey() {
             const method = riskAssessment.chosenSpreadYearlyIncrease
             const result = 
+                //todo: check this, seems to be some (breaking?) changes since FAB3
                 method === "a" 
-                ? "B1"
-                : method === "b"
-                ? "B2a"
-                : method === "c"
-                ? "B2b"
+                ? "B1"  //ok!
+                : method === "d"    // "d": "Anslått økning i forekomstareal"
+                ? "B2a"  // Økning i forekomstareal – selvstendig reproduserende arter 
+                : method === "c"  // "c": "b) Literaturdata på spredningshastighet"
+                ? "B2b"  // Antatt økning i forekomstareal – dørstokkarter 
+                : method === "b" //"b" er utgått verdi (fra FAB3)
+                ? "B2aX"  // todo: fix in future conversation(??)
                 : ""
             return result
         },
