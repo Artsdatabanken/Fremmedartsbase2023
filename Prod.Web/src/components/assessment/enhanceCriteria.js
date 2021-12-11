@@ -160,7 +160,7 @@ function uncertaintyArray(low, high) {
 function criterionLow(criterion) {
     const unc = criterion.uncertaintyValues
     const value = criterion.Value
-    console.log("crit_low: " + value + JSON.stringify(unc))
+    // console.log("crit_low: " + value + JSON.stringify(unc))
     const result = 
         unc.length === 0
         ? value
@@ -170,7 +170,7 @@ function criterionLow(criterion) {
 function criterionHigh(criterion) {
     const unc = criterion.uncertaintyValues
     const value = criterion.Value
-    console.log("crit_high: " + value + JSON.stringify(unc))
+    // console.log("crit_high: " + value + JSON.stringify(unc))
     const result = 
         unc.length === 0
         ? value
@@ -234,9 +234,13 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             const a1submethod = r.acceptOrAdjustCritA
             const result = 
                 method === "LifespanA1aSimplifiedEstimate" 
-                ? a1submethod === "accept" 
-                    ? "A1a" // "AOOaccept"  // "forekomstareal forenklet"
-                    : "A1b" // "AOOadjusted", // "forekomstareal justert"
+                ? riskAssessment.alienSpeciesCategory !== "DoorKnocker"
+                    ? a1submethod === "accept" 
+                        ? "A1a1" // "forekomstareal forenklet"
+                        : "A1a2" // "forekomstareal justert"
+                    : a1submethod === "accept" 
+                        ? "A1b1" // "introduksjonspress forenklet"
+                        : "A1b2" // "introduksjonspress justert"
                 : method === "SpreadRscriptEstimatedSpeciesLongevity"
                 ? "A2"
                 : method === "ViableAnalysis"
@@ -568,7 +572,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         //     })
         //     return {
         //         method: r.acceptOrAdjustCritA === "accept" 
-        //             ? "AOOaccept"  // "forekomstareal forenklet",
+        //             ? ""  // "forekomstareal forenklet",
         //             :  "AOOadjusted", // "forekomstareal justert",
         //         level: levelFloor(r.ascore),
         //         high: levelFloor(r.ahigh),
