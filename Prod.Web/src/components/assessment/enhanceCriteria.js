@@ -239,8 +239,8 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                         ? "A1a1" // "forekomstareal forenklet"
                         : "A1a2" // "forekomstareal justert"
                     : a1submethod === "accept" 
-                        ? "A1b1" // "introduksjonspress forenklet"
-                        : "A1b2" // "introduksjonspress justert"
+                        ? "A1b1" // "introduksjonspress forenklet" (dørstokkart)
+                        : "A1b2" // "introduksjonspress justert"   (dørstokkart)
                 : method === "SpreadRscriptEstimatedSpeciesLongevity"
                 ? "A2"
                 : method === "ViableAnalysis"
@@ -350,8 +350,9 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
         get alow() {
             const k = r.ametodkey
-            return k.startsWith("A1") ? r.adefaultLow 
-            : k === "A2" ?
+            // return k.startsWith("A1") ? r.adefaultLow 
+            return (k === "A1a1" || k === "A1b1") ? r.adefaultLow 
+            : (k === "A2" || k === "A1a2" || k === "A1b2") ?
                 criterionLow(getCriterion(riskAssessment, 0, "A"))
             : k === "A3" ?
                 r.lifetimeLowerQ >= 650 ? 3 :
@@ -1131,8 +1132,11 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
             //     const ulevels = uncertaintylevelsFor(riskAssessment.chosenSpreadYearlyIncrease, yearlyIncreaseLevel)
             //     uv = ulevels
             //     ud = [0,1,2,3]
-
-            if (crit.criteriaLetter === "A" && riskAssessment.ametodkey === "A3") {
+            if (crit.criteriaLetter === "A" && 
+                (riskAssessment.ametodkey === "A1a1" || riskAssessment.ametodkey === "A1b1")) {
+                ud = [0,1,2,3]
+                uv = [value]
+            } else if (crit.criteriaLetter === "A" && riskAssessment.ametodkey === "A3") {
                 ud = riskAssessment.aDisabledUncertaintyValues
                 uv = [value]
             } else if (crit.criteriaLetter === "B") {
