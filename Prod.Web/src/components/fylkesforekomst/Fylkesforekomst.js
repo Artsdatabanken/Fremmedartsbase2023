@@ -179,12 +179,12 @@ const Fylkesforekomst = ({ assessment, fylkesforekomster }) => {
         >
           <div style={{ _paddingBottom: 24 }}></div>
           {!doorKnocker && <>
-          <FylkeslisteLegend index={0} />
-          <FylkeslisteLegend index={1} />
+          <FylkeslisteLegend index={0} disabled={context.readonly}/>
+          <FylkeslisteLegend index={1} disabled={context.readonly}/>
           </>
            }
-          <FylkeslisteLegend index={3} />
-          <FylkeslisteLegend index={2} />
+          <FylkeslisteLegend index={3} disabled={context.readonly} />
+          <FylkeslisteLegend index={2} disabled={context.readonly}/>
           
           {regionSorteringA.map((k, index) => {
             if (k.navn) {
@@ -261,6 +261,7 @@ const Fylkesforekomst = ({ assessment, fylkesforekomster }) => {
             regionDefs={regionDefs}
             states={forekomsterAsObject}
             stateIndex={0}
+            disabled={context.readonly}
           >
             <DiagonalHatch />
             <Legend size={30} categories={specificCategories(0)} />
@@ -275,6 +276,7 @@ const Fylkesforekomst = ({ assessment, fylkesforekomster }) => {
             regionDefs={regionDefs}
             states={forekomsterAsObject}
             stateIndex={1}
+            disabled={context.readonly}
           >
             <DiagonalHatch />
             <Legend size={30} categories={specificCategories(1)} />
@@ -292,6 +294,7 @@ const Fylkesforekomst = ({ assessment, fylkesforekomster }) => {
             regionDefs={regionDefs}
             states={forekomsterAsObject}
             stateIndex={3}
+            disabled={context.readonly}
           >
             <DiagonalHatch />
             <Legend size={30} categories={specificCategories(3)} />

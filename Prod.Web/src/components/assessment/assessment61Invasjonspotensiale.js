@@ -314,8 +314,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                    <div className="numberFields">                  
 
                    <Xcomp.Number observableValue={[riskAssessment, "medianLifetimeInput"]} integer />  {/* ACritMedianLifespan */}
-                   <Xcomp.Number observableValue={[riskAssessment, "lifetimeLowerQInput"]} />  
-                   <Xcomp.Number observableValue={[riskAssessment, "lifetimeUpperQInput"]} />                     
+                   <Xcomp.Number observableValue={[riskAssessment, "lifetimeLowerQInput"]} integer />  
+                   <Xcomp.Number observableValue={[riskAssessment, "lifetimeUpperQInput"]} integer />                     
                             
                    </div>
                    </div>
@@ -356,7 +356,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                 observableValue={[riskAssessment, "chosenSpreadYearlyIncrease"]}/>
                      
                     <SelectableRadio
-                                label={labels.BcritSelect.d}
+                                label={labels.BcritSelect.b}
                                 value={"b"}
                                 disabled={disabled}
                                 observableValue={[riskAssessment, "chosenSpreadYearlyIncrease"]}/>
@@ -410,14 +410,17 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                 <Xcomp.Number                            
                                             observableValue={[riskAssessment, "expansionSpeedInput"]} 
                                             integer
+                                            disabled={disabled}
                                         />  
                                     <Xcomp.Number                            
                                             observableValue={[riskAssessment, "expansionLowerQInput"]}
                                             integer
+                                            disabled={disabled}
                                         />  
                                     <Xcomp.Number                            
                                             observableValue={[riskAssessment, "expansionUpperQInput"]}
                                             integer
+                                            disabled={disabled}
                                         />  
                                    {/* <h4>{labels.Bcrit.data}</h4>
                                     <div className="BCritFiles">
@@ -554,8 +557,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                 </td>
                                                 <td> <Xcomp.Number   
                                                         disabled                         
-                                                        //observableValue={[riskAssessment, "AOOyear2"]}
-                                                        observableValue={[riskAssessment, "AOOyear1"]}
+                                                        observableValue={[riskAssessment, "AOOyear2"]}
+                                                        // observableValue={[riskAssessment, "AOOyear1"]}
                                                         integer
                                                         yearRange={true}/> 
                                                 </td>
@@ -656,9 +659,12 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                 <label htmlFor="spreadYearlyIncreaseObservations">{labels.Bcrit.expansion}</label>
                                             </td>
                                             <td>
-                                                <Xcomp.String
+                                                <Xcomp.Number
+                                                    disabled={disabled}
                                                     //observableValue={[riskAssessment, 'spreadYearlyIncreaseObservations']}/>
-                                                    observableValue={[riskAssessment, 'occurrences1Best']}/>
+                                                    observableValue={[riskAssessment, 'occurrences1Best']}
+                                                    integer/>
+                                                    
                                             </td>
                                         </tr>
                                         <tr>
@@ -666,9 +672,11 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                 <label htmlFor="spreadYearlyIncreaseObservationsLowerQuartile">{labels.Bcrit.lower}</label>
                                             </td>
                                             <td>
-                                                <Xcomp.String
+                                                <Xcomp.Number
+                                                    disabled={disabled}
                                                     //observableValue={[riskAssessment, 'spreadYearlyIncreaseObservationsLowerQuartile']}/>
-                                                    observableValue={[riskAssessment, 'occurrences1Low']}/>
+                                                    observableValue={[riskAssessment, 'occurrences1Low']}
+                                                    integer/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -676,9 +684,12 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                 <label htmlFor="spreadYearlyIncreaseObservationsUpperQuartile">{labels.Bcrit.higher}</label>
                                             </td>
                                             <td>
-                                                <Xcomp.String
+                                                <Xcomp.Number
+                                                    disabled={disabled}
                                                     //observableValue={[riskAssessment, 'spreadYearlyIncreaseObservationsUpperQuartile']}/>
-                                                    observableValue={[riskAssessment, 'occurrences1High']}/>
+                                                    observableValue={[riskAssessment, 'occurrences1High']}
+                                                    integer/>
+
                                             </td>
                                         </tr>
                                        
@@ -714,7 +725,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                     style={{
                                     display: "inline-block"
                                     }}>
-                                <Criterion criterion={crit51B} appState={appState} auto={riskAssessment.chosenSpreadYearlyIncrease == "a" || assessment.alienSpeciesCategory == "DoorKnocker"} mode="noheading"/>
+                                <Criterion criterion={crit51B} appState={appState} disabled={disabled} auto={riskAssessment.chosenSpreadYearlyIncrease == "a" || assessment.alienSpeciesCategory == "DoorKnocker"} mode="noheading"/>
                             </div>
                             }
                            

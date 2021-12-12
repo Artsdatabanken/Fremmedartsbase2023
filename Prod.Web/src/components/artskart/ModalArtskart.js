@@ -14,6 +14,7 @@ const ModalArtskart = ({
   artskartRemoved,
   artskartSelectionGeometry,
   onOverførFraArtskart
+  
 }) => {
   const ref = useRef();
   const [visArtskart, setVisArtskart] = useState(false);
