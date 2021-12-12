@@ -157,13 +157,17 @@ export default class Assessment52Utbredelse extends React.Component {
                                         <p> f.o.m. år (t<sub>0</sub>)</p> 
                                         <Xcomp.Number
                                             style={{marginLeft: 20}}
-                                            observableValue={[assessment.riskAssessment, "AOOyear1"]}
+                                            // observableValue={[assessment.riskAssessment, "AOOyear1"]}
+                                            // About the name of this property: Se domain!
+                                            observableValue={[assessment.riskAssessment, "AOOendyear1"]}
                                             yearRange={true}/> 
                                     </div>
                                     <div>
                                         <p>t.o.m. år</p>
                                         <Xcomp.Number                            
-                                            observableValue={[assessment.riskAssessment, "AOOyear2"]}
+                                            // observableValue={[assessment.riskAssessment, "AOOyear2"]}
+                                            // About the name of this property: Se domain!
+                                            observableValue={[assessment.riskAssessment, "AOOendyear2"]}
                                             yearRange={true}/> 
                                     </div> 
                                 </div>

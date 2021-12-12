@@ -520,12 +520,13 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                 </td>
                                                 <td> <Xcomp.Number       
                                                         disabled                     
-                                                        observableValue={[riskAssessment, "AOOyear1"]} 
+                                                        observableValue={[riskAssessment, "AOOendyear1"]} 
                                                         integer 
                                                     /> 
                                                 </td>
                                                 <td style={{display: 'flex'}}><Xcomp.Number                            
-                                                        observableValue={[riskAssessment, "AOOendyear1"]}
+                                                        // observableValue={[riskAssessment, "AOOendyear1"]}
+                                                        observableValue={[riskAssessment, "AOOyear1"]}
                                                         integer
                                                         yearRange={true}
                                                     /> <span style={{margin: '10px 10px 0'}}>(t<sub>1</sub>)</span>
@@ -557,14 +558,15 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                 </td>
                                                 <td> <Xcomp.Number   
                                                         disabled                         
-                                                        observableValue={[riskAssessment, "AOOyear2"]}
+                                                        observableValue={[riskAssessment, "AOOendyear1"]}
                                                         // observableValue={[riskAssessment, "AOOyear1"]}
                                                         integer
                                                         yearRange={true}/> 
                                                 </td>
                                                 <td style={{display: 'flex'}}><Xcomp.Number            
                                                         //disabled = {!riskAssessment.notUse2021AsEndYear}                
-                                                        observableValue={[riskAssessment, "AOOendyear2"]} 
+                                                        // observableValue={[riskAssessment, "AOOendyear2"]} 
+                                                        observableValue={[riskAssessment, "AOOyear2"]} 
                                                         yearRange={true}/> <span style={{margin: '10px 10px 0'}}>(t<sub>2</sub>)</span>
                                                 </td>
                                                 <td><Xcomp.Number observableValue={[riskAssessment, "AOO2"]} integer /> 
