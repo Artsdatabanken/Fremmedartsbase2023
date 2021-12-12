@@ -3,6 +3,7 @@ import RiskLevel from './riskLevel';
 import {extractFloat, getCriterion} from '../../utils'
 import { EventNote } from '@material-ui/icons';
 import config from '../../config';
+import { JsonHubProtocol } from '@microsoft/signalr';
 
 function round(num){return Math.round(num)}
 function min(num1,num2){return Math.min(num1,num2)}
@@ -254,10 +255,13 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 method === "a" 
                 ? "B1" 
                 : method === "b"
-                ? "B2a"  
+                ? riskAssessment.alienSpeciesCategory !== "DoorKnocker"
+                    ? "B2a"
+                    : "B2b"
                 : method === "c"  // no longer in use (??)
-                ? "B2b"  
+                ? "B2bX"  
                 : ""
+            console.log("#bmetod " + result)
             return result
         },
         get introductionsLow() { 
@@ -429,18 +433,17 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 
 
         get bscore() {
-            const k = r.bmetodkey
-
+            console.log("bscore")
             return r.expansionSpeed >= 500 ? 3
-            : r.expansionSpeed >= 160 ? 2
-            : r.expansionSpeed >= 50 ? 1
-            : r.expansionSpeed < 50 ? 0
-            : 1 // ?
+                : r.expansionSpeed >= 160 ? 2
+                : r.expansionSpeed >= 50 ? 1
+                : r.expansionSpeed < 50 ? 0
+                : 0 // ?
         },
 
         get blow() {
             const k = r.bmetodkey
-            return k === "B1a" ? 
+            return k === "B2a" ? 
                 criterionLow(getCriterion(riskAssessment, 0, "B"))
             : r.expansionLowerQ >= 500 ? 3
             : r.expansionLowerQ >= 160 ? 2
@@ -451,7 +454,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 
         get bhigh() {
             const k = r.bmetodkey
-            return k === "B1a" ? 
+            return k === "B2a" ? 
                 criterionHigh(getCriterion(riskAssessment, 0, "B"))
             : r.expansionUpperQ >= 500 ? min(3, r.bscore + 1) 
             : r.expansionUpperQ >= 160 ? min(2, r.bscore + 1) 
@@ -460,10 +463,10 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             : 1 // ?
         },
         get bDisabledUncertaintyValues() {
-            console.log("uncarr B " + r.bmetodkey)
+            console.log("uncarr B2a bDisabledUncertaintyValues " + r.bmetodkey)
             // return uncertaintyArray(r.blow, r.bhigh)
             const result = uncertaintyArray(r.blow, r.bhigh)
-            console.log("uncarr B: " + r.blow + "!"  + r.bhigh + "!"  + JSON.stringify(result))
+            console.log("uncarr B2a: " + r.blow + "!"  + r.bhigh + "!"  + JSON.stringify(result))
             return result
 
         },
@@ -474,6 +477,16 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 : k === "B2a" ? r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null ? 0 : round(sqrt(r.AOOdarkfigureBest) * (sqrt(r.AOO2) - sqrt(r.AOO1)) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi))) 
                 : k === "B2b" ? round(200 * (sqrt(r.AOO10yrBest / 4) - 1) / sqrt(pi))
                 : 0 // ?
+            console.log("#expspeed: " + k + " " + result)
+            console.log("#expspeed data: " + JSON.stringify({
+                AOOyear1: r.AOOyear1,
+                AOOyear2: r.AOOyear2,
+                AOO1: r.AOO1,
+                AOO2: r.AOO2,
+                AOOdarkfigureBest: r.AOOdarkfigureBest
+
+            }))
+
             return roundToSignificantDecimals(result)
         },
         get expansionLowerQ() {
@@ -1147,7 +1160,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
             } else if (crit.criteriaLetter === "A" && riskAssessment.ametodkey === "A3") {
                 ud = riskAssessment.aDisabledUncertaintyValues
                 uv = [value]
-            } else if (crit.criteriaLetter === "B") {
+            } else if (crit.criteriaLetter === "B" && riskAssessment.ametodkey === "B2a") {
                 ud = riskAssessment.bDisabledUncertaintyValues
                 uv = [value]
 
