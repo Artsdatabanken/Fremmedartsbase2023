@@ -557,8 +557,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                 </td>
                                                 <td> <Xcomp.Number   
                                                         disabled                         
-                                                        //observableValue={[riskAssessment, "AOOyear2"]}
-                                                        observableValue={[riskAssessment, "AOOyear1"]}
+                                                        observableValue={[riskAssessment, "AOOyear2"]}
+                                                        // observableValue={[riskAssessment, "AOOyear1"]}
                                                         integer
                                                         yearRange={true}/> 
                                                 </td>
@@ -659,10 +659,11 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                 <label htmlFor="spreadYearlyIncreaseObservations">{labels.Bcrit.expansion}</label>
                                             </td>
                                             <td>
-                                                <Xcomp.String
+                                                <Xcomp.Number
                                                     disabled={disabled}
                                                     //observableValue={[riskAssessment, 'spreadYearlyIncreaseObservations']}/>
-                                                    observableValue={[riskAssessment, 'occurrences1Best']}/>
+                                                    observableValue={[riskAssessment, 'occurrences1Best']}
+                                                    integer/>
                                                     
                                             </td>
                                         </tr>
@@ -671,10 +672,11 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                 <label htmlFor="spreadYearlyIncreaseObservationsLowerQuartile">{labels.Bcrit.lower}</label>
                                             </td>
                                             <td>
-                                                <Xcomp.String
+                                                <Xcomp.Number
                                                     disabled={disabled}
                                                     //observableValue={[riskAssessment, 'spreadYearlyIncreaseObservationsLowerQuartile']}/>
-                                                    observableValue={[riskAssessment, 'occurrences1Low']}/>
+                                                    observableValue={[riskAssessment, 'occurrences1Low']}
+                                                    integer/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -682,10 +684,12 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                 <label htmlFor="spreadYearlyIncreaseObservationsUpperQuartile">{labels.Bcrit.higher}</label>
                                             </td>
                                             <td>
-                                                <Xcomp.String
+                                                <Xcomp.Number
                                                     disabled={disabled}
                                                     //observableValue={[riskAssessment, 'spreadYearlyIncreaseObservationsUpperQuartile']}/>
-                                                    observableValue={[riskAssessment, 'occurrences1High']}/>
+                                                    observableValue={[riskAssessment, 'occurrences1High']}
+                                                    integer/>
+
                                             </td>
                                         </tr>
                                        
