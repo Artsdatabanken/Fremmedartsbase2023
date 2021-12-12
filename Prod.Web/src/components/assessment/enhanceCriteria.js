@@ -251,15 +251,12 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         get bmetodkey() {
             const method = riskAssessment.chosenSpreadYearlyIncrease
             const result = 
-                //todo: check this, seems to be some (breaking?) changes since FAB3
                 method === "a" 
-                ? "B1"  //ok!
-                : method === "d"    // "d": "Anslått økning i forekomstareal"
-                ? "B2a"  // Økning i forekomstareal – selvstendig reproduserende arter 
-                : method === "c"  // "c": "b) Literaturdata på spredningshastighet"
-                ? "B2b"  // Antatt økning i forekomstareal – dørstokkarter 
-                : method === "b" //"b" er utgått verdi (fra FAB3)
-                ? "B2aX"  // todo: fix in future conversation(??)
+                ? "B1" 
+                : method === "b"
+                ? "B2a"  
+                : method === "c"  // no longer in use (??)
+                ? "B2b"  
                 : ""
             return result
         },
@@ -343,7 +340,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
         get ascore() {
             const k = r.ametodkey
-            console.log("ascore method: " + k)
+            // console.log("ascore method: " + k)
             return k.startsWith("A1") ? r.adefaultBest 
             : r.medianLifetime >= 650 ? 3
             : r.medianLifetime >= 60 ? 2
@@ -384,7 +381,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             // console.log("uncarr A")
 
             const result = uncertaintyArray(r.alow, r.ahigh)
-            console.log("uncarr A: " + r.ametodkey + "!"   + r.alow + "!"  + r.ahigh + "¤"+ r.lifetimeUpperQ + "!"  + JSON.stringify(result))
+            //console.log("uncarr A: " + r.ametodkey + "!"   + r.alow + "!"  + r.ahigh + "¤"+ r.lifetimeUpperQ + "!"  + JSON.stringify(result))
             return result
         },
         get medianLifetime() {
@@ -432,6 +429,8 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 
 
         get bscore() {
+            const k = r.bmetodkey
+
             return r.expansionSpeed >= 500 ? 3
             : r.expansionSpeed >= 160 ? 2
             : r.expansionSpeed >= 50 ? 1
@@ -440,7 +439,10 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
 
         get blow() {
-            return r.expansionLowerQ >= 500 ? 3
+            const k = r.bmetodkey
+            return k === "B1a" ? 
+                criterionLow(getCriterion(riskAssessment, 0, "B"))
+            : r.expansionLowerQ >= 500 ? 3
             : r.expansionLowerQ >= 160 ? 2
             : r.expansionLowerQ >= 50 ? max(1, r.bscore - 1)
             : r.expansionLowerQ < 50 ? max(0, r.bscore - 1)
@@ -448,14 +450,17 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
 
         get bhigh() {
-            return r.expansionUpperQ >= 500 ? min(3, r.bscore + 1) 
+            const k = r.bmetodkey
+            return k === "B1a" ? 
+                criterionHigh(getCriterion(riskAssessment, 0, "B"))
+            : r.expansionUpperQ >= 500 ? min(3, r.bscore + 1) 
             : r.expansionUpperQ >= 160 ? min(2, r.bscore + 1) 
             : r.expansionUpperQ >= 50 ? 1 
             : r.expansionUpperQ < 50 ? 0
             : 1 // ?
         },
         get bDisabledUncertaintyValues() {
-            // console.log("uncarr B")
+            console.log("uncarr B " + r.bmetodkey)
             // return uncertaintyArray(r.blow, r.bhigh)
             const result = uncertaintyArray(r.blow, r.bhigh)
             console.log("uncarr B: " + r.blow + "!"  + r.bhigh + "!"  + JSON.stringify(result))

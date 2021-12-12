@@ -356,7 +356,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                 observableValue={[riskAssessment, "chosenSpreadYearlyIncrease"]}/>
                      
                     <SelectableRadio
-                                label={labels.BcritSelect.d}
+                                label={labels.BcritSelect.b}
                                 value={"b"}
                                 disabled={disabled}
                                 observableValue={[riskAssessment, "chosenSpreadYearlyIncrease"]}/>
