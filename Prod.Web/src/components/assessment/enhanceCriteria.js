@@ -230,12 +230,20 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 
     const r = riskAssessment
     extendObservable(riskAssessment, {
+        horizonDoAssessment: false,
+
+        get doorKnocker() {
+            const cond1 = riskAssessment.alienSpeciesCategory === "effectWithoutEstablishment"
+            const cond2 = riskAssessment.alienSpeciesCategory === "DoorKnocker"
+            const cond3 = riskAssessment.horizonDoAssessment
+            return cond1 || cond2 || cond3
+        },
         get ametodkey() {
             const method = riskAssessment.chosenSpreadMedanLifespan
             const a1submethod = r.acceptOrAdjustCritA
             const result = 
                 method === "LifespanA1aSimplifiedEstimate" 
-                ? riskAssessment.alienSpeciesCategory !== "DoorKnocker"
+                ? !r.doorKnocker
                     ? a1submethod === "accept" 
                         ? "A1a1" // "forekomstareal forenklet"
                         : "A1a2" // "forekomstareal justert"
@@ -255,7 +263,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 method === "a" 
                 ? "B1" 
                 : method === "b"
-                ? riskAssessment.alienSpeciesCategory !== "DoorKnocker"
+                ? !r.doorKnocker
                     ? "B2a"
                     : "B2b"
                 : method === "c"  // no longer in use (??)
@@ -282,6 +290,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 : r.occurrences1Best === 0
                 ? 4 * round(0.64 + 0.36 * r.introductionsBest)
                 : 4 * round(r.occurrences1Best + r.introductionsBest^((r.occurrences1Best + 9)/10))
+            console.log("#AOO10yrBest " + r.occurrences1Best + "!" + r.introductionsBest)
             return result
         },
         get AOO10yrLow() {
