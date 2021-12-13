@@ -127,10 +127,10 @@ checkStatus = (production) => {
                     <Xcomp.Radio value={'false'} observableValue={[assessment, "isAlienSpeciesString"]} label={labels.General.no} />
                     <p>{labels.SpeciesStatus.unsureAlienDescription}</p>
 
-                    {assessment.notApplicableCategory == "notAlienSpecie" ? 
+                    {assessment.notApplicableCategory == "notAlienSpecie" && 
                     // transfer "notApplicableDescription" from FAB3
                     <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/> 
-                    : <Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'isAlien']}/>}
+                    }
                     
                     { assessment.isAlienSpeciesString == 'true' ?
                     <div>                     
@@ -142,10 +142,9 @@ checkStatus = (production) => {
                         
                         { assessment.connectedToAnotherString == "yes" ?
                             <div style={{border: '1px solid lightgray', padding: '10px'}}>
-                           {assessment.notApplicableCategory == "taxonIsEvaluatedInHigherRank" ? 
+                           {assessment.notApplicableCategory == "taxonIsEvaluatedInHigherRank" && 
                             // transfer "notApplicableDescription" from FAB3
-                            <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/> 
-                            : null
+                            <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/>                             
                            }
                             <Xcomp.Radio value={"Connected"} observableValue={[assessment.riskAssessment, "connected"]} label={labels.SpeciesStatus.assessedWithAnotherTaxon}/>
                             {assessment.riskAssessment.connected == "Connected" && 
@@ -241,10 +240,9 @@ checkStatus = (production) => {
                      <div>
                          <p>{labels.SpeciesStatus.isProductionSpecies}</p>                          
                          <Xcomp.StringEnum observableValue={[assessment, "productionSpeciesString"]} mode="radio" codes={codes.yesNo}/> 
-                         {(assessment.productionSpecies == true && assessment.notApplicableCategory == "traditionalProductionSpecie") ? 
+                         {(assessment.productionSpecies == true && assessment.notApplicableCategory == "traditionalProductionSpecie") && 
                             // transfer "notApplicableDescription" from FAB3
-                            <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/> 
-                            : null
+                            <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/>                            
                         }
                     </div>
                          <p> { assessment.isRegionallyAlien ? labels.SpeciesStatus.statusInNorwayRegionallyAlien : labels.SpeciesStatus.statusInNorway }</p>
@@ -287,10 +285,9 @@ checkStatus = (production) => {
                         
                         <p>{labels.SpeciesStatus.probabilityUncertainity}</p>
                         <p>{labels.SpeciesStatus.uncertainityEstablishmentTimeDescription}</p>
-                        {assessment.notApplicableCategory == "establishedBefore1800" ? 
+                        {assessment.notApplicableCategory == "establishedBefore1800" &&
                             // transfer "notApplicableDescription" from FAB3
                             <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/> 
-                            : <Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'establishedBefore1800']}/>
                         }
                         
                      </div> : null}
