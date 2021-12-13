@@ -34,6 +34,12 @@
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Dictionary<string, AllCodesCode[]> Kartleggingsenheter { get; set; }
 
+        [JsonPropertyName("Grunntyper")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+        //public AllCodesCode[] Grunntyper { get; set; }
+        //public Dictionary<int, Codes> Grunntyper { get; set; }
+        public List<Codes> Grunntyper { get; set; }
+
         [JsonPropertyName("Miljovariabler")]
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public EnvironmentVariable[] Miljovariabler { get; set; }

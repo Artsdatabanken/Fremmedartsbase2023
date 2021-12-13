@@ -223,6 +223,8 @@ namespace SwissKnife.Database
         {
             if (code.Kartleggingsenheter != null && code.Kartleggingsenheter.ContainsKey("5000"))
             {
+                //var underids = code.Kartleggingsenheter["5000"].Select(acc => acc.Id);
+                //var undercodes = all.Where(nt => underids.Contains(nt.Kode.Id)).OrderBy(nt => PadNumbers(nt.Kode.Id));
                 var underids = code.Kartleggingsenheter["5000"].Select(acc => acc.Id);
                 var undercodes = all.Where(nt => underids.Contains(nt.Kode.Id)).OrderBy(nt => PadNumbers(nt.Kode.Id));
 
@@ -234,12 +236,28 @@ namespace SwissKnife.Database
             }
         }
 
-        public static Codes getgrunntypefrakartleggingsenhet(Codes code, List<Codes> all)
+        public static IOrderedEnumerable<Codes> getgrunntypefrakartleggingsenhet(Codes code, List<Codes> all)
         {
-            var kartleggingskode = code.Kode.Id;
-            var grunntypekode = kartleggingskode.Replace("-A-", "-").Replace("-B-", "-").Replace("-C-", "-").Replace("-D-", "-").Replace("-E-", "-");
-            var grunntype = all.Where(nt => nt.Kode.Id == grunntypekode).FirstOrDefault();
-            return grunntype;
+            //var kartleggingskode = code.Kode.Id;
+            //var grunntypekode = kartleggingskode.Replace("-A-", "-").Replace("-B-", "-").Replace("-C-", "-").Replace("-D-", "-").Replace("-E-", "-");
+            //var grunntype = all.Where(nt => nt.Kode.Id == grunntypekode).OrderBy(nt => PadNumbers(nt.Kode.Id); //.FirstOrDefault();
+
+
+
+            //var grunntypekoder = code.Grunntyper.Values.ToList();
+            //            var grunntypekode = grunntypekoder.Select(c => c.Kode.Id); //  .ToList();
+            //var grunntyper = all.Where(nt => grunntypekode.Contains(nt.Kode.Id)).OrderBy(nt => PadNumbers(nt.Kode.Id));
+
+
+            if (code.Grunntyper != null)
+            {
+                var grunntyper = code.Grunntyper.OrderBy(nt => PadNumbers(nt.Kode.Id));
+                return grunntyper;
+            }
+            else
+            {
+                return all.Where(nt => false).OrderBy(nt => PadNumbers(nt.Kode.Id));
+            }
         }
 
 
@@ -247,18 +265,20 @@ namespace SwissKnife.Database
         // https://nin-kode-api.artsdatabanken.no/api/v2.3/koder/allekoder
         public static void CreateNin2JSON(string outputfilename)
         {
-            const string apiurl = "https://nin-kode-api.artsdatabanken.no/api/v2.3/koder/allekoder";
-            //const string apiurl = "https://nin-kode-api.artsdatabanken.no/api/v2.2/koder/allekoder";
-
-            //var _allekoder = DownloadAndDeserializeJsonData<List<Codes>>(apiurl);
+            const string apiurl = "https://nin-kode-api.artsdatabanken.no/v2.3/koder/allekoder";
+            //const string apiurl = "https://nin-kode-api.artsdatabanken.no/api/v2.3/koder/allekoder";
+            //const string apiurl = "https://nin-kode-api.artsdatabanken.no/v2.2/koder/allekoder";
+            
+            
+            var allekoder = DownloadAndDeserializeJsonData<List<Codes>>(apiurl);
             //Console.WriteLine("_allekoder items: " + _allekoder.Count());
 
 
 
 
-            var ifn = "../../../Importfiler/NiN2_3.txt";
-            var jsonData = File.ReadAllText(ifn);
-            var allekoder = JsonSerializer.Deserialize<List<Codes>>(jsonData);
+            //var ifn = "../../../Importfiler/NiN2_3.txt";
+            //var jsonData = File.ReadAllText(ifn);
+            //var allekoder = JsonSerializer.Deserialize<List<Codes>>(jsonData);
 
             Console.WriteLine("allekoder items: " + allekoder.Count());
 
@@ -309,8 +329,8 @@ namespace SwissKnife.Database
                         nt3.Collapsed = true;
                         nt3.Children = new List<jsonNT>();
                         nt2.Children.Add(nt3);
-                        var gt = getgrunntypefrakartleggingsenhet(ke, allekoder);
-                        if (gt != null)
+                        var grtyper = getgrunntypefrakartleggingsenhet(ke, allekoder);
+                        foreach (var gt in grtyper)
                         {
                             var nt4 = new jsonNT();
                             nt4.Id = gt.Kode.Id;
