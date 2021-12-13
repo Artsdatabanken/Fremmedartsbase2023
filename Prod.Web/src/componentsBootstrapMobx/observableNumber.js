@@ -133,6 +133,7 @@ const ObservableNumber = (props) => <Observer>{() => {
         {hasLabel && <label htmlFor={prop}>{label}</label>}
         <input
           className="form-control"
+          disabled={disabled}
           name={prop}
           value={displayed ? displayed : filterDisplay(obj, prop, yearRange)}
           disabled={(context.readonly && !auth.isAdmin)|| disabled }

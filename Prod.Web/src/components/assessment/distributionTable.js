@@ -19,6 +19,7 @@ export default class DistributionTable extends React.Component {
         // const labels = fabModel.codeLabels.DistributionHistory
         const koder = appState.koder
         const labels = appState.codeLabels.DistributionHistory
+        const disabled = appState.userContext.readonly
 
     if (assessment.horizonEstablismentPotential == 1){
         assessment.riskAssessment.AOOtotalBest == 1;
@@ -76,11 +77,13 @@ export default class DistributionTable extends React.Component {
                 <td>
                 <Xcomp.Number                            
                     observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "occurrences1Low"] : [assessment.riskAssessment, "AOOtotalLow"]}
+                    disabled={disabled}
                     integer />   
                 </td>                
                 <td>
                 <Xcomp.Number                            
                     observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "occurrences1Best"] :[assessment.riskAssessment, "AOOtotalBest"]}
+                    disabled={disabled}
                     integer
                    // onChange={action (() => assessment.horizonEstablismentPotential == 1 && assessment.riskAssessment.AOOtotalBest != 1 ? alert("Dette stemmer ikke overens med vurdering på horisontskanningen. Er du sikker på at du vil endre?") : null)} 
                    />   
@@ -89,6 +92,7 @@ export default class DistributionTable extends React.Component {
                <td>
                <Xcomp.Number                            
                     observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "occurrences1High"] :[assessment.riskAssessment, "AOOtotalHigh"]}
+                    disabled={disabled}
                     integer />   
                 </td>
                 {assessment.alienSpeciesCategory != "DoorKnocker" &&
@@ -100,6 +104,7 @@ export default class DistributionTable extends React.Component {
                 <td>
                 <Xcomp.Number                            
                     observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "introductionsLow"] : [assessment.riskAssessment, "AOOdarkfigureLow"]}
+                    disabled={disabled}
                     integer />   
                 </td>                
                 <td>
@@ -111,6 +116,7 @@ export default class DistributionTable extends React.Component {
                <td>
                <Xcomp.Number                            
                     observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "introductionsHigh"] : [assessment.riskAssessment, "AOOdarkfigureHigh"]}
+                    disabled={disabled}
                     integer />   
               </td>
               {assessment.alienSpeciesCategory != "DoorKnocker" &&
@@ -162,12 +168,14 @@ export default class DistributionTable extends React.Component {
             <td>
             <Xcomp.Number                            
                 observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "AOO10yrLow"] : [assessment.riskAssessment, "AOO50yrLow"]}
+                disabled={disabled}
                 integer 
                 />   
             </td>            
             <td>
             <Xcomp.Number                            
                 observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "AOO10yrBest"] : [assessment.riskAssessment, "AOO50yrBest"]}
+                disabled={disabled}
                 integer 
                 
                 />   
@@ -175,6 +183,7 @@ export default class DistributionTable extends React.Component {
            <td>
            <Xcomp.Number                            
                 observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "AOO10yrHigh"] :[assessment.riskAssessment, "AOO50yrHigh"]}
+                disabled={disabled}
                 integer 
                 />   
           </td>

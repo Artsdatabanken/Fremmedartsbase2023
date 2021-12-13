@@ -237,12 +237,12 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                         
                    </div>
                    <div className="numberFields">
-                   <Xcomp.Number observableValue={[riskAssessment, "populationSize"]} integer />  
-                   <Xcomp.Number observableValue={[riskAssessment, "growthRate"]} />  
-                   <Xcomp.Number observableValue={[riskAssessment, "envVariance"]} />  
-                   <Xcomp.Number observableValue={[riskAssessment, "demVariance"]} />  
-                   <Xcomp.Number observableValue={[riskAssessment, "carryingCapacity"]} integer />  
-                   <Xcomp.Number observableValue={[riskAssessment, "extinctionThreshold"]} integer />  
+                   <Xcomp.Number observableValue={[riskAssessment, "populationSize"]} disabled={disabled} integer />  
+                   <Xcomp.Number observableValue={[riskAssessment, "growthRate"]} disabled={disabled}/>  
+                   <Xcomp.Number observableValue={[riskAssessment, "envVariance"]} disabled={disabled}/>  
+                   <Xcomp.Number observableValue={[riskAssessment, "demVariance"]} disabled={disabled}/>  
+                   <Xcomp.Number observableValue={[riskAssessment, "carryingCapacity"]} disabled={disabled} integer />  
+                   <Xcomp.Number observableValue={[riskAssessment, "extinctionThreshold"]} disabled={disabled} integer />  
                     
                             
                    </div>
@@ -254,7 +254,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                         <p>{labels.Acrit.median}</p> 
                        </div>
                        <div className="numberFields">
-                       <Xcomp.Number observableValue={[riskAssessment, "medianLifetimeInput"]} integer />  
+                       <Xcomp.Number observableValue={[riskAssessment, "medianLifetimeInput"]} disabled={disabled} integer />  
                        </div>
                    </div>
                    
