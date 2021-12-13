@@ -135,6 +135,7 @@ const ObservableNumber = (props) => <Observer>{() => {
           className="form-control"
           name={prop}
           value={displayed ? displayed : filterDisplay(obj, prop, yearRange)}
+          disabled={(context.readonly && !auth.isAdmin)|| disabled }
           onChange={action(e => {
             obj[prop] = filterNumericInput(
               e.currentTarget.value,
