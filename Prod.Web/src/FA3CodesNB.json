@@ -5303,7 +5303,7 @@
                         {
                             "Id": null,
                             "Value": "b",
-                            "Text": "gamle 'b' skal ikke vises!!! - b) Tidsserie på forekomstareal",
+                            "Text": "Anslått økning i forekomstareal",
                             "Info": null,
                             "Children": null
                         },
@@ -5311,13 +5311,6 @@
                             "Id": null,
                             "Value": "c",
                             "Text": "b) Literaturdata på spredningshastighet",
-                            "Info": null,
-                            "Children": null
-                        },
-                        {
-                            "Id": null,
-                            "Value": "d",
-                            "Text": "Anslått økning i forekomstareal",
                             "Info": null,
                             "Children": null
                         }

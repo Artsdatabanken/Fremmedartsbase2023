@@ -16,7 +16,8 @@ import SpeciesNaturetypeTable from './52Okologiskeffekt/SpeciesNaturetypeTable'
 
 import ScoreUnsure from './51Naturtyper/scoreUnsure'
 import HostParasiteTable from './52Okologiskeffekt/HostParasiteTable'
-import createTaxonSearch from './52Okologiskeffekt/createTaxonSearch'
+//import createTaxonSearch from './52Okologiskeffekt/createTaxonSearch'
+import createTaxonSearch from '../createTaxonSearch'
 
 
 const kodeTekst = (koder, verdi) => koder.filter(item => item.Value === verdi).map(item => item.Text)[0] || verdi 

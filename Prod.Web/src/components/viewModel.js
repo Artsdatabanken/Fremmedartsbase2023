@@ -374,6 +374,10 @@ class ViewModel {
         });
         autorun(() => {
             console.log("horizonDoAssessment: " + this.horizonDoAssessment)
+            if(this.assessment) {
+                runInAction(() => this.assessment.riskAssessment.horizonDoAssessment = this.horizonDoAssessment)
+            }
+
         });
         autorun(() => {
             if(this.assessmentTabs && this.assessmentTabs.activeTab ) {

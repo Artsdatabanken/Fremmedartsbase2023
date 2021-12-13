@@ -21,7 +21,7 @@ export default class DistributionTable extends React.Component {
         const labels = appState.codeLabels.DistributionHistory
 
     if (assessment.horizonEstablismentPotential == 1){
-        assessment.riskAssessment.AOOtotalBest = 1;
+        assessment.riskAssessment.AOOtotalBest == 1;
     }
     if (assessment.alienSpeciesCategory != "DoorKnocker" && assessment.riskAssessment.AOOtotalBest == 0) {
         alert("En selvstending reproduserende art må ha et forekomstareal på minst 4 km2!")
