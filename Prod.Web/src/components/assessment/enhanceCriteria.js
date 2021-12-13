@@ -230,7 +230,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 
     const r = riskAssessment
     extendObservable(riskAssessment, {
-        horizonDoAssessment: false,
+        horizonDoAssessment: false, //This one is updated from viewmodel
 
         get doorKnocker() {
             const cond1 = riskAssessment.alienSpeciesCategory === "effectWithoutEstablishment"
@@ -285,7 +285,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         // get AOO10yrHigh() {return 4 * ((1 + r.occurrences1High) * (1 + r.introductionsHigh / 2) - 1) },
         get AOO10yrBest() {
             const result =
-                r.occurrences1Best === 0 && r.introductionsBest
+                r.occurrences1Best === 0 && r.introductionsBest === 0
                 ? 0
                 : r.occurrences1Best === 0
                 ? 4 * round(0.64 + 0.36 * r.introductionsBest)
