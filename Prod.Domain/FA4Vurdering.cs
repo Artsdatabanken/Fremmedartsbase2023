@@ -753,11 +753,11 @@ public partial class FA4 // (3.2) Artsegenskaper
         [System.Text.Json.Serialization.JsonPropertyName("AOOyear1")]
         public long? AOOyear1 { get; set; } // fra-årstallet for det første forekomstarealet 
         [System.Text.Json.Serialization.JsonPropertyName("AOOendyear1")]
-        public long? AOOendyear1 { get; set; } // til-årstallet for det første forekomstarealet 
+        public long? AOOendyear1 { get; set; } // basert på periode: f.o.m. år (t0) - (NB!! //todo: denne egenskaper bør skifte navn i neste FAB)
         [System.Text.Json.Serialization.JsonPropertyName("AOOyear2")]
         public long? AOOyear2 { get; set; } // fra-årstallet for det andre forekomstarealet 
         [System.Text.Json.Serialization.JsonPropertyName("AOOendyear2")]
-        public long? AOOendyear2 { get; set; } // til-årstallet for det andre forekomstarealet 
+        public long? AOOendyear2 { get; set; } // basert på periode: t.o.m. år  - (NB!! //todo: denne egenskaper bør skifte navn i neste FAB)
         [System.Text.Json.Serialization.JsonPropertyName("AOO1")]
         public long? AOO1 { get; set; } // forekomstarealet i år 1 
         [System.Text.Json.Serialization.JsonPropertyName("AOO2")]
