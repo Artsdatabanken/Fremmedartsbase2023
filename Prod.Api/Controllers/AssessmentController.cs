@@ -424,6 +424,10 @@ namespace Prod.Api.Controllers
                             doc.AlienSpeciesCategory = "AlienSpecie";
                         }
                     }
+                    doc.IsAlienSpecies = true;
+                    doc.ConnectedToAnother = false;
+                    doc.SpeciesStatus = "C2";
+                    doc.AlienSpecieUncertainIfEstablishedBefore1800 = false;
                     doc.RiskAssessment.RiskLevelCode = "";
                     doc.RiskAssessment.RiskLevelText = "";
                     doc.LastUpdatedAt = DateTime.Now;
