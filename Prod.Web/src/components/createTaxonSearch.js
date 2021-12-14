@@ -50,7 +50,7 @@ import {loadDataFromUrl} from '../apiService';
                         filter(item => item.Species).  // item.ExistsInCountry && 
                         map(item => {
                             const taxonRank = item.SubSpecies ? "SubSpecies" : "Species"  
-                            const rlCat = item.TaxonTags.find(tt => tt.Prefix === "RL2015" && tt.Context === contextLetter )
+                            const rlCat = item.TaxonTags.find(tt => tt.Prefix === "RL2021" && tt.Context === contextLetter )
                             const rlCategory = rlCat ? rlCat.Tag : null
                             // console.log("tax: " + item.ValidScientificName)
                             return {

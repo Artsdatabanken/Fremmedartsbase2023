@@ -133,10 +133,10 @@ const ObservableNumber = (props) => <Observer>{() => {
         {hasLabel && <label htmlFor={prop}>{label}</label>}
         <input
           className="form-control"
-          disabled={disabled}
+          disabled={context.readonly|| disabled }
           name={prop}
           value={displayed ? displayed : filterDisplay(obj, prop, yearRange)}
-          disabled={(context.readonly && !auth.isAdmin)|| disabled }
+          // disabled={(context.readonly && !auth.isAdmin)|| disabled } // SAH tok bort 14.12.2021 - duplett av den over og auth er ikke tilgjengelig
           onChange={action(e => {
             obj[prop] = filterNumericInput(
               e.currentTarget.value,
