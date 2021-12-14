@@ -552,22 +552,22 @@
             {
                 "Id": "DistributionOptions",
                 "Value": "E",
-                "Text": "Arten har selv spredd seg fra ett eller flere introduksjonssted(er) og er etablert i minst ti av forekomstene (E)"
+                "Text": "Etter introduksjon har arten selv spredd seg til minst ti forekomster der den er etablert (E)"
             },
             {
                 "Id": "DistributionOptions",
                 "Value": "D2",
-                "Text": "Arten har selv spredd seg fra ett eller flere introduksjonssted(er) og er etablert i minst én av forekomstene (D2)"
+                "Text": "Etter introduksjon har arten selv spredd seg til minst én forekomst der den er etablert (D2)"
             },
             {
                 "Id": "DistributionOptions",
                 "Value": "D1",
-                "Text": "Arten har selv spredd seg fra ett eller flere introduksjonssted(er), men er kun etablert der den er introdusert (D1)"
+                "Text": "Etter introduksjon har arten selv spredd seg, men er kun etablert der den er introdusert (D1)"
             },
             {
                 "Id": "DistributionOptions",
                 "Value": "C3",
-                "Text": "Arten forekommer kun der den er introdusert (og er etablert der) (C3)"
+                "Text": "Arten forekommer kun der den er introdusert og etablert der (C3)"
             }
         ],
 
