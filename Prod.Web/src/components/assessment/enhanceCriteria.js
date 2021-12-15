@@ -437,7 +437,8 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 
         get a1bresulttext() {
             //return `Basert på de beste anslagene på forekomstareal i dag (${r.AOOtotalBest + 1}&nbsp;km²) og om 50&nbsp;år (${r.AOO50yrBest + 1}&nbsp;km²) er A-kriteriet forhåndsskåret som ${r.adefaultBest + 1} (med usikkerhet: ${r.adefaultLow}–${r.adefaultHigh}). Dette innebærer at artens mediane levetid ligger ${r.lifetimeText}, eller at sannsynligheten for utdøing innen 50&nbsp;år er på ${r.extinctionText}.`
-            return `Basert på det beste anslaget på ${r.AOOtotalBest + 1} forekomst(er) i løpet av 10 år og ${r.AOO50yrBest + 1} introduksjon(er) i samme tidsperiode er A-kriteriet forhåndsskåret som ${r.adefaultBest + 1} (med usikkerhet: ${r.adefaultLow}–${r.adefaultHigh}). Dette innebærer at artens mediane levetid ligger ${r.lifetimeText}, eller at sannsynligheten for utdøing innen 50 år er på ${r.extinctionText}.`
+           // return `Basert på det beste anslaget på ${r.AOOtotalBest + 1} forekomst(er) i løpet av 10 år og ${r.AOO50yrBest + 1} introduksjon(er) i samme tidsperiode er A-kriteriet forhåndsskåret som ${r.adefaultBest + 1} (med usikkerhet: ${r.adefaultLow}–${r.adefaultHigh}). Dette innebærer at artens mediane levetid ligger ${r.lifetimeText}, eller at sannsynligheten for utdøing innen 50 år er på ${r.extinctionText}.`
+           return `Basert på det beste anslaget på ${r.occurrences1Best} forekomst(er) i løpet av 10 år og ${r.introductionsBest} introduksjon(er) i samme tidsperiode er A-kriteriet forhåndsskåret som ${r.adefaultBest + 1} (med usikkerhet: ${r.adefaultLow}–${r.adefaultHigh}). Dette innebærer at artens mediane levetid ligger ${r.lifetimeText}, eller at sannsynligheten for utdøing innen 50 år er på ${r.extinctionText}.`
         },
 
 
