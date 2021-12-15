@@ -10,7 +10,8 @@ const SvgShapeSelector = ({
   states,
   stateIndex,
   onSwitchCategory,
-  onSwitchOtherCategory
+  onSwitchOtherCategory,
+  disabled
 }) => {
   const offsetX = useRef();
   const offsetY = useRef();
@@ -38,6 +39,7 @@ const SvgShapeSelector = ({
         boundaryPath={boundary.regions[kode]}
         style={style}
         readonly={readOnly}
+        disabled={disabled}
         onMouseOver={e => {
           e.stopPropagation();
           offsetX.current.beginElement(); //triggers animation
