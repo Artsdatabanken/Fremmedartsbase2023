@@ -43,7 +43,26 @@ const MapOpenLayers = ({
     let hoverStyles;
     let featureOver;
     let drawPolygonInteraction;
+    let waterLayerName;
     const vectorFeatures = {};
+    const colors = {
+        '1': '',
+        '1TO': '',
+        '2': '',
+        '5': '',
+        '1101': '',
+        '1106': '',
+        '1107': '',
+        '1108': '',
+        '1109': '',
+        '5103': '',
+        '5104': '',
+        '5107': '',
+        '5108': '',
+        '5109': '',
+        'VHA5': '',
+        'VHA6': '',
+    };
 
     //if (!mapBounds) mapBounds = [[57, 4.3], [71.5, 32.5]];
 
@@ -140,20 +159,37 @@ const MapOpenLayers = ({
 
     const createTextStyleFunction = (feature) => {
         return new Text({
-            text: feature.get('Name') ? feature.get('Name') : undefined
+            text: feature.get(waterLayerName) ? feature.get(waterLayerName) : undefined
         });
     };
 
-    const internalStyleFunction = (hover) => {
+    const getRandomColor = () => {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    };
+
+    const setColors = () => {
+        for (var key in colors) {
+            colors[key] = getRandomColor();
+        }
+        // console.log('colors', colors);
+    };
+
+    const internalStyleFunction = (feature, hover) => {
         const stroke = new Stroke({
-            // color: hover ? '#66CCFF' : '#3399CC',
-            // color: hover ? '#1177AA' : '#3399CC',
-            color: '#3399CC',
-            width: hover ? 2 : 1.25,
+            // color: hover ? '#3399CCFF' : '#3399CCAA',
+            // width: hover ? 2 : 1.25,
+            color: hover ? '#3399CCFF' : `${colors[feature.get('vannregionID')]}AA`,
+            // color: hover = hover ? `${colors[feature.get('vannregionID')]}FF` : `${colors[feature.get('vannregionID')]}AA`,
+            width: hover ? 4 : 2,
         });
         const fill = new Fill({
             // color: 'rgba(255,255,255,0.4)'
-            color: hover ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0)'
+            color: hover ? `${colors[feature.get('vannregionID')]}AA` : `${colors[feature.get('vannregionID')]}00`
         });
         return new Style({
             image: new Circle({
@@ -167,8 +203,8 @@ const MapOpenLayers = ({
     };
 
     const hoverStyleFunction = (feature, resolution) => {
-        if (!hoverStyles) {
-            hoverStyles = internalStyleFunction(true);
+        if (!hoverStyles || true) {
+            hoverStyles = internalStyleFunction(feature, true);
         }
         const style = hoverStyles.clone();
         style.setText(createTextStyleFunction(feature));
@@ -176,15 +212,27 @@ const MapOpenLayers = ({
     };
 
     const styleFunction = (feature, resolution) => {
-        if (!defaultStyles) {
-            defaultStyles = internalStyleFunction(false);
+        if (!defaultStyles || true) {
+            defaultStyles = internalStyleFunction(feature, false);
         }
         const defaultStyle = defaultStyles.clone();
         defaultStyle.setText(createTextStyleFunction(feature, false));
         return [defaultStyle];
     };
 
-    const createWaterLayer = (name, layerid, projection) => {
+    const createWaterLayer = (name, layerid, projection, waterLayerName, setWaterLayerNameCallback) => {
+        // const vannUrl = 'https://vann-nett.no/arcgis/rest/services/WFD/AdministrativeOmraader/MapServer/';
+        // const vannUrl = 'https://nve.geodataonline.no/arcgis/rest/services/Mapservices/Elspot/MapServer/';
+        // layerid = '0';
+
+        setColors();
+
+        const vannUrl = 'https://nve.geodataonline.no/arcgis/rest/services/Vanndirektiv/MapServer/';
+        layerid = 14; // Vannregion
+        layerid = 15; // Vannomraade
+
+        const props = {};
+
         const source = new VectorTileSource({
             extent: extent,
             projection: projection,
@@ -193,10 +241,10 @@ const MapOpenLayers = ({
                 featureProjection: projection,
                 geometryName: 'geometry'
             }),
-            url: 'https://vann-nett.no/arcgis/rest/services/WFD/AdministrativeOmraader/MapServer/?x={x}&y={y}&z={z}',
+            url: `${vannUrl}?x={x}&y={y}&z={z}`,
             tileGrid: wmtsTileGrid(1, `EPSG:${config.mapEpsgCode}`, projection, Math.floor(mapZoom)),
-            tileLoadFunction: async (tile) => {
-                let url = 'https://vann-nett.no/arcgis/rest/services/WFD/AdministrativeOmraader/MapServer/';
+            tileLoadFunction: async (tile, tileurl) => {
+                let url = vannUrl;
                 url += layerid;
                 url += '/query';
                 url += '?where=';
@@ -207,6 +255,7 @@ const MapOpenLayers = ({
                 url += '&geometryType=esriGeometryEnvelope';
                 url += `&inSR=${config.mapEpsgCode}`;
                 url += '&spatialRel=esriSpatialRelIntersects';
+                url += '&outFields=*';
                 url += '&relationParam=';
                 url += '&outFields=';
                 url += '&returnGeometry=true';
@@ -239,6 +288,22 @@ const MapOpenLayers = ({
                 if (!vectorFeatures[name]) vectorFeatures[name] = [];
                 features.forEach((feature) => {
                     feature.set('_layerName', name);
+                    if (!waterLayerName && setWaterLayerNameCallback) {
+                        waterLayerName = feature.get('Name') ? 'Name' : feature.get('vannomraadenavn') ? 'vannomraadenavn' : undefined;
+                        setWaterLayerNameCallback(waterLayerName);
+                    }
+                    // // console.log('feature', feature.getProperties());
+                    // if (!props['vannregionID']) props['vannregionID'] = {};
+                    // if (!props['vannregionkoordinatorID']) props['vannregionkoordinatorID'] = {};
+                    
+                    // if (props['vannregionID'][feature.get('vannregionID')]) {
+                    //     props['vannregionID'][feature.get('vannregionID')]++;
+                    //     props['vannregionkoordinatorID'][feature.get('vannregionkoordinatorID')]++;
+                    // } else {
+                    //     props['vannregionID'][feature.get('vannregionID')] = 1;
+                    //     props['vannregionkoordinatorID'][feature.get('vannregionkoordinatorID')] = 1;
+                    // }
+                    // console.log('props', props);
                     vectorFeatures[name].push(feature);
                 });
                 tile.setFeatures(features);
@@ -420,7 +485,13 @@ const MapOpenLayers = ({
             // 8: Klimasone (8)
             // 9: Fylke (9)
 
-            options.layers.push(createWaterLayer('Vatn', 2, projection));
+            waterLayerName = undefined;
+
+            const setWaterLayerName = (name) => {
+                waterLayerName = name;
+            };
+
+            options.layers.push(createWaterLayer('Vatn', 2, projection, waterLayerName, setWaterLayerName));
         }
         options.layers.push(hoverLayer);
         options.layers.push(areaLayer);
@@ -491,13 +562,13 @@ const MapOpenLayers = ({
 
             const hoverSource = hoverLayer.getSource();
             if (vatn && vatn.length > 0) {
-                const name = vatn[0].get('Name');
-                if (featureOver && featureOver.get('Name') === name) return;
+                const name = vatn[0].get(waterLayerName);
+                if (featureOver && featureOver.get(waterLayerName) === name) return;
                 if (featureOver) hoverSource.clear();
 
                 featureOver = vatn[0];
                 vectorFeatures[layerName]
-                .filter((feature) => feature.get('Name') === name)
+                .filter((feature) => feature.get(waterLayerName) === name)
                 .forEach((sourceFeature) => {
                     hoverSource.addFeature(sourceFeature);
                 });
