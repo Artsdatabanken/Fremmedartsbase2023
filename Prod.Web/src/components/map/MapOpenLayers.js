@@ -163,18 +163,39 @@ const MapOpenLayers = ({
         });
     };
 
-    const getRandomColor = () => {
-        var letters = '0123456789ABCDEF';
-        var color = '#';
-        for (var i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color;
-    };
-
     const setColors = () => {
+        // const getRandomColor = () => {
+        //     var letters = '0123456789ABCDEF';
+        //     var color = '#';
+        //     for (var i = 0; i < 6; i++) {
+        //         color += letters[Math.floor(Math.random() * 16)];
+        //     }
+        //     return color;
+        // };
+        const palette = [
+            '#86CFEF',
+            '#4B6CA6',
+            '#89C1DA',
+            '#CFE7F1',
+            '#6493B5',
+            '#9EC1ED',
+            '#6391E8',
+            '#345995',
+            '#AAC6DF',
+            '#5B8BC8',
+            '#6582A5',
+            '#7C9ED7',
+            '#72AFCE',
+            '#86CFEF',
+            '#a7a2a9',
+            '#86CFEF' // '#daffed'
+        ];
+        let i = 0;
         for (var key in colors) {
-            colors[key] = getRandomColor();
+            // colors[key] = getRandomColor();
+            colors[key] = palette[i];
+            console.log(`${i}\t${colors[key]}\t%c    `, `background: ${colors[key]};color: ${colors[key]};`);
+            i++;
         }
         // console.log('colors', colors);
     };
@@ -183,13 +204,16 @@ const MapOpenLayers = ({
         const stroke = new Stroke({
             // color: hover ? '#3399CCFF' : '#3399CCAA',
             // width: hover ? 2 : 1.25,
-            color: hover ? '#3399CCFF' : `${colors[feature.get('vannregionID')]}AA`,
             // color: hover = hover ? `${colors[feature.get('vannregionID')]}FF` : `${colors[feature.get('vannregionID')]}AA`,
+            // color: hover ? '#3399CCFF' : `${colors[feature.get('vannregionID')]}AA`,
+            // color: hover ? '#3399CCFF' : '#FFFFFFAA',
+            color: hover ? `${colors[feature.get('vannregionID')]}FF` : '#FFFFFFAA',
             width: hover ? 4 : 2,
         });
         const fill = new Fill({
             // color: 'rgba(255,255,255,0.4)'
-            color: hover ? `${colors[feature.get('vannregionID')]}AA` : `${colors[feature.get('vannregionID')]}00`
+            // color: hover ? `${colors[feature.get('vannregionID')]}AA` : `${colors[feature.get('vannregionID')]}00`
+            color: hover ? `${colors[feature.get('vannregionID')]}AA` : `${colors[feature.get('vannregionID')]}88`
         });
         return new Style({
             image: new Circle({
