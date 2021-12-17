@@ -19,6 +19,7 @@ const RedigerbartKart = ({
   children
 }) => {
   const [selectionGeometry, setSelectionGeometry] = React.useState(artskartSelectionGeometry);
+  const [showRegion, setShowRegion] = React.useState(true);
   const [
     artskart,
     observations,
@@ -34,6 +35,7 @@ const RedigerbartKart = ({
     artskartAdded,
     artskartRemoved,
   });
+  
   // console.log('RedigerbartKart', artskartAdded, artskartRemoved, taxonId, scientificNameId);
 
   const handleEditSelection = e => {
@@ -68,6 +70,19 @@ const RedigerbartKart = ({
         <h3>Arealer og fylker fra Artskart</h3>
         
         <div>
+        {showWaterAreas &&
+          <div style={{ pointerEvents: 'auto' }}>
+            <span>Viser {showRegion ? 'vannregioner' : 'vannområder'} </span>
+            <Xcomp.Button
+              onClick={e => {
+                e.preventDefault();
+                e.stopPropagation();
+                setShowRegion(!showRegion);
+              }}
+              >
+                Bytt til {!showRegion ? 'vannregioner' : 'vannområder'}
+            </Xcomp.Button>
+          </div>}
           Forekomstareal:{" "}
           {areadata.AreaOfOccupancy >= 0 ? (
             <span>
@@ -175,6 +190,7 @@ const RedigerbartKart = ({
       </div>
       <MapOpenLayers
         showWaterAreas={showWaterAreas}
+        showRegion={showRegion}
         geojson={observations}
         selectionGeometry={selectionGeometry}
         style={mapstyle}
