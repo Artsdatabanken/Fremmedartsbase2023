@@ -6,6 +6,7 @@ import config from '../../config';
 import { JsonHubProtocol } from '@microsoft/signalr';
 
 function round(num){return Math.round(num)}
+function trunc(num){return Math.trunc(num)}
 function min(num1,num2){return Math.min(num1,num2)}
 function max(num1,num2){return Math.max(num1,num2)}
 function sqrt(num){return Math.sqrt(num)}
@@ -483,7 +484,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             const k = r.bmetodkey
             const result = 
                 k === "B1" ? r.expansionSpeedInput
-                : k === "B2a" ? r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null ? 0 : round(sqrt(r.AOOdarkfigureBest) * (sqrt(r.AOO2) - sqrt(r.AOO1)) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi))) 
+                : k === "B2a" ? r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null ? 0 : trunc(sqrt(r.AOOdarkfigureBest) * 1000 * (sqrt(r.AOO2) - sqrt(r.AOO1)) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi))) 
                 : k === "B2b" ? round(200 * (sqrt(r.AOO10yrBest / 4) - 1) / sqrt(pi))
                 : 0 // ?
             console.log("#expspeed: " + k + " " + result)
