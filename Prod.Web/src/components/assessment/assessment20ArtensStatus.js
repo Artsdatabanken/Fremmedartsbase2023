@@ -125,11 +125,14 @@ checkStatus = (production) => {
                     { assessment.isAlienSpeciesString == 'true' && assessment.alienSpeciesCategory != "DoorKnocker" ? 
                             <Xcomp.Bool observableValue={[assessment, "isRegionallyAlien"]} checked={assessment.alienSpeciesCategory == "RegionallyAlien"} label={labels.SpeciesStatus.regionallyAlien} /> : null }
                     <Xcomp.Radio value={'false'} observableValue={[assessment, "isAlienSpeciesString"]} label={labels.General.no} />
-                    <p>{labels.SpeciesStatus.unsureAlienDescription}</p>
+                    
 
                     {assessment.notApplicableCategory == "notAlienSpecie" && 
                     // transfer "notApplicableDescription" from FAB3
+                    <>
+                    <p>{labels.SpeciesStatus.unsureAlienDescription}</p>
                     <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/> 
+                    </>
                     }
                     
                     { assessment.isAlienSpeciesString == 'true' ?
@@ -284,10 +287,13 @@ checkStatus = (production) => {
                         </div>
                         
                         <p>{labels.SpeciesStatus.probabilityUncertainity}</p>
-                        <p>{labels.SpeciesStatus.uncertainityEstablishmentTimeDescription}</p>
+                        
                         {assessment.notApplicableCategory == "establishedBefore1800" &&
+                            <>
+                            <p>{labels.SpeciesStatus.uncertainityEstablishmentTimeDescription}</p>
                             // transfer "notApplicableDescription" from FAB3
                             <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/> 
+                            </>
                         }
                         
                      </div> : null}
