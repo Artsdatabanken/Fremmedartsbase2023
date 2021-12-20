@@ -15,6 +15,7 @@ import { addProjection } from 'ol/proj';
 import { Vector as VectorSource, VectorTile as VectorTileSource, WMTS as WmtsSource } from 'ol/source';
 import { Circle, Fill, Stroke, Style, Text } from 'ol/style';
 import WMTSTileGrid from 'ol/tilegrid/WMTS';
+import auth from '../authService'
 import config from '../../config';
 
 const MapOpenLayers = ({
@@ -309,7 +310,65 @@ const MapOpenLayers = ({
 
         const props = {};
 
-        const source = new VectorTileSource({
+        const source = new VectorSource({
+            extent: extent,
+            projection: projection,
+            format: new GeoJSONFormat({
+                dataProjection: projection,
+                featureProjection: projection,
+                geometryName: 'geometry'
+            }),
+            url: `${vannUrl}?x={x}&y={y}&z={z}`,
+            loader: async (extent, resolution, projection, success, failure) => {
+                let url = `${config.apiUrl}/api/static/`;
+                if (layerid === 14) url += 'WaterRegion';
+                else if (layerid === 15) url += 'WaterArea';
+                const response = await fetch(url, {
+                    method: 'get',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + auth.getAuthToken
+                    }
+                });
+                const data = await response.json();
+                if (data.error) return;
+                // console.log('data', data);
+                var features = source.getFormat().readFeatures(data);
+                if (!vectorFeatures[name]) vectorFeatures[name] = [];
+                features.forEach((feature) => {
+                    feature.set('_layerName', name);
+                    if (!waterLayerName && setWaterLayerNameCallback) {
+                        waterLayerName = feature.get('Name')
+                            ? 'Name'
+                            : feature.get('vannomraadenavn')
+                                ? 'vannomraadenavn'
+                                : feature.get('vannregionnavn')
+                                    ? 'vannregionnavn'
+                                    : undefined;
+                        // console.log('setWaterLayerNameCallback', waterLayerName);
+                        setWaterLayerNameCallback(waterLayerName);
+                    }
+                    // // console.log('feature', feature.getProperties());
+                    // if (!props['vannregionID']) props['vannregionID'] = {};
+                    // if (!props['vannregionkoordinatorID']) props['vannregionkoordinatorID'] = {};
+                    
+                    // if (props['vannregionID'][feature.get('vannregionID')]) {
+                    //     props['vannregionID'][feature.get('vannregionID')]++;
+                    //     props['vannregionkoordinatorID'][feature.get('vannregionkoordinatorID')]++;
+                    // } else {
+                    //     props['vannregionID'][feature.get('vannregionID')] = 1;
+                    //     props['vannregionkoordinatorID'][feature.get('vannregionkoordinatorID')] = 1;
+                    // }
+                    // console.log('props', props);
+                    vectorFeatures[name].push(feature);
+                });
+                source.addFeatures(features);
+                success(features);
+            }
+        });
+
+        const ssource = new VectorTileSource({
             extent: extent,
             projection: projection,
             format: new GeoJSONFormat({
@@ -393,7 +452,8 @@ const MapOpenLayers = ({
             },
             crossOrigin: 'anonymous'
         });
-        const layer = new VectorTileLayer({
+        // const layer = new VectorTileLayer({
+        const layer = new VectorLayer({
             name: name,
             opacity: 1,
             renderMode: 'vector',
