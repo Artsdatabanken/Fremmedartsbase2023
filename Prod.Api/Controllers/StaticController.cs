@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Prod.Api.Controllers
 {
     using System;
+    using System.IO;
     using System.Linq;
     using System.Reflection;
     using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace Prod.Api.Controllers
     using Prod.Data.EFCore;
 
     [Route("api/[controller]")]
-    [Authorize]
+    //[Authorize]
     public class StaticController : AuthorizeApiController
     {
         private string[] LegalNames = { "WaterArea", "WaterRegion" };
@@ -22,19 +23,23 @@ namespace Prod.Api.Controllers
 
         // GET api/static/WaterArea
         [HttpGet("{name}")]
-        public async Task<FileStreamResult> Get(string name)
+        public async Task<string> Get(string name)
         {
-            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException($"name is empty");
+            if (string.IsNullOrEmpty(name)) return "name is empty";
             if (!LegalNames.Any(legalName => legalName.Equals(name, StringComparison.OrdinalIgnoreCase)))
-                throw new ArgumentOutOfRangeException($"{name} is illegal");
+                return $"{name} is illegal";
 
-            var basePath = Assembly.GetExecutingAssembly().Location;
-            basePath = basePath.Substring(0, basePath.LastIndexOf("\\", StringComparison.Ordinal));
-            var filePath = System.IO.Path.Combine(basePath, "Resources", $"{name}.geojson");
+            var assembly = Assembly.GetExecutingAssembly();
+            
+            var resourceName = $"Prod.Api.Resources.{name}.geojson";
 
-            if (!System.IO.File.Exists(filePath)) throw new Exception($"{name} not found");
+            await using var stream = assembly.GetManifestResourceStream(resourceName);
+            
+            if (stream == null) return "stream is null";
 
-            return Task.FromResult(new FileStreamResult(System.IO.File.OpenRead(filePath), "application/geo+json")).Result;
+            using var reader = new StreamReader(stream);
+
+            return await reader.ReadToEndAsync();
         }
     }
 }

@@ -13,6 +13,8 @@
     <Content Remove="Resources\Livsmedium.json" />
     <Content Remove="Resources\MigrationPathwayCode.json" />
     <Content Remove="Resources\RedlistedNaturetypeGroups.json" />
+	<Content Remove="Resources\WaterArea.geojson" />
+	<Content Remove="Resources\WaterRegion.geojson" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,6 +44,8 @@
     <EmbeddedResource Include="Resources\Livsmedium.json" />
     <EmbeddedResource Include="Resources\MigrationPathwayCode.json" />
     <EmbeddedResource Include="Resources\RedlistedNaturetypeGroups.json" />
+    <EmbeddedResource Include="Resources\WaterArea.geojson" />
+    <EmbeddedResource Include="Resources\WaterRegion.geojson" />
   </ItemGroup>
 
   <ItemGroup>
@@ -51,15 +55,6 @@
 
   <ItemGroup>
     <Resource Include="Resources\WaterArea.geojson" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Resources\WaterArea.geojson">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Resources\WaterRegion.geojson">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>
