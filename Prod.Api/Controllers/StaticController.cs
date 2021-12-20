@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-
-namespace Prod.Api.Controllers
+﻿namespace Prod.Api.Controllers
 {
     using System;
     using System.IO;
@@ -9,10 +6,12 @@ namespace Prod.Api.Controllers
     using System.Reflection;
     using System.Threading.Tasks;
     using IdentityModel.Client;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
     using Prod.Data.EFCore;
 
     [Route("api/[controller]")]
-    //[Authorize]
+    [Authorize]
     public class StaticController : AuthorizeApiController
     {
         private string[] LegalNames = { "WaterArea", "WaterRegion" };
