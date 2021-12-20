@@ -2,8 +2,9 @@ import React, { useRef, useState, useEffect, useLayoutEffect } from "react"
 import 'ol/ol.css';
 import styles from './MapOpenLayers.css'; // don't delete. it's used to move buttons to the right side
 import MapContext from "./MapContext";
+import { multiPolygon as TurfMultiPolygon, intersect as TurfIntersect, point as TurfPoint } from '@turf/turf';
 import { Feature, Map, View } from 'ol';
-import { Control, defaults as defaultControls } from 'ol/control';
+import { Control, defaults as defaultControls } from 'ol/control';
 import { Draw, Snap } from 'ol/interaction';
 import { Tile as TileLayer, Vector as VectorLayer, VectorTile as VectorTileLayer } from 'ol/layer';
 import { getTopLeft,getWidth } from 'ol/extent';
@@ -15,7 +16,7 @@ import { addProjection } from 'ol/proj';
 import { Vector as VectorSource, VectorTile as VectorTileSource, WMTS as WmtsSource } from 'ol/source';
 import { Circle, Fill, Stroke, Style, Text } from 'ol/style';
 import WMTSTileGrid from 'ol/tilegrid/WMTS';
-import auth from '../authService'
+import mapOlFunc from './MapOlFunctions';
 import config from '../../config';
 
 const MapOpenLayers = ({
@@ -40,33 +41,11 @@ const MapOpenLayers = ({
     const [pointerMoveTarget, setPointerMoveTarget] = useState(undefined);
     const numZoomLevels = 18;
     const mapZoom = 3.7;
-    const extent = [-2500000.0, 3500000.0, 3045984.0, 9045984.0];
     let mapObject;
     let mapCenter = [];
     let mouseoverfeature = null;
-    let defaultStyles;
-    let hoverStyles;
     let featureOver;
     let drawPolygonInteraction;
-    const vectorFeatures = {};
-    const colors = {
-        '1': '',
-        '1TO': '',
-        '2': '',
-        '5': '',
-        '1101': '',
-        '1106': '',
-        '1107': '',
-        '1108': '',
-        '1109': '',
-        '5103': '',
-        '5104': '',
-        '5107': '',
-        '5108': '',
-        '5109': '',
-        'VHA5': '',
-        'VHA6': '',
-    };
 
     //if (!mapBounds) mapBounds = [[57, 4.3], [71.5, 32.5]];
 
@@ -90,31 +69,6 @@ const MapOpenLayers = ({
         return Proj4(`EPSG:${fromEpsgCode}`, `EPSG:${toEpsgCode}`, coordinate);
     };
 
-    const createStyle = (geojsonfeature) => {
-        if (!geojsonfeature.category) {
-            return undefined;
-        }
-        const style4feature = geojsonfeature.source === 'add' ? style[geojsonfeature.source] : style[geojsonfeature.category];
-        // console.log(style4feature);
-        const fill = new Fill({
-            color: style4feature.fillColor,
-            opacity: style4feature.fillOpacity
-        });
-        const stroke = new Stroke({
-            color: style4feature.color,
-            width: style4feature.weight
-        });
-        return new Style({
-            // opacity: style4feature.opacity,
-            image: new Circle({
-                fill: fill,
-                radius: style4feature.radius,
-                stroke: stroke
-            }),
-            fill: fill,
-            stroke: stroke
-        });
-    };
     const createMarker = (coordinate) => {
         if (mouseoverfeature) {
             // console.log('mouseover', mouseoverfeature.getProperties());
@@ -161,95 +115,58 @@ const MapOpenLayers = ({
         return wmtsTileGrid;
     };
 
-    const createTextStyleFunction = (feature) => {
-        return new Text({
-            text: feature.get(waterLayerName) ? feature.get(waterLayerName) : undefined
-        });
-    };
+    const calculateWaterIntersection = (mapObject, fieldName) => {
+        if (!showWaterAreas) return;
+        onHover();
+        const layers = mapObject.getLayers().getArray();
+        // const areaLayer = layers.filter((layer) => layer.get('name') === 'areaLayer' ? true : false)[0];
+        const markerLayer = layers.filter((layer) => layer.get('name') === 'markerLayer' ? true : false)[0];
+        const waterLayer = layers.filter(layer => layer.get('name') === 'Vatn')[0];
+        if (!markerLayer && !waterLayer) return;
 
-    const setColors = () => {
-        // const getRandomColor = () => {
-        //     var letters = '0123456789ABCDEF';
-        //     var color = '#';
-        //     for (var i = 0; i < 6; i++) {
-        //         color += letters[Math.floor(Math.random() * 16)];
-        //     }
-        //     return color;
-        // };
-        const palette = [
-            '#86CFEF',
-            '#4B6CA6',
-            '#89C1DA',
-            '#CFE7F1',
-            '#6493B5',
-            '#9EC1ED',
-            '#6391E8',
-            '#345995',
-            '#AAC6DF',
-            '#5B8BC8',
-            '#6582A5',
-            '#7C9ED7',
-            '#72AFCE',
-            '#86CFEF',
-            '#a7a2a9',
-            '#86CFEF' // '#daffed'
-        ];
-        let i = 0;
-        for (var key in colors) {
-            // colors[key] = getRandomColor();
-            colors[key] = palette[i];
-            console.log(`${i}\t${colors[key]}\t%c    `, `background: ${colors[key]};color: ${colors[key]};`);
-            i++;
+        const features = markerLayer.getSource().getFeatures().filter(f => f.getProperties().properties && f.getProperties().properties.category && f.getProperties().properties.category === 'inside');
+        if (features.length === 0) return;
+
+        const waterFeatures = waterLayer.getSource().getFeatures();
+        if (waterFeatures.length === 0) return;
+
+        const createTurfPoint = (feature) => {
+            const coordinate = feature.getGeometry().getCoordinates();
+            const coordinates = [[
+                [coordinate[0], coordinate[1]],
+                [coordinate[0]+0.1, coordinate[1]],
+                [coordinate[0]+0.1, coordinate[1]+0.1],
+                [coordinate[0], coordinate[1]+0.1],
+                [coordinate[0], coordinate[1]],
+            ]];
+            return new TurfMultiPolygon(coordinates, feature.getProperties());
+            // return new TurfPoint(feature.getGeometry().getCoordinates(), feature.getProperties());
         }
-        // console.log('colors', colors);
-    };
-
-    const internalStyleFunction = (feature, hover) => {
-        const stroke = new Stroke({
-            // color: hover ? '#3399CCFF' : '#3399CCAA',
-            // width: hover ? 2 : 1.25,
-            // color: hover = hover ? `${colors[feature.get('vannregionID')]}FF` : `${colors[feature.get('vannregionID')]}AA`,
-            // color: hover ? '#3399CCFF' : `${colors[feature.get('vannregionID')]}AA`,
-            // color: hover ? '#3399CCFF' : '#FFFFFFAA',
-            color: hover ? `${colors[feature.get('vannregionID')]}FF` : '#FFFFFFAA',
-            width: hover ? 4 : 2,
-        });
-        const fill = new Fill({
-            // color: 'rgba(255,255,255,0.4)'
-            // color: hover ? `${colors[feature.get('vannregionID')]}AA` : `${colors[feature.get('vannregionID')]}00`
-            color: hover ? `${colors[feature.get('vannregionID')]}AA` : `${colors[feature.get('vannregionID')]}88`
-        });
-        return new Style({
-            image: new Circle({
-                fill: fill,
-                stroke: stroke,
-                radius: 5,
-            }),
-            fill: fill,
-            stroke: stroke
-        });
-    };
-
-    const hoverStyleFunction = (feature, resolution) => {
-        if (!hoverStyles || true) {
-            hoverStyles = internalStyleFunction(feature, true);
+        const createTurfMultiPolygon = (feature) => {
+            return new TurfMultiPolygon(feature.getGeometry().getCoordinates(), feature.getProperties());
         }
-        const style = hoverStyles.clone();
-        style.setText(createTextStyleFunction(feature));
-        return [style];
-    };
 
-    const styleFunction = (feature, resolution) => {
-        if (!defaultStyles || true) {
-            defaultStyles = internalStyleFunction(feature, false);
-        }
-        const defaultStyle = defaultStyles.clone();
-        defaultStyle.setText(createTextStyleFunction(feature));
-        return [defaultStyle];
+        // const theFeatures = features.map(f => createTurfMultiPolygon(f));
+        const theFeatures = features.map(f => createTurfPoint(f));
+        const theWaterFeatures = waterFeatures.map(f => createTurfMultiPolygon(f));
+        const intersections = [];
+
+        theFeatures.forEach(feature => {
+            // console.log('featurecoord', feature.getGeometry().getCoordinates());
+            theWaterFeatures.forEach(waterFeature => {
+                const intersect = TurfIntersect(waterFeature, feature);
+                if (intersect !== null && intersections.indexOf(waterFeature) < 0) {
+                    intersections.push(waterFeature);
+                }
+            });
+        });
+
+        onHover(intersections.map(f => f.properties[fieldName]).join(','));
     };
 
     const setPointerMoveForWaterLayer = (mapObject, fieldName) => {
         if (!mapObject) return;
+
         const hoverLayer = mapObject.getLayers().getArray().filter(layer => layer.get('name') === 'hoverLayer')[0];
 
         const pointermove = (e) => {
@@ -277,16 +194,16 @@ const MapOpenLayers = ({
                 if (featureOver) hoverSource.clear();
 
                 featureOver = vatn[0];
-                vectorFeatures[layerName]
+                mapOlFunc.vectorFeatures[layerName]
                 .filter((feature) => feature.get(fieldName) === name)
                 .forEach((sourceFeature) => {
                     hoverSource.addFeature(sourceFeature);
                 });
-                onHover(name);
-            } else if (vectorFeatures[layerName] && vectorFeatures[layerName].length > 0) {
+                // onHover(name);
+            } else if (mapOlFunc.vectorFeatures[layerName] && mapOlFunc.vectorFeatures[layerName].length > 0) {
                 featureOver = undefined;
                 hoverSource.clear();
-                onHover();
+                // onHover();
             }
         };
 
@@ -294,187 +211,9 @@ const MapOpenLayers = ({
             mapObject.un('pointermove', pointerMoveTarget.listener);
         }
 
+        calculateWaterIntersection(mapObject, fieldName);
+
         setPointerMoveTarget(mapObject.on('pointermove', pointermove));
-    }
-
-    const createWaterLayer = (mapObject, name, layerid, projection, waterLayerName, setWaterLayerNameCallback) => {
-        // const vannUrl = 'https://vann-nett.no/arcgis/rest/services/WFD/AdministrativeOmraader/MapServer/';
-        // const vannUrl = 'https://nve.geodataonline.no/arcgis/rest/services/Mapservices/Elspot/MapServer/';
-        // layerid = '0';
-
-        setColors();
-
-        const vannUrl = 'https://nve.geodataonline.no/arcgis/rest/services/Vanndirektiv/MapServer/';
-        // layerid = 14; // Vannregion
-        // layerid = 15; // Vannomraade
-
-        const props = {};
-
-        const source = new VectorSource({
-            extent: extent,
-            projection: projection,
-            format: new GeoJSONFormat({
-                dataProjection: projection,
-                featureProjection: projection,
-                geometryName: 'geometry'
-            }),
-            url: `${vannUrl}?x={x}&y={y}&z={z}`,
-            loader: async (extent, resolution, projection, success, failure) => {
-                let url = `${config.apiUrl}/api/static/`;
-                if (layerid === 14) url += 'WaterRegion';
-                else if (layerid === 15) url += 'WaterArea';
-                const response = await fetch(url, {
-                    method: 'get',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + auth.getAuthToken
-                    }
-                });
-                const data = await response.json();
-                if (data.error) return;
-                // console.log('data', data);
-                var features = source.getFormat().readFeatures(data);
-                if (!vectorFeatures[name]) vectorFeatures[name] = [];
-                features.forEach((feature) => {
-                    feature.set('_layerName', name);
-                    if (!waterLayerName && setWaterLayerNameCallback) {
-                        waterLayerName = feature.get('Name')
-                            ? 'Name'
-                            : feature.get('vannomraadenavn')
-                                ? 'vannomraadenavn'
-                                : feature.get('vannregionnavn')
-                                    ? 'vannregionnavn'
-                                    : undefined;
-                        // console.log('setWaterLayerNameCallback', waterLayerName);
-                        setWaterLayerNameCallback(waterLayerName);
-                    }
-                    // // console.log('feature', feature.getProperties());
-                    // if (!props['vannregionID']) props['vannregionID'] = {};
-                    // if (!props['vannregionkoordinatorID']) props['vannregionkoordinatorID'] = {};
-                    
-                    // if (props['vannregionID'][feature.get('vannregionID')]) {
-                    //     props['vannregionID'][feature.get('vannregionID')]++;
-                    //     props['vannregionkoordinatorID'][feature.get('vannregionkoordinatorID')]++;
-                    // } else {
-                    //     props['vannregionID'][feature.get('vannregionID')] = 1;
-                    //     props['vannregionkoordinatorID'][feature.get('vannregionkoordinatorID')] = 1;
-                    // }
-                    // console.log('props', props);
-                    vectorFeatures[name].push(feature);
-                });
-                source.addFeatures(features);
-                success(features);
-            }
-        });
-
-        const ssource = new VectorTileSource({
-            extent: extent,
-            projection: projection,
-            format: new GeoJSONFormat({
-                dataProjection: projection,
-                featureProjection: projection,
-                geometryName: 'geometry'
-            }),
-            url: `${vannUrl}?x={x}&y={y}&z={z}`,
-            tileGrid: wmtsTileGrid(1, `EPSG:${config.mapEpsgCode}`, projection, Math.floor(mapZoom)),
-            tileLoadFunction: async (tile, tileurl) => {
-                let url = vannUrl;
-                url += layerid;
-                url += '/query';
-                url += '?where=';
-                url += '&text=';
-                url += '&objectIds=';
-                url += '&time=';
-                url += `&geometry=${tile.extent.join(',')}`;
-                url += '&geometryType=esriGeometryEnvelope';
-                url += `&inSR=${config.mapEpsgCode}`;
-                url += '&spatialRel=esriSpatialRelIntersects';
-                url += '&outFields=*';
-                url += '&relationParam=';
-                url += '&outFields=';
-                url += '&returnGeometry=true';
-                url += '&returnTrueCurves=true';
-                url += '&maxAllowableOffset=';
-                url += '&geometryPrecision=';
-                url += `&outSR=${config.mapEpsgCode}`;
-                url += '&returnIdsOnly=false';
-                url += '&returnCountOnly=false';
-                url += '&orderByFields=';
-                url += '&groupByFieldsForStatistics=';
-                url += '&outStatistics=';
-                url += '&returnZ=false';
-                url += '&returnM=false';
-                url += '&gdbVersion=';
-                url += '&returnDistinctValues=false';
-                url += '&resultOffset=';
-                url += '&resultRecordCount=';
-                url += '&queryByDistance=';
-                url += '&returnExtentsOnly=true';
-                url += '&datumTransformation=';
-                url += '&parameterValues=';
-                url += '&rangeValues=';
-                url += '&f=geojson';
-                const response = await fetch(url);
-                const data = await response.json();
-                if (data.error) return;
-                const format = tile.getFormat();
-                const features = format.readFeatures(data);
-                if (!vectorFeatures[name]) vectorFeatures[name] = [];
-                features.forEach((feature) => {
-                    feature.set('_layerName', name);
-                    if (!waterLayerName && setWaterLayerNameCallback) {
-                        waterLayerName = feature.get('Name')
-                            ? 'Name'
-                            : feature.get('vannomraadenavn')
-                                ? 'vannomraadenavn'
-                                : feature.get('vannregionnavn')
-                                    ? 'vannregionnavn'
-                                    : undefined;
-                        // console.log('setWaterLayerNameCallback', waterLayerName);
-                        setWaterLayerNameCallback(waterLayerName);
-                    }
-                    // // console.log('feature', feature.getProperties());
-                    // if (!props['vannregionID']) props['vannregionID'] = {};
-                    // if (!props['vannregionkoordinatorID']) props['vannregionkoordinatorID'] = {};
-                    
-                    // if (props['vannregionID'][feature.get('vannregionID')]) {
-                    //     props['vannregionID'][feature.get('vannregionID')]++;
-                    //     props['vannregionkoordinatorID'][feature.get('vannregionkoordinatorID')]++;
-                    // } else {
-                    //     props['vannregionID'][feature.get('vannregionID')] = 1;
-                    //     props['vannregionkoordinatorID'][feature.get('vannregionkoordinatorID')] = 1;
-                    // }
-                    // console.log('props', props);
-                    vectorFeatures[name].push(feature);
-                });
-                tile.setFeatures(features);
-            },
-            crossOrigin: 'anonymous'
-        });
-        // const layer = new VectorTileLayer({
-        const layer = new VectorLayer({
-            name: name,
-            opacity: 1,
-            renderMode: 'vector',
-            source: source,
-            style: styleFunction,
-            visible: true,
-            zIndex: 2
-        });
-
-        // window.setInterval(() => {
-        //     layer.getSource().dispatchEvent('change');
-        //   }, 3000);
-
-        return layer;
-    }
-
-    const toggleLegend = () => {
-        console.log('visible', visibleLegend);
-        var visible = visibleLegend ? false : true;
-        console.log('visible', visible);
-        setVisibleLegend(visible);
     }
 
     const cancelDrawPolygon = () => {
@@ -516,50 +255,13 @@ const MapOpenLayers = ({
         mapObject.addInteraction(drawPolygonInteraction);
     }
 
-    const createButton = (options) => {
-        const button = document.createElement('button');
-        // button.className = 'ol-polygon-button';
-        button.type = 'button';
-        button.innerHTML = options.innerHTML;
-        if (options.style) button.style = options.style;
-        if (options.click) {
-            button.addEventListener('click', options.click, false);
-            button.addEventListener('touchstart', options.click, false);
-        }
-        return button;
-    }
-
-    const reDrawWaterLayer = () => {
-        const waterLayers = map.getLayers().getArray().filter(layer => layer.get('name') === 'Vatn');
-
-        waterLayers.forEach(layer => {
-            // console.log('removes', layer);
-            map.removeLayer(layer);
-        });
-
-        const setWaterLayerNameCallback = (name) => {
-            // console.log('setPointerMoveForWaterLayer-redraw', name);
-            setWaterLayerName(name);
-            setPointerMoveForWaterLayer(map, name);
-        };
-
-        const projection = new Projection({
-            code: `EPSG:${config.mapEpsgCode}`,
-            extent: extent,
-            units: 'm'
-        });
-
-        setLastShowRegion(showRegion);
-
-        map.addLayer(createWaterLayer(map, 'Vatn', showRegion ? 14 : 15, projection, undefined, setWaterLayerNameCallback));
-    }
-
     useLayoutEffect(() => {
         if (!showWaterAreas) return;
         if (map === null) return;
         if (lastShowRegion === undefined || lastShowRegion === showRegion) return;
 
-        reDrawWaterLayer();
+        // reDrawWaterLayer();
+        mapOlFunc.reDrawWaterLayer(map, showRegion, setLastShowRegion, setPointerMoveForWaterLayer, setWaterLayerName);
     });
 
     // on component mount
@@ -568,13 +270,13 @@ const MapOpenLayers = ({
         const customElement = document.createElement('div');
         customElement.className = 'ol-legend ol-unselectable ol-control';
 
-        // customElement.appendChild(createButton({
+        // customElement.appendChild(mapOlFunc.createButton({
         //     click: toggleLegend,
         //     innerHTML: '&vert;&vert;&vert;',
         //     style: 'transform: rotate(90deg);'
         // }));
 
-        customElement.appendChild(createButton({
+        customElement.appendChild(mapOlFunc.createButton({
             click: drawPolygon,
             innerHTML: '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" width="22" height="22" preserveAspectRatio="xMidYMid meet" viewBox="0 0 32 32"><path d="M14 4c-1.105 0-2 .895-2 2v.063L6.937 9.25A2.009 2.009 0 0 0 6 9c-1.105 0-2 .895-2 2c0 .738.402 1.371 1 1.719V24.28c-.598.348-1 .98-1 1.719c0 1.105.895 2 2 2c.738 0 1.371-.402 1.719-1H20.28c.348.598.98 1 1.719 1c1.105 0 2-.895 2-2c0-.398-.11-.781-.313-1.094L26.125 20a2.005 2.005 0 0 0 .25-3.969l-1.906-5.718C24.785 9.957 25 9.511 25 9c0-1.105-.895-2-2-2c-.512 0-.957.215-1.313.531L15.97 5.594A2.012 2.012 0 0 0 14 4zm1.313 3.5l5.718 1.875c.153.805.79 1.441 1.594 1.594l1.906 5.687A1.99 1.99 0 0 0 24 18c0 .414.129.805.344 1.125L21.875 24a1.988 1.988 0 0 0-1.594 1H7.72A1.981 1.981 0 0 0 7 24.281V12.72c.598-.348 1-.98 1-1.719v-.063l5.063-3.187c.28.148.597.25.937.25c.504 0 .96-.191 1.313-.5z" fill="currentColor"/></svg>'
         }));
@@ -586,7 +288,7 @@ const MapOpenLayers = ({
         }
         const projection = new Projection({
             code: `EPSG:${config.mapEpsgCode}`,
-            extent: extent,
+            extent: mapOlFunc.extent,
             units: 'm'
         });
         addProjection(projection);
@@ -596,7 +298,7 @@ const MapOpenLayers = ({
         const hoverLayer = new VectorLayer({
             name: 'hoverLayer',
             source: new VectorSource({wrapX: false, _text: false}),
-            style: hoverStyleFunction,
+            style: mapOlFunc.hoverStyleFunction,
             zIndex: 3
         });
         const areaLayer = new VectorLayer({name: 'areaLayer', source: new VectorSource({wrapX: false}), zIndex: 4});
@@ -612,7 +314,7 @@ const MapOpenLayers = ({
                 new TileLayer({
                     name: 'Europakart',
                     opacity: 1,
-                    extent: extent,
+                    extent: mapOlFunc.extent,
                     source: new WmtsSource({
                         url: '//opencache.statkart.no/gatekeeper/gk/gk.open_wmts?',
                         // layer: 'europa',
@@ -632,7 +334,7 @@ const MapOpenLayers = ({
                 new TileLayer({
                     name: 'Norges grunnkart',
                     opacity: 1,
-                    extent: extent,
+                    extent: mapOlFunc.extent,
                     source: new WmtsSource({
                         url: '//opencache.statkart.no/gatekeeper/gk/gk.open_wmts?',
                         // layer: 'europa',
@@ -653,32 +355,6 @@ const MapOpenLayers = ({
             controls: defaultControls({attribution: false}).extend(mapControls),
         };
 
-        // if (showWaterAreas) {
-        //     // 0: Kommune (0)
-        //     // 1: REGINE (1)
-        //     // 2: Vannområde (2)
-        //     // 3: Vannregion (3)
-        //     // 4: Vannregionmyndighet (4)
-        //     // 5: Vassdragsområde (5)
-        //     // 6: Økoregion kyst (6)
-        //     // 7: Økoregion fastland (7)
-        //     // 8: Klimasone (8)
-        //     // 9: Fylke (9)
-
-        //     const setWaterLayerNameCallback = (name) => {
-        //         console.log('setPointerMoveForWaterLayer-initial', name);
-        //         mapObject.set('_waterLayerName', name);
-        //         setPointerMoveForWaterLayer(mapObject, name);
-        //     };
-
-        //     // nve.geodataonline.no has new layers
-        //     // layerid = 14; // Vannregion
-        //     // layerid = 15; // Vannomraade
-
-        //     setLastShowRegion(showRegion);
-
-        //     options.layers.push(createWaterLayer(mapObject, 'Vatn', showRegion ? 14 : 15, projection, undefined, setWaterLayerNameCallback));
-        // }
         options.layers.push(hoverLayer);
         options.layers.push(areaLayer);
         options.layers.push(markerLayer);
@@ -752,7 +428,7 @@ const MapOpenLayers = ({
 
             setLastShowRegion(showRegion);
 
-            mapObject.addLayer(createWaterLayer(mapObject, 'Vatn', showRegion ? 14 : 15, projection, undefined, setWaterLayerNameCallback));
+            mapObject.addLayer(mapOlFunc.createWaterLayer(mapObject, 'Vatn', showRegion ? 14 : 15, projection, undefined, setWaterLayerNameCallback));
         }
 
         // Fit extent
@@ -805,7 +481,7 @@ const MapOpenLayers = ({
                     const polygonFeature = new Feature({
                         geometry: geometry
                     });
-                    const polygonStyle = createStyle(geojsonfeature);
+                    const polygonStyle = mapOlFunc.createStyle(geojsonfeature, style);
                     if (polygonStyle) {
                         polygonFeature.setStyle(polygonStyle);
                     }
@@ -816,16 +492,21 @@ const MapOpenLayers = ({
                 }
                 if (geometry) {
                     const pointFeature = new Feature({
-                        geometry: geometry
+                        geometry: geometry,
+                        properties: {
+                            category: geojsonfeature.category,
+                            source: geojsonfeature.source,
+                        }
                     });
                     pointFeature.set('latlng', latlng);
-                    const pointStyle = createStyle(geojsonfeature);
+                    const pointStyle = mapOlFunc.createStyle(geojsonfeature, style);
                     if (pointStyle) {
                         pointFeature.setStyle(pointStyle);
                     }
                     markerSource.addFeature(pointFeature);
                 }
             });
+            calculateWaterIntersection(map, waterLayerName);
             // console.log('summary', areaSource.getFeatures(), markerSource.getFeatures());
         }
         if (selectionGeometry) {
