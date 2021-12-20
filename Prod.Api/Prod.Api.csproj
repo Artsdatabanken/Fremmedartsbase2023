@@ -49,4 +49,17 @@
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Resource Include="Resources\WaterArea.geojson" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\WaterArea.geojson">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\WaterRegion.geojson">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
