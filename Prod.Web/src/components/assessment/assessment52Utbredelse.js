@@ -247,19 +247,16 @@ export default class Assessment52Utbredelse extends React.Component {
                     <div style={{display: 'inline-flex', width: '100%'}}>
                         <div style={{width: '33%', height: 500}}>
                             <SimpleMap
-                                target={1}
                                 showRegion={true}
                                 evaluationContext={assessment.evaluationContext} />
                         </div>
                         <div style={{width: '33%', height: 500}}>
                             <SimpleMap
-                                target={2}
                                 showRegion={false}
                                 evaluationContext={assessment.evaluationContext} />
                         </div>
                         <div style={{width: '33%', height: 500}}>
                             <SimpleMap
-                                target={3}
                                 showRegion={true}
                                 evaluationContext={assessment.evaluationContext} />
                         </div>

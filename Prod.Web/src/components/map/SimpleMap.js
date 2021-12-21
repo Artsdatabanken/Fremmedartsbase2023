@@ -24,7 +24,6 @@ const mapBounds = {
 
 const SimpleMap = ({
     evaluationContext,
-    target,
     showRegion
 }) => {
     const mapRef = useRef();
@@ -66,54 +65,13 @@ const SimpleMap = ({
         mapCenter = [mapExtent[0] + (mapExtent[2] - mapExtent[0]) / 2, mapExtent[1] + (mapExtent[3] - mapExtent[1]) / 2];
 
         const options = {
-            target: document.getElementsByClassName(`ol-map-${target}`)[0],
             view: new View({
                 center: mapCenter,
                 projection: `EPSG:${config.mapEpsgCode}`,
                 maxZoom: mapOlFunc.numZoomLevels,
-                zoom: 0// mapZoom
+                zoom: 0
             }),
             layers: [
-                // new TileLayer({
-                //     name: 'Europakart',
-                //     opacity: 1,
-                //     extent: mapOlFunc.extent,
-                //     source: new WmtsSource({
-                //         url: '//opencache.statkart.no/gatekeeper/gk/gk.open_wmts?',
-                //         // layer: 'europa',
-                //         layer: 'europa_forenklet',
-                //         attributions: 'Kartverket',
-                //         matrixSet: `EPSG:${config.mapEpsgCode}`,
-                //         format: 'image/png',
-                //         projection: projection,
-                //         tileGrid: mapOlFunc.wmtsTileGrid(mapOlFunc.numZoomLevels, `EPSG:${config.mapEpsgCode}`, projection),
-                //         style: 'default',
-                //         wrapX: true,
-                //         crossOrigin: 'anonymous'
-                //     }),
-                //     visible: true,
-                //     zIndex: 0
-                // }),
-                // new TileLayer({
-                //     name: 'Norges grunnkart',
-                //     opacity: 1,
-                //     extent: mapOlFunc.extent,
-                //     source: new WmtsSource({
-                //         url: '//opencache.statkart.no/gatekeeper/gk/gk.open_wmts?',
-                //         // layer: 'europa',
-                //         layer: 'norges_grunnkart',
-                //         attributions: 'Kartverket',
-                //         matrixSet: `EPSG:${config.mapEpsgCode}`,
-                //         format: 'image/png',
-                //         projection: projection,
-                //         tileGrid: mapOlFunc.wmtsTileGrid(mapOlFunc.numZoomLevels, `EPSG:${config.mapEpsgCode}`, projection),
-                //         style: 'default',
-                //         wrapX: true,
-                //         crossOrigin: 'anonymous'
-                //     }),
-                //     visible: true,
-                //     zIndex: 1
-                // }),
                 mapOlFunc.createWaterLayer('Vatn', showRegion ? 14 : 15, projection, '', () => {}),
             ],
             controls: defaultControls({attribution: false, zoom: false}),
@@ -122,17 +80,19 @@ const SimpleMap = ({
 
         mapObject = new Map(options);
 
+        mapObject.setTarget(mapRef.current);
+        setMap(mapObject);
+
+        // Fit extent
         mapObject.getView().fit(mapExtent);
 
 		return () => mapObject.setTarget(undefined);
     }, []);
 
-    let className = `ol-map ol-map-${target}`;
-
     return (
         <div>
-            <MapContext.Provider value={{ map }} style={{width: 500, height: 500}}>
-                <div ref={mapRef} className={className}></div>
+            <MapContext.Provider value={{ map }}>
+                <div ref={mapRef} className="ol-map"></div>
     		</MapContext.Provider>
         </div>
 	)
