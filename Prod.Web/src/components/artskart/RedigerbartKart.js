@@ -199,6 +199,7 @@ const RedigerbartKart = ({
         onEdit={handleEditSelection}
         mapBounds={mapBounds}
         setWaterAreas={setWaterAreas}
+        isLoading={isLoading}
         setIsLoading={setIsLoading}
       />
     </div>

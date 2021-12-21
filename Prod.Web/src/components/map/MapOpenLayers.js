@@ -32,6 +32,7 @@ const MapOpenLayers = ({
     onClickPoint,
     setWaterAreas,
     setIsLoading,
+    isLoading,
     onClosed
 }) => {
     const mapRef = useRef();
@@ -47,6 +48,7 @@ const MapOpenLayers = ({
     let mouseoverfeature = null;
     let featureOver;
     let drawPolygonInteraction;
+    const waterIntersections = [];
 
     //if (!mapBounds) mapBounds = [[57, 4.3], [71.5, 32.5]];
 
@@ -120,11 +122,15 @@ const MapOpenLayers = ({
         if (!showWaterAreas) return;
         setWaterAreas();
         setIsLoading(true);
+        waterIntersections.splice(0);
         const layers = mapObject.getLayers().getArray();
         // const areaLayer = layers.filter((layer) => layer.get('name') === 'areaLayer' ? true : false)[0];
         const markerLayer = layers.filter((layer) => layer.get('name') === 'markerLayer' ? true : false)[0];
         const waterLayer = layers.filter(layer => layer.get('name') === 'Vatn')[0];
-        if (!markerLayer && !waterLayer) return;
+        const waterSelectedLayer = layers.filter(layer => layer.get('name') === 'VatnSelected')[0];
+        if (!markerLayer && !waterLayer && !waterSelectedLayer) return;
+
+        waterSelectedLayer.getSource().clear();
 
         const features = markerLayer.getSource().getFeatures().filter(f => f.getProperties().properties && f.getProperties().properties.category && f.getProperties().properties.category === 'inside');
         if (features.length === 0) return;
@@ -148,22 +154,26 @@ const MapOpenLayers = ({
             return new TurfMultiPolygon(feature.getGeometry().getCoordinates(), feature.getProperties());
         }
 
-        // const theFeatures = features.map(f => createTurfMultiPolygon(f));
         const theFeatures = features.map(f => createTurfPoint(f));
         const theWaterFeatures = waterFeatures.map(f => createTurfMultiPolygon(f));
-        const intersections = [];
 
+        // console.log('calculate intersections..');
         theFeatures.forEach(feature => {
             // console.log('featurecoord', feature.getGeometry().getCoordinates());
-            theWaterFeatures.forEach(waterFeature => {
-                const intersects = intersect(waterFeature, feature);
-                if (intersects !== null && intersections.indexOf(waterFeature) < 0) {
-                    intersections.push(waterFeature);
+            theWaterFeatures.forEach((waterFeature, j) => {
+                if (waterIntersections.indexOf(waterFeatures[j]) < 0) {
+                    const intersects = intersect(waterFeature, feature);
+                    if (intersects !== null) {
+                        waterIntersections.push(waterFeatures[j]);
+                    }
                 }
             });
         });
+        // console.log(`${waterIntersections.length} intersections`);
 
-        setWaterAreas(intersections.map(f => f.properties[fieldName]).filter(x => x.length > 0).join(', '));
+        setWaterAreas(waterIntersections.map(f => f.get(fieldName)).filter(x => x.length > 0).join(', '));
+
+        waterSelectedLayer.getSource().addFeatures(waterIntersections);
         setIsLoading(false);
     };
 
@@ -173,6 +183,7 @@ const MapOpenLayers = ({
         const hoverLayer = mapObject.getLayers().getArray().filter(layer => layer.get('name') === 'hoverLayer')[0];
 
         const pointermove = (e) => {
+            if (isLoading) return;
             // console.log(`${e.pixel[0]},${e.pixel[1]}`); // check if pointermove is called multiple times
             const layerName = 'Vatn';
             const vatnLayer = mapObject.getLayers().getArray().filter((layer) => layer.get('name') === layerName ? true : false)[0];
@@ -203,7 +214,6 @@ const MapOpenLayers = ({
                     hoverSource.addFeature(sourceFeature);
                 });
                 // setWaterAreas(name);
-                console.log('mouseover:', name);
             } else if (mapOlFunc.vectorFeatures[layerName] && mapOlFunc.vectorFeatures[layerName].length > 0) {
                 featureOver = undefined;
                 hoverSource.clear();
@@ -267,6 +277,8 @@ const MapOpenLayers = ({
         // reDrawWaterLayer();
         setWaterAreas();
         setIsLoading(true);
+        const waterSelectedLayer = map.getLayers().getArray().filter(layer => layer.get('name') === 'VatnSelected')[0];
+        if (waterSelectedLayer) waterSelectedLayer.getSource().clear();
         mapOlFunc.reDrawWaterLayer(map, showRegion, setLastShowRegion, setPointerMoveForWaterLayer, setWaterLayerName);
     });
 
@@ -307,8 +319,8 @@ const MapOpenLayers = ({
             style: mapOlFunc.hoverStyleFunction,
             zIndex: 3
         });
-        const areaLayer = new VectorLayer({name: 'areaLayer', source: new VectorSource({wrapX: false}), zIndex: 4});
-        const markerLayer = new VectorLayer({name: 'markerLayer', source: new VectorSource({wrapX: false}), zIndex: 5});
+        const areaLayer = new VectorLayer({name: 'areaLayer', source: new VectorSource({wrapX: false}), zIndex: 5});
+        const markerLayer = new VectorLayer({name: 'markerLayer', source: new VectorSource({wrapX: false}), zIndex: 6});
         let options = {
             view: new View({
                 center: mapCenter,
@@ -434,7 +446,8 @@ const MapOpenLayers = ({
 
             setLastShowRegion(showRegion);
 
-            mapObject.addLayer(mapOlFunc.createWaterLayer(mapObject, 'Vatn', showRegion ? 14 : 15, projection, undefined, setWaterLayerNameCallback));
+            mapObject.addLayer(mapOlFunc.createWaterLayer('Vatn', showRegion ? 14 : 15, projection, undefined, setWaterLayerNameCallback));
+            mapObject.addLayer(mapOlFunc.createWaterSelectedLayer('VatnSelected', projection));
         }
 
         // Fit extent

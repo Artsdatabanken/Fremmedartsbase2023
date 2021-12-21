@@ -94,6 +94,16 @@ const createStyle = (geojsonfeature, style) => {
     });
 };
 
+const createWaterIntersectionStyle = () => {
+    const stroke = new Stroke({
+        color: "#FF0000CC",
+        width: 2
+    });
+    return new Style({
+        stroke: stroke
+    });
+};
+
 const createTextStyleFunction = (feature) => {
     return new Text({
         text: feature.get(waterLayerName) ? feature.get(waterLayerName) : undefined
@@ -144,7 +154,7 @@ const styleFunction = (feature, resolution) => {
     return [defaultStyle];
 };
 
-const createWaterLayer = (mapObject, name, layerid, projection, waterLayerName, setWaterLayerNameCallback) => {
+const createWaterLayer = (name, layerid, projection, waterLayerName, setWaterLayerNameCallback) => {
     // const vannUrl = 'https://vann-nett.no/arcgis/rest/services/WFD/AdministrativeOmraader/MapServer/';
     // const vannUrl = 'https://nve.geodataonline.no/arcgis/rest/services/Mapservices/Elspot/MapServer/';
     // layerid = '0';
@@ -155,7 +165,7 @@ const createWaterLayer = (mapObject, name, layerid, projection, waterLayerName, 
     // layerid = 14; // Vannregion
     // layerid = 15; // Vannomraade
 
-    const props = {};
+    if (vectorFeatures[name]) vectorFeatures[name].splice(0);
 
     const source = new VectorSource({
         extent: extent,
@@ -210,6 +220,30 @@ const createWaterLayer = (mapObject, name, layerid, projection, waterLayerName, 
         style: styleFunction,
         visible: true,
         zIndex: 2
+    });
+
+    return layer;
+}
+
+const createWaterSelectedLayer = (name, projection) => {
+    const source = new VectorSource({
+        extent: extent,
+        projection: projection,
+        format: new GeoJSONFormat({
+            dataProjection: projection,
+            featureProjection: projection,
+            geometryName: 'geometry'
+        }),
+    });
+
+    const layer = new VectorLayer({
+        name: name,
+        opacity: 1,
+        renderMode: 'vector',
+        source: source,
+        style: createWaterIntersectionStyle,
+        visible: true,
+        zIndex: 4
     });
 
     return layer;
@@ -326,12 +360,13 @@ const createWaterLayer_deprecated = (name, layerid, projection, waterLayerName, 
 }
 
 const reDrawWaterLayer = (mapObject, showRegion, setLastShowRegion, setPointerMoveForWaterLayer, setWaterLayerName) => {
-    const waterLayers = mapObject.getLayers().getArray().filter(layer => layer.get('name') === 'Vatn');
-
-    waterLayers.forEach(layer => {
-        // console.log('removes', layer);
-        mapObject.removeLayer(layer);
-    });
+    let waterLayer = mapObject.getLayers().getArray().filter(layer => layer.get('name') === 'Vatn')[0];
+    if (waterLayer) {
+        waterLayer.getSource().clear();
+        waterLayer.setSource(undefined);
+        mapObject.removeLayer(waterLayer);
+        waterLayer = undefined;
+    }
 
     const setWaterLayerNameCallback = (name) => {
         // console.log('setPointerMoveForWaterLayer-redraw', name);
@@ -349,7 +384,7 @@ const reDrawWaterLayer = (mapObject, showRegion, setLastShowRegion, setPointerMo
 
     setLastShowRegion(showRegion);
 
-    mapObject.addLayer(createWaterLayer(mapObject, 'Vatn', showRegion ? 14 : 15, projection, undefined, setWaterLayerNameCallback));
+    mapObject.addLayer(createWaterLayer('Vatn', showRegion ? 14 : 15, projection, undefined, setWaterLayerNameCallback));
 }
 
 const createButton = (options) => {
@@ -368,7 +403,9 @@ const createButton = (options) => {
 const mapOlFunc = {
     createButton: createButton,
     createStyle: createStyle,
+    createWaterIntersectionStyle: createWaterIntersectionStyle,
     createWaterLayer: createWaterLayer,
+    createWaterSelectedLayer: createWaterSelectedLayer,
     extent: extent,
     hoverStyleFunction: hoverStyleFunction,
     reDrawWaterLayer: reDrawWaterLayer,
