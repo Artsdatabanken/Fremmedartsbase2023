@@ -302,6 +302,7 @@ export function getArtskartUrl(
     scientificNameId,
     selectionGeometry,
     kriterier,
+    showWaterAreas,
     geojson = {features:[]})
   {
     // const apibase = "http://localhost:16784/api/listhelper/";
@@ -350,9 +351,12 @@ export function getArtskartUrl(
     if (add) queryparams += "&addPoints=" + add;
     const remove = points2String("remove");
     if (remove) queryparams += "&removePoints=" + remove;
-    return {
+    const result = {
         observations: `${apibase + taxonId}/observations?${queryparams}`,
-        areadata: `${apibase + taxonId}/areadata?${queryparams}`,
-        countylist: `${apibase + taxonId}/countylist?countyYear=2017&${queryparams}`
+        areadata: `${apibase + taxonId}/areadata?${queryparams}`
+    };
+    if (!showWaterAreas) {
+        result['countylist'] = `${apibase + taxonId}/countylist?countyYear=2017&${queryparams}`;
     }
+    return result;
 }

@@ -34,6 +34,7 @@ const RedigerbartKart = ({
     selectionGeometry,
     artskartAdded,
     artskartRemoved,
+    showWaterAreas,
   });
   
   // console.log('RedigerbartKart', artskartAdded, artskartRemoved, taxonId, scientificNameId);
@@ -42,11 +43,8 @@ const RedigerbartKart = ({
     setSelectionGeometry(e);
   };
 
-  const [hoverInfo, setHoverInfo] = useState('');
-  const onHover = (info) => {
-    setHoverInfo(info);
-  }
-
+  const [isLoading, setIsLoading] = useState(false);
+  const [waterAreas, setWaterAreas] = useState('');
   const [editStats, setEditStats] = useState({});
   useEffect(() => {
     async function summarize() {
@@ -107,10 +105,12 @@ const RedigerbartKart = ({
             )}
         </div>
         <div>
-          Fylker: <b>{beskrivFylker(countylist)}</b>
-            {hoverInfo && (
-              <div>Vannområde:{" "}<span><b>{hoverInfo}</b></span></div>
-            )}
+          {!showWaterAreas && (
+            <span>Fylker: <b>{beskrivFylker(countylist)}</b></span>
+          )}
+          {showWaterAreas && (
+            <span>Vannområde:{" "}<span><b>{waterAreas}</b></span></span>
+          )}
         </div>
        
         {artskart.error && (
@@ -121,7 +121,7 @@ const RedigerbartKart = ({
         )}
         <div style={{ pointerEvents: 'auto' }}>
           <Xcomp.Button
-            disabled={artskart.error || artskart.isLoading}
+            disabled={artskart.error || artskart.isLoading || isLoading}
             onClick={e => {
               e.preventDefault();
               e.stopPropagation();
@@ -133,13 +133,13 @@ const RedigerbartKart = ({
               });
               onCancel();
             }}
-            className={artskart.error || artskart.isLoading ? "" : "elevated"}
+            className={artskart.error || (artskart.isLoading || isLoading) ? "" : "elevated"}
           >
             ✓ Overfør kun arealer til vurderingen
           </Xcomp.Button>
           <br/>
           <Xcomp.Button
-            disabled={artskart.error || artskart.isLoading}
+            disabled={artskart.error || artskart.isLoading || isLoading}
             onClick={e => {
               e.preventDefault();
               e.stopPropagation();
@@ -152,25 +152,25 @@ const RedigerbartKart = ({
               });
               onCancel();
             }}
-            className={artskart.error || artskart.isLoading ? "" : "elevated"}
+            className={artskart.error || (artskart.isLoading || isLoading) ? "" : "elevated"}
           >
             ✓ Overfør arealer og fylker tilbake til vurderingen
         </Xcomp.Button>
         {selectionGeometry && <Xcomp.Button
-            disabled={artskart.error || artskart.isLoading}
+            disabled={artskart.error || artskart.isLoading || isLoading}
             onClick={e => {
               e.preventDefault();
               e.stopPropagation();
               setSelectionGeometry();
               //onCancel();
             }}
-            className={artskart.error || artskart.isLoading ? "" : "elevated"}
+            className={artskart.error || (artskart.isLoading || isLoading) ? "" : "elevated"}
           >
             Fjern avgrensende polygon
         </Xcomp.Button>}
         </div>
         <div>
-          {artskart.isLoading && <Loading style={{ left: 0, top: "100%" }} />}
+          {(artskart.isLoading || isLoading) && <Loading style={{ left: 0, top: "100%" }} />}
         </div>
         <div>
           <span>Merk at ruter (2x2km) basert på funn med dårlig geografisk presisjon (&gt; 1000 m) er ekskludert. </span>
@@ -198,7 +198,8 @@ const RedigerbartKart = ({
         onClickPoint={handleClickPoint}
         onEdit={handleEditSelection}
         mapBounds={mapBounds}
-        onHover={onHover}
+        setWaterAreas={setWaterAreas}
+        setIsLoading={setIsLoading}
       />
     </div>
   );

@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect, useLayoutEffect } from "react"
 import 'ol/ol.css';
 import styles from './MapOpenLayers.css'; // don't delete. it's used to move buttons to the right side
 import MapContext from "./MapContext";
-import { multiPolygon as TurfMultiPolygon, intersect as TurfIntersect, point as TurfPoint } from '@turf/turf';
+import { intersect, multiPolygon as TurfMultiPolygon } from '@turf/turf';
 import { Feature, Map, View } from 'ol';
 import { Control, defaults as defaultControls } from 'ol/control';
 import { Draw, Snap } from 'ol/interaction';
@@ -30,7 +30,8 @@ const MapOpenLayers = ({
     geojson,
     selectionGeometry,
     onClickPoint,
-    onHover,
+    setWaterAreas,
+    setIsLoading,
     onClosed
 }) => {
     const mapRef = useRef();
@@ -117,7 +118,8 @@ const MapOpenLayers = ({
 
     const calculateWaterIntersection = (mapObject, fieldName) => {
         if (!showWaterAreas) return;
-        onHover();
+        setWaterAreas();
+        setIsLoading(true);
         const layers = mapObject.getLayers().getArray();
         // const areaLayer = layers.filter((layer) => layer.get('name') === 'areaLayer' ? true : false)[0];
         const markerLayer = layers.filter((layer) => layer.get('name') === 'markerLayer' ? true : false)[0];
@@ -154,14 +156,15 @@ const MapOpenLayers = ({
         theFeatures.forEach(feature => {
             // console.log('featurecoord', feature.getGeometry().getCoordinates());
             theWaterFeatures.forEach(waterFeature => {
-                const intersect = TurfIntersect(waterFeature, feature);
-                if (intersect !== null && intersections.indexOf(waterFeature) < 0) {
+                const intersects = intersect(waterFeature, feature);
+                if (intersects !== null && intersections.indexOf(waterFeature) < 0) {
                     intersections.push(waterFeature);
                 }
             });
         });
 
-        onHover(intersections.map(f => f.properties[fieldName]).join(','));
+        setWaterAreas(intersections.map(f => f.properties[fieldName]).filter(x => x.length > 0).join(', '));
+        setIsLoading(false);
     };
 
     const setPointerMoveForWaterLayer = (mapObject, fieldName) => {
@@ -199,11 +202,12 @@ const MapOpenLayers = ({
                 .forEach((sourceFeature) => {
                     hoverSource.addFeature(sourceFeature);
                 });
-                // onHover(name);
+                // setWaterAreas(name);
+                console.log('mouseover:', name);
             } else if (mapOlFunc.vectorFeatures[layerName] && mapOlFunc.vectorFeatures[layerName].length > 0) {
                 featureOver = undefined;
                 hoverSource.clear();
-                // onHover();
+                // setWaterAreas();
             }
         };
 
@@ -261,6 +265,8 @@ const MapOpenLayers = ({
         if (lastShowRegion === undefined || lastShowRegion === showRegion) return;
 
         // reDrawWaterLayer();
+        setWaterAreas();
+        setIsLoading(true);
         mapOlFunc.reDrawWaterLayer(map, showRegion, setLastShowRegion, setPointerMoveForWaterLayer, setWaterLayerName);
     });
 
