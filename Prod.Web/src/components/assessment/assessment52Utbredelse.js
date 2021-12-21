@@ -46,6 +46,10 @@ export default class Assessment52Utbredelse extends React.Component {
        }
     }
 
+    addRegion = ({ name }) => {
+        console.log('clicked:', name);
+    }
+
     handleOverførFraArtskart = ({ selectionGeometry, countylist, areadata, observations, editStats }) => {
         // console.log('handleOverførFraArtskart', selectionGeometry, countylist, areadata, observations, editStats);
         const aps = this.props.appState;
@@ -248,16 +252,22 @@ export default class Assessment52Utbredelse extends React.Component {
                         <div style={{width: '33%', height: 500}}>
                             <SimpleMap
                                 showRegion={true}
+                                mapType={1}
+                                onClick={action(this.addRegion)}
                                 evaluationContext={assessment.evaluationContext} />
                         </div>
                         <div style={{width: '33%', height: 500}}>
                             <SimpleMap
                                 showRegion={false}
+                                mapType={2}
+                                onClick={action(this.addRegion)}
                                 evaluationContext={assessment.evaluationContext} />
                         </div>
                         <div style={{width: '33%', height: 500}}>
                             <SimpleMap
                                 showRegion={true}
+                                mapType={3}
+                                onClick={action(this.addRegion)}
                                 evaluationContext={assessment.evaluationContext} />
                         </div>
                     </div>

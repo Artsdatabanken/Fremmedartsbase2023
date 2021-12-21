@@ -24,12 +24,17 @@ const mapBounds = {
 
 const SimpleMap = ({
     evaluationContext,
-    showRegion
+    showRegion,
+    onClick,
+    mapType
 }) => {
     const mapRef = useRef();
 	const [map, setMap] = useState(null);
+    const [pointerMoveTarget, setPointerMoveTarget] = useState(undefined);
     let mapObject;
     let mapCenter = [];
+    let featureOver;
+    const waterFieldName = showRegion ? 'vannregionnavn' : 'vannomraadenavn';
 
     const transformCoordinate = (fromEpsgCode, toEpsgCode, coordinate) => {
         if (fromEpsgCode === toEpsgCode) {
@@ -47,6 +52,49 @@ const SimpleMap = ({
             }
         }
         return Proj4(`EPSG:${fromEpsgCode}`, `EPSG:${toEpsgCode}`, coordinate);
+    }
+
+    setPointerMove = (mapObject) => {
+
+        const pointermove = (e) => {
+            const vatnLayer = mapObject.getLayers().getArray().filter((layer) => layer.get('name') === 'Vatn' ? true : false)[0];
+            if (!vatnLayer) return;
+            const vatnSource = vatnLayer.getSource();
+            if (!vatnSource) return;
+
+            const hoverLayer = mapObject.getLayers().getArray().filter(layer => layer.get('name') === 'hoverLayer')[0];
+
+            const vatn = [];
+            mapObject.forEachFeatureAtPixel(e.pixel, (f) => {
+                const featureLayerName = f.get('_layerName');
+                // console.log('feature', featureLayerName, f);
+                if (featureLayerName && featureLayerName === 'Vatn') {
+                    vatn.push(f);
+                    return true;
+                }
+                return false;
+            });
+            // console.log('pointermove', waterFieldName, vatn);
+            const hoverSource = hoverLayer.getSource();
+            if (vatn && vatn.length > 0) {
+                const name = vatn[0].get(waterFieldName);
+                // if (featureOver && featureOver.get(waterFieldName) === name) return;
+                if (featureOver) hoverSource.clear();
+
+                featureOver = vatn[0];
+                hoverSource.addFeatures(vatn);
+            } else {
+                featureOver = undefined;
+                hoverSource.clear();
+            }
+        };
+
+        if (pointerMoveTarget && pointerMoveTarget.listener) {
+            mapObject.un('pointermove', pointerMoveTarget.listener);
+        }
+
+        setPointerMoveTarget(mapObject.on('pointermove', pointermove));
+
     }
 
 	useEffect(() => {
@@ -73,6 +121,12 @@ const SimpleMap = ({
             }),
             layers: [
                 mapOlFunc.createWaterLayer('Vatn', showRegion ? 14 : 15, projection, '', () => {}),
+                new VectorLayer({
+                    name: 'hoverLayer',
+                    source: new VectorSource({wrapX: false, _text: false}),
+                    style: mapOlFunc.hoverStyleFunction,
+                    zIndex: 3
+                })
             ],
             controls: defaultControls({attribution: false, zoom: false}),
             interactions: new Collection(),
@@ -82,6 +136,27 @@ const SimpleMap = ({
 
         mapObject.setTarget(mapRef.current);
         setMap(mapObject);
+
+        setPointerMove(mapObject);
+
+        mapObject.on('click', (e) => {
+            const vatnLayer = mapObject.getLayers().getArray().filter((layer) => layer.get('name') === 'Vatn' ? true : false)[0];
+            if (!vatnLayer) return;
+            const vatnSource = vatnLayer.getSource();
+            if (!vatnSource) return;
+
+            const vatn = [];
+            mapObject.forEachFeatureAtPixel(e.pixel, (f) => {
+                const featureLayerName = f.get('_layerName');
+                // console.log('feature', featureLayerName, f);
+                if (featureLayerName && featureLayerName === 'Vatn') {
+                    vatn.push(f);
+                    return true;
+                }
+                return false;
+            });
+            if (vatn.length > 0) onClick({ name: vatn[0].get(waterFieldName) });
+        });
 
         // Fit extent
         mapObject.getView().fit(mapExtent);
