@@ -155,13 +155,13 @@ const styleFunction = (feature, resolution) => {
 };
 
 const createWaterLayer = (name, layerid, projection, waterLayerName, setWaterLayerNameCallback) => {
-    // const vannUrl = 'https://vann-nett.no/arcgis/rest/services/WFD/AdministrativeOmraader/MapServer/';
-    // const vannUrl = 'https://nve.geodataonline.no/arcgis/rest/services/Mapservices/Elspot/MapServer/';
+    // const vannUrl = 'https://vann-nett.no/arcgis/rest/services/WFD/AdministrativeOmraader/MapServer/'; // old service
+    // const vannUrl = 'https://nve.geodataonline.no/arcgis/rest/services/Mapservices/Elspot/MapServer/'; // new service
     // layerid = '0';
 
     setColors();
 
-    const vannUrl = 'https://nve.geodataonline.no/arcgis/rest/services/Vanndirektiv/MapServer/';
+    // geojson is saved and simplified with a 100m tolerance
     // layerid = 14; // Vannregion
     // layerid = 15; // Vannomraade
 
@@ -175,7 +175,6 @@ const createWaterLayer = (name, layerid, projection, waterLayerName, setWaterLay
             featureProjection: projection,
             geometryName: 'geometry'
         }),
-        url: `${vannUrl}?x={x}&y={y}&z={z}`,
         loader: async (extent, resolution, projection, success, failure) => {
             let url = `${config.apiUrl}/api/static/`;
             if (layerid === 14) url += 'WaterRegion';
@@ -249,115 +248,115 @@ const createWaterSelectedLayer = (name, projection) => {
     return layer;
 }
 
-const createWaterLayer_deprecated = (name, layerid, projection, waterLayerName, setWaterLayerNameCallback) => {
-    // const vannUrl = 'https://vann-nett.no/arcgis/rest/services/WFD/AdministrativeOmraader/MapServer/';
-    // const vannUrl = 'https://nve.geodataonline.no/arcgis/rest/services/Mapservices/Elspot/MapServer/';
-    // layerid = '0';
+// const createWaterLayer_deprecated = (name, layerid, projection, waterLayerName, setWaterLayerNameCallback) => {
+//     // const vannUrl = 'https://vann-nett.no/arcgis/rest/services/WFD/AdministrativeOmraader/MapServer/';
+//     // const vannUrl = 'https://nve.geodataonline.no/arcgis/rest/services/Mapservices/Elspot/MapServer/';
+//     // layerid = '0';
 
-    setColors();
+//     setColors();
 
-    const vannUrl = 'https://nve.geodataonline.no/arcgis/rest/services/Vanndirektiv/MapServer/';
-    // layerid = 14; // Vannregion
-    // layerid = 15; // Vannomraade
+//     const vannUrl = 'https://nve.geodataonline.no/arcgis/rest/services/Vanndirektiv/MapServer/';
+//     // layerid = 14; // Vannregion
+//     // layerid = 15; // Vannomraade
 
-    const props = {};
+//     const props = {};
 
-    const source = new VectorTileSource({
-        extent: extent,
-        projection: projection,
-        format: new GeoJSONFormat({
-            dataProjection: projection,
-            featureProjection: projection,
-            geometryName: 'geometry'
-        }),
-        url: `${vannUrl}?x={x}&y={y}&z={z}`,
-        tileGrid: wmtsTileGrid(1, `EPSG:${config.mapEpsgCode}`, projection, Math.floor(mapZoom)),
-        tileLoadFunction: async (tile, tileurl) => {
-            let url = vannUrl;
-            url += layerid;
-            url += '/query';
-            url += '?where=';
-            url += '&text=';
-            url += '&objectIds=';
-            url += '&time=';
-            url += `&geometry=${tile.extent.join(',')}`;
-            url += '&geometryType=esriGeometryEnvelope';
-            url += `&inSR=${config.mapEpsgCode}`;
-            url += '&spatialRel=esriSpatialRelIntersects';
-            url += '&outFields=*';
-            url += '&relationParam=';
-            url += '&outFields=';
-            url += '&returnGeometry=true';
-            url += '&returnTrueCurves=true';
-            url += '&maxAllowableOffset=';
-            url += '&geometryPrecision=';
-            url += `&outSR=${config.mapEpsgCode}`;
-            url += '&returnIdsOnly=false';
-            url += '&returnCountOnly=false';
-            url += '&orderByFields=';
-            url += '&groupByFieldsForStatistics=';
-            url += '&outStatistics=';
-            url += '&returnZ=false';
-            url += '&returnM=false';
-            url += '&gdbVersion=';
-            url += '&returnDistinctValues=false';
-            url += '&resultOffset=';
-            url += '&resultRecordCount=';
-            url += '&queryByDistance=';
-            url += '&returnExtentsOnly=true';
-            url += '&datumTransformation=';
-            url += '&parameterValues=';
-            url += '&rangeValues=';
-            url += '&f=geojson';
-            const response = await fetch(url);
-            const data = await response.json();
-            if (data.error) return;
-            const format = tile.getFormat();
-            const features = format.readFeatures(data);
-            if (!vectorFeatures[name]) vectorFeatures[name] = [];
-            features.forEach((feature) => {
-                feature.set('_layerName', name);
-                if (!waterLayerName && setWaterLayerNameCallback) {
-                    waterLayerName = feature.get('Name')
-                        ? 'Name'
-                        : feature.get('vannomraadenavn')
-                            ? 'vannomraadenavn'
-                            : feature.get('vannregionnavn')
-                                ? 'vannregionnavn'
-                                : undefined;
-                    // console.log('setWaterLayerNameCallback', waterLayerName);
-                    setWaterLayerNameCallback(waterLayerName);
-                }
-                // // console.log('feature', feature.getProperties());
-                // if (!props['vannregionID']) props['vannregionID'] = {};
-                // if (!props['vannregionkoordinatorID']) props['vannregionkoordinatorID'] = {};
+//     const source = new VectorTileSource({
+//         extent: extent,
+//         projection: projection,
+//         format: new GeoJSONFormat({
+//             dataProjection: projection,
+//             featureProjection: projection,
+//             geometryName: 'geometry'
+//         }),
+//         url: `${vannUrl}?x={x}&y={y}&z={z}`,
+//         tileGrid: wmtsTileGrid(1, `EPSG:${config.mapEpsgCode}`, projection, Math.floor(mapZoom)),
+//         tileLoadFunction: async (tile, tileurl) => {
+//             let url = vannUrl;
+//             url += layerid;
+//             url += '/query';
+//             url += '?where=';
+//             url += '&text=';
+//             url += '&objectIds=';
+//             url += '&time=';
+//             url += `&geometry=${tile.extent.join(',')}`;
+//             url += '&geometryType=esriGeometryEnvelope';
+//             url += `&inSR=${config.mapEpsgCode}`;
+//             url += '&spatialRel=esriSpatialRelIntersects';
+//             url += '&outFields=*';
+//             url += '&relationParam=';
+//             url += '&outFields=';
+//             url += '&returnGeometry=true';
+//             url += '&returnTrueCurves=true';
+//             url += '&maxAllowableOffset=';
+//             url += '&geometryPrecision=';
+//             url += `&outSR=${config.mapEpsgCode}`;
+//             url += '&returnIdsOnly=false';
+//             url += '&returnCountOnly=false';
+//             url += '&orderByFields=';
+//             url += '&groupByFieldsForStatistics=';
+//             url += '&outStatistics=';
+//             url += '&returnZ=false';
+//             url += '&returnM=false';
+//             url += '&gdbVersion=';
+//             url += '&returnDistinctValues=false';
+//             url += '&resultOffset=';
+//             url += '&resultRecordCount=';
+//             url += '&queryByDistance=';
+//             url += '&returnExtentsOnly=true';
+//             url += '&datumTransformation=';
+//             url += '&parameterValues=';
+//             url += '&rangeValues=';
+//             url += '&f=geojson';
+//             const response = await fetch(url);
+//             const data = await response.json();
+//             if (data.error) return;
+//             const format = tile.getFormat();
+//             const features = format.readFeatures(data);
+//             if (!vectorFeatures[name]) vectorFeatures[name] = [];
+//             features.forEach((feature) => {
+//                 feature.set('_layerName', name);
+//                 if (!waterLayerName && setWaterLayerNameCallback) {
+//                     waterLayerName = feature.get('Name')
+//                         ? 'Name'
+//                         : feature.get('vannomraadenavn')
+//                             ? 'vannomraadenavn'
+//                             : feature.get('vannregionnavn')
+//                                 ? 'vannregionnavn'
+//                                 : undefined;
+//                     // console.log('setWaterLayerNameCallback', waterLayerName);
+//                     setWaterLayerNameCallback(waterLayerName);
+//                 }
+//                 // // console.log('feature', feature.getProperties());
+//                 // if (!props['vannregionID']) props['vannregionID'] = {};
+//                 // if (!props['vannregionkoordinatorID']) props['vannregionkoordinatorID'] = {};
                 
-                // if (props['vannregionID'][feature.get('vannregionID')]) {
-                //     props['vannregionID'][feature.get('vannregionID')]++;
-                //     props['vannregionkoordinatorID'][feature.get('vannregionkoordinatorID')]++;
-                // } else {
-                //     props['vannregionID'][feature.get('vannregionID')] = 1;
-                //     props['vannregionkoordinatorID'][feature.get('vannregionkoordinatorID')] = 1;
-                // }
-                // console.log('props', props);
-                vectorFeatures[name].push(feature);
-            });
-            tile.setFeatures(features);
-        },
-        crossOrigin: 'anonymous'
-    });
-    const layer = new VectorTileLayer({
-        name: name,
-        opacity: 1,
-        renderMode: 'vector',
-        source: source,
-        style: styleFunction,
-        visible: true,
-        zIndex: 2
-    });
+//                 // if (props['vannregionID'][feature.get('vannregionID')]) {
+//                 //     props['vannregionID'][feature.get('vannregionID')]++;
+//                 //     props['vannregionkoordinatorID'][feature.get('vannregionkoordinatorID')]++;
+//                 // } else {
+//                 //     props['vannregionID'][feature.get('vannregionID')] = 1;
+//                 //     props['vannregionkoordinatorID'][feature.get('vannregionkoordinatorID')] = 1;
+//                 // }
+//                 // console.log('props', props);
+//                 vectorFeatures[name].push(feature);
+//             });
+//             tile.setFeatures(features);
+//         },
+//         crossOrigin: 'anonymous'
+//     });
+//     const layer = new VectorTileLayer({
+//         name: name,
+//         opacity: 1,
+//         renderMode: 'vector',
+//         source: source,
+//         style: styleFunction,
+//         visible: true,
+//         zIndex: 2
+//     });
 
-    return layer;
-}
+//     return layer;
+// }
 
 const reDrawWaterLayer = (mapObject, showRegion, setLastShowRegion, setPointerMoveForWaterLayer, setWaterLayerName) => {
     let waterLayer = mapObject.getLayers().getArray().filter(layer => layer.get('name') === 'Vatn')[0];
