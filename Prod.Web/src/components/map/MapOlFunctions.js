@@ -1,14 +1,18 @@
+import { getTopLeft, getWidth } from 'ol/extent';
 import { GeoJSON as GeoJSONFormat } from 'ol/format';
-import { Tile as TileLayer, Vector as VectorLayer, VectorTile as VectorTileLayer } from 'ol/layer';
+import { Vector as VectorLayer } from 'ol/layer';
 import { Projection } from 'ol/proj';
-import { Vector as VectorSource, VectorTile as VectorTileSource, WMTS as WmtsSource } from 'ol/source';
+import { Vector as VectorSource } from 'ol/source';
 import { Circle, Fill, Stroke, Style, Text } from 'ol/style';
+import WMTSTileGrid from 'ol/tilegrid/WMTS';
 import auth from '../authService'
 import config from '../../config';
 
 let defaultStyles;
 let hoverStyles;
 let waterLayerName;
+
+const numZoomLevels = 18;
 
 const colors = {
     '1': '',
@@ -399,6 +403,30 @@ const createButton = (options) => {
     return button;
 }
 
+const wmtsTileGrid = (numZoomLevels, matrixSet, projection, startLevel) => {
+    let resolutions = new Array(numZoomLevels);
+    let matrixIds = new Array(numZoomLevels);
+    
+    // console.log('wmtsTileGrid()', numZoomLevels, matrixSet, projection);
+    let projectionExtent = projection.getExtent();
+
+    let size = getWidth(projectionExtent) / 256;
+    
+    startLevel = startLevel ? startLevel : 0;
+    for (let z = startLevel; z < (numZoomLevels + startLevel); ++z) {
+        resolutions[z] = size / Math.pow(2, z);
+        matrixIds[z] = matrixSet + ':' + z;
+    }
+
+    let wmtsTileGrid = new WMTSTileGrid({
+        origin: getTopLeft(projectionExtent),
+        resolutions: resolutions,
+        matrixIds: matrixIds
+    });
+
+    return wmtsTileGrid;
+}
+
 const mapOlFunc = {
     createButton: createButton,
     createStyle: createStyle,
@@ -407,8 +435,10 @@ const mapOlFunc = {
     createWaterSelectedLayer: createWaterSelectedLayer,
     extent: extent,
     hoverStyleFunction: hoverStyleFunction,
+    numZoomLevels: numZoomLevels,
     reDrawWaterLayer: reDrawWaterLayer,
     styleFunction: styleFunction,
-    vectorFeatures: vectorFeatures
+    vectorFeatures: vectorFeatures,
+    wmtsTileGrid: wmtsTileGrid
 };
 export default mapOlFunc;

@@ -5,24 +5,19 @@ import MapContext from "./MapContext";
 import { intersect, multiPolygon as TurfMultiPolygon } from '@turf/turf';
 import { Feature, Map, View } from 'ol';
 import { Control, defaults as defaultControls } from 'ol/control';
-import { Draw, Snap } from 'ol/interaction';
-import { Tile as TileLayer, Vector as VectorLayer, VectorTile as VectorTileLayer } from 'ol/layer';
-import { getTopLeft,getWidth } from 'ol/extent';
-import { Point, Polygon } from "ol/geom";
-import Projection from 'ol/proj/Projection';
+import { Draw } from 'ol/interaction';
+import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
+import { Point, Polygon } from 'ol/geom';
 import { GeoJSON as GeoJSONFormat } from 'ol/format';
 import Proj4 from 'proj4';
-import { addProjection } from 'ol/proj';
-import { Vector as VectorSource, VectorTile as VectorTileSource, WMTS as WmtsSource } from 'ol/source';
-import { Circle, Fill, Stroke, Style, Text } from 'ol/style';
-import WMTSTileGrid from 'ol/tilegrid/WMTS';
+import { addProjection, Projection } from 'ol/proj';
+import { Vector as VectorSource, WMTS as WmtsSource } from 'ol/source';
 import mapOlFunc from './MapOlFunctions';
 import config from '../../config';
 
 const MapOpenLayers = ({
     showWaterAreas,
     showRegion,
-    children,
     onAddPoint,
     onEdit,
     style,
@@ -41,7 +36,6 @@ const MapOpenLayers = ({
 	const [lastShowRegion, setLastShowRegion] = useState(undefined);
 	const [waterLayerName, setWaterLayerName] = useState(undefined);
     const [pointerMoveTarget, setPointerMoveTarget] = useState(undefined);
-    const numZoomLevels = 18;
     const mapZoom = 3.7;
     let mapObject;
     let mapCenter = [];
@@ -93,29 +87,6 @@ const MapOpenLayers = ({
             lng: coordinate[0],
             lat: coordinate[1]
         });
-    };
-    const wmtsTileGrid = (numZoomLevels,matrixSet,projection, startLevel) => {
-        let resolutions = new Array(numZoomLevels);
-        let matrixIds = new Array(numZoomLevels);
-        
-        // console.log('wmtsTileGrid()', numZoomLevels, matrixSet, projection);
-        let projectionExtent = projection.getExtent();
-
-        let size = getWidth(projectionExtent) / 256;
-        
-        startLevel = startLevel ? startLevel : 0;
-        for (let z = startLevel; z < (numZoomLevels + startLevel); ++z) {
-            resolutions[z] = size / Math.pow(2, z);
-            matrixIds[z] = matrixSet + ':' + z;
-        }
-
-        let wmtsTileGrid = new WMTSTileGrid({
-            origin: getTopLeft(projectionExtent),
-            resolutions: resolutions,
-            matrixIds: matrixIds
-        });
-
-        return wmtsTileGrid;
     };
 
     const calculateWaterIntersection = (mapObject, fieldName) => {
@@ -325,7 +296,7 @@ const MapOpenLayers = ({
             view: new View({
                 center: mapCenter,
                 projection: `EPSG:${config.mapEpsgCode}`,
-                maxZoom: numZoomLevels,
+                maxZoom: mapOlFunc.numZoomLevels,
                 zoom: 0// mapZoom
             }),
             layers: [
@@ -341,7 +312,7 @@ const MapOpenLayers = ({
                         matrixSet: `EPSG:${config.mapEpsgCode}`,
                         format: 'image/png',
                         projection: projection,
-                        tileGrid: wmtsTileGrid(numZoomLevels, `EPSG:${config.mapEpsgCode}`, projection),
+                        tileGrid: mapOlFunc.wmtsTileGrid(mapOlFunc.numZoomLevels, `EPSG:${config.mapEpsgCode}`, projection),
                         style: 'default',
                         wrapX: true,
                         crossOrigin: 'anonymous'
@@ -361,7 +332,7 @@ const MapOpenLayers = ({
                         matrixSet: `EPSG:${config.mapEpsgCode}`,
                         format: 'image/png',
                         projection: projection,
-                        tileGrid: wmtsTileGrid(numZoomLevels, `EPSG:${config.mapEpsgCode}`, projection),
+                        tileGrid: mapOlFunc.wmtsTileGrid(mapOlFunc.numZoomLevels, `EPSG:${config.mapEpsgCode}`, projection),
                         style: 'default',
                         wrapX: true,
                         crossOrigin: 'anonymous'
@@ -542,9 +513,7 @@ const MapOpenLayers = ({
         <div>
             <div>{visibleLegend && (<span>{"tegnforklaring"}</span>)}</div>
             <MapContext.Provider value={{ map }}>
-                <div ref={mapRef} className="ol-map" style={{cursor: 'crosshair'}}>
-                    {children}
-                </div>
+                <div ref={mapRef} className="ol-map" style={{cursor: 'crosshair'}}></div>
     		</MapContext.Provider>
         </div>
 	)
