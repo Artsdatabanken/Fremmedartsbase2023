@@ -162,6 +162,7 @@ namespace Prod.Domain
 
         public bool? IsAlienSpecies { get; set; }
 
+        public string IsAlien { get; set; } // new in 2021
         public bool? IsRegionallyAlien { get; set; }
 
         public bool? ConnectedToAnother { get; set; }
