@@ -125,15 +125,14 @@ checkStatus = (production) => {
                     { assessment.isAlienSpeciesString == 'true' && assessment.alienSpeciesCategory != "DoorKnocker" ? 
                             <Xcomp.Bool observableValue={[assessment, "isRegionallyAlien"]} checked={assessment.alienSpeciesCategory == "RegionallyAlien"} label={labels.SpeciesStatus.regionallyAlien} /> : null }
                     <Xcomp.Radio value={'false'} observableValue={[assessment, "isAlienSpeciesString"]} label={labels.General.no} />
-                    
-
-                    {assessment.notApplicableCategory == "notAlienSpecie" && 
-                    // transfer "notApplicableDescription" from FAB3
-                    <>
                     <p>{labels.SpeciesStatus.unsureAlienDescription}</p>
-                    <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/> 
-                    </>
-                    }
+                    {assessment.notApplicableCategory == "notAlienSpecie" ?
+                    // transfer "notApplicableDescription" from FAB3                    
+                    
+                    <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/> :
+                    <Xcomp.HtmlString observableValue={[assessment, 'isAlien']}/>
+                    
+                }
                     
                     { assessment.isAlienSpeciesString == 'true' ?
                     <div>                     
@@ -289,9 +288,10 @@ checkStatus = (production) => {
                         <p>{labels.SpeciesStatus.probabilityUncertainity}</p>
                         
                         {assessment.notApplicableCategory == "establishedBefore1800" &&
+                        // transfer "notApplicableDescription" from FAB3
                             <>
                             <p>{labels.SpeciesStatus.uncertainityEstablishmentTimeDescription}</p>
-                            // transfer "notApplicableDescription" from FAB3
+                            
                             <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/> 
                             </>
                         }
