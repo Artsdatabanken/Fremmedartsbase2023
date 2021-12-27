@@ -155,7 +155,7 @@ export class NaturtypeRad extends React.Component {
                 {/*<td>ntlabel</td>*/}
                 <td>{nt.name ? nt.name : nt.niNCode ? findNTName(nt.niNCode) : ""}</td>
                 <td>{dominanceForrest}</td>
-                {showNatureTypeArea && <td><td>{nt.niNCode ? findNTArea(nt.niNCode) : ""}</td></td> }
+                {showNatureTypeArea && <td>{nt.niNCode ? findNTArea(nt.niNCode) : ""}</td> }
                 {this.edit
                 ?
                 <td>{assessment.alienSpeciesCategory == "DoorKnocker" ? koder.timeHorizon[1].Text : 
@@ -290,7 +290,7 @@ export default class NaturtypeTable extends React.Component {
         // check if there are any red list nature types in the table - they have only numbers in id's
         const reg = /^\d+$/;
         const noRedListTypes = !naturetypes.find(ntype => reg.test(ntype.niNCode))
-        
+                
         console.log("naturtyperader#: " + naturetypes.length)
         console.log("nt table: " + JSON.stringify(naturetypes))
         console.log("canRenderTable: " + canRenderTable)
@@ -300,8 +300,8 @@ export default class NaturtypeTable extends React.Component {
             <table className="table naturetype">
             
             <colgroup>
-                <col  style={{width: "10%"}}/>
-                <col  style={{width: "10%"}}/>
+                <col  style={{width: "5%"}}/>
+                <col  style={{width: "15%"}}/>
                 <col  style={{width: noRedListTypes ? "10%" : "25%"}}/>                
                 {!noRedListTypes && <col  style={{width: "15%"}}/> }
                 <col  style={{width: "10%"}}/>
@@ -334,7 +334,7 @@ export default class NaturtypeTable extends React.Component {
                     //const key = nt.NiNCode + nt.TimeHorizon + nt.ColonizedArea
                     console.log("nt row: " + JSON.stringify(nt))
                     const key = nt.niNCode+nt.timeHorizon
-                    return <NaturtypeRad key={key} naturtype={nt} deleteRow={deleteRow} codes={codes} appState={appState} labels={labels} showNatureTypeArea={noRedListTypes != undefined} toggleEdit={this.toggleEdit} editMode={this.editMode} disabled={disabled}/> }) :
+                    return <NaturtypeRad key={key} naturtype={nt} deleteRow={deleteRow} codes={codes} appState={appState} labels={labels} showNatureTypeArea={noRedListTypes != undefined && noRedListTypes != true} toggleEdit={this.toggleEdit} editMode={this.editMode} disabled={disabled}/> }) :
                     null
                 }
             </tbody>
