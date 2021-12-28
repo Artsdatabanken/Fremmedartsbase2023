@@ -547,6 +547,72 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 
     })
         
+
+    autorun(() => {
+        if (r.AOOtotalBest === 0) {
+            r.addError("(a)err1", "En selvstendig reproduserende art må ha et forekomstareal på minst 4_km²!")
+        } else {
+            r.removeError("(a)err1")
+        }
+    })
+
+    autorun(() => {
+        if (r.AOOtotalLow > r.AOOtotalBest) {
+            r.addError("(a)err2", "Det nedre anslaget på forekomstarealet kan ikke være større enn det beste anslaget!")
+        } else {
+            r.removeError("(a)err2")
+        }
+    })
+
+    autorun(() => {
+        if (r.AOOtotalHigh < r.AOOtotalBest) {
+            r.addError("(a)err3", "Det øvre anslaget på forekomstarealet kan ikke være mindre enn det beste anslaget!")
+        } else {
+            r.removeError("(a)err3")
+        }
+    })
+
+    autorun(() => {
+        if (r.AOO50yrLow > r.AOO50yrBest) {
+            r.addError("(a)err4", "Det nedre anslaget på forekomstarealet kan ikke være større enn det beste anslaget!")
+        } else {
+            r.removeError("(a)err4")
+        }
+    })
+
+    autorun(() => {
+        if (r.AOO50yrHigh < r.AOO50yrBest) {
+            r.addError("(a)err5", "Det øvre anslaget på forekomstarealet kan ikke være mindre enn det beste anslaget!")
+        } else {
+            r.removeError("(a)err5")
+        }
+    })
+    autorun(() => {
+        if (r.AOOtotalBest < r.AOOknown) {
+            r.addError("(a)err6", "Det beste anslaget på det totale nåværende forekomstarealet kan ikke være mindre enn det kjente!")
+        } else {
+            r.removeError("(a)err6")
+        }
+    })
+
+    autorun(() => {
+        if (r.Occurrences1Low > r.Occurrences1Best) {
+            r.addError("(b)err1", "Det nedre anslaget på antall forekomster kan ikke være større enn det beste anslaget!")
+        } else {
+            r.removeError("(b)err1")
+        }
+    })
+
+    autorun(() => {
+        if (r.Occurrences1High < r.Occurrences1Best) {
+            r.addError("(b)err2", "Det øvre anslaget på antall forekomster kan ikke være mindre enn det beste anslaget!")
+        } else {
+            r.removeError("(b)err2")
+        }
+    })
+
+
+
     autorun(() => {
         if (r.lifetimeLowerQ > r.medianLifetime) {
             r.addError("A3err1", "Levetidens nedre kvartil må være mindre enn medianen.")
