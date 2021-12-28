@@ -523,6 +523,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             const k = r.bmetodkey
             const result =
                 k === "B1" ? r.expansionLowerQInput
+                : k === "B2a" ? r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null ? 0 : trunc(sqrt(r.AOOdarkfigureLow) * 1000 * (sqrt(r.AOO2) - sqrt(r.AOO1)) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
                 : k === "B2b" ? round(200 * (sqrt(r.AOO10yrLow / 4) - 1) / sqrt(pi))
                 : 0 // ?
             return roundToSignificantDecimals(result)
@@ -531,6 +532,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             const k = r.bmetodkey
             const result =
                 k === "B1" ? r.expansionUpperQInput
+                : k === "B2a" ? r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null ? 0 : trunc(sqrt(r.AOOdarkfigureHigh) * 1000 * (sqrt(r.AOO2) - sqrt(r.AOO1)) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
                 : k === "B2b" ? round(200 * (sqrt(r.AOO10yrHigh / 4) - 1) / sqrt(pi))
                 : 0 // ?
             return roundToSignificantDecimals(result)
@@ -539,6 +541,18 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             const result =
                 r.AOOknown === null || r.AOOknown === 0 ? 0
                 : roundToSignificantDecimals2(r.AOOtotalBest / r.AOOknown )
+            return result
+        },
+        get AOOdarkfigureLow() {
+            const result =
+                r.AOOknown === null || r.AOOknown === 0 ? 0
+                : roundToSignificantDecimals2(r.AOOtotalLow / r.AOOknown )
+            return result
+        },
+        get AOOdarkfigureHigh() {
+            const result =
+                r.AOOknown === null || r.AOOknown === 0 ? 0
+                : roundToSignificantDecimals2(r.AOOtotalHigh / r.AOOknown )
             return result
         },
         get b2aresulttext() {
