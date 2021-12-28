@@ -505,7 +505,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             const result =
                 k === "B1" ? r.expansionSpeedInput
                 : k === "B2a" ? r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null ? 0 : trunc(sqrt(r.AOOdarkfigureBest) * 1000 * (sqrt(r.AOO2) - sqrt(r.AOO1)) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
-                : k === "B2b" ? round(200 * (sqrt(r.AOO10yrBest / 4) - 1) / sqrt(pi))
+                : k === "B2b" ? trunc(200 * (sqrt(r.AOO10yrBest / 4) - 1) / sqrt(pi))
                 : 0 // ?
             console.log("#expspeed: " + k + " " + result)
             console.log("#expspeed data: " + JSON.stringify({
@@ -524,7 +524,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             const result =
                 k === "B1" ? r.expansionLowerQInput
                 : k === "B2a" ? r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null ? 0 : trunc(sqrt(r.AOOdarkfigureLow) * 1000 * (sqrt(r.AOO2) - sqrt(r.AOO1)) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
-                : k === "B2b" ? round(200 * (sqrt(r.AOO10yrLow / 4) - 1) / sqrt(pi))
+                : k === "B2b" ? trunc(200 * (sqrt(r.AOO10yrLow / 4) - 1) / sqrt(pi))
                 : 0 // ?
             return roundToSignificantDecimals(result)
         },
@@ -533,7 +533,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             const result =
                 k === "B1" ? r.expansionUpperQInput
                 : k === "B2a" ? r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null ? 0 : trunc(sqrt(r.AOOdarkfigureHigh) * 1000 * (sqrt(r.AOO2) - sqrt(r.AOO1)) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
-                : k === "B2b" ? round(200 * (sqrt(r.AOO10yrHigh / 4) - 1) / sqrt(pi))
+                : k === "B2b" ? trunc(200 * (sqrt(r.AOO10yrHigh / 4) - 1) / sqrt(pi))
                 : 0 // ?
             return roundToSignificantDecimals(result)
         },
