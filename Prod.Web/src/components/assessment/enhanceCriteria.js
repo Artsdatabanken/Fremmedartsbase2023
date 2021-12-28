@@ -13,20 +13,20 @@ function sqrt(num){return Math.sqrt(num)}
 const pi = Math.PI
 function roundToSignificantDecimals(num) {
     // console.log("run roundToSignificantDecimals")
-    if (num === null) return 0;    
-    const result = 
+    if (num === null) return 0;
+    const result =
         (num >= 9950000) ? round(num / 1000000) * 1000000 :
         (num >= 995000 ) ? round(num / 100000)  * 100000  :
         (num >= 99500  ) ? round(num / 10000)   * 10000   :
         (num >= 9950   ) ? round(num / 1000)    * 1000    :
         (num >= 995    ) ? round(num / 100)     * 100     :
         (num >= 100    ) ? round(num / 10)      * 10      :
-        num 
+        num
     return result
 }
 function roundToSignificantDecimals2(num) {   // todo: spør om grenseverdiene (100 vs 99.5, og 2(?))
-    if (num === null) return 0;    
-    const result = 
+    if (num === null) return 0;
+    const result =
         // (num >= 9950000) ? round(num / 1000000) * 1000000 :
         // (num >= 995000 ) ? round(num / 100000)  * 100000  :
         // (num >= 99500  ) ? round(num / 10000)   * 10000   :
@@ -37,21 +37,21 @@ function roundToSignificantDecimals2(num) {   // todo: spør om grenseverdiene (
         (num >= 9.95    ) ? round(num / 1)       * 1      :
         (num >= 2    ) ? round(num / 0.1)      * 0.1      :
         (num <  2    ) ? round(num / 0.01)      * 0.01      :
-        num 
+        num
     return result
 }
 
 function yearlyIncreaseLevel(numMYear) {
     const num = numMYear // numKmYear * 1000
-    const result = 
-        num >= 500 ? 3 
+    const result =
+        num >= 500 ? 3
         : num >= 160 ? 2
         : num >= 50 ? 1
         : 0
     return result
 }
 function medianLifespanLevel(num) {
-    const result = 
+    const result =
         num >= 650 ? 3
         : num >= 60 ? 2
         : num >= 10 ? 1
@@ -110,13 +110,13 @@ function introductionNum(table, best) {
 // }
 
 // for nullableints: give 0 if null. (undefined and NaN is unchanged!)
-function n0(num) { 
-    return num === null 
+function n0(num) {
+    return num === null
         ? 0
         : num
 }
-// for divisor = 0 or null give 1 
-function d1(num) { 
+// for divisor = 0 or null give 1
+function d1(num) {
     return num === null || num === 0
         ? 1
         : num
@@ -125,12 +125,12 @@ function d1(num) {
 const errorhandler = {
     errors: {},
     get hasErrors() {
-        return Object.keys(this.errors).length > 0 
+        return Object.keys(this.errors).length > 0
     },
     addError({id, errorText}) {
         if(typeof(id) !== 'string' || typeof(id) !== 'string' ) {
             console.warn("addError wrong data type")
-            
+
         }
         if (!(id in this.errors)) {
             set(this.errors, id)
@@ -163,7 +163,7 @@ function criterionLow(criterion) {
     const unc = criterion.uncertaintyValues
     const value = criterion.Value
     // console.log("crit_low: " + value + JSON.stringify(unc))
-    const result = 
+    const result =
         unc.length === 0
         ? value
         : Math.min(...unc)
@@ -173,7 +173,7 @@ function criterionHigh(criterion) {
     const unc = criterion.uncertaintyValues
     const value = criterion.Value
     // console.log("crit_high: " + value + JSON.stringify(unc))
-    const result = 
+    const result =
         unc.length === 0
         ? value
         : Math.max(...unc)
@@ -196,35 +196,35 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 //
 //chosenSpreadMedanLifespan	#radio (ametod)
 //acceptOrAdjustCritA 		#radio
-//AOOtotalBest 	#integer?	# beste anslag på totalt forekomstareal nå 
-//AOOtotalLow  **	#integer? 	# lavt anslag på totalt forekomstareal nå 
-//AOOtotalHigh **	#integer? 	# høyt anslag på totalt forekomstareal nå 
-//AOO50yrBest	#integer?	# beste anslag på totalt forekomstareal om 50 år 
-//AOO50yrLow	#integer?	# lavt anslag på totalt forekomstareal om 50 år 
-//AOO50yrHigh	#integer?	# høyt anslag på totalt forekomstareal om 50 år 
+//AOOtotalBest 	#integer?	# beste anslag på totalt forekomstareal nå
+//AOOtotalLow  **	#integer? 	# lavt anslag på totalt forekomstareal nå
+//AOOtotalHigh **	#integer? 	# høyt anslag på totalt forekomstareal nå
+//AOO50yrBest	#integer?	# beste anslag på totalt forekomstareal om 50 år
+//AOO50yrLow	#integer?	# lavt anslag på totalt forekomstareal om 50 år
+//AOO50yrHigh	#integer?	# høyt anslag på totalt forekomstareal om 50 år
 //medianLifetimeInput	#integer?	# artens mediane levetid i Norge i år
-//lifetimeLowerQInput 	#integer?	# nedre kvartil for artens levetid i Norge i år 
-//lifetimeUpperQInput	#integer?	# øvre kvartil for artens levetid i Norge i år 
-//introductionsBest	    #number?	# beste anslag på antall introduksjoner i løpet av 10 år 
-//populationSize 	**!	#integer?	# bestandens nåværende størrelse (individtall) 
-//growthRate	    **	#number?	# bestandens multiplikative vekstrate 
-//envVariance	    **	#number?	# miljøvarians 
-//demVariance	    **	#number?	# demografisk varians 
-//carryingCapacity	**  #integer?	# bestandens bæreevne (individtall) 
-//extinctionThreshold **	#integer?	# kvasiutdøingsterskel (individtall) 
+//lifetimeLowerQInput 	#integer?	# nedre kvartil for artens levetid i Norge i år
+//lifetimeUpperQInput	#integer?	# øvre kvartil for artens levetid i Norge i år
+//introductionsBest	    #number?	# beste anslag på antall introduksjoner i løpet av 10 år
+//populationSize 	**!	#integer?	# bestandens nåværende størrelse (individtall)
+//growthRate	    **	#number?	# bestandens multiplikative vekstrate
+//envVariance	    **	#number?	# miljøvarians
+//demVariance	    **	#number?	# demografisk varians
+//carryingCapacity	**  #integer?	# bestandens bæreevne (individtall)
+//extinctionThreshold **	#integer?	# kvasiutdøingsterskel (individtall)
 //
 //chosenSpreadYearlyIncrease radio (bmetod)
-//expansionSpeedInput	#integer?	# ekspansjonshastighet i meter per år 
-//expansionLowerQInput	#integer?	# nedre kvartil for ekspansjonshastighet i meter per år 
-//expansionUpperQInput	#integer?	# øvre kvartil for ekspansjonshastighet i meter per år 
+//expansionSpeedInput	#integer?	# ekspansjonshastighet i meter per år
+//expansionLowerQInput	#integer?	# nedre kvartil for ekspansjonshastighet i meter per år
+//expansionUpperQInput	#integer?	# øvre kvartil for ekspansjonshastighet i meter per år
 //AOO1		#integer?	# forekomstarealet i år 1
 //AOO2		#integer?	# forekomstarealet i år 2
-//AOOyear1	#integer?	# årstallet for det første forekomstarealet 
-//AOOyear2	#integer?	# årstallet for det andre forekomstarealet 
-//AOOknown	#integer?	# kjent forekomstareal 
-//occurrences1Best	    #integer?	# beste anslag på antall forekomster fra 1 introduksjon 
-//occurrences1Low		#integer?	# lavt anslag på antall forekomster fra 1 introduksjon 
-//occurrences1High	    #integer?	# høyt anslag på antall forekomster fra 1 introduksjon 
+//AOOyear1	#integer?	# årstallet for det første forekomstarealet
+//AOOyear2	#integer?	# årstallet for det andre forekomstarealet
+//AOOknown	#integer?	# kjent forekomstareal
+//occurrences1Best	    #integer?	# beste anslag på antall forekomster fra 1 introduksjon
+//occurrences1Low		#integer?	# lavt anslag på antall forekomster fra 1 introduksjon
+//occurrences1High	    #integer?	# høyt anslag på antall forekomster fra 1 introduksjon
 
 
 
@@ -242,13 +242,13 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         get ametodkey() {
             const method = riskAssessment.chosenSpreadMedanLifespan
             const a1submethod = r.acceptOrAdjustCritA
-            const result = 
-                method === "LifespanA1aSimplifiedEstimate" 
+            const result =
+                method === "LifespanA1aSimplifiedEstimate"
                 ? !r.doorKnocker
-                    ? a1submethod === "accept" 
+                    ? a1submethod === "accept"
                         ? "A1a1" // "forekomstareal forenklet"
                         : "A1a2" // "forekomstareal justert"
-                    : a1submethod === "accept" 
+                    : a1submethod === "accept"
                         ? "A1b1" // "introduksjonspress forenklet" (dørstokkart)
                         : "A1b2" // "introduksjonspress justert"   (dørstokkart)
                 : method === "SpreadRscriptEstimatedSpeciesLongevity"
@@ -260,20 +260,20 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
         get bmetodkey() {
             const method = riskAssessment.chosenSpreadYearlyIncrease
-            const result = 
-                method === "a" 
-                ? "B1" 
+            const result =
+                method === "a"
+                ? "B1"
                 : method === "b"
                 ? !r.doorKnocker
                     ? "B2a"
                     : "B2b"
                 : method === "c"  // no longer in use (??)
-                ? "B2bX"  
+                ? "B2bX"
                 : ""
             console.log("#bmetod " + result)
             return result
         },
-        get introductionsLow() { 
+        get introductionsLow() {
             const num = introductionNum(introLowTable, r.introductionsBest)
             return num == 0 ? 0 : round(r.introductionsBest) - num
         },
@@ -281,9 +281,6 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             const num = introductionNum(introHighTable, r.introductionsBest)
             return num == 0 ? 0 : round(r.introductionsBest) + num
         },
-        // get AOO10yrBest() {return 4 * ((1 + r.occurrences1Best) * (1 + round(r.introductionsBest) / 2) - 1) },
-        // get AOO10yrLow() { return 4 * ((1 + r.occurrences1Low) * (1 + r.introductionsLow / 2) - 1) },
-        // get AOO10yrHigh() {return 4 * ((1 + r.occurrences1High) * (1 + r.introductionsHigh / 2) - 1) },
         get AOO10yrBest() {
             const result =
                 r.occurrences1Best === 0 && r.introductionsBest === 0
@@ -313,32 +310,46 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             return result
         },
 
-        get AOOchangeBest() { return r.AOOtotalBest < 4 ? 1 : n0(r.AOO50yrBest) / d1(r.AOOtotalBest) },
-        get AOOchangeLow() { return r.AOOtotalBest < 4 ? 1 : n0(r.AOO50yrLow) / d1(r.AOOtotalBest) },
-        get AOOchangeHigh() { return r.AOOtotalBest >= 4 ? 1 : n0(r.AOO50yrHigh) / d1(r.AOOtotalBest) },
-        get adefaultBest() { 
-            return r.AOO50yrBest < 4 ? 0 
-            : r.AOO50yrBest >= 4 ? 1 
-            : r.AOO50yrBest >= 8 && r.AOOchangeBest > 0.2 ? 2
-            : r.AOO50yrBest >= 20 && r.AOOchangeBest > 0.05 ? 2
+        get AOOchangeBest() { return r.AOOtotalBest < 4 ? 1 : n0(r.AOO50yrBest) / d1(r.AOOtotalBest) }, // nb AOOtotalBest is allways >= 4 (so really no need to check)
+        get AOOchangeLow() { return r.AOOtotalBest < 4 ? 1 : n0(r.AOO50yrLow) / d1(r.AOOtotalBest) },   // nb AOOtotalBest is allways >= 4 (so really no need to check)
+        get AOOchangeHigh() { return r.AOOtotalBest >= 4 ? 1 : n0(r.AOO50yrHigh) / d1(r.AOOtotalBest) }, // nb AOOtotalBest is allways >= 4 (so really no need to check)
+        get adefaultBest() {
+            return r.doorKnocker ?
+            r.AOO10yrBest >= 16 ? 3
+            : r.AOO10yrBest >= 4 ? 2
+            : r.AOO10yrBest >= 1 ? 1
+            : 0
             : r.AOO50yrBest >= 20 && r.AOOchangeBest > 0.2 ? 3
-            : 0 // null?
+            : r.AOO50yrBest >= 20 && r.AOOchangeBest > 0.05 ? 2
+            : r.AOO50yrBest >= 8 && r.AOOchangeBest > 0.2 ? 2
+            : r.AOO50yrBest >= 4 ? 1
+            : 0
         },
         get adefaultLow() {
-            return r.AOO50yrLow < 4 ? max(0, r.adefaultBest - 1) 
-            : r.AOO50yrLow >= 4 ? max(1, r.adefaultBest - 1) 
+            return r.doorKnocker ?
+            r.AOO10yrLow >= 16 ? 3
+            : r.AOO10yrLow >= 4 ? 2
+            : r.AOO10yrLow >= 1 ? max(1, AdefaultBest - 1)
+            : 0
+            : r.AOO50yrLow >= 20 && r.AOOchangeLow > 0.2 ? 3
+            : r.AOO50yrLow >= 20 && r.AOOchangeLow > 0.05 ? 2
             : r.AOO50yrLow >= 8 && r.AOOchangeLow > 0.2 ? 2
-            : r.AOO50yrLow >= 20 && r.AOOchangeLow > 0.05 ? 2 
-            : r.AOO50yrLow >= 20 && r.AOOchangeLow > 0.2 ? 3 
-            : 0 // null?
+            : r.AOO50yrLow >= 4 ? max(1, r.adefaultBest - 1)
+            // : r.AOO50yrLow < 4 ? max(0, r.adefaultBest - 1)
+            : 0
         },
         get adefaultHigh() {
-            return r.AOO50yrHigh < 4 ? 0
+            return r.doorKnocker ?
+            r.AOO10yrHigh >= 16 ? min(3, AdefaultBest + 1)
+            : r.AOO10yrHigh >= 4 ? min(2, AdefaultBest + 1)
+            : r.AOO10yrHigh >= 1 ? 1
+            : 0
+            : r.AOO50yrHigh >= 20 && r.AOOchangeHigh > 0.2 ?  min(3, r.adefaultBest + 1)
+            : r.AOO50yrHigh >= 20 && r.AOOchangeHigh > 0.05 ?  min(2, r.adefaultBest + 1)
+            : r.AOO50yrHigh >= 8 && r.AOOchangeHigh > 0.2 ? min(2, r.adefaultBest + 1)
             : r.AOO50yrHigh >= 4 ? 1
-            : r.AOO50yrHigh >= 8 && r.AOOchangeHigh > 0.2 ? min(2, r.adefaultBest + 1) 
-            : r.AOO50yrHigh >= 20 && r.AOOchangeHigh > 0.05 ?  min(2, r.adefaultBest + 1) 
-            : r.AOO50yrHigh >= 20 && r.AOOchangeHigh > 0.2 ?  min(3, r.adefaultBest + 1) 
-            : 0 // null?
+            // : r.AOO50yrHigh < 4 ? 0
+            : 0
         },
         get apossibleLow() {
             return (r.AOO50yrBest > 80 && r.AOOchangeBest > 1) ? 3
@@ -347,7 +358,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             : 0
         },
 
-        get apossibleHigh() { 
+        get apossibleHigh() {
             return (r.AOO50yrBest < 4) ? 1
             : (r.AOO50yrBest < 20 & r.AOOchangeBest <= 0.05) ? 2
             : 3
@@ -355,17 +366,17 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         get ascore() {
             const k = r.ametodkey
             // console.log("ascore method: " + k)
-            return k.startsWith("A1") ? r.adefaultBest 
+            return k.startsWith("A1") ? r.adefaultBest
             : r.medianLifetime >= 650 ? 3
             : r.medianLifetime >= 60 ? 2
-            : r.medianLifetime >= 10 ? 1 
+            : r.medianLifetime >= 10 ? 1
             : r.medianLifetime < 10 ? 0
             : 0
         },
         get alow() {
             const k = r.ametodkey
-            // return k.startsWith("A1") ? r.adefaultLow 
-            return (k === "A1a1" || k === "A1b1") ? r.adefaultLow 
+            // return k.startsWith("A1") ? r.adefaultLow
+            return (k === "A1a1" || k === "A1b1") ? r.adefaultLow
             : (k === "A2" || k === "A1a2" || k === "A1b2") ?
                 criterionLow(getCriterion(riskAssessment, 0, "A"))
             : k === "A3" ?
@@ -377,7 +388,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             : 0 // 1 / NaN?
         },
         get ahigh() {
-            const k = r.ametodkey 
+            const k = r.ametodkey
             return k.startsWith("A1") ? r.adefaultHigh
             : k === "A2" ?
                 criterionHigh(getCriterion(riskAssessment, 0, "A"))
@@ -401,7 +412,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         get medianLifetime() {
             const k = r.ametodkey
             console.log("medianLifetime methodkey: " + k)
-            const result = k.startsWith("A1") ? 
+            const result = k.startsWith("A1") ?
                 r.ascore === 0 ? 3
                 : r.ascore === 1 ? 25
                 : r.ascore === 2 ? 200
@@ -418,16 +429,16 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             return roundToSignificantDecimals(r.lifetimeUpperQInput)
         },
         get lifetimeText() {
-            return r.adefaultBest === 0 ? "under 10 år" 
-            : r.adefaultBest == 1 ? "mellom 10 år og 60 år" 
-            : r.adefaultBest == 2 ? "mellom 60 år og 650 år" 
-            : r.adefaultBest == 3 ? "over 650 år" 
+            return r.adefaultBest === 0 ? "under 10 år"
+            : r.adefaultBest == 1 ? "mellom 10 år og 60 år"
+            : r.adefaultBest == 2 ? "mellom 60 år og 650 år"
+            : r.adefaultBest == 3 ? "over 650 år"
             : "%%%%%"
         },
         get extinctionText() {
-            return r.adefaultBest === 0 ? "over 97%" 
-            : r.adefaultBest == 1 ? "mellom 43 og 97" 
-            : r.adefaultBest == 2 ? "mellom 60 år og 650 år" 
+            return r.adefaultBest === 0 ? "over 97%"
+            : r.adefaultBest == 1 ? "mellom 43 og 97"
+            : r.adefaultBest == 2 ? "mellom 60 år og 650 år"
             : r.adefaultBest == 3 ? "under 5%"
             : "%%#%%"
         },
@@ -454,7 +465,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 
         get blow() {
             const k = r.bmetodkey
-            return k === "B2a" ? 
+            return k === "B2a" ?
                 criterionLow(getCriterion(riskAssessment, 0, "B"))
             : r.expansionLowerQ >= 500 ? 3
             : r.expansionLowerQ >= 160 ? 2
@@ -465,11 +476,11 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 
         get bhigh() {
             const k = r.bmetodkey
-            return k === "B2a" ? 
+            return k === "B2a" ?
                 criterionHigh(getCriterion(riskAssessment, 0, "B"))
-            : r.expansionUpperQ >= 500 ? min(3, r.bscore + 1) 
-            : r.expansionUpperQ >= 160 ? min(2, r.bscore + 1) 
-            : r.expansionUpperQ >= 50 ? 1 
+            : r.expansionUpperQ >= 500 ? min(3, r.bscore + 1)
+            : r.expansionUpperQ >= 160 ? min(2, r.bscore + 1)
+            : r.expansionUpperQ >= 50 ? 1
             : r.expansionUpperQ < 50 ? 0
             : 1 // ?
         },
@@ -483,9 +494,9 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
         get expansionSpeed() {
             const k = r.bmetodkey
-            const result = 
+            const result =
                 k === "B1" ? r.expansionSpeedInput
-                : k === "B2a" ? r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null ? 0 : trunc(sqrt(r.AOOdarkfigureBest) * 1000 * (sqrt(r.AOO2) - sqrt(r.AOO1)) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi))) 
+                : k === "B2a" ? r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null ? 0 : trunc(sqrt(r.AOOdarkfigureBest) * 1000 * (sqrt(r.AOO2) - sqrt(r.AOO1)) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
                 : k === "B2b" ? round(200 * (sqrt(r.AOO10yrBest / 4) - 1) / sqrt(pi))
                 : 0 // ?
             console.log("#expspeed: " + k + " " + result)
@@ -502,23 +513,23 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
         get expansionLowerQ() {
             const k = r.bmetodkey
-            const result = 
+            const result =
                 k === "B1" ? r.expansionLowerQInput
-                : k === "B2b" ? round(200 * (sqrt(r.AOO10yrLow / 4) - 1) / sqrt(pi)) 
+                : k === "B2b" ? round(200 * (sqrt(r.AOO10yrLow / 4) - 1) / sqrt(pi))
                 : 0 // ?
             return roundToSignificantDecimals(result)
         },
         get expansionUpperQ() {
             const k = r.bmetodkey
-            const result = 
+            const result =
                 k === "B1" ? r.expansionUpperQInput
-                : k === "B2b" ? round(200 * (sqrt(r.AOO10yrHigh / 4) - 1) / sqrt(pi)) 
+                : k === "B2b" ? round(200 * (sqrt(r.AOO10yrHigh / 4) - 1) / sqrt(pi))
                 : 0 // ?
             return roundToSignificantDecimals(result)
         },
-        get AOOdarkfigureBest() {            
-            const result = 
-                r.AOOknown === null || r.AOOknown === 0 ? 0 
+        get AOOdarkfigureBest() {
+            const result =
+                r.AOOknown === null || r.AOOknown === 0 ? 0
                 : roundToSignificantDecimals2(r.AOOtotalBest / r.AOOknown )
             return result
         },
@@ -530,9 +541,9 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
         get expansionText() {
             return r.bscore === 0 ? "under 50 m/år"
-                : r.bscore === 1 ? "mellom 50 m/år og 160 m/år"  
-                : r.bscore === 2 ? "mellom 160 m/år og 500 m/år" 
-                : r.bscore === 3 ? "over 500 m/år" 
+                : r.bscore === 1 ? "mellom 50 m/år og 160 m/år"
+                : r.bscore === 2 ? "mellom 160 m/år og 500 m/år"
+                : r.bscore === 3 ? "over 500 m/år"
                 : null
         }
 
@@ -546,7 +557,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 
 
     })
-        
+
 
     autorun(() => {
         if (r.AOOtotalBest === 0) {
@@ -620,7 +631,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             r.removeError("A3err1")
         }
     })
-        
+
     autorun(() => {
         if (r.LifetimeUpperQ <= r.medianLifetime) {
             r.addError("A3err2", "Levetidens nedre kvartil må være mindre enn medianen.")
@@ -628,7 +639,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             r.removeError("A3err2")
         }
     })
-        
+
     autorun(() => {
         if (r.expansionLowerQ > r.expansionSpeed) {
             r.addError("B1err1", "Ekspansjonshastighetens nedre kvartil må være mindre enn medianen.")
@@ -636,7 +647,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             r.removeError("B1err1")
         }
     })
-        
+
     autorun(() => {
         if (r.expansionUpperQ <= r.expansionSpeed) {
             r.addError("B1err2", "Ekspansjonshastighetens øvre kvartil må være større enn medianen.")
@@ -648,7 +659,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
     // const ec = observable({
     //     warnings: [],
     // })
-    
+
     const ACriteriaSectionNames = [
         "LifespanA1aSimplifiedEstimate", // changed from  "SpreadPVAAnalysisEstimatedSpeciesLongevity" 11.07.21
         "SpreadRscriptEstimatedSpeciesLongevity",
@@ -696,7 +707,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         get RedListCategoryLevel() {  //todo: should this be called "ViableAnalysisLevel"?
             const catstr = riskAssessment.redListCategory || ""
             const cat = catstr.trim().substring(0, 2).toUpperCase()
-            const result = cat === "CR" ? 1 :  
+            const result = cat === "CR" ? 1 :
                             cat === "EN" ? 11 :
                             cat === "VU" ? 61 :
                             cat === "NT" ? 651 :
@@ -711,7 +722,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
           console.log("Autorun criterionA old value: " + criterionA.value)
         // const nv = riskAssessment.CalculatedCritALevel // .ChosenSpreadYearlyIncreaseLevel
         //   console.log("Autorun criterionA CalculatedCritALevel nv: " + JSON.stringify(nv))
-        const avalue = r.ascore 
+        const avalue = r.ascore
         runInAction(() => {
             criterionA.value = avalue
         })
@@ -722,7 +733,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
     autorun(() => {
         const criterionB = getCriterion(riskAssessment, 0, "B")
         console.log("Autorun criterionB old value: " + criterionB.value)
-        const bvalue = r.bscore 
+        const bvalue = r.bscore
         runInAction(() => {
             criterionB.value = bvalue
         })
@@ -754,7 +765,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         })
     });
     autorun(() => {
-        // const a = 5.77 // t*d*: use real value from vurdering.CurrentExistenceAreaCalculated 
+        // const a = 5.77 // t*d*: use real value from vurdering.CurrentExistenceAreaCalculated
         const a =  riskAssessment.vurderingCurrentExistenceAreaCalculated
         const wStr = riskAssessment.SpreadYearlyIncreaseEstimate
         const w = extractFloat(wStr)
@@ -817,7 +828,7 @@ function enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering,
         get effectOnThreathenedNaturetypesLevel() {
             const levels = vurdering.redlistedNatureTypes.map(
                 nt => nt.affectedArea
-            ).map(area => 
+            ).map(area =>
                 area === "0"? 0 :
                 area === "0–2"? 1 :
                 area === "2-5"? 2 :
@@ -838,7 +849,7 @@ function enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering,
         // }
     })
     // const rllevel = (rntlevels, redlistcats) => {
-    //     const levels = rntlevels.filter(rnt => redlistcats.indexOf(rnt.cat) > -1).map(rnt => rnt.area).map(area => 
+    //     const levels = rntlevels.filter(rnt => redlistcats.indexOf(rnt.cat) > -1).map(rnt => rnt.area).map(area =>
     //         area === "0"? 0 :
     //         area === "0–2"? 1 :
     //         area === "2-5"? 2 :
@@ -850,7 +861,7 @@ function enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering,
     //     )
     //     const maxlevel = Math.max(...levels, 0)
     //     return maxlevel
-    // } 
+    // }
     // extendObservable(riskAssessment, {
     //     // effectOnThreathenedNaturetypesLevel: () => {
     //     //     const threatenedlevels = ["CR","EN","VU","Sjelden"]
@@ -879,7 +890,7 @@ export const critILevel = list => {
                 (rlThreatCats.indexOf(item.redListCategory) > -1 && item.parasiteNewForHost && !item.effectLocalScale) ||
                 (rlCats.indexOf(item.redListCategory) > -1 && item.keyStoneSpecie && item.parasiteNewForHost && !item.effectLocalScale)
             )
-            const list3 = list.filter(item => 
+            const list3 = list.filter(item =>
                 !item.parasiteIsAlien &&
                 (
                     (rlThreatCats.indexOf(item.redListCategory) > -1 && item.parasiteNewForHost && item.effectLocalScale) ||
@@ -887,7 +898,7 @@ export const critILevel = list => {
                     (rlCats.indexOf(item.redListCategory) > -1 && !item.keyStoneSpecie && item.parasiteNewForHost && !item.effectLocalScale)
                 )
             )
-            const list2 = list.filter(item => 
+            const list2 = list.filter(item =>
                 !item.parasiteIsAlien &&
                 (
                     (rlCats.indexOf(item.redListCategory) > -1 && !item.keyStoneSpecie && item.parasiteNewForHost && item.effectLocalScale) ||
@@ -931,28 +942,28 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
             const otherRlCats = ["LC","DD","NT"]
             const isThreatened = cat => threatenedCats.indexOf(cat) > -1
             const isOther = cat => otherRlCats.indexOf(cat) > -1
-            
+
             const fullSpeciesList = riskAssessment.speciesSpeciesInteractions
-            const speciesList = fullSpeciesList.filter(item => 
+            const speciesList = fullSpeciesList.filter(item =>
                 isThreatened(item.redListCategory) ||
                 (isOther(item.redListCategory) && item.keyStoneSpecie))
 
-            const speciesNaturtypeList = riskAssessment.speciesNaturetypeInteractions.filter(item => 
+            const speciesNaturtypeList = riskAssessment.speciesNaturetypeInteractions.filter(item =>
                 item.keyStoneSpecie)
             const list = [].concat(speciesNaturtypeList).concat(speciesList)
             // console.log("runD nat:" + speciesNaturtypeList.length)
             // console.log("runD spec:" + speciesList.length)
             // console.log("runD:" + list.length)
-            const result = list.filter(item => 
-                    (item.effect === "Displacement") || 
-                    (item.effect === "Moderate" && !item.effectLocalScale)).length > 0 ? 
+            const result = list.filter(item =>
+                    (item.effect === "Displacement") ||
+                    (item.effect === "Moderate" && !item.effectLocalScale)).length > 0 ?
                 4 :
-                list.filter(item => 
-                    (item.effect === "Moderate" && item.effectLocalScale) || 
-                    (item.effect === "Weak" && !item.effectLocalScale) ).length > 0 ? 
+                list.filter(item =>
+                    (item.effect === "Moderate" && item.effectLocalScale) ||
+                    (item.effect === "Weak" && !item.effectLocalScale) ).length > 0 ?
                 3 :
-                list.filter(item => 
-                    (item.effect === "Weak" && item.effectLocalScale) ).length > 0 ? 
+                list.filter(item =>
+                    (item.effect === "Weak" && item.effectLocalScale) ).length > 0 ?
                 2 :
                 1
             return result - 1;
@@ -972,24 +983,24 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
             // console.log("runE:" + list.length)
 
             // console.log("runE:" + list.length)
-            const result = list.filter(item => 
+            const result = list.filter(item =>
                     item.effect === "Displacement" && !item.effectLocalScale).length > 0 ?
 
                     // (item.effect === "Displacement") ||
                     // // (item.effect === "Displacement" && item.keyStoneSpecie) ||
                     // (item.effect === "Displacement" && !item.keyStoneSpecie && !item.effectLocalScale) ||
-                    // (item.effect === "Moderate" && item.keyStoneSpecie && !item.effectLocalScale)).length > 0 ? 
+                    // (item.effect === "Moderate" && item.keyStoneSpecie && !item.effectLocalScale)).length > 0 ?
                 4 :
                 list.filter(item =>
                     item.effect === "Displacement" && item.effectLocalScale).length > 0 ?
                     // (item.effect === "Displacement" && !item.keyStoneSpecie && item.effectLocalScale) ||
                     // (item.effect === "Moderate" && item.keyStoneSpecie && item.effectLocalScale) ||
-                    // (item.effect === "Weak" && item.keyStoneSpecie && !item.effectLocalScale)).length > 0 ? 
+                    // (item.effect === "Weak" && item.keyStoneSpecie && !item.effectLocalScale)).length > 0 ?
                 3 :
-                list.filter(item => 
+                list.filter(item =>
                     item.effect === "Moderate" && !item.effectLocalScale).length > 0 ?
                     // (item.effect === "Moderate" && !item.keyStoneSpecie && !item.effectLocalScale) ||
-                    // (item.effect === "Weak" && item.keyStoneSpecie && item.effectLocalScale)).length > 0 ? 
+                    // (item.effect === "Weak" && item.keyStoneSpecie && item.effectLocalScale)).length > 0 ?
                 2 :
                 1
             return result - 1;
@@ -1027,18 +1038,18 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
             const rlCats = ["LC","DD","NT"]
             const rlThreatCats = ["VU","EN","CR"]
             const list = riskAssessment.geneticTransferDocumented
-            const result = list.filter(item => 
-                    !item.effectLocalScale && 
+            const result = list.filter(item =>
+                    !item.effectLocalScale &&
                         (item.keyStoneSpecie ||
-                        (rlThreatCats.indexOf(item.redListCategory) > -1))).length > 0 ? 
+                        (rlThreatCats.indexOf(item.redListCategory) > -1))).length > 0 ?
                 4 :
                 list.filter(item =>
                     (!item.effectLocalScale && !item.keyStoneSpecie && (rlCats.indexOf(item.redListCategory) > -1)) ||
                     (item.effectLocalScale && (rlThreatCats.indexOf(item.redListCategory) > -1)) ||
-                    (item.effectLocalScale && item.keyStoneSpecie && (rlCats.indexOf(item.redListCategory) > -1))).length > 0 ? 
+                    (item.effectLocalScale && item.keyStoneSpecie && (rlCats.indexOf(item.redListCategory) > -1))).length > 0 ?
                 3 :
-                list.filter(item => 
-                    (item.effectLocalScale && !item.keyStoneSpecie && (rlCats.indexOf(item.redListCategory) > -1))).length > 0 ? 
+                list.filter(item =>
+                    (item.effectLocalScale && !item.keyStoneSpecie && (rlCats.indexOf(item.redListCategory) > -1))).length > 0 ?
                 2 :
                 1
             return result - 1;
@@ -1134,7 +1145,7 @@ function enhanceCriteriaAddLabelsAndAuto(riskAssessment, codes) {
 
     for (const cr of codes.Criterion) {
         const crit = {}
-        const levs = []        
+        const levs = []
         const letter = cr.Value
 
         console.log("Crit>: " + letter)
@@ -1155,14 +1166,14 @@ function enhanceCriteriaAddLabelsAndAuto(riskAssessment, codes) {
         Object.assign(criteria, crit)
 
         // extendObservable(criteria, {currentValueLabel: computed(function() {
-        //     const v = criteria.value 
+        //     const v = criteria.value
         //     const result = criteria.codes[v]
         //     console.log("Curr crit value: " + criteria.criteriaLetter+ v+result)
         //     return result
         // })})
         extendObservable(criteria, {
             get currentValueLabel() {
-                const v = this.value 
+                const v = this.value
                 const result = this.codes[v].text
                 console.log("Curr crit value: " + this.criteriaLetter+ v + result)
                 return result
@@ -1178,7 +1189,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
     //     // yearlyIncreaseLevel
     //     const maxDistanecFromValue = 1
 
-    //     const valuenum =  extractFloat(riskAssessment[baseAttributeName])        
+    //     const valuenum =  extractFloat(riskAssessment[baseAttributeName])
     //     const value =  levelfunc(valuenum)
 
     //     // const lowstr = riskAssessment[baseAttributeName + "LowerQuartile"]
@@ -1205,7 +1216,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
 
     // }
 
-    for(const crit of riskAssessment.criteria) { 
+    for(const crit of riskAssessment.criteria) {
         let firstrun = true
         extendObservable(crit, {
             uncertaintyDisabled: observable([]),
@@ -1217,20 +1228,20 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
             console.log("uncarr crit value: " + value)
             let ud
             let uv
-            // if (crit.criteriaLetter === "A" && 
-            //         riskAssessment.chosenSpreadMedanLifespan === 'LifespanA1aSimplifiedEstimate' 
+            // if (crit.criteriaLetter === "A" &&
+            //         riskAssessment.chosenSpreadMedanLifespan === 'LifespanA1aSimplifiedEstimate'
             // ) {
             //     const ulevels = uncertaintylevelsFor(riskAssessment.chosenSpreadMedanLifespan, medianLifespanLevel)
             //     uv = ulevels
             //     ud = [0,1,2,3]
-            // } else if (crit.criteriaLetter === "B" && 
-            //         (riskAssessment.chosenSpreadYearlyIncrease === 'SpreadYearlyIncreaseOccurrenceArea' || 
+            // } else if (crit.criteriaLetter === "B" &&
+            //         (riskAssessment.chosenSpreadYearlyIncrease === 'SpreadYearlyIncreaseOccurrenceArea' ||
             //         riskAssessment.chosenSpreadYearlyIncrease === 'SpreadYearlyIncreaseObservations')
             // ) {
             //     const ulevels = uncertaintylevelsFor(riskAssessment.chosenSpreadYearlyIncrease, yearlyIncreaseLevel)
             //     uv = ulevels
             //     ud = [0,1,2,3]
-            if (crit.criteriaLetter === "A" && 
+            if (crit.criteriaLetter === "A" &&
                 (riskAssessment.ametodkey === "A1a1" || riskAssessment.ametodkey === "A1b1")) {
                 ud = [0,1,2,3]
                 uv = [value]
@@ -1241,13 +1252,13 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                 ud = riskAssessment.bDisabledUncertaintyValues
                 uv = [value]
 
-            } else {    
-    
+            } else {
+
                     ud = []
                 for (let n = 0; n < 4 ; n++) {
                     if (Math.abs(n - value) > maxDistanecFromValue || n === value) {
                         ud.push(n)
-                    } 
+                    }
                 }
                 uv = [value]
 
@@ -1257,11 +1268,11 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                         // The first run is done during page load
                         // We want to keep the saved uncertainty values!
                         // Successive calls should automatically set uncertainty when value changes
-                        // NB! Careless changes to the application may cause this code to run multiple times during page load 
+                        // NB! Careless changes to the application may cause this code to run multiple times during page load
                         // Take care this does not happen! (uncomment the trace() function to trace the problem if necassary)
 
                         console.log("#uncertainty nextrun: " + crit.criteriaLetter + " : " + crit.value)
-                        
+
                         crit.uncertaintyValues.replace(uv)
                     } else {
                         // added 27.2.2017
@@ -1287,7 +1298,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
 }
 
 function enhanceCriteriaAddErrorReportingForAutoMode(riskAssessment) {
-    for(const crit of riskAssessment.criteria) { 
+    for(const crit of riskAssessment.criteria) {
         extendObservable(crit, errorhandler)
     }
 }
