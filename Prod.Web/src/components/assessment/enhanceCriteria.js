@@ -15,24 +15,24 @@ function roundToSignificantDecimals(num) {
     // console.log("run roundToSignificantDecimals")
     if (num === null) return 0;
     const result =
-        (num >= 9950000) ? round(num / 1000000) * 1000000 :
-        (num >= 995000 ) ? round(num / 100000)  * 100000  :
-        (num >= 99500  ) ? round(num / 10000)   * 10000   :
-        (num >= 9950   ) ? round(num / 1000)    * 1000    :
-        (num >= 995    ) ? round(num / 100)     * 100     :
-        (num >= 100    ) ? round(num / 10)      * 10      :
+        (num >= 10000000) ? round(num / 1000000) * 1000000 :
+        (num >= 1000000 ) ? round(num / 100000)  * 100000  :
+        (num >= 100000  ) ? round(num / 10000)   * 10000   :
+        (num >= 10000   ) ? round(num / 1000)    * 1000    :
+        (num >= 1000    ) ? round(num / 100)     * 100     :
+        (num >= 100     ) ? round(num / 10)      * 10      :
         num
     return result
 }
 function roundToSignificantDecimals2(num) {   // todo: spør om grenseverdiene (100 vs 99.5, og 2(?))
     if (num === null) return 0;
     const result =
-        // (num >= 9950000) ? round(num / 1000000) * 1000000 :
-        // (num >= 995000 ) ? round(num / 100000)  * 100000  :
-        // (num >= 99500  ) ? round(num / 10000)   * 10000   :
-        // (num >= 9950   ) ? round(num / 1000)    * 1000    :
-        // (num >= 995    ) ? round(num / 100)     * 100     :
-        // (num >= 100    ) ? round(num / 10)      * 10      :
+        // (num >= 10000000) ? round(num / 1000000) * 1000000 :
+        // (num >= 1000000 ) ? round(num / 100000)  * 100000  :
+        // (num >= 100000  ) ? round(num / 10000)   * 10000   :
+        // (num >= 10000   ) ? round(num / 1000)    * 1000    :
+        // (num >= 1000    ) ? round(num / 100)     * 100     :
+        // (num >= 100     ) ? round(num / 10)      * 10      :
         (num >= 99.5    ) ? round(num / 10)      * 10      :
         (num >= 9.95    ) ? round(num / 1)       * 1      :
         (num >= 2    ) ? round(num / 0.1)      * 0.1      :
