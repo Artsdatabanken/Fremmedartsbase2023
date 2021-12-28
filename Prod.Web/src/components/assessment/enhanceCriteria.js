@@ -352,15 +352,23 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             : 0
         },
         get apossibleLow() {
-            return (r.AOO50yrBest > 80 && r.AOOchangeBest > 1) ? 3
-            : (r.AOO50yrBest >= 20 & r.AOOchangeBest > 0.2) ? 2
+            return r.doorKnocker ?
+            r.AOO10yrBest >= 84 ? 3 
+            : r.AOO10yrBest >= 20 ? 2
+            : r.AOO10yrBest >= 4 ? 1
+            : 0
+            : (r.AOO50yrBest > 80 && r.AOOchangeBest > 1) ? 3
+            : (r.AOO50yrBest >= 20 && r.AOOchangeBest > 0.2) ? 2
             : (r.AOO50yrBest >= 4) ? 1
             : 0
         },
 
         get apossibleHigh() {
-            return (r.AOO50yrBest < 4) ? 1
-            : (r.AOO50yrBest < 20 & r.AOOchangeBest <= 0.05) ? 2
+            return r.doorKnocker ?
+            r.AOO10yrBest < 4 ? 0 
+            : 3
+            : (r.AOO50yrBest < 20 && r.AOOchangeBest <= 0.05) ? 2  // todo: check! is this right?
+            : (r.AOO50yrBest < 4) ? 1 // todo: check! is this right?
             : 3
         },
         get ascore() {
