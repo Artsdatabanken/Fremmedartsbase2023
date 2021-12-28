@@ -8030,8 +8030,15 @@
                         },
                         {
                             "Id": null,
-                            "Value": "assessmentBackground",
+                            "Value": "assessmentBackgroundTable",
                             "Text": "Vurderings-grunnlag",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "assessmentBackground",
+                            "Text": "Vurderingsgrunnlag",
                             "Info": null,
                             "Children": null
                         },

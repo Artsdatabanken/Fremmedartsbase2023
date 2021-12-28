@@ -321,7 +321,7 @@ export default class NaturtypeTable extends React.Component {
                     <th>{ntLabels.colonizedArea}</th>
                     <th>{ntLabels.stateChange}</th>
                     <th>{ntLabels.affectedArea}</th>
-                    <th>{ntLabels.assessmentBackground}</th>
+                    <th>{ntLabels.assessmentBackgroundTable}</th>
                     <th>&nbsp;</th>
                     <th>&nbsp;</th>
                 </tr>

@@ -156,7 +156,8 @@ export default class NaturetypeModal extends React.Component {
                             observableValue={[this.editNaturtype, 'affectedArea']}
                             codes={koder.affectedArea}
                             forceSync
-                            observableDisabled={hsc[hscprop] || [this, "hasStateChange"]}/>
+                            //observableDisabled={hsc[hscprop] || [this, "hasStateChange"]}
+                            />
                         }
 
                        {!livsmedium && <Xcomp.MultiselectArray
