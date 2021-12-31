@@ -29,13 +29,13 @@ export default class HistorikkTabell extends React.Component {
                     </tr>
                 </thead>
                 <tbody>
-                    {HistorikkTabell.renderRows(list, fabModel, taxonId, scientificNameId)}
+                    {HistorikkTabell.renderRows(list, fabModel, taxonId, scientificNameId, vurdering)}
                 </tbody>
             </table>
         )
     }
 
-    static renderRows(list, fabModel, taxonId, scientificNameId) {
+    static renderRows(list, fabModel, taxonId, scientificNameId, vurdering) {
         const rows = []
         list.forEach((sh) => {
             //console.log(sh)
@@ -53,7 +53,8 @@ export default class HistorikkTabell extends React.Component {
                     detaljer={sh}
                     fabModel={fabModel}
                     taxonId={taxonId}
-                    scientificNameId={scientificNameId} />)
+                    scientificNameId={scientificNameId}
+                    assessment={vurdering} />)
         })
         return rows
     }

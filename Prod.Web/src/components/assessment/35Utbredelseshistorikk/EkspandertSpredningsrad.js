@@ -12,10 +12,10 @@ export default class EkspandertSpredningsrad extends React.Component {
     @observable visArtskart = false
 
     render() {
-        const {detaljer, fabModel} = this.props
+        const {detaljer, fabModel, assessment} = this.props
         // const labels = fabModel.kodeLabels.DistributionHistory
         // const detaljer = this.props.detaljer
-        const artskartModel = fabModel.artskartModel
+        const artskartModel = assessment.artskartModel
         return (
             <tr
                 className="table-active"
@@ -45,7 +45,8 @@ export default class EkspandertSpredningsrad extends React.Component {
                         </tbody>
                     </table>
                                 </td> */}
-                {this.visArtskart && <Artskart
+                {this.visArtskart && 
+                <Artskart
                     fabModel={this.props.fabModel}
                     onSave={(resultat) => this.handleSave(resultat)}
                     onCancel={() => this.handleCancel()}
@@ -74,15 +75,15 @@ export default class EkspandertSpredningsrad extends React.Component {
         detaljer.speciesCount = artskartRespons.speciesCount
         detaljer.spreadArea = artskartRespons.spreadArea
         detaljer.regions = artskartModel.mapRegionalPresenceFromArtskart(artskartRespons.regionalPresence)
-        detaljer.regionsAssumed = detaljer.Regions
-        detaljer.regionalPresenceKnown = artskartModel.enhanceRegionalPresence(detaljer.Regions)
-        detaljer.regionalPresenceAssumed = artskartModel.enhanceRegionalPresence(detaljer.RegionsAssumed)
+        detaljer.regionsAssumed = detaljer.regions
+        detaljer.regionalPresenceKnown = artskartModel.enhanceRegionalPresence(detaljer.regions)
+        detaljer.regionalPresenceAssumed = artskartModel.enhanceRegionalPresence(detaljer.regionsAssumed)
     }
 }
 
 @observer export class EkspandertSpredningsradDetaljer extends React.Component {
     render() {
-        const {fabModel, detaljer} = this.props
+        const {fabModel, detaljer, assessment} = this.props
         const labels = fabModel.codeLabels.DistributionHistory
         return (
            
@@ -95,8 +96,28 @@ export default class EkspandertSpredningsrad extends React.Component {
                         <td> {detaljer.existenceArea}</td>
                         <td> {detaljer.spreadArea}</td>
                         <td> {detaljer.comment}</td>
-                        <td>
-                            {/* <Fylkesliste
+                        <td><Spredningskart
+                                                map={this.props.fabModel.evaluationContexts.map}
+                                                showLegend
+                                                fabModel={fabModel}
+                                                states={[
+                                                {
+                                                    key: 'none',
+                                                    title: labels.distributionNone
+                                                }, {
+                                                    key: 'known',
+                                                    title: labels.distributionKnown,
+                                                    values: detaljer.regionalPresenceKnown
+                                                }, {
+                                                    key: 'assumed',
+                                                    title: labels.distributionAssumed,
+                                                    values: detaljer.regionalPresenceAssumed
+                                                }
+                                            ]}
+                                            countyListLand={this.props.fabModel.koder.countyListLand}
+                                               /></td>
+                        {/*<td>
+                             <Fylkesliste
                                     countyLabel={labels.distributionCounty}
                                         columns={[
                                                 {
@@ -107,14 +128,16 @@ export default class EkspandertSpredningsrad extends React.Component {
                                                     values: detaljer.regionalPresenceAssumed
                                                 }
                                             ]}
-                                               // rows={fabModel
-                                               // .artskartModel
-                                               // .regionListe()}
-                                        />*/}
-                        </td>
+                                          rows={
+                                                //fabModel
+                                               assessment
+                                               .artskartModel
+                                           .regionListe()} 
+                                        />
+                        </td>*/}
                         <td>&nbsp;</td>
-                    </>   
-                       /* <td
+                      
+                       {/* <td
                             style={{
                             width: "33%"
                         }}>
@@ -262,13 +285,14 @@ export default class EkspandertSpredningsrad extends React.Component {
                                                     values: detaljer.regionalPresenceAssumed
                                                 }
                                             ]}
-                                                countyListLand={this.props.fabModel.artskartModel.koder.countyListLand}/>}
+                                               // countyListLand={this.props.fabModel.artskartModel.koder.countyListLand}
+                                               />}
                                         </td>
                                         <td
                                             style={{
                                             width: "40%"
                                         }}>
-                                            <Fylkesliste
+                                           {/* <Fylkesliste
                                             countyLabel={labels.distributionCounty}
                                                 columns={[
                                                 {
@@ -282,14 +306,14 @@ export default class EkspandertSpredningsrad extends React.Component {
                                                // rows={fabModel
                                                // .artskartModel
                                                // .regionListe()}
-                                               />
+                                        /> 
                                                </td>
                                     </tr>
                                 </tbody >
                             </table>
                         </td>
-                    </tr>
-                    <tr>
+                    
+                    
                         <td
                             colSpan="4"
                             style={{
@@ -298,7 +322,9 @@ export default class EkspandertSpredningsrad extends React.Component {
                             <Button
                                 onClick={() => this.copyToCurrentAndPotential(detaljer)}
                                 bsStyle="primary">⇓ {labels.expandCopyTo} ⇓</Button>
-                        </td>*/
+                        </td>*/}
+
+                </>
                     
                
         )
