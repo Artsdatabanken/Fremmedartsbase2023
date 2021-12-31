@@ -149,7 +149,7 @@ checkStatus = (production) => {
                             <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/>                             
                            }
                             <Xcomp.Radio value={"Connected"} observableValue={[assessment, "connected"]} label={labels.SpeciesStatus.assessedWithAnotherTaxon}/>
-                            {assessment.riskAssessment.connected == "Connected" && 
+                            {assessment.connected == "Connected" && 
                                <div style={{marginLeft: '20px'}}> <p style={{marginLeft: '30px', marginBottom: '10px'}}>{labels.SpeciesStatus.enterTaxonName}</p>
                                 <Xcomp.String observableValue={[assessment, 'connectedTaxon1']} className="connectedTaxon" placeholder={labels.General.searchSpecies} /> 
                                 
@@ -196,7 +196,7 @@ checkStatus = (production) => {
                             }
                             
                             <Xcomp.Radio value={"Shared"} observableValue={[assessment, "connected"]} label={labels.SpeciesStatus.notAssessedButShared} />
-                            {assessment.riskAssessment.connected == "Shared" && 
+                            {assessment.connected == "Shared" && 
                                 <div style={{marginLeft: '20px'}}><p style={{marginLeft: '30px', marginBottom: '10px'}}>{labels.SpeciesStatus.enterTaxonName}</p>
                                 <Xcomp.String observableValue={[assessment, 'connectedTaxon2']} className="connectedTaxon" placeholder={labels.General.searchSpecies} /> 
                                 
