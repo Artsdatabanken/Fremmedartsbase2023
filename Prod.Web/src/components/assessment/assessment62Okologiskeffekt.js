@@ -27,10 +27,9 @@ const kodeTekst = (koder, verdi) => koder.filter(item => item.Value === verdi).m
 export default class Assessment62Okologiskeffekt extends React.Component {
     constructor(props) {
         super(props)
-        const {appState:{assessment:{riskAssessment}}, appState, evaluationContext} = this.props;
+        const {appState:{assessment}, appState:{assessment:{riskAssessment}}, appState, evaluationContext} = this.props;
         const labels = appState.codeLabels
         const koder = appState.koder
-
         extendObservable(this, {
             // showModal: false,
             newSSITS: {
@@ -107,14 +106,20 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                 // // // // NiNCode: riskAssessment.vurderingAllImpactedNatureTypes.length > 0
                 // // // //     ? riskAssessment.vurderingAllImpactedNatureTypes[0].NiNCode
                 // // // //     : "",
+               
                 niNVariation: [],
-                naturetypes: riskAssessment.vurderingAllImpactedNatureTypes,
+                niNCode: assessment.impactedNatureTypes.length > 0
+                        ? assessment.impactedNatureTypes[0].niNCode 
+                        : "",
+                naturetypes: [],
+               // naturetypes: riskAssessment.vurderingAllImpactedNatureTypes,
+                
                 redListCategory: "", 
                 domesticOrAbroad : "",
                 keyStoneSpecie : false, 
                 effectLocalScale : false, 
                 scale: "Limited",
-                // status: "NewAlien",
+                //status: "NewAlien",
                 effect : "Weak",
                 interactionType : "CompetitionSpace", 
                 //interactionType : [], 
@@ -128,7 +133,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
             } 
         })
 
-        this.addSSITS = () => {
+        this.addSSITS = action(() => {
             const list = riskAssessment.speciesSpeciesInteractions //ThreatenedSpecies;
             const newItem = this.newSSITS;
             const clone = toJS(newItem);
@@ -157,18 +162,19 @@ export default class Assessment62Okologiskeffekt extends React.Component {
             newItem.basisOfAssessment = []
             newItem.interactionTypes = []
             newItem.taxonSearchWaitingForResult = false
-        }
-        this.addSNITS = () => {
+        })
+        this.addSNITS = action(() => {
             const list = riskAssessment.speciesNaturetypeInteractions //ThreatenedSpecies;
             const newItem = this.newSNITS;
             const clone = toJS(newItem);
-            // console.log("Clone: " + JSON.stringify(clone))
+            console.log("Clone: " + JSON.stringify(clone))
             // clone.taxonSearchString = undefined
             // clone.taxonSearchResult = undefined
             list.push(clone)
 //            newItem.NiNCode = "",  Dropdown inneholder fortsatt samme naturtype - beholder derfor koden
+            
+           // newItem.niNCode = "",
             newItem.niNVariation.clear(),
-
             newItem.redListCategory = "" 
             newItem.keyStoneSpecie = false
             //newItem.interactionType = []
@@ -185,7 +191,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
 
             // newItem.taxonSearchResult.replace([])
             // newItem.taxonSearchWaitingForResult = false
-        }
+        })
         this.addGTD = () => {
             const list = riskAssessment.geneticTransferDocumented;
             const newItem = this.newGTD;
@@ -259,7 +265,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
     }
 
     render() {
-        const {appState:{assessment:{riskAssessment}}, appState, evaluationContext} = this.props;
+        const {appState:{assessment}, appState:{assessment:{riskAssessment}}, appState, evaluationContext} = this.props;
         // const {riskAssessment, viewModel, fabModel, evaluationContext} = this.props;
         // const labels = fabModel.kodeLabels
         const labels = appState.codeLabels
@@ -296,7 +302,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                     
                     <hr/>
                     
-                    <SpeciesNaturetypeTable list={riskAssessment.speciesNaturetypeInteractions} newItem={this.newSNITS} addNewItem={this.addSNITS}  koder={koder} labels={labels} disabled={appState.userContext.readonly} naturtypeLabels={appState.naturtypeLabels } showKeyStoneSpecie showEffect showInteractionType />
+                    <SpeciesNaturetypeTable list={riskAssessment.speciesNaturetypeInteractions} natureTypes={assessment.impactedNatureTypes} newItem={this.newSNITS} addNewItem={this.addSNITS}  koder={koder} labels={labels} disabled={appState.userContext.readonly} naturtypeLabels={appState.naturtypeLabels } showKeyStoneSpecie showEffect showInteractionType />
 
                     <hr/>
 

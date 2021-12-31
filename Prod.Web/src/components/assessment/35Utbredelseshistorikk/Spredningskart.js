@@ -62,7 +62,7 @@ export default class Spredningskart extends React.Component {
         }, {})
         return (
             <div>
-                <div style={{position:"relative", top:0, bottom:0}}
+                <div style={{position:"absolute", top:0, bottom:0}}
                     onMouseLeave={() => {
                     this.paintWithState = null
                 }}>
