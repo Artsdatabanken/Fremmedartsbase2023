@@ -167,6 +167,8 @@ namespace Prod.Domain
 
         public bool? ConnectedToAnother { get; set; }
 
+        public string Connected { get; set; }
+
         public string SpeciesStatus { get; set; }
 
         public string ConnectedTaxon1 { get; set; } = "";
