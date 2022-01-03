@@ -98,12 +98,28 @@ const Fylkesforekomst = ({ assessment, fylkesforekomster }) => {
   };
 
   const setFylkeState = (ff, state, value) => {
+    // state0 - kjent
+    // state1 - antatt i dag
+    // state2 - ingen
+    // state3 - antatt om 50 år
     switch (state) {
       case 0:
       case 1:
       case 3:
         ff[`state${state}`] = value ? 0 : 1;
         if (ff[`state${state}`] === 1 && ff.state2 === 1) ff.state2 = 0;
+
+        // state0 - set state1 & 3
+        // state1 - set state3
+        if (!value) {
+          switch (state) {
+            case 0:
+              ff.state1 = 1;
+            case 1:
+              ff.state3 = 1;
+              break;
+          }
+        }
         break;
       case 2:
         ff[`state${state}`] = value ? 0 : 1;
