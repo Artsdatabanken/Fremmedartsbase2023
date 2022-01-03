@@ -151,7 +151,7 @@ export class NaturtypeRad extends React.Component {
         console.log("NT row: " + JSON.stringify(nt))
         return(
             <tr>
-                <td>{nt.niNCode}</td>
+                <td>{isNaN(nt.niNCode) ? nt.niNCode : ""}</td>
                 {/*<td>ntlabel</td>*/}
                 <td>{nt.name ? nt.name : nt.niNCode ? findNTName(nt.niNCode) : ""}</td>
                 <td>{dominanceForrest}</td>

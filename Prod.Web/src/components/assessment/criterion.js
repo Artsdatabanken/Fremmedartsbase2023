@@ -17,7 +17,7 @@ export default class Criterion extends React.Component {
         const labels = appState.codeLabels
         const ntLabels = labels.NatureTypes
         const {id, value, uncertaintyValues, auto, codes, heading, info, uncertaintyDisabled, errors } = criterion;
-        console.log(criterion)
+        
         const letter = criterion.criteriaLetter
         //console.log(heading)
         //console.log(codes)
