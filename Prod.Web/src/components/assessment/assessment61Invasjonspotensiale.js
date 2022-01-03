@@ -174,7 +174,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                         <Xcomp.StringEnum observableValue={[riskAssessment, "acceptOrAdjustCritA"]} mode="radio" codes={koder.AcceptOrAdjust}/>   
                                          
                                             
-                        <div>
+                        <div className="adjustScore">
                             {riskAssessment.acceptOrAdjustCritA == "adjust" &&                                
                                 <Xcomp.HtmlString observableValue={[riskAssessment, 'reasonForAdjustmentCritA']} label="Begrunnelse for justering:" />
                             }
@@ -336,6 +336,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     <Criterion criterion={crit51A} 
                     appState={appState}
                     mode="noheading"
+                    disabled = {disabled || riskAssessment.acceptOrAdjustCritA == "accept"}
                     auto = {riskAssessment.chosenSpreadMedanLifespan == "ViableAnalysis" ||
                              riskAssessment.chosenSpreadMedanLifespan == "SpreadRscriptEstimatedSpeciesLongevity" ||
                              (riskAssessment.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && riskAssessment.acceptOrAdjustCritA != "adjust") 
