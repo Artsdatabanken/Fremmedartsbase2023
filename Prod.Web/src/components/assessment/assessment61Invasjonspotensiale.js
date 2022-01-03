@@ -728,7 +728,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                     }}>
                                 <Criterion criterion={crit51B} appState={appState} 
                                             //disabled={disabled} 
-                                            disabled={true}
+                                            // according to issues #318 and #319
+                                            disabled={disabled || riskAssessment.chosenSpreadYearlyIncrease == "a" || (riskAssessment.chosenSpreadYearlyIncrease == "b" && assessment.alienSpeciesCategory == "DoorKnocker")}
                                             auto={riskAssessment.chosenSpreadYearlyIncrease == "a" || assessment.alienSpeciesCategory == "DoorKnocker"} mode="noheading"/>
                             </div>
                             }
