@@ -9,12 +9,14 @@ const Region = ({
   readonly,
   onMouseDown,
   onMouseOver,
-  onMouseLeave
+  onMouseLeave,
+  disabled
 }) => {
   return (
     <g
       key={kode}
       kode={kode}
+      disabled={disabled}
       {...style}
       stateIndex={stateIndex}
       style={{ cursor: readonly ? "arrow" : "hand" }}

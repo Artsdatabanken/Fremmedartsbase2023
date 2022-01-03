@@ -41,7 +41,8 @@ const useArtskart = ({
   kriterier,
   selectionGeometry,
   artskartAdded,
-  artskartRemoved
+  artskartRemoved,
+  showWaterAreas,
 }) => {
   const [observations, setObservations] = React.useState({
     features: makeFeatures(artskartAdded, artskartRemoved)
@@ -53,11 +54,15 @@ const useArtskart = ({
     scientificNameId,
     selectionGeometry,
     kriterier,
-    observations
+    showWaterAreas,
+    observations,
   );
   const [status1] = useRestApi(urls.observations, setObservations);
   const [status2] = useRestApi(urls.areadata, setAreadata);
-  const [status3] = useRestApi(urls.countylist, setCountylist);
+  let status3;
+  if (urls.countylist) {
+    [status3] = useRestApi(urls.countylist, setCountylist);
+  }
   const status = Object.assign({}, status1, status2, status3);
 
   // console.log('useArtskart', kriterier);

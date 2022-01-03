@@ -21,9 +21,9 @@ export default class DistributionTable extends React.Component {
         const labels = appState.codeLabels.DistributionHistory
         const disabled = appState.userContext.readonly
 
-    if (assessment.horizonEstablismentPotential == 1){
+    /*if (assessment.horizonEstablismentPotential == 1){
         assessment.riskAssessment.AOOtotalBest == 1;
-    }
+    }*/
     if (assessment.alienSpeciesCategory != "DoorKnocker" && assessment.riskAssessment.AOOtotalBest == 0) {
         alert("En selvstending reproduserende art må ha et forekomstareal på minst 4 km2!")
     }
@@ -110,7 +110,7 @@ export default class DistributionTable extends React.Component {
                 <td>
                 <Xcomp.Number                            
                     observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "introductionsBest"] : [assessment.riskAssessment, "AOOdarkfigureBest"]}
-                    disabled
+                    disabled={disabled}
                     integer />   
                 </td>
                <td>

@@ -2301,6 +2301,15 @@
                   "Children": []
                 }
               ]
+            },
+            {
+              "Id": "NA L1-14",
+              "Value": "NA L1-14",
+              "Text": "Svært kalkfattig og eksponert fast strandkant-innsjøbunn",
+              "Category": "Grunntype",
+              "Collapsed": true,
+              "Area": 0,
+              "Children": []
             }
           ]
         },
@@ -2706,6 +2715,60 @@
                   "Children": []
                 }
               ]
+            },
+            {
+              "Id": "NA L2-9",
+              "Value": "NA L2-9",
+              "Text": "Kalkfattig innsjø-sedimentbunn av blokker i strandkant",
+              "Category": "Grunntype",
+              "Collapsed": true,
+              "Area": 0,
+              "Children": []
+            },
+            {
+              "Id": "NA L2-14",
+              "Value": "NA L2-14",
+              "Text": "Kalkfattig innsjø-sedimentbunn av blokker i karplantebeltet",
+              "Category": "Grunntype",
+              "Collapsed": true,
+              "Area": 0,
+              "Children": []
+            },
+            {
+              "Id": "NA L2-17",
+              "Value": "NA L2-17",
+              "Text": "Kalkrik innsjø-sedimentbunn av leire i strandkant",
+              "Category": "Grunntype",
+              "Collapsed": true,
+              "Area": 0,
+              "Children": []
+            },
+            {
+              "Id": "NA L2-22",
+              "Value": "NA L2-22",
+              "Text": "Kalkrik innsjø-sedimentbunn av leire i karplantebeltet",
+              "Category": "Grunntype",
+              "Collapsed": true,
+              "Area": 0,
+              "Children": []
+            },
+            {
+              "Id": "NA L2-25",
+              "Value": "NA L2-25",
+              "Text": "Kalkrik innsjø-sedimentbunn av blokker i strandkant",
+              "Category": "Grunntype",
+              "Collapsed": true,
+              "Area": 0,
+              "Children": []
+            },
+            {
+              "Id": "NA L2-30",
+              "Value": "NA L2-30",
+              "Text": "Kalkrik innsjø-sedimentbunn av blokker i karplantebeltet",
+              "Category": "Grunntype",
+              "Collapsed": true,
+              "Area": 0,
+              "Children": []
             }
           ]
         },
@@ -6149,6 +6212,24 @@
                   "Children": []
                 }
               ]
+            },
+            {
+              "Id": "NA O1-25",
+              "Value": "NA O1-25",
+              "Text": "Kalkfattig og svært ujevn fastbunn i klar elv med stryk",
+              "Category": "Grunntype",
+              "Collapsed": true,
+              "Area": 0,
+              "Children": []
+            },
+            {
+              "Id": "NA O1-26",
+              "Value": "NA O1-26",
+              "Text": "Kalkrik og svært ujevn fastbunn i klar elv med stryk",
+              "Category": "Grunntype",
+              "Collapsed": true,
+              "Area": 0,
+              "Children": []
             }
           ]
         },
@@ -6488,6 +6569,15 @@
                   "Children": []
                 }
               ]
+            },
+            {
+              "Id": "NA O2-17",
+              "Value": "NA O2-17",
+              "Text": "Kalkfattig steinbunn i humøs elv",
+              "Category": "Grunntype",
+              "Collapsed": true,
+              "Area": 0,
+              "Children": []
             }
           ]
         },
@@ -7825,6 +7915,51 @@
                   "Children": []
                 }
               ]
+            },
+            {
+              "Id": "NA T1-77",
+              "Value": "NA T1-77",
+              "Text": "kalkfattig lite uttørkingseksponert berg i pionerfase",
+              "Category": "Grunntype",
+              "Collapsed": true,
+              "Area": 0,
+              "Children": []
+            },
+            {
+              "Id": "NA T1-78",
+              "Value": "NA T1-78",
+              "Text": "kalkfattig uttørkingseksponert berg i pionerfase",
+              "Category": "Grunntype",
+              "Collapsed": true,
+              "Area": 0,
+              "Children": []
+            },
+            {
+              "Id": "NA T1-79",
+              "Value": "NA T1-79",
+              "Text": "intermediært til svært kalkrikt lite uttørkingseksponert berg i pionerfase",
+              "Category": "Grunntype",
+              "Collapsed": true,
+              "Area": 0,
+              "Children": []
+            },
+            {
+              "Id": "NA T1-80",
+              "Value": "NA T1-80",
+              "Text": "intermediært til svært kalkrikt uttørkingseksponert berg i pionerfase",
+              "Category": "Grunntype",
+              "Collapsed": true,
+              "Area": 0,
+              "Children": []
+            },
+            {
+              "Id": "NA T1-85",
+              "Value": "NA T1-85",
+              "Text": "fuglestein og fugleberg",
+              "Category": "Grunntype",
+              "Collapsed": true,
+              "Area": 0,
+              "Children": []
             }
           ]
         },
@@ -9781,6 +9916,33 @@
                   "Children": []
                 }
               ]
+            },
+            {
+              "Id": "NA T13-16",
+              "Value": "NA T13-16",
+              "Text": "stein- og blokkdominert rasmark med disruptivt raspreg",
+              "Category": "Grunntype",
+              "Collapsed": true,
+              "Area": 0,
+              "Children": []
+            },
+            {
+              "Id": "NA T13-17",
+              "Value": "NA T13-17",
+              "Text": "steindominert rasmark med disruptivt raspreg",
+              "Category": "Grunntype",
+              "Collapsed": true,
+              "Area": 0,
+              "Children": []
+            },
+            {
+              "Id": "NA T13-18",
+              "Value": "NA T13-18",
+              "Text": "grus- og sanddominert rasmark med disruptivt raspreg",
+              "Category": "Grunntype",
+              "Collapsed": true,
+              "Area": 0,
+              "Children": []
             }
           ]
         },
@@ -9829,6 +9991,15 @@
                   "Children": []
                 }
               ]
+            },
+            {
+              "Id": "NA T14-3",
+              "Value": "NA T14-3",
+              "Text": "deflasjonsrabbe",
+              "Category": "Grunntype",
+              "Collapsed": true,
+              "Area": 0,
+              "Children": []
             }
           ]
         },
@@ -10191,6 +10362,15 @@
                   "Children": []
                 }
               ]
+            },
+            {
+              "Id": "NA T18-4",
+              "Value": "NA T18-4",
+              "Text": "svært sterkt eksponert åpen flomfastmark",
+              "Category": "Grunntype",
+              "Collapsed": true,
+              "Area": 0,
+              "Children": []
             }
           ]
         },
@@ -10239,6 +10419,15 @@
                   "Children": []
                 }
               ]
+            },
+            {
+              "Id": "NA T19-3",
+              "Value": "NA T19-3",
+              "Text": "kalkrik oppfrysingsmark",
+              "Category": "Grunntype",
+              "Collapsed": true,
+              "Area": 0,
+              "Children": []
             }
           ]
         },
@@ -10400,6 +10589,15 @@
                   "Children": []
                 }
               ]
+            },
+            {
+              "Id": "NA T21-7",
+              "Value": "NA T21-7",
+              "Text": "deflasjonsmark",
+              "Category": "Grunntype",
+              "Collapsed": true,
+              "Area": 0,
+              "Children": []
             }
           ]
         },
@@ -10894,6 +11092,15 @@
                   "Children": []
                 }
               ]
+            },
+            {
+              "Id": "NA T27-8",
+              "Value": "NA T27-8",
+              "Text": "blokkmark i pionerfase",
+              "Category": "Grunntype",
+              "Collapsed": true,
+              "Area": 0,
+              "Children": []
             }
           ]
         },

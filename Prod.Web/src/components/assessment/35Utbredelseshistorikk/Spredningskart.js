@@ -48,7 +48,7 @@ export default class Spredningskart extends React.Component {
                 }
             }
         }
-        const {map, countyListLand, states, showLegend} = this.props
+        const {map, countyListLand, states, showLegend, fabModel} = this.props
         const fylkerArray = countyListLand.map((fylke) => {
             const active = Spredningskart.getCurrentState(fylke.Value, states)
             return {id: fylke.Value, title: `${fylke.Text}: ${active.title}`, style: active.key}
@@ -68,7 +68,7 @@ export default class Spredningskart extends React.Component {
                 }}>
                     <Fylkeskart
                         language={
-                            this.context.language === "EN" ? "NB" : this.context.language // todo: change this... ( this is done for the English language demo)
+                            !fabModel.language ? "NB" : fabModel.language // todo: change this... ( this is done for the English language demo)
                         }
                         map={map}
                         readonly={this.props.readonly}
@@ -83,9 +83,9 @@ export default class Spredningskart extends React.Component {
                         onMouseOver={(e, fylke) => this.handleMouseOver(e, fylke)}
                         fylker={fylker}/>
                 </div>
-                {showLegend &&
+                {/*showLegend &&
                   <Legend states={states} styles={styles} />
-                }
+                */}
             </div>
         )
     }
@@ -145,7 +145,7 @@ Spredningskart.contextTypes = {
 }
 
 const Legend = ({states, styles})=>
-    <div style={{position: 'absolute', display: 'inline-block', bottom: 50}}>
+    <div style={{position: 'relative', display: 'inline-block', bottom: 50}}>
         {states.map(x => <LegendItem key={x.key} title={x.title} fill={styles[x.key].normal.fill} />)}
     </div>
 

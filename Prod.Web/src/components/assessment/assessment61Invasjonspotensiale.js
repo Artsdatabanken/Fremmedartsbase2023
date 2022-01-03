@@ -78,8 +78,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
         // const labels = appState.kodeLabels
         const labels = appState.codeLabels
         const labelsArtskart = appState.codeLabels.DistributionHistory
-        labelsArtskart.goTo = '';
-        console.log('labels', labelsArtskart)
+        // console.log('labels', labelsArtskart)
         const koder = appState.koder
         const disabled = appState.userContext.readonly
         const ntLabels = labels.NatureTypes

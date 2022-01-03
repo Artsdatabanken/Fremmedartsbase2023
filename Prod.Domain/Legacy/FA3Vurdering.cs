@@ -114,8 +114,8 @@ namespace Prod.Domain.Legacy
         public string DoorKnockerDescription { get; set; } // fab: Door_Knocker_Description
         public string NotReproductiveDescription2012 { get; set; } // fab: Not_Reproductive_Description 
         public string NotReproductiveFutureDescription2012 { get; set; } // fab: Not_Reproductive_Future_Description
-        public string AssesmentNotApplicableDescription { get; set; } // fab: Assesment_Not_Applicable_Description
-
+        public string AssesmentNotApplicableDescription { get; set; } // fab: Assesment_Not_Applicable_Description        
+       
         public bool AlienSpecieUncertainIfEstablishedBefore1800 { get; set; } // lagt til: 19.10.2016 - renamed 15.11.2016
         public bool AlienSpecieUncertainAntropochor { get; set; } // lagt til: 19.10.2016
         public string AlienSpecieUncertainDescription { get; set; } // lagt til: 22.12.2016

@@ -319,6 +319,7 @@ namespace SwissKnife.Database
                     nt2.Children = new List<jsonNT>();
                     nt1.Children.Add(nt2);
                     var kartleggingsenhet = getkartleggingsenheter(ht, allekoder);
+                    var grunntyperunderkartleggingsenheter = new List<string>();
                     foreach (var ke in kartleggingsenhet)
                     {
                         var nt3 = new jsonNT();
@@ -332,6 +333,10 @@ namespace SwissKnife.Database
                         var grtyper = getgrunntypefrakartleggingsenhet(ke, allekoder);
                         foreach (var gt in grtyper)
                         {
+                            if(!grunntyperunderkartleggingsenheter.Contains(gt.Kode.Id))
+                            {
+                                grunntyperunderkartleggingsenheter.Add(gt.Kode.Id);
+                            }
                             var nt4 = new jsonNT();
                             nt4.Id = gt.Kode.Id;
                             nt4.Text = gt.Navn;
@@ -342,20 +347,19 @@ namespace SwissKnife.Database
                             nt3.Children.Add(nt4);
                         }
                     }
-                    if (kartleggingsenhet.Count() == 0)
+                    var grunntyper = getunderordnet(ht, allekoder).ToList();
+                    var grunntyperikkeunderkartleggingsenheter =
+                        grunntyper.Where(gt => !grunntyperunderkartleggingsenheter.Any(id => id == gt.Kode.Id));
+                    foreach (var gt in grunntyperikkeunderkartleggingsenheter)
                     {
-                        var grunntype = getunderordnet(ht, allekoder);
-                        foreach (var gt in grunntype)
-                        {
-                            var nt3 = new jsonNT();
-                            nt3.Id = gt.Kode.Id;
-                            nt3.Text = gt.Navn;
-                            nt3.Value = gt.Kode.Id;
-                            nt3.Category = "Grunntype";
-                            nt3.Collapsed = true;
-                            nt3.Children = new List<jsonNT>();
-                            nt2.Children.Add(nt3);
-                        }
+                        var nt3 = new jsonNT();
+                        nt3.Id = gt.Kode.Id;
+                        nt3.Text = gt.Navn;
+                        nt3.Value = gt.Kode.Id;
+                        nt3.Category = "Grunntype";
+                        nt3.Collapsed = true;
+                        nt3.Children = new List<jsonNT>();
+                        nt2.Children.Add(nt3);
                     }
                 }
             }

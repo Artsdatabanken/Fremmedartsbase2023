@@ -64,7 +64,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                     
                     {/*<h3>{labels.critDocumentation.status}</h3>*/}
                    
-                    {appState.skalVurderes ?
+                    {/*appState.skalVurderes ?*/}
                         <fieldset className="well">
                             <h2>{critlabels.heading}</h2>
                             <p>{critlabels.status}: {alienSpeciesCategoryLabel}</p>
@@ -84,7 +84,8 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                             <p>{critlabels.notEvaluated2}</p>
                             <p>{critlabels.notEvaluated3}</p>
                             <br />
-                        </fieldset> }
+                        </fieldset> 
+                        {/*}}*/}
                 <br/>
                 <div>
                     <fieldset className="well">

@@ -15,6 +15,7 @@ import fylker from "../fylkesforekomst/fylker_2017";
 import Documents from '../documents'
 import { ContactsOutlined } from '@material-ui/icons';
 import { action, computed, observable } from 'mobx';
+import SimpleMap from '../map/SimpleMap';
 
 @inject('appState')
 @observer
@@ -43,6 +44,10 @@ export default class Assessment52Utbredelse extends React.Component {
        else {
             return ""
        }
+    }
+
+    addRegion = ({ name }) => {
+        console.log('clicked:', name);
     }
 
     handleOverførFraArtskart = ({ selectionGeometry, countylist, areadata, observations, editStats }) => {
@@ -120,7 +125,7 @@ export default class Assessment52Utbredelse extends React.Component {
                             <div className="statusField">
                                 <div className="labels distribution">
                                     <p>Hvor mange 2 x 2 km-ruter kan arten kolonisere i løpet av en 10 års-periode basert på én introduksjon til norsk natur? (Innenfor vurderingsperioden på 50 år)?</p>
-                                    <p>Hvor mange slike introduksjoner til norsk natur antas arten å få i løpet av samme 10-års periode?</p>
+                                    <p>Hvor mange ytterligere introduksjoner til norsk natur antas arten å få i løpet av samme 10-års periode?</p>
                                     <p>Totalt forekomstareal <b> 10 år etter første introduksjon </b> (km<sup>2</sup>)</p>
                                     
                                 </div>
@@ -229,19 +234,46 @@ export default class Assessment52Utbredelse extends React.Component {
                     <h4>Regionvis utbredelse</h4>
                     {/* <b>[Her kommer det et kart]</b> */}
                     {/* TODO: remove component refresh hack */ assessment.fylkesforekomster ? (assessment.fylkesforekomster.map(e => e.state ? '' : '')) : ''}
-                    <Fylkesforekomst
-                        evaluationContext={assessment.evaluationContext}
-                        taxonId={assessment.TaxonId}
-                        latinsknavnId={assessment.latinsknavnId}
-                        utvalg={assessment.artskartModel}
-                        {...assessment.artskartModel} // Rerender hack
-                        artskartModel={assessment.artskartModel}  // could replace this one?
-                        fylkesforekomster={assessment.fylkesforekomster}
-                        assessment={assessment}
-                        disabled={appState.userContext.readonly}
-                        onOverførFraArtskart={action(this.handleOverførFraArtskart)} />
-                        <label htmlFor="CurrentPresenceComment">{labels.describeAsumption}</label>
-                        <Xcomp.HtmlString observableValue={[assessment, 'currentPresenceComment']}/>
+                    {!(assessment.isAlienSpecies && assessment.isRegionallyAlien) &&
+                        <Fylkesforekomst
+                            evaluationContext={assessment.evaluationContext}
+                            taxonId={assessment.TaxonId}
+                            latinsknavnId={assessment.latinsknavnId}
+                            utvalg={assessment.artskartModel}
+                            {...assessment.artskartModel} // Rerender hack
+                            artskartModel={assessment.artskartModel}  // could replace this one?
+                            fylkesforekomster={assessment.fylkesforekomster}
+                            assessment={assessment}
+                            disabled={appState.userContext.readonly}
+                            onOverførFraArtskart={action(this.handleOverførFraArtskart)} />
+                    }
+                    {assessment.isAlienSpecies && assessment.isRegionallyAlien &&
+                    <div style={{display: 'inline-flex', width: '100%'}}>
+                        <div style={{width: '33%', height: 500}}>
+                            <SimpleMap
+                                showRegion={true}
+                                mapType={1}
+                                onClick={action(this.addRegion)}
+                                evaluationContext={assessment.evaluationContext} />
+                        </div>
+                        <div style={{width: '33%', height: 500}}>
+                            <SimpleMap
+                                showRegion={false}
+                                mapType={2}
+                                onClick={action(this.addRegion)}
+                                evaluationContext={assessment.evaluationContext} />
+                        </div>
+                        <div style={{width: '33%', height: 500}}>
+                            <SimpleMap
+                                showRegion={true}
+                                mapType={3}
+                                onClick={action(this.addRegion)}
+                                evaluationContext={assessment.evaluationContext} />
+                        </div>
+                    </div>
+                    }
+                    <label htmlFor="CurrentPresenceComment">{labels.describeAsumption}</label>
+                    <Xcomp.HtmlString observableValue={[assessment, 'currentPresenceComment']}/>
                    {/* <p>Beskriv grunnlaget for anslagene (gjelder både forekomstareal og fylkesvis utbredelse)</p>
                     <Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'backgroundRegional']}/>*/}
                     {assessment.alienSpeciesCategory == "DoorKnocker" ?

@@ -10,6 +10,15 @@ const SpeciesNaturetypeTable = observer((props) =>
 {
     const labels = props.labels
     const disabled = props.disabled
+    console.log(props.newItem)
+    var naturetypeNames = []
+    if (props.natureTypes && props.natureTypes.length > 0) {
+        
+        for (var i = 0; i < props.natureTypes.length; i++){
+            naturetypeNames.push({value: i, text :props.natureTypes[i].niNCode});
+        }
+        
+    }
     return <table className="table ecologicalEffect">
         
 
@@ -46,7 +55,7 @@ const SpeciesNaturetypeTable = observer((props) =>
         </thead>
         <tbody>
             {props.list.map(item =>
-            <tr key={item.niNCode+item.Effect+item.InteractionType+item.KeyStoneSpecie+item.EffectLocalScale}>
+            <tr key={item.niNCode+item.effect+item.interactionType+item.keyStoneSpecie+item.effectLocalScale}>
                 <td>
                     <div className="naturtypeItem">
                         <div className="naturtypeCode">{item.niNCode}</div>
@@ -98,16 +107,23 @@ const SpeciesNaturetypeTable = observer((props) =>
             )}
             <tr className="newRow">
                 <td>
-                    <select className="form-control"  disabled={disabled} placeholder="velg naturtype" value={props.newItem.niNCode}
+               <Xcomp.StringEnum 
+                        observableValue={[props.newItem, "niNCode"]}  
+                        forceSync                                      
+                        codes={naturetypeNames}/>      
+                  {/*  <select className="form-control" disabled={disabled} placeholder="velg naturtype" value={props.newItem.niNCode} options={naturetypeNames}
                             onChange={action(e => props.newItem.niNCode = e.target.value)}
-                            >
+                 > */}
 
                         {/*//todo: uncomment this when we have naturetypeLabels
                          { props.newItem.naturetypes.map(nt => {
                             const ninlabel = props.naturtypeLabels ? props.naturtypeLabels[nt.niNCode] : ""
                             const label = nt.niNCode + " " + ninlabel
-                            return <option value={nt.niNCode} key={nt.niNCode}>{label}</option>})} */}
-                    </select>
+                            return <option value={nt.niNCode} key={nt.niNCode}>{label}</option>})} 
+                            
+                            </select>  
+                            */}
+                                      
 
                 </td>
                 <td><Xcomp.Bool observableValue={[props.newItem, 'keyStoneOrEndangeredSpecie']} /></td>
