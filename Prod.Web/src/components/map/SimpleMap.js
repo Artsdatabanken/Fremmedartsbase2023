@@ -54,7 +54,7 @@ const SimpleMap = ({
         return Proj4(`EPSG:${fromEpsgCode}`, `EPSG:${toEpsgCode}`, coordinate);
     }
 
-    setPointerMove = (mapObject) => {
+    const setPointerMove = (mapObject) => {
 
         const pointermove = (e) => {
             const vatnLayer = mapObject.getLayers().getArray().filter((layer) => layer.get('name') === 'Vatn' ? true : false)[0];
