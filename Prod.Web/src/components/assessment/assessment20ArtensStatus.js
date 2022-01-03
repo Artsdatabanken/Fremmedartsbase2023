@@ -142,8 +142,8 @@ checkStatus = (production) => {
                                 codes={codes.yesNo}
                                 />
                         
-                        { assessment.connectedToAnotherString == "yes" ?
-                            <div style={{border: '1px solid lightgray', padding: '10px'}}>
+                        { assessment.connectedToAnotherString == "yes" || assessment.connectedToAnother == true ?
+                        <div style={{border: '1px solid lightgray', padding: '10px'}}>
                            {assessment.notApplicableCategory == "taxonIsEvaluatedInHigherRank" && 
                             // transfer "notApplicableDescription" from FAB3
                             <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/>                             

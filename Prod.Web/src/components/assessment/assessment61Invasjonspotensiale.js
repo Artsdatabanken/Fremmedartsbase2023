@@ -734,9 +734,9 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                             }
                            
                        </div>
-                       <hr></hr>
+                       <hr/>
                     {riskAssessment.activeSpreadYearlyLiteratureData
-                        ? <div>
+                        ? <div className="previousAssessment">
                                 <table className="formtable Bcrit">
                                 <p>{labels.BcritText.transferredFrom2018}</p>
                                     <tbody>
@@ -791,11 +791,12 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                         </tr>
                                     </tbody>
                                 </table>
-                                <hr/>
+                                
                             </div>
+
                         : null}
                     {riskAssessment.activeSpreadYearlyIncreaseCalculatedExpansionSpeed
-                        ? <div>
+                        ? <div className="previousAssessment">
                                 <table className="formtable">
                                 {!riskAssessment.activeSpreadYearlyLiteratureData && 
                                     <p>{labels.BcritText.transferredFrom2018}</p>
@@ -851,10 +852,10 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                         </tr>
                                     </tbody>
                                 </table>
-                                <hr/>
+                               
                             </div>
                         : null}
-                    
+                     <hr/>
                 </fieldset>
                 <fieldset className="well">
                     {/* {/*<h4>{critC.heading} &nbsp;{labels.Ccrit.transferedFrom4}</h4>
