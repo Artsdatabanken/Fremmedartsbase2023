@@ -298,7 +298,7 @@ checkStatus = (production) => {
                         
                      </div> : null}
 
-                     { assessment.isAlienSpeciesString == 'true'  && 
+                     {/* assessment.isAlienSpeciesString == 'true'  && 
                        assessment.alienSpeciesCategory != "DoorKnocker" && 
                         assessment.speciesStatus == "A" &&
                         (assessment.connectedToAnotherString == "no" || assessment.connectedToAnotherString == "false") ? 
@@ -313,7 +313,7 @@ checkStatus = (production) => {
                             <Xcomp.StringEnum observableValue={[assessment, "wrongAssessed"]} mode="radio" codes={codes.yesNo}/>  
                             
                         </div>
-                        }
+                    */}
 
                         
                     
