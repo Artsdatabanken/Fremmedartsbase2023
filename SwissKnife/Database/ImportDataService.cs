@@ -490,6 +490,7 @@ namespace SwissKnife.Database
                                 if (match != null)
                                 {
                                     match.State0 = 1;
+                                    match.State1 = 1;
                                 }
                                 else
                                 {
