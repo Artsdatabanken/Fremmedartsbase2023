@@ -219,7 +219,7 @@ const HostParasiteTable = observer((props) =>
                 <td>
                     <Xcomp.Button primary xs
                         onClick={props.addNewItem}
-                        disabled={!props.newItem.ScientificName || !props.newItem.ParasiteScientificName }
+                        disabled={!props.newItem.scientificName || !props.newItem.parasiteScientificName }
                     >{labels.General.add}</Xcomp.Button>
                 </td>
             </tr>
