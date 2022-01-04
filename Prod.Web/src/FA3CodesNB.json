@@ -3416,7 +3416,7 @@
                 "Id": "Criterion",
                 "Value": "G",
                 "Text": "G-kriteriet: Effekter på «øvrige» naturtyper",
-                "Info": "Naturtypeareal (%) som gjennomgår tilstandsendring er overført fra «Naturtyper»",
+                "Info": "Naturtypeareal (%) som gjennomgår tilstandsendring er overført fra «Naturtyper»",                
                 "Children": {
                     "CritG": [
                         {
@@ -8018,6 +8018,13 @@
                             "Id": null,
                             "Value": "score",
                             "Text": "Angi skår og usikkerhet",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "uncertainity",
+                            "Text": "Skår, angi usikkerhet",
                             "Info": null,
                             "Children": null
                         },

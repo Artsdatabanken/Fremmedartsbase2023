@@ -163,7 +163,7 @@ export default class Assessment51Naturtyper extends React.Component {
                 </>
                 }
 
-                {assessment.redlistedNatureTypes.length > 0 && <div>
+                {assessment.redlistedNatureTypes.length > 0 && <div className="previousAssessment">
                 <hr></hr>
                 <h4>
                     {ntLabels.dataFromPreviousAssessment}

@@ -174,7 +174,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                         <Xcomp.StringEnum observableValue={[riskAssessment, "acceptOrAdjustCritA"]} mode="radio" codes={koder.AcceptOrAdjust}/>   
                                          
                                             
-                        <div>
+                        <div className="adjustScore">
                             {riskAssessment.acceptOrAdjustCritA == "adjust" &&                                
                                 <Xcomp.HtmlString observableValue={[riskAssessment, 'reasonForAdjustmentCritA']} label="Begrunnelse for justering:" />
                             }
@@ -336,6 +336,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     <Criterion criterion={crit51A} 
                     appState={appState}
                     mode="noheading"
+                    disabled = {disabled || riskAssessment.acceptOrAdjustCritA == "accept"}
                     auto = {riskAssessment.chosenSpreadMedanLifespan == "ViableAnalysis" ||
                              riskAssessment.chosenSpreadMedanLifespan == "SpreadRscriptEstimatedSpeciesLongevity" ||
                              (riskAssessment.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && riskAssessment.acceptOrAdjustCritA != "adjust") 
@@ -726,14 +727,18 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                     style={{
                                     display: "inline-block"
                                     }}>
-                                <Criterion criterion={crit51B} appState={appState} disabled={disabled} auto={riskAssessment.chosenSpreadYearlyIncrease == "a" || assessment.alienSpeciesCategory == "DoorKnocker"} mode="noheading"/>
+                                <Criterion criterion={crit51B} appState={appState} 
+                                            //disabled={disabled} 
+                                            // according to issues #318 and #319
+                                            disabled={disabled || riskAssessment.chosenSpreadYearlyIncrease == "a" || (riskAssessment.chosenSpreadYearlyIncrease == "b" && assessment.alienSpeciesCategory == "DoorKnocker")}
+                                            auto={riskAssessment.chosenSpreadYearlyIncrease == "a" || assessment.alienSpeciesCategory == "DoorKnocker"} mode="noheading"/>
                             </div>
                             }
                            
                        </div>
-                       <hr></hr>
+                       <hr/>
                     {riskAssessment.activeSpreadYearlyLiteratureData
-                        ? <div>
+                        ? <div className="previousAssessment">
                                 <table className="formtable Bcrit">
                                 <p>{labels.BcritText.transferredFrom2018}</p>
                                     <tbody>
@@ -788,11 +793,12 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                         </tr>
                                     </tbody>
                                 </table>
-                                <hr/>
+                                
                             </div>
+
                         : null}
                     {riskAssessment.activeSpreadYearlyIncreaseCalculatedExpansionSpeed
-                        ? <div>
+                        ? <div className="previousAssessment">
                                 <table className="formtable">
                                 {!riskAssessment.activeSpreadYearlyLiteratureData && 
                                     <p>{labels.BcritText.transferredFrom2018}</p>
@@ -848,10 +854,10 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                         </tr>
                                     </tbody>
                                 </table>
-                                <hr/>
+                               
                             </div>
                         : null}
-                    
+                     <hr/>
                 </fieldset>
                 <fieldset className="well">
                     {/* {/*<h4>{critC.heading} &nbsp;{labels.Ccrit.transferedFrom4}</h4>
