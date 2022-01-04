@@ -42,7 +42,7 @@ const MapOpenLayers = ({
     let mouseoverfeature = null;
     let featureOver;
     let drawPolygonInteraction;
-    const waterIntersections = [];
+    let waterIntersections = {};
 
     //if (!mapBounds) mapBounds = [[57, 4.3], [71.5, 32.5]];
 
@@ -90,24 +90,36 @@ const MapOpenLayers = ({
     };
 
     const calculateWaterIntersection = (mapObject, fieldName) => {
-        if (!showWaterAreas) return;
+        if (!showWaterAreas) {
+            setIsLoading(false);
+            return;
+        }
         setWaterAreas();
         setIsLoading(true);
-        waterIntersections.splice(0);
+        waterIntersections = {};
         const layers = mapObject.getLayers().getArray();
         // const areaLayer = layers.filter((layer) => layer.get('name') === 'areaLayer' ? true : false)[0];
         const markerLayer = layers.filter((layer) => layer.get('name') === 'markerLayer' ? true : false)[0];
         const waterLayer = layers.filter(layer => layer.get('name') === 'Vatn')[0];
         const waterSelectedLayer = layers.filter(layer => layer.get('name') === 'VatnSelected')[0];
-        if (!markerLayer && !waterLayer && !waterSelectedLayer) return;
+        if (!markerLayer && !waterLayer && !waterSelectedLayer) {
+            setIsLoading(false);
+            return;
+        }
 
         waterSelectedLayer.getSource().clear();
 
         const features = markerLayer.getSource().getFeatures().filter(f => f.getProperties().properties && f.getProperties().properties.category && f.getProperties().properties.category === 'inside');
-        if (features.length === 0) return;
+        if (features.length === 0) {
+            setIsLoading(false);
+            return;
+        }
 
         const waterFeatures = waterLayer.getSource().getFeatures();
-        if (waterFeatures.length === 0) return;
+        if (waterFeatures.length === 0) {
+            setIsLoading(false);
+            return;
+        }
 
         const createTurfPoint = (feature) => {
             const coordinate = feature.getGeometry().getCoordinates();
@@ -129,22 +141,26 @@ const MapOpenLayers = ({
         const theWaterFeatures = waterFeatures.map(f => createTurfMultiPolygon(f));
 
         // console.log('calculate intersections..');
-        theFeatures.forEach(feature => {
-            // console.log('featurecoord', feature.getGeometry().getCoordinates());
-            theWaterFeatures.forEach((waterFeature, j) => {
-                if (waterIntersections.indexOf(waterFeatures[j]) < 0) {
-                    const intersects = intersect(waterFeature, feature);
-                    if (intersects !== null) {
-                        waterIntersections.push(waterFeatures[j]);
-                    }
+        const waterIntersectionFeatures = [];
+        theFeatures.forEach(theFeature => {
+            // console.log('featurecoord', theFeature.getGeometry().getCoordinates());
+            theWaterFeatures.forEach((theWaterFeature, j) => {
+                const featureName = waterFeatures[j].get(fieldName);
+                if (!waterIntersections.hasOwnProperty(featureName) || (waterIntersections.hasOwnProperty(featureName) && !waterIntersections[featureName].intersects)) {
+                    const intersects = intersect(theWaterFeature, theFeature);
+                    waterIntersections[featureName] = {
+                        name: featureName,
+                        isRegion: showRegion,
+                        intersects: intersects !== null,
+                    };
+                    if (intersects !== null) waterIntersectionFeatures.push(waterFeatures[j]);
                 }
             });
         });
-        // console.log(`${waterIntersections.length} intersections`);
 
-        setWaterAreas(waterIntersections.map(f => f.get(fieldName)).filter(x => x.length > 0).join(', '));
+        setWaterAreas(Object.values(waterIntersections));
 
-        waterSelectedLayer.getSource().addFeatures(waterIntersections);
+        waterSelectedLayer.getSource().addFeatures(waterIntersectionFeatures);
         setIsLoading(false);
     };
 

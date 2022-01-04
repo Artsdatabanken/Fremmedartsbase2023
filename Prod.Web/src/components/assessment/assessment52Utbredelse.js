@@ -50,13 +50,14 @@ export default class Assessment52Utbredelse extends React.Component {
         console.log('clicked:', name);
     }
 
-    handleOverførFraArtskart = ({ selectionGeometry, countylist, areadata, observations, editStats }) => {
+    handleOverførFraArtskart = ({ selectionGeometry, countylist, waterAreas, areadata, observations, editStats }) => {
         // console.log('handleOverførFraArtskart', selectionGeometry, countylist, areadata, observations, editStats);
         const aps = this.props.appState;
         const ass = aps.assessment;
 
         if (ass.isAlienSpecies && ass.isRegionallyAlien) {
-            console.log('working with vannområder...');
+            console.log('working with vannområder...', areadata, waterAreas);
+            ass.waterAreas = waterAreas;
         }
 
         ass.riskAssessment.AOOknown = areadata.AreaExtentOfOccurrence;
@@ -113,6 +114,8 @@ export default class Assessment52Utbredelse extends React.Component {
         const koder = appState.koder
         const generalLabels = appState.codeLabels 
         const labels = appState.codeLabels.DistributionHistory
+
+        console.log('render', assessment.waterAreas);
 
         return (
             <div>
@@ -248,27 +251,37 @@ export default class Assessment52Utbredelse extends React.Component {
                             onOverførFraArtskart={action(this.handleOverførFraArtskart)} />
                     }
                     {assessment.isAlienSpecies && assessment.isRegionallyAlien &&
-                    <div style={{display: 'inline-flex', width: '100%'}}>
-                        <div style={{width: '33%', height: 500}}>
-                            <SimpleMap
-                                showRegion={true}
-                                mapType={1}
-                                onClick={action(this.addRegion)}
-                                evaluationContext={assessment.evaluationContext} />
-                        </div>
-                        <div style={{width: '33%', height: 500}}>
-                            <SimpleMap
-                                showRegion={false}
-                                mapType={2}
-                                onClick={action(this.addRegion)}
-                                evaluationContext={assessment.evaluationContext} />
-                        </div>
-                        <div style={{width: '33%', height: 500}}>
-                            <SimpleMap
-                                showRegion={true}
-                                mapType={3}
-                                onClick={action(this.addRegion)}
-                                evaluationContext={assessment.evaluationContext} />
+                    <div>
+                        {assessment.waterAreas && assessment.waterAreas.map((x, y) => {
+                            console.log('element', y, x.name, x.intersects, x.isRegion);
+                            return (
+                                <>
+                                    <div key={y}>{x.name} <input type="checkbox" checked={x.intersects} /></div>
+                                </>
+                            );
+                        })}
+                        <div style={{display: 'inline-flex', width: '100%'}}>
+                            <div style={{width: '33%', height: 500}}>
+                                <SimpleMap
+                                    showRegion={true}
+                                    mapType={1}
+                                    onClick={action(this.addRegion)}
+                                    evaluationContext={assessment.evaluationContext} />
+                            </div>
+                            <div style={{width: '33%', height: 500}}>
+                                <SimpleMap
+                                    showRegion={false}
+                                    mapType={2}
+                                    onClick={action(this.addRegion)}
+                                    evaluationContext={assessment.evaluationContext} />
+                            </div>
+                            <div style={{width: '33%', height: 500}}>
+                                <SimpleMap
+                                    showRegion={true}
+                                    mapType={3}
+                                    onClick={action(this.addRegion)}
+                                    evaluationContext={assessment.evaluationContext} />
+                            </div>
                         </div>
                     </div>
                     }

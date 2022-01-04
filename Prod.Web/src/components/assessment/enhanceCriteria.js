@@ -542,18 +542,18 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 : roundToSignificantDecimals2(r.AOOtotalBest / r.AOOknown )
             return result
         },
-        get AOOdarkfigureLow() {
-            const result =
-                r.AOOknown === null || r.AOOknown === 0 ? 0
-                : roundToSignificantDecimals2(r.AOOtotalLow / r.AOOknown )
-            return result
-        },
-        get AOOdarkfigureHigh() {
-            const result =
-                r.AOOknown === null || r.AOOknown === 0 ? 0
-                : roundToSignificantDecimals2(r.AOOtotalHigh / r.AOOknown )
-            return result
-        },
+        // get AOOdarkfigureLow() {
+        //     const result =
+        //         r.AOOknown === null || r.AOOknown === 0 ? 0
+        //         : roundToSignificantDecimals2(r.AOOtotalLow / r.AOOknown )
+        //     return result
+        // },
+        // get AOOdarkfigureHigh() {
+        //     const result =
+        //         r.AOOknown === null || r.AOOknown === 0 ? 0
+        //         : roundToSignificantDecimals2(r.AOOtotalHigh / r.AOOknown )
+        //     return result
+        // },
         get b2aresulttext() {
             return `Ekspansjonshastigheten er beregnet til ${r.expansionSpeed} m/år basert på økningen i artens forekomstareal i perioden fra ${r.AOOyear1} til ${r.AOOyear2} og et mørketall på ${r.AOOdarkfigureBest}.`
         },
