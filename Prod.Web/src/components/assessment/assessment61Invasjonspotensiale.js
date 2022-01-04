@@ -336,7 +336,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     <Criterion criterion={crit51A} 
                     appState={appState}
                     mode="noheading"
-                    disabled = {disabled || riskAssessment.acceptOrAdjustCritA == "accept"}
+                    disabled = {disabled || (riskAssessment.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && riskAssessment.acceptOrAdjustCritA == "accept")}
                     auto = {riskAssessment.chosenSpreadMedanLifespan == "ViableAnalysis" ||
                              riskAssessment.chosenSpreadMedanLifespan == "SpreadRscriptEstimatedSpeciesLongevity" ||
                              (riskAssessment.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && riskAssessment.acceptOrAdjustCritA != "adjust") 
