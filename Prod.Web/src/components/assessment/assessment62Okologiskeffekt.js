@@ -280,12 +280,12 @@ export default class Assessment62Okologiskeffekt extends React.Component {
         const ntLabels = labels.NatureTypes
         runInAction(() => {
 
-        crit52D.auto = false
-        crit52E.auto = false
+        crit52D.auto = true
+        crit52E.auto = true
         crit52F.auto = false
         crit52G.auto = false
-        crit52H.auto = false
-        crit52I.auto = false
+        crit52H.auto = true
+        crit52I.auto = true
         })
         //console.log(appState.userContext.readonly)
         return(
