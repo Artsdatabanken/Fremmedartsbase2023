@@ -9,6 +9,7 @@ import UtbredelseshistorikkInnenlands from './35Utbredelseshistorikk/Utbredelses
 import UtbredelseIDag from './35Utbredelseshistorikk/UtbredelseIDag'
 import Utbredelseshistorikk from './35Utbredelseshistorikk/Utbredelseshistorikk'
 import ModalArtskart from '../artskart/ModalArtskart';
+import ModalSimpleMap from '../artskart/ModalSimpleMap';
 import Fylkesforekomst from '../fylkesforekomst/Fylkesforekomst';
 import FileUpload from '../FileUpload'
 import fylker from "../fylkesforekomst/fylker_2017";
@@ -48,6 +49,10 @@ export default class Assessment52Utbredelse extends React.Component {
 
     addRegion = ({ name }) => {
         console.log('clicked:', name);
+    }
+
+    handleOverførFraSimpleMap = () => {
+        console.log('handleOverførFraSimpleMap');
     }
 
     handleOverførFraArtskart = ({ selectionGeometry, countylist, waterAreas, areadata, observations, editStats }) => {
@@ -122,6 +127,19 @@ export default class Assessment52Utbredelse extends React.Component {
                 <div>
                     <fieldset className="well">
                         <h2>Utbredelse i Norge</h2>
+                        {assessment.isAlienSpecies && assessment.isRegionallyAlien &&
+                        <>
+                            <h4>Vurderingsområde <i>(beta)</i></h4>
+                            <div style={{marginLeft: 20, marginBottom: 30}}>
+                                <ModalSimpleMap
+                                    showRegion={true}
+                                    evaluationContext={assessment.evaluationContext}
+                                    labels={labels}
+                                    onOverførFraSimpleMap={action(this.handleOverførFraSimpleMap)}
+                                />
+                            </div>
+                        </>
+                        }
                         <h4>Forekomstareal</h4>
                         {assessment.alienSpeciesCategory == "DoorKnocker" ? 
                         <div>
@@ -263,6 +281,7 @@ export default class Assessment52Utbredelse extends React.Component {
                         <div style={{display: 'inline-flex', width: '100%'}}>
                             <div style={{width: '33%', height: 500}}>
                                 <SimpleMap
+                                    static={true}
                                     showRegion={true}
                                     mapType={1}
                                     onClick={action(this.addRegion)}
@@ -270,6 +289,7 @@ export default class Assessment52Utbredelse extends React.Component {
                             </div>
                             <div style={{width: '33%', height: 500}}>
                                 <SimpleMap
+                                    static={true}
                                     showRegion={false}
                                     mapType={2}
                                     onClick={action(this.addRegion)}
@@ -277,6 +297,7 @@ export default class Assessment52Utbredelse extends React.Component {
                             </div>
                             <div style={{width: '33%', height: 500}}>
                                 <SimpleMap
+                                    static={true}
                                     showRegion={true}
                                     mapType={3}
                                     onClick={action(this.addRegion)}
