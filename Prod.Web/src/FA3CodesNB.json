@@ -214,9 +214,25 @@
                 "Children": null
             }
         ],
-        "workStatus": [
+        "workStatusHS": [
             {
               "text": "Ikke ferdigstilt",
+              "value": "notStarted"
+            },
+            {
+  
+              "text": "Påbegynt",
+              "value": "inprogress"
+            },
+            {
+  
+              "text": "Ferdigstilt",
+              "value": "finished"
+            }
+        ],
+        "workStatus": [
+            {
+              "text": "Ikke påbegynt",
               "value": "notStarted"
             },
             {
@@ -298,12 +314,12 @@
 
         "newComments": [
             {
-                "text": "på mine",
+                "text": "På mine",
                 "value": "mine"
             },
             {
 
-                "text": "alle",
+                "text": "Alle",
                 "value": "all"
             }
         ],
@@ -356,6 +372,26 @@
                 "value": "regionallyAlien"
             },
             {
+                "text": "Effekt uten selvstendig reproduksjon",
+                "value": "effectWithoutEstablishment"
+            }
+        ],
+
+        "assessedTypes2018": [
+            {
+                "text": "Etablert etter 1800",
+                "value": "establishedAfter1800"
+            },
+            {
+
+                "text": "Dørstokkart",
+                "value": "doorKnocker"
+            },
+            {
+                "text": "Regionalt fremmed",
+                "value": "regionallyAlien"
+            },
+            {
                 "text": "Effekt uten etablering",
                 "value": "effectWithoutEstablishment"
             }
@@ -367,21 +403,8 @@
                 "value": "establishedBefore1800"
             },
             {
-
-                "text": "Ingen etablering på 50 år",
-                "value": "notEstablishedFor50Years"
-            },
-            {
-                "text": "Tradisjonell bruksart \n (før: Tradisjonell produksjonsart)",
-                "value": "traditionalProductionSpecies"
-            },
-            {
-                "text": "Deler moderartens status",
+                "text": "Inkludert i vurderinga av annet takson",
                 "value": "sharesMotherSpeciesStatus"
-            },
-            {
-                "text": "Arten finnes ikke i Norge",
-                "value": "notFoundInNorway"
             },
             {
 
@@ -5777,7 +5800,7 @@
                         {
                             "Id": null,
                             "Value": "ADBComments",
-                            "Text": "Vurderinger med kommentarer fra ADB",
+                            "Text": "Kommentarer",
                             "Info": null,
                             "Children": null
                         },

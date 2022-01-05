@@ -227,7 +227,7 @@ export default class SelectAssessment extends Component {
                             <Xcomp.MultiselectArray
                                 observableValue={[appState, 'riskAssessedFilter']} 
                                 className="status"
-                                codes={koder.assessedTypes}
+                                codes={koder.assessedTypes2018}
                                 mode="check"/>
                             <Xcomp.Bool observableValue={[appState, "ikkevurdert"]} label={koder.statusCodes[1].text} />
                             <Xcomp.MultiselectArray
@@ -284,7 +284,7 @@ export default class SelectAssessment extends Component {
                         <div className="filters"><b>{labels.SelectAssessment.assessmentStatus}</b>                            
                             <Xcomp.MultiselectArray
                                 observableValue={[appState, 'workStatus']} 
-                                codes={koder.workStatus}
+                                codes={appState.assessmentTypeFilter == "riskAssessment" ? koder.workStatus: koder.workStatusHS}
                                 mode="check"/>                            
                         </div>
                         <div className="filters"><b>{labels.SelectAssessment.ADBComments}</b>
@@ -331,7 +331,7 @@ export default class SelectAssessment extends Component {
                 
                 <div className="nav_menu">
                         <div className="filters"><b>{labels.SelectAssessment.assessmentStatus}</b>   
-                                <Xcomp.Bool observableValue={[appState.horizonScanFilter, "hsNotStarted"]} label={koder.workStatus[0].text + "   (" + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','2') + ") " + (100*appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','2')/appState.expertgroupAssessmentTotalCount).toFixed() + "%"} />
+                                <Xcomp.Bool observableValue={[appState.horizonScanFilter, "hsNotStarted"]} label={koder.workStatusHS[0].text + "   (" + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','2') + ") " + (100*appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','2')/appState.expertgroupAssessmentTotalCount).toFixed() + "%"} />
                                 <Xcomp.Bool observableValue={[appState.horizonScanFilter, "hsFinished"]} label={koder.workStatus[2].text + " (" + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0') + ")   " + (100*appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0')/appState.expertgroupAssessmentTotalCount).toFixed() + "%"} />
                             <div className="subChoice">
                                     <Xcomp.Bool observableValue={[appState.horizonScanFilter, "toAssessment"]} label={" (" + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1') + ") " + (appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0').toFixed() > 0 ? (100*appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1')/appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0')).toFixed() : "0") + labels.SelectAssessment.further} />
