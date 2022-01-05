@@ -109,7 +109,7 @@ const RedigerbartKart = ({
             <span>Fylker: <b>{beskrivFylker(countylist)}</b></span>
           )}
           {showWaterAreas && (
-            <span>Vannområde:{" "}<span><b>{waterAreas}</b></span></span>
+            <span>Vannområde:{" "}<span><b>{beskrivWaterAreas(waterAreas)}</b></span></span>
           )}
         </div>
        
@@ -145,6 +145,7 @@ const RedigerbartKart = ({
               e.stopPropagation();
               onOverførFraArtskart({
                 countylist,
+                waterAreas,
                 selectionGeometry,
                 areadata,
                 observations,
@@ -154,7 +155,8 @@ const RedigerbartKart = ({
             }}
             className={artskart.error || (artskart.isLoading || isLoading) ? "" : "elevated"}
           >
-            ✓ Overfør arealer og fylker tilbake til vurderingen
+            {showWaterAreas && "✓ Overfør arealer og områder tilbake til vurderingen"}
+            {!showWaterAreas && "✓ Overfør arealer og fylker tilbake til vurderingen"}
         </Xcomp.Button>
         {selectionGeometry && <Xcomp.Button
             disabled={artskart.error || artskart.isLoading || isLoading}
@@ -245,6 +247,15 @@ const beskrivFylker = artskartFylker => {
   if (hasPresence.length <= 0) return "Ingen";
   return hasPresence
     .map(f => f.NAVN)
+    .sort()
+    .join(", ");
+};
+
+const beskrivWaterAreas = areas => {
+  if (!areas || areas.length === 0) return "Ingen";
+  return areas
+    .filter(f => f.intersects)
+    .map(f => f.name)
     .sort()
     .join(", ");
 };

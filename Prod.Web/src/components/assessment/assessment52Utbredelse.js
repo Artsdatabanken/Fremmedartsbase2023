@@ -9,6 +9,7 @@ import UtbredelseshistorikkInnenlands from './35Utbredelseshistorikk/Utbredelses
 import UtbredelseIDag from './35Utbredelseshistorikk/UtbredelseIDag'
 import Utbredelseshistorikk from './35Utbredelseshistorikk/Utbredelseshistorikk'
 import ModalArtskart from '../artskart/ModalArtskart';
+import ModalSimpleMap from '../artskart/ModalSimpleMap';
 import Fylkesforekomst from '../fylkesforekomst/Fylkesforekomst';
 import FileUpload from '../FileUpload'
 import fylker from "../fylkesforekomst/fylker_2017";
@@ -50,13 +51,18 @@ export default class Assessment52Utbredelse extends React.Component {
         console.log('clicked:', name);
     }
 
-    handleOverførFraArtskart = ({ selectionGeometry, countylist, areadata, observations, editStats }) => {
+    handleOverførFraSimpleMap = () => {
+        console.log('handleOverførFraSimpleMap');
+    }
+
+    handleOverførFraArtskart = ({ selectionGeometry, countylist, waterAreas, areadata, observations, editStats }) => {
         // console.log('handleOverførFraArtskart', selectionGeometry, countylist, areadata, observations, editStats);
         const aps = this.props.appState;
         const ass = aps.assessment;
 
         if (ass.isAlienSpecies && ass.isRegionallyAlien) {
-            console.log('working with vannområder...');
+            console.log('working with vannområder...', areadata, waterAreas);
+            ass.waterAreas = waterAreas;
         }
 
         ass.riskAssessment.AOOknown = areadata.AreaExtentOfOccurrence;
@@ -114,11 +120,26 @@ export default class Assessment52Utbredelse extends React.Component {
         const generalLabels = appState.codeLabels 
         const labels = appState.codeLabels.DistributionHistory
 
+        console.log('render', assessment.waterAreas);
+
         return (
             <div>
                 <div>
                     <fieldset className="well">
                         <h2>Utbredelse i Norge</h2>
+                        {assessment.isAlienSpecies && assessment.isRegionallyAlien &&
+                        <>
+                            <h4>Vurderingsområde <i>(beta)</i></h4>
+                            <div style={{marginLeft: 20, marginBottom: 30}}>
+                                <ModalSimpleMap
+                                    showRegion={true}
+                                    evaluationContext={assessment.evaluationContext}
+                                    labels={labels}
+                                    onOverførFraSimpleMap={action(this.handleOverførFraSimpleMap)}
+                                />
+                            </div>
+                        </>
+                        }
                         <h4>Forekomstareal</h4>
                         {assessment.alienSpeciesCategory == "DoorKnocker" ? 
                         <div>
@@ -248,27 +269,40 @@ export default class Assessment52Utbredelse extends React.Component {
                             onOverførFraArtskart={action(this.handleOverførFraArtskart)} />
                     }
                     {assessment.isAlienSpecies && assessment.isRegionallyAlien &&
-                    <div style={{display: 'inline-flex', width: '100%'}}>
-                        <div style={{width: '33%', height: 500}}>
-                            <SimpleMap
-                                showRegion={true}
-                                mapType={1}
-                                onClick={action(this.addRegion)}
-                                evaluationContext={assessment.evaluationContext} />
-                        </div>
-                        <div style={{width: '33%', height: 500}}>
-                            <SimpleMap
-                                showRegion={false}
-                                mapType={2}
-                                onClick={action(this.addRegion)}
-                                evaluationContext={assessment.evaluationContext} />
-                        </div>
-                        <div style={{width: '33%', height: 500}}>
-                            <SimpleMap
-                                showRegion={true}
-                                mapType={3}
-                                onClick={action(this.addRegion)}
-                                evaluationContext={assessment.evaluationContext} />
+                    <div>
+                        {assessment.waterAreas && assessment.waterAreas.map((x, y) => {
+                            console.log('element', y, x.name, x.intersects, x.isRegion);
+                            return (
+                                <>
+                                    <div key={y}>{x.name} <input type="checkbox" checked={x.intersects} /></div>
+                                </>
+                            );
+                        })}
+                        <div style={{display: 'inline-flex', width: '100%'}}>
+                            <div style={{width: '33%', height: 500}}>
+                                <SimpleMap
+                                    static={true}
+                                    showRegion={true}
+                                    mapType={1}
+                                    onClick={action(this.addRegion)}
+                                    evaluationContext={assessment.evaluationContext} />
+                            </div>
+                            <div style={{width: '33%', height: 500}}>
+                                <SimpleMap
+                                    static={true}
+                                    showRegion={false}
+                                    mapType={2}
+                                    onClick={action(this.addRegion)}
+                                    evaluationContext={assessment.evaluationContext} />
+                            </div>
+                            <div style={{width: '33%', height: 500}}>
+                                <SimpleMap
+                                    static={true}
+                                    showRegion={true}
+                                    mapType={3}
+                                    onClick={action(this.addRegion)}
+                                    evaluationContext={assessment.evaluationContext} />
+                            </div>
                         </div>
                     </div>
                     }

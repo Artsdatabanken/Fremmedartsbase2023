@@ -26,6 +26,8 @@ const SimpleMap = ({
     evaluationContext,
     showRegion,
     onClick,
+    modal,
+    static,
     mapType
 }) => {
     const mapRef = useRef();
@@ -119,18 +121,60 @@ const SimpleMap = ({
                 maxZoom: mapOlFunc.numZoomLevels,
                 zoom: 0
             }),
-            layers: [
-                mapOlFunc.createWaterLayer('Vatn', showRegion ? 14 : 15, projection, '', () => {}),
-                new VectorLayer({
-                    name: 'hoverLayer',
-                    source: new VectorSource({wrapX: false, _text: false}),
-                    style: mapOlFunc.hoverStyleFunction,
-                    zIndex: 3
-                })
-            ],
-            controls: defaultControls({attribution: false, zoom: false}),
-            interactions: new Collection(),
+            layers: [],
+            controls: defaultControls({attribution: false, zoom: !static})
         };
+        if (static) {
+            options.interactions = new Collection();
+        } else {
+            options.layers.push(new TileLayer({
+                name: 'Europakart',
+                opacity: 1,
+                extent: mapOlFunc.extent,
+                source: new WmtsSource({
+                    url: '//opencache.statkart.no/gatekeeper/gk/gk.open_wmts?',
+                    // layer: 'europa',
+                    layer: 'europa_forenklet',
+                    attributions: 'Kartverket',
+                    matrixSet: `EPSG:${config.mapEpsgCode}`,
+                    format: 'image/png',
+                    projection: projection,
+                    tileGrid: mapOlFunc.wmtsTileGrid(mapOlFunc.numZoomLevels, `EPSG:${config.mapEpsgCode}`, projection),
+                    style: 'default',
+                    wrapX: true,
+                    crossOrigin: 'anonymous'
+                }),
+                visible: true,
+                zIndex: 0
+            }));
+            options.layers.push(new TileLayer({
+                name: 'Norges grunnkart',
+                opacity: 1,
+                extent: mapOlFunc.extent,
+                source: new WmtsSource({
+                    url: '//opencache.statkart.no/gatekeeper/gk/gk.open_wmts?',
+                    // layer: 'europa',
+                    layer: 'norges_grunnkart',
+                    attributions: 'Kartverket',
+                    matrixSet: `EPSG:${config.mapEpsgCode}`,
+                    format: 'image/png',
+                    projection: projection,
+                    tileGrid: mapOlFunc.wmtsTileGrid(mapOlFunc.numZoomLevels, `EPSG:${config.mapEpsgCode}`, projection),
+                    style: 'default',
+                    wrapX: true,
+                    crossOrigin: 'anonymous'
+                }),
+                visible: true,
+                zIndex: 1
+            }));
+        }
+        options.layers.push(mapOlFunc.createWaterLayer('Vatn', showRegion ? 14 : 15, projection, '', () => {}));
+        options.layers.push(new VectorLayer({
+            name: 'hoverLayer',
+            source: new VectorSource({wrapX: false, _text: false}),
+            style: mapOlFunc.hoverStyleFunction,
+            zIndex: 3
+        }));
 
         mapObject = new Map(options);
 
@@ -155,7 +199,7 @@ const SimpleMap = ({
                 }
                 return false;
             });
-            if (vatn.length > 0) onClick({ name: vatn[0].get(waterFieldName) });
+            if (vatn.length > 0) onClick({ name: vatn[0].get(waterFieldName), properties: vatn[0].getProperties() });
         });
 
         // Fit extent
