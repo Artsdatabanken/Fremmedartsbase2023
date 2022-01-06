@@ -161,7 +161,7 @@ function uncertaintyArray(low, high) {
 
 function criterionLow(criterion) {
     const unc = criterion.uncertaintyValues
-    const value = criterion.Value
+    const value = criterion.value
     // console.log("crit_low: " + value + JSON.stringify(unc))
     const result =
         unc.length === 0
@@ -171,7 +171,7 @@ function criterionLow(criterion) {
 }
 function criterionHigh(criterion) {
     const unc = criterion.uncertaintyValues
-    const value = criterion.Value
+    const value = criterion.value
     // console.log("crit_high: " + value + JSON.stringify(unc))
     const result =
         unc.length === 0
@@ -387,7 +387,9 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         get ascore() {
             const k = r.ametodkey
             // console.log("ascore method: " + k)
-            return k.startsWith("A1") ? r.adefaultBest
+            return (k === "A1a1" || k === "A1b1") ? r.adefaultBest
+            : (k === "A2" || k === "A1a2" || k === "A1b2") ?
+                getCriterion(riskAssessment, 0, "A").value
             : r.medianLifetime >= 650 ? 3
             : r.medianLifetime >= 60 ? 2
             : r.medianLifetime >= 10 ? 1
@@ -1345,6 +1347,36 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
             if (!config.isRelease) trace()  // leave this line here! Se comments above to learn when to uncomment.
        })
     }
+
+    const critA = getCriterion(riskAssessment, 0, "A")
+    autorun(() => {
+        if(riskAssessment.acceptOrAdjustCritA === "adjust" &&
+            riskAssessment.reasonForAdjustmentCritA !== null &&
+            riskAssessment.reasonForAdjustmentCritA.length > 2) {
+                var vd = [];
+                for (var i = 0; i <= 3; i++) {
+                    if(i < riskAssessment.apossibleLow || i > riskAssessment.apossibleHigh) {
+                        vd.push(i)
+                    }
+                }
+                // console.log("%¤"+ riskAssessment.apossibleLow + " " + riskAssessment.apossibleHigh )
+                // console.log("%¤"+ JSON.stringify(vd))
+                runInAction(() => {
+                    critA.auto = false
+                    critA.valueDisabled.replace(vd)
+                })    
+
+        } else {
+            runInAction(() => {
+                critA.auto = true
+                critA.valueDisabled.replace([])
+            })    
+
+        }
+
+
+    })
+
 }
 
 function enhanceCriteriaAddErrorReportingForAutoMode(riskAssessment) {
