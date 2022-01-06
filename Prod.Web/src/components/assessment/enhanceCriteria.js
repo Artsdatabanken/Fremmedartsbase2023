@@ -1368,6 +1368,18 @@ function enhanceCriteriaAddScale(riskAssessment) {
     }
 }
 
+function enhanceCriteriaAddStatus(riskAssessment) {
+    for(var i=0; i < riskAssessment.hostParasiteInformations.length; i++) {
+        riskAssessment.hostParasiteInformations[i].parasiteNewForHost && riskAssessment.hostParasiteInformations[i].parasiteIsAlien ? 
+                riskAssessment.hostParasiteInformations[i].status = "NewAlien" : 
+                riskAssessment.hostParasiteInformations[i].parasiteIsAlien ?
+                riskAssessment.hostParasiteInformations[i].status = "KnownAlien" :
+                riskAssessment.hostParasiteInformations[i].parasiteNewForHost ? 
+                riskAssessment.hostParasiteInformations[i].status = "NewNative" :
+                riskAssessment.hostParasiteInformations[i].status = "KnownNative" 
+    }
+}
+
 
 export default function enhanceCriteria(riskAssessment, vurdering, codes, labels, artificialAndConstructedSites) {
     enhanceRiskAssessmentAddErrorReportingHandler(riskAssessment)
@@ -1379,4 +1391,5 @@ export default function enhanceCriteria(riskAssessment, vurdering, codes, labels
     enhanceRiskAssessmentInvasjonspotensiale(riskAssessment)
     enhanceCriteriaAddUncertaintyRules(riskAssessment)
     enhanceCriteriaAddScale(riskAssessment)
+    enhanceCriteriaAddStatus(riskAssessment)
 }
