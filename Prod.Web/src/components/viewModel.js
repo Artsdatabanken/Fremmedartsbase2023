@@ -135,15 +135,24 @@ class ViewModel {
             expertgroupCategoryFilter: "",
             expertgroupCategoryCheckboxFilter: [],
             statusCheckboxFilter: [],
-            decisiveCriteriaFilter: [],
-            riskCategoryFilter: [],
-            riskAssessedFilter: [],
-            riskNotAssessedFilter: [],
+
             filterType: [],
             workStatus: [],
-            
+            currentFilter:{
+                decisiveCriteriaFilter: [],
+                riskCategoryFilter: [],
+                riskAssessedFilter: [],
+                riskNotAssessedFilter: [],
+            },
+            historyFilter:{
+                decisiveCriteriaFilter: [],
+                riskCategoryFilter: [],
+                riskAssessedFilter: [],
+                riskNotAssessedFilter: [],
+            },
+
             horizonScanFilter: {
-                horizonFilters: false,
+                // horizonFilters: false,
                 hsNotStarted: false,
                 hsFinished: false,
                 toAssessment: false,
@@ -439,7 +448,9 @@ class ViewModel {
                 this.horizonScanFilter.notAssessedDoorKnocker.length, 
                 this.horizonScanFilter.potentialDoorKnockers.length,
                 this.horizonScanFilter.hsNotStarted, this.horizonScanFilter.hsFinished, this.horizonScanFilter.toAssessment, this.horizonScanFilter.notAssessed,
-                this.responsible.length, this.kunUbehandlede
+                this.responsible.length, this.kunUbehandlede,
+                this.historyFilter.riskCategoryFilter.length, this.historyFilter.decisiveCriteriaFilter.length,
+                this.currentFilter.riskCategoryFilter.length, this.currentFilter.decisiveCriteriaFilter.length
             ],
             ([expertgroupId, isLoggedIn])  => {
                 //console.log("react to expertgroup: " + expertgroupId + "," + isLoggedIn)
@@ -1203,16 +1214,23 @@ class ViewModel {
             if (this.kunUbehandlede) filters = filters + "&Comments.KunUbehandlede=true"
         }else{
             filters=filters + "&HorizonScan=false"
-        }
-        if (this.filterType == "FL2018"){
 
-        }
-        if (this.filterType == "FL2023"){
+            if (this.filterType == "FL2018"){
+                if (this.historyFilter.riskCategoryFilter.length > 0) filters = filters + this.historyFilter.riskCategoryFilter.map((x)=> "&History.Category=" + x ).join()
+                if (this.historyFilter.decisiveCriteriaFilter.length > 0) filters = filters + this.historyFilter.decisiveCriteriaFilter.map((x)=> "&History.Criteria=" + x.toUpperCase() ).join()
+            }
+            if (this.filterType == "FL2023"){
+                if (this.currentFilter.riskCategoryFilter.length > 0) filters = filters + this.currentFilter.riskCategoryFilter.map((x)=> "&Current.Category=" + x ).join()
+                if (this.currentFilter.decisiveCriteriaFilter.length > 0) filters = filters + this.currentFilter.decisiveCriteriaFilter.map((x)=> "&Current.Criteria=" + x.toUpperCase() ).join()
 
-        }
-        if (this.filterType == "statusAndCommentFL2023"){
-
-        }
+            }
+            if (this.filterType == "statusAndCommentFL2023"){
+                if (this.responsible.length > 0){
+                    //console.log(this.responsible)
+                    filters = filters + this.responsible.map((x)=> "&Responsible=" + x ).join()
+                }
+            }
+    }
         if ( this.expertgroupAssessmentFilter.length > 1){
             filters =filters +  "&NameSearch=" + this.expertgroupAssessmentFilter
         }

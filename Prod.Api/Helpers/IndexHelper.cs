@@ -22,7 +22,7 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Change this to force index rebuild!
         /// </summary>
-        public const int IndexVersion = 15;
+        public const int IndexVersion = 17;
 
         private const string Field_Id = "Id";
         private const string Field_Group = "Expertgroup";
@@ -38,7 +38,7 @@ namespace Prod.Api.Helpers
         private const string Field_TaxonHierarcy = "TaxonHierarcy";
         private const string Field_Category = "Category";
         private const string Field_Category2018 = "Category2018";
-
+        private const string Field_Criteria2018 = "Criteria2018";
 
         private const string Field_Criteria = "Criteria";
         private const string Field_CriteriaAll = "CriteriaAll";
@@ -262,6 +262,16 @@ namespace Prod.Api.Helpers
                         Field.Store.YES));
                 else
                     document.Add(new StringField(Field_Category2018, "NR", Field.Store.YES));
+
+                // todo: krever ny migreringspatch
+                //if (!string.IsNullOrWhiteSpace(ass2018.DecisiveCriteria))
+                //{
+                //    foreach (var criteria in _criterias)
+                //        if (ass2018.DecisiveCriteria.Contains(criteria, StringComparison.InvariantCulture))
+                //            document.Add(new StringField(Field_Criteria, criteria, Field.Store.NO));
+
+                //    document.Add(new StringField(Field_CriteriaAll, ass2018.DecisiveCriteria, Field.Store.YES));
+                //}
             }
 
             if (!string.IsNullOrWhiteSpace(ass.RiskAssessment.DecisiveCriteria))
@@ -561,7 +571,24 @@ namespace Prod.Api.Helpers
             }
             else
             {
+                // filter 
                 ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_DoHorizonScanning, new[] { "0" }), Occur.MUST);
+
+                // filtrer på sist redigert av
+                if (filter.Responsible.Length > 0)
+                    ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_LastUpdatedBy, filter.Responsible), Occur.MUST);
+
+                if (filter.History.Category.Length > 0)
+                    ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_Category2018, filter.History.Category), Occur.MUST);
+
+                if (filter.History.Criteria.Length > 0)
+                    ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_Criteria2018, filter.History.Criteria), Occur.MUST);
+
+                if (filter.Current.Category.Length > 0)
+                    ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_Category, filter.Current.Category), Occur.MUST);
+
+                if (filter.Current.Criteria.Length > 0)
+                    ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_Criteria, filter.Current.Criteria), Occur.MUST);
             }
 
 

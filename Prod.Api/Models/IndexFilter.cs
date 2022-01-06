@@ -49,10 +49,14 @@ namespace Prod.Api.Models
 
     public class Current
     {
+        public string[] Category { get; set; } = Array.Empty<string>();
+        public string[] Criteria { get; set; } = Array.Empty<string>();
     }
 
     public class History
     {
+        public string[] Category { get; set; } = Array.Empty<string>();
+        public string[] Criteria { get; set; } = Array.Empty<string>();
     }
     public class Horizon
     {

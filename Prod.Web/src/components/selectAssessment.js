@@ -225,26 +225,26 @@ export default class SelectAssessment extends Component {
                         <div className="filters"><b>{labels.SelectAssessment.speciesStatus}</b>
                             <Xcomp.Bool observableValue={[appState, "vurdert"]} label={koder.statusCodes[0].text} />
                             <Xcomp.MultiselectArray
-                                observableValue={[appState, 'riskAssessedFilter']} 
+                                observableValue={[appState.historyFilter, 'riskAssessedFilter']} 
                                 className="status"
                                 codes={koder.assessedTypes2018}
                                 mode="check"/>
                             <Xcomp.Bool observableValue={[appState, "ikkevurdert"]} label={koder.statusCodes[1].text} />
                             <Xcomp.MultiselectArray
-                                observableValue={[appState, 'riskNotAssessedFilter']} 
+                                observableValue={[appState.historyFilter, 'riskNotAssessedFilter']} 
                                 className="status"
                                 codes={koder.notAssessedTypes2018}
                                 mode="check"/>
                         </div>
                         <div className="filters"><b>{labels.SelectAssessment.riskLevelCategory}</b>
                         <Xcomp.MultiselectArray
-                                observableValue={[appState, 'riskCategoryFilter']} 
+                                observableValue={[appState.historyFilter, 'riskCategoryFilter']} 
                                 codes={koder.riskCategory}                                
                                 mode="check"/>
                         </div>
                         <div className="filters"><b>{labels.SelectAssessment.criteria}</b>
                         <Xcomp.MultiselectArray
-                                observableValue={[appState, 'decisiveCriteriaFilter']} 
+                                observableValue={[appState.historyFilter, 'decisiveCriteriaFilter']} 
                                 codes={koder.decisiveCriteria}
                                 mode="check"/>
                         </div>
@@ -254,26 +254,26 @@ export default class SelectAssessment extends Component {
                         <div className="filters speciesStatus"><b>{labels.SelectAssessment.speciesStatus}</b>
                             <Xcomp.Bool observableValue={[appState, "vurdert"]} label={koder.statusCodes[0].text} />
                             <Xcomp.MultiselectArray
-                                observableValue={[appState, 'riskAssessedFilter']} 
+                                observableValue={[appState.currentFilter, 'riskAssessedFilter']} 
                                 className="status"
                                 codes={koder.assessedTypes}
                                 mode="check"/>
                             <Xcomp.Bool observableValue={[appState, "ikkevurdert"]} label={koder.statusCodes[1].text} />
                             <Xcomp.MultiselectArray
-                                observableValue={[appState, 'riskNotAssessedFilter']} 
+                                observableValue={[appState.currentFilter, 'riskNotAssessedFilter']} 
                                 className="status"
                                 codes={koder.notAssessedTypes}
                                 mode="check"/>
                         </div>
                         <div className="filters"><b>{labels.SelectAssessment.riskLevelCategory}</b>
                         <Xcomp.MultiselectArray
-                                observableValue={[appState, 'riskCategoryFilter']} 
+                                observableValue={[appState.currentFilter, 'riskCategoryFilter']} 
                                 codes={koder.riskCategory}
                                 mode="check"/>
                         </div>
                         <div className="filters"><b>{labels.SelectAssessment.criteria}</b>
                         <Xcomp.MultiselectArray
-                                observableValue={[appState, 'decisiveCriteriaFilter']} 
+                                observableValue={[appState.currentFilter, 'decisiveCriteriaFilter']} 
                                 codes={koder.decisiveCriteria}
                                 mode="check"/>
                         </div>
