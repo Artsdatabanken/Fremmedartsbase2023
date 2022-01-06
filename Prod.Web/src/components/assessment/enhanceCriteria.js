@@ -15,12 +15,12 @@ function roundToSignificantDecimals(num) {
     // console.log("run roundToSignificantDecimals")
     if (num === null) return 0;
     const result =
-        (num >= 10000000) ? round(num / 1000000) * 1000000 :
-        (num >= 1000000 ) ? round(num / 100000)  * 100000  :
-        (num >= 100000  ) ? round(num / 10000)   * 10000   :
-        (num >= 10000   ) ? round(num / 1000)    * 1000    :
-        (num >= 1000    ) ? round(num / 100)     * 100     :
-        (num >= 100     ) ? round(num / 10)      * 10      :
+        (num >= 10000000) ? trunc(num / 1000000) * 1000000 :
+        (num >= 1000000 ) ? trunc(num / 100000)  * 100000  :
+        (num >= 100000  ) ? trunc(num / 10000)   * 10000   :
+        (num >= 10000   ) ? trunc(num / 1000)    * 1000    :
+        (num >= 1000    ) ? trunc(num / 100)     * 100     :
+        (num >= 100     ) ? trunc(num / 10)      * 10      :
         num
     return result
 }
@@ -33,10 +33,10 @@ function roundToSignificantDecimals2(num) {   // todo: spør om grenseverdiene (
         // (num >= 10000   ) ? round(num / 1000)    * 1000    :
         // (num >= 1000    ) ? round(num / 100)     * 100     :
         // (num >= 100     ) ? round(num / 10)      * 10      :
-        (num >= 99.5    ) ? round(num / 10)      * 10      :
-        (num >= 9.95    ) ? round(num / 1)       * 1      :
-        (num >= 2    ) ? round(num / 0.1)      * 0.1      :
-        (num <  2    ) ? round(num / 0.01)      * 0.01      :
+        (num >= 99.5    ) ? trunc(num / 10)      * 10      :
+        (num >= 9.95    ) ? trunc(num / 1)       * 1      :
+        (num >= 2    ) ? trunc(num / 0.1)      * 0.1      :
+        (num <  2    ) ? trunc(num / 0.01)      * 0.01      :
         num
     return result
 }
@@ -161,7 +161,7 @@ function uncertaintyArray(low, high) {
 
 function criterionLow(criterion) {
     const unc = criterion.uncertaintyValues
-    const value = criterion.Value
+    const value = criterion.value
     // console.log("crit_low: " + value + JSON.stringify(unc))
     const result =
         unc.length === 0
@@ -171,7 +171,7 @@ function criterionLow(criterion) {
 }
 function criterionHigh(criterion) {
     const unc = criterion.uncertaintyValues
-    const value = criterion.Value
+    const value = criterion.value
     // console.log("crit_high: " + value + JSON.stringify(unc))
     const result =
         unc.length === 0
@@ -320,9 +320,12 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             return result
         },
 
-        get AOOchangeBest() { return r.AOOtotalBest < 4 ? 1 : n0(r.AOO50yrBest) / d1(r.AOOtotalBest) }, // nb AOOtotalBest is allways >= 4 (so really no need to check)
-        get AOOchangeLow() { return r.AOOtotalBest < 4 ? 1 : n0(r.AOO50yrLow) / d1(r.AOOtotalBest) },   // nb AOOtotalBest is allways >= 4 (so really no need to check)
-        get AOOchangeHigh() { return r.AOOtotalBest >= 4 ? 1 : n0(r.AOO50yrHigh) / d1(r.AOOtotalBest) }, // nb AOOtotalBest is allways >= 4 (so really no need to check)
+        // get AOOchangeBest() { return r.AOOtotalBest < 4 ? 1 : n0(r.AOO50yrBest) / d1(r.AOOtotalBest) }, // nb AOOtotalBest is allways >= 4 (so really no need to check)
+        // get AOOchangeLow() { return r.AOOtotalBest < 4 ? 1 : n0(r.AOO50yrLow) / d1(r.AOOtotalBest) },   // nb AOOtotalBest is allways >= 4 (so really no need to check)
+        // get AOOchangeHigh() { return r.AOOtotalBest >= 4 ? 1 : n0(r.AOO50yrHigh) / d1(r.AOOtotalBest) }, // nb AOOtotalBest is allways >= 4 (so really no need to check)
+        get AOOchangeBest() { return n0(r.AOO50yrBest) / d1(r.AOOtotalBest) }, // nb AOOtotalBest is allways >= 4 (so really no need to check)
+        get AOOchangeLow() { return n0(r.AOO50yrLow) / d1(r.AOOtotalBest) },   // nb AOOtotalBest is allways >= 4 (so really no need to check)
+        get AOOchangeHigh() { return n0(r.AOO50yrHigh) / d1(r.AOOtotalBest) }, // nb AOOtotalBest is allways >= 4 (so really no need to check)
         get adefaultBest() {
             return r.doorKnocker ?
             r.AOO10yrBest >= 16 ? 3
@@ -384,7 +387,9 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         get ascore() {
             const k = r.ametodkey
             // console.log("ascore method: " + k)
-            return k.startsWith("A1") ? r.adefaultBest
+            return (k === "A1a1" || k === "A1b1") ? r.adefaultBest
+            : (k === "A2" || k === "A1a2" || k === "A1b2") ?
+                getCriterion(riskAssessment, 0, "A").value
             : r.medianLifetime >= 650 ? 3
             : r.medianLifetime >= 60 ? 2
             : r.medianLifetime >= 10 ? 1
@@ -461,14 +466,11 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             : "%%#%%"
         },
         get a1aresulttext() {
-            //return `Basert på de beste anslagene på forekomstareal i dag (${r.AOOtotalBest + 1}&nbsp;km²) og om 50&nbsp;år (${r.AOO50yrBest + 1}&nbsp;km²) er A-kriteriet forhåndsskåret som ${r.adefaultBest + 1} (med usikkerhet: ${r.adefaultLow}–${r.adefaultHigh}). Dette innebærer at artens mediane levetid ligger ${r.lifetimeText}, eller at sannsynligheten for utdøing innen 50&nbsp;år er på ${r.extinctionText}.`
-            return `Basert på de beste anslagene på forekomstareal i dag (${r.AOOtotalBest + 1} km²) og om 50 år (${r.AOO50yrBest + 1} km²) er A-kriteriet forhåndsskåret som ${r.adefaultBest + 1} (med usikkerhet: ${r.adefaultLow}–${r.adefaultHigh}). Dette innebærer at artens mediane levetid ligger ${r.lifetimeText}, eller at sannsynligheten for utdøing innen 50 år er på ${r.extinctionText}.`
+            return `Basert på de beste anslagene på forekomstareal i dag (${r.AOOtotalBest} km²) og om 50 år (${r.AOO50yrBest} km²) er A-kriteriet forhåndsskåret som ${r.adefaultBest + 1} (med usikkerhet: ${r.adefaultLow + 1}–${r.adefaultHigh + 1}). Dette innebærer at artens mediane levetid ligger ${r.lifetimeText}, eller at sannsynligheten for utdøing innen 50 år er på ${r.extinctionText}.`
         },
 
         get a1bresulttext() {
-            //return `Basert på de beste anslagene på forekomstareal i dag (${r.AOOtotalBest + 1}&nbsp;km²) og om 50&nbsp;år (${r.AOO50yrBest + 1}&nbsp;km²) er A-kriteriet forhåndsskåret som ${r.adefaultBest + 1} (med usikkerhet: ${r.adefaultLow}–${r.adefaultHigh}). Dette innebærer at artens mediane levetid ligger ${r.lifetimeText}, eller at sannsynligheten for utdøing innen 50&nbsp;år er på ${r.extinctionText}.`
-           // return `Basert på det beste anslaget på ${r.AOOtotalBest + 1} forekomst(er) i løpet av 10 år og ${r.AOO50yrBest + 1} introduksjon(er) i samme tidsperiode er A-kriteriet forhåndsskåret som ${r.adefaultBest + 1} (med usikkerhet: ${r.adefaultLow}–${r.adefaultHigh}). Dette innebærer at artens mediane levetid ligger ${r.lifetimeText}, eller at sannsynligheten for utdøing innen 50 år er på ${r.extinctionText}.`
-           return `Basert på det beste anslaget på ${r.occurrences1Best} forekomster i løpet av 10 år og ${r.introductionsBest} introduksjon(er) i samme tidsperiode er A-kriteriet forhåndsskåret som ${r.adefaultBest + 1} (med usikkerhet: ${r.adefaultLow}–${r.adefaultHigh}). Dette innebærer at artens mediane levetid ligger ${r.lifetimeText}, eller at sannsynligheten for utdøing innen 50 år er på ${r.extinctionText}.`
+           return `Basert på det beste anslaget på ${r.occurrences1Best} forekomster i løpet av 10 år og ${r.introductionsBest} introduksjon(er) i samme tidsperiode er A-kriteriet forhåndsskåret som ${r.adefaultBest + 1} (med usikkerhet: ${r.adefaultLow + 1}–${r.adefaultHigh + 1}). Dette innebærer at artens mediane levetid ligger ${r.lifetimeText}, eller at sannsynligheten for utdøing innen 50 år er på ${r.extinctionText}.`
         },
 
         get invationPotentialUncertainityText() {
@@ -570,18 +572,18 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 : roundToSignificantDecimals2(r.AOOtotalBest / r.AOOknown )
             return result
         },
-        // get AOOdarkfigureLow() {
-        //     const result =
-        //         r.AOOknown === null || r.AOOknown === 0 ? 0
-        //         : roundToSignificantDecimals2(r.AOOtotalLow / r.AOOknown )
-        //     return result
-        // },
-        // get AOOdarkfigureHigh() {
-        //     const result =
-        //         r.AOOknown === null || r.AOOknown === 0 ? 0
-        //         : roundToSignificantDecimals2(r.AOOtotalHigh / r.AOOknown )
-        //     return result
-        // },
+        get AOOdarkfigureLow() {
+            const result =
+                r.AOOknown === null || r.AOOknown === 0 ? 0
+                : roundToSignificantDecimals2(r.AOOtotalLow / r.AOOknown )
+            return result
+        },
+        get AOOdarkfigureHigh() {
+            const result =
+                r.AOOknown === null || r.AOOknown === 0 ? 0
+                : roundToSignificantDecimals2(r.AOOtotalHigh / r.AOOknown )
+            return result
+        },
         get b2aresulttext() {
             return `Ekspansjonshastigheten er beregnet til ${r.expansionSpeed} m/år basert på økningen i artens forekomstareal i perioden fra ${r.AOOyear1} til ${r.AOOyear2} og et mørketall på ${r.AOOdarkfigureBest}.`
         },
@@ -1268,6 +1270,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
     for(const crit of riskAssessment.criteria) {
         let firstrun = true
         extendObservable(crit, {
+            valueDisabled: observable([]),
             uncertaintyDisabled: observable([]),
             get majorUncertainty() { return crit.uncertaintyValues.length >= 3}
         })
@@ -1344,11 +1347,69 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
             if (!config.isRelease) trace()  // leave this line here! Se comments above to learn when to uncomment.
        })
     }
+
+    const critA = getCriterion(riskAssessment, 0, "A")
+    autorun(() => {
+        if(riskAssessment.acceptOrAdjustCritA === "adjust" &&
+            riskAssessment.reasonForAdjustmentCritA !== null &&
+            riskAssessment.reasonForAdjustmentCritA.length > 2) {
+                var vd = [];
+                for (var i = 0; i <= 3; i++) {
+                    if(i < riskAssessment.apossibleLow || i > riskAssessment.apossibleHigh) {
+                        vd.push(i)
+                    }
+                }
+                // console.log("%¤"+ riskAssessment.apossibleLow + " " + riskAssessment.apossibleHigh )
+                // console.log("%¤"+ JSON.stringify(vd))
+                runInAction(() => {
+                    critA.auto = false
+                    critA.valueDisabled.replace(vd)
+                })    
+
+        } else {
+            runInAction(() => {
+                critA.auto = true
+                critA.valueDisabled.replace([])
+            })    
+
+        }
+
+
+    })
+
 }
 
 function enhanceCriteriaAddErrorReportingForAutoMode(riskAssessment) {
     for(const crit of riskAssessment.criteria) {
         extendObservable(crit, errorhandler)
+    }
+}
+
+function enhanceCriteriaAddScale(riskAssessment) {
+    for(var i=0; i < riskAssessment.speciesSpeciesInteractions.length; i++) {
+        riskAssessment.speciesSpeciesInteractions[i].effectLocalScale ? riskAssessment.speciesSpeciesInteractions[i].scale = "Limited" : riskAssessment.speciesSpeciesInteractions[i].scale = "Large"
+    }
+    for(var i=0; i < riskAssessment.speciesNaturetypeInteractions.length; i++) {
+        riskAssessment.speciesNaturetypeInteractions[i].effectLocalScale ? riskAssessment.speciesNaturetypeInteractions[i].scale = "Limited" : riskAssessment.speciesNaturetypeInteractions[i].scale = "Large"
+    }
+    for(var i=0; i < riskAssessment.geneticTransferDocumented.length; i++) {
+        riskAssessment.geneticTransferDocumented[i].effectLocalScale ? riskAssessment.geneticTransferDocumented[i].scale = "Limited" : riskAssessment.geneticTransferDocumented[i].scale = "Large"
+    }
+    
+    for(var i=0; i < riskAssessment.hostParasiteInformations.length; i++) {
+        riskAssessment.hostParasiteInformations[i].effectLocalScale ? riskAssessment.hostParasiteInformations[i].scale = "Limited" : riskAssessment.hostParasiteInformations[i].scale = "Large"
+    }
+}
+
+function enhanceCriteriaAddStatus(riskAssessment) {
+    for(var i=0; i < riskAssessment.hostParasiteInformations.length; i++) {
+        riskAssessment.hostParasiteInformations[i].parasiteNewForHost && riskAssessment.hostParasiteInformations[i].parasiteIsAlien ? 
+                riskAssessment.hostParasiteInformations[i].status = "NewAlien" : 
+                riskAssessment.hostParasiteInformations[i].parasiteIsAlien ?
+                riskAssessment.hostParasiteInformations[i].status = "KnownAlien" :
+                riskAssessment.hostParasiteInformations[i].parasiteNewForHost ? 
+                riskAssessment.hostParasiteInformations[i].status = "NewNative" :
+                riskAssessment.hostParasiteInformations[i].status = "KnownNative" 
     }
 }
 
@@ -1362,4 +1423,6 @@ export default function enhanceCriteria(riskAssessment, vurdering, codes, labels
     enhanceRiskAssessmentEcoEffect(riskAssessment)
     enhanceRiskAssessmentInvasjonspotensiale(riskAssessment)
     enhanceCriteriaAddUncertaintyRules(riskAssessment)
+    enhanceCriteriaAddScale(riskAssessment)
+    enhanceCriteriaAddStatus(riskAssessment)
 }

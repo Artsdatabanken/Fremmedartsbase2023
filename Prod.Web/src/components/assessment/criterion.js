@@ -18,7 +18,7 @@ export default class Criterion extends React.Component {
         const riskAssessment = assessment.riskAssessment
         const labels = appState.codeLabels
         const ntLabels = labels.NatureTypes
-        const {id, value, uncertaintyValues, auto, codes, heading, info, uncertaintyDisabled, errors } = criterion;
+        const {id, value, uncertaintyValues, auto, codes, heading, info, valueDisabled, uncertaintyDisabled, errors } = criterion;
         
         const letter = criterion.criteriaLetter
         //console.log(heading)
@@ -93,7 +93,7 @@ export default class Criterion extends React.Component {
                 // console.log("VVV " + value + " " + value + " # " + radiooptional.checked)
                 // console.log("name " + name)
                 checkboxoptional.disabled = (this.context.readonly || disabled || uncertaintyDisabled.indexOf(kode.value) > -1 )
-                radiooptional.disabled = (this.context.readonly || disabled || auto)
+                radiooptional.disabled = (this.context.readonly || disabled || valueDisabled.indexOf(kode.value) > -1 || auto)
 
 
                 // if (logthis) {
