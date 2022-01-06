@@ -261,6 +261,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.BackgroundF, opt => opt.Ignore())
                     .ForMember(dest => dest.BackgroundG, opt => opt.Ignore())
                     .ForMember(dest => dest.AcceptOrAdjustCritA, opt => opt.Ignore())
+                    .ForMember(dest => dest.ReasonForAdjustmentCritA, opt => opt.Ignore())
                     .ForMember(dest => dest.Hovedøkosystem, opt => opt.Ignore())
 
                     .ForMember(dest => dest.FilesDescription, opt => opt.Ignore())
