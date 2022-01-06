@@ -3,12 +3,11 @@ import {loadDataFromUrl} from '../apiService';
 // import config from '../config';
 
  export default function createTaxonSearch(newObj, contextLetter, filter) {
+     
             const doSearch = async (searchString) => {
                 // const baseUrl = '//it-webadbtest01.it.ntnu.no/ArtskartPublicApi/api/taxon/?term='
                 //const baseUrl = ((window.location.href.indexOf('lokalapi') > -1) ? 'http://localhost:7588/'+ 'taxon/?term=' : 'https://invasivespeciesservice.artdata.slu.se/taxon/') 
                 //const baseUrl = 'https://invasivespeciesservice.artdata.slu.se/taxon/'
-
-
 
                 var config = {taxonApiUrl: "https://artskart.artsdatabanken.no/publicapi/api/taxon?term="} // "https://artsdatabanken.no/api/taxon/ScientificName?scientificName="}
 

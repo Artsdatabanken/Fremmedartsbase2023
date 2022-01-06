@@ -27,7 +27,8 @@ const kodeTekst = (koder, verdi) => koder.filter(item => item.Value === verdi).m
 export default class Assessment62Okologiskeffekt extends React.Component {
     constructor(props) {
         super(props)
-        const {appState:{assessment}, appState:{assessment:{riskAssessment}}, appState, evaluationContext} = this.props;
+        const {appState:{assessment}, appState:{assessment:{riskAssessment}}, appState} = this.props;
+        const evaluationContext = appState.evaluationContext
         const labels = appState.codeLabels
         const koder = appState.koder
         extendObservable(this, {
@@ -255,7 +256,9 @@ export default class Assessment62Okologiskeffekt extends React.Component {
             newItem.taxonSearchWaitingForResult = false
         }
 
-        createTaxonSearch(this.newSSITS, evaluationContext, tax => !!tax.rlCategory && tax.existsInCountry)
+        createTaxonSearch(this.newSSITS, evaluationContext, tax => 
+            tax.rlCategory != null &&
+             tax.existsInCountry)
         // createTaxonSearch(this.newSSIDS, "N")
         createTaxonSearch(this.newGTD, evaluationContext, tax => tax.existsInCountry)
 

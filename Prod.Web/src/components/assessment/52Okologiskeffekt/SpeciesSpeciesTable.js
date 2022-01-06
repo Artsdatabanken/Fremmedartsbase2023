@@ -10,7 +10,7 @@ const SpeciesSpeciesTable = observer((props) =>
 {
     const labels = props.labels
     const disabled = props.disabled
-    console.log("Disabled: " + disabled)
+   // console.log("Disabled: " + disabled)
     return <table className="table ecologicalEffect">
         
         {!props.HCrit ? 
@@ -113,8 +113,7 @@ const SpeciesSpeciesTable = observer((props) =>
             )}
             <tr className="newRow">
                 <td>
-              
-                   <div style={{position: 'relative'}}>
+                    <div style={{position: 'relative'}}>
                         {props.newItem.scientificName.length > 0 ?
                         <div 
                             className="speciesNewItem"

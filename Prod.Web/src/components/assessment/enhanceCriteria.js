@@ -180,6 +180,16 @@ function criterionHigh(criterion) {
     return result
 }
 
+function findUncertainityAbove (levels, level){
+    var uncertainityAbove = 0
+    for (var i = 0; i < levels.length; i ++) {
+        if (levels[i] > level && levels[i] > uncertainityAbove) {
+            uncertainityAbove = levels[i];
+        }
+    }
+    return uncertainityAbove == 0 ? "" : uncertainityAbove
+}
+
 function enhanceRiskAssessmentAddErrorReportingHandler(riskAssessment) {
         extendObservable(riskAssessment, errorhandler)
 }
@@ -458,6 +468,24 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
            return `Basert på det beste anslaget på ${r.occurrences1Best} forekomster i løpet av 10 år og ${r.introductionsBest} introduksjon(er) i samme tidsperiode er A-kriteriet forhåndsskåret som ${r.adefaultBest + 1} (med usikkerhet: ${r.adefaultLow}–${r.adefaultHigh}). Dette innebærer at artens mediane levetid ligger ${r.lifetimeText}, eller at sannsynligheten for utdøing innen 50 år er på ${r.extinctionText}.`
         },
 
+        get invationPotentialUncertainityText() {
+
+            return !r.invationPotentialUncertaintyLevels || r.invationPotentialUncertaintyLevels == [] || findUncertainityAbove(r.invationPotentialUncertaintyLevels, r.invationPotentialLevel) == 0 ? "" 
+                    : r.invationPotentialUncertaintyLevels.length == 1 && r.invationPotentialUncertaintyLevels[0] > r.invationPotentialLevel ? `(usikkerhet opp mot ${r.invationPotentialUncertaintyLevels[0]})`
+                    : ` (usikkerhet opp mot ${findUncertainityAbove(r.invationPotentialUncertaintyLevels, r.invationPotentialLevel)})`
+
+           
+        },
+
+        get invasionPotentialText() {
+            
+           return `Delkategori invasjonspotensial: ${r.invationPotentialLevel}${r.invationPotentialUncertainityText}.`
+        },
+
+        get ecoEffectText() {
+            return `Delkategori økologisk effekt: ${r.ecoEffectLevel}.`
+        },
+
         get bscore() {
             console.log("bscore")
             return r.expansionSpeed >= 500 ? 3
@@ -539,18 +567,18 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 : roundToSignificantDecimals2(r.AOOtotalBest / r.AOOknown )
             return result
         },
-        get AOOdarkfigureLow() {
-            const result =
-                r.AOOknown === null || r.AOOknown === 0 ? 0
-                : roundToSignificantDecimals2(r.AOOtotalLow / r.AOOknown )
-            return result
-        },
-        get AOOdarkfigureHigh() {
-            const result =
-                r.AOOknown === null || r.AOOknown === 0 ? 0
-                : roundToSignificantDecimals2(r.AOOtotalHigh / r.AOOknown )
-            return result
-        },
+        // get AOOdarkfigureLow() {
+        //     const result =
+        //         r.AOOknown === null || r.AOOknown === 0 ? 0
+        //         : roundToSignificantDecimals2(r.AOOtotalLow / r.AOOknown )
+        //     return result
+        // },
+        // get AOOdarkfigureHigh() {
+        //     const result =
+        //         r.AOOknown === null || r.AOOknown === 0 ? 0
+        //         : roundToSignificantDecimals2(r.AOOtotalHigh / r.AOOknown )
+        //     return result
+        // },
         get b2aresulttext() {
             return `Ekspansjonshastigheten er beregnet til ${r.expansionSpeed} m/år basert på økningen i artens forekomstareal i perioden fra ${r.AOOyear1} til ${r.AOOyear2} og et mørketall på ${r.AOOdarkfigureBest}.`
         },
