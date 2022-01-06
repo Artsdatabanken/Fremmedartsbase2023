@@ -320,9 +320,12 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             return result
         },
 
-        get AOOchangeBest() { return r.AOOtotalBest < 4 ? 1 : n0(r.AOO50yrBest) / d1(r.AOOtotalBest) }, // nb AOOtotalBest is allways >= 4 (so really no need to check)
-        get AOOchangeLow() { return r.AOOtotalBest < 4 ? 1 : n0(r.AOO50yrLow) / d1(r.AOOtotalBest) },   // nb AOOtotalBest is allways >= 4 (so really no need to check)
-        get AOOchangeHigh() { return r.AOOtotalBest >= 4 ? 1 : n0(r.AOO50yrHigh) / d1(r.AOOtotalBest) }, // nb AOOtotalBest is allways >= 4 (so really no need to check)
+        // get AOOchangeBest() { return r.AOOtotalBest < 4 ? 1 : n0(r.AOO50yrBest) / d1(r.AOOtotalBest) }, // nb AOOtotalBest is allways >= 4 (so really no need to check)
+        // get AOOchangeLow() { return r.AOOtotalBest < 4 ? 1 : n0(r.AOO50yrLow) / d1(r.AOOtotalBest) },   // nb AOOtotalBest is allways >= 4 (so really no need to check)
+        // get AOOchangeHigh() { return r.AOOtotalBest >= 4 ? 1 : n0(r.AOO50yrHigh) / d1(r.AOOtotalBest) }, // nb AOOtotalBest is allways >= 4 (so really no need to check)
+        get AOOchangeBest() { return n0(r.AOO50yrBest) / d1(r.AOOtotalBest) }, // nb AOOtotalBest is allways >= 4 (so really no need to check)
+        get AOOchangeLow() { return n0(r.AOO50yrLow) / d1(r.AOOtotalBest) },   // nb AOOtotalBest is allways >= 4 (so really no need to check)
+        get AOOchangeHigh() { return n0(r.AOO50yrHigh) / d1(r.AOOtotalBest) }, // nb AOOtotalBest is allways >= 4 (so really no need to check)
         get adefaultBest() {
             return r.doorKnocker ?
             r.AOO10yrBest >= 16 ? 3
