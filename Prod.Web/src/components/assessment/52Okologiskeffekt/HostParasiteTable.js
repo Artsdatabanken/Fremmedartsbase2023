@@ -72,7 +72,7 @@ const HostParasiteTable = observer((props) =>
                     </div>
                 </td>
                 {props.showKeyStoneSpecie ? <td><Xcomp.Bool observableValue={[item, 'keyStoneSpecie']} /></td> : null}
-                <td style={{maxWidth: '160px'}}>{item.ParasiteScientificName}</td>
+                <td style={{maxWidth: '160px'}}>{item.parasiteScientificName}</td>
                 <td>
                     <Xcomp.StringEnum observableValue={[item, 'status']} forceSync codes={koder.ParasiteStatus}/>   
                 </td>

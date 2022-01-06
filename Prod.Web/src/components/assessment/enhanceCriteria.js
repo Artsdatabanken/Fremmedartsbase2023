@@ -1352,6 +1352,22 @@ function enhanceCriteriaAddErrorReportingForAutoMode(riskAssessment) {
     }
 }
 
+function enhanceCriteriaAddScale(riskAssessment) {
+    for(var i=0; i < riskAssessment.speciesSpeciesInteractions.length; i++) {
+        riskAssessment.speciesSpeciesInteractions[i].effectLocalScale ? riskAssessment.speciesSpeciesInteractions[i].scale = "Limited" : riskAssessment.speciesSpeciesInteractions[i].scale = "Large"
+    }
+    for(var i=0; i < riskAssessment.speciesNaturetypeInteractions.length; i++) {
+        riskAssessment.speciesNaturetypeInteractions[i].effectLocalScale ? riskAssessment.speciesNaturetypeInteractions[i].scale = "Limited" : riskAssessment.speciesNaturetypeInteractions[i].scale = "Large"
+    }
+    for(var i=0; i < riskAssessment.geneticTransferDocumented.length; i++) {
+        riskAssessment.geneticTransferDocumented[i].effectLocalScale ? riskAssessment.geneticTransferDocumented[i].scale = "Limited" : riskAssessment.geneticTransferDocumented[i].scale = "Large"
+    }
+    
+    for(var i=0; i < riskAssessment.hostParasiteInformations.length; i++) {
+        riskAssessment.hostParasiteInformations[i].effectLocalScale ? riskAssessment.hostParasiteInformations[i].scale = "Limited" : riskAssessment.hostParasiteInformations[i].scale = "Large"
+    }
+}
+
 
 export default function enhanceCriteria(riskAssessment, vurdering, codes, labels, artificialAndConstructedSites) {
     enhanceRiskAssessmentAddErrorReportingHandler(riskAssessment)
@@ -1362,4 +1378,5 @@ export default function enhanceCriteria(riskAssessment, vurdering, codes, labels
     enhanceRiskAssessmentEcoEffect(riskAssessment)
     enhanceRiskAssessmentInvasjonspotensiale(riskAssessment)
     enhanceCriteriaAddUncertaintyRules(riskAssessment)
+    enhanceCriteriaAddScale(riskAssessment)
 }
