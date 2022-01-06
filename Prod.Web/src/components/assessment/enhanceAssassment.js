@@ -37,6 +37,8 @@ export default function enhanceAssessment(json, appState) {
     delete ra.expansionLowerQ 
     delete ra.expansionUpperQ 
     delete ra.AOOdarkfigureBest
+    delete ra.AOOdarkfigureLow
+    delete ra.AOOdarkfigureHigh
     delete ra.AOO10yrBest
     delete ra.AOO10yrLow
     delete ra.AOO10yrHigh
@@ -103,6 +105,8 @@ export default function enhanceAssessment(json, appState) {
             objra.expansionLowerQ = assra.expansionLowerQ
             objra.expansionUpperQ = assra.expansionUpperQ
             objra.AOOdarkfigureBest = assra.AOOdarkfigureBest
+            objra.AOOdarkfigureLow = assra.AOOdarkfigureLow
+            objra.AOOdarkfigureHigh = assra.AOOdarkfigureHigh
             objra.AOO10yrBest = assra.AOO10yrBest
             objra.AOO10yrLow = assra.AOO10yrLow
             objra.AOO10yrHigh = assra.AOO10yrHigh

@@ -132,7 +132,6 @@ export default class Assessment52Utbredelse extends React.Component {
                             <h4>Vurderingsområde <i>(beta)</i></h4>
                             <div style={{marginLeft: 20, marginBottom: 30}}>
                                 <ModalSimpleMap
-                                    showRegion={true}
                                     evaluationContext={assessment.evaluationContext}
                                     labels={labels}
                                     onOverførFraSimpleMap={action(this.handleOverførFraSimpleMap)}
@@ -169,6 +168,7 @@ export default class Assessment52Utbredelse extends React.Component {
                                         scientificNameId={assessment.evaluatedScientificNameId}
                                         evaluationContext={assessment.evaluationContext}
                                         showWaterAreas={assessment.isAlienSpecies && assessment.isRegionallyAlien}
+                                        showRegion={assessment.showRegion}
                                         labels={labels}
                                         utvalg={assessment.riskAssessment}
                                         onOverførFraArtskart={action(this.handleOverførFraArtskart)}
