@@ -7,9 +7,12 @@ import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
 import { Vector as VectorSource, WMTS as WmtsSource } from 'ol/source';
 import Proj4 from 'proj4';
 import { addProjection, Projection } from 'ol/proj';
+import { DragBox, Select } from 'ol/interaction';
+import { platformModifierKeyOnly } from 'ol/events/condition';
 import MapContext from "./MapContext";
 import mapOlFunc from './MapOlFunctions';
 import config from '../../config';
+import * as Xcomp from "../observableComponents";
 
 const mapBounds = {
     S: [
@@ -24,8 +27,9 @@ const mapBounds = {
 
 const SimpleMap = ({
     evaluationContext,
-    showRegion,
     onClick,
+    showRegion,
+    selectAll,
     modal,
     static,
     mapType
@@ -99,7 +103,27 @@ const SimpleMap = ({
 
     }
 
+    useEffect(() => {
+        if (!map) return;
+
+        const vatnLayer = map.getLayers().getArray().filter((layer) => layer.get('name') === 'Vatn' ? true : false)[0];
+        if (!vatnLayer) return;
+        const layers = map.getLayers().getArray();
+        const waterSelectedLayer = layers.filter(layer => layer.get('name') === 'VatnSelected')[0];
+        
+        let features = [];
+        waterSelectedLayer.getSource().clear();
+        if (selectAll) {
+            features = vatnLayer.getSource().getFeatures();
+            waterSelectedLayer.getSource().addFeatures(features);
+        }
+
+        console.log('selectAll changed', selectAll, features);
+    }, [selectAll]);
+
 	useEffect(() => {
+
+        // console.log('SimpleMap - useEffect', showRegion);
 
         if (Proj4.defs(`EPSG:${config.mapEpsgCode}`) === undefined) {
             Proj4.defs(`EPSG:${config.mapEpsgCode}`, config.mapEpsgDef);
@@ -167,6 +191,7 @@ const SimpleMap = ({
                 visible: true,
                 zIndex: 1
             }));
+            options.layers.push(mapOlFunc.createWaterSelectedLayer('VatnSelected', projection));
         }
         options.layers.push(mapOlFunc.createWaterLayer('Vatn', showRegion ? 14 : 15, projection, '', () => {}));
         options.layers.push(new VectorLayer({
@@ -178,35 +203,87 @@ const SimpleMap = ({
 
         mapObject = new Map(options);
 
+        const layers = mapObject.getLayers().getArray();
+
+        const vatnLayer = layers.filter((layer) => layer.get('name') === 'Vatn' ? true : false)[0];
+        const vatnSource = vatnLayer ? vatnLayer.getSource() : undefined;
+
+        if (!static) {
+            const dragBox = new DragBox({condition: platformModifierKeyOnly});
+            mapObject.addInteraction(dragBox);
+
+            const waterSelectedLayer = layers.filter(layer => layer.get('name') === 'VatnSelected')[0];
+
+            const selectDeselectFeatures = (features, deSelect = false, callback = () => {}) => {
+                if (features.length === 0) return;
+                const selectedFeatures = waterSelectedLayer.getSource().getFeatures().map(x => x.get('globalID'));
+                features.forEach((f) => {
+                    const pos = selectedFeatures.indexOf(f.get('globalID'));
+                    if (pos < 0) {
+                        waterSelectedLayer.getSource().addFeature(f);
+                    } else {
+                        if (deSelect) waterSelectedLayer.getSource().removeFeature(f);
+                    }
+                    if (callback) callback({ name: f.get(waterFieldName), properties: f.getProperties(), selected: pos < 0 });
+                });
+            }
+
+            dragBox.on('boxend', (e) => {
+                if (!vatnSource) return;
+    
+                const features = [];
+                vatnSource.forEachFeatureIntersectingExtent(dragBox.getGeometry().getExtent(), (f) => {
+                    features.push(f);
+                });
+                selectDeselectFeatures(features);
+            });
+
+            mapObject.on('click', (e) => {
+                if (!vatnSource) return;
+    
+                const features = [];
+                mapObject.forEachFeatureAtPixel(e.pixel, (f) => {
+                    const featureLayerName = f.get('_layerName');
+                    // console.log('feature', featureLayerName, f);
+                    if (featureLayerName && featureLayerName === 'Vatn') {
+                        features.push(f);
+                        return true;
+                    }
+                    return false;
+                });
+                selectDeselectFeatures(features, true, onClick);
+            });
+        } else {
+            mapObject.on('click', (e) => {
+                if (!vatnSource) return;
+    
+                const features = [];
+                mapObject.forEachFeatureAtPixel(e.pixel, (f) => {
+                    const featureLayerName = f.get('_layerName');
+                    // console.log('feature', featureLayerName, f);
+                    if (featureLayerName && featureLayerName === 'Vatn') {
+                        features.push(f);
+                        return true;
+                    }
+                    return false;
+                });
+                if (features.length === 0) return;
+                features.forEach((f) => {
+                    onClick({ name: f.get(waterFieldName), properties: f.getProperties() });
+                });
+            });
+        }
+
         mapObject.setTarget(mapRef.current);
         setMap(mapObject);
 
         setPointerMove(mapObject);
 
-        mapObject.on('click', (e) => {
-            const vatnLayer = mapObject.getLayers().getArray().filter((layer) => layer.get('name') === 'Vatn' ? true : false)[0];
-            if (!vatnLayer) return;
-            const vatnSource = vatnLayer.getSource();
-            if (!vatnSource) return;
-
-            const vatn = [];
-            mapObject.forEachFeatureAtPixel(e.pixel, (f) => {
-                const featureLayerName = f.get('_layerName');
-                // console.log('feature', featureLayerName, f);
-                if (featureLayerName && featureLayerName === 'Vatn') {
-                    vatn.push(f);
-                    return true;
-                }
-                return false;
-            });
-            if (vatn.length > 0) onClick({ name: vatn[0].get(waterFieldName), properties: vatn[0].getProperties() });
-        });
-
         // Fit extent
         mapObject.getView().fit(mapExtent);
 
 		return () => mapObject.setTarget(undefined);
-    }, []);
+    }, [showRegion]);
 
     return (
         <div>

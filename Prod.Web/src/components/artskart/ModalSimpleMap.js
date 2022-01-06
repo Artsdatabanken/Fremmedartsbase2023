@@ -1,18 +1,19 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SimpleMap from "../map/SimpleMap";
 import * as Xcomp from "../observableComponents";
 
 const ModalSimpleMap = ({
   evaluationContext,
-  showRegion,
   labels,
   onOverførFraSimpleMap
 }) => {
   const ref = useRef();
   const [visSimpleMap, setVisSimpleMap] = useState(false);
+  const [showRegion, setShowRegion] = React.useState(true);
+  const [selectAll, setSelectAll] = React.useState(false);
 
-  const onClick = ({name, properties}) => {
-    console.log('you clicked:', name, properties);
+  const onClick = ({name, properties, selected}) => {
+    console.log('you clicked:', name, properties, selected);
   }
 
   return visSimpleMap ? (
@@ -35,15 +36,50 @@ const ModalSimpleMap = ({
           ✘ Lukk uten å lagre
         </Xcomp.Button>
       </div>
+      <div style={{
+        pointerEvents: 'auto',
+        float: 'left',
+        position: 'absolute',
+        left: 16,
+        top: 66,
+        zIndex: 1000
+        }}>
+        <div>Vurderingsområde</div>
+        <div>
+          <span>Viser {showRegion ? 'vannregioner' : 'vannområder'} </span>
+          <Xcomp.Button
+            onClick={e => {
+            e.preventDefault();
+            e.stopPropagation();
+            setSelectAll(false);
+            setShowRegion(!showRegion);
+            }}
+            >
+            Bytt til {!showRegion ? 'vannregioner' : 'vannområder'}
+          </Xcomp.Button>
+        </div>
+        <div>
+          <Xcomp.Button
+            onClick={e => {
+            e.preventDefault();
+            e.stopPropagation();
+            setSelectAll(!selectAll);
+            }}
+            >
+            {!selectAll ? 'Velg alle' : 'Velg ingen'}
+          </Xcomp.Button>
+        </div>
+      </div>
       <div style={{ height: "100%" }}>
         <SimpleMap
-            modal={true}
-            static={false}
-            evaluationContext={evaluationContext}
-            showRegion={showRegion}
-            labels={labels}
-            onClick={onClick}
-            onOverførFraSimpleMap={onOverførFraSimpleMap}
+          modal={true}
+          static={false}
+          selectAll={selectAll}
+          showRegion={showRegion}
+          evaluationContext={evaluationContext}
+          labels={labels}
+          onClick={onClick}
+          onOverførFraSimpleMap={onOverførFraSimpleMap}
           />
       </div>
     </div>
