@@ -804,6 +804,7 @@ public partial class FA4 // (3.2) Artsegenskaper
 
         public string AcceptOrAdjustCritA { get; set; } = "accept";  // ametod submetod (radio)
         public string ChosenSpreadMedanLifespan { get; set; } = "";  // ametod (radio)
+        public string ReasonForAdjustmentCritA { get; set; } = ""; // added 06.01.2022
 
         public bool ActiveSpreadPVAAnalysisSpeciesLongevity { get; set; } // added 27.09.2016
 
