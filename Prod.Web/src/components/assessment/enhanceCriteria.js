@@ -390,11 +390,13 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             return (k === "A1a1" || k === "A1b1") ? r.adefaultBest
             : (k === "A2" || k === "A1a2" || k === "A1b2") ?
                 getCriterion(riskAssessment, 0, "A").value
-            : r.medianLifetime >= 650 ? 3
-            : r.medianLifetime >= 60 ? 2
-            : r.medianLifetime >= 10 ? 1
-            : r.medianLifetime < 10 ? 0
-            : 0
+            : k === "A3" ?
+                r.medianLifetime >= 650 ? 3
+                : r.medianLifetime >= 60 ? 2
+                : r.medianLifetime >= 10 ? 1
+                : r.medianLifetime < 10 ? 0
+                : 0
+            : 0 // NaN?
         },
         get alow() {
             const k = r.ametodkey
@@ -769,17 +771,19 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
     })
 
     autorun(() => {
-        const criterionA = getCriterion(riskAssessment, 0, "A")
-          console.log("Autorun criterionA old value: " + criterionA.value)
-        // const nv = riskAssessment.CalculatedCritALevel // .ChosenSpreadYearlyIncreaseLevel
-        //   console.log("Autorun criterionA CalculatedCritALevel nv: " + JSON.stringify(nv))
-        const avalue = r.ascore
-        runInAction(() => {
-            criterionA.value = avalue
-        })
-        console.log("Autorun criterionA new value: " + criterionA.value)
-
-    });
+        const k = r.ametodkey
+        if(!(k === "A1a2" || k === "A1b2")) {
+            const criterionA = getCriterion(riskAssessment, 0, "A")
+            console.log("Autorun criterionA old value: " + criterionA.value)
+            // const nv = riskAssessment.CalculatedCritALevel // .ChosenSpreadYearlyIncreaseLevel
+            //   console.log("Autorun criterionA CalculatedCritALevel nv: " + JSON.stringify(nv))
+            const avalue = r.ascore
+            runInAction(() => {
+                criterionA.value = avalue
+            })
+            console.log("Autorun criterionA new value: " + criterionA.value)
+        }
+    })
 
     autorun(() => {
         const criterionB = getCriterion(riskAssessment, 0, "B")
@@ -789,7 +793,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             criterionB.value = bvalue
         })
         console.log("Autorun criterionB new value: " + criterionB.value)
-    });
+    })
 
     autorun(() => {
         const criterionC = getCriterion(riskAssessment, 0, "C")
