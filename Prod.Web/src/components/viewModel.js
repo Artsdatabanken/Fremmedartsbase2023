@@ -120,9 +120,6 @@ class ViewModel {
             },
             artificialAndConstructedSites: ["F4", "F5", "H4", "L7", "L8", "M14", "M15", "T35", "T36", "T37", "T38", "T39", "T40", "T41", "T42", "T43", "T44", "T45", "V11", "V12", "V13"],
             assessmentTypeFilter: "horizonScanning",
-            vurdert: false,
-            ikkevurdert: false,
-
 
             expertgroups: null, // [],
             expertgroup: null,
@@ -143,12 +140,16 @@ class ViewModel {
                 riskCategoryFilter: [],
                 riskAssessedFilter: [],
                 riskNotAssessedFilter: [],
+                vurdert: false,
+                ikkevurdert: false
             },
             historyFilter:{
                 decisiveCriteriaFilter: [],
                 riskCategoryFilter: [],
                 riskAssessedFilter: [],
                 riskNotAssessedFilter: [],
+                vurdert: false,
+                ikkevurdert: false
             },
 
             horizonScanFilter: {
@@ -449,8 +450,14 @@ class ViewModel {
                 this.horizonScanFilter.potentialDoorKnockers.length,
                 this.horizonScanFilter.hsNotStarted, this.horizonScanFilter.hsFinished, this.horizonScanFilter.toAssessment, this.horizonScanFilter.notAssessed,
                 this.responsible.length, this.kunUbehandlede,
+                this.workStatus.length,
+
                 this.historyFilter.riskCategoryFilter.length, this.historyFilter.decisiveCriteriaFilter.length,
-                this.currentFilter.riskCategoryFilter.length, this.currentFilter.decisiveCriteriaFilter.length
+                this.historyFilter.riskAssessedFilter.length, this.historyFilter.riskNotAssessedFilter.length, this.historyFilter.ikkevudert, this.historyFilter.vurdert,
+
+                this.currentFilter.riskCategoryFilter.length, this.currentFilter.decisiveCriteriaFilter.length,
+                this.currentFilter.riskAssessedFilter.length, this.currentFilter.riskNotAssessedFilter.length, this.currentFilter.ikkevudert, this.currentFilter.vurdert,
+
             ],
             ([expertgroupId, isLoggedIn])  => {
                 //console.log("react to expertgroup: " + expertgroupId + "," + isLoggedIn)
@@ -1216,15 +1223,48 @@ class ViewModel {
             filters=filters + "&HorizonScan=false"
 
             if (this.filterType == "FL2018"){
+                if  (this.historyFilter.vurdert) {
+                    filters = filters + "&History.Status=vurdert"
+                }
+                else{
+                    if (this.historyFilter.riskAssessedFilter.length > 0) filters = filters + this.historyFilter.riskAssessedFilter.map((x)=> "&History.Status=" + x ).join()
+                }
+
+                if  (this.historyFilter.ikkevurdert) {
+                    filters = filters + "&History.Status=ikkevurdert"
+                }
+                else{
+                    if (this.historyFilter.riskNotAssessedFilter.length > 0) filters = filters + this.historyFilter.riskNotAssessedFilter.map((x)=> "&History.Status=" + x ).join()
+                }
+
                 if (this.historyFilter.riskCategoryFilter.length > 0) filters = filters + this.historyFilter.riskCategoryFilter.map((x)=> "&History.Category=" + x ).join()
                 if (this.historyFilter.decisiveCriteriaFilter.length > 0) filters = filters + this.historyFilter.decisiveCriteriaFilter.map((x)=> "&History.Criteria=" + x.toUpperCase() ).join()
             }
             if (this.filterType == "FL2023"){
+
+                if  (this.currentFilter.vurdert) {
+                    filters = filters + "&Current.Status=vurdert"
+                }
+                else{
+                    if (this.currentFilter.riskAssessedFilter.length > 0) filters = filters + this.currentFilter.riskAssessedFilter.map((x)=> "&Current.Status=" + x ).join()
+                }
+
+                if  (this.currentFilter.ikkevurdert) {
+                    filters = filters + "&Current.Status=ikkevurdert"
+                }
+                else{
+                    if (this.currentFilter.riskNotAssessedFilter.length > 0) filters = filters + this.currentFilter.riskNotAssessedFilter.map((x)=> "&Current.Status=" + x ).join()
+                }
+
                 if (this.currentFilter.riskCategoryFilter.length > 0) filters = filters + this.currentFilter.riskCategoryFilter.map((x)=> "&Current.Category=" + x ).join()
                 if (this.currentFilter.decisiveCriteriaFilter.length > 0) filters = filters + this.currentFilter.decisiveCriteriaFilter.map((x)=> "&Current.Criteria=" + x.toUpperCase() ).join()
 
             }
             if (this.filterType == "statusAndCommentFL2023"){
+                if (this.workStatus.length > 0){
+                    filters = filters + this.workStatus.map((x)=> "&Status=" + x ).join()
+                }
+
                 if (this.responsible.length > 0){
                     //console.log(this.responsible)
                     filters = filters + this.responsible.map((x)=> "&Responsible=" + x ).join()
