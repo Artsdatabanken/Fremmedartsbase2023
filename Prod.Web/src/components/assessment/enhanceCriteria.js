@@ -1354,7 +1354,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
 
     const critA = getCriterion(riskAssessment, 0, "A")
     autorun(() => {
-        if(riskAssessment.acceptOrAdjustCritA === "adjust" &&
+        if((riskAssessment.ametodkey == "A1a2" || riskAssessment.ametodkey == "A1b2" ) &&
             riskAssessment.reasonForAdjustmentCritA !== null &&
             riskAssessment.reasonForAdjustmentCritA.length > 2) {
                 var vd = [];
@@ -1364,10 +1364,13 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                     }
                 }
                 // console.log("%¤"+ riskAssessment.apossibleLow + " " + riskAssessment.apossibleHigh )
-                // console.log("%¤"+ JSON.stringify(vd))
+                // console.log("%¤"+ JSON.stringify(vd) + " " + critA.value + " " + vd.includes(critA.value))
                 runInAction(() => {
                     critA.auto = false
                     critA.valueDisabled.replace(vd)
+                    if (vd.includes(critA.value)) {
+                        critA.value = riskAssessment.apossibleLow
+                    }
                 })    
 
         } else {
