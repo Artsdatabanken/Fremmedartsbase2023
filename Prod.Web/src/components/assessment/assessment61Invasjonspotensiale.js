@@ -640,7 +640,10 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     <Xcomp.Bool
                         observableValue={[riskAssessment, "activeSpreadYearlyIncreaseCalculatedExpansionSpeed"]}
                   label={labels.BcritSelect.d}/> */}
-                    {riskAssessment.activeSpreadYearlyIncreaseObservations
+
+
+
+                    {/* {riskAssessment.activeSpreadYearlyIncreaseObservations
                         ? <div>
                                 <table className="formtable">
                                     <tbody>
@@ -718,7 +721,9 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                 
                                 <hr/>
                             </div>
-                        : null}
+                        : null} */}
+
+
 
                         <div>
                        
