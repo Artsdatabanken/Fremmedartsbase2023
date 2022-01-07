@@ -5,7 +5,7 @@ WORKDIR /app
 EXPOSE 80
 RUN sed -i 's/DEFAULT@SECLEVEL=2/DEFAULT@SECLEVEL=1/g' /etc/ssl/openssl.cnf
 RUN sed -i 's/DEFAULT@SECLEVEL=2/DEFAULT@SECLEVEL=1/g' /usr/lib/ssl/openssl.cnf
-ENV FabDatabase="Data Source = host.docker.internal; Initial Catalog = fab2023; Persist Security Info = True; User ID = fabbase; Password = notapassword; Connection Timeout = 150;"
+ENV FabDatabase="Data Source = host.docker.internal; Initial Catalog = fab4_test; Persist Security Info = True; User ID = fabbase; Password = notapassword; Connection Timeout = 150;"
 ENV AuthAuthority="https://demo.identityserver.io"
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
