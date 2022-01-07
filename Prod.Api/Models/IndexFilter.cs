@@ -41,6 +41,8 @@ namespace Prod.Api.Models
         /// If mode is HorizonScan or full assessment 
         /// </summary>
         public bool HorizonScan { get; set; }
+
+        public string[] Status { get; set; } = Array.Empty<string>();
     }
 
     public class Progress
@@ -51,12 +53,14 @@ namespace Prod.Api.Models
     {
         public string[] Category { get; set; } = Array.Empty<string>();
         public string[] Criteria { get; set; } = Array.Empty<string>();
+        public string[] Status { get; set; } = Array.Empty<string>();
     }
 
     public class History
     {
         public string[] Category { get; set; } = Array.Empty<string>();
         public string[] Criteria { get; set; } = Array.Empty<string>();
+        public string[] Status { get; set; } = Array.Empty<string>();
     }
     public class Horizon
     {

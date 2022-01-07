@@ -223,13 +223,13 @@ export default class SelectAssessment extends Component {
 
                     {appState.filterType.indexOf('FL2018') > -1 && <div className="nav_menu">                        
                         <div className="filters"><b>{labels.SelectAssessment.speciesStatus}</b>
-                            <Xcomp.Bool observableValue={[appState, "vurdert"]} label={koder.statusCodes[0].text} />
+                            <Xcomp.Bool observableValue={[appState.historyFilter, "vurdert"]} label={koder.statusCodes[0].text} />
                             <Xcomp.MultiselectArray
                                 observableValue={[appState.historyFilter, 'riskAssessedFilter']} 
                                 className="status"
                                 codes={koder.assessedTypes2018}
                                 mode="check"/>
-                            <Xcomp.Bool observableValue={[appState, "ikkevurdert"]} label={koder.statusCodes[1].text} />
+                            <Xcomp.Bool observableValue={[appState.historyFilter, "ikkevurdert"]} label={koder.statusCodes[1].text} />
                             <Xcomp.MultiselectArray
                                 observableValue={[appState.historyFilter, 'riskNotAssessedFilter']} 
                                 className="status"
@@ -252,13 +252,13 @@ export default class SelectAssessment extends Component {
                 </div> }
                    {appState.filterType.indexOf('FL2023') > -1 &&  <div className="nav_menu">                        
                         <div className="filters speciesStatus"><b>{labels.SelectAssessment.speciesStatus}</b>
-                            <Xcomp.Bool observableValue={[appState, "vurdert"]} label={koder.statusCodes[0].text} />
+                            <Xcomp.Bool observableValue={[appState.currentFilter, "vurdert"]} label={koder.statusCodes[0].text} />
                             <Xcomp.MultiselectArray
                                 observableValue={[appState.currentFilter, 'riskAssessedFilter']} 
                                 className="status"
                                 codes={koder.assessedTypes}
                                 mode="check"/>
-                            <Xcomp.Bool observableValue={[appState, "ikkevurdert"]} label={koder.statusCodes[1].text} />
+                            <Xcomp.Bool observableValue={[appState.currentFilter, "ikkevurdert"]} label={koder.statusCodes[1].text} />
                             <Xcomp.MultiselectArray
                                 observableValue={[appState.currentFilter, 'riskNotAssessedFilter']} 
                                 className="status"

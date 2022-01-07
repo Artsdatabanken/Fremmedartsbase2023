@@ -22,7 +22,7 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Change this to force index rebuild!
         /// </summary>
-        public const int IndexVersion = 17;
+        public const int IndexVersion = 23;
 
         private const string Field_Id = "Id";
         private const string Field_Group = "Expertgroup";
@@ -61,7 +61,10 @@ namespace Prod.Api.Helpers
         private const string Field_HsStatus = "HsStatus";
         private const string Field_HsDone = "HsDone";
         private const string Field_HsResult = "HsStatus";
-        private const string Field_Status = "Status";
+        private const string Field_Progress = "Progress";
+        private const string Field_CurrentStatus = "CStatus";
+        private const string Field_2018Status = "PStatus";
+        private const string Field_ProgressStatus = "ProgressStatus";
 
         //facets - telle antall!!
         public const string Facet_Author = "Author";
@@ -230,7 +233,7 @@ namespace Prod.Api.Helpers
                 new StringField(Field_HsStatus, ass.HorizonScanningStatus, Field.Store.YES),
                 //new StringField(Field_HsDone, ass.HorizonScanningStatus, Field.Store.YES),
                 new StringField(Field_HsResult, horResult, Field.Store.NO),
-                new StringField(Field_Status, ass.EvaluationStatus, Field.Store.YES),
+                new StringField(Field_Progress, ass.EvaluationStatus, Field.Store.YES),
                 // facets
                 new FacetField(Facet_Author, assessment.LastUpdatedByUser.FullName),
                 new FacetField(Facet_Progress, horResult),
@@ -254,6 +257,31 @@ namespace Prod.Api.Helpers
                     Field.Store.YES));
             else
                 document.Add(new StringField(Field_Category, "NR", Field.Store.YES));
+
+            // &Current.Status=establishedAfter1800,&Current.Status=doorKnocker,&Current.Status=regionallyAlien,&Current.Status=effectWithoutEstablishment
+            // &Current.Status=establishedBefore1800,&Current.Status=sharesMotherSpeciesStatus,&Current.Status=notAlienInNorway,&Current.Status=notAssessedPotentialDoorKnocker
+            if (ass.IsRegionallyAlien.HasValue && ass.IsRegionallyAlien.Value)  document.Add(new StringField(Field_CurrentStatus, "regionallyAlien", Field.Store.NO));
+            
+            if (ass.AlienSpecieUncertainIfEstablishedBefore1800.HasValue)
+            {
+                document.Add(ass.AlienSpecieUncertainIfEstablishedBefore1800.Value == true
+                    ? new StringField(Field_CurrentStatus, "establishedBefore1800", Field.Store.NO)
+                    : new StringField(Field_CurrentStatus, "establishedAfter1800", Field.Store.NO));
+            }
+
+            //Status=notStarted,&Status=inprogress,&Status=finished
+            if (ass.EvaluationStatus == "imported")
+            {
+                document.Add(new StringField(Field_ProgressStatus, "notStarted", Field.Store.NO));
+            }
+            else if (ass.EvaluationStatus == "inprogress")
+            {
+                document.Add(new StringField(Field_ProgressStatus, "inprogress", Field.Store.NO));
+            }
+            if (ass.EvaluationStatus == "finished")
+            {
+                document.Add(new StringField(Field_ProgressStatus, "finished", Field.Store.NO));
+            }
 
             if (ass2018 != null)
             {
@@ -578,17 +606,28 @@ namespace Prod.Api.Helpers
                 if (filter.Responsible.Length > 0)
                     ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_LastUpdatedBy, filter.Responsible), Occur.MUST);
 
+                if (filter.Status.Length > 0)
+                    ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_ProgressStatus, filter.Status), Occur.MUST);
+
+
                 if (filter.History.Category.Length > 0)
                     ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_Category2018, filter.History.Category), Occur.MUST);
 
                 if (filter.History.Criteria.Length > 0)
                     ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_Criteria2018, filter.History.Criteria), Occur.MUST);
 
+                if (filter.History.Status.Length > 0)
+                    ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_2018Status, filter.History.Status), Occur.MUST);
+
+
                 if (filter.Current.Category.Length > 0)
                     ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_Category, filter.Current.Category), Occur.MUST);
 
                 if (filter.Current.Criteria.Length > 0)
                     ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_Criteria, filter.Current.Criteria), Occur.MUST);
+
+                if (filter.Current.Status.Length > 0)
+                    ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_CurrentStatus, filter.Current.Status), Occur.MUST);
             }
 
 
