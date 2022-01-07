@@ -3,6 +3,7 @@ import {autorun, extendObservable, observable, action, toJS} from 'mobx';
 import {observer, inject} from 'mobx-react';
 import * as Xcomp from '../observableComponents';
 import BsModal from '../../bootstrapModal'
+import createTaxonSearch from '../../createTaxonSearch'
 
 @inject("appState")
 @observer
@@ -27,17 +28,21 @@ export class StringEnum2 extends React.Component {
 export default class NaturetypeModal extends React.Component {
     constructor(props) {
         super()
-        const {fabModel, naturtype, onOk, showModal} = props;
+        const {fabModel, naturtype, onOk, showModal, taxon} = props;
+        const evaluationContext = fabModel.evaluationContext        
         const [sm, smprop] = showModal
+        
         extendObservable(this, {
             // showModal: true,
-            taxonSearchString: "",
-            taxonSearchResult: [],
-            taxonSearchWaitingForResult: true,
+           // taxonSearchString: "",
+            //taxonSearchResult: [],
+            //taxonSearchWaitingForResult: false,
             hasStateChange: false,
             // hideStateChange: false,
             naturtypeLabel: null,
-            editNaturtype: toJS(naturtype) // clone it
+            editNaturtype: toJS(naturtype), // clone it
+            taxSearchResult: taxon.taxonSearchResult
+            
             // {
             //     NiNCode: null,
             //     DominanceForrest: [],
@@ -68,7 +73,7 @@ export default class NaturetypeModal extends React.Component {
 
         this.onOk = action (() => {
             this.hideModal()
-            console.log(this.editNatureype)
+            console.log(this.editNaturetype)
             const clone = toJS(this.editNaturtype) // clone once more to be sure...
             onOk(clone)
         })
@@ -84,7 +89,10 @@ export default class NaturetypeModal extends React.Component {
                 this.editNaturtype.affectedArea = "0"
             }
         })
+
+        //createTaxonSearch(this, evaluationContext, tax => tax.existsInCountry)
     }
+
 
     hasDominanceForrest(nincode) {
         if (!nincode) {
@@ -97,7 +105,7 @@ export default class NaturetypeModal extends React.Component {
     }
 
     render() {
-        const {fabModel, naturtype, labels, showModal, hideStateChange, livsmedium} = this.props;
+        const {fabModel, naturtype, labels, showModal, hideStateChange, livsmedium, taxon} = this.props;
         const [sm, smprop] = showModal
         const [hsc, hscprop] = hideStateChange
         this.hideStateChange = hsc[hscprop]
@@ -105,8 +113,10 @@ export default class NaturetypeModal extends React.Component {
         // const nts = fabModel.naturtyper
         const doms = fabModel.dominansSkog
         const koder = fabModel.koder
-        const addNaturtype = naturtype
-        console.log(addNaturtype)
+        const disabled = fabModel.userContext.readonly
+        const addNaturtype = naturtype       
+        //const taxonSearchResult = taxon.taxonSearchResult
+        console.log(this.taxSearchResult)
         console.log("render naturtypeModal")
         return <div>
             {sm[smprop]
@@ -170,52 +180,71 @@ export default class NaturetypeModal extends React.Component {
                                 />}
 
                         {livsmedium &&                         
-                          <div>
+                          <div style={{position: 'relative'}}>
+                          {/*this.editNaturtype.taxon.scientificName.length > 0 ?
+                          <div 
+                              className="speciesNewItem"
+                              onClick={action(() => {
+                                  this.editNaturtype.taxon.taxonId = "";
+                                  this.editNaturtype.taxon.taxonRank = "";
+                                  this.editNaturtype.taxon.scientificName = "";
+                                  this.editNaturtype.taxon.scientificNameId = "";
+                                  this.editNaturtype.taxon.scientificNameAuthor = "";
+                                  this.editNaturtype.taxon.vernacularName = "";
+                                  this.editNaturtype.taxon.redListCategory = "";
+                                  this.editNaturtype.taxon.taxonSearchResult.replace([]); 
+                                  this.editNaturtype.taxon.taxonSearchString = "" }) 
+                              }
+                            >
+                              <div className={"rlCategory " + this.editNaturtype.taxon.redListCategory}>{this.editNaturtype.taxon.RedListCategory}</div>
+                              <div className="vernacularName">{this.editNaturtype.taxon.vernacularName}</div>
+                              <div className="scientificName">{this.editNaturtype.taxon.scientificName}</div>
+                              <div className="author">{"(" + this.editNaturtype.taxon.scientificNameAuthor + ")"}</div>
+                          </div> :*/}
                           <Xcomp.String 
-                          disabled={fabModel.userContext.readonly}
-                          label={ntLabels.speciesOrTaxon}
-                          observableValue={[this, 'taxonSearchString']} placeholder={labels.General.searchSpecies} />
-                            {this.taxonSearchResult.length > 0 ?
-                            <div className="speciesSearchList" 
+                            disabled={disabled} 
+                            label={ntLabels.speciesOrTaxon}
+                            observableValue={[taxon, 'taxonSearchString']} placeholder={labels.General.searchSpecies} />
+                          {this.taxSearchResult.length > 0 && 
+                          <div className="speciesSearchList" 
                                 //style={{position: 'absolute', top: "36px", left:"15px"}}
                             >
-                                <ul className="panel list-unstyled">
-                                {this.taxonSearchResult.map(item =>
-                                    <li 
-                                    /*onClick={action(e => {
-                                        props.newItem.taxonId = item.taxonId;
-                                        props.newItem.taxonRank = item.taxonRank;
-                                        props.newItem.scientificName = item.scientificName;
-                                        props.newItem.scientificNameId = item.scientificNameId;
-                                        props.newItem.scientificNameAuthor = item.author;
-                                        props.newItem.vernacularName = item.popularName;
-
-                                        props.newItem.redListCategory = item.rlCategory;
-                                        props.newItem.taxonSearchResult.replace([]); 
-                                        props.newItem.taxonSearchString = "" })} 
-                                        key={item.scientificName}*/
-                                    >
-                                        <div className="speciesSearchItem">
-                                            <div className={"rlCategory " + item.rlCategory}>{item.rlCategory}</div>
-                                            <div className="vernacularName">{item.popularName}</div>
-                                            <div className="scientificName">{item.scientificName}</div>
-                                            <div className="author">{"(" + item.author + ")"}</div>
-                                        </div>
-                                    </li>
-                                )}
-                                </ul>
-                            </div> :
-                            null}
-                            {(this.taxonSearchString != "" || this.taxonSearchWaitingForResult) && !fabModel.userContext.readonly ?
-                            <div style={{zIndex: 10000}}>
-                                <div  className={"three-bounce"}>
-                                    <div className="bounce1" />
-                                    <div className="bounce2" />
-                                    <div className="bounce3" />
-                                </div>
-                            </div> :
-                            null}
-                          </div>
+                              <ul className="panel list-unstyled">
+                              {this.taxSearchResult.map(item =>
+                                  <li onClick={action(e => {
+                                    taxon.taxonId = item.taxonId;
+                                    taxon.taxonRank = item.taxonRank;
+                                    taxon.scientificName = item.scientificName;
+                                    taxon.scientificNameId = item.scientificNameId;
+                                    taxon.scientificNameAuthor = item.author;
+                                    taxon.vernacularName = item.popularName;
+  
+                                    taxon.redListCategory = item.rlCategory;
+                                    taxon.taxonSearchResult.replace([]); 
+                                    taxon.taxonSearchString = "" })} 
+                                    key={item.scientificName}
+                                  >
+                                      <div className="speciesSearchItem">
+                                          <div className={"rlCategory " + item.rlCategory}>{item.rlCategory}</div>
+                                          <div className="vernacularName">{item.popularName}</div>
+                                          <div className="scientificName">{item.scientificName}</div>
+                                          <div className="author">{"(" + item.author + ")"}</div>
+                                      </div>
+                                  </li>
+                              )}
+                              </ul>
+                          </div> 
+                          }
+                          {taxon.taxonSearchWaitingForResult ?
+                          <div  style={{zIndex: 10000, position: 'absolute', top: "40px", left:"35px"}}>
+                              <div  className={"three-bounce"}>
+                                  <div className="bounce1" />
+                                  <div className="bounce2" />
+                                  <div className="bounce3" />
+                              </div>
+                          </div> :
+                          null}
+                      </div> 
                         }
                     </BsModal>
                 : null}
