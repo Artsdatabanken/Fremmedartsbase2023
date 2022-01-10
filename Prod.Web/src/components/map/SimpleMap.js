@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect, useLayoutEffect } from 'react';
 import 'ol/ol.css';
 import styles from './MapOpenLayers.css'; // don't delete. it's used to move buttons to the right side
-import { Collection, Feature, Map, View } from 'ol';
+import { Collection, Feature, Map, View, Overlay } from 'ol';
 import { Control, defaults as defaultControls } from 'ol/control';
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
 import { Vector as VectorSource, WMTS as WmtsSource } from 'ol/source';
@@ -28,11 +28,13 @@ const mapBounds = {
 const SimpleMap = ({
     evaluationContext,
     onClick,
-    showRegion,
+    onChange,
+    isWaterArea,
     selectAll,
-    modal,
+    assessmentArea,
+    selectedArea,
     static,
-    mapType
+    mapIndex
 }) => {
     const mapRef = useRef();
 	const [map, setMap] = useState(null);
@@ -40,7 +42,9 @@ const SimpleMap = ({
     let mapObject;
     let mapCenter = [];
     let featureOver;
-    const waterFieldName = showRegion ? 'vannregionnavn' : 'vannomraadenavn';
+    const waterFieldName = isWaterArea ? 'vannomraadenavn' : 'vannregionnavn';
+    // console.log('vatn?', isWaterArea, waterFieldName);
+    console.log('SimpleMap', selectedArea);
 
     const transformCoordinate = (fromEpsgCode, toEpsgCode, coordinate) => {
         if (fromEpsgCode === toEpsgCode) {
@@ -60,9 +64,29 @@ const SimpleMap = ({
         return Proj4(`EPSG:${fromEpsgCode}`, `EPSG:${toEpsgCode}`, coordinate);
     }
 
+    const createPopupElement = (isStatic, index) => {
+        const contentElement = document.createElement('div');
+        contentElement.className = `ol-popup-content ol-popup-content-${index}`;
+        const element = document.createElement('div');
+        element.className = `ol-popup ol-popup-${index}${isStatic ? '' : ' ol-popup-anchor'}`;
+        element.appendChild(contentElement);
+        return element;
+    }
+
     const setPointerMove = (mapObject) => {
 
+        const overlay = mapObject.getOverlayById(`overlay_${mapIndex}`);
+        if (!overlay.getElement()) {
+            const elements = document.getElementsByClassName(`ol-popup ol-popup-${mapIndex}`);
+            if (elements.length === 1) {
+                overlay.setElement(elements[0]);
+            } else {
+                overlay.setElement(createPopupElement(static, mapIndex));
+            }
+        }
+
         const pointermove = (e) => {
+
             const vatnLayer = mapObject.getLayers().getArray().filter((layer) => layer.get('name') === 'Vatn' ? true : false)[0];
             if (!vatnLayer) return;
             const vatnSource = vatnLayer.getSource();
@@ -70,16 +94,36 @@ const SimpleMap = ({
 
             const hoverLayer = mapObject.getLayers().getArray().filter(layer => layer.get('name') === 'hoverLayer')[0];
 
+            const content = document.getElementsByClassName(`ol-popup-content ol-popup-content-${mapIndex}`)[0];
+    
             const vatn = [];
+            let noContent = true;
             mapObject.forEachFeatureAtPixel(e.pixel, (f) => {
                 const featureLayerName = f.get('_layerName');
                 // console.log('feature', featureLayerName, f);
                 if (featureLayerName && featureLayerName === 'Vatn') {
+                    if (!e.dragging) {
+                        if (content) {
+                            content.innerHTML = `<p>${f.get(waterFieldName)}</p>`;
+                            const coordinate = static ? [55000, 7900000] : e.coordinate;
+                            overlay.getElement().style.opacity = 1;
+                            overlay.setPosition(coordinate);
+                            // closer.style.display = 'none';
+                            noContent = false;
+                        }
+                    }
                     vatn.push(f);
                     return true;
                 }
                 return false;
             });
+
+            if (noContent) {
+                overlay.getElement().style.opacity = 0;
+                // overlay.setPosition(undefined);
+                // closer.blur();
+            }
+
             // console.log('pointermove', waterFieldName, vatn);
             const hoverSource = hoverLayer.getSource();
             if (vatn && vatn.length > 0) {
@@ -104,6 +148,7 @@ const SimpleMap = ({
     }
 
     useEffect(() => {
+        // console.log('SimpleMap1', selectedArea);
         if (!map) return;
 
         const vatnLayer = map.getLayers().getArray().filter((layer) => layer.get('name') === 'Vatn' ? true : false)[0];
@@ -115,15 +160,22 @@ const SimpleMap = ({
         waterSelectedLayer.getSource().clear();
         if (selectAll) {
             features = vatnLayer.getSource().getFeatures();
+            features.forEach(f => {
+                f.set('unselectable', false);
+            });
             waterSelectedLayer.getSource().addFeatures(features);
+        } else {
+            features = vatnLayer.getSource().getFeatures();
+            features.forEach(f => {
+                f.set('unselectable', true);
+            });
         }
 
-        console.log('selectAll changed', selectAll, features);
+        // console.log('selectAll changed', selectAll, features);
     }, [selectAll]);
 
 	useEffect(() => {
-
-        // console.log('SimpleMap - useEffect', showRegion);
+        // console.log('SimpleMap2', selectedArea);
 
         if (Proj4.defs(`EPSG:${config.mapEpsgCode}`) === undefined) {
             Proj4.defs(`EPSG:${config.mapEpsgCode}`, config.mapEpsgDef);
@@ -137,6 +189,27 @@ const SimpleMap = ({
 
         const mapExtent = [transformCoordinate(4326, config.mapEpsgCode, [mapBounds[evaluationContext][0][1], mapBounds[evaluationContext][0][0]]), transformCoordinate(4326, config.mapEpsgCode, [mapBounds[evaluationContext][1][1], mapBounds[evaluationContext][1][0]])].flat();
         mapCenter = [mapExtent[0] + (mapExtent[2] - mapExtent[0]) / 2, mapExtent[1] + (mapExtent[3] - mapExtent[1]) / 2];
+
+        // Popup
+        let overlayOptions = {
+            id: `overlay_${mapIndex}`,
+            element: createPopupElement(static, mapIndex),
+        };
+        // if (!static) {
+        //     overlayOptions.autoPan = {
+        //         animation: {
+        //             duration: 250,
+        //         },
+        //     };
+        // }
+
+        const overlay = new Overlay(overlayOptions);
+
+        // closer.onclick = () => {
+        //     overlay.setPosition(undefined);
+        //     closer.blur();
+        //     return false;
+        // };
 
         const options = {
             view: new View({
@@ -193,13 +266,18 @@ const SimpleMap = ({
             }));
             options.layers.push(mapOlFunc.createWaterSelectedLayer('VatnSelected', projection));
         }
-        options.layers.push(mapOlFunc.createWaterLayer('Vatn', showRegion ? 14 : 15, projection, '', () => {}));
+        if (static) {
+            options.layers.push(mapOlFunc.createWaterLayer('Vatn', isWaterArea, projection, '', selectedArea, () => {}));
+        } else {
+            options.layers.push(mapOlFunc.createWaterLayer('Vatn', isWaterArea, projection, '', undefined, () => {}));
+        }
         options.layers.push(new VectorLayer({
             name: 'hoverLayer',
             source: new VectorSource({wrapX: false, _text: false}),
             style: mapOlFunc.hoverStyleFunction,
             zIndex: 3
         }));
+        options.overlays = [overlay];
 
         mapObject = new Map(options);
 
@@ -209,12 +287,13 @@ const SimpleMap = ({
         const vatnSource = vatnLayer ? vatnLayer.getSource() : undefined;
 
         if (!static) {
+
             const dragBox = new DragBox({condition: platformModifierKeyOnly});
             mapObject.addInteraction(dragBox);
 
             const waterSelectedLayer = layers.filter(layer => layer.get('name') === 'VatnSelected')[0];
 
-            const selectDeselectFeatures = (features, deSelect = false, callback = () => {}) => {
+            const selectDeselectFeatures = (features, deSelect = false, changeCallback, clickCallback) => {
                 if (features.length === 0) return;
                 const selectedFeatures = waterSelectedLayer.getSource().getFeatures().map(x => x.get('globalID'));
                 features.forEach((f) => {
@@ -224,8 +303,26 @@ const SimpleMap = ({
                     } else {
                         if (deSelect) waterSelectedLayer.getSource().removeFeature(f);
                     }
-                    if (callback) callback({ name: f.get(waterFieldName), properties: f.getProperties(), selected: pos < 0 });
+                    if (clickCallback) clickCallback({ name: f.get(waterFieldName), properties: f.getProperties(), selected: pos < 0 });
                 });
+                if (changeCallback) changeCallback(waterSelectedLayer.getSource().getFeatures().map(x => {
+                    return {
+                        globalID: x.get('globalID'),
+                        name: x.get(waterFieldName)
+                    }
+                }));
+            }
+
+            if (waterSelectedLayer && vatnSource && selectedArea) {
+                const featuresLoadend = () => {
+                    vatnSource.un('featuresloadend', featuresLoadend);
+                    const selectedGids = selectedArea.map(x => x.globalID);
+                    const preSelected = vatnSource.getFeatures().filter(x => selectedGids.indexOf(x.get('globalID')) >= 0);
+                    waterSelectedLayer.getSource().addFeatures(preSelected);
+                    console.log('preselect items', selectedGids, preSelected);
+                    selectDeselectFeatures(preSelected, undefined, onChange);
+                };
+                vatnSource.on('featuresloadend', featuresLoadend);
             }
 
             dragBox.on('boxend', (e) => {
@@ -235,7 +332,7 @@ const SimpleMap = ({
                 vatnSource.forEachFeatureIntersectingExtent(dragBox.getGeometry().getExtent(), (f) => {
                     features.push(f);
                 });
-                selectDeselectFeatures(features);
+                selectDeselectFeatures(features, undefined, onChange);
             });
 
             mapObject.on('click', (e) => {
@@ -251,7 +348,8 @@ const SimpleMap = ({
                     }
                     return false;
                 });
-                selectDeselectFeatures(features, true, onClick);
+                if (static) selectDeselectFeatures(features, true, undefined, onClick);
+                else selectDeselectFeatures(features, true, onChange);
             });
         } else {
             mapObject.on('click', (e) => {
@@ -274,6 +372,17 @@ const SimpleMap = ({
             });
         }
 
+        mapRef.current.addEventListener('mouseout', () => {
+            if (overlay.getElement()) overlay.getElement().style.opacity = 0;
+
+            // setTimeout(() => { overlay.setPosition(undefined); }, 10);
+            const hoverLayer = mapObject.getLayers().getArray().filter(layer => layer.get('name') === 'hoverLayer')[0];
+            if (hoverLayer) hoverLayer.getSource().clear();
+            setTimeout(() => {
+                if (overlay.getElement()) overlay.getElement().style.opacity = 0;
+            }, 100);
+        });
+
         mapObject.setTarget(mapRef.current);
         setMap(mapObject);
 
@@ -283,13 +392,13 @@ const SimpleMap = ({
         mapObject.getView().fit(mapExtent);
 
 		return () => mapObject.setTarget(undefined);
-    }, [showRegion]);
+    }, [isWaterArea, selectedArea]);
 
     return (
         <div>
             <MapContext.Provider value={{ map }}>
                 <div ref={mapRef} className="ol-map"></div>
-    		</MapContext.Provider>
+            </MapContext.Provider>
         </div>
 	)
 }
