@@ -7033,6 +7033,13 @@
                         },
                         {
                             "Id": null,
+                            "Value": "km2withoutConsideration",
+                            "Text": "Kjent forekomstareal (km<sup>2</sup>) u/tiltakshensyn",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "literatureDataExpansionSpeed",
                             "Text": "Litteraturverdi på spredningshastighet (m/år)",
                             "Info": null,
