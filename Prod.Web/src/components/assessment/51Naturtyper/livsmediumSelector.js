@@ -18,6 +18,7 @@ export default class LivsmediumSelector extends React.Component {
             nnt.niNCode = naturtypekode
             nnt.timeHorizon = null
             nnt.colonizedArea = null
+            nnt.taxon = null
             // nnt.stateChange.clear()
             nnt.affectedArea = null
             // nnt.background.clear()

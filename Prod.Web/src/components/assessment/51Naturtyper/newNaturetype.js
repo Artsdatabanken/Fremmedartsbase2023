@@ -5,6 +5,7 @@ import NaturtypeSelector from './naturtypeSelector';
 import LivsmediumSelector from './livsmediumSelector';
 import TruetSelector from './truetSelector';
 import NaturtypeModal from './naturetypeModal';
+import createTaxonSearch from '../../createTaxonSearch'
 // import * as Xcomp from '../observableComponents';
 @inject("appState")
 @observer
@@ -20,17 +21,63 @@ export default class NewNaturetype extends React.Component {
             nyNaturtype: {
                 niNCode: null,
                 name: null,
-                // dominanceForrest: [],
+                // dominanceForrest: [],                
                 timeHorizon: null,
                 colonizedArea: null,
                 stateChange: [],
                 background: [],
-                affectedArea: null
-            }
+                affectedArea: null,
+                taxon: {
+                    scientificName: "",
+                    scientificNameId: "",
+                    scientificNameAuthor: "",
+                    vernacularName: "",
+                    taxonRank: "",
+                    taxonId: "",
+                    taxonSearchString: "",
+                    taxonSearchResult: [],
+                    domesticOrAbroad : "",
+                    redListCategory: "", 
+                    keyStoneSpecie : false, 
+                    effectLocalScale : false, 
+                    effect : "Weak",
+                    scale: "Limited",
+                    status: "NewAlien",
+                    interactionType : "CompetitionSpace", 
+                    //interactionType : [], 
+                    longDistanceEffect : false, 
+                    confirmedOrAssumed : false, 
+                    basisOfAssessment: [],
+                    interactionTypes: [],
+                }, 
+            },
+            taxon: {
+                scientificName: "",
+                scientificNameId: "",
+                scientificNameAuthor: "",
+                vernacularName: "",
+                taxonRank: "",
+                taxonId: "",
+                taxonSearchString: "",
+                taxonSearchResult: [],
+                domesticOrAbroad : "",
+                redListCategory: "", 
+                keyStoneSpecie : false, 
+                effectLocalScale : false, 
+                effect : "Weak",
+                scale: "Limited",
+                status: "NewAlien",
+                interactionType : "CompetitionSpace", 
+                //interactionType : [], 
+                longDistanceEffect : false, 
+                confirmedOrAssumed : false, 
+                basisOfAssessment: [],
+                interactionTypes: [],
+            }, 
         })
 
 
-
+        createTaxonSearch(this.taxon, appState.evaluationContext, tax => tax.existsInCountry)
         // this.setSelectedNT = action ((naturtypekode) => {
         //     console.log("Nincode: " + naturtypekode)
         //     const nnt = this.nyNaturtype
@@ -99,7 +146,7 @@ export default class NewNaturetype extends React.Component {
                 this.props.mode === "nin" ?
                 <NaturtypeSelector
                     naturtyper={appState.naturtyperNIN2} 
-                    nyNaturtype={this.nyNaturtype}
+                    nyNaturtype={this.nyNaturtype}                    
                     showModal={() => runInAction(() => this.showModal = true)}
                     // setSelected={() => console.log("setSelectedNaturtype")}
                     // setSelected={this.setSelectedNaturtype}
@@ -132,7 +179,7 @@ export default class NewNaturetype extends React.Component {
                 : null} */}
             {this.showModal
             ? <NaturtypeModal
-                
+                taxon = {this.taxon}
                 hideStateChange={[this, "hideStateChange"]}
                 naturtype={this.nyNaturtype}
                 fabModel={appState}

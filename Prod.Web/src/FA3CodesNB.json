@@ -7574,35 +7574,35 @@
                         {
                             "Id": null,
                             "Value": "possibleLowerCategoryNK",
-                            "Text": "Arter med en viss utstrekning i forekomstarealet kan, som en respons på ulike miljøbetingelser, ha ulik påvirkning i naturen. Kunne arten ha fått en <i>lavere</i> risikokategori i deler av sitt (potensielle) forekomstareal?",
+                            "Text": "Arter med en viss utstrekning i forekomstarealet kan, som en respons på ulike miljøbetingelser, ha ulik påvirkning i naturen. Kunne arten ha fått en <i>lavere</i> risikokategori i deler av sitt potensielle forekomstareal?",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "possibleLowerCategoryNK",
-                            "Text": "Arter med en viss utstrekning i forekomstarealet kan, som en respons på ulike miljøbetingelser, ha ulik påvirkning i naturen. Kunne arten ha fått en <i>lavere</i> risikokategori i deler av sitt (potensielle) forekomstareal?",
+                            "Text": "Arter med en viss utstrekning i forekomstarealet kan, som en respons på ulike miljøbetingelser, ha ulik påvirkning i naturen. Kunne arten ha fått en <i>lavere</i> risikokategori i deler av sitt potensielle forekomstareal?",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "possibleLowerCategorySEHI",
-                            "Text": "Arter med en viss utstrekning i forekomstarealet kan, som en respons på ulike miljøbetingelser, ha ulik påvirkning i naturen. Kunne arten ha fått en <i>lavere</i> risikokategori enn HI (dvs. NK, LO eller PH) i deler av sitt (potensielle) forekomstareal?",
+                            "Text": "Arter med en viss utstrekning i forekomstarealet kan, som en respons på ulike miljøbetingelser, ha ulik påvirkning i naturen. Kunne arten ha fått en <i>lavere</i> risikokategori enn HI (dvs. NK, LO eller PH) i deler av sitt potensielle forekomstareal?",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "possibleLowerCategoryPH",
-                            "Text": "Arter med en viss utstrekning i forekomstarealet kan, som en respons på ulike miljøbetingelser, ha ulik påvirkning i naturen. Kunne arten ha fått en <i>lavere</i> risikokategori (dvs. NK eller LO) i deler av sitt (potensielle) forekomstareal?",
+                            "Text": "Arter med en viss utstrekning i forekomstarealet kan, som en respons på ulike miljøbetingelser, ha ulik påvirkning i naturen. Kunne arten ha fått en <i>lavere</i> risikokategori (dvs. NK eller LO) i deler av sitt potensielle forekomstareal?",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "possibleLowerCategoryLO",
-                            "Text": "Arter med en viss utstrekning i forekomstarealet kan, som en respons på ulike miljøbetingelser, ha ulik påvirkning i naturen. Kunne arten ha fått en <i>lavere</i> risikokategori (dvs. NK) i deler av sitt (potensielle) forekomstareal?",
+                            "Text": "Arter med en viss utstrekning i forekomstarealet kan, som en respons på ulike miljøbetingelser, ha ulik påvirkning i naturen. Kunne arten ha fått en <i>lavere</i> risikokategori (dvs. NK) i deler av sitt potensielle forekomstareal?",
                             "Info": null,
                             "Children": null
                         },

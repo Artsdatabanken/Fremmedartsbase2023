@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using CsvHelper.Configuration.Attributes;
 using Prod.Domain;
 using Prod.Domain.Legacy;
 
@@ -15,6 +16,9 @@ namespace Prod.Api.Helpers
             var mapperConfig = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<FA4WithComments, FA4HorizonScanExport>()
+                    .ForMember(x => x.DoorKnockerType, opt => opt.MapFrom(src => GetDoorknockerType(src)))
+                    ;
+                cfg.CreateMap<FA4WithComments, FA4Export>()
                     .ForMember(x => x.DoorKnockerType, opt => opt.MapFrom(src => GetDoorknockerType(src)))
                     ;
             });
@@ -57,6 +61,39 @@ namespace Prod.Api.Helpers
         public string HorizonEcologicalEffect { get; set; }
         public string HorizonEcologicalEffectDescription { get; set; }
         public string LastUpdatedBy { get; set; }
+
+    }
+    public class FA4Export
+    {
+        public int Id { get; set; }
+        public string ExpertGroup { get; set; }
+        public string DoorKnockerType { get; set; }
+
+        public string EvaluatedScientificNameId { get; set; }
+
+
+        public string EvaluatedScientificName { get; set; }
+
+        public string EvaluatedVernacularName { get; set; }
+        public string EvaluatedScientificNameAuthor { get; set; }
+
+        [Name("SistOppdatertAv")]
+        public string LastUpdatedBy { get; set; }
+
+
+        // comments
+        [Name("DatoForSisteKommentar")]
+        public string NewestCommentDate { get; set; }
+
+        [Name("AntallBehandledeKommentarer")]
+        public int CommentClosed { get; set; }
+
+        [Name("AntallÅpneKommentarer")]
+        public int CommentOpen { get; set; }
+        //public int CommentNew { get; set; }
+
+        [Name("VentendeTaksonomiskeEndringer")]
+        public int TaxonChange { get; set; }
 
     }
 }
