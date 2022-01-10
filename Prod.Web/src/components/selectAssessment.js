@@ -491,7 +491,7 @@ export default class SelectAssessment extends Component {
                 :            
                 <span> {labels.SelectAssessment.showingTotal} {appState.expertgroupAssessmentList.length} {appState.expertgroupAssessmentList.length == 1 ? labels.SelectAssessment.assessment : labels.SelectAssessment.assessments} ({labels.SelectAssessment.filteredFrom} {appState.expertgroupAssessmentTotalCount})</span>
             }
-            <input type="button" className="btn btn-primary" value="Last ned fil" onClick={() => window.open(config.apiUrl + '/api/ExpertGroupAssessments/export/' + appState.expertgroup)}></input>
+            <input type="button" className="btn btn-primary" value="Last ned fil" onClick={() => window.open(config.apiUrl + '/api/ExpertGroupAssessments/export/' + appState.assessmentTypeFilter + '/' + appState.expertgroup)}></input>
             </div>
             
             <div>

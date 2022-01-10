@@ -574,6 +574,8 @@ namespace SwissKnife.Database
                                 if (src.NotApplicableCategory == "establishedBefore1800")
                                 {
                                     dest.AlienSpecieUncertainIfEstablishedBefore1800 = true;
+                                    dest.IsAlienSpecies = true;
+                                    dest.ConnectedToAnother = false;
                                 }
 
                                 break;
@@ -590,6 +592,11 @@ namespace SwissKnife.Database
                         }
 
                         // alt annet ser ut til å bli ignorert
+
+                        // issue 290
+
+
+
                     });
 
                 // - slik mapping fungerer ikke - da de blir kallt via convention - og det er ingen tilfeller der den har behov for å mappe fra FA3Legacy til Prod.Domain.RiskAssessment - koden blir ikke kallt
