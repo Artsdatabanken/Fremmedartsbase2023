@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using CsvHelper.Configuration.Attributes;
 using Prod.Domain;
 using Prod.Domain.Legacy;
 
@@ -76,11 +77,23 @@ namespace Prod.Api.Helpers
         public string EvaluatedVernacularName { get; set; }
         public string EvaluatedScientificNameAuthor { get; set; }
 
-        public string HorizonEstablismentPotential { get; set; }
-        public string HorizonEstablismentPotentialDescription { get; set; }
-        public string HorizonEcologicalEffect { get; set; }
-        public string HorizonEcologicalEffectDescription { get; set; }
+        [Name("SistOppdatertAv")]
         public string LastUpdatedBy { get; set; }
+
+
+        // comments
+        [Name("DatoForSisteKommentar")]
+        public string NewestCommentDate { get; set; }
+
+        [Name("AntallBehandledeKommentarer")]
+        public int CommentClosed { get; set; }
+
+        [Name("AntallÅpneKommentarer")]
+        public int CommentOpen { get; set; }
+        //public int CommentNew { get; set; }
+
+        [Name("VentendeTaksonomiskeEndringer")]
+        public int TaxonChange { get; set; }
 
     }
 }
