@@ -386,11 +386,10 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
         get ascore() {
             const k = r.ametodkey
-            // console.log("ascore method: " + k)
             return (k === "A1a1" || k === "A1b1") ? r.adefaultBest
-            : (k === "A2" || k === "A1a2" || k === "A1b2") ?
+            : (k === "A1a2" || k === "A1b2") ?
                 getCriterion(riskAssessment, 0, "A").value
-            : k === "A3" ?
+            : (k === "A2" || k === "A3") ?
                 r.medianLifetime >= 650 ? 3
                 : r.medianLifetime >= 60 ? 2
                 : r.medianLifetime >= 10 ? 1
@@ -400,7 +399,6 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
         get alow() {
             const k = r.ametodkey
-            // return k.startsWith("A1") ? r.adefaultLow
             return (k === "A1a1" || k === "A1b1") ? r.adefaultLow
             : (k === "A2" || k === "A1a2" || k === "A1b2") ?
                 criterionLow(getCriterion(riskAssessment, 0, "A"))
@@ -414,8 +412,8 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
         get ahigh() {
             const k = r.ametodkey
-            return k.startsWith("A1") ? r.adefaultHigh
-            : k === "A2" ?
+            return (k === "A1a1" || k === "A1b1") ? r.adefaultHigh
+            : (k === "A2" || k === "A1a2" || k === "A1b2") ?
                 criterionHigh(getCriterion(riskAssessment, 0, "A"))
             : k === "A3" ?
                 r.lifetimeUpperQ >= 650 ? min(3, r.ascore + 1) :
