@@ -139,7 +139,7 @@ export default function enhanceAssessment(json, appState) {
         // this value is not a part of the domain object
         get connectedToAnotherString() {
             // const value assessment.alienSpeciesCategory == "AlienSpecie" ? "no" : assessment.connectedToAnother ? "true" : "false" 
-            return assessment.notApplicableCategory == "establishedBefore1800" ? "no" : assessment.connectedToAnother ? "yes" : "no"
+            return assessment.connectedToAnother ? "yes" : "no"
         },
         set connectedToAnotherString(s) {
             assessment.connectedToAnother = s === "yes"
