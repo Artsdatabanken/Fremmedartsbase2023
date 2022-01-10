@@ -431,7 +431,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             // console.log("uncarr A")
 
             const result = uncertaintyArray(r.alow, r.ahigh)
-            //console.log("uncarr A: " + r.ametodkey + "!"   + r.alow + "!"  + r.ahigh + "¤"+ r.lifetimeUpperQ + "!"  + JSON.stringify(result))
+            console.log("¤##uncarr A: " + r.ametodkey + "!"   + r.alow + "!"  + r.ahigh + "¤"+ r.lifetimeUpperQ + "!"  + JSON.stringify(result))
             return result
         },
         get medianLifetime() {
@@ -1278,6 +1278,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
             uncertaintyDisabled: observable([]),
             get majorUncertainty() { return crit.uncertaintyValues.length >= 3}
         })
+
         autorun(() => {
             const maxDistanecFromValue = 1
             const value = crit.value
@@ -1300,7 +1301,12 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
             if (crit.criteriaLetter === "A" &&
                 (riskAssessment.ametodkey === "A1a1" || riskAssessment.ametodkey === "A1b1")) {
                 ud = [0,1,2,3]
-                uv = [value]
+                uv = []
+                for (var i = 0; i <= 3; i++) {
+                    if(i >= riskAssessment.alow && i <= riskAssessment.ahigh) {
+                        uv.push(i)
+                    }
+                }
             } else if (crit.criteriaLetter === "A" && riskAssessment.ametodkey === "A3") {
                 ud = riskAssessment.aDisabledUncertaintyValues
                 uv = [value]
@@ -1310,7 +1316,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
 
             } else {
 
-                    ud = []
+                ud = []
                 for (let n = 0; n < 4 ; n++) {
                     if (Math.abs(n - value) > maxDistanecFromValue || n === value) {
                         ud.push(n)
