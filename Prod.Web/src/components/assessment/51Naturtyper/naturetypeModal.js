@@ -4,6 +4,7 @@ import {observer, inject} from 'mobx-react';
 import * as Xcomp from '../observableComponents';
 import BsModal from '../../bootstrapModal'
 import createTaxonSearch from '../../createTaxonSearch'
+import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils';
 
 @inject("appState")
 @observer
@@ -121,69 +122,13 @@ export default class NaturetypeModal extends React.Component {
         console.log(this.taxSearchResult)
         console.log("render naturtypeModal")
         
-        const findNTName = (id) => {
-            var name = "";
-            if (id) {
-
-               /* if(!reg.test(id)){
-                    if (id.startsWith("NA")) {
-                        // taking only the last part of the code
-                        id = id.substring(3)
-    
-                    }
-                    if (id.length == 1) {
-                        name = natureTypeCodes.Children.find(code => code.Id.indexOf(id) > -1).Text
-                    } else if (id.length == 2) {
-                        // search for the name on the second level of nature type groups     
-                        
-                        var firstSubLevel = natureTypeCodes.Children 
-                       
-                        for (var i = 0; i < firstSubLevel.length; i++) {
-                            if (firstSubLevel[i].Id.indexOf(id.substring(0,1)) > -1) {
-                                
-                                name = firstSubLevel[i].Children.find(code => code.Id.indexOf(id) > -1).Text                            
-                            }
-                        }
-                    } else if (id.length > 2) {
-                        var firstPart = id.split("-")[0]
-                        // search for the name on the third level of nature type groups                
-                        var firstSubLevel = natureTypeCodes.Children
-                        for (var i = 0; i < firstSubLevel.length; i++) {
-                           
-                            if (firstSubLevel[i].Id.indexOf(id.substring(0,1)) > -1) {
-                                var secondSubLevel = firstSubLevel[i].Children
-                                 
-                                for (var j = 0; j < secondSubLevel.length; j++) {
-                                    
-                                    if (secondSubLevel[j].Id == firstPart || secondSubLevel[j].Id == "NA "+ firstPart) {
-                                        var thirdSubLevel = secondSubLevel[j].Children
-                                        name = thirdSubLevel.find(code => code.Id.indexOf(id) > -1).Text
-                                    }
-                                }                                           
-                            }
-                        }
-                    }
-
-                } else {*/
-                    
-                    for (var i = 0; i < redListCodes.Children.length; i++) {
-                        for (var j = 0; j < redListCodes.Children[i].Children.length; j++) {
-                            if (redListCodes.Children[i].Children[j].Id == id) {
-                                name = redListCodes.Children[i].Children[j].Text
-                            }
-                        }
-                    }
-                /*}*/
-            }
-                      
-            return name
-        }
+     
         return <div>
             {sm[smprop]
                 ? <BsModal
                         heading={
-                            <div> 
-                                <h4>{isNaN(this.editNaturtype.niNCode) ? this.editNaturtype.niNCode : findNTName(this.editNaturtype.niNCode)}</h4>
+                            <div>
+                                <h4>{naturtype.name ? naturtype.name : this.editNaturtype.name ? this.editNaturtype.name : ""}</h4> 
                                 <p>{this.naturtypeLabel}</p>
                             </div >}
                         onCancel={this.hideModal}

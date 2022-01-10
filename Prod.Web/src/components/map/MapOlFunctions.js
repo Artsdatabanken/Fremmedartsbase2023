@@ -124,10 +124,12 @@ const internalStyleFunction = (feature, hover) => {
         color: hover ? `${colors[feature.get('vannregionID')]}FF` : '#FFFFFFAA',
         width: hover ? 4 : 2,
     });
+    const color = feature.get('unselectable') !== undefined && feature.get('unselectable') === true ? '#d5d5d5' : `${colors[feature.get('vannregionID')]}`
     const fill = new Fill({
         // color: 'rgba(255,255,255,0.4)'
         // color: hover ? `${colors[feature.get('vannregionID')]}AA` : `${colors[feature.get('vannregionID')]}00`
-        color: hover ? `${colors[feature.get('vannregionID')]}AA` : `${colors[feature.get('vannregionID')]}88`
+        // color: hover ? `${colors[feature.get('vannregionID')]}AA` : `${colors[feature.get('vannregionID')]}88`
+        color: hover ? `${color}AA` : `${color}88`
     });
     return new Style({
         image: new Circle({
@@ -141,24 +143,26 @@ const internalStyleFunction = (feature, hover) => {
 };
 
 const hoverStyleFunction = (feature, resolution) => {
-    if (!hoverStyles || true) {
-        hoverStyles = internalStyleFunction(feature, true);
-    }
-    const style = hoverStyles.clone();
+    // if (!hoverStyles || true) {
+    //     hoverStyles = internalStyleFunction(feature, true);
+    // }
+    // const style = hoverStyles.clone();
+    const style = internalStyleFunction(feature, true);
     style.setText(createTextStyleFunction(feature));
     return [style];
 };
 
 const styleFunction = (feature, resolution) => {
-    if (!defaultStyles || true) {
-        defaultStyles = internalStyleFunction(feature, false);
-    }
-    const defaultStyle = defaultStyles.clone();
+    // if (!defaultStyles || true) {
+    //     defaultStyles = internalStyleFunction(feature, false);
+    // }
+    // const defaultStyle = defaultStyles.clone();
+    const defaultStyle = internalStyleFunction(feature, false);
     defaultStyle.setText(createTextStyleFunction(feature));
     return [defaultStyle];
 };
 
-const createWaterLayer = (name, layerid, projection, waterLayerName, setWaterLayerNameCallback) => {
+const createWaterLayer = (name, isWaterArea, projection, waterLayerName, assessmentArea, setWaterLayerNameCallback) => {
     // const vannUrl = 'https://vann-nett.no/arcgis/rest/services/WFD/AdministrativeOmraader/MapServer/'; // old service
     // const vannUrl = 'https://nve.geodataonline.no/arcgis/rest/services/Mapservices/Elspot/MapServer/'; // new service
     // layerid = '0';
@@ -168,8 +172,12 @@ const createWaterLayer = (name, layerid, projection, waterLayerName, setWaterLay
     // geojson is saved and simplified with a 100m tolerance
     // layerid = 14; // Vannregion
     // layerid = 15; // Vannomraade
+    const layerid = isWaterArea ? 15 : 14;
 
     if (vectorFeatures[name]) vectorFeatures[name].splice(0);
+
+    const filterById = assessmentArea ? true : false;
+    const validGids = assessmentArea ? assessmentArea.map(x => x.globalID) : undefined;
 
     const source = new VectorSource({
         extent: extent,
@@ -194,7 +202,24 @@ const createWaterLayer = (name, layerid, projection, waterLayerName, setWaterLay
             const data = await response.json();
             if (data.error) return;
             // console.log('data', data);
-            var features = source.getFormat().readFeatures(data);
+            let features = source.getFormat().readFeatures(data);
+            features.forEach(f => {
+                f.set('unselectable', false);
+            });
+            let unselectableFeatures = [];
+            if (filterById) {
+                console.log('features', features);
+                console.log('validGids', validGids);
+                unselectableFeatures = features.filter(f => validGids.indexOf(f.get('globalID')) < 0);
+                features = features.filter(f => validGids.indexOf(f.get('globalID')) >= 0);
+            }
+            if (unselectableFeatures.length > 0) {
+                console.log('unselectable', unselectableFeatures);
+                unselectableFeatures.forEach(f => {
+                    f.set('unselectable', true);
+                    features.push(f);
+                });
+            }
             if (!vectorFeatures[name]) vectorFeatures[name] = [];
             features.forEach((feature) => {
                 feature.set('_layerName', name);
@@ -362,7 +387,7 @@ const createWaterSelectedLayer = (name, projection) => {
 //     return layer;
 // }
 
-const reDrawWaterLayer = (mapObject, showRegion, setLastShowRegion, setPointerMoveForWaterLayer, setWaterLayerName) => {
+const reDrawWaterLayer = (mapObject, isWaterArea, setLastIsWaterArea, setPointerMoveForWaterLayer, setWaterLayerName) => {
     let waterLayer = mapObject.getLayers().getArray().filter(layer => layer.get('name') === 'Vatn')[0];
     if (waterLayer) {
         waterLayer.getSource().clear();
@@ -385,9 +410,9 @@ const reDrawWaterLayer = (mapObject, showRegion, setLastShowRegion, setPointerMo
         units: 'm'
     });
 
-    setLastShowRegion(showRegion);
+    setLastIsWaterArea(isWaterArea);
 
-    mapObject.addLayer(createWaterLayer('Vatn', showRegion ? 14 : 15, projection, undefined, setWaterLayerNameCallback));
+    mapObject.addLayer(createWaterLayer('Vatn', isWaterArea, projection, undefined, setWaterLayerNameCallback));
 }
 
 const createButton = (options) => {

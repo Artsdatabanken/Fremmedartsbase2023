@@ -884,7 +884,7 @@ namespace SwissKnife.Database
                 var exAssessment = JsonSerializer.Deserialize<FA4>(real.Doc, jsonSerializerOptions);
                 var orgCopy = JsonSerializer.Deserialize<FA4>(real.Doc, jsonSerializerOptions);
 
-                // FieldsFix
+                // Disse feltene er de som faktisk patches.....
                 Debug.Assert(exAssessment != null, nameof(exAssessment) + " != null");
                 exAssessment.SpreadHistory = newAssesment.SpreadHistory;
 
@@ -914,6 +914,8 @@ namespace SwissKnife.Database
                 exAssessment.ProductionSpecies = newAssesment.ProductionSpecies;
                 exAssessment.AlienSpecieUncertainIfEstablishedBefore1800 = newAssesment.AlienSpecieUncertainIfEstablishedBefore1800;
                 exAssessment.IsRegionallyAlien = newAssesment.IsRegionallyAlien;
+                exAssessment.IsAlienSpecies = newAssesment.IsAlienSpecies;
+                exAssessment.ConnectedToAnother = newAssesment.ConnectedToAnother;
 
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (comparisonResult.AreEqual == false)
