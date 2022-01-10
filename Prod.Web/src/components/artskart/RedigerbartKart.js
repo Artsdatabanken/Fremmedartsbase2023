@@ -6,7 +6,7 @@ import * as Xcomp from "../observableComponents";
 
 const RedigerbartKart = ({
   showWaterAreas,
-  showRegion,
+  isWaterArea,
   taxonId,
   scientificNameId,
   kriterier,
@@ -16,6 +16,7 @@ const RedigerbartKart = ({
   artskartSelectionGeometry,
   artskartAdded,
   artskartRemoved,
+  assessmentArea,
   onCancel,
   children
 }) => {
@@ -181,9 +182,10 @@ const RedigerbartKart = ({
       </div>
       <MapOpenLayers
         showWaterAreas={showWaterAreas}
-        showRegion={showRegion}
+        isWaterArea={isWaterArea}
         geojson={observations}
         selectionGeometry={selectionGeometry}
+        assessmentArea={assessmentArea}
         style={mapstyle}
         onAddPoint={handleAddPoint}
         onClickPoint={handleClickPoint}

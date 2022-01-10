@@ -17,13 +17,14 @@ import config from '../../config';
 
 const MapOpenLayers = ({
     showWaterAreas,
-    showRegion,
+    isWaterArea,
     onAddPoint,
     onEdit,
     style,
     mapBounds,
     geojson,
     selectionGeometry,
+    assessmentArea,
     onClickPoint,
     setWaterAreas,
     setIsLoading,
@@ -33,7 +34,7 @@ const MapOpenLayers = ({
     const mapRef = useRef();
     const [visibleLegend, setVisibleLegend] = useState(false);
 	const [map, setMap] = useState(null);
-	const [lastShowRegion, setLastShowRegion] = useState(undefined);
+	const [lastIsWaterArea, setLastIsWaterArea] = useState(isWaterArea);
 	const [waterLayerName, setWaterLayerName] = useState(undefined);
     const [pointerMoveTarget, setPointerMoveTarget] = useState(undefined);
     const mapZoom = 3.7;
@@ -145,15 +146,18 @@ const MapOpenLayers = ({
         theFeatures.forEach(theFeature => {
             // console.log('featurecoord', theFeature.getGeometry().getCoordinates());
             theWaterFeatures.forEach((theWaterFeature, j) => {
-                const featureName = waterFeatures[j].get(fieldName);
-                if (!waterIntersections.hasOwnProperty(featureName) || (waterIntersections.hasOwnProperty(featureName) && !waterIntersections[featureName].intersects)) {
-                    const intersects = intersect(theWaterFeature, theFeature);
-                    waterIntersections[featureName] = {
-                        name: featureName,
-                        isRegion: showRegion,
-                        intersects: intersects !== null,
-                    };
-                    if (intersects !== null) waterIntersectionFeatures.push(waterFeatures[j]);
+                if (waterFeatures[j].get('unselectable') === false) {
+                    const featureName = waterFeatures[j].get(fieldName);
+                    // console.log('intersect', featureName, waterFeatures[j].get('unselectable'));
+                    if (!waterIntersections.hasOwnProperty(featureName) || (waterIntersections.hasOwnProperty(featureName) && !waterIntersections[featureName].intersects)) {
+                        const intersects = intersect(theWaterFeature, theFeature);
+                        waterIntersections[featureName] = {
+                            name: featureName,
+                            isWaterArea: lastIsWaterArea,
+                            intersects: intersects !== null,
+                        };
+                        if (intersects !== null) waterIntersectionFeatures.push(waterFeatures[j]);
+                    }
                 }
             });
         });
@@ -259,14 +263,14 @@ const MapOpenLayers = ({
     useLayoutEffect(() => {
         if (!showWaterAreas) return;
         if (map === null) return;
-        if (lastShowRegion === undefined || lastShowRegion === showRegion) return;
+        if (lastIsWaterArea === undefined || lastIsWaterArea === isWaterArea) return;
 
         // reDrawWaterLayer();
         setWaterAreas();
         setIsLoading(true);
         const waterSelectedLayer = map.getLayers().getArray().filter(layer => layer.get('name') === 'VatnSelected')[0];
         if (waterSelectedLayer) waterSelectedLayer.getSource().clear();
-        mapOlFunc.reDrawWaterLayer(map, showRegion, setLastShowRegion, setPointerMoveForWaterLayer, setWaterLayerName);
+        mapOlFunc.reDrawWaterLayer(map, isWaterArea, setLastIsWaterArea, setPointerMoveForWaterLayer, setWaterLayerName);
     });
 
     // on component mount
@@ -431,9 +435,9 @@ const MapOpenLayers = ({
             // layerid = 14; // Vannregion
             // layerid = 15; // Vannomraade
 
-            setLastShowRegion(showRegion);
+            setLastIsWaterArea(isWaterArea);
 
-            mapObject.addLayer(mapOlFunc.createWaterLayer('Vatn', showRegion ? 14 : 15, projection, undefined, setWaterLayerNameCallback));
+            mapObject.addLayer(mapOlFunc.createWaterLayer('Vatn', isWaterArea, projection, undefined, assessmentArea, setWaterLayerNameCallback));
             mapObject.addLayer(mapOlFunc.createWaterSelectedLayer('VatnSelected', projection));
         }
 
