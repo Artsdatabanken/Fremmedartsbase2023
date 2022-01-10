@@ -4,6 +4,7 @@ import {observer, inject} from 'mobx-react';
 import * as Xcomp from '../observableComponents';
 import BsModal from '../../bootstrapModal'
 import createTaxonSearch from '../../createTaxonSearch'
+import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils';
 
 @inject("appState")
 @observer
@@ -110,6 +111,8 @@ export default class NaturetypeModal extends React.Component {
         const [hsc, hscprop] = hideStateChange
         this.hideStateChange = hsc[hscprop]
         const ntLabels = labels.NatureTypes
+        const natureTypeCodes = require('./../../../Nin2_3.json')
+        const redListCodes = require('./../../../TrueteOgSjeldneNaturtyper2018.json')
         // const nts = fabModel.naturtyper
         const doms = fabModel.dominansSkog
         const koder = fabModel.koder
@@ -118,12 +121,14 @@ export default class NaturetypeModal extends React.Component {
         //const taxonSearchResult = taxon.taxonSearchResult
         console.log(this.taxSearchResult)
         console.log("render naturtypeModal")
+        
+     
         return <div>
             {sm[smprop]
                 ? <BsModal
                         heading={
-                            <div> 
-                                <h4>{this.editNaturtype.niNCode}</h4>
+                            <div>
+                                <h4>{naturtype.name ? naturtype.name : this.editNaturtype.name ? this.editNaturtype.name : ""}</h4> 
                                 <p>{this.naturtypeLabel}</p>
                             </div >}
                         onCancel={this.hideModal}

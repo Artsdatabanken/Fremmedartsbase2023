@@ -5,15 +5,23 @@ import * as Xcomp from "../observableComponents";
 const ModalSimpleMap = ({
   evaluationContext,
   labels,
-  onOverførFraSimpleMap
+  onOverførFraSimpleMap,
+  isWaterArea,
+  assessmentArea
 }) => {
   const ref = useRef();
   const [visSimpleMap, setVisSimpleMap] = useState(false);
-  const [showRegion, setShowRegion] = React.useState(true);
+  const [newIsWaterArea, setIsWaterArea] = React.useState(isWaterArea === undefined ? false : isWaterArea);
   const [selectAll, setSelectAll] = React.useState(false);
+  let selectedItems;
 
   const onClick = ({name, properties, selected}) => {
-    console.log('you clicked:', name, properties, selected);
+    console.log('click', name, properties, selected);
+  }
+
+  const onChange = (items) => {
+    // console.log('selected', items);
+    selectedItems = items;
   }
 
   return visSimpleMap ? (
@@ -46,40 +54,51 @@ const ModalSimpleMap = ({
         }}>
         <div>Vurderingsområde</div>
         <div>
-          <span>Viser {showRegion ? 'vannregioner' : 'vannområder'} </span>
+          <span>Viser {newIsWaterArea ? 'vannområder' : 'vannregioner'} </span>
           <Xcomp.Button
             onClick={e => {
-            e.preventDefault();
-            e.stopPropagation();
-            setSelectAll(false);
-            setShowRegion(!showRegion);
+              e.preventDefault();
+              e.stopPropagation();
+              setSelectAll(false);
+              setIsWaterArea(!newIsWaterArea);
             }}
             >
-            Bytt til {!showRegion ? 'vannregioner' : 'vannområder'}
+            Bytt til {!newIsWaterArea ? 'vannområder' : 'vannregioner'}
           </Xcomp.Button>
         </div>
         <div>
-          <Xcomp.Button
+          {/* <Xcomp.Button
             onClick={e => {
-            e.preventDefault();
-            e.stopPropagation();
-            setSelectAll(!selectAll);
+              e.preventDefault();
+              e.stopPropagation();
+              setSelectAll(!selectAll);
             }}
             >
             {!selectAll ? 'Velg alle' : 'Velg ingen'}
+          </Xcomp.Button> */}
+          <Xcomp.Button
+            onClick={e => {
+              e.preventDefault();
+              e.stopPropagation();
+              onOverførFraSimpleMap({ selectedItems, newIsWaterArea });
+              setVisSimpleMap(false);
+            }}
+            >
+            Overfør områder
           </Xcomp.Button>
         </div>
       </div>
       <div style={{ height: "100%" }}>
         <SimpleMap
-          modal={true}
           static={false}
+          mapIndex={0}
           selectAll={selectAll}
-          showRegion={showRegion}
+          isWaterArea={newIsWaterArea}
           evaluationContext={evaluationContext}
           labels={labels}
+          selectedArea={assessmentArea}
           onClick={onClick}
-          onOverførFraSimpleMap={onOverførFraSimpleMap}
+          onChange={onChange}
           />
       </div>
     </div>
