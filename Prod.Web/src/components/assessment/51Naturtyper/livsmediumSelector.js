@@ -13,9 +13,10 @@ export default class LivsmediumSelector extends React.Component {
         console.log("nts: " + JSON.stringify(props.naturtyper, undefined))
         super(props)
         this.setSelectedNT = action ((naturtypekode) => {
-            console.log("Livsmedium kode: " + naturtypekode)
+            console.log("Livsmedium kode: " + naturtypekode.Id)
             const nnt = props.nyNaturtype
-            nnt.niNCode = naturtypekode
+            nnt.niNCode = naturtypekode.Id
+            nnt.name = naturtypekode.Text
             nnt.timeHorizon = null
             nnt.colonizedArea = null
             nnt.taxon = null
@@ -26,10 +27,10 @@ export default class LivsmediumSelector extends React.Component {
         })
     }
     truncCode(kode) {
-        console.log("trunc: '" + kode + "'")
-        return (kode && kode.length > 3 && kode.startsWith("LI ")) 
-            ? kode.substring(3)
-            : kode
+        console.log("trunc: '" + kode.Id + "'")
+        return (kode.Id != undefined && kode.Id.length > 3 && kode.Id.startsWith("LI ")) 
+            ? kode.Id.substring(3)
+            : kode.Id
     }
 
 
@@ -52,9 +53,9 @@ export default class LivsmediumSelector extends React.Component {
                         </div>
                         <div className="tree-view-label">
                             <span className="hovedtypegruppe">
-                                <span className="naturtype-kode" style={{width: "70px"}}>{this.truncCode(hovedtypegruppe.Value)}</span>
+                                <span className="naturtype-kode" style={{width: "70px"}}>{this.truncCode(hovedtypegruppe)}</span>
                                 {/* to show the name for the highest level for those nature types that only have code*/}
-                                {this.truncCode(hovedtypegruppe.Value).length < 3 && <span>{hovedtypegruppe.Text}</span>}
+                                {this.truncCode(hovedtypegruppe).length < 3 && <span>{hovedtypegruppe.Text}</span>}
                                 {/* {config.showdescription(this.truncCode(hovedtypegruppe.Value)) && <span>{hovedtypegruppe.Text}</span>} */}
                                {/* <span>{hovedtypegruppe.Id}</span> */}
                             </span>
@@ -71,9 +72,9 @@ export default class LivsmediumSelector extends React.Component {
                                     onClick={() => hovedtype.Collapsed = !hovedtype.Collapsed}>
                                     {hovedtype.Children.length > 0 ? hovedtype.Collapsed == false? <ExpandMoreIcon/> : <NavigateNextIcon/> : <div style={{width: '24px'}}></div>} {/* <-- to align all the choice buttons even though they don't have an arrow to expand */}
                                 </div>
-                                <div className="tree-view-label" onClick={() => this.setSelectedNT(hovedtype.Id) }>
+                                <div className="tree-view-label" onClick={() => this.setSelectedNT(hovedtype) }>
                                     <Xcomp.Button className="hovedtype btn-flat">
-                                        <span className="naturtype-kode">{this.truncCode(hovedtype.Id)}</span>
+                                        <span className="naturtype-kode">{this.truncCode(hovedtype)}</span>
                                         {/* <span>{hovedtype.name}</span> */}
                                         <span>{hovedtype.Text}</span>
                                     </Xcomp.Button>
@@ -81,9 +82,9 @@ export default class LivsmediumSelector extends React.Component {
                                 {!hovedtype.Collapsed && hovedtype.Children ?
                                 <div className="tree-view-children">
                                 {hovedtype.Children.map(grunntype =>
-                                    <div key={grunntype.Id} onClick={() => this.setSelectedNT(grunntype.Id)}>
+                                    <div key={grunntype.Id} onClick={() => this.setSelectedNT(grunntype)}>
                                         <span className="grunntype btn-flat">
-                                            <span className="naturtype-kode">{this.truncCode(grunntype.Id)}</span>
+                                            <span className="naturtype-kode">{this.truncCode(grunntype)}</span>
                                             {/* <span>{grunntype.name}</span> */}
                                             <span>{grunntype.Text}</span>
                                         </span>
