@@ -401,16 +401,9 @@ if (AOOdarkfigureHigh >= 9.95) AOOdarkfigureHigh <- round(AOOdarkfigureHigh)
 if (AOOdarkfigureHigh > 2) AOOdarkfigureHigh <- round(AOOdarkfigureHigh * 10) / 10 
 if (AOOdarkfigureHigh < 2) AOOdarkfigureHigh <- round(AOOdarkfigureHigh * 100) / 100 
  
- 
-// org: ExpansionSpeed <- trunc(sqrt(AOOdarkfigureBest) * (sqrt(AOO2) - sqrt(AOO1)) / ((AOOyear2 - AOOyear1) * sqrt(pi))) 
-// corrected: 
-ExpansionSpeed <- trunc(sqrt(AOOdarkfigureBest) * 1000 * (sqrt(AOO2) - sqrt(AOO1)) / ((AOOyear2 - AOOyear1) * sqrt(pi))) 
-// org: ExpansionLowerQ <- trunc(sqrt(AOOdarkfigureLow) * (sqrt(AOO2) - sqrt(AOO1)) / ((AOOyear2 - AOOyear1) * sqrt(pi))) 
-// corrected: 
-ExpansionLowerQ <- trunc(sqrt(AOOdarkfigureLow) * 1000 * (sqrt(AOO2) - sqrt(AOO1)) / ((AOOyear2 - AOOyear1) * sqrt(pi))) 
-// org: ExpansionUpperQ <- trunc(sqrt(AOOdarkfigureHigh) * (sqrt(AOO2) - sqrt(AOO1)) / ((AOOyear2 - AOOyear1) * sqrt(pi))) 
-// corrected: 
-ExpansionUpperQ <- trunc(sqrt(AOOdarkfigureHigh) * 1000 * (sqrt(AOO2) - sqrt(AOO1)) / ((AOOyear2 - AOOyear1) * sqrt(pi))) 
+ExpansionSpeed <- trunc(sqrt(AOOdarkfigureBest) * (sqrt(AOO2) - sqrt(AOO1)) / ((AOOyear2 - AOOyear1) * sqrt(pi))) 
+ExpansionLowerQ <- trunc(sqrt(AOOdarkfigureLow) * (sqrt(AOO2) - sqrt(AOO1)) / ((AOOyear2 - AOOyear1) * sqrt(pi))) 
+ExpansionUpperQ <- trunc(sqrt(AOOdarkfigureHigh) * (sqrt(AOO2) - sqrt(AOO1)) / ((AOOyear2 - AOOyear1) * sqrt(pi))) 
  
 if (ExpansionSpeed < 50) Bscore <- 1 
 if (ExpansionSpeed >= 50) Bscore <- 2 
@@ -420,13 +413,6 @@ if (ExpansionLowerQ < 50) Blow <- max(1, Bscore - 1)
 if (ExpansionLowerQ >= 50) Blow <- max(2, Bscore - 1) 
 if (ExpansionLowerQ >= 160) Blow <- 3 
 if (ExpansionLowerQ >= 500) Blow <- 4 
-
-// org:
-//if (ExpansionUpperQ < 50) Blow <- 1 
-//if (ExpansionUpperQ >= 50) Blow <- 2 
-//if (ExpansionUpperQ >= 160) Blow <- min(3, Bscore + 1) 
-//if (ExpansionUpperQ >= 500) Blow <- min(4, Bscore + 1) 
-//corrected:
 if (ExpansionUpperQ < 50) Bhigh <- 1 
 if (ExpansionUpperQ >= 50) Bhigh <- 2 
 if (ExpansionUpperQ >= 160) Bhigh <- min(3, Bscore + 1) 
@@ -469,10 +455,10 @@ if (ExpansionLowerQ < 50) Blow <- max(1, Bscore - 1)
 if (ExpansionLowerQ >= 50) Blow <- max(2, Bscore - 1) 
 if (ExpansionLowerQ >= 160) Blow <- 3 
 if (ExpansionLowerQ >= 500) Blow <- 4 
-if (ExpansionUpperQ < 50) Blow <- 1 
-if (ExpansionUpperQ >= 50) Blow <- 2 
-if (ExpansionUpperQ >= 160) Blow <- min(3, Bscore + 1) 
-if (ExpansionUpperQ >= 500) Blow <- min(4, Bscore + 1) 
+if (ExpansionUpperQ < 50) Bhigh <- 1 
+if (ExpansionUpperQ >= 50) Bhigh <- 2 
+if (ExpansionUpperQ >= 160) Bhigh <- min(3, Bscore + 1) 
+if (ExpansionUpperQ >= 500) Bhigh <- min(4, Bscore + 1) 
  
 if (Bscore == 1) ExpansionText <- "under 50&nbsp;m/år" 
 if (Bscore == 2) ExpansionText <- "mellom 50&nbsp;m/år og 160&nbsp;m/år" 
@@ -491,3 +477,6 @@ if (ExpansionUpperQ > 1000) ExpansionUpperQ <- trunc(ExpansionUpperQ / 100) * 10
 if (ExpansionUpperQ > 100) ExpansionUpperQ <- trunc(ExpansionUpperQ / 10) * 10 
 # Utmating 
 Basert på det beste anslaget på [Occurrences1Best] forekomst(er) i løpet av 10&nbsp;år og [IntroductionsBest] introduksjon(er) i samme tidsperiode er B-kriteriet skåret som [Bscore] (med usikkerhet: [Blow]–[Bhigh]). Dette innebærer at artens ekspansjonshastighet ligger [ExpansionText] (beste anslag: [ExpansionSpeed]&nbsp;m/år). 
+ 
+ 
+ 
