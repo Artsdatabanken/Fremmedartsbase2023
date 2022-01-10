@@ -25,11 +25,11 @@ const SpeciesSpeciesTable = observer((props) =>
         </colgroup>
              :
              <colgroup>
-             <col style={{width: "30%"}} />
+             <col style={{width: "25%"}} />
              <col style={{width: "10%"}} />
              <col style={{width: "25%"}} />
              <col style={{width: "25%"}} />
-             <col style={{width: "10%"}} />
+             <col style={{width: "15%"}} />
          </colgroup>
               }
             {/*<col style={{width: "5%"}} />
@@ -44,9 +44,8 @@ const SpeciesSpeciesTable = observer((props) =>
                 {props.showKeyStoneSpecie ? <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.keystoneSpecies}} ></th> : null}
                 {props.showEffect ? <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.effect}} ></th> : null}
                 <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.scope}} ></th>
-                {props.showInteractionType ? <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.interactionType}} ></th> : null}
-                <th style={{textAlign: 'center'}} 
-                    dangerouslySetInnerHTML={{ __html: labels.DEcrit.assessmentBasis}}> 
+                {props.showInteractionType && !props.HCrit ? <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.interactionType}} ></th> : null}
+                <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.assessmentBasis}}> 
                     </th>
                 <th>&nbsp;</th>
                {/* <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.longDistanceEffect}} ></th>
@@ -72,7 +71,7 @@ const SpeciesSpeciesTable = observer((props) =>
                 <Xcomp.StringEnum observableValue={[item, 'scale']} forceSync codes={props.koder.speciesSpeciesScopeType}/>
                   {/*  <Xcomp.Bool observableValue={[item, 'effectLocalScale']} />*/}
                     </td>
-                {props.showInteractionType ? <td>
+                {props.showInteractionType && !props.HCrit ? <td>
                   <Xcomp.StringEnum observableValue={[item, 'interactionType']}   
                                     forceSync                                
                                     codes={props.koder.speciesSpeciesInteractionType} />
@@ -180,7 +179,7 @@ const SpeciesSpeciesTable = observer((props) =>
                     <Xcomp.StringEnum observableValue={[props.newItem, 'scale']} forceSync codes={props.koder.speciesSpeciesScopeType} />
                   {/*  <Xcomp.Bool observableValue={[props.newItem, 'effectLocalScale']} /> */}
                 </td>
-                {props.showInteractionType ? <td>
+                {props.showInteractionType && !props.HCrit ? <td>
                     {/* <Xcomp.MultiselectArray
                                 observableValue={[props.newItem, 'interactionTypes']} 
                                 codes={props.koder.speciesSpeciesInteractionTypes}
