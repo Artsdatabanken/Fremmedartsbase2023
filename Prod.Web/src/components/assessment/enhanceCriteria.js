@@ -86,15 +86,15 @@ const introHighTable = {
 
 function introductionNum(table, best) {
     const keys = Object.keys(table).reverse()
-    // console.log("introductionNum keys: " + JSON.stringify(keys))
+    // console.log("¤&introductionNum keys: " + JSON.stringify(keys))
     var i = 0
     for(const key of keys) {
         if(best >= key) {
-            i = key
+            i = table[key]
             break
         }
     }
-    // console.log("introductionNum result: " + i)
+    // console.log("¤&introductionNum result: " + i + " type:" + typeof(i))
     return i
 }
 
