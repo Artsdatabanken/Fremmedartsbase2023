@@ -1283,19 +1283,6 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
             console.log("uncarr crit value: " + value)
             let ud
             let uv
-            // if (crit.criteriaLetter === "A" &&
-            //         riskAssessment.chosenSpreadMedanLifespan === 'LifespanA1aSimplifiedEstimate'
-            // ) {
-            //     const ulevels = uncertaintylevelsFor(riskAssessment.chosenSpreadMedanLifespan, medianLifespanLevel)
-            //     uv = ulevels
-            //     ud = [0,1,2,3]
-            // } else if (crit.criteriaLetter === "B" &&
-            //         (riskAssessment.chosenSpreadYearlyIncrease === 'SpreadYearlyIncreaseOccurrenceArea' ||
-            //         riskAssessment.chosenSpreadYearlyIncrease === 'SpreadYearlyIncreaseObservations')
-            // ) {
-            //     const ulevels = uncertaintylevelsFor(riskAssessment.chosenSpreadYearlyIncrease, yearlyIncreaseLevel)
-            //     uv = ulevels
-            //     ud = [0,1,2,3]
             if (crit.criteriaLetter === "A" &&
                 (riskAssessment.ametodkey === "A1a1" || riskAssessment.ametodkey === "A1b1")) {
                 ud = [0,1,2,3]
@@ -1306,8 +1293,14 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                     }
                 }
             } else if (crit.criteriaLetter === "A" && riskAssessment.ametodkey === "A3") {
-                ud = riskAssessment.aDisabledUncertaintyValues
-                uv = [value]
+                // ud = riskAssessment.aDisabledUncertaintyValues
+                ud = [0,1,2,3]
+                uv = []
+                for (var i = 0; i <= 3; i++) {
+                    if(i >= riskAssessment.alow && i <= riskAssessment.ahigh) {
+                        uv.push(i)
+                    }
+                }
             } else if (crit.criteriaLetter === "B" && riskAssessment.ametodkey === "B2a") {
                 ud = riskAssessment.bDisabledUncertaintyValues
                 uv = [value]
