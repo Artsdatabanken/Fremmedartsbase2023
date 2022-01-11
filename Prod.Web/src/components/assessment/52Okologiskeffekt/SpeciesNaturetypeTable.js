@@ -10,7 +10,6 @@ const SpeciesNaturetypeTable = observer((props) =>
 {
     const labels = props.labels
     const disabled = props.disabled
-    console.log(props.newItem)
     var naturetypeNames = []
     if (props.natureTypes && props.natureTypes.length > 0) {
         
@@ -19,6 +18,7 @@ const SpeciesNaturetypeTable = observer((props) =>
         }
         
     }
+    console.log(naturetypeNames)
     return <table className="table ecologicalEffect">
         
 
@@ -105,12 +105,13 @@ const SpeciesNaturetypeTable = observer((props) =>
                 </Xcomp.Button></td>
             </tr>
             )}
-            <tr className="newRow">
+            {naturetypeNames && naturetypeNames.length > 0 && <tr className="newRow">
                 <td>
-               <Xcomp.StringEnum 
+              <Xcomp.StringEnum 
                         observableValue={[props.newItem, "niNCode"]}  
                         forceSync                                      
-                        codes={naturetypeNames}/>      
+                        codes={naturetypeNames}/>     
+              
                   {/*  <select className="form-control" disabled={disabled} placeholder="velg naturtype" value={props.newItem.niNCode} options={naturetypeNames}
                             onChange={action(e => props.newItem.niNCode = e.target.value)}
                  > */}
@@ -168,7 +169,7 @@ const SpeciesNaturetypeTable = observer((props) =>
                         >{labels.General.add}</Xcomp.Button>
                     </div>
                 </td>
-            </tr>
+            </tr>}
         </tbody>
     </table>})
 
