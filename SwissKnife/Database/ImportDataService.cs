@@ -394,6 +394,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.Connected, opt => opt.Ignore())
                     .ForMember(dest => dest.ConnectedToAnother, opt => opt.Ignore())
                     .ForMember(dest => dest.SpeciesStatus, opt => opt.Ignore())
+                    .ForMember(dest => dest.AssumedReproducing50Years, opt => opt.Ignore())
                     .ForMember(dest => dest.ProductionSpecies, opt => opt.Ignore())
                     .ForMember(dest => dest.ConnectedTaxon1, opt => opt.Ignore())
                     .ForMember(dest => dest.ConnectedTaxon2, opt => opt.Ignore())

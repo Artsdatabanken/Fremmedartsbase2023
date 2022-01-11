@@ -283,20 +283,20 @@ checkStatus = (production) => {
 
                         <p>{labels.SpeciesStatus.codesExplanation}</p>
                         <br></br>
+                        {assessment.horizonDoScanning && assessment.horizonEstablismentPotential == 1 && (assessment.speciesStatus == "C1" || assessment.speciesStatus == "C0" || assessment.speciesStatus == "B1") ? 
+                        
+                        <div>
+                            <p>{labels.SpeciesStatus.assumedReproducing50Years}</p>
+                            <Xcomp.StringEnum observableValue={[assessment, "assumedReproducing50YearsString"]} mode="radio" codes={codes.yesNo}/>
+                        </div>
+                        : null} 
+                        <br></br>
                         <div>
                             <p>{assessment.isRegionallyAlien ? labels.SpeciesStatus.establishedBefore1800RegionallyAlien : labels.SpeciesStatus.establishedBefore1800} </p>
                             <Xcomp.StringEnum observableValue={[assessment, "alienSpecieUncertainIfEstablishedBefore1800String"]} mode="radio" codes={codes.yesNo}/>
                         </div>
                         
                         <p>{labels.SpeciesStatus.probabilityUncertainity}</p>
-                        
-                        {assessment.horizonDoScanning && assessment.horizonEstablismentPotential == 1 && (assessment.speciesStatus == "C1" || assessment.speciesStatus == "C0" || assessment.speciesStatus == "B1") ? 
-                        <div>
-                            <p>Arten skåret 1 på etableringspotensialet under horisontskanningen. Dette kan bety at arten var antatt å reprodusere på stedet uten at den sprer seg ut av forekomstruten i løpet av 10 år (i et 50-årsperspektiv), eller at arten var antatt å overleve på stedet, men ikke reprodusere. Er det antatt at arten reproduserer i et 50-årsperspektiv?</p>
-                            <Xcomp.StringEnum observableValue={[assessment, "assumedReproducing50Years"]} mode="radio" codes={codes.yesNo}/>
-                        </div> 
-                        : null
-                        }
 
                         {assessment.notApplicableCategory == "establishedBefore1800" &&
                         // transfer "notApplicableDescription" from FAB3

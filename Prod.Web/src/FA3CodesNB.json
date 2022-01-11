@@ -4869,6 +4869,13 @@
                         },
                         {
                             "Id": null,
+                            "Value": "assumedReproducing50Years",
+                            "Text": "Arten skåret 1 på etableringspotensialet under horisontskanningen. Dette kan bety at arten var antatt å reprodusere på stedet uten at den sprer seg ut av forekomstruten i løpet av 10 år (i et 50-årsperspektiv), eller at arten var antatt å overleve på stedet, men ikke reprodusere. Er det antatt at arten reproduserer i et 50-årsperspektiv?",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "establishedBefore1800",
                             "Text": "Var arten etablert per 1800?",
                             "Info": null,

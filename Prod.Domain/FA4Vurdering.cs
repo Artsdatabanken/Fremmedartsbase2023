@@ -185,6 +185,8 @@ namespace Prod.Domain
         public bool AlienSpecieUncertainAntropochor { get; set; } // lagt til: 19.10.2016
         public string AlienSpecieUncertainDescription { get; set; } // lagt til: 22.12.2016
 
+        public bool? AssumedReproducing50Years { get; set; }
+
         public bool SkalVurderes { get; set; }
 
         //public string EtableringsmulighetINorge { get; set; } // lagt til 22.08.2016 //fjernet 25.08.2016
