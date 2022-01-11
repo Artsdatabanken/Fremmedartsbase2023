@@ -450,7 +450,7 @@ class ViewModel {
                 this.horizonScanFilter.potentialDoorKnockers.length,
                 this.horizonScanFilter.hsNotStarted, this.horizonScanFilter.hsFinished, this.horizonScanFilter.toAssessment, this.horizonScanFilter.notAssessed,
                 this.responsible.length, this.kunUbehandlede,
-                this.workStatus.length,
+                this.workStatus.length, this.otherComments.length,
 
                 this.historyFilter.riskCategoryFilter.length, this.historyFilter.decisiveCriteriaFilter.length,
                 this.historyFilter.riskAssessedFilter.length, this.historyFilter.riskNotAssessedFilter.length, this.historyFilter.ikkevudert, this.historyFilter.vurdert,
@@ -1268,6 +1268,11 @@ class ViewModel {
                 if (this.responsible.length > 0){
                     //console.log(this.responsible)
                     filters = filters + this.responsible.map((x)=> "&Responsible=" + x ).join()
+                }
+                if (this.otherComments.length > 0){
+                    //console.log(this.responsible)
+                    filters = filters + "&Comments.UserId=" + auth.userId
+                    filters = filters + this.otherComments.map((x)=> "&Comments.CommentType=" + x ).join()
                 }
             }
     }

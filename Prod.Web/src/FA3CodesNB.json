@@ -326,6 +326,10 @@
 
         "comments": [
             {
+                "text": "Nye kommentarer",
+                "value": "newComments"
+            },
+            {
                 "text": "Alle vurderinger med kommentarer",
                 "value": "allAssessmentsWithComments"
             },

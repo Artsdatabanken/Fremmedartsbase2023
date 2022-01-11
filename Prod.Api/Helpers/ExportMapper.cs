@@ -260,7 +260,80 @@ namespace Prod.Api.Helpers
         // slutt artsegenskaper
 
 
+        //// (3.3) Import
+        //public List<MigrationPathway> ImportPathways { get; set; } = new List<MigrationPathway>();
+        public bool ImportedToIndoorOrProductionArea { get; set; } = false;
 
+        public string IndoorProduktion { get; set; }
+        // (3.4) Spredningsveier
+        //public List<MigrationPathway> AssesmentVectors { get; set; } = new List<MigrationPathway>(); // lagt til 09.01.2017
+        public string Vector { get; set; }  // ???!!
+
+        // (3.5) Spredningshistorikk
+        //public List<SpreadHistory> SpreadHistory { get; set; } = new List<SpreadHistory>();
+
+        //[DisplayName("Fremtidig spredningsprognose i Norge, inkl. potensielt utbredelsesområde, antatte kritiske parametre for arten, og forventede endringer i disse:")] // 
+        public string SpreadHistoryDomesticDocumentation { get; set; } // fab: SpreadHistoryDomesticDocumentation
+        //[DisplayName("Detaljinformasjon for Naturtyper:")] // 
+        public string SpreadHistoryForeignDocumentation { get; set; } // fab: SpreadHistoryForeignDocumentation
+
+        //public bool? FutureDistributionChangeExpected { get; set; } // fab: Future_Distribution_Change_Expected // ikke i bruk i 2012
+        public string FutureDistributionChangeExpectedDescription { get; set; } // fab: Future_Distribution_Change_Expected_Description
+        public string FutureDistributionCriticalParameters { get; set; } // fab: Future_Distribution_Critical_Parameters
+
+        public Int64? PotentialAreaDistribution { get; set; } // fab: Potential_Area_Distribution -  ikke i bruk?
+        public string PotentialAreaDistributionInTheFuture { get; set; } // fab: Potential_Area_Distribution_Future_Future @steinho - ikke i bruk?
+
+
+
+        public Int64? CurrentIndividualCount { get; set; }
+        public Int64? CurrentIndividualCountLowCalculated { get; set; }
+        public string CurrentIndividualCountLowMultiplier { get; set; }
+        public Int64? CurrentIndividualCountCalculated { get; set; }
+        public string CurrentIndividualCountMultiplier { get; set; }
+        public string CurrentIndividualCountHighMultiplier { get; set; }
+        public Int64? CurrentIndividualCountHighCalculated { get; set; }
+
+        public Int64? CurrentSpreadArea { get; set; }
+        //public Int64? CurrentSpreadAreaLowMultiplier { get; set; }
+        //public Int64? CurrentSpreadAreaHighMultiplier { get; set; }
+        //public Int64? CurrentSpreadAreaMultiplier { get; set; }
+        public Int64? CurrentSpreadAreaLowCalculated { get; set; }
+        public Int64? CurrentSpreadAreaHighCalculated { get; set; }
+        public Int64? CurrentSpreadAreaCalculated { get; set; }
+
+        public string CurrentPresenceComment { get; set; }
+
+        public string SpreadAreaInChangedNature { get; set; }
+
+        public string SpeciesEstablishmentCategory { get; set; }
+
+        // (4) Naturtyper
+        //public List<ImpactedNatureType> ImpactedNatureTypes { get; set; } = new List<ImpactedNatureType>();
+
+        //public List<RedlistedNatureType> RedlistedNatureTypes { get; set; } = new List<RedlistedNatureType>(); //lagt til 18.11.2016
+
+        //public List<Habitat> Habitats { get; set; } = new List<Habitat>();
+
+        //public string SpeciesNatureTypesDetails { get; set; } // fab: SpeciesNatureTypesDetails // removed 03.11.2016
+
+        public bool UsesLivingSpeciesAsHabitat { get; set; }
+        public string UsesLivingSpeciesAsHabitatScientificName { get; set; }
+
+        // (5) Risikovurdering
+        //public class RegionalRiskAssessment
+        //{
+        //    public string Name { get; set; }
+        //    public RiskAssessment RiskAssessment { get; set; }
+        //}
+
+        // todo: den store risikovurdering
+        //public RiskAssessment RiskAssessment { get; set; } = new RiskAssessment();
+        //public List<RegionalRiskAssessment> RegionalRiskAssessments { get; set; } = new List<RegionalRiskAssessment>();
+
+
+
+        //public List<SimpleReference> References { get; set; } = new List<SimpleReference>();
         // comments
         [Name("DatoForSisteKommentar")]
         public string NewestCommentDate { get; set; }

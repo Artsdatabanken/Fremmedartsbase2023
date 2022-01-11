@@ -550,15 +550,16 @@ namespace Prod.Api.Helpers
                 if (filter.Horizon.NotStarted)
                     queryElements.Add(
                         new BooleanClause(QueryGetFieldQuery(Field_HsResult, new[] { "2" }), Occur.SHOULD));
+
                 if (filter.Horizon.Finished)
                     queryElements.Add(new BooleanClause(QueryGetFieldQuery(Field_HsResult, new[] { "1", "0" }),
                         Occur.SHOULD));
+
                 if (filter.Horizon.ToAssessment)
-                    queryElements.Add(
-                        new BooleanClause(QueryGetFieldQuery(Field_HsResult, new[] { "1" }), Occur.SHOULD));
+                    queryElements.Add(new BooleanClause(QueryGetFieldQuery(Field_HsResult, new[] { "1" }), Occur.SHOULD));
+
                 if (filter.Horizon.NotAssessed)
-                    queryElements.Add(
-                        new BooleanClause(QueryGetFieldQuery(Field_HsResult, new[] { "0" }), Occur.SHOULD));
+                    queryElements.Add(new BooleanClause(QueryGetFieldQuery(Field_HsResult, new[] { "0" }), Occur.SHOULD));
 
                 if (filter.Comments.KunUbehandlede)
                     queryElements.Add(new BooleanClause(QueryGetFieldQuery(Field_CommentsOpen, new[] { "1" }), Occur.MUST));
@@ -602,13 +603,25 @@ namespace Prod.Api.Helpers
                 // filter 
                 ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_DoHorizonScanning, new[] { "0" }), Occur.MUST);
 
-                // filtrer på sist redigert av
+                // filtrer på vurderingsansvarlig
                 if (filter.Responsible.Length > 0)
                     ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_LastUpdatedBy, filter.Responsible), Occur.MUST);
 
+                // filtrer på framdrift
                 if (filter.Status.Length > 0)
                     ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_ProgressStatus, filter.Status), Occur.MUST);
 
+                // filtrer på kommentarer
+                if (filter.Comments.CommentType.Contains("allAssessmentsWithComments"))
+                    ((BooleanQuery)query).Add(new BooleanClause(QueryGetFieldQuery(Field_CommentsOpen, new[] { "1" }), Occur.MUST));
+                if (filter.Comments.CommentType.Contains("newComments") && filter.Comments.UserId != Guid.Empty)
+                    ((BooleanQuery)query).Add(new BooleanClause(new PrefixQuery(new Term(Field_CommentsNew, filter.Comments.UserId.ToString() + ";*")), Occur.MUST));
+                // autoTaxonChange,taxonChangeRequiresUpdate
+                if (filter.Comments.CommentType.Contains("autoTaxonChange"))
+                    ((BooleanQuery)query).Add(new BooleanClause(QueryGetFieldQuery(Field_TaxonChange, new[] { "1" }), Occur.MUST));
+                if (filter.Comments.CommentType.Contains("taxonChangeRequiresUpdate"))
+                    ((BooleanQuery)query).Add(new BooleanClause(QueryGetFieldQuery(Field_TaxonChange, new[] { "2" }), Occur.MUST));
+                // filtrer på kommentarer
 
                 if (filter.History.Category.Length > 0)
                     ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_Category2018, filter.History.Category), Occur.MUST);
@@ -628,6 +641,8 @@ namespace Prod.Api.Helpers
 
                 if (filter.Current.Status.Length > 0)
                     ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_CurrentStatus, filter.Current.Status), Occur.MUST);
+
+
             }
 
 
