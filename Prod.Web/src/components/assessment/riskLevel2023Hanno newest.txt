@@ -401,9 +401,15 @@ if (AOOdarkfigureHigh >= 9.95) AOOdarkfigureHigh <- round(AOOdarkfigureHigh)
 if (AOOdarkfigureHigh > 2) AOOdarkfigureHigh <- round(AOOdarkfigureHigh * 10) / 10 
 if (AOOdarkfigureHigh < 2) AOOdarkfigureHigh <- round(AOOdarkfigureHigh * 100) / 100 
  
-ExpansionSpeed <- trunc(sqrt(AOOdarkfigureBest) * (sqrt(AOO2) - sqrt(AOO1)) / ((AOOyear2 - AOOyear1) * sqrt(pi))) 
-ExpansionLowerQ <- trunc(sqrt(AOOdarkfigureLow) * (sqrt(AOO2) - sqrt(AOO1)) / ((AOOyear2 - AOOyear1) * sqrt(pi))) 
-ExpansionUpperQ <- trunc(sqrt(AOOdarkfigureHigh) * (sqrt(AOO2) - sqrt(AOO1)) / ((AOOyear2 - AOOyear1) * sqrt(pi))) 
+//her mangler korreksjon for km->m
+//ExpansionSpeed <- trunc(sqrt(AOOdarkfigureBest) * (sqrt(AOO2) - sqrt(AOO1)) / ((AOOyear2 - AOOyear1) * sqrt(pi))) 
+//ExpansionLowerQ <- trunc(sqrt(AOOdarkfigureLow) * (sqrt(AOO2) - sqrt(AOO1)) / ((AOOyear2 - AOOyear1) * sqrt(pi))) 
+//ExpansionUpperQ <- trunc(sqrt(AOOdarkfigureHigh) * (sqrt(AOO2) - sqrt(AOO1)) / ((AOOyear2 - AOOyear1) * sqrt(pi))) 
+
+//korreksjon av Helge
+ExpansionSpeed <- trunc(sqrt(AOOdarkfigureBest) * 1000 * (sqrt(AOO2) - sqrt(AOO1)) / ((AOOyear2 - AOOyear1) * sqrt(pi))) 
+ExpansionLowerQ <- trunc(sqrt(AOOdarkfigureLow) * 1000 * (sqrt(AOO2) - sqrt(AOO1)) / ((AOOyear2 - AOOyear1) * sqrt(pi))) 
+ExpansionUpperQ <- trunc(sqrt(AOOdarkfigureHigh) * 1000 * (sqrt(AOO2) - sqrt(AOO1)) / ((AOOyear2 - AOOyear1) * sqrt(pi))) 
  
 if (ExpansionSpeed < 50) Bscore <- 1 
 if (ExpansionSpeed >= 50) Bscore <- 2 
