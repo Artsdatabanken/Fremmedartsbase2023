@@ -1389,7 +1389,7 @@ function enhanceCriteriaAddErrorReportingForAutoMode(riskAssessment) {
     }
 }
 
-function enhanceCriteriaAddScale(riskAssessment) {
+/*function enhanceCriteriaAddScale(riskAssessment) {
     for(var i=0; i < riskAssessment.speciesSpeciesInteractions.length; i++) {
         riskAssessment.speciesSpeciesInteractions[i].effectLocalScale ? riskAssessment.speciesSpeciesInteractions[i].scale = "Limited" : riskAssessment.speciesSpeciesInteractions[i].scale = "Large"
     }
@@ -1415,7 +1415,7 @@ function enhanceCriteriaAddStatus(riskAssessment) {
                 riskAssessment.hostParasiteInformations[i].status = "NewNative" :
                 riskAssessment.hostParasiteInformations[i].status = "KnownNative" 
     }
-}
+}*/
 
 
 export default function enhanceCriteria(riskAssessment, vurdering, codes, labels, artificialAndConstructedSites) {
@@ -1427,6 +1427,6 @@ export default function enhanceCriteria(riskAssessment, vurdering, codes, labels
     enhanceRiskAssessmentEcoEffect(riskAssessment)
     enhanceRiskAssessmentInvasjonspotensiale(riskAssessment)
     enhanceCriteriaAddUncertaintyRules(riskAssessment)
-    enhanceCriteriaAddScale(riskAssessment)
-    enhanceCriteriaAddStatus(riskAssessment)
+    //enhanceCriteriaAddScale(riskAssessment)
+    //enhanceCriteriaAddStatus(riskAssessment)
 }

@@ -222,6 +222,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.Scale, opt => opt.Ignore())
                     .ForMember(dest => dest.InteractionTypes, opt => opt.Ignore())
                     .ForMember(dest => dest.BasisOfAssessment, opt => opt.Ignore())
+                    .ForMember(dest => dest.Status, opt => opt.Ignore())
                     .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.Ignore());
                 cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.Interaction, Prod.Domain.RiskAssessment.Interaction>()
                     .ForMember(dest => dest.Scale, opt => opt.Ignore())
@@ -917,6 +918,63 @@ namespace SwissKnife.Database
                 exAssessment.IsRegionallyAlien = newAssesment.IsRegionallyAlien;
                 exAssessment.IsAlienSpecies = newAssesment.IsAlienSpecies;
                 exAssessment.ConnectedToAnother = newAssesment.ConnectedToAnother;
+
+                for (var i = 0; i < exAssessment.RiskAssessment.SpeciesSpeciesInteractions.Count; i++) {
+                    if (exAssessment.RiskAssessment.SpeciesSpeciesInteractions[i].EffectLocalScale == true)
+                    {
+                        newAssesment.RiskAssessment.SpeciesSpeciesInteractions[i].Scale = "Limited";
+                    }
+                    else
+                    {
+                        newAssesment.RiskAssessment.SpeciesSpeciesInteractions[i].Scale = "Large";
+                    }
+                }
+
+                for (var i = 0; i < exAssessment.RiskAssessment.SpeciesNaturetypeInteractions.Count; i++)
+                {
+                    if (exAssessment.RiskAssessment.SpeciesNaturetypeInteractions[i].EffectLocalScale == true)
+                    {
+                        newAssesment.RiskAssessment.SpeciesNaturetypeInteractions[i].Scale = "Limited";
+                    }
+                    else
+                    {
+                        newAssesment.RiskAssessment.SpeciesNaturetypeInteractions[i].Scale = "Large";
+                    }
+                }
+
+                for (var i = 0; i < exAssessment.RiskAssessment.HostParasiteInformations.Count; i++)
+                {
+                    if (exAssessment.RiskAssessment.HostParasiteInformations[i].EffectLocalScale == true)
+                    {
+                        newAssesment.RiskAssessment.HostParasiteInformations[i].Scale = "Limited";
+                    }
+                    else
+                    {
+                        newAssesment.RiskAssessment.HostParasiteInformations[i].Scale = "Large";
+                    }
+
+                    if (exAssessment.RiskAssessment.HostParasiteInformations[i].ParasiteNewForHost && exAssessment.RiskAssessment.HostParasiteInformations[i].ParasiteIsAlien) {
+                        newAssesment.RiskAssessment.HostParasiteInformations[i].Status = "NewAlien";
+                    } else if (exAssessment.RiskAssessment.HostParasiteInformations[i].ParasiteIsAlien) {
+                        newAssesment.RiskAssessment.HostParasiteInformations[i].Status = "KnownAlien";
+                    } else if (exAssessment.RiskAssessment.HostParasiteInformations[i].ParasiteNewForHost) {
+                        newAssesment.RiskAssessment.HostParasiteInformations[i].Status = "NewNative";
+                    } else {
+                        newAssesment.RiskAssessment.HostParasiteInformations[i].Status = "KnownNative";
+                    }
+                }
+
+                for (var i = 0; i < exAssessment.RiskAssessment.GeneticTransferDocumented.Count; i++)
+                {
+                    if (exAssessment.RiskAssessment.GeneticTransferDocumented[i].EffectLocalScale == true)
+                    {
+                        newAssesment.RiskAssessment.GeneticTransferDocumented[i].Scale = "Limited";
+                    }
+                    else
+                    {
+                        newAssesment.RiskAssessment.GeneticTransferDocumented[i].Scale = "Large";
+                    }
+                }
 
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (comparisonResult.AreEqual == false)

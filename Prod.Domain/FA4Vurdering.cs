@@ -1162,6 +1162,8 @@ public partial class FA4 // (3.2) Artsegenskaper
             public string ParasiteScientificName { get; set; }
             public string ParasiteVernacularName { get; set; }
             public string ParasiteEcoEffect { get; set; }
+
+            public string Status { get; set; }
             public bool ParasiteNewForHost { get; set; }
             //public bool ParasiteNewForNorway { get; set; } // lagt til 09.11.2016
             public bool ParasiteIsAlien { get; set; } // nytt navn  17.01.2017 (ParasiteNewForNorway)
