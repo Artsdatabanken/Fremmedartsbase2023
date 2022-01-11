@@ -536,12 +536,12 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                     /> <span style={{margin: '10px 10px 0'}}>(t<sub>1</sub>)</span>
                                                     </td>
                                                 <td><Xcomp.Number                            
-                                                        observableValue={[riskAssessment, "AOO1"]}
+                                                        observableValue={[riskAssessment, "AOOknown1"]}
                                                         integer
                                                     />
                                                 </td>
                                                 <td><Xcomp.Number                            
-                                                        observableValue={[riskAssessment, "AOO1withoutManagementConsideration"]}
+                                                        observableValue={[riskAssessment, "AOO1"]}
                                                         integer
                                                     />
                                                 </td>
@@ -580,10 +580,10 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                         observableValue={[riskAssessment, "AOOyear2"]} 
                                                         yearRange={true}/> <span style={{margin: '10px 10px 0'}}>(t<sub>2</sub>)</span>
                                                 </td>
-                                                <td><Xcomp.Number observableValue={[riskAssessment, "AOO2"]} integer /> 
+                                                <td><Xcomp.Number observableValue={[riskAssessment, "AOOknown2"]} integer /> 
                                                 </td> 
                                                 <td><Xcomp.Number                            
-                                                        observableValue={[riskAssessment, "AOO2withoutManagementConsideration"]}
+                                                        observableValue={[riskAssessment, "AOO2"]}
                                                         integer
                                                     />
                                                 </td>                                               
