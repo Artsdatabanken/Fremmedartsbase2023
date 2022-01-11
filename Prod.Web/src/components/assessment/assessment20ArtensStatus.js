@@ -7,6 +7,8 @@ import * as Xcomp from './observableComponents';
 import DomesticObservedAndEstablished from './20ArtensStatus/DomesticObservedAndEstablished';
 
 import {action, autorun, extendObservable, observable, toJS} from "mobx"
+
+import createTaxonSearch from '../createTaxonSearch'
 //import createTaxonSearch from './createTaxonSearch'
 
 // const labels = config.labels
@@ -34,7 +36,7 @@ const SkalVurderesLabel = ({skalVurderes}) => (skalVurderes
 const nbsp = "\u00a0"
 
 
-const  connectedTaxon1 = observable({
+const connectedTaxon1 = observable({
     ScientificName: "",
     ScientificNameId: "",
     ScientificNameAuthor: "",
@@ -48,7 +50,7 @@ const  connectedTaxon1 = observable({
     // taxonSearchWaitingForResult: false - should not be observable
 })
 
-const  connectedTaxon2 = observable({
+const connectedTaxon2 = observable({
     ScientificName: "",
     ScientificNameId: "",
     ScientificNameAuthor: "",
@@ -82,6 +84,7 @@ checkStatus = (production) => {
          return ""
     }
  }
+
     render() {
         const {appState:{assessment}, appState} = this.props;
        // const vurdering = assessment
@@ -287,6 +290,14 @@ checkStatus = (production) => {
                         
                         <p>{labels.SpeciesStatus.probabilityUncertainity}</p>
                         
+                        {assessment.horizonDoScanning && assessment.horizonEstablismentPotential == 1 && (assessment.speciesStatus == "C1" || assessment.speciesStatus == "C0" || assessment.speciesStatus == "B1") ? 
+                        <div>
+                            <p>Arten skåret 1 på etableringspotensialet under horisontskanningen. Dette kan bety at arten var antatt å reprodusere på stedet uten at den sprer seg ut av forekomstruten i løpet av 10 år (i et 50-årsperspektiv), eller at arten var antatt å overleve på stedet, men ikke reprodusere. Er det antatt at arten reproduserer i et 50-årsperspektiv?</p>
+                            <Xcomp.StringEnum observableValue={[assessment, "assumedReproducing50Years"]} mode="radio" codes={codes.yesNo}/>
+                        </div> 
+                        : null
+                        }
+
                         {assessment.notApplicableCategory == "establishedBefore1800" &&
                         // transfer "notApplicableDescription" from FAB3
                             <>
