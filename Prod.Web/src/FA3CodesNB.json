@@ -7034,7 +7034,7 @@
                         {
                             "Id": null,
                             "Value": "km2withoutConsideration",
-                            "Text": "Kjent forekomstareal (km<sup>2</sup>) u/tiltakshensyn",
+                            "Text": "Kjent forekomstareal (km<sup>2</sup>) korrigert for tiltak",
                             "Info": null,
                             "Children": null
                         },
