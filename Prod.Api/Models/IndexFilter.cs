@@ -74,5 +74,10 @@ namespace Prod.Api.Models
     public class Comments
     {
         public bool KunUbehandlede { get; set; }
+        /// <summary>
+        /// brukerid til den som man leter etter nye kommentarer for....
+        /// </summary>
+        public Guid UserId { get; set; }
+        public string[] CommentType { get; set; } = Array.Empty<string>();
     }
 }
