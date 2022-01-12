@@ -7,6 +7,24 @@ import TruetSelector from './truetSelector';
 import NaturtypeModal from './naturetypeModal';
 import createTaxonSearch from '../../createTaxonSearch'
 // import * as Xcomp from '../observableComponents';
+
+const taxonSearchState = observable({
+    id: "newNaturtypeTaxonSearch",
+    scientificName: "",
+    scientificNameId: "",
+    scientificNameAuthor: "",
+    vernacularName: "",
+    taxonRank: "",
+    taxonId: "",
+    taxonSearchString: "",
+    taxonSearchResult: [],
+    domesticOrAbroad : "",
+    redListCategory: "", 
+    basisOfAssessment: []
+})
+
+
+
 @inject("appState")
 @observer
 export default class NewNaturetype extends React.Component {
@@ -27,57 +45,59 @@ export default class NewNaturetype extends React.Component {
                 stateChange: [],
                 background: [],
                 affectedArea: null,
-                taxon: {
-                    scientificName: "",
-                    scientificNameId: "",
-                    scientificNameAuthor: "",
-                    vernacularName: "",
-                    taxonRank: "",
-                    taxonId: "",
-                    taxonSearchString: "",
-                    taxonSearchResult: [],
-                    domesticOrAbroad : "",
-                    redListCategory: "", 
-                    keyStoneSpecie : false, 
-                    effectLocalScale : false, 
-                    effect : "Weak",
-                    scale: "Limited",
-                    status: "NewAlien",
-                    interactionType : "CompetitionSpace", 
-                    //interactionType : [], 
-                    longDistanceEffect : false, 
-                    confirmedOrAssumed : false, 
-                    basisOfAssessment: [],
-                    interactionTypes: [],
-                }, 
+                // taxon: {
+                //     id: "newNaturtypeNyNaturtypeTaxonSearch",
+                //     scientificName: "",
+                //     scientificNameId: "",
+                //     scientificNameAuthor: "",
+                //     vernacularName: "",
+                //     taxonRank: "",
+                //     taxonId: "",
+                //     taxonSearchString: "",
+                //     taxonSearchResult: [],
+                //     domesticOrAbroad : "",
+                //     redListCategory: "", 
+                //     keyStoneSpecie : false, 
+                //     effectLocalScale : false, 
+                //     effect : "Weak",
+                //     scale: "Limited",
+                //     status: "NewAlien",
+                //     interactionType : "CompetitionSpace", 
+                //     //interactionType : [], 
+                //     longDistanceEffect : false, 
+                //     confirmedOrAssumed : false, 
+                //     basisOfAssessment: [],
+                //     interactionTypes: [],
+                // }, 
             },
-            taxon: {
-                scientificName: "",
-                scientificNameId: "",
-                scientificNameAuthor: "",
-                vernacularName: "",
-                taxonRank: "",
-                taxonId: "",
-                taxonSearchString: "",
-                taxonSearchResult: [],
-                domesticOrAbroad : "",
-                redListCategory: "", 
-                keyStoneSpecie : false, 
-                effectLocalScale : false, 
-                effect : "Weak",
-                scale: "Limited",
-                status: "NewAlien",
-                interactionType : "CompetitionSpace", 
-                //interactionType : [], 
-                longDistanceEffect : false, 
-                confirmedOrAssumed : false, 
-                basisOfAssessment: [],
-                interactionTypes: [],
-            }, 
+            // taxon: {
+            //     id: "newNaturtypeTaxonSearch",
+            //     scientificName: "",
+            //     scientificNameId: "",
+            //     scientificNameAuthor: "",
+            //     vernacularName: "",
+            //     taxonRank: "",
+            //     taxonId: "",
+            //     taxonSearchString: "",
+            //     taxonSearchResult: [],
+            //     domesticOrAbroad : "",
+            //     redListCategory: "", 
+            //     keyStoneSpecie : false, 
+            //     effectLocalScale : false, 
+            //     effect : "Weak",
+            //     scale: "Limited",
+            //     status: "NewAlien",
+            //     interactionType : "Competition___###___Space", 
+            //     //interactionType : [], 
+            //     longDistanceEffect : false, 
+            //     confirmedOrAssumed : false, 
+            //     basisOfAssessment: [],
+            //     interactionTypes: [],
+            // }, 
         })
 
 
-        createTaxonSearch(this.taxon, appState.evaluationContext, tax => tax.existsInCountry)
+        createTaxonSearch(taxonSearchState, appState.evaluationContext, tax => tax.existsInCountry)
         // this.setSelectedNT = action ((naturtypekode) => {
         //     console.log("Nincode: " + naturtypekode)
         //     const nnt = this.nyNaturtype
@@ -116,6 +136,11 @@ export default class NewNaturetype extends React.Component {
         // console.log("NTS: " + JSON.stringify(nts, undefined, 2))
         // console.log("labels " + JSON.stringify(labels))
         // to determine if the modal pop-up will be for a nature type or for a habitat
+        //console.log("newNaturetype nyNaturtype: " + JSON.stringify(Object.keys(this)))
+        // console.log("newNaturetype nyNaturtype2: " + JSON.stringify(Object.keys(this.nyNaturtype)))
+        // console.log("newNaturetype nyNaturtype2.1: " + JSON.stringify(this.nyNaturtype))
+        //console.log("newNaturetype taxonSearchState: " + JSON.stringify(Object.keys(taxonSearchState)))
+
         const livsmedium = superheader === "Livsmedium"
         console.log("lms" + lms)
 
@@ -179,7 +204,8 @@ export default class NewNaturetype extends React.Component {
                 : null} */}
             {this.showModal
             ? <NaturtypeModal
-                taxon = {this.taxon}
+                //taxon = {this.nyNaturtype.taxon}
+                taxon = {taxonSearchState}
                 hideStateChange={[this, "hideStateChange"]}
                 naturtype={this.nyNaturtype}
                 fabModel={appState}
