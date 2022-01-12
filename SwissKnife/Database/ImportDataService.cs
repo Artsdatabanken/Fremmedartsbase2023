@@ -658,8 +658,17 @@ namespace SwissKnife.Database
                             }
                         }
 
-
-
+                        dest.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes = dest.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes.HasValue == false
+                            ? 0
+                            :
+                            dest.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes.Value > 95 ? 95
+                                :
+                                dest.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes.Value > 75 ? 75
+                                    :
+                                    dest.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes.Value >= 25 ? 25
+                                        :
+                                        dest.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes.Value >= 5 ? 5 : 0;
+                        
                     });
 
                 // - slik mapping fungerer ikke - da de blir kallt via convention - og det er ingen tilfeller der den har behov for å mappe fra FA3Legacy til Prod.Domain.RiskAssessment - koden blir ikke kallt
@@ -692,7 +701,7 @@ namespace SwissKnife.Database
                 //    .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesHigh,
                 //        opt => opt.Ignore())
                 //    .ForAllOtherMembers(opt => opt.Ignore());
-                    
+
 
 
             });
@@ -984,7 +993,8 @@ namespace SwissKnife.Database
                 exAssessment.RiskAssessment.SpeciesNaturetypeInteractions = newAssesment.RiskAssessment.SpeciesNaturetypeInteractions;
                 exAssessment.RiskAssessment.HostParasiteInformations = newAssesment.RiskAssessment.HostParasiteInformations;
                 exAssessment.RiskAssessment.GeneticTransferDocumented = newAssesment.RiskAssessment.GeneticTransferDocumented;
-                
+
+                exAssessment.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes = newAssesment.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes;
 
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (comparisonResult.AreEqual == false)
