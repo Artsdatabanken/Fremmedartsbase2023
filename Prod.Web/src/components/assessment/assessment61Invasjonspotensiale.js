@@ -85,6 +85,10 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
 
         const existenceArea35 = assessment.CurrentExistenceAreaCalculated
 
+        riskAssessment.AOO1 == null ? riskAssessment.AOO1 = riskAssessment.AOOknown1 : riskAssessment.AOO1 = 0
+
+        riskAssessment.AOO2 == null ? riskAssessment.AOO2 = riskAssessment.AOOknown2 : riskAssessment.AOO2 = 0
+
         // const bassertpaValues = [
         //     {
         //         Value: "Counting",
@@ -536,12 +540,13 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                     /> <span style={{margin: '10px 10px 0'}}>(t<sub>1</sub>)</span>
                                                     </td>
                                                 <td><Xcomp.Number                            
-                                                        observableValue={[riskAssessment, "AOO1"]}
+                                                        observableValue={[riskAssessment, "AOOknown1"]}
                                                         integer
+                                                        disabled={!riskAssessment.notUseSpeciesMap}
                                                     />
                                                 </td>
                                                 <td><Xcomp.Number                            
-                                                        observableValue={[riskAssessment, "AOO1withoutManagementConsideration"]}
+                                                        observableValue={[riskAssessment, "AOO1"]}
                                                         integer
                                                     />
                                                 </td>
@@ -580,10 +585,10 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                         observableValue={[riskAssessment, "AOOyear2"]} 
                                                         yearRange={true}/> <span style={{margin: '10px 10px 0'}}>(t<sub>2</sub>)</span>
                                                 </td>
-                                                <td><Xcomp.Number observableValue={[riskAssessment, "AOO2"]} integer /> 
+                                                <td><Xcomp.Number observableValue={[riskAssessment, "AOOknown2"]} integer disabled={!riskAssessment.notUseSpeciesMap} /> 
                                                 </td> 
                                                 <td><Xcomp.Number                            
-                                                        observableValue={[riskAssessment, "AOO2withoutManagementConsideration"]}
+                                                        observableValue={[riskAssessment, "AOO2"]}
                                                         integer
                                                     />
                                                 </td>                                               

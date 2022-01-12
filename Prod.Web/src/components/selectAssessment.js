@@ -288,12 +288,6 @@ export default class SelectAssessment extends Component {
                                 mode="check"/>                            
                         </div>
                         <div className="filters"><b>{labels.SelectAssessment.ADBComments}</b>
-                        <p>{labels.SelectAssessment.newComments}
-                        <Xcomp.MultiselectArray
-                                observableValue={[appState, 'newComments']} 
-                                codes={koder.newComments}
-                                mode="check"/>
-                        </p>
                         <Xcomp.MultiselectArray
                                 observableValue={[appState, 'otherComments']} 
                                 codes={koder.comments}

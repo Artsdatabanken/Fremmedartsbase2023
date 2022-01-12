@@ -222,6 +222,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.Scale, opt => opt.Ignore())
                     .ForMember(dest => dest.InteractionTypes, opt => opt.Ignore())
                     .ForMember(dest => dest.BasisOfAssessment, opt => opt.Ignore())
+                    .ForMember(dest => dest.Status, opt => opt.Ignore())
                     .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.Ignore());
                 cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.Interaction, Prod.Domain.RiskAssessment.Interaction>()
                     .ForMember(dest => dest.Scale, opt => opt.Ignore())
@@ -394,6 +395,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.Connected, opt => opt.Ignore())
                     .ForMember(dest => dest.ConnectedToAnother, opt => opt.Ignore())
                     .ForMember(dest => dest.SpeciesStatus, opt => opt.Ignore())
+                    .ForMember(dest => dest.AssumedReproducing50Years, opt => opt.Ignore())
                     .ForMember(dest => dest.ProductionSpecies, opt => opt.Ignore())
                     .ForMember(dest => dest.ConnectedTaxon1, opt => opt.Ignore())
                     .ForMember(dest => dest.ConnectedTaxon2, opt => opt.Ignore())
@@ -591,12 +593,87 @@ namespace SwissKnife.Database
                             dest.IsRegionallyAlien = true;
                         }
 
-                        // alt annet ser ut til å bli ignorert
+                        for (var i = 0; i < dest.RiskAssessment.SpeciesSpeciesInteractions.Count; i++)
+                        {
+                            if (dest.RiskAssessment.SpeciesSpeciesInteractions[i].EffectLocalScale == true)
+                            {
+                                dest.RiskAssessment.SpeciesSpeciesInteractions[i].Scale = "Limited";
+                            }
+                            else
+                            {
+                                dest.RiskAssessment.SpeciesSpeciesInteractions[i].Scale = "Large";
+                            }
+                        }
 
-                        // issue 290
+                        for (var i = 0; i < dest.RiskAssessment.SpeciesNaturetypeInteractions.Count; i++)
+                        {
+                            if (dest.RiskAssessment.SpeciesNaturetypeInteractions[i].EffectLocalScale == true)
+                            {
+                                dest.RiskAssessment.SpeciesNaturetypeInteractions[i].Scale = "Limited";
+                            }
+                            else
+                            {
+                                dest.RiskAssessment.SpeciesNaturetypeInteractions[i].Scale = "Large";
+                            }
+                        }
 
+                        for (var i = 0; i < dest.RiskAssessment.HostParasiteInformations.Count; i++)
+                        {
+                            if (dest.RiskAssessment.HostParasiteInformations[i].EffectLocalScale == true)
+                            {
+                                dest.RiskAssessment.HostParasiteInformations[i].Scale = "Limited";
+                            }
+                            else
+                            {
+                                dest.RiskAssessment.HostParasiteInformations[i].Scale = "Large";
+                            }
 
+                            if (dest.RiskAssessment.HostParasiteInformations[i].ParasiteNewForHost && dest.RiskAssessment.HostParasiteInformations[i].ParasiteIsAlien)
+                            {
+                                dest.RiskAssessment.HostParasiteInformations[i].Status = "NewAlien";
+                            }
+                            else if (dest.RiskAssessment.HostParasiteInformations[i].ParasiteIsAlien)
+                            {
+                                dest.RiskAssessment.HostParasiteInformations[i].Status = "KnownAlien";
+                            }
+                            else if (dest.RiskAssessment.HostParasiteInformations[i].ParasiteNewForHost)
+                            {
+                                dest.RiskAssessment.HostParasiteInformations[i].Status = "NewNative";
+                            }
+                            else
+                            {
+                                dest.RiskAssessment.HostParasiteInformations[i].Status = "KnownNative";
+                            }
+                        }
 
+                        for (var i = 0; i < dest.RiskAssessment.GeneticTransferDocumented.Count; i++)
+                        {
+                            if (dest.RiskAssessment.GeneticTransferDocumented[i].EffectLocalScale == true)
+                            {
+                                dest.RiskAssessment.GeneticTransferDocumented[i].Scale = "Limited";
+                            }
+                            else
+                            {
+                                dest.RiskAssessment.GeneticTransferDocumented[i].Scale = "Large";
+                            }
+                        }
+
+                        dest.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes = dest.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes.HasValue == false
+                            ? 0
+                            :
+                            dest.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes.Value > 95 ? 95
+                                :
+                                dest.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes.Value > 75 ? 75
+                                    :
+                                    dest.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes.Value >= 25 ? 25
+                                        :
+                                        dest.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes.Value >= 5 ? 5 : 0;
+
+                        if (dest.ExpertGroup == "Sopper" && dest.TaxonHierarcy.ToLowerInvariant().StartsWith("chromista"))
+                        {
+                            dest.ExpertGroup = "Kromister";
+                        }
+                        
                     });
 
                 // - slik mapping fungerer ikke - da de blir kallt via convention - og det er ingen tilfeller der den har behov for å mappe fra FA3Legacy til Prod.Domain.RiskAssessment - koden blir ikke kallt
@@ -629,7 +706,7 @@ namespace SwissKnife.Database
                 //    .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesHigh,
                 //        opt => opt.Ignore())
                 //    .ForAllOtherMembers(opt => opt.Ignore());
-                    
+
 
 
             });
@@ -916,6 +993,15 @@ namespace SwissKnife.Database
                 exAssessment.IsRegionallyAlien = newAssesment.IsRegionallyAlien;
                 exAssessment.IsAlienSpecies = newAssesment.IsAlienSpecies;
                 exAssessment.ConnectedToAnother = newAssesment.ConnectedToAnother;
+
+                exAssessment.RiskAssessment.SpeciesSpeciesInteractions = newAssesment.RiskAssessment.SpeciesSpeciesInteractions;
+                exAssessment.RiskAssessment.SpeciesNaturetypeInteractions = newAssesment.RiskAssessment.SpeciesNaturetypeInteractions;
+                exAssessment.RiskAssessment.HostParasiteInformations = newAssesment.RiskAssessment.HostParasiteInformations;
+                exAssessment.RiskAssessment.GeneticTransferDocumented = newAssesment.RiskAssessment.GeneticTransferDocumented;
+
+                exAssessment.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes = newAssesment.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes;
+
+                exAssessment.ExpertGroup = newAssesment.ExpertGroup;
 
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (comparisonResult.AreEqual == false)

@@ -232,16 +232,11 @@ export default class HabitatTable extends React.Component {
             <div><p>{desc}</p>
             <table className="table habitat">
             
-            <colgroup>
-                <col  style={{width: "10%"}}/>
-                <col  style={{width: "10%"}}/>
-                <col  style={{width: "10%"}}/>                
+            <colgroup>               
                 <col  style={{width: "15%"}}/>
-                <col  style={{width: "10%"}}/>
-                <col  style={{width: "15%"}}/>
+                <col  style={{width: "30%"}}/>
                 <col  style={{width: "15%"}}/>
                 <col  style={{width: "25%"}}/>
-                <col  style={{width: "15%"}}/>
                 <col  style={{width: "15%"}}/>
             </colgroup>
             <thead>

@@ -134,7 +134,13 @@ export default function enhanceAssessment(json, appState) {
             return assessment.alienSpecieUncertainIfEstablishedBefore1800 ? "yes" : "no"
         },
         set alienSpecieUncertainIfEstablishedBefore1800String(s) {
-            assessment.alienSpecieUncertainIfEstablishedBefore1800 = s === "yes"
+            assessment.assumedReproducing50Years = s === "yes"
+        },
+        get assumedReproducing50YearsString() {
+            return assessment.alienSpecieUncertainIfEstablishedBefore1800 ? "yes" : "no"
+        },
+        set assumedReproducing50YearsString(s) {
+            assessment.assumedReproducing50Years = s === "yes"
         },
         // this value is not a part of the domain object
         get connectedToAnotherString() {

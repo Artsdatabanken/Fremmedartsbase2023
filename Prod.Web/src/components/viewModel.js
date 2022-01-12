@@ -119,7 +119,7 @@ class ViewModel {
                 comment: null
             },
             artificialAndConstructedSites: ["F4", "F5", "H4", "L7", "L8", "M14", "M15", "T35", "T36", "T37", "T38", "T39", "T40", "T41", "T42", "T43", "T44", "T45", "V11", "V12", "V13"],
-            assessmentTypeFilter: "horizonScanning",
+            assessmentTypeFilter: "riskAssessment",
 
             expertgroups: null, // [],
             expertgroup: null,
@@ -450,7 +450,7 @@ class ViewModel {
                 this.horizonScanFilter.potentialDoorKnockers.length,
                 this.horizonScanFilter.hsNotStarted, this.horizonScanFilter.hsFinished, this.horizonScanFilter.toAssessment, this.horizonScanFilter.notAssessed,
                 this.responsible.length, this.kunUbehandlede,
-                this.workStatus.length,
+                this.workStatus.length, this.otherComments.length,
 
                 this.historyFilter.riskCategoryFilter.length, this.historyFilter.decisiveCriteriaFilter.length,
                 this.historyFilter.riskAssessedFilter.length, this.historyFilter.riskNotAssessedFilter.length, this.historyFilter.ikkevudert, this.historyFilter.vurdert,
@@ -808,13 +808,6 @@ class ViewModel {
             const assessment = enhanceAssessment(jsonnew, this)
             const assessmentStringCopy = assessment.toJSON
             const assessmentcopy = JSON.parse(assessmentStringCopy)
-            var shda = assessment.riskAssessment.spreadHistoryDomesticAreaInStronglyChangedNatureTypes == null ? 0 : 
-                       assessment.riskAssessment.spreadHistoryDomesticAreaInStronglyChangedNatureTypes > 95 ? 95 :
-                       assessment.riskAssessment.spreadHistoryDomesticAreaInStronglyChangedNatureTypes > 75 ? 75 :
-                       assessment.riskAssessment.spreadHistoryDomesticAreaInStronglyChangedNatureTypes >= 25 ? 25 :
-                       assessment.riskAssessment.spreadHistoryDomesticAreaInStronglyChangedNatureTypes >= 5 ? 5 : 0
-            
-            assessment.riskAssessment.spreadHistoryDomesticAreaInStronglyChangedNatureTypes = shda
             
             runInAction(() => {
                 this.assessmentSavedVersion = assessmentcopy
@@ -1268,6 +1261,11 @@ class ViewModel {
                 if (this.responsible.length > 0){
                     //console.log(this.responsible)
                     filters = filters + this.responsible.map((x)=> "&Responsible=" + x ).join()
+                }
+                if (this.otherComments.length > 0){
+                    //console.log(this.responsible)
+                    filters = filters + "&Comments.UserId=" + auth.userId
+                    filters = filters + this.otherComments.map((x)=> "&Comments.CommentType=" + x ).join()
                 }
             }
     }

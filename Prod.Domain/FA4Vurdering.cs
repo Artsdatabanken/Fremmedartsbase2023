@@ -185,6 +185,8 @@ namespace Prod.Domain
         public bool AlienSpecieUncertainAntropochor { get; set; } // lagt til: 19.10.2016
         public string AlienSpecieUncertainDescription { get; set; } // lagt til: 22.12.2016
 
+        public bool? AssumedReproducing50Years { get; set; }
+
         public bool SkalVurderes { get; set; }
 
         //public string EtableringsmulighetINorge { get; set; } // lagt til 22.08.2016 //fjernet 25.08.2016
@@ -1160,6 +1162,8 @@ public partial class FA4 // (3.2) Artsegenskaper
             public string ParasiteScientificName { get; set; }
             public string ParasiteVernacularName { get; set; }
             public string ParasiteEcoEffect { get; set; }
+
+            public string Status { get; set; }
             public bool ParasiteNewForHost { get; set; }
             //public bool ParasiteNewForNorway { get; set; } // lagt til 09.11.2016
             public bool ParasiteIsAlien { get; set; } // nytt navn  17.01.2017 (ParasiteNewForNorway)
