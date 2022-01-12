@@ -36,46 +36,51 @@ const SkalVurderesLabel = ({skalVurderes}) => (skalVurderes
 const nbsp = "\u00a0"
 
 
-const  connectedTaxon1 = observable({
-    id: "connected1TaxonSearch",
-    ScientificName: "",
-    ScientificNameId: "",
-    ScientificNameAuthor: "",
-    VernacularName: "",
-    TaxonRank: "",
-    TaxonId: "",
-    RedListCategory: "", 
-    Ekspertgruppe: "",
-    taxonSearchString: "",
-    taxonSearchResult: []
-    // taxonSearchWaitingForResult: false - should not be observable
-})
 
-const  connectedTaxon2 = observable({
-    id: "connected2TaxonSearch",
-    ScientificName: "",
-    ScientificNameId: "",
-    ScientificNameAuthor: "",
-    VernacularName: "",
-    TaxonRank: "",
-    TaxonId: "",
-    RedListCategory: "", 
-    Ekspertgruppe: "",
-    taxonSearchString: "",
-    taxonSearchResult: []
-    // taxonSearchWaitingForResult: false - should not be observable
-})
 
 @inject("appState")
 @observer
 export default class Assessment20ArtensStatus extends React.Component {
-// @observer
-//     constructor(props) {
-//         super(props)
+//@observer
+    constructor(props) {
+        super(props)
+       extendObservable(this, {
+        statusChange: false,
+       // newTaxon: this.props.newTaxon
+         /*connectedTaxon1: {
+            id: "connected1TaxonSearch",
+            ScientificName: "",
+            ScientificNameId: "",
+            ScientificNameAuthor: "",
+            VernacularName: "",
+            TaxonRank: "",
+            TaxonId: "",
+            RedListCategory: "", 
+            Ekspertgruppe: "",
+            taxonSearchString: "",
+            taxonSearchResult: []
+            // taxonSearchWaitingForResult: false - should not be observable
+        },
+        
+        connectedTaxon2: {
+            id: "connected2TaxonSearch",
+            ScientificName: "",
+            ScientificNameId: "",
+            ScientificNameAuthor: "",
+            VernacularName: "",
+            TaxonRank: "",
+            TaxonId: "",
+            RedListCategory: "", 
+            Ekspertgruppe: "",
+            taxonSearchString: "",
+            taxonSearchResult: []
+            // taxonSearchWaitingForResult: false - should not be observable
+        }*/
+    })
+   // addTaxon() = this.props.addTaxon
+   }
+   
 
-//     }
-
-@observable statusChange = false
 checkStatus = (production) => {
     // finds all the objects with id's that should be hidden 
     if ( production != true ) {
@@ -87,12 +92,15 @@ checkStatus = (production) => {
     }
  }
 
+ 
+
     render() {
-        const {appState:{assessment}, appState} = this.props;
+        const {appState:{assessment}, appState, newTaxon, addTaxon} = this.props;
        // const vurdering = assessment
         const labels = appState.codeLabels 
 
-
+        //console.log(this.connectedTaxon1.taxonSearchString)
+        console.log(newTaxon.taxonSearchResult)
 
         // console.log("labels" + JSON.stringify(labels.FirstObservation))
 
@@ -155,26 +163,87 @@ checkStatus = (production) => {
                            }
                             <Xcomp.Radio value={"Connected"} observableValue={[assessment, "connected"]} label={labels.SpeciesStatus.assessedWithAnotherTaxon}/>
                             {assessment.connected == "Connected" && 
-                               <div style={{marginLeft: '20px'}}> <p style={{marginLeft: '30px', marginBottom: '10px'}}>{labels.SpeciesStatus.enterTaxonName}</p>
-                                <Xcomp.String observableValue={[assessment, 'connectedTaxon1']} className="connectedTaxon" placeholder={labels.General.searchSpecies} /> 
+
+                            <div style={{position: 'relative', marginLeft: '20px'}}> <p style={{marginLeft: '30px', marginBottom: '10px'}}>{labels.SpeciesStatus.enterTaxonName}</p>
+                                {newTaxon.scientificName.length > 0 ?
+                                <div 
+                                    className="speciesNewItem"
+                                    onClick={action(() => {
+                                        newTaxon.taxonId = "";
+                                        newTaxon.taxonRank = "";
+                                        newTaxon.scientificName = "";
+                                        newTaxon.scientificNameId = "";
+                                        newTaxon.scientificNameAuthor = "";
+                                        newTaxon.vernacularName = "";
+                                        newTaxon.redListCategory = "";
+                                        newTaxon.taxonSearchResult.replace([]); 
+                                        newTaxon.taxonSearchString = "" }) 
+                                    }
+                                >
+                                    <div className={"rlCategory " + newTaxon.redListCategory}>{newTaxon.RedListCategory}</div>
+                                    <div className="vernacularName">{newTaxon.vernacularName}</div>
+                                    <div className="scientificName">{newTaxon.scientificName}</div>
+                                    <div className="author">{"(" + newTaxon.scientificNameAuthor + ")"}</div>
+                                </div> :
+                                <Xcomp.String observableValue={[newTaxon, 'taxonSearchString']} placeholder={labels.General.searchSpecies} />}
+                                {newTaxon.taxonSearchResult.length > 0 ?
+                                <div className="speciesSearchList" style={{position: 'absolute', top: "36px", left:"15px"}}>
+                                    <ul className="panel list-unstyled">
+                                    {newTaxon.taxonSearchResult.map(item =>
+                                        <li onClick={action(e => {
+                                            newTaxon.taxonId = item.taxonId;
+                                            newTaxon.taxonRank = item.taxonRank;
+                                            newTaxon.scientificName = item.scientificName;
+                                            newTaxon.scientificNameId = item.scientificNameId;
+                                            newTaxon.scientificNameAuthor = item.author;
+                                            newTaxon.vernacularName = item.popularName;
+
+                                            newTaxon.redListCategory = item.rlCategory;
+                                            newTaxon.taxonSearchResult.replace([]); 
+                                            newTaxon.taxonSearchString = "" })} 
+                                            key={item.scientificName}
+                                        >
+                                            <div className="speciesSearchItem">
+                                                <div className={"rlCategory " + item.rlCategory}>{item.rlCategory}</div>
+                                                <div className="vernacularName">{item.popularName}</div>
+                                                <div className="scientificName">{item.scientificName}</div>
+                                                <div className="author">{"(" + item.author + ")"}</div>
+                                            </div>
+                                        </li>
+                                    )}
+                                    </ul>
+                                </div> :
+                                null}
+                                {newTaxon.taxonSearchWaitingForResult ?
+                                <div  style={{zIndex: 10000, position: 'absolute', top: "40px", left:"35px"}}>
+                                    <div  className={"three-bounce"}>
+                                        <div className="bounce1" />
+                                        <div className="bounce2" />
+                                        <div className="bounce3" />
+                                    </div>
+                                </div> :
+                                null}
+                            </div> }
+                               
+                                {/*<Xcomp.String observableValue={[this, 'connectedTaxon1']} className="connectedTaxon" placeholder={labels.General.searchSpecies} /> 
                                 
-                                {connectedTaxon1.taxonSearchResult.length > 0 ?
+                                {this.connectedTaxon1.taxonSearchResult.length > 0 ?
                                 <div className="speciesSearchList" style={{position: 'absolute', top: "36px", left:"-10px", backgroundColor: "#fcfcfc" }}>
                                     <ul className="panel list-unstyled">
-                                    {connectedTaxon1.taxonSearchResult.map(item =>
+                                    {this.connectedTaxon1.taxonSearchResult.map(item =>
                                         <li onClick={action(e => {
                                             //console.log(JSON.stringify(item))
 
-                                            assessment.connectedTaxon1.TaxonId = item.taxonId;
-                                            assessment.connectedTaxon1.TaxonRank = item.taxonRank;
-                                            assessment.connectedTaxon1.ScientificName = item.scientificName;
-                                            assessment.connectedTaxon1.ScientificNameId = item.scientificNameId;
-                                            assessment.connectedTaxon1.ScientificNameAuthor = item.author;
-                                            assessment.connectedTaxon1.VernacularName = item.popularName;
+                                            this.connectedTaxon1.TaxonId = item.taxonId;
+                                            this.connectedTaxon1.TaxonRank = item.taxonRank;
+                                            this.connectedTaxon1.ScientificName = item.scientificName;
+                                            this.connectedTaxon1.ScientificNameId = item.scientificNameId;
+                                            this.connectedTaxon1.ScientificNameAuthor = item.author;
+                                            this.connectedTaxon1.VernacularName = item.popularName;
 
-                                            assessment.connectedTaxon1.RedListCategory = item.rlCategory;
-                                            assessment.connectedTaxon1.taxonSearchResult.replace([]); 
-                                            assessment.connectedTaxon1.taxonSearchString = "" })} 
+                                            this.connectedTaxon1.RedListCategory = item.rlCategory;
+                                            this.connectedTaxon1.taxonSearchResult.replace([]); 
+                                            this.connectedTaxon1.taxonSearchString = "" })} 
                                             key={item.scientificName}
                                         >
                                             <div className="speciesSearchItem">
@@ -196,32 +265,93 @@ checkStatus = (production) => {
                                         <div className="bounce3" />
                                     </div>
                                 </div> :
-                               null} */}
+                               null} }
                                 </div>
-                            }
+                            */}
                             
                             <Xcomp.Radio value={"Shared"} observableValue={[assessment, "connected"]} label={labels.SpeciesStatus.notAssessedButShared} />
                             {assessment.connected == "Shared" && 
-                                <div style={{marginLeft: '20px'}}><p style={{marginLeft: '30px', marginBottom: '10px'}}>{labels.SpeciesStatus.enterTaxonName}</p>
-                                <Xcomp.String observableValue={[assessment, 'connectedTaxon2']} className="connectedTaxon" placeholder={labels.General.searchSpecies} /> 
+
+                            <div style={{position: 'relative', marginLeft: '20px'}}> <p style={{marginLeft: '30px', marginBottom: '10px'}}>{labels.SpeciesStatus.enterTaxonName}</p>
+                                {newTaxon.scientificName.length > 0 ?
+                                <div 
+                                    className="speciesNewItem"
+                                    onClick={action(() => {
+                                        newTaxon.taxonId = "";
+                                        newTaxon.taxonRank = "";
+                                        newTaxon.scientificName = "";
+                                        newTaxon.scientificNameId = "";
+                                        newTaxon.scientificNameAuthor = "";
+                                        newTaxon.vernacularName = "";
+                                        newTaxon.redListCategory = "";
+                                        newTaxon.taxonSearchResult.replace([]); 
+                                        newTaxon.taxonSearchString = "" }) 
+                                    }
+                                >
+                                    <div className={"rlCategory " + newTaxon.redListCategory}>{newTaxon.RedListCategory}</div>
+                                    <div className="vernacularName">{newTaxon.vernacularName}</div>
+                                    <div className="scientificName">{newTaxon.scientificName}</div>
+                                    <div className="author">{"(" + newTaxon.scientificNameAuthor + ")"}</div>
+                                </div> :
+                                <Xcomp.String observableValue={[newTaxon, 'taxonSearchString']} placeholder={labels.General.searchSpecies} />}
+                                {newTaxon.taxonSearchResult.length > 0 ?
+                                <div className="speciesSearchList" style={{position: 'absolute', top: "36px", left:"15px"}}>
+                                    <ul className="panel list-unstyled">
+                                    {newTaxon.taxonSearchResult.map(item =>
+                                        <li onClick={action(e => {
+                                            newTaxon.taxonId = item.taxonId;
+                                            newTaxon.taxonRank = item.taxonRank;
+                                            newTaxon.scientificName = item.scientificName;
+                                            newTaxon.scientificNameId = item.scientificNameId;
+                                            newTaxon.scientificNameAuthor = item.author;
+                                            newTaxon.vernacularName = item.popularName;
+
+                                            newTaxon.redListCategory = item.rlCategory;
+                                            newTaxon.taxonSearchResult.replace([]); 
+                                            newTaxon.taxonSearchString = "" })} 
+                                            key={item.scientificName}
+                                        >
+                                            <div className="speciesSearchItem">
+                                                <div className={"rlCategory " + item.rlCategory}>{item.rlCategory}</div>
+                                                <div className="vernacularName">{item.popularName}</div>
+                                                <div className="scientificName">{item.scientificName}</div>
+                                                <div className="author">{"(" + item.author + ")"}</div>
+                                            </div>
+                                        </li>
+                                    )}
+                                    </ul>
+                                </div> :
+                                null}
+                                {newTaxon.taxonSearchWaitingForResult ?
+                                <div  style={{zIndex: 10000, position: 'absolute', top: "40px", left:"35px"}}>
+                                    <div  className={"three-bounce"}>
+                                        <div className="bounce1" />
+                                        <div className="bounce2" />
+                                        <div className="bounce3" />
+                                    </div>
+                                </div> :
+                                null}
+                                </div> }
+                               {/* <div style={{marginLeft: '20px'}}><p style={{marginLeft: '30px', marginBottom: '10px'}}>{labels.SpeciesStatus.enterTaxonName}</p>
+                                <Xcomp.String observableValue={[this, 'connectedTaxon2']} className="connectedTaxon" placeholder={labels.General.searchSpecies} /> 
                                 
-                                {connectedTaxon2.taxonSearchResult.length > 0 ?
+                                {this.connectedTaxon2.taxonSearchResult.length > 0 ?
                                 <div className="speciesSearchList" style={{position: 'absolute', top: "36px", left:"-10px", backgroundColor: "#fcfcfc" }}>
                                     <ul className="panel list-unstyled">
-                                    {connectedTaxon2.taxonSearchResult.map(item =>
+                                    {this.connectedTaxon2.taxonSearchResult.map(item =>
                                         <li onClick={action(e => {
                                             console.log(JSON.stringify(item))
 
-                                            assessment.connectedTaxon2.TaxonId = item.taxonId;
-                                            assessment.connectedTaxon2.TaxonRank = item.taxonRank;
-                                            assessment.connectedTaxon2.ScientificName = item.scientificName;
-                                            assessment.connectedTaxon2.ScientificNameId = item.scientificNameId;
-                                            assessment.connectedTaxon2.ScientificNameAuthor = item.author;
-                                            assessment.connectedTaxon2.VernacularName = item.popularName;
+                                            this.connectedTaxon2.TaxonId = item.taxonId;
+                                            this.connectedTaxon2.TaxonRank = item.taxonRank;
+                                            this.connectedTaxon2.ScientificName = item.scientificName;
+                                            this.connectedTaxon2.ScientificNameId = item.scientificNameId;
+                                            this.connectedTaxon2.ScientificNameAuthor = item.author;
+                                            this.connectedTaxon2.VernacularName = item.popularName;
 
-                                            assessment.connectedTaxon2.RedListCategory = item.rlCategory;
-                                            assessment.connectedTaxon2.taxonSearchResult.replace([]); 
-                                            assessment.connectedTaxon2.taxonSearchString = "" })} 
+                                            this.connectedTaxon2.RedListCategory = item.rlCategory;
+                                            this.connectedTaxon2.taxonSearchResult.replace([]); 
+                                            this.connectedTaxon2.taxonSearchString = "" })} 
                                             key={item.scientificName}
                                         >
                                             <div className="speciesSearchItem">
@@ -237,8 +367,8 @@ checkStatus = (production) => {
                                 null}
                                 
                                 
-                                </div>
-                            }
+                                </div>*/}
+                            
                             </div> : null }
                     </div> : null}
 
