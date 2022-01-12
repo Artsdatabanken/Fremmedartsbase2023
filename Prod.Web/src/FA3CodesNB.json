@@ -557,7 +557,7 @@
               
               {
     
-                "text": "Endret status (inkl. taksonomi, til/fra hjemlig)",
+                "text": "Endret status (inkl. taksonomi, til/fra stedegen)",
                 "value": "changedStatus"
               }
         ],
@@ -2955,22 +2955,22 @@
         "assessmentBackgrounds": [
             {
   
-                "text": "Skriftlig dokumentasjon fra Norge",
+                "text": "Skriftlig dok. fra Norge",
                 "value": "WrittenDocumentationNorway"
               },
               {
     
-                "text": "Kun observasjoner fra Norge",
+                "text": "Kun obs. fra Norge",
                 "value": "ObservationNorway"
               },
               {
   
-                "text": "Skriftlig dokumentasjon fra utlandet",
+                "text": "Skriftlig dok. fra utlandet",
                 "value": "WrittenDocumentationAbroad"
               },
               {
     
-                "text": "Kun observasjoner fra utlandet",
+                "text": "Kun obs. fra utlandet",
                 "value": "ObservationAbroad"
               },
               {
@@ -7273,7 +7273,7 @@
                         {
                             "Id": null,
                             "Value": "parasiteEffectScore",
-                            "Text": "Para&shy;sittens effektskår",
+                            "Text": "Para&shy;sittens delkategori",
                             "Info": null,
                             "Children": null
                         },
@@ -7606,7 +7606,7 @@
                         {
                             "Id": null,
                             "Value": "possibleLowerCategorySEHI",
-                            "Text": "Arter med en viss utstrekning i forekomstarealet kan, som en respons på ulike miljøbetingelser, ha ulik påvirkning i naturen. Kunne arten ha fått en <i>lavere</i> risikokategori enn HI (dvs. NK, LO eller PH) i deler av sitt potensielle forekomstareal?",
+                            "Text": "Arter med en viss utstrekning i forekomstarealet kan, som en respons på ulike miljøbetingelser, ha ulik påvirkning i naturen. Kunne arten ha fått en <i>lavere</i> risikokategori enn SE (dvs. NK, LO, PH eller HI) i deler av sitt potensielle forekomstareal?",
                             "Info": null,
                             "Children": null
                         },
