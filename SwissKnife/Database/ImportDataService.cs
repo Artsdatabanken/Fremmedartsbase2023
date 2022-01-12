@@ -593,9 +593,70 @@ namespace SwissKnife.Database
                             dest.IsRegionallyAlien = true;
                         }
 
-                        // alt annet ser ut til å bli ignorert
+                        for (var i = 0; i < dest.RiskAssessment.SpeciesSpeciesInteractions.Count; i++)
+                        {
+                            if (dest.RiskAssessment.SpeciesSpeciesInteractions[i].EffectLocalScale == true)
+                            {
+                                dest.RiskAssessment.SpeciesSpeciesInteractions[i].Scale = "Limited";
+                            }
+                            else
+                            {
+                                dest.RiskAssessment.SpeciesSpeciesInteractions[i].Scale = "Large";
+                            }
+                        }
 
-                        // issue 290
+                        for (var i = 0; i < dest.RiskAssessment.SpeciesNaturetypeInteractions.Count; i++)
+                        {
+                            if (dest.RiskAssessment.SpeciesNaturetypeInteractions[i].EffectLocalScale == true)
+                            {
+                                dest.RiskAssessment.SpeciesNaturetypeInteractions[i].Scale = "Limited";
+                            }
+                            else
+                            {
+                                dest.RiskAssessment.SpeciesNaturetypeInteractions[i].Scale = "Large";
+                            }
+                        }
+
+                        for (var i = 0; i < dest.RiskAssessment.HostParasiteInformations.Count; i++)
+                        {
+                            if (dest.RiskAssessment.HostParasiteInformations[i].EffectLocalScale == true)
+                            {
+                                dest.RiskAssessment.HostParasiteInformations[i].Scale = "Limited";
+                            }
+                            else
+                            {
+                                dest.RiskAssessment.HostParasiteInformations[i].Scale = "Large";
+                            }
+
+                            if (dest.RiskAssessment.HostParasiteInformations[i].ParasiteNewForHost && dest.RiskAssessment.HostParasiteInformations[i].ParasiteIsAlien)
+                            {
+                                dest.RiskAssessment.HostParasiteInformations[i].Status = "NewAlien";
+                            }
+                            else if (dest.RiskAssessment.HostParasiteInformations[i].ParasiteIsAlien)
+                            {
+                                dest.RiskAssessment.HostParasiteInformations[i].Status = "KnownAlien";
+                            }
+                            else if (dest.RiskAssessment.HostParasiteInformations[i].ParasiteNewForHost)
+                            {
+                                dest.RiskAssessment.HostParasiteInformations[i].Status = "NewNative";
+                            }
+                            else
+                            {
+                                dest.RiskAssessment.HostParasiteInformations[i].Status = "KnownNative";
+                            }
+                        }
+
+                        for (var i = 0; i < dest.RiskAssessment.GeneticTransferDocumented.Count; i++)
+                        {
+                            if (dest.RiskAssessment.GeneticTransferDocumented[i].EffectLocalScale == true)
+                            {
+                                dest.RiskAssessment.GeneticTransferDocumented[i].Scale = "Limited";
+                            }
+                            else
+                            {
+                                dest.RiskAssessment.GeneticTransferDocumented[i].Scale = "Large";
+                            }
+                        }
 
 
 
@@ -919,62 +980,11 @@ namespace SwissKnife.Database
                 exAssessment.IsAlienSpecies = newAssesment.IsAlienSpecies;
                 exAssessment.ConnectedToAnother = newAssesment.ConnectedToAnother;
 
-                for (var i = 0; i < exAssessment.RiskAssessment.SpeciesSpeciesInteractions.Count; i++) {
-                    if (exAssessment.RiskAssessment.SpeciesSpeciesInteractions[i].EffectLocalScale == true)
-                    {
-                        newAssesment.RiskAssessment.SpeciesSpeciesInteractions[i].Scale = "Limited";
-                    }
-                    else
-                    {
-                        newAssesment.RiskAssessment.SpeciesSpeciesInteractions[i].Scale = "Large";
-                    }
-                }
-
-                for (var i = 0; i < exAssessment.RiskAssessment.SpeciesNaturetypeInteractions.Count; i++)
-                {
-                    if (exAssessment.RiskAssessment.SpeciesNaturetypeInteractions[i].EffectLocalScale == true)
-                    {
-                        newAssesment.RiskAssessment.SpeciesNaturetypeInteractions[i].Scale = "Limited";
-                    }
-                    else
-                    {
-                        newAssesment.RiskAssessment.SpeciesNaturetypeInteractions[i].Scale = "Large";
-                    }
-                }
-
-                for (var i = 0; i < exAssessment.RiskAssessment.HostParasiteInformations.Count; i++)
-                {
-                    if (exAssessment.RiskAssessment.HostParasiteInformations[i].EffectLocalScale == true)
-                    {
-                        newAssesment.RiskAssessment.HostParasiteInformations[i].Scale = "Limited";
-                    }
-                    else
-                    {
-                        newAssesment.RiskAssessment.HostParasiteInformations[i].Scale = "Large";
-                    }
-
-                    if (exAssessment.RiskAssessment.HostParasiteInformations[i].ParasiteNewForHost && exAssessment.RiskAssessment.HostParasiteInformations[i].ParasiteIsAlien) {
-                        newAssesment.RiskAssessment.HostParasiteInformations[i].Status = "NewAlien";
-                    } else if (exAssessment.RiskAssessment.HostParasiteInformations[i].ParasiteIsAlien) {
-                        newAssesment.RiskAssessment.HostParasiteInformations[i].Status = "KnownAlien";
-                    } else if (exAssessment.RiskAssessment.HostParasiteInformations[i].ParasiteNewForHost) {
-                        newAssesment.RiskAssessment.HostParasiteInformations[i].Status = "NewNative";
-                    } else {
-                        newAssesment.RiskAssessment.HostParasiteInformations[i].Status = "KnownNative";
-                    }
-                }
-
-                for (var i = 0; i < exAssessment.RiskAssessment.GeneticTransferDocumented.Count; i++)
-                {
-                    if (exAssessment.RiskAssessment.GeneticTransferDocumented[i].EffectLocalScale == true)
-                    {
-                        newAssesment.RiskAssessment.GeneticTransferDocumented[i].Scale = "Limited";
-                    }
-                    else
-                    {
-                        newAssesment.RiskAssessment.GeneticTransferDocumented[i].Scale = "Large";
-                    }
-                }
+                exAssessment.RiskAssessment.SpeciesSpeciesInteractions = newAssesment.RiskAssessment.SpeciesSpeciesInteractions;
+                exAssessment.RiskAssessment.SpeciesNaturetypeInteractions = newAssesment.RiskAssessment.SpeciesNaturetypeInteractions;
+                exAssessment.RiskAssessment.HostParasiteInformations = newAssesment.RiskAssessment.HostParasiteInformations;
+                exAssessment.RiskAssessment.GeneticTransferDocumented = newAssesment.RiskAssessment.GeneticTransferDocumented;
+                
 
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (comparisonResult.AreEqual == false)
