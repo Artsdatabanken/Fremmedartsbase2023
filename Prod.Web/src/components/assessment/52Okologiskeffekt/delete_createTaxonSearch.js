@@ -1,4 +1,4 @@
-import {autorun, runInAction} from 'mobx';
+import {autorun, runInAction, isObservableObject} from 'mobx';
 import {loadData} from '../../../apiService'; 
 import config from '../../../config';
 
@@ -9,6 +9,12 @@ import config from '../../../config';
 
 
  export default function createTaxonSearch(newObj, contextLetter, filter) {
+            if(!newObj) {
+                throw "createTaxonSearch - no newObject"
+            }
+            if(!isObservableObject(newObj)) {
+                throw "createTaxonSearch - newObject is not observable"
+            }
             const doSearch = (searchString) => {
                 // const baseUrl = '//it-webadbtest01.it.ntnu.no/ArtskartPublicApi/api/taxon/?term='
                 //const baseUrl = ((window.location.href.indexOf('lokalapi') > -1) ? 'http://localhost:7588/'+ 'taxon/?term=' : 'https://invasivespeciesservice.artdata.slu.se/taxon/') 
@@ -49,7 +55,7 @@ import config from '../../../config';
                                 //because taxonSearchString may have changed before result is returned
                                 const newList = newObj.taxonSearchString.length >= 2 ? res : []
                                 newObj.taxonSearchWaitingForResult = false
-                                console.log("taxlist length: " + newList.length)
+                                console.log("taxlist id: " + newObj.id + " length: " + newList.length)
                                 newObj.taxonSearchResult.replace(newList)
                             }
                             return null;
