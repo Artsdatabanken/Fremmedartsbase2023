@@ -3,7 +3,7 @@ import {extendObservable, observable, action} from 'mobx';
 import {observer} from 'mobx-react';
 import * as Xcomp from '../observableComponents';
 
-import createTaxonSearch from '../../createTaxonSearch'
+import createTaxonSearch, { selectTaxonSearchState } from '../../createTaxonSearch'
 import NaturtypeModal from './naturetypeModal';
 
 const kodeTekst = (koder, verdi) => koder.filter(item => item.Value === verdi).map(item => item.Text)[0] || verdi 
@@ -97,18 +97,8 @@ export class HabitatTableRow extends React.Component {
                               <ul className="panel list-unstyled">
                               {taxon.taxonSearchResult.map(item =>
                                   <li 
-                                  onClick={action(e => {
-                                    nt.taxon.taxonId = item.taxonId;
-                                    nt.taxon.taxonRank = item.taxonRank;
-                                    nt.taxon.scientificName = item.scientificName;
-                                    nt.taxon.scientificNameId = item.scientificNameId;
-                                    nt.taxon.scientificNameAuthor = item.author;
-                                    nt.taxon.vernacularName = item.popularName;
-  
-                                    nt.taxon.redListCategory = item.rlCategory;
-                                    nt.taxon.taxonSearchResult.replace([]); 
-                                    nt.taxon.taxonSearchString = "" })} 
-                                    key={item.scientificName}
+                                      onClick={() => selectTaxonSearchState(nt.taxon, item)}
+                                      key={item.scientificName}
                                   >
                                       <div className="speciesSearchItem">
                                           <div className={"rlCategory " + item.rlCategory}>{item.rlCategory}</div>
