@@ -168,7 +168,8 @@ export class HabitatTableRow extends React.Component {
                    
                     {this.showModal
                     ? <NaturtypeModal 
-                        naturtype={nt} 
+                        naturtype={nt}
+                        taxon={taxon} 
                         showModal={[this, "showModal"]}
                         hideStateChange={[this, "hideStateChange"]} 
                         onOk={this.updateNaturetype} 
@@ -189,6 +190,7 @@ export default class HabitatTable extends React.Component {
         
         extendObservable(this, {
             taxon: {
+                id: "habitatTableTaxonSearch",
                 scientificName: "",
                 scientificNameId: "",
                 scientificNameAuthor: "",
@@ -212,6 +214,7 @@ export default class HabitatTable extends React.Component {
                 interactionTypes: [],
             }, 
         })
+        // console.log("HabitatTable this.taxon " + JSON.stringify(this.taxon))
         createTaxonSearch(this.taxon, props.fabModel.evaluationContext, tax => tax.existsInCountry)
     }
             

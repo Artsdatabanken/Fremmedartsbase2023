@@ -36,7 +36,8 @@ const SkalVurderesLabel = ({skalVurderes}) => (skalVurderes
 const nbsp = "\u00a0"
 
 
-const connectedTaxon1 = observable({
+const  connectedTaxon1 = observable({
+    id: "connected1TaxonSearch",
     ScientificName: "",
     ScientificNameId: "",
     ScientificNameAuthor: "",
@@ -50,7 +51,8 @@ const connectedTaxon1 = observable({
     // taxonSearchWaitingForResult: false - should not be observable
 })
 
-const connectedTaxon2 = observable({
+const  connectedTaxon2 = observable({
+    id: "connected2TaxonSearch",
     ScientificName: "",
     ScientificNameId: "",
     ScientificNameAuthor: "",

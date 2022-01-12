@@ -668,6 +668,11 @@ namespace SwissKnife.Database
                                     dest.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes.Value >= 25 ? 25
                                         :
                                         dest.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes.Value >= 5 ? 5 : 0;
+
+                        if (dest.ExpertGroup == "Sopper" && dest.TaxonHierarcy.ToLowerInvariant().StartsWith("chromista"))
+                        {
+                            dest.ExpertGroup = "Kromister";
+                        }
                         
                     });
 
@@ -995,6 +1000,8 @@ namespace SwissKnife.Database
                 exAssessment.RiskAssessment.GeneticTransferDocumented = newAssesment.RiskAssessment.GeneticTransferDocumented;
 
                 exAssessment.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes = newAssesment.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes;
+
+                exAssessment.ExpertGroup = newAssesment.ExpertGroup;
 
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (comparisonResult.AreEqual == false)
