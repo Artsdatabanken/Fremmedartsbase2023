@@ -119,7 +119,7 @@ class ViewModel {
                 comment: null
             },
             artificialAndConstructedSites: ["F4", "F5", "H4", "L7", "L8", "M14", "M15", "T35", "T36", "T37", "T38", "T39", "T40", "T41", "T42", "T43", "T44", "T45", "V11", "V12", "V13"],
-            assessmentTypeFilter: "horizonScanning",
+            assessmentTypeFilter: "riskAssessment",
 
             expertgroups: null, // [],
             expertgroup: null,
