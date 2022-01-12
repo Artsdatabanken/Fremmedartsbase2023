@@ -3,7 +3,7 @@ import {autorun, extendObservable, observable, action, toJS} from 'mobx';
 import {observer, inject} from 'mobx-react';
 import * as Xcomp from '../observableComponents';
 import BsModal from '../../bootstrapModal'
-import createTaxonSearch from '../../createTaxonSearch'
+import { selectTaxonSearchState } from '../../createTaxonSearch'
 import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils';
 
 @inject("appState")
@@ -157,17 +157,7 @@ export default class NaturetypeModal extends React.Component {
                         >
                             <ul className="panel list-unstyled">
                             {taxon.taxonSearchResult.map(item =>
-                                <li onClick={action(e => {
-                                taxon.taxonId = item.taxonId;
-                                taxon.taxonRank = item.taxonRank;
-                                taxon.scientificName = item.scientificName;
-                                taxon.scientificNameId = item.scientificNameId;
-                                taxon.scientificNameAuthor = item.author;
-                                taxon.vernacularName = item.popularName;
-
-                                taxon.redListCategory = item.rlCategory;
-                                taxon.taxonSearchResult.replace([]); 
-                                taxon.taxonSearchString = "" })} 
+                                <li onClick={() => selectTaxonSearchState(taxon, item)}
                                 key={item.scientificName}
                                 >
                                     <div className="speciesSearchItem">
