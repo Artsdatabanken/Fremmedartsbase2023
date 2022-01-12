@@ -1,9 +1,51 @@
-import {autorun, action} from 'mobx';
+import {autorun, action, observable, isObservableObject} from 'mobx';
 import {loadDataFromUrl} from '../apiService'; 
 // import config from '../config';
 
+export function createTaxonSearchState(id) {
+    const taxonSearchState = observable({
+        id: "newNaturtypeTaxonSearch",
+        scientificName: "",
+        scientificNameId: "",
+        scientificNameAuthor: "",
+        vernacularName: "",
+        taxonRank: "",
+        taxonId: "",
+        taxonSearchString: "",
+        taxonSearchResult: [],
+        domesticOrAbroad : "",
+        redListCategory: "", 
+        basisOfAssessment: []
+    })
+    return taxonSearchState
+}
+export function resetTaxonSearchState(taxobj) {
+    action(() => {
+        // reset newItem
+        taxobj.scientificName = ""
+        taxobj.scientificNameId = ""
+        taxobj.scientificNameAuthor = ""
+        taxobj.vernacularName = ""
+        taxobj.taxonRank = ""
+        taxobj.taxonId = ""
+        taxobj.taxonSearchString = ""
+        taxobj.taxonSearchResult.replace([])
+        taxobj.domesticOrAbroad = ""
+        taxobj.redListCategory = "" 
+        taxobj.basisOfAssessment.replace([])
+        taxobj.taxonSearchWaitingForResult = false
+    })()
+}
+
+
  export default function createTaxonSearch(newObj, contextLetter, filter) {
-     
+    if(!newObj) {
+        throw "createTaxonSearch - no newObject"
+    }
+    if(!isObservableObject(newObj)) {
+        throw "createTaxonSearch - newObject is not observable"
+    }
+
             const doSearch = async (searchString) => {
                 // const baseUrl = '//it-webadbtest01.it.ntnu.no/ArtskartPublicApi/api/taxon/?term='
                 //const baseUrl = ((window.location.href.indexOf('lokalapi') > -1) ? 'http://localhost:7588/'+ 'taxon/?term=' : 'https://invasivespeciesservice.artdata.slu.se/taxon/') 
@@ -72,7 +114,7 @@ import {loadDataFromUrl} from '../apiService';
                         //because taxonSearchString may have changed before result is returned
                         const newList = newObj.taxonSearchString.length >= 2 ? res : []
                         action(() => newObj.taxonSearchWaitingForResult = false)()
-                        console.log("taxlist length: " + newList.length)
+                        console.log("taxlist id: " + newObj.id + " length: " + newList.length)
                         action(() => newObj.taxonSearchResult.replace(newList))()
                     }
                     return null;
