@@ -1,5 +1,4 @@
 import React from 'react';
-import {extendObservable} from 'mobx';
 import {observer} from 'mobx-react';
 import * as Xcomp from './observableComponents'
 
@@ -10,12 +9,22 @@ export default class BootstrapModal extends React.Component {
         this.onCancel = props.onCancel
         this.onOk = props.onOk
         this.heading = props.heading
-        this.children = props.children
+        // this.children = props.children
         this.labels = props.labels
+        // this.data = props.data
+        // autorun(() => {
+        //     console.log("bootstrapModal data all: " + JSON.stringify(props.data))
+        // })
+    
     }
+    // rerender = () => {
+    //     this.forceUpdate();
+    // };
 
     render() {
         const okEnabled = this.props.okEnabled === undefined ? true : this.props.okEnabled
+        // const datatype = typeof(this.props.data)
+        // console.log("bootstrapModal render run! - data datatype: " + datatype)
         return <div role="dialog">
             <div className="modal-backdrop"  style={{zIndex: 1110, opacity: "75%"}}></div>
             <div role="dialog" tabIndex="-1" className="modal" style={{display: "block", zIndex: 1120}}>
@@ -35,7 +44,7 @@ export default class BootstrapModal extends React.Component {
                         </div>
                         <div className="modal-body">
                             <div>
-                                {this.children}
+                                {this.props.children}
                                 <Xcomp.Button  className={(okEnabled ? "" : " disabled" )} disabled={!okEnabled} onClick={this.onOk}>
                                     {/*{this.labels.ok}*/}
                                     Legg til
