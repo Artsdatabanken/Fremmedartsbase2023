@@ -220,7 +220,7 @@ export default class NaturetypeModal extends React.Component {
                             observableValue={[taxon, 'taxonSearchString']} placeholder={labels.General.searchSpecies} />
 
                           {/* <h1>Hooola</h1> */}
-                          <h3>resultlength {taxon.taxonSearchResult.length}</h3>
+                          {/* <h3>resultlength {taxon.taxonSearchResult.length}</h3> */}
                           {taxon.taxonSearchResult.length > 0 ? 
                           <div className="speciesSearchList" 
                                 // style={{position: 'absolute', top: "36px", left:"15px"}}
