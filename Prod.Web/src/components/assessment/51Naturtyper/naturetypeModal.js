@@ -30,8 +30,11 @@ export default class NaturetypeModal extends React.Component {
     constructor(props) {
         super()
         const {fabModel, naturtype, onOk, showModal, taxon} = props;
-        const evaluationContext = fabModel.evaluationContext        
+        // const evaluationContext = fabModel.evaluationContext        
         const [sm, smprop] = showModal
+
+
+        // console.log("NaturetypeModal taxon " + JSON.stringify(taxon))
         
         extendObservable(this, {
             // showModal: true,
@@ -41,8 +44,9 @@ export default class NaturetypeModal extends React.Component {
             hasStateChange: false,
             // hideStateChange: false,
             naturtypeLabel: null,
-            editNaturtype: toJS(naturtype), // clone it
-            taxSearchResult: taxon.taxonSearchResult
+            // editNaturtype: toJS(naturtype), // clone it
+            editNaturtype: naturtype, 
+            // taxSearchResult: taxon.taxonSearchResult
             
             // {
             //     NiNCode: null,
@@ -119,8 +123,10 @@ export default class NaturetypeModal extends React.Component {
         const disabled = fabModel.userContext.readonly
         const addNaturtype = naturtype       
         //const taxonSearchResult = taxon.taxonSearchResult
-        console.log(this.taxSearchResult)
-        console.log("render naturtypeModal")
+        
+        // console.log("render naturtypeModal ")
+        // console.log("render naturtypeModal: " + JSON.stringify(taxon))
+        // console.log("render naturtypeModal taxonSearchResult: " + taxon.taxonSearchResult.length)
         
      
         return <div>
@@ -134,7 +140,9 @@ export default class NaturetypeModal extends React.Component {
                         onCancel={this.hideModal}
                         onOk={this.onOk}
                         labels={labels.General}
-                        children = {this.editNaturtype.Children}>
+                        // children = {this.editNaturtype.Children}
+                        //data = {this.props.taxon.taxonSearchResult}
+                        >
                         {doms && this.hasDominanceForrest(this.editNaturtype.niNCode)
                             ? <Xcomp.MultiselectArray
                                     label={ntLabels.dominanceForrest}
@@ -210,12 +218,16 @@ export default class NaturetypeModal extends React.Component {
                             disabled={disabled} 
                             label={ntLabels.speciesOrTaxon}
                             observableValue={[taxon, 'taxonSearchString']} placeholder={labels.General.searchSpecies} />
-                          {this.taxSearchResult.length > 0 && 
+
+                          {/* <h1>Hooola</h1> */}
+                          <h3>resultlength {taxon.taxonSearchResult.length}</h3>
+                          {taxon.taxonSearchResult.length > 0 ? 
                           <div className="speciesSearchList" 
-                                //style={{position: 'absolute', top: "36px", left:"15px"}}
+                                // style={{position: 'absolute', top: "36px", left:"15px"}}
                             >
+                                {/* <h3>Resultat</h3> */}
                               <ul className="panel list-unstyled">
-                              {this.taxSearchResult.map(item =>
+                              {taxon.taxonSearchResult.map(item =>
                                   <li onClick={action(e => {
                                     taxon.taxonId = item.taxonId;
                                     taxon.taxonRank = item.taxonRank;
@@ -239,6 +251,7 @@ export default class NaturetypeModal extends React.Component {
                               )}
                               </ul>
                           </div> 
+                          : null
                           }
                           {taxon.taxonSearchWaitingForResult ?
                           <div  style={{zIndex: 10000, position: 'absolute', top: "40px", left:"35px"}}>
