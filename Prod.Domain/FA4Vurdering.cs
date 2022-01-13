@@ -171,10 +171,6 @@ namespace Prod.Domain
 
         public string SpeciesStatus { get; set; }
 
-        public string ConnectedTaxon1 { get; set; } = "";
-
-        public string ConnectedTaxon2 { get; set; } = "";
-
         public bool? ProductionSpecies { get; set; } = false;
 
         public string ChangedFromAlien { get; set; }
