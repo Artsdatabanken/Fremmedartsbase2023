@@ -5,23 +5,10 @@ import NaturtypeSelector from './naturtypeSelector';
 import LivsmediumSelector from './livsmediumSelector';
 import TruetSelector from './truetSelector';
 import NaturtypeModal from './naturetypeModal';
-import createTaxonSearch from '../../createTaxonSearch'
+import createTaxonSearch, {createTaxonSearchState} from '../../createTaxonSearch'
 // import * as Xcomp from '../observableComponents';
 
-const taxonSearchState = observable({
-    id: "newNaturtypeTaxonSearch",
-    scientificName: "",
-    scientificNameId: "",
-    scientificNameAuthor: "",
-    vernacularName: "",
-    taxonRank: "",
-    taxonId: "",
-    taxonSearchString: "",
-    taxonSearchResult: [],
-    domesticOrAbroad : "",
-    redListCategory: "", 
-    basisOfAssessment: []
-})
+const taxonSearchState = createTaxonSearchState("newNaturtypeTaxonSearch")
 
 @inject("appState")
 @observer

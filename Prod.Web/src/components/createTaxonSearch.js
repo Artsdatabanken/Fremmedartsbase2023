@@ -36,6 +36,20 @@ export function resetTaxonSearchState(taxobj) {
         taxobj.taxonSearchWaitingForResult = false
     })()
 }
+export function selectTaxonSearchState(taxobj, selecteditem) {
+    action(() => {
+        taxobj.taxonId = selecteditem.taxonId
+        taxobj.taxonRank = selecteditem.taxonRank
+        taxobj.scientificName = selecteditem.scientificName
+        taxobj.scientificNameId = selecteditem.scientificNameId
+        taxobj.scientificNameAuthor = selecteditem.author
+        taxobj.vernacularName = selecteditem.popularName
+
+        taxobj.redListCategory = selecteditem.rlCategory
+        taxobj.taxonSearchResult.replace([])
+        taxobj.taxonSearchString = ""
+    })()
+} 
 
 export default function createTaxonSearch(newObj, contextLetter, filter) {
     if(!newObj) {
