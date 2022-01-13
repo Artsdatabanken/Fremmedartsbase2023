@@ -605,7 +605,23 @@ public partial class FA4 // (3.2) Artsegenskaper
         public int[] InvationPotentialUncertaintyLevels { get; set; }
 
 
-
+        public int? YearFirstIndoors { get; set; }
+        public bool YearFirstIndoorsInsecure { get; set; }
+        public int? YearFirstReproductionIndoors { get; set; }
+        public bool YearFirstReproductionIndoorsInsecure { get; set; }
+        public int? YearFirstProductionOutdoors { get; set; }
+        public bool YearFirstProductionOutdoorsInsecure { get; set; }
+        public int? YearFirstReproductionOutdoors { get; set; }
+        public bool YearFirstReproductionOutdoorsInsecure { get; set; }
+        public int? YearFirstEstablishmentProductionArea { get; set; }
+        public bool YearFirstEstablishmentProductionAreaInsecure { get; set; }
+        public int? YearFirstNature { get; set; }
+        public bool YearFirstNatureInsecure { get; set; }
+        public int? YearFirstReproductionNature { get; set; }
+        public bool YearFirstReproductionNatureInsecure { get; set; }
+        public int? YearFirstEstablishedNature { get; set; }
+        public bool YearFirstEstablishedNatureInsecure { get; set; }
+        public string YearFirstDomesticObservation { get; set; }
     }
 
     public partial class RiskAssessment // (5.1+5.2) Klassifisering (Ivasjonspotensial+Økologisk effekt)
@@ -1248,9 +1264,9 @@ public partial class FA4 // (3.2) Artsegenskaper
         //// ----------------------------------------------------
 
 
-        public string natureAffectedAbroadF { get; set; }
+        public string NatureAffectedAbroadF { get; set; }
 
-        public string natureAffectedAbroadG { get; set; }
+        public string NatureAffectedAbroadG { get; set; }
 
         public bool? CommonNatureTypesDomesticObserved { get; set; }  // Common_Nature_Types_Affected_Domestic_Observed
         public bool? CommonNatureTypesDomesticDocumented { get; set; }  // Common_Nature_Types_Affected_Domestic_Documented

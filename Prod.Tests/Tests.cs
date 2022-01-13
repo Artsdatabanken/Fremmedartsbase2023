@@ -3,6 +3,7 @@ using Prod.Domain;
 using Prod.Domain.Legacy;
 using System.Text.Encodings.Web;
 using System.Text.Json;
+using SwissKnife.Database;
 
 namespace Prod.Tests
 {
@@ -16,14 +17,14 @@ namespace Prod.Tests
         [Test]
         public void MapOldFormatToNewIsOk()
         {
-            SwissKnife.Database.ImportDataService.CreateMappingFromOldToNew();
+            Fab3Mapper.CreateMappingFromOldToNew();
             Assert.Pass();
         }
 
         [Test]
         public void MapOldRealDocumentToNewIsOk()
         {
-            var mapper = SwissKnife.Database.ImportDataService.CreateMappingFromOldToNew();
+            var mapper = Fab3Mapper.CreateMappingFromOldToNew();
             var jsonSerializerOptions = new JsonSerializerOptions
             {
                 Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
