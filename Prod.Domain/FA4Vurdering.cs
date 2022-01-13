@@ -600,6 +600,7 @@ public partial class FA4 // (3.2) Artsegenskaper
         public bool YearFirstReproductionNatureInsecure { get; set; }
         public int? YearFirstEstablishedNature { get; set; }
         public bool YearFirstEstablishedNatureInsecure { get; set; }
+        public string YearFirstDomesticObservation { get; set; }
     }
 
     public partial class RiskAssessment // (5.1+5.2) Klassifisering (Ivasjonspotensial+Økologisk effekt)

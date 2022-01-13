@@ -208,6 +208,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.YearFirstReproductionNatureInsecure, opt => opt.Ignore())
                     .ForMember(dest => dest.YearFirstEstablishedNature, opt => opt.Ignore())
                     .ForMember(dest => dest.YearFirstEstablishedNatureInsecure, opt => opt.Ignore())
+                    .ForMember(dest => dest.YearFirstDomesticObservation, opt => opt.Ignore())
                     ;
                 //.ForMember(dest => dest., opt => opt.MapFrom(src => src.))
 
@@ -511,12 +512,79 @@ namespace SwissKnife.Database
                                         dest.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes.Value >= 5 ? 5 : 0;
 
                         // issue #346
-                        if (!string.IsNullOrWhiteSpace(src.ObservedAndEstablishedStatusInCountry.Indoor.ObservedInCountry.Time))
+                        if (!string.IsNullOrWhiteSpace(src.ObservedAndEstablishedStatusInCountry.Indoor.ObservedInCountry.Time) || !string.IsNullOrWhiteSpace(src.ObservedAndEstablishedStatusInCountry.Indoor.FertileSpecimenObserved.Time))
                         {
-                            var riskAssessmentYearFirstIndoors = int.Parse(src.ObservedAndEstablishedStatusInCountry.Indoor.ObservedInCountry.Time);
-                            dest.RiskAssessment.YearFirstIndoors = riskAssessmentYearFirstIndoors;
+                            int riskAssessmentYearFirstIndoors = 0;
+                            int riskAssessmentYearFirstIndoorsFertile = 0;
+                            if (IsInt(src.ObservedAndEstablishedStatusInCountry.Indoor.ObservedInCountry.Time)) riskAssessmentYearFirstIndoors = int.Parse(src.ObservedAndEstablishedStatusInCountry.Indoor.ObservedInCountry.Time);
+                            if (IsInt(src.ObservedAndEstablishedStatusInCountry.Indoor.FertileSpecimenObserved.Time)) riskAssessmentYearFirstIndoorsFertile = int.Parse(src.ObservedAndEstablishedStatusInCountry.Indoor.FertileSpecimenObserved.Time);
+                            
+                            dest.RiskAssessment.YearFirstIndoors =
+                                riskAssessmentYearFirstIndoors > 0 && (riskAssessmentYearFirstIndoorsFertile == 0 ||
+                                                                       riskAssessmentYearFirstIndoorsFertile >
+                                                                       riskAssessmentYearFirstIndoors)
+                                    ? riskAssessmentYearFirstIndoors
+                                    : riskAssessmentYearFirstIndoorsFertile;
                         }
-                        
+
+                        if (IsInt(src.ObservedAndEstablishedStatusInCountry.Indoor.Established.Time)) dest.RiskAssessment.YearFirstReproductionIndoors = int.Parse(src.ObservedAndEstablishedStatusInCountry.Indoor.Established.Time);
+
+                        if (!string.IsNullOrWhiteSpace(src.ObservedAndEstablishedStatusInCountry.ProductionArea.ObservedInCountry.Time) || !string.IsNullOrWhiteSpace(src.ObservedAndEstablishedStatusInCountry.ProductionArea.FertileSpecimenObserved.Time))
+                        {
+                            int riskAssessmentYearFirstIndoors = 0;
+                            int riskAssessmentYearFirstIndoorsFertile = 0;
+                            if (IsInt(src.ObservedAndEstablishedStatusInCountry.ProductionArea.ObservedInCountry.Time)) riskAssessmentYearFirstIndoors = int.Parse(src.ObservedAndEstablishedStatusInCountry.ProductionArea.ObservedInCountry.Time);
+                            if (IsInt(src.ObservedAndEstablishedStatusInCountry.ProductionArea.FertileSpecimenObserved.Time)) riskAssessmentYearFirstIndoorsFertile = int.Parse(src.ObservedAndEstablishedStatusInCountry.ProductionArea.FertileSpecimenObserved.Time);
+
+                            dest.RiskAssessment.YearFirstProductionOutdoors =
+                                riskAssessmentYearFirstIndoors > 0 && (riskAssessmentYearFirstIndoorsFertile == 0 ||
+                                                                       riskAssessmentYearFirstIndoorsFertile >
+                                                                       riskAssessmentYearFirstIndoors)
+                                    ? riskAssessmentYearFirstIndoors
+                                    : riskAssessmentYearFirstIndoorsFertile;
+                        }
+
+                        if (IsInt(src.ObservedAndEstablishedStatusInCountry.ProductionArea.Established.Time)) dest.RiskAssessment.YearFirstReproductionOutdoors = int.Parse(src.ObservedAndEstablishedStatusInCountry.ProductionArea.Established.Time);
+
+                        if (IsInt(src.ObservedAndEstablishedStatusInCountry.ProductionArea.Population.Time)) dest.RiskAssessment.YearFirstEstablishmentProductionArea = int.Parse(src.ObservedAndEstablishedStatusInCountry.ProductionArea.Population.Time);
+
+                        if (!string.IsNullOrWhiteSpace(src.ObservedAndEstablishedStatusInCountry.NorwegianNature.ObservedInCountry.Time) || !string.IsNullOrWhiteSpace(src.ObservedAndEstablishedStatusInCountry.NorwegianNature.FertileSpecimenObserved.Time))
+                        {
+                            int riskAssessmentYearFirstIndoors = 0;
+                            int riskAssessmentYearFirstIndoorsFertile = 0;
+                            if (IsInt(src.ObservedAndEstablishedStatusInCountry.NorwegianNature.ObservedInCountry.Time)) riskAssessmentYearFirstIndoors = int.Parse(src.ObservedAndEstablishedStatusInCountry.NorwegianNature.ObservedInCountry.Time);
+                            if (IsInt(src.ObservedAndEstablishedStatusInCountry.NorwegianNature.FertileSpecimenObserved.Time)) riskAssessmentYearFirstIndoorsFertile = int.Parse(src.ObservedAndEstablishedStatusInCountry.NorwegianNature.FertileSpecimenObserved.Time);
+
+                            dest.RiskAssessment.YearFirstNature =
+                                riskAssessmentYearFirstIndoors > 0 && (riskAssessmentYearFirstIndoorsFertile == 0 ||
+                                                                       riskAssessmentYearFirstIndoorsFertile >
+                                                                       riskAssessmentYearFirstIndoors)
+                                    ? riskAssessmentYearFirstIndoors
+                                    : riskAssessmentYearFirstIndoorsFertile;
+                        }
+
+                        if (IsInt(src.ObservedAndEstablishedStatusInCountry.NorwegianNature.Established.Time)) dest.RiskAssessment.YearFirstReproductionNature = int.Parse(src.ObservedAndEstablishedStatusInCountry.NorwegianNature.Established.Time);
+
+                        if (IsInt(src.ObservedAndEstablishedStatusInCountry.NorwegianNature.Population.Time)) dest.RiskAssessment.YearFirstEstablishedNature = int.Parse(src.ObservedAndEstablishedStatusInCountry.NorwegianNature.Population.Time);
+                        var tekster = string.Join(" ",
+                            new string[] {
+                                src.FirstDomesticObservation,
+                                GetNotInt("YearFirstIndoors",src.ObservedAndEstablishedStatusInCountry.Indoor.ObservedInCountry.Time),
+                                GetNotInt("YearFirstIndoors",src.ObservedAndEstablishedStatusInCountry.Indoor.FertileSpecimenObserved.Time),
+                                GetNotInt("YearFirstReproductionIndoors",src.ObservedAndEstablishedStatusInCountry.Indoor.Established.Time),
+                                GetNotInt("YearFirstProductionOutdoors",src.ObservedAndEstablishedStatusInCountry.ProductionArea.ObservedInCountry.Time),
+                                GetNotInt("YearFirstProductionOutdoors",src.ObservedAndEstablishedStatusInCountry.ProductionArea.FertileSpecimenObserved.Time),
+                                GetNotInt("YearFirstReproductionOutdoors",src.ObservedAndEstablishedStatusInCountry.ProductionArea.Established.Time),
+                                GetNotInt("YearFirstEstablishmentProductionArea",src.ObservedAndEstablishedStatusInCountry.ProductionArea.Population.Time),
+                                GetNotInt("YearFirstNature",src.ObservedAndEstablishedStatusInCountry.NorwegianNature.ObservedInCountry.Time),
+                                GetNotInt("YearFirstNature",src.ObservedAndEstablishedStatusInCountry.NorwegianNature.FertileSpecimenObserved.Time),
+                                GetNotInt("YearFirstReproductionNature",src.ObservedAndEstablishedStatusInCountry.NorwegianNature.Established.Time),
+                                GetNotInt("YearFirstEstablishedNature",src.ObservedAndEstablishedStatusInCountry.NorwegianNature.Population.Time)
+
+                            }.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray());
+
+                        if (!string.IsNullOrWhiteSpace(tekster))
+                            dest.RiskAssessment.YearFirstDomesticObservation = tekster;
                     });
 
                 // - slik mapping fungerer ikke - da de blir kallt via convention - og det er ingen tilfeller der den har behov for å mappe fra FA3Legacy til Prod.Domain.RiskAssessment - koden blir ikke kallt
@@ -556,6 +624,25 @@ namespace SwissKnife.Database
             mapperConfig.AssertConfigurationIsValid();
             var mapper = new Mapper(mapperConfig);
             return mapper;
+        }
+
+        private static bool IsInt(string src)
+        {
+            if (string.IsNullOrWhiteSpace(src))
+            {
+                return false;
+            }
+            int riskAssessmentYearFirstIndoors;
+            return int.TryParse(src, out riskAssessmentYearFirstIndoors);
+        }
+        private static string GetNotInt(string label, string src)
+        {
+            if (string.IsNullOrWhiteSpace(src))
+            {
+                return null;
+            }
+
+            return IsInt(src) ? null : label + ":" + src;
         }
 
         private static long? ParseLong(string str)
