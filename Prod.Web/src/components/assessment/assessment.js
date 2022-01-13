@@ -112,7 +112,7 @@ class AssessmentRoot extends Component {
 
     }
 
-    //createTaxonSearch(this.connectedTaxon1, this.props.appState.evaluationContext, tax => tax.existsInCountry)
+    
 
         lockAssessment(e, assessment, appState) {
                 e.stopPropagation()
