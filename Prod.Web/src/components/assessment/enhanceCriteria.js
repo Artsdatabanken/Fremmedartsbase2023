@@ -297,26 +297,26 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 ? 0
                 : r.occurrences1Best === 0
                 ? 4 * round(0.64 + 0.36 * r.introductionsBest)
-                : 4 * round(r.occurrences1Best + r.introductionsBest^((r.occurrences1Best + 9)/10))
-            console.log("#AOO10yrBest " + r.occurrences1Best + "!" + r.introductionsBest)
+                : 4 * round(r.occurrences1Best + Math.pow(r.introductionsBest,(r.occurrences1Best + 9)/10))
+            console.log("#AOO10yrBest " + r.occurrences1Best + "!" + r.introductionsBest + " result: " + result)
             return result
         },
         get AOO10yrLow() {
             const result =
-                r.occurrences1Low === 0 && r.introductionsLow
+                r.occurrences1Low === 0 && r.introductionsLow === 0
                 ? 0
                 : r.occurrences1Low === 0
                 ? 4 * round(0.64 + 0.36 * r.introductionsLow)
-                : 4 * round(r.occurrences1Low + r.introductionsLow^((r.occurrences1Low + 9)/10))
+                : 4 * round(r.occurrences1Low + Math.pow(r.introductionsLow, (r.occurrences1Low + 9)/10))
             return result
         },
         get AOO10yrHigh() {
             const result =
-                r.occurrences1High === 0 && r.introductionsHigh
+                r.occurrences1High === 0 && r.introductionsHigh === 0
                 ? 0
                 : r.occurrences1High === 0
                 ? 4 * round(0.64 + 0.36 * r.introductionsHigh)
-                : 4 * round(r.occurrences1High + r.introductionsHigh^((r.occurrences1High + 9)/10))
+                : 4 * round(r.occurrences1High + Math.pow(r.introductionsHigh,(r.occurrences1High + 9)/10))
             return result
         },
 
@@ -435,7 +435,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         get medianLifetime() {
             const k = r.ametodkey
             console.log("medianLifetime methodkey: " + k)
-            const result = k.startsWith("A1") ?
+            const result = (k === "A1a1" || k === "A1b1") ?
                 r.ascore === 0 ? 3
                 : r.ascore === 1 ? 25
                 : r.ascore === 2 ? 200
@@ -470,7 +470,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
 
         get a1bresulttext() {
-           return `Basert på det beste anslaget på ${r.occurrences1Best} forekomster i løpet av 10 år og ${r.introductionsBest} introduksjon(er) i samme tidsperiode er A-kriteriet forhåndsskåret som ${r.adefaultBest + 1} (med usikkerhet: ${r.adefaultLow + 1}–${r.adefaultHigh + 1}). Dette innebærer at artens mediane levetid ligger ${r.lifetimeText}, eller at sannsynligheten for utdøing innen 50 år er på ${r.extinctionText}.`
+           return `Basert på det beste anslaget på ${r.occurrences1Best} forekomster i løpet av 10 år og ${r.introductionsBest} ytterligere introduksjon(er) i samme tidsperiode er A-kriteriet forhåndsskåret som ${r.adefaultBest + 1} (med usikkerhet: ${r.adefaultLow + 1}–${r.adefaultHigh + 1}). Dette innebærer at artens mediane levetid ligger ${r.lifetimeText}, eller at sannsynligheten for utdøing innen 50 år er på ${r.extinctionText}.`
         },
 
         get invationPotentialUncertainityText() {

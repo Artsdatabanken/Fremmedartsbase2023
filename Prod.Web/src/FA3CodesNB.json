@@ -414,10 +414,6 @@
 
                 "text": "Arten er ikke fremmed i Norge",
                 "value": "notAlienInNorway"
-            },           
-            {
-                "text": "Potensiell dørstokkart som \n ikke skal vurderes",
-                "value": "notAssessedPotentialDoorKnocker"
             }
         ],
 
