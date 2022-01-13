@@ -67,8 +67,8 @@ class AssessmentRoot extends Component {
                 effectLocalScale : false, 
                 effect : "Weak",
                 scale: "Limited",
-                status: "NewAlien",
-                interactionType : "CompetitionSpace", 
+                //status: "NewAlien",
+                //interactionType : "CompetitionSpace", 
                 //interactionType : [], 
                 longDistanceEffect : false, 
                 confirmedOrAssumed : false, 
@@ -78,13 +78,13 @@ class AssessmentRoot extends Component {
         })
 
         this.addTaxon = action(() => {
-            const taxon = assessment.connectedTaxon;
+            //const taxon = assessment.connectedTaxon;
             const newItem = this.newTaxon;
             const clone = toJS(newItem);
             // console.log("Clone: " + JSON.stringify(clone))
             clone.taxonSearchString = undefined
             clone.taxonSearchResult = undefined
-            taxon = clone
+            assessment.connectedTaxon = clone
             newItem.scientificName = ""
             newItem.scientificNameId = ""
             newItem.scientificNameAuthor = ""

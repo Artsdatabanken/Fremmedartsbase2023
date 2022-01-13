@@ -45,6 +45,8 @@ namespace Prod.Domain
         public string TaxonRank { get; set; }   // "Species" or "SupSpecies"
         public string Ekspertgruppe { get; set; }
     }
+
+
     public class TrackInfo
     {
         public string VurderingsId2015 { get; set; }
@@ -168,6 +170,8 @@ namespace Prod.Domain
         public bool? ConnectedToAnother { get; set; }
 
         public string Connected { get; set; }
+
+        public Taxon ConnectedTaxon { get; set; }
 
         public string SpeciesStatus { get; set; }
 

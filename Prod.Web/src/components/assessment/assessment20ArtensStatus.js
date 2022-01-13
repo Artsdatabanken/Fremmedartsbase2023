@@ -66,11 +66,11 @@ checkStatus = (production) => {
  
 
     render() {
-        const {appState:{assessment}, appState, newTaxon, addTaxon} = this.props;
+        const {appState:{assessment}, appState, newTaxon, addNewTaxon} = this.props;
        // const vurdering = assessment
         const labels = appState.codeLabels 
         // console.log("labels" + JSON.stringify(labels.FirstObservation))
-
+        
         const codes = appState.koder
         const standardPeriods = [
             nbsp,
@@ -144,7 +144,8 @@ checkStatus = (production) => {
                                         newTaxon.vernacularName = "";
                                         newTaxon.redListCategory = "";
                                         newTaxon.taxonSearchResult.replace([]); 
-                                        newTaxon.taxonSearchString = "" }) 
+                                        newTaxon.taxonSearchString = ""
+                                        addNewTaxon() }) 
                                     }
                                 >
                                     <div className={"rlCategory " + newTaxon.redListCategory}>{newTaxon.RedListCategory}</div>
