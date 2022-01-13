@@ -46,8 +46,29 @@ namespace Prod.Domain
         public string Ekspertgruppe { get; set; }
     }
 
+    public class CTaxon
+    {
+        public string Id { get; set; }
+        public int taxonID { get; set; }
+        public string scientificName { get; set; }
+        public string scientificNameId { get; set; }
 
-    public class TrackInfo
+        public string scientificNameAuthor { get; set; }
+
+        public string vernacularName { get; set; }
+
+        public string redListCategory { get; set; }
+
+        public List<string> taxonSearchResult { get; set; }
+
+        public string taxonSearchString { get; set; }
+
+        public string taxonRank { get; set; }
+
+    }
+
+
+        public class TrackInfo
     {
         public string VurderingsId2015 { get; set; }
         public int OrgVitenskapeligNavnId { get; set; }
@@ -171,7 +192,7 @@ namespace Prod.Domain
 
         public string Connected { get; set; }
 
-        public Taxon ConnectedTaxon { get; set; }
+        public CTaxon ConnectedTaxon { get; set; }
 
         public string SpeciesStatus { get; set; }
 
@@ -1404,6 +1425,8 @@ public partial class FA4 // (3.2) Artsegenskaper
             public string ColonizedArea { get; set; }
             public List<string> StateChange { get; set; } = new List<string>(); // changed datatype from string 19.12.2016
             public string AffectedArea { get; set; }
+
+            public CTaxon Taxon { get; set; }
         }
 
 
