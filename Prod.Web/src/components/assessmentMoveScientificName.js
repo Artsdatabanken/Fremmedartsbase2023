@@ -10,6 +10,7 @@ import auth from './authService'
 
 // toxoninfo for the selected destination taxon
 const  newAssessment = observable({
+    id: "moveAssessmentTaxonSearch",
     ScientificName: "",
     ScientificNameId: "",
     ScientificNameAuthor: "",

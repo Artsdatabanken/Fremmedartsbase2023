@@ -34,6 +34,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
         extendObservable(this, {
             // showModal: false,
             newSSITS: {
+                id: "newSpeciesSpeciesInteractionsTaxonSearch",
                 scientificName: "",
                 scientificNameId: "",
                 scientificNameAuthor: "",
@@ -57,6 +58,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                 interactionTypes: [],
             }, 
             newGTD: {
+                id: "newGeneticTransferDocumentedTaxonSearch",
                 scientificName: "",
                 scientificNameId: "",
                 scientificNameAuthor: "",
@@ -80,6 +82,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                 interactionTypes: [],
             }, 
             newHPI: {
+                id: "newHostParasiteInformationsTaxonSearch",
                 scientificName: "",
                 scientificNameId: "",
                 scientificNameAuthor: "",
