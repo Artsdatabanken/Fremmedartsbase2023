@@ -99,6 +99,470 @@ namespace Prod.Api.Helpers
         public DateTime LockedForEditAt { get; set; }
         public string LockedForEditBy { get; set; }
 
+        #region RiskAssessment 
+        public int RiskAssessmentRiskLevel { get; set; } = -1;
+        public string RiskAssessmentDecisiveCriteria { get; set; }
+        public string RiskAssessmentRiskLevelCode { get; set; }
+        public string RiskAssessmentRiskLevelText { get; set; }
+
+        public int RiskAssessmentEcoEffectLevel { get; set; }
+        public int[] RiskAssessmentEcoEffectUncertaintyLevels { get; set; }
+
+        public int RiskAssessmentInvationPotentialLevel { get; set; }
+        public int[] RiskAssessmentInvationPotentialUncertaintyLevels { get; set; }
+
+
+        public int? RiskAssessmentYearFirstIndoors { get; set; }
+        public bool RiskAssessmentYearFirstIndoorsInsecure { get; set; }
+        public int? RiskAssessmentYearFirstReproductionIndoors { get; set; }
+        public bool RiskAssessmentYearFirstReproductionIndoorsInsecure { get; set; }
+        public int? RiskAssessmentYearFirstProductionOutdoors { get; set; }
+        public bool RiskAssessmentYearFirstProductionOutdoorsInsecure { get; set; }
+        public int? RiskAssessmentYearFirstReproductionOutdoors { get; set; }
+        public bool RiskAssessmentYearFirstReproductionOutdoorsInsecure { get; set; }
+        public int? RiskAssessmentYearFirstEstablishmentProductionArea { get; set; }
+        public bool RiskAssessmentYearFirstEstablishmentProductionAreaInsecure { get; set; }
+        public int? RiskAssessmentYearFirstNature { get; set; }
+        public bool RiskAssessmentYearFirstNatureInsecure { get; set; }
+        public int? RiskAssessmentYearFirstReproductionNature { get; set; }
+        public bool RiskAssessmentYearFirstReproductionNatureInsecure { get; set; }
+        public int? RiskAssessmentYearFirstEstablishedNature { get; set; }
+        public bool RiskAssessmentYearFirstEstablishedNatureInsecure { get; set; }
+        public string RiskAssessmentYearFirstDomesticObservation { get; set; }
+
+        //public List<Criterion> Criteria { get; set; }
+
+        // ---------- invasjonspotensial -------------
+        public bool? RiskAssessmentQuantitativeDataForDomesticSpreadExsists { get; set; }  // Quantitative_Domestic_Spread_Data_Exsists
+        public bool? RiskAssessmentQuantitativeDataForForeignSpreadExsists { get; set; }   // Quantitative_Foreign_Spread_Data_Exsists
+        public string RiskAssessmentQuantitativeDataComment { get; set; }         // Quantitative_Spread_Data_Comment
+
+        // -- forventet levetid for norsk populasjon
+        public Int64? RiskAssessmentEstimatedSpeciesCount { get; set; }   // Estimated_Species_Count
+        public string RiskAssessmentEstimatedSpeciesCountMethod { get; set; }   // Estimated_Species_Count_Estimation_Method
+        public string RiskAssessmentEstimatedSpeciesCountAssumption { get; set; }   // Estimated_Species_Count_Assumption
+        public bool? RiskAssessmentEstimatedSpeciesLongevityMoreThan1000Years { get; set; }   // Estimated_Species_Longevity_More_than_1000_years
+        public string RiskAssessmentEstimatedSpeciesLongevity { get; set; }  // Estimated_Species_Longevity
+        public string RiskAssessmentEstimatedSpeciesLongevityMethod { get; set; }  // Estimated_Species_Longevity_Method
+
+
+
+
+
+        //*************** Forekomstareal i dag ************************************
+        [Name("AOOknown")]
+        public Int64? RiskAssessmentAOOknown { get; set; }
+        [Name("AOOtotalBest")]
+        public Int64? RiskAssessmentAOOtotalBest { get; set; }
+        [Name("AOOtotalLow")]
+        public Int64? RiskAssessmentAOOtotalLow { get; set; }
+        [Name("AOOtotalHigh")]
+        public Int64? RiskAssessmentAOOtotalHigh { get; set; }
+
+        [Name("AOOchangeBest")]
+        public double? RiskAssessmentAOOchangeBest { get; set; }
+        [Name("AOOchangeLow")]
+        public double? RiskAssessmentAOOchangeLow { get; set; }
+        [Name("AOOchangeHigh")]
+        public double? RiskAssessmentAOOchangeHigh { get; set; }
+
+
+        public int? RiskAssessmentAdefaultBest { get; set; }
+        public int? RiskAssessmentAdefaultLow { get; set; }
+        public int? RiskAssessmentAdefaultHigh { get; set; }
+
+
+        public int? RiskAssessmentApossibleLow { get; set; }
+        public int? RiskAssessmentApossibleHigh { get; set; }
+
+
+
+
+        // -------- disse (forekomstareal i dag) er erstattet:  
+        //todo: *sjekk konvertering fra FAB3 før sletting av utkommentert kode*
+        //public Int64? CurrentExistenceArea { get; set; }
+        //public Int64? CurrentExistenceAreaLowCalculated { get; set; }
+        //public string CurrentExistenceAreaLowMultiplier { get; set; }
+        //public Int64? CurrentExistenceAreaCalculated { get; set; }
+        //public string CurrentExistenceAreaMultiplier { get; set; }
+        //public string CurrentExistenceAreaHighMultiplier { get; set; }
+        //public Int64? CurrentExistenceAreaHighCalculated { get; set; }
+        //*******************************************************************
+
+
+
+
+
+        // *******  (B2a) Økning i forekomstareal – selvstendig reproduserende arter  **********
+        [Name("AOOyear1")]
+        public long? RiskAssessmentAOOyear1 { get; set; } // fra-årstallet for det første forekomstarealet 
+        [Name("AOOendyear1")]
+        public long? RiskAssessmentAOOendyear1 { get; set; } // basert på periode: f.o.m. år (t0) - (NB!! //todo: denne egenskaper bør skifte navn i neste FAB)
+        [Name("AOOyear2")]
+        public long? RiskAssessmentAOOyear2 { get; set; } // fra-årstallet for det andre forekomstarealet 
+        [Name("AOOendyear2")]
+        public long? RiskAssessmentAOOendyear2 { get; set; } // basert på periode: t.o.m. år  - (NB!! //todo: denne egenskaper bør skifte navn i neste FAB)
+        [Name("AOO1")]
+        public long? RiskAssessmentAOO1 { get; set; } // forekomstarealet i år 1 
+        [Name("AOO2")]
+        public long? RiskAssessmentAOO2 { get; set; } // forekomstarealet i år 2 
+        // ************************************************************************************
+
+
+        //*************** Forekomstareal om 50år ************************************
+        [Name("AOO50yrBest")]
+        public Int64? RiskAssessmentAOO50yrBest { get; set; } // beste anslag på totalt forekomstareal om 50 år 
+        [Name("AOO50yrLow")]
+        public Int64? RiskAssessmentAOO50yrLow { get; set; } // lavt anslag på totalt forekomstareal om 50 år 
+        [Name("AOO50yrHigh")]
+        public Int64? RiskAssessmentAOO50yrHigh { get; set; }
+        // -------- disse (forekomstareal om 50år) er erstattet:  
+        //todo: *sjekk konvertering fra FAB3 før sletting av utkommentert kode*
+        //public Int64? PotentialExistenceAreaLowQuartile { get; set; }
+        //public Int64? PotentialExistenceArea { get; set; }
+        //public Int64? PotentialExistenceAreaHighQuartile { get; set; }
+        //public string PotentialPresenceComment { get; set; }
+        //*******************************************************************
+
+        // end nye
+
+
+        //public Int64? SpeciesCount { get; set; } // fab: Species_Count  // ikke i bruk som egen attributt (ligger i spredningshistorikk item) i 2012
+
+
+        public double? RiskAssessmentSpreadHistoryDomesticAreaInStronglyChangedNatureTypes { get; set; }
+        public double? RiskAssessmentSpreadHistoryDomesticAreaInStronglyChangedNatureTypesLow { get; set; }
+        public double? RiskAssessmentSpreadHistoryDomesticAreaInStronglyChangedNatureTypesBest { get; set; }
+        public double? RiskAssessmentSpreadHistoryDomesticAreaInStronglyChangedNatureTypesHigh { get; set; }
+
+
+
+        //        public bool hasPVA { get; set; } // = !string.IsNullOrWhiteSpace(detailsinfo.Spread_PVA_Analysis);
+        #region (A) Populasjonens mediane levetid
+        // todo: find unused properties in this region
+        // ikke i bruk i 2012 applikasjon (?)
+        //public string SpreadingDescription { get; set; } //Spreading_Description
+
+        public string RiskAssessmentAcceptOrAdjustCritA { get; set; } = "accept";  // ametod submetod (radio)
+        public string RiskAssessmentChosenSpreadMedanLifespan { get; set; } = "";  // ametod (radio)
+        public string RiskAssessmentReasonForAdjustmentCritA { get; set; } = ""; // added 06.01.2022
+
+        public bool RiskAssessmentActiveSpreadPVAAnalysisSpeciesLongevity { get; set; } // added 27.09.2016
+
+        [Name("PVA-analyse beskrivelse")]
+        public string RiskAssessmentSpreadPVAAnalysis { get; set; } //Spread_PVA_Analysis
+        [Name("Forventet levetid")]
+        public bool RiskAssessmentActiveSpreadPVAAnalysisEstimatedSpeciesLongevity { get; set; } // lagt til 27.09.2016
+        public string RiskAssessmentSpreadPVAAnalysisEstimatedSpeciesLongevity { get; set; }  //Spread_PVA_Analysis_Estimated_Species_Longevity
+        public string RiskAssessmentSpreadPVAAnalysisEstimatedSpeciesLongevityLowerQuartile { get; set; }  // lagt til 07.09.2016
+        public string RiskAssessmentSpreadPVAAnalysisEstimatedSpeciesLongevityUpperQuartile { get; set; }  // lagt til 07.09.2016 
+
+        public string RiskAssessmentFilesDescription { get; set; } //Spread_PVA_Analysis
+
+
+        //todo: is this section in use???
+        //Rødliste info
+        public bool RiskAssessmentActiveRedListCategoryLevel { get; set; } // lagt til 27.09.2016
+        public string RiskAssessmentRedListUsedCriteria { get; set; }  // lagt til 07.09.2016
+        public string RiskAssessmentRedListDataDescription { get; set; }  // lagt til 07.09.2016
+        public string RiskAssessmentRedListCategory { get; set; }  // lagt til 07.09.2016
+        public string RiskAssessmentRedListSubCategory { get; set; }  // lagt til 07.09.2016
+                                                        // -----------------------------------------------------------------------------------------
+
+
+
+        // ****************************  (A2) Numerisk estimering  ****************************
+        public long? RiskAssessmentPopulationSize { get; set; } // bestandens nåværende størrelse (individtall) 
+        public double? RiskAssessmentGrowthRate { get; set; } // bestandens multiplikative vekstrate 
+        public double? RiskAssessmentEnvVariance { get; set; } // miljøvarians 
+        public double? RiskAssessmentDemVariance { get; set; } // demografisk varians 
+        public long? RiskAssessmentCarryingCapacity { get; set; } // bestandens bæreevne (individtall) 
+        public long? RiskAssessmentExtinctionThreshold { get; set; } // kvasiutdøingsterskel (individtall) 
+        // -------- disse ((A2) Numerisk estimering) er erstattet:  
+        //todo: *sjekk konvertering fra FAB3 før sletting av utkommentert kode*
+        //////public bool ActiveSpreadRscriptSpeciesCount { get; set; } // lagt til 27.09.2016
+
+        //[Name("Bestandstørrelse")]
+        //public int? SpreadRscriptSpeciesCount { get; set; }  //Spread_Rscript_Species_Count
+        //[Name("Vekstrate")]
+        ////public double SpreadRscriptPopulationGrowth { get; set; } //Spread_Rscript_Population_Growth
+        //public string SpreadRscriptPopulationGrowth { get; set; } // type change 01.11.2017
+        ///// <summary>
+        ///// R-script input - environmant (stocastic) variance - Description
+        ///// </summary>
+        //[Name("Miljø varians")]
+        //public string SpreadRscriptEnvironmantVariance { get; set; } //Spread_Rscript_Environmant_Variance
+
+        ///// <summary>
+        ///// R-script input - demographic variance - Description
+        ///// </summary>
+        //[Name("Demografisk varians")]
+        //public string SpreadRscriptDemographicVariance { get; set; }  //Spread_Rscript_Demographic_Variance
+        ///// <summary>
+        ///// R-script input - Sustainability K - Description
+        ///// </summary>
+        //[Name("Bæreevne K")]
+        //public string SpreadRscriptSustainabilityK { get; set; } //Spread_Rscript_Sustainability_K
+        //public bool ActiveSpreadRscriptEstimatedSpeciesLongevity { get; set; } // lagt til 08.11.2016
+        ///// <summary>
+        ///// Estimated species longevity  Conclusion
+        ///// </summary>
+        //public string SpreadRscriptEstimatedSpeciesLongevity { get; set; } //Spread_Rscript_Sustainability_K
+
+        ///// <summary>
+        ///// R-script input - Quasi-extinction Threshold - Description
+        ///// </summary>
+        //[Name("Terskel for kvasiutdøing")]
+        //public string SpreadRscriptQuasiExtinctionThreshold { get; set; }  //Spread_Rscript_Quasi_Extinction_Threshold
+        // ************************************************************************************
+        #endregion
+
+        #region Median life time
+        public double? RiskAssessmentMedianLifetimeInput { get; set; } // artens mediane levetid i Norge i år (brukerinput)
+        public long RiskAssessmentMedianLifetime { get; set; } // artens mediane levetid i Norge i år (beregnet/avrundet)
+        public long? RiskAssessmentLifetimeLowerQInput { get; set; } // nedre kvartil for artens levetid i Norge i år 
+        public long RiskAssessmentLifetimeLowerQ { get; set; } // nedre kvartil for artens levetid i Norge i år 
+        public long? RiskAssessmentLifetimeUpperQInput { get; set; } // øvre kvartil for artens levetid i Norge i år 
+        public long RiskAssessmentLifetimeUpperQ { get; set; } // øvre kvartil for artens levetid i Norge i år 
+        #endregion Median life time
+
+        public string RiskAssessmentAmethod { get; set; } // metode som ble brukt for å beregne A-kriteriet 
+        public int RiskAssessmentAscore { get; set; } // skår for A-kriteriet 
+        public int RiskAssessmentAlow { get; set; } // nedre skår for A-kriteriet (inkludert usikkerhet) 
+        public int RiskAssessmentAhigh { get; set; } // øvre skår for A-kriteriet (inkludert usikkerhet) 
+        public string RiskAssessmentBmethod { get; set; } // metode som ble brukt for å beregne B-kriteriet 
+        public int RiskAssessmentBscore { get; set; } // skår for B-kriteriet 
+        public int RiskAssessmentBlow { get; set; } // nedre skår for B-kriteriet (inkludert usikkerhet) 
+        public int RiskAssessmentBhigh { get; set; } // øvre skår for B-kriteriet (inkludert usikkerhet) 
+
+        public int RiskAssessmentBCritMCount { get; set; } = 0;
+        public string RiskAssessmentBCritExact { get; set; } = "false";
+        public string RiskAssessmentBCritP { get; set; }
+        public string RiskAssessmentBCritNewObs { get; set; } = "True";
+
+
+        public int RiskAssessmentStartYear { get; set; } // startår for B-kriteriet / utbredelse
+
+        public int RiskAssessmentEndYear { get; set; } // sluttår for B-kriteriet / utbredelse
+
+        [Name("AOOdarkfigureBest")]
+        public float? RiskAssessmentAOOdarkfigureBest { get; set; } // beste anslag på forekomstarealets mørketall 
+        [Name("AOOdarkfigureLow")]
+        public float? RiskAssessmentAOOdarkfigureLow { get; set; } // lavt anslag på forekomstarealets mørketall 
+        [Name("AOOdarkfigureHigh")]
+        public float? RiskAssessmentAOOdarkfigureHigh { get; set; } // høyt anslag på forekomstarealets mørketall 
+        [Name("AOO10yrBest")]
+        public long? RiskAssessmentAOO10yrBest { get; set; } // beste anslag på totalt forekomstareal om 10 år
+        [Name("AOO10yrLow")]
+        public long? RiskAssessmentAOO10yrLow { get; set; } // lavt anslag på totalt forekomstareal om 10 år
+        [Name("AOO10yrHigh")]
+        public long? RiskAssessmentAOO10yrHigh { get; set; } // høyt anslag på totalt forekomstareal om 10 år
+
+
+        //-----------------------------------------------------------------------
+        // todo: slett dette (etter hvert)
+        // erstattet disse i 61 - 16.8.21 - dette er kun for referanse. 
+        //PopulationSize ACritSpeciesCount
+        //GrowthRate ACritPopGrowth
+        //EnvVariance ACritEnvirVariance
+        //DemVariance ACritDemoVariance
+        //CarryingCapacity ACritSustainability
+        //ExtinctionThreshold ACritExtThreshold
+        //MedianLifetime ACritMedian
+        //ExpansionSpeed BCritExpansion
+        //ExpansionLowerQ BCritLower
+        //ExpansionUpperQ BCritHigher
+        //-----------------------------------------------------------------------
+
+
+
+
+
+
+        #region (B) Ekspansjonshastighet
+
+        public string RiskAssessmentChosenSpreadYearlyIncrease { get; set; } = "";  // bmetod (radio)
+        public bool RiskAssessmentActiveSpreadYearlyIncreaseObservations { get; set; } //lagt til 29.09.2016
+
+
+        // ********************** (b) Forekomstareal – dørstokkarter  ****************************
+        public long? RiskAssessmentOccurrences1Best { get; set; }	// beste anslag på antall forekomster fra 1 introduksjon 
+        public long? RiskAssessmentOccurrences1Low { get; set; }	// lavt anslag på antall forekomster fra 1 introduksjon 
+        public long? RiskAssessmentOccurrences1High { get; set; }	// høyt anslag på antall forekomster fra 1 introduksjon 
+        public long? RiskAssessmentIntroductionsBest { get; set; }	// beste anslag på antall introduksjoner i løpet av 10 år 
+        public long? RiskAssessmentIntroductionsLow { get; set; }	    // lavt anslag på antall introduksjoner i løpet av 10 år 
+        public long? RiskAssessmentIntroductionsHigh { get; set; }	// høyt anslag på antall introduksjoner i løpet av 10 år 
+        // -------- disse (forekomstareal - dørstokkarter) er erstattet:  
+        //todo: *sjekk konvertering fra FAB3 før sletting av utkommentert kode*
+        //public string SpreadYearlyIncreaseObservations { get; set; } //lagt til 29.09.2016
+        //public string SpreadYearlyIncreaseObservationsLowerQuartile { get; set; } //lagt til 29.09.2016
+        //public string SpreadYearlyIncreaseObservationsUpperQuartile { get; set; } //lagt til 29.09.2016
+        // ****************************************************************************************
+
+
+        // ********************** ((B1) ekspansjonshastighet  ****************************
+        public long? RiskAssessmentExpansionSpeedInput { get; set; }  // ekspansjonshastighet i meter per år 
+        public long? RiskAssessmentExpansionSpeed { get; set; }  // ekspansjonshastighet i meter per år 
+        public long? RiskAssessmentExpansionLowerQInput { get; set; } // nedre kvartil for ekspansjonshastighet i meter per år 
+        public long? RiskAssessmentExpansionLowerQ { get; set; } // nedre kvartil for ekspansjonshastighet i meter per år 
+        public long? RiskAssessmentExpansionUpperQInput { get; set; } // øvre kvartil for ekspansjonshastighet i meter per år 
+        public long? RiskAssessmentExpansionUpperQ { get; set; } // øvre kvartil for ekspansjonshastighet i meter per år 
+        // -------- disse ((B1) ekspansjonshastighet) er erstattet:  
+        //todo: *sjekk konvertering fra FAB3 før sletting av utkommentert kode*
+        //public bool ActiveSpreadYearlyIncreaseOccurrenceArea { get; set; } //lagt til 29.09.2016
+        //public string SpreadYearlyIncreaseOccurrenceArea { get; set; } //lagt til 29.09.2016
+        //public string SpreadYearlyIncreaseOccurrenceAreaLowerQuartile { get; set; } //lagt til 29.09.2016
+        //public string SpreadYearlyIncreaseOccurrenceAreaUpperQuartile { get; set; } //lagt til 29.09.2016
+        //
+        // sjekk ogsa disse:
+        // // SpreadYearlyIncreaseCalculatedExpansionSpeed? SpreadYearlyIncreaseObservations?
+        // *********************************************************************************
+
+
+        public bool RiskAssessmentActiveSpreadYearlyLiteratureData { get; set; } //lagt til 29.09.2016
+        public string RiskAssessmentSpreadYearlyLiteratureDataExpansionSpeed { get; set; } // lagt til 14.10.2016
+        public string RiskAssessmentSpreadYearlyLiteratureDataUncertainty { get; set; } //lagt til 29.09.2016
+        public string RiskAssessmentSpreadYearlyLiteratureDataNumberOfIntroductionSources { get; set; } //lagt til 29.09.2016  
+        public string RiskAssessmentSpreadYearlyLiteratureData { get; set; } //lagt til 29.09.2016 
+        //public string SpreadYearlyLiteratureDataAssumptions { get; set; } //lagt til 29.09.2016 // fjernet 03.11.2016
+        public string RiskAssessmentSpreadYearlyLiteratureDataSource { get; set; } //lagt til 29.09.2016
+
+
+        public bool RiskAssessmentActiveSpreadYearlyIncreaseCalculatedExpansionSpeed { get; set; } //lagt til 29.09.2016 // changed from ActiveSpreadYearlyIncreaseEstimate 09.11.2016
+        public string RiskAssessmentSpreadYearlyIncreaseEstimate { get; set; } //lagt til 29.09.2016
+        public string RiskAssessmentSpreadYearlyIncreaseEstimateDescription { get; set; } //lagt til 29.09.2016
+        public string RiskAssessmentSpreadYearlyIncreaseCalculatedExpansionSpeed { get; set; } //lagt til 14.10.2016
+
+
+
+
+        #endregion (B) Ekspansjonshastighet
+
+
+
+        #region unused ???????
+        // -- spredningshastighet
+
+        public double? RiskAssessmentSpreadYearlyIncrease { get; set; }   // Spread_Yearly_Increase
+        public string RiskAssessmentSpreadYearlyIncreaseMethod { get; set; }  // Spread_Yearly_Increase_EstimationMethod
+        #endregion unused ???????
+
+
+
+
+        #region unused ???????
+        [Name("Beskrivelse")]
+        public string RiskAssessmentSpreadManualEstimate { get; set; } // fab: Spread_Manual_Estimate
+        public string RiskAssessmentSpreadManualEstimateSpeciesLongevity { get; set; } // fab: Spread_Manual_Estimate_Species_Longevity
+        public bool? RiskAssessmentSpreadManualEstimateSpeciesLongevityIsMoreThan1000years { get; set; } // fab: Spread_Manual_Estimate_Species_Longevity_More_than_1000_years
+
+
+
+        // -- fortetningsrate
+        [Name("Fortetningsrate, konklusjon")]
+        public string RiskAssessmentIncreasingDensity { get; set; }  // Increasing_Density_Conclusion
+        [Name("Grunnlag for fortetningsrate")]
+        public string RiskAssessmentIncreasingDensityMethod { get; set; }  // Increasing_Density_Method
+        #endregion
+
+
+
+
+
+        #region unused keys fortetningsrate - PVA - manual estimates
+        [Name("Resultat fra script")]
+        public string RiskAssessmentIncreasingDensityPVAAnalysis { get; set; } //Increasing_Density_PVA_Analysis
+        [Name("Verdi")]
+        public string RiskAssessmentIncreasingDensityPercentualComputation { get; set; } //Increasing_Density_Percentual_Computation
+        [Name("Tidsperiode")]
+        public string RiskAssessmentIncreasingDensityPercentualComputationPeriod { get; set; } //Increasing_Density_Percentual_Computation_Period
+        [Name("Anslag")]
+        public string RiskAssessmentIncreasingDensityManualEstimate { get; set; } //Increasing_Density_Manual_Estimate
+        [Name("Begrunnelse")]
+        public string RiskAssessmentIncreasingDensityManualEstimateDescription { get; set; } //Increasing_Density_Manual_Estimate_Description
+        #endregion
+
+        // -- naturtype forventet kolonisert
+        [Name("Beskrivelse")]
+        public string RiskAssessmentNaturetypeExpectedColonized { get; set; }  // Spread_Naturetype_Expected_Colonization_Description
+
+
+        //public List<SpeciesSpeciesInteraction> SpeciesSpeciesInteractions { get; set; } = new List<SpeciesSpeciesInteraction>(); // lagt til 11.10.2016
+        //public List<SpeciesNaturetypeInteraction> SpeciesNaturetypeInteractions { get; set; } = new List<SpeciesNaturetypeInteraction>(); // lagt til 22.12.2016
+        //public string SpeciesSpeciesInteractionsSupplementaryInformation { get; set; }
+
+        //// - H kriteriet
+        //public List<SpeciesSpeciesInteraction> GeneticTransferDocumented { get; set; } = new List<SpeciesSpeciesInteraction>(); // lagt til 12.09.2016
+        //public List<HostParasiteInteraction> HostParasiteInformations { get; set; } = new List<HostParasiteInteraction>(); // lagt til 09.09.2016
+
+        public List<string> RiskAssessmentThreatenedNatureTypes { get; set; } = new List<string>(); // 09.01.2017  // Threatened_Nature_Types
+        // public string Threatened_Nature_Types_Affected_Documentation  { get; set; }             // ************ intern informasjon *************
+        public bool? RiskAssessmentThreatenedNatureTypesDomesticObserved { get; set; }  // Threatened_Nature_Types_Affected_Domestic_Observed
+        public bool? RiskAssessmentThreatenedNatureTypesDomesticDocumented { get; set; }  // Threatened_Nature_Types_Affected_Domestic_Documented
+        public bool? RiskAssessmentThreatenedNatureTypesForeignDocumented { get; set; }  // Threatened_Nature_Types_Affected_Foreign_Documented
+        public string RiskAssessmentThreatenedNatureTypesAffectedDomesticDescription { get; set; }    //  Threatened_Nature_Types_Affected_Domestic_Description  ????????????
+        public string RiskAssessmentThreatenedNatureTypesAffectedAbroadDescription { get; set; } = "";   //  lagt til 15.11.2016
+
+        // -- (D) potensiale for å endre én eller flere øvrige naturtyper
+        public List<string> RiskAssessmentCommonNatureTypes { get; set; } = new List<string>(); // 09.01.2017  // Common_Nature_Types
+        //public string Common_Nature_Types_Affected_Documentation { get; set; }               //intern informasjon
+
+        public List<string> RiskAssessmentNaturetype2018 { get; set; } = new List<string>();
+        public List<string> RiskAssessmentNaturetypeNIN2 { get; set; } = new List<string>();
+
+        public List<string> RiskAssessmentBackgroundC { get; set; } = new List<string>();
+
+        public List<string> RiskAssessmentBackgroundF { get; set; } = new List<string>();
+
+        public List<string> RiskAssessmentBackgroundG { get; set; } = new List<string>();
+        public List<string> RiskAssessmentHovedøkosystem { get; set; } = new List<string>();
+
+
+        public string RiskAssessmentNatureAffectedAbroadF { get; set; }
+
+        public string RiskAssessmentNatureAffectedAbroadG { get; set; }
+
+        public bool? RiskAssessmentCommonNatureTypesDomesticObserved { get; set; }  // Common_Nature_Types_Affected_Domestic_Observed
+        public bool? RiskAssessmentCommonNatureTypesDomesticDocumented { get; set; }  // Common_Nature_Types_Affected_Domestic_Documented
+        public bool? RiskAssessmentCommonNatureTypesForeignDocumented { get; set; }  // Common_Nature_Types_Affected_Foreign_Documented
+        public string RiskAssessmentCommonNatureTypesAffectedDomesticDescription { get; set; }         // Common_Nature_Types_Affected_Domestic_Description??????????????
+        public string RiskAssessmentCommonNatureTypesAffectedAbroadDescription { get; set; } = "";        // lagt til 15.11.2016
+
+        // -- (E) kan overføre genetisk materiale til stedegne arter
+        public string RiskAssessmentGeneticTransferDomesticDescription { get; set; }        //Genetic_Transfer_Domestic_Description intern informasjon
+        public bool? RiskAssessmentGeneticTransferDomesticObserved { get; set; }  // Genetic_Transfer_Domestic_Observed
+        public bool? RiskAssessmentGeneticTransferDomesticDocumented { get; set; }  // Genetic_Transfer_Domestic_Documented
+        public bool? RiskAssessmentGeneticTransferForeignDocumented { get; set; }  // Genetic_Transfer_Foreign_Documented
+
+        // -- (F) Kan overføre bakterier, parasitter eller virus til stedegne arter
+        public string RiskAssessmentVectorBiologicalDiseaseSpreadingDomesticDescription { get; set; }    //Vector_Biological_Disease_Spreading_Domestic_Description intern informasjon
+        public bool? RiskAssessmentBiologicalDiseaseSpreadingDomesticObserved { get; set; }  // Vector_Biological_Disease_Spreading_Domestic_Observed
+        public bool? RiskAssessmentBiologicalDiseaseSpreadingDomesticDocumented { get; set; }  // Vector_Biological_Disease_Spreading_Domestic_Documented
+        public bool? RiskAssessmentBiologicalDiseaseSpreadingForeignDocumented { get; set; }
+
+        // (5.3) Geografisk Variasjon
+        public List<string> RiskAssessmentGeographicalVariation { get; set; } = new List<string>(); // lagt til 23.09.2016
+        public string RiskAssessmentGeographicalVariationDocumentation { get; set; } // lagt til 23.09.2016
+
+        public string RiskAssessmentPossibleLowerCategory { get; set; }
+
+        // (5.4) Klimaeffekter
+        public string RiskAssessmentClimateEffectsInvationpotential { get; set; } // lagt til 23.09.2016
+        public string RiskAssessmentClimateEffectsEcoEffect { get; set; } // lagt til 23.09.2016
+        public string RiskAssessmentClimateEffectsDocumentation { get; set; } // lagt til 23.09.2016
+
+        // (5.5) Kriteriedokumentasjon
+        public string RiskAssessmentCriteriaDocumentation { get; set; }
+        public string RiskAssessmentCriteriaDocumentationSpeciesStatus { get; set; }
+        public string RiskAssessmentCriteriaDocumentationDomesticSpread { get; set; }
+        public string RiskAssessmentCriteriaDocumentationMigrationPathways { get; set; }
+        public string RiskAssessmentCriteriaDocumentationInvationPotential { get; set; }
+        public string RiskAssessmentCriteriaDocumentationEcoEffect { get; set; }
+
+        #endregion
+
+
+
         // (3.1) Artens status{
         public string AlienSpeciesCategory2012 { get; set; } // added 10.01.2017
         public string DoorKnockerDescription { get; set; } // fab: Door_Knocker_Description
@@ -272,9 +736,9 @@ namespace Prod.Api.Helpers
         // (3.5) Spredningshistorikk
         //public List<SpreadHistory> SpreadHistory { get; set; } = new List<SpreadHistory>();
 
-        //[DisplayName("Fremtidig spredningsprognose i Norge, inkl. potensielt utbredelsesområde, antatte kritiske parametre for arten, og forventede endringer i disse:")] // 
+        //[Name("Fremtidig spredningsprognose i Norge, inkl. potensielt utbredelsesområde, antatte kritiske parametre for arten, og forventede endringer i disse:")] // 
         public string SpreadHistoryDomesticDocumentation { get; set; } // fab: SpreadHistoryDomesticDocumentation
-        //[DisplayName("Detaljinformasjon for Naturtyper:")] // 
+        //[Name("Detaljinformasjon for Naturtyper:")] // 
         public string SpreadHistoryForeignDocumentation { get; set; } // fab: SpreadHistoryForeignDocumentation
 
         //public bool? FutureDistributionChangeExpected { get; set; } // fab: Future_Distribution_Change_Expected // ikke i bruk i 2012

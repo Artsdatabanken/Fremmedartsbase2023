@@ -1243,9 +1243,9 @@ public partial class FA4 // (3.2) Artsegenskaper
         //// ----------------------------------------------------
 
 
-        public string natureAffectedAbroadF { get; set; }
+        public string NatureAffectedAbroadF { get; set; }
 
-        public string natureAffectedAbroadG { get; set; }
+        public string NatureAffectedAbroadG { get; set; }
 
         public bool? CommonNatureTypesDomesticObserved { get; set; }  // Common_Nature_Types_Affected_Domestic_Observed
         public bool? CommonNatureTypesDomesticDocumented { get; set; }  // Common_Nature_Types_Affected_Domestic_Documented
