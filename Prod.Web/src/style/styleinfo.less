@@ -741,6 +741,33 @@ input {
   color: #BBB;  
 }
 
+.connectedTaxons {
+  border: 1px solid lightgray;
+  padding: 10px;
+  div {
+    margin-left: 20px;
+    input {
+      margin-left: 10px;
+    }
+  }
+
+  .speciesSearchItem {
+    margin-left: 0;
+    border-radius: 0;
+  }
+
+  .speciesNewItem {
+    width: 350px;
+    margin-left: 30px;
+    padding: 5px;
+  }
+}
+
+.speciesSearchList {
+  z-index: 100;
+  //margin-left: 20px;
+}
+
 .col-md-6 > div > .speciesSearchList {
   z-index: 3001;
   width: 100%;
@@ -770,10 +797,10 @@ input {
 }
 
 .speciesNewItem:hover {
-    background-color: #2098d1;
+    background-color: #969696;
     color: white;
     cursor: text;
-    padding: 10px;
+    //padding: 5px;
 }
 
 .rlCategory {

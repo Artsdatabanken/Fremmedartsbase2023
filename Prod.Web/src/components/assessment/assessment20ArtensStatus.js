@@ -156,7 +156,7 @@ checkStatus = (production) => {
                                 />
                         
                         { assessment.connectedToAnotherString == "yes" || assessment.connectedToAnother == true ?
-                        <div style={{border: '1px solid lightgray', padding: '10px'}}>
+                        <div className={"connectedTaxons"}>
                            {assessment.notApplicableCategory == "taxonIsEvaluatedInHigherRank" && 
                             // transfer "notApplicableDescription" from FAB3
                             <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/>                             
@@ -164,7 +164,7 @@ checkStatus = (production) => {
                             <Xcomp.Radio value={"Connected"} observableValue={[assessment, "connected"]} label={labels.SpeciesStatus.assessedWithAnotherTaxon}/>
                             {assessment.connected == "Connected" && 
 
-                            <div style={{position: 'relative', marginLeft: '20px'}}> <p style={{marginLeft: '30px', marginBottom: '10px'}}>{labels.SpeciesStatus.enterTaxonName}</p>
+                            <div style={{position: 'relative'}}> <p style={{marginLeft: '30px', marginBottom: '10px'}}>{labels.SpeciesStatus.enterTaxonName}</p>
                                 {newTaxon.scientificName.length > 0 ?
                                 <div 
                                     className="speciesNewItem"
