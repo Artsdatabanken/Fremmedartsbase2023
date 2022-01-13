@@ -367,7 +367,24 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesBest, opt => opt.Ignore())
                     .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesLow, opt => opt.Ignore())
                     .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypesHigh, opt => opt.Ignore())
-                    ;
+                    
+                    .ForMember(dest => dest.YearFirstIndoors, opt => opt.Ignore())
+                    .ForMember(dest => dest.YearFirstIndoorsInsecure, opt => opt.Ignore())
+                    .ForMember(dest => dest.YearFirstReproductionIndoors, opt => opt.Ignore())
+                    .ForMember(dest => dest.YearFirstReproductionIndoorsInsecure, opt => opt.Ignore())
+                    .ForMember(dest => dest.YearFirstProductionOutdoors, opt => opt.Ignore())
+                    .ForMember(dest => dest.YearFirstProductionOutdoorsInsecure, opt => opt.Ignore())
+                    .ForMember(dest => dest.YearFirstReproductionOutdoors, opt => opt.Ignore())
+                    .ForMember(dest => dest.YearFirstReproductionOutdoorsInsecure, opt => opt.Ignore())
+                    .ForMember(dest => dest.YearFirstEstablishmentProductionArea, opt => opt.Ignore())
+                    .ForMember(dest => dest.YearFirstEstablishmentProductionAreaInsecure, opt => opt.Ignore())
+                    .ForMember(dest => dest.YearFirstNature, opt => opt.Ignore())
+                    .ForMember(dest => dest.YearFirstNatureInsecure, opt => opt.Ignore())
+                    .ForMember(dest => dest.YearFirstReproductionNature, opt => opt.Ignore())
+                    .ForMember(dest => dest.YearFirstReproductionNatureInsecure, opt => opt.Ignore())
+                    .ForMember(dest => dest.YearFirstEstablishedNature, opt => opt.Ignore())
+                    .ForMember(dest => dest.YearFirstEstablishedNatureInsecure, opt => opt.Ignore())
+                ;
                 //.ForMember(dest => dest., opt => opt.MapFrom(src => src.))
 
 
@@ -669,6 +686,13 @@ namespace SwissKnife.Database
                                         :
                                         dest.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes.Value >= 5 ? 5 : 0;
 
+                        // issue #346
+                        if (!string.IsNullOrWhiteSpace(src.ObservedAndEstablishedStatusInCountry.Indoor.ObservedInCountry.Time))
+                        {
+                            var riskAssessmentYearFirstIndoors = int.Parse(src.ObservedAndEstablishedStatusInCountry.Indoor.ObservedInCountry.Time);
+                            dest.RiskAssessment.YearFirstIndoors = riskAssessmentYearFirstIndoors;
+                        }
+                        
                     });
 
                 // - slik mapping fungerer ikke - da de blir kallt via convention - og det er ingen tilfeller der den har behov for å mappe fra FA3Legacy til Prod.Domain.RiskAssessment - koden blir ikke kallt
@@ -995,6 +1019,24 @@ namespace SwissKnife.Database
                 exAssessment.RiskAssessment.GeneticTransferDocumented = newAssesment.RiskAssessment.GeneticTransferDocumented;
 
                 exAssessment.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes = newAssesment.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes;
+
+                exAssessment.RiskAssessment.YearFirstIndoors = 1;
+                exAssessment.RiskAssessment.YearFirstIndoorsInsecure = false;
+                exAssessment.RiskAssessment.YearFirstReproductionIndoors = 1;
+                exAssessment.RiskAssessment.YearFirstReproductionIndoorsInsecure = false;
+                exAssessment.RiskAssessment.YearFirstProductionOutdoors = 1;
+                exAssessment.RiskAssessment.YearFirstProductionOutdoorsInsecure = false;
+                exAssessment.RiskAssessment.YearFirstReproductionOutdoors = 1;
+                exAssessment.RiskAssessment.YearFirstReproductionOutdoorsInsecure = false;
+                exAssessment.RiskAssessment.YearFirstEstablishmentProductionArea = 1;
+                exAssessment.RiskAssessment.YearFirstEstablishmentProductionAreaInsecure = false;
+                exAssessment.RiskAssessment.YearFirstNature = 1;
+                exAssessment.RiskAssessment.YearFirstNatureInsecure = false;
+                exAssessment.RiskAssessment.YearFirstReproductionNature = 1;
+                exAssessment.RiskAssessment.YearFirstReproductionNatureInsecure = false;
+                exAssessment.RiskAssessment.YearFirstEstablishedNature = 1;
+                exAssessment.RiskAssessment.YearFirstEstablishedNatureInsecure = false;
+
 
                 if (exAssessment.ExpertGroup == "Sopper")
                 {
