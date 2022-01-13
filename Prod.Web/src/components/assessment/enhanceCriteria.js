@@ -435,7 +435,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         get medianLifetime() {
             const k = r.ametodkey
             console.log("medianLifetime methodkey: " + k)
-            const result = k.startsWith("A1") ?
+            const result = (k === "A1a1" || k === "A1b1") ?
                 r.ascore === 0 ? 3
                 : r.ascore === 1 ? 25
                 : r.ascore === 2 ? 200
