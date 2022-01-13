@@ -669,11 +669,6 @@ namespace SwissKnife.Database
                                         :
                                         dest.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes.Value >= 5 ? 5 : 0;
 
-                        if (dest.ExpertGroup == "Sopper" && dest.TaxonHierarcy.ToLowerInvariant().StartsWith("chromista"))
-                        {
-                            dest.ExpertGroup = "Kromister";
-                        }
-                        
                     });
 
                 // - slik mapping fungerer ikke - da de blir kallt via convention - og det er ingen tilfeller der den har behov for å mappe fra FA3Legacy til Prod.Domain.RiskAssessment - koden blir ikke kallt
@@ -1001,8 +996,15 @@ namespace SwissKnife.Database
 
                 exAssessment.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes = newAssesment.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes;
 
-                exAssessment.ExpertGroup = newAssesment.ExpertGroup;
+                if (exAssessment.ExpertGroup == "Sopper")
+                {
+                    if (exAssessment.TaxonHierarcy.ToLowerInvariant().StartsWith("chromista"))
+                    {
 
+                        exAssessment.ExpertGroup = "Kromister";
+                    }
+                }
+                
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (comparisonResult.AreEqual == false)
                 {
