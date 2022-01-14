@@ -513,14 +513,16 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 
         get bhigh() {
             const k = r.bmetodkey
-            return k === "B2a" ?
-                criterionHigh(getCriterion(riskAssessment, 0, "B"))
-            : r.expansionUpperQ >= 500 ? min(3, r.bscore + 1)
-            : r.expansionUpperQ >= 160 ? min(2, r.bscore + 1)
-            : r.expansionUpperQ >= 50 ? 1
-            : r.expansionUpperQ < 50 ? 0
-            : 1 // ?
-        },
+            const result = k === "B2a"
+                ? mcriterionHigh(getCriterion(riskAssessment, 0, "B"))
+                : r.expansionUpperQ >= 500 ? min(3, r.bscore + 1)
+                : r.expansionUpperQ >= 160 ? min(2, r.bscore + 1)
+                : r.expansionUpperQ >= 50 ? 1
+                : r.expansionUpperQ < 50 ? 0
+                : 1 // ?
+                console.log("#bhigh: " + r.bmetodkey + " expansionUpperQ: " + r.expansionUpperQ + " result: " + result)
+                return result
+            },
         get bDisabledUncertaintyValues() {
             console.log("uncarr B2a bDisabledUncertaintyValues " + r.bmetodkey)
             // return uncertaintyArray(r.blow, r.bhigh)
@@ -1280,7 +1282,8 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
         autorun(() => {
             const maxDistanecFromValue = 1
             const value = crit.value
-            console.log("uncarr crit value: " + value)
+            console.log("#¤#uncarr crit value: " + value)
+
             let ud
             let uv
             if (crit.criteriaLetter === "A" &&
@@ -1293,7 +1296,6 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                     }
                 }
             } else if (crit.criteriaLetter === "A" && riskAssessment.ametodkey === "A3") {
-                // ud = riskAssessment.aDisabledUncertaintyValues
                 ud = [0,1,2,3]
                 uv = []
                 for (var i = 0; i <= 3; i++) {
@@ -1301,6 +1303,16 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                         uv.push(i)
                     }
                 }
+            } else if (crit.criteriaLetter === "B" && riskAssessment.bmetodkey === "B1") {
+                // console.log("#¤#bhigh set uv")
+                ud = [0,1,2,3]
+                uv = []
+                for (var i = 0; i <= 3; i++) {
+                    if(i >= riskAssessment.blow && i <= riskAssessment.bhigh) {
+                        uv.push(i)
+                    }
+                }
+                // console.log("#¤#bhigh set uv "+ JSON.stringify(uv))
             } else if (crit.criteriaLetter === "B" && riskAssessment.ametodkey === "B2a") {
                 ud = riskAssessment.bDisabledUncertaintyValues
                 uv = [value]
@@ -1324,7 +1336,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                         // NB! Careless changes to the application may cause this code to run multiple times during page load
                         // Take care this does not happen! (uncomment the trace() function to trace the problem if necassary)
 
-                        console.log("#uncertainty nextrun: " + crit.criteriaLetter + " : " + crit.value)
+                        console.log("#¤#uncertainty nextrun: " + crit.criteriaLetter + " : " + crit.value)
 
                         crit.uncertaintyValues.replace(uv)
                     } else {
@@ -1335,7 +1347,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                         // This functionality is also dependent on a well working "firstrun"; se comment above
                         // e.g. the criteria must not have a default value that is updated from db after the first run!
 
-                        console.log("#uncertainty firstrun: " + crit.criteriaLetter + " : " + crit.value + " - " + JSON.stringify(crit.uncertaintyValues))
+                        console.log("#¤#uncertainty firstrun: " + crit.criteriaLetter + " : " + crit.value + " - " + JSON.stringify(crit.uncertaintyValues))
                         if (crit.uncertaintyValues.indexOf(value) <= -1 ) {
                             // console.log("rectify uncertainties")
                             crit.uncertaintyValues.replace(uv)
