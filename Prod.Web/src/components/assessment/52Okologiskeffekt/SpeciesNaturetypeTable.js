@@ -17,7 +17,7 @@ const SpeciesNaturetypeTable = observer((props) =>
     const reg = /^\d+$/;
     const findNTName = (nt) => {
         var name = "";
-        const id = nt.niNCode
+        var id = nt.niNCode
         if (id) {
 
             if(!reg.test(id)){
