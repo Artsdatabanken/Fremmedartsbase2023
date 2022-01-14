@@ -68,6 +68,7 @@ namespace SwissKnife.Database
                 cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.SpeciesNaturetypeInteraction,
                         Prod.Domain.RiskAssessment.SpeciesNaturetypeInteraction>()
                     .ForMember(dest => dest.Scale, opt => opt.Ignore())
+                    .ForMember(dest => dest.Name, opt => opt.Ignore())
                     .ForMember(dest => dest.InteractionTypes, opt => opt.Ignore())
                     .ForMember(dest => dest.BasisOfAssessment, opt => opt.Ignore())
                     .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.Ignore());
@@ -226,6 +227,7 @@ namespace SwissKnife.Database
                 cfg.CreateMap<Prod.Domain.Legacy.RegionalPresenceWithPotential, Prod.Domain.RegionalPresenceWithPotential>();
                 cfg.CreateMap<FA3Legacy.ImpactedNatureType, FA4.ImpactedNatureType>()
                     .ForMember(dest => dest.Background, opt => opt.Ignore())
+                    .ForMember(dest => dest.Name, opt => opt.Ignore())
                     .ForMember(dest => dest.NatureTypeArea, opt => opt.Ignore());
                 cfg.CreateMap<FA3Legacy.TimeAndPlace, FA4.TimeAndPlace>();
                 cfg.CreateMap<FA3Legacy.ObservedAndEstablished, FA4.ObservedAndEstablished>();
