@@ -66,11 +66,11 @@ checkStatus = (production) => {
  
 
     render() {
-        const {appState:{assessment}, appState, newTaxon, addTaxon} = this.props;
+        const {appState:{assessment}, appState, newTaxon} = this.props;
        // const vurdering = assessment
         const labels = appState.codeLabels 
         // console.log("labels" + JSON.stringify(labels.FirstObservation))
-
+        
         const codes = appState.koder
         const standardPeriods = [
             nbsp,
@@ -136,7 +136,7 @@ checkStatus = (production) => {
                                 <div 
                                     className="speciesNewItem"
                                     onClick={action(() => {
-                                        newTaxon.taxonId = "";
+                                       newTaxon.taxonId = "";
                                         newTaxon.taxonRank = "";
                                         newTaxon.scientificName = "";
                                         newTaxon.scientificNameId = "";
@@ -144,7 +144,9 @@ checkStatus = (production) => {
                                         newTaxon.vernacularName = "";
                                         newTaxon.redListCategory = "";
                                         newTaxon.taxonSearchResult.replace([]); 
-                                        newTaxon.taxonSearchString = "" }) 
+                                        newTaxon.taxonSearchString = "";                                        
+                                        }) 
+                                        
                                     }
                                 >
                                     <div className={"rlCategory " + newTaxon.redListCategory}>{newTaxon.RedListCategory}</div>
@@ -167,7 +169,9 @@ checkStatus = (production) => {
 
                                             newTaxon.redListCategory = item.rlCategory;
                                             newTaxon.taxonSearchResult.replace([]); 
-                                            newTaxon.taxonSearchString = "" })} 
+                                            newTaxon.taxonSearchString = "";                                            
+                                            assessment.connectedTaxon = item
+                                         })} 
                                             key={item.scientificName}
                                         >
                                             <div className="speciesSearchItem">
@@ -233,7 +237,8 @@ checkStatus = (production) => {
 
                                             newTaxon.redListCategory = item.rlCategory;
                                             newTaxon.taxonSearchResult.replace([]); 
-                                            newTaxon.taxonSearchString = "" })} 
+                                            newTaxon.taxonSearchString = "";
+                                            assessment.connectedTaxon = item})} 
                                             key={item.scientificName}
                                         >
                                             <div className="speciesSearchItem">

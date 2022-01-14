@@ -97,7 +97,7 @@ export class HabitatTableRow extends React.Component {
                               <ul className="panel list-unstyled">
                               {taxon.taxonSearchResult.map(item =>
                                   <li 
-                                      onClick={() => selectTaxonSearchState(nt.taxon, item)}
+                                      onClick={action(() => selectTaxonSearchState(nt.taxon, item), nt.taxon = item)}
                                       key={item.scientificName}
                                   >
                                       <div className="speciesSearchItem">

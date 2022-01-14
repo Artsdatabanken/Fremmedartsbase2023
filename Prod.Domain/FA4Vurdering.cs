@@ -45,7 +45,30 @@ namespace Prod.Domain
         public string TaxonRank { get; set; }   // "Species" or "SupSpecies"
         public string Ekspertgruppe { get; set; }
     }
-    public class TrackInfo
+
+    public class CTaxon
+    {
+        public string Id { get; set; }
+        public int taxonID { get; set; }
+        public string scientificName { get; set; }
+        public string scientificNameId { get; set; }
+
+        public string scientificNameAuthor { get; set; }
+
+        public string vernacularName { get; set; }
+
+        public string redListCategory { get; set; }
+
+        public List<string> taxonSearchResult { get; set; }
+
+        public string taxonSearchString { get; set; }
+
+        public string taxonRank { get; set; }
+
+    }
+
+
+        public class TrackInfo
     {
         public string VurderingsId2015 { get; set; }
         public int OrgVitenskapeligNavnId { get; set; }
@@ -168,6 +191,8 @@ namespace Prod.Domain
         public bool? ConnectedToAnother { get; set; }
 
         public string Connected { get; set; }
+
+        public CTaxon ConnectedTaxon { get; set; }
 
         public string SpeciesStatus { get; set; }
 
@@ -580,7 +605,23 @@ public partial class FA4 // (3.2) Artsegenskaper
         public int[] InvationPotentialUncertaintyLevels { get; set; }
 
 
-
+        public int? YearFirstIndoors { get; set; }
+        public bool YearFirstIndoorsInsecure { get; set; }
+        public int? YearFirstReproductionIndoors { get; set; }
+        public bool YearFirstReproductionIndoorsInsecure { get; set; }
+        public int? YearFirstProductionOutdoors { get; set; }
+        public bool YearFirstProductionOutdoorsInsecure { get; set; }
+        public int? YearFirstReproductionOutdoors { get; set; }
+        public bool YearFirstReproductionOutdoorsInsecure { get; set; }
+        public int? YearFirstEstablishmentProductionArea { get; set; }
+        public bool YearFirstEstablishmentProductionAreaInsecure { get; set; }
+        public int? YearFirstNature { get; set; }
+        public bool YearFirstNatureInsecure { get; set; }
+        public int? YearFirstReproductionNature { get; set; }
+        public bool YearFirstReproductionNatureInsecure { get; set; }
+        public int? YearFirstEstablishedNature { get; set; }
+        public bool YearFirstEstablishedNatureInsecure { get; set; }
+        public string YearFirstDomesticObservation { get; set; }
     }
 
     public partial class RiskAssessment // (5.1+5.2) Klassifisering (Ivasjonspotensial+Økologisk effekt)
@@ -1223,9 +1264,9 @@ public partial class FA4 // (3.2) Artsegenskaper
         //// ----------------------------------------------------
 
 
-        public string natureAffectedAbroadF { get; set; }
+        public string NatureAffectedAbroadF { get; set; }
 
-        public string natureAffectedAbroadG { get; set; }
+        public string NatureAffectedAbroadG { get; set; }
 
         public bool? CommonNatureTypesDomesticObserved { get; set; }  // Common_Nature_Types_Affected_Domestic_Observed
         public bool? CommonNatureTypesDomesticDocumented { get; set; }  // Common_Nature_Types_Affected_Domestic_Documented
@@ -1400,6 +1441,8 @@ public partial class FA4 // (3.2) Artsegenskaper
             public string ColonizedArea { get; set; }
             public List<string> StateChange { get; set; } = new List<string>(); // changed datatype from string 19.12.2016
             public string AffectedArea { get; set; }
+
+            public CTaxon Taxon { get; set; }
         }
 
 
