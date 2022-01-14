@@ -99,6 +99,7 @@ export default class EkspandertSpredningsrad extends React.Component {
                         <td><Spredningskart
                                                 map={this.props.fabModel.evaluationContexts.map}
                                                 showLegend
+                                                width={"150px"}
                                                 fabModel={fabModel}
                                                 states={[
                                                 {
