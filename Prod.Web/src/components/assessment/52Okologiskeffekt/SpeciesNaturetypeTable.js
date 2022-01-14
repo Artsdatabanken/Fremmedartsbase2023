@@ -10,15 +10,79 @@ const SpeciesNaturetypeTable = observer((props) =>
 {
     const labels = props.labels
     const disabled = props.disabled
+    const natureTypeCodes = require('./../../../Nin2_3.json')
     var naturetypeNames = []
+    naturetypeNames.push({"Value": "", "Text": ""})
+    // regular expression to check that the id does not contain only numbers
+    const reg = /^\d+$/;
+    const findNTName = (nt) => {
+        var name = "";
+        const id = nt.niNCode
+        if (id) {
+
+            if(!reg.test(id)){
+                if (id.startsWith("NA")) {
+                    // taking only the last part of the code
+                    id = id.substring(3)
+
+                }
+                if (id.length == 1) {
+                    name = natureTypeCodes.Children.find(code => code.Id.indexOf(id) > -1).Text
+                } else if (id.length == 2) {
+                    // search for the name on the second level of nature type groups     
+                    
+                    var firstSubLevel = natureTypeCodes.Children 
+                   
+                    for (var i = 0; i < firstSubLevel.length; i++) {
+                        if (firstSubLevel[i].Id.indexOf(id.substring(0,1)) > -1) {
+                            
+                            name = firstSubLevel[i].Children.find(code => code.Id.indexOf(id) > -1).Text                            
+                        }
+                    }
+                } else if (id.length > 2) {
+                    var firstPart = id.split("-")[0]
+                    // search for the name on the third level of nature type groups                
+                    var firstSubLevel = natureTypeCodes.Children
+                    for (var i = 0; i < firstSubLevel.length; i++) {
+                       
+                        if (firstSubLevel[i].Id.indexOf(id.substring(0,1)) > -1) {
+                            var secondSubLevel = firstSubLevel[i].Children
+                             
+                            for (var j = 0; j < secondSubLevel.length; j++) {
+                                
+                                if (secondSubLevel[j].Id == firstPart || secondSubLevel[j].Id == "NA "+ firstPart) {
+                                    var thirdSubLevel = secondSubLevel[j].Children
+                                    name = thirdSubLevel.find(code => code.Id.indexOf(id) > -1).Text
+                                }
+                            }                                           
+                        }
+                    }
+                }
+
+            } else {
+                
+                for (var i = 0; i < redListCodes.Children.length; i++) {
+                    for (var j = 0; j < redListCodes.Children[i].Children.length; j++) {
+                        if (redListCodes.Children[i].Children[j].Id == id) {
+                            name = redListCodes.Children[i].Children[j].Text
+                        }
+                    }
+                }
+            }
+        }
+        nt.name = name      
+        return name
+    } 
+
     if (props.natureTypes && props.natureTypes.length > 0) {
         
         for (var i = 0; i < props.natureTypes.length; i++){
-            naturetypeNames.push({value: i, text :props.natureTypes[i].niNCode});
+            naturetypeNames.push({"Value": props.natureTypes[i].niNCode, "Text": findNTName(props.natureTypes[i])});
         }
         
     }
-    console.log(naturetypeNames)
+
+    
     return <table className="table ecologicalEffect">
         
 
@@ -105,6 +169,7 @@ const SpeciesNaturetypeTable = observer((props) =>
                 </Xcomp.Button></td>
             </tr>
             )}
+            {/* new row for adding nature types shows only if there are any nature types chosen in the respective tab */}
             {naturetypeNames && naturetypeNames.length > 0 && <tr className="newRow">
                 <td>
               <Xcomp.StringEnum 
@@ -165,7 +230,7 @@ const SpeciesNaturetypeTable = observer((props) =>
                     <div>
                         <Xcomp.Button primary xs 
                             onClick={props.addNewItem}
-                            disabled={!props.newItem.niNCode}
+                            disabled={props.newItem.niNCode == ""}
                         >{labels.General.add}</Xcomp.Button>
                     </div>
                 </td>

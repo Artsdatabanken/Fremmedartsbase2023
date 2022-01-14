@@ -238,7 +238,16 @@ checkStatus = (production) => {
                                             newTaxon.redListCategory = item.rlCategory;
                                             newTaxon.taxonSearchResult.replace([]); 
                                             newTaxon.taxonSearchString = "";
-                                            assessment.connectedTaxon = item})} 
+                                            assessment.connectedTaxon.taxonId = item.taxonId;
+                                            assessment.connectedTaxon.taxonRank = item.taxonRank;
+                                            assessment.connectedTaxon.scientificName = item.scientificName;
+                                            assessment.connectedTaxon.scientificNameId = item.scientificNameId;
+                                            assessment.connectedTaxon.scientificNameAuthor = item.author;
+                                            assessment.connectedTaxon.vernacularName = item.popularName;
+
+                                            newTaxon.redListCategory = item.rlCategory;
+                                            //assessment.connectedTaxon = item
+                                        })} 
                                             key={item.scientificName}
                                         >
                                             <div className="speciesSearchItem">

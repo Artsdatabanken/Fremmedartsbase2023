@@ -112,12 +112,14 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                 // // // //     : "",
                
                 niNVariation: [],
-                niNCode: assessment.impactedNatureTypes.length > 0
-                        ? assessment.impactedNatureTypes[0].niNCode 
+                niNCode
+                //: assessment.impactedNatureTypes.length > 0
+                  //  ? assessment.impactedNatureTypes[0].niNCode 
                         : "",
+                
                 naturetypes: [],
                // naturetypes: riskAssessment.vurderingAllImpactedNatureTypes,
-                
+                name: "",
                 redListCategory: "", 
                 domesticOrAbroad : "",
                 keyStoneSpecie : false, 
@@ -179,6 +181,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
             
            // newItem.niNCode = "",
             newItem.niNVariation.clear(),
+            newItem.name = ""
             newItem.redListCategory = "" 
             newItem.keyStoneSpecie = false
             //newItem.interactionType = []

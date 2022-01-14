@@ -75,8 +75,9 @@ export class NaturtypeRad extends React.Component {
         const affectedAreaLabel = (id) => codes.affectedArea.find(code => code.Value === id).Text
          // regular expression to check that the id does not contain only numbers
         const reg = /^\d+$/;
-        const findNTName = (id) => {
+        const findNTName = (nt) => {
             var name = "";
+            const id = nt.niNCode
             if (id) {
 
                 if(!reg.test(id)){
@@ -129,7 +130,7 @@ export class NaturtypeRad extends React.Component {
                     }
                 }
             }
-                      
+            nt.name = name      
             return name
         } 
 
@@ -154,7 +155,7 @@ export class NaturtypeRad extends React.Component {
             <tr>
                 <td>{isNaN(nt.niNCode) ? nt.niNCode : ""}</td>
                 {/*<td>ntlabel</td>*/}
-                <td>{nt.name ? nt.name : nt.niNCode ? findNTName(nt.niNCode) : ""}</td>
+                <td>{nt.name ? nt.name : nt.niNCode ? findNTName(nt) : ""}</td>
                {/* <td>{dominanceForrest}</td> */}
                 {showNatureTypeArea && <td>{nt.niNCode ? findNTArea(nt.niNCode) : ""}</td> }
                 {this.edit
