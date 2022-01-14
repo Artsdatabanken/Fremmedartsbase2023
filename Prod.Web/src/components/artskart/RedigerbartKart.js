@@ -96,7 +96,7 @@ const RedigerbartKart = ({
         }
         <div>
           {!showWaterAreas && (
-            <span>Fylker: <b>{beskrivFylker(countylist)}</b></span>
+            <span>Regioner: <b>{beskrivFylker(countylist)}</b></span>
           )}
           {showWaterAreas && (
             <span>Vannområde:{" "}<span><b>{beskrivWaterAreas(waterAreas)}</b></span></span>
