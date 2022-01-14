@@ -78,6 +78,9 @@ export default class EkspandertSpredningsrad extends React.Component {
         detaljer.regionsAssumed = detaljer.regions
         detaljer.regionalPresenceKnown = artskartModel.enhanceRegionalPresence(detaljer.regions)
         detaljer.regionalPresenceAssumed = artskartModel.enhanceRegionalPresence(detaljer.regionsAssumed)
+
+        /*detaljer.regionalPresenceKnown = detaljer.regions
+        detaljer.regionalPresenceAssumed = detaljer.regionsAssumed*/
     }
 }
 
@@ -108,11 +111,13 @@ export default class EkspandertSpredningsrad extends React.Component {
                                                 }, {
                                                     key: 'known',
                                                     title: labels.distributionKnown,
-                                                    values: detaljer.regionalPresenceKnown
+                                                    //values: detaljer.regionalPresenceKnown
+                                                    values: detaljer.regions
                                                 }, {
                                                     key: 'assumed',
                                                     title: labels.distributionAssumed,
-                                                    values: detaljer.regionalPresenceAssumed
+                                                    //values: detaljer.regionalPresenceAssumed
+                                                    values: detaljer.regionsAssumed
                                                 }
                                             ]}
                                             countyListLand={this.props.fabModel.koder.countyListLand}
