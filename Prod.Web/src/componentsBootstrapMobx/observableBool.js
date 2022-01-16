@@ -6,7 +6,7 @@ import {UserContext} from './components'
 
 const ObservableBool = (props) => <Observer>{() => {
     const context = UserContext.getContext()
-    const {observableValue, label, label2, stringBool, disabled, mode} = props;
+    const {observableValue, label, label2, stringBool, disabled, mode, className} = props;
     const [obj, prop] = observableValue;
     
     // eg: stringBool="True,False" (or "Yes,No...") (not for radio!)
@@ -19,7 +19,7 @@ const ObservableBool = (props) => <Observer>{() => {
 
     return (
         mode === "radio"
-        ? <div className={"radiobool"}>
+        ? <div className={className + " radiobool"}>
             <div className={"radiobooltrue"} key={"true"}>
                 <label className={props.disabled ? "disabled" : ""}>
                     <input type="radio" name={"radio " + prop} value={value}
@@ -28,7 +28,7 @@ const ObservableBool = (props) => <Observer>{() => {
                         />{labelB1}
                 </label>
             </div>
-            <div className={"radioboolfalse"} key={"false"}>
+            <div className={className + " radioboolfalse"} key={"false"}>
                 <label className={props.disabled ? "disabled" : ""}>
                     <input type="radio" name={"radio " + prop} value={value}
                         disabled={disabled}
@@ -39,7 +39,7 @@ const ObservableBool = (props) => <Observer>{() => {
           </div>
 
         : hasLabel
-        ? <div className="checkbox">
+        ? <div className={className + " checkbox"}>
                 <label>
                     <input
                         type="checkbox"

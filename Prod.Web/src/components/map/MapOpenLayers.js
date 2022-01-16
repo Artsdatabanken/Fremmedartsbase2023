@@ -146,9 +146,9 @@ const MapOpenLayers = ({
         theFeatures.forEach(theFeature => {
             // console.log('featurecoord', theFeature.getGeometry().getCoordinates());
             theWaterFeatures.forEach((theWaterFeature, j) => {
-                if (waterFeatures[j].get('unselectable') === false) {
+                if (waterFeatures[j].get('disabled') === false) {
                     const featureName = waterFeatures[j].get(fieldName);
-                    // console.log('intersect', featureName, waterFeatures[j].get('unselectable'));
+                    // console.log('intersect', featureName, waterFeatures[j].get('disabled'));
                     if (!waterIntersections.hasOwnProperty(featureName) || (waterIntersections.hasOwnProperty(featureName) && !waterIntersections[featureName].intersects)) {
                         const intersects = intersect(theWaterFeature, theFeature);
                         waterIntersections[featureName] = {
@@ -438,7 +438,9 @@ const MapOpenLayers = ({
             setLastIsWaterArea(isWaterArea);
 
             mapObject.addLayer(mapOlFunc.createWaterLayer('Vatn', isWaterArea, projection, undefined, assessmentArea, setWaterLayerNameCallback));
-            mapObject.addLayer(mapOlFunc.createWaterSelectedLayer('VatnSelected', projection));
+            mapOlFunc.createWaterSelectedLayer('VatnSelected', projection).then(l => {
+                mapObject.addLayer(l);
+            });
         }
 
         // Fit extent

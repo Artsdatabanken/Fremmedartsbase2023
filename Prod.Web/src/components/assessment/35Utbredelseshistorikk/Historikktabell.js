@@ -24,7 +24,7 @@ export default class HistorikkTabell extends React.Component {
                         <th>{labels.historyAreaOccupancy}<br />km&#178;</th>
                         <th>{labels.historyExtentOfOccurrence}<br />km&#178;</th>
                         <th>{labels.historyComment}</th>
-                        <th>{labels.historyCounty}</th>
+                        <th style={{textAlign: "center"}}>{labels.historyCounty}</th>
                         <th>&nbsp;</th>
                     </tr>
                 </thead>

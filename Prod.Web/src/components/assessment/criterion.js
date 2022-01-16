@@ -106,7 +106,7 @@ export default class Criterion extends React.Component {
                 return <div key={kode.value} className="uncertainty">      
                     <div>
                         
-                        {auto ?
+                        {/*auto ?
                             <div className={"criteriaCheck" + (radiooptional.checked ? " glyphicon glyphicon-ok" : "")}>&nbsp;</div> :
                             <>{parseInt(kode.value)+1}
                             <input                            
@@ -115,7 +115,15 @@ export default class Criterion extends React.Component {
                             onChange={onChangeRadio}
                             {...radiooptional} />
                             </>
-                        }
+                        */}
+                        <>{parseInt(kode.value)+1}
+                            <input                            
+                            value={kode.value}
+                            type="radio"
+                            onChange={onChangeRadio}
+                            {...radiooptional} />
+                            </>
+                        <div className={"criteriaCheck" + (radiooptional.checked ? " glyphicon glyphicon-ok" : "")}>&nbsp;</div>
                         <input
                         value={kode.value}
                         type="checkbox"

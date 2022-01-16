@@ -66,7 +66,7 @@ checkStatus = (production) => {
  
 
     render() {
-        const {appState:{assessment}, appState, newTaxon, addNewTaxon} = this.props;
+        const {appState:{assessment}, appState, newTaxon} = this.props;
        // const vurdering = assessment
         const labels = appState.codeLabels 
         // console.log("labels" + JSON.stringify(labels.FirstObservation))
@@ -103,7 +103,7 @@ checkStatus = (production) => {
                     <p>{labels.SpeciesStatus.unsureIfAlien} </p>
                     <Xcomp.Radio value={'true'} observableValue={[assessment, "isAlienSpeciesString"]} defaultChecked={assessment.alienSpeciesCategory == "RegionallyAlien"} label={labels.General.yes} />                    
                     { assessment.isAlienSpeciesString == 'true' && assessment.alienSpeciesCategory != "DoorKnocker" ? 
-                            <Xcomp.Bool observableValue={[assessment, "isRegionallyAlien"]} checked={assessment.alienSpeciesCategory == "RegionallyAlien"} label={labels.SpeciesStatus.regionallyAlien} /> : null }
+                            <Xcomp.Bool className={"regionallyAlien"} observableValue={[assessment, "isRegionallyAlien"]} checked={assessment.alienSpeciesCategory == "RegionallyAlien"} label={labels.SpeciesStatus.regionallyAlien} /> : null }
                     <Xcomp.Radio value={'false'} observableValue={[assessment, "isAlienSpeciesString"]} label={labels.General.no} />
                     <p>{labels.SpeciesStatus.unsureAlienDescription}</p>
                     {assessment.notApplicableCategory == "notAlienSpecie" ?
@@ -136,7 +136,7 @@ checkStatus = (production) => {
                                 <div 
                                     className="speciesNewItem"
                                     onClick={action(() => {
-                                        newTaxon.taxonId = "";
+                                       newTaxon.taxonId = "";
                                         newTaxon.taxonRank = "";
                                         newTaxon.scientificName = "";
                                         newTaxon.scientificNameId = "";
@@ -144,8 +144,9 @@ checkStatus = (production) => {
                                         newTaxon.vernacularName = "";
                                         newTaxon.redListCategory = "";
                                         newTaxon.taxonSearchResult.replace([]); 
-                                        newTaxon.taxonSearchString = ""
-                                        addNewTaxon() }) 
+                                        newTaxon.taxonSearchString = "";                                        
+                                        }) 
+                                        
                                     }
                                 >
                                     <div className={"rlCategory " + newTaxon.redListCategory}>{newTaxon.RedListCategory}</div>
@@ -168,7 +169,9 @@ checkStatus = (production) => {
 
                                             newTaxon.redListCategory = item.rlCategory;
                                             newTaxon.taxonSearchResult.replace([]); 
-                                            newTaxon.taxonSearchString = "" })} 
+                                            newTaxon.taxonSearchString = "";                                            
+                                            assessment.connectedTaxon = item
+                                         })} 
                                             key={item.scientificName}
                                         >
                                             <div className="speciesSearchItem">
@@ -234,7 +237,17 @@ checkStatus = (production) => {
 
                                             newTaxon.redListCategory = item.rlCategory;
                                             newTaxon.taxonSearchResult.replace([]); 
-                                            newTaxon.taxonSearchString = "" })} 
+                                            newTaxon.taxonSearchString = "";
+                                            assessment.connectedTaxon.taxonId = item.taxonId;
+                                            assessment.connectedTaxon.taxonRank = item.taxonRank;
+                                            assessment.connectedTaxon.scientificName = item.scientificName;
+                                            assessment.connectedTaxon.scientificNameId = item.scientificNameId;
+                                            assessment.connectedTaxon.scientificNameAuthor = item.author;
+                                            assessment.connectedTaxon.vernacularName = item.popularName;
+
+                                            newTaxon.redListCategory = item.rlCategory;
+                                            //assessment.connectedTaxon = item
+                                        })} 
                                             key={item.scientificName}
                                         >
                                             <div className="speciesSearchItem">
