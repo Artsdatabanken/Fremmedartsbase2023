@@ -26,7 +26,7 @@ namespace SwissKnife
         }
 
         [Command("maintenance", Description = "Run tasks for maintaining database")]
-        [Subcommand(typeof(TaxonomyWash), typeof(ImportNames), typeof(PatchMigration))]
+        [Subcommand(typeof(TaxonomyWash), typeof(ImportNames), typeof(ImportHSData), typeof(PatchMigration))]
         [HelpOption("--help")]
         internal class Maintenance {
             private int OnExecute(IConsole console)
@@ -65,6 +65,21 @@ namespace SwissKnife
                 private void OnExecute(IConsole console)
                 {
                     Database.MaintenanceService.RunImportNewAssessments(new Prod.Data.EFCore.SqlServerProdDbContext(ConnectionString), SpeciesGroup, InputFolder);
+                }
+            }
+            [Command("importhsdata", Description = "Import and create assessments from names with data from horisontscanning")]
+            internal class ImportHSData : MaintananceBase
+            {
+                //[Option("--speciesgroup", Description = "SpeciesGroup to put assessments in")]
+                //[Required]
+                //public string SpeciesGroup { get; }
+
+                [Option("--csvfile", Description = "CvsFile with path")]
+                [Required]
+                public string InputFolder { get; }
+                private void OnExecute(IConsole console)
+                {
+                    Database.MaintenanceService.RunImportHSAssessments(new Prod.Data.EFCore.SqlServerProdDbContext(ConnectionString), InputFolder);
                 }
             }
 

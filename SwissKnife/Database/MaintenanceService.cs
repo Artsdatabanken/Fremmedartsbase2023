@@ -322,6 +322,21 @@ namespace SwissKnife.Database
             public int ScientificNameId { get; set; }
             public string ScientificName { get; set; }
             public string ScientificNameAuthor { get; set; }
+
+        }
+        public class VascularPlantsImportFormat
+        {
+            public string ExpertGroup { get; set; }
+            public int EvaluatedScientificNameId { get; set; }
+            public string EvaluatedScientificName { get; set; }
+            public string EvaluatedScientificNameAuthor { get; set; }
+            public string DoorknockerType { get; set; }
+            public string HorizonEstablismentPotential { get; set; }
+            public string HorizonEstablismentPotentialDescription { get; set; }
+            public string HorizonEcologicalEffect { get; set; }
+            public string HorizonEcologicalEffectDescription { get; set; }
+            public string AssessedBy { get; set; }
+            public string Code { get; set; }
         }
 
         public static void RunImportNewAssessments(SqlServerProdDbContext _database, string speciesGroup,
@@ -393,6 +408,117 @@ namespace SwissKnife.Database
                 }
 
                 if (datetime>DateTime.MinValue)
+                {
+                    var timestamp = _database.TimeStamp.Single();
+                    timestamp.DateTimeUpdated = datetime;
+                    _database.SaveChanges();
+                }
+            }
+        }
+        public static void RunImportHSAssessments(SqlServerProdDbContext _database, string inputFolder)
+        {
+            var existing = _database.Assessments.Where(x => x.IsDeleted == false).Select(x => new { x.Expertgroup, x.ScientificNameId }).ToArray();
+
+            var theCsvConfiguration = new CsvConfiguration(new CultureInfo("nb-NO"))
+            {
+                Delimiter = ";",
+                Encoding = Encoding.UTF8
+            };
+            var taxonService = new SwissKnife.Database.TaksonService();
+            var datetime = DateTime.MinValue;
+            using (var reader = new StreamReader(inputFolder))
+            using (var csv = new CsvReader(reader, theCsvConfiguration))
+            {
+                var records = csv.GetRecords<VascularPlantsImportFormat>();
+                foreach (var importFormat in records)
+                {
+                    if (importFormat.EvaluatedScientificNameAuthor == "null") importFormat.EvaluatedScientificNameAuthor = null;
+                    Console.WriteLine(
+                        $"{importFormat.EvaluatedScientificNameId} {importFormat.EvaluatedScientificName} {importFormat.EvaluatedScientificNameAuthor}");
+                    if (importFormat.Code == "S: H")
+                    {
+                        Console.WriteLine(
+                            $"Ane ordner denne - S: H");
+                        continue;
+                    }
+
+                    var horisontScanning = importFormat.Code != "S: R";
+                    var user = _database.Users
+                        .Single(x => x.Email == importFormat.AssessedBy);
+                    var fa4 = CreateNewAssessment(importFormat.ExpertGroup, user, importFormat.EvaluatedScientificNameId, horisontScanning, taxonService);
+                    fa4.EvaluationStatus = "inprogress";
+                    fa4.LastUpdatedAt = DateTime.Now;
+                    
+                    switch (importFormat.DoorknockerType)
+                        {
+                            case "canNotEstablishWithin50years":
+                                fa4.NotApplicableCategory = "canNotEstablishWithin50years";
+                                break;
+                            case "NewPotentialDoorknocker":
+                                break;
+                            case "NotPresentInRegion":
+                                fa4.NotApplicableCategory = "NotPresentInRegion";
+                                break;
+                            case "traditionalProductionSpecie":
+                                fa4.NotApplicableCategory = "traditionalProductionSpecie";
+                                break;
+                            default:
+                                throw new NotImplementedException();
+                        }
+                    if (horisontScanning)
+                    {
+                        if (!string.IsNullOrWhiteSpace(importFormat.HorizonEstablismentPotential)) fa4.HorizonEstablismentPotential = importFormat.HorizonEstablismentPotential;
+                        if (!string.IsNullOrWhiteSpace(importFormat.HorizonEstablismentPotentialDescription)) fa4.HorizonEstablismentPotentialDescription = importFormat.HorizonEstablismentPotentialDescription;
+                        if (!string.IsNullOrWhiteSpace(importFormat.HorizonEcologicalEffect)) fa4.HorizonEcologicalEffect = importFormat.HorizonEcologicalEffect;
+                        if (!string.IsNullOrWhiteSpace(importFormat.HorizonEcologicalEffectDescription)) fa4.HorizonEcologicalEffectDescription = importFormat.HorizonEcologicalEffectDescription;
+                    }
+                    var doc = System.Text.Json.JsonSerializer.Serialize<FA4>(fa4);
+
+                    var prosessContext = new ProsessContext { assessment = fa4, changes = false, DbAssessment = null, dbcontext = _database, historyWorthyChanges = false };
+
+                    var result = prosessContext
+                        //.BatchSetAssessmentsToResult()
+                        .CheckTaxonomyForChanges(taxonService, true);
+                    var assessment = new Assessment
+                    {
+                        Doc = doc,
+                        LastUpdatedAt = fa4.LastUpdatedAt,
+                        LastUpdatedByUserId = user.Id,
+                        ScientificNameId = fa4.EvaluatedScientificNameId.Value,
+                        ChangedAt = fa4.LastUpdatedAt
+                    };
+                    if (fa4.EvaluatedScientificNameId != importFormat.EvaluatedScientificNameId || fa4.EvaluatedScientificName != importFormat.EvaluatedScientificName || (fa4.EvaluatedScientificNameAuthor == null ? string.Empty : fa4.EvaluatedScientificNameAuthor.ToLowerInvariant()) != (importFormat.EvaluatedScientificNameAuthor == null ? string.Empty : importFormat.EvaluatedScientificNameAuthor.ToLowerInvariant()))
+                    {
+                        Console.WriteLine(
+                            $" ERROR - not imported {fa4.EvaluatedScientificNameId} <> {importFormat.EvaluatedScientificNameId}  {fa4.EvaluatedScientificName} {fa4.EvaluatedScientificNameAuthor} <> {importFormat.EvaluatedScientificNameAuthor}");
+                    }
+                    else
+                    {
+                        if (existing.Any(x => x.ScientificNameId == fa4.EvaluatedScientificNameId && x.Expertgroup == fa4.ExpertGroup))
+                        {
+                            Console.WriteLine(
+                                $" Warn Existing Assessment {fa4.EvaluatedScientificNameId} {fa4.EvaluatedScientificName} {fa4.EvaluatedScientificNameAuthor}");
+                        }
+                        else
+                        {
+                            var exst = existing.FirstOrDefault(x => x.ScientificNameId == fa4.EvaluatedScientificNameId);
+                            if (exst != null)
+                            {
+                                Console.WriteLine(
+                                    $" There is an existing Assessment for this name in expertgroup {exst.Expertgroup} {fa4.EvaluatedScientificNameId} {fa4.EvaluatedScientificName} {fa4.EvaluatedScientificNameAuthor}");
+                            }
+                            else
+                            {
+                                _database.Assessments.Add(assessment);
+                                datetime = assessment.LastUpdatedAt;
+                                _database.SaveChanges();
+                            }
+                        }
+                    }
+
+                }
+
+                if (datetime > DateTime.MinValue)
                 {
                     var timestamp = _database.TimeStamp.Single();
                     timestamp.DateTimeUpdated = datetime;

@@ -97,3 +97,9 @@ Commands:
   patchmigration  Patch migrated assessments from original json dump
   taxonomywash    Check and update taxonomy on assessments
 ```
+
+
+### import av horisontscannende karplanter
+```
+maintenance importhsdata --connectionstring "Server=localhost;Database=fab4;Integrated Security=true;MultipleActiveResultSets=true" --csvfile ../../../Importfiler/Karplanter_til_Horisontskanning_20220107_til_FAB.csv
+```
