@@ -114,8 +114,8 @@ namespace SwissKnife.Database
                     //.ForMember(dest => dest.UnsureI, opt => opt.Ignore())
                     // --------------------------------
                     .ForMember(dest => dest.PossibleLowerCategory, opt => opt.Ignore())
-                    .ForMember(dest => dest.natureAffectedAbroadF, opt => opt.Ignore())
-                    .ForMember(dest => dest.natureAffectedAbroadG, opt => opt.Ignore())
+                    .ForMember(dest => dest.NatureAffectedAbroadF, opt => opt.Ignore())
+                    .ForMember(dest => dest.NatureAffectedAbroadG, opt => opt.Ignore())
 
                     .ForMember(dest => dest.PopulationSize, opt => opt.MapFrom<long>(src => ParseLongFromNullableInt(src.SpreadRscriptSpeciesCount)))
                     .ForMember(dest => dest.GrowthRate, opt => opt.MapFrom(src => double.Parse(src.SpreadRscriptPopulationGrowth, System.Globalization.CultureInfo.InvariantCulture)))
