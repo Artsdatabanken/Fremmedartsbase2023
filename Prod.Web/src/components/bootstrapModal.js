@@ -13,15 +13,14 @@ export default class BootstrapModal extends React.Component {
     }
     render() {
         const okEnabled = this.props.okEnabled === undefined ? true : this.props.okEnabled
+        
         return <div role="dialog">
             <div className="modal-backdrop"  style={{zIndex: 1110, opacity: "75%"}}></div>
             <div role="dialog" tabIndex="-1" className="modal" style={{display: "block", zIndex: 1120}}>
                 <div className="modal-dialog">
                     <div className="modal-content" role="document">
                         <div className="modal-header">
-                            <Xcomp.Button className="close" ariaLabel="Close" alwaysEnabled={true} onClick={this.onCancel}>
-                                <span aria-hidden="true">×</span>
-                            </Xcomp.Button>
+                            
                             {typeof this.heading === "string" ?
                                 <h3 className="modal-title">
                                     {this.heading}                                 
@@ -29,6 +28,9 @@ export default class BootstrapModal extends React.Component {
                                 <div className="modal-title">
                                     {this.heading}
                                 </div>}
+                                <Xcomp.Button className="close" ariaLabel="Close" alwaysEnabled={true} onClick={this.onCancel}>
+                                    <span aria-hidden="true">×</span>
+                                </Xcomp.Button>
                         </div>
                         <div className="modal-body">
                             <div>

@@ -68,6 +68,7 @@ namespace SwissKnife.Database
                 cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.SpeciesNaturetypeInteraction,
                         Prod.Domain.RiskAssessment.SpeciesNaturetypeInteraction>()
                     .ForMember(dest => dest.Scale, opt => opt.Ignore())
+                    .ForMember(dest => dest.Name, opt => opt.Ignore())
                     .ForMember(dest => dest.InteractionTypes, opt => opt.Ignore())
                     .ForMember(dest => dest.BasisOfAssessment, opt => opt.Ignore())
                     .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.Ignore());
@@ -114,8 +115,8 @@ namespace SwissKnife.Database
                     //.ForMember(dest => dest.UnsureI, opt => opt.Ignore())
                     // --------------------------------
                     .ForMember(dest => dest.PossibleLowerCategory, opt => opt.Ignore())
-                    .ForMember(dest => dest.natureAffectedAbroadF, opt => opt.Ignore())
-                    .ForMember(dest => dest.natureAffectedAbroadG, opt => opt.Ignore())
+                    .ForMember(dest => dest.NatureAffectedAbroadF, opt => opt.Ignore())
+                    .ForMember(dest => dest.NatureAffectedAbroadG, opt => opt.Ignore())
 
                     .ForMember(dest => dest.PopulationSize, opt => opt.MapFrom<long>(src => ParseLongFromNullableInt(src.SpreadRscriptSpeciesCount)))
                     .ForMember(dest => dest.GrowthRate, opt => opt.MapFrom(src => double.Parse(src.SpreadRscriptPopulationGrowth, System.Globalization.CultureInfo.InvariantCulture)))
@@ -226,6 +227,7 @@ namespace SwissKnife.Database
                 cfg.CreateMap<Prod.Domain.Legacy.RegionalPresenceWithPotential, Prod.Domain.RegionalPresenceWithPotential>();
                 cfg.CreateMap<FA3Legacy.ImpactedNatureType, FA4.ImpactedNatureType>()
                     .ForMember(dest => dest.Background, opt => opt.Ignore())
+                    .ForMember(dest => dest.Name, opt => opt.Ignore())
                     .ForMember(dest => dest.NatureTypeArea, opt => opt.Ignore());
                 cfg.CreateMap<FA3Legacy.TimeAndPlace, FA4.TimeAndPlace>();
                 cfg.CreateMap<FA3Legacy.ObservedAndEstablished, FA4.ObservedAndEstablished>();

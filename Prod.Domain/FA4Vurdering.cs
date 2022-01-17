@@ -49,21 +49,21 @@ namespace Prod.Domain
     public class CTaxon
     {
         public string Id { get; set; }
-        public int taxonID { get; set; }
-        public string scientificName { get; set; }
-        public string scientificNameId { get; set; }
+        public int TaxonID { get; set; }
+        public string ScientificName { get; set; }
+        public string ScientificNameId { get; set; }
 
-        public string scientificNameAuthor { get; set; }
+        public string ScientificNameAuthor { get; set; }
 
-        public string vernacularName { get; set; }
+        public string VernacularName { get; set; }
 
-        public string redListCategory { get; set; }
+        public string RedListCategory { get; set; }
 
-        public List<string> taxonSearchResult { get; set; }
+        public List<string> TaxonSearchResult { get; set; }
 
-        public string taxonSearchString { get; set; }
+        public string TaxonSearchString { get; set; }
 
-        public string taxonRank { get; set; }
+        public string TaxonRank { get; set; }
 
     }
 
@@ -1169,6 +1169,7 @@ public partial class FA4 // (3.2) Artsegenskaper
         public class SpeciesNaturetypeInteraction : NaturetypeInteraction // lagt til 22.12.2016
         {
             public string NiNCode { get; set; }
+            public string Name { get; set; }
             public List<string> NiNVariation { get; set; } = new List<string>(); // lagt til 23.12.23
         }
 
@@ -1407,6 +1408,7 @@ public partial class FA4 // (3.2) Artsegenskaper
         public class ImpactedNatureType
         {
             public string NiNCode { get; set; }
+            public string Name { get; set; }
             public List<string> NiNVariation { get; set; } = new List<string>();
             public List<string> DominanceForrest { get; set; } = new List<string>(); // changed datatype from string 18.11.2016
             public long? NatureTypeArea { get; set; }

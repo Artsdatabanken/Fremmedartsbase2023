@@ -342,32 +342,32 @@ namespace SwissKnife.Database
 
                 // Disse feltene er de som faktisk patches.....
                 Debug.Assert(exAssessment != null, nameof(exAssessment) + " != null");
-                //exAssessment.SpreadHistory = newAssesment.SpreadHistory;
+                exAssessment.SpreadHistory = newAssesment.SpreadHistory;
 
-                //exAssessment.RegionalPresenceKnown = newAssesment.RegionalPresenceKnown;
-                //exAssessment.RegionalPresenceAssumed = newAssesment.RegionalPresenceAssumed;
-                //exAssessment.RegionalPresencePotential = newAssesment.RegionalPresencePotential;
-                //exAssessment.Fylkesforekomster = newAssesment.Fylkesforekomster;
+                exAssessment.RegionalPresenceKnown = newAssesment.RegionalPresenceKnown;
+                exAssessment.RegionalPresenceAssumed = newAssesment.RegionalPresenceAssumed;
+                exAssessment.RegionalPresencePotential = newAssesment.RegionalPresencePotential;
+                exAssessment.Fylkesforekomster = newAssesment.Fylkesforekomster;
 
-                ////map fix
+                //map fix
 
-                //exAssessment.RiskAssessment.AOOknown = newAssesment.RiskAssessment.AOOknown;
-                //exAssessment.RiskAssessment.AOOtotalBest = newAssesment.RiskAssessment.AOOtotalBest;
-                //exAssessment.RiskAssessment.AOOtotalLow = newAssesment.RiskAssessment.AOOtotalLow;
-                //exAssessment.RiskAssessment.AOOtotalHigh = newAssesment.RiskAssessment.AOOtotalHigh;
-                //exAssessment.RiskAssessment.AOO50yrBest = newAssesment.RiskAssessment.AOO50yrBest;
-                //exAssessment.RiskAssessment.AOO50yrLow = newAssesment.RiskAssessment.AOO50yrLow;
-                //exAssessment.RiskAssessment.AOO50yrHigh = newAssesment.RiskAssessment.AOO50yrHigh;
-                //exAssessment.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes = newAssesment.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes;
+                exAssessment.RiskAssessment.AOOknown = newAssesment.RiskAssessment.AOOknown;
+                exAssessment.RiskAssessment.AOOtotalBest = newAssesment.RiskAssessment.AOOtotalBest;
+                exAssessment.RiskAssessment.AOOtotalLow = newAssesment.RiskAssessment.AOOtotalLow;
+                exAssessment.RiskAssessment.AOOtotalHigh = newAssesment.RiskAssessment.AOOtotalHigh;
+                exAssessment.RiskAssessment.AOO50yrBest = newAssesment.RiskAssessment.AOO50yrBest;
+                exAssessment.RiskAssessment.AOO50yrLow = newAssesment.RiskAssessment.AOO50yrLow;
+                exAssessment.RiskAssessment.AOO50yrHigh = newAssesment.RiskAssessment.AOO50yrHigh;
+                exAssessment.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes = newAssesment.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes;
 
-                //exAssessment.RiskAssessment.AOOdarkfigureBest = newAssesment.RiskAssessment.AOOdarkfigureBest;
-                //exAssessment.RiskAssessment.AOOdarkfigureHigh = newAssesment.RiskAssessment.AOOdarkfigureHigh;
-                //exAssessment.RiskAssessment.AOOdarkfigureLow = newAssesment.RiskAssessment.AOOdarkfigureLow;
+                exAssessment.RiskAssessment.AOOdarkfigureBest = newAssesment.RiskAssessment.AOOdarkfigureBest;
+                exAssessment.RiskAssessment.AOOdarkfigureHigh = newAssesment.RiskAssessment.AOOdarkfigureHigh;
+                exAssessment.RiskAssessment.AOOdarkfigureLow = newAssesment.RiskAssessment.AOOdarkfigureLow;
 
 
-                //exAssessment.IsAlienSpecies = newAssesment.IsAlienSpecies;
-                //exAssessment.ConnectedToAnother = newAssesment.ConnectedToAnother;
-                //exAssessment.ProductionSpecies = newAssesment.ProductionSpecies;
+                exAssessment.IsAlienSpecies = newAssesment.IsAlienSpecies;
+                exAssessment.ConnectedToAnother = newAssesment.ConnectedToAnother;
+                exAssessment.ProductionSpecies = newAssesment.ProductionSpecies;
                 exAssessment.AlienSpecieUncertainIfEstablishedBefore1800 = newAssesment.AlienSpecieUncertainIfEstablishedBefore1800;
                 exAssessment.IsRegionallyAlien = newAssesment.IsRegionallyAlien;
                 exAssessment.IsAlienSpecies = newAssesment.IsAlienSpecies;

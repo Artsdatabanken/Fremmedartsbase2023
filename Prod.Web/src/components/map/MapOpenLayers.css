@@ -24,6 +24,9 @@
     min-width: 98px;
     transition: opacity 100ms ease-out;
 }
+.ol-popup-static {
+    left: -30px;
+}
 .ol-popup-anchor:after, .ol-popup:before {
     top: 100%;
     border: solid transparent;
@@ -57,4 +60,8 @@
 .ol-popup-content {
     text-align: center;
     white-space: nowrap;
+}
+
+.ol-popup-feature-disabled {
+    color: #aaaaaa;
 }

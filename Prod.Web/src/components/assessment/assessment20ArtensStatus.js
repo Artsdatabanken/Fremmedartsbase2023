@@ -103,7 +103,7 @@ checkStatus = (production) => {
                     <p>{labels.SpeciesStatus.unsureIfAlien} </p>
                     <Xcomp.Radio value={'true'} observableValue={[assessment, "isAlienSpeciesString"]} defaultChecked={assessment.alienSpeciesCategory == "RegionallyAlien"} label={labels.General.yes} />                    
                     { assessment.isAlienSpeciesString == 'true' && assessment.alienSpeciesCategory != "DoorKnocker" ? 
-                            <Xcomp.Bool observableValue={[assessment, "isRegionallyAlien"]} checked={assessment.alienSpeciesCategory == "RegionallyAlien"} label={labels.SpeciesStatus.regionallyAlien} /> : null }
+                            <Xcomp.Bool className={"regionallyAlien"} observableValue={[assessment, "isRegionallyAlien"]} checked={assessment.alienSpeciesCategory == "RegionallyAlien"} label={labels.SpeciesStatus.regionallyAlien} /> : null }
                     <Xcomp.Radio value={'false'} observableValue={[assessment, "isAlienSpeciesString"]} label={labels.General.no} />
                     <p>{labels.SpeciesStatus.unsureAlienDescription}</p>
                     {assessment.notApplicableCategory == "notAlienSpecie" ?
@@ -238,7 +238,16 @@ checkStatus = (production) => {
                                             newTaxon.redListCategory = item.rlCategory;
                                             newTaxon.taxonSearchResult.replace([]); 
                                             newTaxon.taxonSearchString = "";
-                                            assessment.connectedTaxon = item})} 
+                                            assessment.connectedTaxon.taxonId = item.taxonId;
+                                            assessment.connectedTaxon.taxonRank = item.taxonRank;
+                                            assessment.connectedTaxon.scientificName = item.scientificName;
+                                            assessment.connectedTaxon.scientificNameId = item.scientificNameId;
+                                            assessment.connectedTaxon.scientificNameAuthor = item.author;
+                                            assessment.connectedTaxon.vernacularName = item.popularName;
+
+                                            newTaxon.redListCategory = item.rlCategory;
+                                            //assessment.connectedTaxon = item
+                                        })} 
                                             key={item.scientificName}
                                         >
                                             <div className="speciesSearchItem">

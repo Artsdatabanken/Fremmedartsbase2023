@@ -539,7 +539,10 @@ div.naturetype .modal-dialog,
             
 }
 .import > .well .modal-dialog {
-  max-width: 1300px;
+  max-width: 850px;
+  .modal-content {
+    border-radius: 0;
+  }
 }
 
 .main.adm table, .notmain table {
@@ -573,7 +576,7 @@ div.naturetype .modal-dialog,
 }
 
 .modal-dialog > .modal-content > .modal-header {
-  display: block;
+  display: flex;
 }
 
 .modal-body > div > div {
@@ -1158,7 +1161,8 @@ ul.scores {
   padding-inline-start: 0;
 }
 
-ul.scores li.checkbox label input {
+ul.scores li.checkbox label input,
+.regionallyAlien {
   margin-left: 30px;
 }
 
@@ -2101,7 +2105,7 @@ div.geoVarInput > div > div.input_field > div.form-control {
 }
 
 #spreadHistories div, #spreadHistories table, #spreadHistories button {
-  margin-left: 20px;
+ // margin-left: 20px;
   margin-right: 10px;
 }
 

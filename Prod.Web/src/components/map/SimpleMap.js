@@ -68,7 +68,7 @@ const SimpleMap = ({
         const contentElement = document.createElement('div');
         contentElement.className = `ol-popup-content ol-popup-content-${index}`;
         const element = document.createElement('div');
-        element.className = `ol-popup ol-popup-${index}${isStatic ? '' : ' ol-popup-anchor'}`;
+        element.className = `ol-popup ol-popup-${index} ${isStatic ? 'ol-popup-static' : 'ol-popup-anchor'}`;
         element.appendChild(contentElement);
         return element;
     }
@@ -95,21 +95,22 @@ const SimpleMap = ({
             const hoverLayer = mapObject.getLayers().getArray().filter(layer => layer.get('name') === 'hoverLayer')[0];
 
             const content = document.getElementsByClassName(`ol-popup-content ol-popup-content-${mapIndex}`)[0];
+            content.innerHTML = '';
     
             const vatn = [];
-            let noContent = true;
             mapObject.forEachFeatureAtPixel(e.pixel, (f) => {
                 const featureLayerName = f.get('_layerName');
                 // console.log('feature', featureLayerName, f);
                 if (featureLayerName && featureLayerName === 'Vatn') {
                     if (!e.dragging) {
                         if (content) {
-                            content.innerHTML = `<p>${f.get(waterFieldName)}</p>`;
+                            // Show name with faded font if feature is disabled
+                            let waterClassname = f.get('disabled') === true ? ' class=\'ol-popup-feature-disabled\'' : '';
+                            content.innerHTML = `<p${waterClassname}>${f.get(waterFieldName)}</p>`;
                             const coordinate = static ? [55000, 7900000] : e.coordinate;
                             overlay.getElement().style.opacity = 1;
                             overlay.setPosition(coordinate);
                             // closer.style.display = 'none';
-                            noContent = false;
                         }
                     }
                     vatn.push(f);
@@ -118,7 +119,7 @@ const SimpleMap = ({
                 return false;
             });
 
-            if (noContent) {
+            if (content.innerHTML.length === 0) {
                 overlay.getElement().style.opacity = 0;
                 // overlay.setPosition(undefined);
                 // closer.blur();
@@ -161,13 +162,13 @@ const SimpleMap = ({
         if (selectAll) {
             features = vatnLayer.getSource().getFeatures();
             features.forEach(f => {
-                f.set('unselectable', false);
+                f.set('disabled', false);
             });
             waterSelectedLayer.getSource().addFeatures(features);
         } else {
             features = vatnLayer.getSource().getFeatures();
             features.forEach(f => {
-                f.set('unselectable', true);
+                f.set('disabled', true);
             });
         }
 
@@ -221,6 +222,8 @@ const SimpleMap = ({
             layers: [],
             controls: defaultControls({attribution: false, zoom: !static})
         };
+        let waterSelectedLayer;
+
         if (static) {
             options.interactions = new Collection();
         } else {
@@ -264,7 +267,6 @@ const SimpleMap = ({
                 visible: true,
                 zIndex: 1
             }));
-            options.layers.push(mapOlFunc.createWaterSelectedLayer('VatnSelected', projection));
         }
         if (static) {
             options.layers.push(mapOlFunc.createWaterLayer('Vatn', isWaterArea, projection, '', selectedArea, () => {}));
@@ -283,45 +285,57 @@ const SimpleMap = ({
 
         const layers = mapObject.getLayers().getArray();
 
+        const selectDeselectFeatures = (features, deSelect = false, changeCallback, clickCallback) => {
+            if (features.length === 0) return;
+            const selectedFeatures = waterSelectedLayer.getSource().getFeatures().map(x => x.get('globalID'));
+            features.forEach((f) => {
+                const pos = selectedFeatures.indexOf(f.get('globalID'));
+                if (pos < 0) {
+                    waterSelectedLayer.getSource().addFeature(f);
+                } else {
+                    if (deSelect) waterSelectedLayer.getSource().removeFeature(f);
+                }
+                if (clickCallback) clickCallback({ name: f.get(waterFieldName), properties: f.getProperties(), selected: pos < 0 });
+            });
+            if (changeCallback) changeCallback(waterSelectedLayer.getSource().getFeatures().map(x => {
+                return {
+                    globalID: x.get('globalID'),
+                    name: x.get(waterFieldName)
+                }
+            }));
+        };
+
+        const featuresLoadend = () => {
+            vatnSource.un('featuresloadend', featuresLoadend);
+            const selectedGids = selectedArea.map(x => x.globalID);
+            const preSelected = vatnSource.getFeatures().filter(x => selectedGids.indexOf(x.get('globalID')) >= 0);
+            waterSelectedLayer.getSource().addFeatures(preSelected);
+            console.log('preselect items', selectedGids, preSelected);
+            selectDeselectFeatures(preSelected, undefined, onChange);
+        };
+
         const vatnLayer = layers.filter((layer) => layer.get('name') === 'Vatn' ? true : false)[0];
         const vatnSource = vatnLayer ? vatnLayer.getSource() : undefined;
+        if (!static) {
+            mapOlFunc.createWaterSelectedLayer('VatnSelected', projection).then(l => {
+                mapObject.addLayer(l);
+                waterSelectedLayer = l;
+                if (waterSelectedLayer && vatnSource && selectedArea) {
+                    vatnSource.on('featuresloadend', featuresLoadend);
+                }
+            });
+        } else {
+            waterSelectedLayer = layers.filter(layer => layer.get('name') === 'VatnSelected')[0];
+        }
 
         if (!static) {
 
             const dragBox = new DragBox({condition: platformModifierKeyOnly});
             mapObject.addInteraction(dragBox);
 
-            const waterSelectedLayer = layers.filter(layer => layer.get('name') === 'VatnSelected')[0];
-
-            const selectDeselectFeatures = (features, deSelect = false, changeCallback, clickCallback) => {
-                if (features.length === 0) return;
-                const selectedFeatures = waterSelectedLayer.getSource().getFeatures().map(x => x.get('globalID'));
-                features.forEach((f) => {
-                    const pos = selectedFeatures.indexOf(f.get('globalID'));
-                    if (pos < 0) {
-                        waterSelectedLayer.getSource().addFeature(f);
-                    } else {
-                        if (deSelect) waterSelectedLayer.getSource().removeFeature(f);
-                    }
-                    if (clickCallback) clickCallback({ name: f.get(waterFieldName), properties: f.getProperties(), selected: pos < 0 });
-                });
-                if (changeCallback) changeCallback(waterSelectedLayer.getSource().getFeatures().map(x => {
-                    return {
-                        globalID: x.get('globalID'),
-                        name: x.get(waterFieldName)
-                    }
-                }));
-            }
+            // const waterSelectedLayer = layers.filter(layer => layer.get('name') === 'VatnSelected')[0];
 
             if (waterSelectedLayer && vatnSource && selectedArea) {
-                const featuresLoadend = () => {
-                    vatnSource.un('featuresloadend', featuresLoadend);
-                    const selectedGids = selectedArea.map(x => x.globalID);
-                    const preSelected = vatnSource.getFeatures().filter(x => selectedGids.indexOf(x.get('globalID')) >= 0);
-                    waterSelectedLayer.getSource().addFeatures(preSelected);
-                    console.log('preselect items', selectedGids, preSelected);
-                    selectDeselectFeatures(preSelected, undefined, onChange);
-                };
                 vatnSource.on('featuresloadend', featuresLoadend);
             }
 
