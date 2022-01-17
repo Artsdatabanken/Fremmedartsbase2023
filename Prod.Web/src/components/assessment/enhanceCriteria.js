@@ -50,14 +50,14 @@ function yearlyIncreaseLevel(numMYear) {
         : 0
     return result
 }
-function medianLifespanLevel(num) {
-    const result =
-        num >= 650 ? 3
-        : num >= 60 ? 2
-        : num >= 10 ? 1
-        : 0
-    return result
-}
+// function medianLifespanLevel(num) {
+//     const result =
+//         num >= 650 ? 3
+//         : num >= 60 ? 2
+//         : num >= 10 ? 1
+//         : 0
+//     return result
+// }
 
 const introLowTable = {
     1: 1,
@@ -241,13 +241,8 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 
     const r = riskAssessment
     extendObservable(riskAssessment, {
-        horizonDoAssessment: false, //This one is updated from viewmodel
-
         get doorKnocker() {
-            const cond1 = riskAssessment.alienSpeciesCategory === "effectWithoutEstablishment"
-            const cond2 = riskAssessment.alienSpeciesCategory === "DoorKnocker"
-            const cond3 = riskAssessment.horizonDoAssessment
-            return cond1 || cond2 || cond3
+            return riskAssessment.vurderingAlienSpeciesCategory === "DoorKnocker"
         },
         get ametodkey() {
             const method = riskAssessment.chosenSpreadMedanLifespan
@@ -280,7 +275,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 : method === "c"  // no longer in use (??)
                 ? "B2bX"
                 : ""
-            console.log("#bmetod " + result)
+            console.log("##¤bmetod " + result + " doorKnocker: " + r.doorKnocker)
             return result
         },
         get introductionsLow() {
@@ -342,7 +337,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             return r.doorKnocker ?
             r.AOO10yrLow >= 16 ? 3
             : r.AOO10yrLow >= 4 ? 2
-            : r.AOO10yrLow >= 1 ? max(1, AdefaultBest - 1)
+            : r.AOO10yrLow >= 1 ? max(1, r.adefaultBest - 1)
             : 0
             : r.AOO50yrLow >= 20 && r.AOOchangeLow > 0.2 ? 3
             : r.AOO50yrLow >= 20 && r.AOOchangeLow > 0.05 ? 2
@@ -353,8 +348,8 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
         get adefaultHigh() {
             return r.doorKnocker ?
-            r.AOO10yrHigh >= 16 ? min(3, AdefaultBest + 1)
-            : r.AOO10yrHigh >= 4 ? min(2, AdefaultBest + 1)
+            r.AOO10yrHigh >= 16 ? min(3, r.adefaultBest + 1)
+            : r.AOO10yrHigh >= 4 ? min(2, r.adefaultBest + 1)
             : r.AOO10yrHigh >= 1 ? 1
             : 0
             : r.AOO50yrHigh >= 20 && r.AOOchangeHigh > 0.2 ?  min(3, r.adefaultBest + 1)
@@ -492,7 +487,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
 
         get bscore() {
-            console.log("bscore")
+            console.log("##¤bscore expansionSpeed: " + r.expansionSpeed)
             return r.expansionSpeed >= 500 ? 3
                 : r.expansionSpeed >= 160 ? 2
                 : r.expansionSpeed >= 50 ? 1
@@ -514,13 +509,13 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         get bhigh() {
             const k = r.bmetodkey
             const result = k === "B2a"
-                ? mcriterionHigh(getCriterion(riskAssessment, 0, "B"))
+                ? criterionHigh(getCriterion(riskAssessment, 0, "B"))
                 : r.expansionUpperQ >= 500 ? min(3, r.bscore + 1)
                 : r.expansionUpperQ >= 160 ? min(2, r.bscore + 1)
                 : r.expansionUpperQ >= 50 ? 1
                 : r.expansionUpperQ < 50 ? 0
                 : 1 // ?
-                console.log("#bhigh: " + r.bmetodkey + " expansionUpperQ: " + r.expansionUpperQ + " result: " + result)
+                // console.log("#bhigh: " + r.bmetodkey + " expansionUpperQ: " + r.expansionUpperQ + " result: " + result)
                 return result
             },
         get bDisabledUncertaintyValues() {
@@ -533,6 +528,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
         get expansionSpeed() {
             const k = r.bmetodkey
+            console.log("##¤ expansionSpeed " + r.bmetodkey + " " + r.AOO10yrBest)
             const result =
                 k === "B1" ? r.expansionSpeedInput
                 : k === "B2a" ? r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null ? 0 : trunc(sqrt(r.AOOdarkfigureBest) * 1000 * (sqrt(r.AOO2) - sqrt(r.AOO1)) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
@@ -839,8 +835,8 @@ function enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering,
     // const artificialAndConstructedSites = ["F4", "F5", "H4", "L7", "L8", "M14", "M15", "T35", "T36", "T37", "T38", "T39", "T40", "T41", "T42", "T43", "T44", "T45", "V11", "V12", "V13"]
 
     extendObservable(riskAssessment, {
+        get vurderingAlienSpeciesCategory() {return vurdering.alienSpeciesCategory},
         get vurderingCurrentExistenceAreaCalculated() {return vurdering.currentExistenceAreaCalculated},
-
         get vurderingAllImpactedNatureTypes() {return vurdering.impactedNatureTypes.map(x => x)},
         get vurderingImpactedNaturalNatureTypes() { return vurdering.impactedNatureTypes.filter(
             nt => !artificialAndConstructedSites.filter(code => nt.niNCode === code || nt.niNCode.startsWith(code + "-") ).length > 0
