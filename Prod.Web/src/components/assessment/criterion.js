@@ -123,7 +123,7 @@ export default class Criterion extends React.Component {
                             onChange={onChangeRadio}
                             {...radiooptional} />
                             </>
-                        <div className={"criteriaCheck" + (radiooptional.checked ? " glyphicon glyphicon-ok" : "")}>&nbsp;</div>
+                        {/*<div className={"criteriaCheck" + (radiooptional.checked ? " glyphicon glyphicon-ok" : "")}>&nbsp;</div>*/}
                         <input
                         value={kode.value}
                         type="checkbox"
