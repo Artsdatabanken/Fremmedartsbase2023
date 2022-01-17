@@ -44,11 +44,6 @@ export default class Assessment20ArtensStatus extends React.Component {
 //@observer
     constructor(props) {
         super(props)
-    //    extendObservable(this, {
-    //     statusChange: false,       
-         
-    // })
-   
    }
    
 

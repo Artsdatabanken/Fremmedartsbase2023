@@ -52,32 +52,12 @@ export default function enhanceAssessment(json, appState) {
     
     // * * *
     const assessment = observable.object(json)
-
     const labels = appState.codeLabels
     const codes = appState.koder
-
-    // const riskAssessment = fabModel.activeRegionalRiskAssessment;
     const riskAssessment = assessment.riskAssessment
-
     const artificialAndConstructedSites = appState.artificialAndConstructedSites
-
-    // // todo: Remove this section before launch! 
-    // // Code/statechange to help with developement/debugging is placed here
-    // console.log("RUN ENHANCEMENTS HERE")
-    // riskAssessment.chosenSpreadMedanLifespan = "ViableAnalysis"
-    // //assessment.horizonDoScanning = true;  //todo: remove this (It is here for testing purposes)
-    // // ----------------------------------
-
-
-
-
-
     enhanceCriteria(riskAssessment, assessment, codes, labels, artificialAndConstructedSites)
-
     fixFylker(assessment);
-
-
-    //if(assessment.horizonDoScanning !== false) {console.warn("horizonDoScanning should be false for now")}
 
     extendObservable(assessment, {
         get toJSON() {
@@ -162,7 +142,6 @@ export default function enhanceAssessment(json, appState) {
             assessment.productionSpecies = s === "yes"
         },
 
-
         get alienSpeciesCategory() {
             const result = 
                 ! assessment.isAlienSpecies
@@ -190,11 +169,7 @@ export default function enhanceAssessment(json, appState) {
                 console.log("##¤statuschange 2: " + change)
                 appState.statusChange = change
             })()
-
-
         }
     )
-   
     return assessment
-
 }
