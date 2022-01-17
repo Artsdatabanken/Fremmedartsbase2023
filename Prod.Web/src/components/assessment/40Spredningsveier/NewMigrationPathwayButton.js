@@ -60,7 +60,7 @@ export default class NewMigrationPathwayButton extends React.Component {
         const {migrationPathway, onSave, koder, hideIntroductionSpread, disabled, labels, mainCodes, mainCat} = this.props;
         const mplabels = labels.MigrationPathway
         const disable = disabled && (migrationPathway.name != "fra forskning" && migrationPathway.name != "til forskning" && migrationPathway.name != "fra botaniske/zoologiske hager / akvarier (ikke privat)" && migrationPathway.name != "til botaniske/zoologiske hager / akvarier (ikke privat)")
-        
+        const heading = mainCat + " " + migrationPathway.name
         // this.newMigrationPathway.Category = migrationPathway.name
         // try {
         //   console.log("koder4" + koder.toString() )
@@ -73,7 +73,7 @@ export default class NewMigrationPathwayButton extends React.Component {
             <div className="btn-flat btn migration" disabled={disable} style={{textTransform: "none"}} onClick={this.showModal} >{migrationPathway.name}
                 {this.visibleModal ?
                 <BsModal 
-                    heading={migrationPathway.name} 
+                    heading={heading} 
                     onCancel={this.hideModal} 
                     onOk={this.onOk} 
                     okEnabled={this.okEnabled}
