@@ -3617,7 +3617,7 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "releaseForUseOther",
-                                                    "Text": "øvrig utsetting av nyttearter",
+                                                    "Text": "øvrig utsetting til nytteformål",
                                                     "Info": null,
                                                     "Children": null
                                                 },
@@ -3989,7 +3989,7 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "releaseForUseOther",
-                                                    "Text": "øvrig utsetting av nyttearter",
+                                                    "Text": "øvrig utsetting til nytteformål",
                                                     "Info": null,
                                                     "Children": null
                                                 },
