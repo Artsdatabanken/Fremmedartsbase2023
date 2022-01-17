@@ -186,7 +186,8 @@ class ViewModel {
                     nameWithPreposition: 'på Svalbard',
                     map: 'svalbard'
                 }
-            }
+            },
+            statusChange: false
         })
 
 
@@ -382,13 +383,22 @@ class ViewModel {
         autorun(() => {
             console.log("viewMode: " + this.viewMode)
         });
+        // autorun(() => {
+        //     console.log("horizonDoAssessment: " + this.horizonDoAssessment)
+        //     if(this.assessment) {
+        //         runInAction(() => this.assessment.riskAssessment.horizonDoAssessment = this.horizonDoAssessment)
+        //     }
         autorun(() => {
-            console.log("horizonDoAssessment: " + this.horizonDoAssessment)
-            if(this.assessment) {
-                runInAction(() => this.assessment.riskAssessment.horizonDoAssessment = this.horizonDoAssessment)
+            if(this.assessment && this.assessment.speciesStatus == "C3") {
+                runInAction(() => this.assessment.speciesEstablishmentCategory = "C3")
             }
+        })
 
-        });
+        // autorun(() => {
+        //     if(this.assessment && this.assessment.speciesStatus == "C3") {
+        //         runInAction(() => this.assessment.speciesEstablishmentCategory = "C3")
+        //     }
+        // })
         autorun(() => {
             if(this.assessmentTabs && this.assessmentTabs.activeTab ) {
                 console.log("current assessmentTab: " + this.assessmentTabs.activeTab.id )

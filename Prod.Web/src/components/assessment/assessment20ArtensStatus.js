@@ -44,10 +44,10 @@ export default class Assessment20ArtensStatus extends React.Component {
 //@observer
     constructor(props) {
         super(props)
-       extendObservable(this, {
-        statusChange: false,       
+    //    extendObservable(this, {
+    //     statusChange: false,       
          
-    })
+    // })
    
    }
    
@@ -282,28 +282,28 @@ checkStatus = (production) => {
                          <Xcomp.StringEnum className="statusChoice" observableValue={[assessment, "speciesStatus"]} mode="radio" 
                             // checks if the species is a door knocker or not and if it is a production species to determine the available options to choose
                             options={this.checkStatus(assessment.productionSpecies)}
-                            onChange = {action(_e => {
-                                if(assessment.speciesStatus != "A" ) { 
-                                    assessment.wrongAssessed = false
-                                    };
-                                    if (assessment.alienSpeciesCategory == "DoorKnocker" && (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3")) {
-                                        this.statusChange = true
-                                        assessment.alienSpeciesCategory = "AlienSpecie"
-                                        if(assessment.speciesStatus == "C3") {
-                                            assessment.speciesEstablishmentCategory = "C3"
-                                        }
-                                    }
-                                    else if (assessment.alienSpeciesCategory == "AlienSpecie" && assessment.speciesStatus != "C2" && assessment.speciesStatus != "C3"){
-                                        this.statusChange = true
-                                        assessment.alienSpeciesCategory = "DoorKnocker"
-                                    }
-                                     else {
-                                        this.statusChange = false                                     
-                                    }   
+                            // onChange = {action(_e => {
+                            //     if(assessment.speciesStatus != "A" ) { 
+                            //         assessment.wrongAssessed = false
+                            //         };
+                            //         if (assessment.alienSpeciesCategory == "DoorKnocker" && (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3")) {
+                            //             this.statusChange = true
+                            //             assessment.alienSpeciesCategory = "AlienSpecie"
+                            //             if(assessment.speciesStatus == "C3") {
+                            //                 assessment.speciesEstablishmentCategory = "C3"
+                            //             }
+                            //         }
+                            //         else if (assessment.alienSpeciesCategory == "AlienSpecie" && assessment.speciesStatus != "C2" && assessment.speciesStatus != "C3"){
+                            //             this.statusChange = true
+                            //             assessment.alienSpeciesCategory = "DoorKnocker"
+                            //         }
+                            //          else {
+                            //             this.statusChange = false                                     
+                            //         }   
                                                                   
-                                })}
+                            //     })}
                             codes={codes.EstablishmentCategory}/>        
-                            <span className="statusWarning">{this.statusChange ? assessment.alienSpeciesCategory == "DoorKnocker" ? "Arten har nå endret status fra å være selvstendig reproduserende til å være en dørstokkart. Er dette riktig?" :
+                            <span className="statusWarning">{appState.statusChange ? assessment.alienSpeciesCategory == "DoorKnocker" ? "Arten har nå endret status fra å være selvstendig reproduserende til å være en dørstokkart. Er dette riktig?" :
                                     "Arten har nå endret status fra å være en dørstokkart til å være selvstendig reproduserende i norsk natur." : null}</span>
                             </div>
 
