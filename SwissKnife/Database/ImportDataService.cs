@@ -401,6 +401,14 @@ namespace SwissKnife.Database
                 exAssessment.RiskAssessment.YearFirstEstablishedNature = newAssesment.RiskAssessment.YearFirstEstablishedNature;
                 exAssessment.RiskAssessment.YearFirstEstablishedNatureInsecure = newAssesment.RiskAssessment.YearFirstEstablishedNatureInsecure;
 
+                if (exAssessment.ExpertGroup != newAssesment.ExpertGroup)
+                {
+                    if (exAssessment.HorizonDoScanning)
+                    {
+                        
+                    }
+                }
+                exAssessment.ExpertGroup = newAssesment.ExpertGroup;
 
                 if (exAssessment.ExpertGroup == "Sopper")
                 {
