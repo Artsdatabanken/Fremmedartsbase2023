@@ -1137,9 +1137,12 @@ public partial class FA4 // (3.2) Artsegenskaper
             public string DomesticOrAbroad { get; set; }
 
         }
+
         public abstract class SpeciesInteraction : Interaction
         {
             public string ScientificName { get; set; }
+
+            [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
             public int ScientificNameId { get; set; }
             public string ScientificNameAuthor { get; set; } = "";
             public string VernacularName { get; set; }
