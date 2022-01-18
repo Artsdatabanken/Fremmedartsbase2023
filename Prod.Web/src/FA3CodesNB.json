@@ -4211,7 +4211,14 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "tunnelsAndLandBridges",
-                                                    "Text": "over menneskeskapt landforbindelse / gjennom tunnell",
+                                                    "Text": "over menneskeskapt landforbindelse",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "peopleDebris",
+                                                    "Text": "med menneskeskapt drivgods",
                                                     "Info": null,
                                                     "Children": null
                                                 }
