@@ -72,11 +72,15 @@ namespace SwissKnife.Database
                 {
                     dbAssessment.LastUpdatedByUserId = new Guid("00000000-0000-0000-0000-000000000001");
                     dbAssessment.LastUpdatedAt = DateTime.Today;
+                    dbAssessment.ScientificNameId = newAssesment.EvaluatedScientificNameId.Value;
+                    dbAssessment.ChangedAt = oldAssessment.SistOppdatert;
                 }
                 else
                 {
                     dbAssessment.LastUpdatedByUserId = users[oldAssessment.SistOppdatertAv].Id;
                     dbAssessment.LastUpdatedAt = oldAssessment.SistOppdatert;
+                    dbAssessment.ScientificNameId = newAssesment.EvaluatedScientificNameId.Value;
+                    dbAssessment.ChangedAt = oldAssessment.SistOppdatert;
                 }
                 
                 _database.Assessments.Add(dbAssessment);
@@ -408,6 +412,10 @@ namespace SwissKnife.Database
                 }
                 
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
+                if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)
+                {
+                    real.ScientificNameId = exAssessment.EvaluatedScientificNameId.Value;
+                }
                 if (comparisonResult.AreEqual == false)
                 {
                    real.Doc = JsonSerializer.Serialize<FA4>(exAssessment); 

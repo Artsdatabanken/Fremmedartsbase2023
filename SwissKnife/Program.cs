@@ -48,7 +48,7 @@ namespace SwissKnife
             {
                 private void OnExecute(IConsole console)
                 {
-                    Database.MaintenanceService.RunTaxonomyWash(new Prod.Data.EFCore.SqlServerProdDbContext(ConnectionString));
+                    MaintenanceService.RunTaxonomyWash(new Prod.Data.EFCore.SqlServerProdDbContext(ConnectionString));
                 }
             }
 
@@ -64,7 +64,7 @@ namespace SwissKnife
                 public string InputFolder { get; }
                 private void OnExecute(IConsole console)
                 {
-                    Database.MaintenanceService.RunImportNewAssessments(new Prod.Data.EFCore.SqlServerProdDbContext(ConnectionString), SpeciesGroup, InputFolder);
+                    MaintenanceService.RunImportNewAssessments(new Prod.Data.EFCore.SqlServerProdDbContext(ConnectionString), SpeciesGroup, InputFolder);
                 }
             }
             [Command("importhsdata", Description = "Import and create assessments from names with data from horisontscanning")]
@@ -79,7 +79,7 @@ namespace SwissKnife
                 public string InputFolder { get; }
                 private void OnExecute(IConsole console)
                 {
-                    Database.MaintenanceService.RunImportHSAssessments(new Prod.Data.EFCore.SqlServerProdDbContext(ConnectionString), InputFolder);
+                    MaintenanceService.RunImportHSAssessments(new Prod.Data.EFCore.SqlServerProdDbContext(ConnectionString), InputFolder);
                 }
             }
 
@@ -91,7 +91,7 @@ namespace SwissKnife
                 public string InputFolder { get; }
                 private void OnExecute(IConsole console)
                 {
-                    var maintenance = new Database.ImportDataService(ConnectionString);
+                    var maintenance = new ImportDataService(ConnectionString);
                     maintenance.PatchImport(console, InputFolder);
                     
                 }
@@ -178,9 +178,9 @@ namespace SwissKnife
 
                 private void OnExecute(IConsole console)
                 {
-                    var maintenance = new Database.ImportDataService(ConnectionString);
+                    var maintenance = new ImportDataService(ConnectionString);
                     maintenance.Import(console, InputFolder);
-                    Database.MaintenanceService.RunTaxonomyWash(new Prod.Data.EFCore.SqlServerProdDbContext(ConnectionString), true);
+                    MaintenanceService.RunTaxonomyWash(new Prod.Data.EFCore.SqlServerProdDbContext(ConnectionString), true);
                 }
             }
         }
