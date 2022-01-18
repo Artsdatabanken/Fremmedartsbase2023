@@ -118,10 +118,12 @@ export default function enhanceAssessment(json, appState) {
             return assessment.alienSpecieUncertainIfEstablishedBefore1800 ? "yes" : "no"
         },
         set alienSpecieUncertainIfEstablishedBefore1800String(s) {
-            assessment.assumedReproducing50Years = s === "yes"
+            //assessment.assumedReproducing50Years = s === "yes"
+            assessment.alienSpecieUncertainIfEstablishedBefore1800 = s === "yes"
         },
         get assumedReproducing50YearsString() {
-            return assessment.alienSpecieUncertainIfEstablishedBefore1800 ? "yes" : "no"
+            //return assessment.alienSpecieUncertainIfEstablishedBefore1800 ? "yes" : "no"
+            return assessment.assumedReproducing50Years ? "yes" : "no"
         },
         set assumedReproducing50YearsString(s) {
             assessment.assumedReproducing50Years = s === "yes"

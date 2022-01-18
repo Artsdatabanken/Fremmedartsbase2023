@@ -125,7 +125,29 @@ checkStatus = (production) => {
                            }
                             <Xcomp.Radio value={"Connected"} observableValue={[assessment, "connected"]} label={labels.SpeciesStatus.assessedWithAnotherTaxon}/>
                             {assessment.connected == "Connected" && 
-
+                            
+                            assessment.connectedTaxon ? 
+                            <div 
+                                    className="speciesNewItem"
+                                    onClick={action(() => {
+                                        connectedTaxon.taxonId = "";
+                                        connectedTaxon.taxonRank = "";
+                                        connectedTaxon.scientificName = "";
+                                        connectedTaxon.scientificNameId = "";
+                                        connectedTaxon.scientificNameAuthor = "";
+                                        connectedTaxon.vernacularName = "";
+                                        connectedTaxon.redListCategory = "";
+                                        connectedTaxon.taxonSearchResult.replace([]); 
+                                        connectedTaxon.taxonSearchString = "";                                        
+                                        }) 
+                                        
+                                    }
+                                >
+                                    <div className={"rlCategory " + connectedTaxon.redListCategory}>{newTaxon.RedListCategory}</div>
+                                    <div className="vernacularName">{connectedTaxon.vernacularName}</div>
+                                    <div className="scientificName">{connectedTaxon.scientificName}</div>
+                                    <div className="author">{"(" + connectedTaxon.scientificNameAuthor + ")"}</div>
+                                </div> :
                             <div style={{position: 'relative'}}> <p style={{marginLeft: '30px', marginBottom: '10px'}}>{labels.SpeciesStatus.enterTaxonName}</p>
                                 {newTaxon.scientificName.length > 0 ?
                                 <div 
@@ -195,6 +217,29 @@ checkStatus = (production) => {
                             
                             <Xcomp.Radio value={"Shared"} observableValue={[assessment, "connected"]} label={labels.SpeciesStatus.notAssessedButShared} />
                             {assessment.connected == "Shared" && 
+
+                            assessment.connectedTaxon ? 
+                            <div 
+                                    className="speciesNewItem"
+                                    onClick={action(() => {
+                                        connectedTaxon.taxonId = "";
+                                        connectedTaxon.taxonRank = "";
+                                        connectedTaxon.scientificName = "";
+                                        connectedTaxon.scientificNameId = "";
+                                        connectedTaxon.scientificNameAuthor = "";
+                                        connectedTaxon.vernacularName = "";
+                                        connectedTaxon.redListCategory = "";
+                                        connectedTaxon.taxonSearchResult.replace([]); 
+                                        connectedTaxon.taxonSearchString = "";                                        
+                                        }) 
+                                        
+                                    }
+                                >
+                                    <div className={"rlCategory " + connectedTaxon.redListCategory}>{newTaxon.RedListCategory}</div>
+                                    <div className="vernacularName">{connectedTaxon.vernacularName}</div>
+                                    <div className="scientificName">{connectedTaxon.scientificName}</div>
+                                    <div className="author">{"(" + connectedTaxon.scientificNameAuthor + ")"}</div>
+                                </div> :
 
                             <div style={{position: 'relative', marginLeft: '20px'}}> <p style={{marginLeft: '30px', marginBottom: '10px'}}>{labels.SpeciesStatus.enterTaxonName}</p>
                                 {newTaxon.scientificName.length > 0 ?
