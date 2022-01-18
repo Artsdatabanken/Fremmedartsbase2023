@@ -1,7 +1,8 @@
 import enhanceCriteria from './enhanceCriteria'
 import fixFylker from './fixFylker'
-import { extendObservable, observable, toJS} from 'mobx'
+import { action, autorun, extendObservable, observable, reaction, toJS} from 'mobx'
 import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils'
+import { string } from 'prop-types'
 
 
 
@@ -13,6 +14,7 @@ import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils'
 export default function enhanceAssessment(json, appState) {
     // * * * remove properties that will be replaced with computed observables * * *
     const ra = json.riskAssessment
+    delete json.alienSpeciesCategory
     delete ra.riskLevel
     delete ra.riskLevelText
     delete ra.riskLevelCode
@@ -50,37 +52,19 @@ export default function enhanceAssessment(json, appState) {
     
     // * * *
     const assessment = observable.object(json)
-
     const labels = appState.codeLabels
     const codes = appState.koder
-
-    // const riskAssessment = fabModel.activeRegionalRiskAssessment;
     const riskAssessment = assessment.riskAssessment
-
     const artificialAndConstructedSites = appState.artificialAndConstructedSites
-
-    // // todo: Remove this section before launch! 
-    // // Code/statechange to help with developement/debugging is placed here
-    // console.log("RUN ENHANCEMENTS HERE")
-    // riskAssessment.chosenSpreadMedanLifespan = "ViableAnalysis"
-    // //assessment.horizonDoScanning = true;  //todo: remove this (It is here for testing purposes)
-    // // ----------------------------------
-
-
-
-
-
     enhanceCriteria(riskAssessment, assessment, codes, labels, artificialAndConstructedSites)
-
     fixFylker(assessment);
-
-    //if(assessment.horizonDoScanning !== false) {console.warn("horizonDoScanning should be false for now")}
 
     extendObservable(assessment, {
         get toJSON() {
             const assra = assessment.riskAssessment
             const obj = toJS(assessment)
             const objra = obj.riskAssessment
+            obj.alienSpeciesCategory = assessment.alienSpeciesCategory
             objra.riskLevel = assra.riskLevel
             objra.riskLevelText = assra.riskLevelText
             objra.riskLevelCode = assra.riskLevelCode
@@ -157,9 +141,35 @@ export default function enhanceAssessment(json, appState) {
         set productionSpeciesString(s) {
             assessment.productionSpecies = s === "yes"
         },
+
+        get alienSpeciesCategory() {
+            const result = 
+                ! assessment.isAlienSpecies
+                ? "NotAlienSpecie"
+                // : !assessment.horizonDoAssessment
+                // ? "NotDefined1"
+                : !assessment.speciesStatus
+                ? "NotDefined2"
+                : assessment.isRegionallyAlien
+                ? "RegionallyAlien"
+                : assessment.speciesStatus.startsWith("C2") || assessment.speciesStatus.startsWith("C3")
+                ? "AlienSpecie"
+                : "DoorKnocker"
+            return result
+        },
     })
-
-    
+    reaction(
+        () => assessment.alienSpeciesCategory,
+        (alienSpeciesCategory, previousAlienSpeciesCategory) => {
+            const change =
+            (alienSpeciesCategory == "AlienSpecie" && previousAlienSpeciesCategory == "DoorKnocker") ||
+            (alienSpeciesCategory == "DoorKnocker" && previousAlienSpeciesCategory == "AlienSpecie") 
+            // console.log("##¤statuschange: " + change + " " + alienSpeciesCategory + " " + previousAlienSpeciesCategory)
+            action(() => {
+                console.log("##¤statuschange 2: " + change)
+                appState.statusChange = change
+            })()
+        }
+    )
     return assessment
-
 }

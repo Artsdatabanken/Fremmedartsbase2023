@@ -186,7 +186,8 @@ class ViewModel {
                     nameWithPreposition: 'på Svalbard',
                     map: 'svalbard'
                 }
-            }
+            },
+            statusChange: false
         })
 
 
@@ -350,28 +351,6 @@ class ViewModel {
                 })()
             }
         });
-
-
-
-        // autorun(() => {
-            
-
-        //     if(this.assessmentTabs) {
-        //         const b = this.horizonDoAssessment
-        //         const a = this.assessmentTabs ? JSON.stringify(this.assessmentTabs.tabinfos[2].enabled) : "not ready"
-        //         console.log("aaaaaaaaaaaaaaa"  + a + b)
-        //         if(this.assessmentTabs) {
-        //         console.log("aaaaaaaaaaaaaaab" + isObservable(this.assessmentTabs))
-        //         console.log("aaaaaaaaaaaaaaac" + isObservable(this.assessmentTabs.tabinfos))
-        //         console.log("aaaaaaaaaaaaaaad" + isObservable(this.assessmentTabs.tabinfos[2]))
-        //         console.log("aaaaaaaaaaaaaaae" + isObservableProp(this.assessmentTabs.tabinfos[2], "enabled"))
-        //         }
-        //     }
-        // })
-    
-
-
-
         autorun(() => {
             console.log("isServicesReady: " + this.isServicesReady)
             console.log("exp" + (this.expertgroups != null))
@@ -383,12 +362,10 @@ class ViewModel {
             console.log("viewMode: " + this.viewMode)
         });
         autorun(() => {
-            console.log("horizonDoAssessment: " + this.horizonDoAssessment)
-            if(this.assessment) {
-                runInAction(() => this.assessment.riskAssessment.horizonDoAssessment = this.horizonDoAssessment)
+            if(this.assessment && this.assessment.speciesStatus == "C3") {
+                runInAction(() => this.assessment.speciesEstablishmentCategory = "C3")
             }
-
-        });
+        })
         autorun(() => {
             if(this.assessmentTabs && this.assessmentTabs.activeTab ) {
                 console.log("current assessmentTab: " + this.assessmentTabs.activeTab.id )
@@ -400,12 +377,6 @@ class ViewModel {
         autorun(() => {
             console.log("skal vurderes: " + this.skalVurderes)
         });
-
-        // autorun(() => {
-        //     console.log("ASSESSMENT: " + this.assessment.horizonDoScanning)
-        //     this.assessment.horizonDoScanning ?  this.riskAssessmentTabs.activeTab.id = 0 :  this.riskAssessmentTabs.activeTab.id = 1     
-        //     console.log(this.riskAssessmentTabs.activeTab.id) 
-        // })
 
         // **** set assessment and assessmentId ****
         reaction(() => this.assessmentId,
