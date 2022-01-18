@@ -126,7 +126,7 @@ checkStatus = (production) => {
                             <Xcomp.Radio value={"Connected"} observableValue={[assessment, "connected"]} label={labels.SpeciesStatus.assessedWithAnotherTaxon}/>
                             {assessment.connected == "Connected" ? 
                             
-                            assessment.connectedTaxon != null ? 
+                            assessment.connectedTaxon && assessment.connectedTaxon.taxonId != "" ? 
                             <div 
                                     className="speciesNewItem"
                                     onClick={action(() => {
@@ -218,7 +218,7 @@ checkStatus = (production) => {
                             <Xcomp.Radio value={"Shared"} observableValue={[assessment, "connected"]} label={labels.SpeciesStatus.notAssessedButShared} />
                             {assessment.connected == "Shared" ?
 
-                            assessment.connectedTaxon != null ? 
+                            assessment.connectedTaxon != null && assessment.connectedTaxon.taxonId != "" ? 
                             <div 
                                     className="speciesNewItem"
                                     onClick={action(() => {
