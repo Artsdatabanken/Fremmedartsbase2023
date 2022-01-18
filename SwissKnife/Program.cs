@@ -26,7 +26,7 @@ namespace SwissKnife
         }
 
         [Command("maintenance", Description = "Run tasks for maintaining database")]
-        [Subcommand(typeof(TaxonomyWash), typeof(ImportNames), typeof(ImportHSData), typeof(PatchMigration))]
+        [Subcommand(typeof(TaxonomyWash), typeof(TaxonomyWashDirect), typeof(ImportNames), typeof(ImportHSData), typeof(PatchMigration))]
         [HelpOption("--help")]
         internal class Maintenance {
             private int OnExecute(IConsole console)
@@ -49,6 +49,19 @@ namespace SwissKnife
                 private void OnExecute(IConsole console)
                 {
                     MaintenanceService.RunTaxonomyWash(new Prod.Data.EFCore.SqlServerProdDbContext(ConnectionString));
+                }
+            }
+
+            [Command("taxonomywashdirect", Description = "Check and update taxonomy on assessments direct with history")]
+            internal class TaxonomyWashDirect : MaintananceBase
+            {
+                [Option("--speciesgroup", Description = "SpeciesGroup to put assessments in")]
+                [Required]
+                public string SpeciesGroup { get; }
+
+                private void OnExecute(IConsole console)
+                {
+                    MaintenanceService.RunTaxonomyWash(new Prod.Data.EFCore.SqlServerProdDbContext(ConnectionString), SpeciesGroup, false, true);
                 }
             }
 
@@ -180,7 +193,7 @@ namespace SwissKnife
                 {
                     var maintenance = new ImportDataService(ConnectionString);
                     maintenance.Import(console, InputFolder);
-                    MaintenanceService.RunTaxonomyWash(new Prod.Data.EFCore.SqlServerProdDbContext(ConnectionString), true);
+                    MaintenanceService.RunTaxonomyWash(new Prod.Data.EFCore.SqlServerProdDbContext(ConnectionString),"", true, false);
                 }
             }
         }

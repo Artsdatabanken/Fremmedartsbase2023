@@ -36,6 +36,15 @@ namespace SwissKnife.Database
         public string Genus { get; set; }
         public string Species { get; set; }
         public string SubSpecies { get; set; }
+        public ScientificName[] ScientificNames { get; set; }
+
+        public class ScientificName
+        {
+            public int ScientificNameId { get; set; }
+            public bool Accepted { get; set; }
+            public string scientificName { get; set; }
+        public string ScientificNameAuthorship { get; set; }
+        }
 
         // public bool IsDeleted { get; set; } // dont care. always false from the nbic service
     }

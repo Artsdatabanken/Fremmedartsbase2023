@@ -23,7 +23,8 @@ namespace SwissKnife.Database
         //    _database = new Prod.Data.EFCore.SqlServerProdDbContext(connectionString);
         //}
 
-        internal static void RunTaxonomyWash(SqlServerProdDbContext _database, bool firstrun = false)
+        internal static void RunTaxonomyWash(SqlServerProdDbContext _database, string speciesGroup = "" ,
+            bool firstrun = false, bool autoUpdate = false)
         {
             var ts = new TaksonService();
             var batchSize = 1000;
@@ -34,7 +35,7 @@ namespace SwissKnife.Database
                 var batchChanges = false;
                 Console.WriteLine(pointer);
                 _database.ChangeTracker.Clear();
-                var assessments = _database.Assessments.OrderBy(x => x.Id).Skip(pointer).Take(batchSize).ToArray();
+                var assessments = speciesGroup == "" ? _database.Assessments.OrderBy(x => x.Id).Skip(pointer).Take(batchSize).ToArray() : _database.Assessments.Where(x=>x.Expertgroup == speciesGroup).OrderBy(x => x.Id).Skip(pointer).Take(batchSize).ToArray();
                 if (assessments.Length == 0)
                 {
                     break;
@@ -48,7 +49,7 @@ namespace SwissKnife.Database
 
                     var result = prosessContext
                         //.BatchSetAssessmentsToResult()
-                        .CheckTaxonomyForChanges(ts, firstrun);
+                        .CheckTaxonomyForChanges(ts, firstrun, autoUpdate);
                         //.CheckReferencesForChanges(refDict)
                         //.DownLoadArtskartDataIfMissing()
                         //;
@@ -116,11 +117,7 @@ namespace SwissKnife.Database
             dbcontext.SaveChanges();
         }
 
-        public static ProsessContext CheckTaxonomyForChanges(this ProsessContext context,
-    //Dictionary<string, Tuple<object, FA4>> dict, 
-    TaksonService ts,
-    bool firstRun
-    )
+        public static ProsessContext CheckTaxonomyForChanges(this ProsessContext context, TaksonService ts, bool firstRun = false, bool autoUpdate = false)
         {
             var assessment = context.assessment;
             if (assessment.IsDeleted)
@@ -140,11 +137,13 @@ namespace SwissKnife.Database
             var preName = assessment.EvaluatedScientificName + " " + assessment.EvaluatedScientificNameAuthor;
             var postName = currentTaxonomy.ValidScientificName + " " + currentTaxonomy.ValidScientificNameAuthorship;
             var nameChange = !preName.Equals(postName);
-                
+            var scientificNameIdChange = false;
+            var scientificNameChange = false;
+            var taxonIdChange = false;
             if (assessment.EvaluatedScientificNameId.Value != currentTaxonomy.ValidScientificNameId)
             {
-                caseString +=
-                    $"Navnid endret {assessment.EvaluatedScientificNameId.Value} => {currentTaxonomy.ValidScientificNameId}. {(nameChange ? preName + " => " + postName + ". " : string.Empty)}";
+                scientificNameIdChange = true;
+                caseString += $"Navnid endret {assessment.EvaluatedScientificNameId.Value} => {currentTaxonomy.ValidScientificNameId}. {(nameChange ? preName + " => " + postName + ". " : string.Empty)}";
             }
             else
             {
@@ -172,13 +171,15 @@ namespace SwissKnife.Database
 
             if (assessment.TaxonId > 0 && assessment.TaxonId != currentTaxonomy.TaxonId)
             {
+                taxonIdChange = true;
                 caseString += $"Taksonid endret {assessment.TaxonId} => {currentTaxonomy.TaxonId}. ";
             }
 
             if (assessment.EvaluatedScientificName != currentTaxonomy.ValidScientificName ||
                 assessment.EvaluatedScientificNameAuthor != currentTaxonomy.ValidScientificNameAuthorship)
             {
-                if (string.IsNullOrWhiteSpace(caseString)) // ingen endring på taxonid!
+                scientificNameChange = true;
+                if (!taxonIdChange && !scientificNameIdChange) // ingen endring på taxonid!
                 {
 
                     caseString +=
@@ -194,6 +195,14 @@ namespace SwissKnife.Database
             {
                 caseString +=
                     $"Navn ikke endret {assessment.EvaluatedScientificName + " " + assessment.EvaluatedScientificNameAuthor}. ";
+            }
+
+            if ((taxonIdChange || scientificNameIdChange) && autoUpdate && context.historyWorthyChanges == false)
+            {
+                caseString = ""; // blank ut denne for å fjerne kommentarer under 
+                UpdateTaxonomicInfoOnAssessment(assessment, currentTaxonomy);
+                context.changes = true;
+                context.historyWorthyChanges = firstRun == false;
             }
 
 
@@ -362,7 +371,8 @@ namespace SwissKnife.Database
                         $"{importFormat.ScientificNameId} {importFormat.ScientificName} {importFormat.ScientificNameAuthor}");
                     var user = _database.Users
                         .Single(x => x.Id == new Guid("00000000-0000-0000-0000-000000000001"));
-                    var fa4 = CreateNewAssessment(speciesGroup, user, importFormat.ScientificNameId, true, taxonService);
+                    var ti = taxonService.getTaxonInfo(importFormat.ScientificNameId).GetAwaiter().GetResult();
+                    var fa4 = CreateNewAssessment(speciesGroup, user, importFormat.ScientificNameId, true, ti);
                     fa4.EvaluationStatus = "created";
                     fa4.LastUpdatedAt = DateTime.Now;
                     var doc = System.Text.Json.JsonSerializer.Serialize<FA4>(fa4);
@@ -371,7 +381,7 @@ namespace SwissKnife.Database
 
                     var result = prosessContext
                         //.BatchSetAssessmentsToResult()
-                        .CheckTaxonomyForChanges(taxonService, true);
+                        .CheckTaxonomyForChanges(taxonService, true, false);
                     var assessment = new Assessment
                     {
                         Doc = doc,
@@ -447,8 +457,8 @@ namespace SwissKnife.Database
                     var horisontScanning = importFormat.Code != "S: R";
                     var user = _database.Users
                         .Single(x => x.Email == importFormat.AssessedBy);
-                    var fa4 = CreateNewAssessment(importFormat.ExpertGroup, user,
-                        importFormat.EvaluatedScientificNameId, horisontScanning, taxonService);
+                    var ti = taxonService.getTaxonInfo(importFormat.EvaluatedScientificNameId).GetAwaiter().GetResult();
+                    var fa4 = CreateNewAssessment(importFormat.ExpertGroup, user, importFormat.EvaluatedScientificNameId, horisontScanning, ti);
                     fa4.EvaluationStatus = "inprogress";
                     fa4.LastUpdatedAt = DateTime.Now;
 
@@ -518,13 +528,16 @@ namespace SwissKnife.Database
                     }
                     else
                     {
-                        var allmatch = existing.Where(x => (x.ScientificNameId == importFormat.EvaluatedScientificNameId || x.ScientificNameId == fa4.EvaluatedScientificNameId) && x.Expertgroup == fa4.ExpertGroup).ToArray();
+                        var alternativeIds = ti.ScientificNames.Select(x => x.ScientificNameId).ToArray()
+                            .Union(new[] { importFormat.EvaluatedScientificNameId, fa4.EvaluatedScientificNameId.Value}).Distinct().ToArray();
+                        var allmatch = existing.Where(x => alternativeIds.Contains(x.ScientificNameId) && x.Expertgroup == fa4.ExpertGroup).ToArray();
                         //var exst = existing.SingleOrDefault(x => x.ScientificNameId == fa4.EvaluatedScientificNameId && x.Expertgroup != "Testedyr");
+
                         if (allmatch.Length > 0)
                         {
                             // oppdater den eksisterende
                             var ex = _database.Assessments.SingleOrDefault(x =>
-                                (x.ScientificNameId == importFormat.EvaluatedScientificNameId || x.ScientificNameId == fa4.EvaluatedScientificNameId) && x.Expertgroup == fa4.ExpertGroup);
+                                alternativeIds.Contains(x.ScientificNameId) && x.Expertgroup == fa4.ExpertGroup);
                             //var ex = allex.First();
 
                             var theDoc = System.Text.Json.JsonSerializer.Deserialize<FA4>(ex.Doc);
@@ -597,7 +610,7 @@ namespace SwissKnife.Database
             }
         }
         private static FA4 CreateNewAssessment(string expertgroup, User user, int scientificNameId, bool DoorKnocker,
-            TaksonService ts)
+            TaxonInfo ti)
         {
             if (string.IsNullOrWhiteSpace(expertgroup))
             {
@@ -612,8 +625,8 @@ namespace SwissKnife.Database
             var createdby = "createdbyloading";
 
             //var ts = new Prod.Api.Services.TaxonService();
-            var titask = ts.getTaxonInfo(scientificNameId);
-            var ti = titask.GetAwaiter().GetResult();
+
+            
             var (hierarcy, rank) = GetFullPathScientificName(ti);
 
 
