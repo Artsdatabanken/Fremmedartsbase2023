@@ -148,7 +148,7 @@ export class NaturtypeRad extends React.Component {
                     }
                 }
         }
-        return area
+        return area == 0 ? "" : area
     }
         console.log("NT row: " + JSON.stringify(nt))
         return(
