@@ -146,10 +146,12 @@ export default function enhanceAssessment(json, appState) {
             const result = 
                 ! assessment.isAlienSpecies
                 ? "NotAlienSpecie"
+                : assessment.alienSpecieUncertainIfEstablishedBefore1800
+                ? "NotAlienSpecie"
                 // : !assessment.horizonDoAssessment
                 // ? "NotDefined1"
                 : !assessment.speciesStatus
-                ? "NotDefined2"
+                ? "NotDefined"
                 : assessment.isRegionallyAlien
                 ? "RegionallyAlien"
                 : assessment.speciesStatus.startsWith("C2") || assessment.speciesStatus.startsWith("C3")
@@ -157,6 +159,30 @@ export default function enhanceAssessment(json, appState) {
                 : "DoorKnocker"
             return result
         },
+        // get assessmentConclusion() {
+        //     const result = 
+        //         assessment.isAlienSpeciesString == 'true' && 
+        //         (assessment.connectedToAnotherString == "no" || assessment.connectedToAnotherString == "false" ) && 
+        //         (assessment.alienSpecieUncertainIfEstablishedBefore1800String == "no" ) &&
+        //         assessment.speciesStatus != null 
+        //         ? (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3") 
+        //             ? "AssessedSelfReproducing"
+        //             : "AssessedDoorknocker"
+        //         : "WillNotBeRiskAssessed"
+        //     return result
+        // },
+        get assessmentConclusion() {
+            const result = 
+                assessment.connectedToAnother
+                ? "WillNotBeRiskAssessed"
+                : assessment.alienSpeciesCategory == "AlienSpecie"
+                ? "AssessedSelfReproducing"
+                : assessment.alienSpeciesCategory == "DoorKnocker"
+                ? "AssessedDoorknocker"
+                : "WillNotBeRiskAssessed"
+            return result
+        },
+
     })
     reaction(
         () => assessment.alienSpeciesCategory,

@@ -373,7 +373,7 @@ checkStatus = (production) => {
                         <fieldset className="well">
                                         
 
-                               {assessment.isAlienSpeciesString == 'true' && 
+                               {/* {assessment.isAlienSpeciesString == 'true' && 
                                     (assessment.connectedToAnotherString == "no" || assessment.connectedToAnotherString == "false" ) && 
                                     (assessment.alienSpecieUncertainIfEstablishedBefore1800String == "no" ) &&
                                     //|| assessment.alienSpecieUncertainIfEstablishedBefore1800 == false ) &&
@@ -390,7 +390,19 @@ checkStatus = (production) => {
                                     <h3>{labels.SpeciesStatus.conclusion}</h3>
                                     <p>{labels.SpeciesStatus.willNotBeRiskAssessed}</p> 
                                 </div>
+                                } */}
+                                { assessment.assessmentConclusion == "AssessedSelfReproducing"
+                                    ?  <p>{labels.SpeciesStatus.willBeRiskAssessed}<b>{labels.SpeciesStatus.assessedSelfReproducing}</b>.</p>
+                                    : assessment.assessmentConclusion == "AssessedDoorknocker"
+                                    ? <p>{labels.SpeciesStatus.willBeRiskAssessed}<b>{labels.SpeciesStatus.assessedDoorknocker}</b>.</p> 
+                                    : assessment.assessmentConclusion == "WillNotBeRiskAssessed"
+                                    ?   <div>
+                                            <h3>{labels.SpeciesStatus.conclusion}</h3>
+                                            <p>{labels.SpeciesStatus.willNotBeRiskAssessed}</p> 
+                                        </div>
+                                    : null
                                 }
+
                         </fieldset>
                     }
 
