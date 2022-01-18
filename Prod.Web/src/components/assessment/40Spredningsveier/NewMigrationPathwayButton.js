@@ -59,7 +59,7 @@ export default class NewMigrationPathwayButton extends React.Component {
     render() {
         const {migrationPathway, onSave, koder, hideIntroductionSpread, disabled, labels, mainCodes, mainCat} = this.props;
         const mplabels = labels.MigrationPathway
-        const disable = disabled && (migrationPathway.name != "øvrig rømning/forvilling" && migrationPathway.name != "fra forskning" && migrationPathway.name != "til forskning" && migrationPathway.name != "fra botaniske/zoologiske hager / akvarier (ikke privat)" && migrationPathway.name != "til botaniske/zoologiske hager / akvarier (ikke privat)")
+        const disable = disabled && (migrationPathway.name != "direkte til forbruker per post" && migrationPathway.name != "privatpersoners egenimport" && migrationPathway.name != "med annet formål" && migrationPathway.name != "øvrig rømning/forvilling" && migrationPathway.name != "fra forskning" && migrationPathway.name != "til forskning" && migrationPathway.name != "fra botaniske/zoologiske hager / akvarier (ikke privat)" && migrationPathway.name != "til botaniske/zoologiske hager / akvarier (ikke privat)")
         const heading = mainCat + " " + migrationPathway.name
         // this.newMigrationPathway.Category = migrationPathway.name
         // try {
