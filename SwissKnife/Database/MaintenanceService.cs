@@ -123,118 +123,81 @@ namespace SwissKnife.Database
     )
         {
             var assessment = context.assessment;
-            var task = ts.getTaxonInfo(assessment.EvaluatedScientificNameId.Value);
-            task.Wait();
-            var currentTaxonomy = task.Result;
-            //if (assessment.LatinsknavnId != currentTaxonomy.ValidScientificNameId) // latinsknavnid - bare tull
-            //{
             if (assessment.IsDeleted)
             {
                 return context;
             }
+            var currentTaxonomy = ts.getTaxonInfo(assessment.EvaluatedScientificNameId.Value).GetAwaiter().GetResult();
 
-            //}
-            var caseString = String.Empty;
+            var caseString = string.Empty;
             if (currentTaxonomy == null)
             {
                 caseString +=
                     $"NB! Navnid ikke funnet {assessment.EvaluatedScientificNameId} {assessment.EvaluatedScientificName + " " + assessment.EvaluatedScientificNameAuthor}. ";
+                return context;
+            }
+
+            var preName = assessment.EvaluatedScientificName + " " + assessment.EvaluatedScientificNameAuthor;
+            var postName = currentTaxonomy.ValidScientificName + " " + currentTaxonomy.ValidScientificNameAuthorship;
+            var nameChange = !preName.Equals(postName);
+                
+            if (assessment.EvaluatedScientificNameId.Value != currentTaxonomy.ValidScientificNameId)
+            {
+                caseString +=
+                    $"Navnid endret {assessment.EvaluatedScientificNameId.Value} => {currentTaxonomy.ValidScientificNameId}. {(nameChange ? preName + " => " + postName + ". " : string.Empty)}";
             }
             else
             {
-                var preName = assessment.EvaluatedScientificName + " " + assessment.EvaluatedScientificNameAuthor;
-                var postName = currentTaxonomy.ValidScientificName + " " + currentTaxonomy.ValidScientificNameAuthorship;
-                var nameChange = !preName.Equals(postName);
-                //if (assessment.TaxonId != currentTaxonomy.TaxonId && assessment.VurdertVitenskapeligNavnId == currentTaxonomy.ValidScientificNameId)
-                //{
-                //    caseString = "";
-                //}
-                if (assessment.EvaluatedScientificNameId.Value != currentTaxonomy.ValidScientificNameId)
+                //sjekk om populærnavn eller sti er feil...
+                if (currentTaxonomy.PrefferedPopularname != null && (assessment.EvaluatedVernacularName == null ||
+                                                                     !assessment.EvaluatedVernacularName.Equals(currentTaxonomy
+                                                                         .PrefferedPopularname)))
                 {
-                    caseString +=
-                        $"Navnid endret {assessment.EvaluatedScientificNameId.Value} => {currentTaxonomy.ValidScientificNameId}. {(nameChange ? preName + " => " + postName + ". " : string.Empty)}";
-                }
-                else
-                {
-                    //sjekk om populærnavn eller sti er feil...
-                    if (currentTaxonomy.PrefferedPopularname != null && (assessment.EvaluatedVernacularName == null ||
-                                                                         !assessment.EvaluatedVernacularName.Equals(currentTaxonomy
-                                                                             .PrefferedPopularname)))
-                    {
-                        Console.WriteLine(
-                            $"Populærnavn {assessment.EvaluatedVernacularName} => {currentTaxonomy.PrefferedPopularname}");
-                        assessment.EvaluatedVernacularName = currentTaxonomy.PrefferedPopularname;
-                        context.changes = true;
-                    }
-
-                    var assessmentVurdertVitenskapeligNavnHierarki =
-                        TaksonService.GetFullPathScientificName(currentTaxonomy).Item1;
-                    if (assessmentVurdertVitenskapeligNavnHierarki != assessment.TaxonHierarcy)
-                    {
-                        Console.WriteLine(
-                            $"Sti {assessment.TaxonHierarcy} => {assessmentVurdertVitenskapeligNavnHierarki}");
-                        assessment.TaxonHierarcy = assessmentVurdertVitenskapeligNavnHierarki;
-                        context.changes = true;
-                    }
-
-                    //if (assessment.LatinsknavnId != assessment.EvaluatedScientificNameId)
-                    //{
-                    //    Console.WriteLine(
-                    //        $"Latinsknavnid <>  {assessment.LatinsknavnId} => {assessment.EvaluatedScientificNameId}{(nameChange ? " " + preName + " => " + postName + ". " : string.Empty)}");
-                    //    assessment.LatinsknavnId = assessment.EvaluatedScientificNameId;
-                    //    context.changes = true;
-                    //}
-
+                    Console.WriteLine(
+                        $"Populærnavn {assessment.EvaluatedVernacularName} => {currentTaxonomy.PrefferedPopularname}");
+                    assessment.EvaluatedVernacularName = currentTaxonomy.PrefferedPopularname;
+                    context.changes = true;
                 }
 
-                if (assessment.TaxonId > 0 && assessment.TaxonId != currentTaxonomy.TaxonId)
-                {
-                    caseString += $"Taksonid endret {assessment.TaxonId} => {currentTaxonomy.TaxonId}. ";
-                }
+                var assessmentVurdertVitenskapeligNavnHierarki = TaksonService.GetFullPathScientificName(currentTaxonomy).Item1;
 
-                if (assessment.EvaluatedScientificName != currentTaxonomy.ValidScientificName ||
-                    assessment.EvaluatedScientificNameAuthor != currentTaxonomy.ValidScientificNameAuthorship)
+                if (assessmentVurdertVitenskapeligNavnHierarki != assessment.TaxonHierarcy)
                 {
-                    if (String.IsNullOrWhiteSpace(caseString))
-                    {
-
-                        caseString +=
-                            $"Navn endret {assessment.EvaluatedScientificName + " " + assessment.EvaluatedScientificNameAuthor} => {currentTaxonomy.ValidScientificName + " " + currentTaxonomy.ValidScientificNameAuthorship}. ";
-                        // her endrer vi automagisk navn
-                        var oldTaxonInfo = new TaxonHistory()
-                        {
-                            date = DateTime.Now,
-                            username = "steinho",
-                            Ekspertgruppe = assessment.ExpertGroup,
-                            TaxonId = assessment.TaxonId,
-                            TaxonRank = assessment.EvaluatedScientificNameRank,
-                            VitenskapeligNavn = assessment.EvaluatedScientificName,
-                            VitenskapeligNavnAutor = assessment.EvaluatedScientificNameAuthor,
-                            VitenskapeligNavnHierarki = assessment.TaxonHierarcy,
-                            VitenskapeligNavnId = assessment.EvaluatedScientificNameId.Value
-                        };
-                        assessment.TaxonomicHistory.Add(oldTaxonInfo);
-                        assessment.EvaluatedScientificNameAuthor = currentTaxonomy.ValidScientificNameAuthorship;
-                        assessment.EvaluatedScientificName = currentTaxonomy.ValidScientificName;
-                        assessment.EvaluatedVernacularName = currentTaxonomy.PrefferedPopularname;
-                        assessment.TaxonHierarcy =
-                            TaksonService.GetFullPathScientificName(currentTaxonomy).Item1;
-                        assessment.TaxonId = currentTaxonomy.TaxonId;
-                        assessment.EvaluatedScientificNameRank = currentTaxonomy.CategoryValue;
-                        //assessment.LatinsknavnId = currentTaxonomy.ValidScientificNameId;
-                        context.changes = true;
-                        context.historyWorthyChanges = firstRun == false;
-                    }
-                }
-                else if (!String.IsNullOrWhiteSpace(caseString))
-                {
-                    caseString +=
-                        $"Navn ikke endret {assessment.EvaluatedScientificName + " " + assessment.EvaluatedScientificNameAuthor}. ";
+                    Console.WriteLine(
+                        $"Sti {assessment.TaxonHierarcy} => {assessmentVurdertVitenskapeligNavnHierarki}");
+                    assessment.TaxonHierarcy = assessmentVurdertVitenskapeligNavnHierarki;
+                    context.changes = true;
                 }
             }
 
+            if (assessment.TaxonId > 0 && assessment.TaxonId != currentTaxonomy.TaxonId)
+            {
+                caseString += $"Taksonid endret {assessment.TaxonId} => {currentTaxonomy.TaxonId}. ";
+            }
 
-            if (!String.IsNullOrWhiteSpace(caseString) && !firstRun)
+            if (assessment.EvaluatedScientificName != currentTaxonomy.ValidScientificName ||
+                assessment.EvaluatedScientificNameAuthor != currentTaxonomy.ValidScientificNameAuthorship)
+            {
+                if (string.IsNullOrWhiteSpace(caseString)) // ingen endring på taxonid!
+                {
+
+                    caseString +=
+                        $"Navn endret {assessment.EvaluatedScientificName + " " + assessment.EvaluatedScientificNameAuthor} => {currentTaxonomy.ValidScientificName + " " + currentTaxonomy.ValidScientificNameAuthorship}. ";
+                    // her endrer vi automagisk navn
+                    UpdateTaxonomicInfoOnAssessment(assessment, currentTaxonomy);
+                    //assessment.LatinsknavnId = currentTaxonomy.ValidScientificNameId;
+                    context.changes = true;
+                    context.historyWorthyChanges = firstRun == false;
+                }
+            }
+            else if (!string.IsNullOrWhiteSpace(caseString))
+            {
+                caseString +=
+                    $"Navn ikke endret {assessment.EvaluatedScientificName + " " + assessment.EvaluatedScientificNameAuthor}. ";
+            }
+
+
+            if (!string.IsNullOrWhiteSpace(caseString) && !firstRun)
             {
                 var endring = caseString.StartsWith("Navn endret") ? TaksonomiskEndring : PotensiellTaksonomiskEndring;
                 var message = endring + caseString +
@@ -248,65 +211,103 @@ namespace SwissKnife.Database
                                   : "Fremmedartsteamet trenger bekreftelse på denne endringen før vurderingen flyttes over på nytt navn. Svar på denne kommentaren eller send en mail til fremmedearter@artsdatabanken.no"
                               );
 
-                AssessmentComment eksisting = null;
-                var eksistings = context.dbcontext.Comments.Where(x =>
-                    x.AssessmentId == context.DbAssessment.Id
-                    // && x.Closed == false 
-                    && x.IsDeleted == false &&
-                    (x.Type == CommentType.TaxonomicChange || x.Type == CommentType.PotentialTaxonomicChange)).ToArray();
-                if (eksistings.Length > 1)
-                {
-                    // for mange - slett
-                    eksisting = eksistings[0];
-                    for (int i = 1; i < eksistings.Length; i++)
-                    {
-                        context.dbcontext.Comments.Remove(eksistings[i]);
-                        context.changes = true;
-                    }
-                }
-                else if (eksistings.Length == 1)
-                {
-                    eksisting = eksistings[0];
-                }
-
-
-                if (eksisting == null)
-                {
-                    eksisting = new AssessmentComment
-                    {
-                        Comment = message,
-                        AssessmentId = context.DbAssessment.Id,
-                        CommentDate = DateTime.Today,
-                        // todo: put in config - think sweeden
-                        UserId = new Guid("00000000-0000-0000-0000-000000000001"),
-                        Type = message.StartsWith(PotensiellTaksonomiskEndring) ? CommentType.PotentialTaxonomicChange : CommentType.TaxonomicChange
-                }; // siris id
-                    context.dbcontext.Comments.Add(eksisting);
-                    context.changes = true;
-                    Console.WriteLine(message);
-                }
-                else if (eksisting.Comment != message)
-                {
-                    eksisting.Comment = message;
-                    eksisting.CommentDate = DateTime.Today;
-                    context.changes = true;
-                    Console.WriteLine(message);
-                }
+                CreateOrAddTaxonomicCommentToAssessment(context, context.DbAssessment.Id, message);
             }
             else if (context.DbAssessment != null)
             {
-                var existing = context.dbcontext.Comments.SingleOrDefault(x =>
-                    x.AssessmentId == context.DbAssessment.Id && x.Closed == false && x.IsDeleted == false && (x.Type == CommentType.TaxonomicChange || x.Type == CommentType.PotentialTaxonomicChange)
-                    );
-                if (existing != null)
-                {
-                    context.dbcontext.Comments.Remove(existing);
-                    context.changes = true;
-                }
+                RemoveTaxonomicalCommentsFromAssessment(context, context.DbAssessment.Id);
             }
 
             return context;
         }
+
+        private static void UpdateTaxonomicInfoOnAssessment(FA4 assessment, TaxonInfo currentTaxonomy)
+        {
+            var oldTaxonInfo = new TaxonHistory()
+            {
+                date = DateTime.Now,
+                username = "steinho",
+                Ekspertgruppe = assessment.ExpertGroup,
+                TaxonId = assessment.TaxonId,
+                TaxonRank = assessment.EvaluatedScientificNameRank,
+                VitenskapeligNavn = assessment.EvaluatedScientificName,
+                VitenskapeligNavnAutor = assessment.EvaluatedScientificNameAuthor,
+                VitenskapeligNavnHierarki = assessment.TaxonHierarcy,
+                VitenskapeligNavnId = assessment.EvaluatedScientificNameId.Value
+            };
+            assessment.TaxonomicHistory.Add(oldTaxonInfo);
+            assessment.EvaluatedScientificNameAuthor = currentTaxonomy.ValidScientificNameAuthorship;
+            assessment.EvaluatedScientificName = currentTaxonomy.ValidScientificName;
+            assessment.EvaluatedVernacularName = currentTaxonomy.PrefferedPopularname;
+            assessment.TaxonHierarcy =
+                TaksonService.GetFullPathScientificName(currentTaxonomy).Item1;
+            assessment.TaxonId = currentTaxonomy.TaxonId;
+            assessment.EvaluatedScientificNameRank = currentTaxonomy.CategoryValue;
+        }
+
+        private static void CreateOrAddTaxonomicCommentToAssessment(ProsessContext context, int dbAssessmentId, string message)
+        {
+            AssessmentComment eksisting = null;
+            var eksistings = context.dbcontext.Comments.Where(x =>
+                x.AssessmentId == dbAssessmentId
+                // && x.Closed == false 
+                && x.IsDeleted == false &&
+                (x.Type == CommentType.TaxonomicChange || x.Type == CommentType.PotentialTaxonomicChange)).ToArray();
+            if (eksistings.Length > 1)
+            {
+                // for mange - slett
+                eksisting = eksistings[0];
+                for (int i = 1; i < eksistings.Length; i++)
+                {
+                    context.dbcontext.Comments.Remove(eksistings[i]);
+                    context.changes = true;
+                }
+            }
+            else if (eksistings.Length == 1)
+            {
+                eksisting = eksistings[0];
+            }
+
+
+            if (eksisting == null)
+            {
+                eksisting = new AssessmentComment
+                {
+                    Comment = message,
+                    AssessmentId = dbAssessmentId,
+                    CommentDate = DateTime.Today,
+                    // todo: put in config - think sweeden
+                    UserId = new Guid("00000000-0000-0000-0000-000000000001"),
+                    Type = message.StartsWith(PotensiellTaksonomiskEndring)
+                        ? CommentType.PotentialTaxonomicChange
+                        : CommentType.TaxonomicChange
+                }; // siris id
+                context.dbcontext.Comments.Add(eksisting);
+                context.changes = true;
+                Console.WriteLine(message);
+            }
+            else if (eksisting.Comment != message)
+            {
+                eksisting.Comment = message;
+                eksisting.CommentDate = DateTime.Today;
+                context.changes = true;
+                Console.WriteLine(message);
+            }
+        }
+
+        private static void RemoveTaxonomicalCommentsFromAssessment(ProsessContext context, int assessmentId)
+        {
+            var existing = context.dbcontext.Comments.SingleOrDefault(x =>
+                x.AssessmentId == assessmentId && x.Closed == false && x.IsDeleted == false &&
+                (x.Type == CommentType.TaxonomicChange || x.Type == CommentType.PotentialTaxonomicChange)
+            );
+            if (existing != null)
+            {
+                context.dbcontext.Comments.Remove(existing);
+                context.changes = true;
+            }
+        }
+
         public class ProsessContext
         {
             public FA4 assessment { get; set; }
@@ -432,7 +433,8 @@ namespace SwissKnife.Database
                 var records = csv.GetRecords<VascularPlantsImportFormat>();
                 foreach (var importFormat in records)
                 {
-                    if (importFormat.EvaluatedScientificNameAuthor == "null") importFormat.EvaluatedScientificNameAuthor = null;
+                    if (importFormat.EvaluatedScientificNameAuthor == "null")
+                        importFormat.EvaluatedScientificNameAuthor = null;
                     Console.WriteLine(
                         $"{importFormat.EvaluatedScientificNameId} {importFormat.EvaluatedScientificName} {importFormat.EvaluatedScientificNameAuthor}");
                     if (importFormat.Code == "S: H")
@@ -445,36 +447,49 @@ namespace SwissKnife.Database
                     var horisontScanning = importFormat.Code != "S: R";
                     var user = _database.Users
                         .Single(x => x.Email == importFormat.AssessedBy);
-                    var fa4 = CreateNewAssessment(importFormat.ExpertGroup, user, importFormat.EvaluatedScientificNameId, horisontScanning, taxonService);
+                    var fa4 = CreateNewAssessment(importFormat.ExpertGroup, user,
+                        importFormat.EvaluatedScientificNameId, horisontScanning, taxonService);
                     fa4.EvaluationStatus = "inprogress";
                     fa4.LastUpdatedAt = DateTime.Now;
-                    
+
+
                     switch (importFormat.DoorknockerType)
-                        {
-                            case "canNotEstablishWithin50years":
-                                fa4.NotApplicableCategory = "canNotEstablishWithin50years";
-                                break;
-                            case "NewPotentialDoorknocker":
-                                break;
-                            case "NotPresentInRegion":
-                                fa4.NotApplicableCategory = "NotPresentInRegion";
-                                break;
-                            case "traditionalProductionSpecie":
-                                fa4.NotApplicableCategory = "traditionalProductionSpecie";
-                                break;
-                            default:
-                                throw new NotImplementedException();
-                        }
+                    {
+                        case "canNotEstablishWithin50years":
+                            fa4.NotApplicableCategory = "canNotEstablishWithin50years";
+                            break;
+                        case "NewPotentialDoorknocker":
+                            break;
+                        case "NotPresentInRegion":
+                            fa4.NotApplicableCategory = "NotPresentInRegion";
+                            break;
+                        case "traditionalProductionSpecie":
+                            fa4.NotApplicableCategory = "traditionalProductionSpecie";
+                            break;
+                        default:
+                            throw new NotImplementedException();
+                    }
+
                     if (horisontScanning)
                     {
-                        if (!string.IsNullOrWhiteSpace(importFormat.HorizonEstablismentPotential)) fa4.HorizonEstablismentPotential = importFormat.HorizonEstablismentPotential;
-                        if (!string.IsNullOrWhiteSpace(importFormat.HorizonEstablismentPotentialDescription)) fa4.HorizonEstablismentPotentialDescription = importFormat.HorizonEstablismentPotentialDescription;
-                        if (!string.IsNullOrWhiteSpace(importFormat.HorizonEcologicalEffect)) fa4.HorizonEcologicalEffect = importFormat.HorizonEcologicalEffect;
-                        if (!string.IsNullOrWhiteSpace(importFormat.HorizonEcologicalEffectDescription)) fa4.HorizonEcologicalEffectDescription = importFormat.HorizonEcologicalEffectDescription;
+                        if (!string.IsNullOrWhiteSpace(importFormat.HorizonEstablismentPotential))
+                            fa4.HorizonEstablismentPotential = importFormat.HorizonEstablismentPotential;
+                        if (!string.IsNullOrWhiteSpace(importFormat.HorizonEstablismentPotentialDescription))
+                            fa4.HorizonEstablismentPotentialDescription =
+                                importFormat.HorizonEstablismentPotentialDescription;
+                        if (!string.IsNullOrWhiteSpace(importFormat.HorizonEcologicalEffect))
+                            fa4.HorizonEcologicalEffect = importFormat.HorizonEcologicalEffect;
+                        if (!string.IsNullOrWhiteSpace(importFormat.HorizonEcologicalEffectDescription))
+                            fa4.HorizonEcologicalEffectDescription = importFormat.HorizonEcologicalEffectDescription;
                     }
+
                     var doc = System.Text.Json.JsonSerializer.Serialize<FA4>(fa4);
 
-                    var prosessContext = new ProsessContext { assessment = fa4, changes = false, DbAssessment = null, dbcontext = _database, historyWorthyChanges = false };
+                    var prosessContext = new ProsessContext
+                    {
+                        assessment = fa4, changes = false, DbAssessment = null, dbcontext = _database,
+                        historyWorthyChanges = false
+                    };
 
                     var result = prosessContext
                         //.BatchSetAssessmentsToResult()
@@ -487,42 +502,97 @@ namespace SwissKnife.Database
                         ScientificNameId = fa4.EvaluatedScientificNameId.Value,
                         ChangedAt = fa4.LastUpdatedAt
                     };
-                    if (fa4.EvaluatedScientificNameId != importFormat.EvaluatedScientificNameId || fa4.EvaluatedScientificName != importFormat.EvaluatedScientificName || (fa4.EvaluatedScientificNameAuthor == null ? string.Empty : fa4.EvaluatedScientificNameAuthor.ToLowerInvariant()) != (importFormat.EvaluatedScientificNameAuthor == null ? string.Empty : importFormat.EvaluatedScientificNameAuthor.ToLowerInvariant()))
+                    if (fa4.EvaluatedScientificNameId != importFormat.EvaluatedScientificNameId 
+                        //||
+                        //fa4.EvaluatedScientificName != importFormat.EvaluatedScientificName ||
+                        //(fa4.EvaluatedScientificNameAuthor == null
+                        //    ? string.Empty
+                        //    : fa4.EvaluatedScientificNameAuthor.ToLowerInvariant()) !=
+                        //(importFormat.EvaluatedScientificNameAuthor == null
+                        //    ? string.Empty
+                        //    : importFormat.EvaluatedScientificNameAuthor.ToLowerInvariant())
+                        )
                     {
                         Console.WriteLine(
                             $" ERROR - not imported {fa4.EvaluatedScientificNameId} <> {importFormat.EvaluatedScientificNameId}  {fa4.EvaluatedScientificName} {fa4.EvaluatedScientificNameAuthor} <> {importFormat.EvaluatedScientificNameAuthor}");
                     }
                     else
                     {
-                        if (existing.Any(x => x.ScientificNameId == fa4.EvaluatedScientificNameId && x.Expertgroup == fa4.ExpertGroup))
+                        var allmatch = existing.Where(x => (x.ScientificNameId == importFormat.EvaluatedScientificNameId || x.ScientificNameId == fa4.EvaluatedScientificNameId) && x.Expertgroup == fa4.ExpertGroup).ToArray();
+                        //var exst = existing.SingleOrDefault(x => x.ScientificNameId == fa4.EvaluatedScientificNameId && x.Expertgroup != "Testedyr");
+                        if (allmatch.Length > 0)
                         {
-                            Console.WriteLine(
-                                $" Warn Existing Assessment {fa4.EvaluatedScientificNameId} {fa4.EvaluatedScientificName} {fa4.EvaluatedScientificNameAuthor}");
+                            // oppdater den eksisterende
+                            var ex = _database.Assessments.SingleOrDefault(x =>
+                                (x.ScientificNameId == importFormat.EvaluatedScientificNameId || x.ScientificNameId == fa4.EvaluatedScientificNameId) && x.Expertgroup == fa4.ExpertGroup);
+                            //var ex = allex.First();
+
+                            var theDoc = System.Text.Json.JsonSerializer.Deserialize<FA4>(ex.Doc);
+                            theDoc.HorizonEstablismentPotential = fa4.HorizonEstablismentPotential;
+                            theDoc.HorizonEstablismentPotentialDescription = fa4.HorizonEstablismentPotentialDescription;
+                            theDoc.HorizonEcologicalEffect = fa4.HorizonEcologicalEffect;
+                            theDoc.HorizonEcologicalEffectDescription = fa4.HorizonEcologicalEffectDescription;
+                            
+                            theDoc.HorizonDoScanning = fa4.HorizonDoScanning;
+                            if (string.IsNullOrEmpty(theDoc.HorizonScanningStatus) && theDoc.HorizonDoScanning)
+                            {
+                                theDoc.HorizonScanningStatus = fa4.HorizonScanningStatus;
+                            }
+
+                            //theDoc.HorizonScanningStatus = fa4.HorizonDoScanning;
+
+
+                            theDoc.NotApplicableCategory = fa4.NotApplicableCategory;
+                            theDoc.EvaluationStatus = fa4.EvaluationStatus;
+                            theDoc.LastUpdatedAt = fa4.LastUpdatedAt;
+                            theDoc.LastUpdatedBy = fa4.LastUpdatedBy;
+
+                            theDoc.EvaluatedScientificName = fa4.EvaluatedScientificName;
+                            theDoc.EvaluatedScientificNameId = fa4.EvaluatedScientificNameId;
+                            theDoc.EvaluatedScientificNameAuthor = fa4.EvaluatedScientificNameAuthor;
+                            theDoc.TaxonHierarcy = fa4.TaxonHierarcy;
+                            theDoc.TaxonId = fa4.TaxonId;
+                            theDoc.EvaluatedVernacularName = fa4.EvaluatedVernacularName;
+
+                            ex.Expertgroup = fa4.ExpertGroup;
+                            ex.LastUpdatedAt = fa4.LastUpdatedAt;
+                            ex.LastUpdatedByUserId = user.Id;
+                            ex.ScientificNameId = fa4.EvaluatedScientificNameId.Value;
+                            ex.ChangedAt = fa4.LastUpdatedAt;
+                            ex.Doc = System.Text.Json.JsonSerializer.Serialize<FA4>(theDoc);
+
+                            datetime = ex.LastUpdatedAt;
+                            _database.SaveChanges();
                         }
+                        //if (existing.Any(x => x.ScientificNameId == fa4.EvaluatedScientificNameId && x.Expertgroup == fa4.ExpertGroup))
+                        //{
+                        //    Console.WriteLine(
+                        //        $" Warn Existing Assessment {fa4.EvaluatedScientificNameId} {fa4.EvaluatedScientificName} {fa4.EvaluatedScientificNameAuthor}");
+                        //}
+                        //else
+                        //{
+                        //    var exst = existing.FirstOrDefault(x => x.ScientificNameId == fa4.EvaluatedScientificNameId);
+                        //    if (exst != null)
+                        //    {
+                        //        Console.WriteLine(
+                        //            $" There is an existing Assessment for this name in expertgroup {exst.Expertgroup} {fa4.EvaluatedScientificNameId} {fa4.EvaluatedScientificName} {fa4.EvaluatedScientificNameAuthor}");
+                        //    }
                         else
                         {
-                            var exst = existing.FirstOrDefault(x => x.ScientificNameId == fa4.EvaluatedScientificNameId);
-                            if (exst != null)
-                            {
-                                Console.WriteLine(
-                                    $" There is an existing Assessment for this name in expertgroup {exst.Expertgroup} {fa4.EvaluatedScientificNameId} {fa4.EvaluatedScientificName} {fa4.EvaluatedScientificNameAuthor}");
-                            }
-                            else
-                            {
-                                _database.Assessments.Add(assessment);
-                                datetime = assessment.LastUpdatedAt;
-                                _database.SaveChanges();
-                            }
+                            _database.Assessments.Add(assessment);
+                            datetime = assessment.LastUpdatedAt;
+                            _database.SaveChanges();
                         }
+
                     }
 
                 }
 
                 if (datetime > DateTime.MinValue)
                 {
-                    var timestamp = _database.TimeStamp.Single();
-                    timestamp.DateTimeUpdated = datetime;
-                    _database.SaveChanges();
+                    //var timestamp = _database.TimeStamp.Single();
+                    //timestamp.DateTimeUpdated = datetime;
+                    //_database.SaveChanges();
                 }
             }
         }
