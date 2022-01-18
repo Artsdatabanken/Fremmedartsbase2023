@@ -124,9 +124,9 @@ checkStatus = (production) => {
                             <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/>                             
                            }
                             <Xcomp.Radio value={"Connected"} observableValue={[assessment, "connected"]} label={labels.SpeciesStatus.assessedWithAnotherTaxon}/>
-                            {assessment.connected == "Connected" && 
+                            {assessment.connected == "Connected" ? 
                             
-                            assessment.connectedTaxon ? 
+                            assessment.connectedTaxon != null ? 
                             <div 
                                     className="speciesNewItem"
                                     onClick={action(() => {
@@ -143,7 +143,7 @@ checkStatus = (production) => {
                                         
                                     }
                                 >
-                                    <div className={"rlCategory " + assessment.connectedTaxon.redListCategory}>{newTaxon.RedListCategory}</div>
+                                    <div className={"rlCategory " + assessment.connectedTaxon.redListCategory}>{ assessment.connectedTaxon.redListCategory}</div>
                                     <div className="vernacularName">{assessment.connectedTaxon.vernacularName}</div>
                                     <div className="scientificName">{assessment.connectedTaxon.scientificName}</div>
                                     <div className="author">{"(" + assessment.connectedTaxon.scientificNameAuthor + ")"}</div>
@@ -211,14 +211,14 @@ checkStatus = (production) => {
                                     </div>
                                 </div> :
                                 null}
-                            </div> }
+                            </div> : null }
                                
                                 
                             
                             <Xcomp.Radio value={"Shared"} observableValue={[assessment, "connected"]} label={labels.SpeciesStatus.notAssessedButShared} />
-                            {assessment.connected == "Shared" && 
+                            {assessment.connected == "Shared" ?
 
-                            assessment.connectedTaxon ? 
+                            assessment.connectedTaxon != null ? 
                             <div 
                                     className="speciesNewItem"
                                     onClick={action(() => {
@@ -235,7 +235,7 @@ checkStatus = (production) => {
                                         
                                     }
                                 >
-                                    <div className={"rlCategory " + assessment.connectedTaxon.redListCategory}>{newTaxon.RedListCategory}</div>
+                                    <div className={"rlCategory " + assessment.connectedTaxon.redListCategory}>{assessment.connectedTaxon.RedListCategory}</div>
                                     <div className="vernacularName">{assessment.connectedTaxon.vernacularName}</div>
                                     <div className="scientificName">{assessment.connectedTaxon.scientificName}</div>
                                     <div className="author">{"(" + assessment.connectedTaxon.scientificNameAuthor + ")"}</div>
@@ -310,7 +310,7 @@ checkStatus = (production) => {
                                     </div>
                                 </div> :
                                 null}
-                                </div> }
+                                </div> : null }
                                
                             </div> : null }
                     </div> : null}
