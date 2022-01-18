@@ -384,22 +384,22 @@ namespace SwissKnife.Database
 
                 exAssessment.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes = newAssesment.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes;
 
-                exAssessment.RiskAssessment.YearFirstIndoors = 1;
-                exAssessment.RiskAssessment.YearFirstIndoorsInsecure = false;
-                exAssessment.RiskAssessment.YearFirstReproductionIndoors = 1;
-                exAssessment.RiskAssessment.YearFirstReproductionIndoorsInsecure = false;
-                exAssessment.RiskAssessment.YearFirstProductionOutdoors = 1;
-                exAssessment.RiskAssessment.YearFirstProductionOutdoorsInsecure = false;
-                exAssessment.RiskAssessment.YearFirstReproductionOutdoors = 1;
-                exAssessment.RiskAssessment.YearFirstReproductionOutdoorsInsecure = false;
-                exAssessment.RiskAssessment.YearFirstEstablishmentProductionArea = 1;
-                exAssessment.RiskAssessment.YearFirstEstablishmentProductionAreaInsecure = false;
-                exAssessment.RiskAssessment.YearFirstNature = 1;
-                exAssessment.RiskAssessment.YearFirstNatureInsecure = false;
-                exAssessment.RiskAssessment.YearFirstReproductionNature = 1;
-                exAssessment.RiskAssessment.YearFirstReproductionNatureInsecure = false;
-                exAssessment.RiskAssessment.YearFirstEstablishedNature = 1;
-                exAssessment.RiskAssessment.YearFirstEstablishedNatureInsecure = false;
+                exAssessment.RiskAssessment.YearFirstIndoors = newAssesment.RiskAssessment.YearFirstIndoors;
+                exAssessment.RiskAssessment.YearFirstIndoorsInsecure = newAssesment.RiskAssessment.YearFirstIndoorsInsecure;
+                exAssessment.RiskAssessment.YearFirstReproductionIndoors = newAssesment.RiskAssessment.YearFirstReproductionIndoors;
+                exAssessment.RiskAssessment.YearFirstReproductionIndoorsInsecure = newAssesment.RiskAssessment.YearFirstReproductionIndoorsInsecure;
+                exAssessment.RiskAssessment.YearFirstProductionOutdoors = newAssesment.RiskAssessment.YearFirstProductionOutdoors;
+                exAssessment.RiskAssessment.YearFirstProductionOutdoorsInsecure = newAssesment.RiskAssessment.YearFirstProductionOutdoorsInsecure;
+                exAssessment.RiskAssessment.YearFirstReproductionOutdoors = newAssesment.RiskAssessment.YearFirstReproductionOutdoors;
+                exAssessment.RiskAssessment.YearFirstReproductionOutdoorsInsecure = newAssesment.RiskAssessment.YearFirstReproductionOutdoorsInsecure;
+                exAssessment.RiskAssessment.YearFirstEstablishmentProductionArea = newAssesment.RiskAssessment.YearFirstEstablishmentProductionArea;
+                exAssessment.RiskAssessment.YearFirstEstablishmentProductionAreaInsecure = newAssesment.RiskAssessment.YearFirstEstablishmentProductionAreaInsecure;
+                exAssessment.RiskAssessment.YearFirstNature = newAssesment.RiskAssessment.YearFirstNature;
+                exAssessment.RiskAssessment.YearFirstNatureInsecure = newAssesment.RiskAssessment.YearFirstNatureInsecure;
+                exAssessment.RiskAssessment.YearFirstReproductionNature = newAssesment.RiskAssessment.YearFirstReproductionNature;
+                exAssessment.RiskAssessment.YearFirstReproductionNatureInsecure = newAssesment.RiskAssessment.YearFirstReproductionNatureInsecure;
+                exAssessment.RiskAssessment.YearFirstEstablishedNature = newAssesment.RiskAssessment.YearFirstEstablishedNature;
+                exAssessment.RiskAssessment.YearFirstEstablishedNatureInsecure = newAssesment.RiskAssessment.YearFirstEstablishedNatureInsecure;
 
 
                 if (exAssessment.ExpertGroup == "Sopper")
