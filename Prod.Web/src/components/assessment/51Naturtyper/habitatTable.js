@@ -65,27 +65,7 @@ export class HabitatTableRow extends React.Component {
                 {this.edit
                 ?
                     <td>
-                        <div style={{position: 'relative'}}>
-                          {/*this.editNaturtype.taxon.scientificName.length > 0 ?
-                          <div 
-                              className="speciesNewItem"
-                              onClick={action(() => {
-                                  this.editNaturtype.taxon.taxonId = "";
-                                  this.editNaturtype.taxon.taxonRank = "";
-                                  this.editNaturtype.taxon.scientificName = "";
-                                  this.editNaturtype.taxon.scientificNameId = "";
-                                  this.editNaturtype.taxon.scientificNameAuthor = "";
-                                  this.editNaturtype.taxon.vernacularName = "";
-                                  this.editNaturtype.taxon.redListCategory = "";
-                                  this.editNaturtype.taxon.taxonSearchResult.replace([]); 
-                                  this.editNaturtype.taxon.taxonSearchString = "" }) 
-                              }
-                            >
-                              <div className={"rlCategory " + this.editNaturtype.taxon.redListCategory}>{this.editNaturtype.taxon.RedListCategory}</div>
-                              <div className="vernacularName">{this.editNaturtype.taxon.vernacularName}</div>
-                              <div className="scientificName">{this.editNaturtype.taxon.scientificName}</div>
-                              <div className="author">{"(" + this.editNaturtype.taxon.scientificNameAuthor + ")"}</div>
-                          </div> :*/}
+                        <div style={{position: 'relative'}}>                          
                           <Xcomp.String 
                             disabled={disabled} 
                             //label={ntLabels.speciesOrTaxon}
@@ -97,7 +77,19 @@ export class HabitatTableRow extends React.Component {
                               <ul className="panel list-unstyled">
                               {taxon.taxonSearchResult.map(item =>
                                   <li 
-                                      onClick={action(() => selectTaxonSearchState(nt.taxon, item), nt.taxon = item)}
+                                      onClick={action(() => selectTaxonSearchState(nt.taxon, item),
+                                       
+                                        nt.taxon.taxonId = item.taxonId,
+                                        nt.taxon.taxonRank = item.taxonRank,
+                                        nt.taxon.scientificName = item.scientificName,
+                                        nt.taxon.scientificNameId = item.scientificNameId,
+                                        nt.taxon.scientificNameAuthor = item.author,
+                                        nt.taxon.vernacularName = item.popularName,
+
+                                        nt.taxon.redListCategory = item.rlCategory,
+                                        nt.taxon.taxonSearchResult.replace([]), 
+                                        nt.taxon.taxonSearchString = "",                                            
+                                        )}
                                       key={item.scientificName}
                                   >
                                       <div className="speciesSearchItem">
