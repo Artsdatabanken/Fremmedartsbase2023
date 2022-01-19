@@ -27,6 +27,7 @@ export default class NewNaturetype extends React.Component {
                 stateChange: [],
                 background: [],
                 affectedArea: null,
+                taxon: null
             },
         })
         createTaxonSearch(taxonSearchState, appState.evaluationContext, tax => tax.existsInCountry)
