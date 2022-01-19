@@ -1,14 +1,20 @@
 #See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
-FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
 EXPOSE 80
 RUN sed -i 's/DEFAULT@SECLEVEL=2/DEFAULT@SECLEVEL=1/g' /etc/ssl/openssl.cnf
 RUN sed -i 's/DEFAULT@SECLEVEL=2/DEFAULT@SECLEVEL=1/g' /usr/lib/ssl/openssl.cnf
-ENV FabDatabase="Data Source = host.docker.internal; Initial Catalog = fab2023; Persist Security Info = True; User ID = fabbase; Password = notapassword; Connection Timeout = 150;"
+ENV FabDatabase="Data Source = host.docker.internal; Initial Catalog = fab4; Persist Security Info = True; User ID = fabbase; Password = notapassword; Connection Timeout = 150;"
 ENV AuthAuthority="https://demo.identityserver.io"
+ENV ReferenceApiAuthAuthority="https://demo.identityserver.io"
+ENV ReferenceApiEndPoint="https://referenceApiUrl.no/"
+ENV ReferenceApiScope="references_api"
+ENV ReferenceApiClientId="fabapi"
+ENV ReferenceApiClientSecret="test-secret"
+ENV APPINSIGHTS_CONNECTIONSTRING=""
 
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["Prod.Api/Prod.Api.csproj", "Prod.Api/"]
 COPY ["Prod.Domain/Prod.Domain.csproj", "Prod.Domain/"]

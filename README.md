@@ -3,6 +3,12 @@ Arbeidsområde for produksjonsdatabase for Fremmedartsvurderinger frem mot 2023
 
 Testmiljø: https://fab4api.test.artsdatabanken.no/
 
+Løsningen er laget med .net Core 6 og React SPA.
+Krever følgende for å kunne bygges:
+
+* [.net core SDK](https://dotnet.microsoft.com/en-us/download)
+* [node](https://nodejs.org/en/)
+
 [Projektstruktur](ProjectStructure.md)
 
 Todo: 
