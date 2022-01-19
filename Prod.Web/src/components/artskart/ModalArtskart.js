@@ -7,12 +7,14 @@ const ModalArtskart = ({
   labels,
   evaluationContext,
   showWaterAreas,
+  isWaterArea,
   scientificNameId,
   taxonId,
   utvalg,
   artskartAdded,
   artskartRemoved,
   artskartSelectionGeometry,
+  assessmentArea,
   onOverførFraArtskart
   
 }) => {
@@ -27,6 +29,7 @@ const ModalArtskart = ({
         onSave={resultat => this.handleSave(resultat)}
         onCancel={() => setVisArtskart(false)}
         showWaterAreas={showWaterAreas}
+        isWaterArea={isWaterArea}
         taxonId={taxonId || 0}
         scientificNameId={scientificNameId}
         utvalg={utvalg}
@@ -34,6 +37,7 @@ const ModalArtskart = ({
         artskartAdded={artskartAdded}
         artskartRemoved={artskartRemoved}
         artskartSelectionGeometry={artskartSelectionGeometry}
+        assessmentArea={assessmentArea}
       />
       )
     </div>

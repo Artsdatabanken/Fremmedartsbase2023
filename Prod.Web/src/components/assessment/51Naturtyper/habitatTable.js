@@ -3,6 +3,7 @@ import {extendObservable, observable, action} from 'mobx';
 import {observer} from 'mobx-react';
 import * as Xcomp from '../observableComponents';
 
+import createTaxonSearch, { selectTaxonSearchState } from '../../createTaxonSearch'
 import NaturtypeModal from './naturetypeModal';
 
 const kodeTekst = (koder, verdi) => koder.filter(item => item.Value === verdi).map(item => item.Text)[0] || verdi 
@@ -11,7 +12,7 @@ const kodeTekst = (koder, verdi) => koder.filter(item => item.Value === verdi).m
 export class HabitatTableRow extends React.Component {
     constructor(props) {
         super()
-        const {naturtype, fabModel, deleteRow} = props;
+        const {naturtype, fabModel, deleteRow, taxon} = props;
         extendObservable(this, {
             showModal: false,
             hideStateChange: false,
@@ -29,8 +30,10 @@ export class HabitatTableRow extends React.Component {
             this.showModal = false
 
         }
-    }
 
+        
+    }
+    
     // editSelectedNaturtype(naturtypekode) {
     //     this.hideStateChange = false;
     //     this.setSelectedNT(naturtypekode)
@@ -42,9 +45,10 @@ export class HabitatTableRow extends React.Component {
 
 
     render() {
-        const {naturtype, fabModel, assessment, deleteRow, labels, toggleEdit, editMode} = this.props;
+        const {naturtype, fabModel, assessment, deleteRow, labels, toggleEdit, editMode, taxon} = this.props;
         const gLabels = labels.General
         const nt = naturtype
+        const disabled = fabModel.userContext.readonly
         console.log(nt)
         const koder = fabModel.koder
         const ntlabel = (nt.niNCode && nt.niNCode.length > 3 && nt.niNCode.startsWith("LI "))
@@ -61,11 +65,64 @@ export class HabitatTableRow extends React.Component {
                 {this.edit
                 ?
                     <td>
-                        <Xcomp.String 
-                          //label={ntLabels.speciesOrTaxon}
-                          observableValue={[nt, 'taxon']} placeholder={labels.General.searchSpecies} />
+                        <div style={{position: 'relative'}}>
+                          {/*this.editNaturtype.taxon.scientificName.length > 0 ?
+                          <div 
+                              className="speciesNewItem"
+                              onClick={action(() => {
+                                  this.editNaturtype.taxon.taxonId = "";
+                                  this.editNaturtype.taxon.taxonRank = "";
+                                  this.editNaturtype.taxon.scientificName = "";
+                                  this.editNaturtype.taxon.scientificNameId = "";
+                                  this.editNaturtype.taxon.scientificNameAuthor = "";
+                                  this.editNaturtype.taxon.vernacularName = "";
+                                  this.editNaturtype.taxon.redListCategory = "";
+                                  this.editNaturtype.taxon.taxonSearchResult.replace([]); 
+                                  this.editNaturtype.taxon.taxonSearchString = "" }) 
+                              }
+                            >
+                              <div className={"rlCategory " + this.editNaturtype.taxon.redListCategory}>{this.editNaturtype.taxon.RedListCategory}</div>
+                              <div className="vernacularName">{this.editNaturtype.taxon.vernacularName}</div>
+                              <div className="scientificName">{this.editNaturtype.taxon.scientificName}</div>
+                              <div className="author">{"(" + this.editNaturtype.taxon.scientificNameAuthor + ")"}</div>
+                          </div> :*/}
+                          <Xcomp.String 
+                            disabled={disabled} 
+                            //label={ntLabels.speciesOrTaxon}
+                            observableValue={[taxon, 'taxonSearchString']} placeholder={labels.General.searchSpecies} />
+                          {taxon.taxonSearchResult.length > 0 && 
+                          <div className="speciesSearchList" 
+                                //style={{position: 'absolute', top: "36px", left:"15px"}}
+                            >
+                              <ul className="panel list-unstyled">
+                              {taxon.taxonSearchResult.map(item =>
+                                  <li 
+                                      onClick={action(() => selectTaxonSearchState(nt.taxon, item), nt.taxon = item)}
+                                      key={item.scientificName}
+                                  >
+                                      <div className="speciesSearchItem">
+                                          <div className={"rlCategory " + item.rlCategory}>{item.rlCategory}</div>
+                                          <div className="vernacularName">{item.popularName}</div>
+                                          <div className="scientificName">{item.scientificName}</div>
+                                          <div className="author">{"(" + item.author + ")"}</div>
+                                      </div>
+                                  </li>
+                              )}
+                              </ul>
+                          </div> 
+                          }
+                          {taxon.taxonSearchWaitingForResult ?
+                          <div  style={{zIndex: 10000, position: 'absolute', top: "40px", left:"35px"}}>
+                              <div  className={"three-bounce"}>
+                                  <div className="bounce1" />
+                                  <div className="bounce2" />
+                                  <div className="bounce3" />
+                              </div>
+                          </div> :
+                          null}
+                      </div> 
                     </td>: 
-                    <td>{nt.taxon}</td>}
+                    <td>{nt.taxon ? nt.taxon.scientificName : ""}</td>}
                 {this.edit
                 ?
                 <td>{assessment.alienSpeciesCategory == "DoorKnocker" ? koder.timeHorizon[1].Text : 
@@ -101,7 +158,8 @@ export class HabitatTableRow extends React.Component {
                    
                     {this.showModal
                     ? <NaturtypeModal 
-                        naturtype={nt} 
+                        naturtype={nt}
+                        taxon={taxon} 
                         showModal={[this, "showModal"]}
                         hideStateChange={[this, "hideStateChange"]} 
                         onOk={this.updateNaturetype} 
@@ -117,6 +175,39 @@ export class HabitatTableRow extends React.Component {
 
 @observer
 export default class HabitatTable extends React.Component {
+    constructor(props) {
+        super()
+        
+        extendObservable(this, {
+            taxon: {
+                id: "habitatTableTaxonSearch",
+                scientificName: "",
+                scientificNameId: "",
+                scientificNameAuthor: "",
+                vernacularName: "",
+                taxonRank: "",
+                taxonId: "",
+                taxonSearchString: "",
+                taxonSearchResult: [],
+                domesticOrAbroad : "",
+                redListCategory: "", 
+                keyStoneSpecie : false, 
+                effectLocalScale : false, 
+                effect : "Weak",
+                scale: "Limited",
+                status: "NewAlien",
+                interactionType : "CompetitionSpace", 
+                //interactionType : [], 
+                longDistanceEffect : false, 
+                confirmedOrAssumed : false, 
+                basisOfAssessment: [],
+                interactionTypes: [],
+            }, 
+        })
+        // console.log("HabitatTable this.taxon " + JSON.stringify(this.taxon))
+        createTaxonSearch(this.taxon, props.fabModel.evaluationContext, tax => tax.existsInCountry)
+    }
+            
     @observable editMode = false
 
     @action toggleEdit = () => {
@@ -131,16 +222,11 @@ export default class HabitatTable extends React.Component {
             <div><p>{desc}</p>
             <table className="table habitat">
             
-            <colgroup>
-                <col  style={{width: "10%"}}/>
-                <col  style={{width: "10%"}}/>
-                <col  style={{width: "10%"}}/>                
+            <colgroup>               
                 <col  style={{width: "15%"}}/>
-                <col  style={{width: "10%"}}/>
-                <col  style={{width: "15%"}}/>
+                <col  style={{width: "30%"}}/>
                 <col  style={{width: "15%"}}/>
                 <col  style={{width: "25%"}}/>
-                <col  style={{width: "15%"}}/>
                 <col  style={{width: "15%"}}/>
             </colgroup>
             <thead>
@@ -157,7 +243,7 @@ export default class HabitatTable extends React.Component {
                     const key = nt.niNCode + nt.timeHorizon + nt.colonizedArea + 
                     //nt.stateChange.join(';') 
                     + nt.affectedArea
-                    return <HabitatTableRow key={key} naturtype={nt} deleteRow={deleteRow} fabModel={fabModel} toggleEdit={this.toggleEdit} editMode={this.editMode} labels={labels} assessment={assessment}/> }) :
+                    return <HabitatTableRow key={key} naturtype={nt} taxon={this.taxon} deleteRow={deleteRow} fabModel={fabModel} toggleEdit={this.toggleEdit} editMode={this.editMode} labels={labels} assessment={assessment}/> }) :
                     null
                 }
             </tbody>

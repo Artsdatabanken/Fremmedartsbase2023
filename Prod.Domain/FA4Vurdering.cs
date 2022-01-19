@@ -45,7 +45,30 @@ namespace Prod.Domain
         public string TaxonRank { get; set; }   // "Species" or "SupSpecies"
         public string Ekspertgruppe { get; set; }
     }
-    public class TrackInfo
+
+    public class CTaxon
+    {
+        public string Id { get; set; }
+        public int TaxonID { get; set; }
+        public string ScientificName { get; set; }
+        public int ScientificNameId { get; set; }
+
+        public string ScientificNameAuthor { get; set; }
+
+        public string VernacularName { get; set; }
+
+        public string RedListCategory { get; set; }
+
+        public List<string> TaxonSearchResult { get; set; }
+
+        public string TaxonSearchString { get; set; }
+
+        public string TaxonRank { get; set; }
+
+    }
+
+
+        public class TrackInfo
     {
         public string VurderingsId2015 { get; set; }
         public int OrgVitenskapeligNavnId { get; set; }
@@ -169,11 +192,9 @@ namespace Prod.Domain
 
         public string Connected { get; set; }
 
+        public CTaxon ConnectedTaxon { get; set; }
+
         public string SpeciesStatus { get; set; }
-
-        public string ConnectedTaxon1 { get; set; } = "";
-
-        public string ConnectedTaxon2 { get; set; } = "";
 
         public bool? ProductionSpecies { get; set; } = false;
 
@@ -184,6 +205,8 @@ namespace Prod.Domain
         public bool? AlienSpecieUncertainIfEstablishedBefore1800 { get; set; } // lagt til: 19.10.2016 - renamed 15.11.2016
         public bool AlienSpecieUncertainAntropochor { get; set; } // lagt til: 19.10.2016
         public string AlienSpecieUncertainDescription { get; set; } // lagt til: 22.12.2016
+
+        public bool? AssumedReproducing50Years { get; set; }
 
         public bool SkalVurderes { get; set; }
 
@@ -582,7 +605,23 @@ public partial class FA4 // (3.2) Artsegenskaper
         public int[] InvationPotentialUncertaintyLevels { get; set; }
 
 
-
+        public int? YearFirstIndoors { get; set; }
+        public bool YearFirstIndoorsInsecure { get; set; }
+        public int? YearFirstReproductionIndoors { get; set; }
+        public bool YearFirstReproductionIndoorsInsecure { get; set; }
+        public int? YearFirstProductionOutdoors { get; set; }
+        public bool YearFirstProductionOutdoorsInsecure { get; set; }
+        public int? YearFirstReproductionOutdoors { get; set; }
+        public bool YearFirstReproductionOutdoorsInsecure { get; set; }
+        public int? YearFirstEstablishmentProductionArea { get; set; }
+        public bool YearFirstEstablishmentProductionAreaInsecure { get; set; }
+        public int? YearFirstNature { get; set; }
+        public bool YearFirstNatureInsecure { get; set; }
+        public int? YearFirstReproductionNature { get; set; }
+        public bool YearFirstReproductionNatureInsecure { get; set; }
+        public int? YearFirstEstablishedNature { get; set; }
+        public bool YearFirstEstablishedNatureInsecure { get; set; }
+        public string YearFirstDomesticObservation { get; set; }
     }
 
     public partial class RiskAssessment // (5.1+5.2) Klassifisering (Ivasjonspotensial+Økologisk effekt)
@@ -804,6 +843,7 @@ public partial class FA4 // (3.2) Artsegenskaper
 
         public string AcceptOrAdjustCritA { get; set; } = "accept";  // ametod submetod (radio)
         public string ChosenSpreadMedanLifespan { get; set; } = "";  // ametod (radio)
+        public string ReasonForAdjustmentCritA { get; set; } = ""; // added 06.01.2022
 
         public bool ActiveSpreadPVAAnalysisSpeciesLongevity { get; set; } // added 27.09.2016
 
@@ -1097,10 +1137,13 @@ public partial class FA4 // (3.2) Artsegenskaper
             public string DomesticOrAbroad { get; set; }
 
         }
+
         public abstract class SpeciesInteraction : Interaction
         {
             public string ScientificName { get; set; }
-            public string ScientificNameId { get; set; }
+
+            [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
+            public int ScientificNameId { get; set; }
             public string ScientificNameAuthor { get; set; } = "";
             public string VernacularName { get; set; }
             public string TaxonRank { get; set; }
@@ -1129,6 +1172,7 @@ public partial class FA4 // (3.2) Artsegenskaper
         public class SpeciesNaturetypeInteraction : NaturetypeInteraction // lagt til 22.12.2016
         {
             public string NiNCode { get; set; }
+            public string Name { get; set; }
             public List<string> NiNVariation { get; set; } = new List<string>(); // lagt til 23.12.23
         }
 
@@ -1159,6 +1203,8 @@ public partial class FA4 // (3.2) Artsegenskaper
             public string ParasiteScientificName { get; set; }
             public string ParasiteVernacularName { get; set; }
             public string ParasiteEcoEffect { get; set; }
+
+            public string Status { get; set; }
             public bool ParasiteNewForHost { get; set; }
             //public bool ParasiteNewForNorway { get; set; } // lagt til 09.11.2016
             public bool ParasiteIsAlien { get; set; } // nytt navn  17.01.2017 (ParasiteNewForNorway)
@@ -1222,9 +1268,9 @@ public partial class FA4 // (3.2) Artsegenskaper
         //// ----------------------------------------------------
 
 
-        public string natureAffectedAbroadF { get; set; }
+        public string NatureAffectedAbroadF { get; set; }
 
-        public string natureAffectedAbroadG { get; set; }
+        public string NatureAffectedAbroadG { get; set; }
 
         public bool? CommonNatureTypesDomesticObserved { get; set; }  // Common_Nature_Types_Affected_Domestic_Observed
         public bool? CommonNatureTypesDomesticDocumented { get; set; }  // Common_Nature_Types_Affected_Domestic_Documented
@@ -1365,6 +1411,7 @@ public partial class FA4 // (3.2) Artsegenskaper
         public class ImpactedNatureType
         {
             public string NiNCode { get; set; }
+            public string Name { get; set; }
             public List<string> NiNVariation { get; set; } = new List<string>();
             public List<string> DominanceForrest { get; set; } = new List<string>(); // changed datatype from string 18.11.2016
             public long? NatureTypeArea { get; set; }
@@ -1399,6 +1446,8 @@ public partial class FA4 // (3.2) Artsegenskaper
             public string ColonizedArea { get; set; }
             public List<string> StateChange { get; set; } = new List<string>(); // changed datatype from string 19.12.2016
             public string AffectedArea { get; set; }
+
+            public CTaxon Taxon { get; set; }
         }
 
 

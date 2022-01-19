@@ -3,7 +3,8 @@ import { GeoJSON as GeoJSONFormat } from 'ol/format';
 import { Vector as VectorLayer } from 'ol/layer';
 import { Projection } from 'ol/proj';
 import { Vector as VectorSource } from 'ol/source';
-import { Circle, Fill, Stroke, Style, Text } from 'ol/style';
+import { Circle, Icon, Fill, Stroke, Style, Text } from 'ol/style';
+import { DEVICE_PIXEL_RATIO } from 'ol/has';
 import WMTSTileGrid from 'ol/tilegrid/WMTS';
 import auth from '../authService'
 import config from '../../config';
@@ -11,6 +12,7 @@ import config from '../../config';
 let defaultStyles;
 let hoverStyles;
 let waterLayerName;
+let gradient;
 
 const numZoomLevels = 18;
 
@@ -98,13 +100,34 @@ const createStyle = (geojsonfeature, style) => {
     });
 };
 
-const createWaterIntersectionStyle = () => {
+const createGradient = async () => {
+    if (gradient) return gradient;
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    const img = new Image();
+    // 20x20 image with rgba(0,0,0,0) diagonal line
+    // img.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAACxAAAAsQAa0jvXUAAAAlSURBVDhPY6AyaIDSVAGjhpEORg0jHYwaRjoYNYx0MCIMY2AAAJ0lCgF4ST6xAAAAAElFTkSuQmCC';
+    // 20x20 image with rgba(0,0,0,128) diagonal line
+    img.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAACxAAAAsQAa0jvXUAAAAlSURBVDhPY6AyaIDSVAGjhpEORg0jHYwaRjoYNYx0MCIMY2AAAJ0lCgF4ST6xAAAAAElFTkSuQmCC';
+    await img.decode();
+    gradient = context.createPattern(img, 'repeat');
+    return gradient;
+};
+
+const createWaterIntersectionStyle = async () => {
+    
+    const fillColor = await createGradient();
+    const fill = new Fill({
+        color: fillColor
+    });
     const stroke = new Stroke({
         color: "#FF0000CC",
         width: 2
     });
+
     return new Style({
-        stroke: stroke
+        fill: fill,
+        stroke: stroke,
     });
 };
 
@@ -124,10 +147,12 @@ const internalStyleFunction = (feature, hover) => {
         color: hover ? `${colors[feature.get('vannregionID')]}FF` : '#FFFFFFAA',
         width: hover ? 4 : 2,
     });
+    const color = feature.get('disabled') !== undefined && feature.get('disabled') === true ? '#d5d5d5' : `${colors[feature.get('vannregionID')]}`
     const fill = new Fill({
         // color: 'rgba(255,255,255,0.4)'
         // color: hover ? `${colors[feature.get('vannregionID')]}AA` : `${colors[feature.get('vannregionID')]}00`
-        color: hover ? `${colors[feature.get('vannregionID')]}AA` : `${colors[feature.get('vannregionID')]}88`
+        // color: hover ? `${colors[feature.get('vannregionID')]}AA` : `${colors[feature.get('vannregionID')]}88`
+        color: hover ? `${color}AA` : `${color}88`
     });
     return new Style({
         image: new Circle({
@@ -141,24 +166,26 @@ const internalStyleFunction = (feature, hover) => {
 };
 
 const hoverStyleFunction = (feature, resolution) => {
-    if (!hoverStyles || true) {
-        hoverStyles = internalStyleFunction(feature, true);
-    }
-    const style = hoverStyles.clone();
+    // if (!hoverStyles || true) {
+    //     hoverStyles = internalStyleFunction(feature, true);
+    // }
+    // const style = hoverStyles.clone();
+    const style = internalStyleFunction(feature, true);
     style.setText(createTextStyleFunction(feature));
     return [style];
 };
 
 const styleFunction = (feature, resolution) => {
-    if (!defaultStyles || true) {
-        defaultStyles = internalStyleFunction(feature, false);
-    }
-    const defaultStyle = defaultStyles.clone();
+    // if (!defaultStyles || true) {
+    //     defaultStyles = internalStyleFunction(feature, false);
+    // }
+    // const defaultStyle = defaultStyles.clone();
+    const defaultStyle = internalStyleFunction(feature, false);
     defaultStyle.setText(createTextStyleFunction(feature));
     return [defaultStyle];
 };
 
-const createWaterLayer = (name, layerid, projection, waterLayerName, setWaterLayerNameCallback) => {
+const createWaterLayer = (name, isWaterArea, projection, waterLayerName, assessmentArea, setWaterLayerNameCallback) => {
     // const vannUrl = 'https://vann-nett.no/arcgis/rest/services/WFD/AdministrativeOmraader/MapServer/'; // old service
     // const vannUrl = 'https://nve.geodataonline.no/arcgis/rest/services/Mapservices/Elspot/MapServer/'; // new service
     // layerid = '0';
@@ -168,8 +195,12 @@ const createWaterLayer = (name, layerid, projection, waterLayerName, setWaterLay
     // geojson is saved and simplified with a 100m tolerance
     // layerid = 14; // Vannregion
     // layerid = 15; // Vannomraade
+    const layerid = isWaterArea ? 15 : 14;
 
     if (vectorFeatures[name]) vectorFeatures[name].splice(0);
+
+    const filterById = assessmentArea ? true : false;
+    const validGids = assessmentArea ? assessmentArea.map(x => x.globalID) : undefined;
 
     const source = new VectorSource({
         extent: extent,
@@ -194,7 +225,24 @@ const createWaterLayer = (name, layerid, projection, waterLayerName, setWaterLay
             const data = await response.json();
             if (data.error) return;
             // console.log('data', data);
-            var features = source.getFormat().readFeatures(data);
+            let features = source.getFormat().readFeatures(data);
+            features.forEach(f => {
+                f.set('disabled', false);
+            });
+            let disabledFeatures = [];
+            if (filterById) {
+                console.log('features', features);
+                console.log('validGids', validGids);
+                disabledFeatures = features.filter(f => validGids.indexOf(f.get('globalID')) < 0);
+                features = features.filter(f => validGids.indexOf(f.get('globalID')) >= 0);
+            }
+            if (disabledFeatures.length > 0) {
+                console.log('disabled', disabledFeatures);
+                disabledFeatures.forEach(f => {
+                    f.set('disabled', true);
+                    features.push(f);
+                });
+            }
             if (!vectorFeatures[name]) vectorFeatures[name] = [];
             features.forEach((feature) => {
                 feature.set('_layerName', name);
@@ -228,7 +276,10 @@ const createWaterLayer = (name, layerid, projection, waterLayerName, setWaterLay
     return layer;
 }
 
-const createWaterSelectedLayer = (name, projection) => {
+const createWaterSelectedLayer = async (name, projection) => {
+
+    const style = await createWaterIntersectionStyle();
+
     const source = new VectorSource({
         extent: extent,
         projection: projection,
@@ -244,7 +295,7 @@ const createWaterSelectedLayer = (name, projection) => {
         opacity: 1,
         renderMode: 'vector',
         source: source,
-        style: createWaterIntersectionStyle,
+        style: style,
         visible: true,
         zIndex: 4
     });
@@ -362,7 +413,7 @@ const createWaterSelectedLayer = (name, projection) => {
 //     return layer;
 // }
 
-const reDrawWaterLayer = (mapObject, showRegion, setLastShowRegion, setPointerMoveForWaterLayer, setWaterLayerName) => {
+const reDrawWaterLayer = (mapObject, isWaterArea, setLastIsWaterArea, setPointerMoveForWaterLayer, setWaterLayerName) => {
     let waterLayer = mapObject.getLayers().getArray().filter(layer => layer.get('name') === 'Vatn')[0];
     if (waterLayer) {
         waterLayer.getSource().clear();
@@ -385,9 +436,9 @@ const reDrawWaterLayer = (mapObject, showRegion, setLastShowRegion, setPointerMo
         units: 'm'
     });
 
-    setLastShowRegion(showRegion);
+    setLastIsWaterArea(isWaterArea);
 
-    mapObject.addLayer(createWaterLayer('Vatn', showRegion ? 14 : 15, projection, undefined, setWaterLayerNameCallback));
+    mapObject.addLayer(createWaterLayer('Vatn', isWaterArea, projection, undefined, setWaterLayerNameCallback));
 }
 
 const createButton = (options) => {
@@ -430,7 +481,6 @@ const wmtsTileGrid = (numZoomLevels, matrixSet, projection, startLevel) => {
 const mapOlFunc = {
     createButton: createButton,
     createStyle: createStyle,
-    createWaterIntersectionStyle: createWaterIntersectionStyle,
     createWaterLayer: createWaterLayer,
     createWaterSelectedLayer: createWaterSelectedLayer,
     extent: extent,

@@ -85,6 +85,10 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
 
         const existenceArea35 = assessment.CurrentExistenceAreaCalculated
 
+        riskAssessment.AOO1 == null ? riskAssessment.AOO1 = riskAssessment.AOOknown1 : riskAssessment.AOO1 = 0
+
+        riskAssessment.AOO2 == null ? riskAssessment.AOO2 = riskAssessment.AOOknown2 : riskAssessment.AOO2 = 0
+
         // const bassertpaValues = [
         //     {
         //         Value: "Counting",
@@ -102,7 +106,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
         const crit51B = getCriterion(riskAssessment, 0, "B")
         const critC = getCriterion(riskAssessment, 0, "C")
         runInAction(() => {
-            // crit51A.auto = false
+            // crit51A.auto = false // critA auto is set in enhanceCriteria
             crit51B.auto = false
             critC.auto = false
         })
@@ -336,7 +340,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     <Criterion criterion={crit51A} 
                     appState={appState}
                     mode="noheading"
-                    disabled = {disabled || riskAssessment.acceptOrAdjustCritA == "accept"}
+                    disabled = {disabled || (riskAssessment.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && riskAssessment.acceptOrAdjustCritA == "accept")}
                     auto = {riskAssessment.chosenSpreadMedanLifespan == "ViableAnalysis" ||
                              riskAssessment.chosenSpreadMedanLifespan == "SpreadRscriptEstimatedSpeciesLongevity" ||
                              (riskAssessment.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && riskAssessment.acceptOrAdjustCritA != "adjust") 
@@ -496,7 +500,9 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                 <th dangerouslySetInnerHTML={{
                                                      __html: labels.Bcrit.toYear}}></th>
                                                 <th dangerouslySetInnerHTML={{
-                                                     __html: labels.Bcrit.km2}}></th>                                                
+                                                     __html: labels.Bcrit.km2}}></th> 
+                                                <th dangerouslySetInnerHTML={{
+                                                     __html: labels.Bcrit.km2withoutConsideration}}></th>                                                  
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -519,7 +525,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                     </div>
                                                 </td>
                                                 <td> <Xcomp.Number       
-                                                        disabled                     
+                                                        disabled 
+                                                        className={"BcritYear"}                    
                                                         observableValue={[riskAssessment, "AOOendyear1"]} 
                                                         integer 
                                                     /> 
@@ -528,9 +535,16 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                         // observableValue={[riskAssessment, "AOOendyear1"]}
                                                         observableValue={[riskAssessment, "AOOyear1"]}
                                                         integer
+                                                        className={"BcritYear"}
                                                         yearRange={true}
                                                     /> <span style={{margin: '10px 10px 0'}}>(t<sub>1</sub>)</span>
                                                     </td>
+                                                <td><Xcomp.Number                            
+                                                        observableValue={[riskAssessment, "AOOknown1"]}
+                                                        integer
+                                                        disabled={!riskAssessment.notUseSpeciesMap}
+                                                    />
+                                                </td>
                                                 <td><Xcomp.Number                            
                                                         observableValue={[riskAssessment, "AOO1"]}
                                                         integer
@@ -560,17 +574,24 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                         disabled                         
                                                         observableValue={[riskAssessment, "AOOendyear1"]}
                                                         // observableValue={[riskAssessment, "AOOyear1"]}
+                                                        className={"BcritYear"}
                                                         integer
                                                         yearRange={true}/> 
                                                 </td>
                                                 <td style={{display: 'flex'}}><Xcomp.Number            
                                                         //disabled = {!riskAssessment.notUse2021AsEndYear}                
                                                         // observableValue={[riskAssessment, "AOOendyear2"]} 
+                                                        className={"BcritYear"}
                                                         observableValue={[riskAssessment, "AOOyear2"]} 
                                                         yearRange={true}/> <span style={{margin: '10px 10px 0'}}>(t<sub>2</sub>)</span>
                                                 </td>
-                                                <td><Xcomp.Number observableValue={[riskAssessment, "AOO2"]} integer /> 
-                                                </td>                                                
+                                                <td><Xcomp.Number observableValue={[riskAssessment, "AOOknown2"]} integer disabled={!riskAssessment.notUseSpeciesMap} /> 
+                                                </td> 
+                                                <td><Xcomp.Number                            
+                                                        observableValue={[riskAssessment, "AOO2"]}
+                                                        integer
+                                                    />
+                                                </td>                                               
                                             </tr>
                                             </tbody>                            
                                         </table>
@@ -640,7 +661,10 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     <Xcomp.Bool
                         observableValue={[riskAssessment, "activeSpreadYearlyIncreaseCalculatedExpansionSpeed"]}
                   label={labels.BcritSelect.d}/> */}
-                    {riskAssessment.activeSpreadYearlyIncreaseObservations
+
+
+
+                    {/* {riskAssessment.activeSpreadYearlyIncreaseObservations
                         ? <div>
                                 <table className="formtable">
                                     <tbody>
@@ -718,7 +742,9 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                 
                                 <hr/>
                             </div>
-                        : null}
+                        : null} */}
+
+
 
                         <div>
                        

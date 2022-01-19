@@ -58,6 +58,7 @@ export class NaturtypeRad extends React.Component {
         const riskAssessment = assessment.riskAssessment 
         const gLabels = labels.General
         const nt = naturtype
+        console.log(nt)
         const ntlabel = nt.niNVariation
         const koder = codes
         //const dominanceForrest = nt.DominanceForrest.join('\n')
@@ -74,8 +75,9 @@ export class NaturtypeRad extends React.Component {
         const affectedAreaLabel = (id) => codes.affectedArea.find(code => code.Value === id).Text
          // regular expression to check that the id does not contain only numbers
         const reg = /^\d+$/;
-        const findNTName = (id) => {
+        const findNTName = (nt) => {
             var name = "";
+            const id = nt.niNCode
             if (id) {
 
                 if(!reg.test(id)){
@@ -128,7 +130,7 @@ export class NaturtypeRad extends React.Component {
                     }
                 }
             }
-                      
+            nt.name = name      
             return name
         } 
 
@@ -146,15 +148,15 @@ export class NaturtypeRad extends React.Component {
                     }
                 }
         }
-        return area
+        return area == 0 ? "" : area
     }
         console.log("NT row: " + JSON.stringify(nt))
         return(
             <tr>
                 <td>{isNaN(nt.niNCode) ? nt.niNCode : ""}</td>
                 {/*<td>ntlabel</td>*/}
-                <td>{nt.name ? nt.name : nt.niNCode ? findNTName(nt.niNCode) : ""}</td>
-                <td>{dominanceForrest}</td>
+                <td>{nt.name ? nt.name : nt.niNCode ? findNTName(nt) : ""}</td>
+               {/* <td>{dominanceForrest}</td> */}
                 {showNatureTypeArea && <td>{nt.niNCode ? findNTArea(nt.niNCode) : ""}</td> }
                 {this.edit
                 ?
@@ -190,7 +192,7 @@ export class NaturtypeRad extends React.Component {
                             
                         </td> :
                         <td>
-                        {nt.tilstandsendringer ? 
+                        {nt.stateChange.length > 0 ? 
                             <Xcomp.MultiselectArray
                                 observableValue={[nt, 'stateChange']} 
                                 codes={koder.tilstandsendringer}
@@ -300,22 +302,21 @@ export default class NaturtypeTable extends React.Component {
             <table className="table naturetype">
             
             <colgroup>
-                <col  style={{width: "5%"}}/>
+                <col  style={{width: "10%"}}/>
+                <col  style={{width: "25%"}}/>                
+                {/*!noRedListTypes && <col  style={{width: "15%"}}/> */}
+                <col  style={{width: "10%"}}/>
+                <col  style={{width: "10%"}}/>
                 <col  style={{width: "15%"}}/>
-                <col  style={{width: noRedListTypes ? "10%" : "25%"}}/>                
-                {!noRedListTypes && <col  style={{width: "15%"}}/> }
                 <col  style={{width: "10%"}}/>
                 <col  style={{width: "15%"}}/>
-                <col  style={{width: "5%"}}/>
-                <col  style={{width: "10%"}}/>
-                <col  style={{width: "10%"}}/>
                 <col  style={{width: "5%"}}/>
             </colgroup>
             <thead>
                 <tr>
                     <th>{ntLabels.code}</th>
                     <th>{ntLabels.name}</th>
-                    <th>{ntLabels.dominanceForrest}</th>
+                   {/* <th>{ntLabels.dominanceForrest}</th> */}
                     {!noRedListTypes && <th>{ntLabels.natureTypeArea}</th>}
                     <th>{ntLabels.timeHorizon}</th>
                     <th>{ntLabels.colonizedArea}</th>

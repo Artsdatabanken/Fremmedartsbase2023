@@ -119,10 +119,7 @@ class ViewModel {
                 comment: null
             },
             artificialAndConstructedSites: ["F4", "F5", "H4", "L7", "L8", "M14", "M15", "T35", "T36", "T37", "T38", "T39", "T40", "T41", "T42", "T43", "T44", "T45", "V11", "V12", "V13"],
-            assessmentTypeFilter: "horizonScanning",
-            vurdert: false,
-            ikkevurdert: false,
-
+            assessmentTypeFilter: "riskAssessment",
 
             expertgroups: null, // [],
             expertgroup: null,
@@ -135,15 +132,28 @@ class ViewModel {
             expertgroupCategoryFilter: "",
             expertgroupCategoryCheckboxFilter: [],
             statusCheckboxFilter: [],
-            decisiveCriteriaFilter: [],
-            riskCategoryFilter: [],
-            riskAssessedFilter: [],
-            riskNotAssessedFilter: [],
+
             filterType: [],
             workStatus: [],
-            
+            currentFilter:{
+                decisiveCriteriaFilter: [],
+                riskCategoryFilter: [],
+                riskAssessedFilter: [],
+                riskNotAssessedFilter: [],
+                vurdert: false,
+                ikkevurdert: false
+            },
+            historyFilter:{
+                decisiveCriteriaFilter: [],
+                riskCategoryFilter: [],
+                riskAssessedFilter: [],
+                riskNotAssessedFilter: [],
+                vurdert: false,
+                ikkevurdert: false
+            },
+
             horizonScanFilter: {
-                horizonFilters: false,
+                // horizonFilters: false,
                 hsNotStarted: false,
                 hsFinished: false,
                 toAssessment: false,
@@ -176,7 +186,8 @@ class ViewModel {
                     nameWithPreposition: 'på Svalbard',
                     map: 'svalbard'
                 }
-            }
+            },
+            statusChange: false
         })
 
 
@@ -340,28 +351,6 @@ class ViewModel {
                 })()
             }
         });
-
-
-
-        // autorun(() => {
-            
-
-        //     if(this.assessmentTabs) {
-        //         const b = this.horizonDoAssessment
-        //         const a = this.assessmentTabs ? JSON.stringify(this.assessmentTabs.tabinfos[2].enabled) : "not ready"
-        //         console.log("aaaaaaaaaaaaaaa"  + a + b)
-        //         if(this.assessmentTabs) {
-        //         console.log("aaaaaaaaaaaaaaab" + isObservable(this.assessmentTabs))
-        //         console.log("aaaaaaaaaaaaaaac" + isObservable(this.assessmentTabs.tabinfos))
-        //         console.log("aaaaaaaaaaaaaaad" + isObservable(this.assessmentTabs.tabinfos[2]))
-        //         console.log("aaaaaaaaaaaaaaae" + isObservableProp(this.assessmentTabs.tabinfos[2], "enabled"))
-        //         }
-        //     }
-        // })
-    
-
-
-
         autorun(() => {
             console.log("isServicesReady: " + this.isServicesReady)
             console.log("exp" + (this.expertgroups != null))
@@ -373,12 +362,10 @@ class ViewModel {
             console.log("viewMode: " + this.viewMode)
         });
         autorun(() => {
-            console.log("horizonDoAssessment: " + this.horizonDoAssessment)
-            if(this.assessment) {
-                runInAction(() => this.assessment.riskAssessment.horizonDoAssessment = this.horizonDoAssessment)
+            if(this.assessment && this.assessment.speciesStatus == "C3") {
+                runInAction(() => this.assessment.speciesEstablishmentCategory = "C3")
             }
-
-        });
+        })
         autorun(() => {
             if(this.assessmentTabs && this.assessmentTabs.activeTab ) {
                 console.log("current assessmentTab: " + this.assessmentTabs.activeTab.id )
@@ -390,12 +377,6 @@ class ViewModel {
         autorun(() => {
             console.log("skal vurderes: " + this.skalVurderes)
         });
-
-        // autorun(() => {
-        //     console.log("ASSESSMENT: " + this.assessment.horizonDoScanning)
-        //     this.assessment.horizonDoScanning ?  this.riskAssessmentTabs.activeTab.id = 0 :  this.riskAssessmentTabs.activeTab.id = 1     
-        //     console.log(this.riskAssessmentTabs.activeTab.id) 
-        // })
 
         // **** set assessment and assessmentId ****
         reaction(() => this.assessmentId,
@@ -439,7 +420,15 @@ class ViewModel {
                 this.horizonScanFilter.notAssessedDoorKnocker.length, 
                 this.horizonScanFilter.potentialDoorKnockers.length,
                 this.horizonScanFilter.hsNotStarted, this.horizonScanFilter.hsFinished, this.horizonScanFilter.toAssessment, this.horizonScanFilter.notAssessed,
-                this.responsible.length, this.kunUbehandlede
+                this.responsible.length, this.kunUbehandlede,
+                this.workStatus.length, this.otherComments.length,
+
+                this.historyFilter.riskCategoryFilter.length, this.historyFilter.decisiveCriteriaFilter.length,
+                this.historyFilter.riskAssessedFilter.length, this.historyFilter.riskNotAssessedFilter.length, this.historyFilter.ikkevudert, this.historyFilter.vurdert,
+
+                this.currentFilter.riskCategoryFilter.length, this.currentFilter.decisiveCriteriaFilter.length,
+                this.currentFilter.riskAssessedFilter.length, this.currentFilter.riskNotAssessedFilter.length, this.currentFilter.ikkevudert, this.currentFilter.vurdert,
+
             ],
             ([expertgroupId, isLoggedIn])  => {
                 //console.log("react to expertgroup: " + expertgroupId + "," + isLoggedIn)
@@ -777,26 +766,9 @@ class ViewModel {
             // // // find out if the species is alien
             // // const alien = jsonnew.alienSpeciesCategory =="AlienSpecie" || jsonnew.notApplicableCategory == "establishedBefore1800"
             
-            //--------------------------------------------------------------
-            //Argh! this dirty trick makes it possible to use observableStringEnum (radio) for the property
-            //This process must be reversed before saving to server!
-            //jsonnew.isAlienSpecies = alien ? "true" : "false"
-            // if the species was established before 1800, set it as default
-            //jsonnew.alienSpecieUncertainIfEstablishedBefore1800 = jsonnew.notApplicableCategory == "establishedBefore1800" ? "yes" :  jsonnew.alienSpeciesCategory == "AlienSpecie" ? "no" : null
-            //jsonnew.connectedToAnother = jsonnew.alienSpeciesCategory == "AlienSpecie" ? "no" : jsonnew.connectedToAnother ? "true" : "false" 
-            //jsonnew.alienSpeciesCategory = "RegionallyAlien" ? jsonnew.isRegionallyAlien = true : jsonnew.isRegionallyAlien = false
-            //--------------------------------------------------------------
-
             const assessment = enhanceAssessment(jsonnew, this)
             const assessmentStringCopy = assessment.toJSON
             const assessmentcopy = JSON.parse(assessmentStringCopy)
-            var shda = assessment.riskAssessment.spreadHistoryDomesticAreaInStronglyChangedNatureTypes == null ? 0 : 
-                       assessment.riskAssessment.spreadHistoryDomesticAreaInStronglyChangedNatureTypes > 95 ? 95 :
-                       assessment.riskAssessment.spreadHistoryDomesticAreaInStronglyChangedNatureTypes > 75 ? 75 :
-                       assessment.riskAssessment.spreadHistoryDomesticAreaInStronglyChangedNatureTypes >= 25 ? 25 :
-                       assessment.riskAssessment.spreadHistoryDomesticAreaInStronglyChangedNatureTypes >= 5 ? 5 : 0
-            
-            assessment.riskAssessment.spreadHistoryDomesticAreaInStronglyChangedNatureTypes = shda
             
             runInAction(() => {
                 this.assessmentSavedVersion = assessmentcopy
@@ -1132,11 +1104,6 @@ class ViewModel {
 
         const currentdata = JSON.parse(json)
         const data = JSON.parse(json)
-        // // //--------------------------------------------------------------
-        // // //Argh! this reverses the trick when opening the assessment
-        // // data.isAlienSpecies = data.isAlienSpecies === "true" ? true : false
-        // // data.connectedToAnother = data.connectedToAnother === "true" ? true : false
-        // // //--------------------------------------------------------------
         const datastring = JSON.stringify(data)
         // this.addGetters(data)
         console.log("Y:" + json.length)
@@ -1203,16 +1170,61 @@ class ViewModel {
             if (this.kunUbehandlede) filters = filters + "&Comments.KunUbehandlede=true"
         }else{
             filters=filters + "&HorizonScan=false"
-        }
-        if (this.filterType == "FL2018"){
 
-        }
-        if (this.filterType == "FL2023"){
+            if (this.filterType == "FL2018"){
+                if  (this.historyFilter.vurdert) {
+                    filters = filters + "&History.Status=vurdert"
+                }
+                else{
+                    if (this.historyFilter.riskAssessedFilter.length > 0) filters = filters + this.historyFilter.riskAssessedFilter.map((x)=> "&History.Status=" + x ).join()
+                }
 
-        }
-        if (this.filterType == "statusAndCommentFL2023"){
+                if  (this.historyFilter.ikkevurdert) {
+                    filters = filters + "&History.Status=ikkevurdert"
+                }
+                else{
+                    if (this.historyFilter.riskNotAssessedFilter.length > 0) filters = filters + this.historyFilter.riskNotAssessedFilter.map((x)=> "&History.Status=" + x ).join()
+                }
 
-        }
+                if (this.historyFilter.riskCategoryFilter.length > 0) filters = filters + this.historyFilter.riskCategoryFilter.map((x)=> "&History.Category=" + x ).join()
+                if (this.historyFilter.decisiveCriteriaFilter.length > 0) filters = filters + this.historyFilter.decisiveCriteriaFilter.map((x)=> "&History.Criteria=" + x.toUpperCase() ).join()
+            }
+            if (this.filterType == "FL2023"){
+
+                if  (this.currentFilter.vurdert) {
+                    filters = filters + "&Current.Status=vurdert"
+                }
+                else{
+                    if (this.currentFilter.riskAssessedFilter.length > 0) filters = filters + this.currentFilter.riskAssessedFilter.map((x)=> "&Current.Status=" + x ).join()
+                }
+
+                if  (this.currentFilter.ikkevurdert) {
+                    filters = filters + "&Current.Status=ikkevurdert"
+                }
+                else{
+                    if (this.currentFilter.riskNotAssessedFilter.length > 0) filters = filters + this.currentFilter.riskNotAssessedFilter.map((x)=> "&Current.Status=" + x ).join()
+                }
+
+                if (this.currentFilter.riskCategoryFilter.length > 0) filters = filters + this.currentFilter.riskCategoryFilter.map((x)=> "&Current.Category=" + x ).join()
+                if (this.currentFilter.decisiveCriteriaFilter.length > 0) filters = filters + this.currentFilter.decisiveCriteriaFilter.map((x)=> "&Current.Criteria=" + x.toUpperCase() ).join()
+
+            }
+            if (this.filterType == "statusAndCommentFL2023"){
+                if (this.workStatus.length > 0){
+                    filters = filters + this.workStatus.map((x)=> "&Status=" + x ).join()
+                }
+
+                if (this.responsible.length > 0){
+                    //console.log(this.responsible)
+                    filters = filters + this.responsible.map((x)=> "&Responsible=" + x ).join()
+                }
+                if (this.otherComments.length > 0){
+                    //console.log(this.responsible)
+                    filters = filters + "&Comments.UserId=" + auth.userId
+                    filters = filters + this.otherComments.map((x)=> "&Comments.CommentType=" + x ).join()
+                }
+            }
+    }
         if ( this.expertgroupAssessmentFilter.length > 1){
             filters =filters +  "&NameSearch=" + this.expertgroupAssessmentFilter
         }

@@ -42,8 +42,8 @@ export default class SelectAssessmentTable extends Component {
                             
                             <th>{labels.SelectAssessment.comment}</th>
                             <th>{labels.SelectAssessment.status}</th>
-                            <th>&nbsp;</th>
-                            <th>&nbsp;</th>
+                            {/* <th>&nbsp;</th>
+                            <th>&nbsp;</th> */}
                             {/*<th>&nbsp;</th>
                             <th>&nbsp;</th>*/}
                         </tr>

@@ -22,6 +22,7 @@
 
         // GET api/static/WaterArea
         [HttpGet("{name}")]
+        [ResponseCache(Location = ResponseCacheLocation.Any, Duration = 3600)]
         public async Task<string> Get(string name)
         {
             if (string.IsNullOrEmpty(name)) return "name is empty";

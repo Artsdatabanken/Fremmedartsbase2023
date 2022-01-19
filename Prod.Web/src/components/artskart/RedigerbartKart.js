@@ -6,6 +6,7 @@ import * as Xcomp from "../observableComponents";
 
 const RedigerbartKart = ({
   showWaterAreas,
+  isWaterArea,
   taxonId,
   scientificNameId,
   kriterier,
@@ -15,11 +16,11 @@ const RedigerbartKart = ({
   artskartSelectionGeometry,
   artskartAdded,
   artskartRemoved,
+  assessmentArea,
   onCancel,
   children
 }) => {
   const [selectionGeometry, setSelectionGeometry] = React.useState(artskartSelectionGeometry);
-  const [showRegion, setShowRegion] = React.useState(true);
   const [
     artskart,
     observations,
@@ -68,19 +69,6 @@ const RedigerbartKart = ({
         <h3>Arealer og fylker fra Artskart</h3>
         
         <div>
-        {showWaterAreas &&
-          <div style={{ pointerEvents: 'auto' }}>
-            <span>Viser {showRegion ? 'vannregioner' : 'vannområder'} </span>
-            <Xcomp.Button
-              onClick={e => {
-                e.preventDefault();
-                e.stopPropagation();
-                setShowRegion(!showRegion);
-              }}
-              >
-                Bytt til {!showRegion ? 'vannregioner' : 'vannområder'}
-            </Xcomp.Button>
-          </div>}
           Forekomstareal:{" "}
           {areadata.AreaOfOccupancy >= 0 ? (
             <span>
@@ -94,6 +82,7 @@ const RedigerbartKart = ({
           {areadata.ExcludedLocalities > 0 && selectionGeometry &&
             <span>. Ekskludert av polygon: <b>{areadata.ExcludedLocalities} ruter. </b></span>}
         </div>
+        {!showWaterAreas &&
         <div>
           Utbredelsesområde:{" "}
           {areadata.AreaExtentOfOccurrence >= 0 ? (
@@ -104,12 +93,13 @@ const RedigerbartKart = ({
               "?"
             )}
         </div>
+        }
         <div>
           {!showWaterAreas && (
-            <span>Fylker: <b>{beskrivFylker(countylist)}</b></span>
+            <span>Regioner: <b>{beskrivFylker(countylist)}</b></span>
           )}
           {showWaterAreas && (
-            <span>Vannområde:{" "}<span><b>{waterAreas}</b></span></span>
+            <span>Vannområde:{" "}<span><b>{beskrivWaterAreas(waterAreas)}</b></span></span>
           )}
         </div>
        
@@ -145,6 +135,7 @@ const RedigerbartKart = ({
               e.stopPropagation();
               onOverførFraArtskart({
                 countylist,
+                waterAreas,
                 selectionGeometry,
                 areadata,
                 observations,
@@ -154,7 +145,8 @@ const RedigerbartKart = ({
             }}
             className={artskart.error || (artskart.isLoading || isLoading) ? "" : "elevated"}
           >
-            ✓ Overfør arealer og fylker tilbake til vurderingen
+            {showWaterAreas && "✓ Overfør arealer og områder tilbake til vurderingen"}
+            {!showWaterAreas && "✓ Overfør arealer og fylker tilbake til vurderingen"}
         </Xcomp.Button>
         {selectionGeometry && <Xcomp.Button
             disabled={artskart.error || artskart.isLoading || isLoading}
@@ -190,9 +182,10 @@ const RedigerbartKart = ({
       </div>
       <MapOpenLayers
         showWaterAreas={showWaterAreas}
-        showRegion={showRegion}
+        isWaterArea={isWaterArea}
         geojson={observations}
         selectionGeometry={selectionGeometry}
+        assessmentArea={assessmentArea}
         style={mapstyle}
         onAddPoint={handleAddPoint}
         onClickPoint={handleClickPoint}
@@ -245,6 +238,15 @@ const beskrivFylker = artskartFylker => {
   if (hasPresence.length <= 0) return "Ingen";
   return hasPresence
     .map(f => f.NAVN)
+    .sort()
+    .join(", ");
+};
+
+const beskrivWaterAreas = areas => {
+  if (!areas || areas.length === 0) return "Ingen";
+  return areas
+    .filter(f => f.intersects)
+    .map(f => f.name)
     .sort()
     .join(", ");
 };

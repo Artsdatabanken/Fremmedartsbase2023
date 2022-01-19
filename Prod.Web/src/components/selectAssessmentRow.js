@@ -95,8 +95,8 @@ export default class selectAssessmentRow extends Component {
                     // ? <Xcomp.Button disabled={!rolle.leder} onClick={e => this.handleUnlock(e, assessment)}>{labels.SelectAssessment.releaseAssessment}</Xcomp.Button>
                     // : null}
                     </td> */}
-                <td>&nbsp; {isLocked && beskrivTidSiden(assessment.LockedForEditTimeStamp, labels.Timing)}</td>
-                <td>&nbsp; {beskrivTidSiden(assessment.SistOppdatert, labels.Timing)}</td>
+                {/* <td>&nbsp; HER {isLocked && beskrivTidSiden(assessment.LockedForEditTimeStamp, labels.Timing)}</td>
+                <td>&nbsp; {beskrivTidSiden(assessment.SistOppdatert, labels.Timing)}</td> */}
                 {/* <td>&nbsp; </td>
                 <td>&nbsp; </td>*/}
             </tr>

@@ -22,7 +22,7 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Change this to force index rebuild!
         /// </summary>
-        public const int IndexVersion = 15;
+        public const int IndexVersion = 29;
 
         private const string Field_Id = "Id";
         private const string Field_Group = "Expertgroup";
@@ -38,7 +38,7 @@ namespace Prod.Api.Helpers
         private const string Field_TaxonHierarcy = "TaxonHierarcy";
         private const string Field_Category = "Category";
         private const string Field_Category2018 = "Category2018";
-
+        private const string Field_Criteria2018 = "Criteria2018";
 
         private const string Field_Criteria = "Criteria";
         private const string Field_CriteriaAll = "CriteriaAll";
@@ -61,7 +61,10 @@ namespace Prod.Api.Helpers
         private const string Field_HsStatus = "HsStatus";
         private const string Field_HsDone = "HsDone";
         private const string Field_HsResult = "HsStatus";
-        private const string Field_Status = "Status";
+        private const string Field_Progress = "Progress";
+        private const string Field_CurrentStatus = "CStatus";
+        private const string Field_2018Status = "PStatus";
+        private const string Field_ProgressStatus = "ProgressStatus";
 
         //facets - telle antall!!
         public const string Facet_Author = "Author";
@@ -230,7 +233,7 @@ namespace Prod.Api.Helpers
                 new StringField(Field_HsStatus, ass.HorizonScanningStatus, Field.Store.YES),
                 //new StringField(Field_HsDone, ass.HorizonScanningStatus, Field.Store.YES),
                 new StringField(Field_HsResult, horResult, Field.Store.NO),
-                new StringField(Field_Status, ass.EvaluationStatus, Field.Store.YES),
+                new StringField(Field_Progress, ass.EvaluationStatus, Field.Store.YES),
                 // facets
                 new FacetField(Facet_Author, assessment.LastUpdatedByUser.FullName),
                 new FacetField(Facet_Progress, horResult),
@@ -255,6 +258,31 @@ namespace Prod.Api.Helpers
             else
                 document.Add(new StringField(Field_Category, "NR", Field.Store.YES));
 
+            // &Current.Status=establishedAfter1800,&Current.Status=doorKnocker,&Current.Status=regionallyAlien,&Current.Status=effectWithoutEstablishment
+            // &Current.Status=establishedBefore1800,&Current.Status=sharesMotherSpeciesStatus,&Current.Status=notAlienInNorway,&Current.Status=notAssessedPotentialDoorKnocker
+            if (ass.IsRegionallyAlien.HasValue && ass.IsRegionallyAlien.Value)  document.Add(new StringField(Field_CurrentStatus, "regionallyAlien", Field.Store.NO));
+            
+            if (ass.AlienSpecieUncertainIfEstablishedBefore1800.HasValue)
+            {
+                document.Add(ass.AlienSpecieUncertainIfEstablishedBefore1800.Value == true
+                    ? new StringField(Field_CurrentStatus, "establishedBefore1800", Field.Store.NO)
+                    : new StringField(Field_CurrentStatus, "establishedAfter1800", Field.Store.NO));
+            }
+
+            //Status=notStarted,&Status=inprogress,&Status=finished
+            if (ass.EvaluationStatus == "imported")
+            {
+                document.Add(new StringField(Field_ProgressStatus, "notStarted", Field.Store.NO));
+            }
+            else if (ass.EvaluationStatus == "inprogress")
+            {
+                document.Add(new StringField(Field_ProgressStatus, "inprogress", Field.Store.NO));
+            }
+            if (ass.EvaluationStatus == "finished")
+            {
+                document.Add(new StringField(Field_ProgressStatus, "finished", Field.Store.NO));
+            }
+
             if (ass2018 != null)
             {
                 if (IsDocumentEvaluated(ass2018.MainCategory, ass2018.MainSubCategory, ass2018.MainSubCategory))
@@ -262,6 +290,16 @@ namespace Prod.Api.Helpers
                         Field.Store.YES));
                 else
                     document.Add(new StringField(Field_Category2018, "NR", Field.Store.YES));
+
+                // todo: krever ny migreringspatch
+                //if (!string.IsNullOrWhiteSpace(ass2018.DecisiveCriteria))
+                //{
+                //    foreach (var criteria in _criterias)
+                //        if (ass2018.DecisiveCriteria.Contains(criteria, StringComparison.InvariantCulture))
+                //            document.Add(new StringField(Field_Criteria, criteria, Field.Store.NO));
+
+                //    document.Add(new StringField(Field_CriteriaAll, ass2018.DecisiveCriteria, Field.Store.YES));
+                //}
             }
 
             if (!string.IsNullOrWhiteSpace(ass.RiskAssessment.DecisiveCriteria))
@@ -274,22 +312,34 @@ namespace Prod.Api.Helpers
             }
 
             //var ids = result.Select(x => int.Parse(x.Id)).ToArray();
-            var comments = assessment.Comments;
+            var comments = assessment.Comments.ToArray();
             var latest = comments.Any() ? comments.Max(x => x.CommentDate) : DateTime.MinValue;
             var closed = comments.Count(x => x.Closed);
             var open = comments.Count(y =>
                 !y.Closed); // && !y.Comment.StartsWith(TaksonomiskEndring) &&
             //!y.Comment.StartsWith(PotensiellTaksonomiskEndring));
-            var newCommentsForUserId = (from commenter in comments.Where(y =>
-                    y.IsDeleted == false && y.Closed == false).Select(x => x.UserId).ToArray()
-                let newones = comments.Count(y => y.IsDeleted == false && y.Closed == false && y.UserId != commenter &&
-                                                  y.CommentDate > (comments.Any(y2 =>
-                                                      y2.IsDeleted == false && y2.UserId == commenter)
-                                                      ? comments.Where(y2 =>
-                                                              y2.IsDeleted == false && y2.UserId == commenter)
-                                                          .Max(z => z.CommentDate)
-                                                      : DateTime.Now))
-                select new Tuple<Guid, int>(commenter, newones)).ToList();
+            var comenters = comments
+                .Where(y => y.IsDeleted == false && y.Closed == false)
+                .GroupBy(x=>x.UserId).Select(x => new {x.Key, maxDate = x.Max(y=>y.CommentDate) }).ToArray();
+            foreach (var comenter in comenters)
+            {
+                var newCount = comments.Count(y => y.IsDeleted == false && y.Closed == false && y.UserId != comenter.Key &&
+                                                   y.CommentDate > comenter.maxDate);
+                if (newCount > 0)
+                {
+                    document.Add(new StringField(Field_CommentsNew, comenter.Key.ToString(), Field.Store.YES));
+                }
+            }
+            //var newCommentsForUserId = (from commenter in comments.Where(y =>
+            //        y.IsDeleted == false && y.Closed == false).Select(x => x.UserId).ToArray()
+            //    let newones = comments.Count(y => y.IsDeleted == false && y.Closed == false && y.UserId != commenter &&
+            //                                      y.CommentDate > (comments.Any(y2 =>
+            //                                          y2.IsDeleted == false && y2.UserId == commenter)
+            //                                          ? comments.Where(y2 =>
+            //                                                  y2.IsDeleted == false && y2.UserId == commenter)
+            //                                              .Max(z => z.CommentDate)
+            //                                          : DateTime.Now))
+            //    select new Tuple<Guid, int>(commenter, newones)).ToList();
 
             var taxonchange = comments.Any(y =>
                 y.Type == CommentType.PotentialTaxonomicChange && y.IsDeleted == false &&
@@ -303,8 +353,8 @@ namespace Prod.Api.Helpers
 
             document.Add(new StringField(Field_NewestComment, latest.ToString("yyyy-dd-MM HH:mm"), Field.Store.YES));
             document.Add(new StringField(Field_CommentsClosed, closed.ToString(), Field.Store.YES));
-            foreach (var tuple in newCommentsForUserId)
-                document.Add(new StringField(Field_CommentsNew, tuple.Item1 + ";" + tuple.Item2, Field.Store.YES));
+            //foreach (var tuple in newCommentsForUserId.Where(x=>x.Item2 > 0))
+            //    document.Add(new StringField(Field_CommentsNew, tuple.Item1 + ";" + tuple.Item2, Field.Store.YES));
             document.Add(new StringField(Field_CommentsOpen, open.ToString(), Field.Store.YES));
             document.Add(new StringField(Field_TaxonChange, taxonchange.ToString(), Field.Store.YES));
 
@@ -512,15 +562,16 @@ namespace Prod.Api.Helpers
                 if (filter.Horizon.NotStarted)
                     queryElements.Add(
                         new BooleanClause(QueryGetFieldQuery(Field_HsResult, new[] { "2" }), Occur.SHOULD));
+
                 if (filter.Horizon.Finished)
                     queryElements.Add(new BooleanClause(QueryGetFieldQuery(Field_HsResult, new[] { "1", "0" }),
                         Occur.SHOULD));
+
                 if (filter.Horizon.ToAssessment)
-                    queryElements.Add(
-                        new BooleanClause(QueryGetFieldQuery(Field_HsResult, new[] { "1" }), Occur.SHOULD));
+                    queryElements.Add(new BooleanClause(QueryGetFieldQuery(Field_HsResult, new[] { "1" }), Occur.SHOULD));
+
                 if (filter.Horizon.NotAssessed)
-                    queryElements.Add(
-                        new BooleanClause(QueryGetFieldQuery(Field_HsResult, new[] { "0" }), Occur.SHOULD));
+                    queryElements.Add(new BooleanClause(QueryGetFieldQuery(Field_HsResult, new[] { "0" }), Occur.SHOULD));
 
                 if (filter.Comments.KunUbehandlede)
                     queryElements.Add(new BooleanClause(QueryGetFieldQuery(Field_CommentsOpen, new[] { "1" }), Occur.MUST));
@@ -561,7 +612,49 @@ namespace Prod.Api.Helpers
             }
             else
             {
+                // filter 
                 ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_DoHorizonScanning, new[] { "0" }), Occur.MUST);
+
+                // filtrer på vurderingsansvarlig
+                if (filter.Responsible.Length > 0)
+                    ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_LastUpdatedBy, filter.Responsible), Occur.MUST);
+
+                // filtrer på framdrift
+                if (filter.Status.Length > 0)
+                    ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_ProgressStatus, filter.Status), Occur.MUST);
+
+                // filtrer på kommentarer
+                if (filter.Comments.CommentType.Contains("allAssessmentsWithComments"))
+                    ((BooleanQuery)query).Add(new BooleanClause(QueryGetFieldQuery(Field_CommentsOpen, new[] { "1" }), Occur.MUST));
+                if (filter.Comments.CommentType.Contains("newComments") && filter.Comments.UserId != Guid.Empty)
+                    ((BooleanQuery)query).Add(new BooleanClause(QueryGetFieldQuery(Field_CommentsNew, new[] { filter.Comments.UserId.ToString() }), Occur.MUST)); //new PrefixQuery(new Term(Field_CommentsNew, filter.Comments.UserId.ToString() + ";*")), Occur.MUST));
+                // autoTaxonChange,taxonChangeRequiresUpdate
+                if (filter.Comments.CommentType.Contains("autoTaxonChange"))
+                    ((BooleanQuery)query).Add(new BooleanClause(QueryGetFieldQuery(Field_TaxonChange, new[] { "1" }), Occur.MUST));
+                if (filter.Comments.CommentType.Contains("taxonChangeRequiresUpdate"))
+                    ((BooleanQuery)query).Add(new BooleanClause(QueryGetFieldQuery(Field_TaxonChange, new[] { "2" }), Occur.MUST));
+                // filtrer på kommentarer
+
+                if (filter.History.Category.Length > 0)
+                    ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_Category2018, filter.History.Category), Occur.MUST);
+
+                if (filter.History.Criteria.Length > 0)
+                    ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_Criteria2018, filter.History.Criteria), Occur.MUST);
+
+                if (filter.History.Status.Length > 0)
+                    ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_2018Status, filter.History.Status), Occur.MUST);
+
+
+                if (filter.Current.Category.Length > 0)
+                    ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_Category, filter.Current.Category), Occur.MUST);
+
+                if (filter.Current.Criteria.Length > 0)
+                    ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_Criteria, filter.Current.Criteria), Occur.MUST);
+
+                if (filter.Current.Status.Length > 0)
+                    ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_CurrentStatus, filter.Current.Status), Occur.MUST);
+
+
             }
 
 

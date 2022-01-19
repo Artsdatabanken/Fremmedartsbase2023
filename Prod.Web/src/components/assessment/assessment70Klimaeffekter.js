@@ -16,6 +16,10 @@ export default class Assessment70Klimaeffekter extends React.Component {
         // const {riskAssessment, viewModel, fabModel} = this.props;
         const climatelabel = (id) => koder.climateEffects.find(code => code.Value === id).Text
 
+        const ecoEffect = riskAssessment.ecoEffectText
+
+        const invasionPotential = riskAssessment.invasionPotentialText
+
         return(
             <div>
    				{config.showPageHeaders ? <h3>Klimaeffekter</h3> : <br />}
@@ -27,14 +31,14 @@ export default class Assessment70Klimaeffekter extends React.Component {
                     <div>
                     {/*<p>{climatelabel("timePerspective")}</p>*/}
                         <hr></hr>
-                        <p>{climatelabel("partialCategoryInvasion")}</p>
+                        <p>{invasionPotential}</p>
                         <div>
                             <p dangerouslySetInnerHTML={{
                                                 __html: climatelabel("climateChangeAffectsInvationPotential")}}></p>
                             <Xcomp.StringEnum observableValue={[riskAssessment, 'climateEffectsInvationpotential']} codes={koder.yesNo} mode="radio" />
                         </div>
                         <hr></hr>
-                        <p>{climatelabel("partialCategoryEcoeffect")}</p>
+                        <p>{ecoEffect}</p>
                         <div>
                             <p dangerouslySetInnerHTML={{
                                             __html: climatelabel("climateChangeAffectsEcoeffect") }}></p>

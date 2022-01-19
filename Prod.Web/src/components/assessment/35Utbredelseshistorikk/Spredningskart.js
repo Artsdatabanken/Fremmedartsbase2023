@@ -50,11 +50,11 @@ export default class Spredningskart extends React.Component {
         }
         const {map, countyListLand, states, showLegend, fabModel} = this.props
         const fylkerArray = countyListLand.map((fylke) => {
-            const active = Spredningskart.getCurrentState(fylke.Value, states)
+            const active = Spredningskart.getCurrentState(fylke.Value, states)           
             return {id: fylke.Value, title: `${fylke.Text}: ${active.title}`, style: active.key}
         })
 
-        const fylker = fylkerArray.reduce((o, currentArray) => {
+        const fylker = fylkerArray.reduce((o, currentArray) => {            
             const key = currentArray.id,
                 value = currentArray
             o[key] = value
@@ -91,13 +91,16 @@ export default class Spredningskart extends React.Component {
     }
 
     static getCurrentState(fylke, states) {
-        let defaultState = null
-        for (let i = 0; i < states.length; i++) {
-            const state = states[i]
-            if (!state.values)
-                defaultState = state
-            else if (state.values[fylke])
-                return state
+        var defaultState = states[0]
+        for (var i = 0; i < states.length; i++) {
+            //const state = states[i]
+            /*if (!state.values)
+             defaultState = state
+            else if (state.values.indexOf(fylke) > -1)*/
+            if (states[i].values) {
+                if (states[i].values.indexOf(fylke) > -1 )
+                defaultState = states[i]
+            }               
         }
         return defaultState
     }

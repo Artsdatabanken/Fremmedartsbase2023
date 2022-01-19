@@ -17,13 +17,14 @@ import config from '../../config';
 
 const MapOpenLayers = ({
     showWaterAreas,
-    showRegion,
+    isWaterArea,
     onAddPoint,
     onEdit,
     style,
     mapBounds,
     geojson,
     selectionGeometry,
+    assessmentArea,
     onClickPoint,
     setWaterAreas,
     setIsLoading,
@@ -33,7 +34,7 @@ const MapOpenLayers = ({
     const mapRef = useRef();
     const [visibleLegend, setVisibleLegend] = useState(false);
 	const [map, setMap] = useState(null);
-	const [lastShowRegion, setLastShowRegion] = useState(undefined);
+	const [lastIsWaterArea, setLastIsWaterArea] = useState(isWaterArea);
 	const [waterLayerName, setWaterLayerName] = useState(undefined);
     const [pointerMoveTarget, setPointerMoveTarget] = useState(undefined);
     const mapZoom = 3.7;
@@ -42,7 +43,7 @@ const MapOpenLayers = ({
     let mouseoverfeature = null;
     let featureOver;
     let drawPolygonInteraction;
-    const waterIntersections = [];
+    let waterIntersections = {};
 
     //if (!mapBounds) mapBounds = [[57, 4.3], [71.5, 32.5]];
 
@@ -90,24 +91,36 @@ const MapOpenLayers = ({
     };
 
     const calculateWaterIntersection = (mapObject, fieldName) => {
-        if (!showWaterAreas) return;
+        if (!showWaterAreas) {
+            setIsLoading(false);
+            return;
+        }
         setWaterAreas();
         setIsLoading(true);
-        waterIntersections.splice(0);
+        waterIntersections = {};
         const layers = mapObject.getLayers().getArray();
         // const areaLayer = layers.filter((layer) => layer.get('name') === 'areaLayer' ? true : false)[0];
         const markerLayer = layers.filter((layer) => layer.get('name') === 'markerLayer' ? true : false)[0];
         const waterLayer = layers.filter(layer => layer.get('name') === 'Vatn')[0];
         const waterSelectedLayer = layers.filter(layer => layer.get('name') === 'VatnSelected')[0];
-        if (!markerLayer && !waterLayer && !waterSelectedLayer) return;
+        if (!markerLayer && !waterLayer && !waterSelectedLayer) {
+            setIsLoading(false);
+            return;
+        }
 
         waterSelectedLayer.getSource().clear();
 
         const features = markerLayer.getSource().getFeatures().filter(f => f.getProperties().properties && f.getProperties().properties.category && f.getProperties().properties.category === 'inside');
-        if (features.length === 0) return;
+        if (features.length === 0) {
+            setIsLoading(false);
+            return;
+        }
 
         const waterFeatures = waterLayer.getSource().getFeatures();
-        if (waterFeatures.length === 0) return;
+        if (waterFeatures.length === 0) {
+            setIsLoading(false);
+            return;
+        }
 
         const createTurfPoint = (feature) => {
             const coordinate = feature.getGeometry().getCoordinates();
@@ -129,22 +142,29 @@ const MapOpenLayers = ({
         const theWaterFeatures = waterFeatures.map(f => createTurfMultiPolygon(f));
 
         // console.log('calculate intersections..');
-        theFeatures.forEach(feature => {
-            // console.log('featurecoord', feature.getGeometry().getCoordinates());
-            theWaterFeatures.forEach((waterFeature, j) => {
-                if (waterIntersections.indexOf(waterFeatures[j]) < 0) {
-                    const intersects = intersect(waterFeature, feature);
-                    if (intersects !== null) {
-                        waterIntersections.push(waterFeatures[j]);
+        const waterIntersectionFeatures = [];
+        theFeatures.forEach(theFeature => {
+            // console.log('featurecoord', theFeature.getGeometry().getCoordinates());
+            theWaterFeatures.forEach((theWaterFeature, j) => {
+                if (waterFeatures[j].get('disabled') === false) {
+                    const featureName = waterFeatures[j].get(fieldName);
+                    // console.log('intersect', featureName, waterFeatures[j].get('disabled'));
+                    if (!waterIntersections.hasOwnProperty(featureName) || (waterIntersections.hasOwnProperty(featureName) && !waterIntersections[featureName].intersects)) {
+                        const intersects = intersect(theWaterFeature, theFeature);
+                        waterIntersections[featureName] = {
+                            name: featureName,
+                            isWaterArea: lastIsWaterArea,
+                            intersects: intersects !== null,
+                        };
+                        if (intersects !== null) waterIntersectionFeatures.push(waterFeatures[j]);
                     }
                 }
             });
         });
-        // console.log(`${waterIntersections.length} intersections`);
 
-        setWaterAreas(waterIntersections.map(f => f.get(fieldName)).filter(x => x.length > 0).join(', '));
+        setWaterAreas(Object.values(waterIntersections));
 
-        waterSelectedLayer.getSource().addFeatures(waterIntersections);
+        waterSelectedLayer.getSource().addFeatures(waterIntersectionFeatures);
         setIsLoading(false);
     };
 
@@ -243,14 +263,14 @@ const MapOpenLayers = ({
     useLayoutEffect(() => {
         if (!showWaterAreas) return;
         if (map === null) return;
-        if (lastShowRegion === undefined || lastShowRegion === showRegion) return;
+        if (lastIsWaterArea === undefined || lastIsWaterArea === isWaterArea) return;
 
         // reDrawWaterLayer();
         setWaterAreas();
         setIsLoading(true);
         const waterSelectedLayer = map.getLayers().getArray().filter(layer => layer.get('name') === 'VatnSelected')[0];
         if (waterSelectedLayer) waterSelectedLayer.getSource().clear();
-        mapOlFunc.reDrawWaterLayer(map, showRegion, setLastShowRegion, setPointerMoveForWaterLayer, setWaterLayerName);
+        mapOlFunc.reDrawWaterLayer(map, isWaterArea, setLastIsWaterArea, setPointerMoveForWaterLayer, setWaterLayerName);
     });
 
     // on component mount
@@ -415,10 +435,12 @@ const MapOpenLayers = ({
             // layerid = 14; // Vannregion
             // layerid = 15; // Vannomraade
 
-            setLastShowRegion(showRegion);
+            setLastIsWaterArea(isWaterArea);
 
-            mapObject.addLayer(mapOlFunc.createWaterLayer('Vatn', showRegion ? 14 : 15, projection, undefined, setWaterLayerNameCallback));
-            mapObject.addLayer(mapOlFunc.createWaterSelectedLayer('VatnSelected', projection));
+            mapObject.addLayer(mapOlFunc.createWaterLayer('Vatn', isWaterArea, projection, undefined, assessmentArea, setWaterLayerNameCallback));
+            mapOlFunc.createWaterSelectedLayer('VatnSelected', projection).then(l => {
+                mapObject.addLayer(l);
+            });
         }
 
         // Fit extent

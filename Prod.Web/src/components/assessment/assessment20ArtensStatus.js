@@ -7,6 +7,8 @@ import * as Xcomp from './observableComponents';
 import DomesticObservedAndEstablished from './20ArtensStatus/DomesticObservedAndEstablished';
 
 import {action, autorun, extendObservable, observable, toJS} from "mobx"
+
+import createTaxonSearch from '../createTaxonSearch'
 //import createTaxonSearch from './createTaxonSearch'
 
 // const labels = config.labels
@@ -34,44 +36,17 @@ const SkalVurderesLabel = ({skalVurderes}) => (skalVurderes
 const nbsp = "\u00a0"
 
 
-const  connectedTaxon1 = observable({
-    ScientificName: "",
-    ScientificNameId: "",
-    ScientificNameAuthor: "",
-    VernacularName: "",
-    TaxonRank: "",
-    TaxonId: "",
-    RedListCategory: "", 
-    Ekspertgruppe: "",
-    taxonSearchString: "",
-    taxonSearchResult: []
-    // taxonSearchWaitingForResult: false - should not be observable
-})
 
-const  connectedTaxon2 = observable({
-    ScientificName: "",
-    ScientificNameId: "",
-    ScientificNameAuthor: "",
-    VernacularName: "",
-    TaxonRank: "",
-    TaxonId: "",
-    RedListCategory: "", 
-    Ekspertgruppe: "",
-    taxonSearchString: "",
-    taxonSearchResult: []
-    // taxonSearchWaitingForResult: false - should not be observable
-})
 
 @inject("appState")
 @observer
 export default class Assessment20ArtensStatus extends React.Component {
-// @observer
-//     constructor(props) {
-//         super(props)
+//@observer
+    constructor(props) {
+        super(props)
+   }
+   
 
-//     }
-
-@observable statusChange = false
 checkStatus = (production) => {
     // finds all the objects with id's that should be hidden 
     if ( production != true ) {
@@ -82,15 +57,15 @@ checkStatus = (production) => {
          return ""
     }
  }
+
+ 
+
     render() {
-        const {appState:{assessment}, appState} = this.props;
+        const {appState:{assessment}, appState, newTaxon} = this.props;
        // const vurdering = assessment
         const labels = appState.codeLabels 
-
-
-
         // console.log("labels" + JSON.stringify(labels.FirstObservation))
-
+        
         const codes = appState.koder
         const standardPeriods = [
             nbsp,
@@ -123,7 +98,7 @@ checkStatus = (production) => {
                     <p>{labels.SpeciesStatus.unsureIfAlien} </p>
                     <Xcomp.Radio value={'true'} observableValue={[assessment, "isAlienSpeciesString"]} defaultChecked={assessment.alienSpeciesCategory == "RegionallyAlien"} label={labels.General.yes} />                    
                     { assessment.isAlienSpeciesString == 'true' && assessment.alienSpeciesCategory != "DoorKnocker" ? 
-                            <Xcomp.Bool observableValue={[assessment, "isRegionallyAlien"]} checked={assessment.alienSpeciesCategory == "RegionallyAlien"} label={labels.SpeciesStatus.regionallyAlien} /> : null }
+                            <Xcomp.Bool className={"regionallyAlien"} observableValue={[assessment, "isRegionallyAlien"]} checked={assessment.alienSpeciesCategory == "RegionallyAlien"} label={labels.SpeciesStatus.regionallyAlien} /> : null }
                     <Xcomp.Radio value={'false'} observableValue={[assessment, "isAlienSpeciesString"]} label={labels.General.no} />
                     <p>{labels.SpeciesStatus.unsureAlienDescription}</p>
                     {assessment.notApplicableCategory == "notAlienSpecie" ?
@@ -143,47 +118,91 @@ checkStatus = (production) => {
                                 />
                         
                         { assessment.connectedToAnotherString == "yes" || assessment.connectedToAnother == true ?
-                        <div style={{border: '1px solid lightgray', padding: '10px'}}>
+                        <div className={"connectedTaxons"}>
                            {assessment.notApplicableCategory == "taxonIsEvaluatedInHigherRank" && 
                             // transfer "notApplicableDescription" from FAB3
                             <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/>                             
                            }
                             <Xcomp.Radio value={"Connected"} observableValue={[assessment, "connected"]} label={labels.SpeciesStatus.assessedWithAnotherTaxon}/>
-                            {assessment.connected == "Connected" && 
-                               <div style={{marginLeft: '20px'}}> <p style={{marginLeft: '30px', marginBottom: '10px'}}>{labels.SpeciesStatus.enterTaxonName}</p>
-                                <Xcomp.String observableValue={[assessment, 'connectedTaxon1']} className="connectedTaxon" placeholder={labels.General.searchSpecies} /> 
-                                
-                                {connectedTaxon1.taxonSearchResult.length > 0 ?
-                                <div className="speciesSearchList" style={{position: 'absolute', top: "36px", left:"-10px", backgroundColor: "#fcfcfc" }}>
+                            {assessment.connected == "Connected" ? 
+                            
+                            assessment.connectedTaxon && assessment.connectedTaxon.taxonId != "" ? 
+                            <div 
+                                    className="speciesNewItem"
+                                    onClick={action(() => {
+                                        assessment.connectedTaxon.taxonId = "";
+                                        assessment.connectedTaxon.taxonRank = "";
+                                        assessment.connectedTaxon.scientificName = "";
+                                        assessment.connectedTaxon.scientificNameId = "";
+                                        assessment.connectedTaxon.scientificNameAuthor = "";
+                                        assessment.connectedTaxon.vernacularName = "";
+                                        assessment.connectedTaxon.redListCategory = "";
+                                        assessment.connectedTaxon.taxonSearchResult.replace([]); 
+                                        assessment.connectedTaxon.taxonSearchString = "";                                        
+                                        }) 
+                                        
+                                    }
+                                >
+                                    <div className={"rlCategory " + assessment.connectedTaxon.redListCategory}>{ assessment.connectedTaxon.redListCategory}</div>
+                                    <div className="vernacularName">{assessment.connectedTaxon.vernacularName}</div>
+                                    <div className="scientificName">{assessment.connectedTaxon.scientificName}</div>
+                                    <div className="author">{"(" + assessment.connectedTaxon.scientificNameAuthor + ")"}</div>
+                                </div> :
+                            <div style={{position: 'relative'}}> <p style={{marginLeft: '30px', marginBottom: '10px'}}>{labels.SpeciesStatus.enterTaxonName}</p>
+                                {newTaxon.scientificName.length > 0 ?
+                                <div 
+                                    className="speciesNewItem"
+                                    onClick={action(() => {
+                                       newTaxon.taxonId = "";
+                                        newTaxon.taxonRank = "";
+                                        newTaxon.scientificName = "";
+                                        newTaxon.scientificNameId = "";
+                                        newTaxon.scientificNameAuthor = "";
+                                        newTaxon.vernacularName = "";
+                                        newTaxon.redListCategory = "";
+                                        newTaxon.taxonSearchResult.replace([]); 
+                                        newTaxon.taxonSearchString = "";                                        
+                                        }) 
+                                        
+                                    }
+                                >
+                                    <div className={"rlCategory " + newTaxon.redListCategory}>{newTaxon.RedListCategory}</div>
+                                    <div className="vernacularName">{newTaxon.vernacularName}</div>
+                                    <div className="scientificName">{newTaxon.scientificName}</div>
+                                    <div className="author">{"(" + newTaxon.scientificNameAuthor + ")"}</div>
+                                </div> :
+                                <Xcomp.String observableValue={[newTaxon, 'taxonSearchString']} placeholder={labels.General.searchSpecies} />}
+                                {newTaxon.taxonSearchResult.length > 0 ?
+                                <div className="speciesSearchList" style={{position: 'absolute', top: "36px", left:"15px"}}>
                                     <ul className="panel list-unstyled">
-                                    {connectedTaxon1.taxonSearchResult.map(item =>
+                                    {newTaxon.taxonSearchResult.map(item =>
                                         <li onClick={action(e => {
-                                            //console.log(JSON.stringify(item))
+                                            newTaxon.taxonId = item.taxonId;
+                                            newTaxon.taxonRank = item.taxonRank;
+                                            newTaxon.scientificName = item.scientificName;
+                                            newTaxon.scientificNameId = item.scientificNameId;
+                                            newTaxon.scientificNameAuthor = item.author;
+                                            newTaxon.vernacularName = item.popularName;
 
-                                            assessment.connectedTaxon1.TaxonId = item.taxonId;
-                                            assessment.connectedTaxon1.TaxonRank = item.taxonRank;
-                                            assessment.connectedTaxon1.ScientificName = item.scientificName;
-                                            assessment.connectedTaxon1.ScientificNameId = item.scientificNameId;
-                                            assessment.connectedTaxon1.ScientificNameAuthor = item.author;
-                                            assessment.connectedTaxon1.VernacularName = item.popularName;
-
-                                            assessment.connectedTaxon1.RedListCategory = item.rlCategory;
-                                            assessment.connectedTaxon1.taxonSearchResult.replace([]); 
-                                            assessment.connectedTaxon1.taxonSearchString = "" })} 
+                                            newTaxon.redListCategory = item.rlCategory;
+                                            newTaxon.taxonSearchResult.replace([]); 
+                                            newTaxon.taxonSearchString = "";                                            
+                                            assessment.connectedTaxon = item
+                                         })} 
                                             key={item.scientificName}
                                         >
                                             <div className="speciesSearchItem">
                                                 <div className={"rlCategory " + item.rlCategory}>{item.rlCategory}</div>
-                                                {item.popularName ? <span className="vernacularName">{item.popularName + " "}</span> : null }
-                                                <span className="scientificName">{item.scientificName}</span>
-                                                <span className="author">{item.author && item.author.startsWith('(') ? item.author : '(' + item.author + ')'}</span>
+                                                <div className="vernacularName">{item.popularName}</div>
+                                                <div className="scientificName">{item.scientificName}</div>
+                                                <div className="author">{"(" + item.author + ")"}</div>
                                             </div>
                                         </li>
                                     )}
                                     </ul>
                                 </div> :
                                 null}
-                               {/* {newAssessment.taxonSearchWaitingForResult ?
+                                {newTaxon.taxonSearchWaitingForResult ?
                                 <div  style={{zIndex: 10000, position: 'absolute', top: "40px", left:"35px"}}>
                                     <div  className={"three-bounce"}>
                                         <div className="bounce1" />
@@ -191,49 +210,108 @@ checkStatus = (production) => {
                                         <div className="bounce3" />
                                     </div>
                                 </div> :
-                               null} */}
-                                </div>
-                            }
+                                null}
+                            </div> : null }
+                               
+                                
                             
                             <Xcomp.Radio value={"Shared"} observableValue={[assessment, "connected"]} label={labels.SpeciesStatus.notAssessedButShared} />
-                            {assessment.connected == "Shared" && 
-                                <div style={{marginLeft: '20px'}}><p style={{marginLeft: '30px', marginBottom: '10px'}}>{labels.SpeciesStatus.enterTaxonName}</p>
-                                <Xcomp.String observableValue={[assessment, 'connectedTaxon2']} className="connectedTaxon" placeholder={labels.General.searchSpecies} /> 
-                                
-                                {connectedTaxon2.taxonSearchResult.length > 0 ?
-                                <div className="speciesSearchList" style={{position: 'absolute', top: "36px", left:"-10px", backgroundColor: "#fcfcfc" }}>
+                            {assessment.connected == "Shared" ?
+
+                            assessment.connectedTaxon != null && assessment.connectedTaxon.taxonId != "" ? 
+                            <div 
+                                    className="speciesNewItem"
+                                    onClick={action(() => {
+                                        assessment.connectedTaxon.taxonId = "";
+                                        assessment.connectedTaxon.taxonRank = "";
+                                        assessment.connectedTaxon.scientificName = "";
+                                        assessment.connectedTaxon.scientificNameId = "";
+                                        assessment.connectedTaxon.scientificNameAuthor = "";
+                                        assessment.connectedTaxon.vernacularName = "";
+                                        assessment.connectedTaxon.redListCategory = "";
+                                        assessment.connectedTaxon.taxonSearchResult.replace([]); 
+                                        assessment.connectedTaxon.taxonSearchString = "";                                        
+                                        }) 
+                                        
+                                    }
+                                >
+                                    <div className={"rlCategory " + assessment.connectedTaxon.redListCategory}>{assessment.connectedTaxon.RedListCategory}</div>
+                                    <div className="vernacularName">{assessment.connectedTaxon.vernacularName}</div>
+                                    <div className="scientificName">{assessment.connectedTaxon.scientificName}</div>
+                                    <div className="author">{"(" + assessment.connectedTaxon.scientificNameAuthor + ")"}</div>
+                                </div> :
+
+                            <div style={{position: 'relative', marginLeft: '20px'}}> <p style={{marginLeft: '30px', marginBottom: '10px'}}>{labels.SpeciesStatus.enterTaxonName}</p>
+                                {newTaxon.scientificName.length > 0 ?
+                                <div 
+                                    className="speciesNewItem"
+                                    onClick={action(() => {
+                                        newTaxon.taxonId = "";
+                                        newTaxon.taxonRank = "";
+                                        newTaxon.scientificName = "";
+                                        newTaxon.scientificNameId = "";
+                                        newTaxon.scientificNameAuthor = "";
+                                        newTaxon.vernacularName = "";
+                                        newTaxon.redListCategory = "";
+                                        newTaxon.taxonSearchResult.replace([]); 
+                                        newTaxon.taxonSearchString = "" }) 
+                                    }
+                                >
+                                    <div className={"rlCategory " + newTaxon.redListCategory}>{newTaxon.RedListCategory}</div>
+                                    <div className="vernacularName">{newTaxon.vernacularName}</div>
+                                    <div className="scientificName">{newTaxon.scientificName}</div>
+                                    <div className="author">{"(" + newTaxon.scientificNameAuthor + ")"}</div>
+                                </div> :
+                                <Xcomp.String observableValue={[newTaxon, 'taxonSearchString']} placeholder={labels.General.searchSpecies} />}
+                                {newTaxon.taxonSearchResult.length > 0 ?
+                                <div className="speciesSearchList" style={{position: 'absolute', top: "36px", left:"15px"}}>
                                     <ul className="panel list-unstyled">
-                                    {connectedTaxon2.taxonSearchResult.map(item =>
+                                    {newTaxon.taxonSearchResult.map(item =>
                                         <li onClick={action(e => {
-                                            console.log(JSON.stringify(item))
+                                            newTaxon.taxonId = item.taxonId;
+                                            newTaxon.taxonRank = item.taxonRank;
+                                            newTaxon.scientificName = item.scientificName;
+                                            newTaxon.scientificNameId = item.scientificNameId;
+                                            newTaxon.scientificNameAuthor = item.author;
+                                            newTaxon.vernacularName = item.popularName;
 
-                                            assessment.connectedTaxon2.TaxonId = item.taxonId;
-                                            assessment.connectedTaxon2.TaxonRank = item.taxonRank;
-                                            assessment.connectedTaxon2.ScientificName = item.scientificName;
-                                            assessment.connectedTaxon2.ScientificNameId = item.scientificNameId;
-                                            assessment.connectedTaxon2.ScientificNameAuthor = item.author;
-                                            assessment.connectedTaxon2.VernacularName = item.popularName;
+                                            newTaxon.redListCategory = item.rlCategory;
+                                            newTaxon.taxonSearchResult.replace([]); 
+                                            newTaxon.taxonSearchString = "";
+                                            assessment.connectedTaxon.taxonId = item.taxonId;
+                                            assessment.connectedTaxon.taxonRank = item.taxonRank;
+                                            assessment.connectedTaxon.scientificName = item.scientificName;
+                                            assessment.connectedTaxon.scientificNameId = item.scientificNameId;
+                                            assessment.connectedTaxon.scientificNameAuthor = item.author;
+                                            assessment.connectedTaxon.vernacularName = item.popularName;
 
-                                            assessment.connectedTaxon2.RedListCategory = item.rlCategory;
-                                            assessment.connectedTaxon2.taxonSearchResult.replace([]); 
-                                            assessment.connectedTaxon2.taxonSearchString = "" })} 
+                                            newTaxon.redListCategory = item.rlCategory;
+                                            //assessment.connectedTaxon = item
+                                        })} 
                                             key={item.scientificName}
                                         >
                                             <div className="speciesSearchItem">
                                                 <div className={"rlCategory " + item.rlCategory}>{item.rlCategory}</div>
-                                                {item.popularName ? <span className="vernacularName">{item.popularName + " "}</span> : null }
-                                                <span className="scientificName">{item.scientificName}</span>
-                                                <span className="author">{item.author && item.author.startsWith('(') ? item.author : '(' + item.author + ')'}</span>
+                                                <div className="vernacularName">{item.popularName}</div>
+                                                <div className="scientificName">{item.scientificName}</div>
+                                                <div className="author">{"(" + item.author + ")"}</div>
                                             </div>
                                         </li>
                                     )}
                                     </ul>
                                 </div> :
                                 null}
-                                
-                                
-                                </div>
-                            }
+                                {newTaxon.taxonSearchWaitingForResult ?
+                                <div  style={{zIndex: 10000, position: 'absolute', top: "40px", left:"35px"}}>
+                                    <div  className={"three-bounce"}>
+                                        <div className="bounce1" />
+                                        <div className="bounce2" />
+                                        <div className="bounce3" />
+                                    </div>
+                                </div> :
+                                null}
+                                </div> : null }
+                               
                             </div> : null }
                     </div> : null}
 
@@ -253,32 +331,40 @@ checkStatus = (production) => {
                          <Xcomp.StringEnum className="statusChoice" observableValue={[assessment, "speciesStatus"]} mode="radio" 
                             // checks if the species is a door knocker or not and if it is a production species to determine the available options to choose
                             options={this.checkStatus(assessment.productionSpecies)}
-                            onChange = {action(_e => {
-                                if(assessment.speciesStatus != "A" ) { 
-                                    assessment.wrongAssessed = false
-                                    };
-                                    if (assessment.alienSpeciesCategory == "DoorKnocker" && (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3")) {
-                                        this.statusChange = true
-                                        assessment.alienSpeciesCategory = "AlienSpecie"
-                                        if(assessment.speciesStatus == "C3") {
-                                            assessment.speciesEstablishmentCategory = "C3"
-                                        }
-                                    }
-                                    else if (assessment.alienSpeciesCategory == "AlienSpecie" && assessment.speciesStatus != "C2" && assessment.speciesStatus != "C3"){
-                                        this.statusChange = true
-                                        assessment.alienSpeciesCategory = "DoorKnocker"
-                                    }
-                                     else {
-                                        this.statusChange = false                                     
-                                    }   
+                            // onChange = {action(_e => {
+                            //     if(assessment.speciesStatus != "A" ) { 
+                            //         assessment.wrongAssessed = false
+                            //         };
+                            //         if (assessment.alienSpeciesCategory == "DoorKnocker" && (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3")) {
+                            //             this.statusChange = true
+                            //             assessment.alienSpeciesCategory = "AlienSpecie"
+                            //             if(assessment.speciesStatus == "C3") {
+                            //                 assessment.speciesEstablishmentCategory = "C3"
+                            //             }
+                            //         }
+                            //         else if (assessment.alienSpeciesCategory == "AlienSpecie" && assessment.speciesStatus != "C2" && assessment.speciesStatus != "C3"){
+                            //             this.statusChange = true
+                            //             assessment.alienSpeciesCategory = "DoorKnocker"
+                            //         }
+                            //          else {
+                            //             this.statusChange = false                                     
+                            //         }   
                                                                   
-                                })}
+                            //     })}
                             codes={codes.EstablishmentCategory}/>        
-                            <span className="statusWarning">{this.statusChange ? assessment.alienSpeciesCategory == "DoorKnocker" ? "Arten har nå endret status fra å være selvstendig reproduserende til å være en dørstokkart. Er dette riktig?" :
+                            <span className="statusWarning">{appState.statusChange ? assessment.alienSpeciesCategory == "DoorKnocker" ? "Arten har nå endret status fra å være selvstendig reproduserende til å være en dørstokkart. Er dette riktig?" :
                                     "Arten har nå endret status fra å være en dørstokkart til å være selvstendig reproduserende i norsk natur." : null}</span>
                             </div>
 
                         <p>{labels.SpeciesStatus.codesExplanation}</p>
+                        <br></br>
+                        {assessment.horizonDoScanning && assessment.horizonEstablismentPotential == 1 && (assessment.speciesStatus == "C1" || assessment.speciesStatus == "C0" || assessment.speciesStatus == "B1") ? 
+                        
+                        <div>
+                            <p>{labels.SpeciesStatus.assumedReproducing50Years}</p>
+                            <Xcomp.StringEnum observableValue={[assessment, "assumedReproducing50YearsString"]} mode="radio" codes={codes.yesNo}/>
+                        </div>
+                        : null} 
                         <br></br>
                         <div>
                             <p>{assessment.isRegionallyAlien ? labels.SpeciesStatus.establishedBefore1800RegionallyAlien : labels.SpeciesStatus.establishedBefore1800} </p>
@@ -286,7 +372,7 @@ checkStatus = (production) => {
                         </div>
                         
                         <p>{labels.SpeciesStatus.probabilityUncertainity}</p>
-                        
+
                         {assessment.notApplicableCategory == "establishedBefore1800" &&
                         // transfer "notApplicableDescription" from FAB3
                             <>
@@ -332,7 +418,7 @@ checkStatus = (production) => {
                         <fieldset className="well">
                                         
 
-                               {assessment.isAlienSpeciesString == 'true' && 
+                               {/* {assessment.isAlienSpeciesString == 'true' && 
                                     (assessment.connectedToAnotherString == "no" || assessment.connectedToAnotherString == "false" ) && 
                                     (assessment.alienSpecieUncertainIfEstablishedBefore1800String == "no" ) &&
                                     //|| assessment.alienSpecieUncertainIfEstablishedBefore1800 == false ) &&
@@ -349,7 +435,19 @@ checkStatus = (production) => {
                                     <h3>{labels.SpeciesStatus.conclusion}</h3>
                                     <p>{labels.SpeciesStatus.willNotBeRiskAssessed}</p> 
                                 </div>
+                                } */}
+                                { assessment.assessmentConclusion == "AssessedSelfReproducing"
+                                    ?  <p>{labels.SpeciesStatus.willBeRiskAssessed}<b>{labels.SpeciesStatus.assessedSelfReproducing}</b>.</p>
+                                    : assessment.assessmentConclusion == "AssessedDoorknocker"
+                                    ? <p>{labels.SpeciesStatus.willBeRiskAssessed}<b>{labels.SpeciesStatus.assessedDoorknocker}</b>.</p> 
+                                    : assessment.assessmentConclusion == "WillNotBeRiskAssessed"
+                                    ?   <div>
+                                            <h3>{labels.SpeciesStatus.conclusion}</h3>
+                                            <p>{labels.SpeciesStatus.willNotBeRiskAssessed}</p> 
+                                        </div>
+                                    : null
                                 }
+
                         </fieldset>
                     }
 
@@ -371,24 +469,26 @@ checkStatus = (production) => {
                                         {assessment.speciesStatus != "A" &&
                                             <li> {labels.SpeciesStatus.reproductionOutdoorsIfRelevant}</li>
                                         }
-                                        {assessment.productionSpecies == true && assessment.speciesStatus != "A" && assessment.speciesStatus != "B1"
+                                        {/* Removed the logic as described in the issue #341 */}
+                                        {/*assessment.productionSpecies == true && assessment.speciesStatus != "A" && assessment.speciesStatus != "B1"*/}
+                                        {assessment.speciesStatus != "A" 
                                          && assessment.speciesStatus != null &&
                                             <li>{labels.SpeciesStatus.speciesInProductionAreaOutdoors}</li>
                                         }
-                                        {assessment.productionSpecies == true && (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3") &&
+                                        {/*assessment.productionSpecies == true && (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3") &&*/}
                                             <li>{labels.SpeciesStatus.speciesReproductionInProductionAreaOutdoors}</li>
-                                        }
-                                        {(assessment.productionSpecies == true && assessment.speciesStatus == "C3") &&
+                                        
+                                        {/*(assessment.productionSpecies == true && assessment.speciesStatus == "C3") &&*/}
                                             <li>{labels.SpeciesStatus.speciesEstablishmentProductionArea}</li>
-                                        }
-                                        {assessment.speciesStatus.indexOf("C") > -1 &&
-                                            <li>{labels.SpeciesStatus.speciesInNorwegianNature}</li> }
+                                        
+                                        {/*assessment.speciesStatus.indexOf("C") > -1 &&*/}
+                                            <li>{labels.SpeciesStatus.speciesInNorwegianNature}</li> 
     
-                                        {(assessment.speciesStatus == "C3" || assessment.speciesStatus == "C2") &&
-                                            <li>{labels.SpeciesStatus.reproductionInNorwegianNature}</li> }
+                                        {/*(assessment.speciesStatus == "C3" || assessment.speciesStatus == "C2") &&*/}
+                                            <li>{labels.SpeciesStatus.reproductionInNorwegianNature}</li> 
     
-                                        {assessment.speciesStatus == "C3" &&
-                                            <li> {labels.SpeciesStatus.establishmentInNorwegianNature}</li> }
+                                        {/*assessment.speciesStatus == "C3" &&*/}
+                                            <li> {labels.SpeciesStatus.establishmentInNorwegianNature}</li> 
                                     </ul>	
                                     </div>
                                     <div className="yearsAndCheckboxes">
@@ -405,6 +505,7 @@ checkStatus = (production) => {
                                         />    
                                         <Xcomp.Bool observableValue={[assessment.riskAssessment, "yearFirstIndoorsInsecure"]} /> 
                                         </li>}
+
                                         {assessment.speciesStatus != "A" && assessment.speciesStatus != null &&                                   
                                         <li>
                                         <Xcomp.Number                            
@@ -415,8 +516,8 @@ checkStatus = (production) => {
                                         <Xcomp.Bool observableValue={[assessment.riskAssessment, "yearFirstReproductionIndoorsInsecure"]} /> 
                                         </li> }
     
-                                        {assessment.productionSpecies == true && assessment.speciesStatus != "A" && assessment.speciesStatus != "B1"
-                                         && assessment.speciesStatus != null &&
+                                        {/*assessment.productionSpecies == true && assessment.speciesStatus != "A" && assessment.speciesStatus != "B1"*/}
+                                       { assessment.speciesStatus != "A" && assessment.speciesStatus != null &&
                                         <li>
                                         <Xcomp.Number                            
                                             observableValue={[assessment.riskAssessment, "yearFirstProductionOutdoors"]}
@@ -425,7 +526,7 @@ checkStatus = (production) => {
                                         />    
                                         <Xcomp.Bool observableValue={[assessment.riskAssessment, "yearFirstProductionOutdoorsInsecure"]} /> 
                                         </li>}
-                                        {assessment.productionSpecies == true && (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3") &&
+                                        {/*assessment.productionSpecies == true && (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3") && */} 
                                         <li>
                                         <Xcomp.Number                            
                                             observableValue={[assessment.riskAssessment, "yearFirstReproductionOutdoors"]}
@@ -433,8 +534,8 @@ checkStatus = (production) => {
                                             yearRange={true}
                                         />    
                                         <Xcomp.Bool observableValue={[assessment.riskAssessment, "yearFirstReproductionOutdoorsInsecure"]} /> 
-                                        </li> }
-                                        {(assessment.productionSpecies == true && assessment.speciesStatus == "C3") &&
+                                        </li> 
+                                        {/*(assessment.productionSpecies == true && assessment.speciesStatus == "C3") &&*/}
                                             <li>
                                                 <Xcomp.Number                            
                                                     observableValue={[assessment.riskAssessment, "yearFirstEstablishmentProductionArea"]}
@@ -443,9 +544,9 @@ checkStatus = (production) => {
                                                 />    
                                                 <Xcomp.Bool observableValue={[assessment.riskAssessment, "yearFirstEstablishmentProductionAreaInsecure"]} /> 
                                                 </li>
-                                        }
                                         
-                                        {assessment.speciesStatus != null && assessment.speciesStatus.indexOf("C") > -1 && 
+                                        
+                                        {/*assessment.speciesStatus != null && assessment.speciesStatus.indexOf("C") > -1 && */}
                                             <li>                                    
                                             <Xcomp.Number                            
                                                 observableValue={[assessment.riskAssessment, "yearFirstNature"]}
@@ -453,8 +554,8 @@ checkStatus = (production) => {
                                                 yearRange={true}
                                             />    
                                             <Xcomp.Bool observableValue={[assessment.riskAssessment, "yearFirstNatureInsecure"]} /> 
-                                            </li> }
-                                        { (assessment.speciesStatus == "C3" || assessment.speciesStatus == "C2") && 
+                                            </li> 
+                                        {/* (assessment.speciesStatus == "C3" || assessment.speciesStatus == "C2") && */}
                                             <li>
                                             <Xcomp.Number                            
                                                 observableValue={[assessment.riskAssessment, "yearFirstReproductionNature"]}
@@ -462,8 +563,8 @@ checkStatus = (production) => {
                                                 yearRange={true}
                                             />    
                                             <Xcomp.Bool observableValue={[assessment.riskAssessment, "yearFirstReproductionNatureInsecure"]} /> 
-                                            </li> }
-                                        {assessment.speciesStatus == "C3" && 
+                                            </li> 
+                                        {/*assessment.speciesStatus == "C3" && */}
                                             <li>
                                             <Xcomp.Number                            
                                                 observableValue={[assessment.riskAssessment, "yearFirstEstablishedNature"]}
@@ -471,7 +572,7 @@ checkStatus = (production) => {
                                                 yearRange={true}
                                             />    
                                             <Xcomp.Bool observableValue={[assessment.riskAssessment, "yearFirstEstablishedNatureInsecure"]} /> 
-                                            </li>}
+                                            </li>
                                     </ul>
                                     </div>
                                 </div>	

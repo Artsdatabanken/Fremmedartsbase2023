@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { observer, inject } from 'mobx-react'
-import {action, observable} from 'mobx'
+import {action, observable, extendObservable} from 'mobx'
 import auth from '../authService'
 import * as Xcomp from '../observableComponents'
 import Tabs from '../tabs'
@@ -22,6 +22,7 @@ import Assessment70Klimaeffekter from './assessment70Klimaeffekter'
 import AssessmentReferences from './assessmentReferences'
 import AssessmentComments from './assessmentComments'
 import Assessment91Kriteriedokumentasjon from './assessment91Kriteriedokumentasjon'
+import createTaxonSearch from '../createTaxonSearch'
 
 
 
@@ -46,34 +47,99 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward'
 @inject('appState')
 @observer
 class AssessmentRoot extends Component {
-    
-    lockAssessment(e, assessment, appState) {
-            e.stopPropagation()
-            appState.lockFraHode(assessment)
+    constructor(props) {
+        super(props)
+        extendObservable(this, {
+            // showModal: false,
+            newTaxon: {
+                id: "newConnectedTaxon",
+                scientificName: "",
+                scientificNameId: "",
+                scientificNameAuthor: "",
+                vernacularName: "",
+                taxonRank: "",
+                taxonId: "",
+                taxonSearchString: "",
+                taxonSearchResult: [],
+                domesticOrAbroad : "",
+                redListCategory: "", 
+                keyStoneSpecie : false, 
+                effectLocalScale : false, 
+                effect : "Weak",
+                scale: "Limited",
+                //status: "NewAlien",
+                //interactionType : "CompetitionSpace", 
+                //interactionType : [], 
+                longDistanceEffect : false, 
+                confirmedOrAssumed : false, 
+                basisOfAssessment: [],
+                interactionTypes: [],
+            }
+        })
+
+        this.addTaxon = action(() => {
+            //const taxon = assessment.connectedTaxon;            
+            const newItem = this.newTaxon;
+            const clone = toJS(newItem);
+            // console.log("Clone: " + JSON.stringify(clone))
+            clone.taxonSearchString = undefined
+            clone.taxonSearchResult = undefined
+            newItem.scientificName = ""
+            newItem.scientificNameId = ""
+            newItem.scientificNameAuthor = ""
+            newItem.vernacularName = ""
+            newItem.taxonRank = ""
+            newItem.taxonId = ""
+            newItem.redListCategory = "" 
+            newItem.keyStoneSpecie = false
+            newItem.interactionType = "CompetitionSpace" 
+            //newItem.interactionType = []
+            newItem.effect = "Weak" 
+            newItem.scale = "Limited" 
+            newItem.effectLocalScale = false 
+            newItem.longDistanceEffect = false 
+            newItem.confirmedOrAssumed = false
+            newItem.domesticOrAbroad = ""
+            newItem.taxonSearchString = ""
+            newItem.taxonSearchResult.replace([])
+            newItem.basisOfAssessment = []
+            newItem.interactionTypes = []
+            newItem.taxonSearchWaitingForResult = false
+        })
+
+        createTaxonSearch(this.newTaxon, this.props.appState.evaluationContext, tax => tax.existsInCountry)
+
     }
-    @observable move = false
+
     
-    render() {
-        const {appState, appState:{assessment}, appState:{assessmentTabs}} = this.props
-        const rolle = appState.roleincurrentgroup
-        const isSuperUser = rolle.admin
-        const isFinished = assessment.evaluationStatus && assessment.evaluationStatus === "finished"
-        const canEdit = !isFinished && appState.roleincurrentgroup.skriver && assessment.lockedForEditByUser == null    
+
+        lockAssessment(e, assessment, appState) {
+                e.stopPropagation()
+                appState.lockFraHode(assessment)
+        }
+        @observable move = false
         
-        function sjekkForEndringerOgGiAdvarsel(){
-            // var isLockedByMe = appState.assessment && appState.assessment.lockedForEditByUser === auth.userId
-            var isdirty = appState.isDirty
-            var skriver = !!appState.roleincurrentgroup && appState.roleincurrentgroup.skriver
-            var ok = true;
-            // if (isLockedByMe && isdirty && skriver) {
-            if (isdirty && skriver) {
-                ok = window.confirm("Det er endringer på vurderingen - ønsker du virkelig å gå bort fra den uten å lagre?")
-            }
-            if (ok) {
-                appState.viewMode = "choosespecie"
-                appState.updateCurrentAssessment(null)
-            }
-    }
+        render() {
+            const {appState, appState:{assessment}, appState:{assessmentTabs}} = this.props
+            const rolle = appState.roleincurrentgroup
+            const isSuperUser = rolle.admin
+            const isFinished = assessment.evaluationStatus && assessment.evaluationStatus === "finished"
+            const canEdit = !isFinished && appState.roleincurrentgroup.skriver && assessment.lockedForEditByUser == null    
+            
+            function sjekkForEndringerOgGiAdvarsel(){
+                // var isLockedByMe = appState.assessment && appState.assessment.lockedForEditByUser === auth.userId
+                var isdirty = appState.isDirty
+                var skriver = !!appState.roleincurrentgroup && appState.roleincurrentgroup.skriver
+                var ok = true;
+                // if (isLockedByMe && isdirty && skriver) {
+                if (isdirty && skriver) {
+                    ok = window.confirm("Det er endringer på vurderingen - ønsker du virkelig å gå bort fra den uten å lagre?")
+                }
+                if (ok) {
+                    appState.viewMode = "choosespecie"
+                    appState.updateCurrentAssessment(null)
+                }
+        }
                 
         // console.log(rolle)
         // console.log(rolle.skriver)
@@ -125,7 +191,7 @@ class AssessmentRoot extends Component {
                 assessmentTabs.activeTab.id === 0  ?
                 <Assessment10Horisontskanning/> :
                 assessmentTabs.activeTab.id === 1  ?
-                <Assessment20ArtensStatus />
+                <Assessment20ArtensStatus newTaxon={this.newTaxon}/>
                 : assessmentTabs.activeTab.id === 2  ?
                 <Assessment30Artsegenskaper />
                 : assessmentTabs.activeTab.id === 3  ?

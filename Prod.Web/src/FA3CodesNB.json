@@ -214,9 +214,25 @@
                 "Children": null
             }
         ],
-        "workStatus": [
+        "workStatusHS": [
             {
               "text": "Ikke ferdigstilt",
+              "value": "notStarted"
+            },
+            {
+  
+              "text": "Påbegynt",
+              "value": "inprogress"
+            },
+            {
+  
+              "text": "Ferdigstilt",
+              "value": "finished"
+            }
+        ],
+        "workStatus": [
+            {
+              "text": "Ikke påbegynt",
               "value": "notStarted"
             },
             {
@@ -298,17 +314,21 @@
 
         "newComments": [
             {
-                "text": "på mine",
+                "text": "På mine",
                 "value": "mine"
             },
             {
 
-                "text": "alle",
+                "text": "Alle",
                 "value": "all"
             }
         ],
 
         "comments": [
+            {
+                "text": "Nye kommentarer",
+                "value": "newComments"
+            },
             {
                 "text": "Alle vurderinger med kommentarer",
                 "value": "allAssessmentsWithComments"
@@ -356,6 +376,26 @@
                 "value": "regionallyAlien"
             },
             {
+                "text": "Effekt uten selvstendig reproduksjon",
+                "value": "effectWithoutEstablishment"
+            }
+        ],
+
+        "assessedTypes2018": [
+            {
+                "text": "Etablert etter 1800",
+                "value": "establishedAfter1800"
+            },
+            {
+
+                "text": "Dørstokkart",
+                "value": "doorKnocker"
+            },
+            {
+                "text": "Regionalt fremmed",
+                "value": "regionallyAlien"
+            },
+            {
                 "text": "Effekt uten etablering",
                 "value": "effectWithoutEstablishment"
             }
@@ -367,30 +407,13 @@
                 "value": "establishedBefore1800"
             },
             {
-
-                "text": "Ingen etablering på 50 år",
-                "value": "notEstablishedFor50Years"
-            },
-            {
-                "text": "Tradisjonell bruksart \n (før: Tradisjonell produksjonsart)",
-                "value": "traditionalProductionSpecies"
-            },
-            {
-                "text": "Deler moderartens status",
+                "text": "Inkludert i vurderinga av annet takson",
                 "value": "sharesMotherSpeciesStatus"
-            },
-            {
-                "text": "Arten finnes ikke i Norge",
-                "value": "notFoundInNorway"
             },
             {
 
                 "text": "Arten er ikke fremmed i Norge",
                 "value": "notAlienInNorway"
-            },           
-            {
-                "text": "Potensiell dørstokkart som \n ikke skal vurderes",
-                "value": "notAssessedPotentialDoorKnocker"
             }
         ],
 
@@ -530,7 +553,7 @@
               
               {
     
-                "text": "Endret status (inkl. taksonomi, til/fra hjemlig)",
+                "text": "Endret status (inkl. taksonomi, til/fra stedegen)",
                 "value": "changedStatus"
               }
         ],
@@ -1680,14 +1703,14 @@
             {
                 "Id": "climateEffects",
                 "Value": "partialCategoryInvasion",
-                "Text": "Delkategori invasjonspotensial: 20000 (usikkerhet opp mot 100500) Gjeldende kriterier: ",
+                "Text": "Delkategori invasjonspotensial: 20000 (usikkerhet opp mot 100500)",
                 "Info": null,
                 "Children": null
             },
             {
                 "Id": "climateEffects",
                 "Value": "partialCategoryEcoeffect",
-                "Text": "Delkategori økologisk effekt: 100500 Gjeldende kriterier: ",
+                "Text": "Delkategori økologisk effekt: 100500",
                 "Info": null,
                 "Children": null
             }
@@ -2928,22 +2951,22 @@
         "assessmentBackgrounds": [
             {
   
-                "text": "Skriftlig dokumentasjon fra Norge",
+                "text": "Skriftlig dok. fra Norge",
                 "value": "WrittenDocumentationNorway"
               },
               {
     
-                "text": "Kun observasjoner fra Norge",
+                "text": "Kun obs. fra Norge",
                 "value": "ObservationNorway"
               },
               {
   
-                "text": "Skriftlig dokumentasjon fra utlandet",
+                "text": "Skriftlig dok. fra utlandet",
                 "value": "WrittenDocumentationAbroad"
               },
               {
     
-                "text": "Kun observasjoner fra utlandet",
+                "text": "Kun obs. fra utlandet",
                 "value": "ObservationAbroad"
               },
               {
@@ -3594,7 +3617,7 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "releaseForUseOther",
-                                                    "Text": "øvrig utsetting av nyttearter",
+                                                    "Text": "øvrig utsetting til nytteformål",
                                                     "Info": null,
                                                     "Children": null
                                                 },
@@ -3754,7 +3777,7 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "contaminantOnPlantsCommercial",
-                                                    "Text": "som forurensning av planter eller medfølgende jord under kommersiell plantehandel",
+                                                    "Text": "som annen forurensning av planter under kommersiell plantehandel",
                                                     "Info": null,
                                                     "Children": null
                                                 },
@@ -3789,7 +3812,7 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "seedContaminant",
-                                                    "Text": "av frø (ikke mat eller fôr)",
+                                                    "Text": "av frø (ikke mat)",
                                                     "Info": null,
                                                     "Children": null
                                                 },
@@ -3966,7 +3989,7 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "releaseForUseOther",
-                                                    "Text": "øvrig utsetting av nyttearter",
+                                                    "Text": "øvrig utsetting til nytteformål",
                                                     "Info": null,
                                                     "Children": null
                                                 },
@@ -4011,7 +4034,7 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "contaminantOnPlantsCommercial",
-                                                    "Text": "som forurensning av planter eller medfølgende jord under kommersiell plantehandel",
+                                                    "Text": "som annen forurensning av planter under kommersiell plantehandel",
                                                     "Info": null,
                                                     "Children": null
                                                 },
@@ -4046,7 +4069,7 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "seedContaminant",
-                                                    "Text": "av frø (ikke mat eller fôr)",
+                                                    "Text": "av frø (ikke mat)",
                                                     "Info": null,
                                                     "Children": null
                                                 },
@@ -4188,7 +4211,14 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "tunnelsAndLandBridges",
-                                                    "Text": "over menneskeskapt landforbindelse / gjennom tunnell",
+                                                    "Text": "over menneskeskapt landforbindelse",
+                                                    "Info": null,
+                                                    "Children": null
+                                                },
+                                                {
+                                                    "Id": null,
+                                                    "Value": "peopleDebris",
+                                                    "Text": "med menneskeskapt drivgods",
                                                     "Info": null,
                                                     "Children": null
                                                 }
@@ -4205,7 +4235,7 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "naturalDispersalAcrossBorders",
-                                                    "Text": "egenspredning",
+                                                    "Text": "naturlig",
                                                     "Info": null,
                                                     "Children": null
                                                 }
@@ -4309,7 +4339,7 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "importOtherEscape",
-                                                    "Text": "øvrig/ukjent formål",
+                                                    "Text": "med annet formål",
                                                     "Info": null,
                                                     "Children": null
                                                 },
@@ -4361,7 +4391,7 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "importContaminantOnPlantsCommercial",
-                                                    "Text": "som forurensning av planter eller medfølgende jord under kommersiell plantehandel",
+                                                    "Text": "som annen forurensning av planter under kommersiell plantehandel",
                                                     "Info": null,
                                                     "Children": null
                                                 },
@@ -4375,7 +4405,7 @@
                                                 {
                                                     "Id": null,
                                                     "Value": "importSeedContaminant",
-                                                    "Text": "av frø (ikke mat eller fôr)",
+                                                    "Text": "av frø (ikke mat)",
                                                     "Info": null,
                                                     "Children": null
                                                 },
@@ -4841,6 +4871,13 @@
                             "Id": null,
                             "Value": "codesExplanation",
                             "Text": "Koder i parentes angir «etableringsklassene» ifølge internasjonal standardisering (Blackburn mfl. 2011).",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "assumedReproducing50Years",
+                            "Text": "Arten skåret 1 på etableringspotensialet under horisontskanningen. Dette kan bety at arten var antatt å reprodusere på stedet uten at den sprer seg ut av forekomstruten i løpet av 10 år (i et 50-årsperspektiv), eller at arten var antatt å overleve på stedet, men ikke reprodusere. Er det antatt at arten reproduserer i et 50-årsperspektiv?",
                             "Info": null,
                             "Children": null
                         },
@@ -5777,7 +5814,7 @@
                         {
                             "Id": null,
                             "Value": "ADBComments",
-                            "Text": "Vurderinger med kommentarer fra ADB",
+                            "Text": "Kommentarer",
                             "Info": null,
                             "Children": null
                         },
@@ -6713,7 +6750,7 @@
                         {
                             "Id": null,
                             "Value": "magnitude",
-                            "Text": "Abundans",
+                            "Text": "Antall",
                             "Info": null,
                             "Children": null
                         },
@@ -7010,6 +7047,13 @@
                         },
                         {
                             "Id": null,
+                            "Value": "km2withoutConsideration",
+                            "Text": "Kjent forekomstareal (km<sup>2</sup>) korrigert for tiltak",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "literatureDataExpansionSpeed",
                             "Text": "Litteraturverdi på spredningshastighet (m/år)",
                             "Info": null,
@@ -7232,7 +7276,7 @@
                         {
                             "Id": null,
                             "Value": "parasiteEffectScore",
-                            "Text": "Para&shy;sittens effektskår",
+                            "Text": "Para&shy;sittens delkategori",
                             "Info": null,
                             "Children": null
                         },
@@ -7551,35 +7595,35 @@
                         {
                             "Id": null,
                             "Value": "possibleLowerCategoryNK",
-                            "Text": "Arter med en viss utstrekning i forekomstarealet kan, som en respons på ulike miljøbetingelser, ha ulik påvirkning i naturen. Kunne arten ha fått en <i>lavere</i> risikokategori i deler av sitt (potensielle) forekomstareal?",
+                            "Text": "Arter med en viss utstrekning i forekomstarealet kan, som en respons på ulike miljøbetingelser, ha ulik påvirkning i naturen. Kunne arten ha fått en <i>lavere</i> risikokategori i deler av sitt potensielle forekomstareal?",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "possibleLowerCategoryNK",
-                            "Text": "Arter med en viss utstrekning i forekomstarealet kan, som en respons på ulike miljøbetingelser, ha ulik påvirkning i naturen. Kunne arten ha fått en <i>lavere</i> risikokategori i deler av sitt (potensielle) forekomstareal?",
+                            "Text": "Arter med en viss utstrekning i forekomstarealet kan, som en respons på ulike miljøbetingelser, ha ulik påvirkning i naturen. Kunne arten ha fått en <i>lavere</i> risikokategori i deler av sitt potensielle forekomstareal?",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "possibleLowerCategorySEHI",
-                            "Text": "Arter med en viss utstrekning i forekomstarealet kan, som en respons på ulike miljøbetingelser, ha ulik påvirkning i naturen. Kunne arten ha fått en <i>lavere</i> risikokategori enn HI (dvs. NK, LO eller PH) i deler av sitt (potensielle) forekomstareal?",
+                            "Text": "Arter med en viss utstrekning i forekomstarealet kan, som en respons på ulike miljøbetingelser, ha ulik påvirkning i naturen. Kunne arten ha fått en <i>lavere</i> risikokategori enn SE (dvs. NK, LO, PH eller HI) i deler av sitt potensielle forekomstareal?",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "possibleLowerCategoryPH",
-                            "Text": "Arter med en viss utstrekning i forekomstarealet kan, som en respons på ulike miljøbetingelser, ha ulik påvirkning i naturen. Kunne arten ha fått en <i>lavere</i> risikokategori (dvs. NK eller LO) i deler av sitt (potensielle) forekomstareal?",
+                            "Text": "Arter med en viss utstrekning i forekomstarealet kan, som en respons på ulike miljøbetingelser, ha ulik påvirkning i naturen. Kunne arten ha fått en <i>lavere</i> risikokategori (dvs. NK eller LO) i deler av sitt potensielle forekomstareal?",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "possibleLowerCategoryLO",
-                            "Text": "Arter med en viss utstrekning i forekomstarealet kan, som en respons på ulike miljøbetingelser, ha ulik påvirkning i naturen. Kunne arten ha fått en <i>lavere</i> risikokategori (dvs. NK) i deler av sitt (potensielle) forekomstareal?",
+                            "Text": "Arter med en viss utstrekning i forekomstarealet kan, som en respons på ulike miljøbetingelser, ha ulik påvirkning i naturen. Kunne arten ha fått en <i>lavere</i> risikokategori (dvs. NK) i deler av sitt potensielle forekomstareal?",
                             "Info": null,
                             "Children": null
                         },

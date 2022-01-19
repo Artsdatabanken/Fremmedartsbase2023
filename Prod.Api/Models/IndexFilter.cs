@@ -41,6 +41,8 @@ namespace Prod.Api.Models
         /// If mode is HorizonScan or full assessment 
         /// </summary>
         public bool HorizonScan { get; set; }
+
+        public string[] Status { get; set; } = Array.Empty<string>();
     }
 
     public class Progress
@@ -49,10 +51,16 @@ namespace Prod.Api.Models
 
     public class Current
     {
+        public string[] Category { get; set; } = Array.Empty<string>();
+        public string[] Criteria { get; set; } = Array.Empty<string>();
+        public string[] Status { get; set; } = Array.Empty<string>();
     }
 
     public class History
     {
+        public string[] Category { get; set; } = Array.Empty<string>();
+        public string[] Criteria { get; set; } = Array.Empty<string>();
+        public string[] Status { get; set; } = Array.Empty<string>();
     }
     public class Horizon
     {
@@ -66,5 +74,10 @@ namespace Prod.Api.Models
     public class Comments
     {
         public bool KunUbehandlede { get; set; }
+        /// <summary>
+        /// brukerid til den som man leter etter nye kommentarer for....
+        /// </summary>
+        public Guid UserId { get; set; }
+        public string[] CommentType { get; set; } = Array.Empty<string>();
     }
 }

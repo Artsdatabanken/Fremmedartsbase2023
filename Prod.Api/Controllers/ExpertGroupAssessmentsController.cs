@@ -76,14 +76,15 @@ namespace Prod.Api.Controllers
         }
 
 
-        [HttpGet("export/{id}")]
+        [HttpGet("export/{type}/{id}")]
         //[Authorize]
-        public FileResult GetExport(string id)
+        public FileResult GetExport(string type, string id)
         {
             var expertgroupid = id.Replace('_', '/');
+            var hor = type == "horizonScanning";
 
-            var result = GetAssessmentsFromDb(expertgroupid, Array.Empty<string>()).Where(x=>x.HorizonDoScanning == true).ToList();
-            var mem = CreateCvsMemoryStream(result);
+            var result = GetAssessmentsFromDb(expertgroupid, Array.Empty<string>()).Where(x=>x.HorizonDoScanning == hor).ToList();
+            var mem = CreateCvsMemoryStream(result, hor);
 
             return new FileStreamResult(mem, "text/csv")
             {
@@ -91,15 +92,15 @@ namespace Prod.Api.Controllers
             };
         }
 
-        [HttpGet("export/all")]
+        [HttpGet("export/{type}/all")]
         [Authorize]
-        public FileResult GetExport()
+        public FileResult GetExport(string type)
         {
-            //var expertgroupid = id.Replace('_', '/');
+            var hor = type == "horizonScanning";
             var exlude = new[] { "LC", "LCº", "NA", "NE" };
-            var result = GetAssessmentsFromDb("", exlude);
+            var result = GetAssessmentsFromDb("", exlude).Where(x => x.HorizonDoScanning == hor).ToList(); ;
 
-            var mem = CreateCvsMemoryStream(result);
+            var mem = CreateCvsMemoryStream(result, hor);
 
             return new FileStreamResult(mem, "text/csv")
             {
@@ -107,14 +108,14 @@ namespace Prod.Api.Controllers
             };
         }
 
-        [HttpGet("export/absoluteall")]
+        [HttpGet("export/{type}/absoluteall")]
         [Authorize]
-        public FileResult GetExportAbsoluteAll()
+        public FileResult GetExportAbsoluteAll(string type)
         {
-            //var expertgroupid = id.Replace('_', '/');
-            var result = GetAssessmentsFromDb("", Array.Empty<string>());
+            var hor = type == "horizonScanning";
+            var result = GetAssessmentsFromDb("", Array.Empty<string>()).Where(x => x.HorizonDoScanning == hor).ToList(); ;
 
-            var mem = CreateCvsMemoryStream(result);
+            var mem = CreateCvsMemoryStream(result, hor);
 
             return new FileStreamResult(mem, "text/csv")
             {
@@ -122,7 +123,7 @@ namespace Prod.Api.Controllers
             };
         }
 
-        private static MemoryStream CreateCvsMemoryStream(List<FA4WithComments> result)
+        private static MemoryStream CreateCvsMemoryStream(List<FA4WithComments> result, bool hor)
         {
             var mem = new MemoryStream();
             var writer = new StreamWriter(mem, Encoding.Unicode);
@@ -148,8 +149,16 @@ namespace Prod.Api.Controllers
             csv.Context.TypeConverterOptionsCache.GetOptions<string>().NullValues.Add(string.Empty);
 
             var mapper = Helpers.ExportMapper.InitializeMapper();
-
-            csv.WriteRecords(mapper.Map<FA4HorizonScanExport[]>(result));
+            switch (hor)
+            {
+                case true:
+                    csv.WriteRecords(mapper.Map<FA4HorizonScanExport[]>(result));
+                    break;
+                default:
+                    csv.WriteRecords(mapper.Map<FA4Export[]>(result));
+                    break;
+            }
+            
             csv.Flush();
             writer.Flush();
 

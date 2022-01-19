@@ -27,12 +27,14 @@ const kodeTekst = (koder, verdi) => koder.filter(item => item.Value === verdi).m
 export default class Assessment62Okologiskeffekt extends React.Component {
     constructor(props) {
         super(props)
-        const {appState:{assessment}, appState:{assessment:{riskAssessment}}, appState, evaluationContext} = this.props;
+        const {appState:{assessment}, appState:{assessment:{riskAssessment}}, appState} = this.props;
+        const evaluationContext = appState.evaluationContext
         const labels = appState.codeLabels
         const koder = appState.koder
         extendObservable(this, {
             // showModal: false,
             newSSITS: {
+                id: "newSpeciesSpeciesInteractionsTaxonSearch",
                 scientificName: "",
                 scientificNameId: "",
                 scientificNameAuthor: "",
@@ -56,6 +58,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                 interactionTypes: [],
             }, 
             newGTD: {
+                id: "newGeneticTransferDocumentedTaxonSearch",
                 scientificName: "",
                 scientificNameId: "",
                 scientificNameAuthor: "",
@@ -79,6 +82,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                 interactionTypes: [],
             }, 
             newHPI: {
+                id: "newHostParasiteInformationsTaxonSearch",
                 scientificName: "",
                 scientificNameId: "",
                 scientificNameAuthor: "",
@@ -108,12 +112,14 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                 // // // //     : "",
                
                 niNVariation: [],
-                niNCode: assessment.impactedNatureTypes.length > 0
-                        ? assessment.impactedNatureTypes[0].niNCode 
+                niNCode
+                //: assessment.impactedNatureTypes.length > 0
+                  //  ? assessment.impactedNatureTypes[0].niNCode 
                         : "",
+                
                 naturetypes: [],
                // naturetypes: riskAssessment.vurderingAllImpactedNatureTypes,
-                
+                name: "",
                 redListCategory: "", 
                 domesticOrAbroad : "",
                 keyStoneSpecie : false, 
@@ -175,6 +181,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
             
            // newItem.niNCode = "",
             newItem.niNVariation.clear(),
+            newItem.name = ""
             newItem.redListCategory = "" 
             newItem.keyStoneSpecie = false
             //newItem.interactionType = []
@@ -255,7 +262,9 @@ export default class Assessment62Okologiskeffekt extends React.Component {
             newItem.taxonSearchWaitingForResult = false
         }
 
-        createTaxonSearch(this.newSSITS, evaluationContext, tax => !!tax.rlCategory && tax.existsInCountry)
+        createTaxonSearch(this.newSSITS, evaluationContext, tax => 
+            tax.rlCategory != null &&
+             tax.existsInCountry)
         // createTaxonSearch(this.newSSIDS, "N")
         createTaxonSearch(this.newGTD, evaluationContext, tax => tax.existsInCountry)
 
@@ -280,12 +289,12 @@ export default class Assessment62Okologiskeffekt extends React.Component {
         const ntLabels = labels.NatureTypes
         runInAction(() => {
 
-        crit52D.auto = false
-        crit52E.auto = false
+        crit52D.auto = true
+        crit52E.auto = true
         crit52F.auto = false
         crit52G.auto = false
-        crit52H.auto = false
-        crit52I.auto = false
+        crit52H.auto = true
+        crit52I.auto = true
         })
         //console.log(appState.userContext.readonly)
         return(

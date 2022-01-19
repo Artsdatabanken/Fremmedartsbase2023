@@ -15,7 +15,20 @@ const mapBounds = {
   ]
 };
 
-const Artskart = ({ taxonId, scientificNameId, evaluationContext, utvalg, showWaterAreas, onOverførFraArtskart, artskartSelectionGeometry, artskartAdded, artskartRemoved, onCancel }) => {
+const Artskart = ({
+  taxonId,
+  scientificNameId,
+  evaluationContext,
+  utvalg,
+  showWaterAreas,
+  isWaterArea,
+  onOverførFraArtskart,
+  artskartSelectionGeometry,
+  artskartAdded,
+  artskartRemoved,
+  assessmentArea,
+  onCancel
+}) => {
   // console.log('Artskart', taxonId, scientificNameId, evaluationContext);
   return (
     <div className="artskartmodal">
@@ -43,6 +56,7 @@ const Artskart = ({ taxonId, scientificNameId, evaluationContext, utvalg, showWa
 
       <RedigerbartKart
         showWaterAreas={showWaterAreas}
+        isWaterArea={isWaterArea}
         taxonId={taxonId || 0}
         scientificNameId={scientificNameId}
         kriterier={{ ...utvalg }}
@@ -52,6 +66,7 @@ const Artskart = ({ taxonId, scientificNameId, evaluationContext, utvalg, showWa
         artskartAdded={artskartAdded}
         artskartRemoved={artskartRemoved}
         artskartSelectionGeometry={artskartSelectionGeometry}
+        assessmentArea={assessmentArea}
         onCancel={onCancel}
       ></RedigerbartKart>
     </div>

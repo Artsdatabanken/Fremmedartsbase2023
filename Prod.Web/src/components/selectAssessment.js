@@ -223,28 +223,28 @@ export default class SelectAssessment extends Component {
 
                     {appState.filterType.indexOf('FL2018') > -1 && <div className="nav_menu">                        
                         <div className="filters"><b>{labels.SelectAssessment.speciesStatus}</b>
-                            <Xcomp.Bool observableValue={[appState, "vurdert"]} label={koder.statusCodes[0].text} />
+                            <Xcomp.Bool observableValue={[appState.historyFilter, "vurdert"]} label={koder.statusCodes[0].text} />
                             <Xcomp.MultiselectArray
-                                observableValue={[appState, 'riskAssessedFilter']} 
+                                observableValue={[appState.historyFilter, 'riskAssessedFilter']} 
                                 className="status"
-                                codes={koder.assessedTypes}
+                                codes={koder.assessedTypes2018}
                                 mode="check"/>
-                            <Xcomp.Bool observableValue={[appState, "ikkevurdert"]} label={koder.statusCodes[1].text} />
+                            <Xcomp.Bool observableValue={[appState.historyFilter, "ikkevurdert"]} label={koder.statusCodes[1].text} />
                             <Xcomp.MultiselectArray
-                                observableValue={[appState, 'riskNotAssessedFilter']} 
+                                observableValue={[appState.historyFilter, 'riskNotAssessedFilter']} 
                                 className="status"
                                 codes={koder.notAssessedTypes2018}
                                 mode="check"/>
                         </div>
                         <div className="filters"><b>{labels.SelectAssessment.riskLevelCategory}</b>
                         <Xcomp.MultiselectArray
-                                observableValue={[appState, 'riskCategoryFilter']} 
+                                observableValue={[appState.historyFilter, 'riskCategoryFilter']} 
                                 codes={koder.riskCategory}                                
                                 mode="check"/>
                         </div>
                         <div className="filters"><b>{labels.SelectAssessment.criteria}</b>
                         <Xcomp.MultiselectArray
-                                observableValue={[appState, 'decisiveCriteriaFilter']} 
+                                observableValue={[appState.historyFilter, 'decisiveCriteriaFilter']} 
                                 codes={koder.decisiveCriteria}
                                 mode="check"/>
                         </div>
@@ -252,28 +252,28 @@ export default class SelectAssessment extends Component {
                 </div> }
                    {appState.filterType.indexOf('FL2023') > -1 &&  <div className="nav_menu">                        
                         <div className="filters speciesStatus"><b>{labels.SelectAssessment.speciesStatus}</b>
-                            <Xcomp.Bool observableValue={[appState, "vurdert"]} label={koder.statusCodes[0].text} />
+                            <Xcomp.Bool observableValue={[appState.currentFilter, "vurdert"]} label={koder.statusCodes[0].text} />
                             <Xcomp.MultiselectArray
-                                observableValue={[appState, 'riskAssessedFilter']} 
+                                observableValue={[appState.currentFilter, 'riskAssessedFilter']} 
                                 className="status"
                                 codes={koder.assessedTypes}
                                 mode="check"/>
-                            <Xcomp.Bool observableValue={[appState, "ikkevurdert"]} label={koder.statusCodes[1].text} />
+                            <Xcomp.Bool observableValue={[appState.currentFilter, "ikkevurdert"]} label={koder.statusCodes[1].text} />
                             <Xcomp.MultiselectArray
-                                observableValue={[appState, 'riskNotAssessedFilter']} 
+                                observableValue={[appState.currentFilter, 'riskNotAssessedFilter']} 
                                 className="status"
                                 codes={koder.notAssessedTypes}
                                 mode="check"/>
                         </div>
                         <div className="filters"><b>{labels.SelectAssessment.riskLevelCategory}</b>
                         <Xcomp.MultiselectArray
-                                observableValue={[appState, 'riskCategoryFilter']} 
+                                observableValue={[appState.currentFilter, 'riskCategoryFilter']} 
                                 codes={koder.riskCategory}
                                 mode="check"/>
                         </div>
                         <div className="filters"><b>{labels.SelectAssessment.criteria}</b>
                         <Xcomp.MultiselectArray
-                                observableValue={[appState, 'decisiveCriteriaFilter']} 
+                                observableValue={[appState.currentFilter, 'decisiveCriteriaFilter']} 
                                 codes={koder.decisiveCriteria}
                                 mode="check"/>
                         </div>
@@ -284,16 +284,10 @@ export default class SelectAssessment extends Component {
                         <div className="filters"><b>{labels.SelectAssessment.assessmentStatus}</b>                            
                             <Xcomp.MultiselectArray
                                 observableValue={[appState, 'workStatus']} 
-                                codes={koder.workStatus}
+                                codes={appState.assessmentTypeFilter == "riskAssessment" ? koder.workStatus: koder.workStatusHS}
                                 mode="check"/>                            
                         </div>
                         <div className="filters"><b>{labels.SelectAssessment.ADBComments}</b>
-                        <p>{labels.SelectAssessment.newComments}
-                        <Xcomp.MultiselectArray
-                                observableValue={[appState, 'newComments']} 
-                                codes={koder.newComments}
-                                mode="check"/>
-                        </p>
                         <Xcomp.MultiselectArray
                                 observableValue={[appState, 'otherComments']} 
                                 codes={koder.comments}
@@ -331,7 +325,7 @@ export default class SelectAssessment extends Component {
                 
                 <div className="nav_menu">
                         <div className="filters"><b>{labels.SelectAssessment.assessmentStatus}</b>   
-                                <Xcomp.Bool observableValue={[appState.horizonScanFilter, "hsNotStarted"]} label={koder.workStatus[0].text + "   (" + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','2') + ") " + (100*appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','2')/appState.expertgroupAssessmentTotalCount).toFixed() + "%"} />
+                                <Xcomp.Bool observableValue={[appState.horizonScanFilter, "hsNotStarted"]} label={koder.workStatusHS[0].text + "   (" + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','2') + ") " + (100*appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','2')/appState.expertgroupAssessmentTotalCount).toFixed() + "%"} />
                                 <Xcomp.Bool observableValue={[appState.horizonScanFilter, "hsFinished"]} label={koder.workStatus[2].text + " (" + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0') + ")   " + (100*appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0')/appState.expertgroupAssessmentTotalCount).toFixed() + "%"} />
                             <div className="subChoice">
                                     <Xcomp.Bool observableValue={[appState.horizonScanFilter, "toAssessment"]} label={" (" + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1') + ") " + (appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0').toFixed() > 0 ? (100*appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1')/appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0')).toFixed() : "0") + labels.SelectAssessment.further} />
@@ -491,7 +485,7 @@ export default class SelectAssessment extends Component {
                 :            
                 <span> {labels.SelectAssessment.showingTotal} {appState.expertgroupAssessmentList.length} {appState.expertgroupAssessmentList.length == 1 ? labels.SelectAssessment.assessment : labels.SelectAssessment.assessments} ({labels.SelectAssessment.filteredFrom} {appState.expertgroupAssessmentTotalCount})</span>
             }
-            <input type="button" className="btn btn-primary" value="Last ned fil" onClick={() => window.open(config.apiUrl + '/api/ExpertGroupAssessments/export/' + appState.expertgroup)}></input>
+            <input type="button" className="btn btn-primary" value="Last ned fil" onClick={() => window.open(config.apiUrl + '/api/ExpertGroupAssessments/export/' + appState.assessmentTypeFilter + '/' + appState.expertgroup)}></input>
             </div>
             
             <div>

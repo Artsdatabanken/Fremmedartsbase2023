@@ -72,7 +72,7 @@ const HostParasiteTable = observer((props) =>
                     </div>
                 </td>
                 {props.showKeyStoneSpecie ? <td><Xcomp.Bool observableValue={[item, 'keyStoneSpecie']} /></td> : null}
-                <td style={{maxWidth: '160px'}}>{item.ParasiteScientificName}</td>
+                <td style={{maxWidth: '160px'}}>{item.parasiteScientificName}</td>
                 <td>
                     <Xcomp.StringEnum observableValue={[item, 'status']} forceSync codes={koder.ParasiteStatus}/>   
                 </td>
@@ -219,7 +219,7 @@ const HostParasiteTable = observer((props) =>
                 <td>
                     <Xcomp.Button primary xs
                         onClick={props.addNewItem}
-                        disabled={!props.newItem.ScientificName || !props.newItem.ParasiteScientificName }
+                        disabled={!props.newItem.scientificName || !props.newItem.parasiteScientificName }
                     >{labels.General.add}</Xcomp.Button>
                 </td>
             </tr>

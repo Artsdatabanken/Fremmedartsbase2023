@@ -539,7 +539,10 @@ div.naturetype .modal-dialog,
             
 }
 .import > .well .modal-dialog {
-  max-width: 1300px;
+  max-width: 850px;
+  .modal-content {
+    border-radius: 0;
+  }
 }
 
 .main.adm table, .notmain table {
@@ -573,7 +576,7 @@ div.naturetype .modal-dialog,
 }
 
 .modal-dialog > .modal-content > .modal-header {
-  display: block;
+  display: flex;
 }
 
 .modal-body > div > div {
@@ -741,6 +744,33 @@ input {
   color: #BBB;  
 }
 
+.connectedTaxons {
+  border: 1px solid lightgray;
+  padding: 10px;
+  div {
+    margin-left: 20px;
+    input {
+      margin-left: 10px;
+    }
+  }
+
+  .speciesSearchItem {
+    margin-left: 0;
+    border-radius: 0;
+  }
+
+  .speciesNewItem {
+    width: 350px;
+    margin-left: 30px;
+    padding: 5px;
+  }
+}
+
+.speciesSearchList {
+  z-index: 100;
+  //margin-left: 20px;
+}
+
 .col-md-6 > div > .speciesSearchList {
   z-index: 3001;
   width: 100%;
@@ -770,10 +800,10 @@ input {
 }
 
 .speciesNewItem:hover {
-    background-color: #2098d1;
+    background-color: #969696;
     color: white;
     cursor: text;
-    padding: 10px;
+    //padding: 5px;
 }
 
 .rlCategory {
@@ -1131,7 +1161,8 @@ ul.scores {
   padding-inline-start: 0;
 }
 
-ul.scores li.checkbox label input {
+ul.scores li.checkbox label input,
+.regionallyAlien {
   margin-left: 30px;
 }
 
@@ -1886,6 +1917,15 @@ div.well > .btn-group {
   //margin-left: 30px;
 }
 
+.well table.BCritTable th {
+  max-width: 180px;
+  white-space: break-spaces;
+}
+
+.well table.BCritTable .BCritYear .form-control {
+  width: 60px;
+}
+
 .well div.knownDistribution .form-control {
   width: 100%;
 }
@@ -2065,7 +2105,7 @@ div.geoVarInput > div > div.input_field > div.form-control {
 }
 
 #spreadHistories div, #spreadHistories table, #spreadHistories button {
-  margin-left: 20px;
+ // margin-left: 20px;
   margin-right: 10px;
 }
 

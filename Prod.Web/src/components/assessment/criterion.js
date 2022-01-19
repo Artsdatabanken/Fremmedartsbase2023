@@ -14,9 +14,11 @@ export default class Criterion extends React.Component {
         const {criterion, appState, mode, hideInfo, disabled} = this.props;
         
         console.log("keys: " + JSON.stringify(Object.keys(criterion)))
+        const assessment = appState.assessment
+        const riskAssessment = assessment.riskAssessment
         const labels = appState.codeLabels
         const ntLabels = labels.NatureTypes
-        const {id, value, uncertaintyValues, auto, codes, heading, info, uncertaintyDisabled, errors } = criterion;
+        const {id, value, uncertaintyValues, auto, codes, heading, info, valueDisabled, uncertaintyDisabled, errors } = criterion;
         
         const letter = criterion.criteriaLetter
         //console.log(heading)
@@ -59,7 +61,7 @@ export default class Criterion extends React.Component {
             <>
             {showHeading ? <div><h3>{heading}</h3> {!hideInfo ? <p>{info}</p> : null}</div> : null}
             {/*disabled ?  <p>{ntLabels.scoreSummary}</p>  :  <p>{scoreText}</p>*/}
-            {disabled ?  <p>{ntLabels.scoreSummary}</p>  : letter ? (letter !="A" || (letter =="B" && riskAssessment.chosenSpreadYearlyIncrease == "b" && assessment.alienSpeciesCategory != "DoorKnocker" )) ? <p>{ntLabels.uncertainity}</p>: <p>{ntLabels.score}</p> : null}
+            {disabled ?  <p>{ntLabels.scoreSummary}</p>  : letter ? ((letter =="A" && (riskAssessment.chosenSpreadMedanLifespan == "SpreadRscriptEstimatedSpeciesLongevity" || riskAssessment.chosenSpreadMedanLifespan ==  "ViableAnalysis")) || (letter =="B" && riskAssessment.chosenSpreadYearlyIncrease == "b" && assessment.alienSpeciesCategory != "DoorKnocker" )) ? <p>{ntLabels.uncertainity}</p>: <p>{ntLabels.score}</p> : null}
             <div className= {disabled ? "criterion disabled" : "criterion" }>
             
             {codes.map(kode => {  
@@ -91,7 +93,7 @@ export default class Criterion extends React.Component {
                 // console.log("VVV " + value + " " + value + " # " + radiooptional.checked)
                 // console.log("name " + name)
                 checkboxoptional.disabled = (this.context.readonly || disabled || uncertaintyDisabled.indexOf(kode.value) > -1 )
-                radiooptional.disabled = (this.context.readonly || disabled || auto)
+                radiooptional.disabled = (this.context.readonly || disabled || valueDisabled.indexOf(kode.value) > -1 || auto)
 
 
                 // if (logthis) {
@@ -104,7 +106,7 @@ export default class Criterion extends React.Component {
                 return <div key={kode.value} className="uncertainty">      
                     <div>
                         
-                        {auto ?
+                        {/*auto ?
                             <div className={"criteriaCheck" + (radiooptional.checked ? " glyphicon glyphicon-ok" : "")}>&nbsp;</div> :
                             <>{parseInt(kode.value)+1}
                             <input                            
@@ -113,7 +115,15 @@ export default class Criterion extends React.Component {
                             onChange={onChangeRadio}
                             {...radiooptional} />
                             </>
-                        }
+                        */}
+                        <>{parseInt(kode.value)+1}
+                            <input                            
+                            value={kode.value}
+                            type="radio"
+                            onChange={onChangeRadio}
+                            {...radiooptional} />
+                            </>
+                        {/*<div className={"criteriaCheck" + (radiooptional.checked ? " glyphicon glyphicon-ok" : "")}>&nbsp;</div>*/}
                         <input
                         value={kode.value}
                         type="checkbox"
