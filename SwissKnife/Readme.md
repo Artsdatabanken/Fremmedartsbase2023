@@ -96,6 +96,9 @@ Commands:
   importnames     Import and create assessments from names
   patchmigration  Patch migrated assessments from original json dump
   taxonomywash    Check and update taxonomy on assessments
+
+
+dotnet run -- maintenance patchmigration --connectionstring "Server=localhost;Database=fab4;Integrated Security=true;MultipleActiveResultSets=true" --inputfolder ./Dump
 ```
 
 
