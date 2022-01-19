@@ -124,29 +124,29 @@ checkStatus = (production) => {
                             <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/>                             
                            }
                             <Xcomp.Radio value={"Connected"} observableValue={[assessment, "connected"]} label={labels.SpeciesStatus.assessedWithAnotherTaxon}/>
-                            {assessment.connected == "Connected" && 
+                            {assessment.connected == "Connected" ? 
                             
-                            assessment.connectedTaxon ? 
+                            assessment.connectedTaxon && assessment.connectedTaxon.taxonId != "" ? 
                             <div 
                                     className="speciesNewItem"
                                     onClick={action(() => {
-                                        connectedTaxon.taxonId = "";
-                                        connectedTaxon.taxonRank = "";
-                                        connectedTaxon.scientificName = "";
-                                        connectedTaxon.scientificNameId = "";
-                                        connectedTaxon.scientificNameAuthor = "";
-                                        connectedTaxon.vernacularName = "";
-                                        connectedTaxon.redListCategory = "";
-                                        connectedTaxon.taxonSearchResult.replace([]); 
-                                        connectedTaxon.taxonSearchString = "";                                        
+                                        assessment.connectedTaxon.taxonId = "";
+                                        assessment.connectedTaxon.taxonRank = "";
+                                        assessment.connectedTaxon.scientificName = "";
+                                        assessment.connectedTaxon.scientificNameId = "";
+                                        assessment.connectedTaxon.scientificNameAuthor = "";
+                                        assessment.connectedTaxon.vernacularName = "";
+                                        assessment.connectedTaxon.redListCategory = "";
+                                        assessment.connectedTaxon.taxonSearchResult.replace([]); 
+                                        assessment.connectedTaxon.taxonSearchString = "";                                        
                                         }) 
                                         
                                     }
                                 >
-                                    <div className={"rlCategory " + connectedTaxon.redListCategory}>{newTaxon.RedListCategory}</div>
-                                    <div className="vernacularName">{connectedTaxon.vernacularName}</div>
-                                    <div className="scientificName">{connectedTaxon.scientificName}</div>
-                                    <div className="author">{"(" + connectedTaxon.scientificNameAuthor + ")"}</div>
+                                    <div className={"rlCategory " + assessment.connectedTaxon.redListCategory}>{ assessment.connectedTaxon.redListCategory}</div>
+                                    <div className="vernacularName">{assessment.connectedTaxon.vernacularName}</div>
+                                    <div className="scientificName">{assessment.connectedTaxon.scientificName}</div>
+                                    <div className="author">{"(" + assessment.connectedTaxon.scientificNameAuthor + ")"}</div>
                                 </div> :
                             <div style={{position: 'relative'}}> <p style={{marginLeft: '30px', marginBottom: '10px'}}>{labels.SpeciesStatus.enterTaxonName}</p>
                                 {newTaxon.scientificName.length > 0 ?
@@ -211,34 +211,34 @@ checkStatus = (production) => {
                                     </div>
                                 </div> :
                                 null}
-                            </div> }
+                            </div> : null }
                                
                                 
                             
                             <Xcomp.Radio value={"Shared"} observableValue={[assessment, "connected"]} label={labels.SpeciesStatus.notAssessedButShared} />
-                            {assessment.connected == "Shared" && 
+                            {assessment.connected == "Shared" ?
 
-                            assessment.connectedTaxon ? 
+                            assessment.connectedTaxon != null && assessment.connectedTaxon.taxonId != "" ? 
                             <div 
                                     className="speciesNewItem"
                                     onClick={action(() => {
-                                        connectedTaxon.taxonId = "";
-                                        connectedTaxon.taxonRank = "";
-                                        connectedTaxon.scientificName = "";
-                                        connectedTaxon.scientificNameId = "";
-                                        connectedTaxon.scientificNameAuthor = "";
-                                        connectedTaxon.vernacularName = "";
-                                        connectedTaxon.redListCategory = "";
-                                        connectedTaxon.taxonSearchResult.replace([]); 
-                                        connectedTaxon.taxonSearchString = "";                                        
+                                        assessment.connectedTaxon.taxonId = "";
+                                        assessment.connectedTaxon.taxonRank = "";
+                                        assessment.connectedTaxon.scientificName = "";
+                                        assessment.connectedTaxon.scientificNameId = "";
+                                        assessment.connectedTaxon.scientificNameAuthor = "";
+                                        assessment.connectedTaxon.vernacularName = "";
+                                        assessment.connectedTaxon.redListCategory = "";
+                                        assessment.connectedTaxon.taxonSearchResult.replace([]); 
+                                        assessment.connectedTaxon.taxonSearchString = "";                                        
                                         }) 
                                         
                                     }
                                 >
-                                    <div className={"rlCategory " + connectedTaxon.redListCategory}>{newTaxon.RedListCategory}</div>
-                                    <div className="vernacularName">{connectedTaxon.vernacularName}</div>
-                                    <div className="scientificName">{connectedTaxon.scientificName}</div>
-                                    <div className="author">{"(" + connectedTaxon.scientificNameAuthor + ")"}</div>
+                                    <div className={"rlCategory " + assessment.connectedTaxon.redListCategory}>{assessment.connectedTaxon.RedListCategory}</div>
+                                    <div className="vernacularName">{assessment.connectedTaxon.vernacularName}</div>
+                                    <div className="scientificName">{assessment.connectedTaxon.scientificName}</div>
+                                    <div className="author">{"(" + assessment.connectedTaxon.scientificNameAuthor + ")"}</div>
                                 </div> :
 
                             <div style={{position: 'relative', marginLeft: '20px'}}> <p style={{marginLeft: '30px', marginBottom: '10px'}}>{labels.SpeciesStatus.enterTaxonName}</p>
@@ -310,7 +310,7 @@ checkStatus = (production) => {
                                     </div>
                                 </div> :
                                 null}
-                                </div> }
+                                </div> : null }
                                
                             </div> : null }
                     </div> : null}
