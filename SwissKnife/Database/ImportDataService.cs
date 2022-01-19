@@ -418,6 +418,11 @@ namespace SwissKnife.Database
                         exAssessment.ExpertGroup = "Kromister";
                     }
                 }
+
+                if (newAssesment.IsDeleted && !exAssessment.IsDeleted)
+                {
+                    exAssessment.IsDeleted = true;
+                }
                 
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)

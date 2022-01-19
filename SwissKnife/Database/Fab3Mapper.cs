@@ -108,7 +108,7 @@ namespace SwissKnife.Database
             { "FA3/N/304", "Terrestriske invertebrater" },
             { "FA3/N/305", "Terrestriske invertebrater" },
             { "FA3/N/3059", "Terrestriske invertebrater" },
-            { "FA3/N/477+509:509501:538", "Terrestriske invertebrater" },
+            { "FA3/N/477", "Terrestriske invertebrater" },
             { "FA3/N/491", "Terrestriske invertebrater" },
             { "FA3/N/492", "Terrestriske invertebrater" },
             { "FA3/N/321", "Terrestriske invertebrater" },
@@ -802,7 +802,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.SpreadAreaInChangedNature, opt => opt.Ignore())
                     .ForMember(dest => dest.SpeciesEstablishmentCategory, opt => opt.Ignore())
                     .ForMember(dest => dest.Id, opt => opt.Ignore()) // primærnøkkel
-                    .ForMember(dest =>dest.PreviousAssessments, opt => opt.Ignore()) // ny av året
+                    .ForMember(dest => dest.PreviousAssessments, opt => opt.Ignore()) // ny av året
                     .ForMember(dest => dest.Fylkesforekomster, opt => opt.Ignore())
                     .ForMember(dest => dest.TaxonomicHistory, opt => opt.Ignore()) // ny av året
                     .ForMember(dest => dest.ImportInfo, opt => opt.Ignore()) // ny av året
@@ -1127,6 +1127,12 @@ namespace SwissKnife.Database
 
                         if (!string.IsNullOrWhiteSpace(tekster))
                             dest.RiskAssessment.YearFirstDomesticObservation = tekster;
+
+                        if (src.VurderingsStatus == "SlettetAvAdmin" || src.VurderingsStatus == "SlettetFlyttetAvAdmin" || (src.ExpertGroupId == "ExpertGroups/Ikkemarineinvertebrater/N" && src.VurderingsStatus == null))
+                        {
+                            dest.IsDeleted = true;
+                        }
+
                     });
 
                 // - slik mapping fungerer ikke - da de blir kallt via convention - og det er ingen tilfeller der den har behov for å mappe fra FA3Legacy til Prod.Domain.RiskAssessment - koden blir ikke kallt
