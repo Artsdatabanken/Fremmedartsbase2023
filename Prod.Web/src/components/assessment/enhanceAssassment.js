@@ -18,6 +18,7 @@ export default function enhanceAssessment(json, appState) {
     delete ra.riskLevel
     delete ra.riskLevelText
     delete ra.riskLevelCode
+    delete ra.decisiveCriteria
     delete ra.AOOchangeBest
     delete ra.AOOchangeLow
     delete ra.AOOchangeHigh
@@ -68,6 +69,7 @@ export default function enhanceAssessment(json, appState) {
             objra.riskLevel = assra.riskLevel
             objra.riskLevelText = assra.riskLevelText
             objra.riskLevelCode = assra.riskLevelCode
+            objra.decisiveCriteria = assra.decisiveCriteria
             objra.AOOchangeBest = assra.AOOchangeBest
             objra.AOOchangeLow = assra.AOOchangeLow
             objra.AOOchangeHigh = assra.AOOchangeHigh

@@ -1180,10 +1180,10 @@ function enhanceRiskAssessmentLevel(riskAssessment, labels) {
             const result = labels.RiskLevelCode[levtxt]
             return result
         },
-        // get decisiveCriteria() {
-        //     const decisiveCriteriaLabel = riskAssessment.decisiveCriteria
-        //     return decisiveCriteriaLabel
-        // }
+        get decisiveCriteria() {
+            console.log("##!decisiveCriteria: " + JSON.stringify(this.riskLevelObj))
+            return this.riskLevelObj.decisiveCriteriaLabel
+        }
     });
     console.log("end run enhanceRiskAssessmentLevel")
 
