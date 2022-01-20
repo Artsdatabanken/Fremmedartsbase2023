@@ -196,7 +196,7 @@ namespace Prod.Domain
 
         public string SpeciesStatus { get; set; }
 
-        public bool? ProductionSpecies { get; set; } = false;
+        public bool? ProductionSpecies { get; set; } // = false; sah #358
 
         public string ChangedFromAlien { get; set; }
 

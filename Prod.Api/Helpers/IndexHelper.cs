@@ -22,7 +22,7 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Change this to force index rebuild!
         /// </summary>
-        public const int IndexVersion = 29;
+        public const int IndexVersion = 30;
 
         private const string Field_Id = "Id";
         private const string Field_Group = "Expertgroup";
@@ -238,8 +238,7 @@ namespace Prod.Api.Helpers
                 new FacetField(Facet_Author, assessment.LastUpdatedByUser.FullName),
                 new FacetField(Facet_Progress, horResult),
                 new FacetField(Facet_PotentialDoorKnocker, ExtractPotentialDoorKnocker(get2018NotAssessed).ToString()),
-                new FacetField(Facet_NotAssessedDoorKnocker,
-                    ExtractNotAssessedDoorKnocker(get2018NotAssessed).ToString())
+                new FacetField(Facet_NotAssessedDoorKnocker, ExtractNotAssessedDoorKnocker(get2018NotAssessed).ToString())
             };
 
             if (ass.TaxonHierarcy != null && ass.TaxonHierarcy.Length > 0)
@@ -369,6 +368,7 @@ namespace Prod.Api.Helpers
                 case S2018.notEstablishedWithin50Years:
                 case S2018.notAssessedDoorKnocker:
                 case S2018.traditionalProductionSpecie:
+                case S2018.notPresentInRegion:
                     return S2018.NR2018;
                 default:
                     return S2018.newPotentialDoorKnocker;
@@ -382,6 +382,7 @@ namespace Prod.Api.Helpers
                 case S2018.notEstablishedWithin50Years:
                 case S2018.notAssessedDoorKnocker:
                 case S2018.traditionalProductionSpecie:
+                case S2018.notPresentInRegion:
                     return s2018;
                 default:
                     return S2018.assessed;
@@ -427,6 +428,8 @@ namespace Prod.Api.Helpers
                 return S2018.notEstablishedWithin50Years;
             if (ass2018.MainCategory == "NotApplicable" && ass2018.MainSubCategory == "traditionalProductionSpecie")
                 return S2018.traditionalProductionSpecie;
+            if (ass2018.MainCategory == "NotApplicable" && ass2018.MainSubCategory == "NotPresentInRegion")
+                return S2018.notPresentInRegion;
             if (ass2018.MainCategory == "DoorKnocker" && ass2018.MainSubCategory == "noRiskAssessment")
                 return S2018.notAssessedDoorKnocker;
             return S2018.assessed;
@@ -734,7 +737,8 @@ namespace Prod.Api.Helpers
             notAssessedDoorKnocker = 6,
             notEstablishedWithin50Years = 7,
             traditionalProductionSpecie = 8,
-            newPotentialDoorKnocker
+            newPotentialDoorKnocker = 9,
+            notPresentInRegion = 10
         }
     }
 }

@@ -371,7 +371,7 @@ namespace SwissKnife.Database
 
                 exAssessment.IsAlienSpecies = newAssesment.IsAlienSpecies;
                 exAssessment.ConnectedToAnother = newAssesment.ConnectedToAnother;
-                exAssessment.ProductionSpecies = newAssesment.ProductionSpecies;
+                exAssessment.ProductionSpecies = exAssessment.ProductionSpecies is true ? true : newAssesment.ProductionSpecies;
                 exAssessment.AlienSpecieUncertainIfEstablishedBefore1800 = newAssesment.AlienSpecieUncertainIfEstablishedBefore1800;
                 exAssessment.IsRegionallyAlien = newAssesment.IsRegionallyAlien;
                 exAssessment.IsAlienSpecies = newAssesment.IsAlienSpecies;
@@ -417,6 +417,11 @@ namespace SwissKnife.Database
 
                         exAssessment.ExpertGroup = "Kromister";
                     }
+                }
+
+                if (newAssesment.IsDeleted && !exAssessment.IsDeleted)
+                {
+                    exAssessment.IsDeleted = true;
                 }
                 
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);

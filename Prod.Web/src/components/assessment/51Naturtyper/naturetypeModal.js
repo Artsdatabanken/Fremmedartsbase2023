@@ -157,7 +157,20 @@ export default class NaturetypeModal extends React.Component {
                         >
                             <ul className="panel list-unstyled">
                             {taxon.taxonSearchResult.map(item =>
-                                <li onClick={() => selectTaxonSearchState(taxon, item)}
+                                <li onClick={() => selectTaxonSearchState(taxon, item),
+                                     
+                                    this.editNaturtype.taxon.taxonId = item.taxonId,
+                                    this.editNaturtype.taxon.taxonRank = item.taxonRank,
+                                    this.editNaturtype.taxon.scientificName = item.scientificName,
+                                    this.editNaturtype.taxon.scientificNameId = item.scientificNameId,
+                                    this.editNaturtype.taxon.scientificNameAuthor = item.author,
+                                    this.editNaturtype.taxon.vernacularName = item.popularName,
+
+                                    this.editNaturtype.taxon.redListCategory = item.rlCategory,
+                                    this.editNaturtype.taxon.taxonSearchResult.replace([]), 
+                                    this.editNaturtype.taxon.taxonSearchString = ""  
+                                }
+                                
                                 key={item.scientificName}
                                 >
                                     <div className="speciesSearchItem">
