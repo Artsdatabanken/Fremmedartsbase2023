@@ -89,7 +89,7 @@ export default class Assessment41Import extends React.Component {
                 <SelectableRadio
                             label={labels.indoorProduktionImport.a}
                             value={"positive"}
-                            defaultChecked = {assessment.importedToIndoorOrProductionArea}
+                            //defaultChecked = {assessment.importedToIndoorOrProductionArea}
                             disabled = {disabled}
                             observableValue={[assessment, "indoorProduktion"]}/>
                             
