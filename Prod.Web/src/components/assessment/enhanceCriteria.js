@@ -876,8 +876,28 @@ function enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering,
             return maxlevel
         },
         // F criteria
-        get effectOnThreathenedNaturetypesLevel() {
-            const levels = vurdering.redlistedNatureTypes.map(
+        // get effectOnThreathenedNaturetypesLevel() {
+        //     const levels = vurdering.redlistedNatureTypes.map(
+        //         nt => nt.affectedArea
+        //     ).map(area =>
+        //         area === "0"? 0 :
+        //         area === "0–2"? 1 :
+        //         area === "2-5"? 2 :
+        //         area === "5-10"? 3 :
+        //         area === "10-20"? 3 :
+        //         area === "20-50"? 3 :
+        //         area === "50-100"? 3 :
+        //         0
+        //     )
+        //     const maxlevel = Math.max(...levels, 0)
+        //     return maxlevel
+
+        // },
+        get impactedNatureTypesLevel() {
+            // vurdering.impactedNatureTypes
+            // vurderingAllImpactedNatureTypes
+            // vurderingImpactedNaturalNatureTypes
+            const levels = this.vurderingAllImpactedNatureTypes.map(
                 nt => nt.affectedArea
             ).map(area =>
                 area === "0"? 0 :
@@ -1061,7 +1081,8 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
     autorun(() => {
         const criterionF = getCriterion(riskAssessment, 1, "F")
           console.log("Autorun criterionF .value: " + criterionF.value)
-        const nv = riskAssessment.effectOnThreathenedNaturetypesLevel
+        // const nv = riskAssessment.effectOnThreathenedNaturetypesLevel
+        const nv = riskAssessment.impactedNatureTypesLevel
           console.log("Autorun criterionF new value: " + nv)
           console.log("Autorun criterionF not equal: " + (nv != criterionF.value))
         runInAction(() => {
@@ -1181,7 +1202,7 @@ function enhanceRiskAssessmentLevel(riskAssessment, labels) {
             return result
         },
         get decisiveCriteria() {
-            console.log("##!decisiveCriteria: " + JSON.stringify(this.riskLevelObj))
+            //console.log("##!decisiveCriteria: " + JSON.stringify(this.riskLevelObj))
             return this.riskLevelObj.decisiveCriteriaLabel
         }
     });
