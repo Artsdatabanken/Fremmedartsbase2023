@@ -23,7 +23,7 @@ export default class Assessment51Naturtyper extends React.Component {
                 .impactedNatureTypes
                 .push(nyNt)
         })
-        this.addLivsmedium = action((nyLm) => {
+        this.addLivsmedium = action((nyLm) => {                      
             assessment
                 .habitats
                 .push(nyLm)

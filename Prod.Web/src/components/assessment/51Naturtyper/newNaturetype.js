@@ -26,22 +26,33 @@ export default class NewNaturetype extends React.Component {
                 colonizedArea: null,
                 stateChange: [],
                 background: [],
-                affectedArea: null,
+                affectedArea: null
+            },
+            nyttLivsmedium: {
+                niNCode: null,
+                name: null,
+                timeHorizon: null,
+                //colonizedArea: null,
+                stateChange: [],
+                //background: [],
+                //affectedArea: null,
                 taxon: {
-                    id: "newNaturtypeTaxon",
+                    id: "newHabitatTaxon",
                     scientificName: "",
                     scientificNameId: "",
                     scientificNameAuthor: "",
                     vernacularName: "",
                     taxonRank: "",
                     taxonId: "",
-                    //taxonSearchString: "",
-                    //taxonSearchResult: [],
+                    taxonSearchString: "",
+                    taxonSearchResult: [],
                     domesticOrAbroad : "",
                     redListCategory: "", 
                     basisOfAssessment: []
                 }
-            },
+            }
+
+
         })
         createTaxonSearch(taxonSearchState, appState.evaluationContext, tax => tax.existsInCountry)
     }
@@ -55,7 +66,6 @@ export default class NewNaturetype extends React.Component {
         const koder = appState.koder
         const livsmedium = superheader === "Livsmedium"
         console.log("lms" + lms)
-
         return <div className="natureType">
             <div>
                 <h4>{superheader}</h4>
@@ -63,7 +73,7 @@ export default class NewNaturetype extends React.Component {
                 {this.props.mode === "livsmedium" ?
                 <LivsmediumSelector
                     naturtyper={appState.livsmediumCodes} 
-                    nyNaturtype={this.nyNaturtype}                    
+                    nyNaturtype={this.nyttLivsmedium}                    
                     showModal={() => runInAction(() => this.showModal = true)}
                 /> :
                 this.props.mode === "truet" ?
@@ -85,7 +95,7 @@ export default class NewNaturetype extends React.Component {
             ? <NaturtypeModal
                 taxon = {taxonSearchState}
                 hideStateChange={[this, "hideStateChange"]}
-                naturtype={this.nyNaturtype}
+                naturtype={this.props.mode === "livsmedium" ? this.nyttLivsmedium : this.nyNaturtype}
                 fabModel={appState}
                 livsmedium={livsmedium}
                 showModal={[this, "showModal"]}
