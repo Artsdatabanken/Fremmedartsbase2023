@@ -3,6 +3,7 @@ import fixFylker from './fixFylker'
 import { action, autorun, extendObservable, observable, reaction, toJS} from 'mobx'
 import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils'
 import { string } from 'prop-types'
+import { nothing } from 'ol/pixel'
 
 
 
@@ -140,7 +141,7 @@ export default function enhanceAssessment(json, appState) {
         },
         get productionSpeciesString() {
             // const value = assessment.notApplicableCategory == "establishedBefore1800" ? "yes" :  assessment.alienSpeciesCategory == "AlienSpecie" ? "no" : null
-            return assessment.productionSpecies ? "yes" : "no"
+            return assessment.productionSpecies == null ? null : (assessment.productionSpecies ? "yes" : "no")
         },
         set productionSpeciesString(s) {
             assessment.productionSpecies = s === "yes"
