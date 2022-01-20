@@ -836,9 +836,9 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 }
 
 function enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering, artificialAndConstructedSites) {
-    autorun(() => vurdering.impactedNatureTypes.map(x => console.log("##!impactedNatureTypes code: " + x.niNCode )))
-    autorun(() => riskAssessment.redlistedNatureTypes.map(x => console.log("##!redlistedNatureTypes code: " + x.niNCode )))
-    autorun(() => riskAssessment.NiNNatureTypes.map(x => console.log("##!NiNNatureTypes code: " + x.niNCode )))
+    // autorun(() => vurdering.impactedNatureTypes.map(x => console.log("##!impactedNatureTypes code: " + x.niNCode )))
+    // autorun(() => riskAssessment.redlistedNatureTypes.map(x => console.log("##!redlistedNatureTypes code: " + x.niNCode )))
+    // autorun(() => riskAssessment.NiNNatureTypes.map(x => console.log("##!NiNNatureTypes code: " + x.niNCode )))
 
     // const artificialAndConstructedSites = ["F4", "F5", "H4", "L7", "L8", "M14", "M15", "T35", "T36", "T37", "T38", "T39", "T40", "T41", "T42", "T43", "T44", "T45", "V11", "V12", "V13"]
 
@@ -863,24 +863,6 @@ function enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering,
                 const maxlevel = Math.max(...levels, 0)
                 return maxlevel
         },
-        // G criteria
-        get effectOnOtherNaturetypesLevel() {
-            // const levels = riskAssessment.vurderingImpactedNaturalNatureTypes.map(nt => nt.affectedArea).map(area =>
-            const levels = riskAssessment.NiNNatureTypes.map(
-                nt => nt.affectedArea
-            ).map(area =>
-                area === "0"? 0 :
-                area === "0–2"? 0 :
-                area === "2-5"? 0 :
-                area === "5-10"? 1 :
-                area === "10-20"? 2 :
-                area === "20-50"? 3 :
-                area === "50-100"? 3 :
-                0
-            )
-            const maxlevel = Math.max(...levels, 0)
-            return maxlevel
-        },
         // F criteria
         get effectOnThreathenedNaturetypesLevel() {
             const levels = riskAssessment.redlistedNatureTypes.map(
@@ -898,6 +880,23 @@ function enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering,
             const maxlevel = Math.max(...levels, 0)
             return maxlevel
 
+        },
+        // G criteria
+        get effectOnOtherNaturetypesLevel() {
+            const levels = riskAssessment.NiNNatureTypes.map(
+                nt => nt.affectedArea
+            ).map(area =>
+                area === "0"? 0 :
+                area === "0–2"? 0 :
+                area === "2-5"? 0 :
+                area === "5-10"? 1 :
+                area === "10-20"? 2 :
+                area === "20-50"? 3 :
+                area === "50-100"? 3 :
+                0
+            )
+            const maxlevel = Math.max(...levels, 0)
+            return maxlevel
         },
     })
 }
