@@ -437,14 +437,16 @@ checkStatus = (production) => {
                                 </div>
                                 } */}
                                 { assessment.assessmentConclusion == "AssessedSelfReproducing"
-                                    ?  <p>{labels.SpeciesStatus.willBeRiskAssessed}<b>{labels.SpeciesStatus.assessedSelfReproducing}</b>.</p>
+                                    ?  <><h3>{labels.SpeciesStatus.conclusion}</h3>
+                                        <p>{labels.SpeciesStatus.willBeRiskAssessed}<b>{labels.SpeciesStatus.assessedSelfReproducing}</b>.</p></>
                                     : assessment.assessmentConclusion == "AssessedDoorknocker"
-                                    ? <p>{labels.SpeciesStatus.willBeRiskAssessed}<b>{labels.SpeciesStatus.assessedDoorknocker}</b>.</p> 
+                                    ? <><h3>{labels.SpeciesStatus.conclusion}</h3>
+                                        <p>{labels.SpeciesStatus.willBeRiskAssessed}<b>{labels.SpeciesStatus.assessedDoorknocker}</b>.</p></> 
                                     : assessment.assessmentConclusion == "WillNotBeRiskAssessed"
-                                    ?   <div>
+                                    ?   <>
                                             <h3>{labels.SpeciesStatus.conclusion}</h3>
                                             <p>{labels.SpeciesStatus.willNotBeRiskAssessed}</p> 
-                                        </div>
+                                        </>
                                     : null
                                 }
 
