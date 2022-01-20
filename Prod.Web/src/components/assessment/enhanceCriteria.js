@@ -846,17 +846,8 @@ function enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering,
         get vurderingAlienSpeciesCategory() {return vurdering.alienSpeciesCategory},
         get vurderingCurrentExistenceAreaCalculated() {return vurdering.currentExistenceAreaCalculated},
         get vurderingAllImpactedNatureTypes() {return vurdering.impactedNatureTypes.map(x => x)},
-        // get vurderingImpactedNaturalNatureTypes() { return vurdering.impactedNatureTypes.filter(
-        //     nt => !artificialAndConstructedSites.filter(code => nt.niNCode === code || nt.niNCode.startsWith(code + "-") ).length > 0
-        // // ).filter(
-        // //     nt => !nt.NiNCode.startsWith("AM-") // Sverige
-        // ).filter(
-        //     nt => !nt.niNCode.startsWith("LI ")
-        // )},
         get redlistedNatureTypes() {return riskAssessment.vurderingAllImpactedNatureTypes.map(x => x).filter(x => !isNaN(x.niNCode))},
         get NiNNatureTypes() {return riskAssessment.vurderingAllImpactedNatureTypes.map(x => x).filter(x => isNaN(x.niNCode))},
-
-
 
         // C criteria
         get impactedNaturtypesColonizedAreaLevel() {
@@ -908,58 +899,7 @@ function enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering,
             return maxlevel
 
         },
-        // get impactedNatureTypesLevel() {
-        //     // vurdering.impactedNatureTypes
-        //     // vurderingAllImpactedNatureTypes
-        //     // vurderingImpactedNaturalNatureTypes
-        //     const levels = this.vurderingAllImpactedNatureTypes.map(
-        //         nt => nt.affectedArea
-        //     ).map(area =>
-        //         area === "0"? 0 :
-        //         area === "0–2"? 1 :
-        //         area === "2-5"? 2 :
-        //         area === "5-10"? 3 :
-        //         area === "10-20"? 3 :
-        //         area === "20-50"? 3 :
-        //         area === "50-100"? 3 :
-        //         0
-        //     )
-        //     const maxlevel = Math.max(...levels, 0)
-        //     return maxlevel
-
-        // },
-
-        // redlistedNaturtypesCategoryLevels: () => {
-        //         const info = vurdering.RedlistedNatureTypes.map(nt => {return {cat: nt.Category.replace('°', ''), area: nt.AffectedArea}} )
-        //         return info
-        // }
     })
-    // const rllevel = (rntlevels, redlistcats) => {
-    //     const levels = rntlevels.filter(rnt => redlistcats.indexOf(rnt.cat) > -1).map(rnt => rnt.area).map(area =>
-    //         area === "0"? 0 :
-    //         area === "0–2"? 1 :
-    //         area === "2-5"? 2 :
-    //         area === "5-10"? 3 :
-    //         area === "10-20"? 3 :
-    //         area === "20-50"? 3 :
-    //         area === "50-100"? 3 :
-    //         0
-    //     )
-    //     const maxlevel = Math.max(...levels, 0)
-    //     return maxlevel
-    // }
-    // extendObservable(riskAssessment, {
-    //     // effectOnThreathenedNaturetypesLevel: () => {
-    //     //     const threatenedlevels = ["CR","EN","VU","Sjelden"]
-    //     //     const level = rllevel(riskAssessment.redlistedNaturtypesCategoryLevels, threatenedlevels)
-    //     //     return level
-    //     // },
-    //     // effectOnOtherNaturetypesLevel: () => {
-    //     //     const otherlevels = ["LC","DD","NT"]
-    //     //     const level = rllevel(riskAssessment.redlistedNaturtypesCategoryLevels, otherlevels)
-    //     //     return level
-    //     // }
-    // })
 }
 
 // -------------------------------------
