@@ -828,9 +828,17 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             riskAssessment.SpreadYearlyIncreaseCalculatedExpansionSpeed = val
         })
     });
+
+
+
+
+
 }
 
 function enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering, artificialAndConstructedSites) {
+    // autorun(() => vurdering.impactedNatureTypes.map(x => console.log("##!impactedNatureTypes code: " + x.niNCode )))
+    // autorun(() => riskAssessment.redlistedNatureTypes.map(x => console.log("##!redlistedNatureTypes code: " + x.niNCode )))
+    // autorun(() => riskAssessment.NiNNatureTypes.map(x => console.log("##!NiNNatureTypes code: " + x.niNCode )))
 
     // const artificialAndConstructedSites = ["F4", "F5", "H4", "L7", "L8", "M14", "M15", "T35", "T36", "T37", "T38", "T39", "T40", "T41", "T42", "T43", "T44", "T45", "V11", "V12", "V13"]
 
@@ -838,13 +846,8 @@ function enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering,
         get vurderingAlienSpeciesCategory() {return vurdering.alienSpeciesCategory},
         get vurderingCurrentExistenceAreaCalculated() {return vurdering.currentExistenceAreaCalculated},
         get vurderingAllImpactedNatureTypes() {return vurdering.impactedNatureTypes.map(x => x)},
-        get vurderingImpactedNaturalNatureTypes() { return vurdering.impactedNatureTypes.filter(
-            nt => !artificialAndConstructedSites.filter(code => nt.niNCode === code || nt.niNCode.startsWith(code + "-") ).length > 0
-        // ).filter(
-        //     nt => !nt.NiNCode.startsWith("AM-") // Sverige
-        ).filter(
-            nt => !nt.niNCode.startsWith("LI ")
-        )},
+        get redlistedNatureTypes() {return riskAssessment.vurderingAllImpactedNatureTypes.map(x => x).filter(x => !isNaN(x.niNCode))},
+        get NiNNatureTypes() {return riskAssessment.vurderingAllImpactedNatureTypes.map(x => x).filter(x => isNaN(x.niNCode))},
 
         // C criteria
         get impactedNaturtypesColonizedAreaLevel() {
@@ -860,24 +863,9 @@ function enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering,
                 const maxlevel = Math.max(...levels, 0)
                 return maxlevel
         },
-        // G criteria
-        get effectOnOtherNaturetypesLevel() {
-            const levels = riskAssessment.vurderingImpactedNaturalNatureTypes.map(nt => nt.affectedArea).map(area =>
-                area === "0"? 0 :
-                area === "0–2"? 0 :
-                area === "2-5"? 0 :
-                area === "5-10"? 1 :
-                area === "10-20"? 2 :
-                area === "20-50"? 3 :
-                area === "50-100"? 3 :
-                0
-            )
-            const maxlevel = Math.max(...levels, 0)
-            return maxlevel
-        },
         // F criteria
         get effectOnThreathenedNaturetypesLevel() {
-            const levels = vurdering.redlistedNatureTypes.map(
+            const levels = riskAssessment.redlistedNatureTypes.map(
                 nt => nt.affectedArea
             ).map(area =>
                 area === "0"? 0 :
@@ -893,38 +881,24 @@ function enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering,
             return maxlevel
 
         },
-
-        // redlistedNaturtypesCategoryLevels: () => {
-        //         const info = vurdering.RedlistedNatureTypes.map(nt => {return {cat: nt.Category.replace('°', ''), area: nt.AffectedArea}} )
-        //         return info
-        // }
+        // G criteria
+        get effectOnOtherNaturetypesLevel() {
+            const levels = riskAssessment.NiNNatureTypes.map(
+                nt => nt.affectedArea
+            ).map(area =>
+                area === "0"? 0 :
+                area === "0–2"? 0 :
+                area === "2-5"? 0 :
+                area === "5-10"? 1 :
+                area === "10-20"? 2 :
+                area === "20-50"? 3 :
+                area === "50-100"? 3 :
+                0
+            )
+            const maxlevel = Math.max(...levels, 0)
+            return maxlevel
+        },
     })
-    // const rllevel = (rntlevels, redlistcats) => {
-    //     const levels = rntlevels.filter(rnt => redlistcats.indexOf(rnt.cat) > -1).map(rnt => rnt.area).map(area =>
-    //         area === "0"? 0 :
-    //         area === "0–2"? 1 :
-    //         area === "2-5"? 2 :
-    //         area === "5-10"? 3 :
-    //         area === "10-20"? 3 :
-    //         area === "20-50"? 3 :
-    //         area === "50-100"? 3 :
-    //         0
-    //     )
-    //     const maxlevel = Math.max(...levels, 0)
-    //     return maxlevel
-    // }
-    // extendObservable(riskAssessment, {
-    //     // effectOnThreathenedNaturetypesLevel: () => {
-    //     //     const threatenedlevels = ["CR","EN","VU","Sjelden"]
-    //     //     const level = rllevel(riskAssessment.redlistedNaturtypesCategoryLevels, threatenedlevels)
-    //     //     return level
-    //     // },
-    //     // effectOnOtherNaturetypesLevel: () => {
-    //     //     const otherlevels = ["LC","DD","NT"]
-    //     //     const level = rllevel(riskAssessment.redlistedNaturtypesCategoryLevels, otherlevels)
-    //     //     return level
-    //     // }
-    // })
 }
 
 // -------------------------------------
@@ -1061,6 +1035,7 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
     autorun(() => {
         const criterionF = getCriterion(riskAssessment, 1, "F")
           console.log("Autorun criterionF .value: " + criterionF.value)
+        // const nv = riskAssessment.effectOnThreathenedNaturetypesLevel
         const nv = riskAssessment.effectOnThreathenedNaturetypesLevel
           console.log("Autorun criterionF new value: " + nv)
           console.log("Autorun criterionF not equal: " + (nv != criterionF.value))
@@ -1181,7 +1156,7 @@ function enhanceRiskAssessmentLevel(riskAssessment, labels) {
             return result
         },
         get decisiveCriteria() {
-            console.log("##!decisiveCriteria: " + JSON.stringify(this.riskLevelObj))
+            //console.log("##!decisiveCriteria: " + JSON.stringify(this.riskLevelObj))
             return this.riskLevelObj.decisiveCriteriaLabel
         }
     });

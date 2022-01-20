@@ -208,6 +208,7 @@ namespace SwissKnife.Database
             { "FA3/N/345", "Terrestriske invertebrater" },
             { "FA3/N/346", "Terrestriske invertebrater" },
             { "FA3/N/1061", "Terrestriske invertebrater" },
+            { "FA3/N/4061", "Terrestriske invertebrater" },
             { "FA3/N/2482", "Terrestriske invertebrater" },
             { "FA3/N/3169", "Terrestriske invertebrater" },
             { "FA3/N/1056", "Terrestriske invertebrater" },

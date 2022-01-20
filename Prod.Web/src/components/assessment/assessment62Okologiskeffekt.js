@@ -107,18 +107,9 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                 interactionTypes: [],
             },
             newSNITS: {
-                // // // // NiNCode: riskAssessment.vurderingAllImpactedNatureTypes.length > 0
-                // // // //     ? riskAssessment.vurderingAllImpactedNatureTypes[0].NiNCode
-                // // // //     : "",
-               
                 niNVariation: [],
-                niNCode
-                //: assessment.impactedNatureTypes.length > 0
-                  //  ? assessment.impactedNatureTypes[0].niNCode 
-                        : "",
-                
+                niNCode : "",
                 naturetypes: [],
-               // naturetypes: riskAssessment.vurderingAllImpactedNatureTypes,
                 name: "",
                 redListCategory: "", 
                 domesticOrAbroad : "",
