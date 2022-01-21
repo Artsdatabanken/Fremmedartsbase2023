@@ -936,6 +936,10 @@ public partial class FA4 // (3.2) Artsegenskaper
         public int BCritMCount { get; set; } = 0;
         public string BCritExact { get; set; } = "false";
         public string BCritP { get; set; }
+
+        public string BCritModel { get; set; } = "1";
+
+        public string BCritOccurrences { get; set; } = "a";
         public string BCritNewObs { get; set; } = "True";
 
 

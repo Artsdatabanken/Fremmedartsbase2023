@@ -724,6 +724,8 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.BCritMCount, opt => opt.Ignore())
                     .ForMember(dest => dest.BCritExact, opt => opt.Ignore())
                     .ForMember(dest => dest.BCritP, opt => opt.Ignore())
+                    .ForMember(dest => dest.BCritModel, opt => opt.Ignore())
+                    .ForMember(dest => dest.BCritOccurrences, opt => opt.Ignore())
                     .ForMember(dest => dest.BCritNewObs, opt => opt.Ignore())
 
                     .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes, opt => opt.Ignore())
