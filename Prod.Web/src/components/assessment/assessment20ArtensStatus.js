@@ -368,10 +368,11 @@ checkStatus = (production) => {
                         <br></br>
                         <div>
                             <p>{assessment.isRegionallyAlien ? labels.SpeciesStatus.establishedBefore1800RegionallyAlien : labels.SpeciesStatus.establishedBefore1800} </p>
+                            <p>{labels.SpeciesStatus.probabilityUncertainity}</p>
                             <Xcomp.StringEnum observableValue={[assessment, "alienSpecieUncertainIfEstablishedBefore1800String"]} mode="radio" codes={codes.yesNo}/>
                         </div>
                         
-                        <p>{labels.SpeciesStatus.probabilityUncertainity}</p>
+                        
 
                         {assessment.notApplicableCategory == "establishedBefore1800" &&
                         // transfer "notApplicableDescription" from FAB3
