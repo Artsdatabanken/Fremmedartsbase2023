@@ -22,7 +22,7 @@ const Artskart = ({
   utvalg,
   showWaterAreas,
   isWaterArea,
-  initialWaterAreas,
+  waterFeatures,
   onOverførFraArtskart,
   artskartSelectionGeometry,
   artskartAdded,
@@ -58,7 +58,7 @@ const Artskart = ({
       <RedigerbartKart
         showWaterAreas={showWaterAreas}
         isWaterArea={isWaterArea}
-        initialWaterAreas={initialWaterAreas}
+        waterFeatures={waterFeatures}
         taxonId={taxonId || 0}
         scientificNameId={scientificNameId}
         kriterier={{ ...utvalg }}

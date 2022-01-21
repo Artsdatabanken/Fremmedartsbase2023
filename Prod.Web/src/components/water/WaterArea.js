@@ -4,7 +4,12 @@ import { UserContext } from "../observableComponents";
 import LegendItem from "../fylkesforekomst/svg/LegendItem";
 import categories from "../fylkesforekomst/category";
 
-const WaterArea = ({ assessment, initialWaterAreas, waterAreas, onWaterCheck }) => {
+const WaterArea = ({
+  assessment,
+  initialWaterAreas,
+  waterData,
+  onWaterCheck
+}) => {
   // console.log('initialWaterAreas', initialWaterAreas)
   // console.log('waterAreas', waterAreas)
 
@@ -13,7 +18,7 @@ const WaterArea = ({ assessment, initialWaterAreas, waterAreas, onWaterCheck }) 
   const waterAsObject = {};
 
   if (initialWaterAreas) {
-    const initialObject = assessment.isWaterArea ? initialWaterAreas.areaState : initialWaterAreas.regionState;
+    const initialObject = waterData.areas;
     const split = Object.keys(initialObject).length > 50;
     const columnSize = Math.ceil(Object.keys(initialObject).length / 2);
     for (var key in initialObject) {

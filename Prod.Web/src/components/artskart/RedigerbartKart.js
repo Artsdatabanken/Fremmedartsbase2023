@@ -7,7 +7,7 @@ import * as Xcomp from "../observableComponents";
 const RedigerbartKart = ({
   showWaterAreas,
   isWaterArea,
-  initialWaterAreas,
+  waterFeatures,
   taxonId,
   scientificNameId,
   kriterier,
@@ -46,7 +46,7 @@ const RedigerbartKart = ({
   };
 
   const [isLoading, setIsLoading] = useState(false);
-  const [waterAreas, setWaterAreas] = useState('');
+  const [newWaterAreas, setNewWaterAreas] = useState('');
   const [editStats, setEditStats] = useState({});
   useEffect(() => {
     async function summarize() {
@@ -100,7 +100,7 @@ const RedigerbartKart = ({
             <span>Regioner: <b>{beskrivFylker(countylist)}</b></span>
           )}
           {showWaterAreas && (
-            <span>Vannområde:{" "}<span><b>{beskrivWaterAreas(waterAreas)}</b></span></span>
+            <span>Vannområde:{" "}<span><b>{beskrivWaterAreas(newWaterAreas)}</b></span></span>
           )}
         </div>
        
@@ -136,7 +136,7 @@ const RedigerbartKart = ({
               e.stopPropagation();
               onOverførFraArtskart({
                 countylist,
-                waterAreas,
+                newWaterAreas,
                 selectionGeometry,
                 areadata,
                 observations,
@@ -184,7 +184,7 @@ const RedigerbartKart = ({
       <MapOpenLayers
         showWaterAreas={showWaterAreas}
         isWaterArea={isWaterArea}
-        initialWaterAreas={initialWaterAreas}
+        waterFeatures={waterFeatures}
         geojson={observations}
         selectionGeometry={selectionGeometry}
         assessmentArea={assessmentArea}
@@ -193,7 +193,7 @@ const RedigerbartKart = ({
         onClickPoint={handleClickPoint}
         onEdit={handleEditSelection}
         mapBounds={mapBounds}
-        setWaterAreas={setWaterAreas}
+        setWaterAreas={setNewWaterAreas}
         isLoading={isLoading}
         setIsLoading={setIsLoading}
       />

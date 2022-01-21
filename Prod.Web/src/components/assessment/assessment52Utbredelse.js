@@ -67,9 +67,14 @@ export default class Assessment52Utbredelse extends React.Component {
                             }
                         }
                     }
-                    ass.waterData.initialWaterAreas = waterObject;
                 })();
             });
+        }
+    }
+
+    getWaterFeatures = (assessment) => {
+        if (this.initialWaterAreas && assessment && assessment.waterData) {
+            return assessment.waterData.isWaterArea ? this.initialWaterAreas.waterArea : this.initialWaterAreas.waterRegion;
         }
     }
        
@@ -90,9 +95,10 @@ export default class Assessment52Utbredelse extends React.Component {
     addRegion = ({ name, globalID, mapIndex }) => {
         // console.log('clicked:', name, globalID, mapIndex);
         const {appState:{assessment}, appState, appState:{infoTabs}} = this.props;
-        const waterObject = assessment.waterData.isWaterArea ? this.initialWaterAreas.areaState[globalID] : this.initialWaterAreas.regionState[globalID];
+        // const waterObject = assessment.waterData.isWaterArea ? this.initialWaterAreas.areaState[globalID] : this.initialWaterAreas.regionState[globalID];
+        const waterObject = assessment.waterData.areas[globalID];
 
-        if (waterObject) {
+        if (waterObject && !waterObject.disabled) {
             const currentState = mapOlFunc.convertMapIndex2State(mapIndex);
             const areaValue = waterObject[`state${currentState}`] === 0 ? 1 : 0;
             waterObject[`state${currentState}`] = areaValue;
@@ -101,7 +107,7 @@ export default class Assessment52Utbredelse extends React.Component {
             } else if (waterObject.state0 === 0 && waterObject.state1 === 0 && waterObject.state3 === 0) {
                 waterObject.state2 = 1;
             }
-            assessment.waterData.areas = waterObject;
+            // assessment.waterData.areas = waterObject;
             this.waterIsChanged++;
         }
     }
@@ -115,18 +121,6 @@ export default class Assessment52Utbredelse extends React.Component {
             assessment.waterData.areas[waterObject.globalID].state2 = waterObject.state2;
             assessment.waterData.areas[waterObject.globalID].state3 = waterObject.state3;
         }
-        if (this.initialWaterAreas.areaState[waterObject.globalID]) {
-            this.initialWaterAreas.areaState[waterObject.globalID].state0 = waterObject.state0;
-            this.initialWaterAreas.areaState[waterObject.globalID].state1 = waterObject.state1;
-            this.initialWaterAreas.areaState[waterObject.globalID].state2 = waterObject.state2;
-            this.initialWaterAreas.areaState[waterObject.globalID].state3 = waterObject.state3;
-        }
-        if (this.initialWaterAreas.regionState[waterObject.globalID]) {
-            this.initialWaterAreas.regionState[waterObject.globalID].state0 = waterObject.state0;
-            this.initialWaterAreas.regionState[waterObject.globalID].state1 = waterObject.state1;
-            this.initialWaterAreas.regionState[waterObject.globalID].state2 = waterObject.state2;
-            this.initialWaterAreas.regionState[waterObject.globalID].state3 = waterObject.state3;
-        }
         this.waterIsChanged++;
     }
 
@@ -135,14 +129,8 @@ export default class Assessment52Utbredelse extends React.Component {
         const {appState:{assessment}, appState, appState:{infoTabs}} = this.props;
         assessment.waterData.isWaterArea = newIsWaterArea;
         selectedItems.forEach(x => {
-            // if (assessment.waterData.areas[waterObject.globalID]) {
-            //     assessment.waterData.areas[waterObject.globalID].disabled = false;
-            // }
-            if (this.initialWaterAreas.areaState[x.globalID]) {
-                this.initialWaterAreas.areaState[x.globalID].disabled = false;
-            }
-            if (this.initialWaterAreas.regionState[x.globalID]) {
-                this.initialWaterAreas.regionState[x.globalID].disabled = false;
+            if (assessment.waterData.areas[x.globalID]) {
+                assessment.waterData.areas[x.globalID].disabled = false;
             }
         });
         // console.log('this.initialWaterAreas.areaState', this.initialWaterAreas.areaState);
@@ -150,21 +138,21 @@ export default class Assessment52Utbredelse extends React.Component {
         assessment.waterData.assessmentArea = selectedItems;
     }
 
-    handleOverførFraArtskart = ({ selectionGeometry, countylist, waterAreas, areadata, observations, editStats }) => {
+    handleOverførFraArtskart = ({ selectionGeometry, countylist, newWaterAreas, areadata, observations, editStats }) => {
         // console.log('handleOverførFraArtskart', selectionGeometry, countylist, areadata, observations, editStats);
+        console.log('handleOverførFraArtskart', newWaterAreas);
         const aps = this.props.appState;
         const ass = aps.assessment;
 
         if (ass.isAlienSpecies && ass.isRegionallyAlien) {
-            // console.log('working with vannområder...', areadata, waterAreas);
-            ass.waterAreas = waterAreas;
-            if (waterAreas) {
-                const waterObject = ass.waterData.isWaterArea ? this.initialWaterAreas.areaState : this.initialWaterAreas.regionState;
-                waterAreas.forEach(x => {
-                    waterObject[x.globalID].state0 = x.intersects ? 1 : 0;
-                    waterObject[x.globalID].state1 = x.intersects ? 1 : 0;
-                    waterObject[x.globalID].state2 = !x.intersects ? 1 : 0;
-                    waterObject[x.globalID].state3 = x.intersects ? 1 : 0;
+            console.log('working with vannområder...', areadata, newWaterAreas);
+            ass.waterData.waterAreas = newWaterAreas;
+            if (newWaterAreas) {
+                newWaterAreas.forEach(x => {
+                    ass.waterData.areas[x.globalID].state0 = x.intersects ? 1 : 0;
+                    ass.waterData.areas[x.globalID].state1 = x.intersects ? 1 : 0;
+                    ass.waterData.areas[x.globalID].state2 = !x.intersects ? 1 : 0;
+                    ass.waterData.areas[x.globalID].state3 = x.intersects ? 1 : 0;
                 });
                 this.waterIsChanged++;
             }
@@ -284,7 +272,7 @@ export default class Assessment52Utbredelse extends React.Component {
                                         evaluationContext={assessment.evaluationContext}
                                         showWaterAreas={assessment.isAlienSpecies && assessment.isRegionallyAlien}
                                         isWaterArea={assessment.waterData.isWaterArea}
-                                        initialWaterAreas={this.initialWaterAreas}
+                                        waterFeatures={this.getWaterFeatures(assessment)}
                                         labels={labels}
                                         utvalg={assessment.riskAssessment}
                                         onOverførFraArtskart={action(this.handleOverførFraArtskart)}
@@ -292,6 +280,7 @@ export default class Assessment52Utbredelse extends React.Component {
                                         artskartAdded={assessment.artskartAdded}
                                         artskartRemoved={assessment.artskartRemoved}
                                         assessmentArea={assessment.waterData.assessmentArea}
+                                        unused={this.waterIsChanged}
                                     />
                                 </div>
                                 <p>Basert på periode:</p>
@@ -391,7 +380,7 @@ export default class Assessment52Utbredelse extends React.Component {
                             <WaterArea
                                 assessment={assessment}
                                 initialWaterAreas={this.initialWaterAreas}
-                                waterAreas={assessment.waterAreas}
+                                waterData={assessment.waterData}
                                 onWaterCheck={action(this.handleWaterCheck)}
                                 waterIsChanged={this.waterIsChanged}
                                 />
@@ -401,7 +390,8 @@ export default class Assessment52Utbredelse extends React.Component {
                                 <SimpleMap
                                     static={true}
                                     isWaterArea={assessment.waterData.isWaterArea}
-                                    initialWaterAreas={this.initialWaterAreas}
+                                    waterData={assessment.waterData}
+                                    waterFeatures={this.getWaterFeatures(assessment)}
                                     selectedArea={assessment.waterData.assessmentArea}
                                     mapIndex={1}
                                     waterIsChanged={this.waterIsChanged}
@@ -412,7 +402,8 @@ export default class Assessment52Utbredelse extends React.Component {
                                 <SimpleMap
                                     static={true}
                                     isWaterArea={assessment.waterData.isWaterArea}
-                                    initialWaterAreas={this.initialWaterAreas}
+                                    waterData={assessment.waterData}
+                                    waterFeatures={this.getWaterFeatures(assessment)}
                                     selectedArea={assessment.waterData.assessmentArea}
                                     mapIndex={2}
                                     waterIsChanged={this.waterIsChanged}
@@ -423,7 +414,8 @@ export default class Assessment52Utbredelse extends React.Component {
                                 <SimpleMap
                                     static={true}
                                     isWaterArea={assessment.waterData.isWaterArea}
-                                    initialWaterAreas={this.initialWaterAreas}
+                                    waterData={assessment.waterData}
+                                    waterFeatures={this.getWaterFeatures(assessment)}
                                     selectedArea={assessment.waterData.assessmentArea}
                                     mapIndex={3}
                                     waterIsChanged={this.waterIsChanged}

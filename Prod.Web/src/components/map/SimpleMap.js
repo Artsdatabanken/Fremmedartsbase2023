@@ -30,7 +30,8 @@ const SimpleMap = ({
     onClick,
     onChange,
     isWaterArea,
-    initialWaterAreas,
+    waterData,
+    waterFeatures,
     selectAll,
     assessmentArea,
     selectedArea,
@@ -44,8 +45,8 @@ const SimpleMap = ({
     let mapObject;
     let mapCenter = [];
     let featureOver;
-    const waterFieldName = isWaterArea ? 'vannomraadenavn' : 'vannregionnavn';
-    // console.log('vatn?', isWaterArea, waterFieldName);
+    const waterFieldName = waterData && waterData.isWaterArea ? 'vannomraadenavn' : 'vannregionnavn';
+    // console.log('vatn?', waterData.isWaterArea, waterFieldName);
     // console.log('SimpleMap', waterIsChanged, mapObject);
 
     const transformCoordinate = (fromEpsgCode, toEpsgCode, coordinate) => {
@@ -145,7 +146,7 @@ const SimpleMap = ({
         // console.log('SimpleMap0', selectedArea);
 
         if (map === null) return;
-        mapOlFunc.reDrawWaterLayer(map, mapIndex, isWaterArea, initialWaterAreas, selectedArea, () => {}, () => {}, () => {});
+        mapOlFunc.reDrawWaterLayer(map, mapIndex, waterData, waterFeatures, selectedArea, () => {}, () => {}, () => {});
 
     }, [waterIsChanged]);
 
@@ -270,9 +271,9 @@ const SimpleMap = ({
             }));
         }
         if (static) {
-            options.layers.push(mapOlFunc.createWaterLayer('Vatn', mapIndex, isWaterArea, initialWaterAreas, projection, '', selectedArea, () => {}));
+            options.layers.push(mapOlFunc.createWaterLayer('Vatn', mapIndex, waterData, waterFeatures, projection, '', selectedArea, () => {}));
         } else {
-            options.layers.push(mapOlFunc.createWaterLayer('Vatn', mapIndex, isWaterArea, initialWaterAreas, projection, '', undefined, () => {}));
+            options.layers.push(mapOlFunc.createWaterLayer('Vatn', mapIndex, waterData, waterFeatures, projection, '', undefined, () => {}));
         }
         options.layers.push(new VectorLayer({
             name: 'hoverLayer',

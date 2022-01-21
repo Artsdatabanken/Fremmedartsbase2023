@@ -12,6 +12,7 @@ const ModalSimpleMap = ({
 }) => {
   const ref = useRef();
   const [visSimpleMap, setVisSimpleMap] = useState(false);
+  const [waterFeatures, setWaterFeatures] = useState(isWaterArea ? initialWaterAreas.waterArea : initialWaterAreas.waterRegion);
   const [newIsWaterArea, setIsWaterArea] = React.useState(isWaterArea === undefined ? false : isWaterArea);
   const [selectAll, setSelectAll] = React.useState(false);
   let selectedItems;
@@ -61,6 +62,7 @@ const ModalSimpleMap = ({
               e.preventDefault();
               e.stopPropagation();
               setSelectAll(false);
+              setWaterFeatures(!newIsWaterArea ? initialWaterAreas.waterArea : initialWaterAreas.waterRegion);
               setIsWaterArea(!newIsWaterArea);
             }}
             >
@@ -95,7 +97,7 @@ const ModalSimpleMap = ({
           mapIndex={0}
           selectAll={selectAll}
           isWaterArea={newIsWaterArea}
-          initialWaterAreas={initialWaterAreas}
+          waterFeatures={waterFeatures}
           evaluationContext={evaluationContext}
           labels={labels}
           selectedArea={assessmentArea}

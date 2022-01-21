@@ -18,7 +18,7 @@ import config from '../../config';
 const MapOpenLayers = ({
     showWaterAreas,
     isWaterArea,
-    initialWaterAreas,
+    waterFeatures,
     onAddPoint,
     onEdit,
     style,
@@ -274,7 +274,7 @@ const MapOpenLayers = ({
         setIsLoading(true);
         const waterSelectedLayer = map.getLayers().getArray().filter(layer => layer.get('name') === 'VatnSelected')[0];
         if (waterSelectedLayer) waterSelectedLayer.getSource().clear();
-        mapOlFunc.reDrawWaterLayer(map, 0, isWaterArea, initialWaterAreas, setLastIsWaterArea, setPointerMoveForWaterLayer, setWaterLayerName);
+        mapOlFunc.reDrawWaterLayer(map, 0, undefined, waterFeatures, setLastIsWaterArea, setPointerMoveForWaterLayer, setWaterLayerName);
     });
 
     // on component mount
@@ -472,7 +472,7 @@ const MapOpenLayers = ({
 
             setLastIsWaterArea(isWaterArea);
 
-            mapObject.addLayer(mapOlFunc.createWaterLayer('Vatn', 0, isWaterArea, initialWaterAreas, projection, undefined, assessmentArea, setWaterLayerNameCallback));
+            mapObject.addLayer(mapOlFunc.createWaterLayer('Vatn', 0, undefined, waterFeatures, projection, undefined, assessmentArea, setWaterLayerNameCallback));
             mapOlFunc.createWaterSelectedLayer('VatnSelected', projection).then(l => {
                 mapObject.addLayer(l);
             });
