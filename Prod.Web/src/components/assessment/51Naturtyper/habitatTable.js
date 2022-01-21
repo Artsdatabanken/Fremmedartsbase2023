@@ -47,6 +47,7 @@ export class HabitatTableRow extends React.Component {
         const nt = naturtype
         const disabled = fabModel.userContext.readonly
         console.log(nt)
+        const newTaxon = nt.taxon
         const koder = fabModel.koder
         const ntlabel = (nt.niNCode && nt.niNCode.length > 3 && nt.niNCode.startsWith("LI "))
             ? fabModel.livsmediumLabels[nt.niNCode]
@@ -62,28 +63,28 @@ export class HabitatTableRow extends React.Component {
                 {this.edit
                 ?
                     <td>
-                        {/*nt.taxon && nt.taxon.taxonId != "" ? 
+                        {newTaxon && newTaxon.taxonId != "" ? 
                             <div 
                                     className="speciesNewItem"
                                     onClick={action(() => {
-                                        nt.taxon.taxonId = "";
-                                        nt.taxon.taxonRank = "";
-                                        nt.taxon.scientificName = "";
-                                        nt.taxon.scientificNameId = "";
-                                        nt.taxon.scientificNameAuthor = "";
-                                        nt.taxon.vernacularName = "";
-                                        nt.taxon.redListCategory = "";
-                                        nt.taxon.taxonSearchResult.replace([]); 
-                                        nt.taxon.taxonSearchString = "";                                        
+                                        newTaxon.taxonId = "";
+                                        newTaxon.taxonRank = "";
+                                        newTaxon.scientificName = "";
+                                        newTaxon.scientificNameId = "";
+                                        newTaxon.scientificNameAuthor = "";
+                                        newTaxon.vernacularName = "";
+                                        newTaxon.redListCategory = "";
+                                        newTaxon.taxonSearchResult.replace([]); 
+                                        newTaxon.taxonSearchString = "";                                        
                                         }) 
                                         
                                     }
                                 >
-                                    <div className={"rlCategory " + nt.taxon.redListCategory}>{ nt.taxon.redListCategory}</div>
-                                    <div className="vernacularName">{nt.taxon.vernacularName}</div>
-                                    <div className="scientificName">{nt.taxon.scientificName}</div>
-                                    <div className="author">{"(" + nt.taxon.scientificNameAuthor + ")"}</div>
-                                </div> :*/}
+                                    <div className={"rlCategory " + newTaxon.redListCategory}>{ newTaxon.redListCategory}</div>
+                                    <div className="vernacularName">{newTaxon.vernacularName}</div>
+                                    <div className="scientificName">{newTaxon.scientificName}</div>
+                                    <div className="author">{"(" + newTaxon.scientificNameAuthor + ")"}</div>
+                                </div> :
                         <div style={{position: 'relative'}}>                          
                           <Xcomp.String 
                             disabled={disabled} 
@@ -96,9 +97,9 @@ export class HabitatTableRow extends React.Component {
                               <ul className="panel list-unstyled">
                               {taxon.taxonSearchResult.map(item =>                              
                                   <li 
-                                      onClick={action(() => selectTaxonSearchState(nt.taxon, item),
+                                      onClick={action(() => selectTaxonSearchState(newTaxon, item)
                                        
-                                        nt.taxon.taxonId = item.taxonId,
+                                        /*nt.taxon.taxonId = item.taxonId,
                                         nt.taxon.taxonRank = item.taxonRank,
                                         nt.taxon.scientificName = item.scientificName,
                                         nt.taxon.scientificNameId = item.scientificNameId,
@@ -107,7 +108,7 @@ export class HabitatTableRow extends React.Component {
 
                                         nt.taxon.redListCategory = item.rlCategory,
                                         nt.taxon.taxonSearchResult.replace([]), 
-                                        nt.taxon.taxonSearchString = "",  
+                                        nt.taxon.taxonSearchString = "",  */
                                        // this.edit = !this.edit                                          
                                         )}
                                       key={item.scientificName}
@@ -132,7 +133,7 @@ export class HabitatTableRow extends React.Component {
                               </div>
                           </div> :
                           null}
-                      </div> 
+                      </div> }
                     </td> : 
                     <td>{nt.taxon ? nt.taxon.scientificName : ""}</td>}
                 {this.edit

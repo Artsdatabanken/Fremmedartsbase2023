@@ -638,6 +638,42 @@
                 "Text": "3"
             }
         ],
+
+        "BCritMod": [
+            {
+                "Id": "BCritMod",
+                "Value": "1",
+                "Text": "1. konstant ekspansjon og oppdagbarhet"
+            },
+            {
+                "Id": "BCritMod",
+                "Value": "2",
+                "Text": "2. oppdagbarhet endres én gang"
+            },
+            {
+                "Id": "BCritMod",
+                "Value": "3",
+                "Text": "3. test både 1 og 2"
+            },
+            {
+                "Id": "BCritMod",
+                "Value": "4",
+                "Text": "4. kjent innsamlingsinnsats"
+            }
+        ],
+
+        "BCritOccList": [
+            {
+                "Id": "BCritOccList",
+                "Value": "a",
+                "Text": "... bare første året de har blitt observert"
+            },
+            {
+                "Id": "BCritOccList",
+                "Value": "b",
+                "Text": "... hvert år de har eksistert"
+            }
+        ],
   
         "DoorKnocker": [
             {
@@ -5395,7 +5431,7 @@
                         {
                             "Id": null,
                             "Value": "enterParameters",
-                            "Text": "Angi verdi på parametere ",
+                            "Text": "Angi parametervalg fra nettapplikasjon ",
                             "Info": null,
                             "Children": null
                         },
@@ -5403,7 +5439,7 @@
                         {
                             "Id": null,
                             "Value": "standartSettings",
-                            "Text": "(standardinnstilling er forhåndsfylt)",
+                            "Text": "(standardinnstillinga er forhåndsutfylt)",
                             "Info": null,
                             "Children": null
                         },
@@ -6936,7 +6972,21 @@
                         {
                             "Id": null,
                             "Value": "mCount",
-                            "Text": "mtall",
+                            "Text": "Mørketall",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "model",
+                            "Text": "Modell",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "occurrencesListed",
+                            "Text": "Forekomstene er oppført",
                             "Info": null,
                             "Children": null
                         },
