@@ -1,7 +1,11 @@
 import auth from '../authService'
 import config from '../../config';
 
+let waterAreas = undefined;
+
 export async function getWaterAreas() {
+  if (waterAreas) return waterAreas;
+
   const waterObject = {
     waterArea: undefined,
     waterRegion: undefined
@@ -57,5 +61,6 @@ export async function getWaterAreas() {
   }, {});
 
   // console.log('waterObject', waterObject);
-  return waterObject;
+  waterAreas = waterObject;
+  return waterAreas;
 }

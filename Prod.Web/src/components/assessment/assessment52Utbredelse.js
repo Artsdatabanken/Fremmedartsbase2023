@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import config from '../../config';
 import {observer, inject} from 'mobx-react'
 import * as Xcomp from './observableComponents'
@@ -41,34 +41,33 @@ export default class Assessment52Utbredelse extends React.Component {
             initialWaterAreas: null,
             waterIsChanged: 0
         });
-        if (props && props.appState && props.appState.assessment) props.appState.assessment.waterData = props.appState.assessment.waterData || {};
-        const self = this;
-        if (props && props.appState && props.appState.assessment.isAlienSpecies && props.appState.assessment.isRegionallyAlien) {
+        if (props && props.appState && props.appState.assessment && props.appState.assessment.waterData === undefined) props.appState.assessment.waterData = {};
+        if (this.initialWaterAreas === null && props && props.appState && props.appState.assessment.isAlienSpecies && props.appState.assessment.isRegionallyAlien) {
+            const self = this;
             getWaterAreas().then((data) => {
                 action(() => {
                     self.initialWaterAreas = data;
                     const ass = props.appState.assessment;
                     ass.waterData.isWaterArea = ass.waterData.isWaterArea ? ass.waterData.isWaterArea : false;
-                    const waterObject = ass.waterData.isWaterArea ? self.initialWaterAreas.areaState : self.initialWaterAreas.regionState;
-                    if (ass.waterData.areas) {
-                        // ass.waterData.areas
-                    } else {
-                        ass.waterData.areas = {};
-                        console.log('shit', waterObject)
-                        for (var key in waterObject) {
-                            // console.log('adding?', key);
-                            if (ass.waterData.areas[key] === undefined) {
-                                // console.log('adding', key);
-                                ass.waterData.areas[key] = waterObject[key];
-                            // } else {
-                                // ass.waterData.areas[key]
-                            } else {
-                                console.log('not adding', key)
-                            }
-                        }
-                    }
+                    self.reCreateWaterDataArea({ ass, initialWaterAreas: self.initialWaterAreas });
                 })();
             });
+        }
+    }
+
+    reCreateWaterDataArea = ({ ass, initialWaterAreas }) => {
+        const waterObject = ass.waterData.isWaterArea ? initialWaterAreas.areaState : initialWaterAreas.regionState;
+        ass.waterData.areas = {};
+        for (var key in waterObject) {
+            // console.log('adding?', key);
+            if (ass.waterData.areas[key] === undefined) {
+                // console.log('adding', key);
+                ass.waterData.areas[key] = waterObject[key];
+            // } else {
+                // ass.waterData.areas[key]
+            } else {
+                console.log('not adding', key)
+            }
         }
     }
 
@@ -128,6 +127,7 @@ export default class Assessment52Utbredelse extends React.Component {
         // console.log('handleOverførFraSimpleMap', selectedItems);
         const {appState:{assessment}, appState, appState:{infoTabs}} = this.props;
         assessment.waterData.isWaterArea = newIsWaterArea;
+        this.reCreateWaterDataArea({ ass: assessment, initialWaterAreas: this.initialWaterAreas });
         selectedItems.forEach(x => {
             if (assessment.waterData.areas[x.globalID]) {
                 assessment.waterData.areas[x.globalID].disabled = false;
@@ -140,12 +140,12 @@ export default class Assessment52Utbredelse extends React.Component {
 
     handleOverførFraArtskart = ({ selectionGeometry, countylist, newWaterAreas, areadata, observations, editStats }) => {
         // console.log('handleOverførFraArtskart', selectionGeometry, countylist, areadata, observations, editStats);
-        console.log('handleOverførFraArtskart', newWaterAreas);
+        // console.log('handleOverførFraArtskart', newWaterAreas);
         const aps = this.props.appState;
         const ass = aps.assessment;
 
         if (ass.isAlienSpecies && ass.isRegionallyAlien) {
-            console.log('working with vannområder...', areadata, newWaterAreas);
+            // console.log('working with vannområder...', areadata, newWaterAreas);
             ass.waterData.waterAreas = newWaterAreas;
             if (newWaterAreas) {
                 newWaterAreas.forEach(x => {

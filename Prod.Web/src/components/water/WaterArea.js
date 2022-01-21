@@ -17,7 +17,7 @@ const WaterArea = ({
   const regionSorteringB = [];
   const waterAsObject = {};
 
-  if (initialWaterAreas) {
+  if (initialWaterAreas && waterData.areas) {
     const initialObject = waterData.areas;
     const split = Object.keys(initialObject).length > 50;
     const columnSize = Math.ceil(Object.keys(initialObject).length / 2);
