@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {action, observable} from 'mobx';
+import {action, observable, runInAction} from 'mobx';
 import { observer, inject } from 'mobx-react';
 import * as Xcomp from './observableComponents';
 import HelpIcon from '@material-ui/icons/Help';
@@ -114,7 +114,9 @@ export default class SelectAssessment extends Component {
         var experts = ExpertGroupModel.eksperterforvalgtgruppe.filter(item => item.writeAccess == true)
         
         if (appState.expertgroup == "" || appState.expertgroup == undefined) {
-            appState.expertgroup = "Karplanter"
+            runInAction(() =>
+                appState.expertgroup = "Karplanter"
+            )
         }
 
         
