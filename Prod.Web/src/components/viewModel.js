@@ -59,16 +59,6 @@ class ViewModel {
         // // // // //     .catch(err => console.error('SignalR Connection Error: ', err));
 
 
-
-
-        // extendObservable(this, {
-        //     harVurdering: () => !!this.assessment
-        // })
-        // extendObservable(this, {
-        //     skalVurderes: () => //true // todo: implement!
-        //         this.horizonDoAssessment
-        // })
-
         // -------------------------------------
         extendObservable(this, {
             router: null,
@@ -578,21 +568,9 @@ class ViewModel {
     }
 
     @computed get skalVurderes() {
-        //return true 
+        // todo. denne er nå knyttet til horisontskanning. Burde kanskje vært generell og hentet verdi fra: assessment.assessmentConclusion
         return !this.harVurdering ? false : this.assessment.alienSpeciesCategory == "DoorKnocker" && this.assessment.skalVurderes ? true : false
-        //return !this.harVurdering ? false : this.assessment.horizonDoScanning === false ? true : this.horizonDoAssessment // todo: implement real!
     }
-
-    @computed get doFullAssessment() {
-        return false
-        
-        /////////// return  this.skalVurderes    
-        //todo: her skal det komme funksjonalitet for å håndtere utvalg av hvilke av horisontskanningsvurderingene som skal vurderes
-        // - det skas komme en liste med de av hs-ene som får horizonDoAssessment == true som skal vurderes. (det vil gjøres et utvalg når hs er gjennomført)
-    }
-
-
-
 
     @computed get unresolvedComments() {
         const comments = this.assessmentComments
