@@ -119,15 +119,8 @@ namespace Prod.Domain
 
         public string Citation { get; set; }
         public string AlienSpeciesCategory { get; set; } 
-        //public string Alien_Specie_Category { get; set; }
+        public string AssessmentConclusion { get; set; }
 
-        //public Int64? ScientificNameId { get; set; }
-        //public string ScientificName { get; set; }
-
-
-        //public string VurderingsStatus { get; set; }
-
-        //public string SpeciesName { get; set; } // fab: SpeciesName // Brukes 'over alt' i 2012 - toooodo: bør kunne klare oss uten?
         public List<string> ReasonForChangeOfCategory { get; set; } = new List<string>();
         public DateTime LastUpdatedAt { get; set; }
         public string LastUpdatedBy { get; set; }

@@ -16,6 +16,7 @@ export default function enhanceAssessment(json, appState) {
     // * * * remove properties that will be replaced with computed observables * * *
     const ra = json.riskAssessment
     delete json.alienSpeciesCategory
+    delete json.assessmentConclusion
     delete ra.riskLevel
     delete ra.riskLevelText
     delete ra.riskLevelCode
@@ -67,6 +68,7 @@ export default function enhanceAssessment(json, appState) {
             const obj = toJS(assessment)
             const objra = obj.riskAssessment
             obj.alienSpeciesCategory = assessment.alienSpeciesCategory
+            obj.assessmentConclusion = assessment.assessmentConclusion
             objra.riskLevel = assra.riskLevel
             objra.riskLevelText = assra.riskLevelText
             objra.riskLevelCode = assra.riskLevelCode
@@ -157,6 +159,8 @@ export default function enhanceAssessment(json, appState) {
                 // ? "NotDefined1"
                 : !assessment.speciesStatus
                 ? "NotDefined"
+                : assessment.hasEffectWithoutReproduction // todo: property not implemented
+                ? "EffectWithoutReproduction"
                 : assessment.isRegionallyAlien
                 ? "RegionallyAlien"
                 : assessment.speciesStatus.startsWith("C2") || assessment.speciesStatus.startsWith("C3")
@@ -164,24 +168,14 @@ export default function enhanceAssessment(json, appState) {
                 : "DoorKnocker"
             return result
         },
-        // get assessmentConclusion() {
-        //     const result = 
-        //         assessment.isAlienSpeciesString == 'true' && 
-        //         (assessment.connectedToAnotherString == "no" || assessment.connectedToAnotherString == "false" ) && 
-        //         (assessment.alienSpecieUncertainIfEstablishedBefore1800String == "no" ) &&
-        //         assessment.speciesStatus != null 
-        //         ? (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3") 
-        //             ? "AssessedSelfReproducing"
-        //             : "AssessedDoorknocker"
-        //         : "WillNotBeRiskAssessed"
-        //     return result
-        // },
         get assessmentConclusion() {
             const result = 
                 assessment.connectedToAnother
                 ? "WillNotBeRiskAssessed"
                 : assessment.alienSpeciesCategory == "AlienSpecie"
                 ? "AssessedSelfReproducing"
+                : assessment.alienSpeciesCategory == "RegionallyAlien"
+                ? "AssessedSelfReproducing" // todo: check this
                 : assessment.alienSpeciesCategory == "DoorKnocker"
                 ? "AssessedDoorknocker"
                 : "WillNotBeRiskAssessed"
