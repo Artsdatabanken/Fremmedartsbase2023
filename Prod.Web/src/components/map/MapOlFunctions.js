@@ -137,22 +137,71 @@ const createTextStyleFunction = (feature) => {
     });
 };
 
-const internalStyleFunction = (feature, hover) => {
+const internalStyleFunction = (feature, mapIndex, hover) => {
+    let fillColor;
+    let strokeColor = hover ? `${colors[feature.get('vannregionID')]}FF` : '#FFFFFFAA';
+    let strokeWidth = hover ? 4 : 2;
+    if (mapIndex === undefined || mapIndex === 0) {
+        if (feature.get('disabled') === true) {
+            fillColor = `#d5d5d5${hover ? 'aa' : '88'}`;
+            strokeColor = '#FFFFFFAA';
+            strokeWidth = 2;
+        } else {
+            fillColor = `${colors[feature.get('vannregionID')]}${hover ? 'aa' : '88'}`;
+        }
+    } else {
+        strokeWidth = hover ? 2 : 1;
+        const selected = feature.get('selected');
+        if (selected) {
+            strokeColor = '#111111AA';
+            switch (mapIndex) {
+                case 1:
+                    fillColor = `#D5B549${hover ? 'aa' : '88'}`;
+                    break;
+                case 2:
+                    fillColor = `#C8C1B9${hover ? 'aa' : '88'}`;
+                    break;
+                case 3:
+                    fillColor = `#866849${hover ? 'aa' : '88'}`;
+                    break;
+            }
+        } else {
+            if (feature.get('disabled') === true) {
+                fillColor = `#d5d5d5${hover ? 'aa' : '88'}`;
+            } else {
+                strokeColor = '#111111AA';
+                if (hover) {
+                    switch (mapIndex) {
+                        case 1:
+                            fillColor = `#D5B549${hover ? 'aa' : '88'}`;
+                            break;
+                        case 2:
+                            fillColor = `#C8C1B9${hover ? 'aa' : '88'}`;
+                            break;
+                        case 3:
+                            fillColor = `#866849${hover ? 'aa' : '88'}`;
+                            break;
+                    }
+                } else {
+                    fillColor = `#FBF3F0${hover ? 'aa' : '88'}`;
+                }
+            }
+        }
+    }
     const stroke = new Stroke({
         // color: hover ? '#3399CCFF' : '#3399CCAA',
         // width: hover ? 2 : 1.25,
         // color: hover = hover ? `${colors[feature.get('vannregionID')]}FF` : `${colors[feature.get('vannregionID')]}AA`,
         // color: hover ? '#3399CCFF' : `${colors[feature.get('vannregionID')]}AA`,
         // color: hover ? '#3399CCFF' : '#FFFFFFAA',
-        color: hover ? `${colors[feature.get('vannregionID')]}FF` : '#FFFFFFAA',
-        width: hover ? 4 : 2,
+        color: strokeColor,
+        width: strokeWidth,
     });
-    const color = feature.get('disabled') !== undefined && feature.get('disabled') === true ? '#d5d5d5' : `${colors[feature.get('vannregionID')]}`
     const fill = new Fill({
         // color: 'rgba(255,255,255,0.4)'
         // color: hover ? `${colors[feature.get('vannregionID')]}AA` : `${colors[feature.get('vannregionID')]}00`
         // color: hover ? `${colors[feature.get('vannregionID')]}AA` : `${colors[feature.get('vannregionID')]}88`
-        color: hover ? `${color}AA` : `${color}88`
+        color: fillColor
     });
     return new Style({
         image: new Circle({
@@ -165,27 +214,40 @@ const internalStyleFunction = (feature, hover) => {
     });
 };
 
-const hoverStyleFunction = (feature, resolution) => {
+const hoverStyleFunction = (feature, resolution, mapIndex) => {
     // if (!hoverStyles || true) {
     //     hoverStyles = internalStyleFunction(feature, true);
     // }
     // const style = hoverStyles.clone();
-    const style = internalStyleFunction(feature, true);
+    const style = internalStyleFunction(feature, mapIndex, true);
     style.setText(createTextStyleFunction(feature));
     return [style];
 };
 
-const styleFunction = (feature, resolution) => {
+const styleFunction = (feature, resolution, mapIndex) => {
     // if (!defaultStyles || true) {
     //     defaultStyles = internalStyleFunction(feature, false);
     // }
     // const defaultStyle = defaultStyles.clone();
-    const defaultStyle = internalStyleFunction(feature, false);
+    const defaultStyle = internalStyleFunction(feature, mapIndex, false);
     defaultStyle.setText(createTextStyleFunction(feature));
     return [defaultStyle];
 };
 
-const createWaterLayer = (name, isWaterArea, projection, waterLayerName, assessmentArea, setWaterLayerNameCallback) => {
+const convertMapIndex2State = (value) => {
+    switch (value) {
+        case 1:
+            return 0;
+        case 2:
+            return 1;
+        case 3:
+            return 3;
+        default:
+            return 2;
+    }
+};
+
+const createWaterLayer = (name, mapIndex, isWaterArea, initialWaterAreas, projection, waterLayerName, assessmentArea, setWaterLayerNameCallback) => {
     // const vannUrl = 'https://vann-nett.no/arcgis/rest/services/WFD/AdministrativeOmraader/MapServer/'; // old service
     // const vannUrl = 'https://nve.geodataonline.no/arcgis/rest/services/Mapservices/Elspot/MapServer/'; // new service
     // layerid = '0';
@@ -201,6 +263,21 @@ const createWaterLayer = (name, isWaterArea, projection, waterLayerName, assessm
 
     const filterById = assessmentArea ? true : false;
     const validGids = assessmentArea ? assessmentArea.map(x => x.globalID) : undefined;
+    const selectedGids = [];
+    if (validGids && initialWaterAreas && initialWaterAreas.areaState && initialWaterAreas.regionState) {
+        validGids.forEach(globalID => {
+            if (initialWaterAreas.areaState[globalID]) {
+                if (initialWaterAreas.areaState[globalID][`state${convertMapIndex2State(mapIndex)}`] === 1) {
+                    selectedGids.push(globalID);
+                }
+            }
+            if (initialWaterAreas.regionState[globalID]) {
+                if (initialWaterAreas.regionState[globalID][`state${convertMapIndex2State(mapIndex)}`] === 1) {
+                    selectedGids.push(globalID);
+                }
+            }
+        });
+    }
 
     const source = new VectorSource({
         extent: extent,
@@ -211,36 +288,50 @@ const createWaterLayer = (name, isWaterArea, projection, waterLayerName, assessm
             geometryName: 'geometry'
         }),
         loader: async (extent, resolution, projection, success, failure) => {
-            let url = `${config.apiUrl}/api/static/`;
-            if (layerid === 14) url += 'WaterRegion';
-            else if (layerid === 15) url += 'WaterArea';
-            const response = await fetch(url, {
-                method: 'get',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + auth.getAuthToken
-                }
-            });
-            const data = await response.json();
-            if (data.error) return;
+            let data;
+            // let url = `${config.apiUrl}/api/static/`;
+            // if (layerid === 14) url += 'WaterRegion';
+            // else if (layerid === 15) url += 'WaterArea';
+            if (layerid === 14) data = initialWaterAreas.waterRegion;
+            else if (layerid === 15) data = initialWaterAreas.waterArea;
+
+            // const response = await fetch(url, {
+            //     method: 'get',
+            //     headers: {
+            //         'Accept': 'application/json',
+            //         'Content-Type': 'application/json',
+            //         'Authorization': 'Bearer ' + auth.getAuthToken
+            //     }
+            // });
+            // const data = await response.json();
+            // if (data.error) return;
+            if (data === undefined) return;
             // console.log('data', data);
             let features = source.getFormat().readFeatures(data);
             features.forEach(f => {
                 f.set('disabled', false);
             });
             let disabledFeatures = [];
+            let selectedFeatures = [];
             if (filterById) {
-                console.log('features', features);
-                console.log('validGids', validGids);
+                // console.log('features', features);
+                // console.log('validGids', validGids);
                 disabledFeatures = features.filter(f => validGids.indexOf(f.get('globalID')) < 0);
+                selectedFeatures = features.filter(f => selectedGids.indexOf(f.get('globalID')) >= 0);
                 features = features.filter(f => validGids.indexOf(f.get('globalID')) >= 0);
             }
             if (disabledFeatures.length > 0) {
-                console.log('disabled', disabledFeatures);
+                // console.log('disabled', disabledFeatures);
                 disabledFeatures.forEach(f => {
                     f.set('disabled', true);
                     features.push(f);
+                });
+            }
+            if (selectedFeatures.length > 0) {
+                // console.log('selected', selectedFeatures);
+                selectedFeatures.forEach(f => {
+                    f.set('selected', true);
+                    if (features.indexOf(f) < 0) features.push(f);
                 });
             }
             if (!vectorFeatures[name]) vectorFeatures[name] = [];
@@ -258,6 +349,11 @@ const createWaterLayer = (name, isWaterArea, projection, waterLayerName, assessm
                 }
                 vectorFeatures[name].push(feature);
             });
+            // const test = [];
+            // features.forEach((f) => {
+            //     test.push(f.getProperties());
+            // });
+            // console.log('test', test);
             source.addFeatures(features);
             success(features);
         }
@@ -268,7 +364,7 @@ const createWaterLayer = (name, isWaterArea, projection, waterLayerName, assessm
         opacity: 1,
         renderMode: 'vector',
         source: source,
-        style: styleFunction,
+        style: (feature, resolution) => styleFunction(feature, resolution, mapIndex),
         visible: true,
         zIndex: 2
     });
@@ -413,7 +509,7 @@ const createWaterSelectedLayer = async (name, projection) => {
 //     return layer;
 // }
 
-const reDrawWaterLayer = (mapObject, isWaterArea, setLastIsWaterArea, setPointerMoveForWaterLayer, setWaterLayerName) => {
+const reDrawWaterLayer = (mapObject, mapIndex, isWaterArea, initialWaterAreas, assessmentArea, setLastIsWaterArea, setPointerMoveForWaterLayer, setWaterLayerName) => {
     let waterLayer = mapObject.getLayers().getArray().filter(layer => layer.get('name') === 'Vatn')[0];
     if (waterLayer) {
         waterLayer.getSource().clear();
@@ -438,7 +534,7 @@ const reDrawWaterLayer = (mapObject, isWaterArea, setLastIsWaterArea, setPointer
 
     setLastIsWaterArea(isWaterArea);
 
-    mapObject.addLayer(createWaterLayer('Vatn', isWaterArea, projection, undefined, setWaterLayerNameCallback));
+    mapObject.addLayer(createWaterLayer('Vatn', mapIndex, isWaterArea, initialWaterAreas, projection, undefined, assessmentArea, setWaterLayerNameCallback));
 }
 
 const createButton = (options) => {
@@ -478,8 +574,19 @@ const wmtsTileGrid = (numZoomLevels, matrixSet, projection, startLevel) => {
     return wmtsTileGrid;
 }
 
+const createPopupElement = (isStatic, index) => {
+    const contentElement = document.createElement('div');
+    contentElement.className = `ol-popup-content ol-popup-content-${index}`;
+    const element = document.createElement('div');
+    element.className = `ol-popup ol-popup-${index} ${isStatic ? 'ol-popup-static' : 'ol-popup-anchor'}`;
+    element.appendChild(contentElement);
+    return element;
+}
+
 const mapOlFunc = {
+    convertMapIndex2State: convertMapIndex2State,
     createButton: createButton,
+    createPopupElement: createPopupElement,
     createStyle: createStyle,
     createWaterLayer: createWaterLayer,
     createWaterSelectedLayer: createWaterSelectedLayer,

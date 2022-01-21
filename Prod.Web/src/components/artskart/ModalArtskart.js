@@ -8,6 +8,7 @@ const ModalArtskart = ({
   evaluationContext,
   showWaterAreas,
   isWaterArea,
+  initialWaterAreas,
   scientificNameId,
   taxonId,
   utvalg,
@@ -30,6 +31,7 @@ const ModalArtskart = ({
         onCancel={() => setVisArtskart(false)}
         showWaterAreas={showWaterAreas}
         isWaterArea={isWaterArea}
+        initialWaterAreas={initialWaterAreas}
         taxonId={taxonId || 0}
         scientificNameId={scientificNameId}
         utvalg={utvalg}

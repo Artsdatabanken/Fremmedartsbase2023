@@ -7,6 +7,7 @@ const ModalSimpleMap = ({
   labels,
   onOverførFraSimpleMap,
   isWaterArea,
+  initialWaterAreas,
   assessmentArea
 }) => {
   const ref = useRef();
@@ -94,6 +95,7 @@ const ModalSimpleMap = ({
           mapIndex={0}
           selectAll={selectAll}
           isWaterArea={newIsWaterArea}
+          initialWaterAreas={initialWaterAreas}
           evaluationContext={evaluationContext}
           labels={labels}
           selectedArea={assessmentArea}

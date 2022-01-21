@@ -30,11 +30,13 @@ const SimpleMap = ({
     onClick,
     onChange,
     isWaterArea,
+    initialWaterAreas,
     selectAll,
     assessmentArea,
     selectedArea,
     static,
-    mapIndex
+    mapIndex,
+    waterIsChanged
 }) => {
     const mapRef = useRef();
 	const [map, setMap] = useState(null);
@@ -44,7 +46,7 @@ const SimpleMap = ({
     let featureOver;
     const waterFieldName = isWaterArea ? 'vannomraadenavn' : 'vannregionnavn';
     // console.log('vatn?', isWaterArea, waterFieldName);
-    console.log('SimpleMap', selectedArea);
+    // console.log('SimpleMap', waterIsChanged, mapObject);
 
     const transformCoordinate = (fromEpsgCode, toEpsgCode, coordinate) => {
         if (fromEpsgCode === toEpsgCode) {
@@ -64,15 +66,6 @@ const SimpleMap = ({
         return Proj4(`EPSG:${fromEpsgCode}`, `EPSG:${toEpsgCode}`, coordinate);
     }
 
-    const createPopupElement = (isStatic, index) => {
-        const contentElement = document.createElement('div');
-        contentElement.className = `ol-popup-content ol-popup-content-${index}`;
-        const element = document.createElement('div');
-        element.className = `ol-popup ol-popup-${index} ${isStatic ? 'ol-popup-static' : 'ol-popup-anchor'}`;
-        element.appendChild(contentElement);
-        return element;
-    }
-
     const setPointerMove = (mapObject) => {
 
         const overlay = mapObject.getOverlayById(`overlay_${mapIndex}`);
@@ -81,7 +74,7 @@ const SimpleMap = ({
             if (elements.length === 1) {
                 overlay.setElement(elements[0]);
             } else {
-                overlay.setElement(createPopupElement(static, mapIndex));
+                overlay.setElement(mapOlFunc.createPopupElement(static, mapIndex));
             }
         }
 
@@ -149,6 +142,14 @@ const SimpleMap = ({
     }
 
     useEffect(() => {
+        // console.log('SimpleMap0', selectedArea);
+
+        if (map === null) return;
+        mapOlFunc.reDrawWaterLayer(map, mapIndex, isWaterArea, initialWaterAreas, selectedArea, () => {}, () => {}, () => {});
+
+    }, [waterIsChanged]);
+
+    useEffect(() => {
         // console.log('SimpleMap1', selectedArea);
         if (!map) return;
 
@@ -194,7 +195,7 @@ const SimpleMap = ({
         // Popup
         let overlayOptions = {
             id: `overlay_${mapIndex}`,
-            element: createPopupElement(static, mapIndex),
+            element: mapOlFunc.createPopupElement(static, mapIndex),
         };
         // if (!static) {
         //     overlayOptions.autoPan = {
@@ -269,14 +270,14 @@ const SimpleMap = ({
             }));
         }
         if (static) {
-            options.layers.push(mapOlFunc.createWaterLayer('Vatn', isWaterArea, projection, '', selectedArea, () => {}));
+            options.layers.push(mapOlFunc.createWaterLayer('Vatn', mapIndex, isWaterArea, initialWaterAreas, projection, '', selectedArea, () => {}));
         } else {
-            options.layers.push(mapOlFunc.createWaterLayer('Vatn', isWaterArea, projection, '', undefined, () => {}));
+            options.layers.push(mapOlFunc.createWaterLayer('Vatn', mapIndex, isWaterArea, initialWaterAreas, projection, '', undefined, () => {}));
         }
         options.layers.push(new VectorLayer({
             name: 'hoverLayer',
             source: new VectorSource({wrapX: false, _text: false}),
-            style: mapOlFunc.hoverStyleFunction,
+            style: (feature, resolution) => mapOlFunc.hoverStyleFunction(feature, resolution, mapIndex),
             zIndex: 3
         }));
         options.overlays = [overlay];
@@ -310,7 +311,7 @@ const SimpleMap = ({
             const selectedGids = selectedArea.map(x => x.globalID);
             const preSelected = vatnSource.getFeatures().filter(x => selectedGids.indexOf(x.get('globalID')) >= 0);
             waterSelectedLayer.getSource().addFeatures(preSelected);
-            console.log('preselect items', selectedGids, preSelected);
+            // console.log('preselect items', selectedGids, preSelected);
             selectDeselectFeatures(preSelected, undefined, onChange);
         };
 
@@ -381,7 +382,7 @@ const SimpleMap = ({
                 });
                 if (features.length === 0) return;
                 features.forEach((f) => {
-                    onClick({ name: f.get(waterFieldName), properties: f.getProperties() });
+                    onClick({ name: f.get(waterFieldName), globalID: f.get('globalID'), mapIndex });
                 });
             });
         }

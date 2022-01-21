@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import config from '../../config';
 import {observer, inject} from 'mobx-react'
 import * as Xcomp from './observableComponents'
@@ -15,8 +15,11 @@ import FileUpload from '../FileUpload'
 import fylker from "../fylkesforekomst/fylker_2017";
 import Documents from '../documents'
 import { ContactsOutlined } from '@material-ui/icons';
-import { action, computed, observable } from 'mobx';
+import { action, computed, observable, extendObservable } from 'mobx';
 import SimpleMap from '../map/SimpleMap';
+import WaterArea from '../water/WaterArea';
+import { getWaterAreas } from '../water/apiWaterArea';
+import mapOlFunc from '../map/MapOlFunctions';
 
 @inject('appState')
 @observer
@@ -32,6 +35,43 @@ export default class Assessment52Utbredelse extends React.Component {
 
     // a method to check if a given property is smaller than a given value
 
+    constructor(props) {
+        super();
+        extendObservable(this, {
+            initialWaterAreas: null,
+            waterIsChanged: 0
+        });
+        if (props && props.appState && props.appState.assessment) props.appState.assessment.waterData = props.appState.assessment.waterData || {};
+        const self = this;
+        if (props && props.appState && props.appState.assessment.isAlienSpecies && props.appState.assessment.isRegionallyAlien) {
+            getWaterAreas().then((data) => {
+                action(() => {
+                    self.initialWaterAreas = data;
+                    const ass = props.appState.assessment;
+                    ass.waterData.isWaterArea = ass.waterData.isWaterArea ? ass.waterData.isWaterArea : false;
+                    const waterObject = ass.waterData.isWaterArea ? self.initialWaterAreas.areaState : self.initialWaterAreas.regionState;
+                    if (ass.waterData.areas) {
+                        // ass.waterData.areas
+                    } else {
+                        ass.waterData.areas = {};
+                        console.log('shit', waterObject)
+                        for (var key in waterObject) {
+                            // console.log('adding?', key);
+                            if (ass.waterData.areas[key] === undefined) {
+                                // console.log('adding', key);
+                                ass.waterData.areas[key] = waterObject[key];
+                            // } else {
+                                // ass.waterData.areas[key]
+                            } else {
+                                console.log('not adding', key)
+                            }
+                        }
+                    }
+                    ass.waterData.initialWaterAreas = waterObject;
+                })();
+            });
+        }
+    }
        
     checkArea = (property) => {
        // finds all the objects with id's that should be hidden 
@@ -47,15 +87,67 @@ export default class Assessment52Utbredelse extends React.Component {
        }
     }
 
-    addRegion = ({ name }) => {
-        console.log('clicked:', name);
+    addRegion = ({ name, globalID, mapIndex }) => {
+        // console.log('clicked:', name, globalID, mapIndex);
+        const {appState:{assessment}, appState, appState:{infoTabs}} = this.props;
+        const waterObject = assessment.waterData.isWaterArea ? this.initialWaterAreas.areaState[globalID] : this.initialWaterAreas.regionState[globalID];
+
+        if (waterObject) {
+            const currentState = mapOlFunc.convertMapIndex2State(mapIndex);
+            const areaValue = waterObject[`state${currentState}`] === 0 ? 1 : 0;
+            waterObject[`state${currentState}`] = areaValue;
+            if (areaValue === 1) {
+                waterObject.state2 = 0;
+            } else if (waterObject.state0 === 0 && waterObject.state1 === 0 && waterObject.state3 === 0) {
+                waterObject.state2 = 1;
+            }
+            assessment.waterData.areas = waterObject;
+            this.waterIsChanged++;
+        }
+    }
+
+    handleWaterCheck = ({waterObject, state, value}) => {
+        // console.log('handleWaterCheck', waterObject, state, value)
+        const {appState:{assessment}, appState, appState:{infoTabs}} = this.props;
+        if (assessment.waterData.areas[waterObject.globalID]) {
+            assessment.waterData.areas[waterObject.globalID].state0 = waterObject.state0;
+            assessment.waterData.areas[waterObject.globalID].state1 = waterObject.state1;
+            assessment.waterData.areas[waterObject.globalID].state2 = waterObject.state2;
+            assessment.waterData.areas[waterObject.globalID].state3 = waterObject.state3;
+        }
+        if (this.initialWaterAreas.areaState[waterObject.globalID]) {
+            this.initialWaterAreas.areaState[waterObject.globalID].state0 = waterObject.state0;
+            this.initialWaterAreas.areaState[waterObject.globalID].state1 = waterObject.state1;
+            this.initialWaterAreas.areaState[waterObject.globalID].state2 = waterObject.state2;
+            this.initialWaterAreas.areaState[waterObject.globalID].state3 = waterObject.state3;
+        }
+        if (this.initialWaterAreas.regionState[waterObject.globalID]) {
+            this.initialWaterAreas.regionState[waterObject.globalID].state0 = waterObject.state0;
+            this.initialWaterAreas.regionState[waterObject.globalID].state1 = waterObject.state1;
+            this.initialWaterAreas.regionState[waterObject.globalID].state2 = waterObject.state2;
+            this.initialWaterAreas.regionState[waterObject.globalID].state3 = waterObject.state3;
+        }
+        this.waterIsChanged++;
     }
 
     handleOverførFraSimpleMap = ({selectedItems, newIsWaterArea}) => {
-        console.log('handleOverførFraSimpleMap', selectedItems, newIsWaterArea);
+        // console.log('handleOverførFraSimpleMap', selectedItems);
         const {appState:{assessment}, appState, appState:{infoTabs}} = this.props;
-        assessment.isWaterArea = newIsWaterArea;
-        assessment.assessmentArea = selectedItems;
+        assessment.waterData.isWaterArea = newIsWaterArea;
+        selectedItems.forEach(x => {
+            // if (assessment.waterData.areas[waterObject.globalID]) {
+            //     assessment.waterData.areas[waterObject.globalID].disabled = false;
+            // }
+            if (this.initialWaterAreas.areaState[x.globalID]) {
+                this.initialWaterAreas.areaState[x.globalID].disabled = false;
+            }
+            if (this.initialWaterAreas.regionState[x.globalID]) {
+                this.initialWaterAreas.regionState[x.globalID].disabled = false;
+            }
+        });
+        // console.log('this.initialWaterAreas.areaState', this.initialWaterAreas.areaState);
+        // console.log('this.initialWaterAreas.regionState', this.initialWaterAreas.regionState);
+        assessment.waterData.assessmentArea = selectedItems;
     }
 
     handleOverførFraArtskart = ({ selectionGeometry, countylist, waterAreas, areadata, observations, editStats }) => {
@@ -64,8 +156,18 @@ export default class Assessment52Utbredelse extends React.Component {
         const ass = aps.assessment;
 
         if (ass.isAlienSpecies && ass.isRegionallyAlien) {
-            console.log('working with vannområder...', areadata, waterAreas);
+            // console.log('working with vannområder...', areadata, waterAreas);
             ass.waterAreas = waterAreas;
+            if (waterAreas) {
+                const waterObject = ass.waterData.isWaterArea ? this.initialWaterAreas.areaState : this.initialWaterAreas.regionState;
+                waterAreas.forEach(x => {
+                    waterObject[x.globalID].state0 = x.intersects ? 1 : 0;
+                    waterObject[x.globalID].state1 = x.intersects ? 1 : 0;
+                    waterObject[x.globalID].state2 = !x.intersects ? 1 : 0;
+                    waterObject[x.globalID].state3 = x.intersects ? 1 : 0;
+                });
+                this.waterIsChanged++;
+            }
         }
 
         ass.riskAssessment.AOOknown = areadata.AreaExtentOfOccurrence;
@@ -123,23 +225,30 @@ export default class Assessment52Utbredelse extends React.Component {
         const generalLabels = appState.codeLabels 
         const labels = appState.codeLabels.DistributionHistory
 
-        // console.log('render', assessment.waterAreas);
-        console.log('isWaterArea', assessment.isWaterArea);
+        // console.log('render', assessment.waterData.waterAreas);
+        // console.log('isWaterArea', assessment.waterData.isWaterArea);
 
         return (
             <div>
                 <div>
                     <fieldset className="well">
                         <h2>Utbredelse i Norge</h2>
-                        {assessment.isAlienSpecies && assessment.isRegionallyAlien &&
+                        {!this.initialWaterAreas && assessment.isAlienSpecies && assessment.isRegionallyAlien &&
+                            <>
+                                <h4>Vurderingsområde <i>(beta)</i></h4>
+                                <div style={{marginLeft: 20, marginBottom: 30}}>...henter vannregioner og vannområder</div>
+                            </>
+                        }
+                        {this.initialWaterAreas && assessment.isAlienSpecies && assessment.isRegionallyAlien &&
                         <>
                             <h4>Vurderingsområde <i>(beta)</i></h4>
                             <div style={{marginLeft: 20, marginBottom: 30}}>
                                 <ModalSimpleMap
                                     evaluationContext={assessment.evaluationContext}
                                     labels={labels}
-                                    assessmentArea={assessment.assessmentArea}
-                                    isWaterArea={assessment.isWaterArea}
+                                    assessmentArea={assessment.waterData.assessmentArea}
+                                    isWaterArea={assessment.waterData.isWaterArea}
+                                    initialWaterAreas={this.initialWaterAreas}
                                     onOverførFraSimpleMap={action(this.handleOverførFraSimpleMap)}
                                 />
                             </div>
@@ -174,14 +283,15 @@ export default class Assessment52Utbredelse extends React.Component {
                                         scientificNameId={assessment.evaluatedScientificNameId}
                                         evaluationContext={assessment.evaluationContext}
                                         showWaterAreas={assessment.isAlienSpecies && assessment.isRegionallyAlien}
-                                        isWaterArea={assessment.isWaterArea}
+                                        isWaterArea={assessment.waterData.isWaterArea}
+                                        initialWaterAreas={this.initialWaterAreas}
                                         labels={labels}
                                         utvalg={assessment.riskAssessment}
                                         onOverførFraArtskart={action(this.handleOverførFraArtskart)}
                                         artskartSelectionGeometry={assessment.artskartSelectionGeometry}
                                         artskartAdded={assessment.artskartAdded}
                                         artskartRemoved={assessment.artskartRemoved}
-                                        assessmentArea={assessment.assessmentArea}
+                                        assessmentArea={assessment.waterData.assessmentArea}
                                     />
                                 </div>
                                 <p>Basert på periode:</p>
@@ -275,41 +385,48 @@ export default class Assessment52Utbredelse extends React.Component {
                             disabled={appState.userContext.readonly}
                             onOverførFraArtskart={action(this.handleOverførFraArtskart)} />
                     }
-                    {assessment.isAlienSpecies && assessment.isRegionallyAlien &&
+                    {this.initialWaterAreas && assessment.isAlienSpecies && assessment.isRegionallyAlien &&
                     <div>
-                        {assessment.waterAreas && assessment.waterAreas.map((x, y) => {
-                            console.log('element', y, x.name, x.intersects, x.isRegion);
-                            return (
-                                <>
-                                    <div key={y}>{x.name} <input type="checkbox" checked={x.intersects} /></div>
-                                </>
-                            );
-                        })}
+                        {this.initialWaterAreas &&
+                            <WaterArea
+                                assessment={assessment}
+                                initialWaterAreas={this.initialWaterAreas}
+                                waterAreas={assessment.waterAreas}
+                                onWaterCheck={action(this.handleWaterCheck)}
+                                waterIsChanged={this.waterIsChanged}
+                                />
+                        }
                         <div style={{display: 'inline-flex', width: '100%'}}>
                             <div style={{width: '33%', height: 500}}>
                                 <SimpleMap
                                     static={true}
-                                    isWaterArea={assessment.isWaterArea}
-                                    selectedArea={assessment.assessmentArea}
+                                    isWaterArea={assessment.waterData.isWaterArea}
+                                    initialWaterAreas={this.initialWaterAreas}
+                                    selectedArea={assessment.waterData.assessmentArea}
                                     mapIndex={1}
+                                    waterIsChanged={this.waterIsChanged}
                                     onClick={action(this.addRegion)}
                                     evaluationContext={assessment.evaluationContext} />
                             </div>
                             <div style={{width: '33%', height: 500}}>
                                 <SimpleMap
                                     static={true}
-                                    isWaterArea={assessment.isWaterArea}
-                                    selectedArea={assessment.assessmentArea}
+                                    isWaterArea={assessment.waterData.isWaterArea}
+                                    initialWaterAreas={this.initialWaterAreas}
+                                    selectedArea={assessment.waterData.assessmentArea}
                                     mapIndex={2}
+                                    waterIsChanged={this.waterIsChanged}
                                     onClick={action(this.addRegion)}
                                     evaluationContext={assessment.evaluationContext} />
                             </div>
                             <div style={{width: '33%', height: 500}}>
                                 <SimpleMap
                                     static={true}
-                                    isWaterArea={assessment.isWaterArea}
-                                    selectedArea={assessment.assessmentArea}
+                                    isWaterArea={assessment.waterData.isWaterArea}
+                                    initialWaterAreas={this.initialWaterAreas}
+                                    selectedArea={assessment.waterData.assessmentArea}
                                     mapIndex={3}
+                                    waterIsChanged={this.waterIsChanged}
                                     onClick={action(this.addRegion)}
                                     evaluationContext={assessment.evaluationContext} />
                             </div>
