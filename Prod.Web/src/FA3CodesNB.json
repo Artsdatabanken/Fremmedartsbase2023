@@ -181,7 +181,7 @@
             {
                 "Id": "AlienSpeciesCategory",
                 "Value": "AlienSpecie",
-                "Text": "Fremmed art innenfor avgrensninga som er observert og etablert i Norge",
+                "Text": "Fremmed art innenfor avgrensninga som er observert og selvstendig reproduserende i Norge",
                 "Info": null,
                 "Children": null
             },

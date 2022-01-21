@@ -40,9 +40,11 @@ export default class NaturetypeModal extends React.Component {
         this.hideModal  = action(() => sm[smprop]  = false)
 
         this.onOk = action (() => {
+           
             this.hideModal()
-            console.log(this.editNaturetype)
+            
             const clone = toJS(this.editNaturtype) // clone once more to be sure...
+            
             onOk(clone)
         })
         autorun(() => {
@@ -78,6 +80,7 @@ export default class NaturetypeModal extends React.Component {
         const doms = fabModel.dominansSkog
         const koder = fabModel.koder
         const disabled = fabModel.userContext.readonly
+        
         // const addNaturtype = naturtype       
         
         // console.log("render naturtypeModal ")
@@ -144,7 +147,30 @@ export default class NaturetypeModal extends React.Component {
                             // mode="check"
                             />}
 
-                    {livsmedium &&                         
+                    {livsmedium &&
+                    <>     
+                        {taxon && taxon.taxonId != "" ? 
+                            <div 
+                                className="speciesNewItem"
+                                onClick={action(() => {
+                                    taxon.taxonId = "";
+                                    taxon.taxonRank = "";
+                                    taxon.scientificName = "";
+                                    taxon.scientificNameId = "";
+                                    taxon.scientificNameAuthor = "";
+                                    taxon.vernacularName = "";
+                                    taxon.redListCategory = "";
+                                    taxon.taxonSearchResult.replace([]); 
+                                    taxon.taxonSearchString = "";                                        
+                                    }) 
+                                        
+                                    }
+                                >
+                                    <div className={"rlCategory " + taxon.redListCategory}>{ taxon.redListCategory}</div>
+                                    <div className="vernacularName">{taxon.vernacularName}</div>
+                                    <div className="scientificName">{taxon.scientificName}</div>
+                                    <div className="author">{"(" + taxon.scientificNameAuthor + ")"}</div>
+                            </div> :                    
                         <div style={{position: 'relative'}}>
                         <Xcomp.String 
                             disabled={disabled} 
@@ -157,9 +183,9 @@ export default class NaturetypeModal extends React.Component {
                         >
                             <ul className="panel list-unstyled">
                             {taxon.taxonSearchResult.map(item =>
-                                <li onClick={() => selectTaxonSearchState(taxon, item),
+                                <li onClick={action(() => selectTaxonSearchState(taxon, item),
                                      
-                                    this.editNaturtype.taxon.taxonId = item.taxonId,
+                                    /*this.editNaturtype.taxon.taxonId = item.taxonId,
                                     this.editNaturtype.taxon.taxonRank = item.taxonRank,
                                     this.editNaturtype.taxon.scientificName = item.scientificName,
                                     this.editNaturtype.taxon.scientificNameId = item.scientificNameId,
@@ -168,8 +194,8 @@ export default class NaturetypeModal extends React.Component {
 
                                     this.editNaturtype.taxon.redListCategory = item.rlCategory,
                                     this.editNaturtype.taxon.taxonSearchResult.replace([]), 
-                                    this.editNaturtype.taxon.taxonSearchString = ""  
-                                }
+                                    this.editNaturtype.taxon.taxonSearchString = "" */
+                                )}
                                 
                                 key={item.scientificName}
                                 >
@@ -194,7 +220,8 @@ export default class NaturetypeModal extends React.Component {
                             </div>
                         </div> :
                         null}
-                    </div> 
+                    </div> }
+                    </>
                     }
                 </BsModal>
                 : null}

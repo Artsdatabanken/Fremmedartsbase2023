@@ -19,7 +19,20 @@ export default class LivsmediumSelector extends React.Component {
             nnt.name = naturtypekode.Text
             nnt.timeHorizon = null
             nnt.colonizedArea = null
-            nnt.taxon = null
+            nnt.taxon = {
+                id: "newHabitatTaxon",
+                scientificName: "",
+                scientificNameId: "",
+                scientificNameAuthor: "",
+                vernacularName: "",
+                taxonRank: "",
+                taxonId: "",
+                taxonSearchString: "",
+                taxonSearchResult: [],
+                domesticOrAbroad : "",
+                redListCategory: "", 
+                basisOfAssessment: []
+            }
             // nnt.stateChange.clear()
             nnt.affectedArea = null
             // nnt.background.clear()

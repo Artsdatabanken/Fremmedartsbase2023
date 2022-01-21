@@ -28,10 +28,7 @@ export class HabitatTableRow extends React.Component {
             nt.AffectedArea = upd.AffectedArea
             nt.Background = upd.Background
             this.showModal = false
-
-        }
-
-        
+        }        
     }
     
     // editSelectedNaturtype(naturtypekode) {
@@ -65,6 +62,28 @@ export class HabitatTableRow extends React.Component {
                 {this.edit
                 ?
                     <td>
+                        {/*nt.taxon && nt.taxon.taxonId != "" ? 
+                            <div 
+                                    className="speciesNewItem"
+                                    onClick={action(() => {
+                                        nt.taxon.taxonId = "";
+                                        nt.taxon.taxonRank = "";
+                                        nt.taxon.scientificName = "";
+                                        nt.taxon.scientificNameId = "";
+                                        nt.taxon.scientificNameAuthor = "";
+                                        nt.taxon.vernacularName = "";
+                                        nt.taxon.redListCategory = "";
+                                        nt.taxon.taxonSearchResult.replace([]); 
+                                        nt.taxon.taxonSearchString = "";                                        
+                                        }) 
+                                        
+                                    }
+                                >
+                                    <div className={"rlCategory " + nt.taxon.redListCategory}>{ nt.taxon.redListCategory}</div>
+                                    <div className="vernacularName">{nt.taxon.vernacularName}</div>
+                                    <div className="scientificName">{nt.taxon.scientificName}</div>
+                                    <div className="author">{"(" + nt.taxon.scientificNameAuthor + ")"}</div>
+                                </div> :*/}
                         <div style={{position: 'relative'}}>                          
                           <Xcomp.String 
                             disabled={disabled} 
@@ -75,7 +94,7 @@ export class HabitatTableRow extends React.Component {
                                 //style={{position: 'absolute', top: "36px", left:"15px"}}
                             >
                               <ul className="panel list-unstyled">
-                              {taxon.taxonSearchResult.map(item =>
+                              {taxon.taxonSearchResult.map(item =>                              
                                   <li 
                                       onClick={action(() => selectTaxonSearchState(nt.taxon, item),
                                        
@@ -88,7 +107,8 @@ export class HabitatTableRow extends React.Component {
 
                                         nt.taxon.redListCategory = item.rlCategory,
                                         nt.taxon.taxonSearchResult.replace([]), 
-                                        nt.taxon.taxonSearchString = "",                                            
+                                        nt.taxon.taxonSearchString = "",  
+                                       // this.edit = !this.edit                                          
                                         )}
                                       key={item.scientificName}
                                   >
@@ -113,7 +133,7 @@ export class HabitatTableRow extends React.Component {
                           </div> :
                           null}
                       </div> 
-                    </td>: 
+                    </td> : 
                     <td>{nt.taxon ? nt.taxon.scientificName : ""}</td>}
                 {this.edit
                 ?
