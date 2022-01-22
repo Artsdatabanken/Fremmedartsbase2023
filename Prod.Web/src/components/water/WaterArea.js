@@ -6,30 +6,22 @@ import categories from "../fylkesforekomst/category";
 
 const WaterArea = ({
   assessment,
-  initialWaterAreas,
-  waterData,
   onWaterCheck
 }) => {
-  // console.log('initialWaterAreas', initialWaterAreas)
-  // console.log('waterAreas', waterAreas)
 
-  const regionSorteringA = [];
-  const regionSorteringB = [];
+  let regionSortering = [];
+  let regionSorteringA = [];
+  let regionSorteringB = [];
   const waterAsObject = {};
 
-  if (initialWaterAreas && waterData.areas) {
-    const initialObject = waterData.areas;
-    const split = Object.keys(initialObject).length > 50;
-    const columnSize = Math.ceil(Object.keys(initialObject).length / 2);
-    for (var key in initialObject) {
-      const e = initialObject[key];
-      if (!split || regionSorteringA.length < columnSize) {
-        regionSorteringA.push({"navn": e.name});
-      } else {
-        regionSorteringB.push({"navn": e.name});
-      }
+  if (assessment.artskartWaterData.areas) {
+    const initialObject = assessment.artskartWaterData.areas;
+    for (var globalID in initialObject) {
+      const e = initialObject[globalID];
+      regionSortering.push({"navn": e.name, "vannregionID": e.vannregionID});
       waterAsObject[e.name] = {
-        globalID: e.globalID,
+        globalID: globalID,
+        vannregionID: e.vannregionID,
         disabled: e.disabled,
         state0: e.state0,
         state1: e.state1,
@@ -37,34 +29,38 @@ const WaterArea = ({
         state3: e.state3,
       };
     }
+    regionSortering.sort((a,b) => (a.vannregionID > b.vannregionID) ? 1 : ((b.vannregionID > a.vannregionID) ? -1 : 0));
+    let prevId;
+    const split = Object.keys(initialObject).length > 50;
+    const columnSize = Math.ceil(Object.keys(initialObject).length / 2);
+    regionSortering.forEach(e => {
+      let spacer = (prevId !== undefined && prevId !== e.vannregionID) ? true : false;
+      if (!split || regionSorteringA.length < columnSize) {
+        if (split && spacer) regionSorteringA.push({});
+        regionSorteringA.push(e);
+      } else {
+        if (spacer) regionSorteringB.push({});
+        regionSorteringB.push(e);
+      }
+      prevId = e.vannregionID;
+      if (regionSorteringA.length === columnSize) prevId = undefined;
+    });
   }
   // console.log('regionSorteringA', regionSorteringA)
   // console.log('waterAsObject', waterAsObject)
 
   const isDisabled = (k) => {
-    return waterAsObject[k].disabled;
+    return waterAsObject[k].disabled === 1;
   }
 
   const context = UserContext.getContext();
 
   const doorKnocker = assessment.alienSpeciesCategory == "DoorKnocker";
 
-  const handleSwitchOtherCategory = (state, name) => {
-    for (var ff of assessment.waterAreas) {
-      if (area.name !== name) continue;
-      setWaterState(ff, parseInt(state), ff[`state${state}`] === 1);
-    }
-  };
-
   const handleSwitchCategory = (e, area, state, value) => {
     if (context.readonly) return;
     // console.log('check?', area, state, value)
     setWaterState(waterAsObject[area], state, value);
-  //   for (var ff of fylkesforekomster)
-  //     if (ff.name === name) {
-  //       setWaterState(ff, state, value);
-  //       break;
-  //     }
   };
 
   const setWaterState = (ff, state, value) => {
@@ -149,6 +145,7 @@ const WaterArea = ({
 
   // console.log('render', waterAsObject)
 
+  let previousRegion = null;
   return (
     <>
       <div
@@ -181,6 +178,7 @@ const WaterArea = ({
                 <ListeElement
                   key={k.navn}
                   id={k.navn}
+                  subTitle={k.vannregionID}
                   disabled={isDisabled(k.navn)}
                   values={waterAsObject[k.navn]}
                   doorKnocker={doorKnocker}
@@ -217,6 +215,7 @@ const WaterArea = ({
                 <ListeElement
                   key={k.navn}
                   id={k.navn}
+                  subTitle={k.vannregionID}
                   doorKnocker={doorKnocker}
                   values={waterAsObject[k.navn]}
                   onSwitchCategory={action(handleSwitchCategory)}
@@ -254,11 +253,11 @@ const ListeLegend = ({ index }) => {
   );
 };
 
-const ListeElement = ({ id, disabled, values, onSwitchCategory, doorKnocker}) => {
+const ListeElement = ({ id, subTitle, disabled, values, onSwitchCategory, doorKnocker}) => {
   return (
     <>
       {/* <div>{fylker[id]}</div> */}
-      <div>{id}</div>
+      <div title={subTitle}>{id}</div>
       {!doorKnocker && <>
       <div>
         <input

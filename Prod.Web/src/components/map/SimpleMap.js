@@ -30,10 +30,9 @@ const SimpleMap = ({
     onClick,
     onChange,
     isWaterArea,
-    waterData,
+    artskartWaterData,
     waterFeatures,
     selectAll,
-    assessmentArea,
     selectedArea,
     static,
     mapIndex,
@@ -45,8 +44,8 @@ const SimpleMap = ({
     let mapObject;
     let mapCenter = [];
     let featureOver;
-    const waterFieldName = waterData && waterData.isWaterArea ? 'vannomraadenavn' : 'vannregionnavn';
-    // console.log('vatn?', waterData.isWaterArea, waterFieldName);
+    const waterFieldName = isWaterArea ? 'vannomraadenavn' : 'vannregionnavn';
+    // console.log('vatn?', artskartWaterData.isWaterArea, waterFieldName);
     // console.log('SimpleMap', waterIsChanged, mapObject);
 
     const transformCoordinate = (fromEpsgCode, toEpsgCode, coordinate) => {
@@ -146,7 +145,7 @@ const SimpleMap = ({
         // console.log('SimpleMap0', selectedArea);
 
         if (map === null) return;
-        mapOlFunc.reDrawWaterLayer(map, mapIndex, waterData, waterFeatures, selectedArea, () => {}, () => {}, () => {});
+        mapOlFunc.reDrawWaterLayer(map, mapIndex, artskartWaterData, waterFeatures, selectedArea, () => {}, () => {}, () => {});
 
     }, [waterIsChanged]);
 
@@ -271,9 +270,9 @@ const SimpleMap = ({
             }));
         }
         if (static) {
-            options.layers.push(mapOlFunc.createWaterLayer('Vatn', mapIndex, waterData, waterFeatures, projection, '', selectedArea, () => {}));
+            options.layers.push(mapOlFunc.createWaterLayer('Vatn', mapIndex, artskartWaterData, waterFeatures, projection, '', selectedArea, () => {}));
         } else {
-            options.layers.push(mapOlFunc.createWaterLayer('Vatn', mapIndex, waterData, waterFeatures, projection, '', undefined, () => {}));
+            options.layers.push(mapOlFunc.createWaterLayer('Vatn', mapIndex, artskartWaterData, waterFeatures, projection, '', undefined, () => {}));
         }
         options.layers.push(new VectorLayer({
             name: 'hoverLayer',
@@ -309,10 +308,9 @@ const SimpleMap = ({
 
         const featuresLoadend = () => {
             vatnSource.un('featuresloadend', featuresLoadend);
-            const selectedGids = selectedArea.map(x => x.globalID);
-            const preSelected = vatnSource.getFeatures().filter(x => selectedGids.indexOf(x.get('globalID')) >= 0);
+            const preSelected = vatnSource.getFeatures().filter(x => selectedArea.indexOf(x.get('globalID')) >= 0);
             waterSelectedLayer.getSource().addFeatures(preSelected);
-            // console.log('preselect items', selectedGids, preSelected);
+            // console.log('preselect items', selectedArea, preSelected);
             selectDeselectFeatures(preSelected, undefined, onChange);
         };
 

@@ -8,7 +8,7 @@ const ModalSimpleMap = ({
   onOverførFraSimpleMap,
   isWaterArea,
   initialWaterAreas,
-  assessmentArea
+  selectedArea
 }) => {
   const ref = useRef();
   const [visSimpleMap, setVisSimpleMap] = useState(false);
@@ -100,7 +100,7 @@ const ModalSimpleMap = ({
           waterFeatures={waterFeatures}
           evaluationContext={evaluationContext}
           labels={labels}
-          selectedArea={assessmentArea}
+          selectedArea={selectedArea}
           onClick={onClick}
           onChange={onChange}
           />

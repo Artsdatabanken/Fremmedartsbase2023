@@ -39,32 +39,39 @@ export default class Assessment52Utbredelse extends React.Component {
         super();
         extendObservable(this, {
             initialWaterAreas: null,
+            selectedWaterArea: [],
             waterIsChanged: 0
         });
-        if (props && props.appState && props.appState.assessment && props.appState.assessment.waterData === undefined) props.appState.assessment.waterData = {};
+        if (props && props.appState && props.appState.assessment && props.appState.assessment.artskartWaterData === undefined) props.appState.assessment.artskartWaterData = {};
         if (this.initialWaterAreas === null && props && props.appState && props.appState.assessment.isAlienSpecies && props.appState.assessment.isRegionallyAlien) {
             const self = this;
             getWaterAreas().then((data) => {
                 action(() => {
                     self.initialWaterAreas = data;
                     const ass = props.appState.assessment;
-                    ass.waterData.isWaterArea = ass.waterData.isWaterArea ? ass.waterData.isWaterArea : false;
-                    self.reCreateWaterDataArea({ ass, initialWaterAreas: self.initialWaterAreas });
+                    ass.artskartWaterData.isWaterArea = ass.artskartWaterData.isWaterArea ? ass.artskartWaterData.isWaterArea : false;
+                    self.reCreateArtskartWaterDataArea({ ass, initialWaterAreas: self.initialWaterAreas });
                 })();
+            });
+        }
+        if (props && props.appState && props.appState.assessment && props.appState.assessment.artskartWaterData && props.appState.assessment.artskartWaterData.areas) {
+            this.selectedWaterArea = Object.keys(props.appState.assessment.artskartWaterData.areas).filter((key) => {
+                if (props.appState.assessment.artskartWaterData.areas[key].disabled === 0) return key;
             });
         }
     }
 
-    reCreateWaterDataArea = ({ ass, initialWaterAreas }) => {
-        const waterObject = ass.waterData.isWaterArea ? initialWaterAreas.areaState : initialWaterAreas.regionState;
-        ass.waterData.areas = {};
+    reCreateArtskartWaterDataArea = ({ ass, initialWaterAreas }) => {
+        if (ass.artskartWaterData.areas) return;
+        const waterObject = ass.artskartWaterData.isWaterArea ? initialWaterAreas.areaState : initialWaterAreas.regionState;
+        ass.artskartWaterData.areas = {};
         for (var key in waterObject) {
             // console.log('adding?', key);
-            if (ass.waterData.areas[key] === undefined) {
+            if (ass.artskartWaterData.areas[key] === undefined) {
                 // console.log('adding', key);
-                ass.waterData.areas[key] = waterObject[key];
+                ass.artskartWaterData.areas[key] = waterObject[key];
             // } else {
-                // ass.waterData.areas[key]
+                // ass.artskartWaterData.areas[key]
             } else {
                 console.log('not adding', key)
             }
@@ -72,8 +79,8 @@ export default class Assessment52Utbredelse extends React.Component {
     }
 
     getWaterFeatures = (assessment) => {
-        if (this.initialWaterAreas && assessment && assessment.waterData) {
-            return assessment.waterData.isWaterArea ? this.initialWaterAreas.waterArea : this.initialWaterAreas.waterRegion;
+        if (this.initialWaterAreas && assessment && assessment.artskartWaterData) {
+            return assessment.artskartWaterData.isWaterArea ? this.initialWaterAreas.waterArea : this.initialWaterAreas.waterRegion;
         }
     }
        
@@ -94,8 +101,8 @@ export default class Assessment52Utbredelse extends React.Component {
     addRegion = ({ name, globalID, mapIndex }) => {
         // console.log('clicked:', name, globalID, mapIndex);
         const {appState:{assessment}, appState, appState:{infoTabs}} = this.props;
-        // const waterObject = assessment.waterData.isWaterArea ? this.initialWaterAreas.areaState[globalID] : this.initialWaterAreas.regionState[globalID];
-        const waterObject = assessment.waterData.areas[globalID];
+        // const waterObject = assessment.artskartWaterData.isWaterArea ? this.initialWaterAreas.areaState[globalID] : this.initialWaterAreas.regionState[globalID];
+        const waterObject = assessment.artskartWaterData.areas[globalID];
 
         if (waterObject && !waterObject.disabled) {
             const currentState = mapOlFunc.convertMapIndex2State(mapIndex);
@@ -103,10 +110,15 @@ export default class Assessment52Utbredelse extends React.Component {
             waterObject[`state${currentState}`] = areaValue;
             if (areaValue === 1) {
                 waterObject.state2 = 0;
+                switch (currentState) {
+                    case 0:
+                        waterObject.state1 = 1;
+                    case 1:
+                        waterObject.state3 = 1;
+                }
             } else if (waterObject.state0 === 0 && waterObject.state1 === 0 && waterObject.state3 === 0) {
                 waterObject.state2 = 1;
             }
-            // assessment.waterData.areas = waterObject;
             this.waterIsChanged++;
         }
     }
@@ -114,11 +126,11 @@ export default class Assessment52Utbredelse extends React.Component {
     handleWaterCheck = ({waterObject, state, value}) => {
         // console.log('handleWaterCheck', waterObject, state, value)
         const {appState:{assessment}, appState, appState:{infoTabs}} = this.props;
-        if (assessment.waterData.areas[waterObject.globalID]) {
-            assessment.waterData.areas[waterObject.globalID].state0 = waterObject.state0;
-            assessment.waterData.areas[waterObject.globalID].state1 = waterObject.state1;
-            assessment.waterData.areas[waterObject.globalID].state2 = waterObject.state2;
-            assessment.waterData.areas[waterObject.globalID].state3 = waterObject.state3;
+        if (assessment.artskartWaterData.areas[waterObject.globalID]) {
+            assessment.artskartWaterData.areas[waterObject.globalID].state0 = waterObject.state0;
+            assessment.artskartWaterData.areas[waterObject.globalID].state1 = waterObject.state1;
+            assessment.artskartWaterData.areas[waterObject.globalID].state2 = waterObject.state2;
+            assessment.artskartWaterData.areas[waterObject.globalID].state3 = waterObject.state3;
         }
         this.waterIsChanged++;
     }
@@ -126,16 +138,21 @@ export default class Assessment52Utbredelse extends React.Component {
     handleOverførFraSimpleMap = ({selectedItems, newIsWaterArea}) => {
         // console.log('handleOverførFraSimpleMap', selectedItems);
         const {appState:{assessment}, appState, appState:{infoTabs}} = this.props;
-        assessment.waterData.isWaterArea = newIsWaterArea;
-        this.reCreateWaterDataArea({ ass: assessment, initialWaterAreas: this.initialWaterAreas });
-        selectedItems.forEach(x => {
-            if (assessment.waterData.areas[x.globalID]) {
-                assessment.waterData.areas[x.globalID].disabled = false;
-            }
-        });
+        if (assessment.artskartWaterData.isWaterArea != newIsWaterArea) assessment.artskartWaterData.areas = undefined;
+        assessment.artskartWaterData.isWaterArea = newIsWaterArea;
+        this.reCreateArtskartWaterDataArea({ ass: assessment, initialWaterAreas: this.initialWaterAreas });
+        if (selectedItems) {
+            selectedItems.forEach(x => {
+                if (assessment.artskartWaterData.areas[x.globalID]) {
+                    assessment.artskartWaterData.areas[x.globalID].disabled = 0;
+                }
+            });
+        }
         // console.log('this.initialWaterAreas.areaState', this.initialWaterAreas.areaState);
         // console.log('this.initialWaterAreas.regionState', this.initialWaterAreas.regionState);
-        assessment.waterData.assessmentArea = selectedItems;
+        this.selectedWaterArea = Object.keys(assessment.artskartWaterData.areas).filter((key) => {
+            if (assessment.artskartWaterData.areas[key].disabled === 0) return key;
+        });
     }
 
     handleOverførFraArtskart = ({ selectionGeometry, countylist, newWaterAreas, areadata, observations, editStats }) => {
@@ -146,13 +163,12 @@ export default class Assessment52Utbredelse extends React.Component {
 
         if (ass.isAlienSpecies && ass.isRegionallyAlien) {
             // console.log('working with vannområder...', areadata, newWaterAreas);
-            ass.waterData.waterAreas = newWaterAreas;
             if (newWaterAreas) {
                 newWaterAreas.forEach(x => {
-                    ass.waterData.areas[x.globalID].state0 = x.intersects ? 1 : 0;
-                    ass.waterData.areas[x.globalID].state1 = x.intersects ? 1 : 0;
-                    ass.waterData.areas[x.globalID].state2 = !x.intersects ? 1 : 0;
-                    ass.waterData.areas[x.globalID].state3 = x.intersects ? 1 : 0;
+                    ass.artskartWaterData.areas[x.globalID].state0 = x.intersects ? 1 : 0;
+                    ass.artskartWaterData.areas[x.globalID].state1 = x.intersects ? 1 : 0;
+                    ass.artskartWaterData.areas[x.globalID].state2 = !x.intersects ? 1 : 0;
+                    ass.artskartWaterData.areas[x.globalID].state3 = x.intersects ? 1 : 0;
                 });
                 this.waterIsChanged++;
             }
@@ -213,9 +229,6 @@ export default class Assessment52Utbredelse extends React.Component {
         const generalLabels = appState.codeLabels 
         const labels = appState.codeLabels.DistributionHistory
 
-        // console.log('render', assessment.waterData.waterAreas);
-        // console.log('isWaterArea', assessment.waterData.isWaterArea);
-
         return (
             <div>
                 <div>
@@ -234,8 +247,8 @@ export default class Assessment52Utbredelse extends React.Component {
                                 <ModalSimpleMap
                                     evaluationContext={assessment.evaluationContext}
                                     labels={labels}
-                                    assessmentArea={assessment.waterData.assessmentArea}
-                                    isWaterArea={assessment.waterData.isWaterArea}
+                                    selectedArea={this.selectedWaterArea}
+                                    isWaterArea={assessment.artskartWaterData.isWaterArea}
                                     initialWaterAreas={this.initialWaterAreas}
                                     onOverførFraSimpleMap={action(this.handleOverførFraSimpleMap)}
                                 />
@@ -271,7 +284,7 @@ export default class Assessment52Utbredelse extends React.Component {
                                         scientificNameId={assessment.evaluatedScientificNameId}
                                         evaluationContext={assessment.evaluationContext}
                                         showWaterAreas={assessment.isAlienSpecies && assessment.isRegionallyAlien}
-                                        isWaterArea={assessment.waterData.isWaterArea}
+                                        isWaterArea={assessment.artskartWaterData.isWaterArea}
                                         waterFeatures={this.getWaterFeatures(assessment)}
                                         labels={labels}
                                         utvalg={assessment.riskAssessment}
@@ -279,7 +292,7 @@ export default class Assessment52Utbredelse extends React.Component {
                                         artskartSelectionGeometry={assessment.artskartSelectionGeometry}
                                         artskartAdded={assessment.artskartAdded}
                                         artskartRemoved={assessment.artskartRemoved}
-                                        assessmentArea={assessment.waterData.assessmentArea}
+                                        assessmentArea={this.selectedWaterArea}
                                         unused={this.waterIsChanged}
                                     />
                                 </div>
@@ -380,7 +393,6 @@ export default class Assessment52Utbredelse extends React.Component {
                             <WaterArea
                                 assessment={assessment}
                                 initialWaterAreas={this.initialWaterAreas}
-                                waterData={assessment.waterData}
                                 onWaterCheck={action(this.handleWaterCheck)}
                                 waterIsChanged={this.waterIsChanged}
                                 />
@@ -389,10 +401,10 @@ export default class Assessment52Utbredelse extends React.Component {
                             <div style={{width: '33%', height: 500}}>
                                 <SimpleMap
                                     static={true}
-                                    isWaterArea={assessment.waterData.isWaterArea}
-                                    waterData={assessment.waterData}
+                                    isWaterArea={assessment.artskartWaterData.isWaterArea}
+                                    artskartWaterData={assessment.artskartWaterData}
                                     waterFeatures={this.getWaterFeatures(assessment)}
-                                    selectedArea={assessment.waterData.assessmentArea}
+                                    selectedArea={this.selectedWaterArea}
                                     mapIndex={1}
                                     waterIsChanged={this.waterIsChanged}
                                     onClick={action(this.addRegion)}
@@ -401,10 +413,10 @@ export default class Assessment52Utbredelse extends React.Component {
                             <div style={{width: '33%', height: 500}}>
                                 <SimpleMap
                                     static={true}
-                                    isWaterArea={assessment.waterData.isWaterArea}
-                                    waterData={assessment.waterData}
+                                    isWaterArea={assessment.artskartWaterData.isWaterArea}
+                                    artskartWaterData={assessment.artskartWaterData}
                                     waterFeatures={this.getWaterFeatures(assessment)}
-                                    selectedArea={assessment.waterData.assessmentArea}
+                                    selectedArea={this.selectedWaterArea}
                                     mapIndex={2}
                                     waterIsChanged={this.waterIsChanged}
                                     onClick={action(this.addRegion)}
@@ -413,10 +425,10 @@ export default class Assessment52Utbredelse extends React.Component {
                             <div style={{width: '33%', height: 500}}>
                                 <SimpleMap
                                     static={true}
-                                    isWaterArea={assessment.waterData.isWaterArea}
-                                    waterData={assessment.waterData}
+                                    isWaterArea={assessment.artskartWaterData.isWaterArea}
+                                    artskartWaterData={assessment.artskartWaterData}
                                     waterFeatures={this.getWaterFeatures(assessment)}
-                                    selectedArea={assessment.waterData.assessmentArea}
+                                    selectedArea={this.selectedWaterArea}
                                     mapIndex={3}
                                     waterIsChanged={this.waterIsChanged}
                                     onClick={action(this.addRegion)}

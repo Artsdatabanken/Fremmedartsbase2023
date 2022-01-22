@@ -247,7 +247,7 @@ const convertMapIndex2State = (value) => {
     }
 };
 
-const createWaterLayer = (name, mapIndex, waterData, waterFeatures, projection, waterLayerName, assessmentArea, setWaterLayerNameCallback) => {
+const createWaterLayer = (name, mapIndex, artskartWaterData, waterFeatures, projection, waterLayerName, selectedArea, setWaterLayerNameCallback) => {
     // const vannUrl = 'https://vann-nett.no/arcgis/rest/services/WFD/AdministrativeOmraader/MapServer/'; // old service
     // const vannUrl = 'https://nve.geodataonline.no/arcgis/rest/services/Mapservices/Elspot/MapServer/'; // new service
     // layerid = '0';
@@ -257,13 +257,12 @@ const createWaterLayer = (name, mapIndex, waterData, waterFeatures, projection, 
 
     if (vectorFeatures[name]) vectorFeatures[name].splice(0);
 
-    const filterById = assessmentArea ? true : false;
-    const validGids = assessmentArea ? assessmentArea.map(x => x.globalID) : undefined;
+    const filterById = selectedArea ? true : false;
     const selectedGids = [];
-    if (validGids && waterData && waterData.areas) {
-        validGids.forEach(globalID => {
-            if (waterData.areas[globalID]) {
-                if (waterData.areas[globalID][`state${convertMapIndex2State(mapIndex)}`] === 1) {
+    if (selectedArea && artskartWaterData && artskartWaterData.areas) {
+        selectedArea.forEach(globalID => {
+            if (artskartWaterData.areas[globalID]) {
+                if (artskartWaterData.areas[globalID][`state${convertMapIndex2State(mapIndex)}`] === 1) {
                     selectedGids.push(globalID);
                 }
             }
@@ -289,10 +288,10 @@ const createWaterLayer = (name, mapIndex, waterData, waterFeatures, projection, 
             let selectedFeatures = [];
             if (filterById) {
                 // console.log('features', features);
-                // console.log('validGids', validGids);
-                disabledFeatures = features.filter(f => validGids.indexOf(f.get('globalID')) < 0);
+                // console.log('selectedArea', selectedArea);
+                disabledFeatures = features.filter(f => selectedArea.indexOf(f.get('globalID')) < 0);
                 selectedFeatures = features.filter(f => selectedGids.indexOf(f.get('globalID')) >= 0);
-                features = features.filter(f => validGids.indexOf(f.get('globalID')) >= 0);
+                features = features.filter(f => selectedArea.indexOf(f.get('globalID')) >= 0);
             }
             if (disabledFeatures.length > 0) {
                 // console.log('disabled', disabledFeatures);
@@ -373,7 +372,7 @@ const createWaterSelectedLayer = async (name, projection) => {
     return layer;
 }
 
-const reDrawWaterLayer = (mapObject, mapIndex, waterData, waterFeatures, assessmentArea, setLastIsWaterArea, setPointerMoveForWaterLayer, setWaterLayerName) => {
+const reDrawWaterLayer = (mapObject, mapIndex, artskartWaterData, waterFeatures, selectedArea, setLastIsWaterArea, setPointerMoveForWaterLayer, setWaterLayerName) => {
     let waterLayer = mapObject.getLayers().getArray().filter(layer => layer.get('name') === 'Vatn')[0];
     if (waterLayer) {
         waterLayer.getSource().clear();
@@ -398,7 +397,7 @@ const reDrawWaterLayer = (mapObject, mapIndex, waterData, waterFeatures, assessm
 
     // setLastIsWaterArea(isWaterArea);
 
-    mapObject.addLayer(createWaterLayer('Vatn', mapIndex, waterData, waterFeatures, projection, undefined, assessmentArea, setWaterLayerNameCallback));
+    mapObject.addLayer(createWaterLayer('Vatn', mapIndex, artskartWaterData, waterFeatures, projection, undefined, selectedArea, setWaterLayerNameCallback));
 }
 
 const createButton = (options) => {
