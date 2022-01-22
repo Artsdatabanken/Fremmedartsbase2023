@@ -14,8 +14,8 @@ const WaterArea = ({
   let regionSorteringB = [];
   const waterAsObject = {};
 
-  if (assessment.artskartWaterData.areas) {
-    const initialObject = assessment.artskartWaterData.areas;
+  if (assessment.artskartWaterModel.areas) {
+    const initialObject = assessment.artskartWaterModel.areas;
     for (var globalID in initialObject) {
       const e = initialObject[globalID];
       regionSortering.push({"navn": e.name, "vannregionID": e.vannregionID});

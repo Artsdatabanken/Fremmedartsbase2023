@@ -247,7 +247,7 @@ const convertMapIndex2State = (value) => {
     }
 };
 
-const createWaterLayer = (name, mapIndex, artskartWaterData, waterFeatures, projection, waterLayerName, selectedArea, setWaterLayerNameCallback) => {
+const createWaterLayer = (name, mapIndex, artskartWaterModel, waterFeatures, projection, waterLayerName, selectedArea, setWaterLayerNameCallback) => {
     // const vannUrl = 'https://vann-nett.no/arcgis/rest/services/WFD/AdministrativeOmraader/MapServer/'; // old service
     // const vannUrl = 'https://nve.geodataonline.no/arcgis/rest/services/Mapservices/Elspot/MapServer/'; // new service
     // layerid = '0';
@@ -259,10 +259,10 @@ const createWaterLayer = (name, mapIndex, artskartWaterData, waterFeatures, proj
 
     const filterById = selectedArea ? true : false;
     const selectedGids = [];
-    if (selectedArea && artskartWaterData && artskartWaterData.areas) {
+    if (selectedArea && artskartWaterModel && artskartWaterModel.areas) {
         selectedArea.forEach(globalID => {
-            if (artskartWaterData.areas[globalID]) {
-                if (artskartWaterData.areas[globalID][`state${convertMapIndex2State(mapIndex)}`] === 1) {
+            if (artskartWaterModel.areas[globalID]) {
+                if (artskartWaterModel.areas[globalID][`state${convertMapIndex2State(mapIndex)}`] === 1) {
                     selectedGids.push(globalID);
                 }
             }
@@ -372,7 +372,7 @@ const createWaterSelectedLayer = async (name, projection) => {
     return layer;
 }
 
-const reDrawWaterLayer = (mapObject, mapIndex, artskartWaterData, waterFeatures, selectedArea, setLastIsWaterArea, setPointerMoveForWaterLayer, setWaterLayerName) => {
+const reDrawWaterLayer = (mapObject, mapIndex, artskartWaterModel, waterFeatures, selectedArea, setLastIsWaterArea, setPointerMoveForWaterLayer, setWaterLayerName) => {
     let waterLayer = mapObject.getLayers().getArray().filter(layer => layer.get('name') === 'Vatn')[0];
     if (waterLayer) {
         waterLayer.getSource().clear();
@@ -397,7 +397,7 @@ const reDrawWaterLayer = (mapObject, mapIndex, artskartWaterData, waterFeatures,
 
     // setLastIsWaterArea(isWaterArea);
 
-    mapObject.addLayer(createWaterLayer('Vatn', mapIndex, artskartWaterData, waterFeatures, projection, undefined, selectedArea, setWaterLayerNameCallback));
+    mapObject.addLayer(createWaterLayer('Vatn', mapIndex, artskartWaterModel, waterFeatures, projection, undefined, selectedArea, setWaterLayerNameCallback));
 }
 
 const createButton = (options) => {

@@ -30,7 +30,7 @@ const SimpleMap = ({
     onClick,
     onChange,
     isWaterArea,
-    artskartWaterData,
+    artskartWaterModel,
     waterFeatures,
     selectAll,
     selectedArea,
@@ -45,7 +45,7 @@ const SimpleMap = ({
     let mapCenter = [];
     let featureOver;
     const waterFieldName = isWaterArea ? 'vannomraadenavn' : 'vannregionnavn';
-    // console.log('vatn?', artskartWaterData.isWaterArea, waterFieldName);
+    // console.log('vatn?', artskartWaterModel.isWaterArea, waterFieldName);
     // console.log('SimpleMap', waterIsChanged, mapObject);
 
     const transformCoordinate = (fromEpsgCode, toEpsgCode, coordinate) => {
@@ -145,7 +145,7 @@ const SimpleMap = ({
         // console.log('SimpleMap0', selectedArea);
 
         if (map === null) return;
-        mapOlFunc.reDrawWaterLayer(map, mapIndex, artskartWaterData, waterFeatures, selectedArea, () => {}, () => {}, () => {});
+        mapOlFunc.reDrawWaterLayer(map, mapIndex, artskartWaterModel, waterFeatures, selectedArea, () => {}, () => {}, () => {});
 
     }, [waterIsChanged]);
 
@@ -270,9 +270,9 @@ const SimpleMap = ({
             }));
         }
         if (static) {
-            options.layers.push(mapOlFunc.createWaterLayer('Vatn', mapIndex, artskartWaterData, waterFeatures, projection, '', selectedArea, () => {}));
+            options.layers.push(mapOlFunc.createWaterLayer('Vatn', mapIndex, artskartWaterModel, waterFeatures, projection, '', selectedArea, () => {}));
         } else {
-            options.layers.push(mapOlFunc.createWaterLayer('Vatn', mapIndex, artskartWaterData, waterFeatures, projection, '', undefined, () => {}));
+            options.layers.push(mapOlFunc.createWaterLayer('Vatn', mapIndex, artskartWaterModel, waterFeatures, projection, '', undefined, () => {}));
         }
         options.layers.push(new VectorLayer({
             name: 'hoverLayer',
