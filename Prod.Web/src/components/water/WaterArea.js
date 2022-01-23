@@ -15,12 +15,10 @@ const WaterArea = ({
   const waterAsObject = {};
 
   if (assessment.artskartWaterModel.areas) {
-    const initialObject = assessment.artskartWaterModel.areas;
-    for (var globalID in initialObject) {
-      const e = initialObject[globalID];
+    assessment.artskartWaterModel.areas.forEach(e => {
       regionSortering.push({"navn": e.name, "vannregionID": e.vannregionID});
       waterAsObject[e.name] = {
-        globalID: globalID,
+        globalID: e.globalID,
         vannregionID: e.vannregionID,
         disabled: e.disabled,
         state0: e.state0,
@@ -28,11 +26,11 @@ const WaterArea = ({
         state2: e.state2,
         state3: e.state3,
       };
-    }
+    });
     regionSortering.sort((a,b) => (a.vannregionID > b.vannregionID) ? 1 : ((b.vannregionID > a.vannregionID) ? -1 : 0));
     let prevId;
-    const split = Object.keys(initialObject).length > 50;
-    const columnSize = Math.ceil(Object.keys(initialObject).length / 2);
+    const split = assessment.artskartWaterModel.areas.length > 50;
+    const columnSize = Math.ceil(assessment.artskartWaterModel.areas.length / 2);
     regionSortering.forEach(e => {
       let spacer = (prevId !== undefined && prevId !== e.vannregionID) ? true : false;
       if (!split || regionSorteringA.length < columnSize) {

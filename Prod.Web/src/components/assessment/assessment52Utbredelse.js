@@ -55,23 +55,21 @@ export default class Assessment52Utbredelse extends React.Component {
             });
         }
         if (props && props.appState && props.appState.assessment && props.appState.assessment.artskartWaterModel && props.appState.assessment.artskartWaterModel.areas) {
-            this.selectedWaterArea = Object.keys(props.appState.assessment.artskartWaterModel.areas).filter((key) => {
-                if (props.appState.assessment.artskartWaterModel.areas[key].disabled === 0) return key;
-            });
+            this.selectedWaterArea = props.appState.assessment.artskartWaterModel.areas
+            .filter(x => x.disabled === 0)
+            .map(x => x.globalID);
         }
     }
 
     reCreateartskartWaterModelArea = ({ ass, initialWaterAreas }) => {
         if (ass.artskartWaterModel.areas) return;
         const waterObject = ass.artskartWaterModel.isWaterArea ? initialWaterAreas.areaState : initialWaterAreas.regionState;
-        ass.artskartWaterModel.areas = {};
+        ass.artskartWaterModel.areas = [];
         for (var key in waterObject) {
             // console.log('adding?', key);
-            if (ass.artskartWaterModel.areas[key] === undefined) {
+            if (ass.artskartWaterModel.areas.find(x => x.globalID === key) === undefined) {
                 // console.log('adding', key);
-                ass.artskartWaterModel.areas[key] = waterObject[key];
-            // } else {
-                // ass.artskartWaterModel.areas[key]
+                ass.artskartWaterModel.areas.push(waterObject[key]);
             } else {
                 console.log('not adding', key)
             }
@@ -102,7 +100,7 @@ export default class Assessment52Utbredelse extends React.Component {
         // console.log('clicked:', name, globalID, mapIndex);
         const {appState:{assessment}, appState, appState:{infoTabs}} = this.props;
         // const waterObject = assessment.artskartWaterModel.isWaterArea ? this.initialWaterAreas.areaState[globalID] : this.initialWaterAreas.regionState[globalID];
-        const waterObject = assessment.artskartWaterModel.areas[globalID];
+        const waterObject = assessment.artskartWaterModel.areas.find(x => x.globalID === globalID);
 
         if (waterObject && !waterObject.disabled) {
             const currentState = mapOlFunc.convertMapIndex2State(mapIndex);
@@ -126,11 +124,12 @@ export default class Assessment52Utbredelse extends React.Component {
     handleWaterCheck = ({waterObject, state, value}) => {
         // console.log('handleWaterCheck', waterObject, state, value)
         const {appState:{assessment}, appState, appState:{infoTabs}} = this.props;
-        if (assessment.artskartWaterModel.areas[waterObject.globalID]) {
-            assessment.artskartWaterModel.areas[waterObject.globalID].state0 = waterObject.state0;
-            assessment.artskartWaterModel.areas[waterObject.globalID].state1 = waterObject.state1;
-            assessment.artskartWaterModel.areas[waterObject.globalID].state2 = waterObject.state2;
-            assessment.artskartWaterModel.areas[waterObject.globalID].state3 = waterObject.state3;
+        const area = assessment.artskartWaterModel.areas.find(x => x.globalID === waterObject.globalID);
+        if (area) {
+            area.state0 = waterObject.state0;
+            area.state1 = waterObject.state1;
+            area.state2 = waterObject.state2;
+            area.state3 = waterObject.state3;
         }
         this.waterIsChanged++;
     }
@@ -138,21 +137,22 @@ export default class Assessment52Utbredelse extends React.Component {
     handleOverførFraSimpleMap = ({selectedItems, newIsWaterArea}) => {
         // console.log('handleOverførFraSimpleMap', selectedItems);
         const {appState:{assessment}, appState, appState:{infoTabs}} = this.props;
-        if (assessment.artskartWaterModel.isWaterArea != newIsWaterArea) assessment.artskartWaterModel.areas = undefined;
+        if (assessment.artskartWaterModel.isWaterArea != newIsWaterArea) assessment.artskartWaterModel.areas = [];
         assessment.artskartWaterModel.isWaterArea = newIsWaterArea;
         this.reCreateartskartWaterModelArea({ ass: assessment, initialWaterAreas: this.initialWaterAreas });
         if (selectedItems) {
             selectedItems.forEach(x => {
-                if (assessment.artskartWaterModel.areas[x.globalID]) {
-                    assessment.artskartWaterModel.areas[x.globalID].disabled = 0;
+                const area = assessment.artskartWaterModel.areas.find(a => a.globalID === x.globalID);
+                if (area) {
+                    area.disabled = 0;
                 }
             });
         }
         // console.log('this.initialWaterAreas.areaState', this.initialWaterAreas.areaState);
         // console.log('this.initialWaterAreas.regionState', this.initialWaterAreas.regionState);
-        this.selectedWaterArea = Object.keys(assessment.artskartWaterModel.areas).filter((key) => {
-            if (assessment.artskartWaterModel.areas[key].disabled === 0) return key;
-        });
+        this.selectedWaterArea = assessment.artskartWaterModel.areas
+        .filter(x => x.disabled === 0)
+        .map(x => x.globalID);
     }
 
     handleOverførFraArtskart = ({ selectionGeometry, countylist, newWaterAreas, areadata, observations, editStats }) => {
@@ -165,11 +165,17 @@ export default class Assessment52Utbredelse extends React.Component {
             // console.log('working with vannområder...', areadata, newWaterAreas);
             if (newWaterAreas) {
                 newWaterAreas.forEach(x => {
-                    ass.artskartWaterModel.areas[x.globalID].state0 = x.intersects ? 1 : 0;
-                    ass.artskartWaterModel.areas[x.globalID].state1 = x.intersects ? 1 : 0;
-                    ass.artskartWaterModel.areas[x.globalID].state2 = !x.intersects ? 1 : 0;
-                    ass.artskartWaterModel.areas[x.globalID].state3 = x.intersects ? 1 : 0;
+                    const area = ass.artskartWaterModel.areas.find(a => a.globalID === x.globalID);
+                    if (area) {
+                        area.state0 = x.intersects ? 1 : 0;
+                        area.state1 = x.intersects ? 1 : 0;
+                        area.state2 = !x.intersects ? 1 : 0;
+                        area.state3 = x.intersects ? 1 : 0;
+                    }
                 });
+                this.selectedWaterArea = ass.artskartWaterModel.areas
+                .filter(x => x.disabled === 0)
+                .map(x => x.globalID);
                 this.waterIsChanged++;
             }
         }

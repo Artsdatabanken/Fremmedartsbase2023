@@ -261,8 +261,9 @@ const createWaterLayer = (name, mapIndex, artskartWaterModel, waterFeatures, pro
     const selectedGids = [];
     if (selectedArea && artskartWaterModel && artskartWaterModel.areas) {
         selectedArea.forEach(globalID => {
-            if (artskartWaterModel.areas[globalID]) {
-                if (artskartWaterModel.areas[globalID][`state${convertMapIndex2State(mapIndex)}`] === 1) {
+            const area = artskartWaterModel.areas.find(a => a.globalID === globalID);
+            if (area) {
+                if (area[`state${convertMapIndex2State(mapIndex)}`] === 1) {
                     selectedGids.push(globalID);
                 }
             }

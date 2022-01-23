@@ -105,7 +105,7 @@ const MapOpenLayers = ({
         const markerLayer = layers.filter((layer) => layer.get('name') === 'markerLayer' ? true : false)[0];
         const waterLayer = layers.filter(layer => layer.get('name') === 'Vatn')[0];
         const waterSelectedLayer = layers.filter(layer => layer.get('name') === 'VatnSelected')[0];
-        if (!markerLayer && !waterLayer && !waterSelectedLayer) {
+        if (!markerLayer || !waterLayer || !waterSelectedLayer) {
             setIsLoading(false);
             return;
         }

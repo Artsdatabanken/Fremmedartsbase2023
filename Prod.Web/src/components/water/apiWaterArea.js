@@ -36,7 +36,7 @@ export async function getWaterAreas() {
   waterObject.areaState = waterObject.waterArea.features.reduce((acc, x) => {
     acc[x.properties.globalID] = {
       name: x.properties.vannomraadenavn,
-      // globalID: x.properties.globalID,
+      globalID: x.properties.globalID,
       vannregionID: x.properties.vannregionID,
       disabled: 1,
       state0: 0,
@@ -50,7 +50,7 @@ export async function getWaterAreas() {
   waterObject.regionState = waterObject.waterRegion.features.reduce((acc, x) => {
     acc[x.properties.globalID] = {
       name: x.properties.vannregionnavn,
-      // globalID: x.properties.globalID,
+      globalID: x.properties.globalID,
       vannregionID: x.properties.vannregionID,
       disabled: 1,
       state0: 0,
