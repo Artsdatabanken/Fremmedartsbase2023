@@ -1499,6 +1499,7 @@ public partial class FA4 // (3.2) Artsegenskaper
         public string Name { get; set; }
         public string VannregionId { get; set; }
         public int Disabled { get; set; }
+        public int Selected { get; set; }
         public int State0 { get; set; }
         public int State1 { get; set; }
         public int State2 { get; set; }
