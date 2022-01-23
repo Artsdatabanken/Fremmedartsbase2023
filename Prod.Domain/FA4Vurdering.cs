@@ -1484,7 +1484,6 @@ public partial class FA4 // (3.2) Artsegenskaper
         public bool IncludeObservations { get; set; }
         public bool IncludeNorge { get; set; }
         public bool IncludeSvalbard { get; set; }
-
         public bool ExcludeGbif { get; set; }
     }
 
@@ -1496,6 +1495,7 @@ public partial class FA4 // (3.2) Artsegenskaper
 
     public class ArtskartWaterAreaModel
     {
+        public string GlobalId { get; set; }
         public string Name { get; set; }
         public string VannregionId { get; set; }
         public int Disabled { get; set; }
