@@ -21,13 +21,12 @@ const Artskart = ({
   evaluationContext,
   utvalg,
   showWaterAreas,
-  isWaterArea,
+  artskartWaterModel,
   waterFeatures,
   onOverførFraArtskart,
   artskartSelectionGeometry,
   artskartAdded,
   artskartRemoved,
-  assessmentArea,
   onCancel
 }) => {
   // console.log('Artskart', taxonId, scientificNameId, evaluationContext);
@@ -57,7 +56,7 @@ const Artskart = ({
 
       <RedigerbartKart
         showWaterAreas={showWaterAreas}
-        isWaterArea={isWaterArea}
+        artskartWaterModel={artskartWaterModel}
         waterFeatures={waterFeatures}
         taxonId={taxonId || 0}
         scientificNameId={scientificNameId}
@@ -68,7 +67,6 @@ const Artskart = ({
         artskartAdded={artskartAdded}
         artskartRemoved={artskartRemoved}
         artskartSelectionGeometry={artskartSelectionGeometry}
-        assessmentArea={assessmentArea}
         onCancel={onCancel}
       ></RedigerbartKart>
     </div>

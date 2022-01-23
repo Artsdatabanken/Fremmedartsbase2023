@@ -17,7 +17,7 @@ import config from '../../config';
 
 const MapOpenLayers = ({
     showWaterAreas,
-    isWaterArea,
+    artskartWaterModel,
     waterFeatures,
     onAddPoint,
     onEdit,
@@ -25,7 +25,6 @@ const MapOpenLayers = ({
     mapBounds,
     geojson,
     selectionGeometry,
-    assessmentArea,
     onClickPoint,
     setWaterAreas,
     setIsLoading,
@@ -35,11 +34,12 @@ const MapOpenLayers = ({
     const mapRef = useRef();
     const [visibleLegend, setVisibleLegend] = useState(false);
 	const [map, setMap] = useState(null);
-	const [lastIsWaterArea, setLastIsWaterArea] = useState(isWaterArea);
+	const [lastIsWaterArea, setLastIsWaterArea] = useState(artskartWaterModel ? artskartWaterModel.isWaterArea : undefined);
 	const [waterLayerName, setWaterLayerName] = useState(undefined);
     const [pointerMoveTarget, setPointerMoveTarget] = useState(undefined);
-    const waterFieldName = isWaterArea ? 'vannomraadenavn' : 'vannregionnavn';
+    const waterFieldName = artskartWaterModel && artskartWaterModel.isWaterArea ? 'vannomraadenavn' : 'vannregionnavn';
     const mapZoom = 3.7;
+    const assessmentArea = artskartWaterModel && artskartWaterModel.areas ? artskartWaterModel.areas.filter(x => x.disabled === 0).map(x => x.globalId) : undefined;
     let mapObject;
     let mapCenter = [];
     let mouseoverfeature = null;
@@ -158,7 +158,7 @@ const MapOpenLayers = ({
                             name: featureName,
                             isWaterArea: lastIsWaterArea,
                             intersects: intersects !== null,
-                            globalID: theWaterFeature.properties['globalID']
+                            globalId: theWaterFeature.properties['globalID']
                         };
                         if (intersects !== null) waterIntersectionFeatures.push(waterFeatures[j]);
                     }
@@ -267,7 +267,7 @@ const MapOpenLayers = ({
     useLayoutEffect(() => {
         if (!showWaterAreas) return;
         if (map === null) return;
-        if (lastIsWaterArea === undefined || lastIsWaterArea === isWaterArea) return;
+        if (lastIsWaterArea === undefined || lastIsWaterArea === (artskartWaterModel ? artskartWaterModel.isWaterArea : undefined)) return;
 
         // reDrawWaterLayer();
         setWaterAreas();
@@ -470,9 +470,9 @@ const MapOpenLayers = ({
             // layerid = 14; // Vannregion
             // layerid = 15; // Vannomraade
 
-            setLastIsWaterArea(isWaterArea);
+            setLastIsWaterArea(artskartWaterModel.isWaterArea);
 
-            mapObject.addLayer(mapOlFunc.createWaterLayer('Vatn', 0, undefined, waterFeatures, projection, undefined, assessmentArea, setWaterLayerNameCallback));
+            mapObject.addLayer(mapOlFunc.createWaterLayer('Vatn', 0, artskartWaterModel, waterFeatures, projection, undefined, assessmentArea, setWaterLayerNameCallback));
             mapOlFunc.createWaterSelectedLayer('VatnSelected', projection).then(l => {
                 mapObject.addLayer(l);
             });

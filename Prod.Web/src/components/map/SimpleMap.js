@@ -31,9 +31,9 @@ const SimpleMap = ({
     onChange,
     isWaterArea,
     artskartWaterModel,
+    selectedArea,
     waterFeatures,
     selectAll,
-    selectedArea,
     static,
     mapIndex,
     waterIsChanged
@@ -45,8 +45,7 @@ const SimpleMap = ({
     let mapCenter = [];
     let featureOver;
     const waterFieldName = isWaterArea ? 'vannomraadenavn' : 'vannregionnavn';
-    // console.log('vatn?', artskartWaterModel.isWaterArea, waterFieldName);
-    // console.log('SimpleMap', waterIsChanged, mapObject);
+    // console.log('vatn?', isWaterArea, waterFieldName);
 
     const transformCoordinate = (fromEpsgCode, toEpsgCode, coordinate) => {
         if (fromEpsgCode === toEpsgCode) {
@@ -142,15 +141,12 @@ const SimpleMap = ({
     }
 
     useEffect(() => {
-        // console.log('SimpleMap0', selectedArea);
-
         if (map === null) return;
         mapOlFunc.reDrawWaterLayer(map, mapIndex, artskartWaterModel, waterFeatures, selectedArea, () => {}, () => {}, () => {});
 
     }, [waterIsChanged]);
 
     useEffect(() => {
-        // console.log('SimpleMap1', selectedArea);
         if (!map) return;
 
         const vatnLayer = map.getLayers().getArray().filter((layer) => layer.get('name') === 'Vatn' ? true : false)[0];
@@ -177,8 +173,6 @@ const SimpleMap = ({
     }, [selectAll]);
 
 	useEffect(() => {
-        // console.log('SimpleMap2', selectedArea);
-
         if (Proj4.defs(`EPSG:${config.mapEpsgCode}`) === undefined) {
             Proj4.defs(`EPSG:${config.mapEpsgCode}`, config.mapEpsgDef);
         }
@@ -299,18 +293,15 @@ const SimpleMap = ({
                 if (clickCallback) clickCallback({ name: f.get(waterFieldName), properties: f.getProperties(), selected: pos < 0 });
             });
             if (changeCallback) changeCallback(waterSelectedLayer.getSource().getFeatures().map(x => {
-                return {
-                    globalID: x.get('globalID'),
-                    name: x.get(waterFieldName)
-                }
+                return x.get('globalID');
             }));
         };
 
         const featuresLoadend = () => {
             vatnSource.un('featuresloadend', featuresLoadend);
             const preSelected = vatnSource.getFeatures().filter(x => selectedArea.indexOf(x.get('globalID')) >= 0);
-            waterSelectedLayer.getSource().addFeatures(preSelected);
-            // console.log('preselect items', selectedArea, preSelected);
+            const notAdded = waterSelectedLayer.getSource().getFeatures().filter(x => selectedArea.indexOf(x.get('globalID')) < 0)
+            waterSelectedLayer.getSource().addFeatures(notAdded);
             selectDeselectFeatures(preSelected, undefined, onChange);
         };
 
@@ -322,6 +313,9 @@ const SimpleMap = ({
                 waterSelectedLayer = l;
                 if (waterSelectedLayer && vatnSource && selectedArea) {
                     vatnSource.on('featuresloadend', featuresLoadend);
+                    setTimeout(() => {
+                        featuresLoadend();
+                    }, 100);
                 }
             });
         } else {
@@ -332,8 +326,6 @@ const SimpleMap = ({
 
             const dragBox = new DragBox({condition: platformModifierKeyOnly});
             mapObject.addInteraction(dragBox);
-
-            // const waterSelectedLayer = layers.filter(layer => layer.get('name') === 'VatnSelected')[0];
 
             if (waterSelectedLayer && vatnSource && selectedArea) {
                 vatnSource.on('featuresloadend', featuresLoadend);
@@ -381,7 +373,7 @@ const SimpleMap = ({
                 });
                 if (features.length === 0) return;
                 features.forEach((f) => {
-                    onClick({ name: f.get(waterFieldName), globalID: f.get('globalID'), mapIndex });
+                    onClick({ name: f.get(waterFieldName), globalId: f.get('globalID'), mapIndex });
                 });
             });
         }
@@ -389,7 +381,6 @@ const SimpleMap = ({
         mapRef.current.addEventListener('mouseout', () => {
             if (overlay.getElement()) overlay.getElement().style.opacity = 0;
 
-            // setTimeout(() => { overlay.setPosition(undefined); }, 10);
             const hoverLayer = mapObject.getLayers().getArray().filter(layer => layer.get('name') === 'hoverLayer')[0];
             if (hoverLayer) hoverLayer.getSource().clear();
             setTimeout(() => {

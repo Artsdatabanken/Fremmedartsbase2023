@@ -1,5 +1,5 @@
 import { action } from "mobx";
-import React, { useState } from "react";
+import React from "react";
 import { UserContext } from "../observableComponents";
 import LegendItem from "../fylkesforekomst/svg/LegendItem";
 import categories from "../fylkesforekomst/category";
@@ -16,10 +16,10 @@ const WaterArea = ({
 
   if (assessment.artskartWaterModel.areas) {
     assessment.artskartWaterModel.areas.forEach(e => {
-      regionSortering.push({"navn": e.name, "vannregionID": e.vannregionID});
+      regionSortering.push({"navn": e.name, "vannregionId": e.vannregionId});
       waterAsObject[e.name] = {
-        globalID: e.globalID,
-        vannregionID: e.vannregionID,
+        globalId: e.globalId,
+        vannregionId: e.vannregionId,
         disabled: e.disabled,
         state0: e.state0,
         state1: e.state1,
@@ -27,12 +27,12 @@ const WaterArea = ({
         state3: e.state3,
       };
     });
-    regionSortering.sort((a,b) => (a.vannregionID > b.vannregionID) ? 1 : ((b.vannregionID > a.vannregionID) ? -1 : 0));
+    regionSortering.sort((a,b) => (a.vannregionId > b.vannregionId) ? 1 : ((b.vannregionId > a.vannregionId) ? -1 : 0));
     let prevId;
     const split = assessment.artskartWaterModel.areas.length > 50;
     const columnSize = Math.ceil(assessment.artskartWaterModel.areas.length / 2);
     regionSortering.forEach(e => {
-      let spacer = (prevId !== undefined && prevId !== e.vannregionID) ? true : false;
+      let spacer = (prevId !== undefined && prevId !== e.vannregionId) ? true : false;
       if (!split || regionSorteringA.length < columnSize) {
         if (split && spacer) regionSorteringA.push({});
         regionSorteringA.push(e);
@@ -40,7 +40,7 @@ const WaterArea = ({
         if (spacer) regionSorteringB.push({});
         regionSorteringB.push(e);
       }
-      prevId = e.vannregionID;
+      prevId = e.vannregionId;
       if (regionSorteringA.length === columnSize) prevId = undefined;
     });
   }
@@ -99,51 +99,7 @@ const WaterArea = ({
     else ff.state2 = 1;
     onWaterCheck({waterObject: ff, state, value});
   };
-  
-  // const specificCategories = (state) => {
-  //   switch (state) {
-  //     case 0:
-  //       const cat0_2 = Object.assign(categories[2], {});
-  //       cat0_2.y = 68;
-  //       return {
-  //         0: categories[0],
-  //         2: cat0_2,
-  //       }
-  //     case 1:
-  //       const cat1_1 = Object.assign(categories[1], {});
-  //       const cat1_2 = Object.assign(categories[2], {});
-  //       cat1_1.y = 14;
-  //       cat1_2.y = 68;
-  //       return {
-  //         1: cat1_1,
-  //         2: cat1_2,
-  //       }
-  //     case 3:
-  //       const cat3_3 = Object.assign(categories[3], {});
-  //       const cat3_2 = Object.assign(categories[2], {});
-  //       cat3_3.y = 14;
-  //       cat3_2.y = 68;
-  //       return {
-  //         3: cat3_3,
-  //         2: cat3_2,
-  //       }
-  //   }
-  // }
 
-  // const regionDefs = Object.keys(fylker).map(kode => {
-  //   const curState = waterAsObject[kode] || 0;
-  //   // const state = categories[curState.state];
-  //   return {
-  //     kode,
-  //     // title: `${fylker[kode]}: ${state.title}`,
-  //     title: `${fylker[kode]}`,
-  //     // style: state
-  //   };
-  // });
-
-  // console.log('render', waterAsObject)
-
-  let previousRegion = null;
   return (
     <>
       <div
@@ -176,7 +132,7 @@ const WaterArea = ({
                 <ListeElement
                   key={k.navn}
                   id={k.navn}
-                  subTitle={k.vannregionID}
+                  subTitle={k.vannregionId}
                   disabled={isDisabled(k.navn)}
                   values={waterAsObject[k.navn]}
                   doorKnocker={doorKnocker}
@@ -213,7 +169,7 @@ const WaterArea = ({
                 <ListeElement
                   key={k.navn}
                   id={k.navn}
-                  subTitle={k.vannregionID}
+                  subTitle={k.vannregionId}
                   doorKnocker={doorKnocker}
                   values={waterAsObject[k.navn]}
                   onSwitchCategory={action(handleSwitchCategory)}

@@ -3,14 +3,10 @@ import { GeoJSON as GeoJSONFormat } from 'ol/format';
 import { Vector as VectorLayer } from 'ol/layer';
 import { Projection } from 'ol/proj';
 import { Vector as VectorSource } from 'ol/source';
-import { Circle, Icon, Fill, Stroke, Style, Text } from 'ol/style';
-import { DEVICE_PIXEL_RATIO } from 'ol/has';
+import { Circle, Fill, Stroke, Style, Text } from 'ol/style';
 import WMTSTileGrid from 'ol/tilegrid/WMTS';
-import auth from '../authService'
 import config from '../../config';
 
-let defaultStyles;
-let hoverStyles;
 let waterLayerName;
 let gradient;
 
@@ -259,12 +255,13 @@ const createWaterLayer = (name, mapIndex, artskartWaterModel, waterFeatures, pro
 
     const filterById = selectedArea ? true : false;
     const selectedGids = [];
+    // console.log('create..', selectedArea, artskartWaterModel, artskartWaterModel.areas)
     if (selectedArea && artskartWaterModel && artskartWaterModel.areas) {
-        selectedArea.forEach(globalID => {
-            const area = artskartWaterModel.areas.find(a => a.globalID === globalID);
+        selectedArea.forEach(globalId => {
+            const area = artskartWaterModel.areas.find(a => a.globalId === globalId);
             if (area) {
                 if (area[`state${convertMapIndex2State(mapIndex)}`] === 1) {
-                    selectedGids.push(globalID);
+                    selectedGids.push(globalId);
                 }
             }
         });

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import SimpleMap from "../map/SimpleMap";
 import * as Xcomp from "../observableComponents";
 
@@ -7,8 +7,8 @@ const ModalSimpleMap = ({
   labels,
   onOverførFraSimpleMap,
   isWaterArea,
-  initialWaterAreas,
-  selectedArea
+  artskartWaterModel,
+  initialWaterAreas
 }) => {
   const ref = useRef();
   const [visSimpleMap, setVisSimpleMap] = useState(false);
@@ -16,6 +16,9 @@ const ModalSimpleMap = ({
   const [newIsWaterArea, setIsWaterArea] = React.useState(isWaterArea === undefined ? false : isWaterArea);
   const [selectAll, setSelectAll] = React.useState(false);
   let selectedItems;
+  const selectedArea = artskartWaterModel && artskartWaterModel.areas
+    ? artskartWaterModel.areas.filter(x => x.selected === 1).map(x => x.globalId)
+    : undefined;
 
   const onClick = ({name, properties, selected}) => {
     console.log('click', name, properties, selected);
