@@ -42,7 +42,7 @@ export default class Assessment52Utbredelse extends React.Component {
             selectedWaterArea: [],
             waterIsChanged: 0
         });
-        if (props && props.appState && props.appState.assessment && props.appState.assessment.artskartWaterModel === undefined) props.appState.assessment.artskartWaterModel = {};
+        if (props && props.appState && props.appState.assessment && props.appState.assessment.artskartWaterModel === null) props.appState.assessment.artskartWaterModel = {};
         if (this.initialWaterAreas === null && props && props.appState && props.appState.assessment.isAlienSpecies && props.appState.assessment.isRegionallyAlien) {
             const self = this;
             getWaterAreas().then((data) => {
