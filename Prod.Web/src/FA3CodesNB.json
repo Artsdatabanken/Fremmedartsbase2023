@@ -3673,113 +3673,127 @@
                                         "Text": "Rømning/forvilling",
                                         "Info": null,
                                         "Children": {
-                                            "mpimportationescape": [
-                                                {
-                                                    "Id": null,
-                                                    "Value": "agriculture",
-                                                    "Text": "fra jordbruk (unntatt husdyrhold)",
-                                                    "Info": null,
-                                                    "Children": null
-                                                },
-                                                {
-                                                    "Id": null,
-                                                    "Value": "forestry",
-                                                    "Text": "fra skogbruk",
-                                                    "Info": null,
-                                                    "Children": null
-                                                },
-                                                {
-                                                    "Id": null,
-                                                    "Value": "horticulture",
-                                                    "Text": "fra kommersiell plantehandel",
-                                                    "Info": null,
-                                                    "Children": null
-                                                },
-                                                {
-                                                    "Id": null,
-                                                    "Value": "gardening",
-                                                    "Text": "fra hager",
-                                                    "Info": null,
-                                                    "Children": null
-                                                },
-                                                {
-                                                    "Id": null,
-                                                    "Value": "gardenWaste",
-                                                    "Text": "som hageutkast",
-                                                    "Info": null,
-                                                    "Children": null
-                                                },
-                                                {
-                                                    "Id": null,
-                                                    "Value": "ornamentalPurposeOther",
-                                                    "Text": "fra grøntanlegg (inkl. parker, rabatter o.l.)",
-                                                    "Info": null,
-                                                    "Children": null
-                                                },
-                                                {
-                                                    "Id": null,
-                                                    "Value": "farmedAnimals",
-                                                    "Text": "fra husdyrhold (i landbruket)",
-                                                    "Info": null,
-                                                    "Children": null
-                                                },
-                                                {
-                                                    "Id": null,
-                                                    "Value": "furFarms",
-                                                    "Text": "fra pelsdyroppdrett",
-                                                    "Info": null,
-                                                    "Children": null
-                                                },
-                                                {
-                                                    "Id": null,
-                                                    "Value": "aquaculture",
-                                                    "Text": "fra akvakultur (inkl. fiskedammer)",
-                                                    "Info": null,
-                                                    "Children": null
-                                                },
-                                                {
-                                                    "Id": null,
-                                                    "Value": "petAquariumTerrariumSpecies",
-                                                    "Text": "av kjæledyr/hobbydyr eller private akvarieplanter",
-                                                    "Info": null,
-                                                    "Children": null
-                                                },                                                
-                                                {
-                                                    "Id": null,
-                                                    "Value": "liveFoodLiveBait",
-                                                    "Text": "av levende mat til kjæledyr/hobbydyr",
-                                                    "Info": null,
-                                                    "Children": null
-                                                },                                                
-                                                {
-                                                    "Id": null,
-                                                    "Value": "petAquariumTerrariumFood",
-                                                    "Text": "fra levende mat, fôr eller agn (unntatt til kjæledyr)",
-                                                    "Info": null,
-                                                    "Children": null
-                                                },
-                                                {
-                                                    "Id": null,
-                                                    "Value": "botanicalGardenZooAquarium",
-                                                    "Text": "fra botaniske/zoologiske hager / akvarier (ikke privat)",
-                                                    "Info": null,
-                                                    "Children": null
-                                                },
-                                                {
-                                                    "Id": null,
-                                                    "Value": "research",
-                                                    "Text": "fra forskning",
-                                                    "Info": null,
-                                                    "Children": null
-                                                },
-                                                {
-                                                    "Id": null,
-                                                    "Value": "otherEscape",
-                                                    "Text": "øvrig rømning/forvilling",
-                                                    "Info": null,
-                                                    "Children": null
-                                                }
-                                            ]
+                                          "mpimportationescape": [
+                                            {
+                                              "Id": null,
+                                              "Value": "agriculture",
+                                              "Text": "fra jordbruk (unntatt husdyrhold)",
+                                              "Info": null,
+                                              "Children": null
+                                            },
+                                            {
+                                              "Id": null,
+                                              "Value": "forestry",
+                                              "Text": "fra skogbruk",
+                                              "Info": null,
+                                              "Children": null
+                                            },
+                                            {
+                                              "Id": null,
+                                              "Value": "horticulture",
+                                              "Text": "fra kommersiell plantehandel",
+                                              "Info": null,
+                                              "Children": null
+                                            },
+                                            {
+                                              "Id": null,
+                                              "Value": "gardening",
+                                              "Text": "fra hager",
+                                              "Info": null,
+                                              "Children": null
+                                            },
+                                            {
+                                              "Id": null,
+                                              "Value": "gardenWaste",
+                                              "Text": "som hageutkast",
+                                              "Info": null,
+                                              "Children": null
+                                            },
+                                            {
+                                              "Id": null,
+                                              "Value": "ornamentalPurposeOther",
+                                              "Text": "fra grøntanlegg (inkl. parker, rabatter o.l.)",
+                                              "Info": null,
+                                              "Children": null
+                                            },
+                                            {
+                                              "Id": null,
+                                              "Value": "farmedAnimals",
+                                              "Text": "fra husdyrhold (i landbruket)",
+                                              "Info": null,
+                                              "Children": null
+                                            },
+                                            {
+                                              "Id": null,
+                                              "Value": "furFarms",
+                                              "Text": "fra pelsdyroppdrett",
+                                              "Info": null,
+                                              "Children": null
+                                            },
+                                            {
+                                              "Id": null,
+                                              "Value": "aquaculture",
+                                              "Text": "fra akvakultur (inkl. fiskedammer)",
+                                              "Info": null,
+                                              "Children": null
+                                            },
+                                            {
+                                              "Id": null,
+                                              "Value": "petAquariumTerrariumSpecies",
+                                              "Text": "av kjæledyr/hobbydyr eller private akvarieplanter",
+                                              "Info": null,
+                                              "Children": null
+                                            },
+                                            {
+                                              "Id": null,
+                                              "Value": "liveFoodLiveBait",
+                                              "Text": "av levende mat til kjæledyr/hobbydyr",
+                                              "Info": null,
+                                              "Children": null
+                                            },
+                                            {
+                                              "Id": null,
+                                              "Value": "petAquariumTerrariumFood",
+                                              "Text": "fra levende mat, fôr eller agn (unntatt til kjæledyr)",
+                                              "Info": null,
+                                              "Children": null
+                                            },
+                                            {
+                                              "Id": null,
+                                              "Value": "liveAnimalFoodBait",
+                                              "Text": "av levende fôr eller agn (ikke til kjæledyr)",
+                                              "Info": null,
+                                              "Children": null
+                                            },
+                                            {
+                                              "Id": null,
+                                              "Value": "liveHumanFood",
+                                              "Text": "av levende mat (til mennesker)",
+                                              "Info": null,
+                                              "Children": null
+                                            },
+                                            {
+                                              "Id": null,
+                                              "Value": "botanicalGardenZooAquarium",
+                                              "Text": "fra botaniske/zoologiske hager / akvarier (ikke privat)",
+                                              "Info": null,
+                                              "Children": null
+                                            },
+                                            {
+                                              "Id": null,
+                                              "Value": "research",
+                                              "Text": "fra forskning",
+                                              "Info": null,
+                                              "Children": null
+                                            },
+                                            {
+                                              "Id": null,
+                                              "Value": "otherEscape",
+                                              "Text": "øvrig rømning/forvilling",
+                                              "Info": null,
+                                              "Children": null
+                                            }
+                                          ]
                                         }
                                     },
                                     {

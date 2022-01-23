@@ -1140,6 +1140,24 @@ namespace SwissKnife.Database
                             dest.IsDeleted = true;
                         }
 
+                        var petAqua = dest.AssesmentVectors.Where(x=>x.CodeItem == "liveFoodLiveBait").ToArray();
+                        if (petAqua.Length > 0)
+                        {
+                            foreach (var b in petAqua)
+                            {
+                                if (dest.ExpertGroup == "Fisker" || dest.ExpertGroup.StartsWith("Karplanter"))
+                                {
+                                    b.CodeItem = "liveAnimalFoodBait";
+                                    b.Category = "av levende fôr eller agn (ikke til kjæledyr)";
+                                }
+                                else
+                                {
+                                    b.CodeItem = "liveHumanFood";
+                                    b.Category = "av levende mat (til mennesker)";
+                                }
+                            }
+                        }
+
                     });
 
                 // - slik mapping fungerer ikke - da de blir kallt via convention - og det er ingen tilfeller der den har behov for å mappe fra FA3Legacy til Prod.Domain.RiskAssessment - koden blir ikke kallt

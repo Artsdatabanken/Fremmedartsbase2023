@@ -423,7 +423,9 @@ namespace SwissKnife.Database
                 {
                     exAssessment.IsDeleted = true;
                 }
-                
+
+                exAssessment.AssesmentVectors = newAssesment.AssesmentVectors;
+
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)
                 {
