@@ -68,13 +68,14 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                         <fieldset className="well">
                             <h2>{critlabels.heading}</h2>
                             {alienSpeciesCategoryLabel !== "not set"
-                                ? <p>{critlabels.status}: {alienSpeciesCategoryLabel}</p>
+                                ? <p className="summaryStatus">{critlabels.status}: {alienSpeciesCategoryLabel}</p>
                                 : null}
                             {assessment.category !== "NR"
                                 ? <Risikomatrise
                                     labels={critlabels}
                                     invasjonspotensiale={riskAssessment.invationpotential.level}
                                     ecoeffect={riskAssessment.ecoeffect.level}
+                                    elementsize = {300}
                                     invasjonUncertaintyLevels={riskAssessment.invationpotential.uncertaintyLevels}
                                     ecoeffectUncertaintyLevels={riskAssessment.ecoeffect.uncertaintyLevels}/>
                                 : null}
