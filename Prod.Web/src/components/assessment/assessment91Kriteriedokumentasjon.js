@@ -62,9 +62,6 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                     : <br/>}
                     <div>
                     
-                    {/*<h3>{labels.critDocumentation.status}</h3>*/}
-                   
-                    {/*appState.skalVurderes ?*/}
                         <fieldset className="well">
                             <h2>{critlabels.heading}</h2>
                             {alienSpeciesCategoryLabel !== "not set"
@@ -79,10 +76,6 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                                     invasjonUncertaintyLevels={riskAssessment.invationpotential.uncertaintyLevels}
                                     ecoeffectUncertaintyLevels={riskAssessment.ecoeffect.uncertaintyLevels}/>
                                 : null}
-                            {/* <h3>{riskAssessment.riskLevelText} <b> {riskAssessment.riskLevelCode}</b></h3>
-                            <h4>{critlabels.decisiveCriteria}:
-                                <b> {riskAssessment.decisiveCriteria}</b>
-                            </h4> */}
                             <h3>{assessment.category === "NR"
                                 ? ""
                                 : riskAssessment.riskLevelText} 

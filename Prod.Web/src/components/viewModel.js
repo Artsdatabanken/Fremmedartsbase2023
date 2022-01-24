@@ -1287,18 +1287,6 @@ class ViewModel {
         )
     }
 
-    // async getKoder() {
-    //     const url = config.getUrl("Kode/101")  //todo: this is temporory to test new kode format
-    //     const response = await fetch(url)
-    //     const json = await response.json()
-    //     return json
-    // }
-    // async getPåvirkningsfaktorer() {
-    //     const url = config.getUrl("Kode/2")
-    //     const response = await fetch(url)
-    //     const json = await response.json()
-    //     return json
-    // }
     async getExpertGroups() {
 
         const url = config.getUrl("expertgroups")
