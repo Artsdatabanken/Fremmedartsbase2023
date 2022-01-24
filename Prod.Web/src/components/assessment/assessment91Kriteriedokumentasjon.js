@@ -67,17 +67,29 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                     {/*appState.skalVurderes ?*/}
                         <fieldset className="well">
                             <h2>{critlabels.heading}</h2>
-                            <p>{critlabels.status}: {alienSpeciesCategoryLabel}</p>
-                            <Risikomatrise
-                                labels={critlabels}
-                                invasjonspotensiale={riskAssessment.invationpotential.level}
-                                ecoeffect={riskAssessment.ecoeffect.level}
-                                invasjonUncertaintyLevels={riskAssessment.invationpotential.uncertaintyLevels}
-                                ecoeffectUncertaintyLevels={riskAssessment.ecoeffect.uncertaintyLevels}/>
-                            <h3>{riskAssessment.riskLevelText} <b> {riskAssessment.riskLevelCode}</b></h3>
+                            {alienSpeciesCategoryLabel !== "not set"
+                                ? <p>{critlabels.status}: {alienSpeciesCategoryLabel}</p>
+                                : null}
+                            {assessment.category !== "NR"
+                                ? <Risikomatrise
+                                    labels={critlabels}
+                                    invasjonspotensiale={riskAssessment.invationpotential.level}
+                                    ecoeffect={riskAssessment.ecoeffect.level}
+                                    invasjonUncertaintyLevels={riskAssessment.invationpotential.uncertaintyLevels}
+                                    ecoeffectUncertaintyLevels={riskAssessment.ecoeffect.uncertaintyLevels}/>
+                                : null}
+                            {/* <h3>{riskAssessment.riskLevelText} <b> {riskAssessment.riskLevelCode}</b></h3>
                             <h4>{critlabels.decisiveCriteria}:
                                 <b> {riskAssessment.decisiveCriteria}</b>
-                            </h4>
+                            </h4> */}
+                            <h3>{assessment.category === "NR"
+                                ? ""
+                                : riskAssessment.riskLevelText} 
+                                <b> {assessment.category}</b>
+                            </h3>
+                            {assessment.criteria !== "" 
+                                ? <h4>{critlabels.decisiveCriteria}: <b> {assessment.criteria}</b></h4>
+                                : null}
                         </fieldset> 
 
                         {/* if there is no conclusion in species status*/}
