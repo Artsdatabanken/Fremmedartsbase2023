@@ -3,7 +3,7 @@ import 'ol/ol.css';
 import styles from './MapOpenLayers.css'; // don't delete. it's used to move buttons to the right side
 import MapContext from "./MapContext";
 import { intersect, multiPolygon as TurfMultiPolygon } from '@turf/turf';
-import { Feature, Map, View } from 'ol';
+import { Feature, Map, Overlay, View } from 'ol';
 import { Control, defaults as defaultControls } from 'ol/control';
 import { Draw } from 'ol/interaction';
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
@@ -17,14 +17,14 @@ import config from '../../config';
 
 const MapOpenLayers = ({
     showWaterAreas,
-    isWaterArea,
+    artskartWaterModel,
+    waterFeatures,
     onAddPoint,
     onEdit,
     style,
     mapBounds,
     geojson,
     selectionGeometry,
-    assessmentArea,
     onClickPoint,
     setWaterAreas,
     setIsLoading,
@@ -34,10 +34,12 @@ const MapOpenLayers = ({
     const mapRef = useRef();
     const [visibleLegend, setVisibleLegend] = useState(false);
 	const [map, setMap] = useState(null);
-	const [lastIsWaterArea, setLastIsWaterArea] = useState(isWaterArea);
+	const [lastIsWaterArea, setLastIsWaterArea] = useState(artskartWaterModel ? artskartWaterModel.isWaterArea : undefined);
 	const [waterLayerName, setWaterLayerName] = useState(undefined);
     const [pointerMoveTarget, setPointerMoveTarget] = useState(undefined);
+    const waterFieldName = artskartWaterModel && artskartWaterModel.isWaterArea ? 'vannomraadenavn' : 'vannregionnavn';
     const mapZoom = 3.7;
+    const assessmentArea = artskartWaterModel && artskartWaterModel.areas ? artskartWaterModel.areas.filter(x => x.disabled === 0).map(x => x.globalId) : undefined;
     let mapObject;
     let mapCenter = [];
     let mouseoverfeature = null;
@@ -103,7 +105,7 @@ const MapOpenLayers = ({
         const markerLayer = layers.filter((layer) => layer.get('name') === 'markerLayer' ? true : false)[0];
         const waterLayer = layers.filter(layer => layer.get('name') === 'Vatn')[0];
         const waterSelectedLayer = layers.filter(layer => layer.get('name') === 'VatnSelected')[0];
-        if (!markerLayer && !waterLayer && !waterSelectedLayer) {
+        if (!markerLayer || !waterLayer || !waterSelectedLayer) {
             setIsLoading(false);
             return;
         }
@@ -151,10 +153,12 @@ const MapOpenLayers = ({
                     // console.log('intersect', featureName, waterFeatures[j].get('disabled'));
                     if (!waterIntersections.hasOwnProperty(featureName) || (waterIntersections.hasOwnProperty(featureName) && !waterIntersections[featureName].intersects)) {
                         const intersects = intersect(theWaterFeature, theFeature);
+                        // console.log('theWaterFeature.properties', theWaterFeature.properties);
                         waterIntersections[featureName] = {
                             name: featureName,
                             isWaterArea: lastIsWaterArea,
                             intersects: intersects !== null,
+                            globalId: theWaterFeature.properties['globalID']
                         };
                         if (intersects !== null) waterIntersectionFeatures.push(waterFeatures[j]);
                     }
@@ -263,14 +267,14 @@ const MapOpenLayers = ({
     useLayoutEffect(() => {
         if (!showWaterAreas) return;
         if (map === null) return;
-        if (lastIsWaterArea === undefined || lastIsWaterArea === isWaterArea) return;
+        if (lastIsWaterArea === undefined || lastIsWaterArea === (artskartWaterModel ? artskartWaterModel.isWaterArea : undefined)) return;
 
         // reDrawWaterLayer();
         setWaterAreas();
         setIsLoading(true);
         const waterSelectedLayer = map.getLayers().getArray().filter(layer => layer.get('name') === 'VatnSelected')[0];
         if (waterSelectedLayer) waterSelectedLayer.getSource().clear();
-        mapOlFunc.reDrawWaterLayer(map, isWaterArea, setLastIsWaterArea, setPointerMoveForWaterLayer, setWaterLayerName);
+        mapOlFunc.reDrawWaterLayer(map, 0, undefined, waterFeatures, setLastIsWaterArea, setPointerMoveForWaterLayer, setWaterLayerName);
     });
 
     // on component mount
@@ -307,7 +311,7 @@ const MapOpenLayers = ({
         const hoverLayer = new VectorLayer({
             name: 'hoverLayer',
             source: new VectorSource({wrapX: false, _text: false}),
-            style: mapOlFunc.hoverStyleFunction,
+            style: (feature, resolution) => mapOlFunc.hoverStyleFunction(feature, resolution, 0),
             zIndex: 3
         });
         const areaLayer = new VectorLayer({name: 'areaLayer', source: new VectorSource({wrapX: false}), zIndex: 5});
@@ -362,6 +366,7 @@ const MapOpenLayers = ({
                 })
             ],
             controls: defaultControls({attribution: false}).extend(mapControls),
+            overlays: [new Overlay({ id: 'overlay', element: mapOlFunc.createPopupElement(true, 0)})]
         };
 
         options.layers.push(hoverLayer);
@@ -390,8 +395,22 @@ const MapOpenLayers = ({
             // }, 500);
         });
 
+        const overlay = mapObject.getOverlayById('overlay');
+        if (!overlay.getElement()) {
+            const elements = document.getElementsByClassName(`ol-popup ol-popup-${0}`);
+            if (elements.length === 1) {
+                overlay.setElement(elements[0]);
+            } else {
+                overlay.setElement(mapOlFunc.createPopupElement(true, 0));
+            }
+        }
+
         mapObject.on('pointermove', (e) => {
             if (drawPolygonInteraction) return;
+
+            const content = document.getElementsByClassName(`ol-popup-content ol-popup-content-${0}`)[0];
+            content.innerHTML = '';
+
             const markerLayer = mapObject.getLayers().getArray().filter((layer) => layer.get('name') === 'markerLayer' ? true : false)[0];
             if (!markerLayer) return;
             const markerSource = markerLayer.getSource();
@@ -406,11 +425,27 @@ const MapOpenLayers = ({
                 // console.log('pointermove', features);
                 mouseoverfeature = features[0];
                 mapObject.getTargetElement().style.cursor = 'pointer';
-                // document.getElementById('olmap').style.cursor = 'pointer';
             } else {
                 mouseoverfeature = null;
                 mapObject.getTargetElement().style.cursor = 'crosshair';
-                // document.getElementById('olmap').style.cursor = 'crosshair';
+            }
+            mapObject.forEachFeatureAtPixel(e.pixel, (f) => {
+                const featureLayerName = f.get('_layerName');
+                if (featureLayerName && featureLayerName === 'Vatn') {
+                    if (content) {
+                        // Show name with faded font if feature is disabled
+                        let waterClassname = f.get('disabled') === true ? ' class=\'ol-popup-feature-disabled\'' : '';
+                        content.innerHTML = `<p${waterClassname}>${f.get(waterFieldName)}</p>`;
+                        overlay.getElement().style.opacity = 1;
+                        overlay.setPosition(e.coordinate);
+                    }
+                    return true;
+                }
+                return false;
+            });
+
+            if (content.innerHTML.length === 0) {
+                overlay.getElement().style.opacity = 0;
             }
         });
 
@@ -435,9 +470,9 @@ const MapOpenLayers = ({
             // layerid = 14; // Vannregion
             // layerid = 15; // Vannomraade
 
-            setLastIsWaterArea(isWaterArea);
+            setLastIsWaterArea(artskartWaterModel.isWaterArea);
 
-            mapObject.addLayer(mapOlFunc.createWaterLayer('Vatn', isWaterArea, projection, undefined, assessmentArea, setWaterLayerNameCallback));
+            mapObject.addLayer(mapOlFunc.createWaterLayer('Vatn', 0, artskartWaterModel, waterFeatures, projection, undefined, assessmentArea, setWaterLayerNameCallback));
             mapOlFunc.createWaterSelectedLayer('VatnSelected', projection).then(l => {
                 mapObject.addLayer(l);
             });

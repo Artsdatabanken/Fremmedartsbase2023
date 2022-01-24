@@ -929,6 +929,10 @@ public partial class FA4 // (3.2) Artsegenskaper
         public int BCritMCount { get; set; } = 0;
         public string BCritExact { get; set; } = "false";
         public string BCritP { get; set; }
+
+        public string BCritModel { get; set; } = "1";
+
+        public string BCritOccurrences { get; set; } = "a";
         public string BCritNewObs { get; set; } = "True";
 
 
@@ -1465,6 +1469,41 @@ public partial class FA4 // (3.2) Artsegenskaper
         public string ArtskartAdded { get; set; }
         public string ArtskartRemoved { get; set; }
         public string ArtskartSelectionGeometry { get; set; }
+        public string ArtskartSistOverført { get; set; }
+        public ArtskartModel ArtskartModel { get; set; }
+        public ArtskartWaterModel ArtskartWaterModel { get; set; }
+    }
+
+    public class ArtskartModel
+    {
+        public int ObservationFromYear { get; set; }
+        public int ObservationToYear { get; set; }
+        public int FromMonth { get; set; }
+        public int ToMonth { get; set; }
+        public bool IncludeObjects { get; set; }
+        public bool IncludeObservations { get; set; }
+        public bool IncludeNorge { get; set; }
+        public bool IncludeSvalbard { get; set; }
+        public bool ExcludeGbif { get; set; }
+    }
+
+    public class ArtskartWaterModel
+    {
+        public bool IsWaterArea { get; set; }
+        public IList<ArtskartWaterAreaModel> Areas { get; set; }
+    }
+
+    public class ArtskartWaterAreaModel
+    {
+        public string GlobalId { get; set; }
+        public string Name { get; set; }
+        public string VannregionId { get; set; }
+        public int Disabled { get; set; }
+        public int Selected { get; set; }
+        public int State0 { get; set; }
+        public int State1 { get; set; }
+        public int State2 { get; set; }
+        public int State3 { get; set; }
     }
 
 

@@ -724,6 +724,8 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.BCritMCount, opt => opt.Ignore())
                     .ForMember(dest => dest.BCritExact, opt => opt.Ignore())
                     .ForMember(dest => dest.BCritP, opt => opt.Ignore())
+                    .ForMember(dest => dest.BCritModel, opt => opt.Ignore())
+                    .ForMember(dest => dest.BCritOccurrences, opt => opt.Ignore())
                     .ForMember(dest => dest.BCritNewObs, opt => opt.Ignore())
 
                     .ForMember(dest => dest.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes, opt => opt.Ignore())
@@ -812,6 +814,9 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.ArtskartAdded, opt => opt.Ignore()) // ny av året
                     .ForMember(dest => dest.ArtskartRemoved, opt => opt.Ignore()) // ny av året
                     .ForMember(dest => dest.ArtskartSelectionGeometry, opt => opt.Ignore()) // ny av året
+                    .ForMember(dest => dest.ArtskartSistOverført, opt => opt.Ignore()) // ny av året
+                    .ForMember(dest => dest.ArtskartModel, opt => opt.Ignore()) // ny av året
+                    .ForMember(dest => dest.ArtskartWaterModel, opt => opt.Ignore()) // ny av året
                     .ForMember(dest => dest.Habitats, opt => opt.Ignore())  // ny av året
                     .AfterMap((src, dest) =>
                     {
@@ -1133,6 +1138,24 @@ namespace SwissKnife.Database
                         if (src.VurderingsStatus == "SlettetAvAdmin" || src.VurderingsStatus == "SlettetFlyttetAvAdmin" || (src.ExpertGroupId == "ExpertGroups/Ikkemarineinvertebrater/N" && src.VurderingsStatus == null))
                         {
                             dest.IsDeleted = true;
+                        }
+
+                        var petAqua = dest.AssesmentVectors.Where(x=>x.CodeItem == "liveFoodLiveBait").ToArray();
+                        if (petAqua.Length > 0)
+                        {
+                            foreach (var b in petAqua)
+                            {
+                                if (dest.ExpertGroup == "Fisker" || dest.ExpertGroup.StartsWith("Karplanter"))
+                                {
+                                    b.CodeItem = "liveAnimalFoodBait";
+                                    b.Category = "av levende fôr eller agn (ikke til kjæledyr)";
+                                }
+                                else
+                                {
+                                    b.CodeItem = "liveHumanFood";
+                                    b.Category = "av levende mat (til mennesker)";
+                                }
+                            }
                         }
 
                     });

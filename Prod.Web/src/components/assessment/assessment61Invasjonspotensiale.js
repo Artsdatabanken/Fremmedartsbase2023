@@ -372,18 +372,29 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                             <div className="statusField"> 
                             <div className="labels">
                                     <p>{labels.Bcrit.mCount}</p>
-                                    <p>{labels.Bcrit.exact}</p>
+                                    <p>{labels.Bcrit.model}</p>
+                                    <p>{labels.Bcrit.occurrencesListed}</p>
+                                    {/*<p>{labels.Bcrit.exact}</p>
                                     <p>{labels.Bcrit.p}</p>
-                                    <p>{labels.Bcrit.newObs}</p>
+                                    <p>{labels.Bcrit.newObs}</p>*/}
                                                             
                             </div>
                             <div className="numberFields">
-                            <Xcomp.String                            
+                                <Xcomp.String                            
                                             observableValue={[riskAssessment, "bCritMCount"]}
                                             placeholder={""}
                                             disabled={disabled}
                                         />  
-                              <Xcomp.StringEnum                            
+                                <Xcomp.StringEnum                            
+                                            observableValue={[riskAssessment, "bCritModel"]}
+                                            //placeholder={"false"}
+                                            codes={koder.BCritMod}
+                                        />  
+                                <Xcomp.StringEnum                            
+                                            observableValue={[riskAssessment, "bCritOccurrences"]}
+                                            codes={koder.BCritOccList}
+                                        /> 
+                              {/*<Xcomp.StringEnum                            
                                             observableValue={[riskAssessment, "bCritExact"]}
                                             //placeholder={"false"}
                                             codes={koder.TrueOrFalse}
@@ -397,7 +408,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             observableValue={[riskAssessment, "bCritNewObs"]}
                                             placeholder={"True"}
                                             disabled={disabled}
-                                        />                      
+                              />   */}                   
                                         
                             </div>
                             </div>
@@ -746,7 +757,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
 
 
 
-                        <div>
+                        
                        
                             {riskAssessment.chosenSpreadYearlyIncrease != "SpreadYearlyLiteratureData" && riskAssessment.chosenSpreadYearlyIncrease != "SpreadYearlyIncreaseCalculatedExpansionSpeed" && riskAssessment.chosenSpreadYearlyIncrease != "" && 
                                 <div
@@ -758,11 +769,12 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             // according to issues #318 and #319
                                             disabled={disabled || riskAssessment.chosenSpreadYearlyIncrease == "a" || (riskAssessment.chosenSpreadYearlyIncrease == "b" && assessment.alienSpeciesCategory == "DoorKnocker")}
                                             auto={riskAssessment.chosenSpreadYearlyIncrease == "a" || assessment.alienSpeciesCategory == "DoorKnocker"} mode="noheading"/>
+                                <hr></hr>
+                            
                             </div>
                             }
                            
-                       </div>
-                       <hr/>
+                       
                     {riskAssessment.activeSpreadYearlyLiteratureData
                         ? <div className="previousAssessment">
                                 <table className="formtable Bcrit">

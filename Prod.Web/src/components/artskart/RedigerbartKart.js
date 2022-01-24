@@ -6,7 +6,8 @@ import * as Xcomp from "../observableComponents";
 
 const RedigerbartKart = ({
   showWaterAreas,
-  isWaterArea,
+  artskartWaterModel,
+  waterFeatures,
   taxonId,
   scientificNameId,
   kriterier,
@@ -16,7 +17,6 @@ const RedigerbartKart = ({
   artskartSelectionGeometry,
   artskartAdded,
   artskartRemoved,
-  assessmentArea,
   onCancel,
   children
 }) => {
@@ -45,7 +45,7 @@ const RedigerbartKart = ({
   };
 
   const [isLoading, setIsLoading] = useState(false);
-  const [waterAreas, setWaterAreas] = useState('');
+  const [newWaterAreas, setNewWaterAreas] = useState('');
   const [editStats, setEditStats] = useState({});
   useEffect(() => {
     async function summarize() {
@@ -99,7 +99,7 @@ const RedigerbartKart = ({
             <span>Regioner: <b>{beskrivFylker(countylist)}</b></span>
           )}
           {showWaterAreas && (
-            <span>Vannområde:{" "}<span><b>{beskrivWaterAreas(waterAreas)}</b></span></span>
+            <span>Vannområde:{" "}<span><b>{beskrivWaterAreas(newWaterAreas)}</b></span></span>
           )}
         </div>
        
@@ -135,7 +135,7 @@ const RedigerbartKart = ({
               e.stopPropagation();
               onOverførFraArtskart({
                 countylist,
-                waterAreas,
+                newWaterAreas,
                 selectionGeometry,
                 areadata,
                 observations,
@@ -182,16 +182,16 @@ const RedigerbartKart = ({
       </div>
       <MapOpenLayers
         showWaterAreas={showWaterAreas}
-        isWaterArea={isWaterArea}
+        artskartWaterModel={artskartWaterModel}
+        waterFeatures={waterFeatures}
         geojson={observations}
         selectionGeometry={selectionGeometry}
-        assessmentArea={assessmentArea}
         style={mapstyle}
         onAddPoint={handleAddPoint}
         onClickPoint={handleClickPoint}
         onEdit={handleEditSelection}
         mapBounds={mapBounds}
-        setWaterAreas={setWaterAreas}
+        setWaterAreas={setNewWaterAreas}
         isLoading={isLoading}
         setIsLoading={setIsLoading}
       />
