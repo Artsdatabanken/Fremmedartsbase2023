@@ -149,7 +149,7 @@ export class HabitatTableRow extends React.Component {
                 <td>{kodeTekst(koder.affectedArea, nt.affectedArea)}</td>*/}
                 <td>
                 <Xcomp.Button  
-                    disabled={this.context.readonly} xs title={!this.edit ? labels.General.edit : labels.General.ok} 
+                    disabled={this.context.readonly} xs className={this.edit ? "ok" : ""} title={!this.edit ? labels.General.edit : labels.General.ok} 
                     onClick={action(() => {this.edit = !this.edit; this.hideStateChange = nt.niNCode.startsWith("LI "); toggleEdit()})}
                 >{this.edit ? labels.General.ok : 
                    // labels.General.edit
