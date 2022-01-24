@@ -118,7 +118,9 @@ namespace Prod.Domain
         //public string EvaluationCategory { get; set; } // slettet 10.01.2017
 
         public string Citation { get; set; }
-        public string AlienSpeciesCategory { get; set; } 
+        public string Category { get; set; } 
+        public string Criteria { get; set; } 
+        public string AlienSpeciesCategory { get; set; }
         public string AssessmentConclusion { get; set; }
 
         public List<string> ReasonForChangeOfCategory { get; set; } = new List<string>();

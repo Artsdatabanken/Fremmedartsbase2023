@@ -773,6 +773,8 @@ namespace SwissKnife.Database
                 cfg.CreateMap<FA3Legacy.ObservedAndEstablished, FA4.ObservedAndEstablished>();
                 cfg.CreateMap<FA3Legacy.ObservedAndEstablishedInCountry, FA4.ObservedAndEstablishedInCountry>();
                 cfg.CreateMap<FA3Legacy, FA4>()
+                    .ForMember(dest => dest.Category, opt => opt.Ignore())
+                    .ForMember(dest => dest.Criteria, opt => opt.Ignore())
                     .ForMember(dest => dest.AssessmentConclusion, opt => opt.Ignore())
                     .ForMember(dest => dest.IsAlien, opt => opt.Ignore())
                     .ForMember(dest => dest.IsAlienSpecies, opt => opt.Ignore())
