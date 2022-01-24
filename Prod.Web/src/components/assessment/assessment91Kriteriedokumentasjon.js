@@ -67,11 +67,12 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                     {/*appState.skalVurderes ?*/}
                         <fieldset className="well">
                             <h2>{critlabels.heading}</h2>
-                            <p>{critlabels.status}: {alienSpeciesCategoryLabel}</p>
+                            <p className="summaryStatus">{critlabels.status}: {alienSpeciesCategoryLabel}</p>
                             <Risikomatrise
                                 labels={critlabels}
                                 invasjonspotensiale={riskAssessment.invationpotential.level}
                                 ecoeffect={riskAssessment.ecoeffect.level}
+                                elementsize = {300}
                                 invasjonUncertaintyLevels={riskAssessment.invationpotential.uncertaintyLevels}
                                 ecoeffectUncertaintyLevels={riskAssessment.ecoeffect.uncertaintyLevels}/>
                             <h3>{riskAssessment.riskLevelText} <b> {riskAssessment.riskLevelCode}</b></h3>
