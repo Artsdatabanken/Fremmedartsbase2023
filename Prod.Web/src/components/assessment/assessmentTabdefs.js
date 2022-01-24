@@ -11,9 +11,9 @@ function assessmentTabdefs(appState) {
             {id: 2, label:"Artsinformasjon", enabled: !appState.horizonDoScanning, notrequired: !appState.skalVurderes, url: "artinformasjon" },
             {id: 3, label:"Spredningsveier", enabled: !appState.horizonDoScanning, notrequired: !appState.skalVurderes, url: "spredningsveier" },
             {id: 4, label:"Bakgrunnsdata for risikovurdering", enabled: !appState.horizonDoScanning, notrequired: !appState.skalVurderes, url: "bakgrunnsdata" },
-            {id: 5, label:"Risikovurdering", enabled: !appState.horizonDoScanning, notrequired: !appState.skalVurderes, url: "risikovurdering" },
-            {id: 6, label:"Klimaeffekter", enabled: !appState.horizonDoScanning, notrequired: !appState.skalVurderes, url: "klimaeffekter" },
-            {id: 7, label:"Geografisk variasjon", enabled: !appState.horizonDoScanning, notrequired: !appState.skalVurderes, url: "geografiskvariasjon" },
+            {id: 5, label:"Risikovurdering", enabled: appState.doFullAssessment, notrequired: !appState.skalVurderes, url: "risikovurdering" },
+            {id: 6, label:"Klimaeffekter", enabled: appState.doFullAssessment, notrequired: !appState.skalVurderes, url: "klimaeffekter" },
+            {id: 7, label:"Geografisk variasjon", enabled: appState.doFullAssessment, notrequired: !appState.skalVurderes, url: "geografiskvariasjon" },
             {id: 8, label:"Oppsummering", enabled: !appState.horizonDoScanning, url: "oppsummmering"},
             {id: 9, label:"Referanser", enabled: appState.harVurdering, url: "referanser"},
             {id: 10, label:"Kommentar på vurdering", enabled:appState.harVurdering, url: "kommentar"},
@@ -85,8 +85,8 @@ function assessmentTabdefs(appState) {
         activeTab: {id: 1},
         get tabinfos() {return [
 
-            {id: 1, label:"Invasjonspotensiale", enabled:true},
-            {id: 2, label: "Økologisk effekt", enabled:true}
+            {id: 1, label:"Invasjonspotensiale", enabled: appState.doFullAssessment},
+            {id: 2, label: "Økologisk effekt", enabled: appState.doFullAssessment}
         ]},
         get tabList() { return tabItems(this.tabinfos) },
         setActiveTab: (tab) => {

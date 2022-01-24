@@ -571,6 +571,13 @@ class ViewModel {
         // todo. denne er nå knyttet til horisontskanning. Burde kanskje vært generell og hentet verdi fra: assessment.assessmentConclusion
         return !this.harVurdering ? false : this.assessment.alienSpeciesCategory == "DoorKnocker" && this.assessment.skalVurderes ? true : false
     }
+    @computed get doFullAssessment() {
+        // console.log("##!doFullAssessment alienSpeciesCategory: " + (this.assessment ? this.assessment.alienSpeciesCategory : " noo"))
+        // console.log("##!doFullAssessment connectedToAnother: " + (this.assessment ? this.assessment.connectedToAnother : " nix"))
+        // console.log("##!doFullAssessment assessmentConclusion: " + (this.assessment ? this.assessment.assessmentConclusion : " Nope"))
+        return !this.harVurdering ? false : this.assessment.assessmentConclusion !== "WillNotBeRiskAssessed" 
+        //&& this.assessment.skalVurderes ? true : false
+    }
 
     @computed get unresolvedComments() {
         const comments = this.assessmentComments
