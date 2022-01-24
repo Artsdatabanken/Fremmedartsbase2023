@@ -1434,6 +1434,8 @@ public partial class FA4 // (3.2) Artsegenskaper
 
         public class Habitat
         {
+            public string NiNCode { get; set; }
+            public string Name { get; set; }
             public string RedlistedNatureTypeName { get; set; }
             public string Category { get; set; }
             //public List<string> NiNVariation { get; set; } = new List<string>();
