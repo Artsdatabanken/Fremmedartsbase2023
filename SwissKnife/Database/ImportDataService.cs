@@ -427,6 +427,8 @@ namespace SwissKnife.Database
                 exAssessment.AssesmentVectors = newAssesment.AssesmentVectors;
                 
                 exAssessment.ImpactedNatureTypes = newAssesment.ImpactedNatureTypes;
+                exAssessment.ImpactedNatureTypesFrom2018 = newAssesment.ImpactedNatureTypesFrom2018;
+                exAssessment.Habitats = newAssesment.Habitats;
 
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)
