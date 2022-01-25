@@ -118,7 +118,9 @@ namespace Prod.Domain
         //public string EvaluationCategory { get; set; } // slettet 10.01.2017
 
         public string Citation { get; set; }
-        public string AlienSpeciesCategory { get; set; } 
+        public string Category { get; set; } 
+        public string Criteria { get; set; } 
+        public string AlienSpeciesCategory { get; set; }
         public string AssessmentConclusion { get; set; }
 
         public List<string> ReasonForChangeOfCategory { get; set; } = new List<string>();
@@ -1434,6 +1436,8 @@ public partial class FA4 // (3.2) Artsegenskaper
 
         public class Habitat
         {
+            public string NiNCode { get; set; }
+            public string Name { get; set; }
             public string RedlistedNatureTypeName { get; set; }
             public string Category { get; set; }
             //public List<string> NiNVariation { get; set; } = new List<string>();

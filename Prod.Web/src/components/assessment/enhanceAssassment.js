@@ -15,6 +15,8 @@ import { nothing } from 'ol/pixel'
 export default function enhanceAssessment(json, appState) {
     // * * * remove properties that will be replaced with computed observables * * *
     const ra = json.riskAssessment
+    delete json.category
+    delete json.criteria
     delete json.alienSpeciesCategory
     delete json.assessmentConclusion
     delete ra.riskLevel
@@ -67,6 +69,8 @@ export default function enhanceAssessment(json, appState) {
             const assra = assessment.riskAssessment
             const obj = toJS(assessment)
             const objra = obj.riskAssessment
+            obj.category = assessment.category
+            obj.criteria = assessment.criteria
             obj.alienSpeciesCategory = assessment.alienSpeciesCategory
             obj.assessmentConclusion = assessment.assessmentConclusion
             objra.riskLevel = assra.riskLevel
@@ -166,6 +170,9 @@ export default function enhanceAssessment(json, appState) {
                 : assessment.speciesStatus.startsWith("C2") || assessment.speciesStatus.startsWith("C3")
                 ? "AlienSpecie"
                 : "DoorKnocker"
+
+                // "EcoEffectWithoutEstablishment"
+
             return result
         },
         get assessmentConclusion() {
@@ -181,7 +188,20 @@ export default function enhanceAssessment(json, appState) {
                 : "WillNotBeRiskAssessed"
             return result
         },
-
+        get category() {
+            const result =
+                assessment.assessmentConclusion === "WillNotBeRiskAssessed"
+                ? "NR"
+                : assessment.riskAssessment.riskLevelCode
+            return result
+        },
+        get criteria() {
+            const result =
+                assessment.assessmentConclusion === "WillNotBeRiskAssessed"
+                ? ""
+                : assessment.riskAssessment.decisiveCriteria
+            return result
+        },
     })
     reaction(
         () => assessment.alienSpeciesCategory,
