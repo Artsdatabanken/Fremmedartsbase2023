@@ -3746,15 +3746,8 @@
                                             },
                                             {
                                               "Id": null,
-                                              "Value": "liveFoodLiveBait",
-                                              "Text": "av levende mat til kjæledyr/hobbydyr",
-                                              "Info": null,
-                                              "Children": null
-                                            },
-                                            {
-                                              "Id": null,
                                               "Value": "petAquariumTerrariumFood",
-                                              "Text": "fra levende mat, fôr eller agn (unntatt til kjæledyr)",
+                                              "Text": "av levende mat til kjæledyr/hobbydyr",
                                               "Info": null,
                                               "Children": null
                                             },
