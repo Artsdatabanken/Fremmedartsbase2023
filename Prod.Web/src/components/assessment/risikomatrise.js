@@ -44,7 +44,7 @@ export default class Risikomatrise extends React.Component {
     render() {
         const {invasjonspotensiale, ecoeffect, invasjonUncertaintyLevels, ecoeffectUncertaintyLevels, elementsize, labels} = this.props;
         const size = elementsize ? elementsize : 200 
-        const textStyle = { fontSize: 16}
+        const textStyle = { fontSize: 12}
         const headingStyle = { fontSize: 16, fontWeight: "bolder"}
         return(
             <svg width={size+2*size/3} height={size+size/6}>
@@ -52,57 +52,57 @@ export default class Risikomatrise extends React.Component {
                     {this.renderRisikomatrise(size - 28, invasjonspotensiale, ecoeffect, invasjonUncertaintyLevels, ecoeffectUncertaintyLevels)}
                 </g>
                 <text 
-                    transform={"translate(12," + (size - 110) + ")rotate(270)"}
+                    transform={"translate(12," + (size - 100) + ")rotate(270)"}
                     style={headingStyle}>
                     {labels.ecologicalEffect }
                 </text>
                 <text 
-                    transform={"translate(50," + (size - 270) + ")"}
+                    transform={"translate(60," + (size - 270) + ")"}
                     style={textStyle}>
                     {labels.four}
                 </text>
                 <text 
-                    transform={"translate(40," + (size - 250) + ")"}
+                    transform={"translate(50," + (size - 255) + ")"}
                     style={textStyle}>
                     {labels.high}                    
                 </text>
                 <text 
-                    transform={"translate(50," + (size - 200) + ")"}
+                    transform={"translate(60," + (size - 200) + ")"}
                     style={textStyle}>
                     {labels.three}
                 </text>
                 <text 
-                    transform={"translate(20," + (size - 180) + ")"}
+                    transform={"translate(30," + (size - 185) + ")"}
                     style={textStyle}>
                     {labels.medium}
                 </text>
                 <text 
-                    transform={"translate(50," + (size - 130) + ")"}
+                    transform={"translate(60," + (size - 130) + ")"}
                     style={textStyle}>
                     {labels.two}
                 </text>
                 <text 
-                    transform={"translate(40," + (size - 110) + ")"}
+                    transform={"translate(50," + (size - 115) + ")"}
                     style={textStyle}>
                     {labels.low}
                 </text>
                 <text 
-                    transform={"translate(50," + (size - 70) + ")"}
+                    transform={"translate(60," + (size - 70) + ")"}
                     style={textStyle}>
                     {labels.one}
                 </text>
                 <text 
-                    transform={"translate(30," + (size - 50) + ")"}
+                    transform={"translate(40," + (size - 55) + ")"}
                     style={textStyle}>
                     {labels.notKnown1 }
                 </text>
                 <text 
-                    transform={"translate(30," + (size - 30) + ")"}
+                    transform={"translate(40," + (size - 40) + ")"}
                     style={textStyle}>
                     {labels.notKnown2 }
                 </text>
                 <text 
-                    transform={"translate(80," + (size+ size/8) + ")"}
+                    transform={"translate(150," + (size+ size/8) + ")"}
                     style={headingStyle}>
                     {labels.invationPotential } 
                 </text>
@@ -112,7 +112,7 @@ export default class Risikomatrise extends React.Component {
                     {labels.one}
                 </text>
                 <text 
-                    transform={"translate(100," + (size + 10) + ")"}
+                    transform={"translate(110," + (size + 5) + ")"}
                     style={textStyle}>
                     {labels.invLow}
                 </text>
@@ -122,7 +122,7 @@ export default class Risikomatrise extends React.Component {
                     {labels.two}
                 </text>
                 <text 
-                    transform={"translate(150," + (size + 10) + ")"}
+                    transform={"translate(160," + (size + 5) + ")"}
                     style={textStyle}>
                     {labels.limited}
                 </text>
@@ -132,7 +132,7 @@ export default class Risikomatrise extends React.Component {
                     {labels.three}
                 </text>
                 <text 
-                    transform={"translate(230," + (size + 10) + ")"}
+                    transform={"translate(230," + (size + 5) + ")"}
                     style={textStyle}>
                     {labels.moderate}
                 </text>
@@ -142,7 +142,7 @@ export default class Risikomatrise extends React.Component {
                     {labels.four}
                 </text>
                 <text 
-                    transform={"translate(300," + (size + 10) + ")"}
+                    transform={"translate(300," + (size + 5) + ")"}
                     style={textStyle}>
                     {labels.invHigh}
                 </text>
