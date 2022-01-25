@@ -572,6 +572,7 @@ namespace SwissKnife.Database
         };
 
         private static Dictionary<string, string> naturetypes;
+        private static Dictionary<string, string> naturetypes2_2;
 
         private static Dictionary<string, string> Naturetypes
         {
@@ -580,24 +581,6 @@ namespace SwissKnife.Database
                 if (naturetypes != null)
                 {
                     return naturetypes;
-                }
-
-                List<Tuple<string, string>> DrillDown(JsonArray array, string id = "Id", string text = "Text", string child = "Children")
-                {
-                    var result = new List<Tuple<string, string>>();
-                    foreach (var node in array)
-                    {
-                        result.Add(new Tuple<string, string>(node[id].GetValue<string>(), node[text].GetValue<string>()));
-                        result.AddRange(DrillDown(node[child].AsArray(), id, text, child));
-                    }
-
-                    return result;
-                }
-
-
-                JsonNode? ParseJson(string filen)
-                {
-                    return JsonNode.Parse(File.Exists("../../../.." + filen) ? File.ReadAllText("../../../.." + filen) : File.ReadAllText(".." + filen));
                 }
 
                 var nin = ParseJson("/Prod.Web/src/Nin2_3.json");
@@ -609,11 +592,11 @@ namespace SwissKnife.Database
                     dict.Add(item.Item1, item.Item2);
                 }
 
-                var nin1 = ParseJson("/Prod.Web/src/Nin2_2.json");
-                foreach (var item in DrillDown(nin2["Children"].AsArray()).Where(item => !dict.ContainsKey(item.Item1)))
-                {
-                    dict.Add(item.Item1, item.Item2);
-                }
+                //var nin1 = ParseJson("/Prod.Web/src/Nin2_2.json");
+                //foreach (var item in DrillDown(nin2["Children"].AsArray()).Where(item => !dict.ContainsKey(item.Item1)))
+                //{
+                //    dict.Add(item.Item1, item.Item2);
+                //}
                 var ninl1 = ParseJson("/Prod.Web/src/nin-livsmedium.json");
                 foreach (var item in DrillDown(ninl1["children"].AsArray(), "Id", "navn", "children").Where(item => !dict.ContainsKey(item.Item1)))
                 {
@@ -624,7 +607,22 @@ namespace SwissKnife.Database
                 return dict;
             }
         }
+        private static Dictionary<string, string> Naturetypes2_2
+        {
+            get
+            {
+                if (naturetypes2_2 != null)
+                {
+                    return naturetypes2_2;
+                }
+                
+                var nin = ParseJson("/Prod.Web/src/Nin2_2.json");
+                var dict = DrillDown(nin["Children"].AsArray()).ToDictionary(item => item.Item1.Substring(3), item => item.Item2);
 
+                naturetypes2_2 = dict;
+                return dict;
+            }
+        }
         public static Mapper CreateMappingFromOldToNew()
         { 
             var mapperConfig = new MapperConfiguration(cfg =>
@@ -876,6 +874,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.ArtskartModel, opt => opt.Ignore()) // ny av året
                     .ForMember(dest => dest.ArtskartWaterModel, opt => opt.Ignore()) // ny av året
                     .ForMember(dest => dest.Habitats, opt => opt.Ignore())  // ny av året
+                    .ForMember(dest => dest.ImpactedNatureTypesFrom2018, opt => opt.Ignore()) // kun for plassering av ikke kompatible naturtyper
                     .AfterMap((src, dest) =>
                     {
                         // set some standard values
@@ -1216,21 +1215,49 @@ namespace SwissKnife.Database
                             }
                         }
 
-                        // issue 388
+                        // issue #388 og #392
                         var dict = Naturetypes;
-                        foreach (var exAssessmentImpactedNatureType in dest.ImpactedNatureTypes)
+                        var dictOld = Naturetypes2_2;
+                        var impactedNatureTypes = dest.ImpactedNatureTypes.ToArray();
+                        foreach (var item in impactedNatureTypes)
                         {
-                            var code = exAssessmentImpactedNatureType.NiNCode;
-                            var text = dict.ContainsKey(code) ? dict[code] : string.Empty;
-                            if (text == string.Empty) continue;
-
-                            if (string.IsNullOrWhiteSpace(exAssessmentImpactedNatureType.Name))
+                            var code = item.NiNCode;
+                            bool newCode = true;
+                            if ((!code.StartsWith("LI ") && code.StartsWith("L")) || code.StartsWith("F"))
                             {
-                                exAssessmentImpactedNatureType.Name = text;
+                                // nin 2_2 -> flyttes
+                                newCode = false;
+                                dest.ImpactedNatureTypes.Remove(item);
+                                dest.ImpactedNatureTypesFrom2018.Add(item);
                             }
-                            else if (exAssessmentImpactedNatureType.Name != text)
+
+                            var text = newCode 
+                                ? (dict.ContainsKey(code) ? dict[code] : string.Empty) 
+                                : (dictOld.ContainsKey(code) ? dictOld[code] : string.Empty);
+                            if (text == string.Empty)
                             {
-                                exAssessmentImpactedNatureType.Name = text;
+                                continue;
+                            }
+
+                            if (string.IsNullOrWhiteSpace(item.Name))
+                            {
+                                item.Name = text;
+                            }
+                            else if (item.Name != text)
+                            {
+                                item.Name = text;
+                            }
+
+                            if (code.StartsWith("LI "))
+                            {
+                                // livsmedium
+                                dest.ImpactedNatureTypes.Remove(item);
+                                dest.Habitats.Add(new FA4.Habitat()
+                                {
+                                    NiNCode = item.NiNCode, Name = item.Name, TimeHorizon = item.TimeHorizon,
+                                    StateChange = item.StateChange, AffectedArea = item.AffectedArea,
+                                    ColonizedArea = item.ColonizedArea
+                                });
                             }
                         }
 
@@ -1273,6 +1300,22 @@ namespace SwissKnife.Database
             mapperConfig.AssertConfigurationIsValid();
             var mapper = new Mapper(mapperConfig);
             return mapper;
+        }
+
+        private static List<Tuple<string, string>> DrillDown(JsonArray array, string id = "Id", string text = "Text", string child = "Children")
+        {
+            var result = new List<Tuple<string, string>>();
+            foreach (var node in array)
+            {
+                result.Add(new Tuple<string, string>(node[id].GetValue<string>(), node[text].GetValue<string>()));
+                result.AddRange(DrillDown(node[child].AsArray(), id, text, child));
+            }
+
+            return result;
+        }
+        private static JsonNode? ParseJson(string filen)
+        {
+            return JsonNode.Parse(File.Exists("../../../.." + filen) ? File.ReadAllText("../../../.." + filen) : File.ReadAllText(".." + filen));
         }
 
         private static bool IsInt(string src)

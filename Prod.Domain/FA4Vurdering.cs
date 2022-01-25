@@ -547,6 +547,11 @@ public partial class FA4 // (3.2) Artsegenskaper
     {
         //public List<NatureType> AssessmentNatureTypes { get; set; } // removed 03.11.2016 - * see comment for NatureType class
         public List<ImpactedNatureType> ImpactedNatureTypes { get; set; } = new List<ImpactedNatureType>();
+        
+        /// <summary>
+        /// Naturetypes from 2018 after NIN2_2 which are not compatible with NIN2_3 - for reference - not for edit
+        /// </summary>
+        public List<ImpactedNatureType> ImpactedNatureTypesFrom2018 { get; set; } = new List<ImpactedNatureType>();
 
         public List<RedlistedNatureType> RedlistedNatureTypes { get; set; } = new List<RedlistedNatureType>(); //lagt til 18.11.2016
 
