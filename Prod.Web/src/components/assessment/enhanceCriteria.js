@@ -127,14 +127,16 @@ const errorhandler = {
     get hasErrors() {
         return Object.keys(this.errors).length > 0
     },
-    addError({id, errorText}) {
-        if(typeof(id) !== 'string' || typeof(id) !== 'string' ) {
+    addError(id, errorText) {
+        if(typeof(id) !== 'string' || typeof(errorText) !== 'string' ) {
             console.warn("addError wrong data type")
 
         }
         if (!(id in this.errors)) {
-            set(this.errors, id)
-            // this.errors[id] = errorText
+            runInAction(() => {
+                // set(this.errors, id)
+                this.errors[id] = errorText
+            })
         }
     },
     removeError(id) {
@@ -142,8 +144,10 @@ const errorhandler = {
             console.warn("removeError wrong data type")
         }
         if (id in this.errors) {
-            // this.errors[id] = undefined
-            remove(this.errors, id)
+            runInAction(() => {
+                // this.errors[id] = undefined
+                remove(this.errors, id)
+            })
         }
     }
 }
