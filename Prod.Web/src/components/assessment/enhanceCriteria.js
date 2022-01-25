@@ -483,7 +483,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
 
         get invationPotentialText() {
-           return `Delkategori invasjonspotensial: ${r.invationPotentialLevel}${r.invationPotentialUncertainityText}.`
+           return `Delkategori invasjonspotensial: ${r.invationpotential.level + 1}${r.invationPotentialUncertainityText}.`
         },
 
         get ecoEffectLevel () {
@@ -491,7 +491,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
 
         get ecoEffectText() {
-            return `Delkategori økologisk effekt: ${r.ecoeffect.level}.`
+            return `Delkategori økologisk effekt: ${r.ecoeffect.level + 1}.`
         },
 
         get bscore() {
