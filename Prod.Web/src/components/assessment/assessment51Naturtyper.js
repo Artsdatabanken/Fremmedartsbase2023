@@ -107,6 +107,21 @@ export default class Assessment51Naturtyper extends React.Component {
                 </>
                 }
 
+                {assessment.impactedNatureTypesFrom2018.length > 0 && <div className="previousAssessment">
+                <hr></hr>
+                <h4>{ntLabels.dataFromPreviousAssessment}</h4>
+                <p>Nin 2_2</p>
+                <NaturtypeTable
+                    naturetypes={assessment.impactedNatureTypesFrom2018}
+                    appState={appState}
+                    canRenderTable={canRenderTable}
+                    labels={labels}
+                    codes={koder}
+                    appState={appState}
+                    disabled={true}
+                    desc={ntLabels.colonizedAreaDescription}/>
+                </div>}
+
                 {assessment.redlistedNatureTypes.length > 0 && <div className="previousAssessment">
                 <hr></hr>
                 <h4>{ntLabels.dataFromPreviousAssessment}</h4>
