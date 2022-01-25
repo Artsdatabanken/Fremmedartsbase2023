@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.Json.Nodes;
 using System.Threading;
 using AutoMapper;
 using Prod.Domain;
@@ -568,6 +570,60 @@ namespace SwissKnife.Database
             { "FA3/N/3233", "Terrestriske invertebrater" },
             { "FA3/N/3344", "Terrestriske invertebrater" }
         };
+
+        private static Dictionary<string, string> naturetypes;
+
+        private static Dictionary<string, string> Naturetypes
+        {
+            get
+            {
+                if (naturetypes != null)
+                {
+                    return naturetypes;
+                }
+
+                List<Tuple<string, string>> DrillDown(JsonArray array, string id = "Id", string text = "Text", string child = "Children")
+                {
+                    var result = new List<Tuple<string, string>>();
+                    foreach (var node in array)
+                    {
+                        result.Add(new Tuple<string, string>(node[id].GetValue<string>(), node[text].GetValue<string>()));
+                        result.AddRange(DrillDown(node[child].AsArray(), id, text, child));
+                    }
+
+                    return result;
+                }
+
+
+                JsonNode? ParseJson(string filen)
+                {
+                    return JsonNode.Parse(File.Exists("../../../.." + filen) ? File.ReadAllText("../../../.." + filen) : File.ReadAllText(".." + filen));
+                }
+
+                var nin = ParseJson("/Prod.Web/src/Nin2_3.json");
+                var dict = DrillDown(nin["Children"].AsArray()).ToDictionary(item => item.Item1.Substring(3), item => item.Item2);
+
+                var nin2 = ParseJson("/Prod.Web/src/TrueteOgSjeldneNaturtyper2018.json");
+                foreach (var item in DrillDown(nin2["Children"].AsArray()))
+                {
+                    dict.Add(item.Item1, item.Item2);
+                }
+
+                var nin1 = ParseJson("/Prod.Web/src/Nin2_2.json");
+                foreach (var item in DrillDown(nin2["Children"].AsArray()).Where(item => !dict.ContainsKey(item.Item1)))
+                {
+                    dict.Add(item.Item1, item.Item2);
+                }
+                var ninl1 = ParseJson("/Prod.Web/src/nin-livsmedium.json");
+                foreach (var item in DrillDown(ninl1["children"].AsArray(), "Id", "navn", "children").Where(item => !dict.ContainsKey(item.Item1)))
+                {
+                    dict.Add(item.Item1, item.Item2);
+                }
+
+                naturetypes = dict;
+                return dict;
+            }
+        }
 
         public static Mapper CreateMappingFromOldToNew()
         { 
@@ -1155,6 +1211,24 @@ namespace SwissKnife.Database
                                     b.CodeItem = "liveHumanFood";
                                     b.Category = "av levende mat (til mennesker)";
                                 }
+                            }
+                        }
+
+                        // issue 388
+                        var dict = Naturetypes;
+                        foreach (var exAssessmentImpactedNatureType in dest.ImpactedNatureTypes)
+                        {
+                            var code = exAssessmentImpactedNatureType.NiNCode;
+                            var text = dict.ContainsKey(code) ? dict[code] : string.Empty;
+                            if (text == string.Empty) continue;
+
+                            if (string.IsNullOrWhiteSpace(exAssessmentImpactedNatureType.Name))
+                            {
+                                exAssessmentImpactedNatureType.Name = text;
+                            }
+                            else if (exAssessmentImpactedNatureType.Name != text)
+                            {
+                                exAssessmentImpactedNatureType.Name = text;
                             }
                         }
 

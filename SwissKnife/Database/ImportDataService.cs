@@ -318,9 +318,9 @@ namespace SwissKnife.Database
                 IgnoreUnknownObjectTypes = true,
                 TreatStringEmptyAndNullTheSame = true
             });
-
+            
             var existing = _database.Assessments.ToDictionary(x => x.Id, x => JsonSerializer.Deserialize<FA4>(x.Doc, jsonSerializerOptions));
-
+            
             // mapping
             var mapper = Fab3Mapper.CreateMappingFromOldToNew();
             var batchsize = 50;
@@ -401,13 +401,13 @@ namespace SwissKnife.Database
                 exAssessment.RiskAssessment.YearFirstEstablishedNature = newAssesment.RiskAssessment.YearFirstEstablishedNature;
                 exAssessment.RiskAssessment.YearFirstEstablishedNatureInsecure = newAssesment.RiskAssessment.YearFirstEstablishedNatureInsecure;
 
-                if (exAssessment.ExpertGroup != newAssesment.ExpertGroup)
-                {
-                    if (exAssessment.HorizonDoScanning)
-                    {
+                //if (exAssessment.ExpertGroup != newAssesment.ExpertGroup)
+                //{
+                //    if (exAssessment.HorizonDoScanning)
+                //    {
                         
-                    }
-                }
+                //    }
+                //}
                 exAssessment.ExpertGroup = newAssesment.ExpertGroup;
 
                 if (exAssessment.ExpertGroup == "Sopper")
@@ -425,6 +425,8 @@ namespace SwissKnife.Database
                 }
 
                 exAssessment.AssesmentVectors = newAssesment.AssesmentVectors;
+                
+                exAssessment.ImpactedNatureTypes = newAssesment.ImpactedNatureTypes;
 
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)
