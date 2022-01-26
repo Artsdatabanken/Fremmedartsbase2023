@@ -42,22 +42,24 @@ export default class Assessment52Utbredelse extends React.Component {
             selectedWaterArea: [],
             waterIsChanged: 0
         });
-        if (props && props.appState && props.appState.assessment && props.appState.assessment.artskartWaterModel === null) props.appState.assessment.artskartWaterModel = {};
-        if (this.initialWaterAreas === null && props && props.appState && props.appState.assessment.isAlienSpecies && props.appState.assessment.isRegionallyAlien) {
-            const self = this;
-            getWaterAreas().then((data) => {
-                action(() => {
-                    self.initialWaterAreas = data;
-                    const ass = props.appState.assessment;
-                    ass.artskartWaterModel.isWaterArea = ass.artskartWaterModel.isWaterArea ? ass.artskartWaterModel.isWaterArea : false;
-                    self.reCreateartskartWaterModelArea({ ass, initialWaterAreas: self.initialWaterAreas });
-                })();
-            });
-        }
-        if (props && props.appState && props.appState.assessment && props.appState.assessment.artskartWaterModel && props.appState.assessment.artskartWaterModel.areas) {
-            this.selectedWaterArea = props.appState.assessment.artskartWaterModel.areas
-            .filter(x => x.disabled === 0)
-            .map(x => x.globalId);
+        if (props && props.appState && props.appState.assessment && props.appState.assessment.isAlienSpecies && props.appState.assessment.isRegionallyAlien) {
+            if (props && props.appState && props.appState.assessment && props.appState.assessment.artskartWaterModel === null) props.appState.assessment.artskartWaterModel = {};
+            if (this.initialWaterAreas === null && props && props.appState && props.appState.assessment.isAlienSpecies && props.appState.assessment.isRegionallyAlien) {
+                const self = this;
+                getWaterAreas().then((data) => {
+                    action(() => {
+                        self.initialWaterAreas = data;
+                        const ass = props.appState.assessment;
+                        ass.artskartWaterModel.isWaterArea = ass.artskartWaterModel.isWaterArea ? ass.artskartWaterModel.isWaterArea : false;
+                        self.reCreateartskartWaterModelArea({ ass, initialWaterAreas: self.initialWaterAreas });
+                    })();
+                });
+            }
+            if (props && props.appState && props.appState.assessment && props.appState.assessment.artskartWaterModel && props.appState.assessment.artskartWaterModel.areas) {
+                this.selectedWaterArea = props.appState.assessment.artskartWaterModel.areas
+                .filter(x => x.disabled === 0)
+                .map(x => x.globalId);
+            }
         }
     }
 
