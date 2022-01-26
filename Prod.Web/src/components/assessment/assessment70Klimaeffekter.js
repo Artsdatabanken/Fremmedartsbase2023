@@ -18,7 +18,7 @@ export default class Assessment70Klimaeffekter extends React.Component {
 
         const ecoEffect = riskAssessment.ecoEffectText
 
-        const invasionPotential = riskAssessment.invasionPotentialText
+        const invasionPotential = riskAssessment.invationPotentialText
 
         return(
             <div>

@@ -547,6 +547,11 @@ public partial class FA4 // (3.2) Artsegenskaper
     {
         //public List<NatureType> AssessmentNatureTypes { get; set; } // removed 03.11.2016 - * see comment for NatureType class
         public List<ImpactedNatureType> ImpactedNatureTypes { get; set; } = new List<ImpactedNatureType>();
+        
+        /// <summary>
+        /// Naturetypes from 2018 after NIN2_2 which are not compatible with NIN2_3 - for reference - not for edit
+        /// </summary>
+        public List<ImpactedNatureType> ImpactedNatureTypesFrom2018 { get; set; } = new List<ImpactedNatureType>();
 
         public List<RedlistedNatureType> RedlistedNatureTypes { get; set; } = new List<RedlistedNatureType>(); //lagt til 18.11.2016
 
@@ -1482,12 +1487,9 @@ public partial class FA4 // (3.2) Artsegenskaper
     {
         public int ObservationFromYear { get; set; }
         public int ObservationToYear { get; set; }
-        public int FromMonth { get; set; }
-        public int ToMonth { get; set; }
-        public bool IncludeObjects { get; set; }
-        public bool IncludeObservations { get; set; }
         public bool IncludeNorge { get; set; }
         public bool IncludeSvalbard { get; set; }
+        public bool ExcludeObjects { get; set; }
         public bool ExcludeGbif { get; set; }
     }
 

@@ -127,14 +127,16 @@ const errorhandler = {
     get hasErrors() {
         return Object.keys(this.errors).length > 0
     },
-    addError({id, errorText}) {
-        if(typeof(id) !== 'string' || typeof(id) !== 'string' ) {
+    addError(id, errorText) {
+        if(typeof(id) !== 'string' || typeof(errorText) !== 'string' ) {
             console.warn("addError wrong data type")
 
         }
         if (!(id in this.errors)) {
-            set(this.errors, id)
-            // this.errors[id] = errorText
+            runInAction(() => {
+                // set(this.errors, id)
+                this.errors[id] = errorText
+            })
         }
     },
     removeError(id) {
@@ -142,8 +144,10 @@ const errorhandler = {
             console.warn("removeError wrong data type")
         }
         if (id in this.errors) {
-            // this.errors[id] = undefined
-            remove(this.errors, id)
+            runInAction(() => {
+                // this.errors[id] = undefined
+                remove(this.errors, id)
+            })
         }
     }
 }
@@ -468,22 +472,26 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
            return `Basert på det beste anslaget på ${r.occurrences1Best} forekomster i løpet av 10 år og ${r.introductionsBest} ytterligere introduksjon(er) i samme tidsperiode er A-kriteriet forhåndsskåret som ${r.adefaultBest + 1} (med usikkerhet: ${r.adefaultLow + 1}–${r.adefaultHigh + 1}). Dette innebærer at artens mediane levetid ligger ${r.lifetimeText}, eller at sannsynligheten for utdøing innen 50 år er på ${r.extinctionText}.`
         },
 
-        get invationPotentialUncertainityText() {
+        get invationPotentialLevel() {
+            return riskAssessment.invationpotential.level
+        },
 
+        get invationPotentialUncertainityText() {
             return !r.invationPotentialUncertaintyLevels || r.invationPotentialUncertaintyLevels == [] || findUncertainityAbove(r.invationPotentialUncertaintyLevels, r.invationPotentialLevel) == 0 ? "" 
                     : r.invationPotentialUncertaintyLevels.length == 1 && r.invationPotentialUncertaintyLevels[0] > r.invationPotentialLevel ? `(usikkerhet opp mot ${r.invationPotentialUncertaintyLevels[0]})`
                     : ` (usikkerhet opp mot ${findUncertainityAbove(r.invationPotentialUncertaintyLevels, r.invationPotentialLevel)})`
-
-           
         },
 
-        get invasionPotentialText() {
-            
-           return `Delkategori invasjonspotensial: ${r.invationPotentialLevel}${r.invationPotentialUncertainityText}.`
+        get invationPotentialText() {
+           return `Delkategori invasjonspotensial: ${r.invationpotential.level + 1}${r.invationPotentialUncertainityText}.`
+        },
+
+        get ecoEffectLevel () {
+            return riskAssessment.ecoeffect.level
         },
 
         get ecoEffectText() {
-            return `Delkategori økologisk effekt: ${r.ecoEffectLevel}.`
+            return `Delkategori økologisk effekt: ${r.ecoeffect.level + 1}.`
         },
 
         get bscore() {

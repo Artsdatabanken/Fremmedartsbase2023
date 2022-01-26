@@ -40,6 +40,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
         const labels = appState.codeLabels
 		const koder = appState.koder
         const critlabels = labels.critDocumentation
+        const errors = riskAssessment.errors
 
         // const {riskAssessment, viewModel, appState, kritDocInfo} = this.props;
         // const labels = appState.kodeLabels.critDocumentation
@@ -61,7 +62,15 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                     ? <h3>{critlabels.status}</h3>
                     : <br/>}
                     <div>
-                    
+                        { true && riskAssessment.hasErrors
+                        ? <fieldset className="well">
+                            <h4>{"Feilrapport"}</h4>
+                            <ul>
+                            {Object.keys(errors).sort().map(key => <li key={key}><b style={{ color: 'red' }}>{errors[key]}</b></li> )}
+                            </ul>
+                        </fieldset>
+                        : null
+                        }
                         <fieldset className="well">
                             <h2>{critlabels.heading}</h2>
                             {alienSpeciesCategoryLabel !== "not set"

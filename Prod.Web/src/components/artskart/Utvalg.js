@@ -5,7 +5,7 @@ import * as Xcomp from "../observableComponents";
 import useEscapeKey from "./useEscapeKey";
 import useFocus from "./useFocus";
 
-const Utvalg = ({ utvalg }) => {
+const Utvalg = ({ utvalg, artskartModel }) => {
   const closeModal = () => {
     setModalOpen(false);
   };
@@ -26,7 +26,7 @@ const Utvalg = ({ utvalg }) => {
         Utvalg ⧩
       </Xcomp.Button>
       <div ref={refDropDown} style={{ position: "absolute", zIndex: -1 }}>
-        {isModalOpen && <Artskartparametre utvalg={utvalg} />}
+        {isModalOpen && <Artskartparametre utvalg={utvalg} artskartModel={artskartModel} />}
       </div>
     </div>
   );

@@ -42,22 +42,50 @@ export default class Assessment52Utbredelse extends React.Component {
             selectedWaterArea: [],
             waterIsChanged: 0
         });
-        if (props && props.appState && props.appState.assessment && props.appState.assessment.artskartWaterModel === null) props.appState.assessment.artskartWaterModel = {};
-        if (this.initialWaterAreas === null && props && props.appState && props.appState.assessment.isAlienSpecies && props.appState.assessment.isRegionallyAlien) {
-            const self = this;
-            getWaterAreas().then((data) => {
-                action(() => {
-                    self.initialWaterAreas = data;
-                    const ass = props.appState.assessment;
-                    ass.artskartWaterModel.isWaterArea = ass.artskartWaterModel.isWaterArea ? ass.artskartWaterModel.isWaterArea : false;
-                    self.reCreateartskartWaterModelArea({ ass, initialWaterAreas: self.initialWaterAreas });
-                })();
-            });
-        }
-        if (props && props.appState && props.appState.assessment && props.appState.assessment.artskartWaterModel && props.appState.assessment.artskartWaterModel.areas) {
-            this.selectedWaterArea = props.appState.assessment.artskartWaterModel.areas
-            .filter(x => x.disabled === 0)
-            .map(x => x.globalId);
+        if (props && props.appState && props.appState.assessment) {
+            const assessment = props.appState.assessment;
+            if (assessment.isAlienSpecies && assessment.isRegionallyAlien) {
+                if (assessment.artskartWaterModel === null) assessment.artskartWaterModel = {};
+                if (this.initialWaterAreas === null && assessment.isAlienSpecies && assessment.isRegionallyAlien) {
+                    const self = this;
+                    getWaterAreas().then((data) => {
+                        action(() => {
+                            self.initialWaterAreas = data;
+                            const ass = assessment;
+                            ass.artskartWaterModel.isWaterArea = ass.artskartWaterModel.isWaterArea ? ass.artskartWaterModel.isWaterArea : false;
+                            self.reCreateartskartWaterModelArea({ ass, initialWaterAreas: self.initialWaterAreas });
+                        })();
+                    });
+                }
+                if (assessment.artskartWaterModel && assessment.artskartWaterModel.areas) {
+                    this.selectedWaterArea = assessment.artskartWaterModel.areas
+                    .filter(x => x.disabled === 0)
+                    .map(x => x.globalId);
+                }
+            }
+            console.log('assessment.artskartModel', assessment.artskartModel)
+            if (assessment.artskartModel) {
+                const getValue = (value) => {
+                    return value !== undefined ? value : undefined;
+                };
+                assessment.observationFromYear = getValue(assessment.observationFromYear);
+                assessment.observationToYear = getValue(assessment.observationToYear);
+                assessment.includeObjects = getValue(assessment.includeObjects);
+                assessment.includeNorge = getValue(assessment.includeNorge);
+                assessment.includeSvalbard = getValue(assessment.includeSvalbard);
+                assessment.excludeObjects = getValue(assessment.excludeObjects);
+                assessment.excludeGbif = getValue(assessment.excludeGbif);
+            } else {
+                assessment.artskartModel = {
+                    // observationFromYear: undefined,
+                    // observationToYear: undefined,
+                    // includeObjects: undefined,
+                    // includeNorge: undefined,
+                    // includeSvalbard: undefined,
+                    // excludeObjects: undefined,
+                    // excludeGbif: undefined
+                };
+            }
         }
     }
 
@@ -306,6 +334,7 @@ export default class Assessment52Utbredelse extends React.Component {
                                         waterFeatures={this.getWaterFeatures(assessment)}
                                         labels={labels}
                                         utvalg={assessment.riskAssessment}
+                                        artskartModel={assessment.artskartModel}
                                         onOverførFraArtskart={action(this.handleOverførFraArtskart)}
                                         artskartSelectionGeometry={assessment.artskartSelectionGeometry}
                                         artskartAdded={assessment.artskartAdded}
