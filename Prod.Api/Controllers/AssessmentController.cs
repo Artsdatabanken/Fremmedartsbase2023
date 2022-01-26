@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using IdentityModel.Client;
@@ -515,12 +516,12 @@ namespace Prod.Api.Controllers
                 throw new Exception("IKKE SKRIVETILGANG TIL DENNE VURDERINGEN - Låst av annen bruker");
 
             var realUser = await _dbContext.Users.SingleOrDefaultAsync(x => x.Id == user.Id);
-            //// check and update referenceUsages
-            //var usedReferences = doc.References.Select(x => x.ReferenceId).ToArray();
-            //if (!forceStore && usedReferences.Any())
-            //{
-            //    bool ok = await _referenceService.SignalUsage(usedReferences, user.Id);
-            //}
+            // check and update referenceUsages
+            var usedReferences = doc.References.Select(x => x.ReferenceId).ToArray();
+            if (!forceStore && usedReferences.Any())
+            {
+                bool ok = await _referenceService.SignalUsage(usedReferences, user.Id);
+            }
 
             var curAss = JsonSerializer.Deserialize<FA4>(assessment.Doc);
 
@@ -529,49 +530,49 @@ namespace Prod.Api.Controllers
             const string name = "Datagrunnlag fra Artskart";
             const string filetype = "application/zip";
 
-            //if (!forceStore && doc.ArtskartSistOverført != curAss.ArtskartSistOverført)
-            //{
-            //    try
-            //    {
-            //        zipfile = await TaskHelper.TimeoutAfter(GetZipDataFromArtskart(doc), TimeSpan.FromSeconds(10));
-            //    }
-            //    catch
-            //    {
-            //        // ok here
-            //        zipfile = Array.Empty<byte>();
-            //    }
+            if (!forceStore && doc.ArtskartSistOverført != curAss.ArtskartSistOverført)
+            {
+                try
+                {
+                    zipfile = await TaskHelper.TimeoutAfter(GetZipDataFromArtskart(doc), TimeSpan.FromSeconds(10));
+                }
+                catch
+                {
+                    // ok here
+                    zipfile = Array.Empty<byte>();
+                }
 
-            //    if (zipfile.Length > 0)
-            //    {
-            //        var attach = await _dbContext.Attachments.Where(x =>
-            //            x.AssessmentId == assessment.Id && x.Name == name && x.Type == filetype &&
-            //            x.FileName == fileName).FirstOrDefaultAsync();
-            //        if (attach != null)
-            //        {
-            //            attach.File = zipfile;
-            //            attach.IsDeleted = false;
-            //            attach.Date = DateTime.Now;
-            //            attach.UserId = user.Id;
-            //        }
-            //        else
-            //        {
-            //            attach = new Attachment
-            //            {
-            //                AssessmentId = assessment.Id,
-            //                Date = DateTime.Now,
-            //                File = zipfile,
-            //                FileName = fileName,
-            //                Name = name,
-            //                Type = filetype,
-            //                UserId = user.Id
-            //            };
-            //            _dbContext.Attachments.Add(attach);
-            //        }
-            //    }
+                if (zipfile.Length > 0)
+                {
+                    var attach = await _dbContext.Attachments.Where(x =>
+                        x.AssessmentId == assessment.Id && x.Name == name && x.Type == filetype &&
+                        x.FileName == fileName).FirstOrDefaultAsync();
+                    if (attach != null)
+                    {
+                        attach.File = zipfile;
+                        attach.IsDeleted = false;
+                        attach.Date = DateTime.Now;
+                        attach.UserId = user.Id;
+                    }
+                    else
+                    {
+                        attach = new Attachment
+                        {
+                            AssessmentId = assessment.Id,
+                            Date = DateTime.Now,
+                            File = zipfile,
+                            FileName = fileName,
+                            Name = name,
+                            Type = filetype,
+                            UserId = user.Id
+                        };
+                        _dbContext.Attachments.Add(attach);
+                    }
+                }
 
-            //}
-            //var test = _dbContext.AssessmentHistories.ToArray();
-            var history = new AssessmentHistory
+                }
+                //var test = _dbContext.AssessmentHistories.ToArray();
+                var history = new AssessmentHistory
             {
                 Id = assessment.Id,
                 Doc = assessment.Doc,
@@ -612,66 +613,64 @@ namespace Prod.Api.Controllers
             await _dbContext.SaveChangesAsync().ConfigureAwait(false);
             IndexHelper.Index(assessment, _index);
         }
-        //private static async Task<byte[]> GetZipDataFromArtskart(FA4 rlRodliste2019)
-        //{
-        //    // hent datasett fra artskart
-        //    var date = DateTime.Parse(rlRodliste2019.ArtskartSistOverført);
-        //    var kriterier = rlRodliste2019.ArtskartModel;
+        private static async Task<byte[]> GetZipDataFromArtskart(FA4 rlRodliste2019)
+        {
+            // hent datasett fra artskart
+            var date = DateTime.Parse(rlRodliste2019.ArtskartSistOverført);
+            var kriterier = rlRodliste2019.ArtskartModel;
 
-        //    var apibase =
-        //        "https://artskart.artsdatabanken.no/PublicApi/api/listhelper/";
-        //    var type =
-        //        kriterier.IncludeObjects == kriterier.IncludeObservations
-        //            ? "all"
-        //            : kriterier.IncludeObjects
-        //                ? "specimen"
-        //                : "observations";
-        //    var region =
-        //        kriterier.IncludeNorge == kriterier.IncludeSvalbard
-        //            ? "all"
-        //            : kriterier.IncludeNorge
-        //                ? "fastland"
-        //                : "svalbard";
-        //    var excludeGbif =
-        //    kriterier.ExcludeGbif ? "&sourcedatabases[]=-40,-211" : "";
-        //    var queryparams =
-        //        $"&fromYear={kriterier.ObservationFromYear}&toYear={kriterier.ObservationToYear}&fromMonth={kriterier.FromMonth}&toMonth={kriterier.ToMonth}&type={type}&region={region}{excludeGbif}";
-        //    queryparams += $"&scientificNameId={rlRodliste2019.VurdertVitenskapeligNavnId}";
+            var apibase =
+                "https://artskart.artsdatabanken.no/PublicApi/api/listhelper/";
+            var type = //"all";
+                kriterier.ExcludeObjects == false
+                    ? "all"
+                    : "specimen";
+            var region =
+                kriterier.IncludeNorge == kriterier.IncludeSvalbard
+                    ? "all"
+                    : kriterier.IncludeNorge
+                        ? "fastland"
+                        : "svalbard";
+            var excludeGbif =
+            kriterier.ExcludeGbif ? "&sourcedatabases[]=-40,-211" : "";
+            var queryparams =
+                $"&fromYear={kriterier.ObservationFromYear}&toYear={kriterier.ObservationToYear}&type={type}&region={region}{excludeGbif}";
+            queryparams += $"&scientificNameId={rlRodliste2019.EvaluatedScientificNameId}";
 
-        //    if (!string.IsNullOrWhiteSpace(rlRodliste2019.ArtskartSelectionGeometry))
-        //    {
-        //        queryparams += $"&geojsonPolygon=";
-        //        dynamic json = JsonConvert.DeserializeObject(rlRodliste2019.ArtskartSelectionGeometry);
-        //        dynamic coordinates = json.geometry.coordinates;
-        //        dynamic items = coordinates[0];
-        //        foreach (dynamic item in items)
-        //        {
-        //            foreach (dynamic o in item)
-        //            {
-        //                string s = o.ToString();
-        //                queryparams += s.Replace(",", ".") + ",";
-        //            }
-        //        }
+            if (!string.IsNullOrWhiteSpace(rlRodliste2019.ArtskartSelectionGeometry))
+            {
+                queryparams += $"&geojsonPolygon=";
+                dynamic json = JsonSerializer.Deserialize<dynamic>(rlRodliste2019.ArtskartSelectionGeometry);
+                dynamic coordinates = json.geometry.coordinates;
+                dynamic items = coordinates[0];
+                foreach (dynamic item in items)
+                {
+                    foreach (dynamic o in item)
+                    {
+                        string s = o.ToString();
+                        queryparams += s.Replace(",", ".") + ",";
+                    }
+                }
 
-        //        queryparams = queryparams.Substring(0, queryparams.Length - 1);
-        //    }
+                queryparams = queryparams.Substring(0, queryparams.Length - 1);
+            }
 
-        //    if (!string.IsNullOrWhiteSpace(rlRodliste2019.ArtskartAdded))
-        //    {
-        //        queryparams += $"&addPoints={rlRodliste2019.ArtskartAdded}";
-        //    }
+            if (!string.IsNullOrWhiteSpace(rlRodliste2019.ArtskartAdded))
+            {
+                queryparams += $"&addPoints={rlRodliste2019.ArtskartAdded}";
+            }
 
-        //    if (!string.IsNullOrWhiteSpace(rlRodliste2019.ArtskartRemoved))
-        //    {
-        //        queryparams += $"&removePoints={rlRodliste2019.ArtskartRemoved}";
-        //    }
+            if (!string.IsNullOrWhiteSpace(rlRodliste2019.ArtskartRemoved))
+            {
+                queryparams += $"&removePoints={rlRodliste2019.ArtskartRemoved}";
+            }
 
-        //    var urlen = apibase + rlRodliste2019.TaxonId + "/downloadObservations/?" + queryparams;
-        //    using var client = new HttpClient();
+            var urlen = apibase + rlRodliste2019.TaxonId + "/downloadObservations/?" + queryparams;
+            using var client = new HttpClient();
 
-        //    var zipfile = await client.GetByteArrayAsync(urlen);
-        //    return zipfile;
-        //}
+            var zipfile = await client.GetByteArrayAsync(urlen);
+            return zipfile;
+        }
 
         private static FA4 CreateNewAssessment(string expertgroup, User user, int scientificNameId, bool DoorKnocker)
         {
