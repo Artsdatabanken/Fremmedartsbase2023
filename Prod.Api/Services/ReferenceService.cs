@@ -93,11 +93,11 @@ namespace Prod.Api.Services
             return reference;
         }
 
-        public async Task<bool> SignalUsage(Guid[] usedReferences, string userId)
+        public async Task<bool> SignalUsage(Guid[] usedReferences, Guid userId)
         {
             var api = GetApiClient();
             var refUsage = usedReferences.Select(x => new ReferenceUsage()
-                {ApplicationId = AppId, ReferenceId = x, UserId = new Guid(userId)}).ToArray();
+                {ApplicationId = AppId, ReferenceId = x, UserId = userId}).ToArray();
             var ok = await api.BulkAsync(refUsage);
             return ok;
         }
