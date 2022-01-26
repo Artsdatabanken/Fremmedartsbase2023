@@ -520,20 +520,22 @@ const MapOpenLayers = ({
                     const coordinate = transformCoordinate(geojsonCrsCode, config.mapEpsgCode, geojsonfeature.geometry.coordinates);
                     geometry = new Point(coordinate);
                 } else if (geojsonfeature.geometry.type === 'Polygon') {
-                    const coordinates = [[]];
-                    geojsonfeature.geometry.coordinates[0].forEach(coordinate => {
-                        coordinates[0].push(transformCoordinate(geojsonCrsCode, config.mapEpsgCode, coordinate));
-                    });
-                    geometry = new Polygon(coordinates);
-                    const polygonFeature = new Feature({
-                        geometry: geometry
-                    });
-                    const polygonStyle = mapOlFunc.createStyle(geojsonfeature, style);
-                    if (polygonStyle) {
-                        polygonFeature.setStyle(polygonStyle);
+                    if (assessmentArea === undefined) {
+                        const coordinates = [[]];
+                        geojsonfeature.geometry.coordinates[0].forEach(coordinate => {
+                            coordinates[0].push(transformCoordinate(geojsonCrsCode, config.mapEpsgCode, coordinate));
+                        });
+                        geometry = new Polygon(coordinates);
+                        const polygonFeature = new Feature({
+                            geometry: geometry
+                        });
+                        const polygonStyle = mapOlFunc.createStyle(geojsonfeature, style);
+                        if (polygonStyle) {
+                            polygonFeature.setStyle(polygonStyle);
+                        }
+                        areaSource.addFeature(polygonFeature);
+                        geometry = null;
                     }
-                    areaSource.addFeature(polygonFeature);
-                    geometry = null;
                 } else {
                     console.log('Unknown geometry', geojsonfeature.geometry.type);
                 }
