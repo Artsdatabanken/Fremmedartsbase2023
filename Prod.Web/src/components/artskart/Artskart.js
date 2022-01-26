@@ -20,6 +20,7 @@ const Artskart = ({
   scientificNameId,
   evaluationContext,
   utvalg,
+  artskartModel,
   showWaterAreas,
   artskartWaterModel,
   waterFeatures,
@@ -41,7 +42,7 @@ const Artskart = ({
           zIndex: 1000
         }}
       >
-        <Utvalg utvalg={utvalg} />
+        <Utvalg utvalg={utvalg} artskartModel={artskartModel} />
         <Xcomp.Button
           alwaysEnabled = {true}
           onClick={e => {

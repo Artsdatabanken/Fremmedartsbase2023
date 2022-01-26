@@ -12,6 +12,7 @@ const ModalArtskart = ({
   scientificNameId,
   taxonId,
   utvalg,
+  artskartModel,
   artskartAdded,
   artskartRemoved,
   artskartSelectionGeometry,
@@ -34,6 +35,7 @@ const ModalArtskart = ({
         taxonId={taxonId || 0}
         scientificNameId={scientificNameId}
         utvalg={utvalg}
+        artskartModel={artskartModel}
         onOverførFraArtskart={onOverførFraArtskart}
         artskartAdded={artskartAdded}
         artskartRemoved={artskartRemoved}

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import * as Xcomp from "../observableComponents";
 
-const Artskartparametre = ({ utvalg }) => {
+const Artskartparametre = ({ utvalg, artskartModel }) => {
   const inputRef = useRef(null);
   useEffect(() => inputRef.current.focus(), []);
   return (
@@ -32,27 +32,27 @@ const Artskartparametre = ({ utvalg }) => {
       <Xcomp.Number
         label="Fra og med år"
         width="5em"
-        // observableValue={[utvalg, "observationFromYear"]}
-        observableValue={[utvalg, "AOOyear1"]}
+        observableValue={[artskartModel, "observationFromYear"]}
+        // observableValue={[utvalg, "AOOyear1"]}
         integer
         yearRange
       />
       <Xcomp.Number
         label="Til og med år"
         width="5em"
-        // observableValue={[utvalg, "observationToYear"]}
-        observableValue={[utvalg, "AOOyear2"]}
+        observableValue={[artskartModel, "observationToYear"]}
+        // observableValue={[utvalg, "AOOyear2"]}
         integer
         yearRange
       />
 
-      <Xcomp.Bool label="I Norge" observableValue={[utvalg, "includeNorge"]}/>
-      <Xcomp.Bool label="På Svalbard" observableValue={[utvalg, "includeSvalbard"]}/>
+      <Xcomp.Bool label="I Norge" observableValue={[artskartModel, "includeNorge"]}/>
+      <Xcomp.Bool label="På Svalbard" observableValue={[artskartModel, "includeSvalbard"]}/>
       <hr/>
-      <Xcomp.Bool label="ekskluder funn uten belegg" observableValue={[utvalg, "excludeObjects"]}/>
+      <Xcomp.Bool label="ekskluder funn uten belegg" observableValue={[artskartModel, "excludeObjects"]}/>
       {/* <Xcomp.Bool label="objekter" observableValue={[utvalg, "includeObjects"]}/>
       <Xcomp.Boollabel="observasjoner" observableValue={[utvalg, "includeObservations"]}/> */}
-      <Xcomp.Bool label="ekskluder GBIF-noder utenfor Norge" observableValue={[utvalg, "excludeGbif"]}/>
+      <Xcomp.Bool label="ekskluder GBIF-noder utenfor Norge" observableValue={[artskartModel, "excludeGbif"]}/>
     </div>
   );
 };

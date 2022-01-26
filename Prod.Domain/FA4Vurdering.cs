@@ -1487,12 +1487,9 @@ public partial class FA4 // (3.2) Artsegenskaper
     {
         public int ObservationFromYear { get; set; }
         public int ObservationToYear { get; set; }
-        public int FromMonth { get; set; }
-        public int ToMonth { get; set; }
-        public bool IncludeObjects { get; set; }
-        public bool IncludeObservations { get; set; }
         public bool IncludeNorge { get; set; }
         public bool IncludeSvalbard { get; set; }
+        public bool ExcludeObjects { get; set; }
         public bool ExcludeGbif { get; set; }
     }
 
