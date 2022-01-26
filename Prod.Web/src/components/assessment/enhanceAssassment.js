@@ -191,7 +191,7 @@ export default function enhanceAssessment(json, appState) {
                 ? "AssessedDoorknocker"
                 : "WillNotBeRiskAssessed"*/
 
-                assessment.isAlienSpecies && assessment.connectedToAnother && assessment.alienSpecieUncertainIfEstablishedBefore1800String 
+                /*(assessment.isAlienSpecies && !assessment.connectedToAnother && !assessment.alienSpecieUncertainIfEstablishedBefore1800String) 
                 ? assessment.alienSpeciesCategory == "DoorKnocker"
                 ? "AssessedDoorknocker" 
                 : (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3") 
@@ -201,7 +201,22 @@ export default function enhanceAssessment(json, appState) {
                 ? "AssessedSelfReproducing" // todo: check this
                 : "WillNotBeRiskAssessed" 
                 : "WillNotBeRiskAssessed"
+                : ""*/
+
+                (!assessment.isAlienSpecies || assessment.connectedToAnother || assessment.alienSpecieUncertainIfEstablishedBefore1800) 
+                ? "WillNotBeRiskAssessed"
+                : (assessment.isAlienSpecies && !assessment.connectedToAnother && !assessment.alienSpecieUncertainIfEstablishedBefore1800)
+                ? assessment.alienSpeciesCategory == "DoorKnocker"
+                ? "AssessedDoorknocker" 
+                : assessment.speciesStatus != "" 
+                ? (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3")
+
+                //? (assessment.alienSpeciesCategory == "AlienSpecie" || assessment.alienSpeciesCategory == "RegionallyAlien") // todo: check this
+                ? "AssessedSelfReproducing"
+                : ""
                 : "WillNotBeRiskAssessed"
+                //: "WillNotBeRiskAssessed"
+                : ""
 
             return result
         },

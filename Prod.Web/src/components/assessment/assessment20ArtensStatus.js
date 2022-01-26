@@ -415,7 +415,8 @@ checkStatus = (production) => {
                     </div> : null }
                     </fieldset>
                     
-                    {((assessment.isAlienSpeciesString == 'true' || assessment.isAlienSpeciesString == 'false') && assessment.speciesStatus != null) &&
+                    {/*((assessment.isAlienSpeciesString == 'true' || assessment.isAlienSpeciesString == 'false') && assessment.speciesStatus != null) &&*/}
+                    {assessment.assessmentConclusion != "" &&
                         <fieldset className="well">
                                         
 
