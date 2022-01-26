@@ -170,6 +170,8 @@ export default class Artskart extends React.Component {
             "features": []
         }
 
+        // console.log('getInfoFromArtskart', resultat);
+
         loadDataFromUrl(newurl, data => {
             resultat.loadProgress += 1
             resultat.observations = data

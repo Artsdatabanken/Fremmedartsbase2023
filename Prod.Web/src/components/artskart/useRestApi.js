@@ -1,14 +1,23 @@
 import React, { useState, useEffect } from "react";
 
 // Restful GET => JSON
-const useRestApi = (url, onComplete) => {
+const useRestApi = (url, data, onComplete) => {
   const [status, setStatus] = useState({});
 
   useEffect(() => {
     const abortController = new AbortController();
     async function download(url) {
       setStatus({ isLoading: true });
-      const response = await fetch(url);
+      const params = data
+        ? {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          }
+        : undefined;
+      const response = await fetch(url, params);
       if (response.status !== 200)
         return setStatus({
           error: { http: response.status, message: response.error }

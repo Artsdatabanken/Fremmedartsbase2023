@@ -36,6 +36,7 @@ const RedigerbartKart = ({
     artskartAdded,
     artskartRemoved,
     showWaterAreas,
+    artskartWaterModel,
   });
   
   // console.log('RedigerbartKart', artskartAdded, artskartRemoved, taxonId, scientificNameId);

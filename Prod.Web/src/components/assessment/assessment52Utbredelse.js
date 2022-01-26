@@ -63,7 +63,6 @@ export default class Assessment52Utbredelse extends React.Component {
                     .map(x => x.globalId);
                 }
             }
-            console.log('assessment.artskartModel', assessment.artskartModel)
             if (assessment.artskartModel) {
                 const getValue = (value) => {
                     return value !== undefined ? value : undefined;
@@ -76,15 +75,7 @@ export default class Assessment52Utbredelse extends React.Component {
                 assessment.excludeObjects = getValue(assessment.excludeObjects);
                 assessment.excludeGbif = getValue(assessment.excludeGbif);
             } else {
-                assessment.artskartModel = {
-                    // observationFromYear: undefined,
-                    // observationToYear: undefined,
-                    // includeObjects: undefined,
-                    // includeNorge: undefined,
-                    // includeSvalbard: undefined,
-                    // excludeObjects: undefined,
-                    // excludeGbif: undefined
-                };
+                assessment.artskartModel = {};
             }
         }
     }
