@@ -177,7 +177,7 @@ export default function enhanceAssessment(json, appState) {
         },
         get assessmentConclusion() {
             const result = 
-                assessment.connectedToAnother
+               /* assessment.connectedToAnother
                 ? "WillNotBeRiskAssessed"
                 : assessment.alienSpeciesCategory == "AlienSpecie"
                 ? "AssessedSelfReproducing"
@@ -185,7 +185,20 @@ export default function enhanceAssessment(json, appState) {
                 ? "AssessedSelfReproducing" // todo: check this
                 : assessment.alienSpeciesCategory == "DoorKnocker"
                 ? "AssessedDoorknocker"
+                : "WillNotBeRiskAssessed"*/
+
+                assessment.isAlienSpecies && assessment.connectedToAnother && assessment.alienSpecieUncertainIfEstablishedBefore1800String 
+                ? assessment.alienSpeciesCategory == "DoorKnocker"
+                ? "AssessedDoorknocker" 
+                : (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3") 
+                ? assessment.alienSpeciesCategory == "AlienSpecie"
+                ? "AssessedSelfReproducing"
+                : assessment.alienSpeciesCategory == "RegionallyAlien"
+                ? "AssessedSelfReproducing" // todo: check this
+                : "WillNotBeRiskAssessed" 
                 : "WillNotBeRiskAssessed"
+                : "WillNotBeRiskAssessed"
+
             return result
         },
         get category() {
