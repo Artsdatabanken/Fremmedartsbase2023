@@ -1,6 +1,6 @@
 ﻿import React from 'react'
 import {PropTypes} from 'prop-types';
-import { action, isObservable } from 'mobx'
+import { action, isObservable, observable } from 'mobx'
 import { Observer } from 'mobx-react'
 
 import {UserContext} from './components'
@@ -88,6 +88,22 @@ function filterDisplay(obj, prop, yearRange) {
   return ''
 }
 
+function getErrorMsgs(observableErrors) {
+  if(!observableErrors) {
+    return null
+  }
+  const errorKeys = observableErrors.slice(1)
+  const errorhandler = observableErrors[0]
+  const errors = []
+  for(const key of errorKeys) {
+    console.log("#%% errorkey: " + key + " value: " + errorhandler.errors[key])
+    if(errorhandler.errors[key]) {
+      errors.push(errorhandler.errors[key])
+    }
+  }
+  return errors
+}
+
 function filterNumericInput(s, integer = false) {
   let r = ''
   const digits = '0123456789'
@@ -117,7 +133,7 @@ function filterNumericInput(s, integer = false) {
 const ObservableNumber = (props) => <Observer>{() => {
   const context = UserContext.getContext()
   
-  const { observableValue, validate, integer, label, width, disabled, displayed, className, yearRange } = props
+  const { observableValue, observableErrors, validate, integer, label, width, disabled, displayed, className, yearRange } = props
   const [obj, prop] = observableValue
   // const obstype = typeof(obj[prop])
   //console.log("obstype (" + prop + "):" + obstype + "  value: " + obj[prop])
@@ -125,6 +141,13 @@ const ObservableNumber = (props) => <Observer>{() => {
   const hasLabel = !!label
   const isInvalid =
     validate && typeof validate === 'function' && !validate(obj[prop])
+
+
+  const errors = getErrorMsgs(observableErrors)
+  if(errors !== null) {
+      console.log("#%%hasErrors: " + errors.length)
+  }
+
 
 //  console.log("context: " + JSON.stringify(context) + "#" +  isObservable(context))
   return (
