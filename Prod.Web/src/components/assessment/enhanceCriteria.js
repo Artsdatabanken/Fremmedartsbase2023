@@ -123,33 +123,66 @@ function d1(num) {
 }
 
 const errorhandler = {
-    errors: {},
+    _errobjs: [],
+    // errors: {},
     get hasErrors() {
         return Object.keys(this.errors).length > 0
     },
-    addError(id, errorText) {
-        if(typeof(id) !== 'string' || typeof(errorText) !== 'string' ) {
-            console.warn("addError wrong data type")
+    // addError(id, errorText) {
+    //     if(typeof(id) !== 'string' || typeof(errorText) !== 'string' ) {
+    //         console.warn("addError wrong data type")
 
-        }
-        if (!(id in this.errors)) {
-            runInAction(() => {
-                // set(this.errors, id)
-                this.errors[id] = errorText
-            })
+    //     }
+    //     if (!(id in this.errors)) {
+    //         runInAction(() => {
+    //             // set(this.errors, id)
+    //             this.errors[id] = errorText
+    //         })
+    //     }
+    // },
+    // removeError(id) {
+    //     if(typeof(id) !== 'string') {
+    //         console.warn("removeError wrong data type")
+    //     }
+    //     if (id in this.errors) {
+    //         runInAction(() => {
+    //             // this.errors[id] = undefined
+    //             remove(this.errors, id)
+    //         })
+    //     }
+    // },
+    addErrors(errobjarr) {
+        for(const errobj of errobjarr) {
+            this._errobjs.push(errobj)
         }
     },
-    removeError(id) {
-        if(typeof(id) !== 'string') {
-            console.warn("removeError wrong data type")
+    get errors() {
+        const result = {}
+        for(const errobj of this._errobjs) {
+            if(errobj.cond) {
+                result[errobj.id] = errobj.msg
+            }
         }
-        if (id in this.errors) {
-            runInAction(() => {
-                // this.errors[id] = undefined
-                remove(this.errors, id)
-            })
-        }
-    }
+        return result
+    },
+    // addError3(errobj2) {
+    //     const errobj = observable(errobj2)
+    //     const {id, cond, msg} = errobj
+    //     if(cond) {
+    //         if (!(id in this.errors)) {
+    //             runInAction(() => {
+    //                 this.errors[id] = msg
+    //             })
+    //         }
+    //     } else {
+    //         if (id in this.errors) {
+    //             runInAction(() => {
+    //                 remove(this.errors, id)
+    //             })
+    //         }
+    //     }
+    // }
+
 }
 
 function uncertaintyArray(low, high) {
@@ -616,102 +649,76 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
     })
 
 
-    autorun(() => {
-        if (r.AOOtotalBest === 0) {
-            r.addError("(a)err1", "En selvstendig reproduserende art må ha et forekomstareal på minst 4_km²!")
-        } else {
-            r.removeError("(a)err1")
-        }
-    })
 
-    autorun(() => {
-        if (r.AOOtotalLow > r.AOOtotalBest) {
-            r.addError("(a)err2", "Det nedre anslaget på forekomstarealet kan ikke være større enn det beste anslaget!")
-        } else {
-            r.removeError("(a)err2")
-        }
-    })
-
-    autorun(() => {
-        if (r.AOOtotalHigh < r.AOOtotalBest) {
-            r.addError("(a)err3", "Det øvre anslaget på forekomstarealet kan ikke være mindre enn det beste anslaget!")
-        } else {
-            r.removeError("(a)err3")
-        }
-    })
-
-    autorun(() => {
-        if (r.AOO50yrLow > r.AOO50yrBest) {
-            r.addError("(a)err4", "Det nedre anslaget på forekomstarealet kan ikke være større enn det beste anslaget!")
-        } else {
-            r.removeError("(a)err4")
-        }
-    })
-
-    autorun(() => {
-        if (r.AOO50yrHigh < r.AOO50yrBest) {
-            r.addError("(a)err5", "Det øvre anslaget på forekomstarealet kan ikke være mindre enn det beste anslaget!")
-        } else {
-            r.removeError("(a)err5")
-        }
-    })
-    autorun(() => {
-        if (r.AOOtotalBest < r.AOOknown) {
-            r.addError("(a)err6", "Det beste anslaget på det totale nåværende forekomstarealet kan ikke være mindre enn det kjente!")
-        } else {
-            r.removeError("(a)err6")
-        }
-    })
-
-    autorun(() => {
-        if (r.Occurrences1Low > r.Occurrences1Best) {
-            r.addError("(b)err1", "Det nedre anslaget på antall forekomster kan ikke være større enn det beste anslaget!")
-        } else {
-            r.removeError("(b)err1")
-        }
-    })
-
-    autorun(() => {
-        if (r.Occurrences1High < r.Occurrences1Best) {
-            r.addError("(b)err2", "Det øvre anslaget på antall forekomster kan ikke være mindre enn det beste anslaget!")
-        } else {
-            r.removeError("(b)err2")
-        }
-    })
-
+    r.addErrors([{
+        id: "(a)err1", 
+        get cond() {r.AOOtotalBest === 0},
+        msg: "En selvstendig reproduserende art må ha et forekomstareal på minst 4_km²!"
+    },
+    {
+        id: "(a)err2", 
+        get cond() {return r.AOOtotalLow > r.AOOtotalBest},
+        msg: "Det nedre anslaget på forekomstarealet kan ikke være større enn det beste anslaget!"
+    },
+    {
+        id: "(a)err3", 
+        get cond() {return r.AOOtotalHigh < r.AOOtotalBest},
+        msg: "Det øvre anslaget på forekomstarealet kan ikke være mindre enn det beste anslaget!"
+    },
+    {
+        id: "(a)err4", 
+        get cond() {return r.AOO50yrLow > r.AOO50yrBest},
+        msg: "Det nedre anslaget på forekomstarealet kan ikke være større enn det beste anslaget!"
+    },
+    {
+        id: "(a)err5", 
+        get cond() {return r.AOO50yrHigh < r.AOO50yrBest},
+        msg: "Det øvre anslaget på forekomstarealet kan ikke være mindre enn det beste anslaget!"
+    },
+    {
+        id: "(a)err6", 
+        get cond() {return r.AOOtotalBest < r.AOOknown},
+        msg: "Det beste anslaget på det totale nåværende forekomstarealet kan ikke være mindre enn det kjente!"
+    },
+    {
+        id: "(b)err1", 
+        get cond() {return r.Occurrences1Low > r.Occurrences1Best},
+        msg: "Det nedre anslaget på antall forekomster kan ikke være større enn det beste anslaget!"
+    },
+    {
+        id: "(b)err2", 
+        get cond() {return r.Occurrences1High < r.Occurrences1Best},
+        msg: "Det øvre anslaget på antall forekomster kan ikke være mindre enn det beste anslaget!"
+    },
+    {
+        id: "A3err1", 
+        get cond() {return r.lifetimeLowerQ > r.medianLifetime},
+        msg: "Levetidens nedre kvartil må være mindre enn medianen."
+    },
+    {
+        id: "A3err2", 
+        get cond() {return r.LifetimeUpperQ <= r.medianLifetime},
+        msg: "Levetidens øvre kvartil må være større enn medianen."
+    },
+    {
+        id: "B1err1", 
+        get cond() {return r.expansionLowerQ > r.expansionSpeed},
+        msg: "Ekspansjonshastighetens nedre kvartil må være mindre enn medianen."
+    },
+    {
+        id: "B1err2", 
+        get cond() {return r.expansionUpperQ <= r.expansionSpeed},
+        msg: "Ekspansjonshastighetens øvre kvartil må være større enn medianen."
+    }])
 
 
-    autorun(() => {
-        if (r.lifetimeLowerQ > r.medianLifetime) {
-            r.addError("A3err1", "Levetidens nedre kvartil må være mindre enn medianen.")
-        } else {
-            r.removeError("A3err1")
-        }
-    })
-
-    autorun(() => {
-        if (r.LifetimeUpperQ <= r.medianLifetime) {
-            r.addError("A3err2", "Levetidens nedre kvartil må være mindre enn medianen.")
-        } else {
-            r.removeError("A3err2")
-        }
-    })
-
-    autorun(() => {
-        if (r.expansionLowerQ > r.expansionSpeed) {
-            r.addError("B1err1", "Ekspansjonshastighetens nedre kvartil må være mindre enn medianen.")
-        } else {
-            r.removeError("B1err1")
-        }
-    })
-
-    autorun(() => {
-        if (r.expansionUpperQ <= r.expansionSpeed) {
-            r.addError("B1err2", "Ekspansjonshastighetens øvre kvartil må være større enn medianen.")
-        } else {
-            r.removeError("B1err2")
-        }
-    })
+    // autorun(() => {
+    //     if (r.expansionUpperQ <= r.expansionSpeed) {
+    //         r.addError("B1err2", "Ekspansjonshastighetens øvre kvartil må være større enn medianen.")
+    //     } else {
+    //         r.removeError("B1err2")
+    //     }
+    // })
 
     // const ec = observable({
     //     warnings: [],
