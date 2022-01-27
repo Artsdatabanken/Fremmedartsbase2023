@@ -160,6 +160,7 @@ const ObservableNumber = (props) => <Observer>{() => {
         <input
           className="form-control"
           disabled={context.readonly|| disabled }
+          style={{backgroundColor: (errors !== null && errors.length > 0) ? 'red' : 'white' }}
           name={prop}
           value={displayed ? displayed : filterDisplay(obj, prop, yearRange)}
           // disabled={(context.readonly && !auth.isAdmin)|| disabled } // SAH tok bort 14.12.2021 - duplett av den over og auth er ikke tilgjengelig
