@@ -79,13 +79,14 @@ export default class DistributionTable extends React.Component {
                 <td>
                 <Xcomp.Number                            
                     observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "occurrences1Low"] : [assessment.riskAssessment, "AOOtotalLow"]}
-                    observableErrors={assessment.alienSpeciesCategory == "DoorKnocker" ? [errorhandler, "B1err1", "(b)err1"] : [errorhandler, "(a)err4", "(a)err2" ]}
+                    observableErrors={assessment.alienSpeciesCategory == "DoorKnocker" ? [errorhandler, "(b)err1"] : [errorhandler, "(a)err2" ]}
                     disabled={disabled}
                     integer />   
                 </td>                
                 <td>
                 <Xcomp.Number                            
                     observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "occurrences1Best"] :[assessment.riskAssessment, "AOOtotalBest"]}
+                    observableErrors={assessment.alienSpeciesCategory == "DoorKnocker" ? [errorhandler, "(b)err1", "(b)err2"] : [errorhandler, "(a)err2", "(a)err3" ]}
                     disabled={disabled}
                     integer
                    // onChange={action (() => assessment.horizonEstablismentPotential == 1 && assessment.riskAssessment.AOOtotalBest != 1 ? alert("Dette stemmer ikke overens med vurdering på horisontskanningen. Er du sikker på at du vil endre?") : null)} 
@@ -95,6 +96,7 @@ export default class DistributionTable extends React.Component {
                <td>
                <Xcomp.Number                            
                     observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "occurrences1High"] :[assessment.riskAssessment, "AOOtotalHigh"]}
+                    observableErrors={assessment.alienSpeciesCategory == "DoorKnocker" ? [errorhandler, "(b)err2"] : [errorhandler, "(a)err3" ]}
                     disabled={disabled}
                     integer />   
                 </td>
