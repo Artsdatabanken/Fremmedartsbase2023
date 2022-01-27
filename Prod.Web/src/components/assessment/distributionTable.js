@@ -1,11 +1,13 @@
 import React from 'react'
-import config from '../../config';
+// import config from '../../config';
 import {observer, inject} from 'mobx-react'
-import {action} from 'mobx'
+// import {action} from 'mobx'
 import * as Xcomp from './observableComponents'
-import Tabs from '../tabs'
-import Assessment51Naturtyper from './assessment51Naturtyper'
-import UtbredelseshistorikkInnenlands from './35Utbredelseshistorikk/UtbredelseshistorikkInnenlands'
+import errorhandler from '../errorhandler';
+
+// import Tabs from '../tabs'
+// import Assessment51Naturtyper from './assessment51Naturtyper'
+// import UtbredelseshistorikkInnenlands from './35Utbredelseshistorikk/UtbredelseshistorikkInnenlands'
 @inject('appState')
 @observer
 export default class DistributionTable extends React.Component {
@@ -77,6 +79,7 @@ export default class DistributionTable extends React.Component {
                 <td>
                 <Xcomp.Number                            
                     observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "occurrences1Low"] : [assessment.riskAssessment, "AOOtotalLow"]}
+                    observableErrors={assessment.alienSpeciesCategory == "DoorKnocker" ? [errorhandler, "B1err1", "(b)err1"] : [errorhandler, "(a)err4", "(a)err2" ]}
                     disabled={disabled}
                     integer />   
                 </td>                
@@ -170,7 +173,9 @@ export default class DistributionTable extends React.Component {
             <td>
             <Xcomp.Number                            
                 observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "AOO10yrLow"] : [assessment.riskAssessment, "AOO50yrLow"]}
-                disabled={disabled}
+                // observableError={assessment.alienSpeciesCategory == "DoorKnocker" ? [errorhandler, "B1err1"] : [errorhandler, "(a)err4"]}
+                // disabled={disabled}
+                disabled={true}
                 integer 
                 />   
             </td>            
@@ -185,7 +190,8 @@ export default class DistributionTable extends React.Component {
            <td>
            <Xcomp.Number                            
                 observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "AOO10yrHigh"] :[assessment.riskAssessment, "AOO50yrHigh"]}
-                disabled={disabled}
+                // disabled={disabled}
+                disabled={true}
                 integer 
                 />   
           </td>
