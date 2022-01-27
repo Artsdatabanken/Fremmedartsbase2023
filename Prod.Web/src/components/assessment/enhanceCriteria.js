@@ -165,9 +165,9 @@ function findUncertainityAbove (levels, level){
     return uncertainityAbove == 0 ? "" : uncertainityAbove
 }
 
-function enhanceRiskAssessmentAddErrorReportingHandler(riskAssessment) {
-        extendObservable(riskAssessment, errorhandler)
-}
+// function enhanceRiskAssessmentAddErrorReportingHandler(riskAssessment) {
+//         extendObservable(riskAssessment, errorhandler)
+// }
 
 
 
@@ -586,9 +586,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 
     })
 
-
-
-    r.addErrors([{
+    errorhandler.addErrors([{
         id: "(a)err1", 
         get cond() {r.AOOtotalBest === 0},
         msg: "En selvstendig reproduserende art må ha et forekomstareal på minst 4_km²!"
@@ -1306,16 +1304,16 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
 
 }
 
-function enhanceCriteriaAddErrorReportingForAutoMode(riskAssessment) {
-    for(const crit of riskAssessment.criteria) {
-        extendObservable(crit, errorhandler)
-    }
-}
+// function enhanceCriteriaAddErrorReportingForAutoMode(riskAssessment) {
+//     for(const crit of riskAssessment.criteria) {
+//         extendObservable(crit, errorhandler)
+//     }
+// }
 
 
 export default function enhanceCriteria(riskAssessment, vurdering, codes, labels, artificialAndConstructedSites) {
-    enhanceRiskAssessmentAddErrorReportingHandler(riskAssessment)
-    enhanceCriteriaAddErrorReportingForAutoMode(riskAssessment)
+    // enhanceRiskAssessmentAddErrorReportingHandler(riskAssessment)
+    // enhanceCriteriaAddErrorReportingForAutoMode(riskAssessment)
     enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering, artificialAndConstructedSites)
     enhanceRiskAssessmentLevel(riskAssessment, labels)
     enhanceCriteriaAddLabelsAndAuto(riskAssessment, codes)
