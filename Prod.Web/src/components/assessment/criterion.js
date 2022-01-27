@@ -132,13 +132,13 @@ export default class Criterion extends React.Component {
                         />
                         {kode.text}
                     </div>
-                    <div>
+                    {/* <div>
                         <ul>
                         {Object.keys(errors).map(key =>
                             <li>{errors[key]}</li>
                         )}
                         </ul>
-                    </div>
+                    </div> */}
                 
                 </div>})} 
                {/*!hasImpactAbroad && <Xcomp.Button primary onClick= {() => {
