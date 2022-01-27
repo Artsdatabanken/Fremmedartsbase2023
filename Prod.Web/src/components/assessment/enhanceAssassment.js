@@ -162,7 +162,7 @@ export default function enhanceAssessment(json, appState) {
                 ! assessment.isAlienSpecies
                 ? "NotAlienSpecie"
                 : assessment.alienSpecieUncertainIfEstablishedBefore1800
-                ? "NotAlienSpecie"
+                ? "UncertainBefore1800"
                 // : !assessment.horizonDoAssessment
                 // ? "NotDefined1"
                 : !assessment.speciesStatus
@@ -174,9 +174,6 @@ export default function enhanceAssessment(json, appState) {
                 : assessment.speciesStatus.startsWith("C2") || assessment.speciesStatus.startsWith("C3")
                 ? "AlienSpecie"
                 : "DoorKnocker"
-
-                // "EcoEffectWithoutEstablishment"
-
             return result
         },
         get assessmentConclusion() {
@@ -203,20 +200,54 @@ export default function enhanceAssessment(json, appState) {
                 : "WillNotBeRiskAssessed"
                 : ""*/
 
-                (!assessment.isAlienSpecies || assessment.connectedToAnother || assessment.alienSpecieUncertainIfEstablishedBefore1800) 
-                ? "WillNotBeRiskAssessed"
-                : (assessment.isAlienSpecies && !assessment.connectedToAnother && !assessment.alienSpecieUncertainIfEstablishedBefore1800)
-                ? assessment.alienSpeciesCategory == "DoorKnocker"
-                ? "AssessedDoorknocker" 
-                : assessment.speciesStatus != "" 
-                ? (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3")
+                // (!assessment.isAlienSpecies || assessment.connectedToAnother || assessment.alienSpecieUncertainIfEstablishedBefore1800) 
+                // ? "WillNotBeRiskAssessed"
+                // : (assessment.isAlienSpecies && !assessment.connectedToAnother && !assessment.alienSpecieUncertainIfEstablishedBefore1800)
+                // ?   assessment.alienSpeciesCategory == "DoorKnocker"
+                // ? "AssessedDoorknocker" 
+                // : assessment.speciesStatus != "" 
+                // ? (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3")
 
-                //? (assessment.alienSpeciesCategory == "AlienSpecie" || assessment.alienSpeciesCategory == "RegionallyAlien") // todo: check this
+                // //? (assessment.alienSpeciesCategory == "AlienSpecie" || assessment.alienSpeciesCategory == "RegionallyAlien") // todo: check this
+                // ? "AssessedSelfReproducing"
+                // : ""
+                // : "WillNotBeRiskAssessed"
+                // //: "WillNotBeRiskAssessed"
+                // : ""
+
+                // (!assessment.isAlienSpecies || assessment.connectedToAnother || assessment.alienSpecieUncertainIfEstablishedBefore1800) 
+                // ? "WillNotBeRiskAssessed"
+                // : !(!assessment.connectedToAnother && !assessment.alienSpecieUncertainIfEstablishedBefore1800)
+                // ? ""
+                // : assessment.alienSpeciesCategory == "DoorKnocker"
+                // ? "AssessedDoorknocker" 
+                // : assessment.alienSpeciesCategory == "NotDefined"
+                // ? "NotDecided"
+                // : assessment.alienSpeciesCategory == "AlienSpecie"
+                // ? "AssessedSelfReproducing"
+                // : ""
+
+                !assessment.isAlienSpecies 
+                ? "WillNotBeRiskAssessed"
+                : assessment.connectedToAnother 
+                ? "WillNotBeRiskAssessed"
+                : assessment.alienSpeciesCategory == "UncertainBefore1800"
+                ? "WillNotBeRiskAssessed"
+                : assessment.alienSpeciesCategory == "NotDefined"
+                ? "NotDecided"
+                : assessment.alienSpeciesCategory == "DoorKnocker"
+                ? "AssessedDoorknocker" 
+                : assessment.alienSpeciesCategory == "AlienSpecie"
                 ? "AssessedSelfReproducing"
-                : ""
+                : assessment.alienSpeciesCategory == "RegionallyAlien"
+                ? "AssessedSelfReproducing"
+                : assessment.alienSpeciesCategory == "EffectWithoutReproduction"
+                ? "WillNotBeRiskAssessed"
+
                 : "WillNotBeRiskAssessed"
-                //: "WillNotBeRiskAssessed"
-                : ""
+
+
+
 
             return result
         },
