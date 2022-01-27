@@ -618,12 +618,12 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
     },
     {
         id: "(b)err1", 
-        get cond() {return r.Occurrences1Low > r.Occurrences1Best},
+        get cond() {return r.occurrences1Low > r.occurrences1Best},
         msg: "Det nedre anslaget på antall forekomster kan ikke være større enn det beste anslaget!"
     },
     {
         id: "(b)err2", 
-        get cond() {return r.Occurrences1High < r.Occurrences1Best},
+        get cond() {return r.occurrences1High < r.occurrences1Best},
         msg: "Det øvre anslaget på antall forekomster kan ikke være mindre enn det beste anslaget!"
     },
     {
@@ -633,7 +633,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
     },
     {
         id: "A3err2", 
-        get cond() {return r.LifetimeUpperQ <= r.medianLifetime},
+        get cond() {return r.lifetimeUpperQ <= r.medianLifetime},
         msg: "Levetidens øvre kvartil må være større enn medianen."
     },
     {
