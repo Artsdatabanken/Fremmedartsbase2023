@@ -90,13 +90,13 @@ function filterDisplay(obj, prop, yearRange) {
 
 function getErrorMsgs(observableErrors) {
   if(!observableErrors) {
-    return null
+    return null // todo: change to [] when component error handling is complete
   }
   const errorKeys = observableErrors.slice(1)
   const errorhandler = observableErrors[0]
   const errors = []
   for(const key of errorKeys) {
-    console.log("#%% errorkey: " + key + " value: " + errorhandler.errors[key])
+    // console.log("#%% errorkey: " + key + " value: " + errorhandler.errors[key])
     if(errorhandler.errors[key]) {
       errors.push(errorhandler.errors[key])
     }
@@ -145,7 +145,10 @@ const ObservableNumber = (props) => <Observer>{() => {
 
   const errors = getErrorMsgs(observableErrors)
   if(errors !== null) {
-      console.log("#%%hasErrors: " + errors.length)
+      console.log("#%% - " + prop)
+      for(const msg of errors) {
+        console.log("#%%Error: " + msg)
+      }
   }
 
 
