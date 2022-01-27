@@ -68,7 +68,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                         ? <fieldset className="well">
                             <h4>{"Feilrapport"}</h4>
                             <ul>
-                            {Object.keys(errorhandler.errors).sort().map(key => <li key={key}><b style={{ color: 'red' }}>{errorhandler.errors[key]}</b></li> )}
+                            {Object.keys(errorhandler.errors).sort().filter(key => errorhandler.errors[key] !== null).map(key => <li key={key}><b style={{ color: 'red' }}>{errorhandler.errors[key]}</b></li> )}
                             </ul>
                         </fieldset>
                         : null
