@@ -3,6 +3,7 @@ import RiskLevel from './riskLevel';
 import {extractFloat, getCriterion} from '../../utils'
 import { EventNote } from '@material-ui/icons';
 import config from '../../config';
+import errorhandler from '../errorhandler';
 import { JsonHubProtocol } from '@microsoft/signalr';
 
 function round(num){return Math.round(num)}
@@ -120,69 +121,6 @@ function d1(num) {
     return num === null || num === 0
         ? 1
         : num
-}
-
-const errorhandler = {
-    _errobjs: [],
-    // errors: {},
-    get hasErrors() {
-        return Object.keys(this.errors).length > 0
-    },
-    // addError(id, errorText) {
-    //     if(typeof(id) !== 'string' || typeof(errorText) !== 'string' ) {
-    //         console.warn("addError wrong data type")
-
-    //     }
-    //     if (!(id in this.errors)) {
-    //         runInAction(() => {
-    //             // set(this.errors, id)
-    //             this.errors[id] = errorText
-    //         })
-    //     }
-    // },
-    // removeError(id) {
-    //     if(typeof(id) !== 'string') {
-    //         console.warn("removeError wrong data type")
-    //     }
-    //     if (id in this.errors) {
-    //         runInAction(() => {
-    //             // this.errors[id] = undefined
-    //             remove(this.errors, id)
-    //         })
-    //     }
-    // },
-    addErrors(errobjarr) {
-        for(const errobj of errobjarr) {
-            this._errobjs.push(errobj)
-        }
-    },
-    get errors() {
-        const result = {}
-        for(const errobj of this._errobjs) {
-            if(errobj.cond) {
-                result[errobj.id] = errobj.msg
-            }
-        }
-        return result
-    },
-    // addError3(errobj2) {
-    //     const errobj = observable(errobj2)
-    //     const {id, cond, msg} = errobj
-    //     if(cond) {
-    //         if (!(id in this.errors)) {
-    //             runInAction(() => {
-    //                 this.errors[id] = msg
-    //             })
-    //         }
-    //     } else {
-    //         if (id in this.errors) {
-    //             runInAction(() => {
-    //                 remove(this.errors, id)
-    //             })
-    //         }
-    //     }
-    // }
-
 }
 
 function uncertaintyArray(low, high) {
@@ -710,19 +648,6 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         get cond() {return r.expansionUpperQ <= r.expansionSpeed},
         msg: "Ekspansjonshastighetens øvre kvartil må være større enn medianen."
     }])
-
-
-    // autorun(() => {
-    //     if (r.expansionUpperQ <= r.expansionSpeed) {
-    //         r.addError("B1err2", "Ekspansjonshastighetens øvre kvartil må være større enn medianen.")
-    //     } else {
-    //         r.removeError("B1err2")
-    //     }
-    // })
-
-    // const ec = observable({
-    //     warnings: [],
-    // })
 
     const ACriteriaSectionNames = [
         "LifespanA1aSimplifiedEstimate", // changed from  "SpreadPVAAnalysisEstimatedSpeciesLongevity" 11.07.21
