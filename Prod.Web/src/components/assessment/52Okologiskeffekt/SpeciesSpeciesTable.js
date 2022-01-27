@@ -135,7 +135,7 @@ const SpeciesSpeciesTable = observer((props) =>
                         </div> :
                         <Xcomp.String className={props.HCrit ? "HCrit" : ""}  disabled={disabled} observableValue={[props.newItem, 'taxonSearchString']} placeholder={labels.General.searchSpecies} />}
                         {props.newItem.taxonSearchResult.length > 0 ?
-                        <div className="speciesSearchList" style={{position: 'absolute', top: "36px", left:"15px"}}>
+                        <div className="speciesSearchList" style={{position: 'absolute', top: "36px"}}>
                             <ul className="panel list-unstyled">
                             {props.newItem.taxonSearchResult.map(item =>
                                 <li onClick={action(e => {
