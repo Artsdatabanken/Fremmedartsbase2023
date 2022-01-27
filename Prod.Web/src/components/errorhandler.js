@@ -1,5 +1,4 @@
 import {observable} from 'mobx';
-
 const errorhandler = observable({
     _errobjs: [],
     get hasErrors() {
@@ -19,5 +18,14 @@ const errorhandler = observable({
         }
         return result
     },
+    get errorsMsg() {
+        const result = []
+        const keys = Object.keys(errors)
+        const okeys = keys.sort()
+        for(const key of okeys) {
+            result.add(this.errors[key])
+        }
+        return result
+    }
 })
 export default errorhandler
