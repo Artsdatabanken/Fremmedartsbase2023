@@ -20,9 +20,9 @@ export default class NaturetypeSelector extends React.Component {
             nnt.name = naturtypekode.Text
             nnt.timeHorizon = null
             nnt.colonizedArea = null
-            // nnt.stateChange.clear()
+            nnt.stateChange.clear()
             nnt.affectedArea = null
-            // nnt.background.clear()
+            nnt.background.clear()
             props.showModal()
         })
 
