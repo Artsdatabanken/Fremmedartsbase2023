@@ -202,6 +202,7 @@ const ListeLegend = ({ index }) => {
         width={21}
         height={21}
         size={16}
+        showRect={true}
       ></LegendItem>
     </div>
   );

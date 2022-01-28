@@ -1,7 +1,8 @@
 import React from "react";
 
-const LegendItem = ({ title, tooltip, fill, x, y, width, height, size }) => (
-  <svg x={x} y={y} width={width} height={height}>
+const LegendItem = ({ title, tooltip, showRect, fill, x, y, width, height, size }) => (
+  <svg x={x} y={y} width={width} height={height} showRect={showRect}>
+    {showRect &&
     <rect
       width={size}
       height={size}
@@ -12,6 +13,7 @@ const LegendItem = ({ title, tooltip, fill, x, y, width, height, size }) => (
         filter: "url(#f1)"
       }}
     ></rect>
+    }
     <text fontSize={size} x={1.5 * size} y={size*0.85}>
       {title}
     </text>
