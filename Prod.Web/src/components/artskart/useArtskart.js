@@ -43,6 +43,7 @@ const useArtskart = ({
   artskartAdded,
   artskartRemoved,
   showWaterAreas,
+  artskartModel,
   artskartWaterModel,
 }) => {
   const [observations, setObservations] = React.useState({
@@ -55,6 +56,7 @@ const useArtskart = ({
     scientificNameId,
     selectionGeometry,
     kriterier,
+    artskartModel,
     showWaterAreas,
     observations,
   );

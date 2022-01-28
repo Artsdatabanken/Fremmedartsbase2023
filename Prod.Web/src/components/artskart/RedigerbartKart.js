@@ -5,6 +5,7 @@ import useArtskart from "./useArtskart";
 import * as Xcomp from "../observableComponents";
 
 const RedigerbartKart = ({
+  artskartModel,
   showWaterAreas,
   artskartWaterModel,
   waterFeatures,
@@ -33,6 +34,7 @@ const RedigerbartKart = ({
     scientificNameId,
     kriterier,
     selectionGeometry,
+    artskartModel,
     artskartAdded,
     artskartRemoved,
     showWaterAreas,
