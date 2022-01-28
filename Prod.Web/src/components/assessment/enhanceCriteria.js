@@ -789,7 +789,7 @@ function enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering,
 
         // C criteria
         get impactedNaturtypesColonizedAreaLevel() {
-                const levels =  riskAssessment.vurderingImpactedNaturalNatureTypes.map(nt => nt.colonizedArea).map(area =>
+                const levels =  riskAssessment.vurderingAllImpactedNatureTypes.map(nt => nt.colonizedArea).map(area =>
                     area === "0–2"? 0 :
                     area === "2-5"? 0 :
                     area === "5-10"? 1 :
