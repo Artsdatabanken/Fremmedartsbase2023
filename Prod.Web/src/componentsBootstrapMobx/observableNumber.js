@@ -88,20 +88,27 @@ function filterDisplay(obj, prop, yearRange) {
   return ''
 }
 
-function getErrorMsgs(observableErrors) {
-  if(!observableErrors) {
-    return null // todo: change to [] when component error handling is complete
-  }
-  const errorKeys = observableErrors.slice(1)
-  const errorhandler = observableErrors[0]
-  const errors = []
-  for(const key of errorKeys) {
-    // console.log("#%% errorkey: " + key + " value: " + errorhandler.errors[key])
-    if(errorhandler.errors[key]) {
-      errors.push(errorhandler.errors[key])
+function getErrors(observableErrors) {
+  const result = {}
+  if(observableErrors) {
+    const errorKeys = observableErrors.slice(1)
+    const errorhandler = observableErrors[0]
+    const errors = []
+    for(const key of errorKeys) {
+      // console.log("#%% errorkey: " + key + " value: " + errorhandler.errors[key])
+      if(errorhandler.errors[key]) {
+        errors.push(errorhandler.errors[key])
+      }
     }
+    result.hasObservableErrors = true
+    result.hasErrors = errors.length > 0
+    result.errors = errors
+    result.errorKeys = errorKeys
+  } else {
+    result.hasObservableErrors = false
+    result.hasErrors = false
   }
-  return errors
+  return result
 }
 
 function filterNumericInput(s, integer = false) {
@@ -143,13 +150,13 @@ const ObservableNumber = (props) => <Observer>{() => {
     validate && typeof validate === 'function' && !validate(obj[prop])
 
 
-  const errors = getErrorMsgs(observableErrors)
-  if(errors !== null) {
-      console.log("#%% - " + prop)
-      for(const msg of errors) {
-        console.log("#%%Error: " + msg)
-      }
-  }
+  const {hasErrors, errors} = getErrors(observableErrors)
+  // if(hasErrors) {
+  //     console.log("#%% - " + prop)
+  //     for(const msg of errors) {
+  //       console.log("#%%Error: " + msg)
+  //     }
+  // }
 
 
 //  console.log("context: " + JSON.stringify(context) + "#" +  isObservable(context))
@@ -160,7 +167,7 @@ const ObservableNumber = (props) => <Observer>{() => {
         <input
           className="form-control"
           disabled={context.readonly|| disabled }
-          style={{backgroundColor: (errors !== null && errors.length > 0) ? 'red' : 'white' }}
+          style={{backgroundColor: (hasErrors) ? 'red' : null }}
           name={prop}
           value={displayed ? displayed : filterDisplay(obj, prop, yearRange)}
           // disabled={(context.readonly && !auth.isAdmin)|| disabled } // SAH tok bort 14.12.2021 - duplett av den over og auth er ikke tilgjengelig
