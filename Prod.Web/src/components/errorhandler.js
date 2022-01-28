@@ -4,8 +4,23 @@ const errorhandler = observable({
     get hasErrors() {
         return Object.keys(this.errors).filter(key => this.errors[key] !== null).length > 0
     },
-    addErrors(errobjarr) {
-        for(const errobj of errobjarr) {
+    addErrors(errorobjectarray) {
+        // **** errorobjectarray format ****
+        // [ {
+        //     id: "id1", 
+        //     get cond() {return obj.prop1 === 0},
+        //     msg: "error message 1"
+        // },
+        // {
+        //     id: "id2", 
+        //     get cond() {return obj.prop1 > obj.prop2},
+        //     msg: "error message 2"
+        // },
+        // ...
+        // ...
+        // ]
+        // **********************************
+        for(const errobj of errorobjectarray) {
             this._errobjs.push(errobj)
         }
     },
