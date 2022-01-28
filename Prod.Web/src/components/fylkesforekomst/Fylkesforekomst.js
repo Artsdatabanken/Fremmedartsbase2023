@@ -135,32 +135,61 @@ const Fylkesforekomst = ({ assessment, fylkesforekomster }) => {
     else ff.state2 = 1;
   };
   
+  const allCategories = () => {
+    const createClonedCategory = (cat, y) => {
+      return {
+        highlight: cat.highlight,
+        normal: cat.normal,
+        title: cat.title,
+        tooltip: cat.tooltip,
+        x: cat.x,
+        y: y ? y : cat.y,
+        showRect: true
+      };
+    }
+    const cat0 = createClonedCategory(categories[0], 48);
+    const cat1 = createClonedCategory(categories[1], 82);
+    const cat3 = createClonedCategory(categories[3], 116);
+    const cat2 = createClonedCategory(categories[2], 14);
+    return {
+      0: cat0,
+      1: cat1,
+      3: cat3,
+      2: cat2
+    }
+  }
+
   const specificCategories = (state) => {
     switch (state) {
       case 0:
-        const cat0_2 = Object.assign(categories[2], {});
-        cat0_2.y = 68;
+        const cat0_1 = Object.assign(categories[0], {});
+        // const cat0_2 = Object.assign(categories[2], {});
+        // cat0_2.y = 68;
+        cat0_1.y = 14;
+        cat0_1.showRect = false;
         return {
-          0: categories[0],
-          2: cat0_2,
+          0: cat0_1,
+          // 2: cat0_2,
         }
       case 1:
         const cat1_1 = Object.assign(categories[1], {});
-        const cat1_2 = Object.assign(categories[2], {});
+        // const cat1_2 = Object.assign(categories[2], {});
         cat1_1.y = 14;
-        cat1_2.y = 68;
+        // cat1_2.y = 68;
+        cat1_1.showRect = false;
         return {
           1: cat1_1,
-          2: cat1_2,
+          // 2: cat1_2,
         }
       case 3:
         const cat3_3 = Object.assign(categories[3], {});
-        const cat3_2 = Object.assign(categories[2], {});
+        // const cat3_2 = Object.assign(categories[2], {});
         cat3_3.y = 14;
-        cat3_2.y = 68;
+        // cat3_2.y = 68;
+        cat3_3.showRect = false;
         return {
           3: cat3_3,
-          2: cat3_2,
+          // 2: cat3_2,
         }
     }
   }
@@ -257,6 +286,13 @@ const Fylkesforekomst = ({ assessment, fylkesforekomster }) => {
             }
             
           })}
+          <div style={{position: "relative", top: -35, left: -24}}>
+            <Legend size={18} categories={allCategories()} />
+            {/* <FylkeslisteLegend index={0} />
+            <FylkeslisteLegend index={1} />
+            <FylkeslisteLegend index={3} />
+            <FylkeslisteLegend index={2} /> */}
+          </div>
         </div>
       </div>
       <div
@@ -280,7 +316,7 @@ const Fylkesforekomst = ({ assessment, fylkesforekomster }) => {
             disabled={context.readonly}
           >
             <DiagonalHatch />
-            <Legend size={30} categories={specificCategories(0)} />
+            <Legend size={35} categories={specificCategories(0)} />
           </SvgShapeSelector>
         </div>
         <div style={{ marginLeft: -40, marginRight: -40, _float: "middle" }}>
@@ -295,7 +331,7 @@ const Fylkesforekomst = ({ assessment, fylkesforekomster }) => {
             disabled={context.readonly}
           >
             <DiagonalHatch />
-            <Legend size={30} categories={specificCategories(1)} />
+            <Legend size={35} categories={specificCategories(1)} />
           </SvgShapeSelector>
         </div>
 
@@ -313,7 +349,7 @@ const Fylkesforekomst = ({ assessment, fylkesforekomster }) => {
             disabled={context.readonly}
           >
             <DiagonalHatch />
-            <Legend size={30} categories={specificCategories(3)} />
+            <Legend size={35} categories={specificCategories(3)} />
           </SvgShapeSelector>
         </div>
       </div>
@@ -326,6 +362,7 @@ const FylkeslisteLegend = ({ index }) => {
   return (
     <div style={{ _textAlign: "center", _width: 10, _height: 10 }}>
       <LegendItem
+        showRect={true}
         fill={cat.normal.fill}
         x={1}
         y={1}

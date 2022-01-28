@@ -213,13 +213,9 @@ export default class Vurdering34Spredningsveier extends React.Component {
                     div style={{marginBottom: "30px"}}
                 { true || config.showPageHeaders ? <h4 style={{marginTop: "25px"}} >{labels.MigrationPathway.introductionSpread}</h4> : <br />} */}
                 <h4>{name}</h4>
-                {migrationPathways.length > 0 &&
-                     <MPTable migrationPathways={migrationPathways} removeMigrationPathway={fjernSpredningsvei} showIntroductionSpread getCategoryText={this.getCategoryText} migrationPathwayCodes={appState.spredningsveier.children}/>
-                }
-                <hr/>
                 <div className="import">
                 <div className="well">
-                    <h4>Legg til spredningsvei</h4>
+                    <h5>Legg til spredningsvei</h5>
                     <NewMigrationPathwaySelector migrationPathways={migrationPathwayKoder} onSave={mp => this.saveMigrationPathway(vurdering, mp, name, appState.spredningsveier.children)} mainCodes={koder} koder={importationCodes} vurdering={vurdering} labels={labels} />
                 </div>
                 <div className="definitions">
@@ -235,6 +231,11 @@ export default class Vurdering34Spredningsveier extends React.Component {
                 }
                 </div>
                 </div>
+                {migrationPathways.length > 0 &&
+                     <MPTable migrationPathways={migrationPathways} removeMigrationPathway={fjernSpredningsvei} showIntroductionSpread getCategoryText={this.getCategoryText} migrationPathwayCodes={appState.spredningsveier.children}/>
+                }
+                <hr/>
+                
                 <p>{furtherInfo}</p>
                 <Xcomp.HtmlString                            
                                 observableValue={[riskAssessment, "furtherInfoAboutImport"]}

@@ -220,6 +220,8 @@ export default class Assessment52Utbredelse extends React.Component {
         ass.artskartManuellRemove = editStats.remove;
         ass.artskartSistOverført = new Date();
         ass.artskartSelectionGeometry = selectionGeometry;
+        ass.riskAssessment.AOOendyear1 = ass.artskartModel.observationFromYear;
+        ass.riskAssessment.AOOendyear2 = ass.artskartModel.observationToYear;
         if (ass.artskartSelectionGeometry != undefined) {
             ass.riskAssessment.AOO2 = areadata.ExcludedLocalities*4;
         } else {
