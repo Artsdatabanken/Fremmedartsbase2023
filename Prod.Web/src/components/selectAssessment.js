@@ -119,6 +119,19 @@ export default class SelectAssessment extends Component {
             )
         }
 
+        const filterIsEmpty = appState.expertgroupAssessmentFilter == "" 
+                            && !appState.kunUbehandlede 
+                            && !appState.horizonScanFilter.hsNotStarted 
+                            && !appState.horizonScanFilter.hsFinished 
+                            && !appState.horizonScanFilter.toAssessment 
+                            && !appState.horizonScanFilter.notAssessed 
+                            && appState.responsible.length == 0 
+                            && (appState.currentFilter.decisiveCriteriaFilter && appState.currentFilter.decisiveCriteriaFilter.length == 0) 
+                            && (appState.workStatus && appState.workStatus.length == 0) 
+                            && (appState.currentFilter.riskCategoryFilter && appState.currentFilter.riskCategoryFilter.length == 0)
+                            && (appState.historyFilter.decisiveCriteriaFilter && appState.historyFilter.decisiveCriteriaFilter.length == 0) 
+                            && (appState.historyFilter.riskCategoryFilter && appState.historyFilter.riskCategoryFilter.length == 0)
+
         
      /*   let checkList = document.getElementById('list1');
         if (checkList) {checkList.getElementsByClassName('anchor')[0].onclick = function (evt) {
@@ -481,8 +494,8 @@ export default class SelectAssessment extends Component {
             
             <div className="usedFilters">
             <div className="counter">
-            {(appState.expertgroupAssessmentFilter == "" && !appState.kunUbehandlede && !appState.horizonScanFilter.hsNotStarted && !appState.horizonScanFilter.hsFinished && !appState.horizonScanFilter.toAssessment && !appState.horizonScanFilter.notAssessed && appState.responsible.length == 0) ?
-                
+            {filterIsEmpty ?
+                // TO DO: check that all the filters are observed
                 <span>{labels.SelectAssessment.showingTotal} {appState.expertgroupAssessmentTotalCount} {appState.expertgroupAssessmentTotalCount == 1 ? labels.SelectAssessment.assessment : labels.SelectAssessment.assessments}</span>
                 :            
                 <span> {labels.SelectAssessment.showingTotal} {appState.expertgroupAssessmentList.length} {appState.expertgroupAssessmentList.length == 1 ? labels.SelectAssessment.assessment : labels.SelectAssessment.assessments} ({labels.SelectAssessment.filteredFrom} {appState.expertgroupAssessmentTotalCount})</span>
