@@ -56,6 +56,7 @@ const Artskart = ({
       </div>
 
       <RedigerbartKart
+        artskartModel={artskartModel}
         showWaterAreas={showWaterAreas}
         artskartWaterModel={artskartWaterModel}
         waterFeatures={waterFeatures}

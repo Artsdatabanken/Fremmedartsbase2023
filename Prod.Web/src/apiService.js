@@ -302,6 +302,7 @@ export function getArtskartUrl(
     scientificNameId,
     selectionGeometry,
     kriterier,
+    artskartModel,
     showWaterAreas,
     geojson = {features:[]})
   {
@@ -313,26 +314,26 @@ export function getArtskartUrl(
     //     : kriterier.includeObjects
     //         ? "specimen"
     //         : "observations";
-    const type = kriterier.excludeObjects
+    const type = artskartModel.excludeObjects
         ? "specimen"
         : "all";
-    const includeNorge = !kriterier.includeNorge ? false : kriterier.includeNorge;
-    const includeSvalbard = !kriterier.includeSvalbard ? false : kriterier.includeSvalbard;
+    const includeNorge = !artskartModel.includeNorge ? false : artskartModel.includeNorge;
+    const includeSvalbard = !artskartModel.includeSvalbard ? false : artskartModel.includeSvalbard;
     const region =
       includeNorge === includeSvalbard
         ? "all"
         : includeNorge
             ? "fastland"
             : "svalbard";
-    const excludeGbif = kriterier.excludeGbif ? "&sourcedatabases[]=-40,-211" : "";   
-    // let queryparams = `fromYear=${kriterier.observationFromYear}&toYear=${kriterier.observationToYear}&fromMonth=${kriterier.fromMonth}&toMonth=${kriterier.toMonth}&type=${type}&region=${region}`;
-    let queryparams = `fromYear=${kriterier.AOOyear1}&toYear=${kriterier.AOOyear2}`;
+    const excludeGbif = artskartModel.excludeGbif ? "&sourcedatabases[]=-40,-211" : "";   
+    let queryparams = `fromYear=${artskartModel.observationFromYear}&toYear=${artskartModel.observationToYear}`;
+    // let queryparams = `fromYear=${kriterier.AOOyear1}&toYear=${kriterier.AOOyear2}`;
     // queryparams += `&fromMonth=${kriterier.fromMonth}`;
     // queryparams += `&toMonth=${kriterier.toMonth}`;
     if (type !== undefined) queryparams += `&type=${type}`;
     if (region !== undefined) queryparams += `&region=${region}`;
     queryparams += `&scientificNameId=${scientificNameId}`;
-    if (excludeGbif) queryparams += `&excludeGbif=${kriterier.excludeGbif}${excludeGbif}`;
+    if (excludeGbif) queryparams += `&excludeGbif=${artskartModel.excludeGbif}${excludeGbif}`;
     queryparams += `&crs=EPSG:${config.mapEpsgCode}`;
     // console.log('getArtskartUrl', queryparams);
     if (selectionGeometry)
