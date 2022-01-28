@@ -217,6 +217,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
     const r = riskAssessment
     extendObservable(riskAssessment, {
         get doorKnocker() {
+            console.log("#¤% alienSpeciesCategory " + riskAssessment.vurderingAlienSpeciesCategory)
             return riskAssessment.vurderingAlienSpeciesCategory === "DoorKnocker"
         },
         get ametodkey() {
@@ -789,7 +790,7 @@ function enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering,
 
         // C criteria
         get impactedNaturtypesColonizedAreaLevel() {
-                const levels =  riskAssessment.vurderingImpactedNaturalNatureTypes.map(nt => nt.colonizedArea).map(area =>
+                const levels =  riskAssessment.vurderingAllImpactedNatureTypes.map(nt => nt.colonizedArea).map(area =>
                     area === "0–2"? 0 :
                     area === "2-5"? 0 :
                     area === "5-10"? 1 :
@@ -1180,6 +1181,9 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
 
     // }
 
+    autorun(() => {console.log("#¤% bmethodkey: " + riskAssessment.bmetodkey)})
+
+
     for(const crit of riskAssessment.criteria) {
         let firstrun = true
         extendObservable(crit, {
@@ -1212,8 +1216,8 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                         uv.push(i)
                     }
                 }
-            } else if (crit.criteriaLetter === "B" && riskAssessment.bmetodkey === "B1") {
-                // console.log("#¤#bhigh set uv")
+            } else if (crit.criteriaLetter === "B" && (riskAssessment.bmetodkey === "B1" || riskAssessment.bmetodkey === "B2b")) {
+                console.log("#¤%bhigh set uv, key: " + riskAssessment.bmetodkey)
                 ud = [0,1,2,3]
                 uv = []
                 for (var i = 0; i <= 3; i++) {
@@ -1223,6 +1227,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                 }
                 // console.log("#¤#bhigh set uv "+ JSON.stringify(uv))
             } else if (crit.criteriaLetter === "B" && riskAssessment.ametodkey === "B2a") {
+                console.log("#¤%bhigh set uv, key: " + riskAssessment.bmetodkey)
                 ud = riskAssessment.bDisabledUncertaintyValues
                 uv = [value]
 
