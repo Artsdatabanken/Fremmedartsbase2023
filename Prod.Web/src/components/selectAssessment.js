@@ -131,6 +131,13 @@ export default class SelectAssessment extends Component {
                             && (appState.currentFilter.riskCategoryFilter && appState.currentFilter.riskCategoryFilter.length == 0)
                             && (appState.historyFilter.decisiveCriteriaFilter && appState.historyFilter.decisiveCriteriaFilter.length == 0) 
                             && (appState.historyFilter.riskCategoryFilter && appState.historyFilter.riskCategoryFilter.length == 0)
+                            && (appState.historyFilter.riskAssessedFilter && appState.historyFilter.riskAssessedFilter.length == 0) 
+                            && (appState.historyFilter.riskNotAssessedFilter && appState.historyFilter.riskNotAssessedFilter.length == 0)
+                            && (appState.currentFilter.riskAssessedFilter && appState.currentFilter.riskAssessedFilter.length == 0) 
+                            && (appState.currentFilter.riskNotAssessedFilter && appState.currentFilter.riskNotAssessedFilter.length == 0)
+                            && (appState.otherComments && appState.otherComments.length == 0)
+                            && (appState.horizonScanFilter.potentialDoorKnockers && appState.horizonScanFilter.potentialDoorKnockers.length == 0)
+                            && (appState.horizonScanFilter.notAssessedDoorKnocker && appState.horizonScanFilter.notAssessedDoorKnocker.length == 0)
 
         
      /*   let checkList = document.getElementById('list1');
