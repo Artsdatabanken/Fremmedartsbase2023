@@ -117,40 +117,31 @@ export default function enhanceAssessment(json, appState) {
     });
 
     extendObservable(assessment, {
-        // this value is not a part of the domain object
         get isAlienSpeciesString() {
-            // const alien = assessment.alienSpeciesCategory =="AlienSpecie" || assessment.notApplicableCategory == "establishedBefore1800"
             return assessment.isAlienSpecies ? "true" : "false"
         },
         set isAlienSpeciesString(s) {
             assessment.isAlienSpecies = s === "true"
         },
-        // this value is not a part of the domain object
         get alienSpecieUncertainIfEstablishedBefore1800String() {
-            // const value = assessment.notApplicableCategory == "establishedBefore1800" ? "yes" :  assessment.alienSpeciesCategory == "AlienSpecie" ? "no" : null
             return assessment.alienSpecieUncertainIfEstablishedBefore1800 ? "yes" : "no"
         },
         set alienSpecieUncertainIfEstablishedBefore1800String(s) {
-            //assessment.assumedReproducing50Years = s === "yes"
             assessment.alienSpecieUncertainIfEstablishedBefore1800 = s === "yes"
         },
         get assumedReproducing50YearsString() {
-            //return assessment.alienSpecieUncertainIfEstablishedBefore1800 ? "yes" : "no"
             return assessment.assumedReproducing50Years ? "yes" : "no"
         },
         set assumedReproducing50YearsString(s) {
             assessment.assumedReproducing50Years = s === "yes"
         },
-        // this value is not a part of the domain object
         get connectedToAnotherString() {
-            // const value assessment.alienSpeciesCategory == "AlienSpecie" ? "no" : assessment.connectedToAnother ? "true" : "false" 
             return assessment.connectedToAnother ? "yes" : "no"
         },
         set connectedToAnotherString(s) {
             assessment.connectedToAnother = s === "yes"
         },
         get productionSpeciesString() {
-            // const value = assessment.notApplicableCategory == "establishedBefore1800" ? "yes" :  assessment.alienSpeciesCategory == "AlienSpecie" ? "no" : null
             return assessment.productionSpecies == null ? null : (assessment.productionSpecies ? "yes" : "no")
         },
         set productionSpeciesString(s) {
@@ -178,55 +169,6 @@ export default function enhanceAssessment(json, appState) {
         },
         get assessmentConclusion() {
             const result = 
-               /* assessment.connectedToAnother
-                ? "WillNotBeRiskAssessed"
-                : assessment.alienSpeciesCategory == "AlienSpecie"
-                ? "AssessedSelfReproducing"
-                : assessment.alienSpeciesCategory == "RegionallyAlien"
-                ? "AssessedSelfReproducing" // todo: check this
-                : assessment.alienSpeciesCategory == "DoorKnocker"
-                ? "AssessedDoorknocker"
-                : "WillNotBeRiskAssessed"*/
-
-                /*(assessment.isAlienSpecies && !assessment.connectedToAnother && !assessment.alienSpecieUncertainIfEstablishedBefore1800String) 
-                ? assessment.alienSpeciesCategory == "DoorKnocker"
-                ? "AssessedDoorknocker" 
-                : (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3") 
-                ? assessment.alienSpeciesCategory == "AlienSpecie"
-                ? "AssessedSelfReproducing"
-                : assessment.alienSpeciesCategory == "RegionallyAlien"
-                ? "AssessedSelfReproducing" // todo: check this
-                : "WillNotBeRiskAssessed" 
-                : "WillNotBeRiskAssessed"
-                : ""*/
-
-                // (!assessment.isAlienSpecies || assessment.connectedToAnother || assessment.alienSpecieUncertainIfEstablishedBefore1800) 
-                // ? "WillNotBeRiskAssessed"
-                // : (assessment.isAlienSpecies && !assessment.connectedToAnother && !assessment.alienSpecieUncertainIfEstablishedBefore1800)
-                // ?   assessment.alienSpeciesCategory == "DoorKnocker"
-                // ? "AssessedDoorknocker" 
-                // : assessment.speciesStatus != "" 
-                // ? (assessment.speciesStatus == "C2" || assessment.speciesStatus == "C3")
-
-                // //? (assessment.alienSpeciesCategory == "AlienSpecie" || assessment.alienSpeciesCategory == "RegionallyAlien") // todo: check this
-                // ? "AssessedSelfReproducing"
-                // : ""
-                // : "WillNotBeRiskAssessed"
-                // //: "WillNotBeRiskAssessed"
-                // : ""
-
-                // (!assessment.isAlienSpecies || assessment.connectedToAnother || assessment.alienSpecieUncertainIfEstablishedBefore1800) 
-                // ? "WillNotBeRiskAssessed"
-                // : !(!assessment.connectedToAnother && !assessment.alienSpecieUncertainIfEstablishedBefore1800)
-                // ? ""
-                // : assessment.alienSpeciesCategory == "DoorKnocker"
-                // ? "AssessedDoorknocker" 
-                // : assessment.alienSpeciesCategory == "NotDefined"
-                // ? "NotDecided"
-                // : assessment.alienSpeciesCategory == "AlienSpecie"
-                // ? "AssessedSelfReproducing"
-                // : ""
-
                 !assessment.isAlienSpecies 
                 ? "WillNotBeRiskAssessed"
                 : assessment.connectedToAnother 
@@ -234,7 +176,7 @@ export default function enhanceAssessment(json, appState) {
                 : assessment.alienSpeciesCategory == "UncertainBefore1800"
                 ? "WillNotBeRiskAssessed"
                 : assessment.alienSpeciesCategory == "NotDefined"
-                ? "NotDecided"
+                ? "NotDecided"           // todo: This should probably also be "WillNotBeRiskAssessed" (?? check this)
                 : assessment.alienSpeciesCategory == "DoorKnocker"
                 ? "AssessedDoorknocker" 
                 : assessment.alienSpeciesCategory == "AlienSpecie"
@@ -245,10 +187,6 @@ export default function enhanceAssessment(json, appState) {
                 ? "WillNotBeRiskAssessed"
 
                 : "WillNotBeRiskAssessed"
-
-
-
-
             return result
         },
         get category() {
