@@ -145,7 +145,7 @@ export default class assessmentNew extends React.Component {
                     <div className="row">
                         <div className="col-md-12">
                             <h2>{labels.SelectAssessment.createAssessment}</h2>
-                            <p>{labels.SelectAssessment.createAssessmentHint}</p>
+                            {/*<p>{labels.SelectAssessment.createAssessmentHint}</p>*/}
                             <br></br>
                             <h3>{labels.SelectAssessment.expertgroup}</h3>
                             <Xcomp.StringEnum
