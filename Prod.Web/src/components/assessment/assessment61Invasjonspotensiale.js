@@ -16,6 +16,8 @@ import Documents from '../documents'
 import { KeyboardHideSharp } from '@material-ui/icons'
 import {stringFormat} from "../../utils"
 import ModalArtskart from '../artskart/ModalArtskart';
+import errorhandler from '../errorhandler';
+
 
 @observer
 class SelectableRadio extends React.Component {
@@ -316,9 +318,9 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                    </div>
                    <div className="numberFields">                  
 
-                   <Xcomp.Number observableValue={[riskAssessment, "medianLifetimeInput"]} integer />  {/* ACritMedianLifespan */}
-                   <Xcomp.Number observableValue={[riskAssessment, "lifetimeLowerQInput"]} integer />  
-                   <Xcomp.Number observableValue={[riskAssessment, "lifetimeUpperQInput"]} integer />                     
+                   <Xcomp.Number observableValue={[riskAssessment, "medianLifetimeInput"]} observableErrors={[errorhandler, "A3err1", "A3err2"]} integer />  {/* ACritMedianLifespan */}
+                   <Xcomp.Number observableValue={[riskAssessment, "lifetimeLowerQInput"]} observableErrors={[errorhandler, "A3err1"]} integer />  
+                   <Xcomp.Number observableValue={[riskAssessment, "lifetimeUpperQInput"]} observableErrors={[errorhandler, "A3err2"]} integer />                     
                             
                    </div>
                    </div>
@@ -424,16 +426,19 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                 <div className="numberFieldsB">
                                 <Xcomp.Number                            
                                             observableValue={[riskAssessment, "expansionSpeedInput"]} 
+                                            observableErrors={[errorhandler, "B1err1", "B1err2"]} 
                                             integer
                                             disabled={disabled}
                                         />  
                                     <Xcomp.Number                            
                                             observableValue={[riskAssessment, "expansionLowerQInput"]}
+                                            observableErrors={[errorhandler, "B1err1"]} 
                                             integer
                                             disabled={disabled}
                                         />  
                                     <Xcomp.Number                            
                                             observableValue={[riskAssessment, "expansionUpperQInput"]}
+                                            observableErrors={[errorhandler, "B1err2"]} 
                                             integer
                                             disabled={disabled}
                                         />  

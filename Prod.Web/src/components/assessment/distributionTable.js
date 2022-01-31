@@ -26,9 +26,9 @@ export default class DistributionTable extends React.Component {
     /*if (assessment.horizonEstablismentPotential == 1){
         assessment.riskAssessment.AOOtotalBest == 1;
     }*/
-    if (assessment.alienSpeciesCategory != "DoorKnocker" && assessment.riskAssessment.AOOtotalBest == 0) {
-        alert("En selvstending reproduserende art må ha et forekomstareal på minst 4 km2!")
-    }
+    // if (assessment.alienSpeciesCategory != "DoorKnocker" && assessment.riskAssessment.AOOtotalBest == 0) {
+    //     alert("En selvstending reproduserende art må ha et forekomstareal på minst 4 km2!")
+    // }
        
     return (
     <>
@@ -86,7 +86,7 @@ export default class DistributionTable extends React.Component {
                 <td>
                 <Xcomp.Number                            
                     observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "occurrences1Best"] :[assessment.riskAssessment, "AOOtotalBest"]}
-                    observableErrors={assessment.alienSpeciesCategory == "DoorKnocker" ? [errorhandler, "(b)err1", "(b)err2"] : [errorhandler, "(a)err2", "(a)err3" ]}
+                    observableErrors={assessment.alienSpeciesCategory == "DoorKnocker" ? [errorhandler, "(b)err1", "(b)err2"] : [errorhandler, "(a)err1", "(a)err2", "(a)err3", "(a)err6" ]}
                     disabled={disabled}
                     integer
                    // onChange={action (() => assessment.horizonEstablismentPotential == 1 && assessment.riskAssessment.AOOtotalBest != 1 ? alert("Dette stemmer ikke overens med vurdering på horisontskanningen. Er du sikker på at du vil endre?") : null)} 
@@ -175,7 +175,7 @@ export default class DistributionTable extends React.Component {
             <td>
             <Xcomp.Number                            
                 observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "AOO10yrLow"] : [assessment.riskAssessment, "AOO50yrLow"]}
-                // observableError={assessment.alienSpeciesCategory == "DoorKnocker" ? [errorhandler, "B1err1"] : [errorhandler, "(a)err4"]}
+                observableErrors={assessment.alienSpeciesCategory == "DoorKnocker" ? [errorhandler, "B1err1"] : [errorhandler, "(a)err4"]}
                 disabled={disabled || assessment.alienSpeciesCategory == "DoorKnocker"}
                 //disabled={true}
                 integer 
@@ -184,7 +184,8 @@ export default class DistributionTable extends React.Component {
             <td>
             <Xcomp.Number                            
                 observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "AOO10yrBest"] : [assessment.riskAssessment, "AOO50yrBest"]}
-                disabled={disabled}
+                observableErrors={assessment.alienSpeciesCategory == "DoorKnocker" ? [errorhandler, "B1err1", "B1err2"] : [errorhandler, "(a)err4", "(a)err5"]}
+                disabled={disabled || assessment.alienSpeciesCategory == "DoorKnocker"}
                 integer 
                 
                 />   
@@ -192,6 +193,7 @@ export default class DistributionTable extends React.Component {
            <td>
            <Xcomp.Number                            
                 observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "AOO10yrHigh"] :[assessment.riskAssessment, "AOO50yrHigh"]}
+                observableErrors={assessment.alienSpeciesCategory == "DoorKnocker" ? [errorhandler, "B1err2"] : [errorhandler, "(a)err5"]}
                 disabled={disabled || assessment.alienSpeciesCategory == "DoorKnocker"}
                 // disabled={disabled}
                 // disabled={true}
