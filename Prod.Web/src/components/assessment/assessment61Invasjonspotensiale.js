@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import PropTypes from 'prop-types'
 import {observer, inject} from 'mobx-react';
-import {action, runInAction} from 'mobx'
+import {action, computed, runInAction, observable} from 'mobx'
 
 import * as Xcomp from './observableComponents';
 import Tabs from '../tabs'
@@ -17,13 +17,13 @@ import { KeyboardHideSharp } from '@material-ui/icons'
 import {stringFormat} from "../../utils"
 import ModalArtskart from '../artskart/ModalArtskart';
 
+@inject('appState')
 @observer
 class SelectableRadio extends React.Component {
     // shouldComponentUpdate() {
     //     return true
     // }
     render() {
-        
         const [obj, prop] = this.props.observableValue
         // console.log("Selectable" + this.props.value) console.log(" - - " +
         // obj["Selectable" + this.props.value])
@@ -63,6 +63,13 @@ class SelectableRadio extends React.Component {
 @inject("appState")
 @observer
 export default class Assessment61Invasjonspotensiale extends React.Component {
+    // code looks unused, but it makes the Artskart-module listen to changes
+    @computed get isDirty() {
+        if (!this.props.appState.assessmentId) return false
+        const a = JSON.stringify(this.props.appState.assessment)
+        const b = this.props.appState.assessmentSavedVersionString
+        return a != b
+    }
     // getCriterion(riskAssessment, akse, letter) {     const result =
     // riskAssessment.criteria.filter(c => c.akse === akse && c.criteriaLetter ===
     // letter)[0];     return result; }
@@ -73,6 +80,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
         console.log('ToDo: data from Artskart - 1', data);
     }
     render() {
+        const renderAgain = this.isDirty; // code looks unused, but it makes the Artskart-module listen to changes
         const {appState:{assessment, assessment:{riskAssessment}}, appState:{riskAssessmentTabs}, appState, } = this.props;
 
         // const labels = appState.kodeLabels
@@ -88,6 +96,16 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
         riskAssessment.AOO1 == null ? riskAssessment.AOO1 = riskAssessment.AOOknown1 : riskAssessment.AOO1 = 0
 
         riskAssessment.AOO2 == null ? riskAssessment.AOO2 = riskAssessment.AOOknown2 : riskAssessment.AOO2 = 0
+
+        if (assessment.artskartModel2 === undefined) {
+            assessment.artskartModel2 = {
+                observationFromYear: assessment.artskartModel.observationFromYear,
+                observationToYear: assessment.artskartModel.observationToYear,
+                includeNorge: assessment.artskartModel.includeNorge,
+                excludeObjects: assessment.artskartModel.excludeObjects,
+                excludeGbif: assessment.artskartModel.excludeGbif,
+            };
+        }
 
         // const bassertpaValues = [
         //     {
@@ -528,6 +546,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                             showWaterAreas={assessment.isAlienSpecies && assessment.isRegionallyAlien}
                                                             labels={labelsArtskart}
                                                             utvalg={assessment.riskAssessment}
+                                                            artskartModel={assessment.artskartModel2}
                                                             onOverførFraArtskart={action(this.handleDateFromArtskart0)}
                                                             artskartSelectionGeometry={assessment.artskartSelectionGeometry}
                                                             artskartAdded={assessment.artskartAdded}
@@ -574,6 +593,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                             showWaterAreas={assessment.isAlienSpecies && assessment.isRegionallyAlien}
                                                             labels={labelsArtskart}
                                                             utvalg={assessment.riskAssessment}
+                                                            artskartModel={assessment.artskartModel2}
                                                             onOverførFraArtskart={action(this.handleDateFromArtskart1)}
                                                             artskartSelectionGeometry={assessment.artskartSelectionGeometry}
                                                             artskartAdded={assessment.artskartAdded}
