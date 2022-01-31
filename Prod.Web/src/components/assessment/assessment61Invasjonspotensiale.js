@@ -98,6 +98,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
         riskAssessment.AOO2 == null ? riskAssessment.AOO2 = riskAssessment.AOOknown2 : riskAssessment.AOO2 = 0
 
         if (assessment.artskartModel2 === undefined) {
+            // ToDo: Not completed yet...
             assessment.artskartModel2 = {
                 observationFromYear: assessment.artskartModel.observationFromYear,
                 observationToYear: assessment.artskartModel.observationToYear,
