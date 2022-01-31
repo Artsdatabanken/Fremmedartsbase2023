@@ -22,16 +22,17 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
     }
 
     setAssessmentComplete(appState) {
-        const r = confirm("Er du sikker på at du vil ferdigstille vurderingen?")
+        // console.log("#&% setAssessmentComplete")
+        const r = window.confirm("Er du sikker på at du vil ferdigstille vurderingen?")
         if (r) {
-            appState.setAssessmentComplete()
+            appState.setAssessmentComplete("finish")
         }
     }
 
     resetAssessmentComplete(appState) {
-        const r = confirm("Er du sikker på at du vil åpne for videre vurdering?")
+        const r = window.confirm("Er du sikker på at du vil åpne for videre vurdering?")
         if (r) {
-            appState.updateAssessmentStatus(null)
+            appState.setAssessmentComplete("unfinish")
         }
     }
                         // <p>Artens status: {appState.kodeLabels.AlienSpeciesCategory[kdi.alienSpeciesCategory]}</p>
@@ -328,7 +329,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                         {assessment.evaluationStatus != "finnished" ? 
                         <div>
                             <p>{critlabels.assessmentUnderWork}</p>
-                            <Xcomp.Button>{critlabels.setComplete}</Xcomp.Button>
+                            <Xcomp.Button onClick={() => this.setAssessmentComplete(appState)}>{critlabels.setComplete}</Xcomp.Button>
                          </div>: <p>{critlabels.assessmentCompleted}</p>}                       
                 </div>
             </div>

@@ -8,6 +8,7 @@ import {codes2labels} from '../utils'
 import config from '../config'
 import auth from './authService'
 import createContext from './createContext'
+import errorhandler from './errorhandler';
 import enhanceAssessment from './assessment/enhanceAssassment.js'
 import { checkStatus, loadData } from '../apiService'
 import tabdefs from './tabdefs'
@@ -776,6 +777,7 @@ class ViewModel {
     }
 
     @action setAssessmentComplete(statusaction) {
+        // console.log("#%% ferdigstill")
         if (!this.roleincurrentgroup.admin) {
             alert("setAssessmentComplete: 'Not allowed'")
             return
@@ -783,7 +785,15 @@ class ViewModel {
         if (statusaction !== "finish" && statusaction !== "unfinish" )
         {
             alert("Wrong statusaction: " + statusaction)
+            return
         }
+        if (errorhandler.hasErrors) {
+            // console.log("#%% kanikke")
+            alert("Kan ikke ferdigstille. Vurderinger er ikke korrekt!")
+            return
+        }
+        
+
         // const status = statusaction === "finish" ? "finished" : "inprogress"  // ???
         // this.assessment.evaluationStatus = status
 

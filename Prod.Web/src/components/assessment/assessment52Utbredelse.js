@@ -20,6 +20,8 @@ import SimpleMap from '../map/SimpleMap';
 import WaterArea from '../water/WaterArea';
 import { getWaterAreas } from '../water/apiWaterArea';
 import mapOlFunc from '../map/MapOlFunctions';
+import errorhandler from '../errorhandler';
+
 
 @inject('appState')
 @observer
@@ -370,6 +372,8 @@ export default class Assessment52Utbredelse extends React.Component {
                                                     className={"knownDistribution"} 
                                                     //observableValue={[assessment.riskAssessment, "knownDistribution"]}                     
                                                     observableValue={[assessment.riskAssessment, "AOOknown"]}
+                                                    observableErrors={[errorhandler, "(a)err6"]}
+
                                                     /> 
                                             </div>
                                             }
