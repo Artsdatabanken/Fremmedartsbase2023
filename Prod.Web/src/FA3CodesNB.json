@@ -1813,6 +1813,103 @@
                 "Children": null
             }
         ],
+        "coastLineZone": [
+            {
+                "Id": "coastLineZone",
+                "Value": "northSeaAndSkagerrak",
+                "Text": "Nordsjøen og Skagerrak",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "coastLineZone",
+                "Value": "norwegianSea",
+                "Text": "Norskehavet",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "coastLineZone",
+                "Value": "barentsSea",
+                "Text": "Barentshavet sør",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "coastLineZone",
+                "Value": "greenlandSea",
+                "Text": "Grønlandshavet",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "coastLineZone",
+                "Value": "polarSea",
+                "Text": "Barentshavet nord og Polhavet",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "arcticBioCLimateZone": [
+            {
+                "Id": "arcticBioCLimateZone",
+                "Value": "midArctic",
+                "Text": "Mellomarktisk tundrasone",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "arcticBioCLimateZone",
+                "Value": "northArctic",
+                "Text": "Nordarktisk tundrasone",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "arcticBioCLimateZone",
+                "Value": "northArcticDesert",
+                "Text": "Nordarktisk polarørkensone",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "continentalBioClimateZone": [
+            {
+                "Id": "continentalBioClimateZone",
+                "Value": "boreonemoral",
+                "Text": "Boreonemoral sone",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "continentalBioClimateZone",
+                "Value": "southBoreal",
+                "Text": "Sørboreal sone",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "continentalBioClimateZone",
+                "Value": "midBoreal",
+                "Text": "Mellomboreal sone",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "continentalBioClimateZone",
+                "Value": "northBoreal",
+                "Text": "Nordboreal sone",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "continentalBioClimateZone",
+                "Value": "alpineZones",
+                "Text": "Alpine soner",
+                "Info": null,
+                "Children": null
+            }
+        ],
         "naturalOriginClimateZone": [
             {
                 "Id": "naturalOriginClimateZone",
@@ -2066,6 +2163,103 @@
             {
                 "Id": "naturalOriginDisabled",
                 "Value": "unknown;",
+                "Text": "",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "coastZoneDisabled": [
+            {
+                "Id": "coastZoneDisabled",
+                "Value": "northSeaAndSkagerrak",
+                "Text": "None",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "coastZoneDisabled",
+                "Value": "norwegianSea",
+                "Text": "None,Skagerrak",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "coastZoneDisabled",
+                "Value": "barentsSea",
+                "Text": "OpenCoastLine,Skagerrak",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "coastZoneDisabled",
+                "Value": "greenlandSea",
+                "Text": "OpenCoastLine,Skagerrak",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "coastZoneDisabled",
+                "Value": "polarSea",
+                "Text": "OpenCoastLine,Skagerrak",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "arcticZoneDisabled": [
+            {
+                "Id": "arcticZoneDisabled",
+                "Value": "midArctic",
+                "Text": "WeakOceanic",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "arcticZoneDisabled",
+                "Value": "northArctic",
+                "Text": "",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "arcticZoneDisabled",
+                "Value": "northArcticDesert",
+                "Text": "WeakOceanic,ClearContinental",
+                "Info": null,
+                "Children": null
+            }
+        ],
+        "mainlandZoneDisabled": [
+            {
+                "Id": "mainlandZoneDisabled",
+                "Value": "boreonemoral",
+                "Text": "WeakContinental",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "mainlandZoneDisabled",
+                "Value": "southBoreal",
+                "Text": "WeakContinental",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "mainlandZoneDisabled",
+                "Value": "midBoreal",
+                "Text": "",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "mainlandZoneDisabled",
+                "Value": "northBoreal",
+                "Text": "",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "mainlandZoneDisabled",
+                "Value": "alpineZones",
                 "Text": "",
                 "Info": null,
                 "Children": null
@@ -6499,6 +6693,69 @@
                         },
                         {
                             "Id": null,
+                            "Value": "none",
+                            "Text": "Ingen",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "openCoastLine",
+                            "Text": "Åpen kystlinje",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "skagerrak",
+                            "Text": "Skagerrak",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "strongOceanic",
+                            "Text": "Sterkt oseanisk seksjon",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "clearOceanic",
+                            "Text": "Klart oseanisk seksjon",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "weakOceanic",
+                            "Text": "Svakt oseanisk seksjon",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "transferSection",
+                            "Text": "Overgangsseksjon",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "weakContinental",
+                            "Text": "Svakt kontinental sekjson",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "clearContinental",
+                            "Text": "Klart kontinental sekjson",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "noKnown",
                             "Text": "Ingen kjent utbredelse",
                             "Info": null,
@@ -8098,6 +8355,62 @@
                             "Id": null,
                             "Value": "category",
                             "Text": "Kategori",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "marineSpecies",
+                            "Text": "Marine arter",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "mainlandNorway",
+                            "Text": "FastlandsNorge (soner i Arktis er ekskludert)",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "svalbard",
+                            "Text": "Svalbard",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "coastWaterSections",
+                            "Text": "Kystvannsseksjoner",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "coastWaterZones",
+                            "Text": "Kystvannssoner",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "bioClimateSections",
+                            "Text": "Bioklimatiske seksjoner",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "bioClimateZones",
+                            "Text": "Bioklimatiske soner",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "bioClimateZonesArctic",
+                            "Text": "Bioklimatiske soner i Arktis",
                             "Info": null,
                             "Children": null
                         },

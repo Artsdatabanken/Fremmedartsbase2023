@@ -8,6 +8,7 @@ import NaturtypeTable from './51Naturtyper/naturtypeTable';
 import HabitatTable from './51Naturtyper/habitatTable';
 import NewNaturetype from './51Naturtyper/newNaturetype';
 import RedlistedNaturetypeTable from './51Naturtyper/redlistedNaturetypeTable';
+import OriginTable from './30Artsegenskaper/originTable'
 //import NewRedlistedNaturetype from './51Naturtyper/newRedlistedNaturetype';
 
 @inject("appState")
@@ -47,6 +48,15 @@ export default class Assessment51Naturtyper extends React.Component {
         const critC = getCriterion(riskAssessment, 0, "C")
         const critF = getCriterion(riskAssessment, 1, "F")
         const critG = getCriterion(riskAssessment, 1, "G")
+        const climateZoneLabel = (id) => koder.naturalOriginClimateZone.find(code => code.Value === id).Text
+        const contBioClimateZoneLabel = (id) => koder.continentalBioClimateZone.find(code => code.Value === id).Text
+        const arcticBioClimateZoneLabel = (id) => koder.arcticBioCLimateZone.find(code => code.Value === id).Text
+        const coastLineZoneLabel = (id) => koder.coastLineZone.find(code => code.Value === id).Text
+        const subClimateZoneLabel = (id) => koder.naturalOriginSubClimateZone.find(code => code.Value === id).Text
+        const naturalOriginDisabled = (id, region) => koder.naturalOriginDisabled.find(code => code.Value === id).Text.indexOf(region) !== -1
+        const coastZoneDisabled = (id, region) => koder.coastZoneDisabled.find(code => code.Value === id).Text.indexOf(region) !== -1
+        const arcticZoneDisabled = (id, region) => koder.arcticZoneDisabled.find(code => code.Value === id).Text.indexOf(region) !== -1
+        const mainlandZoneDisabled = (id, region) => koder.mainlandZoneDisabled.find(code => code.Value === id).Text.indexOf(region) !== -1
         action(() => {
             critC.auto = false
             critF.auto = false
@@ -106,7 +116,48 @@ export default class Assessment51Naturtyper extends React.Component {
                     desc={ntLabels.colonizedAreaDescription}/>
                 </>
                 }
-
+                <hr></hr>
+                <h4>{ntLabels.marineSpecies}</h4>
+                <p className="bioCLZone">{ntLabels.coastWaterSections}</p>
+                <div className="bioclimaticZones">
+                <div>{ntLabels.coastWaterZones}</div>
+                <OriginTable 
+                        mode = {"marine"}
+                        origins={assessment.coastLineSections} 
+                        climateZoneLabel={coastLineZoneLabel}
+                        subClimateZoneLabel={subClimateZoneLabel}
+                        naturalOriginDisabled={coastZoneDisabled}
+                        labels={labels.NaturalOrigin}
+                />
+                </div>
+                <hr></hr>
+                <h4>{ntLabels.mainlandNorway}</h4>
+                <p className="bioCLZone">{ntLabels.bioClimateSections}</p>
+                <div className="bioclimaticZones">
+                <div>{ntLabels.bioClimateZones}</div>
+                <OriginTable 
+                        mode = {"continental"}
+                        origins={assessment.currentBioClimateZones} 
+                        climateZoneLabel={contBioClimateZoneLabel}
+                        subClimateZoneLabel={subClimateZoneLabel}
+                        naturalOriginDisabled={mainlandZoneDisabled}
+                        labels={labels.NaturalOrigin}
+                />
+                </div>
+                <hr></hr>
+                <h4>{ntLabels.svalbard}</h4>
+                <p className="bioCLZone">{ntLabels.bioClimateSections}</p>
+                <div className="bioclimaticZones">
+                <div>{ntLabels.bioClimateZonesArctic}</div>
+                <OriginTable 
+                        mode = {"arctic"}
+                        origins={assessment.arcticBioClimateZones} 
+                        climateZoneLabel={arcticBioClimateZoneLabel}
+                        subClimateZoneLabel={subClimateZoneLabel}
+                        naturalOriginDisabled={arcticZoneDisabled}
+                        labels={labels.NaturalOrigin}
+                />
+                </div>
                 {assessment.impactedNatureTypesFrom2018.length > 0 && <div className="previousAssessment">
                
                 <h4>{ntLabels.dataFromPreviousAssessment}</h4>
@@ -123,7 +174,7 @@ export default class Assessment51Naturtyper extends React.Component {
                 </div>}
 
                 {assessment.redlistedNatureTypes.length > 0 && <div className="previousAssessment">
-                <hr></hr>
+                
                 <h4>{ntLabels.dataFromPreviousAssessment}</h4>
                 <p>{ntLabels.redlistedNaturetypes2011}</p>
                 <RedlistedNaturetypeTable

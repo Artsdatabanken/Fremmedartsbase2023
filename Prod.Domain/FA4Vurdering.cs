@@ -370,37 +370,75 @@ public partial class FA4 // (3.2) Artsegenskaper
             public bool SouthAmerica { get; set; }
         }
 
+        public class CoastLineSection
+        {
+            public string ClimateZone { get; set; }
+            //public string ClimateZoneSubtype { get; set; }
+            public bool None { get; set; }
+            public bool OpenCoastLine { get; set; }
+            public bool Skagerrak { get; set; }
+        }
+
+        public class BioClimateZones
+        {
+            public string ClimateZone { get; set; }
+            //public string ClimateZoneSubtype { get; set; }
+            public bool StrongOceanic { get; set; }
+            public bool ClearOceanic { get; set; }
+            public bool WeakOceanic { get; set; }
+            public bool TransferSection { get; set; }
+            public bool WeakContinental { get; set; }
+        }
+
+        public class BioClimateZonesArctic
+        {
+            public string ClimateZone { get; set; }
+            //public string ClimateZoneSubtype { get; set; }
+            
+            public bool WeakOceanic { get; set; }
+            public bool TransferSection { get; set; }
+            public bool WeakContinental { get; set; }
+
+            public bool ClearContinental { get; set; }
+        }
+
         public List<NaturalOrigin> NaturalOrigins { get; set; } = new List<NaturalOrigin>(); // lagt til 09.01.2017
         public string NaturalOriginUnknownDocumentation { get; set; }
         public List<NaturalOrigin> CurrentInternationalExistenceAreas { get; set; } = new List<NaturalOrigin>(); // lagt til 09.01.2017
+
+        public List<CoastLineSection> CoastLineSections { get; set; } = new List<CoastLineSection>();
+        public List<BioClimateZones> CurrentBioClimateZones { get; set; } = new List<BioClimateZones>();
+        public List<BioClimateZonesArctic> ArcticBioClimateZones { get; set; } = new List<BioClimateZonesArctic>();
         public string CurrentInternationalExistenceAreasUnknownDocumentation { get; set; }
 
-        //public NaturalOrigin createDefaultNaturalOrigin(string climateZone, string climateZoneSubType)
-        //{
-        //    return new NaturalOrigin()
-        //    {
-        //        ClimateZone = climateZone,
-        //        ClimateZoneSubtype = climateZoneSubType,
-        //    };
-        //}
-        //public List<NaturalOrigin> createDefaultNaturalOrigins()
-        //{
-        //    return new List<NaturalOrigin> {
-        //        createDefaultNaturalOrigin("polart","inkl alpint"),
-        //        createDefaultNaturalOrigin("temperert","boreal"),
-        //        createDefaultNaturalOrigin("temperert","nemoral"),
-        //        createDefaultNaturalOrigin("temperert","tørt"),
-        //        createDefaultNaturalOrigin("subtropisk","middelhavsklima"),
-        //        createDefaultNaturalOrigin("subtropisk","fuktig"),
-        //        createDefaultNaturalOrigin("subtropisk","tørt"),
-        //        createDefaultNaturalOrigin("subtropisk","høydeklima"),
-        //        createDefaultNaturalOrigin("subtropisk","kappregionen"),
-        //        createDefaultNaturalOrigin("tropisk","")
-        //    };
-        //}
+       
+
+    //public NaturalOrigin createDefaultNaturalOrigin(string climateZone, string climateZoneSubType)
+    //{
+    //    return new NaturalOrigin()
+    //    {
+    //        ClimateZone = climateZone,
+    //        ClimateZoneSubtype = climateZoneSubType,
+    //    };
+    //}
+    //public List<NaturalOrigin> createDefaultNaturalOrigins()
+    //{
+    //    return new List<NaturalOrigin> {
+    //        createDefaultNaturalOrigin("polart","inkl alpint"),
+    //        createDefaultNaturalOrigin("temperert","boreal"),
+    //        createDefaultNaturalOrigin("temperert","nemoral"),
+    //        createDefaultNaturalOrigin("temperert","tørt"),
+    //        createDefaultNaturalOrigin("subtropisk","middelhavsklima"),
+    //        createDefaultNaturalOrigin("subtropisk","fuktig"),
+    //        createDefaultNaturalOrigin("subtropisk","tørt"),
+    //        createDefaultNaturalOrigin("subtropisk","høydeklima"),
+    //        createDefaultNaturalOrigin("subtropisk","kappregionen"),
+    //        createDefaultNaturalOrigin("tropisk","")
+    //    };
+    //}
 
 
-        public void initNaturalOrigins()
+    public void initNaturalOrigins()
         {
             //NaturalOrigins = createDefaultNaturalOrigins();
             //NaturalOrigins = new List<NaturalOrigin> {
@@ -447,6 +485,28 @@ public partial class FA4 // (3.2) Artsegenskaper
                 new NaturalOrigin() {ClimateZone = "subtropic;highlands",     Europe=false,Asia=false,Africa=false,Oceania=false,NorthAndCentralAmerica=false,SouthAmerica=false },
                 new NaturalOrigin() {ClimateZone = "tropic;",                 Europe=false,Asia=false,Africa=false,Oceania=false,NorthAndCentralAmerica=false,SouthAmerica=false },
                 new NaturalOrigin() {ClimateZone = "unknown;",                Europe=false,Asia=false,Africa=false,Oceania=false,NorthAndCentralAmerica=false,SouthAmerica=false }
+            };
+
+            CoastLineSections = new List<CoastLineSection> {
+                new CoastLineSection() {ClimateZone = "northSeaAndSkagerrak",       None=false,OpenCoastLine=false,Skagerrak=false },
+                new CoastLineSection() {ClimateZone = "norwegianSea",               None=false,OpenCoastLine=false,Skagerrak=false },
+                new CoastLineSection() {ClimateZone = "barentsSea",                 None=false,OpenCoastLine=false,Skagerrak=false },
+                new CoastLineSection() {ClimateZone = "greenlandSea",               None=false,OpenCoastLine=false,Skagerrak=false },
+                new CoastLineSection() {ClimateZone = "polarSea",                   None=false,OpenCoastLine=false,Skagerrak=false }               
+            };
+
+            CurrentBioClimateZones = new List<BioClimateZones> {
+                new BioClimateZones() {ClimateZone = "boreonemoral",                  StrongOceanic=false,ClearOceanic=false,WeakOceanic=false,TransferSection=false,WeakContinental=false },
+                new BioClimateZones() {ClimateZone = "southBoreal",                   StrongOceanic=false,ClearOceanic=false,WeakOceanic=false,TransferSection=false,WeakContinental=false },
+                new BioClimateZones() {ClimateZone = "midBoreal",                     StrongOceanic=false,ClearOceanic=false,WeakOceanic=false,TransferSection=false,WeakContinental=false },
+                new BioClimateZones() {ClimateZone = "northBorealnorthBoreal",        StrongOceanic=false,ClearOceanic=false,WeakOceanic=false,TransferSection=false,WeakContinental=false },
+                new BioClimateZones() {ClimateZone = "alpineZones",                   StrongOceanic=false,ClearOceanic=false,WeakOceanic=false,TransferSection=false,WeakContinental=false }
+            };
+
+            ArcticBioClimateZones = new List<BioClimateZonesArctic> {
+                new BioClimateZonesArctic() {ClimateZone = "midArctic;",                  WeakOceanic=false,TransferSection=false,WeakContinental=false,ClearContinental=false },
+                new BioClimateZonesArctic() {ClimateZone = "northArctic",                 WeakOceanic=false,TransferSection=false,WeakContinental=false,ClearContinental=false },
+                new BioClimateZonesArctic() {ClimateZone = "northArcticDesert;",          WeakOceanic=false,TransferSection=false,WeakContinental=false,ClearContinental=false }
             };
         }
         public List<string> NaturalOriginMarine { get; set; } = new List<string>(); // lagt til 05.09.2016
