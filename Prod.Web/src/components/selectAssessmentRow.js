@@ -45,13 +45,14 @@ export default class selectAssessmentRow extends Component {
                 onClick={() => this.props.onOpen(assessment)}>
                 {/*<td>{isLocked && <span className='glyphicon glyphicon-lock'/>}</td>     */}           
                 <td>
-                    <span>{assessment.scientificName}</span>
+                    <span><i>{assessment.scientificName}</i> {assessment.scientificNameAuthor} {assessment.popularName}</span>
                 </td>
-                <td>
+                {/* <td>
                     <span>{assessment.popularName}</span>
-                </td>
+                </td> */}
                 {/*<td>{assessment.horizonDoScanning ? "Ja" : "Nei"}</td>*/}
-                <td><span>{assessment.category2018}</span></td> 
+                <td><span>{assessment.category2018}</span></td>
+                {appState.assessmentTypeFilter == "riskAssessment" && <td><span>{assessment.horizontScanResult == 1 ? "HS" : ""}</span></td>} 
                 {appState.assessmentTypeFilter == "riskAssessment" && <td><span>{assessment.category}</span></td>}
                 <td>
                     <span>{assessment.lastUpdatedAt.substring(0, 10) + " av " + assessment.lastUpdatedBy}</span>

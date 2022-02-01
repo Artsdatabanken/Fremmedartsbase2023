@@ -97,7 +97,7 @@ checkStatus = (production) => {
                     <p>{labels.SpeciesStatus.isAlienSpecies} </p>
                     <p>{labels.SpeciesStatus.unsureIfAlien} </p>
                     <Xcomp.Radio value={'true'} observableValue={[assessment, "isAlienSpeciesString"]} defaultChecked={assessment.alienSpeciesCategory == "RegionallyAlien"} label={labels.General.yes} />                    
-                    { assessment.isAlienSpeciesString == 'true' && assessment.alienSpeciesCategory != "DoorKnocker" ? 
+                    { assessment.isAlienSpecies && assessment.alienSpeciesCategory != "DoorKnocker" ? 
                             <Xcomp.Bool className={"regionallyAlien"} observableValue={[assessment, "isRegionallyAlien"]} checked={assessment.alienSpeciesCategory == "RegionallyAlien"} label={labels.SpeciesStatus.regionallyAlien} /> : null }
                     <Xcomp.Radio value={'false'} observableValue={[assessment, "isAlienSpeciesString"]} label={labels.General.no} />
                     <p>{labels.SpeciesStatus.unsureAlienDescription}</p>
@@ -109,7 +109,7 @@ checkStatus = (production) => {
                     
                 }
                     
-                    { assessment.isAlienSpeciesString == 'true' ?
+                    { assessment.isAlienSpecies ?
                     <div>                     
                         <p>{labels.SpeciesStatus.connectedToAnotherTaxon} </p> 
                         <Xcomp.StringEnum mode="radiohorizontal" observableValue={[assessment, "connectedToAnotherString"]} 
@@ -117,7 +117,7 @@ checkStatus = (production) => {
                                 codes={codes.yesNo}
                                 />
                         
-                        { assessment.connectedToAnotherString == "yes" || assessment.connectedToAnother == true ?
+                        { assessment.connectedToAnother || assessment.connectedToAnother ?
                         <div className={"connectedTaxons"}>
                            {assessment.notApplicableCategory == "taxonIsEvaluatedInHigherRank" && 
                             // transfer "notApplicableDescription" from FAB3
@@ -315,7 +315,8 @@ checkStatus = (production) => {
                             </div> : null }
                     </div> : null}
 
-                    { assessment.isAlienSpeciesString == 'true' && (assessment.connectedToAnotherString == "no" || assessment.connectedToAnotherString == "false" ) ? 
+                    {/* { assessment.isAlienSpeciesString == 'true' && (assessment.connectedToAnotherString == "no" || assessment.connectedToAnotherString == "false" ) ?  */}
+                    { assessment.isAlienSpecies && (!assessment.connectedToAnother || !assessment.connectedToAnother ) ? 
                      <div>
                      <div>
                          <p>{labels.SpeciesStatus.isProductionSpecies}</p>                          
@@ -404,7 +405,7 @@ checkStatus = (production) => {
 
                         
                     
-                    { assessment.isAlienSpeciesString == 'false' ?
+                    { assessment.isAlienSpecies ?
                     <div>
                         <p>{labels.SpeciesStatus.didSpecies} </p>
                         <Xcomp.StringEnum observableValue={[assessment, "changedFromAlien"]} mode="radio" codes={codes.ChangedFromAlien}/>
@@ -455,8 +456,8 @@ checkStatus = (production) => {
                         </fieldset>
                     }
 
-                    {assessment.isAlienSpeciesString == 'true' && 
-                        (assessment.connectedToAnotherString == "no" || assessment.connectedToAnotherString == "false" ) &&
+                    {assessment.isAlienSpecies && 
+                        (!assessment.connectedToAnother || !assessment.connectedToAnother ) &&
                         (assessment.wrongAssessed == false || assessment.wrongAssessed == null ) && assessment.speciesStatus != null && assessment.wrongAssessed != "yes" ?
                         <fieldset className="well">
                             {assessment.speciesStatus != "A" &&

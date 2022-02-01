@@ -32,10 +32,11 @@ export default class SelectAssessmentTable extends Component {
                 <table className="table table-striped vurderinger">
                     <thead>
                         <tr>                            
-                            <th>{labels.SelectAssessment.scientificName}</th>
-                            <th>{labels.SelectAssessment.popularName}</th>
+                            <th>{labels.SelectAssessment.species}</th>
+                            {/* <th>{labels.SelectAssessment.popularName}</th> */}
                             {/*<th>{labels.SelectAssessment.horizonscanning}</th>*/}
                             <th>{labels.SelectAssessment.cat2018}</th>
+                            {appState.assessmentTypeFilter == "riskAssessment" && <th>{labels.SelectAssessment.hs2023}</th>}
                             {appState.assessmentTypeFilter == "riskAssessment" && <th>{labels.SelectAssessment.cat2023}</th>}
                             {/*<th>{labels.SelectAssessment.duration}</th>*/}
                             <th>{labels.SelectAssessment.lastSaved}</th>

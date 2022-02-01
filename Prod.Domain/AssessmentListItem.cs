@@ -16,6 +16,7 @@ namespace Prod.Domain
         public string LockedForEditByUser { get; set; }
         public DateTime LockedForEditAt { get; set; }
         public string ScientificName { get; set; }
+        public string ScientificNameAuthor { get; set; }
         public string TaxonHierarcy { get; set; }
 
         public string Category { get; set; }
@@ -37,7 +38,7 @@ namespace Prod.Domain
 
         public int TaxonChange { get; set; }
         public string Category2018 { get; set; }
-        public string HorizontScanResult { get; set; }
+        public int HorizontScanResult { get; set; }
 
         //public List<string> Criteria { get; set; }
         //public List<string> SearchStrings { get; set; }

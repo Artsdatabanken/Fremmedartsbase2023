@@ -95,20 +95,23 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
 
         const existenceArea35 = assessment.CurrentExistenceAreaCalculated
 
-        riskAssessment.AOO1 == null ? riskAssessment.AOO1 = riskAssessment.AOOknown1 : riskAssessment.AOO1 = 0
+        // riskAssessment.AOO1 == null ? riskAssessment.AOO1 = riskAssessment.AOOknown1 : riskAssessment.AOO1 = 0
 
-        riskAssessment.AOO2 == null ? riskAssessment.AOO2 = riskAssessment.AOOknown2 : riskAssessment.AOO2 = 0
+        // riskAssessment.AOO2 == null ? riskAssessment.AOO2 = riskAssessment.AOOknown2 : riskAssessment.AOO2 = 0
 
-        if (assessment.artskartModel2 === undefined) {
-            // ToDo: Not completed yet...
-            assessment.artskartModel2 = {
-                observationFromYear: assessment.artskartModel.observationFromYear,
-                observationToYear: assessment.artskartModel.observationToYear,
-                includeNorge: assessment.artskartModel.includeNorge,
-                excludeObjects: assessment.artskartModel.excludeObjects,
-                excludeGbif: assessment.artskartModel.excludeGbif,
-            };
-        }
+
+        // commented this out. it crashed the application.
+        // if (assessment.artskartModel2 === undefined) {
+        //     // ToDo: Not completed yet...
+        //     assessment.artskartModel2 = {
+        //         observationFromYear: assessment.artskartModel.observationFromYear,
+        //         observationToYear: assessment.artskartModel.observationToYear,
+        //         includeNorge: assessment.artskartModel.includeNorge,
+        //         excludeObjects: assessment.artskartModel.excludeObjects,
+        //         excludeGbif: assessment.artskartModel.excludeGbif,
+        //     };
+        // }
+
 
         // const bassertpaValues = [
         //     {

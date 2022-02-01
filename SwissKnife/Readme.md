@@ -107,3 +107,8 @@ dotnet run -- maintenance patchmigration --connectionstring "Server=localhost;Da
 dotnet run -- maintenance importhsdata --connectionstring "Server=localhost;Database=fab4;Integrated Security=true;MultipleActiveResultSets=true" --csvfile ./Importfiler/Karplanter_til_Horisontskanning_20220107_til_FAB.csv
 dotnet run -- maintenance taxonomywashdirect --connectionstring "Server=localhost;Database=fab4;Integrated Security=true;MultipleActiveResultSets=true" --speciesgroup "Fugler"
 ```
+
+### Overføre vurderinger fra horisontscanning til full vurdering
+```
+dotnet run -- maintenance transferfromhs --connectionstring "Server=localhost;Database=fab4;Integrated Security=true;MultipleActiveResultSets=true"
+```
