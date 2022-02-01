@@ -1,7 +1,13 @@
 ﻿function getErrorDefinitions(assessment) {
     const a = assessment
     const r = assessment.riskAssessment
-    const errorDefinitions = [{
+    const errorDefinitions = [
+        {
+            id: "Error1", 
+            get cond() {return a.alienSpeciesCategory === "NotDefined"},
+            msg: "Overordnet kategori i Artens Status er ikke valgt!"
+        },
+        {
             id: "(a)err1", 
             get cond() {return r.AOOtotalBest === 0},
             msg: "En selvstendig reproduserende art må ha et forekomstareal på minst 4_km²!"
