@@ -427,7 +427,7 @@ public partial class FA4 // (3.2) Artsegenskaper
                 new BioClimateZones() {ClimateZone = "boreonemoral",                  StrongOceanic=false,ClearOceanic=false,WeakOceanic=false,TransferSection=false,WeakContinental=false },
                 new BioClimateZones() {ClimateZone = "southBoreal",                   StrongOceanic=false,ClearOceanic=false,WeakOceanic=false,TransferSection=false,WeakContinental=false },
                 new BioClimateZones() {ClimateZone = "midBoreal",                     StrongOceanic=false,ClearOceanic=false,WeakOceanic=false,TransferSection=false,WeakContinental=false },
-                new BioClimateZones() {ClimateZone = "northBorealnorthBoreal",        StrongOceanic=false,ClearOceanic=false,WeakOceanic=false,TransferSection=false,WeakContinental=false },
+                new BioClimateZones() {ClimateZone = "northBoreal",        StrongOceanic=false,ClearOceanic=false,WeakOceanic=false,TransferSection=false,WeakContinental=false },
                 new BioClimateZones() {ClimateZone = "alpineZones",                   StrongOceanic=false,ClearOceanic=false,WeakOceanic=false,TransferSection=false,WeakContinental=false }
             };
         public List<BioClimateZonesArctic> ArcticBioClimateZones { get; set; } = new List<BioClimateZonesArctic>(){

@@ -56,13 +56,11 @@ const OriginTable = (props) =>
             <colgroup>
             <col className="col-md-1" />
             <col className="col-md-2" />
-            <col className="col-md-1" />            
-            <col className="col-md-1" />
+            <col className="col-md-1" /> 
             <col className="col-md-1" />
         </colgroup>
         <thead>
             <tr>
-                <th>&nbsp;</th>
                 <th>&nbsp;</th>
                 <th>{props.labels.none}</th>
                 <th>{props.labels.openCoastLine}</th>
@@ -81,11 +79,9 @@ const OriginTable = (props) =>
             <col className="col-md-1" />
             <col className="col-md-1" />
             <col className="col-md-1" />
-            <col className="col-md-1" />
         </colgroup>
         <thead>
             <tr>
-                <th>&nbsp;</th>
                 <th>&nbsp;</th>
                 <th>{props.labels.strongOceanic}</th>
                 <th>{props.labels.clearOceanic}</th>
@@ -104,11 +100,9 @@ const OriginTable = (props) =>
             <col className="col-md-1" />
             <col className="col-md-1" />
             <col className="col-md-1" />
-            <col className="col-md-1" />
         </colgroup>
         <thead>
             <tr>
-                <th>&nbsp;</th>
                 <th>&nbsp;</th>
                 <th>{props.labels.weakOceanic}</th>
                 <th>{props.labels.transferSection}</th>

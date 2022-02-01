@@ -257,11 +257,11 @@ export default class Assessment62Okologiskeffekt extends React.Component {
             tax.rlCategory != null &&
              tax.existsInCountry)
         // createTaxonSearch(this.newSSIDS, "N")
-        createTaxonSearch(this.newGTD, evaluationContext, tax => tax.existsInCountry)
+        //createTaxonSearch(this.newGTD, evaluationContext, tax => tax.existsInCountry)
+        createTaxonSearch(this.newGTD, evaluationContext)
 
-        createTaxonSearch(this.newHPI, evaluationContext, tax => tax.existsInCountry)
-
-
+        //createTaxonSearch(this.newHPI, evaluationContext, tax => tax.existsInCountry)
+        createTaxonSearch(this.newHPI, evaluationContext)
     }
 
     render() {

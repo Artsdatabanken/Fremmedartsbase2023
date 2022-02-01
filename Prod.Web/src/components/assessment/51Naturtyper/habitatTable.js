@@ -218,7 +218,8 @@ export default class HabitatTable extends React.Component {
             }, 
         })
         // console.log("HabitatTable this.taxon " + JSON.stringify(this.taxon))
-        createTaxonSearch(this.taxon, props.fabModel.evaluationContext, tax => tax.existsInCountry)
+        //createTaxonSearch(this.taxon, props.fabModel.evaluationContext, tax => tax.existsInCountry)
+        createTaxonSearch(this.taxon, props.fabModel.evaluationContext)
     }
             
     @observable editMode = false

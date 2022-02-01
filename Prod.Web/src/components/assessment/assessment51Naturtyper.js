@@ -52,14 +52,18 @@ export default class Assessment51Naturtyper extends React.Component {
         const mainland = assessment.expertGroup != "Marine invertebrater" && assessment.expertGroup.indexOf ("Svalbard") < 0
         const svalbard = (assessment.expertGroup == "Karplanter (Svalbard)" || assessment.expertGroup == "Pattedyr (Svalbard)")
         const climateZoneLabel = (id) => koder.naturalOriginClimateZone.find(code => code.Value === id).Text
-        const contBioClimateZoneLabel = (id) => koder.continentalBioClimateZone.find(code => code.Value === id).Text
-        const arcticBioClimateZoneLabel = (id) => koder.arcticBioCLimateZone.find(code => code.Value === id).Text
-        const coastLineZoneLabel = (id) => koder.coastLineZone.find(code => code.Value === id).Text
+        const contBioClimateZoneLabel = (id) => koder.continentalBioClimateZone.find(code => code.Value === id) ? koder.continentalBioClimateZone.find(code => code.Value === id).Text : id
+        const arcticBioClimateZoneLabel = (id) => koder.arcticBioCLimateZone.find(code => code.Value === id) ? koder.arcticBioCLimateZone.find(code => code.Value === id).Text : id
+        const coastLineZoneLabel = (id) => koder.coastLineZone.find(code => code.Value === id) ? koder.coastLineZone.find(code => code.Value === id).Text : id
         const subClimateZoneLabel = (id) => koder.naturalOriginSubClimateZone.find(code => code.Value === id).Text
         const naturalOriginDisabled = (id, region) => koder.naturalOriginDisabled.find(code => code.Value === id).Text.indexOf(region) !== -1
-        const coastZoneDisabled = (id, region) => koder.coastZoneDisabled.find(code => code.Value === id).Text.indexOf(region) !== -1
-        const arcticZoneDisabled = (id, region) => koder.arcticZoneDisabled.find(code => code.Value === id).Text.indexOf(region) !== -1
-        const mainlandZoneDisabled = (id, region) => koder.mainlandZoneDisabled.find(code => code.Value === id).Text.indexOf(region) !== -1
+        const coastZoneDisabled = (id, region) => koder.coastZoneDisabled.find(code => code.Value === id) ? koder.coastZoneDisabled.find(code => code.Value === id).Text.indexOf(region) !== -1 : true
+        const arcticZoneDisabled = (id, region) => koder.arcticZoneDisabled.find(code => code.Value === id) ? koder.arcticZoneDisabled.find(code => code.Value === id).Text.indexOf(region) !== -1 : true
+        const mainlandZoneDisabled = (id, region) => koder.mainlandZoneDisabled.find(code => code.Value === id) ? koder.mainlandZoneDisabled.find(code => code.Value === id).Text.indexOf(region) !== -1 : true
+
+        console.log("ACHTUNG!")
+        console.log(assessment.currentBioClimateZones)
+        console.log(koder.continentalBioClimateZone)
         action(() => {
             critC.auto = false
             critF.auto = false
@@ -131,7 +135,7 @@ export default class Assessment51Naturtyper extends React.Component {
                             mode = {"marine"}
                             origins={assessment.coastLineSections} 
                             climateZoneLabel={coastLineZoneLabel}
-                            subClimateZoneLabel={subClimateZoneLabel}
+                            //subClimateZoneLabel={subClimateZoneLabel}
                             naturalOriginDisabled={coastZoneDisabled}
                             labels={labels.NaturalOrigin}
                     />
@@ -152,7 +156,7 @@ export default class Assessment51Naturtyper extends React.Component {
                             mode = {"continental"}
                             origins={assessment.currentBioClimateZones} 
                             climateZoneLabel={contBioClimateZoneLabel}
-                            subClimateZoneLabel={subClimateZoneLabel}
+                            //subClimateZoneLabel={subClimateZoneLabel}
                             naturalOriginDisabled={mainlandZoneDisabled}
                             labels={labels.NaturalOrigin}
                     />
@@ -170,7 +174,7 @@ export default class Assessment51Naturtyper extends React.Component {
                             mode = {"arctic"}
                             origins={assessment.arcticBioClimateZones} 
                             climateZoneLabel={arcticBioClimateZoneLabel}
-                            subClimateZoneLabel={subClimateZoneLabel}
+                           // subClimateZoneLabel={subClimateZoneLabel}
                             naturalOriginDisabled={arcticZoneDisabled}
                             labels={labels.NaturalOrigin}
                     />

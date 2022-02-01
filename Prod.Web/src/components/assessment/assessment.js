@@ -107,7 +107,8 @@ class AssessmentRoot extends Component {
             newItem.taxonSearchWaitingForResult = false
         })
 
-        createTaxonSearch(this.newTaxon, this.props.appState.evaluationContext, tax => tax.existsInCountry)
+        //createTaxonSearch(this.newTaxon, this.props.appState.evaluationContext, tax => tax.existsInCountry)
+        createTaxonSearch(this.newTaxon, this.props.appState.evaluationContext)
 
     }
 
