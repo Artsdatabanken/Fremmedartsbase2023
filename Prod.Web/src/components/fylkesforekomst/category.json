@@ -1,10 +1,10 @@
 [
   {
     "key": "known",
-    "title": "Kjent",
+    "title": "Kjent utbredelse i dag",
     "x": 24,
     "y": 14,
-    "tooltip": "Kjent",
+    "tooltip": "Kjent utbredelse i dag",
     "normal": {
       "stroke": "hsl(22, 35%, 18%)",
       "strokeWidth": 1,
@@ -19,8 +19,8 @@
   },
   {
     "key": "assumed",
-    "title": "Antatt i dag",
-    "tooltip": "Antatt i dag",
+    "title": "Antatt utbredelse i dag",
+    "tooltip": "Antatt utbredelse i dag",
     "x": 24,
     "y": 68,
     "normal": {
@@ -54,10 +54,10 @@
   },
   {
     "key": "assumed_future",
-    "title": "Antatt om 50 år",
+    "title": "Antatt utbredelse om 50 år",
     "x": 24,
     "y": 172,
-    "tooltip": "Antatt om 50 år",
+    "tooltip": "Antatt utbredelse om 50 år",
     "normal": {
       "stroke": "hsl(26.7, 15%, 25%)",
       "strokeWidth": 1,
