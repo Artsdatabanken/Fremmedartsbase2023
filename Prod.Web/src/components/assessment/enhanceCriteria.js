@@ -236,7 +236,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 ? "A2"
                 : method === "ViableAnalysis"
                 ? "A3"
-                : ""
+                : "AmethodInvalid"
             return result
         },
         get bmetodkey() {
@@ -250,7 +250,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                     : "B2b"
                 : method === "c"  // no longer in use (??)
                 ? "B2bX"
-                : ""
+                : "BmethodNotChosen"
             console.log("##¤bmetod " + result + " doorKnocker: " + r.doorKnocker)
             return result
         },
