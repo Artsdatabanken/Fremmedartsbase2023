@@ -111,19 +111,19 @@ namespace SwissKnife.Database
                 foreach (var item in assessments)
                 {
                     var doc = System.Text.Json.JsonSerializer.Deserialize<FA4>(item.Doc);
-                    if (doc.HorizonDoScanning == false)
+                    var horizonScanResult = GetHorizonScanResult(doc);
+                    if (doc.HorizonDoScanning == false) // && horizonScanResult.HasValue == false)
                     {
                         continue;
                     }
 
-                    var horizonScanResult = GetHorizonScanResult(doc);
                     if (horizonScanResult.HasValue == false)
                     {
                         continue;
                     }
 
                     doc.HorizonScanResult = horizonScanResult.Value == true ? "scanned_fullAssessment" : "scanned_noAssessment";
-                    doc.HorizonDoScanning = false;
+                    doc.HorizonDoScanning = horizonScanResult.Value != true;
 
                     var docLastUpdatedOn = DateTime.Now;
                     item.Doc = System.Text.Json.JsonSerializer.Serialize(doc);
