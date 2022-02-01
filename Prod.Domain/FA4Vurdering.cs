@@ -415,9 +415,26 @@ public partial class FA4 // (3.2) Artsegenskaper
         public string NaturalOriginUnknownDocumentation { get; set; }
         public List<NaturalOrigin> CurrentInternationalExistenceAreas { get; set; } = new List<NaturalOrigin>(); // lagt til 09.01.2017
 
-        public List<CoastLineSection> CoastLineSections { get; set; } = new List<CoastLineSection>();
-        public List<BioClimateZones> CurrentBioClimateZones { get; set; } = new List<BioClimateZones>();
-        public List<BioClimateZonesArctic> ArcticBioClimateZones { get; set; } = new List<BioClimateZonesArctic>();
+        public List<CoastLineSection> CoastLineSections { get; set; } = new List<CoastLineSection>()  {
+                new CoastLineSection() {ClimateZone = "northSeaAndSkagerrak",       None=false,OpenCoastLine=false,Skagerrak=false },
+                new CoastLineSection() {ClimateZone = "norwegianSea",               None=false,OpenCoastLine=false,Skagerrak=false },
+                new CoastLineSection() {ClimateZone = "barentsSea",                 None=false,OpenCoastLine=false,Skagerrak=false },
+                new CoastLineSection() {ClimateZone = "greenlandSea",               None=false,OpenCoastLine=false,Skagerrak=false },
+                new CoastLineSection() {ClimateZone = "polarSea",                   None=false,OpenCoastLine=false,Skagerrak=false }
+            };
+
+        public List<BioClimateZones> CurrentBioClimateZones { get; set; } = new List<BioClimateZones>() {
+                new BioClimateZones() {ClimateZone = "boreonemoral",                  StrongOceanic=false,ClearOceanic=false,WeakOceanic=false,TransferSection=false,WeakContinental=false },
+                new BioClimateZones() {ClimateZone = "southBoreal",                   StrongOceanic=false,ClearOceanic=false,WeakOceanic=false,TransferSection=false,WeakContinental=false },
+                new BioClimateZones() {ClimateZone = "midBoreal",                     StrongOceanic=false,ClearOceanic=false,WeakOceanic=false,TransferSection=false,WeakContinental=false },
+                new BioClimateZones() {ClimateZone = "northBorealnorthBoreal",        StrongOceanic=false,ClearOceanic=false,WeakOceanic=false,TransferSection=false,WeakContinental=false },
+                new BioClimateZones() {ClimateZone = "alpineZones",                   StrongOceanic=false,ClearOceanic=false,WeakOceanic=false,TransferSection=false,WeakContinental=false }
+            };
+        public List<BioClimateZonesArctic> ArcticBioClimateZones { get; set; } = new List<BioClimateZonesArctic>(){
+                new BioClimateZonesArctic() {ClimateZone = "midArctic;",                  WeakOceanic=false,TransferSection=false,WeakContinental=false,ClearContinental=false },
+                new BioClimateZonesArctic() {ClimateZone = "northArctic",                 WeakOceanic=false,TransferSection=false,WeakContinental=false,ClearContinental=false },
+                new BioClimateZonesArctic() {ClimateZone = "northArcticDesert;",          WeakOceanic=false,TransferSection=false,WeakContinental=false,ClearContinental=false }
+            };
         public string CurrentInternationalExistenceAreasUnknownDocumentation { get; set; }
 
        
