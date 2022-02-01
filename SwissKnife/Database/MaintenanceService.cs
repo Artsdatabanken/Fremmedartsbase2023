@@ -90,6 +90,67 @@ namespace SwissKnife.Database
 
             }
         }
+        internal static void TransferFromHs(SqlServerProdDbContext _database)
+        {
+            var ts = new TaksonService();
+            var batchSize = 1000;
+            var pointer = 0;
+            var commentdatetime = DateTime.MinValue;
+            while (true)
+            {
+                var batchChanges = false;
+                Console.WriteLine(pointer);
+                _database.ChangeTracker.Clear();
+                var assessments = _database.Assessments.OrderBy(x => x.Id).Skip(pointer).Take(batchSize).ToArray();
+                if (assessments.Length == 0)
+                {
+                    break;
+                }
+                pointer += assessments.Length;
+
+                foreach (var item in assessments)
+                {
+                    var doc = System.Text.Json.JsonSerializer.Deserialize<FA4>(item.Doc);
+                    var horizonScanResult = GetHorizonScanResult(doc);
+                    if (doc.HorizonDoScanning == false) // && horizonScanResult.HasValue == false)
+                    {
+                        continue;
+                    }
+
+                    if (horizonScanResult.HasValue == false)
+                    {
+                        continue;
+                    }
+
+                    doc.HorizonScanResult = horizonScanResult.Value == true ? "scanned_fullAssessment" : "scanned_noAssessment";
+                    doc.HorizonDoScanning = horizonScanResult.Value != true;
+
+                    var docLastUpdatedOn = DateTime.Now;
+                    item.Doc = System.Text.Json.JsonSerializer.Serialize(doc);
+                    item.LastUpdatedAt = docLastUpdatedOn;
+                    commentdatetime = item.LastUpdatedAt;
+                    batchChanges = true;
+                    
+                }
+
+                if (batchChanges)
+                {
+                    _database.SaveChanges();
+                }
+            }
+            if (commentdatetime > DateTime.MinValue)
+            {
+
+                var stamp = _database.TimeStamp.SingleOrDefault();
+                if (stamp != null && stamp.DateTimeUpdated < commentdatetime)
+                {
+                    stamp.DateTimeUpdated = commentdatetime;
+                }
+
+                _database.SaveChanges();
+
+            }
+        }
         private static void UpdateAndCreateHistory(SqlServerProdDbContext dbcontext, Assessment assessment, FA4 doc)
         {
             var docLastUpdatedOn = DateTime.Now;
@@ -315,6 +376,36 @@ namespace SwissKnife.Database
                 context.dbcontext.Comments.Remove(existing);
                 context.changes = true;
             }
+        }
+
+        private static bool? GetHorizonScanResult(FA4 ass)
+        {
+            var pot = ass.HorizonEstablismentPotential ?? string.Empty;
+            var effects = ass.HorizonEcologicalEffect ?? string.Empty;
+            if (pot == string.Empty || effects == string.Empty) return null;
+            switch (pot)
+            {
+                case "0":
+                    switch (effects)
+                    {
+                        case "no":
+                        case "yesWhilePresent": return false;
+                        case "yesAfterGone": return true;
+                        default: return false;
+                    }
+                case "1":
+                    switch (effects)
+                    {
+                        case "no": return false;
+                        case "yesWhilePresent":
+                        case "yesAfterGone": return true;
+                        default: return false;
+                    }
+                case "2":
+                    return true;
+            }
+
+            return false;
         }
 
         public class ProsessContext

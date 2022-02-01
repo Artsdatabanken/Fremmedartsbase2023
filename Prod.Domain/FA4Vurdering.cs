@@ -160,6 +160,15 @@ namespace Prod.Domain
         /// If true this assessment is marked for horizon scanning prior to risk assessment
         /// </summary>
         public bool HorizonDoScanning { get; set; } = false;
+
+        /// <summary>
+        /// Signal if Horizonscan has been done and result
+        /// </summary>
+        /// <remarks>
+        /// scanned_fullAssessment = Do full alienspecies assessment 
+        /// scanned_noAssessment = Don't do full alienspecies assessment
+        /// </remarks>
+        public string HorizonScanResult { get; set; } = "";
         public string HorizonEstablismentPotential { get; set; }
         public string HorizonEstablismentPotentialDescription { get; set; } = "";
         public string HorizonEcologicalEffect { get; set; }
@@ -406,9 +415,26 @@ public partial class FA4 // (3.2) Artsegenskaper
         public string NaturalOriginUnknownDocumentation { get; set; }
         public List<NaturalOrigin> CurrentInternationalExistenceAreas { get; set; } = new List<NaturalOrigin>(); // lagt til 09.01.2017
 
-        public List<CoastLineSection> CoastLineSections { get; set; } = new List<CoastLineSection>();
-        public List<BioClimateZones> CurrentBioClimateZones { get; set; } = new List<BioClimateZones>();
-        public List<BioClimateZonesArctic> ArcticBioClimateZones { get; set; } = new List<BioClimateZonesArctic>();
+        public List<CoastLineSection> CoastLineSections { get; set; } = new List<CoastLineSection>()  {
+                new CoastLineSection() {ClimateZone = "northSeaAndSkagerrak",       None=false,OpenCoastLine=false,Skagerrak=false },
+                new CoastLineSection() {ClimateZone = "norwegianSea",               None=false,OpenCoastLine=false,Skagerrak=false },
+                new CoastLineSection() {ClimateZone = "barentsSea",                 None=false,OpenCoastLine=false,Skagerrak=false },
+                new CoastLineSection() {ClimateZone = "greenlandSea",               None=false,OpenCoastLine=false,Skagerrak=false },
+                new CoastLineSection() {ClimateZone = "polarSea",                   None=false,OpenCoastLine=false,Skagerrak=false }
+            };
+
+        public List<BioClimateZones> CurrentBioClimateZones { get; set; } = new List<BioClimateZones>() {
+                new BioClimateZones() {ClimateZone = "boreonemoral",                  StrongOceanic=false,ClearOceanic=false,WeakOceanic=false,TransferSection=false,WeakContinental=false },
+                new BioClimateZones() {ClimateZone = "southBoreal",                   StrongOceanic=false,ClearOceanic=false,WeakOceanic=false,TransferSection=false,WeakContinental=false },
+                new BioClimateZones() {ClimateZone = "midBoreal",                     StrongOceanic=false,ClearOceanic=false,WeakOceanic=false,TransferSection=false,WeakContinental=false },
+                new BioClimateZones() {ClimateZone = "northBorealnorthBoreal",        StrongOceanic=false,ClearOceanic=false,WeakOceanic=false,TransferSection=false,WeakContinental=false },
+                new BioClimateZones() {ClimateZone = "alpineZones",                   StrongOceanic=false,ClearOceanic=false,WeakOceanic=false,TransferSection=false,WeakContinental=false }
+            };
+        public List<BioClimateZonesArctic> ArcticBioClimateZones { get; set; } = new List<BioClimateZonesArctic>(){
+                new BioClimateZonesArctic() {ClimateZone = "midArctic;",                  WeakOceanic=false,TransferSection=false,WeakContinental=false,ClearContinental=false },
+                new BioClimateZonesArctic() {ClimateZone = "northArctic",                 WeakOceanic=false,TransferSection=false,WeakContinental=false,ClearContinental=false },
+                new BioClimateZonesArctic() {ClimateZone = "northArcticDesert;",          WeakOceanic=false,TransferSection=false,WeakContinental=false,ClearContinental=false }
+            };
         public string CurrentInternationalExistenceAreasUnknownDocumentation { get; set; }
 
        
@@ -1545,8 +1571,8 @@ public partial class FA4 // (3.2) Artsegenskaper
 
     public class ArtskartModel
     {
-        public int ObservationFromYear { get; set; }
-        public int ObservationToYear { get; set; }
+        public int ObservationFromYear { get; set; } = 1950;
+        public int ObservationToYear { get; set; } = 2021;
         public bool IncludeNorge { get; set; }
         public bool IncludeSvalbard { get; set; }
         public bool ExcludeObjects { get; set; }

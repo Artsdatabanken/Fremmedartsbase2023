@@ -858,6 +858,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.IsDeleted, opt => opt.Ignore())
                     //.ForMember(dest => dest.VurderingId2018, opt => opt.MapFrom(src => src.Id))
                     .ForMember(dest => dest.HorizonDoScanning, opt => opt.Ignore())
+                    .ForMember(dest => dest.HorizonScanResult, opt => opt.Ignore())
                     .ForMember(dest => dest.HorizonScanningStatus, opt => opt.Ignore())
                     .ForMember(dest => dest.HorizonEcologicalEffect, opt => opt.Ignore())
                     .ForMember(dest => dest.HorizonEcologicalEffectDescription, opt => opt.Ignore())
