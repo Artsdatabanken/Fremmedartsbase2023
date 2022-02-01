@@ -2356,6 +2356,20 @@
                 "text": "Annen tilstandsendring",
                 "Info": null,
                 "Children": null
+            },
+            {
+                "Id": "tilstandsendringer",
+                "value": "F11",
+                "text": "F11",
+                "Info": null,
+                "Children": null
+            },
+            {
+                "Id": "tilstandsendringer",
+                "value": "F13",
+                "text": "F13",
+                "Info": null,
+                "Children": null
             }
         ],
         "affectedArea": [

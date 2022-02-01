@@ -628,7 +628,7 @@ class ViewModel {
         if (assessment && assessment.id) {
             const assessmentStringCopy = JSON.stringify(assessment,undefined,2)
             const jsoncopy = JSON.parse(assessmentStringCopy)
-            transaction(() => {
+            runInAction(() => {
                 this.assessmentSavedVersion = jsoncopy
                 this.assessmentSavedVersionString = assessmentStringCopy
             })
