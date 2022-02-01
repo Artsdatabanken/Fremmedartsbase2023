@@ -627,10 +627,7 @@ namespace SwissKnife.Database
         { 
             var mapperConfig = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<FA3Legacy, FA4>()
-                    .ForMember(dest => dest.CoastLineSections, opt => opt.Ignore())
-                    .ForMember(dest => dest.ArcticBioClimateZones, opt => opt.Ignore())
-                    .ForMember(dest => dest.CurrentBioClimateZones, opt => opt.Ignore());
+                
                 cfg.CreateMap<FA3Legacy.NaturalOrigin, FA4.NaturalOrigin>();
                 cfg.CreateMap<FA3Legacy.RedlistedNatureType, FA4.RedlistedNatureType>()
                     .ForMember(dest => dest.Background, opt => opt.Ignore());
@@ -847,6 +844,9 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.ChangedAssessment, opt => opt.Ignore())
                     .ForMember(dest => dest.ReasonForChangeOfCategory, opt => opt.Ignore())
                     .ForMember(dest => dest.IndoorProduktion, opt => opt.Ignore())
+                    .ForMember(dest => dest.CoastLineSections, opt => opt.Ignore())
+                    .ForMember(dest => dest.ArcticBioClimateZones, opt => opt.Ignore())
+                    .ForMember(dest => dest.CurrentBioClimateZones, opt => opt.Ignore())
                     .ForMember(dest => dest.LastUpdatedBy, opt => opt.MapFrom(src => src.SistOppdatertAv))
                     .ForMember(dest => dest.LastUpdatedAt, opt => opt.MapFrom(src => src.SistOppdatert))
                     .ForMember(dest => dest.LockedForEditAt,
