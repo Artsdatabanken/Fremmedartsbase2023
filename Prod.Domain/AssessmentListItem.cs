@@ -37,7 +37,7 @@ namespace Prod.Domain
 
         public int TaxonChange { get; set; }
         public string Category2018 { get; set; }
-        public string HorizontScanResult { get; set; }
+        public int HorizontScanResult { get; set; }
 
         //public List<string> Criteria { get; set; }
         //public List<string> SearchStrings { get; set; }
