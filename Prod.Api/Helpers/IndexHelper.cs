@@ -22,7 +22,7 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Change this to force index rebuild!
         /// </summary>
-        public const int IndexVersion = 30;
+        public const int IndexVersion = 31;
 
         private const string Field_Id = "Id";
         private const string Field_Group = "Expertgroup";
@@ -496,6 +496,7 @@ namespace Prod.Api.Helpers
                 Criteria = doc.Get(Field_CriteriaAll),
                 AssessmentContext = doc.Get(Field_AssessmentContext),
                 PopularName = doc.Get(Field_PopularName),
+                HorizontScanResult = doc.Get(Field_HsResult),
                 CommentDate = doc.Get(Field_NewestComment),
                 CommentClosed = int.Parse(doc.Get(Field_CommentsClosed)),
                 CommentOpen = int.Parse(doc.Get(Field_CommentsOpen)),
