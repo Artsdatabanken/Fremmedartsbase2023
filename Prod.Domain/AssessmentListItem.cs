@@ -16,6 +16,7 @@ namespace Prod.Domain
         public string LockedForEditByUser { get; set; }
         public DateTime LockedForEditAt { get; set; }
         public string ScientificName { get; set; }
+        public string ScientificNameAuthor { get; set; }
         public string TaxonHierarcy { get; set; }
 
         public string Category { get; set; }

@@ -22,7 +22,7 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Change this to force index rebuild!
         /// </summary>
-        public const int IndexVersion = 34;
+        public const int IndexVersion = 2;
 
         private const string Field_Id = "Id";
         private const string Field_Group = "Expertgroup";
@@ -32,6 +32,7 @@ namespace Prod.Api.Helpers
         private const string Field_LockedForEditByUser = "LockedForEditByUser";
         private const string Field_LockedForEditAt = "LockedForEditAt";
         private const string Field_ScientificName = "ScientificName";
+        private const string Field_ScientificNameAuthor = "ScientificNameAuthor";
         private const string Field_TaxonPath = "TaxonPath";
         private const string Field_ScientificNameId = "ScientificNameId";
         public const string Field_ScientificNameAsTerm = "ScientificNameTerm";
@@ -214,10 +215,11 @@ namespace Prod.Api.Helpers
                 new StoredField(Field_LockedForEditByUser,
                     assessment.LockedForEditByUser != null ? assessment.LockedForEditByUser.FullName.Trim() : string.Empty),
                 new StoredField(Field_LockedForEditAt, assessment.LockedForEditAt.ToString("s")),
-                new TextField(Field_ScientificName,
-                    ass.EvaluatedScientificName + (!string.IsNullOrWhiteSpace(ass.EvaluatedScientificNameAuthor)
-                        ? " " + ass.EvaluatedScientificNameAuthor
-                        : string.Empty),
+                new TextField(Field_ScientificName, ass.EvaluatedScientificName, // + (!string.IsNullOrWhiteSpace(ass.EvaluatedScientificNameAuthor) ? " " + ass.EvaluatedScientificNameAuthor : string.Empty),
+                    Field.Store.YES), // textfield - ignore case
+                new TextField(Field_ScientificNameAuthor, !string.IsNullOrWhiteSpace(ass.EvaluatedScientificNameAuthor)
+                        ? ass.EvaluatedScientificNameAuthor
+                        : string.Empty,
                     Field.Store.YES), // textfield - ignore case
                 new StringField(Field_ScientificNameId, ass.EvaluatedScientificNameId.ToString(), Field.Store.NO),
                 new StringField(Field_ScientificNameAsTerm, ass.EvaluatedScientificName.ToLowerInvariant(),
@@ -490,6 +492,7 @@ namespace Prod.Api.Helpers
                 LockedForEditByUser = doc.Get(Field_LockedForEditByUser),
                 LockedForEditAt = Convert.ToDateTime(doc.Get(Field_LockedForEditAt)),
                 ScientificName = doc.Get(Field_ScientificName),
+                ScientificNameAuthor = doc.Get(Field_ScientificNameAuthor),
                 TaxonHierarcy = doc.Get(Field_TaxonHierarcy),
                 Category = doc.Get(Field_Category),
                 Category2018 = doc.Get(Field_Category2018),

@@ -6099,6 +6099,13 @@
                         },
                         {
                             "Id": null,
+                            "Value": "species",
+                            "Text": "Art",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "popularName",
                             "Text": "Populærnavn",
                             "Info": null,
@@ -6122,6 +6129,13 @@
                             "Id": null,
                             "Value": "cat2023",
                             "Text": "Kategori 2023",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "hs2023",
+                            "Text": "HSc",
                             "Info": null,
                             "Children": null
                         },
