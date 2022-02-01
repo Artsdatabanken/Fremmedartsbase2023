@@ -160,6 +160,15 @@ namespace Prod.Domain
         /// If true this assessment is marked for horizon scanning prior to risk assessment
         /// </summary>
         public bool HorizonDoScanning { get; set; } = false;
+
+        /// <summary>
+        /// Signal if Horizonscan has been done and result
+        /// </summary>
+        /// <remarks>
+        /// scanned_fullAssessment = Do full alienspecies assessment 
+        /// scanned_noAssessment = Don't do full alienspecies assessment
+        /// </remarks>
+        public string HorizonScanResult { get; set; } = "";
         public string HorizonEstablismentPotential { get; set; }
         public string HorizonEstablismentPotentialDescription { get; set; } = "";
         public string HorizonEcologicalEffect { get; set; }
@@ -1545,8 +1554,8 @@ public partial class FA4 // (3.2) Artsegenskaper
 
     public class ArtskartModel
     {
-        public int ObservationFromYear { get; set; }
-        public int ObservationToYear { get; set; }
+        public int ObservationFromYear { get; set; } = 1950;
+        public int ObservationToYear { get; set; } = 2021;
         public bool IncludeNorge { get; set; }
         public bool IncludeSvalbard { get; set; }
         public bool ExcludeObjects { get; set; }
