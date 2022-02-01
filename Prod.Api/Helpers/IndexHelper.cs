@@ -22,7 +22,7 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Change this to force index rebuild!
         /// </summary>
-        public const int IndexVersion = 31;
+        public const int IndexVersion = 32;
 
         private const string Field_Id = "Id";
         private const string Field_Group = "Expertgroup";
@@ -232,7 +232,7 @@ namespace Prod.Api.Helpers
                 new StringField(Field_NR2018, get2018NotAssessed.ToString(), Field.Store.NO),
                 new StringField(Field_HsStatus, ass.HorizonScanningStatus, Field.Store.YES),
                 //new StringField(Field_HsDone, ass.HorizonScanningStatus, Field.Store.YES),
-                new StringField(Field_HsResult, horResult, Field.Store.NO),
+                new StringField(Field_HsResult, horResult, Field.Store.YES),
                 new StringField(Field_Progress, ass.EvaluationStatus, Field.Store.YES),
                 // facets
                 new FacetField(Facet_Author, assessment.LastUpdatedByUser.FullName),
