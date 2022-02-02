@@ -173,8 +173,8 @@ export default function enhanceAssessment(json, appState) {
             const result = 
                 !assessment.isAlienSpecies 
                 ? "WillNotBeRiskAssessed"
-                : assessment.connectedToAnother 
-                ? "WillNotBeRiskAssessed"
+                //: assessment.connectedToAnother 
+                //? "WillNotBeRiskAssessed"
                 : assessment.alienSpeciesCategory == "UncertainBefore1800"
                 ? "WillNotBeRiskAssessed"
                 : assessment.alienSpeciesCategory == "NotDefined"

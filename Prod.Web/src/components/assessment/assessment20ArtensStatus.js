@@ -117,16 +117,15 @@ checkStatus = (production) => {
                                 codes={codes.yesNo}
                                 />
                         
-                        { assessment.connectedToAnother || assessment.connectedToAnother ?
+                        {assessment.connectedToAnother || assessment.connectedToAnother ?
                         <div className={"connectedTaxons"}>
-                           {assessment.notApplicableCategory == "taxonIsEvaluatedInHigherRank" && 
-                            // transfer "notApplicableDescription" from FAB3
-                            <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/>                             
-                           }
-                            <Xcomp.Radio value={"Connected"} observableValue={[assessment, "connected"]} label={labels.SpeciesStatus.assessedWithAnotherTaxon}/>
-                            {assessment.connected == "Connected" ? 
+                             {/*assessment.notApplicableCategory == "taxonIsEvaluatedInHigherRank" && 
+                                // transfer "notApplicableDescription" from FAB3
+                             */}
                             
-                            assessment.connectedTaxon && assessment.connectedTaxon.taxonId != "" ? 
+                            <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/>   
+
+                            {assessment.connectedTaxon && assessment.connectedTaxon.taxonId != "" ? 
                             <div 
                                     className="speciesNewItem"
                                     onClick={action(() => {
@@ -211,12 +210,11 @@ checkStatus = (production) => {
                                     </div>
                                 </div> :
                                 null}
-                            </div> : null }
-                               
-                                
-                            
+                            </div> }                          
+                           
+                           {/* <Xcomp.Radio value={"Connected"} observableValue={[assessment, "connected"]} label={labels.SpeciesStatus.assessedWithAnotherTaxon}/>
                             <Xcomp.Radio value={"Shared"} observableValue={[assessment, "connected"]} label={labels.SpeciesStatus.notAssessedButShared} />
-                            {assessment.connected == "Shared" ?
+                            assessment.connected == "Shared" ?
 
                             assessment.connectedTaxon != null && assessment.connectedTaxon.taxonId != "" ? 
                             <div 
@@ -310,13 +308,15 @@ checkStatus = (production) => {
                                     </div>
                                 </div> :
                                 null}
-                                </div> : null }
+                                </div> : null }*/}
                                
                             </div> : null }
-                    </div> : null}
+                    </div> : null} 
 
                     {/* { assessment.isAlienSpeciesString == 'true' && (assessment.connectedToAnotherString == "no" || assessment.connectedToAnotherString == "false" ) ?  */}
-                    { assessment.isAlienSpecies && (!assessment.connectedToAnother || !assessment.connectedToAnother ) ? 
+                    { assessment.isAlienSpecies 
+                    //&& (!assessment.connectedToAnother || !assessment.connectedToAnother ) 
+                    ? 
                      <div>
                      <div>
                          <p>{labels.SpeciesStatus.isProductionSpecies}</p>                          
@@ -457,7 +457,7 @@ checkStatus = (production) => {
                     }
 
                     {assessment.isAlienSpecies && 
-                        (!assessment.connectedToAnother || !assessment.connectedToAnother ) &&
+                       // (!assessment.connectedToAnother || !assessment.connectedToAnother ) &&
                         (assessment.wrongAssessed == false || assessment.wrongAssessed == null ) && assessment.speciesStatus != null && assessment.wrongAssessed != "yes" ?
                         <fieldset className="well">
                             {assessment.speciesStatus != "A" &&
