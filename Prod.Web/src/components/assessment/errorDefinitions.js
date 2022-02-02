@@ -36,11 +36,16 @@
             id: "(a)err6", 
             get cond() {return r.AOOtotalBest < r.AOOknown},
             msg: "Estimatet kan ikke justeres til å være lavere enn kjent forekomstareal!"
-            //for ">":  "MERK: Estimatet skal kun justeres om forekomster som er utgått pga. tiltak ble tatt ut av estimatet for kjent forekomstareal"
         },
         {
             id: "(a)err7", 
-            get cond() {return r.AOO1 < r.AOOknown},
+            get cond() {return r.AOO1 < r.AOOknown1},
+            msg: "Det beste anslaget på det totale nåværende forekomstarealet kan ikke være mindre enn det kjente!"
+            //for ">":  "MERK: Estimatet skal kun justeres om forekomster som er utgått pga. tiltak ble tatt ut av estimatet for kjent forekomstareal"
+        },
+        {
+            id: "(a)err8", 
+            get cond() {return r.AOO2 < r.AOOknown2},
             msg: "Det beste anslaget på det totale nåværende forekomstarealet kan ikke være mindre enn det kjente!"
         },
         {
