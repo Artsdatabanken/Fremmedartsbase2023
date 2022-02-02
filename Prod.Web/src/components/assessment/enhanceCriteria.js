@@ -1,4 +1,4 @@
-﻿import {action, autorun, computed, extendObservable, observable, observe, isObservableArray, runInAction, remove, set, trace} from 'mobx';
+﻿import {action, autorun, extendObservable, observable, reaction, runInAction, trace} from 'mobx';
 import RiskLevel from './riskLevel';
 import {extractFloat, getCriterion} from '../../utils'
 import { EventNote } from '@material-ui/icons';
