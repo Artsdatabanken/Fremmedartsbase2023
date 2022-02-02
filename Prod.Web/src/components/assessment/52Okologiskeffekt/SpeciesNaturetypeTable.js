@@ -3,6 +3,7 @@ import {action} from 'mobx';
 import {observer} from 'mobx-react';
 import * as Xcomp from '../observableComponents';
 
+const redListCodes = require('./../../../TrueteOgSjeldneNaturtyper2018.json')
 
 const kodeTekst = (koder, verdi) => koder.filter(item => item.Value === verdi).map(item => item.Text)[0] || verdi 
 
