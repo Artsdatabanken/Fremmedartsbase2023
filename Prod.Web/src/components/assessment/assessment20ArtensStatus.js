@@ -405,7 +405,7 @@ checkStatus = (production) => {
 
                         
                     
-                    { assessment.isAlienSpecies ?
+                    { !assessment.isAlienSpecies ?
                     <div>
                         <p>{labels.SpeciesStatus.didSpecies} </p>
                         <Xcomp.StringEnum observableValue={[assessment, "changedFromAlien"]} mode="radio" codes={codes.ChangedFromAlien}/>
