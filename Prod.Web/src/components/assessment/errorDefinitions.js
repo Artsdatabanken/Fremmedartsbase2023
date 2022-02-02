@@ -69,12 +69,12 @@
         },
         {
             id: "B1err1", 
-            get cond() {return r.expansionLowerQ > r.expansionSpeed},
+            get cond() {return r.doFullAssessment && r.expansionLowerQ > r.expansionSpeed},
             msg: "Ekspansjonshastighetens nedre kvartil må være mindre enn medianen."
         },
         {
             id: "B1err2", 
-            get cond() {return r.expansionUpperQ <= r.expansionSpeed},
+            get cond() {return r.doFullAssessment && r.expansionUpperQ <= r.expansionSpeed},
             msg: "Ekspansjonshastighetens øvre kvartil må være større enn medianen."
         }
     ]
