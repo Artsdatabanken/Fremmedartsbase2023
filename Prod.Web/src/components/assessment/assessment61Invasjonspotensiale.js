@@ -579,7 +579,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                     /> <span style={{margin: '10px 10px 0'}}>(t<sub>1</sub>)</span>
                                                     </td>
                                                 <td><Xcomp.Number                            
-                                                        observableValue={[riskAssessment, "AOOknown1"]}
+                                                        observableValue={[riskAssessment, "AOOknown"]}
                                                         integer
                                                         disabled={!riskAssessment.notUseSpeciesMap}
                                                     />
