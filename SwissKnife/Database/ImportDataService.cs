@@ -356,6 +356,8 @@ namespace SwissKnife.Database
                 //map fix
 
                 exAssessment.RiskAssessment.AOOknown = newAssesment.RiskAssessment.AOOknown;
+                exAssessment.RiskAssessment.AOOknown1 = newAssesment.RiskAssessment.AOOknown1;
+                exAssessment.RiskAssessment.AOOknown2 = newAssesment.RiskAssessment.AOOknown2;
                 exAssessment.RiskAssessment.AOOtotalBest = newAssesment.RiskAssessment.AOOtotalBest;
                 exAssessment.RiskAssessment.AOOtotalLow = newAssesment.RiskAssessment.AOOtotalLow;
                 exAssessment.RiskAssessment.AOOtotalHigh = newAssesment.RiskAssessment.AOOtotalHigh;

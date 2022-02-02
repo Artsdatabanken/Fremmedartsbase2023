@@ -738,6 +738,8 @@ namespace SwissKnife.Database
 
                     // følgende blir mappet fra FA3Legacy lenger nede
                     .ForMember(dest => dest.AOOknown, opt => opt.Ignore())
+                    .ForMember(dest => dest.AOOknown1, opt => opt.Ignore())
+                    .ForMember(dest => dest.AOOknown2, opt => opt.Ignore())
                     .ForMember(dest => dest.AOOtotalBest, opt => opt.Ignore())
                     .ForMember(dest => dest.AOOtotalLow, opt => opt.Ignore())
                     .ForMember(dest => dest.AOOtotalHigh, opt => opt.Ignore())
