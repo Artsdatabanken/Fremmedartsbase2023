@@ -54,10 +54,10 @@ const OriginTable = (props) =>
         props.mode == "marine" ? 
         <>
             <colgroup>
-            <col className="col-md-1" />
+            <col className="col-md-5" />
             <col className="col-md-2" />
-            <col className="col-md-1" /> 
-            <col className="col-md-1" />
+            <col className="col-md-2" /> 
+            <col className="col-md-2" />
         </colgroup>
         <thead>
             <tr>
@@ -75,10 +75,10 @@ const OriginTable = (props) =>
             <colgroup>
             <col className="col-md-1" />
             <col className="col-md-2" />
-            <col className="col-md-1" />
-            <col className="col-md-1" />
-            <col className="col-md-1" />
-            <col className="col-md-1" />
+            <col className="col-md-2" />
+            <col className="col-md-2" />
+            <col className="col-md-2" />
+            <col className="col-md-3" />
         </colgroup>
         <thead>
             <tr>
@@ -95,11 +95,11 @@ const OriginTable = (props) =>
 
         <>
             <colgroup>
-            <col className="col-md-1" />
             <col className="col-md-2" />
-            <col className="col-md-1" />
-            <col className="col-md-1" />
-            <col className="col-md-1" />
+            <col className="col-md-2" />
+            <col className="col-md-2" />
+            <col className="col-md-2" />
+            <col className="col-md-2" />
         </colgroup>
         <thead>
             <tr>

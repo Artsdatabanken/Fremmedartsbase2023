@@ -5065,7 +5065,7 @@
                         {
                             "Id": null,
                             "Value": "connectedToAnotherTaxon",
-                            "Text": "Er taxonet inkludert i vurderingen av et annet taxon?",
+                            "Text": "Deler taksonet vurderinga med et annet takson?",
                             "Info": null,
                             "Children": null
                         }, 
@@ -6764,7 +6764,7 @@
                         {
                             "Id": null,
                             "Value": "transferSection",
-                            "Text": "Overgangsseksjon",
+                            "Text": "Overgangs-seksjon",
                             "Info": null,
                             "Children": null
                         },
