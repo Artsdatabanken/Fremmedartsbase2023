@@ -57,7 +57,7 @@ export default class Documents extends Component {
             {/*<h2>Filer for {assessment.id}</h2>*/}
             {this.attachments.length > 0 && 
             <div>
-                <h5>Opplastede filer med beskrivelse</h5>
+                <h5>Du har lastet opp følgende filer til vurderingen:</h5>
             <table className="table table-striped">
                 <thead>
                     <tr>
