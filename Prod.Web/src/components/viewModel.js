@@ -576,8 +576,8 @@ class ViewModel {
         //console.log("##!doFullAssessment alienSpeciesCategory: " + (this.assessment ? this.assessment.alienSpeciesCategory : " noo"))
         //console.log("##!doFullAssessment connectedToAnother: " + (this.assessment ? this.assessment.connectedToAnother : " nix"))
         //console.log("##!doFullAssessment assessmentConclusion: " + (this.assessment ? this.assessment.assessmentConclusion : " Nope"))
-        return !this.harVurdering ? false : this.assessment.assessmentConclusion !== "WillNotBeRiskAssessed" 
-        //&& this.assessment.skalVurderes ? true : false
+        // return !this.harVurdering ? false : this.assessment.assessmentConclusion !== "WillNotBeRiskAssessed" 
+        return !this.harVurdering ? false : this.assessment.doFullAssessment 
     }
 
     @computed get unresolvedComments() {

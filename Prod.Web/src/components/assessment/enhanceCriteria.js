@@ -1,4 +1,4 @@
-﻿import {action, autorun, computed, extendObservable, observable, observe, isObservableArray, runInAction, remove, set, trace} from 'mobx';
+﻿import {action, autorun, extendObservable, observable, reaction, runInAction, trace} from 'mobx';
 import RiskLevel from './riskLevel';
 import {extractFloat, getCriterion} from '../../utils'
 import { EventNote } from '@material-ui/icons';
@@ -704,10 +704,16 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         })
     });
 
-
-
-
-
+    reaction(
+        () => r.AOOknown,
+        (AOOknown, previousAOOknown) => {
+            const prevAOO1 = r.AOO1
+            action(() => {
+                r.AOO1 = AOOknown
+                console.log("#&#AOO1 updated from AOOknown. old value:" + prevAOO1 + " new value: " + AOOknown)
+            })()
+        }
+    )
 }
 
 function enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering, artificialAndConstructedSites) {

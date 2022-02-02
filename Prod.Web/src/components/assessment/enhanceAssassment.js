@@ -191,6 +191,9 @@ export default function enhanceAssessment(json, appState) {
                 : "WillNotBeRiskAssessed"
             return result
         },
+        get doFullAssessment() {
+            return assessment.assessmentConclusion !== "WillNotBeRiskAssessed" 
+        },
         get category() {
             const result =
                 assessment.assessmentConclusion === "WillNotBeRiskAssessed"
