@@ -122,7 +122,7 @@ checkStatus = (production) => {
                              {/*assessment.notApplicableCategory == "taxonIsEvaluatedInHigherRank" && 
                                 // transfer "notApplicableDescription" from FAB3
                              */}
-                            
+                            <p>Nærmere begrunnelse</p>
                             <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/>   
 
                             {assessment.connectedTaxon && assessment.connectedTaxon.taxonId != "" ? 
