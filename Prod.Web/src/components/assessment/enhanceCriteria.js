@@ -216,6 +216,8 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 
     const r = riskAssessment
     extendObservable(riskAssessment, {
+        get notUseSpeciesMap() { return true},
+
         get doorKnocker() {
             console.log("#¤% alienSpeciesCategory " + riskAssessment.vurderingAlienSpeciesCategory)
             return riskAssessment.vurderingAlienSpeciesCategory === "DoorKnocker"
@@ -705,13 +707,23 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
     });
 
     reaction(
-        () => r.AOOknown,
-        (AOOknown, previousAOOknown) => {
+        () => r.AOOknown1,
+        (AOOknown1, previousAOOknown1) => {
             const prevAOO1 = r.AOO1
             action(() => {
-                r.AOO1 = AOOknown
-                console.log("#&#AOO1 updated from AOOknown. old value:" + prevAOO1 + " new value: " + AOOknown)
+                r.AOO1 = AOOknown1
             })()
+            console.log("#&#AOO1 updated from AOOknown1. old value:" + prevAOO1 + " new value: " + AOOknown1)
+        }
+    )
+    reaction(
+        () => r.AOOknown2,
+        (AOOknown2, previousAOOknown2) => {
+            const prevAOO2 = r.AOO2
+            action(() => {
+                r.AOO2 = AOOknown2
+            })()
+            console.log("#&#AOO2 updated from AOOknown2. old value:" + prevAOO2 + " new value: " + AOOknown2)
         }
     )
 }
