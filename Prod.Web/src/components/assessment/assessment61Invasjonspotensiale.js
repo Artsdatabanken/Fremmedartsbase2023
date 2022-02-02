@@ -157,6 +157,12 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
         // {appState.invasjonspotensialeLevel.uncertaintyLevels.slice().join(';')}
         // **</h5>**</h5>
 
+        const AOO1error = errorhandler.errors["(a)err7"]
+        const AOO1msg = riskAssessment.AOO1 > riskAssessment.AOOknown1 ? "MERK: Estimatet skal kun justeres om forekomster som er utgått pga. tiltak ble tatt ut av estimatet for kjent forekomstareal" : ""
+        const AOO2error = errorhandler.errors["(a)err8"]
+        const AOO2msg = riskAssessment.AOO2 > riskAssessment.AOOknown2 ? "MERK: Estimatet skal kun justeres om forekomster som er utgått pga. tiltak ble tatt ut av estimatet for kjent forekomstareal" : ""
+        
+
         return (
             <div>
                 {config.showPageHeaders
@@ -544,6 +550,10 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                            {(AOO1error || AOO1msg)
+                                            ? <tr><td colspan="5">{AOO1error ? <b style={{ color: "red" }}>{AOO1error}</b> : <b style={{ color: "orange" }}> {AOO1msg}</b>}</td></tr>
+                                            : null
+                                            }
                                             <tr>
                                                 <td>
                                                     {/* <Xcomp.Button primary>{labels.DistributionHistory.speciesMap}</Xcomp.Button> */}
@@ -579,18 +589,23 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                     /> <span style={{margin: '10px 10px 0'}}>(t<sub>1</sub>)</span>
                                                     </td>
                                                 <td><Xcomp.Number                            
-                                                        observableValue={[riskAssessment, "AOOknown"]}
+                                                        observableValue={[riskAssessment, "AOOknown1"]}
                                                         integer
                                                         disabled={!riskAssessment.notUseSpeciesMap}
                                                     />
                                                 </td>
                                                 <td><Xcomp.Number                            
                                                         observableValue={[riskAssessment, "AOO1"]}
+                                                        observableErrors={[errorhandler, "(a)err7"]}
                                                         integer
                                                     />
                                                 </td>
                                                
                                             </tr>
+                                            {AOO2error || AOO2msg 
+                                            ? <tr><td colspan="5">{AOO2error ? <b style={{ color: "red" }}>{AOO2error}</b> : <b style={{ color: "orange" }}> {AOO2msg}</b>}</td></tr>
+                                            : null
+                                            }
                                             <tr>
                                                 <td>
                                                     {/* <Xcomp.Button primary>{labels.DistributionHistory.speciesMap}</Xcomp.Button> */}
@@ -625,10 +640,12 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                         observableValue={[riskAssessment, "AOOyear2"]} 
                                                         yearRange={true}/> <span style={{margin: '10px 10px 0'}}>(t<sub>2</sub>)</span>
                                                 </td>
-                                                <td><Xcomp.Number observableValue={[riskAssessment, "AOOknown2"]} integer disabled={!riskAssessment.notUseSpeciesMap} /> 
+                                                <td>
+                                                <Xcomp.Number observableValue={[riskAssessment, "AOOknown2"]} integer disabled={!riskAssessment.notUseSpeciesMap} /> 
                                                 </td> 
                                                 <td><Xcomp.Number                            
                                                         observableValue={[riskAssessment, "AOO2"]}
+                                                        observableErrors={[errorhandler, "(a)err8"]}
                                                         integer
                                                     />
                                                 </td>                                               
