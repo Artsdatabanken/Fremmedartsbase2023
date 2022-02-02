@@ -836,6 +836,10 @@ public partial class FA4 // (3.2) Artsegenskaper
         //*************** Forekomstareal i dag ************************************
         [System.Text.Json.Serialization.JsonPropertyName("AOOknown")]
         public Int64? AOOknown { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("AOOknown1")]
+        public Int64? AOOknown1 { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("AOOknown2")]
+        public Int64? AOOknown2 { get; set; }
         [System.Text.Json.Serialization.JsonPropertyName("AOOtotalBest")]
         public Int64? AOOtotalBest { get; set; }
         [System.Text.Json.Serialization.JsonPropertyName("AOOtotalLow")]
