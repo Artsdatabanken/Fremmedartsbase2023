@@ -704,10 +704,16 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         })
     });
 
-
-
-
-
+    reaction(
+        () => r.AOOknown,
+        (AOOknown, previousAOOknown) => {
+            const prevAOO1 = r.AOO1
+            action(() => {
+                r.AOO1 = AOOknown
+                console.log("#&#AOO1 updated from AOOknown. old value:" + prevAOO1 + " new value: " + AOOknown)
+            })()
+        }
+    )
 }
 
 function enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering, artificialAndConstructedSites) {
