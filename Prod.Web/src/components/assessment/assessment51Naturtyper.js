@@ -162,22 +162,22 @@ export default class Assessment51Naturtyper extends React.Component {
                     <h4>{ntLabels.critFHeading}</h4>
                     <p>{ntLabels.criteriumF}</p>
                     <Criterion criterion={critF} mode="noheading" disabled={disabled}/>
-                    {hasImpactAbroad ? 
+                    {/*hasImpactAbroad ? 
                     <div>
-                        <p>{ntLabels.natureAffectedAbroad}</p>
-                        <Xcomp.HtmlString observableValue={[riskAssessment, 'natureAffectedAbroadF']}/>
-                        </div> : null}
+                    <p>{ntLabels.natureAffectedAbroad}</p>*/}
+                        <Xcomp.HtmlString observableValue={[riskAssessment, 'threatenedNatureTypesForeignDocumented']}/>
+                
                 </fieldset>
                 
                 <fieldset className="well">
                     <h4>{ntLabels.critGHeading}</h4>
                     <p>{ntLabels.criteriumG}</p>
                     <Criterion criterion={critG} mode="noheading" disabled={disabled}/>
-                   { hasImpactAbroad ? 
+                   { /*hasImpactAbroad ? 
                     <div>
-                        <p>{ntLabels.natureAffectedAbroad}</p>
-                        <Xcomp.HtmlString observableValue={[riskAssessment, 'natureAffectedAbroadG']}/>
-                        </div> : null }
+                   <p>{ntLabels.natureAffectedAbroad}</p>
+                        <Xcomp.HtmlString observableValue={[riskAssessment, 'natureAffectedAbroadG']}/>*/}
+                        
                         <Xcomp.HtmlString
                             observableValue={[riskAssessment, 'commonNatureTypesAffectedDomesticDescription']}/>
                 </fieldset>
