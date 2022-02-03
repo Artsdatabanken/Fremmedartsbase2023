@@ -65,17 +65,17 @@
         },
         {
             id: "A3err1", 
-            get cond() {return (r.ametodkey === "A3" && r.lifetimeLowerQ > r.medianLifetime)},
+            get cond() {return ( r.doFullAssessment && r.ametodkey === "A3" && r.lifetimeLowerQ > r.medianLifetime)},
             msg: "Levetidens nedre kvartil må være mindre enn medianen."
         },
         {
             id: "A3err2", 
-            get cond() {return (r.ametodkey === "A3" && r.lifetimeUpperQ <= r.medianLifetime)},
+            get cond() {return ( r.doFullAssessment && r.ametodkey === "A3" && r.lifetimeUpperQ <= r.medianLifetime)},
             msg: "Levetidens øvre kvartil må være større enn medianen."
         },
         {
             id: "Berr1", 
-            get cond() {return (r.bmetodkey === "BmethodNotChosen" || r.bmetodkey === "B2bX") },
+            get cond() {return ( r.doFullAssessment && (r.bmetodkey === "BmethodNotChosen" || r.bmetodkey === "B2bX")) },
             msg: "Metode for B-kriteriet er ikke valgt."
         },
         {
