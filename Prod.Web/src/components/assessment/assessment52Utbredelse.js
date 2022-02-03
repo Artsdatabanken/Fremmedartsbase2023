@@ -371,7 +371,7 @@ export default class Assessment52Utbredelse extends React.Component {
                                                 <Xcomp.Number      
                                                     className={"knownDistribution"} 
                                                     //observableValue={[assessment.riskAssessment, "knownDistribution"]}                     
-                                                    observableValue={[assessment.riskAssessment, "AOOknown"]}
+                                                    observableValue={[assessment.riskAssessment, "AOOknownInput"]}
                                                     observableErrors={[errorhandler, "(a)err6"]}
 
                                                     /> 

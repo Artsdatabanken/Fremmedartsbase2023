@@ -7,6 +7,7 @@ import config from '../../config';
 import { JsonHubProtocol } from '@microsoft/signalr';
 
 function round(num){return Math.round(num)}
+function ceil(num){return Math.ceil(num)}
 function trunc(num){return Math.trunc(num)}
 function min(num1,num2){return Math.min(num1,num2)}
 function max(num1,num2){return Math.max(num1,num2)}
@@ -215,6 +216,16 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 
 
     const r = riskAssessment
+    function adjustAOOInput(input) {
+        const inputvalue = input === NaN ? 0 : input
+        const result = 
+            r.doorKnocker 
+            ? inputvalue
+            : ceil((inputvalue / 4) * 4)
+        return result
+
+    }
+
     extendObservable(riskAssessment, {
         get notUseSpeciesMap() { return true},
 
@@ -546,6 +557,28 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 : 0 // ?
             return roundToSignificantDecimals(result)
         },
+        get AOOknown() {
+            return adjustAOOInput(r.AOOknownInput)
+        },
+        get AOOtotalLow() {
+            return adjustAOOInput(r.AOOtotalLowInput)
+        },
+        get AOOtotalBest() {
+            return adjustAOOInput(r.AOOtotalBestInput)
+        },
+        get AOOtotalLow() {
+            return adjustAOOInput(r.AOOtotalHighInput)
+        },
+        get AOO50yrLow() {
+            return adjustAOOInput(r.AOO50yrLowInput)
+        },
+        get AOO50yrBest() {
+            return adjustAOOInput(r.AOO50yrBestInput)
+        },
+        get AOO50yrLow() {
+            return adjustAOOInput(r.AOO50yrHighInput)
+        },
+
         get AOOdarkfigureBest() {
             const result =
                 r.AOOknown === null || r.AOOknown === 0 ? 0

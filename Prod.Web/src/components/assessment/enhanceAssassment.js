@@ -10,54 +10,86 @@ import { nothing } from 'ol/pixel'
 
 
 
+function deleteProps(obj, proparray) {
+    for(const prop of proparray) {
+        delete obj[prop]
+    }
+}
+function copyProps(fromobj, toobj, proparray) {
+    for(const prop of proparray) {
+        toobj[prop] = fromobj[prop]
+    }
+}
 
+//////////////////////////////////////////////////////////////
+// these arrays contains all propertynames of 
+// computed (mobx) values that replaces 
+// the domain properties on the assessment. 
+// 
+// these properties needs to be deleted from the object
+// before the computed (mobx) getters are added to the object
+//
+// since javascript serialization (toJSON) does not
+// serialize getter properties, we need to add these
+// properties to the JSON manually
+///////////////////////////////////////////////////////////////
+const assessmentGetterFields = [
+    "category",
+    "criteria",
+    "alienSpeciesCategory",
+    "assessmentConclusion"
+]
+const riskAssessmentGetterFields = [
+    "riskLevel",
+    "riskLevelText",
+    "riskLevelCode",
+    "invationPotentialLevel",
+    "ecoEffectLevel",
+    "decisiveCriteria",
+    "AOOchangeBest",
+    "AOOchangeLow",
+    "AOOchangeHigh",
+    "adefaultBest",
+    "adefaultLow",
+    "adefaultHigh",
+    "apossibleLow",
+    "apossibleHigh",
+    "ascore",
+    "alow",
+    "ahigh", 
+    "medianLifetime",
+    "lifetimeLowerQ",
+    "lifetimeUpperQ",
+    "bscore",
+    "blow",
+    "bhigh",
+    "expansionSpeed",
+    "expansionLowerQ",
+    "expansionUpperQ",
+    "AOOknown",
+    "AOOtotalBest",
+    "AOOtotalLow",
+    "AOOtotalHigh",
+    "AOO50yrBest",
+    "AOO50yrLow",
+    "AOO50yrHigh",
+    "AOOdarkfigureBest",
+    "AOOdarkfigureLow",
+    "AOOdarkfigureHigh",
+    "AOO10yrBest",
+    "AOO10yrLow",
+    "AOO10yrHigh",
+    "introductionsLow",
+    "introductionsHigh"
+]
 
 
 
 export default function enhanceAssessment(json, appState) {
     // * * * remove properties that will be replaced with computed observables * * *
     const ra = json.riskAssessment
-    delete json.category
-    delete json.criteria
-    delete json.alienSpeciesCategory
-    delete json.assessmentConclusion
-    delete ra.riskLevel
-    delete ra.riskLevelText
-    delete ra.riskLevelCode
-    delete ra.invationPotentialLevel
-    delete ra.ecoEffectLevel
-    delete ra.decisiveCriteria
-    delete ra.AOOchangeBest
-    delete ra.AOOchangeLow
-    delete ra.AOOchangeHigh
-    delete ra.adefaultBest
-    delete ra.adefaultLow
-    delete ra.adefaultHigh
-    delete ra.apossibleLow
-    delete ra.apossibleHigh
-    delete ra.ascore
-    delete ra.alow 
-    delete ra.ahigh 
-    delete ra.medianLifetime 
-    delete ra.lifetimeLowerQ 
-    delete ra.lifetimeUpperQ 
-    delete ra.bscore 
-    delete ra.blow 
-    delete ra.bhigh 
-    delete ra.expansionSpeed 
-    delete ra.expansionLowerQ 
-    delete ra.expansionUpperQ 
-    delete ra.AOOdarkfigureBest
-    delete ra.AOOdarkfigureLow
-    delete ra.AOOdarkfigureHigh
-    delete ra.AOO10yrBest
-    delete ra.AOO10yrLow
-    delete ra.AOO10yrHigh
-    delete ra.introductionsLow
-    delete ra.introductionsHigh
-    
-    
-
+    deleteProps(json, assessmentGetterFields)
+    deleteProps(ra, riskAssessmentGetterFields)
     
     // * * *
     const assessment = observable.object(json)
@@ -73,44 +105,8 @@ export default function enhanceAssessment(json, appState) {
             const assra = assessment.riskAssessment
             const obj = toJS(assessment)
             const objra = obj.riskAssessment
-            obj.category = assessment.category
-            obj.criteria = assessment.criteria
-            obj.alienSpeciesCategory = assessment.alienSpeciesCategory
-            obj.assessmentConclusion = assessment.assessmentConclusion
-            objra.riskLevel = assra.riskLevel
-            objra.riskLevelText = assra.riskLevelText
-            objra.riskLevelCode = assra.riskLevelCode
-            objra.invationPotentialLevel = assra.invationPotentialLevel
-            objra.ecoEffectLevel = assra.ecoEffectLevel
-            objra.decisiveCriteria = assra.decisiveCriteria
-            objra.AOOchangeBest = assra.AOOchangeBest
-            objra.AOOchangeLow = assra.AOOchangeLow
-            objra.AOOchangeHigh = assra.AOOchangeHigh
-            objra.adefaultBest = assra.adefaultBest
-            objra.adefaultLow = assra.adefaultLow
-            objra.adefaultHigh = assra.adefaultHigh
-            objra.apossibleLow = assra.apossibleLow
-            objra.apossibleHigh = assra.apossibleHigh
-            objra.ascore = assra.ascore
-            objra.alow = assra.alow
-            objra.ahigh = assra.ahigh
-            objra.medianLifetime = assra.medianLifetime
-            objra.lifetimeLowerQ = assra.lifetimeLowerQ
-            objra.lifetimeUpperQ = assra.lifetimeUpperQ
-            objra.bscore = assra.bscore
-            objra.blow = assra.blow
-            objra.bhigh = assra.bhigh
-            objra.expansionSpeed = assra.expansionSpeed
-            objra.expansionLowerQ = assra.expansionLowerQ
-            objra.expansionUpperQ = assra.expansionUpperQ
-            objra.AOOdarkfigureBest = assra.AOOdarkfigureBest
-            objra.AOOdarkfigureLow = assra.AOOdarkfigureLow
-            objra.AOOdarkfigureHigh = assra.AOOdarkfigureHigh
-            objra.AOO10yrBest = assra.AOO10yrBest
-            objra.AOO10yrLow = assra.AOO10yrLow
-            objra.AOO10yrHigh = assra.AOO10yrHigh
-            objra.introductionsLow = assra.introductionsLow
-            objra.introductionsHigh = assra.introductionsHigh            
+            copyProps(assessment, obj, assessmentGetterFields)
+            copyProps(objra, assra, assessmentGetterFields)
         
             const json = JSON.stringify(obj, undefined, 2)
             // console.log(JSON.stringify(Object.keys(obj)))

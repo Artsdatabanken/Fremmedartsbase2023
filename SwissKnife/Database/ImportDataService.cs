@@ -355,14 +355,21 @@ namespace SwissKnife.Database
 
                 //map fix
 
+                exAssessment.RiskAssessment.AOOknownInput = newAssesment.RiskAssessment.AOOknownInput;
                 exAssessment.RiskAssessment.AOOknown = newAssesment.RiskAssessment.AOOknown;
                 exAssessment.RiskAssessment.AOOknown1 = newAssesment.RiskAssessment.AOOknown1;
                 exAssessment.RiskAssessment.AOOknown2 = newAssesment.RiskAssessment.AOOknown2;
+                exAssessment.RiskAssessment.AOOtotalBestInput = newAssesment.RiskAssessment.AOOtotalBestInput;
                 exAssessment.RiskAssessment.AOOtotalBest = newAssesment.RiskAssessment.AOOtotalBest;
+                exAssessment.RiskAssessment.AOOtotalLowInput = newAssesment.RiskAssessment.AOOtotalLowInput;
                 exAssessment.RiskAssessment.AOOtotalLow = newAssesment.RiskAssessment.AOOtotalLow;
+                exAssessment.RiskAssessment.AOOtotalHighInput = newAssesment.RiskAssessment.AOOtotalHighInput;
                 exAssessment.RiskAssessment.AOOtotalHigh = newAssesment.RiskAssessment.AOOtotalHigh;
+                exAssessment.RiskAssessment.AOO50yrBestInput = newAssesment.RiskAssessment.AOO50yrBestInput;
                 exAssessment.RiskAssessment.AOO50yrBest = newAssesment.RiskAssessment.AOO50yrBest;
+                exAssessment.RiskAssessment.AOO50yrLowInput = newAssesment.RiskAssessment.AOO50yrLowInput;
                 exAssessment.RiskAssessment.AOO50yrLow = newAssesment.RiskAssessment.AOO50yrLow;
+                exAssessment.RiskAssessment.AOO50yrHighInput = newAssesment.RiskAssessment.AOO50yrHighInput;
                 exAssessment.RiskAssessment.AOO50yrHigh = newAssesment.RiskAssessment.AOO50yrHigh;
                 exAssessment.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes = newAssesment.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes;
 
