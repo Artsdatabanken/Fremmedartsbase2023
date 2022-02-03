@@ -377,14 +377,14 @@ checkStatus = (production) => {
                         
                         
 
-                        {assessment.notApplicableCategory == "establishedBefore1800" &&
-                        // transfer "notApplicableDescription" from FAB3
-                            <>
+                        {/*assessment.notApplicableCategory == "establishedBefore1800" &&
+                        // transfer "notApplicableDescription" from FAB3 */}
+                            
                             <p>{labels.SpeciesStatus.uncertainityEstablishmentTimeDescription}</p>
                             
                             <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/> 
-                            </>
-                        }
+                            
+                        
                         
                      </div> : null}
 
