@@ -165,7 +165,7 @@ export default class Assessment51Naturtyper extends React.Component {
                     {/*hasImpactAbroad ? 
                     <div>
                     <p>{ntLabels.natureAffectedAbroad}</p>*/}
-                        <Xcomp.HtmlString observableValue={[riskAssessment, 'threatenedNatureTypesAffectedDomesticDescription']}/>
+                        <Xcomp.HtmlString observableValue={[riskAssessment, 'threatenedNatureTypesAffectedDomesticDescription']} />
                 
                 </fieldset>
                 
