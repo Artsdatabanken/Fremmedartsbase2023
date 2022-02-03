@@ -4893,8 +4893,22 @@
                         },
                         {
                             "Id": null,
-                            "Value": "chooseFiles",
-                            "Text": "Velg filer",
+                            "Value": "chooseFile",
+                            "Text": "Velg fil",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "uploadMoreFiles",
+                            "Text": "Ønsker du å laste opp flere filer?",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "uploadFiles",
+                            "Text": "Du har ikke lastet opp noen filer til vurderingen. Velg datafil du ønsker å laste opp:",
                             "Info": null,
                             "Children": null
                         },
@@ -4902,6 +4916,13 @@
                             "Id": null,
                             "Value": "noFileChosen",
                             "Text": "Ingen fil valgt",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "followingIsChosen",
+                            "Text": "Du har lastet opp følgende filer til vurderingen:",
                             "Info": null,
                             "Children": null
                         },

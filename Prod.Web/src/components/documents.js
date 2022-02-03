@@ -53,16 +53,17 @@ export default class Documents extends Component {
         <div className="files">
             <FileUpload 
                 onUploadComplete={this.getAttachments}
+                labels = {labels}
             />
             {/*<h2>Filer for {assessment.id}</h2>*/}
             {this.attachments.length > 0 && 
             <div>
-                <h5>Du har lastet opp følgende filer til vurderingen:</h5>
+                <h5>{labels.General.followingIsChosen}</h5>
             <table className="table table-striped">
                 <thead>
                     <tr>
-                        <th>Filnavn</th>
-                        <th>Beskrivelse</th>
+                        <th>{labels.General.filename}</th>
+                        <th>{labels.General.fileDescription}</th>
                         <th></th>
                     </tr>
                 </thead>
