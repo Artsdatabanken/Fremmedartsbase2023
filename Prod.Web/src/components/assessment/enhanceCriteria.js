@@ -566,7 +566,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         get AOOtotalBest() {
             return adjustAOOInput(r.AOOtotalBestInput)
         },
-        get AOOtotalLow() {
+        get AOOtotalHigh() {
             return adjustAOOInput(r.AOOtotalHighInput)
         },
         get AOO50yrLow() {
@@ -575,7 +575,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         get AOO50yrBest() {
             return adjustAOOInput(r.AOO50yrBestInput)
         },
-        get AOO50yrLow() {
+        get AOO50yrHigh() {
             return adjustAOOInput(r.AOO50yrHighInput)
         },
 
