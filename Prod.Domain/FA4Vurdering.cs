@@ -834,16 +834,24 @@ public partial class FA4 // (3.2) Artsegenskaper
 
 
         //*************** Forekomstareal i dag ************************************
+        [System.Text.Json.Serialization.JsonPropertyName("AOOknownInput")]
+        public Int64? AOOknownInput { get; set; }
         [System.Text.Json.Serialization.JsonPropertyName("AOOknown")]
         public Int64? AOOknown { get; set; }
         [System.Text.Json.Serialization.JsonPropertyName("AOOknown1")]
         public Int64? AOOknown1 { get; set; }
         [System.Text.Json.Serialization.JsonPropertyName("AOOknown2")]
         public Int64? AOOknown2 { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("AOOtotalBestInput")]
+        public Int64? AOOtotalBestInput { get; set; }
         [System.Text.Json.Serialization.JsonPropertyName("AOOtotalBest")]
         public Int64? AOOtotalBest { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("AOOtotalLowInput")]
+        public Int64? AOOtotalLowInput { get; set; }
         [System.Text.Json.Serialization.JsonPropertyName("AOOtotalLow")]
         public Int64? AOOtotalLow { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("AOOtotalHighInput")]
+        public Int64? AOOtotalHighInput { get; set; }
         [System.Text.Json.Serialization.JsonPropertyName("AOOtotalHigh")]
         public Int64? AOOtotalHigh { get; set; }
 
@@ -898,10 +906,16 @@ public partial class FA4 // (3.2) Artsegenskaper
 
 
         //*************** Forekomstareal om 50år ************************************
+        [System.Text.Json.Serialization.JsonPropertyName("AOO50yrBestInput")]
+        public Int64? AOO50yrBestInput { get; set; } // beste anslag på totalt forekomstareal om 50 år 
         [System.Text.Json.Serialization.JsonPropertyName("AOO50yrBest")]
         public Int64? AOO50yrBest { get; set; } // beste anslag på totalt forekomstareal om 50 år 
+        [System.Text.Json.Serialization.JsonPropertyName("AOO50yrLowInput")]
+        public Int64? AOO50yrLowInput { get; set; } // lavt anslag på totalt forekomstareal om 50 år 
         [System.Text.Json.Serialization.JsonPropertyName("AOO50yrLow")]
         public Int64? AOO50yrLow { get; set; } // lavt anslag på totalt forekomstareal om 50 år 
+        [System.Text.Json.Serialization.JsonPropertyName("AOO50yrHighInput")]
+        public Int64? AOO50yrHighInput { get; set; }
         [System.Text.Json.Serialization.JsonPropertyName("AOO50yrHigh")]
         public Int64? AOO50yrHigh { get; set; }
         // -------- disse (forekomstareal om 50år) er erstattet:  
@@ -917,7 +931,7 @@ public partial class FA4 // (3.2) Artsegenskaper
 
         //public Int64? SpeciesCount { get; set; } // fab: Species_Count  // ikke i bruk som egen attributt (ligger i spredningshistorikk item) i 2012
 
-        
+
         public double? SpreadHistoryDomesticAreaInStronglyChangedNatureTypes { get; set; }
         public double? SpreadHistoryDomesticAreaInStronglyChangedNatureTypesLow { get; set; }
         public double? SpreadHistoryDomesticAreaInStronglyChangedNatureTypesBest { get; set; }
