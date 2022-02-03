@@ -8388,6 +8388,13 @@
                         },
                         {
                             "Id": null,
+                            "Value": "regionalNaturetypes",
+                            "Text": "Regional naturvariasjon",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "marineSpecies",
                             "Text": "Marine arter",
                             "Info": null,
