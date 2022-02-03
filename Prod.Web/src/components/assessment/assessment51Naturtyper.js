@@ -123,64 +123,7 @@ export default class Assessment51Naturtyper extends React.Component {
                     desc={ntLabels.colonizedAreaDescription}/>
                 </>
                 }
-                {marine && 
-                <>
-                    <hr></hr>
-                    <h4>{ntLabels.marineSpecies}</h4>
-                    <p className="bioCLZone">{ntLabels.coastWaterSections}</p>
-                    <div className="bioclimaticZones">
-                    <div>{ntLabels.coastWaterZones}</div>
-                    
-                    <OriginTable 
-                            mode = {"marine"}
-                            origins={assessment.coastLineSections} 
-                            climateZoneLabel={coastLineZoneLabel}
-                            //subClimateZoneLabel={subClimateZoneLabel}
-                            naturalOriginDisabled={coastZoneDisabled}
-                            labels={labels.NaturalOrigin}
-                    />
-                    </div>
-                </>
-                }
                 
-                
-                {mainland && 
-                <>
-                    <hr></hr>
-                    <h4>{ntLabels.mainlandNorway}</h4>
-                    <p className="bioCLZone">{ntLabels.bioClimateSections}</p>
-                    <div className="bioclimaticZones">
-                    <div>{ntLabels.bioClimateZones}</div>
-                    
-                    <OriginTable 
-                            mode = {"continental"}
-                            origins={assessment.currentBioClimateZones} 
-                            climateZoneLabel={contBioClimateZoneLabel}
-                            //subClimateZoneLabel={subClimateZoneLabel}
-                            naturalOriginDisabled={mainlandZoneDisabled}
-                            labels={labels.NaturalOrigin}
-                    />
-                    </div>
-                </>
-                }
-                {svalbard && 
-                <>
-                    <hr></hr>
-                    <h4>{ntLabels.svalbard}</h4>
-                    <p className="bioCLZone">{ntLabels.bioClimateSections}</p>
-                    <div className="bioclimaticZones">
-                    <div>{ntLabels.bioClimateZonesArctic}</div>
-                    <OriginTable 
-                            mode = {"arctic"}
-                            origins={assessment.arcticBioClimateZones} 
-                            climateZoneLabel={arcticBioClimateZoneLabel}
-                           // subClimateZoneLabel={subClimateZoneLabel}
-                            naturalOriginDisabled={arcticZoneDisabled}
-                            labels={labels.NaturalOrigin}
-                    />
-                    </div>
-                </>
-                }
                 {assessment.impactedNatureTypesFrom2018.length > 0 && <div className="previousAssessment">
                
                 <h4>{ntLabels.dataFromPreviousAssessment}</h4>
@@ -238,6 +181,66 @@ export default class Assessment51Naturtyper extends React.Component {
                         <Xcomp.HtmlString
                             observableValue={[riskAssessment, 'commonNatureTypesAffectedDomesticDescription']}/>
                 </fieldset>
+
+                <fieldset className="well">
+                <h4>{ntLabels.regionalNaturetypes}</h4>
+                {marine && 
+                <>
+                    <h5 className={"bioCLZone"}>{ntLabels.marineSpecies}</h5>
+                    <p className="bioCLZone">{ntLabels.coastWaterSections}</p>
+                    <div className="bioclimaticZones">
+                    <div>{ntLabels.coastWaterZones}</div>
+                    
+                    <OriginTable 
+                            mode = {"marine"}
+                            origins={assessment.coastLineSections} 
+                            climateZoneLabel={coastLineZoneLabel}
+                            //subClimateZoneLabel={subClimateZoneLabel}
+                            naturalOriginDisabled={coastZoneDisabled}
+                            labels={labels.NaturalOrigin}
+                    />
+                    </div>
+                </>
+                }
+                
+                
+                {mainland && 
+                <>
+                    <h5 className={"bioCLZone"}>{ntLabels.mainlandNorway}</h5>
+                    <p className="bioCLZone">{ntLabels.bioClimateSections}</p>
+                    <div className="bioclimaticZones">
+                    <div>{ntLabels.bioClimateZones}</div>
+                    
+                    <OriginTable 
+                            mode = {"continental"}
+                            origins={assessment.currentBioClimateZones} 
+                            climateZoneLabel={contBioClimateZoneLabel}
+                            //subClimateZoneLabel={subClimateZoneLabel}
+                            naturalOriginDisabled={mainlandZoneDisabled}
+                            labels={labels.NaturalOrigin}
+                    />
+                    </div>
+                </>
+                }
+                {svalbard && 
+                <>                   
+                    <h5 className={"bioCLZone"}>{ntLabels.svalbard}</h5>
+                    <p className="bioCLZone">{ntLabels.bioClimateSections}</p>
+                    <div className="bioclimaticZones">
+                    <div>{ntLabels.bioClimateZonesArctic}</div>
+                    <OriginTable 
+                            mode = {"arctic"}
+                            origins={assessment.arcticBioClimateZones} 
+                            climateZoneLabel={arcticBioClimateZoneLabel}
+                           // subClimateZoneLabel={subClimateZoneLabel}
+                            naturalOriginDisabled={arcticZoneDisabled}
+                            labels={labels.NaturalOrigin}
+                    />
+                    </div>
+                </>
+                }
+                </fieldset>
+
             {true || appState.livsmediumEnabled
                 ? <fieldset className="well">
                     {appState.livsmediumCodes
