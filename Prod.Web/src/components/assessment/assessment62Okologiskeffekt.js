@@ -253,16 +253,18 @@ export default class Assessment62Okologiskeffekt extends React.Component {
             newItem.taxonSearchWaitingForResult = false
         }
 
-        createTaxonSearch(this.newSSITS, evaluationContext
-            //, tax => tax.rlCategory != null 
+        createTaxonSearch(this.newSSITS, evaluationContext,
+             tax => tax.rlCategory != null 
             //&& tax.existsInCountry
             )
         // createTaxonSearch(this.newSSIDS, "N")
         //createTaxonSearch(this.newGTD, evaluationContext, tax => tax.existsInCountry)
-        createTaxonSearch(this.newGTD, evaluationContext)
+        createTaxonSearch(this.newGTD, evaluationContext,
+            tax => tax.rlCategory != null )
 
         //createTaxonSearch(this.newHPI, evaluationContext, tax => tax.existsInCountry)
-        createTaxonSearch(this.newHPI, evaluationContext)
+        createTaxonSearch(this.newHPI, evaluationContext,
+            tax => tax.rlCategory != null )
     }
 
     render() {
@@ -279,6 +281,8 @@ export default class Assessment62Okologiskeffekt extends React.Component {
         const crit52H = getCriterion(riskAssessment, 1 , "H")
         const crit52I = getCriterion(riskAssessment, 1 , "I")
         const ntLabels = labels.NatureTypes
+
+        console.log(this.newSSITS.taxonSearchResult)
         runInAction(() => {
 
         crit52D.auto = true
