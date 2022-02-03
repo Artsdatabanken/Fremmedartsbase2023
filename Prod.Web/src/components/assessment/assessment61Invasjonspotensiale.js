@@ -158,10 +158,9 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
         // **</h5>**</h5>
 
         const AOO1error = errorhandler.errors["(a)err7"]
-        const AOO1msg = riskAssessment.AOO1 > riskAssessment.AOOknown1 ? "MERK: Estimatet skal kun justeres om forekomster som er utgått pga. tiltak ble tatt ut av estimatet for kjent forekomstareal" : ""
+        const AOO1warn = errorhandler.warnings["(a)warn2"]
         const AOO2error = errorhandler.errors["(a)err8"]
-        const AOO2msg = riskAssessment.AOO2 > riskAssessment.AOOknown2 ? "MERK: Estimatet skal kun justeres om forekomster som er utgått pga. tiltak ble tatt ut av estimatet for kjent forekomstareal" : ""
-        
+        const AOO2warn = errorhandler.warnings["(a)warn3"]
 
         return (
             <div>
@@ -550,8 +549,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                            {(AOO1error || AOO1msg)
-                                            ? <tr><td colspan="5">{AOO1error ? <b style={{ color: "red" }}>{AOO1error}</b> : <b style={{ color: "orange" }}> {AOO1msg}</b>}</td></tr>
+                                            {(AOO1error || AOO1warn)
+                                            ? <tr><td colspan="5">{AOO1error ? <b style={{ color: "red" }}>{AOO1error}</b> : <b style={{ color: "orange" }}> {AOO1warn}</b>}</td></tr>
                                             : null
                                             }
                                             <tr>
@@ -602,8 +601,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                 </td>
                                                
                                             </tr>
-                                            {AOO2error || AOO2msg 
-                                            ? <tr><td colspan="5">{AOO2error ? <b style={{ color: "red" }}>{AOO2error}</b> : <b style={{ color: "orange" }}> {AOO2msg}</b>}</td></tr>
+                                            {AOO2error || AOO2warn 
+                                            ? <tr><td colspan="5">{AOO2error ? <b style={{ color: "red" }}>{AOO2error}</b> : <b style={{ color: "orange" }}> {AOO2warn}</b>}</td></tr>
                                             : null
                                             }
                                             <tr>

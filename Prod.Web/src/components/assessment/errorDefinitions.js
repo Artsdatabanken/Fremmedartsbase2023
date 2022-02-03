@@ -55,6 +55,19 @@
             msg: "MERK: Forekomstarealene vil bli avrundet oppover til nærmeste større multippel av 4_km²."
         },
         {
+            id: "(a)warn2",
+            get cond() {return r.AOO1 > r.AOOknown1},
+            type: "warning",
+            msg: "MERK: Estimatet skal kun justeres om forekomster som er utgått pga. tiltak ble tatt ut av estimatet for kjent forekomstareal"
+        },
+        {
+            id: "(a)warn3",
+            get cond() {return r.AOO2 > r.AOOknown2},
+            type: "warning",
+            msg: "MERK: Estimatet skal kun justeres om forekomster som er utgått pga. tiltak ble tatt ut av estimatet for kjent forekomstareal"
+        },
+
+        {
             id: "(b)err1",
             get cond() {return r.occurrences1Low > r.occurrences1Best},
             msg: "Det nedre anslaget på antall forekomster kan ikke være større enn det beste anslaget!"
