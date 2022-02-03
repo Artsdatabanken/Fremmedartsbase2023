@@ -77,6 +77,7 @@ namespace Prod.Api.Helpers
         private static readonly string[] _criterias = { "A", "B", "C", "D", "E", "F", "G", "H", "I" };
         private static readonly string Field_CommentsClosed = "CommentsClosed";
         private static readonly string Field_CommentsOpen = "CommentsOpen";
+        private static readonly string Field_HorizontScanResult= "HorizontScanResult";
         private static readonly string Field_CommentsNew = "CommentsNew";
 
         private static readonly string Field_TaxonChange = "TaxonChange";
@@ -626,10 +627,14 @@ namespace Prod.Api.Helpers
                 if (filter.Responsible.Length > 0)
                     ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_LastUpdatedBy, filter.Responsible), Occur.MUST);
 
+                
+
                 // filtrer på framdrift
                 if (filter.Status.Length > 0)
                     ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_ProgressStatus, filter.Status), Occur.MUST);
-
+                // filtrer på HS-status
+                if (filter.HSStatus)
+                    ((BooleanQuery)query).Add(new BooleanClause(QueryGetFieldQuery(Field_HorizontScanResult, new[] { "1" }), Occur.MUST));
                 // filtrer på kommentarer
                 if (filter.Comments.CommentType.Contains("allAssessmentsWithComments"))
                     ((BooleanQuery)query).Add(new BooleanClause(QueryGetFieldQuery(Field_CommentsOpen, new[] { "1" }), Occur.MUST));

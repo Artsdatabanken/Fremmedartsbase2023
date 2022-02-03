@@ -42,6 +42,8 @@ namespace Prod.Api.Models
         /// </summary>
         public bool HorizonScan { get; set; }
 
+        public bool HSStatus { get; set; }
+
         public string[] Status { get; set; } = Array.Empty<string>();
     }
 

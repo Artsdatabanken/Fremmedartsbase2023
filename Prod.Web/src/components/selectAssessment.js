@@ -31,6 +31,7 @@ export default class SelectAssessment extends Component {
         appState.statusCheckboxFilter = []
         appState.kunMine = false            
         appState.kunUbehandlede = false
+        appState.hSStatus = false
         appState.withComments = false,
         appState.withPotentialTaxonChanges = false,
         appState.withAutomaticNameChanges = false,
@@ -59,6 +60,8 @@ export default class SelectAssessment extends Component {
             appState.withAutomaticNameChanges = false
         } else if (name === 'expertgroupAssessmentFilter') {
             appState.expertgroupAssessmentFilter = ""
+        } else if (name === 'hSStatus') {
+            appState.hSStatus = false
         } else if (name === 'hsNotStarted' ) {
             appState.horizonScanFilter.hsNotStarted = false
         } else if (name === 'hsFinished') {
@@ -118,9 +121,10 @@ export default class SelectAssessment extends Component {
                 appState.expertgroup = "Karplanter"
             )
         }
-
+        console.log(appState.expertgroupAssessmentList)
         const filterIsEmpty = appState.expertgroupAssessmentFilter == "" 
                             && !appState.kunUbehandlede 
+                            && !appState.hSStatus
                             && !appState.horizonScanFilter.hsNotStarted 
                             && !appState.horizonScanFilter.hsFinished 
                             && !appState.horizonScanFilter.toAssessment 
@@ -228,6 +232,9 @@ export default class SelectAssessment extends Component {
                 {appState.assessmentTypeFilter == "riskAssessment" &&
                 <div className="selectFilter">
                     <div>
+                        <div className="selectFilter">
+                            <div className="filters"><Xcomp.Bool observableValue={[appState, "hSStatus"]} label={"Arter som kom fra horisontskanning"}/></div>                        
+                        </div>
                     <div className="filters"> 
                     
                         {/*<span>Vurderinger med kommentar </span>
@@ -539,6 +546,7 @@ export default class SelectAssessment extends Component {
                             {appState.withComments && <button onClick={() => this.resetOneFilter(appState, 'withComments')}>{labels.SelectAssessment.allComments}<a href="#">x</a></button>}
                             {appState.kunMine && <button onClick={() => this.resetOneFilter(appState, 'kunMine')}>{labels.SelectAssessment.myAssessments}<a href="#">x</a></button>}
                             {appState.kunUbehandlede && <button onClick={() => this.resetOneFilter(appState, 'kunUbehandlede')}>{labels.SelectAssessment.commentsToRead}<a href="#">x</a></button>}
+                            {appState.hSStatus && <button onClick={() => this.resetOneFilter(appState, 'hSStatus')}>{"HS-arter"}<a href="#">x</a></button>}
                             {appState.withPotentialTaxonChanges && <button onClick={() => this.resetOneFilter(appState, 'withPotentialTaxonChanges')}>{labels.SelectAssessment.potentialTaxonChange}<a href="#">x</a></button>}
                             {appState.withAutomaticNameChanges && <button onClick={() => this.resetOneFilter(appState, 'withAutomaticNameChanges')}>{labels.SelectAssessment.automaticNameChange}<a href="#">x</a></button>}
                             

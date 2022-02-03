@@ -91,6 +91,7 @@ class ViewModel {
             withPotentialTaxonChanges: false,
             withAutomaticNameChanges: false,
             kunUbehandlede: false,
+            hSStatus: false,
             kunMine: false,
             includeLC: false,
             showTheCat: false,
@@ -412,6 +413,7 @@ class ViewModel {
                 this.horizonScanFilter.potentialDoorKnockers.length,
                 this.horizonScanFilter.hsNotStarted, this.horizonScanFilter.hsFinished, this.horizonScanFilter.toAssessment, this.horizonScanFilter.notAssessed,
                 this.responsible.length, this.kunUbehandlede,
+                this.hSStatus,
                 this.workStatus.length, this.otherComments.length,
 
                 this.historyFilter.riskCategoryFilter.length, this.historyFilter.decisiveCriteriaFilter.length,
@@ -1065,7 +1067,7 @@ class ViewModel {
             if (this.kunUbehandlede) filters = filters + "&Comments.KunUbehandlede=true"
         }else{
             filters=filters + "&HorizonScan=false"
-
+            if (this.hSStatus) filters = filters + "&HSStatus=true"
             if (this.filterType == "FL2018"){
                 if  (this.historyFilter.vurdert) {
                     filters = filters + "&History.Status=vurdert"
