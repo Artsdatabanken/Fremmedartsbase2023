@@ -122,8 +122,7 @@ checkStatus = (production) => {
                              {/*assessment.notApplicableCategory == "taxonIsEvaluatedInHigherRank" && 
                                 // transfer "notApplicableDescription" from FAB3
                              */}
-                            <p>Nærmere begrunnelse</p>
-                            <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/>   
+                            
 
                             {assessment.connectedTaxon && assessment.connectedTaxon.taxonId != "" ? 
                             <div 
@@ -210,7 +209,10 @@ checkStatus = (production) => {
                                     </div>
                                 </div> :
                                 null}
-                            </div> }                          
+                            </div> }             
+
+                            <p>Nærmere begrunnelse</p>
+                            <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/>                
                            
                            {/* <Xcomp.Radio value={"Connected"} observableValue={[assessment, "connected"]} label={labels.SpeciesStatus.assessedWithAnotherTaxon}/>
                             <Xcomp.Radio value={"Shared"} observableValue={[assessment, "connected"]} label={labels.SpeciesStatus.notAssessedButShared} />
@@ -375,14 +377,14 @@ checkStatus = (production) => {
                         
                         
 
-                        {assessment.notApplicableCategory == "establishedBefore1800" &&
-                        // transfer "notApplicableDescription" from FAB3
-                            <>
+                        {/*assessment.notApplicableCategory == "establishedBefore1800" &&
+                        // transfer "notApplicableDescription" from FAB3 */}
+                            
                             <p>{labels.SpeciesStatus.uncertainityEstablishmentTimeDescription}</p>
                             
                             <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/> 
-                            </>
-                        }
+                            
+                        
                         
                      </div> : null}
 
