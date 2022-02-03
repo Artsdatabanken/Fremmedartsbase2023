@@ -29,9 +29,11 @@ export default class DistributionTable extends React.Component {
     // if (assessment.alienSpeciesCategory != "DoorKnocker" && assessment.riskAssessment.AOOtotalBest == 0) {
     //     alert("En selvstending reproduserende art må ha et forekomstareal på minst 4 km2!")
     // }
-       
+    const warn1 = errorhandler.warnings["(a)warn1"]
+
     return (
     <>
+    {warn1 ? <b>{warn1}</b> : null }
     {assessment.alienSpeciesCategory != "DoorKnocker" && <h5>Antatt</h5> }
     <table className="table distribution">
     {assessment.alienSpeciesCategory != "DoorKnocker" ?

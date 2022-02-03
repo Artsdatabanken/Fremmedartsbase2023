@@ -1,6 +1,7 @@
 import {observable} from 'mobx';
 const errorhandler = observable({
     _errobjs: [],
+    _warnobjs: [],
     get hasErrors() {
         return Object.keys(this.errors).filter(key => this.errors[key] !== null).length > 0
     },
@@ -14,14 +15,25 @@ const errorhandler = observable({
         // {
         //     id: "id2", 
         //     get cond() {return obj.prop1 > obj.prop2},
+        //     type: "error"
         //     msg: "error message 2"
+        // },
+        // {
+        //     id: "id3", 
+        //     get cond() {return obj.prop5 > obj.prop2},
+        //     type: "warning"
+        //     msg: "warning message 1"
         // },
         // ...
         // ...
         // ]
         // **********************************
         for(const errobj of errorobjectarray) {
-            this._errobjs.push(errobj)
+            if(errobj.type === undefined || errobj.type === "error" ) {
+                this._errobjs.push(errobj)
+            } else if(errobj.type === "warning" ) {
+                this._warnobjs.push(errobj)
+            }
         }
     },
     get errors() {
@@ -31,6 +43,17 @@ const errorhandler = observable({
                 result[errobj.id] = errobj.msg
             } else {
                 result[errobj.id] = null
+            }
+        }
+        return result
+    },
+    get warnings() {
+        const result = {}
+        for(const warnobj of this._warnobjs) {
+            if(warnobj.cond) {
+                result[warnobj.id] = warnobj.msg
+            } else {
+                result[warnobj.id] = null
             }
         }
         return result
