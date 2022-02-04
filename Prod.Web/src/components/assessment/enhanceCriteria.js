@@ -759,6 +759,17 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             console.log("#&#AOO2 updated from AOOknown2. old value:" + prevAOO2 + " new value: " + AOOknown2)
         }
     )
+    reaction(
+        () => r.riskLevelCode,
+        (riskLevelCode, previousriskLevelCode) => {
+            if (riskLevelCode == "NK") {
+                action(() => {
+                    r.possibleLowerCategory = "no";
+                })()
+            }
+            console.log('#&#possibleLowerCategory is set to "no" because risklevelCode is "NK"')
+        }
+    )
 }
 
 function enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering, artificialAndConstructedSites) {

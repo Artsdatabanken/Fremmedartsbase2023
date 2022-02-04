@@ -15,11 +15,6 @@ export default class Assessment80GeografiskVariasjon extends React.Component {
 		const koder = appState.koder
 		const geolabels = labels.geographicVariation
 		
-		
-		if (riskAssessment.riskLevelCode == "NK") {
-			riskAssessment.possibleLowerCategory = "no";
-		} 
-        
 		return(
 			<div>
 				{config.showPageHeaders ? <h3>{geolabels.heading}</h3> :  <br />}
