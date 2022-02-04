@@ -229,7 +229,9 @@ export default class Assessment52Utbredelse extends React.Component {
         } else {
             ass.riskAssessment.AOO2 = areadata.AreaOfOccupancy;
         }
-        ass.riskAssessment.yearFirstProductionOutdoors = areadata.AreaExtentOfOccurrence;
+        // ass.riskAssessment.yearFirstProductionOutdoors = areadata.AreaExtentOfOccurrence;
+        if  (ass.riskAssessment.AOOyear2 === undefined || ass.riskAssessment.AOOyear2 == null) ass.riskAssessment.AOOyear2 = ass.artskartModel.observationToYear;
+        if  (ass.riskAssessment.AOOknown2 === undefined || ass.riskAssessment.AOOknown2 == null) ass.riskAssessment.AOOknown2 = ass.riskAssessment.AOOknownInput;   
         
         // TODO: Fylkesoversikt - avventer data fra API
         if (countylist) {
