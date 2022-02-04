@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import * as Xcomp from "../observableComponents";
 
+// Rendrer div og dialog for utvalgsparamtere
 const Artskartparametre = ({ utvalg, artskartModel }) => {
   const inputRef = useRef(null);
   useEffect(() => inputRef.current.focus(), []);
