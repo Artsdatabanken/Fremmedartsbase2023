@@ -33,16 +33,34 @@ export default class SelectAssessment extends Component {
         appState.kunUbehandlede = false
         appState.hSStatus = false
         appState.withComments = false,
-        appState.withPotentialTaxonChanges = false,
-        appState.withAutomaticNameChanges = false,
+        appState.withPotentialTaxonChanges = false
+        appState.withAutomaticNameChanges = false
         appState.withNewComments = false    
-        appState.horizonScanFilter.hsNotStarted = false
-        appState.horizonScanFilter.hsFinished = false
-        appState.horizonScanFilter.notAssessed = false
-        appState.horizonScanFilter.toAssessment = false
         appState.responsible = []
-        appState.horizonScanFilter.notAssessedDoorKnocker = []
-        appState.horizonScanFilter.potentialDoorKnockers = []
+        appState.workStatus = []
+        appState.otherComments = []
+        if (appState.horizonScanFilter != undefined) {
+            appState.horizonScanFilter.hsNotStarted = false
+            appState.horizonScanFilter.hsFinished = false
+            appState.horizonScanFilter.notAssessed = false
+            appState.horizonScanFilter.toAssessment = false
+            appState.horizonScanFilter.notAssessedDoorKnocker = []
+            appState.horizonScanFilter.potentialDoorKnockers = []
+        }
+
+        if (appState.historyFilter != undefined) {
+            appState.historyFilter.decisiveCriteriaFilter = []
+            appState.historyFilter.riskCategoryFilter = []
+            appState.historyFilter.riskNotAssessedFilter = []
+            appState.historyFilter.riskAssessedFilter = []
+        }
+
+        if (appState.currentFilter != undefined) {
+            appState.currentFilter.decisiveCriteriaFilter = []
+            appState.currentFilter.riskCategoryFilter = []
+            appState.currentFilter.riskNotAssessedFilter = []
+            appState.currentFilter.riskAssessedFilter = []
+        }
 
     })
     resetOneFilter = action ((appState, name) => {        
@@ -76,6 +94,15 @@ export default class SelectAssessment extends Component {
            // appState.name = false
         }
         //[appState, name] = false
+    })
+
+    changeFilters = action((appState) => {
+        if (appState) {
+
+            appState.filterType = []
+            appState.horizonScanFilter.horizonFilters = false
+            this.resetFilters(appState)
+        }
     })
 
     resetResponsible = action ((appState, name) => {
@@ -129,20 +156,22 @@ export default class SelectAssessment extends Component {
                             && !appState.horizonScanFilter.hsFinished 
                             && !appState.horizonScanFilter.toAssessment 
                             && !appState.horizonScanFilter.notAssessed 
-                            && appState.responsible.length == 0 
-                            && (appState.currentFilter.decisiveCriteriaFilter && appState.currentFilter.decisiveCriteriaFilter.length == 0) 
-                            && (appState.workStatus && appState.workStatus.length == 0) 
-                            && (appState.currentFilter.riskCategoryFilter && appState.currentFilter.riskCategoryFilter.length == 0)
-                            && (appState.historyFilter.decisiveCriteriaFilter && appState.historyFilter.decisiveCriteriaFilter.length == 0) 
-                            && (appState.historyFilter.riskCategoryFilter && appState.historyFilter.riskCategoryFilter.length == 0)
-                            && (appState.historyFilter.riskAssessedFilter && appState.historyFilter.riskAssessedFilter.length == 0) 
-                            && (appState.historyFilter.riskNotAssessedFilter && appState.historyFilter.riskNotAssessedFilter.length == 0)
-                            && (appState.currentFilter.riskAssessedFilter && appState.currentFilter.riskAssessedFilter.length == 0) 
-                            && (appState.currentFilter.riskNotAssessedFilter && appState.currentFilter.riskNotAssessedFilter.length == 0)
-                            && (appState.otherComments && appState.otherComments.length == 0)
-                            && (appState.horizonScanFilter.potentialDoorKnockers && appState.horizonScanFilter.potentialDoorKnockers.length == 0)
-                            && (appState.horizonScanFilter.notAssessedDoorKnocker && appState.horizonScanFilter.notAssessedDoorKnocker.length == 0)
+                            && appState.responsible.length === 0 
+                            && (appState.currentFilter.decisiveCriteriaFilter && appState.currentFilter.decisiveCriteriaFilter.length === 0) 
+                            && (appState.workStatus && appState.workStatus.length === 0) 
+                            && (appState.currentFilter.riskCategoryFilter && appState.currentFilter.riskCategoryFilter.length ===0)
+                            && (appState.historyFilter.decisiveCriteriaFilter && appState.historyFilter.decisiveCriteriaFilter.length === 0) 
+                            && (appState.historyFilter.riskCategoryFilter && appState.historyFilter.riskCategoryFilter.length === 0)
+                            && (appState.historyFilter.riskAssessedFilter && appState.historyFilter.riskAssessedFilter.length === 0) 
+                            && (appState.historyFilter.riskNotAssessedFilter && appState.historyFilter.riskNotAssessedFilter.length === 0)
+                            && (appState.currentFilter.riskAssessedFilter && appState.currentFilter.riskAssessedFilter.length === 0) 
+                            && (appState.currentFilter.riskNotAssessedFilter && appState.currentFilter.riskNotAssessedFilter.length === 0)
+                            && (appState.otherComments && appState.otherComments.length === 0)
+                            && (appState.horizonScanFilter.potentialDoorKnockers && appState.horizonScanFilter.potentialDoorKnockers.length === 0)
+                            && (appState.horizonScanFilter.notAssessedDoorKnocker && appState.horizonScanFilter.notAssessedDoorKnocker.length === 0)
 
+                            && appState.expertgroupCategoryCheckboxFilter.length === 0 && appState.statusCheckboxFilter.length === 0 
+                            && !appState.kunMine && !appState.withComments && !appState.withAutomaticNameChanges && !appState.withPotentialTaxonChanges
         
      /*   let checkList = document.getElementById('list1');
         if (checkList) {checkList.getElementsByClassName('anchor')[0].onclick = function (evt) {
@@ -193,6 +222,7 @@ export default class SelectAssessment extends Component {
                                     observableValue={[appState, 'assessmentTypeFilter']} 
                                     heading={labels.SelectAssessment.whatDoYouWantToDo}
                                     codes={koder.assessmentType}
+                                    onChange={() => this.changeFilters(appState)}
                                     mode="radio"/>
                 <fieldset className="well">
                     <h4>{labels.SelectAssessment.chooseSpeciesGroup}</h4>
@@ -552,7 +582,7 @@ export default class SelectAssessment extends Component {
                             
                 <button                        
                         type="button"  
-                        disabled={!appState.hSStatus && appState.expertgroupCategoryCheckboxFilter.length === 0 && appState.expertgroupAssessmentFilter === "" && appState.statusCheckboxFilter.length === 0 && !appState.kunMine &&!appState.withComments && !appState.kunUbehandlede && !appState.withAutomaticNameChanges && !appState.withPotentialTaxonChanges && !appState.horizonScanFilter.hsNotStarted && !appState.horizonScanFilter.toAssessment && !appState.horizonScanFilter.hsFinished && !appState.horizonScanFilter.notAssessed && appState.responsible.length === 0 && appState.horizonScanFilter.notAssessedDoorKnocker.length === 0 && appState.horizonScanFilter.potentialDoorKnockers.length === 0} 
+                        disabled={filterIsEmpty} 
                         onClick={() => this.resetFilters(appState)}>{labels.SelectAssessment.resetAll}</button>
                 </div>
             </div>
