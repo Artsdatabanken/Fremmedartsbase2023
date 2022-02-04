@@ -1583,18 +1583,18 @@ public partial class FA4 // (3.2) Artsegenskaper
         public string ArtskartRemoved { get; set; }
         public string ArtskartSelectionGeometry { get; set; }
         public string ArtskartSistOverført { get; set; }
-        public ArtskartModel ArtskartModel { get; set; }
-        public ArtskartWaterModel ArtskartWaterModel { get; set; }
+        public ArtskartModel ArtskartModel { get; set; } = new ArtskartModel();
+        public ArtskartWaterModel ArtskartWaterModel { get; set; } = new ArtskartWaterModel();
     }
 
     public class ArtskartModel
     {
         public int ObservationFromYear { get; set; } = 1950;
         public int ObservationToYear { get; set; } = 2021;
-        public bool IncludeNorge { get; set; }
-        public bool IncludeSvalbard { get; set; }
-        public bool ExcludeObjects { get; set; }
-        public bool ExcludeGbif { get; set; }
+        public bool IncludeNorge { get; set; } = true;
+        public bool IncludeSvalbard { get; set; } = true;
+        public bool ExcludeObjects { get; set; } = false;
+        public bool ExcludeGbif { get; set; } = false;
     }
 
     public class ArtskartWaterModel

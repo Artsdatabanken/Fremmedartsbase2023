@@ -231,10 +231,10 @@ export default class SelectAssessment extends Component {
                 
                 {appState.assessmentTypeFilter == "riskAssessment" &&
                 <div className="selectFilter">
-                    <div>
-                        <div className="selectFilter">
-                            <div className="filters"><Xcomp.Bool observableValue={[appState, "hSStatus"]} label={"Arter som kom fra horisontskanning"}/></div>                        
-                        </div>
+                    <div>                        
+                    <div className="filters">
+                        <Xcomp.Bool observableValue={[appState, "hSStatus"]} label={labels.SelectAssessment.hsFilter}/></div>                        
+                
                     <div className="filters"> 
                     
                         {/*<span>Vurderinger med kommentar </span>
@@ -552,7 +552,7 @@ export default class SelectAssessment extends Component {
                             
                 <button                        
                         type="button"  
-                        disabled={appState.expertgroupCategoryCheckboxFilter.length === 0 && appState.expertgroupAssessmentFilter === "" && appState.statusCheckboxFilter.length === 0 && !appState.kunMine &&!appState.withComments && !appState.kunUbehandlede && !appState.withAutomaticNameChanges && !appState.withPotentialTaxonChanges && !appState.horizonScanFilter.hsNotStarted && !appState.horizonScanFilter.toAssessment && !appState.horizonScanFilter.hsFinished && !appState.horizonScanFilter.notAssessed && appState.responsible.length === 0 && appState.horizonScanFilter.notAssessedDoorKnocker.length === 0 && appState.horizonScanFilter.potentialDoorKnockers.length === 0} 
+                        disabled={!appState.hSStatus && appState.expertgroupCategoryCheckboxFilter.length === 0 && appState.expertgroupAssessmentFilter === "" && appState.statusCheckboxFilter.length === 0 && !appState.kunMine &&!appState.withComments && !appState.kunUbehandlede && !appState.withAutomaticNameChanges && !appState.withPotentialTaxonChanges && !appState.horizonScanFilter.hsNotStarted && !appState.horizonScanFilter.toAssessment && !appState.horizonScanFilter.hsFinished && !appState.horizonScanFilter.notAssessed && appState.responsible.length === 0 && appState.horizonScanFilter.notAssessedDoorKnocker.length === 0 && appState.horizonScanFilter.potentialDoorKnockers.length === 0} 
                         onClick={() => this.resetFilters(appState)}>{labels.SelectAssessment.resetAll}</button>
                 </div>
             </div>
