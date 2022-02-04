@@ -1277,6 +1277,8 @@ namespace SwissKnife.Database
 
                     });
 
+                
+
                 // - slik mapping fungerer ikke - da de blir kallt via convention - og det er ingen tilfeller der den har behov for å mappe fra FA3Legacy til Prod.Domain.RiskAssessment - koden blir ikke kallt
                 //cfg.CreateMap<FA3Legacy, Prod.Domain.RiskAssessment>()
                 //    .ForMember(dest => dest.AOOknown, opt => opt.MapFrom(src => src.CurrentExistenceArea))

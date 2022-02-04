@@ -320,7 +320,7 @@ namespace SwissKnife.Database
             });
             
             var existing = _database.Assessments.ToDictionary(x => x.Id, x => JsonSerializer.Deserialize<FA4>(x.Doc, jsonSerializerOptions));
-            
+            var seen = new List<int>();
             // mapping
             var mapper = Fab3Mapper.CreateMappingFromOldToNew();
             var batchsize = 50;
@@ -339,6 +339,7 @@ namespace SwissKnife.Database
                     continue;
                 }
                 var real = _database.Assessments.Single(x => x.Id == theMatchingAssessment.Key);
+                seen.Add(theMatchingAssessment.Key);
 
                 // todo: overfør manglende morro
                 var exAssessment = JsonSerializer.Deserialize<FA4>(real.Doc, jsonSerializerOptions);
@@ -439,6 +440,9 @@ namespace SwissKnife.Database
                 exAssessment.ImpactedNatureTypesFrom2018 = newAssesment.ImpactedNatureTypesFrom2018;
                 exAssessment.Habitats = newAssesment.Habitats;
 
+                exAssessment.ArtskartModel = newAssesment.ArtskartModel;
+                exAssessment.ArtskartWaterModel = newAssesment.ArtskartWaterModel;
+
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)
                 {
@@ -454,6 +458,49 @@ namespace SwissKnife.Database
                 //}
                 
                 //               _database.Assessments.Add(dbAssessment);
+                count++;
+
+                if (count > batchsize)
+                {
+                    _database.SaveChanges();
+                    count = 0;
+                }
+            }
+
+            // fiks ting på vurderinger som er nye for 2023
+            var notSeen = existing.Where(x => !seen.Contains(x.Key)).Select(y=>y.Key).ToArray();
+            foreach (var item in notSeen)
+            {
+                var real = _database.Assessments.Single(x => x.Id == item);
+
+                // todo: overfør manglende morro
+                var exAssessment = JsonSerializer.Deserialize<FA4>(real.Doc, jsonSerializerOptions);
+                var orgCopy = JsonSerializer.Deserialize<FA4>(real.Doc, jsonSerializerOptions);
+
+                Debug.Assert(exAssessment != null, nameof(exAssessment) + " != null");
+                exAssessment.ArtskartModel ??= new ArtskartModel();
+                exAssessment.ArtskartWaterModel ??= new ArtskartWaterModel();
+                exAssessment.ImpactedNatureTypesFrom2018 ??= new List<FA4.ImpactedNatureType>();
+
+                if (exAssessment.ExpertGroup == "Sopper")
+                {
+                    if (exAssessment.TaxonHierarcy.ToLowerInvariant().StartsWith("chromista"))
+                    {
+
+                        exAssessment.ExpertGroup = "Kromister";
+                    }
+                }
+
+                var comparisonResult = comparer.Compare(orgCopy, exAssessment);
+                if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)
+                {
+                    real.ScientificNameId = exAssessment.EvaluatedScientificNameId.Value;
+                }
+                if (comparisonResult.AreEqual == false)
+                {
+                    real.Doc = JsonSerializer.Serialize<FA4>(exAssessment);
+                }
+
                 count++;
 
                 if (count > batchsize)
