@@ -932,13 +932,13 @@ namespace SwissKnife.Database
                         ConvertHelper.SetHorizonScanningBasedOn2018Assessments(dest);
 
                         // hentet fra det under - slik mapping fungerer ikke - da de blir kallt via convention - og det er ingen tilfeller der den har behov for å mappe fra FA3Legacy til Prod.Domain.RiskAssessment - koden blir ikke kallt
-                        dest.RiskAssessment.AOOknown = src.CurrentExistenceArea;
-                        dest.RiskAssessment.AOOtotalBest = src.CurrentExistenceAreaCalculated;
-                        dest.RiskAssessment.AOOtotalLow = src.CurrentExistenceAreaLowCalculated;
-                        dest.RiskAssessment.AOOtotalHigh = src.CurrentExistenceAreaHighCalculated;
-                        dest.RiskAssessment.AOO50yrBest = src.PotentialExistenceArea;
-                        dest.RiskAssessment.AOO50yrLow = src.PotentialExistenceAreaLowQuartile;
-                        dest.RiskAssessment.AOO50yrHigh = src.PotentialExistenceAreaHighQuartile;
+                        dest.RiskAssessment.AOOknownInput = src.CurrentExistenceArea;
+                        dest.RiskAssessment.AOOtotalBestInput = src.CurrentExistenceAreaCalculated;
+                        dest.RiskAssessment.AOOtotalLowInput = src.CurrentExistenceAreaLowCalculated;
+                        dest.RiskAssessment.AOOtotalHighInput = src.CurrentExistenceAreaHighCalculated;
+                        dest.RiskAssessment.AOO50yrBestInput = src.PotentialExistenceArea;
+                        dest.RiskAssessment.AOO50yrLowInput = src.PotentialExistenceAreaLowQuartile;
+                        dest.RiskAssessment.AOO50yrHighInput = src.PotentialExistenceAreaHighQuartile;
 
                         dest.RiskAssessment.AOOdarkfigureBest = ParseFloat(src.CurrentExistenceAreaMultiplier);
                         dest.RiskAssessment.AOOdarkfigureHigh = ParseFloat(src.CurrentExistenceAreaHighMultiplier);
