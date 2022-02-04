@@ -129,11 +129,11 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
         // console.log(crit51A)
         const crit51B = getCriterion(riskAssessment, 0, "B")
         const critC = getCriterion(riskAssessment, 0, "C")
-        runInAction(() => {
-            // crit51A.auto = false // critA auto is set in enhanceCriteria
-            crit51B.auto = false
-            critC.auto = false
-        })
+        // runInAction(() => {
+        //     // crit51A.auto = false // critA auto is set in enhanceCriteria
+        //     crit51B.auto = false
+        //     critC.auto = false
+        // })
         const textAS = riskAssessment.a1aresulttext
         console.log(textAS)
         //stringFormat(labels.AcritText.SelfProducing)
@@ -370,6 +370,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     appState={appState}
                     mode="noheading"
                     disabled = {disabled || (riskAssessment.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && riskAssessment.acceptOrAdjustCritA == "accept")}
+                    // commente out to fix isDirty problem. fix in enhanceCriteria necessery
                     auto = {riskAssessment.chosenSpreadMedanLifespan == "ViableAnalysis" ||
                              riskAssessment.chosenSpreadMedanLifespan == "SpreadRscriptEstimatedSpeciesLongevity" ||
                              (riskAssessment.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && riskAssessment.acceptOrAdjustCritA != "adjust") 
