@@ -1,8 +1,7 @@
 ﻿import React from 'react';
 import PropTypes from 'prop-types'
 import {observer, inject} from 'mobx-react';
-import {action, computed, runInAction, observable} from 'mobx'
-
+import {action, computed, runInAction, observable, makeObservable} from 'mobx'
 import * as Xcomp from './observableComponents';
 import Tabs from '../tabs'
 import Criterion from './criterion'
@@ -17,7 +16,6 @@ import { KeyboardHideSharp } from '@material-ui/icons'
 import {stringFormat} from "../../utils"
 import ModalArtskart from '../artskart/ModalArtskart';
 import errorhandler from '../errorhandler';
-
 
 @inject('appState')
 @observer
@@ -75,11 +73,20 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
     // getCriterion(riskAssessment, akse, letter) {     const result =
     // riskAssessment.criteria.filter(c => c.akse === akse && c.criteriaLetter ===
     // letter)[0];     return result; }
-    handleDateFromArtskart0 = (data) => {
-        console.log('ToDo: data from Artskart - 0', data);
+    handleDateFromArtskart0 = ({ selectionGeometry, countylist, newWaterAreas, areadata, observations, editStats }) => {
+        console.log('ToDo: data from Artskart - 0', areadata);
+        const aps = this.props.appState;
+        const ass = aps.assessment;
+        // assessment.riskAssessment.AOOyear1
+        ass.riskAssessment.AOOknown1 = areadata.AreaOfOccupancy;
+        ass.riskAssessment.AOOyear1 = this.props.appState.virtualArtskartModel0.observationToYear;
     }
-    handleDateFromArtskart1 = (data) => {
-        console.log('ToDo: data from Artskart - 1', data);
+    handleDateFromArtskart1 = ({ selectionGeometry, countylist, newWaterAreas, areadata, observations, editStats }) => {
+        console.log('ToDo: data from Artskart - 1', areadata);
+        const aps = this.props.appState;
+        const ass = aps.assessment;
+        ass.riskAssessment.AOOknown2 = areadata.AreaOfOccupancy;
+        ass.riskAssessment.AOOyear2 = this.props.appState.virtualArtskartModel.observationToYear;
     }
     render() {
         const renderAgain = this.isDirty; // code looks unused, but it makes the Artskart-module listen to changes
@@ -99,6 +106,20 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
 
         // riskAssessment.AOO2 == null ? riskAssessment.AOO2 = riskAssessment.AOOknown2 : riskAssessment.AOO2 = 0
 
+        this.props.appState.virtualArtskartModel0 = observable({
+            observationFromYear: assessment.artskartModel.observationFromYear,
+            observationToYear: assessment.riskAssessment.AOOyear1,
+            includeNorge: assessment.artskartModel.includeNorge,
+            excludeObjects: assessment.artskartModel.excludeObjects,
+            excludeGbif: assessment.artskartModel.excludeGbif,
+        });        
+        this.props.appState.virtualArtskartModel = observable({
+            observationFromYear: assessment.artskartModel.observationFromYear,
+            observationToYear: assessment.riskAssessment.AOOyear2,
+            includeNorge: assessment.artskartModel.includeNorge,
+            excludeObjects: assessment.artskartModel.excludeObjects,
+            excludeGbif: assessment.artskartModel.excludeGbif,
+        });
 
         // commented this out. it crashed the application.
         // if (assessment.artskartModel2 === undefined) {
@@ -111,7 +132,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
         //         excludeGbif: assessment.artskartModel.excludeGbif,
         //     };
         // }
-
+        // if  (assessment.riskAssessment.AOOyear2 === undefined || assessment.riskAssessment.AOOyear2 == null) assessment.riskAssessment.AOOyear2 = assessment.artskartModel.observationToYear;
+        // if  (assessment.riskAssessment.AOOknown2 === undefined || assessment.riskAssessment.AOOknown2 == null) assessment.riskAssessment.AOOknown2 = assessment.riskAssessment.AOOknownInput;   
 
         // const bassertpaValues = [
         //     {
@@ -565,7 +587,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                             showWaterAreas={assessment.isAlienSpecies && assessment.isRegionallyAlien}
                                                             labels={labelsArtskart}
                                                             utvalg={assessment.riskAssessment}
-                                                            artskartModel={assessment.artskartModel2}
+                                                            artskartModel={this.props.appState.virtualArtskartModel0}
                                                             onOverførFraArtskart={action(this.handleDateFromArtskart0)}
                                                             artskartSelectionGeometry={assessment.artskartSelectionGeometry}
                                                             artskartAdded={assessment.artskartAdded}
@@ -617,7 +639,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                             showWaterAreas={assessment.isAlienSpecies && assessment.isRegionallyAlien}
                                                             labels={labelsArtskart}
                                                             utvalg={assessment.riskAssessment}
-                                                            artskartModel={assessment.artskartModel2}
+                                                            artskartModel={this.props.appState.virtualArtskartModel}
                                                             onOverførFraArtskart={action(this.handleDateFromArtskart1)}
                                                             artskartSelectionGeometry={assessment.artskartSelectionGeometry}
                                                             artskartAdded={assessment.artskartAdded}

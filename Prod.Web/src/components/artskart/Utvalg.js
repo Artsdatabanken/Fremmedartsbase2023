@@ -5,6 +5,7 @@ import * as Xcomp from "../observableComponents";
 import useEscapeKey from "./useEscapeKey";
 import useFocus from "./useFocus";
 
+// Rendrer knapp for å vise og dialog for utvalgsparamtere - ArtskartModel
 const Utvalg = ({ utvalg, artskartModel }) => {
   const closeModal = () => {
     setModalOpen(false);
