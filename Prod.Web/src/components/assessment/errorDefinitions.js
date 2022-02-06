@@ -9,7 +9,7 @@
         },
         {
             id: "(a)err1",
-            get cond() {return r.AOOtotalBest === 0},
+            get cond() {return r.doFullAssessment && r.AOOtotalBest === 0},
             msg: "En selvstendig reproduserende art må ha et forekomstareal på minst 4_km²!"
         },
         {

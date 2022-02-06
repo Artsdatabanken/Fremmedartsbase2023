@@ -39,6 +39,7 @@ export default class SelectAssessment extends Component {
         appState.responsible = []
         appState.workStatus = []
         appState.otherComments = []
+       
         if (appState.horizonScanFilter != undefined) {
             appState.horizonScanFilter.hsNotStarted = false
             appState.horizonScanFilter.hsFinished = false
@@ -53,6 +54,8 @@ export default class SelectAssessment extends Component {
             appState.historyFilter.riskCategoryFilter = []
             appState.historyFilter.riskNotAssessedFilter = []
             appState.historyFilter.riskAssessedFilter = []
+            appState.historyFilter.vurdert = false
+            appState.historyFilter.ikkevurdert = false
         }
 
         if (appState.currentFilter != undefined) {
@@ -60,6 +63,8 @@ export default class SelectAssessment extends Component {
             appState.currentFilter.riskCategoryFilter = []
             appState.currentFilter.riskNotAssessedFilter = []
             appState.currentFilter.riskAssessedFilter = []
+            appState.currentFilter.vurdert = false
+            appState.currentFilter.ikkevurdert = false 
         }
 
     })
@@ -105,16 +110,8 @@ export default class SelectAssessment extends Component {
         }
     })
 
-    resetResponsible = action ((appState, name) => {
-            appState.responsible.remove(name)
-    })
-
-    resetDoorKnocker = action ((appState, name) => {
-        appState.horizonScanFilter.potentialDoorKnockers.remove(name)
-    })
-
-    resetNotAssessedDK = action ((appState, name) => {
-        appState.horizonScanFilter.notAssessedDoorKnocker.remove(name)
+    resetArrayFilter = action ((array, name) => {
+            array.remove(name)
     })
 
     removeStatus = action ((appState, status) =>{
@@ -158,6 +155,8 @@ export default class SelectAssessment extends Component {
                             && !appState.horizonScanFilter.notAssessed 
                             && appState.responsible.length === 0 
                             && (appState.currentFilter.decisiveCriteriaFilter && appState.currentFilter.decisiveCriteriaFilter.length === 0) 
+                            && !appState.currentFilter.vurdert && !appState.currentFilter.ikkevurdert
+                            && !appState.historyFilter.vurdert && !appState.historyFilter.ikkevurdert
                             && (appState.workStatus && appState.workStatus.length === 0) 
                             && (appState.currentFilter.riskCategoryFilter && appState.currentFilter.riskCategoryFilter.length ===0)
                             && (appState.historyFilter.decisiveCriteriaFilter && appState.historyFilter.decisiveCriteriaFilter.length === 0) 
@@ -567,10 +566,10 @@ export default class SelectAssessment extends Component {
                             {appState.horizonScanFilter.toAssessment && <button onClick={() => this.resetOneFilter(appState, 'toAssessment')}>{"Videre til risikovurdering"}<a href="#">x</a></button>}  
                             {appState.horizonScanFilter.notAssessed && <button onClick={() => this.resetOneFilter(appState, 'notAssessed')}>{"Ikke videre"}<a href="#">x</a></button>}  
                             
-                            {appState.responsible && appState.responsible.length > 0 && appState.responsible.map (r => <button onClick={() => this.resetResponsible(appState, r)}>{r}<a href="#">x</a></button>)}
-
-                            {appState.horizonScanFilter.potentialDoorKnockers && appState.horizonScanFilter.potentialDoorKnockers.length > 0 && appState.horizonScanFilter.potentialDoorKnockers.map (pdk => <button onClick={() => this.resetDoorKnocker(appState, pdk)}>{this.findFilterText(koder.potentialDoorKnockers, pdk)}<a href="#">x</a></button>)}
-                            {appState.horizonScanFilter.notAssessedDoorKnocker && appState.horizonScanFilter.notAssessedDoorKnocker.length > 0 && appState.horizonScanFilter.notAssessedDoorKnocker.map (nadk => <button onClick={() => this.resetNotAssessedDK(appState, nadk)}>{this.findFilterText(koder.notAssessedDoorKnocker, nadk)}<a href="#">x</a></button>)}
+                            {appState.responsible && appState.responsible.length > 0 && appState.responsible.map (r => <button onClick={() => this.resetArrayFilter(appState.responsible, r)}>{r}<a href="#">x</a></button>)}
+                            {appState.workStatus && appState.workStatus.length > 0 && appState.workStatus.map (r => <button onClick={() => this.resetArrayFilter(appState.workStatus, r)}>{this.findFilterText(koder.workStatus, r)}<a href="#">x</a></button>)}
+                            {appState.horizonScanFilter.potentialDoorKnockers && appState.horizonScanFilter.potentialDoorKnockers.length > 0 && appState.horizonScanFilter.potentialDoorKnockers.map (pdk => <button onClick={() => this.resetArrayFilter(appState.horizonScanFilter.potentialDoorKnockers, pdk)}>{this.findFilterText(koder.potentialDoorKnockers, pdk)}<a href="#">x</a></button>)}
+                            {appState.horizonScanFilter.notAssessedDoorKnocker && appState.horizonScanFilter.notAssessedDoorKnocker.length > 0 && appState.horizonScanFilter.notAssessedDoorKnocker.map (nadk => <button onClick={() => this.resetArrayFilter(appState.horizonScanFilter.notAssessedDoorKnocker, nadk)}>{this.findFilterText(koder.notAssessedDoorKnocker, nadk)}<a href="#">x</a></button>)}
                             
                             {appState.withNewComments && <button onClick={() => this.resetOneFilter(appState, 'withNewComments')}>{labels.SelectAssessment.newComments}<a href="#">x</a></button>}                     
                             {appState.withComments && <button onClick={() => this.resetOneFilter(appState, 'withComments')}>{labels.SelectAssessment.allComments}<a href="#">x</a></button>}
