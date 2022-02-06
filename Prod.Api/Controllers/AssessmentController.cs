@@ -666,6 +666,8 @@ namespace Prod.Api.Controllers
                 queryparams += $"&removePoints={fab4.ArtskartRemoved}";
             }
 
+            queryparams += "&crs=EPSG:32633";
+
             var urlen = apibase + fab4.TaxonId + "/downloadObservations/?" + queryparams;
             var postparam = "";
             if (fab4.ArtskartWaterModel != null && fab4.ArtskartWaterModel.Areas != null)
