@@ -613,13 +613,14 @@ namespace Prod.Api.Controllers
             await _dbContext.SaveChangesAsync().ConfigureAwait(false);
             IndexHelper.Index(assessment, _index);
         }
-        private static async Task<byte[]> GetZipDataFromArtskart(FA4 rlRodliste2019)
+        private static async Task<byte[]> GetZipDataFromArtskart(FA4 fab4)
         {
             // hent datasett fra artskart
-            var date = DateTime.Parse(rlRodliste2019.ArtskartSistOverført);
-            var kriterier = rlRodliste2019.ArtskartModel;
+            var date = DateTime.Parse(fab4.ArtskartSistOverført);
+            var kriterier = fab4.ArtskartModel;
 
-            var apibase =
+            var apibase = 
+                //"http://localhost:16784/api/listhelper/";
                 "https://artskart.artsdatabanken.no/PublicApi/api/listhelper/";
             var type = //"all";
                 kriterier.ExcludeObjects == false
@@ -635,12 +636,12 @@ namespace Prod.Api.Controllers
             kriterier.ExcludeGbif ? "&sourcedatabases[]=-40,-211" : "";
             var queryparams =
                 $"&fromYear={kriterier.ObservationFromYear}&toYear={kriterier.ObservationToYear}&type={type}&region={region}{excludeGbif}";
-            queryparams += $"&scientificNameId={rlRodliste2019.EvaluatedScientificNameId}";
+            queryparams += $"&scientificNameId={fab4.EvaluatedScientificNameId}";
 
-            if (!string.IsNullOrWhiteSpace(rlRodliste2019.ArtskartSelectionGeometry))
+            if (!string.IsNullOrWhiteSpace(fab4.ArtskartSelectionGeometry))
             {
                 queryparams += $"&geojsonPolygon=";
-                dynamic json = JsonSerializer.Deserialize<dynamic>(rlRodliste2019.ArtskartSelectionGeometry);
+                dynamic json = JsonSerializer.Deserialize<dynamic>(fab4.ArtskartSelectionGeometry);
                 dynamic coordinates = json.geometry.coordinates;
                 dynamic items = coordinates[0];
                 foreach (dynamic item in items)
@@ -655,20 +656,34 @@ namespace Prod.Api.Controllers
                 queryparams = queryparams.Substring(0, queryparams.Length - 1);
             }
 
-            if (!string.IsNullOrWhiteSpace(rlRodliste2019.ArtskartAdded))
+            if (!string.IsNullOrWhiteSpace(fab4.ArtskartAdded))
             {
-                queryparams += $"&addPoints={rlRodliste2019.ArtskartAdded}";
+                queryparams += $"&addPoints={fab4.ArtskartAdded}";
             }
 
-            if (!string.IsNullOrWhiteSpace(rlRodliste2019.ArtskartRemoved))
+            if (!string.IsNullOrWhiteSpace(fab4.ArtskartRemoved))
             {
-                queryparams += $"&removePoints={rlRodliste2019.ArtskartRemoved}";
+                queryparams += $"&removePoints={fab4.ArtskartRemoved}";
             }
 
-            var urlen = apibase + rlRodliste2019.TaxonId + "/downloadObservations/?" + queryparams;
+            var urlen = apibase + fab4.TaxonId + "/downloadObservations/?" + queryparams;
+            var postparam = "";
+            if (fab4.ArtskartWaterModel != null && fab4.ArtskartWaterModel.Areas != null)
+            {
+                var geoids = fab4.ArtskartWaterModel.Areas.Where(x => x.Selected == 1).Select(x => "\"" + x.GlobalId + "\"")
+                    .ToArray();
+                if (geoids.Length > 0)
+                {
+                    postparam = "["+ string.Join(",", geoids) +"]";
+                }
+            }
+
+            
             using var client = new HttpClient();
-
-            var zipfile = await client.GetByteArrayAsync(urlen);
+            var post = await client.PostAsync(urlen, new StringContent(postparam));
+            var test = post.IsSuccessStatusCode;
+            var zipfile = await post.Content.ReadAsByteArrayAsync();
+            //var zipfile = await client.GetByteArrayAsync(urlen);
             return zipfile;
         }
 

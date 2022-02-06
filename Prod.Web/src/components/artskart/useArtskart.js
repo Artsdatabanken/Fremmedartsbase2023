@@ -64,7 +64,7 @@ const useArtskart = ({
     ?
       artskartWaterModel.areas.filter(x => x.selected === 1).map(x => x.globalId)
     : undefined;
-  const [status1] = useRestApi(urls.observations, undefined, setObservations);
+  const [status1] = useRestApi(urls.observations, globalIds, setObservations);
   const [status2] = useRestApi(urls.areadata, globalIds, setAreadata);
   let status3;
   if (urls.countylist) {
