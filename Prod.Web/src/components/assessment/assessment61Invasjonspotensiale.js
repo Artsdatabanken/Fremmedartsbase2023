@@ -592,6 +592,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                             artskartSelectionGeometry={assessment.artskartSelectionGeometry}
                                                             artskartAdded={assessment.artskartAdded}
                                                             artskartRemoved={assessment.artskartRemoved}
+                                                            showTransferRegionlist={false}
                                                         />
                                                     </div>
                                                 </td>
@@ -644,6 +645,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                             artskartSelectionGeometry={assessment.artskartSelectionGeometry}
                                                             artskartAdded={assessment.artskartAdded}
                                                             artskartRemoved={assessment.artskartRemoved}
+                                                            showTransferRegionlist={false}
                                                         />
                                                     </div>
                                                 </td>

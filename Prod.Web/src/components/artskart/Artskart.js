@@ -28,7 +28,8 @@ const Artskart = ({
   artskartSelectionGeometry,
   artskartAdded,
   artskartRemoved,
-  onCancel
+  onCancel,
+  showTransferRegionlist
 }) => {
   // console.log('Artskart', taxonId, scientificNameId, evaluationContext);
   return (
@@ -70,6 +71,7 @@ const Artskart = ({
         artskartRemoved={artskartRemoved}
         artskartSelectionGeometry={artskartSelectionGeometry}
         onCancel={onCancel}
+        showTransferRegionlist={showTransferRegionlist}
       ></RedigerbartKart>
     </div>
   );
