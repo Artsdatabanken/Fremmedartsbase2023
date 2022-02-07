@@ -7077,6 +7077,13 @@
                         },
                         {
                             "Id": null,
+                            "Value": "chosenPathways",
+                            "Text": "Valgte spredningsveier",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "mainCategory",
                             "Text": "Hovedkategori",
                             "Info": null,
@@ -7106,7 +7113,7 @@
                         {
                             "Id": null,
                             "Value": "magnitude",
-                            "Text": "Antall",
+                            "Text": "Antall individer",
                             "Info": null,
                             "Children": null
                         },
