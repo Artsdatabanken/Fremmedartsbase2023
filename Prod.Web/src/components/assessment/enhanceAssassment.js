@@ -97,22 +97,8 @@ export default function enhanceAssessment(json, appState) {
     const codes = appState.koder
     const riskAssessment = assessment.riskAssessment
     const artificialAndConstructedSites = appState.artificialAndConstructedSites
-    enhanceCriteria(riskAssessment, assessment, codes, labels, artificialAndConstructedSites)
-    fixFylker(assessment);
-
-    extendObservable(assessment, {
-        get toJSON() {
-            const assra = assessment.riskAssessment
-            const obj = toJS(assessment)
-            const objra = obj.riskAssessment
-            copyProps(assessment, obj, assessmentGetterFields)
-            copyProps(objra, assra, assessmentGetterFields)
-        
-            const json = JSON.stringify(obj, undefined, 2)
-            // console.log(JSON.stringify(Object.keys(obj)))
-            return json
-        }
-    });
+    // enhanceCriteria(riskAssessment, assessment, codes, labels, artificialAndConstructedSites)
+    // fixFylker(assessment);
 
     extendObservable(assessment, {
         get isAlienSpeciesString() {
@@ -190,6 +176,28 @@ export default function enhanceAssessment(json, appState) {
         get doFullAssessment() {
             return assessment.assessmentConclusion !== "WillNotBeRiskAssessed" 
         },
+        // get category() {
+        //     const result =
+        //         assessment.assessmentConclusion === "WillNotBeRiskAssessed"
+        //         ? "NR"
+        //         : assessment.riskAssessment.riskLevelCode
+        //     return result
+        // },
+        // get criteria() {
+        //     const result =
+        //         assessment.assessmentConclusion === "WillNotBeRiskAssessed"
+        //         ? ""
+        //         : assessment.riskAssessment.decisiveCriteria
+        //     return result
+        // },
+
+    })
+    //deleteProps(ra, riskAssessmentGetterFields)
+    enhanceCriteria(riskAssessment, assessment, codes, labels, artificialAndConstructedSites)
+    fixFylker(assessment);
+
+
+    extendObservable(assessment, {
         get category() {
             const result =
                 assessment.assessmentConclusion === "WillNotBeRiskAssessed"
@@ -204,8 +212,23 @@ export default function enhanceAssessment(json, appState) {
                 : assessment.riskAssessment.decisiveCriteria
             return result
         },
-
     })
+    extendObservable(assessment, {
+        get toJSON() {
+            const assra = assessment.riskAssessment
+            const obj = toJS(assessment)
+            const objra = obj.riskAssessment
+            copyProps(assessment, obj, assessmentGetterFields)
+            copyProps(assra, objra, assessmentGetterFields)
+        
+            const json = JSON.stringify(obj, undefined, 2)
+            // console.log(JSON.stringify(Object.keys(obj)))
+            return json
+        }
+    });
+
+
+
     reaction(
         () => assessment.alienSpeciesCategory,
         (alienSpeciesCategory, previousAlienSpeciesCategory) => {
@@ -219,6 +242,7 @@ export default function enhanceAssessment(json, appState) {
             })()
         }
     )
+
     const errorDefinitions = getErrorDefinitions(assessment)
 
     errorhandler.addErrors(errorDefinitions)
