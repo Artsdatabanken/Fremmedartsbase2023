@@ -5758,7 +5758,7 @@
                         {
                             "Id": null,
                             "Value": "natureTypeArea",
-                            "Text": "Naturtypeareal",
+                            "Text": "Naturtypeareal  (km<sup>2</sup>)",
                             "Info": null,
                             "Children": null
                         },
@@ -8368,7 +8368,7 @@
                         {
                             "Id": null,
                             "Value": "natureTypeArea",
-                            "Text": "Naturtypeareal",
+                            "Text": "Naturtypeareal  (km<sup>2</sup>)",
                             "Info": null,
                             "Children": null
                         },
