@@ -1233,7 +1233,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
         autorun(() => {
             const maxDistanecFromValue = 1
             const value = crit.value
-            console.log("#¤#uncarr crit value: " + value)
+            console.log("#¤# autorun  crit " + crit.criteriaLetter + " value: " + value)
 
             let ud
             let uv
@@ -1249,14 +1249,24 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                 }
             } else if (crit.criteriaLetter === "A" &&
                 (riskAssessment.ametodkey === "A1a2" || riskAssessment.ametodkey === "A1b2")) {
-                ud = [0,1,2,3]
+                // ud = [0,1,2,3]
+                ud = []
+                for (var i = 0; i <= 3; i++) {
+                    // if (Math.abs(n - value) > maxDistanecFromValue || n === value) {
+                    //    max(1, Ascore - 1) til og med min(4, Ascore + 1)
+                    if(i < (riskAssessment.ascore - 1) || i > (riskAssessment.ascore + 1)) {
+                        ud.push(i)
+                    }
+                }
+
                 uv = []
                 for (var i = 0; i <= 3; i++) {
                     if(i >= riskAssessment.alow && i <= riskAssessment.ahigh) {
                         uv.push(i)
                     }
                 }
-            } else if (crit.criteriaLetter === "A" && riskAssessment.ametodkey === "A3") {
+            } else if (crit.criteriaLetter === "A" && 
+                riskAssessment.ametodkey === "A3") {
                 ud = [0,1,2,3]
                 uv = []
                 for (var i = 0; i <= 3; i++) {
@@ -1265,7 +1275,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                     }
                 }
             } else if (crit.criteriaLetter === "B" && (riskAssessment.bmetodkey === "B1" || riskAssessment.bmetodkey === "B2b")) {
-                console.log("#¤%bhigh set uv, key: " + riskAssessment.bmetodkey)
+                // console.log("#¤%bhigh set uv, key: " + riskAssessment.bmetodkey)
                 ud = [0,1,2,3]
                 uv = []
                 for (var i = 0; i <= 3; i++) {
@@ -1275,7 +1285,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                 }
                 // console.log("#¤#bhigh set uv "+ JSON.stringify(uv))
             } else if (crit.criteriaLetter === "B" && riskAssessment.ametodkey === "B2a") {
-                console.log("#¤%bhigh set uv, key: " + riskAssessment.bmetodkey)
+                // console.log("#¤%bhigh set uv, key: " + riskAssessment.bmetodkey)
                 ud = riskAssessment.bDisabledUncertaintyValues
                 uv = [value]
 
@@ -1309,6 +1319,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                         // This functionality is also dependent on a well working "firstrun"; se comment above
                         // e.g. the criteria must not have a default value that is updated from db after the first run!
 
+                        // console.log("#¤#uncertainty firstrun1 : " + crit.criteriaLetter )
                         console.log("#¤#uncertainty firstrun: " + crit.criteriaLetter + " : " + crit.value + " - " + JSON.stringify(crit.uncertaintyValues))
                         if (crit.uncertaintyValues.indexOf(value) <= -1 ) {
                             // console.log("rectify uncertainties")
@@ -1317,13 +1328,16 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
 
                     }
                     crit.uncertaintyDisabled.replace(ud)
+                    // console.log("#¤# uncertainty1 : " + crit.criteriaLetter )
+                    // console.log("#¤# uncertainty : " + crit.criteriaLetter + " : " + crit.value + " - " + JSON.stringify(crit.uncertaintyValues)  + " + " + JSON.stringify(crit.uncertaintyDisabled))
+
+
             })
             firstrun = false
             if (!config.isRelease) trace()  // leave this line here! Se comments above to learn when to uncomment.
        })
     }
 
-    // const critA = getCriterion(riskAssessment, 0, "A")
     autorun(() => {
         const r = riskAssessment
         if((r.ametodkey == "A1a2" || r.ametodkey == "A1b2" ) &&
@@ -1346,7 +1360,6 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                         r.critA.value = r.apossibleLow
                     }
                 })    
-
         } else {
             console.log("#!! Set Acrit auto = true")
             console.log("#!! Set Acrit critA: " + JSON.stringify(r.critA))
@@ -1355,12 +1368,8 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                 r.critA.auto = true
                 r.critA.valueDisabled.replace([])
             })    
-
         }
-
-
     })
-
 }
 
 // function enhanceCriteriaAddErrorReportingForAutoMode(riskAssessment) {
