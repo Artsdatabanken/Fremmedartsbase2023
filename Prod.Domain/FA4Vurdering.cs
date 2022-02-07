@@ -194,6 +194,8 @@ namespace Prod.Domain
 
         public bool? ConnectedToAnother { get; set; }
 
+        public bool? HigherOrLowerLevel { get; set; }
+
         public string Connected { get; set; }
 
         public CTaxon ConnectedTaxon { get; set; }
