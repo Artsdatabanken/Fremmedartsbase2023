@@ -218,6 +218,7 @@ export default class Assessment52Utbredelse extends React.Component {
         }
 
         ass.riskAssessment.AOOknownInput = areadata.AreaOfOccupancy;
+        ass.currentSpreadArea = areadata.AreaExtentOfOccurrence;
         ass.artskartManuellAdd = editStats.add;
         ass.artskartManuellRemove = editStats.remove;
         ass.artskartSistOverført = new Date();
