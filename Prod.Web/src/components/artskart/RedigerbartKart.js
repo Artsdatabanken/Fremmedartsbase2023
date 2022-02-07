@@ -19,7 +19,8 @@ const RedigerbartKart = ({
   artskartAdded,
   artskartRemoved,
   onCancel,
-  children
+  children,
+  showTransferRegionlist
 }) => {
   const [selectionGeometry, setSelectionGeometry] = React.useState(artskartSelectionGeometry);
   const [
@@ -131,6 +132,7 @@ const RedigerbartKart = ({
             ✓ Overfør kun arealer til vurderingen
           </Xcomp.Button>
           <br/>
+          { showTransferRegionlist != false &&
           <Xcomp.Button
             disabled={artskart.error || artskart.isLoading || isLoading}
             onClick={e => {
@@ -150,7 +152,7 @@ const RedigerbartKart = ({
           >
             {showWaterAreas && "✓ Overfør arealer og områder tilbake til vurderingen"}
             {!showWaterAreas && "✓ Overfør arealer og regioner tilbake til vurderingen"}
-        </Xcomp.Button>
+        </Xcomp.Button>}
         {selectionGeometry && <Xcomp.Button
             disabled={artskart.error || artskart.isLoading || isLoading}
             onClick={e => {

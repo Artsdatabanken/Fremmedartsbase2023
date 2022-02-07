@@ -16,7 +16,8 @@ const ModalArtskart = ({
   artskartAdded,
   artskartRemoved,
   artskartSelectionGeometry,
-  onOverførFraArtskart
+  onOverførFraArtskart,
+  showTransferRegionlist
   
 }) => {
   const ref = useRef();
@@ -40,6 +41,7 @@ const ModalArtskart = ({
         artskartAdded={artskartAdded}
         artskartRemoved={artskartRemoved}
         artskartSelectionGeometry={artskartSelectionGeometry}
+        showTransferRegionlist={showTransferRegionlist}
       />
       )
     </div>
