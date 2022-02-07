@@ -768,6 +768,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.AOO50yrBestInput, opt => opt.Ignore())
                     .ForMember(dest => dest.AOO50yrLowInput, opt => opt.Ignore())
                     .ForMember(dest => dest.AOO50yrHighInput, opt => opt.Ignore())
+                    .ForMember(dest => dest.NotUseSpeciesMap, opt => opt.Ignore())                    
 
                     .ForMember(dest => dest.Amethod, opt => opt.Ignore())
                     .ForMember(dest => dest.Ascore, opt => opt.Ignore())

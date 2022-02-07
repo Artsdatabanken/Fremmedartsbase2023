@@ -674,7 +674,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             </tr>
                                             </tbody>                            
                                         </table>
-
+                                        <Xcomp.Bool observableValue={[riskAssessment, "notUseSpeciesMap"]} label={"Ønsker ikke å bruke Artskart for å beregne forekomstareal"} />
                                         {/*<table className="table BCritTable">
                                             <thead>    
                                                 <tr>                          

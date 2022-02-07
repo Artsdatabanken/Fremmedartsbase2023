@@ -227,7 +227,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
     }
 
     extendObservable(riskAssessment, {
-        get notUseSpeciesMap() { return true},
+        //get notUseSpeciesMap() { return true},
 
         get doorKnocker() {
             console.log("#¤% alienSpeciesCategory " + riskAssessment.vurderingAlienSpeciesCategory)
