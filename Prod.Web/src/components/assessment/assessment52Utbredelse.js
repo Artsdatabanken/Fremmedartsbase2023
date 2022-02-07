@@ -246,6 +246,8 @@ export default class Assessment52Utbredelse extends React.Component {
                 f.state0 = fo[fylker[f.fylke]] > 0 ? 1 : 0;
                 if (f.state0 === 1) {
                     f.state2 = 0;
+                    f.state1 = 1;
+                    f.state3 = 1;
                 } else if ((parseInt(f.state0) + parseInt(f.state1) + parseInt(f.state3)) === 0) {
                     f.state2 = 1;
                 }
