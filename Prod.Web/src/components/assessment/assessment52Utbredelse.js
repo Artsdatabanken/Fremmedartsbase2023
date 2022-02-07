@@ -218,17 +218,18 @@ export default class Assessment52Utbredelse extends React.Component {
         }
 
         ass.riskAssessment.AOOknownInput = areadata.AreaOfOccupancy;
+        ass.currentSpreadArea = areadata.AreaExtentOfOccurrence;
         ass.artskartManuellAdd = editStats.add;
         ass.artskartManuellRemove = editStats.remove;
         ass.artskartSistOverført = new Date();
         ass.artskartSelectionGeometry = selectionGeometry;
         ass.riskAssessment.AOOendyear1 = ass.artskartModel.observationFromYear;
         ass.riskAssessment.AOOendyear2 = ass.artskartModel.observationToYear;
-        if (ass.artskartSelectionGeometry != undefined) {
-            ass.riskAssessment.AOO2 = areadata.ExcludedLocalities*4;
-        } else {
-            ass.riskAssessment.AOO2 = areadata.AreaOfOccupancy;
-        }
+        // if (ass.artskartSelectionGeometry != undefined) {
+        //     ass.riskAssessment.AOO2 = areadata.ExcludedLocalities*4;
+        // } else {
+        //     ass.riskAssessment.AOO2 = areadata.AreaOfOccupancy;
+        // }
         // ass.riskAssessment.yearFirstProductionOutdoors = areadata.AreaExtentOfOccurrence;
         if  (ass.riskAssessment.AOOyear2 === undefined || ass.riskAssessment.AOOyear2 == null) ass.riskAssessment.AOOyear2 = ass.artskartModel.observationToYear;
         if  (ass.riskAssessment.AOOknown2 === undefined || ass.riskAssessment.AOOknown2 == null) ass.riskAssessment.AOOknown2 = ass.riskAssessment.AOOknownInput;   
@@ -245,6 +246,8 @@ export default class Assessment52Utbredelse extends React.Component {
                 f.state0 = fo[fylker[f.fylke]] > 0 ? 1 : 0;
                 if (f.state0 === 1) {
                     f.state2 = 0;
+                    f.state1 = 1;
+                    f.state3 = 1;
                 } else if ((parseInt(f.state0) + parseInt(f.state1) + parseInt(f.state3)) === 0) {
                     f.state2 = 1;
                 }

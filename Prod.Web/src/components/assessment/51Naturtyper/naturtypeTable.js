@@ -317,7 +317,7 @@ export default class NaturtypeTable extends React.Component {
                     <th>{ntLabels.code}</th>
                     <th>{ntLabels.name}</th>
                    {/* <th>{ntLabels.dominanceForrest}</th> */}
-                    {!noRedListTypes && <th>{ntLabels.natureTypeArea}</th>}
+                    {!noRedListTypes && <th dangerouslySetInnerHTML={{__html: ntLabels.natureTypeArea}}></th>}
                     <th>{ntLabels.timeHorizon}</th>
                     <th>{ntLabels.colonizedArea}</th>
                     <th>{ntLabels.stateChange}</th>

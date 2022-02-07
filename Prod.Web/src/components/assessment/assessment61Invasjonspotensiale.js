@@ -594,6 +594,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                             artskartSelectionGeometry={assessment.artskartSelectionGeometry}
                                                             artskartAdded={assessment.artskartAdded}
                                                             artskartRemoved={assessment.artskartRemoved}
+                                                            showTransferRegionlist={false}
                                                         />
                                                     </div>
                                                 </td>
@@ -646,6 +647,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                             artskartSelectionGeometry={assessment.artskartSelectionGeometry}
                                                             artskartAdded={assessment.artskartAdded}
                                                             artskartRemoved={assessment.artskartRemoved}
+                                                            showTransferRegionlist={false}
                                                         />
                                                     </div>
                                                 </td>
@@ -676,7 +678,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             </tr>
                                             </tbody>                            
                                         </table>
-
+                                        <Xcomp.Bool observableValue={[riskAssessment, "notUseSpeciesMap"]} label={"Ønsker ikke å bruke Artskart for å beregne forekomstareal"} />
                                         {/*<table className="table BCritTable">
                                             <thead>    
                                                 <tr>                          

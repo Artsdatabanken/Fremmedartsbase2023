@@ -194,6 +194,8 @@ namespace Prod.Domain
 
         public bool? ConnectedToAnother { get; set; }
 
+        public bool? HigherOrLowerLevel { get; set; }
+
         public string Connected { get; set; }
 
         public CTaxon ConnectedTaxon { get; set; }
@@ -870,7 +872,7 @@ public partial class FA4 // (3.2) Artsegenskaper
         public int? ApossibleLow { get; set; }
         public int? ApossibleHigh { get; set; }
 
-
+        public bool NotUseSpeciesMap { get; set; } = false;
 
 
         // -------- disse (forekomstareal i dag) er erstattet:  

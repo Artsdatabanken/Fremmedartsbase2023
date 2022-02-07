@@ -125,6 +125,13 @@ export default function enhanceAssessment(json, appState) {
         set connectedToAnotherString(s) {
             assessment.connectedToAnother = s === "yes"
         },
+
+        get higherOrLowerLevelString() {
+            return assessment.higherOrLowerLevel ? "yes" : "no"
+        },
+        set higherOrLowerLevelString(s) {
+            assessment.higherOrLowerLevel = s === "yes"
+        },
         get productionSpeciesString() {
             return assessment.productionSpecies == null ? null : (assessment.productionSpecies ? "yes" : "no")
         },
@@ -155,8 +162,8 @@ export default function enhanceAssessment(json, appState) {
             const result = 
                 !assessment.isAlienSpecies 
                 ? "WillNotBeRiskAssessed"
-                //: assessment.connectedToAnother 
-                //? "WillNotBeRiskAssessed"
+                : assessment.higherOrLowerLevel 
+                ? "WillNotBeRiskAssessed"
                 : assessment.alienSpeciesCategory == "UncertainBefore1800"
                 ? "WillNotBeRiskAssessed"
                 : assessment.alienSpeciesCategory == "NotDefined"

@@ -768,6 +768,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.AOO50yrBestInput, opt => opt.Ignore())
                     .ForMember(dest => dest.AOO50yrLowInput, opt => opt.Ignore())
                     .ForMember(dest => dest.AOO50yrHighInput, opt => opt.Ignore())
+                    .ForMember(dest => dest.NotUseSpeciesMap, opt => opt.Ignore())                    
 
                     .ForMember(dest => dest.Amethod, opt => opt.Ignore())
                     .ForMember(dest => dest.Ascore, opt => opt.Ignore())
@@ -845,6 +846,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.IsRegionallyAlien, opt => opt.Ignore())
                     .ForMember(dest => dest.Connected, opt => opt.Ignore())
                     .ForMember(dest => dest.ConnectedToAnother, opt => opt.Ignore())
+                    .ForMember(dest => dest.HigherOrLowerLevel, opt => opt.Ignore())
                     .ForMember(dest => dest.SpeciesStatus, opt => opt.Ignore())
                     .ForMember(dest => dest.AssumedReproducing50Years, opt => opt.Ignore())
                     .ForMember(dest => dest.ProductionSpecies, opt => opt.Ignore())

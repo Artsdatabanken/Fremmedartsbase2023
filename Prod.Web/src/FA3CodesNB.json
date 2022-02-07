@@ -5086,7 +5086,14 @@
                         {
                             "Id": null,
                             "Value": "connectedToAnotherTaxon",
-                            "Text": "Deler taksonet vurderinga med et annet takson?",
+                            "Text": "Vurderes taksonet sammen med et annet takson?",
+                            "Info": null,
+                            "Children": null
+                        }, 
+                        {
+                            "Id": null,
+                            "Value": "higherOrLowerLevel",
+                            "Text": "Vurderes taksonet på et høyere (artsnivå) eller lavere (underartsnivå) taksonomisk nivå?",
                             "Info": null,
                             "Children": null
                         }, 
@@ -5758,7 +5765,7 @@
                         {
                             "Id": null,
                             "Value": "natureTypeArea",
-                            "Text": "Naturtypeareal",
+                            "Text": "Naturtypeareal  (km<sup>2</sup>)",
                             "Info": null,
                             "Children": null
                         },
@@ -7077,6 +7084,13 @@
                         },
                         {
                             "Id": null,
+                            "Value": "chosenPathways",
+                            "Text": "Valgte spredningsveier",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "mainCategory",
                             "Text": "Hovedkategori",
                             "Info": null,
@@ -7106,7 +7120,7 @@
                         {
                             "Id": null,
                             "Value": "magnitude",
-                            "Text": "Antall",
+                            "Text": "Antall individer",
                             "Info": null,
                             "Children": null
                         },
@@ -8177,7 +8191,7 @@
                         {
                             "Id": null,
                             "Value": "add",
-                            "Text": "Legg til",
+                            "Text": "Knytt referansen til vurderingen",
                             "Info": null,
                             "Children": null
                         },
@@ -8368,7 +8382,7 @@
                         {
                             "Id": null,
                             "Value": "natureTypeArea",
-                            "Text": "Naturtypeareal",
+                            "Text": "Naturtypeareal  (km<sup>2</sup>)",
                             "Info": null,
                             "Children": null
                         },
