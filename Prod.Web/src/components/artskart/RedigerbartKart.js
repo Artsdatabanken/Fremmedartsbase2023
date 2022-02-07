@@ -69,7 +69,7 @@ const RedigerbartKart = ({
     <div style={{ height: "100%" }}>
       {children}
       <div style={{ pointerEvents: 'none', position: "absolute", zIndex: 500, top: 24, left: 24, maxWidth: 777 }}>
-        <h3>Arealer og fylker fra Artskart</h3>
+        <h3>Arealer og regioner fra Artskart</h3>
         
         <div>
           Forekomstareal:{" "}
@@ -149,7 +149,7 @@ const RedigerbartKart = ({
             className={artskart.error || (artskart.isLoading || isLoading) ? "" : "elevated"}
           >
             {showWaterAreas && "✓ Overfør arealer og områder tilbake til vurderingen"}
-            {!showWaterAreas && "✓ Overfør arealer og fylker tilbake til vurderingen"}
+            {!showWaterAreas && "✓ Overfør arealer og regioner tilbake til vurderingen"}
         </Xcomp.Button>
         {selectionGeometry && <Xcomp.Button
             disabled={artskart.error || artskart.isLoading || isLoading}
