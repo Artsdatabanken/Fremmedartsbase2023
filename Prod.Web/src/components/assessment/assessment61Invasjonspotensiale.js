@@ -395,11 +395,11 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     mode="noheading"
                     disabled = {disabled || (riskAssessment.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && riskAssessment.acceptOrAdjustCritA == "accept")}
                     // commente out to fix isDirty problem. fix in enhanceCriteria necessery
-                    auto = {riskAssessment.chosenSpreadMedanLifespan == "ViableAnalysis" ||
-                             riskAssessment.chosenSpreadMedanLifespan == "SpreadRscriptEstimatedSpeciesLongevity" ||
-                             (riskAssessment.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && riskAssessment.acceptOrAdjustCritA != "adjust") 
+                    // auto = {riskAssessment.chosenSpreadMedanLifespan == "ViableAnalysis" ||
+                    //          riskAssessment.chosenSpreadMedanLifespan == "SpreadRscriptEstimatedSpeciesLongevity" ||
+                    //          (riskAssessment.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && riskAssessment.acceptOrAdjustCritA != "adjust") 
                             
-                            }
+                    //         }
                     />}
                 </fieldset>
                 <br/>
