@@ -8,7 +8,7 @@ import Criterion from './criterion'
 import Assessment62Okologiskeffekt from './assessment62Okologiskeffekt'
 //import ScoreUnsure from './51Naturtyper/scoreUnsure';
 import config from '../../config'
-import {codes2labels, getCriterion} from '../../utils'
+// import {codes2labels, getCriterion} from '../../utils'
 import Filliste from './35Utbredelseshistorikk/Filliste'
 import FileUpload from '../FileUpload'
 import Documents from '../documents'
@@ -106,20 +106,20 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
 
         // riskAssessment.AOO2 == null ? riskAssessment.AOO2 = riskAssessment.AOOknown2 : riskAssessment.AOO2 = 0
 
-        this.props.appState.virtualArtskartModel0 = observable({
-            observationFromYear: assessment.artskartModel.observationFromYear,
-            observationToYear: assessment.riskAssessment.AOOyear1,
-            includeNorge: assessment.artskartModel.includeNorge,
-            excludeObjects: assessment.artskartModel.excludeObjects,
-            excludeGbif: assessment.artskartModel.excludeGbif,
-        });        
-        this.props.appState.virtualArtskartModel = observable({
-            observationFromYear: assessment.artskartModel.observationFromYear,
-            observationToYear: assessment.riskAssessment.AOOyear2,
-            includeNorge: assessment.artskartModel.includeNorge,
-            excludeObjects: assessment.artskartModel.excludeObjects,
-            excludeGbif: assessment.artskartModel.excludeGbif,
-        });
+        // // // this.props.appState.virtualArtskartModel0 = observable({
+        // // //     observationFromYear: assessment.artskartModel.observationFromYear,
+        // // //     observationToYear: assessment.riskAssessment.AOOyear1,
+        // // //     includeNorge: assessment.artskartModel.includeNorge,
+        // // //     excludeObjects: assessment.artskartModel.excludeObjects,
+        // // //     excludeGbif: assessment.artskartModel.excludeGbif,
+        // // // });        
+        // // // this.props.appState.virtualArtskartModel = observable({
+        // // //     observationFromYear: assessment.artskartModel.observationFromYear,
+        // // //     observationToYear: assessment.riskAssessment.AOOyear2,
+        // // //     includeNorge: assessment.artskartModel.includeNorge,
+        // // //     excludeObjects: assessment.artskartModel.excludeObjects,
+        // // //     excludeGbif: assessment.artskartModel.excludeGbif,
+        // // // });
 
         // commented this out. it crashed the application.
         // if (assessment.artskartModel2 === undefined) {
@@ -147,13 +147,15 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
         //         Text: "Minimumsanslag"
         //     }
         // ];
-        const crit51A = getCriterion(riskAssessment, 0, "A")
-        // console.log(crit51A)
-        const crit51B = getCriterion(riskAssessment, 0, "B")
-        const critC = getCriterion(riskAssessment, 0, "C")
+        // const critA = getCriterion(riskAssessment, 0, "A")
+        // const critB = getCriterion(riskAssessment, 0, "B")
+        // const critC = getCriterion(riskAssessment, 0, "C")
+        const critA = riskAssessment.critA
+        const critB = riskAssessment.critB
+        const critC = riskAssessment.critC
         // runInAction(() => {
-        //     // crit51A.auto = false // critA auto is set in enhanceCriteria
-        //     crit51B.auto = false
+        //     // critA.auto = false // critA auto is set in enhanceCriteria
+        //     critB.auto = false
         //     critC.auto = false
         // })
         const textAS = riskAssessment.a1aresulttext
@@ -195,8 +197,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                 <div> 
                 <fieldset className="well">
                     <h2>{labels.Acrit.mainHeading}</h2>
-                    <h4>{crit51A.heading}</h4>
-                    <p>{crit51A.info}</p>
+                    <h4>{critA.heading}</h4>
+                    <p>{critA.info}</p>
                     
                     {/* <Xcomp.StringEnum observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]} mode="radio" codes={codes.HorizonEstablismentPotential}/> */}
                     
@@ -388,7 +390,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                 <b>Den utgåtte metoden c) Rødlistekriterier var brukt på A-kriteriet for denne arten i 2018. Det resulterte i skår {riskAssessment.ascore} på A-kriteriet.</b> }
 
                 {riskAssessment.chosenSpreadMedanLifespan != "RedListCategoryLevel" && riskAssessment.chosenSpreadMedanLifespan != "" && 
-                    <Criterion criterion={crit51A} 
+                    <Criterion criterion={critA} 
                     appState={appState}
                     mode="noheading"
                     disabled = {disabled || (riskAssessment.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && riskAssessment.acceptOrAdjustCritA == "accept")}
@@ -402,8 +404,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                 </fieldset>
                 <br/>
                 <fieldset className="well">
-                    <h4>{crit51B.heading}</h4>
-                    <p>{crit51B.info}</p>
+                    <h4>{critB.heading}</h4>
+                    <p>{critB.info}</p>
 
                     <SelectableRadio
                                 label={labels.BcritSelect.a}
@@ -832,7 +834,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                     style={{
                                     display: "inline-block"
                                     }}>
-                                <Criterion criterion={crit51B} appState={appState} 
+                                <Criterion criterion={critB} appState={appState} 
                                             //disabled={disabled} 
                                             // according to issues #318 and #319
                                             disabled={disabled || riskAssessment.chosenSpreadYearlyIncrease == "a" || (riskAssessment.chosenSpreadYearlyIncrease == "b" && assessment.alienSpeciesCategory == "DoorKnocker")}
