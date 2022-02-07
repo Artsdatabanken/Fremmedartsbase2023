@@ -48,11 +48,11 @@ export default class Criterion extends React.Component {
         // console.log("##info:" + JSON.stringify(criterion))
 
 
-        // console.log("head " + heading)
-        // console.log("val " + value) // + "|" + Id)
-        // console.log("udis " + JSON.stringify(uncertaintyDisabled))
-        // console.log("uval " + JSON.stringify(uncertaintyValues))
-        // console.log("auto " + auto)
+        console.log("#!!head " + heading)
+        console.log("#!!val " + value) // + "|" + Id)
+        console.log("#!!udis " + JSON.stringify(uncertaintyDisabled))
+        console.log("#!!uval " + JSON.stringify(uncertaintyValues))
+        console.log("#!!auto " + auto)
 
 
         // const logthis = criterion.criteriaLetter === "A"
@@ -100,6 +100,9 @@ export default class Criterion extends React.Component {
                 //     console.log("level " + kode.value + "/\\" + value + "#" + radiooptional.checked)
                 // }
                 // console.log("unclevel " + kode.value + "/\\" + value + "#" + checkboxoptional.disabled)
+                console.log("#!! radio disabled level " + kode.value + "/\\" + value + "#" + radiooptional.disabled +
+                    " ¤¤ " + this.context.readonly + " # " + disabled + " % " +  (valueDisabled.indexOf(kode.value) > -1) + " # " +  auto)
+
                 console.log("unclevel " + criterion.criteriaLetter + "&" + kode.value + "/" + this.context.readonly  + "/text: " + kode.text + "!props dis:" + this.props.disabled  + "#" + (uncertaintyDisabled.indexOf(kode.value) > -1))
 
 
