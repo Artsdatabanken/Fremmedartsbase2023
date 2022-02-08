@@ -8,7 +8,7 @@ import Assessment62Okologiskeffekt from './assessment62Okologiskeffekt'
 import Assessment61Invasjonspotensiale from './assessment61Invasjonspotensiale'
 import ScoreUnsure from './51Naturtyper/scoreUnsure';
 import config from '../../config'
-import {codes2labels, getCriterion} from '../../utils'
+// import {codes2labels, getCriterion} from '../../utils'
 import Filliste from './35Utbredelseshistorikk/Filliste'
 import { KeyboardHideSharp } from '@material-ui/icons';
 
@@ -83,9 +83,9 @@ export default class AssessmentRisikovurdering extends React.Component {
         //         Text: "Minimumsanslag"
         //     }
         // ];
-        const crit51A = getCriterion(riskAssessment, 0, "A")
-        const crit51B = getCriterion(riskAssessment, 0, "B")
-        const critC = getCriterion(riskAssessment, 0, "C")
+        // const crit51A = getCriterion(riskAssessment, 0, "A")
+        // const crit51B = getCriterion(riskAssessment, 0, "B")
+        // const critC = getCriterion(riskAssessment, 0, "C")
 
         const nbsp = "\u00a0"
 

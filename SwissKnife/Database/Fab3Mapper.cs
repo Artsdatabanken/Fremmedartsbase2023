@@ -633,7 +633,8 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.Background, opt => opt.Ignore());
                 cfg.CreateMap<FA3Legacy.Reference, FA4.SimpleReference>();
                 cfg.CreateMap<FA3Legacy.RegionalRiskAssessment, FA4.RegionalRiskAssessment>();
-                cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.Criterion, Prod.Domain.RiskAssessment.Criterion>();
+                cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.Criterion, Prod.Domain.RiskAssessment.Criterion>()
+                    .ForMember(dest => dest.Auto, opt => opt.Ignore());
                 cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.HostParasiteInteraction,
                         Prod.Domain.RiskAssessment.HostParasiteInteraction>()
                     .ForMember(dest => dest.Scale, opt => opt.Ignore())
@@ -846,6 +847,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.IsRegionallyAlien, opt => opt.Ignore())
                     .ForMember(dest => dest.Connected, opt => opt.Ignore())
                     .ForMember(dest => dest.ConnectedToAnother, opt => opt.Ignore())
+                    .ForMember(dest => dest.HigherOrLowerLevel, opt => opt.Ignore())
                     .ForMember(dest => dest.SpeciesStatus, opt => opt.Ignore())
                     .ForMember(dest => dest.AssumedReproducing50Years, opt => opt.Ignore())
                     .ForMember(dest => dest.ProductionSpecies, opt => opt.Ignore())

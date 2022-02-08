@@ -65,11 +65,11 @@ export function codes2labels(codes) {
 	return labels
 }
 
-export function getCriterion(riskAssessment, akse, letter) {
-	const result = riskAssessment.criteria.filter(c => c.akse === akse && c.criteriaLetter === letter)[0]; 
-	return result;
-	// return "Not implemented"
-}
+// export function getCriterion(riskAssessment, akse, letter) {
+// 	const result = riskAssessment.criteria.filter(c => c.akse === akse && c.criteriaLetter === letter)[0]; 
+// 	return result;
+// 	// return "Not implemented"
+// }
 
 
 // ********************************************************************************

@@ -232,7 +232,11 @@ export default class Vurdering34Spredningsveier extends React.Component {
                 </div>
                 </div>
                 {migrationPathways.length > 0 &&
-                     <MPTable migrationPathways={migrationPathways} removeMigrationPathway={fjernSpredningsvei} showIntroductionSpread getCategoryText={this.getCategoryText} migrationPathwayCodes={appState.spredningsveier.children}/>
+                <>
+                    <h4>{labels.MigrationPathway.chosenPathways}</h4>
+                    <MPTable migrationPathways={migrationPathways} removeMigrationPathway={fjernSpredningsvei} showIntroductionSpread getCategoryText={this.getCategoryText} migrationPathwayCodes={appState.spredningsveier.children}/>
+                </>
+                     
                 }
                 <hr/>
                 

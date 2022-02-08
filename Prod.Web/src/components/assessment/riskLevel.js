@@ -22,27 +22,25 @@
     //     "Svært høy risiko"
     // ],
     invasjonspotensiale: (riskAssessment) => {
-        const getCriterion = (riskAssessment, akse, letter) => {
-            const result = riskAssessment.criteria.filter(c => c.akse === akse && c.criteriaLetter === letter)[0]; 
-            return result;
-        };        
-        const aCrit = getCriterion(riskAssessment, 0, "A");
-        const bCrit = getCriterion(riskAssessment, 0, "B");
-        const cCrit = getCriterion(riskAssessment, 0, "C");
+        console.log("invasjonspotensiale:::: ")
 
-        console.log("aCrit: " + JSON.stringify(aCrit))
-        console.log("bCrit: " + JSON.stringify(bCrit))
-        console.log("cCrit: " + JSON.stringify(cCrit))
+        const critA = riskAssessment.critA
+        const critB = riskAssessment.critB
+        const critC = riskAssessment.critC
+
+        console.log("critA: " + JSON.stringify(critA))
+        console.log("critB: " + JSON.stringify(critB))
+        console.log("critC: " + JSON.stringify(critC))
 
 
 
-        const a = aCrit.value;
-        const b = bCrit.value;
-        const c = cCrit.value;
+        const a = critA.value;
+        const b = critB.value;
+        const c = critC.value;
 
 
-        // console.log("========a: " + JSON.stringify(aCrit))
-        // console.log("========abc: " + a + " " + b + " " + c)
+        console.log("========a: " + JSON.stringify(critA))
+        console.log("========abc: " + a + " " + b + " " + c)
 
 
         const abAdjustment = [ 
@@ -55,6 +53,7 @@
         // const adjustedA = a === 0 ? 0 : a === 1 && b < 1 ? 0 : a === 1 ? 1 : a === 2 && b < 1 ? 1 : a === 2 ? 2 : a === 3 && b < 3 ? b + 1 : a === 3 ? 3 : NaN;
         // const adjustedB = b === 3 && a < 3 ? 2 : b === 3 ? 3 : b === 2 && a < 2 ? 1 : b === 2 ? 2 : b; 
         // const level = Math.max(adjustedA, adjustedB, c);
+        console.log("RISKLEVEL A B" + JSON.stringify(a) + JSON.stringify(b))
         const adjustedAB = abAdjustment[a][b]
         // console.log("AdjustedAB: " + a + " "  + b + " " + adjustedAB + abAdjustment[0][0])
         const adjustedA = Math.min(adjustedAB, a)
@@ -67,30 +66,30 @@
 
         const critAIsDecisive = adjustedA === level
         if (critAIsDecisive) {
-            decisiveCrits.push(aCrit)
+            decisiveCrits.push(critA)
         }
         // const uncertentyLevelsA = critAIsDecisive ?
-        //     aCrit.uncertaintyValues.map(lev => lev + adjustedA - a).filter(lev => lev >= 0 && lev < 4) :
+        //     critA.uncertaintyValues.map(lev => lev + adjustedA - a).filter(lev => lev >= 0 && lev < 4) :
         //     []
 
         const critBIsDecisive = adjustedB === level
         if (critBIsDecisive) {
-            decisiveCrits.push(bCrit)
+            decisiveCrits.push(critB)
         }
         // const uncertentyLevelsB = critBIsDecisive ?
-        //     bCrit.uncertaintyValues.map(lev => lev + adjustedB - b).filter(lev => lev >= 0 && lev < 4) :
+        //     critB.uncertaintyValues.map(lev => lev + adjustedB - b).filter(lev => lev >= 0 && lev < 4) :
         //     []
 
         // console.log("#3")
 
         const uncertaintiesAB = [];
         if (critAIsDecisive || critBIsDecisive) {
-            const minUL_A = aCrit.uncertaintyValues.length === 0 ? a : Math.min(...aCrit.uncertaintyValues)
-            const minUL_B = bCrit.uncertaintyValues.length === 0 ? b : Math.min(...bCrit.uncertaintyValues)
+            const minUL_A = critA.uncertaintyValues.length === 0 ? a : Math.min(...critA.uncertaintyValues)
+            const minUL_B = critB.uncertaintyValues.length === 0 ? b : Math.min(...critB.uncertaintyValues)
             const minUL_AB_adj = abAdjustment[minUL_A][minUL_B]
             const minUL_AB = Math.max(minUL_AB_adj, adjustedAB - 1 )
-            const maxUL_A = aCrit.uncertaintyValues.length === 0 ? a : Math.max(...aCrit.uncertaintyValues)
-            const maxUL_B = bCrit.uncertaintyValues.length === 0 ? b : Math.max(...bCrit.uncertaintyValues)
+            const maxUL_A = critA.uncertaintyValues.length === 0 ? a : Math.max(...critA.uncertaintyValues)
+            const maxUL_B = critB.uncertaintyValues.length === 0 ? b : Math.max(...critB.uncertaintyValues)
             const maxUL_AB_adj = abAdjustment[maxUL_A][maxUL_B]
             const maxUL_AB = Math.min(maxUL_AB_adj, adjustedAB + 1 )
 
@@ -104,17 +103,17 @@
         // console.log("#4")
 
         // if (adjustedB === level) {
-        //     decisiveCrits.push(bCrit)
-        //     bCrit.uncertaintyValues.map(lev => lev + adjustedB - b).filter(lev => lev >= 0 && lev < 4).map(lev => alluncertentyLevels.push(lev))
+        //     decisiveCrits.push(critB)
+        //     critB.uncertaintyValues.map(lev => lev + adjustedB - b).filter(lev => lev >= 0 && lev < 4).map(lev => alluncertentyLevels.push(lev))
         // }
         if (c === level) {
-            decisiveCrits.push(cCrit)
-            // cCrit.uncertaintyValues.map(lev => alluncertentyLevels.push(lev))
+            decisiveCrits.push(critC)
+            // critC.uncertaintyValues.map(lev => alluncertentyLevels.push(lev))
         }
 
         // console.log("#5")
 
-        const uncertaintiesC = c === level ? cCrit.uncertaintyValues : []
+        const uncertaintiesC = c === level ? critC.uncertaintyValues : []
         // console.log("#6")
 
         const allUncertaintyLevels = [...new Set([...uncertaintiesAB,...uncertaintiesC])].sort()
@@ -140,6 +139,7 @@
         return result;
     },
     ecoeffect: (riskAssessment) => {
+        console.log("ecoeffect:::: ")
         const crits = riskAssessment.criteria.filter(c => c.akse === 1)
         const level = Math.max(...crits.map(crit => crit.value));
         const decisiveCrits = crits.filter(crit => crit.value === level)
@@ -156,7 +156,27 @@
         const result = {level: level, decisiveCriteria:decisiveCrits, uncertaintyLevels: sweepingUncertaintyLevels} // uncertaintyLevels }
         return result;
     },
+    // riskLevel: (invasjonspotensiale, ecoeffect) => {
+    //     console.log("riskLevel:::: ")
+    //     console.log("inv:" + JSON.stringify(invasjonspotensiale))
+    //     console.log("eco:" + JSON.stringify(ecoeffect))
+    //     const lev = self.riskLevelMatrise[3 - ecoeffect.level][invasjonspotensiale.level]
+    //     // const code =  self.riskLevelCode[lev]
+    //     // const text =  self.riskLevelText[lev]
+    //     // const label = code + " - " + text
+    //     const invLetters = invasjonspotensiale.decisiveCriteria.map(crit => crit.criteriaLetter).join("")
+    //     const invLetters2 = invasjonspotensiale.level === 0 ? "" : invLetters
+    //     const ecoLetters = ecoeffect.decisiveCriteria.map(crit => crit.criteriaLetter).join("")
+    //     const ecoLetters2 = ecoeffect.level === 0 ? "" : ecoLetters
+    //     const decisiveCriteriaLabel = "" + (invasjonspotensiale.level + 1) +  invLetters2 + "," + (ecoeffect.level + 1) + ecoLetters2
+    //     // const result = {level: lev, code: code, text: text, label: label, decisiveCriteriaLabel:decisiveCriteriaLabel}
+    //     const result = {level: lev,   decisiveCriteriaLabel:decisiveCriteriaLabel}
+    //     return result;
+    // }
     riskLevel: (invasjonspotensiale, ecoeffect) => {
+        // console.log("riskLevel:::: ")
+        // console.log("inv:" + JSON.stringify(invasjonspotensiale))
+        // console.log("eco:" + JSON.stringify(ecoeffect))
         const lev = self.riskLevelMatrise[3 - ecoeffect.level][invasjonspotensiale.level]
         // const code =  self.riskLevelCode[lev]
         // const text =  self.riskLevelText[lev]

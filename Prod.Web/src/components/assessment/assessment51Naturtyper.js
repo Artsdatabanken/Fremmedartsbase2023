@@ -3,7 +3,7 @@ import {observer, inject} from 'mobx-react';
 import {action} from 'mobx';
 import * as Xcomp from './observableComponents';
 import Criterion from './criterion'
-import {getCriterion} from '../../utils'
+// import {getCriterion} from '../../utils'
 import NaturtypeTable from './51Naturtyper/naturtypeTable';
 import HabitatTable from './51Naturtyper/habitatTable';
 import NewNaturetype from './51Naturtyper/newNaturetype';
@@ -45,9 +45,12 @@ export default class Assessment51Naturtyper extends React.Component {
         const koder = appState.koder
         const disabled = appState.userContext.readonly
         const ntLabels = labels.NatureTypes
-        const critC = getCriterion(riskAssessment, 0, "C")
-        const critF = getCriterion(riskAssessment, 1, "F")
-        const critG = getCriterion(riskAssessment, 1, "G")
+        // const critC = getCriterion(riskAssessment, 0, "C")
+        // const critF = getCriterion(riskAssessment, 1, "F")
+        // const critG = getCriterion(riskAssessment, 1, "G")
+        const critC = riskAssessment.critC
+        const critF = riskAssessment.critF
+        const critG = riskAssessment.critG
         const marine = (assessment.expertGroup == "Marine invertebrater" || assessment.expertGroup == "Marine invertebrater (Svalbard)" || assessment.expertGroup == "Alger" || assessment.expertGroup == "Fisker" || assessment.expertGroup == "Fisker (Svalbard)")
         const mainland = assessment.expertGroup != "Marine invertebrater" && assessment.expertGroup.indexOf ("Svalbard") < 0
         const svalbard = (assessment.expertGroup == "Karplanter (Svalbard)" || assessment.expertGroup == "Pattedyr (Svalbard)")
@@ -64,11 +67,11 @@ export default class Assessment51Naturtyper extends React.Component {
         console.log("ACHTUNG!")
         console.log(assessment.currentBioClimateZones)
         console.log(koder.continentalBioClimateZone)
-        action(() => {
-            critC.auto = false
-            critF.auto = false
-            critG.auto = false
-        })
+        // action(() => {
+        //     critC.auto = false
+        //     critF.auto = false
+        //     critG.auto = false
+        // })
         const nts = appState.naturtyper
         const doms = appState.dominansSkog
         var hasImpactAbroad = false 

@@ -565,9 +565,9 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                     
                     <div className="form_item">                            
                             <div><strong>{labels.references.referenceType}</strong></div>
-                            <div className="row"> 
-                                <div className="newRef"><Xcomp.StringEnum observableValue={[this, 'redigeringsType']} disabled={!this.editMode} codes={this.typeVerdier}/>
+                            <div className="row">                                
                                 <div><Xcomp.Button primary onClick={() => {this.nyReferanse()}}>{labels.references.newReference}</Xcomp.Button></div>
+                                <div className="newRef"><Xcomp.StringEnum observableValue={[this, 'redigeringsType']} disabled={!this.editMode} codes={this.typeVerdier}/>
                             </div>
                             </div>   
                         </div>

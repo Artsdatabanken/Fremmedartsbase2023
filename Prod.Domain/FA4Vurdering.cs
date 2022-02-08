@@ -194,6 +194,8 @@ namespace Prod.Domain
 
         public bool? ConnectedToAnother { get; set; }
 
+        public bool? HigherOrLowerLevel { get; set; }
+
         public string Connected { get; set; }
 
         public CTaxon ConnectedTaxon { get; set; }
@@ -726,8 +728,7 @@ public partial class FA4 // (3.2) Artsegenskaper
             //public int UncertaintyValue { get; set; }
             public int[] UncertaintyValues { get; set; } = new int[] { };
 
-            //NB!  skal ikke publiseres!!!
-            //  public string UncertantyInformation { get; set; }
+            public bool Auto { get; set; } = false;
 
             public enum Axis
             {
