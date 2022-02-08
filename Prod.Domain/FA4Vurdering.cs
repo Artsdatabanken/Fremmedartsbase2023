@@ -1295,6 +1295,7 @@ public partial class FA4 // (3.2) Artsegenskaper
         // - D + E kriteriet
         public List<SpeciesSpeciesInteraction> SpeciesSpeciesInteractions { get; set; } = new List<SpeciesSpeciesInteraction>(); // lagt til 11.10.2016
         public List<SpeciesNaturetypeInteraction> SpeciesNaturetypeInteractions { get; set; } = new List<SpeciesNaturetypeInteraction>(); // lagt til 22.12.2016
+        public List<SpeciesNaturetypeInteraction> SpeciesNaturetypeInteractions2018 { get; set; } = new List<SpeciesNaturetypeInteraction>();
         public string SpeciesSpeciesInteractionsSupplementaryInformation { get; set; }
 
         // - H kriteriet

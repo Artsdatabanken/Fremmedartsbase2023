@@ -685,6 +685,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.Hovedøkosystem, opt => opt.Ignore())
 
                     .ForMember(dest => dest.FilesDescription, opt => opt.Ignore())
+                    .ForMember(dest => dest.SpeciesNaturetypeInteractions2018, opt => opt.Ignore())
 
                     .ForMember(dest => dest.StartYear, opt => opt.Ignore())
                     .ForMember(dest => dest.EndYear, opt => opt.Ignore())
@@ -1077,8 +1078,8 @@ namespace SwissKnife.Database
                         }
 
                         for (var i = 0; i < dest.RiskAssessment.SpeciesNaturetypeInteractions.Count; i++)
-                        {
-                            if (dest.RiskAssessment.SpeciesNaturetypeInteractions[i].EffectLocalScale == true)
+                        {  
+                           if (dest.RiskAssessment.SpeciesNaturetypeInteractions[i].EffectLocalScale == true)
                             {
                                 dest.RiskAssessment.SpeciesNaturetypeInteractions[i].Scale = "Limited";
                             }

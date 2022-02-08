@@ -64,9 +64,7 @@ export default class Assessment51Naturtyper extends React.Component {
         const arcticZoneDisabled = (id, region) => koder.arcticZoneDisabled.find(code => code.Value === id) ? koder.arcticZoneDisabled.find(code => code.Value === id).Text.indexOf(region) !== -1 : true
         const mainlandZoneDisabled = (id, region) => koder.mainlandZoneDisabled.find(code => code.Value === id) ? koder.mainlandZoneDisabled.find(code => code.Value === id).Text.indexOf(region) !== -1 : true
 
-        console.log("ACHTUNG!")
-        console.log(assessment.currentBioClimateZones)
-        console.log(koder.continentalBioClimateZone)
+        
         // action(() => {
         //     critC.auto = false
         //     critF.auto = false
