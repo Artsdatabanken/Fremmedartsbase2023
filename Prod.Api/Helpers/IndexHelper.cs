@@ -77,7 +77,6 @@ namespace Prod.Api.Helpers
         private static readonly string[] _criterias = { "A", "B", "C", "D", "E", "F", "G", "H", "I" };
         private static readonly string Field_CommentsClosed = "CommentsClosed";
         private static readonly string Field_CommentsOpen = "CommentsOpen";
-        private static readonly string Field_HorizontScanResult= "HorizontScanResult";
         private static readonly string Field_CommentsNew = "CommentsNew";
 
         private static readonly string Field_TaxonChange = "TaxonChange";
@@ -470,6 +469,28 @@ namespace Prod.Api.Helpers
         private static bool IsDocumentEvaluated(string alienSpeciesCategory, string doorKnockerCategory,
             string regionallyAlienCategory)
         {
+            // get assessmentConclusion() {
+            //const result =
+            //    !assessment.isAlienSpecies
+            //    ? "WillNotBeRiskAssessed"
+            //    //: assessment.connectedToAnother 
+            //    //? "WillNotBeRiskAssessed"
+            //    : assessment.alienSpeciesCategory == "UncertainBefore1800"
+            //    ? "WillNotBeRiskAssessed"
+            //    : assessment.alienSpeciesCategory == "NotDefined"
+            //    ? "NotDecided"           // todo: This should probably also be "WillNotBeRiskAssessed" (?? check this)
+            //    : assessment.alienSpeciesCategory == "DoorKnocker"
+            //    ? "AssessedDoorknocker"
+            //    : assessment.alienSpeciesCategory == "AlienSpecie"
+            //    ? "AssessedSelfReproducing"
+            //    : assessment.alienSpeciesCategory == "RegionallyAlien"
+            //    ? "AssessedSelfReproducing"
+            //    : assessment.alienSpeciesCategory == "EffectWithoutReproduction"
+            //    ? "WillNotBeRiskAssessed"
+
+            //    : "WillNotBeRiskAssessed"
+            //return result
+
             if (alienSpeciesCategory == "AlienSpecie" || alienSpeciesCategory == "EcoEffectWithoutEstablishment")
                 return true;
             if (alienSpeciesCategory == "DoorKnocker")
@@ -634,7 +655,7 @@ namespace Prod.Api.Helpers
                     ((BooleanQuery)query).Add(QueryGetFieldQuery(Field_ProgressStatus, filter.Status), Occur.MUST);
                 // filtrer på HS-status
                 if (filter.HSStatus)
-                    ((BooleanQuery)query).Add(new BooleanClause(QueryGetFieldQuery(Field_HorizontScanResult, new[] { "1" }), Occur.MUST));
+                    ((BooleanQuery)query).Add(new BooleanClause(QueryGetFieldQuery(Field_HsResult, new[] { "1" }), Occur.MUST));
                 // filtrer på kommentarer
                 if (filter.Comments.CommentType.Contains("allAssessmentsWithComments"))
                     ((BooleanQuery)query).Add(new BooleanClause(QueryGetFieldQuery(Field_CommentsOpen, new[] { "1" }), Occur.MUST));

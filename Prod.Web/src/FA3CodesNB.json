@@ -5275,56 +5275,56 @@
                         {
                             "Id": null,
                             "Value": "speciesIndoorsIfRelevant",
-                            "Text": "individ innendørs (hvis relevant):",
+                            "Text": "individ <b>innendørs</b> (hvis relevant):",
                             "Info": null,
                             "Children": null
                         },  
                         {
                             "Id": null,
                             "Value": "reproductionOutdoorsIfRelevant",
-                            "Text": "selvstendig reproduksjon innendørs (hvis relevant):",
+                            "Text": "selvstendig reproduksjon <b>innendørs</b> (hvis relevant):",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "speciesInProductionAreaOutdoors",
-                            "Text": "individ på artens eget produksjonsareal utendørs:",
+                            "Text": "individ på artens eget <b>produksjonsareal</b> utendørs:",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "speciesReproductionInProductionAreaOutdoors",
-                            "Text": "selvstendig reproduksjon på artens eget produksjonsareal utendørs:",
+                            "Text": "selvstendig reproduksjon på artens eget <b>produksjonsareal</b> utendørs:",
                             "Info": null,
                             "Children": null
                         }, 
                         {
                             "Id": null,
                             "Value": "speciesEstablishmentProductionArea",
-                            "Text": "etablering på artens eget produksjonsareal:",
+                            "Text": "etablering på artens eget <b>produksjonsareal</b>:",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "speciesInNorwegianNature",
-                            "Text": "individ i norsk natur:",
+                            "Text": "individ i <b>norsk natur</b>:",
                             "Info": null,
                             "Children": null
                         }, 
                         {
                             "Id": null,
                             "Value": "reproductionInNorwegianNature",
-                            "Text": "selvstendig reproduksjon i norsk natur:",
+                            "Text": "selvstendig reproduksjon i <b>norsk natur</b>:",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "establishmentInNorwegianNature",
-                            "Text": "etablering i norsk natur: ",
+                            "Text": "etablering i <b>norsk natur</b>: ",
                             "Info": null,
                             "Children": null
                         },
