@@ -388,7 +388,7 @@ namespace SwissKnife.Database
                 exAssessment.ConnectedToAnother = newAssesment.ConnectedToAnother;
 
                 exAssessment.RiskAssessment.SpeciesSpeciesInteractions = newAssesment.RiskAssessment.SpeciesSpeciesInteractions;
-                exAssessment.RiskAssessment.SpeciesNaturetypeInteractions = newAssesment.RiskAssessment.SpeciesNaturetypeInteractions;
+                //exAssessment.RiskAssessment.SpeciesNaturetypeInteractions = newAssesment.RiskAssessment.SpeciesNaturetypeInteractions;
                 exAssessment.RiskAssessment.HostParasiteInformations = newAssesment.RiskAssessment.HostParasiteInformations;
                 exAssessment.RiskAssessment.GeneticTransferDocumented = newAssesment.RiskAssessment.GeneticTransferDocumented;
 
@@ -432,6 +432,29 @@ namespace SwissKnife.Database
                 if (newAssesment.IsDeleted && !exAssessment.IsDeleted)
                 {
                     exAssessment.IsDeleted = true;
+                }
+
+                if (exAssessment.RiskAssessment.SpeciesNaturetypeInteractions.Count > 0) {
+                for (var i=0; i < exAssessment.RiskAssessment.SpeciesNaturetypeInteractions.Count; i++)
+                    {
+                        var code = exAssessment.RiskAssessment.SpeciesNaturetypeInteractions[i].NiNCode;
+                        // checks if the nature type code is in the impacted nature types from 2018 which are not used anymore; if so, set it to a separate list 
+                        for (var j = 0; j < exAssessment.ImpactedNatureTypesFrom2018.Count; j++)
+                        {
+                            if (exAssessment.ImpactedNatureTypesFrom2018[j].NiNCode == code)
+                            {
+                                newAssesment.RiskAssessment.SpeciesNaturetypeInteractions2018.Add(exAssessment.RiskAssessment.SpeciesNaturetypeInteractions[i]);
+                                
+
+                            }
+                            else {
+
+                                newAssesment.RiskAssessment.SpeciesNaturetypeInteractions.Add(exAssessment.RiskAssessment.SpeciesNaturetypeInteractions[i]);
+                            }
+                        }
+
+                    }
+                    
                 }
 
                 exAssessment.AssesmentVectors = newAssesment.AssesmentVectors;
