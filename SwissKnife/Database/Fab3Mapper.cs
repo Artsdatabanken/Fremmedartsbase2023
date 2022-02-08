@@ -738,6 +738,10 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.ExpansionUpperQInput, opt => opt.Ignore())
                     .ForMember(dest => dest.ExpansionUpperQ, opt => opt.MapFrom<double?>(src => ParseDouble(src.SpreadYearlyIncreaseOccurrenceAreaUpperQuartile)))
 
+                    .ForMember(dest => dest.Occurrences1Best, opt => opt.Ignore())
+                    .ForMember(dest => dest.Occurrences1Low, opt => opt.Ignore())
+                    .ForMember(dest => dest.Occurrences1High, opt => opt.Ignore())
+
                     // følgende blir mappet fra FA3Legacy lenger nede
                     .ForMember(dest => dest.AOOknownInput, opt => opt.Ignore())
                     .ForMember(dest => dest.AOOknown, opt => opt.Ignore())
