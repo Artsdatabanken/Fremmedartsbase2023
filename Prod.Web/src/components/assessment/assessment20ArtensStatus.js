@@ -110,7 +110,12 @@ checkStatus = (production) => {
                 }
                     
                     { assessment.isAlienSpecies ?
-                    <div>                     
+                    <div>   
+                        <p>{labels.SpeciesStatus.higherOrLowerLevel} </p> 
+                        <Xcomp.StringEnum mode="radiohorizontal" observableValue={[assessment, "higherOrLowerLevelString"]} 
+                                style={{marginTop: "20px"}}
+                                codes={codes.yesNo}
+                                />                  
                         <p>{labels.SpeciesStatus.connectedToAnotherTaxon} </p> 
                         <Xcomp.StringEnum mode="radiohorizontal" observableValue={[assessment, "connectedToAnotherString"]} 
                                 style={{marginTop: "20px"}}
@@ -321,11 +326,7 @@ checkStatus = (production) => {
                     ? 
                      <div>
                      <div>
-                     <p>{labels.SpeciesStatus.higherOrLowerLevel} </p> 
-                        <Xcomp.StringEnum mode="radiohorizontal" observableValue={[assessment, "higherOrLowerLevelString"]} 
-                                style={{marginTop: "20px"}}
-                                codes={codes.yesNo}
-                                />
+                     
 
                          <p>{labels.SpeciesStatus.isProductionSpecies}</p>                          
                          <Xcomp.StringEnum observableValue={[assessment, "productionSpeciesString"]} mode="radio" codes={codes.yesNo}/> 
