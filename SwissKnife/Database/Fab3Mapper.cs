@@ -1276,6 +1276,13 @@ namespace SwissKnife.Database
                             }
                         }
 
+                        var test = dest.RiskAssessment.Criteria.Where(x => x.CriteriaLetter == "F").Single();
+                        if (test.UncertaintyValues.Length > 1)
+                        {
+                            test.UncertaintyValues = new[] { 0 };
+                        }
+
+
                     });
 
                 

@@ -444,7 +444,7 @@ namespace SwissKnife.Database
                 exAssessment.ArtskartWaterModel = newAssesment.ArtskartWaterModel;
                 if (exAssessment.Fylkesforekomster.All(x => x.Fylke != "St")) exAssessment.Fylkesforekomster.Add(new Fylkesforekomst() { Fylke = "St" });
                 if (exAssessment.Fylkesforekomster.All(x => x.Fylke != "Nt")) exAssessment.Fylkesforekomster.Add(new Fylkesforekomst() { Fylke = "Nt" });
-
+                exAssessment.RiskAssessment.Criteria = newAssesment.RiskAssessment.Criteria;
 
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)
