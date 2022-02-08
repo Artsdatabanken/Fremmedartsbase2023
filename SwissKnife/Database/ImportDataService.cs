@@ -411,11 +411,17 @@ namespace SwissKnife.Database
                 exAssessment.RiskAssessment.YearFirstEstablishedNature = newAssesment.RiskAssessment.YearFirstEstablishedNature;
                 exAssessment.RiskAssessment.YearFirstEstablishedNatureInsecure = newAssesment.RiskAssessment.YearFirstEstablishedNatureInsecure;
 
+                exAssessment.RiskAssessment.ExpansionUpperQInput = newAssesment.RiskAssessment.ExpansionUpperQInput;
+                exAssessment.RiskAssessment.ExpansionLowerQInput = newAssesment.RiskAssessment.ExpansionLowerQInput;
+                exAssessment.RiskAssessment.ExpansionSpeedInput = newAssesment.RiskAssessment.ExpansionSpeedInput;
+
+                exAssessment.RiskAssessment.ChosenSpreadYearlyIncrease = newAssesment.RiskAssessment.ChosenSpreadYearlyIncrease;
+
                 //if (exAssessment.ExpertGroup != newAssesment.ExpertGroup)
                 //{
                 //    if (exAssessment.HorizonDoScanning)
                 //    {
-                        
+
                 //    }
                 //}
                 exAssessment.ExpertGroup = newAssesment.ExpertGroup;

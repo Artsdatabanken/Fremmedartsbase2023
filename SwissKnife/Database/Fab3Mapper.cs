@@ -724,9 +724,9 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.LifetimeLowerQ, opt => opt.Ignore())
                     .ForMember(dest => dest.LifetimeUpperQInput, opt => opt.Ignore())
                     .ForMember(dest => dest.LifetimeUpperQ, opt => opt.Ignore())
-                    .ForMember(dest => dest.Occurrences1Best, opt => opt.MapFrom<double?>(src => ParseDouble(src.SpreadYearlyIncreaseObservations)))
-                    .ForMember(dest => dest.Occurrences1Low, opt => opt.MapFrom<double?>(src => ParseDouble(src.SpreadYearlyIncreaseObservationsLowerQuartile)))
-                    .ForMember(dest => dest.Occurrences1High, opt => opt.MapFrom<double?>(src => ParseDouble(src.SpreadYearlyIncreaseObservationsUpperQuartile)))
+                    .ForMember(dest => dest.ExpansionSpeedInput, opt => opt.MapFrom<double?>(src => ParseDouble(src.SpreadYearlyIncreaseObservations)))
+                    .ForMember(dest => dest.ExpansionLowerQInput, opt => opt.MapFrom<double?>(src => ParseDouble(src.SpreadYearlyIncreaseObservationsLowerQuartile)))
+                    .ForMember(dest => dest.ExpansionUpperQInput, opt => opt.MapFrom<double?>(src => ParseDouble(src.SpreadYearlyIncreaseObservationsUpperQuartile)))
                     .ForMember(dest => dest.IntroductionsBest, opt => opt.Ignore())
                     .ForMember(dest => dest.IntroductionsLow, opt => opt.Ignore())
                     .ForMember(dest => dest.IntroductionsHigh, opt => opt.Ignore())
@@ -816,7 +816,13 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.YearFirstEstablishedNature, opt => opt.Ignore())
                     .ForMember(dest => dest.YearFirstEstablishedNatureInsecure, opt => opt.Ignore())
                     .ForMember(dest => dest.YearFirstDomesticObservation, opt => opt.Ignore())
-                    ;
+                    .AfterMap((src, dest) =>
+                    {
+                        if (src.ChosenSpreadYearlyIncrease == "SpreadYearlyIncreaseCalculatedExpansionSpeed")
+                        {
+                            dest.ChosenSpreadYearlyIncrease = "a";
+                        }
+                    });
                 //.ForMember(dest => dest., opt => opt.MapFrom(src => src.))
 
 
