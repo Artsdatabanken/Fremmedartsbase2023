@@ -6,7 +6,7 @@ function assessmentTabdefs(appState) {
     assessmentTabs: {
         activeTab: {id: appState.horizonDoScanning ? 0 : 1},
         get tabinfos() {return [
-            {id: 0, label:"Horisontskanning", enabled: appState.harVurdering, visible: appState.horizonDoScanning, url: "horisontskanning" },
+            {id: 0, label:"Horisontskanning", enabled: appState.harVurdering, visible: (appState.horizonDoScanning || appState.horizonScanned), url: "horisontskanning" },
             {id: 1, label:"Artens status", enabled: !appState.horizonDoScanning, url: "artensstatus" },
             {id: 2, label:"Artsinformasjon", enabled: !appState.horizonDoScanning, notrequired: !appState.skalVurderes, url: "artinformasjon" },
             {id: 3, label:"Spredningsveier", enabled: !appState.horizonDoScanning, notrequired: !appState.skalVurderes, url: "spredningsveier" },

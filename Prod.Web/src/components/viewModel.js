@@ -570,6 +570,10 @@ class ViewModel {
         return !this.harVurdering ? false : this.assessment.horizonDoScanning
     }
 
+    @computed get horizonScanned() {
+        return !this.harVurdering ? false : this.assessment.horizonEstablismentPotential == 2
+    }
+
     @computed get skalVurderes() {
         // todo. denne er nå knyttet til horisontskanning. Burde kanskje vært generell og hentet verdi fra: assessment.assessmentConclusion
         return !this.harVurdering ? false : this.assessment.alienSpeciesCategory == "DoorKnocker" && this.assessment.skalVurderes ? true : false
