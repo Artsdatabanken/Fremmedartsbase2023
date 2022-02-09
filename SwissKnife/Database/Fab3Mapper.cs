@@ -1082,8 +1082,21 @@ namespace SwissKnife.Database
                         }
 
                         for (var i = 0; i < dest.RiskAssessment.SpeciesNaturetypeInteractions.Count; i++)
-                        {  
-                           if (dest.RiskAssessment.SpeciesNaturetypeInteractions[i].EffectLocalScale == true)
+                        {
+                           
+                         var code = dest.RiskAssessment.SpeciesNaturetypeInteractions[i].NiNCode;
+                                // checks if the nature type code is in the impacted nature types from 2018 which are not used anymore; if so, set it to a separate list 
+                         for (var j = 0; j < dest.ImpactedNatureTypesFrom2018.Count; j++)
+                             {
+                                //if (dest.ImpactedNatureTypesFrom2018[j].NiNCode == code)
+                                  // {
+                                    dest.RiskAssessment.SpeciesNaturetypeInteractions2018.Add(dest.RiskAssessment.SpeciesNaturetypeInteractions[i]);
+                                    dest.RiskAssessment.SpeciesNaturetypeInteractions.Remove(dest.RiskAssessment.SpeciesNaturetypeInteractions[i]);
+
+                               // }
+                             }
+
+                            if (dest.RiskAssessment.SpeciesNaturetypeInteractions[i].EffectLocalScale == true)
                             {
                                 dest.RiskAssessment.SpeciesNaturetypeInteractions[i].Scale = "Limited";
                             }
