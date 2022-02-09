@@ -30,7 +30,7 @@ export default class ArrivedCountryFrom extends React.Component {
 
         return(
             <ul style={{paddingLeft: "0px"}}>
-                {vurdering.AlienSpeciesCategory === 'RegionallyAlien' 
+                {vurdering.alienSpeciesCategory === 'RegionallyAlien' 
                 ? <li className="checkbox">
                     <label>
                         <input type="checkbox" label={otherRegionCode.Text} checked={values.indexOf(otherRegionCode.Value) !== -1}
