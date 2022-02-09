@@ -260,12 +260,9 @@ export default class SelectAssessment extends Component {
                 
                 {appState.assessmentTypeFilter == "riskAssessment" &&
                 <div className="selectFilter">
-                    <div>                        
-                    <div className="filters">
-                        <Xcomp.Bool observableValue={[appState, "hSStatus"]} label={labels.SelectAssessment.hsFilter}/></div>                        
-                
+                    <div>  
                     <div className="filters"> 
-                    
+                    <Xcomp.Bool observableValue={[appState, "hSStatus"]} style={{marginBottom: "-5px"}} label={labels.SelectAssessment.hsFilter}/>
                         {/*<span>Vurderinger med kommentar </span>
                         <div className="comment"><Xcomp.Bool observableValue={[appState, "withNewComments"]} label={"Nye kommentarer (på dine) (" + appState.antallNye + ")"}/></div>
                         <div className="comment"><Xcomp.Bool observableValue={[appState, "withComments"]} label={"Alle vurderinger med kommentar (" + appState.antallVurderinger + ")"}/></div>
@@ -281,13 +278,13 @@ export default class SelectAssessment extends Component {
 
                     {appState.filterType.indexOf('FL2018') > -1 && <div className="nav_menu">                        
                         <div className="filters"><b>{labels.SelectAssessment.speciesStatus}</b>
-                            <Xcomp.Bool observableValue={[appState.historyFilter, "vurdert"]} label={koder.statusCodes[0].text} />
+                            <Xcomp.Bool observableValue={[appState.historyFilter, "vurdert"]}  className={"riskStatus"} label={koder.statusCodes[0].text} />
                             <Xcomp.MultiselectArray
                                 observableValue={[appState.historyFilter, 'riskAssessedFilter']} 
                                 className="status"
                                 codes={koder.assessedTypes2018}
                                 mode="check"/>
-                            <Xcomp.Bool observableValue={[appState.historyFilter, "ikkevurdert"]} label={koder.statusCodes[1].text} />
+                            <Xcomp.Bool observableValue={[appState.historyFilter, "ikkevurdert"]}  className={"riskStatus"} label={koder.statusCodes[1].text} />
                             <Xcomp.MultiselectArray
                                 observableValue={[appState.historyFilter, 'riskNotAssessedFilter']} 
                                 className="status"
@@ -310,13 +307,13 @@ export default class SelectAssessment extends Component {
                 </div> }
                    {appState.filterType.indexOf('FL2023') > -1 &&  <div className="nav_menu">                        
                         <div className="filters speciesStatus"><b>{labels.SelectAssessment.speciesStatus}</b>
-                            <Xcomp.Bool observableValue={[appState.currentFilter, "vurdert"]} label={koder.statusCodes[0].text} />
+                            <Xcomp.Bool observableValue={[appState.currentFilter, "vurdert"]} className={"riskStatus"} label={koder.statusCodes[0].text} />
                             <Xcomp.MultiselectArray
                                 observableValue={[appState.currentFilter, 'riskAssessedFilter']} 
                                 className="status"
                                 codes={koder.assessedTypes}
                                 mode="check"/>
-                            <Xcomp.Bool observableValue={[appState.currentFilter, "ikkevurdert"]} label={koder.statusCodes[1].text} />
+                            <Xcomp.Bool observableValue={[appState.currentFilter, "ikkevurdert"]} className={"riskStatus"} label={koder.statusCodes[1].text} />
                             <Xcomp.MultiselectArray
                                 observableValue={[appState.currentFilter, 'riskNotAssessedFilter']} 
                                 className="status"

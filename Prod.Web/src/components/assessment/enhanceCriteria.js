@@ -53,6 +53,12 @@ const nonCountingNaturetypes = [
     "T35","T36","T37","T38","T39","T40","T41","T42","T43","T44","T45",
     "V11","V12","V13"
 ]
+function getBaseNaturetypeCode(nincode) {
+    const code = nincode.startsWith("NA ") ? nincode.substr(3) : nincode
+    const indexofbar = code.indexOf("-")
+    const base = indexofbar === -1 ? code : code.substr(0, indexofbar)
+    return base
+}
 
 function yearlyIncreaseLevel(numMYear) {
     const num = numMYear // numKmYear * 1000
@@ -836,7 +842,7 @@ function enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering,
         // C criteria
         get impactedNaturtypesColonizedAreaLevel() {
                 const levels =  riskAssessment.vurderingAllImpactedNatureTypes
-                    .filter(nt => !nonCountingNaturetypes.includes(nt.niNCode))
+                    .filter(nt => !nonCountingNaturetypes.includes(getBaseNaturetypeCode(nt.niNCode)))
                     .map(nt => nt.colonizedArea)
                     .map(area =>
                     area === "0–2"? 0 :
@@ -871,7 +877,7 @@ function enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering,
         // G criteria
         get effectOnOtherNaturetypesLevel() {
             const levels = riskAssessment.NiNNatureTypes
-            .filter(nt => !nonCountingNaturetypes.includes(nt.niNCode))
+            .filter(nt => !nonCountingNaturetypes.includes(getBaseNaturetypeCode(nt.niNCode)))
             .map(nt => nt.affectedArea)
             .map(area =>
                 area === "0"? 0 :
