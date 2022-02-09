@@ -368,7 +368,9 @@ checkStatus = (production) => {
 
                         <p>{labels.SpeciesStatus.codesExplanation}</p>
                         <br></br>
-                        {assessment.horizonDoScanning && assessment.horizonEstablismentPotential == 1 && (assessment.speciesStatus == "C1" || assessment.speciesStatus == "C0" || assessment.speciesStatus == "B1" || assessment.speciesStatus == "B2") ? 
+                        {
+                        //assessment.horizonDoScanning && 
+                        assessment.horizonEstablismentPotential == 1 && (assessment.speciesStatus == "C1" || assessment.speciesStatus == "C0" || assessment.speciesStatus == "B1" || assessment.speciesStatus == "B2") ? 
                         
                         <div>
                             <p>{labels.SpeciesStatus.assumedReproducing50Years}</p>
