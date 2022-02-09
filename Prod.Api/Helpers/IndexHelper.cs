@@ -22,7 +22,7 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Change this to force index rebuild!
         /// </summary>
-        public const int IndexVersion = 2;
+        public const int IndexVersion = 3;
 
         private const string Field_Id = "Id";
         private const string Field_Group = "Expertgroup";
@@ -286,7 +286,7 @@ namespace Prod.Api.Helpers
 
             if (ass2018 != null)
             {
-                if (IsDocumentEvaluated(ass2018.MainCategory, ass2018.MainSubCategory, ass2018.MainSubCategory))
+                if (IsDocumentEvaluated(ass2018.MainCategory, ass2018.MainSubCategory, ass2018.MainSubCategory, ass))
                     indexFields.Add(new StringField(Field_Category2018, GetCategoryFromRiskLevel(ass2018?.RiskLevel ?? -1),
                         Field.Store.YES));
                 else
@@ -467,30 +467,14 @@ namespace Prod.Api.Helpers
         }
 
         private static bool IsDocumentEvaluated(string alienSpeciesCategory, string doorKnockerCategory,
-            string regionallyAlienCategory)
+            string regionallyAlienCategory, FA4 ass)
         {
-            // get assessmentConclusion() {
-            //const result =
-            //    !assessment.isAlienSpecies
-            //    ? "WillNotBeRiskAssessed"
-            //    //: assessment.connectedToAnother 
-            //    //? "WillNotBeRiskAssessed"
-            //    : assessment.alienSpeciesCategory == "UncertainBefore1800"
-            //    ? "WillNotBeRiskAssessed"
-            //    : assessment.alienSpeciesCategory == "NotDefined"
-            //    ? "NotDecided"           // todo: This should probably also be "WillNotBeRiskAssessed" (?? check this)
-            //    : assessment.alienSpeciesCategory == "DoorKnocker"
-            //    ? "AssessedDoorknocker"
-            //    : assessment.alienSpeciesCategory == "AlienSpecie"
-            //    ? "AssessedSelfReproducing"
-            //    : assessment.alienSpeciesCategory == "RegionallyAlien"
-            //    ? "AssessedSelfReproducing"
-            //    : assessment.alienSpeciesCategory == "EffectWithoutReproduction"
-            //    ? "WillNotBeRiskAssessed"
+            if (!(ass.IsAlienSpecies.HasValue && ass.IsAlienSpecies.Value == true)) return false;
 
-            //    : "WillNotBeRiskAssessed"
-            //return result
+            if (ass.AlienSpeciesCategory == "UncertainBefore1800") return false;
 
+            if (ass.AlienSpeciesCategory == "NotDefined") return false; // todo: This should probably also be "WillNotBeRiskAssessed" (?? check this)
+            if (ass.AlienSpeciesCategory == "EffectWithoutReproduction") return false;
             if (alienSpeciesCategory == "AlienSpecie" || alienSpeciesCategory == "EcoEffectWithoutEstablishment")
                 return true;
             if (alienSpeciesCategory == "DoorKnocker")
