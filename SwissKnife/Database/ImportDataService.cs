@@ -475,6 +475,13 @@ namespace SwissKnife.Database
                 if (exAssessment.Fylkesforekomster.All(x => x.Fylke != "Nt")) exAssessment.Fylkesforekomster.Add(new Fylkesforekomst() { Fylke = "Nt" });
                 exAssessment.RiskAssessment.Criteria = newAssesment.RiskAssessment.Criteria;
 
+                if (exAssessment.HorizonEcologicalEffect != null && exAssessment.HorizonEcologicalEffect.ToLowerInvariant() == "yeswhilepresent" && exAssessment.HorizonEcologicalEffect != "yesWhilePresent")
+                    exAssessment.HorizonEcologicalEffect = "yesWhilePresent";
+                if (exAssessment.HorizonEcologicalEffect != null && exAssessment.HorizonEcologicalEffect.ToLowerInvariant() == "no" && exAssessment.HorizonEcologicalEffect != "no")
+                    exAssessment.HorizonEcologicalEffect = "no";
+                if (exAssessment.HorizonEcologicalEffect != null && exAssessment.HorizonEcologicalEffect.ToLowerInvariant() == "yesaftergone" && exAssessment.HorizonEcologicalEffect != "yesAfterGone")
+                    exAssessment.HorizonEcologicalEffect = "yesAfterGone";
+
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)
                 {
@@ -525,7 +532,13 @@ namespace SwissKnife.Database
 
                 if (exAssessment.Fylkesforekomster.All(x => x.Fylke != "St")) exAssessment.Fylkesforekomster.Add(new Fylkesforekomst() { Fylke = "St" });
                 if (exAssessment.Fylkesforekomster.All(x => x.Fylke != "Nt")) exAssessment.Fylkesforekomster.Add(new Fylkesforekomst() { Fylke = "Nt" });
-
+                
+                if (exAssessment.HorizonEcologicalEffect != null && exAssessment.HorizonEcologicalEffect.ToLowerInvariant() == "yeswhilepresent" && exAssessment.HorizonEcologicalEffect != "yesWhilePresent")
+                    exAssessment.HorizonEcologicalEffect = "yesWhilePresent";
+                if (exAssessment.HorizonEcologicalEffect != null && exAssessment.HorizonEcologicalEffect.ToLowerInvariant() == "no" && exAssessment.HorizonEcologicalEffect != "no")
+                    exAssessment.HorizonEcologicalEffect = "no";
+                if (exAssessment.HorizonEcologicalEffect != null && exAssessment.HorizonEcologicalEffect.ToLowerInvariant() == "yesaftergone" && exAssessment.HorizonEcologicalEffect != "yesAfterGone")
+                    exAssessment.HorizonEcologicalEffect = "yesAfterGone";
 
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)
