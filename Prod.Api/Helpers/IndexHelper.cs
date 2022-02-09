@@ -105,7 +105,7 @@ namespace Prod.Api.Helpers
                 var tempDate = result.Max(x => x.LastUpdatedAt);
                 if (maxDate < tempDate) maxDate = tempDate;
 
-                var docs = result.Where(x => x.IsDeleted == false).Select(GetDocumentFromAssessment).ToArray();
+                var docs = result.Where(x => x.IsDeleted == false).Select(GetIndexFieldsFromAssessment).ToArray();
                 _index.AddOrUpdate(docs);
                 var deletedDocs = result.Where(x => x.IsDeleted).Select(x => x.Id).ToArray();
                 _index.Delete(deletedDocs);
@@ -170,7 +170,7 @@ namespace Prod.Api.Helpers
                 var tempDate = result.Max(x => x.LastUpdatedAt);
                 if (maxDate < tempDate) maxDate = tempDate;
 
-                var docs = result.Select(GetDocumentFromAssessment).ToArray();
+                var docs = result.Select(GetIndexFieldsFromAssessment).ToArray();
                 _index.AddOrUpdate(docs);
             }
 
@@ -187,7 +187,7 @@ namespace Prod.Api.Helpers
             }
             else
             {
-                var doc = GetDocumentFromAssessment(assessment);
+                var doc = GetIndexFieldsFromAssessment(assessment);
                 index.AddOrUpdate(doc);
             }
 
@@ -195,7 +195,7 @@ namespace Prod.Api.Helpers
         }
         //private const string Field_DateLastSave = "DateSave";
 
-        private static Document GetDocumentFromAssessment(Assessment assessment)
+        private static Document GetIndexFieldsFromAssessment(Assessment assessment)
         {
             var ass = JsonSerializer.Deserialize<FA4>(assessment.Doc);
             //string kategori = ass.Kategori; // string.IsNullOrWhiteSpace(ass.Kategori) ? "" : ass.Kategori.Substring(0,2);
@@ -204,7 +204,7 @@ namespace Prod.Api.Helpers
             var get2018NotAssessed = Get2018NotAssessed(ass);
             var horResult = horizonScanResult.HasValue ? horizonScanResult.Value ? "1" : "0" : "2";
 
-            var document = new Document
+            var indexFields = new Document
             {
                 new StringField(Field_Id, assessment.Id.ToString(), Field.Store.YES),
                 // StringField indexes but doesn't tokenize - Case important
@@ -248,24 +248,24 @@ namespace Prod.Api.Helpers
                 var elements = ass.TaxonHierarcy.Split(new[] { "/" }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var item in elements)
                 {
-                    document.Add(new TextField(Field_TaxonPath, item, Field.Store.NO));
+                    indexFields.Add(new TextField(Field_TaxonPath, item, Field.Store.NO));
                 }
 
             }
 
             if (IsDocumentEvaluated(ass))
-                document.Add(new StringField(Field_Category, GetCategoryFromRiskLevel(ass.RiskAssessment.RiskLevel),
+                indexFields.Add(new StringField(Field_Category, GetCategoryFromRiskLevel(ass.RiskAssessment.RiskLevel),
                     Field.Store.YES));
             else
-                document.Add(new StringField(Field_Category, "NR", Field.Store.YES));
+                indexFields.Add(new StringField(Field_Category, "NR", Field.Store.YES));
 
             // &Current.Status=establishedAfter1800,&Current.Status=doorKnocker,&Current.Status=regionallyAlien,&Current.Status=effectWithoutEstablishment
             // &Current.Status=establishedBefore1800,&Current.Status=sharesMotherSpeciesStatus,&Current.Status=notAlienInNorway,&Current.Status=notAssessedPotentialDoorKnocker
-            if (ass.IsRegionallyAlien.HasValue && ass.IsRegionallyAlien.Value)  document.Add(new StringField(Field_CurrentStatus, "regionallyAlien", Field.Store.NO));
+            if (ass.IsRegionallyAlien.HasValue && ass.IsRegionallyAlien.Value)  indexFields.Add(new StringField(Field_CurrentStatus, "regionallyAlien", Field.Store.NO));
             
             if (ass.AlienSpecieUncertainIfEstablishedBefore1800.HasValue)
             {
-                document.Add(ass.AlienSpecieUncertainIfEstablishedBefore1800.Value == true
+                indexFields.Add(ass.AlienSpecieUncertainIfEstablishedBefore1800.Value == true
                     ? new StringField(Field_CurrentStatus, "establishedBefore1800", Field.Store.NO)
                     : new StringField(Field_CurrentStatus, "establishedAfter1800", Field.Store.NO));
             }
@@ -273,24 +273,24 @@ namespace Prod.Api.Helpers
             //Status=notStarted,&Status=inprogress,&Status=finished
             if (ass.EvaluationStatus == "imported")
             {
-                document.Add(new StringField(Field_ProgressStatus, "notStarted", Field.Store.NO));
+                indexFields.Add(new StringField(Field_ProgressStatus, "notStarted", Field.Store.NO));
             }
             else if (ass.EvaluationStatus == "inprogress")
             {
-                document.Add(new StringField(Field_ProgressStatus, "inprogress", Field.Store.NO));
+                indexFields.Add(new StringField(Field_ProgressStatus, "inprogress", Field.Store.NO));
             }
             if (ass.EvaluationStatus == "finished")
             {
-                document.Add(new StringField(Field_ProgressStatus, "finished", Field.Store.NO));
+                indexFields.Add(new StringField(Field_ProgressStatus, "finished", Field.Store.NO));
             }
 
             if (ass2018 != null)
             {
                 if (IsDocumentEvaluated(ass2018.MainCategory, ass2018.MainSubCategory, ass2018.MainSubCategory))
-                    document.Add(new StringField(Field_Category2018, GetCategoryFromRiskLevel(ass2018?.RiskLevel ?? -1),
+                    indexFields.Add(new StringField(Field_Category2018, GetCategoryFromRiskLevel(ass2018?.RiskLevel ?? -1),
                         Field.Store.YES));
                 else
-                    document.Add(new StringField(Field_Category2018, "NR", Field.Store.YES));
+                    indexFields.Add(new StringField(Field_Category2018, "NR", Field.Store.YES));
 
                 // todo: krever ny migreringspatch
                 //if (!string.IsNullOrWhiteSpace(ass2018.DecisiveCriteria))
@@ -307,9 +307,9 @@ namespace Prod.Api.Helpers
             {
                 foreach (var criteria in _criterias)
                     if (ass.RiskAssessment.DecisiveCriteria.Contains(criteria, StringComparison.InvariantCulture))
-                        document.Add(new StringField(Field_Criteria, criteria, Field.Store.NO));
+                        indexFields.Add(new StringField(Field_Criteria, criteria, Field.Store.NO));
 
-                document.Add(new StringField(Field_CriteriaAll, ass.RiskAssessment.DecisiveCriteria, Field.Store.YES));
+                indexFields.Add(new StringField(Field_CriteriaAll, ass.RiskAssessment.DecisiveCriteria, Field.Store.YES));
             }
 
             //var ids = result.Select(x => int.Parse(x.Id)).ToArray();
@@ -328,7 +328,7 @@ namespace Prod.Api.Helpers
                                                    y.CommentDate > comenter.maxDate);
                 if (newCount > 0)
                 {
-                    document.Add(new StringField(Field_CommentsNew, comenter.Key.ToString(), Field.Store.YES));
+                    indexFields.Add(new StringField(Field_CommentsNew, comenter.Key.ToString(), Field.Store.YES));
                 }
             }
             //var newCommentsForUserId = (from commenter in comments.Where(y =>
@@ -352,15 +352,15 @@ namespace Prod.Api.Helpers
                     ? 1
                     : 0;
 
-            document.Add(new StringField(Field_NewestComment, latest.ToString("yyyy-dd-MM HH:mm"), Field.Store.YES));
-            document.Add(new StringField(Field_CommentsClosed, closed.ToString(), Field.Store.YES));
+            indexFields.Add(new StringField(Field_NewestComment, latest.ToString("yyyy-dd-MM HH:mm"), Field.Store.YES));
+            indexFields.Add(new StringField(Field_CommentsClosed, closed.ToString(), Field.Store.YES));
             //foreach (var tuple in newCommentsForUserId.Where(x=>x.Item2 > 0))
             //    document.Add(new StringField(Field_CommentsNew, tuple.Item1 + ";" + tuple.Item2, Field.Store.YES));
-            document.Add(new StringField(Field_CommentsOpen, open.ToString(), Field.Store.YES));
-            document.Add(new StringField(Field_TaxonChange, taxonchange.ToString(), Field.Store.YES));
+            indexFields.Add(new StringField(Field_CommentsOpen, open.ToString(), Field.Store.YES));
+            indexFields.Add(new StringField(Field_TaxonChange, taxonchange.ToString(), Field.Store.YES));
 
 
-            return document;
+            return indexFields;
         }
 
         private static S2018 ExtractPotentialDoorKnocker(S2018 s2018)
