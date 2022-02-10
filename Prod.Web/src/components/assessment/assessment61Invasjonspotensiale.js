@@ -153,11 +153,6 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
         const critA = riskAssessment.critA
         const critB = riskAssessment.critB
         const critC = riskAssessment.critC
-        // runInAction(() => {
-        //     // critA.auto = false // critA auto is set in enhanceCriteria
-        //     critB.auto = false
-        //     critC.auto = false
-        // })
         const textAS = riskAssessment.a1aresulttext
         console.log(textAS)
         //stringFormat(labels.AcritText.SelfProducing)
@@ -839,8 +834,9 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                 <Criterion criterion={critB} appState={appState} 
                                             //disabled={disabled} 
                                             // according to issues #318 and #319
-                                            disabled={disabled || riskAssessment.chosenSpreadYearlyIncrease == "a" || (riskAssessment.chosenSpreadYearlyIncrease == "b" && assessment.alienSpeciesCategory == "DoorKnocker")}
-                                            auto={riskAssessment.chosenSpreadYearlyIncrease == "a" || assessment.alienSpeciesCategory == "DoorKnocker"} mode="noheading"/>
+                                            // disabled={disabled || riskAssessment.chosenSpreadYearlyIncrease == "a" || (riskAssessment.chosenSpreadYearlyIncrease == "b" && assessment.alienSpeciesCategory == "DoorKnocker")}
+                                            // auto={riskAssessment.chosenSpreadYearlyIncrease == "a" || assessment.alienSpeciesCategory == "DoorKnocker"} 
+                                            mode="noheading"/>
                                 <hr></hr>
                             
                             </div>
