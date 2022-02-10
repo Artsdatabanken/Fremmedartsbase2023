@@ -1280,11 +1280,19 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
         let firstrun = true
         extdendCriteriaProps(crit)
         autorun(() => {
+            const auto = !(riskAssessment.ametodkey === "A1a2" || riskAssessment.ametodkey === "A1b2")
+            runInAction(() => {
+                crit.auto = auto
+            })
+        })
+
+
+        autorun(() => {
             console.log("#¤# autorun crit" + crit.criteriaLetter + " value: " + crit.value)
             let ud // uncertaintyDisabled 
             let uv // uncentaintyValues (selected by program)
             let vd // valuesDisabled (only some values/levels is alowed)
-            let auto // value is selected by program
+            // let auto // value is selected by program
 
             if (riskAssessment.ametodkey === "A1a1" || riskAssessment.ametodkey === "A1b1") {
                 vd = []
@@ -1296,7 +1304,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                         uv.push(i)
                     }
                 }
-                auto = true
+                // auto = true
             } else if (riskAssessment.ametodkey === "A1a2" || riskAssessment.ametodkey === "A1b2") {
                 vd = []
                 uv = []
@@ -1317,7 +1325,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
 
                 //         r.reasonForAdjustmentCritA !== null &&
                 //         r.reasonForAdjustmentCritA.length > 2) {
-                auto = false
+                // auto = false
             } else if (riskAssessment.ametodkey === "A3") {
                 vd = []
                 ud = [0,1,2,3]
@@ -1327,7 +1335,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                         uv.push(i)
                     }
                 }
-                auto = true
+                // auto = true
             } else {
 
                 vd = []
@@ -1344,7 +1352,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                 setUncertaintyValues(firstrun, crit, uv)
                 arrayConditionalReplace(crit.valueDisabled, vd)
                 arrayConditionalReplace(crit.uncertaintyDisabled, ud)
-                crit.auto = auto
+                // crit.auto = auto
                 if (vd.includes(crit.value)) {
                     crit.value = riskAssessment.apossibleLow
                 }
