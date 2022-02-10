@@ -1290,13 +1290,83 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
         autorun(() => {
             console.log("#¤# autorun crit" + crit.criteriaLetter + " value: " + crit.value)
             let ud // uncertaintyDisabled 
-            let uv // uncentaintyValues (selected by program)
-            let vd // valuesDisabled (only some values/levels is alowed)
-            // let auto // value is selected by program
+            // let uv // uncentaintyValues (selected by program)
+            // let vd // valuesDisabled (only some values/levels is alowed)
 
             if (riskAssessment.ametodkey === "A1a1" || riskAssessment.ametodkey === "A1b1") {
-                vd = []
+                // vd = []
                 ud = [0,1,2,3]
+                // uv = []
+
+                for (var i = 0; i <= 3; i++) {
+                    if(i >= riskAssessment.alow && i <= riskAssessment.ahigh) {
+                        uv.push(i)
+                    }
+                }
+            } else if (riskAssessment.ametodkey === "A1a2" || riskAssessment.ametodkey === "A1b2") {
+                // vd = []
+                // uv = []
+                ud = []
+                // console.log("#¤# critA apossible: "+ riskAssessment.apossibleLow + " " + riskAssessment.apossibleHigh )
+                // console.log("#¤# critA alowhigh: "+ riskAssessment.alow + " " + riskAssessment.ahigh )
+                // console.log("#¤# critA ascore: "+ riskAssessment.ascore )
+
+                for (var i = 0; i <= 3; i++) {
+                    // if(i < riskAssessment.apossibleLow || i > riskAssessment.apossibleHigh) {
+                    //     vd.push(i)
+                    // }
+                    if(i < (riskAssessment.ascore - 1) || i > (riskAssessment.ascore + 1)) {
+                        ud.push(i)
+                    }
+                }
+                // uv = uncertaintyArrayAddValue(filterUncertaintyArray(crit.uncertaintyValues, uncertaintyArrayReverse(ud)), riskAssessment.ascore)
+
+                //         r.reasonForAdjustmentCritA !== null &&
+                //         r.reasonForAdjustmentCritA.length > 2) {
+            } else if (riskAssessment.ametodkey === "A3") {
+                // vd = []
+                ud = [0,1,2,3]
+                // uv = []
+                // for (var i = 0; i <= 3; i++) {
+                //     if(i >= riskAssessment.alow && i <= riskAssessment.ahigh) {
+                //         uv.push(i)
+                //     }
+                // }
+            } else {
+                // vd = []
+                ud = []
+                for (let n = 0; n < 4 ; n++) {
+                    if (Math.abs(n - crit.value) > 1 || n === crit.value) {
+                        ud.push(n)
+                    }
+                }
+                // uv = [crit.value]
+
+            }
+            runInAction(() => {
+                // setUncertaintyValues(firstrun, crit, uv)
+                // arrayConditionalReplace(crit.valueDisabled, vd)
+                arrayConditionalReplace(crit.uncertaintyDisabled, ud)
+                // if (vd.includes(crit.value)) {
+                //     crit.value = riskAssessment.apossibleLow
+                // }
+                // console.log("#¤# uncertainty1 : " + crit.criteriaLetter )
+                // console.log("#¤# uncertainty : " + crit.criteriaLetter + " : " + crit.value + " - " + JSON.stringify(crit.uncertaintyValues)  + " + " + JSON.stringify(crit.uncertaintyDisabled))
+            })
+            // firstrun = false
+            //if (!config.isRelease) trace()  // leave this line here! Se comments above to learn when to uncomment.
+        })
+
+
+        autorun(() => {
+            console.log("#¤# autorun crit" + crit.criteriaLetter + " value: " + crit.value)
+            // let ud // uncertaintyDisabled 
+            let uv // uncentaintyValues (selected by program)
+            // let vd // valuesDisabled (only some values/levels is alowed)
+
+            if (riskAssessment.ametodkey === "A1a1" || riskAssessment.ametodkey === "A1b1") {
+                // vd = []
+                // ud = [0,1,2,3]
                 uv = []
 
                 for (var i = 0; i <= 3; i++) {
@@ -1304,19 +1374,17 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                         uv.push(i)
                     }
                 }
-                // auto = true
             } else if (riskAssessment.ametodkey === "A1a2" || riskAssessment.ametodkey === "A1b2") {
-                vd = []
-                uv = []
-                ud = []
-                console.log("#¤# critA apossible: "+ riskAssessment.apossibleLow + " " + riskAssessment.apossibleHigh )
-                console.log("#¤# critA alowhigh: "+ riskAssessment.alow + " " + riskAssessment.ahigh )
-                console.log("#¤# critA ascore: "+ riskAssessment.ascore )
+                // vd = []
+                const ud = []
+                // console.log("#¤# critA apossible: "+ riskAssessment.apossibleLow + " " + riskAssessment.apossibleHigh )
+                // console.log("#¤# critA alowhigh: "+ riskAssessment.alow + " " + riskAssessment.ahigh )
+                // console.log("#¤# critA ascore: "+ riskAssessment.ascore )
 
                 for (var i = 0; i <= 3; i++) {
-                    if(i < riskAssessment.apossibleLow || i > riskAssessment.apossibleHigh) {
-                        vd.push(i)
-                    }
+                    // if(i < riskAssessment.apossibleLow || i > riskAssessment.apossibleHigh) {
+                    //     vd.push(i)
+                    // }
                     if(i < (riskAssessment.ascore - 1) || i > (riskAssessment.ascore + 1)) {
                         ud.push(i)
                     }
@@ -1325,43 +1393,113 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
 
                 //         r.reasonForAdjustmentCritA !== null &&
                 //         r.reasonForAdjustmentCritA.length > 2) {
-                // auto = false
             } else if (riskAssessment.ametodkey === "A3") {
-                vd = []
-                ud = [0,1,2,3]
+                // vd = []
+                // ud = [0,1,2,3]
                 uv = []
                 for (var i = 0; i <= 3; i++) {
                     if(i >= riskAssessment.alow && i <= riskAssessment.ahigh) {
                         uv.push(i)
                     }
                 }
-                // auto = true
             } else {
-
-                vd = []
-                ud = []
-                for (let n = 0; n < 4 ; n++) {
-                    if (Math.abs(n - crit.value) > 1 || n === crit.value) {
-                        ud.push(n)
-                    }
-                }
+                // vd = []
+                // ud = []
+                // for (let n = 0; n < 4 ; n++) {
+                //     if (Math.abs(n - crit.value) > 1 || n === crit.value) {
+                //         ud.push(n)
+                //     }
+                // }
                 uv = [crit.value]
 
             }
             runInAction(() => {
                 setUncertaintyValues(firstrun, crit, uv)
+                // arrayConditionalReplace(crit.valueDisabled, vd)
+                // arrayConditionalReplace(crit.uncertaintyDisabled, ud)
+                // if (vd.includes(crit.value)) {
+                //     crit.value = riskAssessment.apossibleLow
+                // }
+                // console.log("#¤# uncertainty1 : " + crit.criteriaLetter )
+                // console.log("#¤# uncertainty : " + crit.criteriaLetter + " : " + crit.value + " - " + JSON.stringify(crit.uncertaintyValues)  + " + " + JSON.stringify(crit.uncertaintyDisabled))
+            })
+            firstrun = false
+            //if (!config.isRelease) trace()  // leave this line here! Se comments above to learn when to uncomment.
+        })
+
+
+        autorun(() => {
+            console.log("#¤# autorun crit" + crit.criteriaLetter + " value: " + crit.value)
+            // let ud // uncertaintyDisabled 
+            // let uv // uncentaintyValues (selected by program)
+            let vd // valuesDisabled (only some values/levels is alowed)
+
+            if (riskAssessment.ametodkey === "A1a1" || riskAssessment.ametodkey === "A1b1") {
+                vd = []
+                // ud = [0,1,2,3]
+                // uv = []
+
+                // for (var i = 0; i <= 3; i++) {
+                //     if(i >= riskAssessment.alow && i <= riskAssessment.ahigh) {
+                //         uv.push(i)
+                //     }
+                // }
+            } else if (riskAssessment.ametodkey === "A1a2" || riskAssessment.ametodkey === "A1b2") {
+                vd = []
+                // uv = []
+                // ud = []
+                // console.log("#¤# critA apossible: "+ riskAssessment.apossibleLow + " " + riskAssessment.apossibleHigh )
+                // console.log("#¤# critA alowhigh: "+ riskAssessment.alow + " " + riskAssessment.ahigh )
+                // console.log("#¤# critA ascore: "+ riskAssessment.ascore )
+
+                for (var i = 0; i <= 3; i++) {
+                    if(i < riskAssessment.apossibleLow || i > riskAssessment.apossibleHigh) {
+                        vd.push(i)
+                    }
+                    // if(i < (riskAssessment.ascore - 1) || i > (riskAssessment.ascore + 1)) {
+                    //     ud.push(i)
+                    // }
+                }
+                // uv = uncertaintyArrayAddValue(filterUncertaintyArray(crit.uncertaintyValues, uncertaintyArrayReverse(ud)), riskAssessment.ascore)
+
+                //         r.reasonForAdjustmentCritA !== null &&
+                //         r.reasonForAdjustmentCritA.length > 2) {
+            } else if (riskAssessment.ametodkey === "A3") {
+                vd = []
+                // ud = [0,1,2,3]
+                // uv = []
+                // for (var i = 0; i <= 3; i++) {
+                //     if(i >= riskAssessment.alow && i <= riskAssessment.ahigh) {
+                //         uv.push(i)
+                //     }
+                // }
+            } else {
+                vd = []
+                // ud = []
+                // for (let n = 0; n < 4 ; n++) {
+                //     if (Math.abs(n - crit.value) > 1 || n === crit.value) {
+                //         ud.push(n)
+                //     }
+                // }
+                // uv = [crit.value]
+
+            }
+            runInAction(() => {
+                // setUncertaintyValues(firstrun, crit, uv)
                 arrayConditionalReplace(crit.valueDisabled, vd)
-                arrayConditionalReplace(crit.uncertaintyDisabled, ud)
-                // crit.auto = auto
+                // arrayConditionalReplace(crit.uncertaintyDisabled, ud)
                 if (vd.includes(crit.value)) {
                     crit.value = riskAssessment.apossibleLow
                 }
                 // console.log("#¤# uncertainty1 : " + crit.criteriaLetter )
                 // console.log("#¤# uncertainty : " + crit.criteriaLetter + " : " + crit.value + " - " + JSON.stringify(crit.uncertaintyValues)  + " + " + JSON.stringify(crit.uncertaintyDisabled))
             })
-            firstrun = false
-            if (!config.isRelease) trace()  // leave this line here! Se comments above to learn when to uncomment.
-       })
+            // firstrun = false
+            //if (!config.isRelease) trace()  // leave this line here! Se comments above to learn when to uncomment.
+        })
+
+
+
 
     }
 
