@@ -109,7 +109,7 @@ checkStatus = (production) => {
                     
                 }
                     
-                    { assessment.isAlienSpecies ?
+                    { assessment.isAlienSpecies || assessment.isAlienSpeciesString == "true" ?
                     <div>   
                         <p>{labels.SpeciesStatus.higherOrLowerLevel} </p> 
                         <Xcomp.StringEnum mode="radiohorizontal" observableValue={[assessment, "higherOrLowerLevelString"]} 
@@ -321,7 +321,7 @@ checkStatus = (production) => {
                     </div> : null} 
 
                     {/* { assessment.isAlienSpeciesString == 'true' && (assessment.connectedToAnotherString == "no" || assessment.connectedToAnotherString == "false" ) ?  */}
-                    { assessment.isAlienSpecies 
+                    { assessment.isAlienSpecies  || assessment.isAlienSpeciesString == "true"
                     //&& (!assessment.connectedToAnother || !assessment.connectedToAnother ) 
                     ? 
                      <div>
@@ -416,7 +416,7 @@ checkStatus = (production) => {
 
                         
                     
-                    { !assessment.isAlienSpecies ?
+                    { !assessment.isAlienSpecies && assessment.isAlienSpeciesString != "true" ?
                     <div>
                         <p>{labels.SpeciesStatus.didSpecies} </p>
                         <Xcomp.StringEnum observableValue={[assessment, "changedFromAlien"]} mode="radio" codes={codes.ChangedFromAlien}/>
