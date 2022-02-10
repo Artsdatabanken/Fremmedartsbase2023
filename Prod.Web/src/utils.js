@@ -44,6 +44,21 @@ export function *processTree(tree){
 	yield *processData(tree.children)
 }
 
+export function arraysEqual(arr1,arr2) {
+	// warning: this definition has some limitations
+	return (arr1.length === arr2.length && arr1.every((v, i) => v === arr2[i]))
+	// return JSON.stringify(a1)===JSON.stringify(a2);
+}
+
+export function arrayConditionalReplace(arr,replacewitharr) {
+	// This is a function to avoid unneccesarry updates of array
+	// Especially usefull for mobx arrays, to avoid cascading updates of linked observables
+	if (!arraysEqual(arr, replacewitharr)) {
+		arr.replace(replacewitharr)
+	}
+}
+
+
 // ********************************************************************************
 // Util functions that is not general purpose, but linked to the NBIC datastructure 
 // ********************************************************************************
