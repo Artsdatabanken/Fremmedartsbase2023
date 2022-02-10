@@ -1234,11 +1234,58 @@ function enhanceCriteriaAddLabelsAndAuto(riskAssessment, codes) {
 }
 
 
+function setUncertaintyValues(isFirstrun, crit, uvalues) {
+
+    if (!isFirstrun) {
+        // The first run is done during page load
+        // We want to keep the saved uncertainty values!
+        // Successive calls should automatically set uncertainty when value changes
+        // NB! Careless changes to the application may cause this code to run multiple times during page load
+        // Take care this does not happen! (uncomment the trace() function to trace the problem if necassary)
+
+        console.log("#¤#uncertainty nextrun: " + crit.criteriaLetter + " : " + crit.value)
+
+
+        if(crit.criteriaLetter === "A") {
+            console.log("#¤# critA uvalues 00: " +  JSON.stringify(crit.uncertaintyValues) + "#" +  JSON.stringify(uvalues)  )
+            
+        }
+
+
+        //const uvChanged = !(crit.uncertaintyValues.length === uvalues.length && crit.uncertaintyValues.reduce((a, b, i) => a && uvalues[i], true))
+        const uvChanged = !(crit.uncertaintyValues.length === uvalues.length && crit.uncertaintyValues.every((v, i) => v === uvalues[i]))
+        if(uvChanged) {
+            if(crit.criteriaLetter === "A") {
+                console.log("#¤# critA uvalues: " +  JSON.stringify(crit.uncertaintyValues) + "#" +  JSON.stringify(uvalues)  )
+                
+            }
+            crit.uncertaintyValues.replace(uvalues)
+        }
+    } else {
+        // added 27.2.2017
+        // In the hope that this does not mess tings up
+        // this code is introduced to update illegal uncertainty values that
+        // are introduced when criteria rules are changed
+        // This functionality is also dependent on a well working "firstrun"; se comment above
+        // e.g. the criteria must not have a default value that is updated from db after the first run!
+
+        // console.log("#¤#uncertainty firstrun1 : " + crit.criteriaLetter )
+        console.log("#¤#uncertainty firstrun: " + crit.criteriaLetter + " : " + crit.value + " - " + JSON.stringify(crit.uncertaintyValues))
+        if (crit.uncertaintyValues.indexOf(crit.value) <= -1 ) {
+            // console.log("rectify uncertainties")
+            crit.uncertaintyValues.replace(uvalues)
+        }
+
+    }
+}
+
+
 function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
     const r = riskAssessment
     autorun(() => {console.log("#¤% bmethodkey: " + riskAssessment.bmetodkey)})
 
-    for(const crit of riskAssessment.criteria) {
+    //for(const crit of riskAssessment.criteria) {
+    for(const crit of [r.critA, r.critB, r.critC, r.critD, r.critE, r.critF, r.critG, r.critH, r.critI]) {
         let firstrun = true
         extendObservable(crit, {
             valueDisabled: observable([]),
@@ -1343,59 +1390,15 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
 
             }
             runInAction(() => {
-                if (!firstrun) {
-                    // The first run is done during page load
-                    // We want to keep the saved uncertainty values!
-                    // Successive calls should automatically set uncertainty when value changes
-                    // NB! Careless changes to the application may cause this code to run multiple times during page load
-                    // Take care this does not happen! (uncomment the trace() function to trace the problem if necassary)
-
-                    console.log("#¤#uncertainty nextrun: " + crit.criteriaLetter + " : " + crit.value)
-
-
-                    if(crit.criteriaLetter === "A") {
-                        console.log("#¤# critA uv 00: " +  JSON.stringify(crit.uncertaintyValues) + "#" +  JSON.stringify(uv)  )
-                        
-                    }
-
-
-                    //const uvChanged = !(crit.uncertaintyValues.length === uv.length && crit.uncertaintyValues.reduce((a, b, i) => a && uv[i], true))
-                    const uvChanged = !(crit.uncertaintyValues.length === uv.length && crit.uncertaintyValues.every((v, i) => v === uv[i]))
-                    if(uvChanged) {
-                        if(crit.criteriaLetter === "A") {
-                            console.log("#¤# critA uv: " +  JSON.stringify(crit.uncertaintyValues) + "#" +  JSON.stringify(uv)  )
-                            
-                        }
-                        crit.uncertaintyValues.replace(uv)
-                    }
-                } else {
-                    // added 27.2.2017
-                    // In the hope that this does not mess tings up
-                    // this code is introduced to update illegal uncertainty values that
-                    // are introduced when criteria rules are changed
-                    // This functionality is also dependent on a well working "firstrun"; se comment above
-                    // e.g. the criteria must not have a default value that is updated from db after the first run!
-
-                    // console.log("#¤#uncertainty firstrun1 : " + crit.criteriaLetter )
-                    console.log("#¤#uncertainty firstrun: " + crit.criteriaLetter + " : " + crit.value + " - " + JSON.stringify(crit.uncertaintyValues))
-                    if (crit.uncertaintyValues.indexOf(crit.value) <= -1 ) {
-                        // console.log("rectify uncertainties")
-                        crit.uncertaintyValues.replace(uv)
-                    }
-
-                }
+                setUncertaintyValues(firstrun, crit, uv)
                 crit.valueDisabled.replace(vd)
                 crit.uncertaintyDisabled.replace(ud)
                 crit.auto = auto
                 if (vd.includes(crit.value)) {
                     crit.value = riskAssessment.apossibleLow
                 }
-
-
                 // console.log("#¤# uncertainty1 : " + crit.criteriaLetter )
                 // console.log("#¤# uncertainty : " + crit.criteriaLetter + " : " + crit.value + " - " + JSON.stringify(crit.uncertaintyValues)  + " + " + JSON.stringify(crit.uncertaintyDisabled))
-
-
             })
             firstrun = false
             if (!config.isRelease) trace()  // leave this line here! Se comments above to learn when to uncomment.
