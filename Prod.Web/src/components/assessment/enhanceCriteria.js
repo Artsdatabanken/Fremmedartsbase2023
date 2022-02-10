@@ -1419,12 +1419,11 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
     }
 
     for(const crit of [r.critC, r.critD, r.critE, r.critF, r.critG, r.critH, r.critI]) {
+        extdendCriteriaProps(crit)
         runInAction(() => {
             crit.auto = !["C", "F", "G"].includes(crit.criteriaLetter)
         })
 
-        let firstrun = true
-        extdendCriteriaProps(crit)
         autorun(() => {
             // console.log("#¤# autorun crit" + crit.criteriaLetter + " value: " + crit.value)
             const ud = []
@@ -1437,6 +1436,8 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                 arrayConditionalReplace(crit.uncertaintyDisabled, ud)
             })
         })
+
+        let firstrun = true
         autorun(() => {
             // console.log("#¤# autorun crit" + crit.criteriaLetter + " value: " + crit.value)
             const uv = [crit.value]
@@ -1447,7 +1448,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
             //if (!config.isRelease) trace()  // leave this line here! Se comments above to learn when to uncomment.
         })
     }
-    autorun(() => {console.log("#¤# critA value**: " + riskAssessment.critA.value + " | " + riskAssessment.ascore)})
+    // autorun(() => {console.log("#¤# critA value**: " + riskAssessment.critA.value + " | " + riskAssessment.ascore)})
 }
 
 // function enhanceCriteriaAddErrorReportingForAutoMode(riskAssessment) {
