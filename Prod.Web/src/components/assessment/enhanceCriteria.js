@@ -1282,10 +1282,10 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
     for(const crit of [r.critA]) {  // just to get scope
         extdendCriteriaProps(crit)
         autorun(() => {
-            const auto = !(r.ametodkey === "A1a2" || r.ametodkey === "A1b2")
-                //         r.reasonForAdjustmentCritA !== null &&
-                //         r.reasonForAdjustmentCritA.length > 2) {
-
+            const auto = !(
+                (r.ametodkey === "A1a2" || r.ametodkey === "A1b2") &&
+                r.reasonForAdjustmentCritA !== null &&
+                r.reasonForAdjustmentCritA.length > 2)
             runInAction(() => {
                 crit.auto = auto
             })
