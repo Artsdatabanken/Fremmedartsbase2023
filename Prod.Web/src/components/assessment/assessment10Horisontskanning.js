@@ -16,6 +16,7 @@ export default class Assessment10Horisontskanning extends React.Component {
         const {appState:{assessment}, appState} = this.props;
         const labels = appState.codeLabels
         const codes = appState.koder
+        const disabled = appState.assessmentTypeFilter == "riskAssessment"
         return (
             <div>
             
@@ -40,17 +41,17 @@ export default class Assessment10Horisontskanning extends React.Component {
                     <h4>{labels.SpeciesStatus.establishmentPotential}</h4>                    
                     <div className="scanning">
                         <p>{labels.SpeciesStatus.colonizationInformation}</p>
-                            <Xcomp.StringEnum observableValue={[assessment, "horizonEstablismentPotential"]} mode="radio" codes={codes.HorizonEstablismentPotential}/>
+                            <Xcomp.StringEnum observableValue={[assessment, "horizonEstablismentPotential"]} disabled={disabled} mode="radio" codes={codes.HorizonEstablismentPotential}/>
                     </div>
-                        <Xcomp.HtmlString observableValue={[assessment, 'horizonEstablismentPotentialDescription']} placeholder={labels.SpeciesStatus.furtherInformation} /> 
+                        <Xcomp.HtmlString observableValue={[assessment, 'horizonEstablismentPotentialDescription']} disabled={disabled} placeholder={labels.SpeciesStatus.furtherInformation} /> 
                </div>
                <div  className="filters">
                     <h4>{labels.SpeciesStatus.ecologicalEffect}</h4>
                     <div className="scanning">
                         <p>{labels.SpeciesStatus.knownNegativeEffects}</p>
-                        <Xcomp.StringEnum observableValue={[assessment, "horizonEcologicalEffect"]} mode="radio" codes={codes.HorizonEcologicalEffect}/>
+                        <Xcomp.StringEnum observableValue={[assessment, "horizonEcologicalEffect"]} disabled={disabled} mode="radio" codes={codes.HorizonEcologicalEffect}/>
                     </div>
-                    <Xcomp.HtmlString observableValue={[assessment, 'horizonEcologicalEffectDescription']} placeholder={labels.SpeciesStatus.furtherInformation}/>
+                    <Xcomp.HtmlString observableValue={[assessment, 'horizonEcologicalEffectDescription']} disabled={disabled} placeholder={labels.SpeciesStatus.furtherInformation}/>
                </div>
                
             </div>

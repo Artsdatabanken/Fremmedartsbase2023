@@ -145,7 +145,7 @@ export default class SelectAssessment extends Component {
                 appState.expertgroup = "Karplanter"
             )
         }
-        console.log(appState.expertgroupAssessmentList)
+        
         const filterIsEmpty = appState.expertgroupAssessmentFilter == "" 
                             && !appState.kunUbehandlede 
                             && !appState.hSStatus
