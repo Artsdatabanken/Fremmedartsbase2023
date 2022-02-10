@@ -1396,41 +1396,35 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
 
 
     for(const crit of [r.critC, r.critD, r.critE, r.critF, r.critG, r.critH, r.critI]) {
+        runInAction(() => {
+            crit.auto = !["C", "F", "G"].includes(crit.criteriaLetter)
+        })
+
         let firstrun = true
         extdendCriteriaProps(crit)
         autorun(() => {
-            console.log("#¤# autorun crit" + crit.criteriaLetter + " value: " + crit.value)
-            let ud // uncertaintyDisabled 
-            let uv // uncentaintyValues (selected by program)
-            let auto // value is selected by program
-
-            auto = !["B", "C", "F", "G"].includes(crit.criteriaLetter)
-
-            ud = []
+            // console.log("#¤# autorun crit" + crit.criteriaLetter + " value: " + crit.value)
+            const ud = []
             for (let n = 0; n < 4 ; n++) {
                 if (Math.abs(n - crit.value) > 1 || n === crit.value) {
                     ud.push(n)
                 }
             }
-            uv = [crit.value]
-
+            runInAction(() => {
+                arrayConditionalReplace(crit.uncertaintyDisabled, ud)
+            })
+        })
+        autorun(() => {
+            // console.log("#¤# autorun crit" + crit.criteriaLetter + " value: " + crit.value)
+            const uv = [crit.value]
             runInAction(() => {
                 setUncertaintyValues(firstrun, crit, uv)
-                arrayConditionalReplace(crit.uncertaintyDisabled, ud)
-                crit.auto = auto
-                // console.log("#¤# uncertainty1 : " + crit.criteriaLetter )
-                // console.log("#¤# uncertainty : " + crit.criteriaLetter + " : " + crit.value + " - " + JSON.stringify(crit.uncertaintyValues)  + " + " + JSON.stringify(crit.uncertaintyDisabled))
             })
             firstrun = false
-            if (!config.isRelease) trace()  // leave this line here! Se comments above to learn when to uncomment.
-       })
-
+            //if (!config.isRelease) trace()  // leave this line here! Se comments above to learn when to uncomment.
+        })
     }
-
-
     autorun(() => {console.log("#¤# critA value**: " + riskAssessment.critA.value + " | " + riskAssessment.ascore)})
-
-
 }
 
 // function enhanceCriteriaAddErrorReportingForAutoMode(riskAssessment) {
