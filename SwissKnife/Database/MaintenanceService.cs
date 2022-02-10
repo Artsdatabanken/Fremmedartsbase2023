@@ -124,6 +124,8 @@ namespace SwissKnife.Database
 
                     doc.HorizonScanResult = horizonScanResult.Value == true ? "scanned_fullAssessment" : "scanned_noAssessment";
                     doc.HorizonDoScanning = horizonScanResult.Value != true;
+                    // todo fix potensielt vurderingsendringer her....
+
 
                     var docLastUpdatedOn = DateTime.Now;
                     item.Doc = System.Text.Json.JsonSerializer.Serialize(doc);
