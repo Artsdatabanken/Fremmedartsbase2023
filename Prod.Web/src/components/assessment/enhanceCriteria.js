@@ -1244,24 +1244,6 @@ function setUncertaintyValues(isFirstrun, crit, uvalues) {
         // Take care this does not happen! (uncomment the trace() function to trace the problem if necassary)
 
         console.log("#¤#uncertainty nextrun: " + crit.criteriaLetter + " : " + crit.value)
-
-
-        if(crit.criteriaLetter === "A") {
-            console.log("#¤# critA uvalues 00: " +  JSON.stringify(crit.uncertaintyValues) + "#" +  JSON.stringify(uvalues)  )
-            
-        }
-
-
-        //const uvChanged = !(crit.uncertaintyValues.length === uvalues.length && crit.uncertaintyValues.reduce((a, b, i) => a && uvalues[i], true))
-        //const uvChanged = !(crit.uncertaintyValues.length === uvalues.length && crit.uncertaintyValues.every((v, i) => v === uvalues[i]))
-        // // const uvChanged = !arraysEqual(crit.uncertaintyValues, uvalues)
-        // // if(uvChanged) {
-        // //     if(crit.criteriaLetter === "A") {
-        // //         console.log("#¤# critA uvalues: " +  JSON.stringify(crit.uncertaintyValues) + "#" +  JSON.stringify(uvalues)  )
-                
-        // //     }
-        // //     crit.uncertaintyValues.replace(uvalues)
-        // // }
         arrayConditionalReplace(crit.uncertaintyValues, uvalues)
 
     } else {
@@ -1300,12 +1282,6 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
     for(const crit of [r.critA, r.critB]) {
         let firstrun = true
         extdendCriteriaProps(crit)
-        // extendObservable(crit, {
-        //     valueDisabled: observable([]),
-        //     uncertaintyDisabled: observable([]),
-        //     get majorUncertainty() { return crit.uncertaintyValues.length >= 3}
-        // })
-    
         autorun(() => {
             const maxDistanecFromValue = 1
             // const value = crit.value
@@ -1422,23 +1398,14 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
     for(const crit of [r.critC, r.critD, r.critE, r.critF, r.critG, r.critH, r.critI]) {
         let firstrun = true
         extdendCriteriaProps(crit)
-
-        // extendObservable(crit, {
-        //     valueDisabled: observable([]),
-        //     uncertaintyDisabled: observable([]),
-        //     get majorUncertainty() { return crit.uncertaintyValues.length >= 3}
-        // })
-    
         autorun(() => {
             console.log("#¤# autorun crit" + crit.criteriaLetter + " value: " + crit.value)
             let ud // uncertaintyDisabled 
             let uv // uncentaintyValues (selected by program)
-            // let vd // valuesDisabled (only some values/levels is alowed)
             let auto // value is selected by program
 
             auto = !["B", "C", "F", "G"].includes(crit.criteriaLetter)
 
-            // vd = []
             ud = []
             for (let n = 0; n < 4 ; n++) {
                 if (Math.abs(n - crit.value) > 1 || n === crit.value) {
@@ -1449,13 +1416,8 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
 
             runInAction(() => {
                 setUncertaintyValues(firstrun, crit, uv)
-                // crit.valueDisabled.replace(vd)
-                // crit.uncertaintyDisabled.replace(ud)
                 arrayConditionalReplace(crit.uncertaintyDisabled, ud)
                 crit.auto = auto
-                // if (vd.includes(crit.value)) {
-                //     crit.value = riskAssessment.apossibleLow
-                // }
                 // console.log("#¤# uncertainty1 : " + crit.criteriaLetter )
                 // console.log("#¤# uncertainty : " + crit.criteriaLetter + " : " + crit.value + " - " + JSON.stringify(crit.uncertaintyValues)  + " + " + JSON.stringify(crit.uncertaintyDisabled))
             })
