@@ -1358,6 +1358,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
     }
 
     for(const crit of [r.critB]) { // just to get scope
+        extdendCriteriaProps(crit)
         autorun(() => {
             const auto = (riskAssessment.bmetodkey === "B1" || riskAssessment.bmetodkey === "B2b")
             runInAction(() => {
@@ -1368,16 +1369,13 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
         })
 
         let firstrun = true
-        extdendCriteriaProps(crit)
         autorun(() => {
             console.log("#¤# autorun crit" + crit.criteriaLetter + " value: " + crit.value)
             let ud // uncertaintyDisabled 
             let uv // uncentaintyValues (selected by program)
-            let vd // valuesDisabled (only some values/levels is alowed)
 
             if (riskAssessment.bmetodkey === "B1" || riskAssessment.bmetodkey === "B2b") {
                 // console.log("#¤%bhigh set uv, key: " + riskAssessment.bmetodkey)
-                vd = []
                 ud = [0,1,2,3]
                 uv = []
                 for (var i = 0; i <= 3; i++) {
@@ -1388,13 +1386,11 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                 // console.log("#¤#bhigh set uv "+ JSON.stringify(uv))
             } else if (riskAssessment.ametodkey === "B2a") {
                 // console.log("#¤%bhigh set uv, key: " + riskAssessment.bmetodkey)
-                vd = []
                 ud = riskAssessment.bDisabledUncertaintyValues
                 uv = [crit.value]
 
             } else {
 
-                vd = []
                 ud = []
                 for (let n = 0; n < 4 ; n++) {
                     if (Math.abs(n - crit.value) > 1 || n === crit.value) {
@@ -1405,11 +1401,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
             }
             runInAction(() => {
                 setUncertaintyValues(firstrun, crit, uv)
-                arrayConditionalReplace(crit.valueDisabled, vd)
                 arrayConditionalReplace(crit.uncertaintyDisabled, ud)
-                if (vd.includes(crit.value)) {
-                    crit.value = riskAssessment.apossibleLow
-                }
                 // console.log("#¤# uncertainty1 : " + crit.criteriaLetter )
                 // console.log("#¤# uncertainty : " + crit.criteriaLetter + " : " + crit.value + " - " + JSON.stringify(crit.uncertaintyValues)  + " + " + JSON.stringify(crit.uncertaintyDisabled))
             })
