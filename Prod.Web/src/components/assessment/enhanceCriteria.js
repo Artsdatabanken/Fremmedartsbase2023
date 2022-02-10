@@ -1370,45 +1370,55 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
 
         let firstrun = true
         autorun(() => {
-            console.log("#¤# autorun crit" + crit.criteriaLetter + " value: " + crit.value)
+            // console.log("#¤# autorun crit" + crit.criteriaLetter + " value: " + crit.value)
             let ud // uncertaintyDisabled 
-            let uv // uncentaintyValues (selected by program)
-
             if (riskAssessment.bmetodkey === "B1" || riskAssessment.bmetodkey === "B2b") {
-                // console.log("#¤%bhigh set uv, key: " + riskAssessment.bmetodkey)
                 ud = [0,1,2,3]
-                uv = []
-                for (var i = 0; i <= 3; i++) {
-                    if(i >= riskAssessment.blow && i <= riskAssessment.bhigh) {
-                        uv.push(i)
-                    }
-                }
-                // console.log("#¤#bhigh set uv "+ JSON.stringify(uv))
             } else if (riskAssessment.ametodkey === "B2a") {
-                // console.log("#¤%bhigh set uv, key: " + riskAssessment.bmetodkey)
                 ud = riskAssessment.bDisabledUncertaintyValues
-                uv = [crit.value]
-
             } else {
-
                 ud = []
                 for (let n = 0; n < 4 ; n++) {
                     if (Math.abs(n - crit.value) > 1 || n === crit.value) {
                         ud.push(n)
                     }
                 }
-                uv = [crit.value]
             }
             runInAction(() => {
-                setUncertaintyValues(firstrun, crit, uv)
                 arrayConditionalReplace(crit.uncertaintyDisabled, ud)
                 // console.log("#¤# uncertainty1 : " + crit.criteriaLetter )
                 // console.log("#¤# uncertainty : " + crit.criteriaLetter + " : " + crit.value + " - " + JSON.stringify(crit.uncertaintyValues)  + " + " + JSON.stringify(crit.uncertaintyDisabled))
             })
-            firstrun = false
-            if (!config.isRelease) trace()  // leave this line here! Se comments above to learn when to uncomment.
+            // firstrun = false
+            // if (!config.isRelease) trace()  // leave this line here! Se comments above to learn when to uncomment.
        })
-    }
+       autorun(() => {
+        // console.log("#¤# autorun crit" + crit.criteriaLetter + " value: " + crit.value)
+        let uv // uncentaintyValues (selected by program)
+
+        if (riskAssessment.bmetodkey === "B1" || riskAssessment.bmetodkey === "B2b") {
+            // console.log("#¤%bhigh set uv, key: " + riskAssessment.bmetodkey)
+            uv = []
+            for (var i = 0; i <= 3; i++) {
+                if(i >= riskAssessment.blow && i <= riskAssessment.bhigh) {
+                    uv.push(i)
+                }
+            }
+            // console.log("#¤#bhigh set uv "+ JSON.stringify(uv))
+        } else if (riskAssessment.ametodkey === "B2a") {
+            // console.log("#¤%bhigh set uv, key: " + riskAssessment.bmetodkey)
+            uv = [crit.value]
+        } else {
+            uv = [crit.value]
+        }
+        runInAction(() => {
+            setUncertaintyValues(firstrun, crit, uv)
+            // console.log("#¤# uncertainty1 : " + crit.criteriaLetter )
+        })
+        firstrun = false
+        if (!config.isRelease) trace()  // leave this line here! Se comments above to learn when to uncomment.
+   })
+}
 
 
 
