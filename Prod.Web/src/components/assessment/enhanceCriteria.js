@@ -1,7 +1,7 @@
 ﻿import {action, autorun, extendObservable, observable, reaction, runInAction, trace} from 'mobx';
 import RiskLevel from './riskLevel';
 // import {extractFloat, getCriterion} from '../../utils'
-import {extractFloat} from '../../utils'
+import {arrayConditionalReplace, extractFloat} from '../../utils'
 import { EventNote } from '@material-ui/icons';
 import config from '../../config';
 // import errorhandler from '../errorhandler';
@@ -1253,14 +1253,17 @@ function setUncertaintyValues(isFirstrun, crit, uvalues) {
 
 
         //const uvChanged = !(crit.uncertaintyValues.length === uvalues.length && crit.uncertaintyValues.reduce((a, b, i) => a && uvalues[i], true))
-        const uvChanged = !(crit.uncertaintyValues.length === uvalues.length && crit.uncertaintyValues.every((v, i) => v === uvalues[i]))
-        if(uvChanged) {
-            if(crit.criteriaLetter === "A") {
-                console.log("#¤# critA uvalues: " +  JSON.stringify(crit.uncertaintyValues) + "#" +  JSON.stringify(uvalues)  )
+        //const uvChanged = !(crit.uncertaintyValues.length === uvalues.length && crit.uncertaintyValues.every((v, i) => v === uvalues[i]))
+        // // const uvChanged = !arraysEqual(crit.uncertaintyValues, uvalues)
+        // // if(uvChanged) {
+        // //     if(crit.criteriaLetter === "A") {
+        // //         console.log("#¤# critA uvalues: " +  JSON.stringify(crit.uncertaintyValues) + "#" +  JSON.stringify(uvalues)  )
                 
-            }
-            crit.uncertaintyValues.replace(uvalues)
-        }
+        // //     }
+        // //     crit.uncertaintyValues.replace(uvalues)
+        // // }
+        arrayConditionalReplace(crit.uncertaintyValues, uvalues)
+
     } else {
         // added 27.2.2017
         // In the hope that this does not mess tings up
@@ -1273,10 +1276,19 @@ function setUncertaintyValues(isFirstrun, crit, uvalues) {
         console.log("#¤#uncertainty firstrun: " + crit.criteriaLetter + " : " + crit.value + " - " + JSON.stringify(crit.uncertaintyValues))
         if (crit.uncertaintyValues.indexOf(crit.value) <= -1 ) {
             // console.log("rectify uncertainties")
-            crit.uncertaintyValues.replace(uvalues)
+            // crit.uncertaintyValues.replace(uvalues)
+            arrayConditionalReplace(crit.uncertaintyValues, uvalues)
         }
 
     }
+}
+
+function extdendCriteriaProps(crit) {
+    extendObservable(crit, {
+        valueDisabled: observable([]),
+        uncertaintyDisabled: observable([]),
+        get majorUncertainty() { return crit.uncertaintyValues.length >= 3}
+    })
 }
 
 
@@ -1285,16 +1297,14 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
     autorun(() => {console.log("#¤% bmethodkey: " + riskAssessment.bmetodkey)})
 
     //for(const crit of riskAssessment.criteria) {
-    for(const crit of [r.critA, r.critB, r.critC, r.critD, r.critE, r.critF, r.critG, r.critH, r.critI]) {
+    for(const crit of [r.critA, r.critB]) {
         let firstrun = true
-        extendObservable(crit, {
-            valueDisabled: observable([]),
-            uncertaintyDisabled: observable([]),
-            get majorUncertainty() { return crit.uncertaintyValues.length >= 3}
-        })
-        // reaction(
-        //     () => r.AOOknown1,
-        //     (AOOknown1, previousAOOknown1) => {
+        extdendCriteriaProps(crit)
+        // extendObservable(crit, {
+        //     valueDisabled: observable([]),
+        //     uncertaintyDisabled: observable([]),
+        //     get majorUncertainty() { return crit.uncertaintyValues.length >= 3}
+        // })
     
         autorun(() => {
             const maxDistanecFromValue = 1
@@ -1391,8 +1401,10 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
             }
             runInAction(() => {
                 setUncertaintyValues(firstrun, crit, uv)
-                crit.valueDisabled.replace(vd)
-                crit.uncertaintyDisabled.replace(ud)
+                // crit.valueDisabled.replace(vd)
+                arrayConditionalReplace(crit.valueDisabled, vd)
+                // crit.uncertaintyDisabled.replace(ud)
+                arrayConditionalReplace(crit.uncertaintyDisabled, ud)
                 crit.auto = auto
                 if (vd.includes(crit.value)) {
                     crit.value = riskAssessment.apossibleLow
@@ -1405,6 +1417,54 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
        })
 
     }
+
+
+    for(const crit of [r.critC, r.critD, r.critE, r.critF, r.critG, r.critH, r.critI]) {
+        let firstrun = true
+        extdendCriteriaProps(crit)
+
+        // extendObservable(crit, {
+        //     valueDisabled: observable([]),
+        //     uncertaintyDisabled: observable([]),
+        //     get majorUncertainty() { return crit.uncertaintyValues.length >= 3}
+        // })
+    
+        autorun(() => {
+            console.log("#¤# autorun crit" + crit.criteriaLetter + " value: " + crit.value)
+            let ud // uncertaintyDisabled 
+            let uv // uncentaintyValues (selected by program)
+            // let vd // valuesDisabled (only some values/levels is alowed)
+            let auto // value is selected by program
+
+            auto = !["B", "C", "F", "G"].includes(crit.criteriaLetter)
+
+            // vd = []
+            ud = []
+            for (let n = 0; n < 4 ; n++) {
+                if (Math.abs(n - crit.value) > 1 || n === crit.value) {
+                    ud.push(n)
+                }
+            }
+            uv = [crit.value]
+
+            runInAction(() => {
+                setUncertaintyValues(firstrun, crit, uv)
+                // crit.valueDisabled.replace(vd)
+                // crit.uncertaintyDisabled.replace(ud)
+                arrayConditionalReplace(crit.uncertaintyDisabled, ud)
+                crit.auto = auto
+                // if (vd.includes(crit.value)) {
+                //     crit.value = riskAssessment.apossibleLow
+                // }
+                // console.log("#¤# uncertainty1 : " + crit.criteriaLetter )
+                // console.log("#¤# uncertainty : " + crit.criteriaLetter + " : " + crit.value + " - " + JSON.stringify(crit.uncertaintyValues)  + " + " + JSON.stringify(crit.uncertaintyDisabled))
+            })
+            firstrun = false
+            if (!config.isRelease) trace()  // leave this line here! Se comments above to learn when to uncomment.
+       })
+
+    }
+
 
     autorun(() => {console.log("#¤# critA value**: " + riskAssessment.critA.value + " | " + riskAssessment.ascore)})
 
