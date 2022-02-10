@@ -1276,29 +1276,18 @@ function extdendCriteriaProps(crit) {
 
 function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
     const r = riskAssessment
-    autorun(() => {console.log("#¤% bmethodkey: " + riskAssessment.bmetodkey)})
-
-    //for(const crit of riskAssessment.criteria) {
-    for(const crit of [r.critA, r.critB]) {
+    for(const crit of [r.critA]) {  // just to get scope
         let firstrun = true
         extdendCriteriaProps(crit)
         autorun(() => {
             const maxDistanecFromValue = 1
-            // const value = crit.value
             console.log("#¤# autorun crit" + crit.criteriaLetter + " value: " + crit.value)
-
-            // const ascore = r.ascore
-            
-
-
             let ud // uncertaintyDisabled 
             let uv // uncentaintyValues (selected by program)
             let vd // valuesDisabled (only some values/levels is alowed)
             let auto // value is selected by program
 
-            auto = !["B", "C", "F", "G"].includes(crit.criteriaLetter)
-            if (crit.criteriaLetter === "A" &&
-                (riskAssessment.ametodkey === "A1a1" || riskAssessment.ametodkey === "A1b1")) {
+            if (riskAssessment.ametodkey === "A1a1" || riskAssessment.ametodkey === "A1b1") {
                 vd = []
                 ud = [0,1,2,3]
                 uv = []
@@ -1309,9 +1298,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                     }
                 }
                 auto = true
-            } else if (crit.criteriaLetter === "A" &&
-                (riskAssessment.ametodkey === "A1a2" || riskAssessment.ametodkey === "A1b2")) {
-                // ud = [0,1,2,3]
+            } else if (riskAssessment.ametodkey === "A1a2" || riskAssessment.ametodkey === "A1b2") {
                 vd = []
                 uv = []
                 ud = []
@@ -1323,9 +1310,6 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                     if(i < riskAssessment.apossibleLow || i > riskAssessment.apossibleHigh) {
                         vd.push(i)
                     }
-                    // if(i >= riskAssessment.alow && i <= riskAssessment.ahigh) {
-                    //     uv.push(i)
-                    // }
                     if(i < (riskAssessment.ascore - 1) || i > (riskAssessment.ascore + 1)) {
                         ud.push(i)
                     }
@@ -1335,8 +1319,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                 //         r.reasonForAdjustmentCritA !== null &&
                 //         r.reasonForAdjustmentCritA.length > 2) {
                 auto = false
-            } else if (crit.criteriaLetter === "A" && 
-                riskAssessment.ametodkey === "A3") {
+            } else if (riskAssessment.ametodkey === "A3") {
                 vd = []
                 ud = [0,1,2,3]
                 uv = []
@@ -1346,7 +1329,48 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                     }
                 }
                 auto = true
-            } else if (crit.criteriaLetter === "B" && (riskAssessment.bmetodkey === "B1" || riskAssessment.bmetodkey === "B2b")) {
+            } else {
+
+                vd = []
+                ud = []
+                for (let n = 0; n < 4 ; n++) {
+                    if (Math.abs(n - crit.value) > maxDistanecFromValue || n === crit.value) {
+                        ud.push(n)
+                    }
+                }
+                uv = [crit.value]
+
+            }
+            runInAction(() => {
+                setUncertaintyValues(firstrun, crit, uv)
+                arrayConditionalReplace(crit.valueDisabled, vd)
+                arrayConditionalReplace(crit.uncertaintyDisabled, ud)
+                crit.auto = auto
+                if (vd.includes(crit.value)) {
+                    crit.value = riskAssessment.apossibleLow
+                }
+                // console.log("#¤# uncertainty1 : " + crit.criteriaLetter )
+                // console.log("#¤# uncertainty : " + crit.criteriaLetter + " : " + crit.value + " - " + JSON.stringify(crit.uncertaintyValues)  + " + " + JSON.stringify(crit.uncertaintyDisabled))
+            })
+            firstrun = false
+            if (!config.isRelease) trace()  // leave this line here! Se comments above to learn when to uncomment.
+       })
+
+    }
+
+    for(const crit of [r.critB]) { // just to get scope
+        let firstrun = true
+        extdendCriteriaProps(crit)
+        autorun(() => {
+            const maxDistanecFromValue = 1
+            console.log("#¤# autorun crit" + crit.criteriaLetter + " value: " + crit.value)
+            let ud // uncertaintyDisabled 
+            let uv // uncentaintyValues (selected by program)
+            let vd // valuesDisabled (only some values/levels is alowed)
+            let auto // value is selected by program
+
+            auto = !["B", "C", "F", "G"].includes(crit.criteriaLetter)
+            if (riskAssessment.bmetodkey === "B1" || riskAssessment.bmetodkey === "B2b") {
                 // console.log("#¤%bhigh set uv, key: " + riskAssessment.bmetodkey)
                 vd = []
                 ud = [0,1,2,3]
@@ -1357,7 +1381,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                     }
                 }
                 // console.log("#¤#bhigh set uv "+ JSON.stringify(uv))
-            } else if (crit.criteriaLetter === "B" && riskAssessment.ametodkey === "B2a") {
+            } else if (riskAssessment.ametodkey === "B2a") {
                 // console.log("#¤%bhigh set uv, key: " + riskAssessment.bmetodkey)
                 vd = []
                 ud = riskAssessment.bDisabledUncertaintyValues
@@ -1373,13 +1397,10 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                     }
                 }
                 uv = [crit.value]
-
             }
             runInAction(() => {
                 setUncertaintyValues(firstrun, crit, uv)
-                // crit.valueDisabled.replace(vd)
                 arrayConditionalReplace(crit.valueDisabled, vd)
-                // crit.uncertaintyDisabled.replace(ud)
                 arrayConditionalReplace(crit.uncertaintyDisabled, ud)
                 crit.auto = auto
                 if (vd.includes(crit.value)) {
@@ -1391,8 +1412,8 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
             firstrun = false
             if (!config.isRelease) trace()  // leave this line here! Se comments above to learn when to uncomment.
        })
-
     }
+
 
 
     for(const crit of [r.critC, r.critD, r.critE, r.critF, r.critG, r.critH, r.critI]) {
