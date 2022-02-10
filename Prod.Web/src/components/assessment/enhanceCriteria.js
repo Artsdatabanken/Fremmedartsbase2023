@@ -151,7 +151,7 @@ function uncertaintyArray(low, high) {
             arr.push(n)
         }
     }
-    console.log("#¤# uncertaintyArray: " + JSON.stringify(arr) + " | " + low  + " | " + high )
+    // console.log("#¤# uncertaintyArray: " + JSON.stringify(arr) + " | " + low  + " | " + high )
     return arr
 }
 
@@ -173,7 +173,7 @@ function filterUncertaintyArray(orgarr, filterarr) {
             result.push(item)
         }
     }
-    console.log("#¤# critA filterUncertaintyArray: " + JSON.stringify(orgarr) + " # " + JSON.stringify(filterarr) + " # " + JSON.stringify(result))
+    //console.log("#¤# critA filterUncertaintyArray: " + JSON.stringify(orgarr) + " # " + JSON.stringify(filterarr) + " # " + JSON.stringify(result))
     return result
 }
 function uncertaintyArrayAddValue(orgarr, value) {
@@ -181,7 +181,7 @@ function uncertaintyArrayAddValue(orgarr, value) {
         orgarr.push(value)
     }
     const result = orgarr.splice(0).sort()
-    console.log("#¤# critA uncertaintyArrayAddValue: " + JSON.stringify(orgarr) + " # " + value + " # " + JSON.stringify(result))
+    //console.log("#¤# critA uncertaintyArrayAddValue: " + JSON.stringify(orgarr) + " # " + value + " # " + JSON.stringify(result))
     return result
 }
 
@@ -280,7 +280,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         //get notUseSpeciesMap() { return true},
 
         get doorKnocker() {
-            console.log("#¤% alienSpeciesCategory " + riskAssessment.vurderingAlienSpeciesCategory)
+            // console.log("#¤% alienSpeciesCategory " + riskAssessment.vurderingAlienSpeciesCategory)
             return riskAssessment.vurderingAlienSpeciesCategory === "DoorKnocker"
         },
         get ametodkey() {
@@ -332,7 +332,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 : r.occurrences1Best === 0
                 ? 4 * round(0.64 + 0.36 * r.introductionsBest)
                 : 4 * round(r.occurrences1Best + Math.pow(r.introductionsBest,(r.occurrences1Best + 9)/10))
-            console.log("#AOO10yrBest " + r.occurrences1Best + "!" + r.introductionsBest + " result: " + result)
+            //console.log("#AOO10yrBest " + r.occurrences1Best + "!" + r.introductionsBest + " result: " + result)
             return result
         },
         get AOO10yrLow() {
@@ -459,7 +459,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
         get medianLifetime() {
             const k = r.ametodkey
-            console.log("medianLifetime methodkey: " + k)
+            // console.log("medianLifetime methodkey: " + k)
             const result = (k === "A1a1" || k === "A1b1") ?
                 r.ascore === 0 ? 3
                 : r.ascore === 1 ? 25
@@ -467,7 +467,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 : r.ascore === 3 ? 2000
                 : 0
             : roundToSignificantDecimals(r.medianLifetimeInput)
-            console.log("medianLifetime result: " + result)
+            // console.log("medianLifetime result: " + result)
             return result
         },
         get lifetimeLowerQ() {
@@ -521,7 +521,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
 
         get bscore() {
-            console.log("##¤bscore expansionSpeed: " + r.expansionSpeed)
+            // console.log("##¤bscore expansionSpeed: " + r.expansionSpeed)
             return r.expansionSpeed >= 500 ? 3
                 : r.expansionSpeed >= 160 ? 2
                 : r.expansionSpeed >= 50 ? 1
@@ -558,15 +558,15 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 : k === "B2a" ? r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null ? 0 : trunc(sqrt(r.AOOdarkfigureBest) * 1000 * (sqrt(r.AOO2) - sqrt(r.AOO1)) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
                 : k === "B2b" ? trunc(200 * (sqrt(r.AOO10yrBest / 4) - 1) / sqrt(pi))
                 : 0 // ?
-            console.log("#expspeed: " + k + " " + result)
-            console.log("#expspeed data: " + JSON.stringify({
-                AOOyear1: r.AOOyear1,
-                AOOyear2: r.AOOyear2,
-                AOO1: r.AOO1,
-                AOO2: r.AOO2,
-                AOOdarkfigureBest: r.AOOdarkfigureBest
+            // console.log("#expspeed: " + k + " " + result)
+            // console.log("#expspeed data: " + JSON.stringify({
+            //     AOOyear1: r.AOOyear1,
+            //     AOOyear2: r.AOOyear2,
+            //     AOO1: r.AOO1,
+            //     AOO2: r.AOO2,
+            //     AOOdarkfigureBest: r.AOOdarkfigureBest
 
-            }))
+            // }))
 
             return roundToSignificantDecimals(result)
         },
@@ -712,35 +712,35 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         if(!(k === "A1a2" || k === "A1b2")) {
             // const criterionA = getCriterion(riskAssessment, 0, "A")
             const criterionA = riskAssessment.critA
-            console.log("Autorun criterionA old value: " + criterionA.value)
+            console.log("##&Autorun criterionA old value: " + criterionA.value)
             // const nv = riskAssessment.CalculatedCritALevel // .ChosenSpreadYearlyIncreaseLevel
             //   console.log("Autorun criterionA CalculatedCritALevel nv: " + JSON.stringify(nv))
             const avalue = r.ascore
             runInAction(() => {
                 criterionA.value = avalue
             })
-            console.log("Autorun criterionA new value: " + criterionA.value)
+            console.log("##&Autorun criterionA new value: " + criterionA.value)
         }
     })
 
     autorun(() => {
         // const criterionB = getCriterion(riskAssessment, 0, "B")
         const criterionB = riskAssessment.critB
-        console.log("Autorun criterionB old value: " + criterionB.value)
+        console.log("##&Autorun criterionB old value: " + criterionB.value)
         const bvalue = r.bscore
         runInAction(() => {
             criterionB.value = bvalue
         })
-        console.log("Autorun criterionB new value: " + criterionB.value)
+        console.log("##&Autorun criterionB new value: " + criterionB.value)
     })
 
     autorun(() => {
         // const criterionC = getCriterion(riskAssessment, 0, "C")
         const criterionC = riskAssessment.critC
-           console.log("Autorun criterionC .value: " + criterionC.value)
+           console.log("##&Autorun criterionC .value: " + criterionC.value)
         const nv = riskAssessment.impactedNaturtypesColonizedAreaLevel
-           console.log("Autorun criterionC new value: " + nv)
-           console.log("Autorun criterionC not equal: " + (nv != criterionC.value))
+           console.log("##&Autorun criterionC new value: " + nv)
+        //    console.log("Autorun criterionC not equal: " + (nv != criterionC.value))
            runInAction(() => {
                criterionC.value = nv
            })
@@ -1043,11 +1043,11 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
     autorun(() => {
         // const criterionF = getCriterion(riskAssessment, 1, "F")
         const criterionF = riskAssessment.critF
-          console.log("Autorun criterionF .value: " + criterionF.value)
+          console.log("##&Autorun criterionF .value: " + criterionF.value)
         // const nv = riskAssessment.effectOnThreathenedNaturetypesLevel
         const nv = riskAssessment.effectOnThreathenedNaturetypesLevel
-          console.log("Autorun criterionF new value: " + nv)
-          console.log("Autorun criterionF not equal: " + (nv != criterionF.value))
+          console.log("##&Autorun criterionF new value: " + nv)
+        //   console.log("Autorun criterionF not equal: " + (nv != criterionF.value))
         runInAction(() => {
             criterionF.value = nv
         })
@@ -1056,18 +1056,14 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
     autorun(() => {
         // const criterionG = getCriterion(riskAssessment, 1, "G")
         const criterionG = riskAssessment.critG
-        console.log("Autorun criterionG .value: " + criterionG.value)
+        console.log("##&Autorun criterionG .value: " + criterionG.value)
         const nv = riskAssessment.effectOnOtherNaturetypesLevel
-          console.log("Autorun criterionG new value: " + nv)
-          console.log("Autorun criterionG not equal: " + (nv != criterionG.value))
+          console.log("##&Autorun criterionG new value: " + nv)
+        //   console.log("Autorun criterionG not equal: " + (nv != criterionG.value))
         runInAction(() => {
             criterionG.value = nv
         })
     });
-
-
-
-
 
     extendObservable(riskAssessment, {
         get HGeneticTransferLevel() {
@@ -1130,7 +1126,7 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
 }
 
 function enhanceRiskAssessmentLevel(riskAssessment, labels) {
-    console.log("run enhanceRiskAssessmentLevel")
+    // console.log("run enhanceRiskAssessmentLevel")
     extendObservable(riskAssessment, {
         get invationpotential() {
             const result = RiskLevel.invasjonspotensiale(riskAssessment)
@@ -1170,7 +1166,7 @@ function enhanceRiskAssessmentLevel(riskAssessment, labels) {
             return this.riskLevelObj.decisiveCriteriaLabel
         }
     });
-    console.log("end run enhanceRiskAssessmentLevel")
+    // console.log("end run enhanceRiskAssessmentLevel")
 
 }
 
@@ -1184,7 +1180,7 @@ function enhanceCriteriaAddLabelsAndAuto(riskAssessment, codes) {
         const levs = []
         const letter = cr.Value
 
-        console.log("Crit>: " + letter)
+        // console.log("Crit>: " + letter)
         for (const levdef of cr.Children["Crit" + letter]) {
             const lev = {
                 value: Number(levdef.Value),
@@ -1211,7 +1207,7 @@ function enhanceCriteriaAddLabelsAndAuto(riskAssessment, codes) {
             get currentValueLabel() {
                 const v = this.value
                 const result = this.codes[v].text
-                console.log("Curr crit value: " + this.criteriaLetter+ v + result)
+                console.log("#=-Curr crit value: " + this.criteriaLetter+ v + result)
                 return result
             }
         })
@@ -1268,7 +1264,6 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
         })
 
         autorun(() => {
-            console.log("#¤# autorun crit" + crit.criteriaLetter + " value: " + crit.value)
             let ud // uncertaintyDisabled 
             if (r.ametodkey === "A1a1" || r.ametodkey === "A1b1" || r.ametodkey === "A3") {
                 ud = [0,1,2,3]
@@ -1336,7 +1331,6 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
             }
             runInAction(() => {
                 arrayConditionalReplace(crit.uncertaintyDisabled, ud)
-                // console.log("#¤# uncertainty : " + crit.criteriaLetter + " : " + crit.value + " - " + JSON.stringify(crit.uncertaintyValues)  + " + " + JSON.stringify(crit.uncertaintyDisabled))
             })
             // if (!config.isRelease) trace()  // leave this line here! Se comments above to learn when to uncomment.
         })
@@ -1364,7 +1358,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
         })
 
         autorun(() => {
-            ud = uncertaintyArray(crit.value - 1, crit.value + 1)
+            const ud = uncertaintyArray(crit.value - 1, crit.value + 1)
             runInAction(() => {
                 arrayConditionalReplace(crit.uncertaintyDisabled, ud)
             })
