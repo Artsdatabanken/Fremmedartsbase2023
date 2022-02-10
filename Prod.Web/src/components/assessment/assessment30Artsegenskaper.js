@@ -436,7 +436,7 @@ export default class Assessment30Artsegenskaper extends React.Component {
                 <div>
                     <h4>{labels.NaturalOrigin.arrivedCountry}  {vurdering.isRegionallyAlien ? " vurderingsområdet " : vurdering.expertGroup.indexOf("Svalbard") > -1 ? "Svalbard" : "Fastlands-Norge"} {labels.NaturalOrigin.arrivedCountryFrom}</h4>
                     {/* <ArrivedCountryFrom vurdering={vurdering} fabModel={fabModel} /> */}
-                        <ArrivedCountryFrom assessment={assessment} appState={appState}/>
+                        <ArrivedCountryFrom assessment={vurdering} appState={appState}/>
                     </div>
                 <label>{labels.NaturalOrigin.arrivedCountryFromDetails}</label>
                 <Xcomp.HtmlString observableValue={[vurdering, 'arrivedCountryFromDetails']} /> {/* earlier named: 'NaturalOrigin' */}
