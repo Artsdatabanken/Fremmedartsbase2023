@@ -178,7 +178,6 @@ function uncertaintyArrayAddValue(orgarr, value) {
     }
     const result = orgarr.splice(0).sort()
     console.log("#¤# critA uncertaintyArrayAddValue: " + JSON.stringify(orgarr) + " # " + value + " # " + JSON.stringify(result))
-    // return orgarr.sort()
     return result
 }
 
@@ -1281,7 +1280,6 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
         let firstrun = true
         extdendCriteriaProps(crit)
         autorun(() => {
-            const maxDistanecFromValue = 1
             console.log("#¤# autorun crit" + crit.criteriaLetter + " value: " + crit.value)
             let ud // uncertaintyDisabled 
             let uv // uncentaintyValues (selected by program)
@@ -1335,7 +1333,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                 vd = []
                 ud = []
                 for (let n = 0; n < 4 ; n++) {
-                    if (Math.abs(n - crit.value) > maxDistanecFromValue || n === crit.value) {
+                    if (Math.abs(n - crit.value) > 1 || n === crit.value) {
                         ud.push(n)
                     }
                 }
@@ -1360,20 +1358,24 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
     }
 
     for(const crit of [r.critB]) { // just to get scope
-        let firstrun = true
         extdendCriteriaProps(crit)
         autorun(() => {
-            const maxDistanecFromValue = 1
+            const auto = (riskAssessment.bmetodkey === "B1" || riskAssessment.bmetodkey === "B2b")
+            runInAction(() => {
+                crit.auto = auto
+                // auto={                riskAssessment.chosenSpreadYearlyIncrease == "a" ||                                                      assessment.alienSpeciesCategory == "DoorKnocker"} 
+                // disabled={disabled || riskAssessment.chosenSpreadYearlyIncrease == "a" || (riskAssessment.chosenSpreadYearlyIncrease == "b" && assessment.alienSpeciesCategory == "DoorKnocker")}
+            })
+        })
+
+        let firstrun = true
+        autorun(() => {
             console.log("#¤# autorun crit" + crit.criteriaLetter + " value: " + crit.value)
             let ud // uncertaintyDisabled 
             let uv // uncentaintyValues (selected by program)
-            let vd // valuesDisabled (only some values/levels is alowed)
-            let auto // value is selected by program
 
-            auto = !["B", "C", "F", "G"].includes(crit.criteriaLetter)
             if (riskAssessment.bmetodkey === "B1" || riskAssessment.bmetodkey === "B2b") {
                 // console.log("#¤%bhigh set uv, key: " + riskAssessment.bmetodkey)
-                vd = []
                 ud = [0,1,2,3]
                 uv = []
                 for (var i = 0; i <= 3; i++) {
@@ -1384,16 +1386,14 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                 // console.log("#¤#bhigh set uv "+ JSON.stringify(uv))
             } else if (riskAssessment.ametodkey === "B2a") {
                 // console.log("#¤%bhigh set uv, key: " + riskAssessment.bmetodkey)
-                vd = []
                 ud = riskAssessment.bDisabledUncertaintyValues
                 uv = [crit.value]
 
             } else {
 
-                vd = []
                 ud = []
                 for (let n = 0; n < 4 ; n++) {
-                    if (Math.abs(n - crit.value) > maxDistanecFromValue || n === crit.value) {
+                    if (Math.abs(n - crit.value) > 1 || n === crit.value) {
                         ud.push(n)
                     }
                 }
@@ -1401,12 +1401,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
             }
             runInAction(() => {
                 setUncertaintyValues(firstrun, crit, uv)
-                arrayConditionalReplace(crit.valueDisabled, vd)
                 arrayConditionalReplace(crit.uncertaintyDisabled, ud)
-                crit.auto = auto
-                if (vd.includes(crit.value)) {
-                    crit.value = riskAssessment.apossibleLow
-                }
                 // console.log("#¤# uncertainty1 : " + crit.criteriaLetter )
                 // console.log("#¤# uncertainty : " + crit.criteriaLetter + " : " + crit.value + " - " + JSON.stringify(crit.uncertaintyValues)  + " + " + JSON.stringify(crit.uncertaintyDisabled))
             })
