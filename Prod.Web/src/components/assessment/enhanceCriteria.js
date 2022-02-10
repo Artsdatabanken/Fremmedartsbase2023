@@ -176,9 +176,10 @@ function uncertaintyArrayAddValue(orgarr, value) {
     if (!orgarr.includes(value)) {
         orgarr.push(value)
     }
-    const result = orgarr.splice().sort()
+    const result = orgarr.splice(0).sort()
     console.log("#¤# critA uncertaintyArrayAddValue: " + JSON.stringify(orgarr) + " # " + value + " # " + JSON.stringify(result))
-    return orgarr.sort()
+    // return orgarr.sort()
+    return result
 }
 
 function criterionLow(criterion) {
