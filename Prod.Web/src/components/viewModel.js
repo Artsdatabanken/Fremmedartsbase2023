@@ -571,7 +571,9 @@ class ViewModel {
     }
 
     @computed get horizonScanned() {
-        return !this.harVurdering ? false : this.assessment.horizonEstablismentPotential == 2
+        return !this.harVurdering ? false : (this.assessment.horizonEstablismentPotential == 2
+                                            || (this.assessment.horizonEstablismentPotential == 1 && this.assessment.horizonEcologicalEffect != "no")
+                                            || (this.assessment.horizonEstablismentPotential == 0 && this.assessment.horizonEcologicalEffect == "yesAfterGone"))
     }
 
     @computed get skalVurderes() {
