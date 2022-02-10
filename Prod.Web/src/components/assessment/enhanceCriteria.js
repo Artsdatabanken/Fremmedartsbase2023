@@ -1276,7 +1276,6 @@ function extdendCriteriaProps(crit) {
 function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
     const r = riskAssessment
     for(const crit of [r.critA]) {  // just to get scope
-        let firstrun = true
         extdendCriteriaProps(crit)
         autorun(() => {
             const auto = !(riskAssessment.ametodkey === "A1a2" || riskAssessment.ametodkey === "A1b2")
@@ -1316,6 +1315,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
             //if (!config.isRelease) trace()  // leave this line here! Se comments above to learn when to uncomment.
         })
 
+        let firstrun = true
         autorun(() => {
             // console.log("#¤# autorun crit" + crit.criteriaLetter + " value: " + crit.value)
             let uv // uncentaintyValues (selected by program)
@@ -1435,7 +1435,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
                 // console.log("#¤# uncertainty1 : " + crit.criteriaLetter )
             })
             firstrun = false
-            if (!config.isRelease) trace()  // leave this line here! Se comments above to learn when to uncomment.
+            //if (!config.isRelease) trace()  // leave this line here! Se comments above to learn when to uncomment.
         })
     }
 
