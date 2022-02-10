@@ -34,7 +34,7 @@ export default class ArrivedCountryFrom extends React.Component {
         return(
             <ul style={{paddingLeft: "0px"}}>
                 {/*vurdering.AlienSpeciesCategory === 'RegionallyAlien'*/}
-                {assessment.isRegionallyAlien == true
+                {assessment.isRegionallyAlien != true
                 
                 ? 
                 <li className="checkbox">
