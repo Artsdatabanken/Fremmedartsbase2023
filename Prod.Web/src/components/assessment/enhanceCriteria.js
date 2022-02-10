@@ -142,12 +142,16 @@ function d1(num) {
 }
 
 function uncertaintyArray(low, high) {
+    const _low = Math.max(low, 0)
+    const _high = Math.min(high, 3)
     const arr = []
     for (let n = 0; n < 4 ; n++) {
-        if(!(low >= n && high <= n)) {
+        //if(!(_low >= n && _high <= n)) {
+        if(n < _low || n > _high) {
             arr.push(n)
         }
     }
+    console.log("#¤# uncertaintyArray: " + JSON.stringify(arr) + " | " + low  + " | " + high )
     return arr
 }
 
@@ -455,13 +459,13 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
 
 
-        get aDisabledUncertaintyValues() {
-            // console.log("uncarr A")
+        // get aDisabledUncertaintyValues() {
+        //     // console.log("uncarr A")
 
-            const result = uncertaintyArray(r.alow, r.ahigh)
-            console.log("¤##uncarr A: " + r.ametodkey + "!"   + r.alow + "!"  + r.ahigh + "¤"+ r.lifetimeUpperQ + "!"  + JSON.stringify(result))
-            return result
-        },
+        //     const result = uncertaintyArray(r.alow, r.ahigh)
+        //     console.log("¤##uncarr A: " + r.ametodkey + "!"   + r.alow + "!"  + r.ahigh + "¤"+ r.lifetimeUpperQ + "!"  + JSON.stringify(result))
+        //     return result
+        // },
         get medianLifetime() {
             const k = r.ametodkey
             console.log("medianLifetime methodkey: " + k)
@@ -557,14 +561,14 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 // console.log("#bhigh: " + r.bmetodkey + " expansionUpperQ: " + r.expansionUpperQ + " result: " + result)
                 return result
             },
-        get bDisabledUncertaintyValues() {
-            console.log("uncarr B2a bDisabledUncertaintyValues " + r.bmetodkey)
-            // return uncertaintyArray(r.blow, r.bhigh)
-            const result = uncertaintyArray(r.blow, r.bhigh)
-            console.log("uncarr B2a: " + r.blow + "!"  + r.bhigh + "!"  + JSON.stringify(result))
-            return result
+        // get bDisabledUncertaintyValues() {
+        //     console.log("uncarr B2a bDisabledUncertaintyValues " + r.bmetodkey)
+        //     // return uncertaintyArray(r.blow, r.bhigh)
+        //     const result = uncertaintyArray(r.blow, r.bhigh)
+        //     console.log("uncarr B2a: " + r.blow + "!"  + r.bhigh + "!"  + JSON.stringify(result))
+        //     return result
 
-        },
+        // },
         get expansionSpeed() {
             const k = r.bmetodkey
             console.log("##¤ expansionSpeed " + r.bmetodkey + " " + r.AOO10yrBest)
@@ -1292,21 +1296,25 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
             let ud // uncertaintyDisabled 
             if (r.ametodkey === "A1a1" || r.ametodkey === "A1b1" || r.ametodkey === "A3") {
                 ud = [0,1,2,3]
-            } else if (r.ametodkey === "A1a2" || r.ametodkey === "A1b2") {
-                ud = []
-                for (var i = 0; i <= 3; i++) {
-                    if(i < (r.ascore - 1) || i > (r.ascore + 1)) {
-                        ud.push(i)
-                    }
-                }
+            // } else if (r.ametodkey === "A1a2" || r.ametodkey === "A1b2") {
+            //     ud = []
+            //     for (var i = 0; i <= 3; i++) {
+            //         if(i < (r.ascore - 1) || i > (r.ascore + 1)) {
+            //             ud.push(i)
+            //         }
+            //     }
+            // } else {
+            //     ud = []
+            //     for (let n = 0; n < 4 ; n++) {
+            //         if (Math.abs(n - crit.value) > 1 || n === crit.value) {
+            //             ud.push(n)
+            //         }
+            //     }
+            // }
             } else {
-                ud = []
-                for (let n = 0; n < 4 ; n++) {
-                    if (Math.abs(n - crit.value) > 1 || n === crit.value) {
-                        ud.push(n)
-                    }
-                }
+                ud = uncertaintyArray(r.ascore - 1, r.ascore + 1)
             }
+
             runInAction(() => {
                 arrayConditionalReplace(crit.uncertaintyDisabled, ud)
             })
@@ -1318,19 +1326,22 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
             // console.log("#¤# autorun crit" + crit.criteriaLetter + " value: " + crit.value)
             let uv // uncentaintyValues (selected by program)
             if (r.ametodkey === "A1a1" || r.ametodkey === "A1b1" || r.ametodkey === "A3") {
-                uv = []
-                for (var i = 0; i <= 3; i++) {
-                    if(i >= r.alow && i <= r.ahigh) {
-                        uv.push(i)
-                    }
-                }
+                // uv = []
+                // for (var i = 0; i <= 3; i++) {
+                //     if(i >= r.alow && i <= r.ahigh) {
+                //         uv.push(i)
+                //     }
+                // }
+                uv = uncertaintyArrayReverse(uncertaintyArray(r.alow, r.ahigh))
+
             } else if (r.ametodkey === "A1a2" || r.ametodkey === "A1b2") {
-                const ud = []
-                for (var i = 0; i <= 3; i++) {
-                    if(i < (r.ascore - 1) || i > (r.ascore + 1)) {
-                        ud.push(i)
-                    }
-                }
+                // const ud = []
+                // for (var i = 0; i <= 3; i++) {
+                //     if(i < (r.ascore - 1) || i > (r.ascore + 1)) {
+                //         ud.push(i)
+                //     }
+                // }
+                const ud = uncertaintyArray(r.ascore - 1, r.ascore + 1)
                 uv = uncertaintyArrayAddValue(filterUncertaintyArray(crit.uncertaintyValues, uncertaintyArrayReverse(ud)), r.ascore)
             // } else if (r.ametodkey === "A3") {
             //     uv = []
@@ -1356,12 +1367,15 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
             //     vd = []
             // } else 
             if (r.ametodkey === "A1a2" || r.ametodkey === "A1b2") {
-                vd = []
-                for (var i = 0; i <= 3; i++) {
-                    if(i < r.apossibleLow || i > r.apossibleHigh) {
-                        vd.push(i)
-                    }
-                }
+                // vd = []
+                // for (var i = 0; i <= 3; i++) {
+                //     if(i < r.apossibleLow || i > r.apossibleHigh) {
+                //         vd.push(i)
+                //     }
+                // }
+                vd = uncertaintyArray(r.apossibleLow, r.apossibleHigh)
+
+
             // } else if (r.ametodkey === "A3") {
             //     vd = []
             } else {
@@ -1392,14 +1406,19 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
             if (r.bmetodkey === "B1" || r.bmetodkey === "B2b") {
                 ud = [0,1,2,3]
             } else if (r.ametodkey === "B2a") {
-                ud = r.bDisabledUncertaintyValues
+                // ud = r.bDisabledUncertaintyValues
+                ud = uncertaintyArray(r.blow, r.bhigh)
+
+                
             } else {
-                ud = []
-                for (let n = 0; n < 4 ; n++) {
-                    if (Math.abs(n - crit.value) > 1 || n === crit.value) {
-                        ud.push(n)
-                    }
-                }
+                // ud = []
+                // for (let n = 0; n < 4 ; n++) {
+                //     if (Math.abs(n - crit.value) > 1 || n === crit.value) {
+                //         ud.push(n)
+                //     }
+                // }
+                ud = uncertaintyArray(r.bscore - 1, r.bscore + 1)
+
             }
             runInAction(() => {
                 arrayConditionalReplace(crit.uncertaintyDisabled, ud)
@@ -1415,12 +1434,14 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
             let uv // uncentaintyValues (selected by program)
             if (r.bmetodkey === "B1" || r.bmetodkey === "B2b") {
                 // console.log("#¤%bhigh set uv, key: " + r.bmetodkey)
-                uv = []
-                for (var i = 0; i <= 3; i++) {
-                    if(i >= r.blow && i <= r.bhigh) {
-                        uv.push(i)
-                    }
-                }
+                // uv = []
+                // for (var i = 0; i <= 3; i++) {
+                //     if(i >= r.blow && i <= r.bhigh) {
+                //         uv.push(i)
+                //     }
+                // }
+                uv = uncertaintyArrayReverse(uncertaintyArray(r.blow, r.bhigh))
+
                 // console.log("#¤#bhigh set uv "+ JSON.stringify(uv))
             // } else if (r.ametodkey === "B2a") {
             //     // console.log("#¤%bhigh set uv, key: " + r.bmetodkey)
@@ -1444,12 +1465,14 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
 
         autorun(() => {
             // console.log("#¤# autorun crit" + crit.criteriaLetter + " value: " + crit.value)
-            const ud = []
-            for (let n = 0; n < 4 ; n++) {
-                if (Math.abs(n - crit.value) > 1 || n === crit.value) {
-                    ud.push(n)
-                }
-            }
+            // const ud = []
+            // for (let n = 0; n < 4 ; n++) {
+            //     if (Math.abs(n - crit.value) > 1 || n === crit.value) {
+            //         ud.push(n)
+            //     }
+            // }
+            ud = uncertaintyArray(crit.value - 1, crit.value + 1)
+
             runInAction(() => {
                 arrayConditionalReplace(crit.uncertaintyDisabled, ud)
             })
