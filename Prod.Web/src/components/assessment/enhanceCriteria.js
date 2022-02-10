@@ -1278,7 +1278,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
     for(const crit of [r.critA]) {  // just to get scope
         extdendCriteriaProps(crit)
         autorun(() => {
-            const auto = !(riskAssessment.ametodkey === "A1a2" || riskAssessment.ametodkey === "A1b2")
+            const auto = !(r.ametodkey === "A1a2" || r.ametodkey === "A1b2")
                 //         r.reasonForAdjustmentCritA !== null &&
                 //         r.reasonForAdjustmentCritA.length > 2) {
 
@@ -1290,16 +1290,16 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
         autorun(() => {
             console.log("#¤# autorun crit" + crit.criteriaLetter + " value: " + crit.value)
             let ud // uncertaintyDisabled 
-            if (riskAssessment.ametodkey === "A1a1" || riskAssessment.ametodkey === "A1b1") {
+            if (r.ametodkey === "A1a1" || r.ametodkey === "A1b1") {
                 ud = [0,1,2,3]
-            } else if (riskAssessment.ametodkey === "A1a2" || riskAssessment.ametodkey === "A1b2") {
+            } else if (r.ametodkey === "A1a2" || r.ametodkey === "A1b2") {
                 ud = []
                 for (var i = 0; i <= 3; i++) {
-                    if(i < (riskAssessment.ascore - 1) || i > (riskAssessment.ascore + 1)) {
+                    if(i < (r.ascore - 1) || i > (r.ascore + 1)) {
                         ud.push(i)
                     }
                 }
-            } else if (riskAssessment.ametodkey === "A3") {
+            } else if (r.ametodkey === "A3") {
                 ud = [0,1,2,3]
             } else {
                 ud = []
@@ -1319,25 +1319,25 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
         autorun(() => {
             // console.log("#¤# autorun crit" + crit.criteriaLetter + " value: " + crit.value)
             let uv // uncentaintyValues (selected by program)
-            if (riskAssessment.ametodkey === "A1a1" || riskAssessment.ametodkey === "A1b1") {
+            if (r.ametodkey === "A1a1" || r.ametodkey === "A1b1") {
                 uv = []
                 for (var i = 0; i <= 3; i++) {
-                    if(i >= riskAssessment.alow && i <= riskAssessment.ahigh) {
+                    if(i >= r.alow && i <= r.ahigh) {
                         uv.push(i)
                     }
                 }
-            } else if (riskAssessment.ametodkey === "A1a2" || riskAssessment.ametodkey === "A1b2") {
+            } else if (r.ametodkey === "A1a2" || r.ametodkey === "A1b2") {
                 const ud = []
                 for (var i = 0; i <= 3; i++) {
-                    if(i < (riskAssessment.ascore - 1) || i > (riskAssessment.ascore + 1)) {
+                    if(i < (r.ascore - 1) || i > (r.ascore + 1)) {
                         ud.push(i)
                     }
                 }
-                uv = uncertaintyArrayAddValue(filterUncertaintyArray(crit.uncertaintyValues, uncertaintyArrayReverse(ud)), riskAssessment.ascore)
-            } else if (riskAssessment.ametodkey === "A3") {
+                uv = uncertaintyArrayAddValue(filterUncertaintyArray(crit.uncertaintyValues, uncertaintyArrayReverse(ud)), r.ascore)
+            } else if (r.ametodkey === "A3") {
                 uv = []
                 for (var i = 0; i <= 3; i++) {
-                    if(i >= riskAssessment.alow && i <= riskAssessment.ahigh) {
+                    if(i >= r.alow && i <= r.ahigh) {
                         uv.push(i)
                     }
                 }
@@ -1354,16 +1354,16 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
         autorun(() => {
             // console.log("#¤# autorun crit" + crit.criteriaLetter + " value: " + crit.value)
             let vd // valuesDisabled (only some values/levels is alowed)
-            if (riskAssessment.ametodkey === "A1a1" || riskAssessment.ametodkey === "A1b1") {
+            if (r.ametodkey === "A1a1" || r.ametodkey === "A1b1") {
                 vd = []
-            } else if (riskAssessment.ametodkey === "A1a2" || riskAssessment.ametodkey === "A1b2") {
+            } else if (r.ametodkey === "A1a2" || r.ametodkey === "A1b2") {
                 vd = []
                 for (var i = 0; i <= 3; i++) {
-                    if(i < riskAssessment.apossibleLow || i > riskAssessment.apossibleHigh) {
+                    if(i < r.apossibleLow || i > r.apossibleHigh) {
                         vd.push(i)
                     }
                 }
-            } else if (riskAssessment.ametodkey === "A3") {
+            } else if (r.ametodkey === "A3") {
                 vd = []
             } else {
                 vd = []
@@ -1371,7 +1371,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
             runInAction(() => {
                 arrayConditionalReplace(crit.valueDisabled, vd)
                 if (vd.includes(crit.value)) {
-                    crit.value = riskAssessment.apossibleLow
+                    crit.value = r.apossibleLow
                 }
             })
             //if (!config.isRelease) trace()  // leave this line here! Se comments above to learn when to uncomment.
@@ -1381,7 +1381,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
     for(const crit of [r.critB]) { // just to get scope
         extdendCriteriaProps(crit)
         autorun(() => {
-            const auto = (riskAssessment.bmetodkey === "B1" || riskAssessment.bmetodkey === "B2b")
+            const auto = (r.bmetodkey === "B1" || r.bmetodkey === "B2b")
             runInAction(() => {
                 crit.auto = auto
             })
@@ -1390,10 +1390,10 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
         autorun(() => {
             // console.log("#¤# autorun crit" + crit.criteriaLetter + " value: " + crit.value)
             let ud // uncertaintyDisabled 
-            if (riskAssessment.bmetodkey === "B1" || riskAssessment.bmetodkey === "B2b") {
+            if (r.bmetodkey === "B1" || r.bmetodkey === "B2b") {
                 ud = [0,1,2,3]
-            } else if (riskAssessment.ametodkey === "B2a") {
-                ud = riskAssessment.bDisabledUncertaintyValues
+            } else if (r.ametodkey === "B2a") {
+                ud = r.bDisabledUncertaintyValues
             } else {
                 ud = []
                 for (let n = 0; n < 4 ; n++) {
@@ -1415,17 +1415,17 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
             // console.log("#¤# autorun crit" + crit.criteriaLetter + " value: " + crit.value)
             let uv // uncentaintyValues (selected by program)
 
-            if (riskAssessment.bmetodkey === "B1" || riskAssessment.bmetodkey === "B2b") {
-                // console.log("#¤%bhigh set uv, key: " + riskAssessment.bmetodkey)
+            if (r.bmetodkey === "B1" || r.bmetodkey === "B2b") {
+                // console.log("#¤%bhigh set uv, key: " + r.bmetodkey)
                 uv = []
                 for (var i = 0; i <= 3; i++) {
-                    if(i >= riskAssessment.blow && i <= riskAssessment.bhigh) {
+                    if(i >= r.blow && i <= r.bhigh) {
                         uv.push(i)
                     }
                 }
                 // console.log("#¤#bhigh set uv "+ JSON.stringify(uv))
-            } else if (riskAssessment.ametodkey === "B2a") {
-                // console.log("#¤%bhigh set uv, key: " + riskAssessment.bmetodkey)
+            } else if (r.ametodkey === "B2a") {
+                // console.log("#¤%bhigh set uv, key: " + r.bmetodkey)
                 uv = [crit.value]
             } else {
                 uv = [crit.value]
@@ -1469,7 +1469,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
             //if (!config.isRelease) trace()  // leave this line here! Se comments above to learn when to uncomment.
         })
     }
-    // autorun(() => {console.log("#¤# critA value**: " + riskAssessment.critA.value + " | " + riskAssessment.ascore)})
+    // autorun(() => {console.log("#¤# critA value**: " + r.critA.value + " | " + r.ascore)})
 }
 
 // function enhanceCriteriaAddErrorReportingForAutoMode(riskAssessment) {
