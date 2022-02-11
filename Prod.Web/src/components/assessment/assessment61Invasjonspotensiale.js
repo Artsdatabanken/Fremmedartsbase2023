@@ -540,19 +540,31 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                 }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>*/}
                                                 
                             </div> : 
-                            riskAssessment.chosenSpreadYearlyIncrease == "b" ?
+                        riskAssessment.chosenSpreadYearlyIncrease == "b" ?
                             <div>
-                                
-                                <p style={{marginTop: "20px", marginBottom: "20px", paddingTop: "20px", borderTop:'1px solid gray'}} dangerouslySetInnerHTML={{__html: labels.BcritText.SelfProducing}}></p>
-                               {/*   <Xcomp.Radio value={'true'} observableValue={[assessment.riskAssessment, "manuallyAddArea"]} label={labels.Bcrit.useMap} />                    
-                                        { assessment.riskAssessment.manuallyAddArea == 'true' ? <Xcomp.Bool observableValue={[assessment.riskAssessment, "notUse2021AsEndYear"]} label={labels.Bcrit.notUse2021} /> : null } 
-                                     <Xcomp.Radio value={'false'} observableValue={[assessment.riskAssessment, "manuallyAddArea"]} label={labels.Bcrit.addManually} />                    
-                                        { assessment.riskAssessment.manuallyAddArea == 'false' ? <Xcomp.Bool observableValue={[assessment.riskAssessment, "notUse2021AsEndYear"]} label={labels.Bcrit.notUse2021} /> : null }
+                                <hr />
+                                <p>Er artens første forekomst i norsk natur fra år 2012 eller senere?</p>
+                                <Xcomp.StringEnum 
+                                    mode="radio"
+                                    observableValue={[riskAssessment, "AOOfirstOccurenceLessThan10Years"]} 
+                                    // style={{marginLeft: "35px"}}
+                                    codes={koder.yesNo}
+                                />                  
+                                {riskAssessment.AOOfirstOccurenceLessThan10Years === "no" ?
+                                    <>
+                                        <p> Hvis tidsserien tillater det anbefales det at ekspansjonshastigheten estimeres ut fra kjent forekomstareal ved to ulike år, hvor perioden fra år 1 t.o.m. år 2 er på minimum 10 år. Er dette mulig?</p>
+                                        <Xcomp.StringEnum 
+                                            mode="radio"
+                                            observableValue={[riskAssessment, "AOOestimationPeriod10yrPossible"]} 
+                                            // style={{marginLeft: "45px"}}
+                                            codes={koder.yesNo}
+                                        />                  
+                                    </> : 
+                                    null
+                                }
 
-                                      <span style={{paddingLeft: '40px'}}>{labels.Bcrit.choose}</span> <Xcomp.Button primary >{labels.Bcrit.getFromMap}</Xcomp.Button>
-                                            <span>{labels.Bcrit.addManually}</span>
+                                <p style={{marginTop: "10px", marginBottom: "20px", paddingTop: "20px"}} dangerouslySetInnerHTML={{__html: labels.BcritText.SelfProducing}}></p>
 
-                                            <Xcomp.Bool observableValue={[riskAssessment, "notUseExpansionInNorway"]} label={labels.BcritText.chooseNotToUseKnownArea} /> */}
 
                                         <table className="table BCritTable">
                                             <thead>
