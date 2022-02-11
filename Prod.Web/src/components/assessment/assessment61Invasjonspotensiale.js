@@ -70,6 +70,12 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
         const b = this.props.appState.assessmentSavedVersionString
         return a != b
     }
+    GetIsRegionalAssessment = (assessment) =>
+    {
+        return assessment.isAlienSpecies 
+        && assessment.isRegionallyAlien 
+        && assessment.expertGroup == "Fisker" 
+    }
     // getCriterion(riskAssessment, akse, letter) {     const result =
     // riskAssessment.criteria.filter(c => c.akse === akse && c.criteriaLetter ===
     // letter)[0];     return result; }
@@ -593,7 +599,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                             taxonId={assessment.taxonId}
                                                             scientificNameId={assessment.evaluatedScientificNameId}
                                                             evaluationContext={assessment.evaluationContext}
-                                                            showWaterAreas={assessment.isAlienSpecies && assessment.isRegionallyAlien}
+                                                            showWaterAreas={this.GetIsRegionalAssessment(assessment)}
                                                             labels={labelsArtskart}
                                                             utvalg={assessment.riskAssessment}
                                                             artskartModel={this.props.appState.virtualArtskartModel0}
@@ -646,7 +652,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                             taxonId={assessment.taxonId}
                                                             scientificNameId={assessment.evaluatedScientificNameId}
                                                             evaluationContext={assessment.evaluationContext}
-                                                            showWaterAreas={assessment.isAlienSpecies && assessment.isRegionallyAlien}
+                                                            showWaterAreas={this.GetIsRegionalAssessment(assessment)}
                                                             labels={labelsArtskart}
                                                             utvalg={assessment.riskAssessment}
                                                             artskartModel={this.props.appState.virtualArtskartModel}

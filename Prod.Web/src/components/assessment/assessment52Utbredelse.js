@@ -34,6 +34,12 @@ export default class Assessment52Utbredelse extends React.Component {
         const b = this.props.appState.assessmentSavedVersionString
         return a != b
     }
+    GetIsRegionalAssessment = (assessment) =>
+    {
+        return assessment.isAlienSpecies 
+        && assessment.isRegionallyAlien 
+        && assessment.expertGroup == "Fisker" 
+    }
 
     // a method to check if a given property is smaller than a given value
 
@@ -46,9 +52,9 @@ export default class Assessment52Utbredelse extends React.Component {
         });
         if (props && props.appState && props.appState.assessment) {
             const assessment = props.appState.assessment;
-            if (assessment.isAlienSpecies && assessment.isRegionallyAlien) {
+            if (this.GetIsRegionalAssessment(assessment)) {
                 if (assessment.artskartWaterModel === null) assessment.artskartWaterModel = {};
-                if (this.initialWaterAreas === null && assessment.isAlienSpecies && assessment.isRegionallyAlien) {
+                if (this.initialWaterAreas === null && this.GetIsRegionalAssessment(assessment)) {
                     const self = this;
                     getWaterAreas().then((data) => {
                         action(() => {
@@ -198,7 +204,7 @@ export default class Assessment52Utbredelse extends React.Component {
         const aps = this.props.appState;
         const ass = aps.assessment;
 
-        if (ass.isAlienSpecies && ass.isRegionallyAlien) {
+        if (this.GetIsRegionalAssessment(ass)) {
             // console.log('working with vannområder...', areadata, newWaterAreas);
             if (newWaterAreas) {
                 newWaterAreas.forEach(x => {
@@ -284,13 +290,13 @@ export default class Assessment52Utbredelse extends React.Component {
                 <div>
                     <fieldset className="well">
                         <h2>Utbredelse i Norge</h2>
-                        {!this.initialWaterAreas && assessment.isAlienSpecies && assessment.isRegionallyAlien &&
+                        {!this.initialWaterAreas && this.GetIsRegionalAssessment(assessment) &&
                             <>
                                 <h4>Vurderingsområde <i>(beta)</i></h4>
                                 <div style={{marginLeft: 20, marginBottom: 30}}>...henter vannregioner og vannområder</div>
                             </>
                         }
-                        {this.initialWaterAreas && assessment.isAlienSpecies && assessment.isRegionallyAlien &&
+                        {this.initialWaterAreas && this.GetIsRegionalAssessment(assessment) &&
                         <>
                             <h4>Vurderingsområde <i>(beta)</i></h4>
                             <div style={{marginLeft: 20, marginBottom: 30}}>
@@ -333,7 +339,7 @@ export default class Assessment52Utbredelse extends React.Component {
                                         taxonId={assessment.taxonId}
                                         scientificNameId={assessment.evaluatedScientificNameId}
                                         evaluationContext={assessment.evaluationContext}
-                                        showWaterAreas={assessment.isAlienSpecies && assessment.isRegionallyAlien}
+                                        showWaterAreas={this.GetIsRegionalAssessment(assessment)}
                                         artskartWaterModel={assessment.artskartWaterModel}
                                         waterFeatures={this.getWaterFeatures(assessment)}
                                         labels={labels}
@@ -426,7 +432,7 @@ export default class Assessment52Utbredelse extends React.Component {
                     <h4>Regionvis utbredelse</h4>
                     {/* <b>[Her kommer det et kart]</b> */}
                     {/* TODO: remove component refresh hack */ assessment.fylkesforekomster ? (assessment.fylkesforekomster.map(e => e.state ? '' : '')) : ''}
-                    {!(assessment.isAlienSpecies && assessment.isRegionallyAlien) &&
+                    {!(this.GetIsRegionalAssessment(assessment)) &&
                         <Fylkesforekomst
                             evaluationContext={assessment.evaluationContext}
                             taxonId={assessment.TaxonId}
