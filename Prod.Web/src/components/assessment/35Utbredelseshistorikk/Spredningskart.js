@@ -48,7 +48,7 @@ export default class Spredningskart extends React.Component {
                 }
             }
         }
-        const {map, countyListLand, states, showLegend, fabModel} = this.props
+        const {map, countyListLand, states, showLegend, fabModel, disabled} = this.props
         const fylkerArray = countyListLand.map((fylke) => {
             const active = Spredningskart.getCurrentState(fylke.Value, states)           
             return {id: fylke.Value, title: `${fylke.Text}: ${active.title}`, style: active.key}
@@ -81,7 +81,9 @@ export default class Spredningskart extends React.Component {
                         onMouseDown={(e, fylke) => this.handleMouseDown(e, fylke)}
                         onMouseUp={(e) => this.handleMouseUp(e)}
                         onMouseOver={(e, fylke) => this.handleMouseOver(e, fylke)}
-                        fylker={fylker}/>
+                        fylker={fylker}
+                        disabled={disabled}
+                        />
                 </div>
                 {/*showLegend &&
                   <Legend states={states} styles={styles} />
@@ -118,21 +120,27 @@ export default class Spredningskart extends React.Component {
     }
 
     handleMouseOver(e, fylke) {
-        e.stopPropagation()
-        if (this.paintWithState == null)
-            return
-        this.check(fylke, this.paintWithState)
+       
+            e.stopPropagation()
+            if (this.paintWithState == null)
+                return
+            this.check(fylke, this.paintWithState)
+        
+       
     }
     handleMouseUp(e) {
         e.stopPropagation()
         this.paintWithState = null
     }
     handleMouseDown(e, fylke) {
-        e.stopPropagation()
-        const states = this.props.states
-        const curState = Spredningskart.getCurrentState(fylke, states)
-        this.paintWithState = this.getNextState(curState)
-        this.check(fylke, this.paintWithState)
+        
+            e.stopPropagation()
+            const states = this.props.states
+            const curState = Spredningskart.getCurrentState(fylke, states)
+            this.paintWithState = this.getNextState(curState)
+            this.check(fylke, this.paintWithState)
+        
+        
     }
     check(fylke, state) {
         const states = this.props.states

@@ -12,19 +12,20 @@ export default class EkspandertSpredningsrad extends React.Component {
     @observable visArtskart = false
 
     render() {
-        const {detaljer, fabModel, assessment} = this.props
+        const {detaljer, fabModel, assessment, disabled} = this.props
         // const labels = fabModel.kodeLabels.DistributionHistory
         // const detaljer = this.props.detaljer
         const artskartModel = assessment.artskartModel
         return (
             <tr
-                className="table-active"
+                className={disabled ? "table-disabled" : "table-active"}
                 style={{
                 borderTopColor: "transparent",
                 boxShadow: "rgba(0, 0, 0, 0.0470588) 6px 6px 4px 0px"
             }}>
                 <EkspandertSpredningsradDetaljer
                                         { ...this.props }
+                                        disabled = {disabled}
                                         onShowArtskart={() => {
                                         this.visArtskart = true;
                                         return null
@@ -86,7 +87,7 @@ export default class EkspandertSpredningsrad extends React.Component {
 
 @observer export class EkspandertSpredningsradDetaljer extends React.Component {
     render() {
-        const {fabModel, detaljer, assessment} = this.props
+        const {fabModel, detaljer, assessment, disabled} = this.props
         const labels = fabModel.codeLabels.DistributionHistory
         return (
            
@@ -102,6 +103,7 @@ export default class EkspandertSpredningsrad extends React.Component {
                         <td><Spredningskart
                                                 map={this.props.fabModel.evaluationContexts.map}
                                                 showLegend
+                                                disabled={disabled}
                                                 width={"150px"}
                                                 fabModel={fabModel}
                                                 states={[
