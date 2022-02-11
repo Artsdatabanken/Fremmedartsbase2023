@@ -919,6 +919,10 @@ public partial class FA4 // (3.2) Artsegenskaper
         public Int64? AOO50yrHighInput { get; set; }
         [System.Text.Json.Serialization.JsonPropertyName("AOO50yrHigh")]
         public Int64? AOO50yrHigh { get; set; }
+        [System.Text.Json.Serialization.JsonPropertyName("AOOfirstOccurenceLessThan10Years")]
+        public string AOOfirstOccurenceLessThan10Years { get; set; } = "no";
+        [System.Text.Json.Serialization.JsonPropertyName("AOOestimationPeriod10yrPossible")]
+        public string AOOestimationPeriod10yrPossible { get; set; } = "yes";
         // -------- disse (forekomstareal om 50år) er erstattet:  
         //todo: *sjekk konvertering fra FAB3 før sletting av utkommentert kode*
         //public Int64? PotentialExistenceAreaLowQuartile { get; set; }
@@ -1114,6 +1118,8 @@ public partial class FA4 // (3.2) Artsegenskaper
         public long? ExpansionLowerQ { get; set; } // nedre kvartil for ekspansjonshastighet i meter per år 
         public long? ExpansionUpperQInput { get; set; } // øvre kvartil for ekspansjonshastighet i meter per år 
         public long? ExpansionUpperQ { get; set; } // øvre kvartil for ekspansjonshastighet i meter per år 
+
+
         // -------- disse ((B1) ekspansjonshastighet) er erstattet:  
         //todo: *sjekk konvertering fra FAB3 før sletting av utkommentert kode*
         //public bool ActiveSpreadYearlyIncreaseOccurrenceArea { get; set; } //lagt til 29.09.2016
