@@ -10,7 +10,7 @@ import Filliste from './Filliste'
 export default class UtbredelseshistorikkInnenlands extends React.Component {
     render() {
         const {vurdering, fabModel} = this.props
-        console.log(fabModel)
+        
         const labels = fabModel.codeLabels.DistributionHistory
         const history = vurdering.spreadHistory
         return (
@@ -29,7 +29,7 @@ export default class UtbredelseshistorikkInnenlands extends React.Component {
                     }}>
                         {labels.domesticAddHistory}
                 </Button> */}
-                    <HistorikkTabell historikk={history} fabModel={fabModel}/>
+                    <HistorikkTabell disabled historikk={history} fabModel={fabModel}/>
                     {fabModel.fileUploadEnabled
                     ? <div>
                         <h4>{labels.domesticDataset}</h4>

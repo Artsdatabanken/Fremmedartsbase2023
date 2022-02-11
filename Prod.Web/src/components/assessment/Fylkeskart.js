@@ -28,6 +28,7 @@ export default class Fylkeskart extends React.Component {
         return boundary
     }
     render() {
+        const disabled = this.props.disabled
         const language = this.props.language
         const boundary = Fylkeskart.getBoundaryForCountry(language)
         const styles = this.props.styles
@@ -38,7 +39,7 @@ export default class Fylkeskart extends React.Component {
                 const prefs = this.props.fylker[kode]
                 const mainStyle = styles[prefs.style]
                 let style = mainStyle.normal
-                if (this.state.hoveringOver == kode)
+                if (this.state.hoveringOver == kode && !disabled)
                     style = mainStyle.highlight
                 return <Region
                     key={kode}
