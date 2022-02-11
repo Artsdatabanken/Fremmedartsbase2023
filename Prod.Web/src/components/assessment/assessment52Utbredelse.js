@@ -445,7 +445,7 @@ export default class Assessment52Utbredelse extends React.Component {
                             disabled={appState.userContext.readonly}
                             onOverførFraArtskart={action(this.handleOverførFraArtskart)} />
                     }
-                    {this.initialWaterAreas && assessment.isAlienSpecies && assessment.isRegionallyAlien &&
+                    {this.initialWaterAreas && this.GetIsRegionalAssessment(assessment) &&
                     <div>
                         {this.initialWaterAreas &&
                             <WaterArea
