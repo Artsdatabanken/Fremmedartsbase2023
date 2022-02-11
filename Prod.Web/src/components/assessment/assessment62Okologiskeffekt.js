@@ -165,6 +165,8 @@ export default class Assessment62Okologiskeffekt extends React.Component {
             const newItem = this.newSNITS;
             const clone = toJS(newItem);
             console.log("Clone: " + JSON.stringify(clone))
+            const name = assessment.impactedNatureTypes.find(element => element.niNCode == clone.niNCode).name;
+            clone.name = name;
             // clone.taxonSearchString = undefined
             // clone.taxonSearchResult = undefined
             list.push(clone)

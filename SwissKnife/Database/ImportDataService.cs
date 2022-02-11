@@ -417,6 +417,8 @@ namespace SwissKnife.Database
                 exAssessment.RiskAssessment.ExpansionSpeedInput = newAssesment.RiskAssessment.ExpansionSpeedInput;
 
                 exAssessment.RiskAssessment.ChosenSpreadYearlyIncrease = newAssesment.RiskAssessment.ChosenSpreadYearlyIncrease;
+                
+                exAssessment.RiskAssessment.ROAscore2018 = newAssesment.RiskAssessment.ROAscore2018;
 
                 //if (exAssessment.ExpertGroup != newAssesment.ExpertGroup)
                 //{

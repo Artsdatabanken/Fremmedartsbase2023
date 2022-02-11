@@ -16,69 +16,69 @@ const SpeciesNaturetypeTable = observer((props) =>
     naturetypeNames.push({"Value": "", "Text": ""})
     // regular expression to check that the id does not contain only numbers
     const reg = /^\d+$/;
-    const findNTName = (nt) => {
-        var name = "";
-        var id = nt.niNCode
-        if (id) {
+    // const findNTName = (nt) => {
+    //     var name = "";
+    //     var id = nt.niNCode
+    //     if (id) {
 
-            if(!reg.test(id)){
-                if (id.startsWith("NA")) {
-                    // taking only the last part of the code
-                    id = id.substring(3)
+    //         if(!reg.test(id)){
+    //             if (id.startsWith("NA")) {
+    //                 // taking only the last part of the code
+    //                 id = id.substring(3)
 
-                }
-                if (id.length == 1) {
-                    name = natureTypeCodes.Children.find(code => code.Id.indexOf(id) > -1).Text
-                } else if (id.length == 2) {
-                    // search for the name on the second level of nature type groups     
+    //             }
+    //             if (id.length == 1) {
+    //                 name = natureTypeCodes.Children.find(code => code.Id.indexOf(id) > -1).Text
+    //             } else if (id.length == 2) {
+    //                 // search for the name on the second level of nature type groups     
                     
-                    var firstSubLevel = natureTypeCodes.Children 
+    //                 var firstSubLevel = natureTypeCodes.Children 
                    
-                    for (var i = 0; i < firstSubLevel.length; i++) {
-                        if (firstSubLevel[i].Id.indexOf(id.substring(0,1)) > -1) {
+    //                 for (var i = 0; i < firstSubLevel.length; i++) {
+    //                     if (firstSubLevel[i].Id.indexOf(id.substring(0,1)) > -1) {
                             
-                            name = firstSubLevel[i].Children.find(code => code.Id.indexOf(id) > -1).Text                            
-                        }
-                    }
-                } else if (id.length > 2) {
-                    var firstPart = id.split("-")[0]
-                    // search for the name on the third level of nature type groups                
-                    var firstSubLevel = natureTypeCodes.Children
-                    for (var i = 0; i < firstSubLevel.length; i++) {
+    //                         name = firstSubLevel[i].Children.find(code => code.Id.indexOf(id) > -1).Text                            
+    //                     }
+    //                 }
+    //             } else if (id.length > 2) {
+    //                 var firstPart = id.split("-")[0]
+    //                 // search for the name on the third level of nature type groups                
+    //                 var firstSubLevel = natureTypeCodes.Children
+    //                 for (var i = 0; i < firstSubLevel.length; i++) {
                        
-                        if (firstSubLevel[i].Id.indexOf(id.substring(0,1)) > -1) {
-                            var secondSubLevel = firstSubLevel[i].Children
+    //                     if (firstSubLevel[i].Id.indexOf(id.substring(0,1)) > -1) {
+    //                         var secondSubLevel = firstSubLevel[i].Children
                              
-                            for (var j = 0; j < secondSubLevel.length; j++) {
+    //                         for (var j = 0; j < secondSubLevel.length; j++) {
                                 
-                                if (secondSubLevel[j].Id == firstPart || secondSubLevel[j].Id == "NA "+ firstPart) {
-                                    var thirdSubLevel = secondSubLevel[j].Children
-                                    name = thirdSubLevel.find(code => code.Id.indexOf(id) > -1).Text
-                                }
-                            }                                           
-                        }
-                    }
-                }
+    //                             if (secondSubLevel[j].Id == firstPart || secondSubLevel[j].Id == "NA "+ firstPart) {
+    //                                 var thirdSubLevel = secondSubLevel[j].Children
+    //                                 name = thirdSubLevel.find(code => code.Id.indexOf(id) > -1).Text
+    //                             }
+    //                         }                                           
+    //                     }
+    //                 }
+    //             }
 
-            } else {
+    //         } else {
                 
-                for (var i = 0; i < redListCodes.Children.length; i++) {
-                    for (var j = 0; j < redListCodes.Children[i].Children.length; j++) {
-                        if (redListCodes.Children[i].Children[j].Id == id) {
-                            name = redListCodes.Children[i].Children[j].Text
-                        }
-                    }
-                }
-            }
-        }
-        nt.name = name      
-        return name
-    } 
+    //             for (var i = 0; i < redListCodes.Children.length; i++) {
+    //                 for (var j = 0; j < redListCodes.Children[i].Children.length; j++) {
+    //                     if (redListCodes.Children[i].Children[j].Id == id) {
+    //                         name = redListCodes.Children[i].Children[j].Text
+    //                     }
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     nt.name = name      
+    //     return name
+    // } 
 
     if (props.natureTypes && props.natureTypes.length > 0) {
         
         for (var i = 0; i < props.natureTypes.length; i++){
-            naturetypeNames.push({"Value": props.natureTypes[i].niNCode, "Text": findNTName(props.natureTypes[i])});
+            naturetypeNames.push({"Value": props.natureTypes[i].niNCode, "Text": props.natureTypes[i].name});
         }
         
     }
@@ -124,7 +124,7 @@ const SpeciesNaturetypeTable = observer((props) =>
                 <td>
                     <div className="naturtypeItem">
                         <div className="naturtypeCode">{item.niNCode}</div>
-                        <div className="naturtypeName">{props.naturtypeLabels[item.niNCode]}</div>
+                        <div className="naturtypeName">{item.name}</div>
                     </div>
                 </td>
                 <td><Xcomp.Bool observableValue={[item, 'keyStoneOrEndangeredSpecie']} /></td>

@@ -781,6 +781,7 @@ namespace SwissKnife.Database
 
                     .ForMember(dest => dest.Amethod, opt => opt.Ignore())
                     .ForMember(dest => dest.Ascore, opt => opt.Ignore())
+                    .ForMember(dest => dest.ROAscore2018, opt => opt.Ignore())
                     .ForMember(dest => dest.Alow, opt => opt.Ignore())
                     .ForMember(dest => dest.Ahigh, opt => opt.Ignore())
                     .ForMember(dest => dest.AdefaultBest, opt => opt.Ignore())
@@ -829,6 +830,11 @@ namespace SwissKnife.Database
                         if (src.ChosenSpreadYearlyIncrease == "SpreadYearlyIncreaseCalculatedExpansionSpeed")
                         {
                             dest.ChosenSpreadYearlyIncrease = "a";
+                        }
+
+                        if (src.ActiveRedListCategoryLevel)
+                        {
+                            dest.ROAscore2018 = src.Criteria.Single(x => x.CriteriaLetter == "A").Value;
                         }
                     });
                 //.ForMember(dest => dest., opt => opt.MapFrom(src => src.))
