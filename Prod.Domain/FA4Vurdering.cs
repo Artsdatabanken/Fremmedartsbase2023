@@ -1034,7 +1034,12 @@ public partial class FA4 // (3.2) Artsegenskaper
         #endregion Median life time
 
         public string Amethod { get; set; } // metode som ble brukt for å beregne A-kriteriet 
-        public int Ascore { get; set; } // skår for A-kriteriet 
+        public int Ascore { get; set; } // skår for A-kriteriet
+
+        /// <summary>
+        /// Score for metode C rødlistekriterier fra 2018 vurdering
+        /// </summary>
+        public int? ROAscore2018 { get; set; } // skår for A-kriteriet 
         public int Alow { get; set; } // nedre skår for A-kriteriet (inkludert usikkerhet) 
         public int Ahigh { get; set; } // øvre skår for A-kriteriet (inkludert usikkerhet) 
         public string Bmethod { get; set; } // metode som ble brukt for å beregne B-kriteriet 
