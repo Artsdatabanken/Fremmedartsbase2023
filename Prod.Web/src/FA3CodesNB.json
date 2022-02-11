@@ -5499,14 +5499,14 @@
                         {
                             "Id": null,
                             "Value": "a",
-                            "Text": "Ja (gjelder også arter som per nå kun befinner seg i innendørs- eller produksjonsareal)",
+                            "Text": "Ja",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "b",
-                            "Text": "Nei, arten kommer utelukkende direkte til norsk natur",
+                            "Text": "Nei, arten spres til norsk natur kun/også via innendørs- eller produksjonsareal",
                             "Info": null,
                             "Children": null
                         }
