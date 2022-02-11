@@ -49,6 +49,16 @@
             msg: "Det beste anslaget på det totale nåværende forekomstarealet kan ikke være mindre enn det kjente!"
         },
         {
+            id: "(a)err9",
+            get cond() {return r.AOO1 <= 0},
+            msg: "Forekomstarealet kan ikke være 0!"
+        },
+        {
+            id: "(a)err10",
+            get cond() {return r.AOO2 <= 0},
+            msg: "Forekomstarealet kan ikke være 0!"
+        },
+        {
             id: "(a)warn1",
             get cond() {return (r.AOOknown % 4 || r.AOOtotalLow % 4 || r.AOOtotalBest % 4 || r.AOOtotalHigh % 4 || r.AOO50yrLow % 4 || (r.AOO50yrBest % 4) || r.AOO50yrHigh % 4 || false)},
             type: "warning",
