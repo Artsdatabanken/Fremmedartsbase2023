@@ -550,40 +550,90 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 // console.log("#bhigh: " + r.bmetodkey + " expansionUpperQ: " + r.expansionUpperQ + " result: " + result)
                 return result
         },
+
+        get expansionSpeedB2a() {
+            const result =
+                riskAssessment.AOOfirstOccurenceLessThan10Years === "yes"
+                ? trunc(20 * (sqrt(r.AOO50yrBest) - sqrt(r.AOOtotalBest)) / sqrt(pi))
+                : riskAssessment.AOOestimationPeriod10yrPossible === "yes"
+                ? r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null || (r.AOOyear2 - r.AOOyear1) < 10 || r.AOO1 <= 0 || r.AOO2 <= 0
+                    ? 0
+                    : trunc(sqrt(r.AOOdarkfigureBest) * 2000 * (sqrt(ceil(r.AOO2 / 4)) - sqrt(ceil(r.AOO1 / 4))) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
+                : trunc(20 * (sqrt(r.AOO50yrBest) - sqrt(r.AOOtotalBest)) / sqrt(pi))  //same as first case
+                // old code for expansionSpeedB2a:
+                //trunc(sqrt(r.AOOdarkfigureBest) * 1000 * (sqrt(r.AOO2) - sqrt(r.AOO1)) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
+            console.log("##!expansionSpeedB2a data: " + JSON.stringify({
+                AOOfirstOccurenceLessThan10Years: r.AOOfirstOccurenceLessThan10Years,
+                AOOestimationPeriod10yrPossible: r.AOOestimationPeriod10yrPossible,
+                AOOyear1: r.AOOyear1,
+                AOOyear2: r.AOOyear2,
+                AOO1: r.AOO1,
+                AOO2: r.AOO2,
+                AOOdarkfigureBest: r.AOOdarkfigureBest,
+                AOO50yrBest: r.AOO50yrBest,
+                AOOtotalBest: r.AOOtotalBest
+            }))
+            return result
+        },
+        // get expansionSpeedB2b() {
+        //     const result =
+        //         trunc(200 * (sqrt(r.AOO10yrBest / 4) - 1) / sqrt(pi))
+        //     console.log("##!expansionSpeedB2b data: " + JSON.stringify({
+        //         AOO10yrBest: r.AOO10yrBest
+        //     }))
+        //     return result
+        // },
         get expansionSpeed() {
             const k = r.bmetodkey
             console.log("##¤ expansionSpeed " + r.bmetodkey + " " + r.AOO10yrBest)
             const result =
                 k === "B1" ? r.expansionSpeedInput
-                : k === "B2a" ? r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null ? 0 : trunc(sqrt(r.AOOdarkfigureBest) * 1000 * (sqrt(r.AOO2) - sqrt(r.AOO1)) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
+                : k === "B2a" ? this.expansionSpeedB2a // r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null ? 0 : trunc(sqrt(r.AOOdarkfigureBest) * 1000 * (sqrt(r.AOO2) - sqrt(r.AOO1)) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
                 : k === "B2b" ? trunc(200 * (sqrt(r.AOO10yrBest / 4) - 1) / sqrt(pi))
                 : 0 // ?
-            // console.log("#expspeed: " + k + " " + result)
-            // console.log("#expspeed data: " + JSON.stringify({
-            //     AOOyear1: r.AOOyear1,
-            //     AOOyear2: r.AOOyear2,
-            //     AOO1: r.AOO1,
-            //     AOO2: r.AOO2,
-            //     AOOdarkfigureBest: r.AOOdarkfigureBest
-
-            // }))
-
+            console.log("##!expansionSpeed: key:" + k + " unroundedresult: " + result)
             return roundToSignificantDecimals(result)
+        },
+        get expansionLowerQB2a() {
+            const result =
+                riskAssessment.AOOfirstOccurenceLessThan10Years === "yes"
+                ? trunc(20 * (sqrt(r.AOO50yrHigh) - sqrt(r.AOOtotalBest)) / sqrt(pi))
+                : riskAssessment.AOOestimationPeriod10yrPossible === "yes"
+                ? r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null || (r.AOOyear2 - r.AOOyear1) < 10 || r.AOO1 <= 0 || r.AOO2 <= 0
+                    ? 0
+                    : trunc(sqrt(r.AOOdarkfigureLow) * 2000 * (sqrt(ceil(r.AOO2 / 4)) - sqrt(ceil(r.AOO1 / 4))) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
+                : trunc(20 * (sqrt(r.AOO50yrHigh) - sqrt(r.AOOtotalBest)) / sqrt(pi))  //same as first case
+                // old code for expansionLowerQB2a:
+                //trunc(sqrt(r.AOOdarkfigureLow) * 1000 * (sqrt(r.AOO2) - sqrt(r.AOO1)) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
+            return result
         },
         get expansionLowerQ() {
             const k = r.bmetodkey
             const result =
                 k === "B1" ? r.expansionLowerQInput
-                : k === "B2a" ? r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null ? 0 : trunc(sqrt(r.AOOdarkfigureLow) * 1000 * (sqrt(r.AOO2) - sqrt(r.AOO1)) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
+                : k === "B2a" ? r.expansionLowerQB2a // r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null ? 0 : trunc(sqrt(r.AOOdarkfigureLow) * 1000 * (sqrt(r.AOO2) - sqrt(r.AOO1)) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
                 : k === "B2b" ? trunc(200 * (sqrt(r.AOO10yrLow / 4) - 1) / sqrt(pi))
                 : 0 // ?
             return roundToSignificantDecimals(result)
+        },
+        get expansionUpperQB2a() {
+            const result =
+                riskAssessment.AOOfirstOccurenceLessThan10Years === "yes"
+                ? trunc(20 * (sqrt(r.AOO50yrLow) - sqrt(r.AOOtotalBest)) / sqrt(pi))
+                : riskAssessment.AOOestimationPeriod10yrPossible === "yes"
+                ? r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null || (r.AOOyear2 - r.AOOyear1) < 10 || r.AOO1 <= 0 || r.AOO2 <= 0
+                    ? 0
+                    : trunc(sqrt(r.AOOdarkfigureHigh) * 2000 * (sqrt(ceil(r.AOO2 / 4)) - sqrt(ceil(r.AOO1 / 4))) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
+                : trunc(20 * (sqrt(r.AOO50yrLow) - sqrt(r.AOOtotalBest)) / sqrt(pi))  //same as first case
+                // old code for expansionUpperQB2a:
+                // trunc(sqrt(r.AOOdarkfigureHigh) * 1000 * (sqrt(r.AOO2) - sqrt(r.AOO1)) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
+            return result
         },
         get expansionUpperQ() {
             const k = r.bmetodkey
             const result =
                 k === "B1" ? r.expansionUpperQInput
-                : k === "B2a" ? r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null ? 0 : trunc(sqrt(r.AOOdarkfigureHigh) * 1000 * (sqrt(r.AOO2) - sqrt(r.AOO1)) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
+                : k === "B2a" ? r.expansionUpperQB2a // r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null ? 0 : trunc(sqrt(r.AOOdarkfigureHigh) * 1000 * (sqrt(r.AOO2) - sqrt(r.AOO1)) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
                 : k === "B2b" ? trunc(200 * (sqrt(r.AOO10yrHigh / 4) - 1) / sqrt(pi))
                 : 0 // ?
             return roundToSignificantDecimals(result)
