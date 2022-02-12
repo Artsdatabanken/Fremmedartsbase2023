@@ -104,7 +104,7 @@ export default class Assessment41Import extends React.Component {
                 
                     {assessment.indoorProduktion != null &&
                     <div>
-                        {assessment.indoorProduktion == "positive" &&                    
+                        {assessment.indoorProduktion == "negative" &&                    
                                 <Vurdering34Spredningsveier  name={"Til innendørs- eller produksjonsareal"} furtherInfo={labels.Import.furtherInfoIndoors}/>  
                         }
                             <Vurdering34Spredningsveier name={"Introduksjon til natur"} furtherInfo={labels.Import.furtherInfoIntro}/>
