@@ -261,7 +261,7 @@ namespace Prod.Api.Controllers
                     if (dbTimestamp == null ||
                         indexVersion.Version != IndexHelper.IndexVersion) // not indexed yet or index is different now
                     {
-                        IndexHelper.Index(true, _dbContext, _index);
+                        IndexHelper.ReIndex(_dbContext, _index);
                     }
                 }
 
@@ -344,7 +344,7 @@ namespace Prod.Api.Controllers
             Response.Headers.Add(HeaderNames.ContentType, "text/html");
             var outputStream = Response.Body;
             var uniencoding = new UnicodeEncoding();
-            var task = Task.Run(() => { IndexHelper.Index(true, _dbContext, _index); });
+            var task = Task.Run(() => { IndexHelper.ReIndex(_dbContext, _index); });
             while (true)
             {
                 if (task.IsCompleted) break;

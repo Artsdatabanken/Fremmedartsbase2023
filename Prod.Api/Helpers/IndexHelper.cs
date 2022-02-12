@@ -23,6 +23,7 @@ namespace Prod.Api.Helpers
         ///     Change this to force index rebuild!
         /// </summary>
         public const int IndexVersion = 3;
+        private static readonly object IndexingLock = new();
 
         private const string Field_Id = "Id";
         private const string Field_Group = "Expertgroup";
@@ -146,52 +147,56 @@ namespace Prod.Api.Helpers
             _dbContext.SaveChanges();
         }
 
-        public static DateTime Index(bool clear, ProdDbContext _dbContext, Index _index)
+        public static DateTime ReIndex(ProdDbContext _dbContext, Index _index)
         {
-            //if (_index.IndexCount() > 1 && _index.IndexCount() < 5000) return;
-
-
-            if (clear) _index.ClearIndex();
-
             var batchSize = 1000;
             var pointer = 0;
             var maxDate = DateTime.MinValue;
-            while (true)
+            //if (_index.IndexCount() > 1 && _index.IndexCount() < 5000) return;
+            lock (IndexingLock)
             {
-                var result = _dbContext.Assessments
-                    .Include(x => x.LastUpdatedByUser)
-                    .Include(x => x.LockedForEditByUser)
-                    .Include(x => x.Comments)
-                    .Where(x => x.IsDeleted == false).OrderBy(x => x.Id)
-                    .Skip(pointer).Take(batchSize)
-                    .ToArray();
-                if (result.Length == 0) break;
-                pointer += result.Length;
-                var tempDate = result.Max(x => x.LastUpdatedAt);
-                if (maxDate < tempDate) maxDate = tempDate;
+                _index.ClearIndex();
 
-                var docs = result.Select(GetIndexFieldsFromAssessment).ToArray();
-                _index.AddOrUpdate(docs);
+                while (true)
+                {
+                    var result = _dbContext.Assessments
+                        .Include(x => x.LastUpdatedByUser)
+                        .Include(x => x.LockedForEditByUser)
+                        .Include(x => x.Comments)
+                        .Where(x => x.IsDeleted == false).OrderBy(x => x.Id)
+                        .Skip(pointer).Take(batchSize)
+                        .ToArray();
+                    if (result.Length == 0) break;
+                    pointer += result.Length;
+                    var tempDate = result.Max(x => x.LastUpdatedAt);
+                    if (maxDate < tempDate) maxDate = tempDate;
+
+                    var docs = result.Select(GetIndexFieldsFromAssessment).ToArray();
+                    _index.AddOrUpdate(docs);
+                }
+
+                SetTimeStamps(_dbContext, _index, maxDate);
             }
-
-            SetTimeStamps(_dbContext, _index, maxDate);
 
             return maxDate;
         }
 
         public static void Index(Assessment assessment, Index index)
         {
-            if (assessment.IsDeleted)
+            lock (IndexingLock)
             {
-                index.Delete(new[] { assessment.Id }.ToArray());
-            }
-            else
-            {
-                var doc = GetIndexFieldsFromAssessment(assessment);
-                index.AddOrUpdate(doc);
-            }
+                if (assessment.IsDeleted)
+                {
+                    index.Delete(new[] { assessment.Id }.ToArray());
+                }
+                else
+                {
+                    var doc = GetIndexFieldsFromAssessment(assessment);
+                    index.AddOrUpdate(doc);
+                }
 
-            index.SetIndexVersion(new IndexVersion { Version = IndexVersion, DateTime = assessment.LastUpdatedAt });
+                index.SetIndexVersion(new IndexVersion { Version = IndexVersion, DateTime = assessment.LastUpdatedAt });
+            }
         }
         //private const string Field_DateLastSave = "DateSave";
 
