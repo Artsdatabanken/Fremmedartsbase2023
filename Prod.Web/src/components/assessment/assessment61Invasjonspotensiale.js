@@ -550,14 +550,15 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                         riskAssessment.chosenSpreadYearlyIncrease == "b" ?
                             <div>
                                 <hr />
-                                <p>Er artens første forekomst i norsk natur fra år 2012 eller senere?</p>
+                                {/* <p>Er artens første forekomst i norsk natur fra år 2012 eller senere?</p> */}
+                                <p>Det anbefales at ekspansjonshastigheten estimeres med utgangspunkt i kjent forekomstareal ved to ulike år der perioden fra t<sub>1</sub>  til og med år t<sub>2</sub> er på minimum 10 år. Hvis artens første forekomst i norsk natur er fra 2012 eller senere, eller perioden er mindre enn 10 år av andre årsaker, vil ekspansjonshastigheten beregnes med utgangspunkt i beste anslag på forekomstarealet i dag og om 50 år (hentet fra Utbredelse i Norge). Er perioden på minimum 10 år?</p>
                                 <Xcomp.StringEnum 
                                     mode="radio"
                                     observableValue={[riskAssessment, "AOOfirstOccurenceLessThan10Years"]} 
                                     // style={{marginLeft: "35px"}}
                                     codes={koder.yesNo}
                                 />                  
-                                {riskAssessment.AOOfirstOccurenceLessThan10Years === "no" ?
+                                {/* {riskAssessment.AOOfirstOccurenceLessThan10Years === "no" ?
                                     <>
                                         <p> Hvis tidsserien tillater det anbefales det at ekspansjonshastigheten estimeres ut fra kjent forekomstareal ved to ulike år, hvor perioden fra år 1 t.o.m. år 2 er på minimum 10 år. Er dette mulig?</p>
                                         <Xcomp.StringEnum 
@@ -568,7 +569,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                         />                  
                                     </> : 
                                     null
-                                }
+                                } */}
 
                                 <p style={{marginTop: "10px", marginBottom: "20px", paddingTop: "20px"}} dangerouslySetInnerHTML={{__html: labels.BcritText.SelfProducing}}></p>
 
