@@ -468,6 +468,18 @@ namespace SwissKnife.Database
                 if (exAssessment.HorizonEcologicalEffect != null && exAssessment.HorizonEcologicalEffect.ToLowerInvariant() == "yesaftergone" && exAssessment.HorizonEcologicalEffect != "yesAfterGone")
                     exAssessment.HorizonEcologicalEffect = "yesAfterGone";
 
+                if (exAssessment.HorizonScanResult == "scanned_fullAssessment")
+                {
+                    if (exAssessment.HorizonEstablismentPotential == "0")
+                    {
+                        exAssessment.RiskAssessment.Occurrences1Best = 0;
+                    }
+                    else if (exAssessment.HorizonEstablismentPotential == "1")
+                    {
+                        exAssessment.RiskAssessment.Occurrences1Best = 1;
+                    }
+                }
+
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)
                 {
@@ -531,6 +543,18 @@ namespace SwissKnife.Database
                     exAssessment.HorizonEcologicalEffect = "no";
                 if (exAssessment.HorizonEcologicalEffect != null && exAssessment.HorizonEcologicalEffect.ToLowerInvariant() == "yesaftergone" && exAssessment.HorizonEcologicalEffect != "yesAfterGone")
                     exAssessment.HorizonEcologicalEffect = "yesAfterGone";
+
+                if (exAssessment.HorizonScanResult == "scanned_fullAssessment")
+                {
+                    if (exAssessment.HorizonEstablismentPotential == "0")
+                    {
+                        exAssessment.RiskAssessment.Occurrences1Best = 0;
+                    }
+                    else if (exAssessment.HorizonEstablismentPotential == "1")
+                    {
+                        exAssessment.RiskAssessment.Occurrences1Best = 1;
+                    }
+                }
 
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)
