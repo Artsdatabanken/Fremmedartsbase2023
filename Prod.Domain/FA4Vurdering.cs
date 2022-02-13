@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Prod.Domain.Helpers;
 
 //using System.Text.Json.Serialization;
 
@@ -49,8 +50,12 @@ namespace Prod.Domain
     public class CTaxon
     {
         public string Id { get; set; }
+        //[JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
+        [JsonConverter(typeof(JsonHelpers.CrazyIntJsonConverter))]
         public int TaxonID { get; set; }
         public string ScientificName { get; set; }
+        //[JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
+        [JsonConverter(typeof(JsonHelpers.CrazyIntJsonConverter))]
         public int ScientificNameId { get; set; }
 
         public string ScientificNameAuthor { get; set; }
@@ -98,6 +103,10 @@ namespace Prod.Domain
             newfa.RiskAssessment.Criteria = RiskAssessment.CreateDefaultCriteria();
             return newfa;
         }
+
+        [JsonExtensionData]
+        public Dictionary<string, JsonElement>? ExtensionData { get; set; }
+
         public List<TaxonHistory> TaxonomicHistory { get; set; } = new List<TaxonHistory>();
         public TrackInfo ImportInfo { get; set; } = new TrackInfo();
         public int Id { get; set; }
@@ -681,6 +690,9 @@ public partial class FA4 // (3.2) Artsegenskaper
         ////public Int64? EcologicalEffectRiskUncertantyLevel { get; set; }
         //public string SpreadRiskDecisiveCriterias { get; set; }
         //public string EcologicalEffectDecisiveCriterias { get; set; }
+        [JsonExtensionData()]
+        public Dictionary<string, JsonElement>? ExtensionData { get; set; }
+
         public int RiskLevel { get; set; } = -1;
         public string DecisiveCriteria { get; set; }
         public string RiskLevelCode { get; set; }
@@ -1262,12 +1274,15 @@ public partial class FA4 // (3.2) Artsegenskaper
         {
             public string ScientificName { get; set; }
 
-            [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
+            //[JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
+            [JsonConverter(typeof(JsonHelpers.CrazyIntJsonConverter))]
             public int ScientificNameId { get; set; }
             public string ScientificNameAuthor { get; set; } = "";
             public string VernacularName { get; set; }
             public string TaxonRank { get; set; }
-            public string TaxonId { get; set; }
+            //[JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
+            [JsonConverter(typeof(JsonHelpers.CrazyIntJsonConverter))]
+            public int TaxonId { get; set; }
         }
 
         public class SpeciesSpeciesInteraction : SpeciesInteraction // lagt til 09.09.2016

@@ -22,7 +22,8 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Change this to force index rebuild!
         /// </summary>
-        public const int IndexVersion = 3;
+        public const int IndexVersion = 4;
+        private static readonly object IndexingLock = new();
 
         private const string Field_Id = "Id";
         private const string Field_Group = "Expertgroup";
@@ -146,52 +147,56 @@ namespace Prod.Api.Helpers
             _dbContext.SaveChanges();
         }
 
-        public static DateTime Index(bool clear, ProdDbContext _dbContext, Index _index)
+        public static DateTime ReIndex(ProdDbContext _dbContext, Index _index)
         {
-            //if (_index.IndexCount() > 1 && _index.IndexCount() < 5000) return;
-
-
-            if (clear) _index.ClearIndex();
-
             var batchSize = 1000;
             var pointer = 0;
             var maxDate = DateTime.MinValue;
-            while (true)
+            //if (_index.IndexCount() > 1 && _index.IndexCount() < 5000) return;
+            lock (IndexingLock)
             {
-                var result = _dbContext.Assessments
-                    .Include(x => x.LastUpdatedByUser)
-                    .Include(x => x.LockedForEditByUser)
-                    .Include(x => x.Comments)
-                    .Where(x => x.IsDeleted == false).OrderBy(x => x.Id)
-                    .Skip(pointer).Take(batchSize)
-                    .ToArray();
-                if (result.Length == 0) break;
-                pointer += result.Length;
-                var tempDate = result.Max(x => x.LastUpdatedAt);
-                if (maxDate < tempDate) maxDate = tempDate;
+                _index.ClearIndex();
 
-                var docs = result.Select(GetIndexFieldsFromAssessment).ToArray();
-                _index.AddOrUpdate(docs);
+                while (true)
+                {
+                    var result = _dbContext.Assessments
+                        .Include(x => x.LastUpdatedByUser)
+                        .Include(x => x.LockedForEditByUser)
+                        .Include(x => x.Comments)
+                        .Where(x => x.IsDeleted == false).OrderBy(x => x.Id)
+                        .Skip(pointer).Take(batchSize)
+                        .ToArray();
+                    if (result.Length == 0) break;
+                    pointer += result.Length;
+                    var tempDate = result.Max(x => x.LastUpdatedAt);
+                    if (maxDate < tempDate) maxDate = tempDate;
+
+                    var docs = result.Select(GetIndexFieldsFromAssessment).ToArray();
+                    _index.AddOrUpdate(docs);
+                }
+
+                SetTimeStamps(_dbContext, _index, maxDate);
             }
-
-            SetTimeStamps(_dbContext, _index, maxDate);
 
             return maxDate;
         }
 
         public static void Index(Assessment assessment, Index index)
         {
-            if (assessment.IsDeleted)
+            lock (IndexingLock)
             {
-                index.Delete(new[] { assessment.Id }.ToArray());
-            }
-            else
-            {
-                var doc = GetIndexFieldsFromAssessment(assessment);
-                index.AddOrUpdate(doc);
-            }
+                if (assessment.IsDeleted)
+                {
+                    index.Delete(new[] { assessment.Id }.ToArray());
+                }
+                else
+                {
+                    var doc = GetIndexFieldsFromAssessment(assessment);
+                    index.AddOrUpdate(doc);
+                }
 
-            index.SetIndexVersion(new IndexVersion { Version = IndexVersion, DateTime = assessment.LastUpdatedAt });
+                index.SetIndexVersion(new IndexVersion { Version = IndexVersion, DateTime = assessment.LastUpdatedAt });
+            }
         }
         //private const string Field_DateLastSave = "DateSave";
 
@@ -225,8 +230,8 @@ namespace Prod.Api.Helpers
                 new StringField(Field_ScientificNameAsTerm, ass.EvaluatedScientificName.ToLowerInvariant(),
                     Field.Store.NO), // textfield - ignore case
                 //new StoredField(Field_TaxonHierarcy, ass.VurdertVitenskapeligNavnHierarki),
-                new StringField(Field_Category, GetCategoryFromRiskLevel(ass.RiskAssessment.RiskLevel),
-                    Field.Store.YES),
+                //new StringField(Field_Category, GetCategoryFromRiskLevel(ass.RiskAssessment.RiskLevel),
+                //    Field.Store.YES),
 
                 //new StringField(Field_AssessmentContext, ass.VurderingsContext, Field.Store.YES),
                 new TextField(Field_PopularName, ass.EvaluatedVernacularName ?? string.Empty, Field.Store.YES),
@@ -286,7 +291,7 @@ namespace Prod.Api.Helpers
 
             if (ass2018 != null)
             {
-                if (IsDocumentEvaluated(ass2018.MainCategory, ass2018.MainSubCategory, ass2018.MainSubCategory, ass))
+                if (Is2018DocumentEvaluated(ass2018.MainCategory, ass2018.MainSubCategory, ass2018.MainSubCategory))
                     indexFields.Add(new StringField(Field_Category2018, GetCategoryFromRiskLevel(ass2018?.RiskLevel ?? -1),
                         Field.Store.YES));
                 else
@@ -452,22 +457,7 @@ namespace Prod.Api.Helpers
             }
         }
 
-        private static bool IsDocumentEvaluated(FA4 vurdering)
-        {
-            if (vurdering.AlienSpeciesCategory == "AlienSpecie" ||
-                vurdering.AlienSpeciesCategory == "EcoEffectWithoutEstablishment")
-                return true;
-            if (vurdering.AlienSpeciesCategory == "DoorKnocker")
-                return vurdering.DoorKnockerCategory == "doRiskAssessment";
-            if (vurdering.AlienSpeciesCategory == "RegionallyAlien")
-                return vurdering.RegionallyAlienCategory == "doRiskAssessment";
-            if (vurdering.AlienSpeciesCategory == "NotApplicable")
-                return false;
-            return false; // should not be reachable // todo: replace with exception
-        }
-
-        private static bool IsDocumentEvaluated(string alienSpeciesCategory, string doorKnockerCategory,
-            string regionallyAlienCategory, FA4 ass)
+        private static bool IsDocumentEvaluated(FA4 ass)
         {
             if (!(ass.IsAlienSpecies.HasValue && ass.IsAlienSpecies.Value == true)) return false;
 
@@ -475,6 +465,21 @@ namespace Prod.Api.Helpers
 
             if (ass.AlienSpeciesCategory == "NotDefined") return false; // todo: This should probably also be "WillNotBeRiskAssessed" (?? check this)
             if (ass.AlienSpeciesCategory == "EffectWithoutReproduction") return false;
+            if (ass.AlienSpeciesCategory == "AlienSpecie" ||
+                ass.AlienSpeciesCategory == "EcoEffectWithoutEstablishment")
+                return true;
+            if (ass.AlienSpeciesCategory == "DoorKnocker")
+                return ass.DoorKnockerCategory == "doRiskAssessment";
+            if (ass.AlienSpeciesCategory == "RegionallyAlien")
+                return ass.RegionallyAlienCategory == "doRiskAssessment";
+            if (ass.AlienSpeciesCategory == "NotApplicable")
+                return false;
+            return false; // should not be reachable // todo: replace with exception
+        }
+
+        private static bool Is2018DocumentEvaluated(string alienSpeciesCategory, string doorKnockerCategory,
+            string regionallyAlienCategory)
+        {
             if (alienSpeciesCategory == "AlienSpecie" || alienSpeciesCategory == "EcoEffectWithoutEstablishment")
                 return true;
             if (alienSpeciesCategory == "DoorKnocker")
