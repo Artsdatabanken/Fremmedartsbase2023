@@ -860,6 +860,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.YearFirstEstablishedNature, opt => opt.Ignore())
                     .ForMember(dest => dest.YearFirstEstablishedNatureInsecure, opt => opt.Ignore())
                     .ForMember(dest => dest.YearFirstDomesticObservation, opt => opt.Ignore())
+                    .ForMember(dest => dest.ExtensionData, opt => opt.Ignore())
                     .AfterMap((src, dest) =>
                     {
                         if (src.ChosenSpreadYearlyIncrease == "SpreadYearlyIncreaseObservations")
@@ -951,6 +952,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.ArtskartWaterModel, opt => opt.Ignore()) // ny av året
                     .ForMember(dest => dest.Habitats, opt => opt.Ignore())  // ny av året
                     .ForMember(dest => dest.ImpactedNatureTypesFrom2018, opt => opt.Ignore()) // kun for plassering av ikke kompatible naturtyper
+                    .ForMember(dest => dest.ExtensionData, opt => opt.Ignore())
                     .AfterMap((src, dest) =>
                     {
                         // set some standard values
