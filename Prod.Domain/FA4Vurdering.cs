@@ -98,6 +98,10 @@ namespace Prod.Domain
             newfa.RiskAssessment.Criteria = RiskAssessment.CreateDefaultCriteria();
             return newfa;
         }
+
+        [JsonExtensionData]
+        public Dictionary<string, JsonElement>? ExtensionData { get; set; }
+
         public List<TaxonHistory> TaxonomicHistory { get; set; } = new List<TaxonHistory>();
         public TrackInfo ImportInfo { get; set; } = new TrackInfo();
         public int Id { get; set; }
@@ -681,6 +685,9 @@ public partial class FA4 // (3.2) Artsegenskaper
         ////public Int64? EcologicalEffectRiskUncertantyLevel { get; set; }
         //public string SpreadRiskDecisiveCriterias { get; set; }
         //public string EcologicalEffectDecisiveCriterias { get; set; }
+        [JsonExtensionData()]
+        public Dictionary<string, JsonElement>? ExtensionData { get; set; }
+
         public int RiskLevel { get; set; } = -1;
         public string DecisiveCriteria { get; set; }
         public string RiskLevelCode { get; set; }

@@ -28,6 +28,9 @@ namespace Prod.Api.Controllers
         private readonly Index _index;
         private readonly IReferenceService _referenceService;
 
+        private string[] _knownExtraFields = new[]
+            { "critA", "critB", "critC", "critD", "critE", "critF", "critG", "critH", "critI", "furtherInfoAboutImport" };
+
         public AssessmentController(IDiscoveryCache discoveryCache, ProdDbContext dbContext,
             IReferenceService referenceService, IHubContext<MessageHub> hubContext, Index index) : base(discoveryCache,
             dbContext)
@@ -304,6 +307,29 @@ namespace Prod.Api.Controllers
         [HttpPost("{id}")]
         public async Task<IActionResult> Post(string id, [FromBody] FA4 value)
         {
+            if (value.ExtensionData != null || value.RiskAssessment.ExtensionData != null)
+            {
+                if (this.Request.Host.Host == "localhost")
+                {
+                    if (value.ExtensionData != null)
+                        foreach (var element in value.ExtensionData.Where(element =>
+                                     !_knownExtraFields.Contains(element.Key)))
+                        {
+                            throw new Exception("New nonmapped field on Fa4:" + element.Key);
+                        }
+
+                    if (value.RiskAssessment.ExtensionData != null)
+                        foreach (var element in value.RiskAssessment.ExtensionData.Where(element =>
+                                     !_knownExtraFields.Contains(element.Key)))
+                        {
+                            throw new Exception("New nonmapped field on Fa4.RiskAssessment:" + element.Key);
+                        }
+                }
+
+                value.ExtensionData = null;
+                value.RiskAssessment.ExtensionData = null;
+            }
+
             var role = await GetRoleInGroup(value.ExpertGroup);
             try
             {
