@@ -84,6 +84,37 @@ const riskAssessmentGetterFields = [
 ]
 
 
+function getCategoryText(val, pathways) {
+    var text = ""
+    if (pathways != undefined) {
+        pathways.map (pathway => pathway.children.map(higherLevel => { 
+            higherLevel.children.map(lowerLevel => {
+                if (lowerLevel.value === val) { 
+                    text = higherLevel.name + " - " + lowerLevel.name + ": "
+                }
+            })     
+        }))
+    }
+    return text
+}
+function removeBreaks (text) {
+    var br = new RegExp('<br>', 'ig');
+    text = text.replace(br, '');
+    return text
+}
+function generateFurtherInfoText(migrationPathways, appState) {
+    var elaborateInformation = ""
+    if (migrationPathways != []) {
+        for (var i = 0; i < migrationPathways.length; i++) {
+            if (migrationPathways[i].elaborateInformation != "") {
+                var categoryText = getCategoryText(migrationPathways[i].codeItem, appState.spredningsveier.children)
+                elaborateInformation += categoryText + removeBreaks(migrationPathways[i].elaborateInformation) + "." + "<br>"                       
+            }
+        }
+    }
+    return elaborateInformation
+}
+
 
 export default function enhanceAssessment(json, appState) {
     // * * * remove properties that will be replaced with computed observables * * *
@@ -197,6 +228,22 @@ export default function enhanceAssessment(json, appState) {
         //         : assessment.riskAssessment.decisiveCriteria
         //     return result
         // },
+
+        get spreadIndoorFurtherInfoGeneratedText() {
+            const migrationPathways  = assessment.importPathways
+            const result = generateFurtherInfoText(migrationPathways, appState)
+            return result
+        },
+        get spreadIntroductionFurtherInfoGeneratedText() {
+            const migrationPathways  = assessment.assesmentVectors.filter(vector => vector.introductionSpread == "introduction")
+            const result = generateFurtherInfoText(migrationPathways, appState)
+            return result
+        },
+        get spreadFurtherSpreadFurtherInfoGeneratedText() {
+            const migrationPathways  = assessment.assesmentVectors.filter(vector => vector.introductionSpread == "spread")
+            const result = generateFurtherInfoText(migrationPathways, appState)
+            return result
+        },
 
     })
     //deleteProps(ra, riskAssessmentGetterFields)

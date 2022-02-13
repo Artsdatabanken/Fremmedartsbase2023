@@ -104,11 +104,17 @@ export default class Assessment41Import extends React.Component {
                 
                     {assessment.indoorProduktion != null &&
                     <div>
-                        {assessment.indoorProduktion == "negative" &&                    
-                                <Assessment42Spredningsveier  name={"Til innendørs- eller produksjonsareal"} furtherInfo={labels.Import.furtherInfoIndoors}/>  
+                        {assessment.indoorProduktion == "negative" 
+                                ? <>  
+                                    <Assessment42Spredningsveier  name={"Til innendørs- eller produksjonsareal"} furtherInfo={labels.Import.furtherInfoIndoors}/>  
+                                    {/* <Xcomp.String observableValue={[assessment, "spreadIndoorFurtherInfoGeneratedText"]}  /> */}
+                                  </>
+                                : null
                         }
                             <Assessment42Spredningsveier name={"Introduksjon til natur"} furtherInfo={labels.Import.furtherInfoIntro}/>
+                            {/* <Xcomp.String observableValue={[assessment, "spreadIntroductionFurtherInfoGeneratedText"]}  /> */}
                             <Assessment42Spredningsveier name={"Videre spredning i natur"} furtherInfo={labels.Import.furtherInfoNature}/>
+                            {/* <Xcomp.String observableValue={[assessment, "spreadFurtherSpreadFurtherInfoGeneratedText"]}  /> */}
                      </div>
                     }
                 
