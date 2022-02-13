@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Prod.Domain.Helpers;
 
 //using System.Text.Json.Serialization;
 
@@ -49,8 +50,12 @@ namespace Prod.Domain
     public class CTaxon
     {
         public string Id { get; set; }
+        //[JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
+        [JsonConverter(typeof(JsonHelpers.CrazyIntJsonConverter))]
         public int TaxonID { get; set; }
         public string ScientificName { get; set; }
+        //[JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
+        [JsonConverter(typeof(JsonHelpers.CrazyIntJsonConverter))]
         public int ScientificNameId { get; set; }
 
         public string ScientificNameAuthor { get; set; }
@@ -1269,12 +1274,14 @@ public partial class FA4 // (3.2) Artsegenskaper
         {
             public string ScientificName { get; set; }
 
-            [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
+            //[JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
+            [JsonConverter(typeof(JsonHelpers.CrazyIntJsonConverter))]
             public int ScientificNameId { get; set; }
             public string ScientificNameAuthor { get; set; } = "";
             public string VernacularName { get; set; }
             public string TaxonRank { get; set; }
-            [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
+            //[JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
+            [JsonConverter(typeof(JsonHelpers.CrazyIntJsonConverter))]
             public int TaxonId { get; set; }
         }
 
