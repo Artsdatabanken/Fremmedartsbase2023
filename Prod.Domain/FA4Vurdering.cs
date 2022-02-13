@@ -1267,7 +1267,7 @@ public partial class FA4 // (3.2) Artsegenskaper
             public string ScientificNameAuthor { get; set; } = "";
             public string VernacularName { get; set; }
             public string TaxonRank { get; set; }
-            public string TaxonId { get; set; }
+            public int TaxonId { get; set; }
         }
 
         public class SpeciesSpeciesInteraction : SpeciesInteraction // lagt til 09.09.2016
