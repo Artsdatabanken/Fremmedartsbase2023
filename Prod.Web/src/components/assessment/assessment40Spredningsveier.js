@@ -6,7 +6,7 @@ import Tabs from '../tabs';
 // import assessment20ArtensStatus from './assessment20ArtensStatus';
 // import Vurdering32Artsegenskaper from './assessment30Artsegenskaper';
 import Assessment41Import from './assessment41Import';
-// import Assessment42Spredningsveier from './vurdering34Spredningsveier';
+// import Assessment42Spredningsveier from './assessment42Spredningsveier';
 // import Vurdering35Utbredelseshistorikk from './vurdering35Utbredelseshistorikk';
 // import { JsonHubProtocol } from '@microsoft/signalr';
 

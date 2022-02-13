@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import {observer, inject} from 'mobx-react';
 import {action, autorun, computed, extendObservable, observable, toJS} from 'mobx';
 import * as Xcomp from './observableComponents';
-import Assessment42Spredningsveier from './vurdering34Spredningsveier'
+import Assessment42Spredningsveier from './assessment42Spredningsveier'
 import NewMigrationPathwaySelector from './40Spredningsveier/NewMigrationPathwaySelector'
 import MPTable from './40Spredningsveier/MigrationPathwayTable'
 import { DriveEtaRounded } from '@material-ui/icons';
