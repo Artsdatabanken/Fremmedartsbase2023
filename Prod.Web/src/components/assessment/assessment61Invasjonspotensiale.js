@@ -570,8 +570,9 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                     </> : 
                                     null
                                 } */}
-
-                                <p style={{marginTop: "10px", marginBottom: "20px", paddingTop: "20px"}} dangerouslySetInnerHTML={{__html: labels.BcritText.SelfProducing}}></p>
+                                {riskAssessment.AOOfirstOccurenceLessThan10Years === "yes"
+                                ?<>
+                                    <p style={{marginTop: "10px", marginBottom: "20px", paddingTop: "20px"}} dangerouslySetInnerHTML={{__html: labels.BcritText.SelfProducing}}></p>
 
 
                                         <table className="table BCritTable">
@@ -728,7 +729,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                     <Xcomp.HtmlString                            
                                                 observableValue={[riskAssessment, "commentOrDescription"]}                                                
                                             />                      
-                                    
+                                    </>
+                                    : null }
                                     <p>{textASB} </p>
                                    {/* <p>{ntLabels.scoreSummary}</p>
                                     <ScoreUnsure appState={appState}
