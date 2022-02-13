@@ -1267,6 +1267,7 @@ public partial class FA4 // (3.2) Artsegenskaper
             public string ScientificNameAuthor { get; set; } = "";
             public string VernacularName { get; set; }
             public string TaxonRank { get; set; }
+            [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString)]
             public int TaxonId { get; set; }
         }
 
