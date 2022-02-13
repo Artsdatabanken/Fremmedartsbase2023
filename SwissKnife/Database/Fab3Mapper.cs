@@ -646,32 +646,67 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.Scale, opt => opt.Ignore())
                     .ForMember(dest => dest.InteractionTypes, opt => opt.Ignore())
                     .ForMember(dest => dest.BasisOfAssessment, opt => opt.Ignore())
-                    .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.Ignore());
+                    .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.MapFrom(x => x.KeyStoneSpecie))
+                    .AfterMap((src, dest) =>
+                    {
+                        if (src.DomesticOrAbroad == "True")
+                        {
+                            dest.BasisOfAssessment = new List<string>() { "WrittenDocumentationAbroad" };
+                        }
+                    });
                 cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.NaturetypeInteraction,
                         Prod.Domain.RiskAssessment.NaturetypeInteraction>()
                     .ForMember(dest => dest.Scale, opt => opt.Ignore())
                     .ForMember(dest => dest.InteractionTypes, opt => opt.Ignore())
                     .ForMember(dest => dest.BasisOfAssessment, opt => opt.Ignore())
-                    .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.Ignore());
+                    .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.MapFrom(x => x.KeyStoneSpecie))
+                    .AfterMap((src, dest) =>
+                    {
+                        if (src.DomesticOrAbroad == "True")
+                        {
+                            dest.BasisOfAssessment = new List<string>() { "WrittenDocumentationAbroad" };
+                        }
+                    });
                 cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.SpeciesInteraction,
                         Prod.Domain.RiskAssessment.SpeciesInteraction>()
                     .ForMember(dest => dest.Scale, opt => opt.Ignore())
                     .ForMember(dest => dest.InteractionTypes, opt => opt.Ignore())
                     .ForMember(dest => dest.BasisOfAssessment, opt => opt.Ignore())
-                    .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.Ignore());
+                    .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.MapFrom(x => x.KeyStoneSpecie))
+                    .AfterMap((src, dest) =>
+                    {
+                        if (src.DomesticOrAbroad == "True")
+                        {
+                            dest.BasisOfAssessment = new List<string>() { "WrittenDocumentationAbroad" };
+                        }
+                    });
                 cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.SpeciesNaturetypeInteraction,
                         Prod.Domain.RiskAssessment.SpeciesNaturetypeInteraction>()
                     .ForMember(dest => dest.Scale, opt => opt.Ignore())
                     .ForMember(dest => dest.Name, opt => opt.Ignore())
                     .ForMember(dest => dest.InteractionTypes, opt => opt.Ignore())
                     .ForMember(dest => dest.BasisOfAssessment, opt => opt.Ignore())
-                    .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.Ignore());
+                    .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.MapFrom(x => x.KeyStoneSpecie))
+                    .AfterMap((src, dest) =>
+                    {
+                        if (src.DomesticOrAbroad == "True")
+                        {
+                            dest.BasisOfAssessment = new List<string>() { "WrittenDocumentationAbroad" };
+                        }
+                    });
                 cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.SpeciesSpeciesInteraction,
                         Prod.Domain.RiskAssessment.SpeciesSpeciesInteraction>()
                     .ForMember(dest => dest.Scale, opt => opt.Ignore())
                     .ForMember(dest => dest.InteractionTypes, opt => opt.Ignore())
                     .ForMember(dest => dest.BasisOfAssessment, opt => opt.Ignore())
-                    .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.Ignore());
+                    .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.MapFrom(x => x.KeyStoneSpecie))
+                    .AfterMap((src, dest) =>
+                    {
+                        if (src.DomesticOrAbroad == "True")
+                        {
+                            dest.BasisOfAssessment = new List<string>() { "WrittenDocumentationAbroad" };
+                        }
+                    });
 
                 cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment, Prod.Domain.RiskAssessment>()
 
