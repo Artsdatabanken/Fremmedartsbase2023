@@ -125,7 +125,17 @@ namespace SwissKnife.Database
                     doc.HorizonScanResult = horizonScanResult.Value == true ? "scanned_fullAssessment" : "scanned_noAssessment";
                     doc.HorizonDoScanning = horizonScanResult.Value != true;
                     // todo fix potensielt vurderingsendringer her....
-
+                    if (doc.HorizonScanResult == "scanned_fullAssessment")
+                    {
+                        if (doc.HorizonEstablismentPotential == "0")
+                        {
+                            doc.RiskAssessment.Occurrences1Best = 0;
+                        }
+                        else if (doc.HorizonEstablismentPotential == "1")
+                        {
+                            doc.RiskAssessment.Occurrences1Best = 1;
+                        }
+                    }
 
                     var docLastUpdatedOn = DateTime.Now;
                     item.Doc = System.Text.Json.JsonSerializer.Serialize(doc);
