@@ -71,24 +71,24 @@ export default class Assessment52Utbredelse extends React.Component {
                     .map(x => x.globalId);
                 }
             }
-            if (assessment.artskartModel) {
-                const getValue = (value) => {
-                    return value !== undefined ? value : undefined;
-                };
-                runInAction(() => {
-                    assessment.observationFromYear = getValue(assessment.observationFromYear);
-                    assessment.observationToYear = getValue(assessment.observationToYear);
-                    assessment.includeObjects = getValue(assessment.includeObjects);
-                    assessment.includeNorge = getValue(assessment.includeNorge);
-                    assessment.includeSvalbard = getValue(assessment.includeSvalbard);
-                    assessment.excludeObjects = getValue(assessment.excludeObjects);
-                    assessment.excludeGbif = getValue(assessment.excludeGbif);
-                })
-            } else {
-                runInAction(() => {
-                    assessment.artskartModel = {};
-                })
-            }
+            // if (assessment.artskartModel) {
+            //     const getValue = (value) => {
+            //         return value !== undefined ? value : undefined;
+            //     };
+            //     runInAction(() => {
+            //         assessment.observationFromYear = getValue(assessment.observationFromYear);
+            //         assessment.observationToYear = getValue(assessment.observationToYear);
+            //         assessment.includeObjects = getValue(assessment.includeObjects);
+            //         assessment.includeNorge = getValue(assessment.includeNorge);
+            //         assessment.includeSvalbard = getValue(assessment.includeSvalbard);
+            //         assessment.excludeObjects = getValue(assessment.excludeObjects);
+            //         assessment.excludeGbif = getValue(assessment.excludeGbif);
+            //     })
+            // } else {
+            //     runInAction(() => {
+            //         assessment.artskartModel = {};
+            //     })
+            // }
         }
     }
 

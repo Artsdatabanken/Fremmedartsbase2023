@@ -112,20 +112,20 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
 
         // riskAssessment.AOO2 == null ? riskAssessment.AOO2 = riskAssessment.AOOknown2 : riskAssessment.AOO2 = 0
 
-        // // // this.props.appState.virtualArtskartModel0 = observable({
-        // // //     observationFromYear: assessment.artskartModel.observationFromYear,
-        // // //     observationToYear: assessment.riskAssessment.AOOyear1,
-        // // //     includeNorge: assessment.artskartModel.includeNorge,
-        // // //     excludeObjects: assessment.artskartModel.excludeObjects,
-        // // //     excludeGbif: assessment.artskartModel.excludeGbif,
-        // // // });        
-        // // // this.props.appState.virtualArtskartModel = observable({
-        // // //     observationFromYear: assessment.artskartModel.observationFromYear,
-        // // //     observationToYear: assessment.riskAssessment.AOOyear2,
-        // // //     includeNorge: assessment.artskartModel.includeNorge,
-        // // //     excludeObjects: assessment.artskartModel.excludeObjects,
-        // // //     excludeGbif: assessment.artskartModel.excludeGbif,
-        // // // });
+        this.props.appState.virtualArtskartModel0 = observable({
+            observationFromYear: assessment.artskartModel.observationFromYear,
+            observationToYear: assessment.riskAssessment.AOOyear1,
+            includeNorge: assessment.artskartModel.includeNorge,
+            excludeObjects: assessment.artskartModel.excludeObjects,
+            excludeGbif: assessment.artskartModel.excludeGbif,
+        });        
+        this.props.appState.virtualArtskartModel = observable({
+            observationFromYear: assessment.artskartModel.observationFromYear,
+            observationToYear: assessment.riskAssessment.AOOyear2,
+            includeNorge: assessment.artskartModel.includeNorge,
+            excludeObjects: assessment.artskartModel.excludeObjects,
+            excludeGbif: assessment.artskartModel.excludeGbif,
+        });
 
         // commented this out. it crashed the application.
         // if (assessment.artskartModel2 === undefined) {
