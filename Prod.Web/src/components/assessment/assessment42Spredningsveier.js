@@ -12,7 +12,7 @@ const labels = config.labels
 
 @inject("appState")
 @observer
-export default class Vurdering34Spredningsveier extends React.Component {
+export default class Assessment42Spredningsveier extends React.Component {
     constructor(props) {
         super(props);
         extendObservable(this, {
@@ -256,7 +256,7 @@ export default class Vurdering34Spredningsveier extends React.Component {
 
 
 
-// Vurdering34Spredningsveier.propTypes = {
+// Assessment42Spredningsveier.propTypes = {
 // 	viewModel: PropTypes.object.isRequired,
 // 	vurdering: PropTypes.object.isRequired
 // }

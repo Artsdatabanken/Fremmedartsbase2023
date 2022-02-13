@@ -6,7 +6,7 @@ import Tabs from '../tabs';
 // import assessment20ArtensStatus from './assessment20ArtensStatus';
 // import Vurdering32Artsegenskaper from './assessment30Artsegenskaper';
 import Assessment41Import from './assessment41Import';
-// import Vurdering34Spredningsveier from './vurdering34Spredningsveier';
+// import Assessment42Spredningsveier from './assessment42Spredningsveier';
 // import Vurdering35Utbredelseshistorikk from './vurdering35Utbredelseshistorikk';
 // import { JsonHubProtocol } from '@microsoft/signalr';
 
@@ -43,7 +43,7 @@ export default class Assessment40Spredningsveier extends React.Component {
                     spredningsveierTabs.activeTab.id === 1  ?
                     <Assessment41Import  />
                     // : artsinformasjonTabs.activeTab.id === 4  ?
-                    // <Vurdering34Spredningsveier vurdering={vurdering}  viewModel={viewModel} fabModel={fabModel} />
+                    // <Assessment42Spredningsveier vurdering={vurdering}  viewModel={viewModel} fabModel={fabModel} />
                     // : artsinformasjonTabs.activeTab.id === 5  ?
                     // <Vurdering35Utbredelseshistorikk vurdering={vurdering}  viewModel={viewModel} fabModel={fabModel}  />
                     :<h1>Oooops?? artinfotab:{spredningsveierTabs.activeTab.id}</h1>}

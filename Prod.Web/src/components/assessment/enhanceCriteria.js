@@ -554,10 +554,10 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         get expansionSpeedB2a() {
             const result =
                 riskAssessment.AOOfirstOccurenceLessThan10Years === "yes"
-                ? trunc(20 * (sqrt(r.AOO50yrBest) - sqrt(r.AOOtotalBest)) / sqrt(pi))
-                : r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null || (r.AOOyear2 - r.AOOyear1) < 10 || r.AOO1 <= 0 || r.AOO2 <= 0
+                ? r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null || (r.AOOyear2 - r.AOOyear1) < 10 || r.AOO1 <= 0 || r.AOO2 <= 0
                     ? 0
                     : trunc(sqrt(r.AOOdarkfigureBest) * 2000 * (sqrt(ceil(r.AOO2 / 4)) - sqrt(ceil(r.AOO1 / 4))) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
+                : trunc(20 * (sqrt(r.AOO50yrBest) - sqrt(r.AOOtotalBest)) / sqrt(pi))
 
                 // // : riskAssessment.AOOestimationPeriod10yrPossible === "yes"
                 // // ? r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null || (r.AOOyear2 - r.AOOyear1) < 10 || r.AOO1 <= 0 || r.AOO2 <= 0
@@ -602,10 +602,10 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         get expansionLowerQB2a() {
             const result =
                 riskAssessment.AOOfirstOccurenceLessThan10Years === "yes"
-                ? trunc(20 * (sqrt(r.AOO50yrHigh) - sqrt(r.AOOtotalBest)) / sqrt(pi))
-                : r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null || (r.AOOyear2 - r.AOOyear1) < 10 || r.AOO1 <= 0 || r.AOO2 <= 0
+                ? r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null || (r.AOOyear2 - r.AOOyear1) < 10 || r.AOO1 <= 0 || r.AOO2 <= 0
                     ? 0
                     : trunc(sqrt(r.AOOdarkfigureLow) * 2000 * (sqrt(ceil(r.AOO2 / 4)) - sqrt(ceil(r.AOO1 / 4))) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
+                : trunc(20 * (sqrt(r.AOO50yrHigh) - sqrt(r.AOOtotalBest)) / sqrt(pi))
 
                 // // : riskAssessment.AOOestimationPeriod10yrPossible === "yes"
                 // // ? r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null || (r.AOOyear2 - r.AOOyear1) < 10 || r.AOO1 <= 0 || r.AOO2 <= 0
@@ -629,10 +629,10 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         get expansionUpperQB2a() {
             const result =
                 riskAssessment.AOOfirstOccurenceLessThan10Years === "yes"
-                ? trunc(20 * (sqrt(r.AOO50yrLow) - sqrt(r.AOOtotalBest)) / sqrt(pi))
-                : r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null || (r.AOOyear2 - r.AOOyear1) < 10 || r.AOO1 <= 0 || r.AOO2 <= 0
+                ? r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null || (r.AOOyear2 - r.AOOyear1) < 10 || r.AOO1 <= 0 || r.AOO2 <= 0
                     ? 0
                     : trunc(sqrt(r.AOOdarkfigureHigh) * 2000 * (sqrt(ceil(r.AOO2 / 4)) - sqrt(ceil(r.AOO1 / 4))) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
+                : trunc(20 * (sqrt(r.AOO50yrLow) - sqrt(r.AOOtotalBest)) / sqrt(pi))
 
                 // // : riskAssessment.AOOestimationPeriod10yrPossible === "yes"
                 // // ? r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null || (r.AOOyear2 - r.AOOyear1) < 10 || r.AOO1 <= 0 || r.AOO2 <= 0

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import {observer, inject} from 'mobx-react';
 import {action, autorun, computed, extendObservable, observable, toJS} from 'mobx';
 import * as Xcomp from './observableComponents';
-import Vurdering34Spredningsveier from './vurdering34Spredningsveier'
+import Assessment42Spredningsveier from './assessment42Spredningsveier'
 import NewMigrationPathwaySelector from './40Spredningsveier/NewMigrationPathwaySelector'
 import MPTable from './40Spredningsveier/MigrationPathwayTable'
 import { DriveEtaRounded } from '@material-ui/icons';
@@ -105,10 +105,10 @@ export default class Assessment41Import extends React.Component {
                     {assessment.indoorProduktion != null &&
                     <div>
                         {assessment.indoorProduktion == "negative" &&                    
-                                <Vurdering34Spredningsveier  name={"Til innendørs- eller produksjonsareal"} furtherInfo={labels.Import.furtherInfoIndoors}/>  
+                                <Assessment42Spredningsveier  name={"Til innendørs- eller produksjonsareal"} furtherInfo={labels.Import.furtherInfoIndoors}/>  
                         }
-                            <Vurdering34Spredningsveier name={"Introduksjon til natur"} furtherInfo={labels.Import.furtherInfoIntro}/>
-                            <Vurdering34Spredningsveier name={"Videre spredning i natur"} furtherInfo={labels.Import.furtherInfoNature}/>
+                            <Assessment42Spredningsveier name={"Introduksjon til natur"} furtherInfo={labels.Import.furtherInfoIntro}/>
+                            <Assessment42Spredningsveier name={"Videre spredning i natur"} furtherInfo={labels.Import.furtherInfoNature}/>
                      </div>
                     }
                 
