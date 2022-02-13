@@ -22,7 +22,7 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Change this to force index rebuild!
         /// </summary>
-        public const int IndexVersion = 3;
+        public const int IndexVersion = 4;
         private static readonly object IndexingLock = new();
 
         private const string Field_Id = "Id";
@@ -230,8 +230,8 @@ namespace Prod.Api.Helpers
                 new StringField(Field_ScientificNameAsTerm, ass.EvaluatedScientificName.ToLowerInvariant(),
                     Field.Store.NO), // textfield - ignore case
                 //new StoredField(Field_TaxonHierarcy, ass.VurdertVitenskapeligNavnHierarki),
-                new StringField(Field_Category, GetCategoryFromRiskLevel(ass.RiskAssessment.RiskLevel),
-                    Field.Store.YES),
+                //new StringField(Field_Category, GetCategoryFromRiskLevel(ass.RiskAssessment.RiskLevel),
+                //    Field.Store.YES),
 
                 //new StringField(Field_AssessmentContext, ass.VurderingsContext, Field.Store.YES),
                 new TextField(Field_PopularName, ass.EvaluatedVernacularName ?? string.Empty, Field.Store.YES),
@@ -291,7 +291,7 @@ namespace Prod.Api.Helpers
 
             if (ass2018 != null)
             {
-                if (IsDocumentEvaluated(ass2018.MainCategory, ass2018.MainSubCategory, ass2018.MainSubCategory, ass))
+                if (Is2018DocumentEvaluated(ass2018.MainCategory, ass2018.MainSubCategory, ass2018.MainSubCategory))
                     indexFields.Add(new StringField(Field_Category2018, GetCategoryFromRiskLevel(ass2018?.RiskLevel ?? -1),
                         Field.Store.YES));
                 else
@@ -457,22 +457,7 @@ namespace Prod.Api.Helpers
             }
         }
 
-        private static bool IsDocumentEvaluated(FA4 vurdering)
-        {
-            if (vurdering.AlienSpeciesCategory == "AlienSpecie" ||
-                vurdering.AlienSpeciesCategory == "EcoEffectWithoutEstablishment")
-                return true;
-            if (vurdering.AlienSpeciesCategory == "DoorKnocker")
-                return vurdering.DoorKnockerCategory == "doRiskAssessment";
-            if (vurdering.AlienSpeciesCategory == "RegionallyAlien")
-                return vurdering.RegionallyAlienCategory == "doRiskAssessment";
-            if (vurdering.AlienSpeciesCategory == "NotApplicable")
-                return false;
-            return false; // should not be reachable // todo: replace with exception
-        }
-
-        private static bool IsDocumentEvaluated(string alienSpeciesCategory, string doorKnockerCategory,
-            string regionallyAlienCategory, FA4 ass)
+        private static bool IsDocumentEvaluated(FA4 ass)
         {
             if (!(ass.IsAlienSpecies.HasValue && ass.IsAlienSpecies.Value == true)) return false;
 
@@ -480,6 +465,21 @@ namespace Prod.Api.Helpers
 
             if (ass.AlienSpeciesCategory == "NotDefined") return false; // todo: This should probably also be "WillNotBeRiskAssessed" (?? check this)
             if (ass.AlienSpeciesCategory == "EffectWithoutReproduction") return false;
+            if (ass.AlienSpeciesCategory == "AlienSpecie" ||
+                ass.AlienSpeciesCategory == "EcoEffectWithoutEstablishment")
+                return true;
+            if (ass.AlienSpeciesCategory == "DoorKnocker")
+                return ass.DoorKnockerCategory == "doRiskAssessment";
+            if (ass.AlienSpeciesCategory == "RegionallyAlien")
+                return ass.RegionallyAlienCategory == "doRiskAssessment";
+            if (ass.AlienSpeciesCategory == "NotApplicable")
+                return false;
+            return false; // should not be reachable // todo: replace with exception
+        }
+
+        private static bool Is2018DocumentEvaluated(string alienSpeciesCategory, string doorKnockerCategory,
+            string regionallyAlienCategory)
+        {
             if (alienSpeciesCategory == "AlienSpecie" || alienSpeciesCategory == "EcoEffectWithoutEstablishment")
                 return true;
             if (alienSpeciesCategory == "DoorKnocker")
