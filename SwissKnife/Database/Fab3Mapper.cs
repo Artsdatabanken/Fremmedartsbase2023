@@ -862,10 +862,14 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.YearFirstDomesticObservation, opt => opt.Ignore())
                     .AfterMap((src, dest) =>
                     {
-                        if (src.ChosenSpreadYearlyIncrease == "SpreadYearlyIncreaseCalculatedExpansionSpeed")
+                        if (src.ChosenSpreadYearlyIncrease == "SpreadYearlyIncreaseObservations")
                         {
                             dest.ChosenSpreadYearlyIncrease = "a";
                         }
+
+                        dest.ExpansionSpeedInput = ParseLong(src.SpreadYearlyIncreaseObservations);
+                        dest.ExpansionLowerQInput = ParseLong(src.SpreadYearlyIncreaseObservationsLowerQuartile);
+                        dest.ExpansionUpperQInput = ParseLong(src.SpreadYearlyIncreaseObservationsUpperQuartile);
 
                         if (src.ActiveRedListCategoryLevel)
                         {
@@ -1514,7 +1518,7 @@ namespace SwissKnife.Database
 
             return null;
         }
-
+        
         private static long ParseLongFromNullableInt(int? spreadYearlyIncreaseObservations)
         {
             if (!spreadYearlyIncreaseObservations.HasValue)

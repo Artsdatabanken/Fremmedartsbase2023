@@ -374,6 +374,12 @@ namespace SwissKnife.Database
                 exAssessment.RiskAssessment.AOO50yrHigh = newAssesment.RiskAssessment.AOO50yrHigh;
                 exAssessment.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes = newAssesment.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes;
 
+
+                exAssessment.RiskAssessment.ChosenSpreadYearlyIncrease = newAssesment.RiskAssessment.ChosenSpreadYearlyIncrease;
+                exAssessment.RiskAssessment.ExpansionSpeedInput = newAssesment.RiskAssessment.ExpansionSpeedInput;
+                exAssessment.RiskAssessment.ExpansionUpperQInput = newAssesment.RiskAssessment.ExpansionUpperQInput;
+                exAssessment.RiskAssessment.ExpansionLowerQInput = newAssesment.RiskAssessment.ExpansionLowerQInput;
+
                 exAssessment.RiskAssessment.AOOdarkfigureBest = newAssesment.RiskAssessment.AOOdarkfigureBest;
                 exAssessment.RiskAssessment.AOOdarkfigureHigh = newAssesment.RiskAssessment.AOOdarkfigureHigh;
                 exAssessment.RiskAssessment.AOOdarkfigureLow = newAssesment.RiskAssessment.AOOdarkfigureLow;
@@ -416,7 +422,6 @@ namespace SwissKnife.Database
                 exAssessment.RiskAssessment.ExpansionLowerQInput = newAssesment.RiskAssessment.ExpansionLowerQInput;
                 exAssessment.RiskAssessment.ExpansionSpeedInput = newAssesment.RiskAssessment.ExpansionSpeedInput;
 
-                exAssessment.RiskAssessment.ChosenSpreadYearlyIncrease = newAssesment.RiskAssessment.ChosenSpreadYearlyIncrease;
                 
                 exAssessment.RiskAssessment.ROAscore2018 = newAssesment.RiskAssessment.ROAscore2018;
 
