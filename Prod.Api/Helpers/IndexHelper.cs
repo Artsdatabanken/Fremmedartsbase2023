@@ -22,7 +22,7 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Change this to force index rebuild!
         /// </summary>
-        public const int IndexVersion = 4;
+        public const int IndexVersion = 6;
         private static readonly object IndexingLock = new();
 
         private const string Field_Id = "Id";
@@ -259,7 +259,7 @@ namespace Prod.Api.Helpers
             }
 
             if (IsDocumentEvaluated(ass))
-                indexFields.Add(new StringField(Field_Category, GetCategoryFromRiskLevel(ass.RiskAssessment.RiskLevel),
+                indexFields.Add(new StringField(Field_Category, string.IsNullOrWhiteSpace(ass.Category) ? GetCategoryFromRiskLevel(ass.RiskAssessment.RiskLevel) : ass.Category,
                     Field.Store.YES));
             else
                 indexFields.Add(new StringField(Field_Category, "NR", Field.Store.YES));
