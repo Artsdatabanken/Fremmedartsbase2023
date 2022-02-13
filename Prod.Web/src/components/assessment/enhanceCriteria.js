@@ -271,7 +271,8 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         const result = 
             r.doorKnocker 
             ? inputvalue
-            : ceil((inputvalue / 4) * 4)
+            : ceil(inputvalue / 4) * 4
+        //console.log("##% adjustAOOInput: " + input + " ! " + result)
         return result
 
     }

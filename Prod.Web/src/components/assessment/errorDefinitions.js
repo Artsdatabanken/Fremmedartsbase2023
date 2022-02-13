@@ -59,8 +59,43 @@
             msg: "Forekomstarealet kan ikke være 0!"
         },
         {
+            id: "(a)err11",
+            get cond() {return !r.doorKnocker && ((r.AOOknownInput % 4) !== 0) },
+            msg: "Forekomstarealene må være multippel av 4_km²!"
+        },
+        {
+            id: "(a)err12",
+            get cond() {return !r.doorKnocker && ((r.AOOtotalLowInput % 4) !== 0) },
+            msg: "Forekomstarealene må være multippel av 4_km²!"
+        },
+        {
+            id: "(a)err13",
+            get cond() {return !r.doorKnocker && ((r.AOOtotalBestInput % 4) !== 0) },
+            msg: "Forekomstarealene må være multippel av 4_km²!"
+        },
+        {
+            id: "(a)err14",
+            get cond() {return !r.doorKnocker && ((r.AOOtotalHighInput % 4) !== 0) },
+            msg: "Forekomstarealene må være multippel av 4_km²!"
+        },
+        {
+            id: "(a)err15",
+            get cond() {return !r.doorKnocker && ((r.AOO50yrLowInput % 4) !== 0) },
+            msg: "Forekomstarealene må være multippel av 4_km²!"
+        },
+        {
+            id: "(a)err16",
+            get cond() {return !r.doorKnocker && ((r.AOO50yrBestInput % 4) !== 0) },
+            msg: "Forekomstarealene må være multippel av 4_km²!"
+        },
+        {
+            id: "(a)err17",
+            get cond() {return !r.doorKnocker && ((r.AOO50yrHighInput % 4) !== 0) },
+            msg: "Forekomstarealene må være multippel av 4_km²!"
+        },
+        {
             id: "(a)warn1",
-            get cond() {return (r.AOOknown % 4 || r.AOOtotalLow % 4 || r.AOOtotalBest % 4 || r.AOOtotalHigh % 4 || r.AOO50yrLow % 4 || (r.AOO50yrBest % 4) || r.AOO50yrHigh % 4 || false)},
+            get cond() {return !r.doorKnocker && (r.AOOknownInput % 4 || r.AOOtotalLowInput % 4 || r.AOOtotalBestInput % 4 || r.AOOtotalHighInput % 4 || r.AOO50yrLowInput % 4 || r.AOO50yrBestInput % 4 || r.AOO50yrHighInput % 4 || false)},
             type: "warning",
             msg: "MERK: Forekomstarealene vil bli avrundet oppover til nærmeste større multippel av 4_km²."
         },

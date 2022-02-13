@@ -81,14 +81,14 @@ export default class DistributionTable extends React.Component {
                 <td>
                 <Xcomp.Number                            
                     observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "occurrences1Low"] : [assessment.riskAssessment, "AOOtotalLowInput"]}
-                    observableErrors={assessment.alienSpeciesCategory == "DoorKnocker" ? [errorhandler, "(b)err1"] : [errorhandler, "(a)err2" ]}
+                    observableErrors={assessment.alienSpeciesCategory == "DoorKnocker" ? [errorhandler, "(b)err1"] : [errorhandler, "(a)err2", "(a)err12" ]}
                     disabled={disabled}
                     integer />   
                 </td>                
                 <td>
                 <Xcomp.Number                            
                     observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "occurrences1Best"] :[assessment.riskAssessment, "AOOtotalBestInput"]}
-                    observableErrors={assessment.alienSpeciesCategory == "DoorKnocker" ? [errorhandler, "(b)err1", "(b)err2"] : [errorhandler, "(a)err1", "(a)err2", "(a)err3", "(a)err6" ]}
+                    observableErrors={assessment.alienSpeciesCategory == "DoorKnocker" ? [errorhandler, "(b)err1", "(b)err2"] : [errorhandler, "(a)err1", "(a)err2", "(a)err3", "(a)err6", "(a)err13" ]}
                     disabled={disabled}
                     integer
                    // onChange={action (() => assessment.horizonEstablismentPotential == 1 && assessment.riskAssessment.AOOtotalBest != 1 ? alert("Dette stemmer ikke overens med vurdering på horisontskanningen. Er du sikker på at du vil endre?") : null)} 
@@ -98,7 +98,7 @@ export default class DistributionTable extends React.Component {
                <td>
                <Xcomp.Number                            
                     observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "occurrences1High"] :[assessment.riskAssessment, "AOOtotalHighInput"]}
-                    observableErrors={assessment.alienSpeciesCategory == "DoorKnocker" ? [errorhandler, "(b)err2"] : [errorhandler, "(a)err3" ]}
+                    observableErrors={assessment.alienSpeciesCategory == "DoorKnocker" ? [errorhandler, "(b)err2"] : [errorhandler, "(a)err3", "(a)err14" ]}
                     disabled={disabled}
                     integer />   
                 </td>
@@ -177,7 +177,7 @@ export default class DistributionTable extends React.Component {
             <td>
             <Xcomp.Number                            
                 observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "AOO10yrLow"] : [assessment.riskAssessment, "AOO50yrLowInput"]}
-                observableErrors={assessment.alienSpeciesCategory == "DoorKnocker" ? [errorhandler, "B1err1"] : [errorhandler, "(a)err4"]}
+                observableErrors={assessment.alienSpeciesCategory == "DoorKnocker" ? [errorhandler, "B1err1"] : [errorhandler, "(a)err4", "(a)err15"]}
                 disabled={disabled || assessment.alienSpeciesCategory == "DoorKnocker"}
                 //disabled={true}
                 integer 
@@ -186,7 +186,7 @@ export default class DistributionTable extends React.Component {
             <td>
             <Xcomp.Number                            
                 observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "AOO10yrBest"] : [assessment.riskAssessment, "AOO50yrBestInput"]}
-                observableErrors={assessment.alienSpeciesCategory == "DoorKnocker" ? [errorhandler, "B1err1", "B1err2"] : [errorhandler, "(a)err4", "(a)err5"]}
+                observableErrors={assessment.alienSpeciesCategory == "DoorKnocker" ? [errorhandler, "B1err1", "B1err2"] : [errorhandler, "(a)err4", "(a)err5", "(a)err16"]}
                 disabled={disabled || assessment.alienSpeciesCategory == "DoorKnocker"}
                 integer 
                 
@@ -195,7 +195,7 @@ export default class DistributionTable extends React.Component {
            <td>
            <Xcomp.Number                            
                 observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "AOO10yrHigh"] :[assessment.riskAssessment, "AOO50yrHighInput"]}
-                observableErrors={assessment.alienSpeciesCategory == "DoorKnocker" ? [errorhandler, "B1err2"] : [errorhandler, "(a)err5"]}
+                observableErrors={assessment.alienSpeciesCategory == "DoorKnocker" ? [errorhandler, "B1err2"] : [errorhandler, "(a)err5", "(a)err17"]}
                 disabled={disabled || assessment.alienSpeciesCategory == "DoorKnocker"}
                 // disabled={disabled}
                 // disabled={true}
