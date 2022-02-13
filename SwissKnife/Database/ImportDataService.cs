@@ -502,6 +502,12 @@ namespace SwissKnife.Database
                 var exAssessment = JsonSerializer.Deserialize<FA4>(real.Doc, jsonSerializerOptions);
                 var orgCopy = JsonSerializer.Deserialize<FA4>(real.Doc, jsonSerializerOptions);
 
+                exAssessment.ExtensionData = null;
+                exAssessment.RiskAssessment.ExtensionData = null;
+
+                orgCopy.ExtensionData = null;
+                orgCopy.RiskAssessment.ExtensionData = null;
+
                 Debug.Assert(exAssessment != null, nameof(exAssessment) + " != null");
                 exAssessment.ArtskartModel ??= new ArtskartModel();
                 exAssessment.ArtskartWaterModel ??= new ArtskartWaterModel();
