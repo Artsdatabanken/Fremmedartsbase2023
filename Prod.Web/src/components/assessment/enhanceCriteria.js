@@ -6,6 +6,7 @@ import { EventNote } from '@material-ui/icons';
 import config from '../../config';
 // import errorhandler from '../errorhandler';
 import { JsonHubProtocol } from '@microsoft/signalr';
+import { lineToPolygon } from '@turf/turf';
 
 function round(num){return Math.round(num)}
 function ceil(num){return Math.ceil(num)}
@@ -1134,14 +1135,14 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
             // console.log("runD:" + list.length)
             const result = list.filter(item =>
                     (item.effect === "Displacement") ||
-                    (item.effect === "Moderate" && !item.effectLocalScale)).length > 0 ?
+                    (item.effect === "Moderate" && !effectLocalScale(item))).length > 0 ?
                 4 :
                 list.filter(item =>
-                    (item.effect === "Moderate" && item.effectLocalScale) ||
-                    (item.effect === "Weak" && !item.effectLocalScale) ).length > 0 ?
+                    (item.effect === "Moderate" && effectLocalScale(item)) ||
+                    (item.effect === "Weak" && !effectLocalScale(item)) ).length > 0 ?
                 3 :
                 list.filter(item =>
-                    (item.effect === "Weak" && item.effectLocalScale) ).length > 0 ?
+                    (item.effect === "Weak" && effectLocalScale(item)) ).length > 0 ?
                 2 :
                 1
             return result - 1;
@@ -1162,7 +1163,7 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
 
             // console.log("runE:" + list.length)
             const result = list.filter(item =>
-                    item.effect === "Displacement" && !item.effectLocalScale).length > 0 ?
+                    item.effect === "Displacement" && !effectLocalScale(item)).length > 0 ?
 
                     // (item.effect === "Displacement") ||
                     // // (item.effect === "Displacement" && item.keyStoneSpecie) ||
@@ -1170,13 +1171,13 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
                     // (item.effect === "Moderate" && item.keyStoneSpecie && !item.effectLocalScale)).length > 0 ?
                 4 :
                 list.filter(item =>
-                    item.effect === "Displacement" && item.effectLocalScale).length > 0 ?
+                    item.effect === "Displacement" && effectLocalScale(item)).length > 0 ?
                     // (item.effect === "Displacement" && !item.keyStoneSpecie && item.effectLocalScale) ||
                     // (item.effect === "Moderate" && item.keyStoneSpecie && item.effectLocalScale) ||
                     // (item.effect === "Weak" && item.keyStoneSpecie && !item.effectLocalScale)).length > 0 ?
                 3 :
                 list.filter(item =>
-                    item.effect === "Moderate" && !item.effectLocalScale).length > 0 ?
+                    item.effect === "Moderate" && !effectLocalScale(item)).length > 0 ?
                     // (item.effect === "Moderate" && !item.keyStoneSpecie && !item.effectLocalScale) ||
                     // (item.effect === "Weak" && item.keyStoneSpecie && item.effectLocalScale)).length > 0 ?
                 2 :
@@ -1215,20 +1216,23 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
             const rlCats = ["LC","DD","NT"]
             const rlThreatCats = ["VU","EN","CR"]
             const list = riskAssessment.geneticTransferDocumented
+            list.map(item => console.log("#&& hcritlevel: " + !effectLocalScale(item) + "!" + item.keyStoneSpecie + "¤" + item.redListCategory + " " + rlThreatCats.indexOf(item.redListCategory) ))
+
             const result = list.filter(item =>
-                    !item.effectLocalScale &&
+                    !effectLocalScale(item) &&
                         (item.keyStoneSpecie ||
                         (rlThreatCats.indexOf(item.redListCategory) > -1))).length > 0 ?
                 4 :
                 list.filter(item =>
-                    (!item.effectLocalScale && !item.keyStoneSpecie && (rlCats.indexOf(item.redListCategory) > -1)) ||
-                    (item.effectLocalScale && (rlThreatCats.indexOf(item.redListCategory) > -1)) ||
-                    (item.effectLocalScale && item.keyStoneSpecie && (rlCats.indexOf(item.redListCategory) > -1))).length > 0 ?
+                    (!effectLocalScale(item) && !item.keyStoneSpecie && (rlCats.indexOf(item.redListCategory) > -1)) ||
+                    (effectLocalScale(item) && (rlThreatCats.indexOf(item.redListCategory) > -1)) ||
+                    (effectLocalScale(item) && item.keyStoneSpecie && (rlCats.indexOf(item.redListCategory) > -1))).length > 0 ?
                 3 :
                 list.filter(item =>
-                    (item.effectLocalScale && !item.keyStoneSpecie && (rlCats.indexOf(item.redListCategory) > -1))).length > 0 ?
+                    (effectLocalScale(item) && !item.keyStoneSpecie && (rlCats.indexOf(item.redListCategory) > -1))).length > 0 ?
                 2 :
                 1
+            console.log("#&& hcritlevel: " +  result)
             return result - 1;
         }
     });
@@ -1255,8 +1259,9 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
     });
     autorun(() => {
         // const criterionH = getCriterion(riskAssessment, 1, "H")
+        const nv = riskAssessment.HGeneticTransferLevel
         runInAction(() => {
-            riskAssessment.critH.value = riskAssessment.HGeneticTransferLevel
+            riskAssessment.critH.value = nv
         })
     });
     autorun(() => {
