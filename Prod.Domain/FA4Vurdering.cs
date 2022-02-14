@@ -598,6 +598,15 @@ public partial class FA4 // (3.2) Artsegenskaper
     {
         public List<MigrationPathway> AssesmentVectors { get; set; } = new List<MigrationPathway>(); // lagt til 09.01.2017
         public string Vector { get; set; }  // ???!!
+        public string SpreadIndoorFurtherInfo { get; set; } = "";
+        public string SpreadIndoorFurtherInfoGeneratedText { get; set; } = "";
+        public string SpreadIntroductionFurtherInfo { get; set; } = "";
+        public string SpreadIntroductionFurtherInfoGeneratedText { get; set; } = "";
+        public string SpreadFurtherSpreadFurtherInfo { get; set; } = "";
+        public string SpreadFurtherSpreadFurtherInfoGeneratedText { get; set; } = "";
+
+
+
     }
     public partial class FA4 // (3.5) Spredningshistorikk
     {
@@ -632,6 +641,11 @@ public partial class FA4 // (3.2) Artsegenskaper
         public Int64? CurrentSpreadAreaLowCalculated { get; set; }
         public Int64? CurrentSpreadAreaHighCalculated { get; set; }
         public Int64? CurrentSpreadAreaCalculated { get; set; }
+
+
+
+
+
 
         public string CurrentPresenceComment { get; set; }
 

@@ -953,6 +953,12 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.Habitats, opt => opt.Ignore())  // ny av året
                     .ForMember(dest => dest.ImpactedNatureTypesFrom2018, opt => opt.Ignore()) // kun for plassering av ikke kompatible naturtyper
                     .ForMember(dest => dest.ExtensionData, opt => opt.Ignore())
+                    .ForMember(dest => dest.SpreadIndoorFurtherInfo, opt => opt.Ignore())
+                    .ForMember(dest => dest.SpreadIndoorFurtherInfoGeneratedText, opt => opt.Ignore())
+                    .ForMember(dest => dest.SpreadIntroductionFurtherInfo, opt => opt.Ignore())
+                    .ForMember(dest => dest.SpreadIntroductionFurtherInfoGeneratedText, opt => opt.Ignore())
+                    .ForMember(dest => dest.SpreadFurtherSpreadFurtherInfo, opt => opt.Ignore())
+                    .ForMember(dest => dest.SpreadFurtherSpreadFurtherInfoGeneratedText, opt => opt.Ignore())
                     .AfterMap((src, dest) =>
                     {
                         // set some standard values
