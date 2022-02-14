@@ -160,40 +160,55 @@ export default class Assessment42Spredningsveier extends React.Component {
         const labels = appState.codeLabels
         const koder = appState.koder
         
-        const importationCodes = name == "Til innendørs- eller produksjonsareal" ? koder.migrationPathways[0].Children.mp[0].Children.mpimport : 
-                                name == "Introduksjon til natur" ? koder.migrationPathways[0].Children.mp[0].Children.mpimportation : 
-                                name == "Videre spredning i natur" ? koder.migrationPathways[0].Children.mp[0].Children.mpspread : null 
-        // const {vurdering, viewModel, fabModel} = this.props;
-       // const introductionSpread = name == "Introduksjon til natur" ? "introduction" : name == "Videre spredning i natur" ? "spread" : null
-       // const migrationPathways = assessment.assesmentVectors.filter(pathway => pathway.introductionSpread == introductionSpread)
+        const importationCodes = 
+            name == "Til innendørs- eller produksjonsareal" 
+            ? koder.migrationPathways[0].Children.mp[0].Children.mpimport 
+            : name == "Introduksjon til natur" 
+            ? koder.migrationPathways[0].Children.mp[0].Children.mpimportation 
+            : name == "Videre spredning i natur" ? koder.migrationPathways[0].Children.mp[0].Children.mpspread : null 
       
-       const migrationPathways = name == "Til innendørs- eller produksjonsareal" ? assessment.importPathways :        
-                                name == "Videre spredning i natur" ? assessment.assesmentVectors.filter(vector => vector.introductionSpread == "spread") : 
-                                name == "Introduksjon til natur" ? assessment.assesmentVectors.filter(vector => vector.introductionSpread == "introduction") : null
+        const migrationPathways = 
+            name == "Til innendørs- eller produksjonsareal" 
+            ? assessment.importPathways 
+            : name == "Videre spredning i natur" 
+            ? assessment.assesmentVectors.filter(vector => vector.introductionSpread == "spread") 
+            : name == "Introduksjon til natur" ? assessment.assesmentVectors.filter(vector => vector.introductionSpread == "introduction") : null
 
-               
-        //const migrationPathwayKoder = appState.spredningsveier.children.filter(child => child.name != "Import")
-       const migrationPathwayKoder = name == "Til innendørs- eller produksjonsareal" ? appState.spredningsveier.children.filter(child => child.name == "Import") :
-                                  name == "Videre spredning i natur" ? appState.spredningsveier.children.filter(child => child.name == "Videre spredning" || child.name == "Spredning")
-                                   : appState.spredningsveier.children.filter(child => child.name != "Import" && child.name != "Videre spredning")
+        const migrationPathwayKoder = 
+            name == "Til innendørs- eller produksjonsareal" 
+            ? appState.spredningsveier.children.filter(child => child.name == "Import")
+            : name == "Videre spredning i natur" 
+            ? appState.spredningsveier.children.filter(child => child.name == "Videre spredning" || child.name == "Spredning")
+            : appState.spredningsveier.children.filter(child => child.name != "Import" && child.name != "Videre spredning")
 
-             
+        const observableDef = 
+            name == "Til innendørs- eller produksjonsareal" 
+            ? [assessment, "spreadIndoorFurtherInfo"] 
+            : name == "Videre spredning i natur" 
+            ? [assessment, "spreadFurtherSpreadFurtherInfo"] 
+            : [assessment, "spreadIntroductionFurtherInfo"] 
+              
+        const observableGeneratedStringDef = 
+            name == "Til innendørs- eller produksjonsareal" 
+            ? [assessment, "spreadIndoorFurtherInfoGeneratedText"] 
+            : name == "Videre spredning i natur" 
+            ? [assessment, "spreadFurtherSpreadFurtherInfoGeneratedText"] 
+            : [assessment, "spreadIntroductionFurtherInfoGeneratedText"] 
         
-        
-        // sets the string composed of all elaborate information and related categories
-        var elaborateInformation = ""
+    //     // sets the string composed of all elaborate information and related categories
+    //     var elaborateInformation = ""
 
-        if (migrationPathways != []) {
+    //     if (migrationPathways != []) {
 
-            for (var i = 0; i < migrationPathways.length; i++) {
-                if (migrationPathways[i].elaborateInformation != "") {
-                    var categoryText = this.getCategoryText(migrationPathways[i].codeItem, appState.spredningsveier.children)
-                    elaborateInformation += categoryText + this.removeBreaks(migrationPathways[i].elaborateInformation) + "." + "<br>"                       
-                }
+    //         for (var i = 0; i < migrationPathways.length; i++) {
+    //             if (migrationPathways[i].elaborateInformation != "") {
+    //                 var categoryText = this.getCategoryText(migrationPathways[i].codeItem, appState.spredningsveier.children)
+    //                 elaborateInformation += categoryText + this.removeBreaks(migrationPathways[i].elaborateInformation) + "." + "<br>"                       
+    //             }
                 
-            }
-        }
-       riskAssessment.furtherInfoAboutImport = elaborateInformation
+    //         }
+    //     }
+    //    riskAssessment.furtherInfoAboutImport = elaborateInformation
 
 
         //console.log(appState.spredningsveier.children)
@@ -242,12 +257,15 @@ export default class Assessment42Spredningsveier extends React.Component {
                 
                 <p>{furtherInfo}</p>
                 <Xcomp.HtmlString                            
-                                observableValue={[riskAssessment, "furtherInfoAboutImport"]}
+                                observableValue={observableDef}
+                                // observableValue={[riskAssessment, "furtherInfoAboutImport"]}
                                 //label={labels.DEcrit.insecurity}
                                 
                                // value={elaborateInformation}
                                 //placeholder={labels.Import.furtherInfoComment}
                                 />
+                <Xcomp.String observableValue={observableGeneratedStringDef} disabled />
+
             </fieldset>
         );
     }
