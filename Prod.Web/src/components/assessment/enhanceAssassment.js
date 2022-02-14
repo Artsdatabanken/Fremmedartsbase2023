@@ -111,7 +111,7 @@ function generateFurtherInfoText(migrationPathways, appState) {
         for (var i = 0; i < migrationPathways.length; i++) {
             if (migrationPathways[i].elaborateInformation != "") {
                 var categoryText = getCategoryText(migrationPathways[i].codeItem, appState.spredningsveier.children)
-                elaborateInformation += categoryText + removeBreaks(migrationPathways[i].elaborateInformation) + "." + "<br>"                       
+                elaborateInformation += categoryText + removeBreaks(migrationPathways[i].elaborateInformation) + "." //+ "<br>"                       
             }
         }
     }
