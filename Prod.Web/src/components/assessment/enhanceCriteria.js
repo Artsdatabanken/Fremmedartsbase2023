@@ -1157,11 +1157,11 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
             // const speciesNaturtypeList = riskAssessment.SpeciesNaturetypeInteractions.filter(item => !item.keyStoneSpecie)
             const speciesNaturtypeList = riskAssessment.speciesNaturetypeInteractions.map(a => a) // changed 23.02.2017 - let all nature types count for E-criteria (email from Heidi Solstad)
             const list = [].concat(speciesNaturtypeList).concat(speciesList)
-            // console.log("runE nat:" + speciesNaturtypeList.length)
-            // console.log("runE spec:" + speciesList.length)
-            // console.log("runE:" + list.length)
+            // console.log("#&&runE fullSpeciesList:" + fullSpeciesList.length)
+            // console.log("#&&runE spec:" + speciesList.length)
+            // console.log("#&&runE nat:" + speciesNaturtypeList.length)
+            // console.log("#&&runE total length:" + list.length)
 
-            // console.log("runE:" + list.length)
             const result = list.filter(item =>
                     item.effect === "Displacement" && !effectLocalScale(item)).length > 0 ?
 
@@ -1216,7 +1216,7 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
             const rlCats = ["LC","DD","NT"]
             const rlThreatCats = ["VU","EN","CR"]
             const list = riskAssessment.geneticTransferDocumented
-            list.map(item => console.log("#&& hcritlevel: " + !effectLocalScale(item) + "!" + item.keyStoneSpecie + "¤" + item.redListCategory + " " + rlThreatCats.indexOf(item.redListCategory) ))
+            // list.map(item => console.log("#&& hcritlevel: " + !effectLocalScale(item) + "!" + item.keyStoneSpecie + "¤" + item.redListCategory + " " + rlThreatCats.indexOf(item.redListCategory) ))
 
             const result = list.filter(item =>
                     !effectLocalScale(item) &&
@@ -1232,7 +1232,7 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
                     (effectLocalScale(item) && !item.keyStoneSpecie && (rlCats.indexOf(item.redListCategory) > -1))).length > 0 ?
                 2 :
                 1
-            console.log("#&& hcritlevel: " +  result)
+            // console.log("#&& hcritlevel: " +  result)
             return result - 1;
         }
     });
