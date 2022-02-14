@@ -115,8 +115,11 @@ checkStatus = (production) => {
                         <Xcomp.StringEnum mode="radiohorizontal" observableValue={[assessment, "higherOrLowerLevelString"]} 
                                 style={{marginTop: "20px"}}
                                 codes={codes.yesNo}
-                                />                  
-                        <p>{labels.SpeciesStatus.connectedToAnotherTaxon} </p> 
+                                />     
+
+                        {!assessment.higherOrLowerLevel &&
+                        <>
+                            <p>{labels.SpeciesStatus.connectedToAnotherTaxon} </p> 
                         <Xcomp.StringEnum mode="radiohorizontal" observableValue={[assessment, "connectedToAnotherString"]} 
                                 style={{marginTop: "20px"}}
                                 codes={codes.yesNo}
@@ -318,10 +321,13 @@ checkStatus = (production) => {
                                 </div> : null }*/}
                                
                             </div> : null }
+                        </>
+                        }           
+                        
                     </div> : null} 
 
                     {/* { assessment.isAlienSpeciesString == 'true' && (assessment.connectedToAnotherString == "no" || assessment.connectedToAnotherString == "false" ) ?  */}
-                    { assessment.isAlienSpecies  || assessment.isAlienSpeciesString == "true"
+                    { ((assessment.isAlienSpecies  || assessment.isAlienSpeciesString == "true") && !assessment.higherOrLowerLevel)
                     //&& (!assessment.connectedToAnother || !assessment.connectedToAnother ) 
                     ? 
                      <div>
@@ -416,7 +422,7 @@ checkStatus = (production) => {
 
                         
                     
-                    { !assessment.isAlienSpecies && assessment.isAlienSpeciesString != "true" ?
+                    { !assessment.isAlienSpecies && assessment.isAlienSpeciesString != "true"?
                     <div>
                         <p>{labels.SpeciesStatus.didSpecies} </p>
                         <Xcomp.StringEnum observableValue={[assessment, "changedFromAlien"]} mode="radio" codes={codes.ChangedFromAlien}/>
