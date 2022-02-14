@@ -37,7 +37,10 @@ const assessmentGetterFields = [
     "category",
     "criteria",
     "alienSpeciesCategory",
-    "assessmentConclusion"
+    "assessmentConclusion",
+    "spreadIndoorFurtherInfoGeneratedText",
+    "spreadIntroductionFurtherInfoGeneratedText",
+    "spreadFurtherSpreadFurtherInfoGeneratedText"
 ]
 const riskAssessmentGetterFields = [
     "riskLevel",
