@@ -50,12 +50,12 @@
         },
         {
             id: "(a)err9",
-            get cond() {return r.AOO1 <= 0},
+            get cond() {return r.bmetodkey === "B2a" && AOOfirstOccurenceLessThan10Years === "yes" && r.AOO1 <= 0},
             msg: "Forekomstarealet kan ikke være 0!"
         },
         {
             id: "(a)err10",
-            get cond() {return r.AOO2 <= 0},
+            get cond() {return r.bmetodkey === "B2a" && AOOfirstOccurenceLessThan10Years === "yes" && r.AOO2 <= 0},
             msg: "Forekomstarealet kan ikke være 0!"
         },
         {

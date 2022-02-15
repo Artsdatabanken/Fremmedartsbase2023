@@ -810,7 +810,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.AOO50yrLowInput, opt => opt.Ignore())
                     .ForMember(dest => dest.AOO50yrHighInput, opt => opt.Ignore())
                     .ForMember(dest => dest.AOOfirstOccurenceLessThan10Years, opt => opt.Ignore())
-                    .ForMember(dest => dest.AOOestimationPeriod10yrPossible, opt => opt.Ignore())
+                    //.ForMember(dest => dest.AOOestimationPeriod10yrPossible, opt => opt.Ignore())
 
                     .ForMember(dest => dest.NotUseSpeciesMap, opt => opt.Ignore())                    
 

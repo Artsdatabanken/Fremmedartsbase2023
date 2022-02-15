@@ -9294,6 +9294,27 @@
                             "Text": "Artsdatabanken",
                             "Info": null,
                             "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "guidelines",
+                            "Text": "Retningslinjer",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "userManual",
+                            "Text": "Brukermanual",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "changesSince2018",
+                            "Text": "Endringer siden 2018",
+                            "Info": null,
+                            "Children": null
                         }
                     ],
                     "TaxonInfo": [
