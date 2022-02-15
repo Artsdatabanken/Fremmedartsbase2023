@@ -468,6 +468,10 @@ namespace SwissKnife.Database
                 if (exAssessment.HorizonEcologicalEffect != null && exAssessment.HorizonEcologicalEffect.ToLowerInvariant() == "yesaftergone" && exAssessment.HorizonEcologicalEffect != "yesAfterGone")
                     exAssessment.HorizonEcologicalEffect = "yesAfterGone";
 
+                exAssessment.RiskAssessment.Occurrences1Best = newAssesment.RiskAssessment.Occurrences1Best;
+                exAssessment.RiskAssessment.Occurrences1High = newAssesment.RiskAssessment.Occurrences1High;
+                exAssessment.RiskAssessment.Occurrences1Low = newAssesment.RiskAssessment.Occurrences1Low;
+
                 if (exAssessment.HorizonScanResult == "scanned_fullAssessment")
                 {
                     if (exAssessment.HorizonEstablismentPotential == "0")
@@ -479,6 +483,8 @@ namespace SwissKnife.Database
                         exAssessment.RiskAssessment.Occurrences1Best = 1;
                     }
                 }
+
+                exAssessment.AssesmentVectors = newAssesment.AssesmentVectors;
 
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)

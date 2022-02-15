@@ -561,6 +561,12 @@ namespace SwissKnife.Database
                     var user = _database.Users
                         .Single(x => x.Email == importFormat.AssessedBy);
                     var ti = taxonService.getTaxonInfo(importFormat.EvaluatedScientificNameId).GetAwaiter().GetResult();
+                    if (ti == null)
+                    {
+                        Console.WriteLine(
+                            $"ERROR - could not find in Artsnavnebase: {importFormat.EvaluatedScientificNameId} {importFormat.EvaluatedScientificName} {importFormat.EvaluatedScientificNameAuthor}");
+                        continue;
+                    }
                     var fa4 = CreateNewAssessment(importFormat.ExpertGroup, user, importFormat.EvaluatedScientificNameId, horisontScanning, ti);
                     fa4.EvaluationStatus = "inprogress";
                     fa4.LastUpdatedAt = DateTime.Now;
@@ -594,6 +600,12 @@ namespace SwissKnife.Database
                             fa4.HorizonEcologicalEffect = importFormat.HorizonEcologicalEffect;
                         if (!string.IsNullOrWhiteSpace(importFormat.HorizonEcologicalEffectDescription))
                             fa4.HorizonEcologicalEffectDescription = importFormat.HorizonEcologicalEffectDescription;
+                        if (fa4.HorizonEcologicalEffect != null && fa4.HorizonEcologicalEffect.ToLowerInvariant() == "yeswhilepresent" && fa4.HorizonEcologicalEffect != "yesWhilePresent")
+                            fa4.HorizonEcologicalEffect = "yesWhilePresent";
+                        if (fa4.HorizonEcologicalEffect != null && fa4.HorizonEcologicalEffect.ToLowerInvariant() == "no" && fa4.HorizonEcologicalEffect != "no")
+                            fa4.HorizonEcologicalEffect = "no";
+                        if (fa4.HorizonEcologicalEffect != null && fa4.HorizonEcologicalEffect.ToLowerInvariant() == "yesaftergone" && fa4.HorizonEcologicalEffect != "yesAfterGone")
+                            fa4.HorizonEcologicalEffect = "yesAfterGone";
                     }
 
                     var doc = System.Text.Json.JsonSerializer.Serialize<FA4>(fa4);
