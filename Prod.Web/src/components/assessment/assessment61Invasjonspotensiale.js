@@ -234,7 +234,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             
                         <div className="adjustScore">
                             {riskAssessment.acceptOrAdjustCritA == "adjust" &&                                
-                                <Xcomp.HtmlString observableValue={[riskAssessment, 'reasonForAdjustmentCritA']} label="Begrunnelse for justering:" />
+                                <Xcomp.HtmlString observableValue={[riskAssessment, 'reasonForAdjustmentCritA']} label="Begrunnelse for justering (obligatorisk):" />
                             }
 
                             {/* <ScoreUnsure appState={appState}
