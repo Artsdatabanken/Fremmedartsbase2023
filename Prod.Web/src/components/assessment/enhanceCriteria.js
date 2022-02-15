@@ -384,7 +384,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             : r.AOO50yrLow >= 20 && r.AOOchangeLow > 0.05 ? 2
             : r.AOO50yrLow >= 8 && r.AOOchangeLow > 0.2 ? 2
             : r.AOO50yrLow >= 4 ? max(1, r.adefaultBest - 1)
-            // : r.AOO50yrLow < 4 ? max(0, r.adefaultBest - 1)
+            : r.AOO50yrLow < 4 ? max(0, r.adefaultBest - 1)
             : 0
         },
         get adefaultHigh() {
