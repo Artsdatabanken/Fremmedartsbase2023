@@ -3867,7 +3867,7 @@
                                                 },
                                                 {
                                                     "Id": null,
-                                                    "Value": "otherUnknownRelease",
+                                                    "Value": "otherIntentionalRelease",
                                                     "Text": "øvrig tilsiktet utsetting",
                                                     "Info": null,
                                                     "Children": null

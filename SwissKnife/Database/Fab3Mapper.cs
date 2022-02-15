@@ -749,9 +749,9 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.NatureAffectedAbroadG, opt => opt.Ignore())
 
                     .ForMember(dest => dest.PopulationSize, opt => opt.MapFrom<long>(src => ParseLongFromNullableInt(src.SpreadRscriptSpeciesCount)))
-                    .ForMember(dest => dest.GrowthRate, opt => opt.MapFrom(src => double.Parse(src.SpreadRscriptPopulationGrowth, System.Globalization.CultureInfo.InvariantCulture)))
-                    .ForMember(dest => dest.EnvVariance, opt => opt.MapFrom(src => double.Parse(src.SpreadRscriptEnvironmantVariance, System.Globalization.CultureInfo.InvariantCulture)))
-                    .ForMember(dest => dest.DemVariance, opt => opt.MapFrom(src => double.Parse(src.SpreadRscriptDemographicVariance, System.Globalization.CultureInfo.InvariantCulture)))
+                    .ForMember(dest => dest.GrowthRate, opt => opt.MapFrom(src => ParseDouble(src.SpreadRscriptPopulationGrowth)))
+                    .ForMember(dest => dest.EnvVariance, opt => opt.MapFrom(src => ParseDouble(src.SpreadRscriptEnvironmantVariance)))
+                    .ForMember(dest => dest.DemVariance, opt => opt.MapFrom(src => ParseDouble(src.SpreadRscriptDemographicVariance)))
                     .ForMember(dest => dest.CarryingCapacity, opt => opt.MapFrom<long?>(src => ParseLong(src.SpreadRscriptSustainabilityK)))
                     .ForMember(dest => dest.ExtinctionThreshold, opt => opt.MapFrom<long?>(src => ParseLong(src.SpreadRscriptQuasiExtinctionThreshold)))
                     .ForMember(dest => dest.MedianLifetimeInput, opt => opt.MapFrom<double?>(src => ParseDouble(src.SpreadRscriptEstimatedSpeciesLongevity))) //ActiveSpreadRscriptEstimatedSpeciesLongevity?? ChosenSpreadMedanLifespan??
@@ -1309,6 +1309,15 @@ namespace SwissKnife.Database
                                     b.CodeItem = "liveHumanFood";
                                     b.Category = "av levende mat (til mennesker)";
                                 }
+                            }
+                        }
+
+                        if (dest.AssesmentVectors.Any(x => x.CodeItem == "otherUnknownRelease"))
+                        {
+                            var these = dest.AssesmentVectors.Where(x => x.CodeItem == "otherUnknownRelease").ToArray();
+                            foreach (var migrationPathway in these)
+                            {
+                                migrationPathway.CodeItem = "otherIntentionalRelease";
                             }
                         }
 
