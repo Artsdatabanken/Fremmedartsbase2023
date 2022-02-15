@@ -533,7 +533,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                         riskAssessment.chosenSpreadYearlyIncrease == "b" && assessment.alienSpeciesCategory == "DoorKnocker" ?
                             <div>
                             <p>{textDKB}</p>
-                            <p dangerouslySetInnerHTML={{ __html: labels.BcritText.DoorKnocker}}></p>
+                            
                                               {/*  <p>{ntLabels.scoreSummary}</p>
                                                 <ScoreUnsure appState={appState}
                                                             critScores={koder.scoresB}
@@ -573,8 +573,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                 {riskAssessment.AOOfirstOccurenceLessThan10Years === "yes"
                                 ?<>
                                     <p style={{marginTop: "10px", marginBottom: "20px", paddingTop: "20px"}} dangerouslySetInnerHTML={{__html: labels.BcritText.SelfProducing}}></p>
-
-
+                                    {/* Issue #471*/}
+                                    <p dangerouslySetInnerHTML={{ __html: labels.BcritText.DoorKnocker}}></p>
                                         <table className="table BCritTable">
                                             <thead>
                                                 <tr>     
