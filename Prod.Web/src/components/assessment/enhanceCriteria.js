@@ -379,6 +379,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             r.AOO10yrLow >= 16 ? 3
             : r.AOO10yrLow >= 4 ? 2
             : r.AOO10yrLow >= 1 ? max(1, r.adefaultBest - 1)
+            : r.AOO10yrLow < 1 ? max(0, r.adefaultBest - 1)
             : 0
             : r.AOO50yrLow >= 20 && r.AOOchangeLow > 0.2 ? 3
             : r.AOO50yrLow >= 20 && r.AOOchangeLow > 0.05 ? 2
