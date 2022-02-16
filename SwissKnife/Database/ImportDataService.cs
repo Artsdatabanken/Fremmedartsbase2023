@@ -352,151 +352,9 @@ namespace SwissKnife.Database
 
                 // Disse feltene er de som faktisk patches.....
                 Debug.Assert(exAssessment != null, nameof(exAssessment) + " != null");
-                exAssessment.SpreadHistory = newAssesment.SpreadHistory;
-
-                exAssessment.RegionalPresenceKnown = newAssesment.RegionalPresenceKnown;
-                exAssessment.RegionalPresenceAssumed = newAssesment.RegionalPresenceAssumed;
-                exAssessment.RegionalPresencePotential = newAssesment.RegionalPresencePotential;
-                exAssessment.Fylkesforekomster = newAssesment.Fylkesforekomster;
-
-                //map fix
-
-                exAssessment.RiskAssessment.AOOknownInput = newAssesment.RiskAssessment.AOOknownInput;
-                exAssessment.RiskAssessment.AOOknown = newAssesment.RiskAssessment.AOOknown;
-                exAssessment.RiskAssessment.AOOknown1 = newAssesment.RiskAssessment.AOOknown1;
-                exAssessment.RiskAssessment.AOOknown2 = newAssesment.RiskAssessment.AOOknown2;
-                exAssessment.RiskAssessment.AOOtotalBestInput = newAssesment.RiskAssessment.AOOtotalBestInput;
-                exAssessment.RiskAssessment.AOOtotalBest = newAssesment.RiskAssessment.AOOtotalBest;
-                exAssessment.RiskAssessment.AOOtotalLowInput = newAssesment.RiskAssessment.AOOtotalLowInput;
-                exAssessment.RiskAssessment.AOOtotalLow = newAssesment.RiskAssessment.AOOtotalLow;
-                exAssessment.RiskAssessment.AOOtotalHighInput = newAssesment.RiskAssessment.AOOtotalHighInput;
-                exAssessment.RiskAssessment.AOOtotalHigh = newAssesment.RiskAssessment.AOOtotalHigh;
-                exAssessment.RiskAssessment.AOO50yrBestInput = newAssesment.RiskAssessment.AOO50yrBestInput;
-                exAssessment.RiskAssessment.AOO50yrBest = newAssesment.RiskAssessment.AOO50yrBest;
-                exAssessment.RiskAssessment.AOO50yrLowInput = newAssesment.RiskAssessment.AOO50yrLowInput;
-                exAssessment.RiskAssessment.AOO50yrLow = newAssesment.RiskAssessment.AOO50yrLow;
-                exAssessment.RiskAssessment.AOO50yrHighInput = newAssesment.RiskAssessment.AOO50yrHighInput;
-                exAssessment.RiskAssessment.AOO50yrHigh = newAssesment.RiskAssessment.AOO50yrHigh;
-                exAssessment.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes = newAssesment.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes;
-
-
-                exAssessment.RiskAssessment.ChosenSpreadYearlyIncrease = newAssesment.RiskAssessment.ChosenSpreadYearlyIncrease;
-                exAssessment.RiskAssessment.ExpansionSpeedInput = newAssesment.RiskAssessment.ExpansionSpeedInput;
-                exAssessment.RiskAssessment.ExpansionUpperQInput = newAssesment.RiskAssessment.ExpansionUpperQInput;
-                exAssessment.RiskAssessment.ExpansionLowerQInput = newAssesment.RiskAssessment.ExpansionLowerQInput;
-
-                exAssessment.RiskAssessment.AOOdarkfigureBest = newAssesment.RiskAssessment.AOOdarkfigureBest;
-                exAssessment.RiskAssessment.AOOdarkfigureHigh = newAssesment.RiskAssessment.AOOdarkfigureHigh;
-                exAssessment.RiskAssessment.AOOdarkfigureLow = newAssesment.RiskAssessment.AOOdarkfigureLow;
-
-
-                exAssessment.IsAlienSpecies = newAssesment.IsAlienSpecies;
-                exAssessment.ConnectedToAnother = newAssesment.ConnectedToAnother;
-                exAssessment.ProductionSpecies = exAssessment.ProductionSpecies is true ? true : newAssesment.ProductionSpecies;
-                exAssessment.AlienSpecieUncertainIfEstablishedBefore1800 = newAssesment.AlienSpecieUncertainIfEstablishedBefore1800;
-                exAssessment.IsRegionallyAlien = newAssesment.IsRegionallyAlien;
-                exAssessment.IsAlienSpecies = newAssesment.IsAlienSpecies;
-                exAssessment.ConnectedToAnother = newAssesment.ConnectedToAnother;
-
-                exAssessment.RiskAssessment.SpeciesSpeciesInteractions = newAssesment.RiskAssessment.SpeciesSpeciesInteractions;
-                exAssessment.RiskAssessment.SpeciesNaturetypeInteractions = newAssesment.RiskAssessment.SpeciesNaturetypeInteractions;
-                exAssessment.RiskAssessment.SpeciesNaturetypeInteractions2018 = newAssesment.RiskAssessment.SpeciesNaturetypeInteractions2018;
-                exAssessment.RiskAssessment.HostParasiteInformations = newAssesment.RiskAssessment.HostParasiteInformations;
-                exAssessment.RiskAssessment.GeneticTransferDocumented = newAssesment.RiskAssessment.GeneticTransferDocumented;
-
-                exAssessment.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes = newAssesment.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes;
-
-                exAssessment.RiskAssessment.YearFirstIndoors = newAssesment.RiskAssessment.YearFirstIndoors;
-                exAssessment.RiskAssessment.YearFirstIndoorsInsecure = newAssesment.RiskAssessment.YearFirstIndoorsInsecure;
-                exAssessment.RiskAssessment.YearFirstReproductionIndoors = newAssesment.RiskAssessment.YearFirstReproductionIndoors;
-                exAssessment.RiskAssessment.YearFirstReproductionIndoorsInsecure = newAssesment.RiskAssessment.YearFirstReproductionIndoorsInsecure;
-                exAssessment.RiskAssessment.YearFirstProductionOutdoors = newAssesment.RiskAssessment.YearFirstProductionOutdoors;
-                exAssessment.RiskAssessment.YearFirstProductionOutdoorsInsecure = newAssesment.RiskAssessment.YearFirstProductionOutdoorsInsecure;
-                exAssessment.RiskAssessment.YearFirstReproductionOutdoors = newAssesment.RiskAssessment.YearFirstReproductionOutdoors;
-                exAssessment.RiskAssessment.YearFirstReproductionOutdoorsInsecure = newAssesment.RiskAssessment.YearFirstReproductionOutdoorsInsecure;
-                exAssessment.RiskAssessment.YearFirstEstablishmentProductionArea = newAssesment.RiskAssessment.YearFirstEstablishmentProductionArea;
-                exAssessment.RiskAssessment.YearFirstEstablishmentProductionAreaInsecure = newAssesment.RiskAssessment.YearFirstEstablishmentProductionAreaInsecure;
-                exAssessment.RiskAssessment.YearFirstNature = newAssesment.RiskAssessment.YearFirstNature;
-                exAssessment.RiskAssessment.YearFirstNatureInsecure = newAssesment.RiskAssessment.YearFirstNatureInsecure;
-                exAssessment.RiskAssessment.YearFirstReproductionNature = newAssesment.RiskAssessment.YearFirstReproductionNature;
-                exAssessment.RiskAssessment.YearFirstReproductionNatureInsecure = newAssesment.RiskAssessment.YearFirstReproductionNatureInsecure;
-                exAssessment.RiskAssessment.YearFirstEstablishedNature = newAssesment.RiskAssessment.YearFirstEstablishedNature;
-                exAssessment.RiskAssessment.YearFirstEstablishedNatureInsecure = newAssesment.RiskAssessment.YearFirstEstablishedNatureInsecure;
-
-                exAssessment.RiskAssessment.ExpansionUpperQInput = newAssesment.RiskAssessment.ExpansionUpperQInput;
-                exAssessment.RiskAssessment.ExpansionLowerQInput = newAssesment.RiskAssessment.ExpansionLowerQInput;
-                exAssessment.RiskAssessment.ExpansionSpeedInput = newAssesment.RiskAssessment.ExpansionSpeedInput;
-
                 
-                exAssessment.RiskAssessment.ROAscore2018 = newAssesment.RiskAssessment.ROAscore2018;
+                TransferAndFixPropertiesOnAssessmentsFrom2018(exAssessment, newAssesment);
 
-                //if (exAssessment.ExpertGroup != newAssesment.ExpertGroup)
-                //{
-                //    if (exAssessment.HorizonDoScanning)
-                //    {
-
-                //    }
-                //}
-                exAssessment.ExpertGroup = newAssesment.ExpertGroup;
-
-                if (exAssessment.ExpertGroup == "Sopper")
-                {
-                    if (exAssessment.TaxonHierarcy.ToLowerInvariant().StartsWith("chromista"))
-                    {
-
-                        exAssessment.ExpertGroup = "Kromister";
-                    }
-                }
-
-                if (newAssesment.IsDeleted && !exAssessment.IsDeleted)
-                {
-                    exAssessment.IsDeleted = true;
-                }
-
-
-                exAssessment.AssesmentVectors = newAssesment.AssesmentVectors;
-                
-                exAssessment.ImpactedNatureTypes = newAssesment.ImpactedNatureTypes;
-                exAssessment.ImpactedNatureTypesFrom2018 = newAssesment.ImpactedNatureTypesFrom2018;
-                exAssessment.Habitats = newAssesment.Habitats;
-
-                exAssessment.ArtskartModel = newAssesment.ArtskartModel;
-                exAssessment.ArtskartWaterModel = newAssesment.ArtskartWaterModel;
-                if (exAssessment.Fylkesforekomster.All(x => x.Fylke != "St")) exAssessment.Fylkesforekomster.Add(new Fylkesforekomst() { Fylke = "St" });
-                if (exAssessment.Fylkesforekomster.All(x => x.Fylke != "Nt")) exAssessment.Fylkesforekomster.Add(new Fylkesforekomst() { Fylke = "Nt" });
-                exAssessment.RiskAssessment.Criteria = newAssesment.RiskAssessment.Criteria;
-
-                if (exAssessment.HorizonEcologicalEffect != null && exAssessment.HorizonEcologicalEffect.ToLowerInvariant() == "yeswhilepresent" && exAssessment.HorizonEcologicalEffect != "yesWhilePresent")
-                    exAssessment.HorizonEcologicalEffect = "yesWhilePresent";
-                if (exAssessment.HorizonEcologicalEffect != null && exAssessment.HorizonEcologicalEffect.ToLowerInvariant() == "no" && exAssessment.HorizonEcologicalEffect != "no")
-                    exAssessment.HorizonEcologicalEffect = "no";
-                if (exAssessment.HorizonEcologicalEffect != null && exAssessment.HorizonEcologicalEffect.ToLowerInvariant() == "yesaftergone" && exAssessment.HorizonEcologicalEffect != "yesAfterGone")
-                    exAssessment.HorizonEcologicalEffect = "yesAfterGone";
-
-                exAssessment.RiskAssessment.Occurrences1Best = newAssesment.RiskAssessment.Occurrences1Best;
-                exAssessment.RiskAssessment.Occurrences1High = newAssesment.RiskAssessment.Occurrences1High;
-                exAssessment.RiskAssessment.Occurrences1Low = newAssesment.RiskAssessment.Occurrences1Low;
-
-                if (exAssessment.HorizonScanResult == "scanned_fullAssessment")
-                {
-                    if (exAssessment.HorizonEstablismentPotential == "0")
-                    {
-                        exAssessment.RiskAssessment.Occurrences1Best = 0;
-                    }
-                    else if (exAssessment.HorizonEstablismentPotential == "1")
-                    {
-                        exAssessment.RiskAssessment.Occurrences1Best = 1;
-                    }
-                }
-
-                exAssessment.AssesmentVectors = newAssesment.AssesmentVectors;
-                exAssessment.RiskAssessment.DemVariance = newAssesment.RiskAssessment.DemVariance;
-                exAssessment.RiskAssessment.EnvVariance = newAssesment.RiskAssessment.EnvVariance;
-
-                if (string.IsNullOrWhiteSpace(exAssessment.RiskAssessment.AOOfirstOccurenceLessThan10Years))
-                {
-                    
-                }
 
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)
@@ -539,44 +397,9 @@ namespace SwissKnife.Database
                 orgCopy.RiskAssessment.ExtensionData = null;
 
                 Debug.Assert(exAssessment != null, nameof(exAssessment) + " != null");
-                exAssessment.ArtskartModel ??= new ArtskartModel();
-                exAssessment.ArtskartWaterModel ??= new ArtskartWaterModel();
-                exAssessment.ImpactedNatureTypesFrom2018 ??= new List<FA4.ImpactedNatureType>();
 
-                if (exAssessment.ExpertGroup == "Sopper")
-                {
-                    if (exAssessment.TaxonHierarcy.ToLowerInvariant().StartsWith("chromista"))
-                    {
+                FixPropertiesOnNewAssessments(exAssessment);
 
-                        exAssessment.ExpertGroup = "Kromister";
-                    }
-                }
-
-                if (exAssessment.Fylkesforekomster.All(x => x.Fylke != "St")) exAssessment.Fylkesforekomster.Add(new Fylkesforekomst() { Fylke = "St" });
-                if (exAssessment.Fylkesforekomster.All(x => x.Fylke != "Nt")) exAssessment.Fylkesforekomster.Add(new Fylkesforekomst() { Fylke = "Nt" });
-                
-                if (exAssessment.HorizonEcologicalEffect != null && exAssessment.HorizonEcologicalEffect.ToLowerInvariant() == "yeswhilepresent" && exAssessment.HorizonEcologicalEffect != "yesWhilePresent")
-                    exAssessment.HorizonEcologicalEffect = "yesWhilePresent";
-                if (exAssessment.HorizonEcologicalEffect != null && exAssessment.HorizonEcologicalEffect.ToLowerInvariant() == "no" && exAssessment.HorizonEcologicalEffect != "no")
-                    exAssessment.HorizonEcologicalEffect = "no";
-                if (exAssessment.HorizonEcologicalEffect != null && exAssessment.HorizonEcologicalEffect.ToLowerInvariant() == "yesaftergone" && exAssessment.HorizonEcologicalEffect != "yesAfterGone")
-                    exAssessment.HorizonEcologicalEffect = "yesAfterGone";
-
-                if (exAssessment.HorizonScanResult == "scanned_fullAssessment")
-                {
-                    if (exAssessment.HorizonEstablismentPotential == "0")
-                    {
-                        exAssessment.RiskAssessment.Occurrences1Best = 0;
-                    }
-                    else if (exAssessment.HorizonEstablismentPotential == "1")
-                    {
-                        exAssessment.RiskAssessment.Occurrences1Best = 1;
-                    }
-                }
-                if (string.IsNullOrWhiteSpace(exAssessment.RiskAssessment.AOOfirstOccurenceLessThan10Years))
-                {
-
-                }
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)
                 {
@@ -597,6 +420,221 @@ namespace SwissKnife.Database
             }
 
             _database.SaveChanges();
+        }
+
+        private static void FixPropertiesOnNewAssessments(FA4? exAssessment)
+        {
+            //exAssessment.ArtskartModel ??= new ArtskartModel();
+            //exAssessment.ArtskartWaterModel ??= new ArtskartWaterModel();
+            //exAssessment.ImpactedNatureTypesFrom2018 ??= new List<FA4.ImpactedNatureType>();
+
+            //if (exAssessment.ExpertGroup == "Sopper")
+            //{
+            //    if (exAssessment.TaxonHierarcy.ToLowerInvariant().StartsWith("chromista"))
+            //    {
+            //        exAssessment.ExpertGroup = "Kromister";
+            //    }
+            //}
+
+            //if (exAssessment.Fylkesforekomster.All(x => x.Fylke != "St"))
+            //    exAssessment.Fylkesforekomster.Add(new Fylkesforekomst() { Fylke = "St" });
+            //if (exAssessment.Fylkesforekomster.All(x => x.Fylke != "Nt"))
+            //    exAssessment.Fylkesforekomster.Add(new Fylkesforekomst() { Fylke = "Nt" });
+
+            //if (exAssessment.HorizonEcologicalEffect != null &&
+            //    exAssessment.HorizonEcologicalEffect.ToLowerInvariant() == "yeswhilepresent" &&
+            //    exAssessment.HorizonEcologicalEffect != "yesWhilePresent")
+            //    exAssessment.HorizonEcologicalEffect = "yesWhilePresent";
+            //if (exAssessment.HorizonEcologicalEffect != null &&
+            //    exAssessment.HorizonEcologicalEffect.ToLowerInvariant() == "no" && exAssessment.HorizonEcologicalEffect != "no")
+            //    exAssessment.HorizonEcologicalEffect = "no";
+            //if (exAssessment.HorizonEcologicalEffect != null &&
+            //    exAssessment.HorizonEcologicalEffect.ToLowerInvariant() == "yesaftergone" &&
+            //    exAssessment.HorizonEcologicalEffect != "yesAfterGone")
+            //    exAssessment.HorizonEcologicalEffect = "yesAfterGone";
+
+            //if (exAssessment.HorizonScanResult == "scanned_fullAssessment")
+            //{
+            //    if (exAssessment.HorizonEstablismentPotential == "0")
+            //    {
+            //        exAssessment.RiskAssessment.Occurrences1Best = 0;
+            //    }
+            //    else if (exAssessment.HorizonEstablismentPotential == "1")
+            //    {
+            //        exAssessment.RiskAssessment.Occurrences1Best = 1;
+            //    }
+            //}
+
+            if (exAssessment.HorizonScanResult== "scanned_fullAssessment")
+            {
+                exAssessment.IsAlienSpecies = true;
+            }
+        }
+
+        private static void TransferAndFixPropertiesOnAssessmentsFrom2018(FA4? exAssessment, FA4 newAssesment)
+        {
+            //exAssessment.SpreadHistory = newAssesment.SpreadHistory;
+
+            //exAssessment.RegionalPresenceKnown = newAssesment.RegionalPresenceKnown;
+            //exAssessment.RegionalPresenceAssumed = newAssesment.RegionalPresenceAssumed;
+            //exAssessment.RegionalPresencePotential = newAssesment.RegionalPresencePotential;
+            //exAssessment.Fylkesforekomster = newAssesment.Fylkesforekomster;
+
+            ////map fix
+
+            //exAssessment.RiskAssessment.AOOknownInput = newAssesment.RiskAssessment.AOOknownInput;
+            //exAssessment.RiskAssessment.AOOknown = newAssesment.RiskAssessment.AOOknown;
+            //exAssessment.RiskAssessment.AOOknown1 = newAssesment.RiskAssessment.AOOknown1;
+            //exAssessment.RiskAssessment.AOOknown2 = newAssesment.RiskAssessment.AOOknown2;
+            //exAssessment.RiskAssessment.AOOtotalBestInput = newAssesment.RiskAssessment.AOOtotalBestInput;
+            //exAssessment.RiskAssessment.AOOtotalBest = newAssesment.RiskAssessment.AOOtotalBest;
+            //exAssessment.RiskAssessment.AOOtotalLowInput = newAssesment.RiskAssessment.AOOtotalLowInput;
+            //exAssessment.RiskAssessment.AOOtotalLow = newAssesment.RiskAssessment.AOOtotalLow;
+            //exAssessment.RiskAssessment.AOOtotalHighInput = newAssesment.RiskAssessment.AOOtotalHighInput;
+            //exAssessment.RiskAssessment.AOOtotalHigh = newAssesment.RiskAssessment.AOOtotalHigh;
+            //exAssessment.RiskAssessment.AOO50yrBestInput = newAssesment.RiskAssessment.AOO50yrBestInput;
+            //exAssessment.RiskAssessment.AOO50yrBest = newAssesment.RiskAssessment.AOO50yrBest;
+            //exAssessment.RiskAssessment.AOO50yrLowInput = newAssesment.RiskAssessment.AOO50yrLowInput;
+            //exAssessment.RiskAssessment.AOO50yrLow = newAssesment.RiskAssessment.AOO50yrLow;
+            //exAssessment.RiskAssessment.AOO50yrHighInput = newAssesment.RiskAssessment.AOO50yrHighInput;
+            //exAssessment.RiskAssessment.AOO50yrHigh = newAssesment.RiskAssessment.AOO50yrHigh;
+            //exAssessment.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes =
+            //    newAssesment.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes;
+
+
+            //exAssessment.RiskAssessment.ChosenSpreadYearlyIncrease = newAssesment.RiskAssessment.ChosenSpreadYearlyIncrease;
+            //exAssessment.RiskAssessment.ExpansionSpeedInput = newAssesment.RiskAssessment.ExpansionSpeedInput;
+            //exAssessment.RiskAssessment.ExpansionUpperQInput = newAssesment.RiskAssessment.ExpansionUpperQInput;
+            //exAssessment.RiskAssessment.ExpansionLowerQInput = newAssesment.RiskAssessment.ExpansionLowerQInput;
+
+            //exAssessment.RiskAssessment.AOOdarkfigureBest = newAssesment.RiskAssessment.AOOdarkfigureBest;
+            //exAssessment.RiskAssessment.AOOdarkfigureHigh = newAssesment.RiskAssessment.AOOdarkfigureHigh;
+            //exAssessment.RiskAssessment.AOOdarkfigureLow = newAssesment.RiskAssessment.AOOdarkfigureLow;
+
+
+            //exAssessment.IsAlienSpecies = newAssesment.IsAlienSpecies;
+            //exAssessment.ConnectedToAnother = newAssesment.ConnectedToAnother;
+            //exAssessment.ProductionSpecies = exAssessment.ProductionSpecies is true ? true : newAssesment.ProductionSpecies;
+            //exAssessment.AlienSpecieUncertainIfEstablishedBefore1800 = newAssesment.AlienSpecieUncertainIfEstablishedBefore1800;
+            //exAssessment.IsRegionallyAlien = newAssesment.IsRegionallyAlien;
+            //exAssessment.IsAlienSpecies = newAssesment.IsAlienSpecies;
+            //exAssessment.ConnectedToAnother = newAssesment.ConnectedToAnother;
+
+            //exAssessment.RiskAssessment.SpeciesSpeciesInteractions = newAssesment.RiskAssessment.SpeciesSpeciesInteractions;
+            //exAssessment.RiskAssessment.SpeciesNaturetypeInteractions =
+            //    newAssesment.RiskAssessment.SpeciesNaturetypeInteractions;
+            //exAssessment.RiskAssessment.SpeciesNaturetypeInteractions2018 =
+            //    newAssesment.RiskAssessment.SpeciesNaturetypeInteractions2018;
+            //exAssessment.RiskAssessment.HostParasiteInformations = newAssesment.RiskAssessment.HostParasiteInformations;
+            //exAssessment.RiskAssessment.GeneticTransferDocumented = newAssesment.RiskAssessment.GeneticTransferDocumented;
+
+            //exAssessment.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes =
+            //    newAssesment.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes;
+
+            //exAssessment.RiskAssessment.YearFirstIndoors = newAssesment.RiskAssessment.YearFirstIndoors;
+            //exAssessment.RiskAssessment.YearFirstIndoorsInsecure = newAssesment.RiskAssessment.YearFirstIndoorsInsecure;
+            //exAssessment.RiskAssessment.YearFirstReproductionIndoors = newAssesment.RiskAssessment.YearFirstReproductionIndoors;
+            //exAssessment.RiskAssessment.YearFirstReproductionIndoorsInsecure =
+            //    newAssesment.RiskAssessment.YearFirstReproductionIndoorsInsecure;
+            //exAssessment.RiskAssessment.YearFirstProductionOutdoors = newAssesment.RiskAssessment.YearFirstProductionOutdoors;
+            //exAssessment.RiskAssessment.YearFirstProductionOutdoorsInsecure =
+            //    newAssesment.RiskAssessment.YearFirstProductionOutdoorsInsecure;
+            //exAssessment.RiskAssessment.YearFirstReproductionOutdoors =
+            //    newAssesment.RiskAssessment.YearFirstReproductionOutdoors;
+            //exAssessment.RiskAssessment.YearFirstReproductionOutdoorsInsecure =
+            //    newAssesment.RiskAssessment.YearFirstReproductionOutdoorsInsecure;
+            //exAssessment.RiskAssessment.YearFirstEstablishmentProductionArea =
+            //    newAssesment.RiskAssessment.YearFirstEstablishmentProductionArea;
+            //exAssessment.RiskAssessment.YearFirstEstablishmentProductionAreaInsecure =
+            //    newAssesment.RiskAssessment.YearFirstEstablishmentProductionAreaInsecure;
+            //exAssessment.RiskAssessment.YearFirstNature = newAssesment.RiskAssessment.YearFirstNature;
+            //exAssessment.RiskAssessment.YearFirstNatureInsecure = newAssesment.RiskAssessment.YearFirstNatureInsecure;
+            //exAssessment.RiskAssessment.YearFirstReproductionNature = newAssesment.RiskAssessment.YearFirstReproductionNature;
+            //exAssessment.RiskAssessment.YearFirstReproductionNatureInsecure =
+            //    newAssesment.RiskAssessment.YearFirstReproductionNatureInsecure;
+            //exAssessment.RiskAssessment.YearFirstEstablishedNature = newAssesment.RiskAssessment.YearFirstEstablishedNature;
+            //exAssessment.RiskAssessment.YearFirstEstablishedNatureInsecure =
+            //    newAssesment.RiskAssessment.YearFirstEstablishedNatureInsecure;
+
+            //exAssessment.RiskAssessment.ExpansionUpperQInput = newAssesment.RiskAssessment.ExpansionUpperQInput;
+            //exAssessment.RiskAssessment.ExpansionLowerQInput = newAssesment.RiskAssessment.ExpansionLowerQInput;
+            //exAssessment.RiskAssessment.ExpansionSpeedInput = newAssesment.RiskAssessment.ExpansionSpeedInput;
+
+
+            //exAssessment.RiskAssessment.ROAscore2018 = newAssesment.RiskAssessment.ROAscore2018;
+
+            ////if (exAssessment.ExpertGroup != newAssesment.ExpertGroup)
+            ////{
+            ////    if (exAssessment.HorizonDoScanning)
+            ////    {
+
+            ////    }
+            ////}
+            //exAssessment.ExpertGroup = newAssesment.ExpertGroup;
+
+            //if (exAssessment.ExpertGroup == "Sopper")
+            //{
+            //    if (exAssessment.TaxonHierarcy.ToLowerInvariant().StartsWith("chromista"))
+            //    {
+            //        exAssessment.ExpertGroup = "Kromister";
+            //    }
+            //}
+
+            //if (newAssesment.IsDeleted && !exAssessment.IsDeleted)
+            //{
+            //    exAssessment.IsDeleted = true;
+            //}
+
+
+            //exAssessment.AssesmentVectors = newAssesment.AssesmentVectors;
+
+            //exAssessment.ImpactedNatureTypes = newAssesment.ImpactedNatureTypes;
+            //exAssessment.ImpactedNatureTypesFrom2018 = newAssesment.ImpactedNatureTypesFrom2018;
+            //exAssessment.Habitats = newAssesment.Habitats;
+
+            //exAssessment.ArtskartModel = newAssesment.ArtskartModel;
+            //exAssessment.ArtskartWaterModel = newAssesment.ArtskartWaterModel;
+            //if (exAssessment.Fylkesforekomster.All(x => x.Fylke != "St"))
+            //    exAssessment.Fylkesforekomster.Add(new Fylkesforekomst() { Fylke = "St" });
+            //if (exAssessment.Fylkesforekomster.All(x => x.Fylke != "Nt"))
+            //    exAssessment.Fylkesforekomster.Add(new Fylkesforekomst() { Fylke = "Nt" });
+            //exAssessment.RiskAssessment.Criteria = newAssesment.RiskAssessment.Criteria;
+
+            //if (exAssessment.HorizonEcologicalEffect != null &&
+            //    exAssessment.HorizonEcologicalEffect.ToLowerInvariant() == "yeswhilepresent" &&
+            //    exAssessment.HorizonEcologicalEffect != "yesWhilePresent")
+            //    exAssessment.HorizonEcologicalEffect = "yesWhilePresent";
+            //if (exAssessment.HorizonEcologicalEffect != null &&
+            //    exAssessment.HorizonEcologicalEffect.ToLowerInvariant() == "no" && exAssessment.HorizonEcologicalEffect != "no")
+            //    exAssessment.HorizonEcologicalEffect = "no";
+            //if (exAssessment.HorizonEcologicalEffect != null &&
+            //    exAssessment.HorizonEcologicalEffect.ToLowerInvariant() == "yesaftergone" &&
+            //    exAssessment.HorizonEcologicalEffect != "yesAfterGone")
+            //    exAssessment.HorizonEcologicalEffect = "yesAfterGone";
+
+            //exAssessment.RiskAssessment.Occurrences1Best = newAssesment.RiskAssessment.Occurrences1Best;
+            //exAssessment.RiskAssessment.Occurrences1High = newAssesment.RiskAssessment.Occurrences1High;
+            //exAssessment.RiskAssessment.Occurrences1Low = newAssesment.RiskAssessment.Occurrences1Low;
+
+            //if (exAssessment.HorizonScanResult == "scanned_fullAssessment")
+            //{
+            //    if (exAssessment.HorizonEstablismentPotential == "0")
+            //    {
+            //        exAssessment.RiskAssessment.Occurrences1Best = 0;
+            //    }
+            //    else if (exAssessment.HorizonEstablismentPotential == "1")
+            //    {
+            //        exAssessment.RiskAssessment.Occurrences1Best = 1;
+            //    }
+            //}
+
+            //exAssessment.AssesmentVectors = newAssesment.AssesmentVectors;
+            //exAssessment.RiskAssessment.DemVariance = newAssesment.RiskAssessment.DemVariance;
+            //exAssessment.RiskAssessment.EnvVariance = newAssesment.RiskAssessment.EnvVariance;
+            if (exAssessment.HorizonScanResult == "scanned_fullAssessment")
+            {
+                exAssessment.IsAlienSpecies = true;
+            }
         }
     }
 }

@@ -136,7 +136,7 @@ export default function enhanceAssessment(json, appState) {
 
     extendObservable(assessment, {
         get isAlienSpeciesString() {
-            return assessment.isAlienSpecies || assessment.horizonEstablismentPotential == 2 ? "true" : "false"
+            return assessment.isAlienSpecies ? "true" : "false"
         },
         set isAlienSpeciesString(s) {
             assessment.isAlienSpecies = s === "true"
