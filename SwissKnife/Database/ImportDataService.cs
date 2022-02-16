@@ -344,6 +344,11 @@ namespace SwissKnife.Database
                 // todo: overfør manglende morro
                 var exAssessment = JsonSerializer.Deserialize<FA4>(real.Doc, jsonSerializerOptions);
                 var orgCopy = JsonSerializer.Deserialize<FA4>(real.Doc, jsonSerializerOptions);
+                exAssessment.ExtensionData = null;
+                exAssessment.RiskAssessment.ExtensionData = null;
+
+                orgCopy.ExtensionData = null;
+                orgCopy.RiskAssessment.ExtensionData = null;
 
                 // Disse feltene er de som faktisk patches.....
                 Debug.Assert(exAssessment != null, nameof(exAssessment) + " != null");
@@ -485,6 +490,13 @@ namespace SwissKnife.Database
                 }
 
                 exAssessment.AssesmentVectors = newAssesment.AssesmentVectors;
+                exAssessment.RiskAssessment.DemVariance = newAssesment.RiskAssessment.DemVariance;
+                exAssessment.RiskAssessment.EnvVariance = newAssesment.RiskAssessment.EnvVariance;
+
+                if (string.IsNullOrWhiteSpace(exAssessment.RiskAssessment.AOOfirstOccurenceLessThan10Years))
+                {
+                    
+                }
 
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)
@@ -561,7 +573,10 @@ namespace SwissKnife.Database
                         exAssessment.RiskAssessment.Occurrences1Best = 1;
                     }
                 }
+                if (string.IsNullOrWhiteSpace(exAssessment.RiskAssessment.AOOfirstOccurenceLessThan10Years))
+                {
 
+                }
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)
                 {
