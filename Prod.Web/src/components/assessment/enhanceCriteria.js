@@ -364,9 +364,9 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         get AOOchangeHigh() { return n0(r.AOO50yrHigh) / d1(r.AOOtotalBest) }, // nb AOOtotalBest is allways >= 4 (so really no need to check)
         get adefaultBest() {
             return r.doorKnocker ?
-            r.AOO10yrBest >= 16 ? 3
-            : r.AOO10yrBest >= 4 ? 2
-            : r.AOO10yrBest >= 1 ? 1
+            r.AOO10yrBest > 16 ? 3
+            : r.AOO10yrBest > 4 ? 2
+            : r.AOO10yrBest > 1 ? 1
             : 0
             : r.AOO50yrBest >= 20 && r.AOOchangeBest > 0.2 ? 3
             : r.AOO50yrBest >= 20 && r.AOOchangeBest > 0.05 ? 2
@@ -376,9 +376,10 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
         get adefaultLow() {
             return r.doorKnocker ?
-            r.AOO10yrLow >= 16 ? 3
-            : r.AOO10yrLow >= 4 ? 2
-            : r.AOO10yrLow >= 1 ? max(1, r.adefaultBest - 1)
+            r.AOO10yrLow > 16 ? 3
+            : r.AOO10yrLow > 4 ? 2
+            : r.AOO10yrLow > 1 ? max(1, r.adefaultBest - 1)
+            : r.AOO10yrLow <= 1 ? max(0, r.adefaultBest - 1)
             : 0
             : r.AOO50yrLow >= 20 && r.AOOchangeLow > 0.2 ? 3
             : r.AOO50yrLow >= 20 && r.AOOchangeLow > 0.05 ? 2
@@ -389,9 +390,9 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
         get adefaultHigh() {
             return r.doorKnocker ?
-            r.AOO10yrHigh >= 16 ? min(3, r.adefaultBest + 1)
-            : r.AOO10yrHigh >= 4 ? min(2, r.adefaultBest + 1)
-            : r.AOO10yrHigh >= 1 ? 1
+            r.AOO10yrHigh > 16 ? min(3, r.adefaultBest + 1)
+            : r.AOO10yrHigh > 4 ? min(2, r.adefaultBest + 1)
+            : r.AOO10yrHigh > 1 ? 1
             : 0
             : r.AOO50yrHigh >= 20 && r.AOOchangeHigh > 0.2 ?  min(3, r.adefaultBest + 1)
             : r.AOO50yrHigh >= 20 && r.AOOchangeHigh > 0.05 ?  min(2, r.adefaultBest + 1)
@@ -962,6 +963,10 @@ function parasiteNewForHost(item) {
     // "NewAlien", "NewNative", "KnownAlien", "KnownNative"
     return item.status === "NewAlien" || item.status === "NewNative"
 }
+function parasiteIsAlien(item) {
+    // "NewAlien", "NewNative", "KnownAlien", "KnownNative"
+    return item.status === "NewAlien" || item.status === "KnownAlien"
+}
 
 function effectLocalScale(item) {
     // item.scale
@@ -983,12 +988,12 @@ export const critILevel = list => {
         console.log("#!% item parasiteNewForHost value: " + parasiteNewForHost(item))
     })
     const list4 = list.filter(item =>
-        item.parasiteIsAlien ||
+        parasiteIsAlien(item) ||
         (rlThreatCats.indexOf(item.redListCategory) > -1 && parasiteNewForHost(item) && !effectLocalScale(item)) ||
         (rlCats.indexOf(item.redListCategory) > -1 && item.keyStoneSpecie && parasiteNewForHost(item) && !effectLocalScale(item))
     )
     const list3 = list.filter(item =>
-        !item.parasiteIsAlien &&
+        !parasiteIsAlien(item) &&
         (
             (rlThreatCats.indexOf(item.redListCategory) > -1 && parasiteNewForHost(item) && effectLocalScale(item)) ||
             (rlCats.indexOf(item.redListCategory) > -1 && item.keyStoneSpecie && parasiteNewForHost(item) && effectLocalScale(item)) ||
@@ -996,7 +1001,7 @@ export const critILevel = list => {
         )
     )
     const list2 = list.filter(item =>
-        !item.parasiteIsAlien &&
+        !parasiteIsAlien(item) &&
         (
             (rlCats.indexOf(item.redListCategory) > -1 && !item.keyStoneSpecie && parasiteNewForHost(item) && effectLocalScale(item)) ||
             (!parasiteNewForHost(item) && !effectLocalScale(item))
@@ -1029,67 +1034,6 @@ export const critILevel = list => {
     console.log("#!%Ihostparasitelevel " + result)
     return result - 1;
 }
-// export const critILevel = list => {
-//             const rlCats = ["LC","DD","NT"]
-//             const rlThreatCats = ["VU","EN","CR"]
-//             // const list = riskAssessment.HostParasiteInformations
-//             list.map(item => {
-//                 console.log("#!% item: " + JSON.stringify(item))
-//                 console.log("#!% item parasiteNewForHost type: " + typeof(item.parasiteNewForHost))
-//                 console.log("#!% item parasiteNewForHost value: " + item.parasiteNewForHost)
-//             })
-//             // list.map(item => {
-//             //     console.log("parasiteNewForHost type: " + typeof(item.parasiteNewForHost))
-//             //     console.log("parasiteNewForHost value: " + item.parasiteNewForHost)
-//             // })
-//             const list4 = list.filter(item =>
-//                 item.parasiteIsAlien ||
-//                 (rlThreatCats.indexOf(item.redListCategory) > -1 && item.parasiteNewForHost && !item.effectLocalScale) ||
-//                 (rlCats.indexOf(item.redListCategory) > -1 && item.keyStoneSpecie && item.parasiteNewForHost && !item.effectLocalScale)
-//             )
-//             const list3 = list.filter(item =>
-//                 !item.parasiteIsAlien &&
-//                 (
-//                     (rlThreatCats.indexOf(item.redListCategory) > -1 && item.parasiteNewForHost && item.effectLocalScale) ||
-//                     (rlCats.indexOf(item.redListCategory) > -1 && item.keyStoneSpecie && item.parasiteNewForHost && item.effectLocalScale) ||
-//                     (rlCats.indexOf(item.redListCategory) > -1 && !item.keyStoneSpecie && item.parasiteNewForHost && !item.effectLocalScale)
-//                 )
-//             )
-//             const list2 = list.filter(item =>
-//                 !item.parasiteIsAlien &&
-//                 (
-//                     (rlCats.indexOf(item.redListCategory) > -1 && !item.keyStoneSpecie && item.parasiteNewForHost && item.effectLocalScale) ||
-//                     (!item.parasiteNewForHost && !item.effectLocalScale)
-//                 )
-//             )
-//             console.log("#!%list2 " + JSON.stringify(list2)   )
-//             console.log("#!%list3 " + JSON.stringify(list3)   )
-//             console.log("#!%list4 " + JSON.stringify(list4)   )
-
-
-//             const maxEffect4 = Math.max(...list4.map(item => parseInt(item.parasiteEcoEffect)))
-//             const maxEffect3 = Math.max(...list3.map(item => parseInt(item.parasiteEcoEffect)))
-//             const maxEffect2 = Math.max(...list2.map(item => parseInt(item.parasiteEcoEffect)))
-
-//             console.log("#!%maxeffect2 " + maxEffect2)
-//             console.log("#!%maxeffect3 " + maxEffect3)
-//             console.log("#!%maxeffect4 " + maxEffect4)
-
-
-//             // console.log("maxEffect4: " + maxEffect4)
-//             // console.log("maxEffect3: " + maxEffect3)
-//             // console.log("maxEffect2: " + maxEffect2)
-//             // const maxEffect4 = 3
-//             // const maxEffect3 = 3
-//             // const maxEffect2 = 3
-//             const effect4 = list4.length > 0 ? Math.min(4, maxEffect4) : 1
-//             const effect3 = list3.length > 0 ? Math.min(3, maxEffect3) : 1
-//             const effect2 = list2.length > 0 ? Math.min(2, maxEffect2) : 1
-//             const result = Math.max(effect4, effect3, effect2)
-//             console.log("#!%Ihostparasitelevel " + result)
-//             return result - 1;
-//         }
-// -------------------------------------
 
 
 function enhanceRiskAssessmentEcoEffect(riskAssessment) {
