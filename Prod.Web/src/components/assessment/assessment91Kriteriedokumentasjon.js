@@ -169,8 +169,29 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                     <fieldset className="well">
                         <h4>{critlabels.domesticSpread}</h4>
                         <p>{critlabels.see33And34}</p>
-                        <Xcomp.HtmlString
+                       {/*} <Xcomp.HtmlString
                             observableValue={[riskAssessment, 'criteriaDocumentationMigrationPathways']}
+                            style={{
+                            //width: 800,
+                            height: 150,
+                            maxHeight: 150
+                        }}/>*/}
+                        <Xcomp.HtmlString
+                            observableValue={[assessment, 'spreadIndoorFurtherInfo']}
+                            style={{
+                            //width: 800,
+                            height: 150,
+                            maxHeight: 150
+                        }}/>
+                        <Xcomp.HtmlString
+                            observableValue={[assessment, 'spreadIntroductionFurtherInfo']}
+                            style={{
+                            //width: 800,
+                            height: 150,
+                            maxHeight: 150
+                        }}/>
+                        <Xcomp.HtmlString
+                            observableValue={[assessment, 'spreadFurtherSpreadFurtherInfo']}
                             style={{
                             //width: 800,
                             height: 150,
