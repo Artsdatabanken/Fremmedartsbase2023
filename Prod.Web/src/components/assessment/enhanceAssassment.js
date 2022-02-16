@@ -284,7 +284,16 @@ export default function enhanceAssessment(json, appState) {
         }
     });
 
-
+    autorun(() => {
+        const asc = assessment.alienSpeciesCategory
+        console.log("¤¤¤ alienSpeciesCategory: " + asc)
+    
+    })
+    autorun(() => {
+        const ss = assessment.speciesStatus
+        console.log("¤¤¤ speciesStatus: '" + ss + "'")
+    
+    })
 
     reaction(
         () => assessment.alienSpeciesCategory,
