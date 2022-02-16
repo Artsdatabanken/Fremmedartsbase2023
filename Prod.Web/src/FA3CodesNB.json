@@ -5643,7 +5643,7 @@
                         {
                             "Id": null,
                             "Value": "DoorKnocker",
-                            "Text": "Basert på det beste anslaget på [X1] forekomster i løpet av 10 år og [X2] introduksjoner i samme tidsperiode er A-kriteriet forhåndsskåret som [X3] (med usikkerhet: [X4-X5]). Dette innebærer at artens mediane levetid ligger [mellom X6 år og X7 år], eller at sannsynligheten for utdøing innen 50 år er på [mellom X8 % og X9 %].",
+                            "Text": "Basert på det beste anslaget på [X1] forekomster i løpet av 10 år og [X2] ytterligere introduksjoner i samme tidsperiode er A-kriteriet forhåndsskåret som [X3] (med usikkerhet: [X4-X5]). Dette innebærer at artens mediane levetid ligger [mellom X6 år og X7 år], eller at sannsynligheten for utdøing innen 50 år er på [mellom X8 % og X9 %].",
                             "Info": null,
                             "Children": null
                         }
