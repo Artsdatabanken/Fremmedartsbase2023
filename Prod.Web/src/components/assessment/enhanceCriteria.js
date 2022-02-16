@@ -364,9 +364,9 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         get AOOchangeHigh() { return n0(r.AOO50yrHigh) / d1(r.AOOtotalBest) }, // nb AOOtotalBest is allways >= 4 (so really no need to check)
         get adefaultBest() {
             return r.doorKnocker ?
-            r.AOO10yrBest >= 16 ? 3
-            : r.AOO10yrBest >= 4 ? 2
-            : r.AOO10yrBest >= 1 ? 1
+            r.AOO10yrBest > 16 ? 3
+            : r.AOO10yrBest > 4 ? 2
+            : r.AOO10yrBest > 1 ? 1
             : 0
             : r.AOO50yrBest >= 20 && r.AOOchangeBest > 0.2 ? 3
             : r.AOO50yrBest >= 20 && r.AOOchangeBest > 0.05 ? 2
@@ -376,10 +376,10 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
         get adefaultLow() {
             return r.doorKnocker ?
-            r.AOO10yrLow >= 16 ? 3
-            : r.AOO10yrLow >= 4 ? 2
-            : r.AOO10yrLow >= 1 ? max(1, r.adefaultBest - 1)
-            : r.AOO10yrLow < 1 ? max(0, r.adefaultBest - 1)
+            r.AOO10yrLow > 16 ? 3
+            : r.AOO10yrLow > 4 ? 2
+            : r.AOO10yrLow > 1 ? max(1, r.adefaultBest - 1)
+            : r.AOO10yrLow <= 1 ? max(0, r.adefaultBest - 1)
             : 0
             : r.AOO50yrLow >= 20 && r.AOOchangeLow > 0.2 ? 3
             : r.AOO50yrLow >= 20 && r.AOOchangeLow > 0.05 ? 2
@@ -390,9 +390,9 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
         get adefaultHigh() {
             return r.doorKnocker ?
-            r.AOO10yrHigh >= 16 ? min(3, r.adefaultBest + 1)
-            : r.AOO10yrHigh >= 4 ? min(2, r.adefaultBest + 1)
-            : r.AOO10yrHigh >= 1 ? 1
+            r.AOO10yrHigh > 16 ? min(3, r.adefaultBest + 1)
+            : r.AOO10yrHigh > 4 ? min(2, r.adefaultBest + 1)
+            : r.AOO10yrHigh > 1 ? 1
             : 0
             : r.AOO50yrHigh >= 20 && r.AOOchangeHigh > 0.2 ?  min(3, r.adefaultBest + 1)
             : r.AOO50yrHigh >= 20 && r.AOOchangeHigh > 0.05 ?  min(2, r.adefaultBest + 1)
