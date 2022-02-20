@@ -946,7 +946,7 @@ public partial class FA4 // (3.2) Artsegenskaper
         [System.Text.Json.Serialization.JsonPropertyName("AOO50yrHigh")]
         public Int64? AOO50yrHigh { get; set; }
         [System.Text.Json.Serialization.JsonPropertyName("AOOfirstOccurenceLessThan10Years")]
-        public string AOOfirstOccurenceLessThan10Years { get; set; } = "no";
+        public string AOOfirstOccurenceLessThan10Years { get; set; } = "yes";
         //[System.Text.Json.Serialization.JsonPropertyName("AOOestimationPeriod10yrPossible")]
         //public string AOOestimationPeriod10yrPossible { get; set; } = "yes";
         // -------- disse (forekomstareal om 50år) er erstattet:  
