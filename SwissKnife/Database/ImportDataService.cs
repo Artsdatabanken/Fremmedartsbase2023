@@ -722,6 +722,7 @@ namespace SwissKnife.Database
             exAssessment.PreviousAssessments = newAssesment.PreviousAssessments;
 
             exAssessment.IndoorProduktion = newAssesment.IndoorProduktion;
+            exAssessment.SpreadIntroductionFurtherInfo = newAssesment.SpreadIntroductionFurtherInfo;
         }
     }
 }

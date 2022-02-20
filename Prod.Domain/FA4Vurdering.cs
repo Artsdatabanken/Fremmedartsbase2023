@@ -1464,7 +1464,7 @@ public partial class FA4 // (3.2) Artsegenskaper
         public string CriteriaDocumentation { get; set; }
         public string CriteriaDocumentationSpeciesStatus { get; set; }
         public string CriteriaDocumentationDomesticSpread { get; set; }
-        public string CriteriaDocumentationMigrationPathways { get; set; }
+        //public string CriteriaDocumentationMigrationPathways { get; set; } // fjernet 20.02.2020 - erstattet av spreadIntroductionFurtherInfo
         public string CriteriaDocumentationInvationPotential { get; set; }
         public string CriteriaDocumentationEcoEffect { get; set; }
 
