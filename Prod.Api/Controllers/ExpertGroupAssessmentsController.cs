@@ -71,7 +71,8 @@ namespace Prod.Api.Controllers
                 Rolle = roleInGroup,
                 Assessments = filteredAssessments.assessmentList,
                 Facets = filteredAssessments.Facets,
-                TotalCount = filteredAssessments.TotalCount
+                TotalCount = filteredAssessments.TotalCount,
+                FilterCount = filteredAssessments.FilterCount
             };
             return expertgroupAssessments;
         }
@@ -279,8 +280,8 @@ namespace Prod.Api.Controllers
                 await IndexHelper.Index(indexVersion.DateTime, _dbContext, _index);
             }
 
-            filter.Page = 0;
-            filter.PageSize = 1000;
+            //filter.Page = 0;
+            //filter.PageSize = 1000;
             //filter.HorizonScan = true;
             var query = IndexHelper.QueryGetDocumentQuery(expertgroupid, filter);
 
@@ -288,6 +289,7 @@ namespace Prod.Api.Controllers
                 .SearchReference(query, filter.Page, filter.PageSize, IndexHelper.Field_ScientificNameAsTerm)
                 .Select(IndexHelper.GetDocumentFromIndex)
                 .ToList();
+            var count = _index.SearchTotalCount(query);
             var getAllQuery =
                 IndexHelper.QueryGetDocumentQuery(expertgroupid, new IndexFilter { HorizonScan = filter.HorizonScan });
             var facets = _index.SearchFacetsReference(getAllQuery,
@@ -299,6 +301,7 @@ namespace Prod.Api.Controllers
             var totalCount = _index.SearchTotalCount(getAllQuery);
 
             doReturn.assessmentList = result;
+            doReturn.FilterCount = count;
             doReturn.TotalCount = totalCount;
             if (doReturn.TotalCount > 0)
                 doReturn.Facets = facets.Select(x => new Facet
@@ -366,6 +369,7 @@ namespace Prod.Api.Controllers
             public List<AssessmentListItem> Assessments { get; set; }
             public List<Facet> Facets { get; set; }
             public int TotalCount { get; set; }
+            public int FilterCount { get; set; }
         }
     }
 }

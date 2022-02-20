@@ -538,7 +538,7 @@ export default class SelectAssessment extends Component {
                 // TO DO: check that all the filters are observed
                 <span>{labels.SelectAssessment.showingTotal} {appState.expertgroupAssessmentTotalCount} {appState.expertgroupAssessmentTotalCount == 1 ? labels.SelectAssessment.assessment : labels.SelectAssessment.assessments}</span>
                 :            
-                <span> {labels.SelectAssessment.showingTotal} {appState.expertgroupAssessmentList.length} {appState.expertgroupAssessmentList.length == 1 ? labels.SelectAssessment.assessment : labels.SelectAssessment.assessments} ({labels.SelectAssessment.filteredFrom} {appState.expertgroupAssessmentTotalCount})</span>
+                <span> {labels.SelectAssessment.showingTotal} {appState.expertgroupAssessmentFilterCount} {appState.expertgroupAssessmentList.length == 1 ? labels.SelectAssessment.assessment : labels.SelectAssessment.assessments} ({labels.SelectAssessment.filteredFrom} {appState.expertgroupAssessmentTotalCount})</span>
             }
             <input type="button" className="btn btn-primary" value="Last ned fil" onClick={() => window.open(config.apiUrl + '/api/ExpertGroupAssessments/export/' + appState.assessmentTypeFilter + '/' + appState.expertgroup)}></input>
             </div>

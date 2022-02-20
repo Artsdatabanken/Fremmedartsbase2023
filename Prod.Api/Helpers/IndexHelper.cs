@@ -22,7 +22,7 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Change this to force index rebuild!
         /// </summary>
-        public const int IndexVersion = 7;
+        public const int IndexVersion = 9;
         private static readonly object IndexingLock = new();
 
         private const string Field_Id = "Id";
@@ -260,10 +260,16 @@ namespace Prod.Api.Helpers
             }
 
             if (IsDocumentEvaluated(ass))
+            {
                 indexFields.Add(new StringField(Field_Category, string.IsNullOrWhiteSpace(ass.Category) ? GetCategoryFromRiskLevel(ass.RiskAssessment.RiskLevel) : ass.Category,
                     Field.Store.YES));
+                indexFields.Add(new StringField(Field_CurrentStatus, "vurdert", Field.Store.NO));
+            }
             else
+            {
                 indexFields.Add(new StringField(Field_Category, "NR", Field.Store.YES));
+                indexFields.Add(new StringField(Field_CurrentStatus, "ikkevurdert", Field.Store.NO));
+            }
 
             // &Current.Status=establishedAfter1800,&Current.Status=doorKnocker,&Current.Status=regionallyAlien,&Current.Status=effectWithoutEstablishment
             // &Current.Status=establishedBefore1800,&Current.Status=sharesMotherSpeciesStatus,&Current.Status=notAlienInNorway,&Current.Status=notAssessedPotentialDoorKnocker
@@ -275,6 +281,23 @@ namespace Prod.Api.Helpers
                     ? new StringField(Field_CurrentStatus, "establishedBefore1800", Field.Store.NO)
                     : new StringField(Field_CurrentStatus, "establishedAfter1800", Field.Store.NO));
             }
+
+            if (!(ass.IsAlienSpecies.HasValue && ass.IsAlienSpecies.Value == true))
+            {
+                indexFields.Add(new StringField(Field_CurrentStatus, "notAlienInNorway", Field.Store.NO));
+            }
+
+            if (ass.IsAlienSpecies == true && ass.ConnectedToAnother == true)
+            {
+                indexFields.Add(new StringField(Field_CurrentStatus, "sharesMotherSpeciesStatus", Field.Store.NO));
+            }
+            //effectWithoutEstablishment ??
+            //doorKnocker
+            if (ass.IsAlienSpecies == true && ass.ConnectedToAnother != true && ass.SpeciesStatus != "C2" && ass.SpeciesStatus != "C3" && ass.AlienSpecieUncertainIfEstablishedBefore1800 == false)
+            {
+                indexFields.Add(new StringField(Field_CurrentStatus, "doorKnocker", Field.Store.NO));
+            }
+
 
             //Status=notStarted,&Status=inprogress,&Status=finished
             if (ass.EvaluationStatus == "imported")
