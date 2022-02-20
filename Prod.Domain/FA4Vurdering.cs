@@ -590,7 +590,7 @@ public partial class FA4 // (3.2) Artsegenskaper
     public partial class FA4 // (3.3) Import
     {
         public List<MigrationPathway> ImportPathways { get; set; } = new List<MigrationPathway>();
-        public bool ImportedToIndoorOrProductionArea { get; set; } = false;
+        public bool ImportedToIndoorOrProductionArea { get; set; } = false; // trolig ikke i pruk - rest fra fa3 og erstattet av den under
 
         public string IndoorProduktion { get; set; }
     }

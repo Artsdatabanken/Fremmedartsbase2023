@@ -331,7 +331,7 @@ namespace SwissKnife.Database
             var taxonService = new SwissKnife.Database.TaksonService();
 
             var datetime = DateTime.MinValue;
-            var redlistByScientificName = GetRedlistByScientificNameDictoDictionary(inputFolder, theCsvConfiguration);
+            //var redlistByScientificName = GetRedlistByScientificNameDictoDictionary(inputFolder, theCsvConfiguration);
 
 
             var existing = _database.Assessments.ToDictionary(x => x.Id, x => JsonSerializer.Deserialize<FA4>(x.Doc, jsonSerializerOptions));
@@ -370,7 +370,7 @@ namespace SwissKnife.Database
                 
                 TransferAndFixPropertiesOnAssessmentsFrom2018(exAssessment, newAssesment);
 
-                FixRedlistOnExistingAssessment(exAssessment, redlistByScientificName, taxonService);
+                //FixRedlistOnExistingAssessment(exAssessment, redlistByScientificName, taxonService);
 
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)
@@ -415,7 +415,7 @@ namespace SwissKnife.Database
                 Debug.Assert(exAssessment != null, nameof(exAssessment) + " != null");
 
                 FixPropertiesOnNewAssessments(exAssessment);
-                FixRedlistOnExistingAssessment(exAssessment, redlistByScientificName, taxonService);
+                //FixRedlistOnExistingAssessment(exAssessment, redlistByScientificName, taxonService);
 
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)
@@ -545,10 +545,11 @@ namespace SwissKnife.Database
             //    }
             //}
 
-            if (exAssessment.HorizonScanResult== "scanned_fullAssessment")
-            {
-                exAssessment.IsAlienSpecies = true;
-            }
+            //if (exAssessment.HorizonScanResult== "scanned_fullAssessment")
+            //{
+            //    exAssessment.IsAlienSpecies = true;
+            //}
+
         }
 
         private static void TransferAndFixPropertiesOnAssessmentsFrom2018(FA4? exAssessment, FA4 newAssesment)
@@ -711,10 +712,16 @@ namespace SwissKnife.Database
             //exAssessment.AssesmentVectors = newAssesment.AssesmentVectors;
             //exAssessment.RiskAssessment.DemVariance = newAssesment.RiskAssessment.DemVariance;
             //exAssessment.RiskAssessment.EnvVariance = newAssesment.RiskAssessment.EnvVariance;
-            if (exAssessment.HorizonScanResult == "scanned_fullAssessment")
-            {
-                exAssessment.IsAlienSpecies = true;
-            }
+
+            // prod 16.02.2020
+            //if (exAssessment.HorizonScanResult == "scanned_fullAssessment")
+            //{
+            //    exAssessment.IsAlienSpecies = true;
+            //}
+
+            exAssessment.PreviousAssessments = newAssesment.PreviousAssessments;
+
+            exAssessment.IndoorProduktion = newAssesment.IndoorProduktion;
         }
     }
 }

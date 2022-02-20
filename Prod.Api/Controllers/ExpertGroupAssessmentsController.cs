@@ -129,7 +129,7 @@ namespace Prod.Api.Controllers
             var mem = new MemoryStream();
             var writer = new StreamWriter(mem, Encoding.Unicode);
             //var csvConfiguration = new CsvConfiguration(new CultureInfo("nb-NO"));
-            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+            var config = new CsvConfiguration(CultureInfo.DefaultThreadCurrentCulture)
             {
                 Delimiter = "\t"
             };
@@ -148,9 +148,9 @@ namespace Prod.Api.Controllers
             csv.Context.TypeConverterCache.RemoveConverter<string>();
             csv.Context.TypeConverterCache.AddConverter<string>(new CsvHelpers.CustomStringConverter());
             csv.Context.TypeConverterOptionsCache.GetOptions<string>().NullValues.Add(string.Empty);
-            var options = new TypeConverterOptions { Formats = new[] { "o" } };
-            csv.Context.TypeConverterOptionsCache.AddOptions<DateTime>(options);
-            csv.Context.TypeConverterOptionsCache.AddOptions<DateTime?>(options);
+            //var options = new TypeConverterOptions { Formats = new[] { "o" } };
+            //csv.Context.TypeConverterOptionsCache.AddOptions<DateTime>(options);
+            //csv.Context.TypeConverterOptionsCache.AddOptions<DateTime?>(options);
 
             var mapper = Helpers.ExportMapper.InitializeMapper();
             switch (hor)
