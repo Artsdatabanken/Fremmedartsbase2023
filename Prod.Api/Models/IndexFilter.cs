@@ -17,7 +17,7 @@ namespace Prod.Api.Models
         }
 
         public int Page { get; set; } = 0;
-        public int PageSize { get; set; } = 1000;
+        public int PageSize { get; set; } = 500;
 
         /// <summary>
         /// Authors by full name
