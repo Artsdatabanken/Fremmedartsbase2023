@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CsvHelper;
 using CsvHelper.Configuration;
+using CsvHelper.TypeConversion;
 using IdentityModel.Client;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -147,6 +148,9 @@ namespace Prod.Api.Controllers
             csv.Context.TypeConverterCache.RemoveConverter<string>();
             csv.Context.TypeConverterCache.AddConverter<string>(new CsvHelpers.CustomStringConverter());
             csv.Context.TypeConverterOptionsCache.GetOptions<string>().NullValues.Add(string.Empty);
+            var options = new TypeConverterOptions { Formats = new[] { "o" } };
+            csv.Context.TypeConverterOptionsCache.AddOptions<DateTime>(options);
+            csv.Context.TypeConverterOptionsCache.AddOptions<DateTime?>(options);
 
             var mapper = Helpers.ExportMapper.InitializeMapper();
             switch (hor)
