@@ -22,7 +22,7 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Change this to force index rebuild!
         /// </summary>
-        public const int IndexVersion = 6;
+        public const int IndexVersion = 7;
         private static readonly object IndexingLock = new();
 
         private const string Field_Id = "Id";
@@ -44,6 +44,7 @@ namespace Prod.Api.Helpers
 
         private const string Field_Criteria = "Criteria";
         private const string Field_CriteriaAll = "CriteriaAll";
+        private const string Field_CriteriaAll2018 = "CriteriaAll2018";
 
         private const string Field_AssessmentContext = "AssessmentContext";
 
@@ -298,14 +299,14 @@ namespace Prod.Api.Helpers
                     indexFields.Add(new StringField(Field_Category2018, "NR", Field.Store.YES));
 
                 // todo: krever ny migreringspatch
-                //if (!string.IsNullOrWhiteSpace(ass2018.DecisiveCriteria))
-                //{
-                //    foreach (var criteria in _criterias)
-                //        if (ass2018.DecisiveCriteria.Contains(criteria, StringComparison.InvariantCulture))
-                //            document.Add(new StringField(Field_Criteria, criteria, Field.Store.NO));
+                if (!string.IsNullOrWhiteSpace(ass2018.DecisiveCriteria))
+                {
+                    foreach (var criteria in _criterias)
+                        if (ass2018.DecisiveCriteria.Contains(criteria, StringComparison.InvariantCulture))
+                            indexFields.Add(new StringField(Field_Criteria2018, criteria, Field.Store.NO));
 
-                //    document.Add(new StringField(Field_CriteriaAll, ass2018.DecisiveCriteria, Field.Store.YES));
-                //}
+                    indexFields.Add(new StringField(Field_CriteriaAll2018, ass2018.DecisiveCriteria, Field.Store.YES));
+                }
             }
 
             if (!string.IsNullOrWhiteSpace(ass.RiskAssessment.DecisiveCriteria))
