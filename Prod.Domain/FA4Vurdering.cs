@@ -1556,6 +1556,7 @@ public partial class FA4 // (3.2) Artsegenskaper
             public int EcologicalRiskLevel { get; set; }
             public string MainCategory { get; set; }
             public string MainSubCategory { get; set; }
+            public string DecisiveCriteria { get; set; }
         }
 
         public class ImpactedNatureType
