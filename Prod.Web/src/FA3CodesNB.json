@@ -1725,7 +1725,7 @@
             {
                 "Id": "climateEffects",
                 "Value": "categoryNK",
-                "Text": "Arten er NK uten usikkerhet oppover, og utfylling av klimaeffekter er dermed ikke aktuelt.",
+                "Text": "Arten er NK og utfylling av klimaeffekter er dermed ikke aktuelt.",
                 "Info": null,
                 "Children": null
             },
