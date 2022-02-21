@@ -804,6 +804,8 @@ namespace SwissKnife.Database
             exAssessment.RiskAssessment.SpeciesSpeciesInteractions = newAssesment.RiskAssessment.SpeciesSpeciesInteractions;
             exAssessment.RiskAssessment.HostParasiteInformations = newAssesment.RiskAssessment.HostParasiteInformations;
             exAssessment.RiskAssessment.GeneticTransferDocumented = newAssesment.RiskAssessment.GeneticTransferDocumented;
+            exAssessment.RiskAssessment.SpeciesNaturetypeInteractions = newAssesment.RiskAssessment.SpeciesNaturetypeInteractions;
+            exAssessment.RiskAssessment.SpeciesNaturetypeInteractions2018 = newAssesment.RiskAssessment.SpeciesNaturetypeInteractions2018;
         }
     }
 }

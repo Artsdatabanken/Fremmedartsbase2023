@@ -650,9 +650,19 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.MapFrom(x => x.KeyStoneSpecie))
                     .AfterMap((src, dest) =>
                     {
-                        if (src.DomesticOrAbroad == "True")
+                        if (src.DomesticOrAbroad == "True" && src.ConfirmedOrAssumed)
+                        {
+                            dest.BasisOfAssessment = new List<string>() { "WrittenDocumentationNorway" };
+                        }
+                        else if (src.ConfirmedOrAssumed)
                         {
                             dest.BasisOfAssessment = new List<string>() { "WrittenDocumentationAbroad" };
+
+                        }
+                        else if (src.DomesticOrAbroad == "True")
+                        {
+                            dest.BasisOfAssessment = new List<string>() { "WrittenDocumentationNorway" };
+
                         }
                     });
                 cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.NaturetypeInteraction,
@@ -663,9 +673,19 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.MapFrom(x => x.KeyStoneSpecie))
                     .AfterMap((src, dest) =>
                     {
-                        if (src.DomesticOrAbroad == "True")
+                        if (src.DomesticOrAbroad == "True" && src.ConfirmedOrAssumed)
+                        {
+                            dest.BasisOfAssessment = new List<string>() { "WrittenDocumentationNorway" };
+                        }
+                        else if (src.ConfirmedOrAssumed)
                         {
                             dest.BasisOfAssessment = new List<string>() { "WrittenDocumentationAbroad" };
+
+                        }
+                        else if (src.DomesticOrAbroad == "True")
+                        {
+                            dest.BasisOfAssessment = new List<string>() { "WrittenDocumentationNorway" };
+
                         }
                     });
                 cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.SpeciesInteraction,
@@ -676,9 +696,20 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.MapFrom(x => x.KeyStoneSpecie))
                     .AfterMap((src, dest) =>
                     {
-                        if (src.DomesticOrAbroad == "True")
+                        // dokumentasjon norske forhold
+                        if (src.DomesticOrAbroad == "True" && src.ConfirmedOrAssumed)
+                        {
+                            dest.BasisOfAssessment = new List<string>() { "WrittenDocumentationNorway" };
+                        }
+                        else if (src.ConfirmedOrAssumed)
                         {
                             dest.BasisOfAssessment = new List<string>() { "WrittenDocumentationAbroad" };
+
+                        }
+                        else if (src.DomesticOrAbroad == "True")
+                        {
+                            dest.BasisOfAssessment = new List<string>() { "WrittenDocumentationNorway" };
+
                         }
                     });
                 cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.SpeciesNaturetypeInteraction,
@@ -690,9 +721,19 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.MapFrom(x => x.KeyStoneSpecie))
                     .AfterMap((src, dest) =>
                     {
-                        if (src.DomesticOrAbroad == "True")
+                        if (src.DomesticOrAbroad == "True" && src.ConfirmedOrAssumed)
+                        {
+                            dest.BasisOfAssessment = new List<string>() { "WrittenDocumentationNorway" };
+                        }
+                        else if (src.ConfirmedOrAssumed)
                         {
                             dest.BasisOfAssessment = new List<string>() { "WrittenDocumentationAbroad" };
+
+                        }
+                        else if (src.DomesticOrAbroad == "True")
+                        {
+                            dest.BasisOfAssessment = new List<string>() { "WrittenDocumentationNorway" };
+
                         }
                     });
                 cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.SpeciesSpeciesInteraction,
@@ -703,9 +744,19 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.MapFrom(x => x.KeyStoneSpecie))
                     .AfterMap((src, dest) =>
                     {
-                        if (src.DomesticOrAbroad == "True")
+                        if (src.DomesticOrAbroad == "True" && src.ConfirmedOrAssumed)
+                        {
+                            dest.BasisOfAssessment = new List<string>() { "WrittenDocumentationNorway" };
+                        }
+                        else if (src.ConfirmedOrAssumed)
                         {
                             dest.BasisOfAssessment = new List<string>() { "WrittenDocumentationAbroad" };
+
+                        }
+                        else if (src.DomesticOrAbroad == "True")
+                        {
+                            dest.BasisOfAssessment = new List<string>() { "WrittenDocumentationNorway" };
+
                         }
                     });
 
