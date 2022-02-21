@@ -255,7 +255,7 @@ export default class Assessment42Spredningsveier extends React.Component {
                 }
                 <hr/>
                 
-                <p>{furtherInfo}</p>
+                <p dangerouslySetInnerHTML={{__html: furtherInfo}}></p>
                 <Xcomp.HtmlString                            
                                 observableValue={observableDef}
                                 // observableValue={[riskAssessment, "furtherInfoAboutImport"]}
