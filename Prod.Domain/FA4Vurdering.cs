@@ -1557,6 +1557,8 @@ public partial class FA4 // (3.2) Artsegenskaper
             public string MainCategory { get; set; }
             public string MainSubCategory { get; set; }
             public string DecisiveCriteria { get; set; }
+            //public bool? IsAlienSpecies { get; set; }
+            //public bool? ConnectedToAnother { get; set; }
         }
 
         public class ImpactedNatureType

@@ -286,7 +286,7 @@ namespace Prod.Api.Controllers
             var query = IndexHelper.QueryGetDocumentQuery(expertgroupid, filter);
 
             var result = _index
-                .SearchReference(query, filter.Page, filter.PageSize, IndexHelper.Field_ScientificNameAsTerm)
+                .SearchReference(query, filter.Page - 1, filter.PageSize, IndexHelper.Field_ScientificNameAsTerm)
                 .Select(IndexHelper.GetDocumentFromIndex)
                 .ToList();
             var count = _index.SearchTotalCount(query);

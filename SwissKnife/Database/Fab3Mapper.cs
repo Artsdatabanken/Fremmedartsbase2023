@@ -1022,32 +1022,7 @@ namespace SwissKnife.Database
             {
                 dest.ExpertGroup = specificExpertGroups[src.Id];
             }
-
-            dest.PreviousAssessments.Add(new FA4.PreviousAssessment()
-            {
-                AssessmentId = src.Id,
-                RevisionYear = 2018,
-                RiskLevel = src.RiskAssessment.RiskLevel,
-                EcologicalRiskLevel = src.RiskAssessment.EcoEffectLevel,
-                SpreadRiskLevel = src.RiskAssessment.InvationPotentialLevel,
-                DecisiveCriteria = src.RiskAssessment.DecisiveCriteria,
-                MainCategory = src.AlienSpeciesCategory,
-                MainSubCategory = src.AlienSpeciesCategory == "DoorKnocker" ? src.DoorKnockerCategory :
-                    src.AlienSpeciesCategory == "NotApplicable" ? src.NotApplicableCategory :
-                    src.AlienSpeciesCategory == "RegionallyAlien" ? src.RegionallyAlienCategory :
-                    ""
-            });
-            dest.PreviousAssessments.Add(new FA4.PreviousAssessment()
-            {
-                AssessmentId = src.VurderingId2012.ToString(),
-                RevisionYear = 2012,
-                RiskLevel = src.RiskLevel2012,
-                EcologicalRiskLevel = src.EcologicalRiskLevel2012,
-                SpreadRiskLevel = src.SpreadRiskLevel2012,
-                MainCategory = src.AlienSpeciesCategory2012,
-                MainSubCategory = ""
-            });
-
+            
             ConvertHelper.SetHorizonScanningBasedOn2018Assessments(dest);
 
             // hentet fra det under - slik mapping fungerer ikke - da de blir kallt via convention - og det er ingen tilfeller der den har behov for å mappe fra FA3Legacy til Prod.Domain.RiskAssessment - koden blir ikke kallt
@@ -1474,6 +1449,35 @@ namespace SwissKnife.Database
             {
                 dest.IndoorProduktion = "negative";
             }
+
+
+            dest.PreviousAssessments.Add(new FA4.PreviousAssessment()
+            {
+                AssessmentId = src.Id,
+                RevisionYear = 2018,
+                RiskLevel = src.RiskAssessment.RiskLevel,
+                EcologicalRiskLevel = src.RiskAssessment.EcoEffectLevel,
+                SpreadRiskLevel = src.RiskAssessment.InvationPotentialLevel,
+                DecisiveCriteria = src.RiskAssessment.DecisiveCriteria,
+                MainCategory = src.AlienSpeciesCategory,
+                MainSubCategory = src.AlienSpeciesCategory == "DoorKnocker" ? src.DoorKnockerCategory :
+                    src.AlienSpeciesCategory == "NotApplicable" ? src.NotApplicableCategory :
+                    src.AlienSpeciesCategory == "RegionallyAlien" ? src.RegionallyAlienCategory :
+                    "",
+                //IsAlienSpecies = dest.IsAlienSpecies,
+                //ConnectedToAnother = dest.ConnectedToAnother
+            });
+            dest.PreviousAssessments.Add(new FA4.PreviousAssessment()
+            {
+                AssessmentId = src.VurderingId2012.ToString(),
+                RevisionYear = 2012,
+                RiskLevel = src.RiskLevel2012,
+                EcologicalRiskLevel = src.EcologicalRiskLevel2012,
+                SpreadRiskLevel = src.SpreadRiskLevel2012,
+                MainCategory = src.AlienSpeciesCategory2012,
+                MainSubCategory = ""
+            });
+
         }
 
         private static List<Tuple<string, string>> DrillDown(JsonArray array, string id = "Id", string text = "Text", string child = "Children")
