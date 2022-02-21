@@ -1023,7 +1023,6 @@ namespace SwissKnife.Database
                 dest.ExpertGroup = specificExpertGroups[src.Id];
             }
             
-            ConvertHelper.SetHorizonScanningBasedOn2018Assessments(dest);
 
             // hentet fra det under - slik mapping fungerer ikke - da de blir kallt via convention - og det er ingen tilfeller der den har behov for å mappe fra FA3Legacy til Prod.Domain.RiskAssessment - koden blir ikke kallt
             dest.RiskAssessment.AOOknownInput = src.CurrentExistenceArea;
@@ -1477,6 +1476,8 @@ namespace SwissKnife.Database
                 MainCategory = src.AlienSpeciesCategory2012,
                 MainSubCategory = ""
             });
+
+            ConvertHelper.SetHorizonScanningBasedOn2018Assessments(dest);
 
         }
 
