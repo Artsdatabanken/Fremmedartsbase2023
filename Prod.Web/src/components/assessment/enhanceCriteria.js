@@ -1394,13 +1394,20 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
 
         autorun(() => {
             let ud // uncertaintyDisabled 
-            if (r.bmetodkey === "B1" || r.bmetodkey === "B2b") {
+            if (r.bmetodkey === "B1" 
+               || r.bmetodkey === "B2b"
+               || (r.bmetodkey === "B2a" && r.AOOfirstOccurenceLessThan10Years === "yes"))
+            {
+                // console.log("¤¤¤ uncertaintyDisabled - 1")
                 ud = [0,1,2,3]
-            } else if (r.ametodkey === "B2a") {
+            } else if (r.bmetodkey === "B2a") {
+                // console.log("¤¤¤ uncertaintyDisabled - 2")
                 ud = uncertaintyArray(r.blow, r.bhigh)
             } else {
+                // console.log("¤¤¤ uncertaintyDisabled - 3")
                 ud = uncertaintyArray(r.bscore - 1, r.bscore + 1)
             }
+            // console.log("¤¤¤ uncertaintyDisabled: " + JSON.stringify(ud) + " " + r.bmetodkey + " " + r.AOOfirstOccurenceLessThan10Years)
             runInAction(() => {
                 arrayConditionalReplace(crit.uncertaintyDisabled, ud)
             })
