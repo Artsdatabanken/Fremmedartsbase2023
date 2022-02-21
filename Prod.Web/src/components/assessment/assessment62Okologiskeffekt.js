@@ -375,6 +375,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                 <fieldset className="well">
                     <h4>{critH.heading}</h4>
                     <p>{critH.info}</p>
+                    <br></br>
                     <SpeciesSpeciesTable list={riskAssessment.geneticTransferDocumented} newItem={this.newGTD} addNewItem={this.addGTD} koder={koder} labels={labels} disabled={appState.userContext.readonly} showKeyStoneSpecie showInteractionType showConfirmedOrAssumed HCrit />
                     <hr/>
 
