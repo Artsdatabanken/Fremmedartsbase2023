@@ -7026,11 +7026,32 @@
                         },
                         {
                             "Id": null,
+                            "Value": "summaryInfoIntro",
+                            "Text": "Introduksjon til natur",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "summaryInfoNature",
+                            "Text": "Videre spredning i natur",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "summaryInfoIndoors",
+                            "Text": "Til innendørs- eller produksjonsareal",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "furtherInfoComment",
                             "Text": "Legg inn eventuell utfyllende informasjon om spredningsveiene. Gjelder informasjonen en spesifikk kategori må kategorien nevnes i teksten.",
                             "Info": null,
                             "Children": null
-                        },
+                        },                        
                         {
                             "Id": null,
                             "Value": "importAdd",
