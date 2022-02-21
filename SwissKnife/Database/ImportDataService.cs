@@ -331,7 +331,7 @@ namespace SwissKnife.Database
             var taxonService = new SwissKnife.Database.TaksonService();
 
             var datetime = DateTime.MinValue;
-            //var redlistByScientificName = GetRedlistByScientificNameDictoDictionary(inputFolder, theCsvConfiguration);
+            var redlistByScientificName = GetRedlistByScientificNameDictoDictionary(inputFolder, theCsvConfiguration);
 
 
             var existing = _database.Assessments.ToDictionary(x => x.Id, x => JsonSerializer.Deserialize<FA4>(x.Doc, jsonSerializerOptions));
@@ -370,7 +370,7 @@ namespace SwissKnife.Database
                 
                 TransferAndFixPropertiesOnAssessmentsFrom2018(exAssessment, newAssesment);
 
-                //FixRedlistOnExistingAssessment(exAssessment, redlistByScientificName, taxonService);
+                FixRedlistOnExistingAssessment(exAssessment, redlistByScientificName, taxonService);
 
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)
@@ -415,7 +415,7 @@ namespace SwissKnife.Database
                 Debug.Assert(exAssessment != null, nameof(exAssessment) + " != null");
 
                 FixPropertiesOnNewAssessments(exAssessment);
-                //FixRedlistOnExistingAssessment(exAssessment, redlistByScientificName, taxonService);
+                FixRedlistOnExistingAssessment(exAssessment, redlistByScientificName, taxonService);
 
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)
@@ -462,6 +462,84 @@ namespace SwissKnife.Database
             IConsole console;
             //tryfixredlist
             foreach (var interaction in exAssessment.RiskAssessment.SpeciesSpeciesInteractions)
+            {
+                var currentSciId = interaction.ScientificNameId;
+                if (redlistByScientificName.ContainsKey(currentSciId))
+                {
+                    var hit = redlistByScientificName[currentSciId];
+                    var interactionRedListCategory = hit.Kategori.Substring(0, 2);
+                    if (interaction.RedListCategory != interactionRedListCategory)
+                    {
+                        interaction.RedListCategory = interactionRedListCategory;
+                    }
+                }
+                else
+                {
+
+                    var ti = taksonService.getTaxonInfo(currentSciId).GetAwaiter().GetResult();
+                    if (ti != null)
+                    {
+                        if (redlistByScientificName.ContainsKey(ti.ValidScientificNameId))
+                        {
+                            var hit = redlistByScientificName[ti.ValidScientificNameId];
+                            var interactionRedListCategory = hit.Kategori.Substring(0, 2);
+                            if (interaction.RedListCategory != interactionRedListCategory)
+                            {
+                                interaction.RedListCategory = interactionRedListCategory;
+                            }
+                        }
+                        else
+                        {
+
+                        }
+                    }
+                    else
+                    {
+                        //trøbbel
+                    }
+
+                }
+            }
+            foreach (var interaction in exAssessment.RiskAssessment.HostParasiteInformations)
+            {
+                var currentSciId = interaction.ScientificNameId;
+                if (redlistByScientificName.ContainsKey(currentSciId))
+                {
+                    var hit = redlistByScientificName[currentSciId];
+                    var interactionRedListCategory = hit.Kategori.Substring(0, 2);
+                    if (interaction.RedListCategory != interactionRedListCategory)
+                    {
+                        interaction.RedListCategory = interactionRedListCategory;
+                    }
+                }
+                else
+                {
+
+                    var ti = taksonService.getTaxonInfo(currentSciId).GetAwaiter().GetResult();
+                    if (ti != null)
+                    {
+                        if (redlistByScientificName.ContainsKey(ti.ValidScientificNameId))
+                        {
+                            var hit = redlistByScientificName[ti.ValidScientificNameId];
+                            var interactionRedListCategory = hit.Kategori.Substring(0, 2);
+                            if (interaction.RedListCategory != interactionRedListCategory)
+                            {
+                                interaction.RedListCategory = interactionRedListCategory;
+                            }
+                        }
+                        else
+                        {
+
+                        }
+                    }
+                    else
+                    {
+                        //trøbbel
+                    }
+
+                }
+            }
+            foreach (var interaction in exAssessment.RiskAssessment.GeneticTransferDocumented)
             {
                 var currentSciId = interaction.ScientificNameId;
                 if (redlistByScientificName.ContainsKey(currentSciId))
@@ -723,6 +801,9 @@ namespace SwissKnife.Database
 
             exAssessment.IndoorProduktion = newAssesment.IndoorProduktion;
             exAssessment.SpreadIntroductionFurtherInfo = newAssesment.SpreadIntroductionFurtherInfo;
+            exAssessment.RiskAssessment.SpeciesSpeciesInteractions = newAssesment.RiskAssessment.SpeciesSpeciesInteractions;
+            exAssessment.RiskAssessment.HostParasiteInformations = newAssesment.RiskAssessment.HostParasiteInformations;
+            exAssessment.RiskAssessment.GeneticTransferDocumented = newAssesment.RiskAssessment.GeneticTransferDocumented;
         }
     }
 }
