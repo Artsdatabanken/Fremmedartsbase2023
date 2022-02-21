@@ -9,6 +9,7 @@ namespace Prod.Api.Models
     public class FilteredAssessments
     {
         public List<AssessmentListItem> assessmentList { get; set; }
+        public int FilterCount { get; set; }
         public int TotalCount { get; set; }
         public List<Facet> Facets { get; set; }
     }

@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CsvHelper;
 using CsvHelper.Configuration;
+using CsvHelper.TypeConversion;
 using IdentityModel.Client;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -70,7 +71,8 @@ namespace Prod.Api.Controllers
                 Rolle = roleInGroup,
                 Assessments = filteredAssessments.assessmentList,
                 Facets = filteredAssessments.Facets,
-                TotalCount = filteredAssessments.TotalCount
+                TotalCount = filteredAssessments.TotalCount,
+                FilterCount = filteredAssessments.FilterCount
             };
             return expertgroupAssessments;
         }
@@ -128,7 +130,7 @@ namespace Prod.Api.Controllers
             var mem = new MemoryStream();
             var writer = new StreamWriter(mem, Encoding.Unicode);
             //var csvConfiguration = new CsvConfiguration(new CultureInfo("nb-NO"));
-            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+            var config = new CsvConfiguration(CultureInfo.DefaultThreadCurrentCulture)
             {
                 Delimiter = "\t"
             };
@@ -147,6 +149,9 @@ namespace Prod.Api.Controllers
             csv.Context.TypeConverterCache.RemoveConverter<string>();
             csv.Context.TypeConverterCache.AddConverter<string>(new CsvHelpers.CustomStringConverter());
             csv.Context.TypeConverterOptionsCache.GetOptions<string>().NullValues.Add(string.Empty);
+            //var options = new TypeConverterOptions { Formats = new[] { "o" } };
+            //csv.Context.TypeConverterOptionsCache.AddOptions<DateTime>(options);
+            //csv.Context.TypeConverterOptionsCache.AddOptions<DateTime?>(options);
 
             var mapper = Helpers.ExportMapper.InitializeMapper();
             switch (hor)
@@ -275,15 +280,16 @@ namespace Prod.Api.Controllers
                 await IndexHelper.Index(indexVersion.DateTime, _dbContext, _index);
             }
 
-            filter.Page = 0;
-            filter.PageSize = 1000;
+            //filter.Page = 0;
+            //filter.PageSize = 1000;
             //filter.HorizonScan = true;
             var query = IndexHelper.QueryGetDocumentQuery(expertgroupid, filter);
 
             var result = _index
-                .SearchReference(query, filter.Page, filter.PageSize, IndexHelper.Field_ScientificNameAsTerm)
+                .SearchReference(query, filter.Page - 1, filter.PageSize, IndexHelper.Field_ScientificNameAsTerm)
                 .Select(IndexHelper.GetDocumentFromIndex)
                 .ToList();
+            var count = _index.SearchTotalCount(query);
             var getAllQuery =
                 IndexHelper.QueryGetDocumentQuery(expertgroupid, new IndexFilter { HorizonScan = filter.HorizonScan });
             var facets = _index.SearchFacetsReference(getAllQuery,
@@ -295,6 +301,7 @@ namespace Prod.Api.Controllers
             var totalCount = _index.SearchTotalCount(getAllQuery);
 
             doReturn.assessmentList = result;
+            doReturn.FilterCount = count;
             doReturn.TotalCount = totalCount;
             if (doReturn.TotalCount > 0)
                 doReturn.Facets = facets.Select(x => new Facet
@@ -362,6 +369,7 @@ namespace Prod.Api.Controllers
             public List<AssessmentListItem> Assessments { get; set; }
             public List<Facet> Facets { get; set; }
             public int TotalCount { get; set; }
+            public int FilterCount { get; set; }
         }
     }
 }

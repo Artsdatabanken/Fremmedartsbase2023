@@ -169,6 +169,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                     <fieldset className="well">
                         <h4>{critlabels.domesticSpread}</h4>
                         <p>{critlabels.see33And34}</p>
+                        <br></br>
                        {/*} <Xcomp.HtmlString
                             observableValue={[riskAssessment, 'criteriaDocumentationMigrationPathways']}
                             style={{
@@ -176,6 +177,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                             height: 150,
                             maxHeight: 150
                         }}/>*/}
+                        <p>{labels.Import.summaryInfoIndoors}</p>
                         <Xcomp.HtmlString
                             observableValue={[assessment, 'spreadIndoorFurtherInfo']}
                             style={{
@@ -183,6 +185,8 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                             height: 150,
                             maxHeight: 150
                         }}/>
+                        <br></br>
+                        <p>{labels.Import.summaryInfoIntro}</p>
                         <Xcomp.HtmlString
                             observableValue={[assessment, 'spreadIntroductionFurtherInfo']}
                             style={{
@@ -190,6 +194,8 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                             height: 150,
                             maxHeight: 150
                         }}/>
+                        <br></br>
+                        <p>{labels.Import.summaryInfoNature}</p>
                         <Xcomp.HtmlString
                             observableValue={[assessment, 'spreadFurtherSpreadFurtherInfo']}
                             style={{

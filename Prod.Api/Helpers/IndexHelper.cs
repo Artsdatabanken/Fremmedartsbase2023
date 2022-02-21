@@ -22,7 +22,7 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Change this to force index rebuild!
         /// </summary>
-        public const int IndexVersion = 6;
+        public const int IndexVersion = 14;
         private static readonly object IndexingLock = new();
 
         private const string Field_Id = "Id";
@@ -44,6 +44,7 @@ namespace Prod.Api.Helpers
 
         private const string Field_Criteria = "Criteria";
         private const string Field_CriteriaAll = "CriteriaAll";
+        private const string Field_CriteriaAll2018 = "CriteriaAll2018";
 
         private const string Field_AssessmentContext = "AssessmentContext";
 
@@ -259,10 +260,16 @@ namespace Prod.Api.Helpers
             }
 
             if (IsDocumentEvaluated(ass))
+            {
                 indexFields.Add(new StringField(Field_Category, string.IsNullOrWhiteSpace(ass.Category) ? GetCategoryFromRiskLevel(ass.RiskAssessment.RiskLevel) : ass.Category,
                     Field.Store.YES));
+                indexFields.Add(new StringField(Field_CurrentStatus, "vurdert", Field.Store.NO));
+            }
             else
+            {
                 indexFields.Add(new StringField(Field_Category, "NR", Field.Store.YES));
+                indexFields.Add(new StringField(Field_CurrentStatus, "ikkevurdert", Field.Store.NO));
+            }
 
             // &Current.Status=establishedAfter1800,&Current.Status=doorKnocker,&Current.Status=regionallyAlien,&Current.Status=effectWithoutEstablishment
             // &Current.Status=establishedBefore1800,&Current.Status=sharesMotherSpeciesStatus,&Current.Status=notAlienInNorway,&Current.Status=notAssessedPotentialDoorKnocker
@@ -274,6 +281,28 @@ namespace Prod.Api.Helpers
                     ? new StringField(Field_CurrentStatus, "establishedBefore1800", Field.Store.NO)
                     : new StringField(Field_CurrentStatus, "establishedAfter1800", Field.Store.NO));
             }
+
+            if (!(ass.IsAlienSpecies.HasValue && ass.IsAlienSpecies.Value == true))
+            {
+                indexFields.Add(new StringField(Field_CurrentStatus, "notAlienInNorway", Field.Store.NO));
+            }
+
+            if (ass.IsAlienSpecies == true && ass.ConnectedToAnother == true)
+            {
+                indexFields.Add(new StringField(Field_CurrentStatus, "sharesMotherSpeciesStatus", Field.Store.NO));
+            }
+            //effectWithoutEstablishment ??
+            if (ass.AssumedReproducing50Years.HasValue && ass.AssumedReproducing50Years == false)
+            {
+                indexFields.Add(new StringField(Field_CurrentStatus, "effectWithoutEstablishment", Field.Store.NO));
+            }
+            if (ass.IsAlienSpecies == true && ass.ConnectedToAnother != true && ass.SpeciesStatus != "C2" && ass.SpeciesStatus != "C3" && ass.AlienSpecieUncertainIfEstablishedBefore1800 == false)
+            {
+                indexFields.Add(new StringField(Field_CurrentStatus, "doorKnocker", Field.Store.NO));
+            }
+
+            //2018 status
+            //Field_2018Status
 
             //Status=notStarted,&Status=inprogress,&Status=finished
             if (ass.EvaluationStatus == "imported")
@@ -292,20 +321,75 @@ namespace Prod.Api.Helpers
             if (ass2018 != null)
             {
                 if (Is2018DocumentEvaluated(ass2018.MainCategory, ass2018.MainSubCategory, ass2018.MainSubCategory))
-                    indexFields.Add(new StringField(Field_Category2018, GetCategoryFromRiskLevel(ass2018?.RiskLevel ?? -1),
+                {
+                    indexFields.Add(new StringField(Field_Category2018,
+                        GetCategoryFromRiskLevel(ass2018?.RiskLevel ?? -1),
                         Field.Store.YES));
+                    indexFields.Add(new StringField(Field_2018Status, "vurdert", Field.Store.NO));
+                }
                 else
-                    indexFields.Add(new StringField(Field_Category2018, "NR", Field.Store.YES));
+                {
+                    indexFields.Add(new StringField(Field_Category2018, "NR", Field.Store.YES)); 
+                    indexFields.Add(new StringField(Field_2018Status, "ikkevurdert", Field.Store.NO));
+                }
+
+                if (ass2018.MainCategory == "RegionallyAlien")
+                {
+                    indexFields.Add(new StringField(Field_2018Status, "regionallyAlien", Field.Store.NO));
+                }
+                if (ass2018.MainCategory == "AlienSpecie" || ass2018.MainCategory == "DoorKnocker")
+                {
+                    indexFields.Add(new StringField(Field_2018Status, "establishedAfter1800", Field.Store.NO));
+                    
+                    if (ass2018.MainCategory == "DoorKnocker" && ass2018.MainSubCategory == "doRiskAssessment")
+                    {
+                        indexFields.Add(new StringField(Field_2018Status, "doorKnocker", Field.Store.NO));
+                    }
+
+                    if (ass2018.MainCategory == "DoorKnocker" && ass2018.MainSubCategory == "noRiskAssessment")
+                    {
+                        indexFields.Add(new StringField(Field_2018Status, "notAssessedDoorKnocker", Field.Store.NO));
+                    }
+                }
+                else if (ass2018.MainCategory == "NotApplicable" && ass2018.MainSubCategory == "establishedBefore1800")
+                {
+                    indexFields.Add(new StringField(Field_2018Status, "establishedBefore1800", Field.Store.NO));
+                }
+
+                if (ass2018.MainCategory == "NotApplicable" && ass2018.MainSubCategory == "canNotEstablishWithin50years")
+                {
+                    indexFields.Add(new StringField(Field_2018Status, "notEstablishedFor50Years", Field.Store.NO));
+                }
+                
+                if (ass2018.MainCategory == "NotApplicable" && ass2018.MainSubCategory == "traditionalProductionSpecie")
+                {
+                    indexFields.Add(new StringField(Field_2018Status, "traditionalProductionSpecies", Field.Store.NO));
+                }
+
+                if (ass2018.MainCategory == "NotApplicable" && ass2018.MainSubCategory == "NotPresentInRegion")
+                {
+                    indexFields.Add(new StringField(Field_2018Status, "notFoundInNorway", Field.Store.NO));
+                }
+
+                if (ass2018.MainCategory == "NotApplicable" && ass2018.MainSubCategory == "taxonIsEvaluatedInHigherRank")
+                {
+                    indexFields.Add(new StringField(Field_2018Status, "sharesMotherSpeciesStatus", Field.Store.NO));
+                }
+
+                if (ass2018.MainCategory == "EcoEffectWithoutEstablishment")
+                {
+                    indexFields.Add(new StringField(Field_2018Status, "effectWithoutEstablishment", Field.Store.NO));
+                }
 
                 // todo: krever ny migreringspatch
-                //if (!string.IsNullOrWhiteSpace(ass2018.DecisiveCriteria))
-                //{
-                //    foreach (var criteria in _criterias)
-                //        if (ass2018.DecisiveCriteria.Contains(criteria, StringComparison.InvariantCulture))
-                //            document.Add(new StringField(Field_Criteria, criteria, Field.Store.NO));
+                if (!string.IsNullOrWhiteSpace(ass2018.DecisiveCriteria))
+                {
+                    foreach (var criteria in _criterias)
+                        if (ass2018.DecisiveCriteria.Contains(criteria, StringComparison.InvariantCulture))
+                            indexFields.Add(new StringField(Field_Criteria2018, criteria, Field.Store.NO));
 
-                //    document.Add(new StringField(Field_CriteriaAll, ass2018.DecisiveCriteria, Field.Store.YES));
-                //}
+                    indexFields.Add(new StringField(Field_CriteriaAll2018, ass2018.DecisiveCriteria, Field.Store.YES));
+                }
             }
 
             if (!string.IsNullOrWhiteSpace(ass.RiskAssessment.DecisiveCriteria))

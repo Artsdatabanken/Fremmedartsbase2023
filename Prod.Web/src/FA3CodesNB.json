@@ -1725,7 +1725,7 @@
             {
                 "Id": "climateEffects",
                 "Value": "categoryNK",
-                "Text": "Arten er NK uten usikkerhet oppover, og utfylling av klimaeffekter er dermed ikke aktuelt.",
+                "Text": "Arten er NK og utfylling av klimaeffekter er dermed ikke aktuelt.",
                 "Info": null,
                 "Children": null
             },
@@ -7006,21 +7006,42 @@
                         {
                             "Id": null,
                             "Value": "furtherInfoIntro",
-                            "Text": "Utfyllende informasjon om introduksjon til naturen. Dersom informasjonen er knyttet til en bestemt spredningsvei, må dette angis.",
+                            "Text": "Utfyllende informasjon om introduksjon til naturen. Dersom informasjonen er knyttet til en bestemt spredningsvei, må dette angis <i>(overføres til oppsummeringen)</i>.",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "furtherInfoNature",
-                            "Text": "Utfyllende informasjon om videre spredning i naturen. Dersom informasjonen er knyttet til en bestemt spredningsvei, må dette angis.",
+                            "Text": "Utfyllende informasjon om videre spredning i naturen. Dersom informasjonen er knyttet til en bestemt spredningsvei, må dette angis <i>(overføres til oppsummeringen)</i>.",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "furtherInfoIndoors",
-                            "Text": "Utfyllende informasjon om spredning til innendørs- eller produksjonsareal. Dersom informasjonen er knyttet til en bestemt spredningsvei, må dette angis.",
+                            "Text": "Utfyllende informasjon om spredning til innendørs- eller produksjonsareal. Dersom informasjonen er knyttet til en bestemt spredningsvei, må dette angis <i>(overføres til oppsummeringen)</i>.",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "summaryInfoIntro",
+                            "Text": "Introduksjon til natur",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "summaryInfoNature",
+                            "Text": "Videre spredning i natur",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "summaryInfoIndoors",
+                            "Text": "Til innendørs- eller produksjonsareal",
                             "Info": null,
                             "Children": null
                         },
@@ -7030,7 +7051,7 @@
                             "Text": "Legg inn eventuell utfyllende informasjon om spredningsveiene. Gjelder informasjonen en spesifikk kategori må kategorien nevnes i teksten.",
                             "Info": null,
                             "Children": null
-                        },
+                        },                        
                         {
                             "Id": null,
                             "Value": "importAdd",

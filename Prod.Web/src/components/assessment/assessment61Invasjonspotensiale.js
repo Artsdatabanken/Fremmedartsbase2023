@@ -851,7 +851,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                             {riskAssessment.chosenSpreadYearlyIncrease != "SpreadYearlyLiteratureData" && riskAssessment.chosenSpreadYearlyIncrease != "SpreadYearlyIncreaseCalculatedExpansionSpeed" && riskAssessment.chosenSpreadYearlyIncrease != "SpreadYearlyIncreaseObservations" && riskAssessment.chosenSpreadYearlyIncrease != "" && 
                                 <div
                                     style={{
-                                    display: "inline-block"
+                                    display: "inline-block",
+                                    marginTop: "10px"
                                     }}>
                                 <Criterion criterion={critB} appState={appState} 
                                             //disabled={disabled} 

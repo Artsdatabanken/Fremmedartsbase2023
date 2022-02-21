@@ -118,6 +118,7 @@ class ViewModel {
             roleincurrentgroup: null,
             expertgroupAssessmentList: [],
             expertgroupAssessmentTotalCount: 0,
+            expertgroupAssessmentFilterCount: 0,
             expertgroupAssessmentAuthors: [],
             assessmentsStatistics: observable,
             expertgroupAssessmentFilter: "",
@@ -417,10 +418,10 @@ class ViewModel {
                 this.workStatus.length, this.otherComments.length,
 
                 this.historyFilter.riskCategoryFilter.length, this.historyFilter.decisiveCriteriaFilter.length,
-                this.historyFilter.riskAssessedFilter.length, this.historyFilter.riskNotAssessedFilter.length, this.historyFilter.ikkevudert, this.historyFilter.vurdert,
+                this.historyFilter.riskAssessedFilter.length, this.historyFilter.riskNotAssessedFilter.length, this.historyFilter.ikkevurdert, this.historyFilter.vurdert,
 
                 this.currentFilter.riskCategoryFilter.length, this.currentFilter.decisiveCriteriaFilter.length,
-                this.currentFilter.riskAssessedFilter.length, this.currentFilter.riskNotAssessedFilter.length, this.currentFilter.ikkevudert, this.currentFilter.vurdert,
+                this.currentFilter.riskAssessedFilter.length, this.currentFilter.riskNotAssessedFilter.length, this.currentFilter.ikkevurdert, this.currentFilter.vurdert,
 
             ],
             ([expertgroupId, isLoggedIn])  => {
@@ -1161,6 +1162,7 @@ class ViewModel {
             this.roleincurrentgroup = role
             this.loadingExpertGroup = false
             this.expertgroupAssessmentTotalCount = expertgroupAssessments.totalCount
+            this.expertgroupAssessmentFilterCount = expertgroupAssessments.filterCount
             this.expertgroupAssessmentAuthors = observable.array(authors)            
            
             if (this.responsible.length > 0) {

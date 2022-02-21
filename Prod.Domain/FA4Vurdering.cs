@@ -590,7 +590,7 @@ public partial class FA4 // (3.2) Artsegenskaper
     public partial class FA4 // (3.3) Import
     {
         public List<MigrationPathway> ImportPathways { get; set; } = new List<MigrationPathway>();
-        public bool ImportedToIndoorOrProductionArea { get; set; } = false;
+        public bool ImportedToIndoorOrProductionArea { get; set; } = false; // trolig ikke i pruk - rest fra fa3 og erstattet av den under
 
         public string IndoorProduktion { get; set; }
     }
@@ -1464,7 +1464,7 @@ public partial class FA4 // (3.2) Artsegenskaper
         public string CriteriaDocumentation { get; set; }
         public string CriteriaDocumentationSpeciesStatus { get; set; }
         public string CriteriaDocumentationDomesticSpread { get; set; }
-        public string CriteriaDocumentationMigrationPathways { get; set; }
+        //public string CriteriaDocumentationMigrationPathways { get; set; } // fjernet 20.02.2020 - erstattet av spreadIntroductionFurtherInfo
         public string CriteriaDocumentationInvationPotential { get; set; }
         public string CriteriaDocumentationEcoEffect { get; set; }
 
@@ -1556,6 +1556,9 @@ public partial class FA4 // (3.2) Artsegenskaper
             public int EcologicalRiskLevel { get; set; }
             public string MainCategory { get; set; }
             public string MainSubCategory { get; set; }
+            public string DecisiveCriteria { get; set; }
+            //public bool? IsAlienSpecies { get; set; }
+            //public bool? ConnectedToAnother { get; set; }
         }
 
         public class ImpactedNatureType

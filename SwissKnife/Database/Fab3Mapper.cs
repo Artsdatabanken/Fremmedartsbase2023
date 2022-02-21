@@ -7,6 +7,7 @@ using System.Threading;
 using AutoMapper;
 using Prod.Domain;
 using Prod.Domain.Legacy;
+using RiskAssessment = Prod.Domain.Legacy.RiskAssessment;
 
 namespace SwissKnife.Database
 {
@@ -649,9 +650,19 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.MapFrom(x => x.KeyStoneSpecie))
                     .AfterMap((src, dest) =>
                     {
-                        if (src.DomesticOrAbroad == "True")
+                        if (src.DomesticOrAbroad == "True" && src.ConfirmedOrAssumed)
+                        {
+                            dest.BasisOfAssessment = new List<string>() { "WrittenDocumentationNorway" };
+                        }
+                        else if (src.ConfirmedOrAssumed)
                         {
                             dest.BasisOfAssessment = new List<string>() { "WrittenDocumentationAbroad" };
+
+                        }
+                        else if (src.DomesticOrAbroad == "True")
+                        {
+                            dest.BasisOfAssessment = new List<string>() { "WrittenDocumentationNorway" };
+
                         }
                     });
                 cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.NaturetypeInteraction,
@@ -662,9 +673,19 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.MapFrom(x => x.KeyStoneSpecie))
                     .AfterMap((src, dest) =>
                     {
-                        if (src.DomesticOrAbroad == "True")
+                        if (src.DomesticOrAbroad == "True" && src.ConfirmedOrAssumed)
+                        {
+                            dest.BasisOfAssessment = new List<string>() { "WrittenDocumentationNorway" };
+                        }
+                        else if (src.ConfirmedOrAssumed)
                         {
                             dest.BasisOfAssessment = new List<string>() { "WrittenDocumentationAbroad" };
+
+                        }
+                        else if (src.DomesticOrAbroad == "True")
+                        {
+                            dest.BasisOfAssessment = new List<string>() { "WrittenDocumentationNorway" };
+
                         }
                     });
                 cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.SpeciesInteraction,
@@ -675,9 +696,20 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.MapFrom(x => x.KeyStoneSpecie))
                     .AfterMap((src, dest) =>
                     {
-                        if (src.DomesticOrAbroad == "True")
+                        // dokumentasjon norske forhold
+                        if (src.DomesticOrAbroad == "True" && src.ConfirmedOrAssumed)
+                        {
+                            dest.BasisOfAssessment = new List<string>() { "WrittenDocumentationNorway" };
+                        }
+                        else if (src.ConfirmedOrAssumed)
                         {
                             dest.BasisOfAssessment = new List<string>() { "WrittenDocumentationAbroad" };
+
+                        }
+                        else if (src.DomesticOrAbroad == "True")
+                        {
+                            dest.BasisOfAssessment = new List<string>() { "WrittenDocumentationNorway" };
+
                         }
                     });
                 cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.SpeciesNaturetypeInteraction,
@@ -689,9 +721,19 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.MapFrom(x => x.KeyStoneSpecie))
                     .AfterMap((src, dest) =>
                     {
-                        if (src.DomesticOrAbroad == "True")
+                        if (src.DomesticOrAbroad == "True" && src.ConfirmedOrAssumed)
+                        {
+                            dest.BasisOfAssessment = new List<string>() { "WrittenDocumentationNorway" };
+                        }
+                        else if (src.ConfirmedOrAssumed)
                         {
                             dest.BasisOfAssessment = new List<string>() { "WrittenDocumentationAbroad" };
+
+                        }
+                        else if (src.DomesticOrAbroad == "True")
+                        {
+                            dest.BasisOfAssessment = new List<string>() { "WrittenDocumentationNorway" };
+
                         }
                     });
                 cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.SpeciesSpeciesInteraction,
@@ -702,9 +744,19 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.MapFrom(x => x.KeyStoneSpecie))
                     .AfterMap((src, dest) =>
                     {
-                        if (src.DomesticOrAbroad == "True")
+                        if (src.DomesticOrAbroad == "True" && src.ConfirmedOrAssumed)
+                        {
+                            dest.BasisOfAssessment = new List<string>() { "WrittenDocumentationNorway" };
+                        }
+                        else if (src.ConfirmedOrAssumed)
                         {
                             dest.BasisOfAssessment = new List<string>() { "WrittenDocumentationAbroad" };
+
+                        }
+                        else if (src.DomesticOrAbroad == "True")
+                        {
+                            dest.BasisOfAssessment = new List<string>() { "WrittenDocumentationNorway" };
+
                         }
                     });
 
@@ -861,22 +913,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.YearFirstEstablishedNatureInsecure, opt => opt.Ignore())
                     .ForMember(dest => dest.YearFirstDomesticObservation, opt => opt.Ignore())
                     .ForMember(dest => dest.ExtensionData, opt => opt.Ignore())
-                    .AfterMap((src, dest) =>
-                    {
-                        if (src.ChosenSpreadYearlyIncrease == "SpreadYearlyIncreaseObservations")
-                        {
-                            dest.ChosenSpreadYearlyIncrease = "a";
-                        }
-
-                        dest.ExpansionSpeedInput = ParseLong(src.SpreadYearlyIncreaseObservations);
-                        dest.ExpansionLowerQInput = ParseLong(src.SpreadYearlyIncreaseObservationsLowerQuartile);
-                        dest.ExpansionUpperQInput = ParseLong(src.SpreadYearlyIncreaseObservationsUpperQuartile);
-
-                        if (src.ActiveRedListCategoryLevel)
-                        {
-                            dest.ROAscore2018 = src.Criteria.Single(x => x.CriteriaLetter == "A").Value;
-                        }
-                    });
+                    .AfterMap((src, dest) => { AfterRiskAssessmentMap(src, dest); });
                 //.ForMember(dest => dest., opt => opt.MapFrom(src => src.))
 
 
@@ -955,426 +992,11 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.ExtensionData, opt => opt.Ignore())
                     .ForMember(dest => dest.SpreadIndoorFurtherInfo, opt => opt.Ignore())
                     .ForMember(dest => dest.SpreadIndoorFurtherInfoGeneratedText, opt => opt.Ignore())
-                    .ForMember(dest => dest.SpreadIntroductionFurtherInfo, opt => opt.Ignore())
+                    .ForMember(dest => dest.SpreadIntroductionFurtherInfo, opt => opt.MapFrom(src => src.RiskAssessment.CriteriaDocumentationMigrationPathways))
                     .ForMember(dest => dest.SpreadIntroductionFurtherInfoGeneratedText, opt => opt.Ignore())
                     .ForMember(dest => dest.SpreadFurtherSpreadFurtherInfo, opt => opt.Ignore())
                     .ForMember(dest => dest.SpreadFurtherSpreadFurtherInfoGeneratedText, opt => opt.Ignore())
-                    .AfterMap((src, dest) =>
-                    {
-                        // set some standard values
-                        dest.EvaluationStatus = "imported";
-                        dest.HorizonScanningStatus = "notStarted";
-                        dest.TaxonHierarcy = "";
-                        dest.IsDeleted = false;
-                        if (string.IsNullOrWhiteSpace(dest.ExpertGroup) && !string.IsNullOrWhiteSpace(src.ExpertGroupId) && expertGroupReplacements.ContainsKey(src.ExpertGroupId))
-                        {
-                            dest.ExpertGroup = expertGroupReplacements[src.ExpertGroupId];
-                        }
-                        if (!string.IsNullOrWhiteSpace(src.Id) && specificExpertGroups.ContainsKey(src.Id))
-                        {
-                            dest.ExpertGroup = specificExpertGroups[src.Id];
-                        }
-
-                        dest.PreviousAssessments.Add(new FA4.PreviousAssessment()
-                        {
-                            AssessmentId = src.Id,
-                            RevisionYear = 2018,
-                            RiskLevel = src.RiskAssessment.RiskLevel,
-                            EcologicalRiskLevel = src.RiskAssessment.EcoEffectLevel,
-                            SpreadRiskLevel = src.RiskAssessment.InvationPotentialLevel,
-                            MainCategory = src.AlienSpeciesCategory,
-                            MainSubCategory = src.AlienSpeciesCategory == "DoorKnocker" ? src.DoorKnockerCategory :
-                                src.AlienSpeciesCategory == "NotApplicable" ? src.NotApplicableCategory:
-                                src.AlienSpeciesCategory == "RegionallyAlien" ? src.RegionallyAlienCategory:
-                                ""
-                        });
-                        dest.PreviousAssessments.Add(new FA4.PreviousAssessment()
-                        {
-                            AssessmentId = src.VurderingId2012.ToString(),
-                            RevisionYear = 2012,
-                            RiskLevel = src.RiskLevel2012,
-                            EcologicalRiskLevel = src.EcologicalRiskLevel2012,
-                            SpreadRiskLevel = src.SpreadRiskLevel2012,
-                            MainCategory = src.AlienSpeciesCategory2012,
-                            MainSubCategory = ""
-                        });
-
-                        ConvertHelper.SetHorizonScanningBasedOn2018Assessments(dest);
-
-                        // hentet fra det under - slik mapping fungerer ikke - da de blir kallt via convention - og det er ingen tilfeller der den har behov for å mappe fra FA3Legacy til Prod.Domain.RiskAssessment - koden blir ikke kallt
-                        dest.RiskAssessment.AOOknownInput = src.CurrentExistenceArea;
-                        dest.RiskAssessment.AOOtotalBestInput = src.CurrentExistenceAreaCalculated;
-                        dest.RiskAssessment.AOOtotalLowInput = src.CurrentExistenceAreaLowCalculated;
-                        dest.RiskAssessment.AOOtotalHighInput = src.CurrentExistenceAreaHighCalculated;
-                        dest.RiskAssessment.AOO50yrBestInput = src.PotentialExistenceArea;
-                        dest.RiskAssessment.AOO50yrLowInput = src.PotentialExistenceAreaLowQuartile;
-                        dest.RiskAssessment.AOO50yrHighInput = src.PotentialExistenceAreaHighQuartile;
-
-                        dest.RiskAssessment.AOOdarkfigureBest = ParseFloat(src.CurrentExistenceAreaMultiplier);
-                        dest.RiskAssessment.AOOdarkfigureHigh = ParseFloat(src.CurrentExistenceAreaHighMultiplier);
-                        dest.RiskAssessment.AOOdarkfigureLow = ParseFloat(src.CurrentExistenceAreaLowMultiplier);
-
-                        dest.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes = src.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes;
-
-                        if (!string.IsNullOrWhiteSpace(src.RegionalPresenceKnown))
-                        {
-                            var elements = src.RegionalPresenceKnown.Split(",", StringSplitOptions.RemoveEmptyEntries);
-                            foreach (var item in elements)
-                            {
-                                var match = dest.Fylkesforekomster.SingleOrDefault(x => x.Fylke.ToLowerInvariant() == item.ToLowerInvariant());
-                                if (match != null)
-                                {
-                                    match.State0 = 1;
-                                    match.State1 = 1;
-                                }
-                                else
-                                {
-                                    throw new Exception("No match not good");
-                                }
-                            }
-                        }
-                        if (!string.IsNullOrWhiteSpace(src.RegionalPresenceAssumed))
-                        {
-                            var elements = src.RegionalPresenceAssumed.Split(",", StringSplitOptions.RemoveEmptyEntries);
-                            foreach (var item in elements)
-                            {
-                                var match = dest.Fylkesforekomster.SingleOrDefault(x => x.Fylke.ToLowerInvariant() == item.ToLowerInvariant());
-                                if (match != null)
-                                {
-                                    match.State1 = 1;
-                                }
-                                else
-                                {
-                                    throw new Exception("No match not good");
-                                }
-                            }
-                        }
-                        if (!string.IsNullOrWhiteSpace(src.RegionalPresencePotential))
-                        {
-                            var elements = src.RegionalPresencePotential.Split(",", StringSplitOptions.RemoveEmptyEntries);
-                            foreach (var item in elements)
-                            {
-                                var match = dest.Fylkesforekomster.SingleOrDefault(x => x.Fylke.ToLowerInvariant() == item.ToLowerInvariant());
-                                if (match != null)
-                                {
-                                    match.State3 = 1;
-                                }
-                                else
-                                {
-                                    throw new Exception("No match not good");
-                                }
-                            }
-                        }
-                        foreach (var item in dest.Fylkesforekomster)
-                        {
-                            if (item.State0 == 0 && item.State1 == 00 && item.State3 == 0)
-                            {
-                                item.State2 = 1;
-                            }
-                            else
-                            {
-                                item.State2 = 0;
-                            }
-                        }
-                        //                    "RegionalPresenceKnown": "St",
-                        //"RegionalPresenceAssumed": "",
-                        //"RegionalPresencePotential": "Ro,Ho,Sf,Mr,St",
-
-
-                        switch (src.AlienSpeciesCategory)
-                        {
-                            case "AlienSpecie":
-                            case "DoorKnocker":
-                            case "RegionallyAlien":
-                            case "EcoEffectWithoutEstablishment":
-                                dest.IsAlienSpecies = true;
-                                break;
-                            case "NotApplicable":
-                                if (src.NotApplicableCategory != "notAlienSpecie")
-                                {
-                                    dest.IsAlienSpecies = true;
-                                }
-
-                                if (src.NotApplicableCategory == "taxonIsEvaluatedInHigherRank")
-                                {
-                                    dest.ConnectedToAnother = true;
-                                }
-
-                                if (src.NotApplicableCategory == "traditionalProductionSpecie")
-                                {
-                                    dest.ProductionSpecies = true;
-                                }
-
-                                if (src.NotApplicableCategory == "establishedBefore1800")
-                                {
-                                    dest.AlienSpecieUncertainIfEstablishedBefore1800 = true;
-                                    dest.IsAlienSpecies = true;
-                                    dest.ConnectedToAnother = false;
-                                }
-
-                                break;
-                        }
-
-                        if (src.AlienSpeciesCategory == "AlienSpecie" || src.AlienSpeciesCategory == "DoorKnocker")
-                        {
-                            dest.AlienSpecieUncertainIfEstablishedBefore1800 = false;
-                        }
-
-                        if (src.AlienSpeciesCategory == "RegionallyAlien")
-                        {
-                            dest.IsRegionallyAlien = true;
-                        }
-
-                        for (var i = 0; i < dest.RiskAssessment.SpeciesSpeciesInteractions.Count; i++)
-                        {
-                            if (dest.RiskAssessment.SpeciesSpeciesInteractions[i].EffectLocalScale == true)
-                            {
-                                dest.RiskAssessment.SpeciesSpeciesInteractions[i].Scale = "Limited";
-                            }
-                            else
-                            {
-                                dest.RiskAssessment.SpeciesSpeciesInteractions[i].Scale = "Large";
-                            }
-                        }
-
-                        for (var i = 0; i < dest.RiskAssessment.SpeciesNaturetypeInteractions.Count; i++)
-                        {
-                           
-                         var code = dest.RiskAssessment.SpeciesNaturetypeInteractions[i].NiNCode;
-                                // checks if the nature type code is in the impacted nature types from 2018 which are not used anymore; if so, set it to a separate list 
-                         for (var j = 0; j < dest.ImpactedNatureTypesFrom2018.Count; j++)
-                             {
-                                if (dest.ImpactedNatureTypesFrom2018[j].NiNCode == code)
-                                     {
-                                    dest.RiskAssessment.SpeciesNaturetypeInteractions2018.Add(dest.RiskAssessment.SpeciesNaturetypeInteractions[i]);
-                                    dest.RiskAssessment.SpeciesNaturetypeInteractions.Remove(dest.RiskAssessment.SpeciesNaturetypeInteractions[i]);
-
-                               }
-                             }
-
-                            if (dest.RiskAssessment.SpeciesNaturetypeInteractions[i].EffectLocalScale == true)
-                            {
-                                dest.RiskAssessment.SpeciesNaturetypeInteractions[i].Scale = "Limited";
-                            }
-                            else
-                            {
-                                dest.RiskAssessment.SpeciesNaturetypeInteractions[i].Scale = "Large";
-                            }
-                        }
-
-                        for (var i = 0; i < dest.RiskAssessment.HostParasiteInformations.Count; i++)
-                        {
-                            if (dest.RiskAssessment.HostParasiteInformations[i].EffectLocalScale == true)
-                            {
-                                dest.RiskAssessment.HostParasiteInformations[i].Scale = "Limited";
-                            }
-                            else
-                            {
-                                dest.RiskAssessment.HostParasiteInformations[i].Scale = "Large";
-                            }
-
-                            if (dest.RiskAssessment.HostParasiteInformations[i].ParasiteNewForHost && dest.RiskAssessment.HostParasiteInformations[i].ParasiteIsAlien)
-                            {
-                                dest.RiskAssessment.HostParasiteInformations[i].Status = "NewAlien";
-                            }
-                            else if (dest.RiskAssessment.HostParasiteInformations[i].ParasiteIsAlien)
-                            {
-                                dest.RiskAssessment.HostParasiteInformations[i].Status = "KnownAlien";
-                            }
-                            else if (dest.RiskAssessment.HostParasiteInformations[i].ParasiteNewForHost)
-                            {
-                                dest.RiskAssessment.HostParasiteInformations[i].Status = "NewNative";
-                            }
-                            else
-                            {
-                                dest.RiskAssessment.HostParasiteInformations[i].Status = "KnownNative";
-                            }
-                        }
-
-                        for (var i = 0; i < dest.RiskAssessment.GeneticTransferDocumented.Count; i++)
-                        {
-                            if (dest.RiskAssessment.GeneticTransferDocumented[i].EffectLocalScale == true)
-                            {
-                                dest.RiskAssessment.GeneticTransferDocumented[i].Scale = "Limited";
-                            }
-                            else
-                            {
-                                dest.RiskAssessment.GeneticTransferDocumented[i].Scale = "Large";
-                            }
-                        }
-
-                        dest.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes = dest.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes.HasValue == false
-                            ? 0
-                            :
-                            dest.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes.Value > 95 ? 95
-                                :
-                                dest.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes.Value > 75 ? 75
-                                    :
-                                    dest.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes.Value >= 25 ? 25
-                                        :
-                                        dest.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes.Value >= 5 ? 5 : 0;
-
-                        // issue #346
-                        if (!string.IsNullOrWhiteSpace(src.ObservedAndEstablishedStatusInCountry.Indoor.ObservedInCountry.Time) || !string.IsNullOrWhiteSpace(src.ObservedAndEstablishedStatusInCountry.Indoor.FertileSpecimenObserved.Time))
-                        {
-                            int riskAssessmentYearFirstIndoors = 0;
-                            int riskAssessmentYearFirstIndoorsFertile = 0;
-                            if (IsInt(src.ObservedAndEstablishedStatusInCountry.Indoor.ObservedInCountry.Time)) riskAssessmentYearFirstIndoors = int.Parse(src.ObservedAndEstablishedStatusInCountry.Indoor.ObservedInCountry.Time);
-                            if (IsInt(src.ObservedAndEstablishedStatusInCountry.Indoor.FertileSpecimenObserved.Time)) riskAssessmentYearFirstIndoorsFertile = int.Parse(src.ObservedAndEstablishedStatusInCountry.Indoor.FertileSpecimenObserved.Time);
-                            
-                            dest.RiskAssessment.YearFirstIndoors =
-                                riskAssessmentYearFirstIndoors > 0 && (riskAssessmentYearFirstIndoorsFertile == 0 ||
-                                                                       riskAssessmentYearFirstIndoorsFertile >
-                                                                       riskAssessmentYearFirstIndoors)
-                                    ? riskAssessmentYearFirstIndoors
-                                    : riskAssessmentYearFirstIndoorsFertile;
-                        }
-
-                        if (IsInt(src.ObservedAndEstablishedStatusInCountry.Indoor.Established.Time)) dest.RiskAssessment.YearFirstReproductionIndoors = int.Parse(src.ObservedAndEstablishedStatusInCountry.Indoor.Established.Time);
-
-                        if (!string.IsNullOrWhiteSpace(src.ObservedAndEstablishedStatusInCountry.ProductionArea.ObservedInCountry.Time) || !string.IsNullOrWhiteSpace(src.ObservedAndEstablishedStatusInCountry.ProductionArea.FertileSpecimenObserved.Time))
-                        {
-                            int riskAssessmentYearFirstIndoors = 0;
-                            int riskAssessmentYearFirstIndoorsFertile = 0;
-                            if (IsInt(src.ObservedAndEstablishedStatusInCountry.ProductionArea.ObservedInCountry.Time)) riskAssessmentYearFirstIndoors = int.Parse(src.ObservedAndEstablishedStatusInCountry.ProductionArea.ObservedInCountry.Time);
-                            if (IsInt(src.ObservedAndEstablishedStatusInCountry.ProductionArea.FertileSpecimenObserved.Time)) riskAssessmentYearFirstIndoorsFertile = int.Parse(src.ObservedAndEstablishedStatusInCountry.ProductionArea.FertileSpecimenObserved.Time);
-
-                            dest.RiskAssessment.YearFirstProductionOutdoors =
-                                riskAssessmentYearFirstIndoors > 0 && (riskAssessmentYearFirstIndoorsFertile == 0 ||
-                                                                       riskAssessmentYearFirstIndoorsFertile >
-                                                                       riskAssessmentYearFirstIndoors)
-                                    ? riskAssessmentYearFirstIndoors
-                                    : riskAssessmentYearFirstIndoorsFertile;
-                        }
-
-                        if (IsInt(src.ObservedAndEstablishedStatusInCountry.ProductionArea.Established.Time)) dest.RiskAssessment.YearFirstReproductionOutdoors = int.Parse(src.ObservedAndEstablishedStatusInCountry.ProductionArea.Established.Time);
-
-                        if (IsInt(src.ObservedAndEstablishedStatusInCountry.ProductionArea.Population.Time)) dest.RiskAssessment.YearFirstEstablishmentProductionArea = int.Parse(src.ObservedAndEstablishedStatusInCountry.ProductionArea.Population.Time);
-
-                        if (!string.IsNullOrWhiteSpace(src.ObservedAndEstablishedStatusInCountry.NorwegianNature.ObservedInCountry.Time) || !string.IsNullOrWhiteSpace(src.ObservedAndEstablishedStatusInCountry.NorwegianNature.FertileSpecimenObserved.Time))
-                        {
-                            int riskAssessmentYearFirstIndoors = 0;
-                            int riskAssessmentYearFirstIndoorsFertile = 0;
-                            if (IsInt(src.ObservedAndEstablishedStatusInCountry.NorwegianNature.ObservedInCountry.Time)) riskAssessmentYearFirstIndoors = int.Parse(src.ObservedAndEstablishedStatusInCountry.NorwegianNature.ObservedInCountry.Time);
-                            if (IsInt(src.ObservedAndEstablishedStatusInCountry.NorwegianNature.FertileSpecimenObserved.Time)) riskAssessmentYearFirstIndoorsFertile = int.Parse(src.ObservedAndEstablishedStatusInCountry.NorwegianNature.FertileSpecimenObserved.Time);
-
-                            dest.RiskAssessment.YearFirstNature =
-                                riskAssessmentYearFirstIndoors > 0 && (riskAssessmentYearFirstIndoorsFertile == 0 ||
-                                                                       riskAssessmentYearFirstIndoorsFertile >
-                                                                       riskAssessmentYearFirstIndoors)
-                                    ? riskAssessmentYearFirstIndoors
-                                    : riskAssessmentYearFirstIndoorsFertile;
-                        }
-
-                        if (IsInt(src.ObservedAndEstablishedStatusInCountry.NorwegianNature.Established.Time)) dest.RiskAssessment.YearFirstReproductionNature = int.Parse(src.ObservedAndEstablishedStatusInCountry.NorwegianNature.Established.Time);
-
-                        if (IsInt(src.ObservedAndEstablishedStatusInCountry.NorwegianNature.Population.Time)) dest.RiskAssessment.YearFirstEstablishedNature = int.Parse(src.ObservedAndEstablishedStatusInCountry.NorwegianNature.Population.Time);
-                        var tekster = string.Join(" ",
-                            new string[] {
-                                src.FirstDomesticObservation,
-                                GetNotInt("YearFirstIndoors",src.ObservedAndEstablishedStatusInCountry.Indoor.ObservedInCountry.Time),
-                                GetNotInt("YearFirstIndoors",src.ObservedAndEstablishedStatusInCountry.Indoor.FertileSpecimenObserved.Time),
-                                GetNotInt("YearFirstReproductionIndoors",src.ObservedAndEstablishedStatusInCountry.Indoor.Established.Time),
-                                GetNotInt("YearFirstProductionOutdoors",src.ObservedAndEstablishedStatusInCountry.ProductionArea.ObservedInCountry.Time),
-                                GetNotInt("YearFirstProductionOutdoors",src.ObservedAndEstablishedStatusInCountry.ProductionArea.FertileSpecimenObserved.Time),
-                                GetNotInt("YearFirstReproductionOutdoors",src.ObservedAndEstablishedStatusInCountry.ProductionArea.Established.Time),
-                                GetNotInt("YearFirstEstablishmentProductionArea",src.ObservedAndEstablishedStatusInCountry.ProductionArea.Population.Time),
-                                GetNotInt("YearFirstNature",src.ObservedAndEstablishedStatusInCountry.NorwegianNature.ObservedInCountry.Time),
-                                GetNotInt("YearFirstNature",src.ObservedAndEstablishedStatusInCountry.NorwegianNature.FertileSpecimenObserved.Time),
-                                GetNotInt("YearFirstReproductionNature",src.ObservedAndEstablishedStatusInCountry.NorwegianNature.Established.Time),
-                                GetNotInt("YearFirstEstablishedNature",src.ObservedAndEstablishedStatusInCountry.NorwegianNature.Population.Time)
-
-                            }.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray());
-
-                        if (!string.IsNullOrWhiteSpace(tekster))
-                            dest.RiskAssessment.YearFirstDomesticObservation = tekster;
-
-                        if (src.VurderingsStatus == "SlettetAvAdmin" || src.VurderingsStatus == "SlettetFlyttetAvAdmin" || (src.ExpertGroupId == "ExpertGroups/Ikkemarineinvertebrater/N" && src.VurderingsStatus == null))
-                        {
-                            dest.IsDeleted = true;
-                        }
-
-                        var petAqua = dest.AssesmentVectors.Where(x=>x.CodeItem == "liveFoodLiveBait").ToArray();
-                        if (petAqua.Length > 0)
-                        {
-                            foreach (var b in petAqua)
-                            {
-                                if (dest.ExpertGroup == "Fisker" || dest.ExpertGroup.StartsWith("Karplanter"))
-                                {
-                                    b.CodeItem = "liveAnimalFoodBait";
-                                    b.Category = "av levende fôr eller agn (ikke til kjæledyr)";
-                                }
-                                else
-                                {
-                                    b.CodeItem = "liveHumanFood";
-                                    b.Category = "av levende mat (til mennesker)";
-                                }
-                            }
-                        }
-
-                        if (dest.AssesmentVectors.Any(x => x.CodeItem == "otherUnknownRelease"))
-                        {
-                            var these = dest.AssesmentVectors.Where(x => x.CodeItem == "otherUnknownRelease").ToArray();
-                            foreach (var migrationPathway in these)
-                            {
-                                migrationPathway.CodeItem = "otherIntentionalRelease";
-                            }
-                        }
-
-                        // issue #388 og #392
-                        var dict = Naturetypes;
-                        var dictOld = Naturetypes2_2;
-                        var impactedNatureTypes = dest.ImpactedNatureTypes.ToArray();
-                        foreach (var item in impactedNatureTypes)
-                        {
-                            var code = item.NiNCode;
-                            bool newCode = true;
-                            if ((!code.StartsWith("LI ") && code.StartsWith("L")) || code.StartsWith("F"))
-                            {
-                                // nin 2_2 -> flyttes
-                                newCode = false;
-                                dest.ImpactedNatureTypes.Remove(item);
-                                dest.ImpactedNatureTypesFrom2018.Add(item);
-                            }
-
-                            var text = newCode 
-                                ? (dict.ContainsKey(code) ? dict[code] : string.Empty) 
-                                : (dictOld.ContainsKey(code) ? dictOld[code] : string.Empty);
-                            if (text == string.Empty)
-                            {
-                                continue;
-                            }
-
-                            if (string.IsNullOrWhiteSpace(item.Name))
-                            {
-                                item.Name = text;
-                            }
-                            else if (item.Name != text)
-                            {
-                                item.Name = text;
-                            }
-
-                            if (code.StartsWith("LI "))
-                            {
-                                // livsmedium
-                                dest.ImpactedNatureTypes.Remove(item);
-                                dest.Habitats.Add(new FA4.Habitat()
-                                {
-                                    NiNCode = item.NiNCode, Name = item.Name, TimeHorizon = item.TimeHorizon,
-                                    StateChange = item.StateChange, AffectedArea = item.AffectedArea,
-                                    ColonizedArea = item.ColonizedArea
-                                });
-                            }
-                        }
-
-                        var test = dest.RiskAssessment.Criteria.Where(x => x.CriteriaLetter == "F").Single();
-                        if (test.UncertaintyValues.Length > 1)
-                        {
-                            test.UncertaintyValues = new[] { 0 };
-                        }
-
-
-                    });
+                    .AfterMap((src, dest) => { AfterFabMap(dest, src); });
 
                 
 
@@ -1415,6 +1037,499 @@ namespace SwissKnife.Database
             mapperConfig.AssertConfigurationIsValid();
             var mapper = new Mapper(mapperConfig);
             return mapper;
+        }
+
+        private static void AfterRiskAssessmentMap(RiskAssessment src, Prod.Domain.RiskAssessment dest)
+        {
+            if (src.ChosenSpreadYearlyIncrease == "SpreadYearlyIncreaseObservations")
+            {
+                dest.ChosenSpreadYearlyIncrease = "a";
+            }
+
+            dest.ExpansionSpeedInput = ParseLong(src.SpreadYearlyIncreaseObservations);
+            dest.ExpansionLowerQInput = ParseLong(src.SpreadYearlyIncreaseObservationsLowerQuartile);
+            dest.ExpansionUpperQInput = ParseLong(src.SpreadYearlyIncreaseObservationsUpperQuartile);
+
+            if (src.ActiveRedListCategoryLevel)
+            {
+                dest.ROAscore2018 = src.Criteria.Single(x => x.CriteriaLetter == "A").Value;
+            }
+        }
+
+        private static void AfterFabMap(FA4 dest, FA3Legacy src)
+        {
+            // set some standard values
+            dest.EvaluationStatus = "imported";
+            dest.HorizonScanningStatus = "notStarted";
+            dest.TaxonHierarcy = "";
+            dest.IsDeleted = false;
+            if (string.IsNullOrWhiteSpace(dest.ExpertGroup) && !string.IsNullOrWhiteSpace(src.ExpertGroupId) &&
+                expertGroupReplacements.ContainsKey(src.ExpertGroupId))
+            {
+                dest.ExpertGroup = expertGroupReplacements[src.ExpertGroupId];
+            }
+
+            if (!string.IsNullOrWhiteSpace(src.Id) && specificExpertGroups.ContainsKey(src.Id))
+            {
+                dest.ExpertGroup = specificExpertGroups[src.Id];
+            }
+            
+
+            // hentet fra det under - slik mapping fungerer ikke - da de blir kallt via convention - og det er ingen tilfeller der den har behov for å mappe fra FA3Legacy til Prod.Domain.RiskAssessment - koden blir ikke kallt
+            dest.RiskAssessment.AOOknownInput = src.CurrentExistenceArea;
+            dest.RiskAssessment.AOOtotalBestInput = src.CurrentExistenceAreaCalculated;
+            dest.RiskAssessment.AOOtotalLowInput = src.CurrentExistenceAreaLowCalculated;
+            dest.RiskAssessment.AOOtotalHighInput = src.CurrentExistenceAreaHighCalculated;
+            dest.RiskAssessment.AOO50yrBestInput = src.PotentialExistenceArea;
+            dest.RiskAssessment.AOO50yrLowInput = src.PotentialExistenceAreaLowQuartile;
+            dest.RiskAssessment.AOO50yrHighInput = src.PotentialExistenceAreaHighQuartile;
+
+            dest.RiskAssessment.AOOdarkfigureBest = ParseFloat(src.CurrentExistenceAreaMultiplier);
+            dest.RiskAssessment.AOOdarkfigureHigh = ParseFloat(src.CurrentExistenceAreaHighMultiplier);
+            dest.RiskAssessment.AOOdarkfigureLow = ParseFloat(src.CurrentExistenceAreaLowMultiplier);
+
+            dest.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes =
+                src.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes;
+
+            if (!string.IsNullOrWhiteSpace(src.RegionalPresenceKnown))
+            {
+                var elements = src.RegionalPresenceKnown.Split(",", StringSplitOptions.RemoveEmptyEntries);
+                foreach (var item in elements)
+                {
+                    var match = dest.Fylkesforekomster.SingleOrDefault(x =>
+                        x.Fylke.ToLowerInvariant() == item.ToLowerInvariant());
+                    if (match != null)
+                    {
+                        match.State0 = 1;
+                        match.State1 = 1;
+                    }
+                    else
+                    {
+                        throw new Exception("No match not good");
+                    }
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(src.RegionalPresenceAssumed))
+            {
+                var elements = src.RegionalPresenceAssumed.Split(",", StringSplitOptions.RemoveEmptyEntries);
+                foreach (var item in elements)
+                {
+                    var match = dest.Fylkesforekomster.SingleOrDefault(x =>
+                        x.Fylke.ToLowerInvariant() == item.ToLowerInvariant());
+                    if (match != null)
+                    {
+                        match.State1 = 1;
+                    }
+                    else
+                    {
+                        throw new Exception("No match not good");
+                    }
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(src.RegionalPresencePotential))
+            {
+                var elements = src.RegionalPresencePotential.Split(",", StringSplitOptions.RemoveEmptyEntries);
+                foreach (var item in elements)
+                {
+                    var match = dest.Fylkesforekomster.SingleOrDefault(x =>
+                        x.Fylke.ToLowerInvariant() == item.ToLowerInvariant());
+                    if (match != null)
+                    {
+                        match.State3 = 1;
+                    }
+                    else
+                    {
+                        throw new Exception("No match not good");
+                    }
+                }
+            }
+
+            foreach (var item in dest.Fylkesforekomster)
+            {
+                if (item.State0 == 0 && item.State1 == 00 && item.State3 == 0)
+                {
+                    item.State2 = 1;
+                }
+                else
+                {
+                    item.State2 = 0;
+                }
+            }
+            //                    "RegionalPresenceKnown": "St",
+            //"RegionalPresenceAssumed": "",
+            //"RegionalPresencePotential": "Ro,Ho,Sf,Mr,St",
+
+
+            switch (src.AlienSpeciesCategory)
+            {
+                case "AlienSpecie":
+                case "DoorKnocker":
+                case "RegionallyAlien":
+                case "EcoEffectWithoutEstablishment":
+                    dest.IsAlienSpecies = true;
+                    break;
+                case "NotApplicable":
+                    if (src.NotApplicableCategory != "notAlienSpecie")
+                    {
+                        dest.IsAlienSpecies = true;
+                    }
+
+                    if (src.NotApplicableCategory == "taxonIsEvaluatedInHigherRank")
+                    {
+                        dest.ConnectedToAnother = true;
+                    }
+
+                    if (src.NotApplicableCategory == "traditionalProductionSpecie")
+                    {
+                        dest.ProductionSpecies = true;
+                    }
+
+                    if (src.NotApplicableCategory == "establishedBefore1800")
+                    {
+                        dest.AlienSpecieUncertainIfEstablishedBefore1800 = true;
+                        dest.IsAlienSpecies = true;
+                        dest.ConnectedToAnother = false;
+                    }
+
+                    break;
+            }
+
+            if (src.AlienSpeciesCategory == "AlienSpecie" || src.AlienSpeciesCategory == "DoorKnocker")
+            {
+                dest.AlienSpecieUncertainIfEstablishedBefore1800 = false;
+            }
+
+            if (src.AlienSpeciesCategory == "RegionallyAlien")
+            {
+                dest.IsRegionallyAlien = true;
+            }
+
+            for (var i = 0; i < dest.RiskAssessment.SpeciesSpeciesInteractions.Count; i++)
+            {
+                if (dest.RiskAssessment.SpeciesSpeciesInteractions[i].EffectLocalScale == true)
+                {
+                    dest.RiskAssessment.SpeciesSpeciesInteractions[i].Scale = "Limited";
+                }
+                else
+                {
+                    dest.RiskAssessment.SpeciesSpeciesInteractions[i].Scale = "Large";
+                }
+            }
+
+            for (var i = 0; i < dest.RiskAssessment.SpeciesNaturetypeInteractions.Count; i++)
+            {
+                var code = dest.RiskAssessment.SpeciesNaturetypeInteractions[i].NiNCode;
+                // checks if the nature type code is in the impacted nature types from 2018 which are not used anymore; if so, set it to a separate list 
+                for (var j = 0; j < dest.ImpactedNatureTypesFrom2018.Count; j++)
+                {
+                    if (dest.ImpactedNatureTypesFrom2018[j].NiNCode == code)
+                    {
+                        dest.RiskAssessment.SpeciesNaturetypeInteractions2018.Add(dest.RiskAssessment
+                            .SpeciesNaturetypeInteractions[i]);
+                        dest.RiskAssessment.SpeciesNaturetypeInteractions.Remove(dest.RiskAssessment
+                            .SpeciesNaturetypeInteractions[i]);
+                    }
+                }
+
+                if (dest.RiskAssessment.SpeciesNaturetypeInteractions[i].EffectLocalScale == true)
+                {
+                    dest.RiskAssessment.SpeciesNaturetypeInteractions[i].Scale = "Limited";
+                }
+                else
+                {
+                    dest.RiskAssessment.SpeciesNaturetypeInteractions[i].Scale = "Large";
+                }
+            }
+
+            for (var i = 0; i < dest.RiskAssessment.HostParasiteInformations.Count; i++)
+            {
+                if (dest.RiskAssessment.HostParasiteInformations[i].EffectLocalScale == true)
+                {
+                    dest.RiskAssessment.HostParasiteInformations[i].Scale = "Limited";
+                }
+                else
+                {
+                    dest.RiskAssessment.HostParasiteInformations[i].Scale = "Large";
+                }
+
+                if (dest.RiskAssessment.HostParasiteInformations[i].ParasiteNewForHost &&
+                    dest.RiskAssessment.HostParasiteInformations[i].ParasiteIsAlien)
+                {
+                    dest.RiskAssessment.HostParasiteInformations[i].Status = "NewAlien";
+                }
+                else if (dest.RiskAssessment.HostParasiteInformations[i].ParasiteIsAlien)
+                {
+                    dest.RiskAssessment.HostParasiteInformations[i].Status = "KnownAlien";
+                }
+                else if (dest.RiskAssessment.HostParasiteInformations[i].ParasiteNewForHost)
+                {
+                    dest.RiskAssessment.HostParasiteInformations[i].Status = "NewNative";
+                }
+                else
+                {
+                    dest.RiskAssessment.HostParasiteInformations[i].Status = "KnownNative";
+                }
+            }
+
+            for (var i = 0; i < dest.RiskAssessment.GeneticTransferDocumented.Count; i++)
+            {
+                if (dest.RiskAssessment.GeneticTransferDocumented[i].EffectLocalScale == true)
+                {
+                    dest.RiskAssessment.GeneticTransferDocumented[i].Scale = "Limited";
+                }
+                else
+                {
+                    dest.RiskAssessment.GeneticTransferDocumented[i].Scale = "Large";
+                }
+            }
+
+            dest.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes =
+                dest.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes.HasValue == false
+                    ? 0
+                    : dest.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes.Value > 95
+                        ? 95
+                        : dest.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes.Value > 75
+                            ? 75
+                            : dest.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes.Value >= 25
+                                ? 25
+                                : dest.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes.Value >= 5
+                                    ? 5
+                                    : 0;
+
+            // issue #346
+            if (!string.IsNullOrWhiteSpace(src.ObservedAndEstablishedStatusInCountry.Indoor.ObservedInCountry.Time) ||
+                !string.IsNullOrWhiteSpace(src.ObservedAndEstablishedStatusInCountry.Indoor.FertileSpecimenObserved.Time))
+            {
+                int riskAssessmentYearFirstIndoors = 0;
+                int riskAssessmentYearFirstIndoorsFertile = 0;
+                if (IsInt(src.ObservedAndEstablishedStatusInCountry.Indoor.ObservedInCountry.Time))
+                    riskAssessmentYearFirstIndoors =
+                        int.Parse(src.ObservedAndEstablishedStatusInCountry.Indoor.ObservedInCountry.Time);
+                if (IsInt(src.ObservedAndEstablishedStatusInCountry.Indoor.FertileSpecimenObserved.Time))
+                    riskAssessmentYearFirstIndoorsFertile =
+                        int.Parse(src.ObservedAndEstablishedStatusInCountry.Indoor.FertileSpecimenObserved.Time);
+
+                dest.RiskAssessment.YearFirstIndoors =
+                    riskAssessmentYearFirstIndoors > 0 && (riskAssessmentYearFirstIndoorsFertile == 0 ||
+                                                           riskAssessmentYearFirstIndoorsFertile >
+                                                           riskAssessmentYearFirstIndoors)
+                        ? riskAssessmentYearFirstIndoors
+                        : riskAssessmentYearFirstIndoorsFertile;
+            }
+
+            if (IsInt(src.ObservedAndEstablishedStatusInCountry.Indoor.Established.Time))
+                dest.RiskAssessment.YearFirstReproductionIndoors =
+                    int.Parse(src.ObservedAndEstablishedStatusInCountry.Indoor.Established.Time);
+
+            if (!string.IsNullOrWhiteSpace(src.ObservedAndEstablishedStatusInCountry.ProductionArea.ObservedInCountry.Time) ||
+                !string.IsNullOrWhiteSpace(
+                    src.ObservedAndEstablishedStatusInCountry.ProductionArea.FertileSpecimenObserved.Time))
+            {
+                int riskAssessmentYearFirstIndoors = 0;
+                int riskAssessmentYearFirstIndoorsFertile = 0;
+                if (IsInt(src.ObservedAndEstablishedStatusInCountry.ProductionArea.ObservedInCountry.Time))
+                    riskAssessmentYearFirstIndoors =
+                        int.Parse(src.ObservedAndEstablishedStatusInCountry.ProductionArea.ObservedInCountry.Time);
+                if (IsInt(src.ObservedAndEstablishedStatusInCountry.ProductionArea.FertileSpecimenObserved.Time))
+                    riskAssessmentYearFirstIndoorsFertile = int.Parse(src.ObservedAndEstablishedStatusInCountry.ProductionArea
+                        .FertileSpecimenObserved.Time);
+
+                dest.RiskAssessment.YearFirstProductionOutdoors =
+                    riskAssessmentYearFirstIndoors > 0 && (riskAssessmentYearFirstIndoorsFertile == 0 ||
+                                                           riskAssessmentYearFirstIndoorsFertile >
+                                                           riskAssessmentYearFirstIndoors)
+                        ? riskAssessmentYearFirstIndoors
+                        : riskAssessmentYearFirstIndoorsFertile;
+            }
+
+            if (IsInt(src.ObservedAndEstablishedStatusInCountry.ProductionArea.Established.Time))
+                dest.RiskAssessment.YearFirstReproductionOutdoors =
+                    int.Parse(src.ObservedAndEstablishedStatusInCountry.ProductionArea.Established.Time);
+
+            if (IsInt(src.ObservedAndEstablishedStatusInCountry.ProductionArea.Population.Time))
+                dest.RiskAssessment.YearFirstEstablishmentProductionArea =
+                    int.Parse(src.ObservedAndEstablishedStatusInCountry.ProductionArea.Population.Time);
+
+            if (!string.IsNullOrWhiteSpace(src.ObservedAndEstablishedStatusInCountry.NorwegianNature.ObservedInCountry.Time) ||
+                !string.IsNullOrWhiteSpace(src.ObservedAndEstablishedStatusInCountry.NorwegianNature.FertileSpecimenObserved
+                    .Time))
+            {
+                int riskAssessmentYearFirstIndoors = 0;
+                int riskAssessmentYearFirstIndoorsFertile = 0;
+                if (IsInt(src.ObservedAndEstablishedStatusInCountry.NorwegianNature.ObservedInCountry.Time))
+                    riskAssessmentYearFirstIndoors =
+                        int.Parse(src.ObservedAndEstablishedStatusInCountry.NorwegianNature.ObservedInCountry.Time);
+                if (IsInt(src.ObservedAndEstablishedStatusInCountry.NorwegianNature.FertileSpecimenObserved.Time))
+                    riskAssessmentYearFirstIndoorsFertile = int.Parse(src.ObservedAndEstablishedStatusInCountry.NorwegianNature
+                        .FertileSpecimenObserved.Time);
+
+                dest.RiskAssessment.YearFirstNature =
+                    riskAssessmentYearFirstIndoors > 0 && (riskAssessmentYearFirstIndoorsFertile == 0 ||
+                                                           riskAssessmentYearFirstIndoorsFertile >
+                                                           riskAssessmentYearFirstIndoors)
+                        ? riskAssessmentYearFirstIndoors
+                        : riskAssessmentYearFirstIndoorsFertile;
+            }
+
+            if (IsInt(src.ObservedAndEstablishedStatusInCountry.NorwegianNature.Established.Time))
+                dest.RiskAssessment.YearFirstReproductionNature =
+                    int.Parse(src.ObservedAndEstablishedStatusInCountry.NorwegianNature.Established.Time);
+
+            if (IsInt(src.ObservedAndEstablishedStatusInCountry.NorwegianNature.Population.Time))
+                dest.RiskAssessment.YearFirstEstablishedNature =
+                    int.Parse(src.ObservedAndEstablishedStatusInCountry.NorwegianNature.Population.Time);
+            var tekster = string.Join(" ",
+                new string[]
+                {
+                    src.FirstDomesticObservation,
+                    GetNotInt("YearFirstIndoors", src.ObservedAndEstablishedStatusInCountry.Indoor.ObservedInCountry.Time),
+                    GetNotInt("YearFirstIndoors",
+                        src.ObservedAndEstablishedStatusInCountry.Indoor.FertileSpecimenObserved.Time),
+                    GetNotInt("YearFirstReproductionIndoors",
+                        src.ObservedAndEstablishedStatusInCountry.Indoor.Established.Time),
+                    GetNotInt("YearFirstProductionOutdoors",
+                        src.ObservedAndEstablishedStatusInCountry.ProductionArea.ObservedInCountry.Time),
+                    GetNotInt("YearFirstProductionOutdoors",
+                        src.ObservedAndEstablishedStatusInCountry.ProductionArea.FertileSpecimenObserved.Time),
+                    GetNotInt("YearFirstReproductionOutdoors",
+                        src.ObservedAndEstablishedStatusInCountry.ProductionArea.Established.Time),
+                    GetNotInt("YearFirstEstablishmentProductionArea",
+                        src.ObservedAndEstablishedStatusInCountry.ProductionArea.Population.Time),
+                    GetNotInt("YearFirstNature",
+                        src.ObservedAndEstablishedStatusInCountry.NorwegianNature.ObservedInCountry.Time),
+                    GetNotInt("YearFirstNature",
+                        src.ObservedAndEstablishedStatusInCountry.NorwegianNature.FertileSpecimenObserved.Time),
+                    GetNotInt("YearFirstReproductionNature",
+                        src.ObservedAndEstablishedStatusInCountry.NorwegianNature.Established.Time),
+                    GetNotInt("YearFirstEstablishedNature",
+                        src.ObservedAndEstablishedStatusInCountry.NorwegianNature.Population.Time)
+                }.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray());
+
+            if (!string.IsNullOrWhiteSpace(tekster))
+                dest.RiskAssessment.YearFirstDomesticObservation = tekster;
+
+            if (src.VurderingsStatus == "SlettetAvAdmin" || src.VurderingsStatus == "SlettetFlyttetAvAdmin" ||
+                (src.ExpertGroupId == "ExpertGroups/Ikkemarineinvertebrater/N" && src.VurderingsStatus == null))
+            {
+                dest.IsDeleted = true;
+            }
+
+            var petAqua = dest.AssesmentVectors.Where(x => x.CodeItem == "liveFoodLiveBait").ToArray();
+            if (petAqua.Length > 0)
+            {
+                foreach (var b in petAqua)
+                {
+                    if (dest.ExpertGroup == "Fisker" || dest.ExpertGroup.StartsWith("Karplanter"))
+                    {
+                        b.CodeItem = "liveAnimalFoodBait";
+                        b.Category = "av levende fôr eller agn (ikke til kjæledyr)";
+                    }
+                    else
+                    {
+                        b.CodeItem = "liveHumanFood";
+                        b.Category = "av levende mat (til mennesker)";
+                    }
+                }
+            }
+
+            if (dest.AssesmentVectors.Any(x => x.CodeItem == "otherUnknownRelease"))
+            {
+                var these = dest.AssesmentVectors.Where(x => x.CodeItem == "otherUnknownRelease").ToArray();
+                foreach (var migrationPathway in these)
+                {
+                    migrationPathway.CodeItem = "otherIntentionalRelease";
+                }
+            }
+
+            // issue #388 og #392
+            var dict = Naturetypes;
+            var dictOld = Naturetypes2_2;
+            var impactedNatureTypes = dest.ImpactedNatureTypes.ToArray();
+            foreach (var item in impactedNatureTypes)
+            {
+                var code = item.NiNCode;
+                bool newCode = true;
+                if ((!code.StartsWith("LI ") && code.StartsWith("L")) || code.StartsWith("F"))
+                {
+                    // nin 2_2 -> flyttes
+                    newCode = false;
+                    dest.ImpactedNatureTypes.Remove(item);
+                    dest.ImpactedNatureTypesFrom2018.Add(item);
+                }
+
+                var text = newCode
+                    ? (dict.ContainsKey(code) ? dict[code] : string.Empty)
+                    : (dictOld.ContainsKey(code) ? dictOld[code] : string.Empty);
+                if (text == string.Empty)
+                {
+                    continue;
+                }
+
+                if (string.IsNullOrWhiteSpace(item.Name))
+                {
+                    item.Name = text;
+                }
+                else if (item.Name != text)
+                {
+                    item.Name = text;
+                }
+
+                if (code.StartsWith("LI "))
+                {
+                    // livsmedium
+                    dest.ImpactedNatureTypes.Remove(item);
+                    dest.Habitats.Add(new FA4.Habitat()
+                    {
+                        NiNCode = item.NiNCode, Name = item.Name, TimeHorizon = item.TimeHorizon,
+                        StateChange = item.StateChange, AffectedArea = item.AffectedArea,
+                        ColonizedArea = item.ColonizedArea
+                    });
+                }
+            }
+
+            var test = dest.RiskAssessment.Criteria.Where(x => x.CriteriaLetter == "F").Single();
+            if (test.UncertaintyValues.Length > 1)
+            {
+                test.UncertaintyValues = new[] { 0 };
+            }
+
+            if (src.ImportedToIndoorOrProductionArea)
+            {
+                dest.IndoorProduktion = "negative";
+            }
+
+
+            dest.PreviousAssessments.Add(new FA4.PreviousAssessment()
+            {
+                AssessmentId = src.Id,
+                RevisionYear = 2018,
+                RiskLevel = src.RiskAssessment.RiskLevel,
+                EcologicalRiskLevel = src.RiskAssessment.EcoEffectLevel,
+                SpreadRiskLevel = src.RiskAssessment.InvationPotentialLevel,
+                DecisiveCriteria = src.RiskAssessment.DecisiveCriteria,
+                MainCategory = src.AlienSpeciesCategory,
+                MainSubCategory = src.AlienSpeciesCategory == "DoorKnocker" ? src.DoorKnockerCategory :
+                    src.AlienSpeciesCategory == "NotApplicable" ? src.NotApplicableCategory :
+                    src.AlienSpeciesCategory == "RegionallyAlien" ? src.RegionallyAlienCategory :
+                    "",
+                //IsAlienSpecies = dest.IsAlienSpecies,
+                //ConnectedToAnother = dest.ConnectedToAnother
+            });
+            dest.PreviousAssessments.Add(new FA4.PreviousAssessment()
+            {
+                AssessmentId = src.VurderingId2012.ToString(),
+                RevisionYear = 2012,
+                RiskLevel = src.RiskLevel2012,
+                EcologicalRiskLevel = src.EcologicalRiskLevel2012,
+                SpreadRiskLevel = src.SpreadRiskLevel2012,
+                MainCategory = src.AlienSpeciesCategory2012,
+                MainSubCategory = ""
+            });
+
+            ConvertHelper.SetHorizonScanningBasedOn2018Assessments(dest);
+
         }
 
         private static List<Tuple<string, string>> DrillDown(JsonArray array, string id = "Id", string text = "Text", string child = "Children")
