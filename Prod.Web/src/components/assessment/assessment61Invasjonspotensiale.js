@@ -559,18 +559,6 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                     // style={{marginLeft: "35px"}}
                                     codes={koder.yesNo}
                                 />                  
-                                {/* {riskAssessment.AOOfirstOccurenceLessThan10Years === "no" ?
-                                    <>
-                                        <p> Hvis tidsserien tillater det anbefales det at ekspansjonshastigheten estimeres ut fra kjent forekomstareal ved to ulike år, hvor perioden fra år 1 t.o.m. år 2 er på minimum 10 år. Er dette mulig?</p>
-                                        <Xcomp.StringEnum 
-                                            mode="radio"
-                                            observableValue={[riskAssessment, "AOOestimationPeriod10yrPossible"]} 
-                                            // style={{marginLeft: "45px"}}
-                                            codes={koder.yesNo}
-                                        />                  
-                                    </> : 
-                                    null
-                                } */}
                                 {riskAssessment.AOOfirstOccurenceLessThan10Years === "yes"
                                 ?<>
                                     <p style={{marginTop: "10px", marginBottom: "20px", paddingTop: "20px"}} dangerouslySetInnerHTML={{__html: labels.BcritText.SelfProducing}}></p>
