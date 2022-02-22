@@ -28,7 +28,7 @@ function roundToSignificantDecimals(num) {
         num
     return result
 }
-function roundToSignificantDecimals2(num) {   // todo: spør om grenseverdiene (100 vs 99.5, og 2(?))
+function roundToSignificantDecimals2(num) {
     if (num === null) return 0;
     const result =
         // (num >= 10000000) ? round(num / 1000000) * 1000000 :
@@ -37,11 +37,15 @@ function roundToSignificantDecimals2(num) {   // todo: spør om grenseverdiene (
         // (num >= 10000   ) ? round(num / 1000)    * 1000    :
         // (num >= 1000    ) ? round(num / 100)     * 100     :
         // (num >= 100     ) ? round(num / 10)      * 10      :
-        (num >= 99.5    ) ? round(num / 10)      * 10      :
-        (num >= 9.95    ) ? round(num / 1)       * 1      :
-        (num >= 2    ) ? round(num / 0.1)      * 0.1      :
-        (num <  2    ) ? round(num / 0.01)      * 0.01      :
+        (num >= 99500   ) ? round(num / 10000)      * 10000   :
+        (num >= 9950    ) ? round(num / 1000 )      * 1000    :
+        (num >= 995     ) ? round(num / 100  )      * 100     :
+        (num >= 99.5    ) ? round(num / 10   )      * 10      :
+        (num >= 9.95    ) ? round(num / 1    )      * 1       :
+        (num >= 2    ) ?  (round(num / 0.1 ) * 100) / 1000    : // multiplying with 0.1 gives floating point inaccuracy
+        (num <  2    ) ?  (round(num / 0.01) * 100) / 10000   :
         num
+    console.log("¤¤¤¤ roundToSignificantDecimals2 " + num + " ! " + result)
     return result
 }
 
