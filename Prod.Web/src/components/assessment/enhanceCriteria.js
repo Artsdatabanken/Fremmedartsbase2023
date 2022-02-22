@@ -1412,7 +1412,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
         //     })
         // })
         runInAction(() => {
-            crit.auto = false
+            crit.auto = true
         })
 
         // autorun(() => {
