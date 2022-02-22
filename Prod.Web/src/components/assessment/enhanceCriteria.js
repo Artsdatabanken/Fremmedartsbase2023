@@ -37,10 +37,10 @@ function roundToSignificantDecimals2(num) {   // todo: spør om grenseverdiene (
         // (num >= 10000   ) ? round(num / 1000)    * 1000    :
         // (num >= 1000    ) ? round(num / 100)     * 100     :
         // (num >= 100     ) ? round(num / 10)      * 10      :
-        (num >= 99.5    ) ? trunc(num / 10)      * 10      :
-        (num >= 9.95    ) ? trunc(num / 1)       * 1      :
-        (num >= 2    ) ? trunc(num / 0.1)      * 0.1      :
-        (num <  2    ) ? trunc(num / 0.01)      * 0.01      :
+        (num >= 99.5    ) ? round(num / 10)      * 10      :
+        (num >= 9.95    ) ? round(num / 1)       * 1      :
+        (num >= 2    ) ? round(num / 0.1)      * 0.1      :
+        (num <  2    ) ? round(num / 0.01)      * 0.01      :
         num
     return result
 }
