@@ -599,7 +599,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 ? r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null || (r.AOOyear2 - r.AOOyear1) < 10 || r.AOO1 <= 0 || r.AOO2 <= 0
                     ? 0
                     : trunc(sqrt(r.AOOdarkfigureLow) * 2000 * (sqrt(ceil(r.AOO2 / 4)) - sqrt(ceil(r.AOO1 / 4))) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
-                : trunc(20 * (sqrt(r.AOO50yrHigh) - sqrt(r.AOOtotalBest)) / sqrt(pi))
+                : trunc(20 * (sqrt(r.AOO50yrLow) - sqrt(r.AOOtotalBest)) / sqrt(pi))
             return result
         },
         get expansionLowerQ() {
@@ -617,7 +617,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 ? r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null || (r.AOOyear2 - r.AOOyear1) < 10 || r.AOO1 <= 0 || r.AOO2 <= 0
                     ? 0
                     : trunc(sqrt(r.AOOdarkfigureHigh) * 2000 * (sqrt(ceil(r.AOO2 / 4)) - sqrt(ceil(r.AOO1 / 4))) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
-                : trunc(20 * (sqrt(r.AOO50yrLow) - sqrt(r.AOOtotalBest)) / sqrt(pi))
+                : trunc(20 * (sqrt(r.AOO50yrHigh) - sqrt(r.AOOtotalBest)) / sqrt(pi))
             return result
         },
         get expansionUpperQ() {
