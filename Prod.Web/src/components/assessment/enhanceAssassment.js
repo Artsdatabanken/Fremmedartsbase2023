@@ -311,7 +311,10 @@ export default function enhanceAssessment(json, appState) {
             // console.log("##¤statuschange: " + change + " " + alienSpeciesCategory + " " + previousAlienSpeciesCategory)
             action(() => {
                 console.log("##¤statuschange 2: " + change)
-                appState.statusChange = change
+                if (assessment.speciesStatus != null) {
+                    appState.statusChange = change
+                }
+                
             })()
         }
     )
