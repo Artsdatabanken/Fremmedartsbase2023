@@ -49,7 +49,6 @@ export default class Documents extends Component {
         const riskAssessment = assessment.riskAssessment
         const labels = appState.codeLabels
         const disabled = appState.userContext.readonly
-        console.log(this.attachments)
         return(
         <div className="files">
             <FileUpload 
