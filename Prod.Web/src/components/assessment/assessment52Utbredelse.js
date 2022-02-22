@@ -355,14 +355,14 @@ export default class Assessment52Utbredelse extends React.Component {
                                 </div>
 
                                 <div style={{ paddingBottom: 16 }}>
-                                    {assessment.artskartSistOverført && 
+                                    {assessment.artskartSistOverført && (!!assessment.artskartAdded || !!assessment.artskartRemoved || assessment.artskartSelectionGeometry) &&
                                     <span>Sist overført fra Artskart {beskrivTidSiden(assessment.artskartSistOverført, appState.codeLabels.Timing)}. </span>}
                                     {assessment.artskartManuellAdd > 0 && 
                                     <span>{assessment.artskartManuellAdd} {assessment.artskartManuellAdd === 1 ? "rute" : "ruter"} ble manuelt lagt til. </span>}
                                     {assessment.artskartManuellRemove > 0 && <span>{assessment.artskartManuellRemove} {assessment.artskartManuellRemove === 1 ? "rute" : "ruter"} ble manuelt fjernet.</span>}
                                     {assessment.artskartSelectionGeometry && <span>Et polygon som ekskluderer <b>{assessment.b2ForekomstarealKjentAndel / 4}</b> {assessment.b2ForekomstarealKjentAndel / 4 === 1 ? "rute" : "ruter"} har blitt lagt til.</span>}
                                 </div>
-                                { //(!!assessment.artskartAdded || !!assessment.artskartRemoved || assessment.artskartSelectionGeometry) &&
+                                { (!!assessment.artskartAdded || !!assessment.artskartRemoved || assessment.artskartSelectionGeometry) &&
                                     <div style={{ paddingBottom: 24 }}>
                                         <Xcomp.HtmlString
                                             label="Hvis nye lokaliteter legges til eller gamle fjernes, eller man har avgrenset utvalget ved å tegne et polygon, skal det dokumenteres (hvorfor og hva)"
