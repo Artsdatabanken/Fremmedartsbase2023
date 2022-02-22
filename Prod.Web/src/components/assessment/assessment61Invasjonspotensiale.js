@@ -848,7 +848,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             // disabled={disabled || riskAssessment.chosenSpreadYearlyIncrease == "a" || (riskAssessment.chosenSpreadYearlyIncrease == "b" && assessment.alienSpeciesCategory == "DoorKnocker")}
                                             // auto={riskAssessment.chosenSpreadYearlyIncrease == "a" || assessment.alienSpeciesCategory == "DoorKnocker"} 
                                             mode="noheading"/>
-                                <hr></hr>
+                               
                             
                             </div>
                             }
@@ -974,7 +974,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                
                             </div>
                         : null}
-                     <hr/>
+                    
                 </fieldset>
                 <fieldset className="well">
                     {/* {/*<h4>{critC.heading} &nbsp;{labels.Ccrit.transferedFrom4}</h4>
