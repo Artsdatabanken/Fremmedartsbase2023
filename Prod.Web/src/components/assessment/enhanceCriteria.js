@@ -304,17 +304,35 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 : "AmethodInvalid"
             return result
         },
+        // get bmetodkey() {
+        //     const method = riskAssessment.chosenSpreadYearlyIncrease
+        //     const result =
+        //         method === "a"
+        //         ? "B1"
+        //         : method === "b"
+        //         ? !r.doorKnocker
+        //             ? "B2a"
+        //             : "B2b"
+        //         : method === "c"  // no longer in use (??)
+        //         ? "B2bX"
+        //         : "BmethodNotChosen"
+        //     console.log("##¤bmetod " + result + " doorKnocker: " + r.doorKnocker)
+        //     return result
+        // },
         get bmetodkey() {
             const method = riskAssessment.chosenSpreadYearlyIncrease
+            // B2a1, B2a2 og B2b
             const result =
                 method === "a"
                 ? "B1"
                 : method === "b"
                 ? !r.doorKnocker
-                    ? "B2a"
+                    ? r.AOOfirstOccurenceLessThan10Years === "yes"
+                        ? "B2a1"
+                        : "B2a2"
                     : "B2b"
-                : method === "c"  // no longer in use (??)
-                ? "B2bX"
+                // : method === "c"  // no longer in use (??)
+                // ? "B2bX"
                 : "BmethodNotChosen"
             console.log("##¤bmetod " + result + " doorKnocker: " + r.doorKnocker)
             return result
@@ -533,9 +551,10 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
         get blow() {
             const k = r.bmetodkey
-            return k === "B2a" ?
-                criterionLow(riskAssessment.critB)
-            : r.expansionLowerQ >= 500 ? 3
+            // return ["B2a1", "B2a2"].includes(k) ?
+            //     criterionLow(riskAssessment.critB)
+            // : 
+            return r.expansionLowerQ >= 500 ? 3
             : r.expansionLowerQ >= 160 ? 2
             : r.expansionLowerQ >= 50 ? max(1, r.bscore - 1)
             : r.expansionLowerQ < 50 ? max(0, r.bscore - 1)
@@ -543,9 +562,10 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
         get bhigh() {
             const k = r.bmetodkey
-            const result = k === "B2a"
-                ? criterionHigh(riskAssessment.critB)
-                : r.expansionUpperQ >= 500 ? min(3, r.bscore + 1)
+            // const result = ["B2a1", "B2a2"].includes(k)
+            //     ? criterionHigh(riskAssessment.critB)
+            //     : 
+            const result = r.expansionUpperQ >= 500 ? min(3, r.bscore + 1)
                 : r.expansionUpperQ >= 160 ? min(2, r.bscore + 1)
                 : r.expansionUpperQ >= 50 ? 1
                 : r.expansionUpperQ < 50 ? 0
@@ -587,7 +607,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             console.log("##¤ expansionSpeed " + r.bmetodkey + " " + r.AOO10yrBest)
             const result =
                 k === "B1" ? r.expansionSpeedInput
-                : k === "B2a" ? this.expansionSpeedB2a 
+                : ["B2a1", "B2a2"].includes(k) ? this.expansionSpeedB2a 
                 : k === "B2b" ? trunc(200 * (sqrt(r.AOO10yrBest / 4) - 1) / sqrt(pi))
                 : 0 // ?
             console.log("##!expansionSpeed: key:" + k + " unroundedresult: " + result)
@@ -606,7 +626,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             const k = r.bmetodkey
             const result =
                 k === "B1" ? r.expansionLowerQInput
-                : k === "B2a" ? r.expansionLowerQB2a
+                : ["B2a1", "B2a2"].includes(k) ? r.expansionLowerQB2a
                 : k === "B2b" ? trunc(200 * (sqrt(r.AOO10yrLow / 4) - 1) / sqrt(pi))
                 : 0 // ?
             return roundToSignificantDecimals(result)
@@ -624,7 +644,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             const k = r.bmetodkey
             const result =
                 k === "B1" ? r.expansionUpperQInput
-                : k === "B2a" ? r.expansionUpperQB2a
+                : ["B2a1", "B2a2"].includes(k) ? r.expansionUpperQB2a
                 : k === "B2b" ? trunc(200 * (sqrt(r.AOO10yrHigh / 4) - 1) / sqrt(pi))
                 : 0 // ?
             return roundToSignificantDecimals(result)
@@ -1385,43 +1405,52 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
 
     for(const crit of [r.critB]) { // just to get scope
         extdendCriteriaProps(crit)
-        autorun(() => {
-            const auto = (r.bmetodkey === "B1" || r.bmetodkey === "B2b")
-            runInAction(() => {
-                crit.auto = auto
-            })
+        // autorun(() => {
+        //     const auto = (r.bmetodkey === "B1" || r.bmetodkey === "B2b")
+        //     runInAction(() => {
+        //         crit.auto = auto
+        //     })
+        // })
+        runInAction(() => {
+            crit.auto = false
         })
 
-        autorun(() => {
-            let ud // uncertaintyDisabled 
-            if (r.bmetodkey === "B1" 
-               || r.bmetodkey === "B2b"
-               || (r.bmetodkey === "B2a" && r.AOOfirstOccurenceLessThan10Years === "yes"))
-            {
-                // console.log("¤¤¤ uncertaintyDisabled - 1")
-                ud = [0,1,2,3]
-            } else if (r.bmetodkey === "B2a") {
-                // console.log("¤¤¤ uncertaintyDisabled - 2")
-                ud = uncertaintyArray(r.blow, r.bhigh)
-            } else {
-                // console.log("¤¤¤ uncertaintyDisabled - 3")
-                ud = uncertaintyArray(r.bscore - 1, r.bscore + 1)
-            }
-            // console.log("¤¤¤ uncertaintyDisabled: " + JSON.stringify(ud) + " " + r.bmetodkey + " " + r.AOOfirstOccurenceLessThan10Years)
-            runInAction(() => {
-                arrayConditionalReplace(crit.uncertaintyDisabled, ud)
-            })
-            // if (!config.isRelease) trace()  // leave this line here! Se comments above to learn when to uncomment.
+        // autorun(() => {
+        //     let ud // uncertaintyDisabled 
+        //     if (r.bmetodkey === "B1" 
+        //        || r.bmetodkey === "B2b"
+        //        || r.bmetodkey === "B2a1")
+        //     //    || (r.bmetodkey === "B2a" && r.AOOfirstOccurenceLessThan10Years === "yes"))
+        //     {
+        //         // console.log("¤¤¤ uncertaintyDisabled - 1")
+        //         ud = [0,1,2,3]
+        //     } else if (r.bmetodkey === "B2a2") {
+        //         // console.log("¤¤¤ uncertaintyDisabled - 2")
+        //         ud = uncertaintyArray(r.blow, r.bhigh)
+        //     } else {
+        //         // console.log("¤¤¤ uncertaintyDisabled - 3")
+        //         ud = uncertaintyArray(r.bscore - 1, r.bscore + 1)
+        //     }
+        //     // console.log("¤¤¤ uncertaintyDisabled: " + JSON.stringify(ud) + " " + r.bmetodkey + " " + r.AOOfirstOccurenceLessThan10Years)
+        //     runInAction(() => {
+        //         arrayConditionalReplace(crit.uncertaintyDisabled, ud)
+        //     })
+        //     // if (!config.isRelease) trace()  // leave this line here! Se comments above to learn when to uncomment.
+        // })
+
+        runInAction(() => {
+            arrayConditionalReplace(crit.uncertaintyDisabled, [0,1,2,3])
         })
 
         let firstrun = true
         autorun(() => {
-            let uv // uncentaintyValues (selected by program)
-            if (r.bmetodkey === "B1" || r.bmetodkey === "B2b") {
-                uv = uncertaintyArrayReverse(uncertaintyArray(r.blow, r.bhigh))
-            } else {
-                uv = [crit.value]
-            }
+            // let uv // uncentaintyValues (selected by program)
+            // if (r.bmetodkey === "B1" || r.bmetodkey === "B2b") {
+            //     uv = uncertaintyArrayReverse(uncertaintyArray(r.blow, r.bhigh))
+            // } else {
+            //     uv = [crit.value]
+            // }
+            const uv = uncertaintyArrayReverse(uncertaintyArray(r.blow, r.bhigh))
             runInAction(() => {
                 setUncertaintyValues(firstrun, crit, uv)
             })

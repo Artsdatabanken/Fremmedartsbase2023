@@ -129,6 +129,9 @@ export default function enhanceAssessment(json, appState) {
     if(jsonra.AOOfirstOccurenceLessThan10Years === null) {
         jsonra.AOOfirstOccurenceLessThan10Years = "yes"
     }
+    if(jsonra.chosenSpreadYearlyIncrease === "c") {
+        jsonra.chosenSpreadYearlyIncrease = "a"
+    }
     // *****
 
     const assessment = observable.object(json)
