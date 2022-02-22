@@ -556,7 +556,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 
         get expansionSpeedB2a() {
             const result =
-            (riskAssessment.AOOfirstOccurenceLessThan10Years && riskAssessment.AOOfirstOccurenceLessThan10Years === "yes")
+            (riskAssessment.AOOfirstOccurenceLessThan10Years === "yes")
                 ? r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null || (r.AOOyear2 - r.AOOyear1) < 10 || r.AOO1 <= 0 || r.AOO2 <= 0
                     ? 0
                     : trunc(sqrt(r.AOOdarkfigureBest) * 2000 * (sqrt(ceil(r.AOO2 / 4)) - sqrt(ceil(r.AOO1 / 4))) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
@@ -595,7 +595,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
         get expansionLowerQB2a() {
             const result =
-            (riskAssessment.AOOfirstOccurenceLessThan10Years && riskAssessment.AOOfirstOccurenceLessThan10Years === "yes")
+            (riskAssessment.AOOfirstOccurenceLessThan10Years === "yes")
                 ? r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null || (r.AOOyear2 - r.AOOyear1) < 10 || r.AOO1 <= 0 || r.AOO2 <= 0
                     ? 0
                     : trunc(sqrt(r.AOOdarkfigureLow) * 2000 * (sqrt(ceil(r.AOO2 / 4)) - sqrt(ceil(r.AOO1 / 4))) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
@@ -613,7 +613,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
         get expansionUpperQB2a() {
             const result =
-            (riskAssessment.AOOfirstOccurenceLessThan10Years && riskAssessment.AOOfirstOccurenceLessThan10Years === "yes")
+            (riskAssessment.AOOfirstOccurenceLessThan10Years === "yes")
                 ? r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null || (r.AOOyear2 - r.AOOyear1) < 10 || r.AOO1 <= 0 || r.AOO2 <= 0
                     ? 0
                     : trunc(sqrt(r.AOOdarkfigureHigh) * 2000 * (sqrt(ceil(r.AOO2 / 4)) - sqrt(ceil(r.AOO1 / 4))) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
@@ -671,7 +671,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
         get b2aresulttext() {
             const result =
-                (riskAssessment.AOOfirstOccurenceLessThan10Years && r.AOOfirstOccurenceLessThan10Years === "yes")
+                (r.AOOfirstOccurenceLessThan10Years === "yes")
                 ? `Ekspansjonshastigheten er beregnet til ${r.expansionSpeed} m/år basert på økningen i artens forekomstareal i perioden fra ${r.AOOyear1} til ${r.AOOyear2} og et mørketall på ${r.AOOdarkfigureBest}.`
                 : `Ekspansjonshastigheten beregnes ut fra de beste anslagene på forekomstarealet i dag og om 50 år. Disse er angitt under fanen Utbredelse.
                 Ekspansjonshastigheten er beregnet til ${r.expansionSpeed} m/år basert på det beste anslaget på artens forekomstareal i dag (${r.AOOtotalBest}) og om 50 år (${r.AOO50yrBest}).`
