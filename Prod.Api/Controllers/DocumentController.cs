@@ -44,6 +44,7 @@ namespace Prod.Api.Controllers
                     UserId = x.User.Id,
                     Name = x.Name,
                     FileName = x.FileName,
+                    Description = x.Description,
                     IsDeleted = x.IsDeleted
                 }).ToArrayAsync();
         }

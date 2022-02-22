@@ -111,7 +111,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
         // riskAssessment.AOO1 == null ? riskAssessment.AOO1 = riskAssessment.AOOknown1 : riskAssessment.AOO1 = 0
 
         // riskAssessment.AOO2 == null ? riskAssessment.AOO2 = riskAssessment.AOOknown2 : riskAssessment.AOO2 = 0
-
+        if (assessment.artskartModel) {
         this.props.appState.virtualArtskartModel0 = observable({
             observationFromYear: assessment.artskartModel.observationFromYear,
             observationToYear: assessment.riskAssessment.AOOyear1,
@@ -126,6 +126,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
             excludeObjects: assessment.artskartModel.excludeObjects,
             excludeGbif: assessment.artskartModel.excludeGbif,
         });
+    }
 
         // commented this out. it crashed the application.
         // if (assessment.artskartModel2 === undefined) {
