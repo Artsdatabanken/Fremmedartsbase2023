@@ -71,13 +71,15 @@ export default class Documents extends Component {
                 {this.attachments.map((item) => {
                                 return (<tr key={item.id}>
                                     <td>
-                                        <a href={config.getUrl('document/getfile/' + item.id)} download={item.fileName} target="_blank" >{item.fileName}</a>                                        
-                                    </td>
-                                    <td>   
-                                    {this.edit
+                                        <a href={config.getUrl('document/getfile/' + item.id)} download={item.fileName} target="_blank" >{item.fileName}</a>  
+                                        <br></br>    
+                                        {this.edit
                                         ? <Xcomp.String observableValue={[item, 'name']} />
                                         : item.name
-                                        }                 
+                                        }                                      
+                                    </td>
+                                    <td>   
+                                        {item.description}
                                     </td>
                                     
                                     <td>

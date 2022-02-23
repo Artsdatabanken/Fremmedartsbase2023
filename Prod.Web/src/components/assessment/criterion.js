@@ -61,7 +61,7 @@ export default class Criterion extends React.Component {
             <>
             {showHeading ? <div><h3>{heading}</h3> {!hideInfo ? <p>{info}</p> : null}</div> : null}
             {/*disabled ?  <p>{ntLabels.scoreSummary}</p>  :  <p>{scoreText}</p>*/}
-            {disabled ?  <p>{ntLabels.scoreSummary}</p>  : letter ? ((letter =="A" && (riskAssessment.chosenSpreadMedanLifespan == "SpreadRscriptEstimatedSpeciesLongevity" || riskAssessment.chosenSpreadMedanLifespan ==  "ViableAnalysis")) || (letter =="B" && riskAssessment.chosenSpreadYearlyIncrease == "b" && assessment.alienSpeciesCategory != "DoorKnocker" )) ? <p>{ntLabels.uncertainity}</p>: <p>{ntLabels.score}</p> : null}
+            {disabled || (letter && letter == "B") ?  <p>{ntLabels.scoreSummary}</p>  : letter ? ((letter == "A" && (riskAssessment.chosenSpreadMedanLifespan == "SpreadRscriptEstimatedSpeciesLongevity" || riskAssessment.chosenSpreadMedanLifespan ==  "ViableAnalysis")) || (letter =="B" && riskAssessment.chosenSpreadYearlyIncrease == "b" && assessment.alienSpeciesCategory != "DoorKnocker" )) ? <p>{ntLabels.uncertainity}</p>: <p>{ntLabels.score}</p> : null}
             <div className= {disabled ? "criterion disabled" : "criterion" }>
             
             {codes.map(kode => {  

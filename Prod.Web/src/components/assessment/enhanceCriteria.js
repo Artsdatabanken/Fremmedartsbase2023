@@ -28,7 +28,7 @@ function roundToSignificantDecimals(num) {
         num
     return result
 }
-function roundToSignificantDecimals2(num) {   // todo: spør om grenseverdiene (100 vs 99.5, og 2(?))
+function roundToSignificantDecimals2(num) {
     if (num === null) return 0;
     const result =
         // (num >= 10000000) ? round(num / 1000000) * 1000000 :
@@ -37,11 +37,15 @@ function roundToSignificantDecimals2(num) {   // todo: spør om grenseverdiene (
         // (num >= 10000   ) ? round(num / 1000)    * 1000    :
         // (num >= 1000    ) ? round(num / 100)     * 100     :
         // (num >= 100     ) ? round(num / 10)      * 10      :
-        (num >= 99.5    ) ? trunc(num / 10)      * 10      :
-        (num >= 9.95    ) ? trunc(num / 1)       * 1      :
-        (num >= 2    ) ? trunc(num / 0.1)      * 0.1      :
-        (num <  2    ) ? trunc(num / 0.01)      * 0.01      :
+        (num >= 99500   ) ? round(num / 10000)      * 10000   :
+        (num >= 9950    ) ? round(num / 1000 )      * 1000    :
+        (num >= 995     ) ? round(num / 100  )      * 100     :
+        (num >= 99.5    ) ? round(num / 10   )      * 10      :
+        (num >= 9.95    ) ? round(num / 1    )      * 1       :
+        (num >= 2    ) ?  (round(num / 0.1 ) * 100) / 1000    : // multiplying with 0.1 gives floating point inaccuracy
+        (num <  2    ) ?  (round(num / 0.01) * 100) / 10000   :
         num
+    console.log("¤¤¤¤ roundToSignificantDecimals2 " + num + " ! " + result)
     return result
 }
 
@@ -304,17 +308,35 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 : "AmethodInvalid"
             return result
         },
+        // get bmetodkey() {
+        //     const method = riskAssessment.chosenSpreadYearlyIncrease
+        //     const result =
+        //         method === "a"
+        //         ? "B1"
+        //         : method === "b"
+        //         ? !r.doorKnocker
+        //             ? "B2a"
+        //             : "B2b"
+        //         : method === "c"  // no longer in use (??)
+        //         ? "B2bX"
+        //         : "BmethodNotChosen"
+        //     console.log("##¤bmetod " + result + " doorKnocker: " + r.doorKnocker)
+        //     return result
+        // },
         get bmetodkey() {
             const method = riskAssessment.chosenSpreadYearlyIncrease
+            // B2a1, B2a2 og B2b
             const result =
                 method === "a"
                 ? "B1"
                 : method === "b"
                 ? !r.doorKnocker
-                    ? "B2a"
+                    ? r.AOOfirstOccurenceLessThan10Years === "yes"
+                        ? "B2a1"
+                        : "B2a2"
                     : "B2b"
-                : method === "c"  // no longer in use (??)
-                ? "B2bX"
+                // : method === "c"  // no longer in use (??)
+                // ? "B2bX"
                 : "BmethodNotChosen"
             console.log("##¤bmetod " + result + " doorKnocker: " + r.doorKnocker)
             return result
@@ -533,9 +555,10 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
         get blow() {
             const k = r.bmetodkey
-            return k === "B2a" ?
-                criterionLow(riskAssessment.critB)
-            : r.expansionLowerQ >= 500 ? 3
+            // return ["B2a1", "B2a2"].includes(k) ?
+            //     criterionLow(riskAssessment.critB)
+            // : 
+            return r.expansionLowerQ >= 500 ? 3
             : r.expansionLowerQ >= 160 ? 2
             : r.expansionLowerQ >= 50 ? max(1, r.bscore - 1)
             : r.expansionLowerQ < 50 ? max(0, r.bscore - 1)
@@ -543,9 +566,10 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
         get bhigh() {
             const k = r.bmetodkey
-            const result = k === "B2a"
-                ? criterionHigh(riskAssessment.critB)
-                : r.expansionUpperQ >= 500 ? min(3, r.bscore + 1)
+            // const result = ["B2a1", "B2a2"].includes(k)
+            //     ? criterionHigh(riskAssessment.critB)
+            //     : 
+            const result = r.expansionUpperQ >= 500 ? min(3, r.bscore + 1)
                 : r.expansionUpperQ >= 160 ? min(2, r.bscore + 1)
                 : r.expansionUpperQ >= 50 ? 1
                 : r.expansionUpperQ < 50 ? 0
@@ -556,7 +580,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 
         get expansionSpeedB2a() {
             const result =
-            (riskAssessment.AOOfirstOccurenceLessThan10Years && riskAssessment.AOOfirstOccurenceLessThan10Years === "yes")
+            (riskAssessment.AOOfirstOccurenceLessThan10Years === "yes")
                 ? r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null || (r.AOOyear2 - r.AOOyear1) < 10 || r.AOO1 <= 0 || r.AOO2 <= 0
                     ? 0
                     : trunc(sqrt(r.AOOdarkfigureBest) * 2000 * (sqrt(ceil(r.AOO2 / 4)) - sqrt(ceil(r.AOO1 / 4))) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
@@ -587,7 +611,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             console.log("##¤ expansionSpeed " + r.bmetodkey + " " + r.AOO10yrBest)
             const result =
                 k === "B1" ? r.expansionSpeedInput
-                : k === "B2a" ? this.expansionSpeedB2a 
+                : ["B2a1", "B2a2"].includes(k) ? this.expansionSpeedB2a 
                 : k === "B2b" ? trunc(200 * (sqrt(r.AOO10yrBest / 4) - 1) / sqrt(pi))
                 : 0 // ?
             console.log("##!expansionSpeed: key:" + k + " unroundedresult: " + result)
@@ -595,36 +619,36 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
         get expansionLowerQB2a() {
             const result =
-            (riskAssessment.AOOfirstOccurenceLessThan10Years && riskAssessment.AOOfirstOccurenceLessThan10Years === "yes")
+            (riskAssessment.AOOfirstOccurenceLessThan10Years === "yes")
                 ? r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null || (r.AOOyear2 - r.AOOyear1) < 10 || r.AOO1 <= 0 || r.AOO2 <= 0
                     ? 0
                     : trunc(sqrt(r.AOOdarkfigureLow) * 2000 * (sqrt(ceil(r.AOO2 / 4)) - sqrt(ceil(r.AOO1 / 4))) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
-                : trunc(20 * (sqrt(r.AOO50yrHigh) - sqrt(r.AOOtotalBest)) / sqrt(pi))
+                : trunc(20 * (sqrt(r.AOO50yrLow) - sqrt(r.AOOtotalBest)) / sqrt(pi))
             return result
         },
         get expansionLowerQ() {
             const k = r.bmetodkey
             const result =
                 k === "B1" ? r.expansionLowerQInput
-                : k === "B2a" ? r.expansionLowerQB2a
+                : ["B2a1", "B2a2"].includes(k) ? r.expansionLowerQB2a
                 : k === "B2b" ? trunc(200 * (sqrt(r.AOO10yrLow / 4) - 1) / sqrt(pi))
                 : 0 // ?
             return roundToSignificantDecimals(result)
         },
         get expansionUpperQB2a() {
             const result =
-            (riskAssessment.AOOfirstOccurenceLessThan10Years && riskAssessment.AOOfirstOccurenceLessThan10Years === "yes")
+            (riskAssessment.AOOfirstOccurenceLessThan10Years === "yes")
                 ? r.AOOyear2 === 0 || r.AOOyear2 === null || r.AOOyear1 === 0 || r.AOOyear1 === null || (r.AOOyear2 - r.AOOyear1) < 10 || r.AOO1 <= 0 || r.AOO2 <= 0
                     ? 0
                     : trunc(sqrt(r.AOOdarkfigureHigh) * 2000 * (sqrt(ceil(r.AOO2 / 4)) - sqrt(ceil(r.AOO1 / 4))) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
-                : trunc(20 * (sqrt(r.AOO50yrLow) - sqrt(r.AOOtotalBest)) / sqrt(pi))
+                : trunc(20 * (sqrt(r.AOO50yrHigh) - sqrt(r.AOOtotalBest)) / sqrt(pi))
             return result
         },
         get expansionUpperQ() {
             const k = r.bmetodkey
             const result =
                 k === "B1" ? r.expansionUpperQInput
-                : k === "B2a" ? r.expansionUpperQB2a
+                : ["B2a1", "B2a2"].includes(k) ? r.expansionUpperQB2a
                 : k === "B2b" ? trunc(200 * (sqrt(r.AOO10yrHigh / 4) - 1) / sqrt(pi))
                 : 0 // ?
             return roundToSignificantDecimals(result)
@@ -671,7 +695,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
         get b2aresulttext() {
             const result =
-                (riskAssessment.AOOfirstOccurenceLessThan10Years && r.AOOfirstOccurenceLessThan10Years === "yes")
+                (r.AOOfirstOccurenceLessThan10Years === "yes")
                 ? `Ekspansjonshastigheten er beregnet til ${r.expansionSpeed} m/år basert på økningen i artens forekomstareal i perioden fra ${r.AOOyear1} til ${r.AOOyear2} og et mørketall på ${r.AOOdarkfigureBest}.`
                 : `Ekspansjonshastigheten beregnes ut fra de beste anslagene på forekomstarealet i dag og om 50 år. Disse er angitt under fanen Utbredelse.
                 Ekspansjonshastigheten er beregnet til ${r.expansionSpeed} m/år basert på det beste anslaget på artens forekomstareal i dag (${r.AOOtotalBest}) og om 50 år (${r.AOO50yrBest}).`
@@ -1385,36 +1409,52 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
 
     for(const crit of [r.critB]) { // just to get scope
         extdendCriteriaProps(crit)
-        autorun(() => {
-            const auto = (r.bmetodkey === "B1" || r.bmetodkey === "B2b")
-            runInAction(() => {
-                crit.auto = auto
-            })
+        // autorun(() => {
+        //     const auto = (r.bmetodkey === "B1" || r.bmetodkey === "B2b")
+        //     runInAction(() => {
+        //         crit.auto = auto
+        //     })
+        // })
+        runInAction(() => {
+            crit.auto = true
         })
 
-        autorun(() => {
-            let ud // uncertaintyDisabled 
-            if (r.bmetodkey === "B1" || r.bmetodkey === "B2b") {
-                ud = [0,1,2,3]
-            } else if (r.ametodkey === "B2a") {
-                ud = uncertaintyArray(r.blow, r.bhigh)
-            } else {
-                ud = uncertaintyArray(r.bscore - 1, r.bscore + 1)
-            }
-            runInAction(() => {
-                arrayConditionalReplace(crit.uncertaintyDisabled, ud)
-            })
-            // if (!config.isRelease) trace()  // leave this line here! Se comments above to learn when to uncomment.
+        // autorun(() => {
+        //     let ud // uncertaintyDisabled 
+        //     if (r.bmetodkey === "B1" 
+        //        || r.bmetodkey === "B2b"
+        //        || r.bmetodkey === "B2a1")
+        //     //    || (r.bmetodkey === "B2a" && r.AOOfirstOccurenceLessThan10Years === "yes"))
+        //     {
+        //         // console.log("¤¤¤ uncertaintyDisabled - 1")
+        //         ud = [0,1,2,3]
+        //     } else if (r.bmetodkey === "B2a2") {
+        //         // console.log("¤¤¤ uncertaintyDisabled - 2")
+        //         ud = uncertaintyArray(r.blow, r.bhigh)
+        //     } else {
+        //         // console.log("¤¤¤ uncertaintyDisabled - 3")
+        //         ud = uncertaintyArray(r.bscore - 1, r.bscore + 1)
+        //     }
+        //     // console.log("¤¤¤ uncertaintyDisabled: " + JSON.stringify(ud) + " " + r.bmetodkey + " " + r.AOOfirstOccurenceLessThan10Years)
+        //     runInAction(() => {
+        //         arrayConditionalReplace(crit.uncertaintyDisabled, ud)
+        //     })
+        //     // if (!config.isRelease) trace()  // leave this line here! Se comments above to learn when to uncomment.
+        // })
+
+        runInAction(() => {
+            arrayConditionalReplace(crit.uncertaintyDisabled, [0,1,2,3])
         })
 
         let firstrun = true
         autorun(() => {
-            let uv // uncentaintyValues (selected by program)
-            if (r.bmetodkey === "B1" || r.bmetodkey === "B2b") {
-                uv = uncertaintyArrayReverse(uncertaintyArray(r.blow, r.bhigh))
-            } else {
-                uv = [crit.value]
-            }
+            // let uv // uncentaintyValues (selected by program)
+            // if (r.bmetodkey === "B1" || r.bmetodkey === "B2b") {
+            //     uv = uncertaintyArrayReverse(uncertaintyArray(r.blow, r.bhigh))
+            // } else {
+            //     uv = [crit.value]
+            // }
+            const uv = uncertaintyArrayReverse(uncertaintyArray(r.blow, r.bhigh))
             runInAction(() => {
                 setUncertaintyValues(firstrun, crit, uv)
             })

@@ -25,7 +25,7 @@ if (AOOtotalBest < AOOknown) FEILMELDING ("Det beste anslaget på det totale nå
 if (AOOtotalLow == AOOknown) ADVARSEL ("Er det realistisk at det ikke eksisterer noen uoppdagede forekomster av arten?") 
 if (AOOtotalLow < AOOknown) ADVARSEL ("Er det korrekt at artens totale nåværende forekomstareal kan være mindre enn det kjente?") 
 if (AOO50yrBest < AOOtotalBest) ADVARSEL ("Er det korrekt at det er forventet en nedgang i artens forekomstareal i løpet av de neste 50&nbsp;år?") 
-if ((AOOknown %% 4) | (AOOtotalLow) %% 4 | (AOOtotalBest %% 4) | (AOOtotalHigh %% 4) | (AOO50yrLow %% 4) | (AOO50yrBest %% 4) | (AOO50yrHigh %% 4)) ADVARSEL ("Forekomstarealene vil bli avrundet oppover til nærmeste større multippel av 4_km².") 
+if ((AOOknown %% 4) | (AOOtotalLow) %% 4 | (AOOtotalBest %% 4) | (AOOtotalHigh %% 4) | (AOO50yearLow %% 4) | (AOO50yearBest %% 4) | (AOO50yearHigh %% 4)) ADVARSEL ("Forekomstarealene vil bli avrundet oppover til nærmeste større multippel av 4_km².") 
  
 AOOknown <- ceiling(AOOknown / 4) * 4 
 AOOtotalLow <- ceiling(AOOtotalLow / 4) * 4 
@@ -401,11 +401,15 @@ if (AOOdarkfigureHigh >= 9.95) AOOdarkfigureHigh <- round(AOOdarkfigureHigh)
 if (AOOdarkfigureHigh > 2) AOOdarkfigureHigh <- round(AOOdarkfigureHigh * 10) / 10 
 if (AOOdarkfigureHigh < 2) AOOdarkfigureHigh <- round(AOOdarkfigureHigh * 100) / 100 
  
-ExpansionSpeed  <- trunc(sqrt(AOOdarkfigureBest) * 2000 * (sqrt(ceiling(AOO2 / 4)) - sqrt(ceiling(AOO1 / 4))) / ((AOOyear2 - AOOyear1) * sqrt(pi))) 
- 
-ExpansionLowerQ <- trunc(sqrt(AOOdarkfigureLow)  * 2000 * (sqrt(ceiling(AOO2 / 4)) - sqrt(ceiling(AOO1 / 4))) / ((AOOyear2 - AOOyear1) * sqrt(pi))) 
- 
-ExpansionUpperQ <- trunc(sqrt(AOOdarkfigureHigh) * 2000 * (sqrt(ceiling(AOO2 / 4)) - sqrt(ceiling(AOO1 / 4))) / ((AOOyear2 - AOOyear1) * sqrt(pi))) 
+//her mangler korreksjon for km->m
+//ExpansionSpeed <- trunc(sqrt(AOOdarkfigureBest) * (sqrt(AOO2) - sqrt(AOO1)) / ((AOOyear2 - AOOyear1) * sqrt(pi))) 
+//ExpansionLowerQ <- trunc(sqrt(AOOdarkfigureLow) * (sqrt(AOO2) - sqrt(AOO1)) / ((AOOyear2 - AOOyear1) * sqrt(pi))) 
+//ExpansionUpperQ <- trunc(sqrt(AOOdarkfigureHigh) * (sqrt(AOO2) - sqrt(AOO1)) / ((AOOyear2 - AOOyear1) * sqrt(pi))) 
+
+//korreksjon av Helge
+ExpansionSpeed <- trunc(sqrt(AOOdarkfigureBest) * 1000 * (sqrt(AOO2) - sqrt(AOO1)) / ((AOOyear2 - AOOyear1) * sqrt(pi))) 
+ExpansionLowerQ <- trunc(sqrt(AOOdarkfigureLow) * 1000 * (sqrt(AOO2) - sqrt(AOO1)) / ((AOOyear2 - AOOyear1) * sqrt(pi))) 
+ExpansionUpperQ <- trunc(sqrt(AOOdarkfigureHigh) * 1000 * (sqrt(AOO2) - sqrt(AOO1)) / ((AOOyear2 - AOOyear1) * sqrt(pi))) 
  
 if (ExpansionSpeed < 50) Bscore <- 1 
 if (ExpansionSpeed >= 50) Bscore <- 2 
@@ -437,43 +441,7 @@ Ekspansjonshastigheten er beregnet til [ExpansionSpeed]&nbsp;m/år basert på ø
 # Valgbare bokser for usikkerhet er skårene fra og med max(1, Bscore - 1) til og med min(4, Bscore + 1). 
 # Det laveste krysset i usikkerhetsboksene bestemmer verdien til Blow (mellom 1 og 4). 
 # Det høyeste krysset i usikkerhetsboksene bestemmer verdien til Bhigh (mellom 1 og 4). 
- 
- 
-#For de med få år med relevant data for å estimere ekspansjonshastighet (dvs. mindre enn 10 år f#ra år 1 til år 2: 
- 
-ExpansionSpeed  <- trunc(20 * (sqrt(AOO50yrBest) - sqrt(AOOtotalBest)) / sqrt(pi)) 
-ExpansionLowerQ <- trunc(20 * (sqrt(AOO50yrLow) - sqrt(AOOtotalBest)) / sqrt(pi)) 
-ExpansionUpperQ <- trunc(20 * (sqrt(AOO50yrHigh)  - sqrt(AOOtotalBest)) / sqrt(pi)) 
- 
-if (ExpansionSpeed < 50) Bscore <- 1 
-if (ExpansionSpeed >= 50) Bscore <- 2 
-if (ExpansionSpeed >= 160) Bscore <- 3 
-if (ExpansionSpeed >= 500) Bscore <- 4 
-if (ExpansionLowerQ < 50) Blow <- max(1, Bscore - 1) 
-if (ExpansionLowerQ >= 50) Blow <- max(2, Bscore - 1) 
-if (ExpansionLowerQ >= 160) Blow <- 3 
-if (ExpansionLowerQ >= 500) Blow <- 4 
-if (ExpansionUpperQ < 50) Bhigh <- 1 
-if (ExpansionUpperQ >= 50) Bhigh <- 2 
-if (ExpansionUpperQ >= 160) Bhigh <- min(3, Bscore + 1) 
-if (ExpansionUpperQ >= 500) Bhigh <- min(4, Bscore + 1) 
- 
-# avrunding nedover til to signifikante desimaler: 
-if (ExpansionSpeed > 10000) ExpansionSpeed <- trunc(ExpansionSpeed / 1000) * 1000 
-if (ExpansionSpeed > 1000) ExpansionSpeed <- trunc(ExpansionSpeed / 100) * 100 
-if (ExpansionSpeed > 100) ExpansionSpeed <- trunc(ExpansionSpeed / 10) * 10 
-if (ExpansionLowerQ > 10000) ExpansionLowerQ <- trunc(ExpansionLowerQ / 1000) * 1000 
-if (ExpansionLowerQ > 1000) ExpansionLowerQ <- trunc(ExpansionLowerQ / 100) * 100 
-if (ExpansionLowerQ > 100) ExpansionLowerQ <- trunc(ExpansionLowerQ / 10) * 10 
-if (ExpansionUpperQ > 10000) ExpansionUpperQ <- trunc(ExpansionUpperQ / 1000) * 1000 
-if (ExpansionUpperQ > 1000) ExpansionUpperQ <- trunc(ExpansionUpperQ / 100) * 100 
-if (ExpansionUpperQ > 100) ExpansionUpperQ <- trunc(ExpansionUpperQ / 10) * 10 
- 
- 
-#Utmating 
-Ekspansjonshastigheten er beregnet til ExpansionSpeed#&nbsp;m/år basert på det beste anslaget på artens forekomstareal i dag (AOOtotalBest) og om 50 år (AOO50yrBest). 
- 
-B2b) Antatt økning i forekomstareal – dørstokkarter 
+(B2b) Antatt økning i forekomstareal – dørstokkarter 
 # Variabler som beregnes på fanen 
 ExpansionLowerQ	#integer	# nedre kvartil for ekspansjonshastighet i meter per år 
 ExpansionUpperQ	#integer	# øvre kvartil for ekspansjonshastighet i meter per år 

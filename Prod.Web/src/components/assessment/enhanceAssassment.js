@@ -121,11 +121,19 @@ function generateFurtherInfoText(migrationPathways, appState) {
 
 export default function enhanceAssessment(json, appState) {
     // * * * remove properties that will be replaced with computed observables * * *
-    const ra = json.riskAssessment
+    const jsonra = json.riskAssessment
     deleteProps(json, assessmentGetterFields)
-    deleteProps(ra, riskAssessmentGetterFields)
-    
+    deleteProps(jsonra, riskAssessmentGetterFields)
     // * * *
+    // ***** Fix invalid values ***********************
+    if(jsonra.AOOfirstOccurenceLessThan10Years === null) {
+        jsonra.AOOfirstOccurenceLessThan10Years = "yes"
+    }
+    if(jsonra.chosenSpreadYearlyIncrease === "c") {
+        jsonra.chosenSpreadYearlyIncrease = "a"
+    }
+    // *****
+
     const assessment = observable.object(json)
     const labels = appState.codeLabels
     const codes = appState.koder
@@ -249,7 +257,6 @@ export default function enhanceAssessment(json, appState) {
         },
 
     })
-    //deleteProps(ra, riskAssessmentGetterFields)
     enhanceCriteria(riskAssessment, assessment, codes, labels, artificialAndConstructedSites)
     fixFylker(assessment);
 
@@ -302,10 +309,12 @@ export default function enhanceAssessment(json, appState) {
             (alienSpeciesCategory == "AlienSpecie" && previousAlienSpeciesCategory == "DoorKnocker") ||
             (alienSpeciesCategory == "DoorKnocker" && previousAlienSpeciesCategory == "AlienSpecie") 
             // console.log("##¤statuschange: " + change + " " + alienSpeciesCategory + " " + previousAlienSpeciesCategory)
-            action(() => {
-                console.log("##¤statuschange 2: " + change)
-                appState.statusChange = change
-            })()
+            if (assessment.speciesStatus != null) {
+                action(() => {
+                    // console.log("##¤statuschange 2: " + change)
+                    appState.statusChange = change
+                })()
+            }
         }
     )
 

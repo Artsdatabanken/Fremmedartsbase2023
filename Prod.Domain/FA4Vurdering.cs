@@ -1630,6 +1630,8 @@ public partial class FA4 // (3.2) Artsegenskaper
         public string ArtskartSistOverført { get; set; }
         public ArtskartModel ArtskartModel { get; set; } = new ArtskartModel();
         public ArtskartWaterModel ArtskartWaterModel { get; set; } = new ArtskartWaterModel();
+        public string ArtskartManuellKommentar { get; set; } = "";
+
     }
 
     public class ArtskartModel

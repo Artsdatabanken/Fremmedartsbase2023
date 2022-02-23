@@ -111,7 +111,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
         // riskAssessment.AOO1 == null ? riskAssessment.AOO1 = riskAssessment.AOOknown1 : riskAssessment.AOO1 = 0
 
         // riskAssessment.AOO2 == null ? riskAssessment.AOO2 = riskAssessment.AOOknown2 : riskAssessment.AOO2 = 0
-
+        if (assessment.artskartModel) {
         this.props.appState.virtualArtskartModel0 = observable({
             observationFromYear: assessment.artskartModel.observationFromYear,
             observationToYear: assessment.riskAssessment.AOOyear1,
@@ -126,6 +126,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
             excludeObjects: assessment.artskartModel.excludeObjects,
             excludeGbif: assessment.artskartModel.excludeGbif,
         });
+    }
 
         // commented this out. it crashed the application.
         // if (assessment.artskartModel2 === undefined) {
@@ -558,18 +559,6 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                     // style={{marginLeft: "35px"}}
                                     codes={koder.yesNo}
                                 />                  
-                                {/* {riskAssessment.AOOfirstOccurenceLessThan10Years === "no" ?
-                                    <>
-                                        <p> Hvis tidsserien tillater det anbefales det at ekspansjonshastigheten estimeres ut fra kjent forekomstareal ved to ulike år, hvor perioden fra år 1 t.o.m. år 2 er på minimum 10 år. Er dette mulig?</p>
-                                        <Xcomp.StringEnum 
-                                            mode="radio"
-                                            observableValue={[riskAssessment, "AOOestimationPeriod10yrPossible"]} 
-                                            // style={{marginLeft: "45px"}}
-                                            codes={koder.yesNo}
-                                        />                  
-                                    </> : 
-                                    null
-                                } */}
                                 {riskAssessment.AOOfirstOccurenceLessThan10Years === "yes"
                                 ?<>
                                     <p style={{marginTop: "10px", marginBottom: "20px", paddingTop: "20px"}} dangerouslySetInnerHTML={{__html: labels.BcritText.SelfProducing}}></p>
@@ -860,7 +849,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             // disabled={disabled || riskAssessment.chosenSpreadYearlyIncrease == "a" || (riskAssessment.chosenSpreadYearlyIncrease == "b" && assessment.alienSpeciesCategory == "DoorKnocker")}
                                             // auto={riskAssessment.chosenSpreadYearlyIncrease == "a" || assessment.alienSpeciesCategory == "DoorKnocker"} 
                                             mode="noheading"/>
-                                <hr></hr>
+                               
                             
                             </div>
                             }
@@ -986,7 +975,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                
                             </div>
                         : null}
-                     <hr/>
+                    
                 </fieldset>
                 <fieldset className="well">
                     {/* {/*<h4>{critC.heading} &nbsp;{labels.Ccrit.transferedFrom4}</h4>
