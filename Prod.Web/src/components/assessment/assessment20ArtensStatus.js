@@ -1,32 +1,14 @@
 ﻿import React from 'react';
 import {observer, inject} from 'mobx-react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import config from '../../config';
 // import RadioGroup from './radioGroup'
 import * as Xcomp from './observableComponents';
-import DomesticObservedAndEstablished from './20ArtensStatus/DomesticObservedAndEstablished';
+// import DomesticObservedAndEstablished from './20ArtensStatus/DomesticObservedAndEstablished';
 
 import {action, autorun, extendObservable, observable, toJS} from "mobx"
 
-import createTaxonSearch from '../createTaxonSearch'
-//import createTaxonSearch from './createTaxonSearch'
-
-// const labels = config.labels
-// const standardPeriods = [
-//     nbsp,
-//     "-1800",
-//     "1800-1849",
-//     "1850-1899",
-//     "1900-1949",
-//     "1950-1959",
-//     "1960-1969",
-//     "1970-1979",
-//     "1980-1989",
-//     "1990-1999",
-//     "2000-2009",
-//     "2010-",
-//     "Vet ikke"
-// ];
+// import createTaxonSearch from '../createTaxonSearch'
 
 const SkalVurderesLabel = ({skalVurderes}) => (skalVurderes
     ? <label>
@@ -34,9 +16,6 @@ const SkalVurderesLabel = ({skalVurderes}) => (skalVurderes
 : <label className="important-info">Arter som faller innenfor denne gruppen skal ikke risikovurderes videre</label>)
 
 const nbsp = "\u00a0"
-
-
-
 
 @inject("appState")
 @observer
