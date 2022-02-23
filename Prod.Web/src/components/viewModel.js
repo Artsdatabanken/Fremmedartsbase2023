@@ -658,9 +658,6 @@ class ViewModel {
             const id = Number(json.id)
             console.log("type of id : " + typeof(id))
             const jsonnew = JSON.parse(JSON.stringify(json))
-            // // // find out if the species is alien
-            // // const alien = jsonnew.alienSpeciesCategory =="AlienSpecie" || jsonnew.notApplicableCategory == "establishedBefore1800"
-            
             const assessment = enhanceAssessment(jsonnew, this)
             const assessmentStringCopy = assessment.toJSON
             const assessmentcopy = JSON.parse(assessmentStringCopy)
