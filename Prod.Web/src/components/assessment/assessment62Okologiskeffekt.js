@@ -310,7 +310,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                     <hr/>
                     {riskAssessment.speciesNaturetypeInteractions2018.length > 0 && 
                     <SpeciesNaturetypeTable list={riskAssessment.speciesNaturetypeInteractions2018} 
-                                            natureTypes={assessment.impactedNatureTypes} 
+                                            natureTypes={assessment.impactedNatureTypesFrom2018} 
                                             //newItem={this.newSNITS} addNewItem={this.addSNITS}  
                                             koder={koder} labels={labels} 
                                             disabled={true} naturtypeLabels={appState.naturtypeLabels } showKeyStoneSpecie showEffect showInteractionType />
