@@ -171,7 +171,7 @@ const SpeciesNaturetypeTable = observer((props) =>
             </tr>
             )}
             {/* new row for adding nature types shows only if there are any nature types chosen in the respective tab */}
-            {props.addNewItem && naturetypeNames && naturetypeNames.length > 0 && <tr className="newRow">
+            {naturetypeNames && naturetypeNames.length > 0 && <tr className="newRow">
                 <td>
               <Xcomp.StringEnum 
                         observableValue={[props.newItem, "niNCode"]}  
