@@ -282,6 +282,22 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 
     }
 
+    function AOO10yr(occurrences1, introductions) {
+        const occ = n0(occurrences1)
+        const intr = n0(introductions)
+        const result =
+            isNaN(intr)
+            ? NaN
+            : occ === 0 && intr === 0
+            ? 0
+            : occ === 0 || isNaN(occ)
+            ? 4 * round(0.64 + 0.36 * intr)
+            : 4 * round(occ + Math.pow(intr,(occ + 9)/10))
+        // console.log("#&& AOO10yrBest " + r.occurrences1Best + "!" + r.introductionsBest + " result: " + result)
+        // console.log("#&& AOO10yrBest occ intr" + occ + "!" + intr)
+        return result
+    }
+
     extendObservable(riskAssessment, {
         //get notUseSpeciesMap() { return true},
 
@@ -350,31 +366,40 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             return num == 0 ? 0 : round(r.introductionsBest) + num
         },
         get AOO10yrBest() {
-            const result =
-                r.occurrences1Best === 0 && r.introductionsBest === 0
-                ? 0
-                : r.occurrences1Best === 0
-                ? 4 * round(0.64 + 0.36 * r.introductionsBest)
-                : 4 * round(r.occurrences1Best + Math.pow(r.introductionsBest,(r.occurrences1Best + 9)/10))
-            //console.log("#AOO10yrBest " + r.occurrences1Best + "!" + r.introductionsBest + " result: " + result)
+            // const occ = n0(r.occurrences1Best)
+            // const intr = n0(r.introductionsBest)
+            // const result =
+            //     isNaN(intr)
+            //     ? NaN
+            //     : occ === 0 && intr === 0
+            //     ? 0
+            //     : occ === 0 || isNaN(occ)
+            //     ? 4 * round(0.64 + 0.36 * intr)
+            //     : 4 * round(occ + Math.pow(intr,(occ + 9)/10))
+            // // console.log("#&& AOO10yrBest " + r.occurrences1Best + "!" + r.introductionsBest + " result: " + result)
+            // // console.log("#&& AOO10yrBest occ intr" + occ + "!" + intr)
+
+            const result = AOO10yr(r.occurrences1Best, r.introductionsBest)
             return result
         },
         get AOO10yrLow() {
-            const result =
-                r.occurrences1Low === 0 && r.introductionsLow === 0
-                ? 0
-                : r.occurrences1Low === 0
-                ? 4 * round(0.64 + 0.36 * r.introductionsLow)
-                : 4 * round(r.occurrences1Low + Math.pow(r.introductionsLow, (r.occurrences1Low + 9)/10))
+            // const result =
+            //     r.occurrences1Low === 0 && r.introductionsLow === 0
+            //     ? 0
+            //     : r.occurrences1Low === 0
+            //     ? 4 * round(0.64 + 0.36 * r.introductionsLow)
+            //     : 4 * round(r.occurrences1Low + Math.pow(r.introductionsLow, (r.occurrences1Low + 9)/10))
+            const result = AOO10yr(r.occurrences1Low, r.introductionsLow)
             return result
         },
         get AOO10yrHigh() {
-            const result =
-                r.occurrences1High === 0 && r.introductionsHigh === 0
-                ? 0
-                : r.occurrences1High === 0
-                ? 4 * round(0.64 + 0.36 * r.introductionsHigh)
-                : 4 * round(r.occurrences1High + Math.pow(r.introductionsHigh,(r.occurrences1High + 9)/10))
+            // const result =
+            //     r.occurrences1High === 0 && r.introductionsHigh === 0
+            //     ? 0
+            //     : r.occurrences1High === 0
+            //     ? 4 * round(0.64 + 0.36 * r.introductionsHigh)
+            //     : 4 * round(r.occurrences1High + Math.pow(r.introductionsHigh,(r.occurrences1High + 9)/10))
+            const result = AOO10yr(r.occurrences1High, r.introductionsHigh)
             return result
         },
 
