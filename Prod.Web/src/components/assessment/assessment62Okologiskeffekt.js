@@ -308,6 +308,8 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                     
                     
                     <hr/>
+                    <SpeciesNaturetypeTable list={riskAssessment.speciesNaturetypeInteractions} natureTypes={assessment.impactedNatureTypes} newItem={this.newSNITS} addNewItem={this.addSNITS}  koder={koder} labels={labels} disabled={appState.userContext.readonly} naturtypeLabels={appState.naturtypeLabels } showKeyStoneSpecie showEffect showInteractionType />
+                    <p>Data fra tidligere vurdering</p>
                     {riskAssessment.speciesNaturetypeInteractions2018.length > 0 && 
                     <SpeciesNaturetypeTable list={riskAssessment.speciesNaturetypeInteractions2018} 
                                             natureTypes={assessment.impactedNatureTypesFrom2018} 
@@ -315,9 +317,6 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                                             koder={koder} labels={labels} 
                                             disabled={true} naturtypeLabels={appState.naturtypeLabels } showKeyStoneSpecie showEffect showInteractionType />
                     }
-
-                    <SpeciesNaturetypeTable list={riskAssessment.speciesNaturetypeInteractions} natureTypes={assessment.impactedNatureTypes} newItem={this.newSNITS} addNewItem={this.addSNITS}  koder={koder} labels={labels} disabled={appState.userContext.readonly} naturtypeLabels={appState.naturtypeLabels } showKeyStoneSpecie showEffect showInteractionType />
-
                     <hr/>
 
                     <Xcomp.HtmlString observableValue={[riskAssessment, 'speciesSpeciesInteractionsSupplementaryInformation']} label="Utfyllende informasjon (f.eks. hvilke(n) artsgruppe i naturtypen påvirkes og hvordan blir disse generelt påvirket):" />
