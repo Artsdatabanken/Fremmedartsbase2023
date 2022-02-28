@@ -137,12 +137,12 @@ export default class Assessment51Naturtyper extends React.Component {
                     codes={koder}
                     appState={appState}
                     disabled={true}
-                    desc={ntLabels.colonizedAreaDescription}/>
+                    desc={ntLabels.transferredFromNiN22}/>
                 </div>}
 
                 {assessment.redlistedNatureTypes.length > 0 && <div className="previousAssessment">
                 
-                {assessment.impactedNatureTypesFrom2018.length = 0 && <h4>{ntLabels.dataFromPreviousAssessment}</h4>}
+                {assessment.impactedNatureTypesFrom2018.length == 0 && <h4>{ntLabels.dataFromPreviousAssessment}</h4>}
                 <p>{ntLabels.redlistedNaturetypes2011}</p>
                 <RedlistedNaturetypeTable
                     naturetypes={assessment.redlistedNatureTypes}

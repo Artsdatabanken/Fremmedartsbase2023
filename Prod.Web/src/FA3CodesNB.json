@@ -8598,6 +8598,13 @@
                         },
                         {
                             "Id": null,
+                            "Value": "transferredFromNiN22",
+                            "Text": "Overførte naturtyper fra NiN 2.2.",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "criteriumC",
                             "Text": "Andel av forekomstarealet til minst én naturtype som vil være kolonisert etter 50 år, med usikkerhet",
                             "Info": null,
