@@ -4,6 +4,8 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -11,6 +13,7 @@ using IdentityModel.Client;
 using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +25,7 @@ using Microsoft.OpenApi.Models;
 using Prod.Api.Controllers;
 using Prod.Data.EFCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Prod.Api.Helpers;
 using Prod.Domain.Helpers;
 
@@ -75,6 +79,8 @@ namespace Prod.Api
             });
             services.AddResponseCompression();
             services.AddApplicationInsightsTelemetry();
+            services.AddHealthChecks()
+                .AddDbContextCheck<ProdDbContext>(); ;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -125,10 +131,14 @@ namespace Prod.Api
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHealthChecks("/hc", new HealthCheckOptions
+                {
+                    ResponseWriter = WriteResponse
+                });
                 endpoints.MapControllers();
                 endpoints.MapGet("/", async context =>
                 {
-                    await context.Response.WriteAsync("These are not the droids you're looking for! Ver: 2020.02.22");
+                    await context.Response.WriteAsync("These are not the droids you're looking for! Ver:" + Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion);
                 });
                 endpoints.MapHub<Hubs.MessageHub>("/messageHub", options =>
                 {
@@ -205,6 +215,47 @@ namespace Prod.Api
                         }
                     };
                 });
+        }
+        private static Task WriteResponse(HttpContext context, HealthReport healthReport)
+        {
+            context.Response.ContentType = "application/json; charset=utf-8";
+
+            var options = new JsonWriterOptions { Indented = true };
+
+            using var memoryStream = new MemoryStream();
+            using (var jsonWriter = new Utf8JsonWriter(memoryStream, options))
+            {
+                jsonWriter.WriteStartObject();
+                jsonWriter.WriteString("status", healthReport.Status.ToString());
+                jsonWriter.WriteStartObject("results");
+
+                foreach (var healthReportEntry in healthReport.Entries)
+                {
+                    jsonWriter.WriteStartObject(healthReportEntry.Key);
+                    jsonWriter.WriteString("status",
+                        healthReportEntry.Value.Status.ToString());
+                    jsonWriter.WriteString("description",
+                        healthReportEntry.Value.Description);
+                    jsonWriter.WriteStartObject("data");
+
+                    foreach (var item in healthReportEntry.Value.Data)
+                    {
+                        jsonWriter.WritePropertyName(item.Key);
+
+                        JsonSerializer.Serialize(jsonWriter, item.Value,
+                            item.Value?.GetType() ?? typeof(object));
+                    }
+
+                    jsonWriter.WriteEndObject();
+                    jsonWriter.WriteEndObject();
+                }
+
+                jsonWriter.WriteEndObject();
+                jsonWriter.WriteEndObject();
+            }
+
+            return context.Response.WriteAsync(
+                Encoding.UTF8.GetString(memoryStream.ToArray()));
         }
     }
 }

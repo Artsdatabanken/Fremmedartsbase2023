@@ -23,6 +23,7 @@ import AssessmentReferences from './assessmentReferences'
 import AssessmentComments from './assessmentComments'
 import Assessment91Kriteriedokumentasjon from './assessment91Kriteriedokumentasjon'
 import createTaxonSearch from '../createTaxonSearch'
+import ErrorBoundary from '../errorBoundary'
 
 
 
@@ -190,27 +191,27 @@ class AssessmentRoot extends Component {
                 <Tabs clName={"nav_menu faner"} tabData={assessmentTabs}/> 
                 {
                 assessmentTabs.activeTab.id === 0  ?
-                <Assessment10Horisontskanning/> :
+                <ErrorBoundary><Assessment10Horisontskanning/></ErrorBoundary> :
                 assessmentTabs.activeTab.id === 1  ?
-                <Assessment20ArtensStatus newTaxon={this.newTaxon}/>
+                <ErrorBoundary><Assessment20ArtensStatus newTaxon={this.newTaxon}/></ErrorBoundary>
                 : assessmentTabs.activeTab.id === 2  ?
-                <Assessment30Artsegenskaper />
+                <ErrorBoundary><Assessment30Artsegenskaper /></ErrorBoundary>
                 : assessmentTabs.activeTab.id === 3  ?
-                <Assessment41Import/>
+                <ErrorBoundary><Assessment41Import/></ErrorBoundary>
                 : assessmentTabs.activeTab.id === 4  ?
-                <AssessmentBakgrunnsdata/>
+                <ErrorBoundary><AssessmentBakgrunnsdata/></ErrorBoundary>
                 : assessmentTabs.activeTab.id === 5  ?
-                <AssessmentRisikovurdering/>
+                <ErrorBoundary><AssessmentRisikovurdering/></ErrorBoundary>
                 : assessmentTabs.activeTab.id === 6  ?
-                <Assessment70Klimaeffekter/>
+                <ErrorBoundary><Assessment70Klimaeffekter/></ErrorBoundary>
                 : assessmentTabs.activeTab.id === 7  ?
-                <Assessment80GeografiskVariasjon/>
+                <ErrorBoundary><Assessment80GeografiskVariasjon/></ErrorBoundary>
                 : assessmentTabs.activeTab.id === 8  ?
-                <Assessment91Kriteriedokumentasjon kritDocInfo={kritDocInfo}/>
+                <ErrorBoundary><Assessment91Kriteriedokumentasjon kritDocInfo={kritDocInfo}/></ErrorBoundary>
                 : assessmentTabs.activeTab.id === 9  ?
-                <AssessmentReferences/>
+                <ErrorBoundary><AssessmentReferences/></ErrorBoundary>
                 : assessmentTabs.activeTab.id === 10  ?
-                <AssessmentComments/>
+                <ErrorBoundary><AssessmentComments/></ErrorBoundary>
                // : assessmentTabs.activeTab.id === 11  ?
                // <Vurdering55Kriteriedokumentasjon kritDocInfo={kritDocInfo}/>
                 // // kritDocInfo={{}}

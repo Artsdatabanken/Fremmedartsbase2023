@@ -987,6 +987,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.ArtskartSistOverført, opt => opt.Ignore()) // ny av året
                     .ForMember(dest => dest.ArtskartModel, opt => opt.Ignore()) // ny av året
                     .ForMember(dest => dest.ArtskartWaterModel, opt => opt.Ignore()) // ny av året
+                    .ForMember(dest => dest.ArtskartManuellKommentar, opt => opt.Ignore()) // ny av året
                     .ForMember(dest => dest.Habitats, opt => opt.Ignore())  // ny av året
                     .ForMember(dest => dest.ImpactedNatureTypesFrom2018, opt => opt.Ignore()) // kun for plassering av ikke kompatible naturtyper
                     .ForMember(dest => dest.ExtensionData, opt => opt.Ignore())
@@ -1206,85 +1207,6 @@ namespace SwissKnife.Database
                 dest.IsRegionallyAlien = true;
             }
 
-            for (var i = 0; i < dest.RiskAssessment.SpeciesSpeciesInteractions.Count; i++)
-            {
-                if (dest.RiskAssessment.SpeciesSpeciesInteractions[i].EffectLocalScale == true)
-                {
-                    dest.RiskAssessment.SpeciesSpeciesInteractions[i].Scale = "Limited";
-                }
-                else
-                {
-                    dest.RiskAssessment.SpeciesSpeciesInteractions[i].Scale = "Large";
-                }
-            }
-
-            for (var i = 0; i < dest.RiskAssessment.SpeciesNaturetypeInteractions.Count; i++)
-            {
-                var code = dest.RiskAssessment.SpeciesNaturetypeInteractions[i].NiNCode;
-                // checks if the nature type code is in the impacted nature types from 2018 which are not used anymore; if so, set it to a separate list 
-                for (var j = 0; j < dest.ImpactedNatureTypesFrom2018.Count; j++)
-                {
-                    if (dest.ImpactedNatureTypesFrom2018[j].NiNCode == code)
-                    {
-                        dest.RiskAssessment.SpeciesNaturetypeInteractions2018.Add(dest.RiskAssessment
-                            .SpeciesNaturetypeInteractions[i]);
-                        dest.RiskAssessment.SpeciesNaturetypeInteractions.Remove(dest.RiskAssessment
-                            .SpeciesNaturetypeInteractions[i]);
-                    }
-                }
-
-                if (dest.RiskAssessment.SpeciesNaturetypeInteractions[i].EffectLocalScale == true)
-                {
-                    dest.RiskAssessment.SpeciesNaturetypeInteractions[i].Scale = "Limited";
-                }
-                else
-                {
-                    dest.RiskAssessment.SpeciesNaturetypeInteractions[i].Scale = "Large";
-                }
-            }
-
-            for (var i = 0; i < dest.RiskAssessment.HostParasiteInformations.Count; i++)
-            {
-                if (dest.RiskAssessment.HostParasiteInformations[i].EffectLocalScale == true)
-                {
-                    dest.RiskAssessment.HostParasiteInformations[i].Scale = "Limited";
-                }
-                else
-                {
-                    dest.RiskAssessment.HostParasiteInformations[i].Scale = "Large";
-                }
-
-                if (dest.RiskAssessment.HostParasiteInformations[i].ParasiteNewForHost &&
-                    dest.RiskAssessment.HostParasiteInformations[i].ParasiteIsAlien)
-                {
-                    dest.RiskAssessment.HostParasiteInformations[i].Status = "NewAlien";
-                }
-                else if (dest.RiskAssessment.HostParasiteInformations[i].ParasiteIsAlien)
-                {
-                    dest.RiskAssessment.HostParasiteInformations[i].Status = "KnownAlien";
-                }
-                else if (dest.RiskAssessment.HostParasiteInformations[i].ParasiteNewForHost)
-                {
-                    dest.RiskAssessment.HostParasiteInformations[i].Status = "NewNative";
-                }
-                else
-                {
-                    dest.RiskAssessment.HostParasiteInformations[i].Status = "KnownNative";
-                }
-            }
-
-            for (var i = 0; i < dest.RiskAssessment.GeneticTransferDocumented.Count; i++)
-            {
-                if (dest.RiskAssessment.GeneticTransferDocumented[i].EffectLocalScale == true)
-                {
-                    dest.RiskAssessment.GeneticTransferDocumented[i].Scale = "Limited";
-                }
-                else
-                {
-                    dest.RiskAssessment.GeneticTransferDocumented[i].Scale = "Large";
-                }
-            }
-
             dest.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes =
                 dest.RiskAssessment.SpreadHistoryDomesticAreaInStronglyChangedNatureTypes.HasValue == false
                     ? 0
@@ -1488,6 +1410,89 @@ namespace SwissKnife.Database
                     });
                 }
             }
+
+            for (var i = 0; i < dest.RiskAssessment.SpeciesSpeciesInteractions.Count; i++)
+            {
+                if (dest.RiskAssessment.SpeciesSpeciesInteractions[i].EffectLocalScale == true)
+                {
+                    dest.RiskAssessment.SpeciesSpeciesInteractions[i].Scale = "Limited";
+                }
+                else
+                {
+                    dest.RiskAssessment.SpeciesSpeciesInteractions[i].Scale = "Large";
+                }
+            }
+
+            // flyttet logikken ned til etter at SpeciesNaturetypeInteractions2018 er fylt med innhold
+            var tempcopy = dest.RiskAssessment.SpeciesNaturetypeInteractions.ToArray();
+            // må ha en temporær liste siden man ikke kan iterere over en liste og samtidig ta bort element...
+            foreach (var interaction in tempcopy)
+            {
+                var code = interaction.NiNCode;
+                // checks if the nature type code is in the impacted nature types from 2018 which are not used anymore; if so, set it to a separate list 
+
+                if (dest.ImpactedNatureTypesFrom2018.Any(x => x.NiNCode == code))
+                {
+                    dest.RiskAssessment.SpeciesNaturetypeInteractions2018.Add(interaction);
+                    dest.RiskAssessment.SpeciesNaturetypeInteractions.Remove(interaction);
+                }
+            }
+
+            for (var i = 0; i < dest.RiskAssessment.SpeciesNaturetypeInteractions.Count; i++)
+            {
+                if (dest.RiskAssessment.SpeciesNaturetypeInteractions[i].EffectLocalScale == true)
+                {
+                    dest.RiskAssessment.SpeciesNaturetypeInteractions[i].Scale = "Limited";
+                }
+                else
+                {
+                    dest.RiskAssessment.SpeciesNaturetypeInteractions[i].Scale = "Large";
+                }
+            }
+
+            for (var i = 0; i < dest.RiskAssessment.HostParasiteInformations.Count; i++)
+            {
+                if (dest.RiskAssessment.HostParasiteInformations[i].EffectLocalScale == true)
+                {
+                    dest.RiskAssessment.HostParasiteInformations[i].Scale = "Limited";
+                }
+                else
+                {
+                    dest.RiskAssessment.HostParasiteInformations[i].Scale = "Large";
+                }
+
+                if (dest.RiskAssessment.HostParasiteInformations[i].ParasiteNewForHost &&
+                    dest.RiskAssessment.HostParasiteInformations[i].ParasiteIsAlien)
+                {
+                    dest.RiskAssessment.HostParasiteInformations[i].Status = "NewAlien";
+                }
+                else if (dest.RiskAssessment.HostParasiteInformations[i].ParasiteIsAlien)
+                {
+                    dest.RiskAssessment.HostParasiteInformations[i].Status = "KnownAlien";
+                }
+                else if (dest.RiskAssessment.HostParasiteInformations[i].ParasiteNewForHost)
+                {
+                    dest.RiskAssessment.HostParasiteInformations[i].Status = "NewNative";
+                }
+                else
+                {
+                    dest.RiskAssessment.HostParasiteInformations[i].Status = "KnownNative";
+                }
+            }
+
+            for (var i = 0; i < dest.RiskAssessment.GeneticTransferDocumented.Count; i++)
+            {
+                if (dest.RiskAssessment.GeneticTransferDocumented[i].EffectLocalScale == true)
+                {
+                    dest.RiskAssessment.GeneticTransferDocumented[i].Scale = "Limited";
+                }
+                else
+                {
+                    dest.RiskAssessment.GeneticTransferDocumented[i].Scale = "Large";
+                }
+            }
+
+
 
             var test = dest.RiskAssessment.Criteria.Where(x => x.CriteriaLetter == "F").Single();
             if (test.UncertaintyValues.Length > 1)

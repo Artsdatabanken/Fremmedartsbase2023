@@ -127,14 +127,14 @@ const SpeciesNaturetypeTable = observer((props) =>
                         <div className="naturtypeName">{item.name}</div>
                     </div>
                 </td>
-                <td><Xcomp.Bool observableValue={[item, 'keyStoneOrEndangeredSpecie']} /></td>
-                <td><Xcomp.StringEnum observableValue={[item, 'effect']} forceSync codes={props.koder.speciesSpeciesEffectType} /></td>
+                <td><Xcomp.Bool observableValue={[item, 'keyStoneOrEndangeredSpecie']} disabled={disabled} /></td>
+                <td><Xcomp.StringEnum observableValue={[item, 'effect']} forceSync codes={props.koder.speciesSpeciesEffectType} disabled={disabled} /></td>
                 <td>
                     {/*<Xcomp.Bool observableValue={[item, 'effectLocalScale']} />*/}
-                    <Xcomp.StringEnum observableValue={[item, 'scale']} forceSync codes={props.koder.speciesSpeciesScopeType} />
+                    <Xcomp.StringEnum observableValue={[item, 'scale']} forceSync codes={props.koder.speciesSpeciesScopeType} disabled={disabled} />
                 </td>
                 <td>
-                    <Xcomp.StringEnum observableValue={[item, 'interactionType']} forceSync codes={props.koder.speciesSpeciesInteractionType} />
+                    <Xcomp.StringEnum observableValue={[item, 'interactionType']} forceSync codes={props.koder.speciesSpeciesInteractionType} disabled={disabled} />
                    {/* <Xcomp.MultiselectArray
                                 observableValue={[item, 'interactionTypes']} 
                                 codes={props.koder.speciesSpeciesInteractionTypes}
@@ -171,7 +171,7 @@ const SpeciesNaturetypeTable = observer((props) =>
             </tr>
             )}
             {/* new row for adding nature types shows only if there are any nature types chosen in the respective tab */}
-            {naturetypeNames && naturetypeNames.length > 0 && <tr className="newRow">
+            {props.addNewItem && naturetypeNames && naturetypeNames.length > 0 && <tr className="newRow">
                 <td>
               <Xcomp.StringEnum 
                         observableValue={[props.newItem, "niNCode"]}  

@@ -100,7 +100,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
 
                         {/* if there is no conclusion in species status*/}
                         
-                        {(assessment.isAlienSpeciesString != 'true' || 
+                        {(assessment.isAlienSpecies || 
                                     //(assessment.connectedToAnotherString != "no" && assessment.connectedToAnotherString != "false" ) 
                                      (assessment.alienSpecieUncertainIfEstablishedBefore1800String != "no" ) ||
                                     assessment.speciesStatus == null )

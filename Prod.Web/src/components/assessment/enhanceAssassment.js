@@ -129,6 +129,9 @@ export default function enhanceAssessment(json, appState) {
     if(jsonra.AOOfirstOccurenceLessThan10Years === null) {
         jsonra.AOOfirstOccurenceLessThan10Years = "yes"
     }
+    if(jsonra.chosenSpreadYearlyIncrease === "c") {
+        jsonra.chosenSpreadYearlyIncrease = "a"
+    }
     // *****
 
     const assessment = observable.object(json)
@@ -306,13 +309,12 @@ export default function enhanceAssessment(json, appState) {
             (alienSpeciesCategory == "AlienSpecie" && previousAlienSpeciesCategory == "DoorKnocker") ||
             (alienSpeciesCategory == "DoorKnocker" && previousAlienSpeciesCategory == "AlienSpecie") 
             // console.log("##¤statuschange: " + change + " " + alienSpeciesCategory + " " + previousAlienSpeciesCategory)
-            action(() => {
-                console.log("##¤statuschange 2: " + change)
-                if (assessment.speciesStatus != null) {
+            if (assessment.speciesStatus != null) {
+                action(() => {
+                    // console.log("##¤statuschange 2: " + change)
                     appState.statusChange = change
-                }
-                
-            })()
+                })()
+            }
         }
     )
 
