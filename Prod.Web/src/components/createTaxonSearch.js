@@ -64,7 +64,7 @@ export default function createTaxonSearch(newObj, contextLetter, filter) {
         //const baseUrl = ((window.location.href.indexOf('lokalapi') > -1) ? 'http://localhost:7588/'+ 'taxon/?term=' : 'https://invasivespeciesservice.artdata.slu.se/taxon/') 
         //const baseUrl = 'https://invasivespeciesservice.artdata.slu.se/taxon/'
 
-        var config = {taxonApiUrl: "https://artskart.artsdatabanken.no/publicapi/api/taxon?term="} // "https://artsdatabanken.no/api/taxon/ScientificName?scientificName="}
+        var config = {taxonApiUrl: "https://artskart.artsdatabanken.no/publicapi/api/taxon?take=100&term="} // "https://artsdatabanken.no/api/taxon/ScientificName?scientificName="}
 
         const url = config.taxonApiUrl + searchString
         // console.log("url:" + url)
