@@ -177,14 +177,18 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                             height: 150,
                             maxHeight: 150
                         }}/>*/}
-                        <p>{labels.Import.summaryInfoIndoors}</p>
-                        <Xcomp.HtmlString
-                            observableValue={[assessment, 'spreadIndoorFurtherInfo']}
-                            style={{
-                            //width: 800,
-                            height: 150,
-                            maxHeight: 150
-                        }}/>
+                         {assessment.indoorProduktion === "negative" && 
+                        <>
+                            <p>{labels.Import.summaryInfoIndoors}</p>
+                            <Xcomp.HtmlString
+                                observableValue={[assessment, 'spreadIndoorFurtherInfo']}
+                                style={{
+                                //width: 800,
+                                height: 150,
+                                maxHeight: 150
+                            }}/>
+                        </>
+                    }
                         <br></br>
                         <p>{labels.Import.summaryInfoIntro}</p>
                         <Xcomp.HtmlString
@@ -220,14 +224,16 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                         />
                     </div>*/}
                     <fieldset className="well">
+                       
                         <h4>{critlabels.invationPotential}</h4>
                         <Xcomp.HtmlString
-                            observableValue={[riskAssessment, 'criteriaDocumentationInvationPotential']}
-                            style={{
-                           // width: 800,
-                            height: 150,
-                            maxHeight: 150
+                                observableValue={[riskAssessment, 'criteriaDocumentationInvationPotential']}
+                                style={{
+                            // width: 800,
+                                height: 150,
+                                maxHeight: 150
                         }}/>
+                        
                     </fieldset>
                     <fieldset className="well">
                         <h4>{critlabels.ecologicalEffect}</h4>
