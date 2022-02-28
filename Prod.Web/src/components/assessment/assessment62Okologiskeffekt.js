@@ -312,13 +312,17 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                     
                     <Xcomp.HtmlString observableValue={[riskAssessment, 'speciesSpeciesInteractionsSupplementaryInformation']} label="Utfyllende informasjon (f.eks. hvilke(n) artsgruppe i naturtypen påvirkes og hvordan blir disse generelt påvirket):" />
 
-                    <p>Data fra tidligere vurdering</p>
+                    
                     {riskAssessment.speciesNaturetypeInteractions2018.length > 0 && 
-                    <SpeciesNaturetypeTable list={riskAssessment.speciesNaturetypeInteractions2018} 
-                                            natureTypes={assessment.impactedNatureTypesFrom2018} 
-                                            //newItem={this.newSNITS} addNewItem={this.addSNITS}  
-                                            koder={koder} labels={labels} 
-                                            disabled={true} naturtypeLabels={appState.naturtypeLabels } showKeyStoneSpecie showEffect showInteractionType />
+                        <div class="previousAssessment">
+                            <h4>{ntLabels.dataFromPreviousAssessment}</h4>
+                            <SpeciesNaturetypeTable list={riskAssessment.speciesNaturetypeInteractions2018} 
+                                                    natureTypes={assessment.impactedNatureTypesFrom2018} 
+                                                    //newItem={this.newSNITS} addNewItem={this.addSNITS}  
+                                                    koder={koder} labels={labels} 
+                                                    disabled={true} naturtypeLabels={appState.naturtypeLabels } showKeyStoneSpecie showEffect showInteractionType />
+
+                        </div>
                     }
                     <hr/>
                 </fieldset>
