@@ -65,17 +65,19 @@
         },
         {
             id: "(a)err12",
-            get cond() {return r.doFullAssessment && (!r.doorKnocker && ((r.AOOtotalLowInput % 4) !== 0) )},
+            get cond() {return !r.doorKnocker && ((r.AOOtotalLowInput % 4) !== 0)},
             msg: "Forekomstarealene må være multippel av 4_km²!"
         },
         {
             id: "(a)err13",
-            get cond() {return r.doFullAssessment && (!r.doorKnocker && ((r.AOOtotalBestInput % 4) !== 0) )},
+            get cond() {return !r.doorKnocker && r.AOOtotalBestInput % 4 !== 0 },
+                //r.doFullAssessment                
+               
             msg: "Forekomstarealene må være multippel av 4_km²!"
         },
         {
             id: "(a)err14",
-            get cond() {return r.doFullAssessment && (!r.doorKnocker && ((r.AOOtotalHighInput % 4) !== 0) )},
+            get cond() {return !r.doorKnocker && ((r.AOOtotalHighInput % 4) !== 0)},
             msg: "Forekomstarealene må være multippel av 4_km²!"
         },
         {
@@ -92,6 +94,21 @@
             id: "(a)err17",
             get cond() {return r.doFullAssessment && (!r.doorKnocker && ((r.AOO50yrHighInput % 4) !== 0) )},
             msg: "Forekomstarealene må være multippel av 4_km²!"
+        },
+        {
+            id: "(a)err18",
+            get cond() {return !r.doorKnocker && (r.AOOtotalLowInput > r.AOOtotalBestInput)},
+            msg: "Lavt anslag kan ikke være større enn beste anslag!"
+        },
+        {
+            id: "(a)err19",
+            get cond() {return !r.doorKnocker && (r.AOOtotalLowInput > r.AOOtotalHighInput)},
+            msg: "Lavt anslag kan ikke være større enn høyt anslag!"
+        },
+        {
+            id: "(a)err20",
+            get cond() {return !r.doorKnocker && (r.AOOtotalBestInput > r.AOOtotalHighInput)},
+            msg: "Beste anslag kan ikke være større enn høyt anslag!"
         },
         {
             id: "(a)warn1",

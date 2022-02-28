@@ -1,5 +1,6 @@
 import {action, extendObservable} from 'mobx'
 import tabItems from '../tabItems'
+import auth from '../authService';
 
 function assessmentTabdefs(appState) {
     extendObservable(appState, {
