@@ -720,7 +720,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             />                      
                                     </>
                                     : null }
-                                    <p>{textASB} </p>
+                                    <p><b>{textASB} </b></p>
                             </div> : null
                 }
                             {riskAssessment.chosenSpreadYearlyIncrease != "SpreadYearlyLiteratureData" && riskAssessment.chosenSpreadYearlyIncrease != "SpreadYearlyIncreaseCalculatedExpansionSpeed" && riskAssessment.chosenSpreadYearlyIncrease != "SpreadYearlyIncreaseObservations" && riskAssessment.chosenSpreadYearlyIncrease != "" && 
