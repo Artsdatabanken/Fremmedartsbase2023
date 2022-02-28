@@ -219,7 +219,11 @@ export default class Assessment42Spredningsveier extends React.Component {
         // console.log("fabModel" + fabModel.toString() )
         // console.log("koder" + fabModel.koder.toString() )
         const fjernSpredningsvei = (mp) => this.fjernSpredningsvei(vurdering, mp, name)
-
+        const directImport = "Arten blir tilsikta satt ut i et innendørs-miljø eller på produksjonsareal."
+        const release = "Arten blir tilsikta satt ut direkte i norsk natur (utenfor artens eventuelle produksjonsareal), med den hensikt at arten overlever i naturen."
+        const escape = "Arten ble tilsikta satt ut i et innendørs-miljø eller på produksjonsareal, mens det ikke var den opprinnelige hensikten at arten kommer ut i norsk natur; dette inkluderer også dumping eller frislipp av bruksarter."
+        const corridor = "Arten sprer seg selvstendig, men via eller ved hjelp av menneskeskapte strukturer."
+        const naturalDispersal = "Arten sprer seg selvstendig og ikke via menneskeskapte strukturer."
         
         return(
             <fieldset className="well">
@@ -238,10 +242,15 @@ export default class Assessment42Spredningsveier extends React.Component {
                     
                     {this.visibleDefinitions && 
                     <p>
-                        <b>Forurensning av vare: </b>Arten følger med <i>levende/døde organismer</i> eller <i>organisk materiale</i> som parasitt (dvs. den transporterte organismen er vektor) eller som annen «smitte»
+                        {name == "Til innendørs- eller produksjonsareal" && <><b>Direkte import: </b> {directImport} <br/></>  }
+                        {(name == "Introduksjon til natur" || name == "Videre spredning i natur") && <><b>Tilsiktet utsetting: </b> {release} <br/></> }
+                        {name == "Introduksjon til natur" &&  <><b>Rømning/forvilling: </b> {escape} <br/></> }
+                        <b>Forurensning av vare: </b>Arten følger utilsikta med under transport av andre arter eller gjenstander (vektorer) og har en spesifikk økologisk tilknytning til den andre arten eller til det organiske mediet som ble transportert.
                         <br/>
-                        <b>Blindpassasjer med/på transport: </b>Arten følger med under transport av <i>mennesker, varer</i> eller <i>kjøretøy/fartøy</i>.
-
+                        <b>Blindpassasjer med/på transport: </b>Arten følger utilsikta med under transport av andre arter eller gjenstander (vektorer), men har bare en nokså tilfeldig tilknytning til varen eller gjenstanden som ble transportert, eller til selve transportmiddelet.
+                        <br/>
+                        {(name == "Introduksjon til natur" || name == "Videre spredning i natur") && <><b>Korridor: </b> {corridor} <br/>
+                                                                <b>Egenspredning: </b> {naturalDispersal}</>  }
                     </p>
                 }
                 </div>
