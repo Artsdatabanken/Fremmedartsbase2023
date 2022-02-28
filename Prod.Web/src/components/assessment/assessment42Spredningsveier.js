@@ -264,7 +264,7 @@ export default class Assessment42Spredningsveier extends React.Component {
                                // value={elaborateInformation}
                                 //placeholder={labels.Import.furtherInfoComment}
                                 />
-                <Xcomp.String className="generatedText" observableValue={observableGeneratedStringDef} disabled />
+                <Xcomp.HtmlString className="generatedText" observableValue={observableGeneratedStringDef} disabled />
 
             </fieldset>
         );
