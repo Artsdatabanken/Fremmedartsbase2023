@@ -223,7 +223,7 @@ export default function enhanceAssessment(json, appState) {
             return result
         },
         get doFullAssessment() {
-            return assessment.assessmentConclusion !== "WillNotBeRiskAssessed" 
+            return assessment.assessmentConclusion !== "NotDecided" && assessment.assessmentConclusion !== "WillNotBeRiskAssessed" 
         },
         // get category() {
         //     const result =
