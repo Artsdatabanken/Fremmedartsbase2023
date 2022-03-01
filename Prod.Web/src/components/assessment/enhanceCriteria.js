@@ -721,7 +721,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         get b2aresulttext() {
             const result =
                 (r.AOOfirstOccurenceLessThan10Years === "yes")
-                ? `Ekspansjonshastigheten er beregnet til ${r.expansionSpeed} m/år basert på økningen i artens forekomstareal i perioden fra ${r.AOOyear1} til ${r.AOOyear2} og et mørketall på ${r.AOOdarkfigureBest}.`
+                ? `Ekspansjonshastigheten er beregnet til ${r.expansionSpeed} m/år basert på økningen i artens forekomstareal i perioden fra ${r.AOOyear1} til ${r.AOOyear2} og et mørketall på ${r.AOOdarkfigureBest}. Med usikkerhet: ${r.expansionLowerQ} m/år (mørketall på ${r.AOOdarkfigureLow}) - ${r.expansionUpperQ} m/år (mørketall på ${r.AOOdarkfigureHigh})`
                 : `Ekspansjonshastigheten beregnes ut fra de beste anslagene på forekomstarealet i dag og om 50 år. Disse er angitt under fanen Utbredelse.
                 Ekspansjonshastigheten er beregnet til ${r.expansionSpeed} m/år basert på det beste anslaget på artens forekomstareal i dag (${r.AOOtotalBest}) og om 50 år (${r.AOO50yrBest}).`
              return result
