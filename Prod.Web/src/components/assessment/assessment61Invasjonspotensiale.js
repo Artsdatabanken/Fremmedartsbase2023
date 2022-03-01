@@ -719,7 +719,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             />                      
                                     </>
                                     : null }
-                                    <p><b>{textASB} </b></p>
+                                    <p dangerouslySetInnerHTML={{ __html: textASB}} style={{fontWeight: "bold"}}></p>
                                     {/* Issue #471, #499*/}
                                     <p dangerouslySetInnerHTML={{ __html: labels.BcritText.DoorKnocker}}></p>
                             </div> : null
