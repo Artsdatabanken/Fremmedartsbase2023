@@ -562,8 +562,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                 {riskAssessment.AOOfirstOccurenceLessThan10Years === "yes"
                                 ?<>
                                     <p style={{marginTop: "10px", marginBottom: "20px", paddingTop: "20px"}} dangerouslySetInnerHTML={{__html: labels.BcritText.SelfProducing}}></p>
-                                    {/* Issue #471*/}
-                                    <p dangerouslySetInnerHTML={{ __html: labels.BcritText.DoorKnocker}}></p>
+                                    
                                         <table className="table BCritTable">
                                             <thead>
                                                 <tr>     
@@ -721,6 +720,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                     </>
                                     : null }
                                     <p><b>{textASB} </b></p>
+                                    {/* Issue #471, #499*/}
+                                    <p dangerouslySetInnerHTML={{ __html: labels.BcritText.DoorKnocker}}></p>
                             </div> : null
                 }
                             {riskAssessment.chosenSpreadYearlyIncrease != "SpreadYearlyLiteratureData" && riskAssessment.chosenSpreadYearlyIncrease != "SpreadYearlyIncreaseCalculatedExpansionSpeed" && riskAssessment.chosenSpreadYearlyIncrease != "SpreadYearlyIncreaseObservations" && riskAssessment.chosenSpreadYearlyIncrease != "" && 
