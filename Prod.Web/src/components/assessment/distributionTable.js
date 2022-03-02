@@ -107,7 +107,8 @@ export default class DistributionTable extends React.Component {
                 }
                            
             </tr>
-            <tr>
+            {/* Styling of the table for door knockers because of large amount of text to the left*/}
+            <tr style={assessment.alienSpeciesCategory == "DoorKnocker" ? {marginTop: "30px" } : {marginTop: "5px"}}>
                 <td>
                 <Xcomp.Number                            
                     observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "introductionsLow"] : [assessment.riskAssessment, "AOOdarkfigureLow"]}
