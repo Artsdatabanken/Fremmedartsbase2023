@@ -390,10 +390,10 @@ export default class Assessment52Utbredelse extends React.Component {
                                 </div>
                                 <div className="statusField">
                                     <div className="labels distribution">
-                                        <div style={{display: 'flex', marginTop: '40px', marginBottom: '50px'}}>
+                                        <div style={{display: 'flex', marginTop: '90px'}}>
                                             <p>Forekomstareal <b>i dag</b> (km<sup>2</sup>):</p>
                                             {assessment.alienSpeciesCategory != "DoorKnocker" && 
-                                            <div style={{width: '100px', marginTop: '44px'}}>
+                                            <div style={{width: '100px', marginTop: '-5px'}}>
                                                 <b>Kjent</b>
                                                 <Xcomp.Number      
                                                     className={"knownDistribution"} 
@@ -405,8 +405,8 @@ export default class Assessment52Utbredelse extends React.Component {
                                             </div>
                                             }
                                         </div>
-                                        <ul>
-                                            {Object.keys(errorhandler.errors).sort().filter(obj => (obj == "(a)err17" || obj == "(a)err18" || obj == "(a)err19" || obj == "(a)err20") && errorhandler.errors[obj] !== null).map(key => <li key={key}><b style={{ color: 'red' }}>{errorhandler.errors[key]}</b></li> )}
+                                        <ul className="errorMessages">
+                                            {Object.keys(errorhandler.errors).sort().filter(obj => (obj == "(a)err666" || obj == "(a)err18" || obj == "(a)err19" || obj == "(a)err20") && errorhandler.errors[obj] !== null).map(key => <li key={key}><b style={{ color: 'red' }}>{errorhandler.errors[key]}</b></li> )}
                                         </ul>
                                         <p>Forekomstareal <b>om 50 år </b> (km<sup>2</sup>)</p>
                                     </div>

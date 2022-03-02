@@ -168,7 +168,7 @@ checkStatus = (production) => {
                                         >
                                             <div className="speciesSearchItem">
                                                 <div className={"rlCategory " + item.rlCategory}>{item.rlCategory}</div>
-                                                <div className="vernacularName">{item.popularName}</div>
+                                                <span className="vernacularName">{item.popularName}</span>
                                                 <div className="scientificName">{item.scientificName}</div>
                                                 <div className="author">{"(" + item.author + ")"}</div>
                                             </div>
