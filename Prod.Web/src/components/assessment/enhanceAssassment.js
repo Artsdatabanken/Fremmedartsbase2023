@@ -87,6 +87,41 @@ const riskAssessmentGetterFields = [
 ]
 
 
+function nullToNaN(obj, proparray) {
+    for(const prop of proparray) {
+        if(obj[prop] === null) {
+            obj[prop] = NaN
+        }
+    }
+}
+
+////////////////////////////////////////////////
+// observableNumber uses NaN for no value
+// but NaN is converted to null on server side
+// when persisting data.
+// to give more predictable behavior convert
+// these properties from null -> NaN
+// when initializing (enhance) the assessment 
+////////////////////////////////////////////////
+const riskAssessmentNumberFields = [
+    "occurrences1Low",
+    "occurrences1Best",
+    "occurrences1High",
+    // "introductionsLow",
+    "introductionsBest",
+    // "introductionsHigh",
+    "AOOtotalLowInput",
+    "AOOtotalBestInput",
+    "AOOtotalHighInput",
+    "AOO50yrLowInput",
+    "AOO50yrBestInput",
+    "AOO50yrHighInput",
+]
+
+
+
+
+
 function getCategoryText(val, pathways) {
     var text = ""
     if (pathways != undefined) {
@@ -118,10 +153,10 @@ function generateFurtherInfoText(migrationPathways, appState) {
     return elaborateInformation
 }
 
-
 export default function enhanceAssessment(json, appState) {
     // * * * remove properties that will be replaced with computed observables * * *
     const jsonra = json.riskAssessment
+    nullToNaN(json, riskAssessmentNumberFields)
     deleteProps(json, assessmentGetterFields)
     deleteProps(jsonra, riskAssessmentGetterFields)
     // * * *
