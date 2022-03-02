@@ -698,13 +698,13 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         get b2aresulttext() {
             const result =
                 (r.AOOfirstOccurenceLessThan10Years === "yes")
-                ? `Ekspansjonshastigheten er beregnet til ${r.expansionSpeed} m/år basert på økningen i artens forekomstareal i perioden fra ${r.AOOyear1} til ${r.AOOyear2} og et mørketall på ${r.AOOdarkfigureBest}.`
-                : `Ekspansjonshastigheten beregnes ut fra de beste anslagene på forekomstarealet i dag og om 50 år. Disse er angitt under fanen Utbredelse.
-                Ekspansjonshastigheten er beregnet til ${r.expansionSpeed} m/år basert på det beste anslaget på artens forekomstareal i dag (${r.AOOtotalBest}) og om 50 år (${r.AOO50yrBest}).`
+                ? `Ekspansjonshastigheten er beregnet til ${r.expansionSpeed} m/år basert på økningen i artens forekomstareal i perioden fra ${r.AOOyear1} til ${r.AOOyear2} og et mørketall på ${r.AOOdarkfigureBest}. Med usikkerhet: ${r.expansionLowerQ} m/år (mørketall på ${r.AOOdarkfigureLow}) - ${r.expansionUpperQ} m/år (mørketall på ${r.AOOdarkfigureHigh}).`
+                : `Ekspansjonshastigheten beregnes ut fra de beste anslagene på forekomstarealet i dag og om 50 år. Disse er angitt under fanen Utbredelse. <br/>
+                Ekspansjonshastigheten er beregnet til ${r.expansionSpeed} m/år basert på det beste anslaget på artens forekomstareal i dag (${r.AOOtotalBest} km²) og om 50 år (${r.AOO50yrBest} km²).`
              return result
         },
         get b2bresulttext() {
-            return `Basert på det beste anslaget på ${r.occurrences1Best} forekomster i løpet av 10 år og ${r.introductionsBest} introduksjon(er) i samme tidsperiode er B-kriteriet skåret som ${r.bscore + 1} (med usikkerhet: ${r.blow + 1}–${r.bhigh + 1}). Dette innebærer at artens ekspansjonshastighet ligger ${r.expansionText} (beste anslag: ${r.expansionSpeed} m/år).`
+            return `Basert på det beste anslaget på ${r.occurrences1Best} forekomster i løpet av 10 år og ${r.introductionsBest} ytterligere introduksjon(er) i samme tidsperiode er B-kriteriet skåret som ${r.bscore + 1} (med usikkerhet: ${r.blow + 1}–${r.bhigh + 1}). Dette innebærer at artens ekspansjonshastighet ligger ${r.expansionText} (beste anslag: ${r.expansionSpeed} m/år).`
         },
         get expansionText() {
             return r.bscore === 0 ? "under 50 m/år"

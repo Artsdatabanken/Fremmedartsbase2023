@@ -1,5 +1,6 @@
 import {action, extendObservable} from 'mobx'
 import tabItems from '../tabItems'
+import auth from '../authService';
 
 function assessmentTabdefs(appState) {
     extendObservable(appState, {
@@ -17,7 +18,7 @@ function assessmentTabdefs(appState) {
             {id: 8, label:"Oppsummering", enabled: !appState.horizonDoScanning, url: "oppsummmering"},
             {id: 9, label:"Referanser", enabled: appState.harVurdering, url: "referanser"},
             {id: 10, label:"Kommentar på vurdering", enabled:appState.harVurdering, url: "kommentar"},
-            {id: 11, label:"JSON", enabled:appState.harVurdering, url: "diff"}
+            {id: 11, label:"JSON", enabled: appState.harVurdering && auth.user.profile.email.indexOf("artsdatabanken.no") > -1, url: "diff"}
         ]},
         // get tabinfos() {return [
         //     {id: 0, label:"Horisontskanning", enabled: appState.harVurdering, visible: appState.horizonDoScanning, url: "horisontskanning" },
