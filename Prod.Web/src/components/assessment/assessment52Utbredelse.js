@@ -316,13 +316,13 @@ export default class Assessment52Utbredelse extends React.Component {
                         {assessment.alienSpeciesCategory == "DoorKnocker" ? 
                         <div>
                             <div className="statusField">
-                                <div className="labels distribution">
+                                <div className="labels distribution dk">
                                     <p>Hvor mange 2 x 2 km-ruter kan arten kolonisere i løpet av en 10 års-periode basert på én introduksjon til norsk natur? (Innenfor vurderingsperioden på 50 år)?</p>
                                     <p>Hvor mange ytterligere introduksjoner til norsk natur antas arten å få i løpet av samme 10-års periode?</p>
                                     <p>Totalt forekomstareal <b> 10 år etter første introduksjon </b> (km<sup>2</sup>)</p>
                                     
                                 </div>
-                                <div className="distribution">
+                                <div className="distribution dk">
                                     <DistributionTable/>
                                 </div>
                             </div>
