@@ -65,7 +65,7 @@
         },
         {
             id: "(a)err666",
-            get cond() {return !r.doorKnocker && ((r.AOOtotalLowInput % 4) !== 0 || (r.AOOtotalBestInput % 4) !== 0 || (r.AOOtotalHighInput % 4) !== 0 || (r.AOO50yrLowInput % 4) !== 0 || (r.AOO50yrBestInput % 4) !== 0 || (r.AOO50yrHighInput % 4) !== 0)},
+            get cond() {return !r.doorKnocker && ((r.AOOknownInput % 4) !== 0 || (r.AOOtotalLowInput % 4) !== 0 || (r.AOOtotalBestInput % 4) !== 0 || (r.AOOtotalHighInput % 4) !== 0 || (r.AOO50yrLowInput % 4) !== 0 || (r.AOO50yrBestInput % 4) !== 0 || (r.AOO50yrHighInput % 4) !== 0)},
             msg: "Forekomstarealene må være multippel av 4_km²!"
         },
         {
