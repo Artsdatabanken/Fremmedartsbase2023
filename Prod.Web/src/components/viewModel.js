@@ -471,14 +471,23 @@ class ViewModel {
         if (facet) // found
         {
             var count = 0;
-            var items = facetitem.split(",").forEach( harry => {
-                var item = facet.facetsItems.find(element => element.name == harry)
+            if (facetitem && facetitem.length > 1){
+                var items = facetitem.split(",").forEach( harry => {
+                    var item = facet.facetsItems.find(element => element.name == harry)
+                    if (item)
+                    {
+                        count+= item.count 
+                    }
+                    }
+                )
+            } else {
+                var item = facet.facetsItems.find(element => element.name == facetitem)
                 if (item)
-                {
-                    count+= item.count 
-                }
-                }
-            )
+                    {
+                        count+= item.count 
+                    }
+            }
+            
 
             return count;
         }

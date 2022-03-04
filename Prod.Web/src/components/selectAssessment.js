@@ -340,8 +340,13 @@ export default class SelectAssessment extends Component {
                             <Xcomp.MultiselectArray
                                 observableValue={[appState, 'workStatus']} 
                                 codes={appState.assessmentTypeFilter == "riskAssessment" ? koder.workStatus: koder.workStatusHS}
+                                facetFunction={appState.getStatisticsFor}
+                                facets={appState.assessmentsStatistics}
+                                facet="Progress"
+                                totalCount={appState.expertgroupAssessmentTotalCount}
                                 mode="check"/>                            
                         </div>
+
                         <div className="filters"><b>{labels.SelectAssessment.ADBComments}</b>
                         <Xcomp.MultiselectArray
                                 observableValue={[appState, 'otherComments']} 

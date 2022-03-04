@@ -8,7 +8,7 @@ import {UserContext} from './components'
 @observer
 export class ObservableMultiselectArrayCheckboxes extends React.Component {
     render() {
-        const {observableValue, codes, className, disabled, hideUnchecked, facetFunction, facets, facet} = this.props;
+        const {observableValue, codes, className, disabled, hideUnchecked, facetFunction, facets, facet, totalCount} = this.props;
         const [obj, prop] = observableValue;
         const context = UserContext.getContext()
         if(obj[prop] === undefined) {
@@ -20,6 +20,10 @@ export class ObservableMultiselectArrayCheckboxes extends React.Component {
         if(!codes) {
             console.log("ObservableMultiselectArrayCheckboxes - prop:" + prop + " no codes")
         }
+        console.log("Observable value")
+        console.log(observableValue)
+        console.log(codes)
+        console.log("Achtung!")
         return(
             <ul className={className ? className : "" }  >
                 {codes.map(code => 
@@ -35,7 +39,7 @@ export class ObservableMultiselectArrayCheckboxes extends React.Component {
                             else {obj[prop].remove(code.value)}
                             // e.nativeEvent.stopImmediatePropagation()
                             })}
-                         />{code.text + (facetFunction ? (' (' + facetFunction(facets,facet,code.value) + ')') : '')}
+                         />{code.text + (facetFunction ? facet =="Progress" ? (' (' + facetFunction(facets,facet,code.id) + ') ' + (100*facetFunction(facets,facet,code.id) /totalCount).toFixed() + "%") : (' (' + facetFunction(facets,facet,code.value) + ')') : '')}
                     </label>
                 </li>)}
             </ul>
@@ -102,14 +106,14 @@ export default class ObservableMultiselectArray extends React.Component {
         // this.selectHelper = multipleSelectHelper(prop, obj[prop] , codes, this.context.readonly)
     }
     render() {
-        const {observableValue, className, codes, label, labels, mode, formlayout, disabled, heading, hideUnchecked, facetFunction, facets, facet} = this.props;
+        const {observableValue, className, codes, label, labels, mode, formlayout, disabled, heading, hideUnchecked, facetFunction, facets, facet, totalCount} = this.props;
         const [obj, prop] = observableValue;
         const hasLabel = !!label;
         const context = UserContext.getContext()
         //console.log("////" + prop +"-" + mode)
         return(
             mode === "check" ?
-            <ObservableMultiselectArrayCheckboxes observableValue={observableValue} codes={codes} disabled={context.readonly || disabled} className={hideUnchecked ? "magicList" : className} hideUnchecked={hideUnchecked} facetFunction={facetFunction} facets={facets} facet={facet}/>
+            <ObservableMultiselectArrayCheckboxes observableValue={observableValue} codes={codes} disabled={context.readonly || disabled} className={hideUnchecked ? "magicList" : className} hideUnchecked={hideUnchecked} facetFunction={facetFunction} facets={facets} facet={facet} totalCount={totalCount}/>
             :
             hasLabel ?
             <div className="hasLabel">

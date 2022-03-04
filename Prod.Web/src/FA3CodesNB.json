@@ -233,17 +233,20 @@
         "workStatus": [
             {
               "text": "Ikke påbegynt",
-              "value": "notStarted"
+              "value": "notStarted",
+              "id": 2
             },
             {
   
               "text": "Påbegynt",
-              "value": "inprogress"
+              "value": "inprogress",
+              "id": 1
             },
             {
   
               "text": "Ferdigstilt",
-              "value": "finished"
+              "value": "finished",
+              "id": 0
             }
         ],
 
