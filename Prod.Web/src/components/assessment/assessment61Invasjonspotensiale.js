@@ -389,8 +389,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                         appState.saveCurrentAssessment();
                     }}>{labels.AppHeader.assessmentSave}</Xcomp.Button> */}
                 </div> : 
-                riskAssessment.roAscore2018 != null &&
-                <b>Den utgåtte metoden c) Rødlistekriterier var brukt på A-kriteriet for denne arten i 2018. Det resulterte i skår {riskAssessment.roAscore2018 + 1} på A-kriteriet.</b> }
+               // riskAssessment.roAscore2018 != null &&
+                <p><b>Den utgåtte metoden c) Rødlistekriterier var brukt på A-kriteriet for denne arten i 2018. Det resulterte i skår {riskAssessment.roAscore2018 + 1} på A-kriteriet.</b></p> }
 
                 {riskAssessment.chosenSpreadMedanLifespan != "RedListCategoryLevel" && riskAssessment.chosenSpreadMedanLifespan != "" && 
                     <Criterion criterion={critA} 
