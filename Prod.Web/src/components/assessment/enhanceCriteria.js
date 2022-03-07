@@ -293,7 +293,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             : occ === 0 || isNaN(occ)
             ? 4 * round(0.64 + 0.36 * intr)
             : 4 * round(occ + Math.pow(intr,(occ + 9)/10))
-        // console.log("#&! AOO10yr occ: " + occ.toString() + " intr: " + intr.toString() + " result: " + result.toString())
+        console.log("#&! AOO10yr occ: " + occ.toString() + " intr: " + intr.toString() + " result: " + result.toString())
         return result
     }
 
@@ -365,17 +365,17 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             return num == 0 ? 0 : round(r.introductionsBest) + num
         },
         get AOO10yrBest() {
-            // console.log("#&! AOO10yrBest")
+            console.log("#&! AOO10yrBest")
             const result = AOO10yr(r.occurrences1Best, r.introductionsBest)
             return result
         },
         get AOO10yrLow() {
-            // console.log("#&! AOO10yrLow")
+            console.log("#&! AOO10yrLow")
             const result = AOO10yr(r.occurrences1Low, r.introductionsLow)
             return result
         },
         get AOO10yrHigh() {
-            // console.log("#&! AOO10yrHigh")
+            console.log("#&! AOO10yrHigh")
             const result = AOO10yr(r.occurrences1High, r.introductionsHigh)
             return result
         },
