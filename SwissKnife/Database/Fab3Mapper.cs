@@ -983,6 +983,8 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.EvaluatedScientificNameRank, opt => opt.Ignore()) // ny av året
                     .ForMember(dest => dest.ArtskartAdded, opt => opt.Ignore()) // ny av året
                     .ForMember(dest => dest.ArtskartRemoved, opt => opt.Ignore()) // ny av året
+                    .ForMember(dest => dest.ArtskartManuellAdd, opt => opt.Ignore()) // ny av året
+                    .ForMember(dest => dest.ArtskartManuellRemove, opt => opt.Ignore()) // ny av året
                     .ForMember(dest => dest.ArtskartSelectionGeometry, opt => opt.Ignore()) // ny av året
                     .ForMember(dest => dest.ArtskartSistOverført, opt => opt.Ignore()) // ny av året
                     .ForMember(dest => dest.ArtskartModel, opt => opt.Ignore()) // ny av året

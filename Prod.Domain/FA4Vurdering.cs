@@ -1632,6 +1632,9 @@ public partial class FA4 // (3.2) Artsegenskaper
         public ArtskartWaterModel ArtskartWaterModel { get; set; } = new ArtskartWaterModel();
         public string ArtskartManuellKommentar { get; set; } = "";
 
+        public int ArtskartManuellAdd { get; set; }
+        public int ArtskartManuellRemove { get; set; }
+
     }
 
     public class ArtskartModel

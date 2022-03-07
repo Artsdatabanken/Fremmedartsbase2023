@@ -369,7 +369,6 @@ namespace SwissKnife.Database
                 Debug.Assert(exAssessment != null, nameof(exAssessment) + " != null");
                 
                 TransferAndFixPropertiesOnAssessmentsFrom2018(exAssessment, newAssesment);
-
                 FixRedlistOnExistingAssessment(exAssessment, redlistByScientificName, taxonService);
 
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
@@ -377,9 +376,11 @@ namespace SwissKnife.Database
                 {
                     real.ScientificNameId = exAssessment.EvaluatedScientificNameId.Value;
                 }
+
                 if (comparisonResult.AreEqual == false)
                 {
-                   real.Doc = JsonSerializer.Serialize<FA4>(exAssessment); 
+                    console.WriteLine($"Endring på doc {exAssessment.Id} {exAssessment.ExpertGroup} {exAssessment.EvaluatedScientificName} {comparisonResult.DifferencesString}");
+                    real.Doc = JsonSerializer.Serialize<FA4>(exAssessment);
                 }
                 //else
                 //{
@@ -424,6 +425,7 @@ namespace SwissKnife.Database
                 }
                 if (comparisonResult.AreEqual == false)
                 {
+                    console.WriteLine($"Endring på doc {exAssessment.Id} {exAssessment.ExpertGroup} {exAssessment.EvaluatedScientificName} {comparisonResult.DifferencesString}");
                     real.Doc = JsonSerializer.Serialize<FA4>(exAssessment);
                 }
 
@@ -459,7 +461,6 @@ namespace SwissKnife.Database
         private static void FixRedlistOnExistingAssessment(FA4? exAssessment,
             Dictionary<int, Rodliste2021Rad> redlistByScientificName, TaksonService taksonService)
         {
-            IConsole console;
             //tryfixredlist
             foreach (var interaction in exAssessment.RiskAssessment.SpeciesSpeciesInteractions)
             {
@@ -797,10 +798,10 @@ namespace SwissKnife.Database
             //    exAssessment.IsAlienSpecies = true;
             //}
 
-            exAssessment.PreviousAssessments = newAssesment.PreviousAssessments;
+            //exAssessment.PreviousAssessments = newAssesment.PreviousAssessments;
 
-            exAssessment.IndoorProduktion = newAssesment.IndoorProduktion;
-            exAssessment.SpreadIntroductionFurtherInfo = newAssesment.SpreadIntroductionFurtherInfo;
+            //exAssessment.IndoorProduktion = newAssesment.IndoorProduktion;
+            //exAssessment.SpreadIntroductionFurtherInfo = newAssesment.SpreadIntroductionFurtherInfo;
             exAssessment.RiskAssessment.SpeciesSpeciesInteractions = newAssesment.RiskAssessment.SpeciesSpeciesInteractions;
             exAssessment.RiskAssessment.HostParasiteInformations = newAssesment.RiskAssessment.HostParasiteInformations;
             exAssessment.RiskAssessment.GeneticTransferDocumented = newAssesment.RiskAssessment.GeneticTransferDocumented;
