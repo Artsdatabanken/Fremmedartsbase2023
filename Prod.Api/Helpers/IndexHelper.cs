@@ -22,7 +22,7 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Change this to force index rebuild!
         /// </summary>
-        public const int IndexVersion = 14;
+        public const int IndexVersion = 15;
         private static readonly object IndexingLock = new();
 
         private const string Field_Id = "Id";
@@ -82,6 +82,8 @@ namespace Prod.Api.Helpers
         private static readonly string Field_CommentsNew = "CommentsNew";
 
         private static readonly string Field_TaxonChange = "TaxonChange";
+
+        private static DateTime _dateTimeForHorScanDone = new DateTime(2022, 2,22);
         //private const string PotensiellTaksonomiskEndring = "Potensiell taksonomisk endring: ";
         //private const string TaksonomiskEndring = "Automatisk endring av navn: ";
 
@@ -305,7 +307,7 @@ namespace Prod.Api.Helpers
             //Field_2018Status
 
             //Status=notStarted,&Status=inprogress,&Status=finished
-            if (ass.EvaluationStatus == "imported")
+            if (ass.EvaluationStatus == "imported" || (ass.HorizonScanResult == "scanned_fullAssessment" && ass.LastUpdatedAt < _dateTimeForHorScanDone))
             {
                 indexFields.Add(new StringField(Field_ProgressStatus, "notStarted", Field.Store.NO));
             }
