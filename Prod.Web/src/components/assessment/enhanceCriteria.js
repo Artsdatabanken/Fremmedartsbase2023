@@ -286,11 +286,11 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         const occ = occurrences1 ?? NaN
         const intr = introductions ?? NaN
         const result =
-            isNaN(intr)
+            isNaN(intr) || isNaN(occ)
             ? NaN
             : occ === 0 && intr === 0
             ? 0
-            : occ === 0 || isNaN(occ)
+            : occ === 0
             ? 4 * round(0.64 + 0.36 * intr)
             : 4 * round(occ + Math.pow(intr,(occ + 9)/10))
         console.log("#&! AOO10yr occ: " + occ.toString() + " intr: " + intr.toString() + " result: " + result.toString())
