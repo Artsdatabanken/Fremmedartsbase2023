@@ -720,8 +720,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                     </>
                                     : null }
                                     <p dangerouslySetInnerHTML={{ __html: textASB}}></p>
-                                    {/* Issue #471, #499*/}
-                                    <p dangerouslySetInnerHTML={{ __html: labels.BcritText.DoorKnocker}}></p>
+                                    {/* Issue #471, #499, #518
+                                    <p dangerouslySetInnerHTML={{ __html: labels.BcritText.DoorKnocker}}></p>*/}
                             </div> : null
                 }
                             {riskAssessment.chosenSpreadYearlyIncrease != "SpreadYearlyLiteratureData" && riskAssessment.chosenSpreadYearlyIncrease != "SpreadYearlyIncreaseCalculatedExpansionSpeed" && riskAssessment.chosenSpreadYearlyIncrease != "SpreadYearlyIncreaseObservations" && riskAssessment.chosenSpreadYearlyIncrease != "" && 
