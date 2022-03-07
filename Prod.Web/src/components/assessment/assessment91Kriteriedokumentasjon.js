@@ -98,9 +98,13 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                                 : null}
                         </fieldset> 
 
-                        {/* if there is no conclusion in species status*/}
+                        {/* if there is no conclusion in species status
                         
-                        {(assessment.isAlienSpecies || 
+                            Isuue #517
+
+                        */}
+                        
+                        {/*(assessment.isAlienSpecies || 
                                     //(assessment.connectedToAnotherString != "no" && assessment.connectedToAnotherString != "false" ) 
                                      (assessment.alienSpecieUncertainIfEstablishedBefore1800String != "no" ) ||
                                     assessment.speciesStatus == null )
@@ -112,8 +116,8 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                             <p>{critlabels.notEvaluated3}</p>
                             <br />
                         </fieldset>}
-                        {/*}}*/}
-                <br/>
+                        {/*}}
+                <br/>*/}
                 <div>
                     <fieldset className="well">
                         <h4>{critlabels.speciesDescription}</h4>
