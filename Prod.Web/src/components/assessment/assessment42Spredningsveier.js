@@ -247,7 +247,7 @@ export default class Assessment42Spredningsveier extends React.Component {
                         {name == "Introduksjon til natur" &&  <><b>Rømning/forvilling: </b> {escape} <br/></> }
                         <b>Forurensning av vare: </b>Arten følger utilsikta med under transport av andre arter eller gjenstander (vektorer) og har en spesifikk økologisk tilknytning til den andre arten eller til det organiske mediet som ble transportert.
                         <br/>
-                        <b>Blindpassasjer med/på transport: </b>Arten følger utilsikta med under transport av andre arter eller gjenstander (vektorer), men har bare en nokså tilfeldig tilknytning til varen eller gjenstanden som ble transportert, eller til selve transportmiddelet.
+                        <b>Blindpassasjer med transport: </b>Arten følger utilsikta med under transport av andre arter eller gjenstander (vektorer), men har bare en nokså tilfeldig tilknytning til varen eller gjenstanden som ble transportert, eller til selve transportmiddelet.
                         <br/>
                         {(name == "Introduksjon til natur" || name == "Videre spredning i natur") && <><b>Korridor: </b> {corridor} <br/>
                                                                 <b>Egenspredning: </b> {naturalDispersal}</>  }
