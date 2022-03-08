@@ -316,12 +316,12 @@ namespace Prod.Api.Helpers
             else if (ass.EvaluationStatus == "inprogress")
             {
                 indexFields.Add(new StringField(Field_ProgressStatus, "inprogress", Field.Store.NO));
-                fullfacetstatus = "0";
+                fullfacetstatus = "1";
             }
             if (ass.EvaluationStatus == "finished")
             {
                 indexFields.Add(new StringField(Field_ProgressStatus, "finished", Field.Store.NO));
-                fullfacetstatus = "1";
+                fullfacetstatus = "0";
             }
             indexFields.Add(new FacetField(Facet_Progress, ass.HorizonDoScanning ? horResult: fullfacetstatus));
 
