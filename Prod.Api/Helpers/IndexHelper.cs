@@ -22,7 +22,7 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Change this to force index rebuild!
         /// </summary>
-        public const int IndexVersion = 14;
+        public const int IndexVersion = 16;
         private static readonly object IndexingLock = new();
 
         private const string Field_Id = "Id";
@@ -82,6 +82,8 @@ namespace Prod.Api.Helpers
         private static readonly string Field_CommentsNew = "CommentsNew";
 
         private static readonly string Field_TaxonChange = "TaxonChange";
+
+        private static DateTime _dateTimeForHorScanDone = new DateTime(2022, 2,22);
         //private const string PotensiellTaksonomiskEndring = "Potensiell taksonomisk endring: ";
         //private const string TaksonomiskEndring = "Automatisk endring av navn: ";
 
@@ -244,7 +246,7 @@ namespace Prod.Api.Helpers
                 new StringField(Field_Progress, ass.EvaluationStatus, Field.Store.YES),
                 // facets
                 new FacetField(Facet_Author, assessment.LastUpdatedByUser.FullName),
-                new FacetField(Facet_Progress, horResult),
+                //new FacetField(Facet_Progress, horResult),
                 new FacetField(Facet_PotentialDoorKnocker, ExtractPotentialDoorKnocker(get2018NotAssessed).ToString()),
                 new FacetField(Facet_NotAssessedDoorKnocker, ExtractNotAssessedDoorKnocker(get2018NotAssessed).ToString())
             };
@@ -305,18 +307,23 @@ namespace Prod.Api.Helpers
             //Field_2018Status
 
             //Status=notStarted,&Status=inprogress,&Status=finished
-            if (ass.EvaluationStatus == "imported")
+            var fullfacetstatus = "0";
+            if (ass.EvaluationStatus == "imported" || (ass.HorizonDoScanning == false && ass.LastUpdatedAt < _dateTimeForHorScanDone))
             {
                 indexFields.Add(new StringField(Field_ProgressStatus, "notStarted", Field.Store.NO));
+                fullfacetstatus = "2";
             }
             else if (ass.EvaluationStatus == "inprogress")
             {
                 indexFields.Add(new StringField(Field_ProgressStatus, "inprogress", Field.Store.NO));
+                fullfacetstatus = "1";
             }
-            if (ass.EvaluationStatus == "finished")
+            else if (ass.EvaluationStatus == "finished")
             {
                 indexFields.Add(new StringField(Field_ProgressStatus, "finished", Field.Store.NO));
+                fullfacetstatus = "0";
             }
+            indexFields.Add(new FacetField(Facet_Progress, ass.HorizonDoScanning ? horResult: fullfacetstatus));
 
             if (ass2018 != null)
             {

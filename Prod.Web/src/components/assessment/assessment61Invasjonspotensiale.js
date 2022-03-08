@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import PropTypes from 'prop-types'
 import {observer, inject} from 'mobx-react';
-import {action, computed, runInAction, observable, makeObservable} from 'mobx'
+import {action, computed, runInAction, observable, makeObservable, extendObservable} from 'mobx'
 import * as Xcomp from './observableComponents';
 import Tabs from '../tabs'
 import Criterion from './criterion'
@@ -16,6 +16,8 @@ import { KeyboardHideSharp } from '@material-ui/icons'
 import {stringFormat} from "../../utils"
 import ModalArtskart from '../artskart/ModalArtskart';
 import errorhandler from '../errorhandler';
+import WaterArea from '../water/WaterArea';
+import { getWaterAreas } from '../water/apiWaterArea';
 
 @inject('appState')
 @observer
@@ -70,12 +72,80 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
         const b = this.props.appState.assessmentSavedVersionString
         return a != b
     }
+
     GetIsRegionalAssessment = (assessment) =>
     {
         return assessment.isAlienSpecies 
         && assessment.isRegionallyAlien 
         && assessment.expertGroup == "Fisker" 
     }
+
+    // a method to check if a given property is smaller than a given value
+
+    constructor(props) {
+        super();
+        extendObservable(this, {
+            initialWaterAreas: null,
+            selectedWaterArea: [],
+            waterIsChanged: 0
+        });
+        if (props && props.appState && props.appState.assessment) {
+            const assessment = props.appState.assessment;
+            if (this.GetIsRegionalAssessment(assessment)) {
+                if (assessment.artskartWaterModel === null) assessment.artskartWaterModel = {};
+                if (this.initialWaterAreas === null && this.GetIsRegionalAssessment(assessment)) {
+                    const self = this;
+                    getWaterAreas().then((data) => {
+                        action(() => {
+                            self.initialWaterAreas = data;
+                            const ass = assessment;
+                            ass.artskartWaterModel.isWaterArea = ass.artskartWaterModel.isWaterArea ? ass.artskartWaterModel.isWaterArea : false;
+                            self.reCreateartskartWaterModelArea({ ass, initialWaterAreas: self.initialWaterAreas });
+                        })();
+                    });
+                }
+                if (assessment.artskartWaterModel && assessment.artskartWaterModel.areas) {
+                    this.selectedWaterArea = assessment.artskartWaterModel.areas
+                    .filter(x => x.disabled === 0)
+                    .map(x => x.globalId);
+                }
+            }
+            // if (assessment.artskartModel) {
+            //     const getValue = (value) => {
+            //         return value !== undefined ? value : undefined;
+            //     };
+            //     runInAction(() => {
+            //         assessment.observationFromYear = getValue(assessment.observationFromYear);
+            //         assessment.observationToYear = getValue(assessment.observationToYear);
+            //         assessment.includeObjects = getValue(assessment.includeObjects);
+            //         assessment.includeNorge = getValue(assessment.includeNorge);
+            //         assessment.includeSvalbard = getValue(assessment.includeSvalbard);
+            //         assessment.excludeObjects = getValue(assessment.excludeObjects);
+            //         assessment.excludeGbif = getValue(assessment.excludeGbif);
+            //     })
+            // } else {
+            //     runInAction(() => {
+            //         assessment.artskartModel = {};
+            //     })
+            // }
+        }
+    }
+
+    reCreateartskartWaterModelArea = ({ ass, initialWaterAreas }) => {
+        if (ass.artskartWaterModel.areas) return;
+        const waterObject = ass.artskartWaterModel.isWaterArea ? initialWaterAreas.areaState : initialWaterAreas.regionState;
+        ass.artskartWaterModel.areas = [];
+        for (var key in waterObject) {
+            // console.log('adding?', key);
+            if (ass.artskartWaterModel.areas.find(x => x.globalId === key) === undefined) {
+                // console.log('adding', key);
+                ass.artskartWaterModel.areas.push(waterObject[key]);
+            } else {
+                console.log('not adding', key)
+            }
+        }
+    }
+
     // getCriterion(riskAssessment, akse, letter) {     const result =
     // riskAssessment.criteria.filter(c => c.akse === akse && c.criteriaLetter ===
     // letter)[0];     return result; }
@@ -93,6 +163,11 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
         const ass = aps.assessment;
         ass.riskAssessment.AOOknown2 = areadata.AreaOfOccupancy;
         ass.riskAssessment.AOOyear2 = this.props.appState.virtualArtskartModel.observationToYear;
+    }
+    getWaterFeatures = (assessment) => {
+        if (this.initialWaterAreas && assessment && assessment.artskartWaterModel) {
+            return assessment.artskartWaterModel.isWaterArea ? this.initialWaterAreas.waterArea : this.initialWaterAreas.waterRegion;
+        }
     }
     render() {
         const renderAgain = this.isDirty; // code looks unused, but it makes the Artskart-module listen to changes
@@ -591,6 +666,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                             scientificNameId={assessment.evaluatedScientificNameId}
                                                             evaluationContext={assessment.evaluationContext}
                                                             showWaterAreas={this.GetIsRegionalAssessment(assessment)}
+                                                            artskartWaterModel={assessment.artskartWaterModel}
+                                                            waterFeatures={this.getWaterFeatures(assessment)}
                                                             labels={labelsArtskart}
                                                             utvalg={assessment.riskAssessment}
                                                             artskartModel={this.props.appState.virtualArtskartModel0}
@@ -644,6 +721,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                             scientificNameId={assessment.evaluatedScientificNameId}
                                                             evaluationContext={assessment.evaluationContext}
                                                             showWaterAreas={this.GetIsRegionalAssessment(assessment)}
+                                                            artskartWaterModel={assessment.artskartWaterModel}
+                                                            waterFeatures={this.getWaterFeatures(assessment)}
                                                             labels={labelsArtskart}
                                                             utvalg={assessment.riskAssessment}
                                                             artskartModel={this.props.appState.virtualArtskartModel}

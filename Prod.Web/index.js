@@ -19,7 +19,13 @@ import { ApplicationInsights } from '@microsoft/applicationinsights-web'
 if (process.env.NODE_ENV !== 'development') {
   window.appInsights = new ApplicationInsights({
     config: {
-      instrumentationKey: window.location.href.indexOf("test.") > 1 ? '30685b0e-8736-4205-9839-99dd918f986f' : 'ab7c8c2e-7415-4db4-bcce-eed403f6f2b6'
+      instrumentationKey: window.location.href.indexOf("test.") > 1 ? '30685b0e-8736-4205-9839-99dd918f986f' : 'ab7c8c2e-7415-4db4-bcce-eed403f6f2b6',
+      autoTrackPageVisitTime: true,
+      enableAutoRouteTracking: true,
+      disableFetchTracking: false,
+      enableCorsCorrelation: true,
+      enableRequestHeaderTracking: true,
+      enableResponseHeaderTracking: true
       /* ...Other Configuration Options... */
     }
   });
@@ -57,13 +63,13 @@ else {
   }
 
   window.onbeforeunload = (e) => {
-    var isdirty = viewModel.isDirty
-    var skriver =  !!viewModel.roleincurrentgroup && viewModel.roleincurrentgroup.writeAccess
-    var flag = isdirty && writeAccess
-    if (flag) {
-        // e.preventDefault()
-        e.returnValue = "du lukker siden uten å ha lagret" 
-    } 
+      var isdirty = viewModel.isDirty
+      var skriver = !!viewModel.roleincurrentgroup && viewModel.roleincurrentgroup.writeAccess
+      var flag = isdirty && writeAccess
+      if (flag) {
+          // e.preventDefault()
+          e.returnValue = "du lukker siden uten å ha lagret"
+      }
   }
   
   var string =
