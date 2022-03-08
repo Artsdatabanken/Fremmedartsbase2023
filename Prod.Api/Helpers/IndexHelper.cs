@@ -22,7 +22,7 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Change this to force index rebuild!
         /// </summary>
-        public const int IndexVersion = 15;
+        public const int IndexVersion = 16;
         private static readonly object IndexingLock = new();
 
         private const string Field_Id = "Id";
@@ -307,7 +307,7 @@ namespace Prod.Api.Helpers
             //Field_2018Status
 
             //Status=notStarted,&Status=inprogress,&Status=finished
-            if (ass.EvaluationStatus == "imported" || (ass.HorizonScanResult == "scanned_fullAssessment" && ass.LastUpdatedAt < _dateTimeForHorScanDone))
+            if (ass.EvaluationStatus == "imported" || (ass.HorizonDoScanning == false && ass.LastUpdatedAt < _dateTimeForHorScanDone))
             {
                 indexFields.Add(new StringField(Field_ProgressStatus, "notStarted", Field.Store.NO));
             }
