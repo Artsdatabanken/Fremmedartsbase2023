@@ -318,7 +318,7 @@ namespace Prod.Api.Helpers
                 indexFields.Add(new StringField(Field_ProgressStatus, "inprogress", Field.Store.NO));
                 fullfacetstatus = "1";
             }
-            if (ass.EvaluationStatus == "finished")
+            else if (ass.EvaluationStatus == "finished")
             {
                 indexFields.Add(new StringField(Field_ProgressStatus, "finished", Field.Store.NO));
                 fullfacetstatus = "0";
