@@ -149,8 +149,8 @@ class AssessmentRoot extends Component {
         // console.log(assessment.lockedForEditByUser)
         if (window.appInsights) {
             window.appInsights.trackPageView({
-            name: 'Assessment ' + assessment.vurdertVitenskapeligNavn, 
-            properties: { SpeciesGroup: assessment.ekspertgruppe }});
+            name: 'Assessment ' + assessment.evaluatedScientificName, 
+            properties: { SpeciesGroup: assessment.expertGroup }});
         }
 
         const kritDocInfo = {
