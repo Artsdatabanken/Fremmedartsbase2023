@@ -61,7 +61,7 @@ checkStatus = (production) => {
             "2010-",
             labels.FirstObservation.dontknow
         ];
-
+        
         return (
             <div>
                 {config.showPageHeaders
@@ -253,8 +253,18 @@ checkStatus = (production) => {
                         <Xcomp.HtmlString observableValue={[assessment, 'changedAssessment']}/>
                     </div> : null }
                     </fieldset>
+
+                    <fieldset 
+                            className={assessment.assessmentConclusion == "" || assessment.assessmentConclusion == "NotDecided" ? "invisible well" : "well"}
+                            >
+                        <h3>{labels.SpeciesStatus.conclusion} </h3>
+                        <p>
+                            {assessment.assessmentConclusion == "" || assessment.assessmentConclusion == "NotDecided" ? "" : assessment.assessmentConclusion == "WillNotBeRiskAssessed" ? labels.SpeciesStatus.willNotBeRiskAssessed : labels.SpeciesStatus.willBeRiskAssessed}
+                            <b> {assessment.assessmentConclusion == "" || assessment.assessmentConclusion == "WillNotBeRiskAssessed" || assessment.assessmentConclusion == "NotDecided" ? "" : assessment.assessmentConclusion == "AssessedSelfReproducing" ? labels.SpeciesStatus.assessedSelfReproducing + "." : labels.SpeciesStatus.assessedDoorknocker + "."}</b>
+                        </p>
+                    </fieldset> 
                     
-                    {assessment.assessmentConclusion != "" &&
+                    {/*assessment.assessmentConclusion != "" &&
                         <fieldset className="well">
                                 { assessment.assessmentConclusion == "AssessedSelfReproducing"
                                     ?  <><h3>{labels.SpeciesStatus.conclusion}</h3>
@@ -271,7 +281,7 @@ checkStatus = (production) => {
                                 }
 
                         </fieldset>
-                    }
+                            */}
 
                     {assessment.isAlienSpecies && 
                        // (!assessment.connectedToAnother || !assessment.connectedToAnother ) &&
