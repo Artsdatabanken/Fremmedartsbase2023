@@ -6809,14 +6809,14 @@
                         {
                             "Id": null,
                             "Value": "weakContinental",
-                            "Text": "Svakt kontinental sekjson",
+                            "Text": "Svakt kontinental seksjon",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "clearContinental",
-                            "Text": "Klart kontinental sekjson",
+                            "Text": "Klart kontinental seksjon",
                             "Info": null,
                             "Children": null
                         },
