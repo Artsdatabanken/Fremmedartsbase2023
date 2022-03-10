@@ -54,6 +54,7 @@ export default class Documents extends Component {
             <FileUpload 
                 onUploadComplete={this.getAttachments}
                 labels = {labels}
+                attachments = {this.attachments}
             />
             {/*<h2>Filer for {assessment.id}</h2>*/}
             {this.attachments.length > 0 && 

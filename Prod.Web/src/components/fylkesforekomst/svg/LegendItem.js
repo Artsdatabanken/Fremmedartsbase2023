@@ -1,6 +1,6 @@
 import React from "react";
 
-const LegendItem = ({ title, tooltip, showRect, fill, x, y, width, height, size }) => (
+const LegendItem = ({ title, tooltip, showRect, fill, x, y, width, height, size, filter }) => (
   <svg x={x} y={y} width={width} height={height} showRect={showRect}>
     {showRect &&
     <rect
@@ -10,7 +10,7 @@ const LegendItem = ({ title, tooltip, showRect, fill, x, y, width, height, size 
         fill: fill,
         stroke: "rgb(0,0,0)",
         strokeWidth: 1,
-        filter: "url(#f1)"
+        filter: filter ? "url(#f1)" : ""
       }}
     ></rect>
     }
