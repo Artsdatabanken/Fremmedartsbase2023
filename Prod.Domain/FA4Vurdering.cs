@@ -196,6 +196,8 @@ namespace Prod.Domain
         public string NotReproductiveFutureDescription2012 { get; set; } // fab: Not_Reproductive_Future_Description
         public string AssesmentNotApplicableDescription { get; set; } // fab: Assesment_Not_Applicable_Description
 
+        public string UncertainityStatusDescription { get; set; }
+
         public bool? IsAlienSpecies { get; set; }
 
         public string IsAlien { get; set; } // new in 2021

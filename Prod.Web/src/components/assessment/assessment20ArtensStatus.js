@@ -61,7 +61,7 @@ checkStatus = (production) => {
             "2010-",
             labels.FirstObservation.dontknow
         ];
-        
+
         return (
             <div>
                 {config.showPageHeaders
@@ -220,6 +220,9 @@ checkStatus = (production) => {
                             </div>
 
                         <p>{labels.SpeciesStatus.codesExplanation}</p>
+                        <p>{labels.SpeciesStatus.uncertainityStatusDescription}</p>
+                            
+                            <Xcomp.HtmlString observableValue={[assessment, 'uncertainityStatusDescription']}/> 
                         <br></br>
                         {
                         //assessment.horizonDoScanning && 

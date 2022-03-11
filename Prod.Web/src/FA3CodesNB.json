@@ -5193,6 +5193,13 @@
                         },
                         {
                             "Id": null,
+                            "Value": "uncertainityStatusDescription",
+                            "Text": "Beskriv eventuell usikkerhet vedrørende artens status:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
                             "Value": "wronglyAssessedBefore",
                             "Text": "Har arten tidligere vært feilbestemt?",
                             "Info": null,
