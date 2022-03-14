@@ -475,7 +475,8 @@ export default class Assessment52Utbredelse extends React.Component {
                                 />
                         }
                         <div style={{display: 'inline-flex', width: '100%'}}>
-                            <div style={{width: '33%', height: 500}}>
+                            <div className="waterAreas">
+                                <p>Kjent utbredelse i dag</p>
                                 <SimpleMap
                                     static={true}
                                     isWaterArea={assessment.artskartWaterModel.isWaterArea}
@@ -487,7 +488,8 @@ export default class Assessment52Utbredelse extends React.Component {
                                     onClick={action(this.addRegion)}
                                     evaluationContext={assessment.evaluationContext} />
                             </div>
-                            <div style={{width: '33%', height: 500}}>
+                            <div className="waterAreas">
+                                <p>Antatt utbredelse i dag</p>
                                 <SimpleMap
                                     static={true}
                                     isWaterArea={assessment.artskartWaterModel.isWaterArea}
@@ -499,7 +501,8 @@ export default class Assessment52Utbredelse extends React.Component {
                                     onClick={action(this.addRegion)}
                                     evaluationContext={assessment.evaluationContext} />
                             </div>
-                            <div style={{width: '33%', height: 500}}>
+                            <div className="waterAreas">
+                                <p>Antatt utbredelse om 50 år</p>
                                 <SimpleMap
                                     static={true}
                                     isWaterArea={assessment.artskartWaterModel.isWaterArea}
