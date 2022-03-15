@@ -309,7 +309,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                         __html: riskAssessment.criteriaDocumentation
                     }} />
                 </div>*/}
-                {assessment.riskAssessment.riskLevelCode != null && assessment.previousAssessments[0] != null && category2018(assessment.previousAssessments[0].riskLevel) != assessment.riskAssessment.riskLevelCode &&
+                {assessment.assessmentConclusion != "NotDecided" && assessment.riskAssessment.riskLevelCode != null && assessment.previousAssessments[0] != null && category2018(assessment.previousAssessments[0].riskLevel) != assessment.riskAssessment.riskLevelCode &&
                 <fieldset className="well">
                     <h3>{critlabels.reasonForChangeHeading}</h3>
                         <p> {critlabels.cat2023} {assessment.riskAssessment.riskLevelCode}</p>
