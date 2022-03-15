@@ -372,9 +372,15 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                          : 
                          <div>
                             <p>{critlabels.assessmentCompleted}</p>
-                            <Xcomp.Button 
-                                    //onClick={() => this.setAssessmentComplete(appState)}
-                                    >Fortsett vurderingen</Xcomp.Button>
+                            {appState.assessment.evaluationStatus === 'finished' 
+                                && appState.ekspertgruppe !== null 
+                                && appState.ekspertgruppeRolle 
+                                && appState.ekspertgruppeRolle.admin
+                                && 
+                                    <Xcomp.Button 
+                                            onClick={() => this.resetAssessmentComplete(appState)}
+                                            >{critlabels.resetComplete}</Xcomp.Button>
+                            }
                          </div>
                          }                       
                 </div>
