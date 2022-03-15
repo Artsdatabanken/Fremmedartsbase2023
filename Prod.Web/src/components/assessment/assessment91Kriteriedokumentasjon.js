@@ -7,6 +7,7 @@ import * as Xcomp from './observableComponents';
 import Risikomatrise from './risikomatrise';
 import Documents from '../documents'
 import errorhandler from '../errorhandler';
+import auth from '../authService';
 
 
 @inject("appState")
@@ -375,7 +376,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                             {appState.assessment.evaluationStatus === 'finished' 
                                 && appState.ekspertgruppe !== null 
                                 && appState.ekspertgruppeRolle 
-                                && appState.ekspertgruppeRolle.admin
+                                && auth.isAdmin
                                 && 
                                     <Xcomp.Button 
                                             onClick={() => this.resetAssessmentComplete(appState)}
