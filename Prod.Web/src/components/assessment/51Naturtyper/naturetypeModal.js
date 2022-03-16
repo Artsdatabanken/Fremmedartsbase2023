@@ -4,7 +4,6 @@ import {observer, inject} from 'mobx-react';
 import * as Xcomp from '../observableComponents';
 import BsModal from '../../bootstrapModal'
 import { selectTaxonSearchState } from '../../createTaxonSearch'
-import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils';
 
 const kodeTekst = (koder, verdi) => koder.filter(item => item.Value === verdi).map(item => item.Text)[0] || verdi 
 
@@ -110,7 +109,7 @@ export default class NaturetypeModal extends React.Component {
                                 forceSync
                                 formlayout/>
                         : null}
-                    {assessment.alienSpeciesCategory == "DoorKnocker" && assessment.speciesStatus == "A" ? 
+                    {(assessment.alienSpeciesCategory == "DoorKnocker" && assessment.speciesStatus == "A") ? 
                     <div>
                         <label>{ntLabels.timeHorizon}</label><br/>
                         <span>{kodeTekst(koder.timeHorizon, this.editNaturtype.timeHorizon)}</span>
