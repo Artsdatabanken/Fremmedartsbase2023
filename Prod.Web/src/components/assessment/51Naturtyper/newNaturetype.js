@@ -22,7 +22,7 @@ export default class NewNaturetype extends React.Component {
             nyNaturtype: {
                 niNCode: null,
                 name: null,
-                timeHorizon: null,
+                timeHorizon: (assessment.speciesStatus == "A" && assessment.alienSpeciesCategory == "DoorKnocker") ? "future" : null,
                 colonizedArea: null,
                 stateChange: [],
                 background: [],
@@ -82,12 +82,14 @@ export default class NewNaturetype extends React.Component {
                 <TruetSelector
                     naturtyper={appState.trueteogsjeldneCodes}
                     nyNaturtype={this.nyNaturtype}
+                    assessment={assessment}
                     showModal={() => runInAction(() => this.showModal = true)}
                 /> :
                 this.props.mode === "nin" ?
                 <NaturtypeSelector
                     naturtyper={appState.naturtyperNIN2} 
-                    nyNaturtype={this.nyNaturtype}                    
+                    nyNaturtype={this.nyNaturtype}  
+                    assessment={assessment}                  
                     showModal={() => runInAction(() => this.showModal = true)}
                 /> :
                 null
