@@ -70,7 +70,23 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
         if (!this.props.appState.assessmentId) return false
         const a = JSON.stringify(this.props.appState.assessment)
         const b = this.props.appState.assessmentSavedVersionString
-        return a != b
+        const c = {
+            observationFromYear: this.props.appState.assessment.artskartModel.observationFromYear,
+            observationToYear: this.props.appState.assessment.riskAssessment.AOOyear1,
+            includeNorge: this.props.appState.assessment.artskartModel.includeNorge,
+            excludeObjects: this.props.appState.assessment.artskartModel.excludeObjects,
+            excludeGbif: this.props.appState.assessment.artskartModel.excludeGbif,
+        }
+        const d = JSON.stringify(this.props.appState.virtualArtskartModel0);
+        const e = {
+            observationFromYear: this.props.appState.assessment.artskartModel.observationFromYear,
+            observationToYear: this.props.appState.assessment.riskAssessment.AOOyear2,
+            includeNorge: this.props.appState.assessment.artskartModel.includeNorge,
+            excludeObjects: this.props.appState.assessment.artskartModel.excludeObjects,
+            excludeGbif: this.props.appState.assessment.artskartModel.excludeGbif,
+        }
+        const f = JSON.stringify(this.props.appState.virtualArtskartModel);
+        return a != b || c != d || e != f;
     }
 
     GetIsRegionalAssessment = (assessment) =>
@@ -187,14 +203,14 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
 
         // riskAssessment.AOO2 == null ? riskAssessment.AOO2 = riskAssessment.AOOknown2 : riskAssessment.AOO2 = 0
         if (assessment.artskartModel) {
-        this.props.appState.virtualArtskartModel0 = observable({
+        this.props.appState.virtualArtskartModel0 = this.props.appState.virtualArtskartModel0 || observable({
             observationFromYear: assessment.artskartModel.observationFromYear,
             observationToYear: assessment.riskAssessment.AOOyear1,
             includeNorge: assessment.artskartModel.includeNorge,
             excludeObjects: assessment.artskartModel.excludeObjects,
             excludeGbif: assessment.artskartModel.excludeGbif,
         });        
-        this.props.appState.virtualArtskartModel = observable({
+            this.props.appState.virtualArtskartModel = this.props.appState.virtualArtskartModel || observable({
             observationFromYear: assessment.artskartModel.observationFromYear,
             observationToYear: assessment.riskAssessment.AOOyear2,
             includeNorge: assessment.artskartModel.includeNorge,
