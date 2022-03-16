@@ -231,9 +231,10 @@ checkStatus = (production) => {
                         <div>
                             <p>{labels.SpeciesStatus.assumedReproducing50Years}</p>
                             <Xcomp.StringEnum observableValue={[assessment, "assumedReproducing50YearsString"]} mode="radio" codes={codes.yesNo}/>
+                            <br></br>
                         </div>
                         : null} 
-                        <br></br>
+                        
                         <div>
                             <p>{assessment.isRegionallyAlien ? labels.SpeciesStatus.establishedBefore1800RegionallyAlien : labels.SpeciesStatus.establishedBefore1800} </p>
                             <p>{labels.SpeciesStatus.probabilityUncertainity}</p>
