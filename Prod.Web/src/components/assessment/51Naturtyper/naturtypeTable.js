@@ -160,7 +160,7 @@ export class NaturtypeRad extends React.Component {
                 {showNatureTypeArea && <td>{nt.niNCode ? findNTArea(nt.niNCode) : ""}</td> }
                 {this.edit
                 ?
-                <td>{assessment.alienSpeciesCategory == "DoorKnocker" ? koder.timeHorizon[1].Text : 
+                <td>{assessment.alienSpeciesCategory == "DoorKnocker" && assessment.speciesStatus == "A" ? koder.timeHorizon[1].Text : 
                         //kodeTekst(koder.timeHorizon, nt.timeHorizon)
                         <Xcomp.StringEnum observableValue={[nt, 'timeHorizon']} forceSync codes={koder.timeHorizon} />
                         }</td>
@@ -249,6 +249,7 @@ export class NaturtypeRad extends React.Component {
                     {this.showModal
                     ? <NaturtypeModal 
                         naturtype={nt} 
+                        assessment={assessment}
                         showModal={[this, "showModal"]}
                         hideStateChange={[this, "hideStateChange"]} 
                         onOk={this.updateNaturetype} 

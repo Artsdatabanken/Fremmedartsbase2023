@@ -89,6 +89,7 @@ export default class Assessment51Naturtyper extends React.Component {
                     {appState.trueteogsjeldneCodes
                         ? <NewNaturetype
                             mode="truet"
+                            assessment={assessment}
                             appState={appState}
                             addNaturtype={this.addNaturtype}
                             labels={labels}
@@ -103,6 +104,7 @@ export default class Assessment51Naturtyper extends React.Component {
                 <NewNaturetype
                     mode="nin"
                     appState={appState}
+                    assessment={assessment}
                     addNaturtype={this.addNaturtype}
                     labels={labels}
                     codes={appState.naturtyperNIN2}
@@ -252,6 +254,7 @@ export default class Assessment51Naturtyper extends React.Component {
                     {appState.livsmediumCodes
                         ? <NewNaturetype
                         mode="livsmedium"
+                        assessment={assessment}
                         appState={appState}
                         addNaturtype={this.addLivsmedium}
                         labels={labels}

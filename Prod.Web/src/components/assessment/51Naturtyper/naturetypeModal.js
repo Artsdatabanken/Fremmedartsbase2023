@@ -6,6 +6,8 @@ import BsModal from '../../bootstrapModal'
 import { selectTaxonSearchState } from '../../createTaxonSearch'
 import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils';
 
+const kodeTekst = (koder, verdi) => koder.filter(item => item.Value === verdi).map(item => item.Text)[0] || verdi 
+
 @inject("appState")
 @observer
 export class StringEnum2 extends React.Component {
@@ -71,7 +73,7 @@ export default class NaturetypeModal extends React.Component {
         return result
     }
     render() {
-        const {fabModel, naturtype, labels, showModal, hideStateChange, livsmedium, taxon} = this.props;
+        const {fabModel, naturtype, labels, showModal, hideStateChange, livsmedium, taxon, assessment} = this.props;
         const [sm, smprop] = showModal
         const [hsc, hscprop] = hideStateChange
         this.hideStateChange = hsc[hscprop]
@@ -108,11 +110,18 @@ export default class NaturetypeModal extends React.Component {
                                 forceSync
                                 formlayout/>
                         : null}
+                    {assessment.alienSpeciesCategory == "DoorKnocker" && assessment.speciesStatus == "A" ? 
+                    <div>
+                        <label>{ntLabels.timeHorizon}</label><br/>
+                        <span>{kodeTekst(koder.timeHorizon, this.editNaturtype.timeHorizon)}</span>
+                    </div>
+                     :
                     <Xcomp.StringEnum
                         label={ntLabels.timeHorizon}
                         observableValue={[this.editNaturtype, 'timeHorizon']}
-                        codes={koder.timeHorizon}
+                        codes={koder.timeHorizon }
                         forceSync/>
+                    }
                     {!livsmedium && <Xcomp.StringEnum
                         label={ntLabels.colonizedArea}
                         observableValue={[this.editNaturtype, 'colonizedArea']}
