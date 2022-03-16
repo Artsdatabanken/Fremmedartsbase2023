@@ -7,6 +7,7 @@ import * as Xcomp from './observableComponents';
 import Risikomatrise from './risikomatrise';
 import Documents from '../documents'
 import errorhandler from '../errorhandler';
+import auth from '../authService';
 
 
 @inject("appState")
@@ -309,7 +310,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                         __html: riskAssessment.criteriaDocumentation
                     }} />
                 </div>*/}
-                {assessment.riskAssessment.riskLevelCode != null && assessment.previousAssessments[0] != null && category2018(assessment.previousAssessments[0].riskLevel) != assessment.riskAssessment.riskLevelCode &&
+                {assessment.assessmentConclusion != "NotDecided" && assessment.riskAssessment.riskLevelCode != null && assessment.previousAssessments[0] != null && category2018(assessment.previousAssessments[0].riskLevel) != assessment.riskAssessment.riskLevelCode &&
                 <fieldset className="well">
                     <h3>{critlabels.reasonForChangeHeading}</h3>
                         <p> {critlabels.cat2023} {assessment.riskAssessment.riskLevelCode}</p>
@@ -364,11 +365,25 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                 </fieldset>
 
                         <Xcomp.Button>{critlabels.showAssessmentSummary}</Xcomp.Button>
-                        {assessment.evaluationStatus != "finnished" ? 
+                        {assessment.evaluationStatus != "finished" ? 
                         <div>
                             <p>{critlabels.assessmentUnderWork}</p>
                             <Xcomp.Button onClick={() => this.setAssessmentComplete(appState)}>{critlabels.setComplete}</Xcomp.Button>
-                         </div>: <p>{critlabels.assessmentCompleted}</p>}                       
+                         </div>
+                         : 
+                         <div>
+                            <p>{critlabels.assessmentCompleted}</p>
+                            {appState.assessment.evaluationStatus === 'finished' 
+                                && appState.ekspertgruppe !== null 
+                                && appState.ekspertgruppeRolle 
+                                && auth.isAdmin
+                                && 
+                                    <Xcomp.Button 
+                                            onClick={() => this.resetAssessmentComplete(appState)}
+                                            >{critlabels.resetComplete}</Xcomp.Button>
+                            }
+                         </div>
+                         }                       
                 </div>
             </div>
         );
