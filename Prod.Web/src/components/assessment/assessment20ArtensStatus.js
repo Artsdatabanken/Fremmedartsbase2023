@@ -208,8 +208,8 @@ checkStatus = (production) => {
                             <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/>                            
                         }
                     </div>
-                         <p> { assessment.isRegionallyAlien ? labels.SpeciesStatus.statusInNorwayRegionallyAlien : labels.SpeciesStatus.statusInNorway }</p>
-                         <p>{labels.SpeciesStatus.highestCategoryPerToday}</p>
+                         <p> { assessment.isRegionallyAlien ? labels.SpeciesStatus.statusInNorwayRegionallyAlien : labels.SpeciesStatus.statusInNorway } { assessment.expertGroup.indexOf("Svalbard") < 0 ? labels.SpeciesStatus.inNorway : labels.SpeciesStatus.inSvalbard }</p>
+                         <p>{labels.SpeciesStatus.highestCategoryPerToday}{ assessment.expertGroup.indexOf("Svalbard") < 0 ? labels.SpeciesStatus.inNorwayToday : labels.SpeciesStatus.inSvalbardToday }</p>
                          <div style={{display: "flex"}}>
                          <Xcomp.StringEnum className="statusChoice" observableValue={[assessment, "speciesStatus"]} mode="radio" 
                             // checks if the species is a door knocker or not and if it is a production species to determine the available options to choose

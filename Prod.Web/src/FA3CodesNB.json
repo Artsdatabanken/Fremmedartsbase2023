@@ -5131,7 +5131,7 @@
                         {
                             "Id": null,
                             "Value": "statusInNorway",
-                            "Text": "Hvilken etableringsklasse har arten i Norge?",
+                            "Text": "Hvilken etableringsklasse har arten ",
                             "Info": null,
                             "Children": null
                         },
@@ -5145,7 +5145,35 @@
                         {
                             "Id": null,
                             "Value": "highestCategoryPerToday",
-                            "Text": "Merk av den høyeste (øverste) klassen som oppfylles av arten i Norge i dag:",
+                            "Text": "Merk av den høyeste (øverste) klassen som oppfylles av arten ",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "inNorway",
+                            "Text": "i Norge?",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "inSvalbard",
+                            "Text": "på Svalbard?",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "inNorwayToday",
+                            "Text": "i Norge i dag:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "inSvalbardToday",
+                            "Text": "på Svalbard i dag:",
                             "Info": null,
                             "Children": null
                         },
