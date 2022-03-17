@@ -14,7 +14,8 @@ export function checkStatus(response) {
         // tving reautentisering
         // todo: logout needed?
         //session.invalidate()
-        throw new Error("Ikke innlogget.")
+        // throw new Error("Ikke innlogget.")
+        throw new Error("Har ikke rettighet.")
 
     }
 
