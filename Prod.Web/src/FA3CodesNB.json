@@ -5222,7 +5222,7 @@
                         {
                             "Id": null,
                             "Value": "uncertainityStatusDescription",
-                            "Text": "Beskriv eventuell usikkerhet vedrørende artens status:",
+                            "Text": "Beskriv eventuell usikkerhet vedrørende etableringsklasse:",
                             "Info": null,
                             "Children": null
                         },
