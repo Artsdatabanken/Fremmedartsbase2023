@@ -12,13 +12,14 @@ export default class NaturetypeSelector extends React.Component {
     constructor(props) {
         console.log("nts: " + JSON.stringify(props.naturtyper, undefined))
         super(props)
+        const ass = props.assessment
         this.setSelectedNT = action ((naturtypekode) => {
            
             console.log("Truet kode: " + naturtypekode.Id)
             const nnt = props.nyNaturtype
             nnt.niNCode = naturtypekode.Id
             nnt.name = naturtypekode.Text
-            nnt.timeHorizon = null
+            nnt.timeHorizon = (ass.alienSpeciesCategory == "DoorKnocker" && ass.speciesStatus == "A") ? "future" : null,
             nnt.colonizedArea = null
             nnt.stateChange.clear()
             nnt.affectedArea = null
