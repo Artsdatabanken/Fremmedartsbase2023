@@ -804,7 +804,7 @@ class ViewModel {
         }
         if (errorhandler.hasErrors) {
             // console.log("#%% kanikke")
-            alert("Kan ikke ferdigstille. Vurderinger er ikke korrekt!")
+            alert("Kan ikke ferdigstille. Vurderingen er ikke korrekt!")
             return
         }
         

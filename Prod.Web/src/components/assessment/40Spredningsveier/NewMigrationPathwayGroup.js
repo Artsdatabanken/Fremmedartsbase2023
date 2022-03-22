@@ -44,7 +44,7 @@ export default class NewMigrationPathwayGroup extends React.Component {
         //  console.log("koder3" + koder.toString() )
 
         const hasChildren = migrationPathway.children && migrationPathway.children.length > 0 
-        const disabled = (migrationPathway.name == "Rømning/forvilling" || migrationPathway.name =="Direkte import")
+        const disabled = (migrationPathway.name == "Rømning/forvilling" && vurdering.indoorProduktion === "positive")
             // <div className="clearfix col-lg-4 col-md-6 col-sm-8 col-xs-12">
         //todo: fix data for "egenspredning". remove the invalid child
         return(
@@ -53,7 +53,7 @@ export default class NewMigrationPathwayGroup extends React.Component {
                     <div className="panel-heading compact migration" onClick={migrationPathway.value === null ? ()=> this.expand() : null}>
                         
                        {/* {migrationPathway.value === null ? */}
-                        <Xcomp.Button onClick={()=> {this.togglePathways()}}>{migrationPathway.name} 
+                        <Xcomp.Button disabled={disabled} onClick={()=> {this.togglePathways()}}>{migrationPathway.name} 
                         {hasChildren ? 
                         <div style={{float: "right"}} onClick={ (e)=> {e.stopPropagation(); this.expand(); this.togglePathways()}}>
                             <ExpandMoreIcon></ExpandMoreIcon>

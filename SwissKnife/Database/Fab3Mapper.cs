@@ -949,6 +949,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.AssumedReproducing50Years, opt => opt.Ignore())
                     .ForMember(dest => dest.ProductionSpecies, opt => opt.Ignore())
                     .ForMember(dest => dest.ConnectedTaxon, opt => opt.Ignore())
+                    .ForMember(dest => dest.UncertainityStatusDescription, opt => opt.Ignore())
                     .ForMember(dest => dest.ChangedFromAlien, opt => opt.Ignore())
                     .ForMember(dest => dest.ChangedAssessment, opt => opt.Ignore())
                     .ForMember(dest => dest.ReasonForChangeOfCategory, opt => opt.Ignore())

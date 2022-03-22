@@ -518,11 +518,11 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             : "%%#%%"
         },
         get a1aresulttext() {
-            return `Basert på de beste anslagene på forekomstareal i dag (${r.AOOtotalBest} km²) og om 50 år (${r.AOO50yrBest} km²) er A-kriteriet forhåndsskåret som ${r.adefaultBest + 1} (med usikkerhet: ${r.adefaultLow + 1}–${r.adefaultHigh + 1}). Dette innebærer at artens mediane levetid ligger ${r.lifetimeText}, eller at sannsynligheten for utdøing innen 50 år er på ${r.extinctionText}.`
+            return `<b>Basert på de beste anslagene på forekomstareal i dag (${r.AOOtotalBest} km²) og om 50 år (${r.AOO50yrBest} km²) er A-kriteriet forhåndsskåret som ${r.adefaultBest + 1} (med usikkerhet: ${r.adefaultLow + 1}–${r.adefaultHigh + 1}). Dette innebærer at artens mediane levetid ligger ${r.lifetimeText}, eller at sannsynligheten for utdøing innen 50 år er på ${r.extinctionText}.</b>`
         },
 
         get a1bresulttext() {
-           return `Basert på det beste anslaget på ${r.occurrences1Best} forekomster i løpet av 10 år og ${r.introductionsBest} ytterligere introduksjon(er) i samme tidsperiode er A-kriteriet forhåndsskåret som ${r.adefaultBest + 1} (med usikkerhet: ${r.adefaultLow + 1}–${r.adefaultHigh + 1}). Dette innebærer at artens mediane levetid ligger ${r.lifetimeText}, eller at sannsynligheten for utdøing innen 50 år er på ${r.extinctionText}.`
+           return `<b>Basert på det beste anslaget på ${r.occurrences1Best} forekomster i løpet av 10 år og ${r.introductionsBest} ytterligere introduksjon(er) i samme tidsperiode er A-kriteriet forhåndsskåret som ${r.adefaultBest + 1} (med usikkerhet: ${r.adefaultLow + 1}–${r.adefaultHigh + 1}). Dette innebærer at artens mediane levetid ligger ${r.lifetimeText}, eller at sannsynligheten for utdøing innen 50 år er på ${r.extinctionText}.</b>`
         },
 
         get invationPotentialLevel() {
@@ -698,8 +698,8 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         get b2aresulttext() {
             const result =
                 (r.AOOfirstOccurenceLessThan10Years === "yes")
-                ? `Ekspansjonshastigheten er beregnet til ${r.expansionSpeed} m/år basert på økningen i artens forekomstareal i perioden fra ${r.AOOyear1} til ${r.AOOyear2} og et mørketall på ${r.AOOdarkfigureBest}. Med usikkerhet: ${r.expansionLowerQ} m/år (mørketall på ${r.AOOdarkfigureLow}) - ${r.expansionUpperQ} m/år (mørketall på ${r.AOOdarkfigureHigh}).`
-                : `Ekspansjonshastigheten beregnes ut fra de beste anslagene på forekomstarealet i dag og om 50 år. Disse er angitt under fanen Utbredelse. <br/>
+                ? `<b>Ekspansjonshastigheten er beregnet til ${r.expansionSpeed} m/år basert på økningen i artens forekomstareal i perioden fra ${r.AOOyear1} til ${r.AOOyear2} og et mørketall på ${r.AOOdarkfigureBest}. Med usikkerhet: ${r.expansionLowerQ} m/år (mørketall på ${r.AOOdarkfigureLow}) - ${r.expansionUpperQ} m/år (mørketall på ${r.AOOdarkfigureHigh}).</b>`
+                : `Ekspansjonshastigheten beregnes ut fra de beste anslagene på forekomstarealet i dag og om 50 år. Disse er angitt under fanen Utbredelse. <br/><br/>
                 <b>Ekspansjonshastigheten er beregnet til ${r.expansionSpeed} m/år basert på det beste anslaget på artens forekomstareal i dag (${r.AOOtotalBest} km²) og om 50 år (${r.AOO50yrBest} km²).</b>`
              return result
         },

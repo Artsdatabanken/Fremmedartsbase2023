@@ -593,7 +593,7 @@
             {
                 "Id": "DistributionOptions",
                 "Value": "C3",
-                "Text": "Arten forekommer kun der den er introdusert og etablert der (C3)"
+                "Text": "Arten forekommer kun der den er introdusert og der er den også etablert (C3)"
             }
         ],
 
@@ -5131,21 +5131,49 @@
                         {
                             "Id": null,
                             "Value": "statusInNorway",
-                            "Text": "Hvilken etableringsklasse har arten i Norge?",
+                            "Text": "Hvilken etableringsklasse har arten ",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "statusInNorwayRegionallyAlien",
-                            "Text": "Hvilken status har artens regionalt fremmede forekomster i Norge?",
+                            "Text": "Hvilken status har artens regionalt fremmede forekomster ",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "highestCategoryPerToday",
-                            "Text": "Merk av den høyeste (øverste) klassen som oppfylles av arten i Norge i dag:",
+                            "Text": "Merk av den høyeste (øverste) klassen som oppfylles av arten ",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "inNorway",
+                            "Text": "i Norge?",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "inSvalbard",
+                            "Text": "på Svalbard?",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "inNorwayToday",
+                            "Text": "i Norge i dag:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "inSvalbardToday",
+                            "Text": "på Svalbard i dag:",
                             "Info": null,
                             "Children": null
                         },
@@ -5188,6 +5216,13 @@
                             "Id": null,
                             "Value": "uncertainityEstablishmentTimeDescription",
                             "Text": "Beskriv eventuell usikkerhet vedrørende artens etableringstidspunkt:",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "uncertainityStatusDescription",
+                            "Text": "Beskriv eventuell usikkerhet vedrørende etableringsklasse:",
                             "Info": null,
                             "Children": null
                         },
@@ -5509,7 +5544,7 @@
                         {
                             "Id": null,
                             "Value": "b",
-                            "Text": "Nei, arten spres til norsk natur kun/også via innendørs- eller produksjonsareal",
+                            "Text": "Nei, arten spres til norsk natur kun/også via innendørsareal eller artens eget produksjonsareal",
                             "Info": null,
                             "Children": null
                         }
@@ -6809,14 +6844,14 @@
                         {
                             "Id": null,
                             "Value": "weakContinental",
-                            "Text": "Svakt kontinental sekjson",
+                            "Text": "Svakt kontinental seksjon",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "clearContinental",
-                            "Text": "Klart kontinental sekjson",
+                            "Text": "Klart kontinental seksjon",
                             "Info": null,
                             "Children": null
                         },

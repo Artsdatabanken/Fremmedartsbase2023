@@ -43,6 +43,7 @@ function assessmentTabdefs(appState) {
             action(() => {
                 if(tab.enabled) {
                     appState.assessmentTabs.activeTab.id = tab.id
+                    window.scrollTo(0,0)
                     //                            appState.router.hash = "#" + tab.url + "/" + appState.assessmentId
                 }
             })()
@@ -60,6 +61,7 @@ function assessmentTabdefs(appState) {
                 //console.log('xxx', tab)
                 if(tab.enabled) {
                     appState.spredningsveierTabs.activeTab.id = tab.id
+                    window.scrollTo(0,0)
                     //appState.assessmentId = null
                     //                            appState.router.hash = "#" + tab.url + "/" + appState.assessmentId
                 }
@@ -78,6 +80,7 @@ function assessmentTabdefs(appState) {
             action(() => {
                 if(tab.enabled) {
                     appState.infoTabs.activeTab.id = tab.id
+                    window.scrollTo(0,0)
                 }
             })()
         }
@@ -94,6 +97,7 @@ function assessmentTabdefs(appState) {
             action(() => {
                 if(tab.enabled) {
                     appState.riskAssessmentTabs.activeTab.id = tab.id
+                    window.scrollTo(0,0)
                 }
             })()
         }
@@ -110,6 +114,7 @@ function assessmentTabdefs(appState) {
             action(() => {
                 if(tab.enabled) {
                     appState.moveAssessmentTabs.activeTab.id = tab.id
+                    window.scrollTo(0,0)
                 }
             })()
         }

@@ -250,7 +250,9 @@ This file will be imported into all other LESS files that uses this values
 
 .page_container > h1,
 .main div h1,
-.page_wrapper h2 {
+.page_wrapper h2,
+table.habitat .speciesNewItem,
+.criteria_list > li {
   //text-align: center;
   padding: 5px;
 }
@@ -274,16 +276,32 @@ This file will be imported into all other LESS files that uses this values
 .disabled {
   user-select: none;
   pointer-events: none;
+  color: #BBB; 
   /* cursor doesn't work if pointer-events is set to none */
   cursor: not-allowed;
+}
+
+.main .btn-primary:disabled, .main .btn-primary.disabled,
+.header_background .btn-primary:disabled, .header_backround .btn-primary.disabled   {
+  background-color: #f5f5f5;
+  color: #4c4a48;
+  border: 1px solid #363635;
 }
 
 td {
   padding-right: 4px;
   padding-left: 5px;
 }
-.table-impact > thead > tr > th{
+
+.table-impact > thead > tr > th {
   text-align: left;
+}
+
+.table-impact > tbody > tr > td {
+  text-align: left;
+  vertical-align: middle;
+  width: 20%;
+  padding-right: 15px;
 }
 
 .page_wrapper > .form_item {
@@ -293,15 +311,107 @@ td {
   }
 }
 
-.form_item .form-control{
-  max-width: 350px;
-  width: 55%;
+.page_wrapper > span {
+  margin-bottom: 20px;
+}
+
+.form_item {
+
+  h4 {
+    margin-left: 5px;
+  }
+  
+  p {
+    margin-bottom: 0;
+    margin-left: 10;
+  }
+
+  table button, p button {
+    margin-left: 0;
+  }
+
+  .table-hover {
+    width: auto;
+  }
+
+  div.row {
+    margin: 10px 0 0;
+  }
+
+  div > strong {
+    margin: 0;
+    padding: 0;
+  }
+
+  .form-control {
+    max-width: 350px;
+    width: 55%;
+  }
+
+  ul.criteria_list {
+    padding: 0;
+  }
+
+  .criteria_list span {
+    margin-left: 0;
+  }
+
+  .impact > tbody > tr > td > div > .form-control {  
+    min-width: 550px;
+    width: 80%;
+  }
+
+  table.references > tbody > tr {
+    td:first-child {
+      p {
+        margin-left: 30px;
+        text-indent: -30px;
+      }
+    }
+  }
+
+  .table-striped > tbody > tr > td > div {
+    //margin-top: 10px;
+    max-width: 100%;
+  }
+
+  .table-striped > tbody > tr > td > div > div > p > sup {
+    line-height: 1.42857143;
+  }
+
+  .choice > tbody > tr > td.kraftig > div > {   
+    width: 60%;
+  }
+
+}
+
+.form_item > .radio {
+  width: auto;
+  margin-top: 0;
+}
+
+.form_item.row div.newRef {
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.form_category .form_item_search > div, .form_item_search > table {
+  margin-left: 15px;
+}
+
+.form_item_search > table.table-striped > tbody > tr {
+  height: 50px;
 }
 
 div.form-control:empty:not(:focus):before {
   content: attr(placeholder);
   font-style: italic;
 }
+
+.fileUpload {
+  width: 60%;
+} 
 
 div.fileUpload div .form-control {
   width: 90%;
@@ -316,19 +426,24 @@ table.formtable b {
   margin-left: 20px;
 }
 
+#spreadHistories {
+  div, table, button {
+     margin-right: 10px;
+   }
+
+   td {
+    padding: 10px;
+    height: 180px;
+  }
+
+  tr.table-disabled, tr.table-disabled:hover {
+    background-color: #d3d3d3;
+  }
+} 
+
 .intervall .form-control {
   width: 100%;
 }
-
-.form_item > .impact > tbody > tr > td > div > .form-control {  
-  min-width: 550px;
-  width: 80%;
-}
-
-.form_item > .choice > tbody > tr > td.kraftig > div > {   
-  width: 60%;
-}
-
 
 //.intervall div,
 //.intervall .row,
@@ -337,24 +452,20 @@ table.formtable b {
   padding-bottom: 5px;
 }
 
-table.choice div {
-  padding-bottom: 0;
-}
-.table-impact > tbody > tr > td {
-  text-align: left;
-  vertical-align: middle;
-  width: 20%;
-  padding-right: 15px;
-}
+table.choice {
+  div {
+    padding-bottom: 0;
+  }
 
-table.choice tbody tr td {
-  text-align: center;
-  padding: 5px;
-}
+  tbody tr td {
+    text-align: center;
+    padding: 5px;
+  }
 
-table.choice .form-control {
-  width: 85%;
-}
+  .form-control {
+    width: 85%;
+  }
+} 
 
 table.formtable {
     p {
@@ -382,7 +493,7 @@ table.formtable {
 }
 
 // Make the text not be smoshed outside the page
-.row{
+.row {
   margin-left:10px;
   max-width:calc(100% - 10px);
 }
@@ -474,12 +585,6 @@ div .btn:hover, div .btn:active {
 }
 
 
-.main .btn-primary:disabled, .main .btn-primary.disabled,
-.header_background .btn-primary:disabled, .header_backround .btn-primary.disabled   {
-  background-color: #f5f5f5;
-  color: #4c4a48;
-  border: 1px solid #363635;
-}
 
 div .btn-flat:hover, 
 //div .btn:active *, 
@@ -534,10 +639,24 @@ a.btn-flat {
 }
 
 //.btn-flat .modal-body div,
-  .import .modal-body > div > div label {
+.import .modal-body > div > div label {
   white-space: break-spaces;
   float: left;
   text-align: left;
+}
+
+.import > .well {
+  .modal-dialog {
+    max-width: 850px;
+    .modal-content {
+      border-radius: 0;
+    }
+  }
+  // hide introductionSpread menu
+  .intro {
+    display: none;
+  }
+
 }
 
 li .dropdownButton {
@@ -554,12 +673,7 @@ div.naturetype .modal-dialog,
   max-width: 1200px;
             
 }
-.import > .well .modal-dialog {
-  max-width: 850px;
-  .modal-content {
-    border-radius: 0;
-  }
-}
+
 
 .main.adm table, .notmain table {
   width: 95%;
@@ -586,10 +700,7 @@ div.naturetype .modal-dialog,
   padding: 1px 1px 1px;
 }
 
-// hide introductionSpread menu
-.import > .well .intro {
-  display: none;
-}
+
 
 .modal-dialog > .modal-content > .modal-header {
   display: flex;
@@ -605,13 +716,28 @@ div.naturetype .modal-dialog,
   margin-right: 20px;
 }
 
-table.migrationPathways td {
-  white-space: break-spaces;
-  max-width: 200px;
-      div select.form-control {
-         width: 100px;
-      }
+
+.files {
+  display: flex;
+  margin-top: 50px;
 }
+
+.well table.migrationPathways {
+  td {
+    white-space: break-spaces;
+    max-width: 200px;
+        div select.form-control {
+           width: 100px;
+        }
+  }
+  .toolbar_styling {
+    display: none; 
+  }
+  .form-control {
+    width: 100px; 
+  }
+
+} 
 
 table.migrationPathways button, .files table button {
   height: 30px;
@@ -619,12 +745,14 @@ table.migrationPathways button, .files table button {
   box-shadow:none;
 }
 
-table.migrationPathways .toolbar_styling {
-  display: none; 
-}
 
-.well table.migrationPathways .form-control {
-  width: 100px; 
+fieldset.well .files table.table-striped {
+  margin-left: 0;
+  td {
+    padding: 10px;
+    background-color: #f5f5f5; 
+    max-width: 450px;
+  }
 }
 
 div.btn-flat.migration {
@@ -668,6 +796,32 @@ ul.migration {
 
 .import .modal-body > div > div .btn-group {
   margin-top: 0;
+}
+
+
+.well .import {
+  display: flex;
+  h5 {
+    margin-left: 20px;
+  }
+  .definitions {
+    width: 45%;
+    margin-left: 150px;
+    margin-top: 30px;
+
+    button {
+      box-shadow: none;
+    }
+
+    p {
+      border: 1px solid gray;
+      //border-radius: 28px;
+      background-color: #c5c5c5;
+      padding: 15px;
+      margin: 20px 0 0;
+    }
+    
+  }
 }
 
 .well div.generatedText > input.form-control { 
@@ -750,21 +904,19 @@ label{
   margin-top: 5px;
 }
 
-
 div.uncertainty {
   display: inline !important;
 input {
     margin-right: 7px;
   }
-}
 
+  input[type="radio"] {
+    margin-left: 5px;
+  }
+}
 
 .newRow {
   background-color: #D8D8D8;
-}
-
-.disabled {
-  color: #BBB;  
 }
 
 .connectedTaxons {
@@ -789,9 +941,6 @@ input {
   }
 }
 
-table.habitat .speciesNewItem {
-  padding: 5px;
-}
 
 table.habitat button.ok {
   padding: 2px 10px 2px;
@@ -839,7 +988,6 @@ table.habitat button.ok {
     background-color: #969696;
     color: white;
     cursor: text;
-    //padding: 5px;
 }
 
 .rlCategory {
@@ -995,10 +1143,6 @@ table.habitat button.ok {
     transform: rotate(-90deg);
 }
 
-.tree-view-children .tree-view-arrow {
-  -webkit-transform: rotate(0deg);
-  transform: rotate(0deg);
-}
 
 /*.tree-view-children .tree-view-arrow-collapsed {
   -webkit-transform: rotate(-90deg);
@@ -1021,6 +1165,17 @@ table.habitat button.ok {
     .btn {
       border: none;
     }
+
+    .btn-flat {
+      font-size: 11pt;
+      font-weight: bold;
+      background-color: #f5f5f5;
+    }
+  
+    .btn-flat:hover {
+      background-color: #4c4a48;
+      color: #fff;
+    }
 }
 
 p.bioCLZone {
@@ -1029,20 +1184,6 @@ p.bioCLZone {
 
 h5.bioCLZone {
   margin-left: 20px;
-}
-
-.bioclimaticZones { 
-    div {
-    /* -webkit-transform: rotate(-90deg);
-      -moz-transform: rotate(-90deg);
-      -ms-transform: rotate(-90deg);
-      transform: rotate(-90deg);*/
-      height: 50px;
-      margin-top: 100px;
-  }
-  table td input {
-      margin-left: 35px;
-  }
 }
 
 .natureType .btn-flat {
@@ -1055,29 +1196,23 @@ h5.bioCLZone {
 }
 
 .tree-view-children {
-    margin-left: 35px;    
+    margin-left: 35px; 
+    .tree-view-arrow {
+      -webkit-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }   
       div > .btn-flat {
         display: inline-block;
       }  
 }
 
-.natureType .tree-view-children button.btn-flat, .natureType .tree-view-children .hovedtype.btn-flat {
+.natureType .tree-view-children button.btn-flat, 
+.natureType .tree-view-children .hovedtype.btn-flat {
     font-size: medium;
     font-weight: normal;
     display: inline-block;
     padding: 2px;
   }
-
-.tree-view-label .btn-flat {
-  font-size: 11pt;
-  font-weight: bold;
-  background-color: #f5f5f5;
-}
-
-.tree-view-label .btn-flat:hover {
-  background-color: #4c4a48;
-  color: #fff;
-}
 
 .hovedtypegruppe {
     cursor: default;
@@ -1159,18 +1294,11 @@ span.naturtype-kode {
   margin-left: 10px;
 }
 
-.form_item > .checkbox {
-  padding-left: 20px;
-}
-
 .form_category > h3 {
   margin-left: 30px;
   font-size: 16pt;
 }
 
-.form_item > h4 {
-  margin-left: 5px;
-}
 
 .form_category > h4 {
   padding-top: 10px;
@@ -1195,25 +1323,47 @@ span.naturtype-kode {
   content: "\e013";  
 }
 
-.vurderinger  tbody tr:hover td {
-  background-color: #d6cfca;
-  transition: all 0.2s ease-in-out;
-}
+table.vurderinger {
 
-table.vurderinger td {
-  text-align: center;
-}
+  td {
+    text-align: center;
+  }
 
-table.vurderinger tbody tr td:first-child {
-  text-align: left;
-  padding-left: 20px;
+  thead tr {
+    position: sticky;
+    top: 40px;
+    height: 80px;
+  }
+
+  tbody {
+
+    tr:hover td {
+      background-color: #d6cfca;
+      transition: all 0.2s ease-in-out;
+    }
+
+    tr td:first-child {
+      text-align: left;
+      padding-left: 20px;
+    }
+
+    tr > td.sciName {
+      min-width: 200px;
+    }
+
+  } 
+
 }
 
 li.checkbox > label {
-      white-space: nowrap; 
+  white-space: nowrap; 
 }
 .checkbox input[type="checkbox"] {
   margin-top: 5px;
+}
+
+.form_item > .checkbox {
+  padding-left: 20px;
 }
 
 ul.scores {
@@ -1225,18 +1375,16 @@ ul.scores li.checkbox label input,
   margin-left: 30px;
 }
 
+.waterAreas {
+  width: 33%;
+  height: 500px;
+  margin-bottom: 20px;
+  margin-top: 40px;  
+} 
+
 .selectAssessment, .chooseSpecies {
   display: flex;
 }
-
-.files {
-  display: flex;
-  margin-top: 50px;
-}
-
-.fileUpload {
-  width: 60%;
-} 
 
 .chooseSpecies > div {
   float: left; 
@@ -1245,6 +1393,10 @@ ul.scores li.checkbox label input,
   fieldset.well {      
     margin-bottom: 5px;
   }
+}
+
+fieldset.invisible.well {
+  display: none;
 }
 
 .selectAssessment > div {
@@ -1263,24 +1415,85 @@ ul.scores li.checkbox label input,
   width: 100%;
 }
 
-.selectAssessment .checkbox {
-  padding-left: 50px;
+.selectAssessment {
+  .checkbox {
+    padding-left: 50px;
+  }
+
+  input.btn-primary {
+    height: 40px;
+    margin-top: 15px;
+  }
+
+} 
+
+.filters {
+  label, .faner, .nav_menu {
+      font-weight: normal;
+      cursor: pointer;
+  }
+
+  input {
+    margin-top: 160px;
+    margin-left: 60px;
+  }
+
+  .taxon {
+      display: flex;
+      width: 25%;
+      border: none;
+      margin-right: 10px;
+    }
+
+    p {
+      margin-bottom: 20px;
+    }
+
+    .riskStatus label {
+      font-weight: 500;
+    }
+
+    h2 > .btn-primary {
+      margin-left: 30px;
+      a {
+        color: inherit;
+      }
+    }
 }
 
-.selectAssessment input.btn-primary {
-  height: 40px;
-  margin-top: 15px;
+.scanning, .filters div div.input_field,
+.well div.input_field {
+  margin: 10px 20px 10px;
 }
 
-.filters > h2 > .btn-primary {
-  margin-left: 30px;
-  a {
-    color: inherit;
+.input_field > div {
+  //max-width: 900px;
+  margin-top: 0;
+  padding-top: 15px;
+}
+
+.well > div > div.connectedTaxons {
+  .input_field {
+    margin-left: 10px;
+  }
+  p {
+    margin-left: 50px;
+  }
+} 
+
+.well > div > .input_field > .form-control > p {
+  margin-left: 0;
+}
+.well div div.input_field {
+  margin-top: 0;
+
+  .toolbar_styling {
+    padding-top: 5px;
   }
 }
 
-.filters .riskStatus label {
-  font-weight: 500;
+.input_field > div.toolbar_styling.disabled {
+  display: none;
 }
 
 .well > div > div.checkbox, .well > div > ul > li.checkbox {
@@ -1302,9 +1515,7 @@ ul.scores li.checkbox label input,
   float: left;  
 }
 
-.form_item > .table-hover {
-  width: auto;
-}
+
 
 .container_description {
   margin: auto;
@@ -1352,16 +1563,8 @@ ul.scores li.checkbox label input,
   margin-right: auto;
 }
 
-.criteria_list > li {
-  padding: 5px;
-}
-
 .criterion {
   margin: 10px 25px 10px;
-}
-
-.uncertainty input[type="radio"] {
-  margin-left: 5px;
 }
 
 .input_container > div {
@@ -1379,8 +1582,8 @@ ul.scores li.checkbox label input,
   width: 80%;
 }
 .form_category > .form_item > table > tbody > tr > td > .radio > label {
- margin: 0;
- padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .form_category > .form_item > .table-hover > tbody > tr > td:first-child,
@@ -1426,19 +1629,7 @@ td > .radiohorizontal > .radio {
 .populasjonsstørrelse > .radiohorizontal > .radio {
   width: 35%;
 }
-.form_item > .radio {
-  width: auto;
-  margin-top: 0;
-}
 
-.form_item > div > strong {
-  margin: 0;
-  padding: 0;
-}
-
-.form_item div.row {
-  margin: 10px 0 0;
-}
 
 .interval {
   margin-top: 20px;
@@ -1460,20 +1651,6 @@ td > .radiohorizontal > .radio {
 .dropdown-menu > li > a {
   text-align: center;
   border-radius: 24px;
-}
-
-.page_wrapper > span {
-  margin-bottom: 20px;
-}
-
-.input_field > div {
-  //max-width: 900px;
-  margin-top: 0;
-  padding-top: 15px;
-}
-
-.input_field > div.toolbar_styling.disabled {
-  display: none;
 }
 
 .container_description > p,
@@ -1511,12 +1688,6 @@ table.table-striped.warning tr {
 
 .table-striped thead tr {
   background-color: #5FB7B1;
-}
-
-table.vurderinger thead tr {
-  position: sticky;
-  top: 40px;
-  height: 80px;
 }
 
 .table-striped > tbody > tr > td,
@@ -1599,20 +1770,6 @@ table.table-hover,
   margin-left: 0;
 }
 
-.form_item p {
-  margin-bottom: 0;
-  margin-left: 10;
-}
-
-.table-striped tbody tr td p {
-  margin-left: 0;
-}
-
-.form_item table button,
-.form_item p button {
-  margin-left: 0;
-}
-
 .units ul,
 .info p {
   margin-left: 0;
@@ -1620,14 +1777,6 @@ table.table-hover,
 .responsive p {
   margin-left: 35px;
   margin-bottom: 10px;
-}
-
-.form_item ul.criteria_list {
-  padding: 0;
-}
-
-.form_item > .criteria_list span {
-  margin-left: 0;
 }
 
 .criteria_list > .table-striped > tbody > tr > td {
@@ -1649,32 +1798,24 @@ table.table-hover,
   padding: 15px;
 }
 
-.filter div li:hover {
-  background-color: transparent;
-}
+.filter div {
 
-.filter div li span {
-  margin-left: 10px;
-  margin-right: 10px;
-  font-size: medium;
-}
+  li span {
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: medium;
+  }
+
+  li:hover {
+    background-color: transparent;
+  }
+
+} 
 
 .counter {
   margin-bottom: 10px;
   padding-bottom: 10px;
   border-bottom: 1px dotted #fff;
-}
-
-
-.usedFilters button:disabled {
-  background-color: #ddd;
-  color: #888;
-}
-
-.usedFilters a {
-  margin-left: 10px;
-  color: #000;
-  font-weight: bold;
 }
 
 .usedFilters {
@@ -1685,12 +1826,25 @@ table.table-hover,
   top: 35px;
   background-color: #ccece6;  
   color: #000;
+
+  a {
+    margin-left: 10px;
+    color: #000;
+    font-weight: bold;
+  }
+
   button {  
     border: 1px solid #000;
     //border-radius: 20px;
     color: #000;
     margin: 2px 10px 2px;
   }
+
+  button:disabled {
+    background-color: #ddd;
+    color: #888;
+  }
+
   .counter input {
     float: right;
     height: 30px;
@@ -1722,35 +1876,29 @@ table.table-hover,
   margin-bottom: 20px;
   border: 1px solid #ddd;
   background-color: #f5f5f5;
-}
 
-.assessmentType .radio {
-  margin-left: 30px;
+  .radio {
+    margin-left: 30px;
+  }
 }
 
 /*.well .radio {
   margin-left: 10px;
 }*/
 
-.well .row .form-control {
-  margin-left: 20px;
-}
-
 .well > .col-md-6 > div {
   margin-left: 20px;
   margin-right: 10px;
 }
 
-.well .statusField > p {
-  margin-left: 0;
-  width: auto;
-}
-
-.row > div, .row > div > div, .row > div > div > div {
+.row > div, 
+.row > div > div, 
+.row > div > div > div {
   margin-left: 0;
 }
 
-.selectFilter > .filters > div.checkbox, .selectFilter > div > .filters > ul > li.checkbox {
+.selectFilter > .filters > div.checkbox, 
+.selectFilter > div > .filters > ul > li.checkbox {
   margin-left: 40px;
 }
 
@@ -1828,14 +1976,49 @@ ul.faner {
           white-space: break-spaces;
         }
     }
-
+    .filters:last-child {
+      margin-right: 0;
+    }
+  } 
 }
 
-  .nav_menu .filters:last-child {
-    margin-right: 0;
+.nav_menu {
+  .filters li.checkbox {
+      text-align: left;
+  }
+
+  li.disabled {
+    opacity: 0.5;
+  }
+
+  li.disabled:hover {
+    background-color: transparent;
+    color: #5a5b5d;
   }
 }
 
+
+.main {
+
+  .submenu {
+    top: 141px;
+    padding: 10px 0 10px;
+    border-bottom: 2px solid gray;
+    border-top: 2px solid gray;
+    background-color: #C9D6D9;
+    position: sticky;
+    z-index: 1;
+  }
+
+  .nav_menu > li.active:focus, .main .nav_menu > li.active {
+    background-color: #f5f5f5;
+    color: #4c4a48;
+  }
+} 
+
+._container .nav_menu li, .main > div > .nav_menu li, .main .submenu li {
+  border-radius: 0;
+}
 
 .filters {
   width: auto;
@@ -1879,42 +2062,11 @@ ul.faner {
   
 }
 
-.main .submenu {
-  top: 141px;
-  padding: 10px 0 10px;
-  border-bottom: 2px solid gray;
-  border-top: 2px solid gray;
-  background-color: #C9D6D9;
-  position: sticky;
-  z-index: 1;
-}
-
-.nav_menu .filters li.checkbox {
-  text-align: left;
-}
-
-._container .nav_menu li, .main > div > .nav_menu li, .main .submenu li {
-  border-radius: 0;
-}
-
-.nav_menu li.disabled {
-  opacity: 0.5;
-}
-
-.main .nav_menu > li.active:focus, .main .nav_menu > li.active {
-  background-color: #f5f5f5;
-  color: #4c4a48;
-}
-
 /*._container ul.nav_menu li.active:focus, ._container ul.nav_menu li.active {
   background-color: #4c4a48;
   color: #fff;
 }*/
 
-.nav_menu li.disabled:hover {
-  background-color: transparent;
-  color: #5a5b5d;
-}
 
 fieldset.well {
   border: 1px solid #e3e3e3;
@@ -1930,7 +2082,7 @@ fieldset.well {
     margin-top: 0;
   }
 
-  button.dropdown-toggle{
+  button.dropdown-toggle {
     padding-top: 2px;
   }
 
@@ -1944,18 +2096,60 @@ fieldset.well {
 
 }
 
-fieldset.well .files table.table-striped {
-  margin-left: 0;
-  td {
-    padding: 10px;
-    background-color: #f5f5f5; 
-    max-width: 450px;
-  }
-}
+.well {
 
-.well button.pull-left {
-  margin-left: 20px;
-}
+  .row .form-control {
+    margin-left: 20px;
+  } 
+
+  button.pull-left {
+    margin-left: 20px;
+  }
+  .radio label {
+    padding-left: 40px;
+  }
+
+  .row label {
+    padding-left: 20px;
+  }
+
+  .checkbox label {
+    padding-left: 28px;
+    margin-left: 0;
+  }
+
+  div {
+    .form-control {
+      width: auto;
+      //margin-left: 30px;
+    }
+
+    .input_field .form-control {  
+      min-height: 80px;
+      height: 15%;
+    }
+
+  } 
+
+  div.knownDistribution .form-control {
+    width: 100%;
+  }
+
+  table.BCritTable {
+    width: 50%;
+    margin: 20px 0 20px;
+  
+    th {
+      max-width: 180px;
+      white-space: break-spaces;
+    }
+  
+    .BCritYear .form-control {
+      width: 60px;
+    }
+  }
+
+} 
 
 //fieldset.well > div, 
 div.well h4 {
@@ -1965,68 +2159,6 @@ div.well h4 {
 div.well > .btn-group {
   margin-bottom: 30px; 
   margin-left: 20px;
-}
-.well .radio label {
-  padding-left: 40px;
-}
-
-.well .row label {
-  padding-left: 20px;
-}
-
-.well .checkbox label {
-  padding-left: 28px;
-  margin-left: 0;
-}
-
-.well div .form-control {
-  width: auto;
-  //margin-left: 30px;
-}
-
-.well table.BCritTable th {
-  max-width: 180px;
-  white-space: break-spaces;
-}
-
-.well table.BCritTable .BCritYear .form-control {
-  width: 60px;
-}
-
-.well div.knownDistribution .form-control {
-  width: 100%;
-}
-
-.well div .input_field .form-control {  
-  min-height: 80px;
-  height: 15%;
-}
-
-.well .import {
-  display: flex;
-}
-
-.import h5 {
-  margin-left: 20px;
-}
-
-.well .import .definitions p {
-  border: 1px solid gray;
-  //border-radius: 28px;
-  background-color: #c5c5c5;
-  padding: 15px;
-  margin: 20px 0 0;
-}
-
-.import .definitions {
-    width: 45%;
-    margin-left: 150px;
-    margin-top: 50px;
-
-    button {
-      box-shadow: none;
-    }
-    
 }
 
 ul.geoVar {
@@ -2046,38 +2178,21 @@ div.geoVarInput > div > div.input_field > div.form-control {
   height: 80%;
 }
 
-.well > p, .well > b {
+.well > p, 
+.well > b {
   margin: 10px 20px 10px;
 }
 
-.well > div > p, .well > div > div > p, .well > div > div > div > p  {
+.well > div > p, 
+.well > div > div > p, 
+.well > div > div > div > p  {
   margin-left: 20px;
-}
-
-.well > div > div.connectedTaxons p {
-  margin-left: 50px;
-}
-
-.well > div > div.connectedTaxons .input_field {
-  margin-left: 10px;
-}
-
-.well > div > .input_field > .form-control > p {
-  margin-left: 0;
 }
 
 .well > p, .well div > p,
 .well > label,
 .well > div > label {
   margin-bottom: 0;
-}
-
-.well div div.input_field {
-  margin-top: 0;
-
-  .toolbar_styling {
-    padding-top: 5px;
-  }
 }
 
 .well div div.radio {
@@ -2087,33 +2202,93 @@ div.geoVarInput > div > div.input_field > div.form-control {
 .well p.furtherInfo {
   margin: 20px 20px 0;
 }
+
 .statusField, .BCritFiles {
   display: flex;
   padding: 10px 0 10px;
   margin-left: 20px;
 }
 
-.statusField input[type=checkbox] {
-  margin: 6px 10px 0;
+
+.well .statusField > p {
+  margin-left: 0;
+  width: auto;
 }
 
-.statusField .firstObs {
-  float: left;
-  width: 60%;
-}
+.statusField {
+
+  .labels {
+    width: 250px;
+  }
+
+  .labels.distribution {
+    width: 550px;
+  
+    p {
+      width: 100%;
+      height: 40px;
+      margin: 25px 0 0;
+    }
+  }
+
+  .labels.distribution.dk p {
+    width: 100%;
+    height: 70px;
+    margin: 85px 0 0;
+  }
+
+  .labels p, .labelsB p {
+    margin: 15px 0 25px;
+  }
+
+  p {
+    width: 350px;
+    margin-right: 10px;
+  }
+
+  input[type=checkbox] {
+    margin: 6px 10px 0;
+  }
+
+  .firstObs {
+    float: left;
+    width: 60%;
+
+    li {
+      margin-top: 19px;
+      margin-bottom: 16px;
+    }
+  }
+
+  .numbers div {
+    margin: 10px 0 5px;
+  }
+
+  .numberFields .form-control, .numberFieldsB .form-control {
+    margin: 0 0 15px;
+    width: 50%;
+  }
+
+  .otherInfo .form-control {
+    width: 50%;
+  }
+
+  .numberFields div  {
+
+    input.form-control {
+      margin: 10px 15px 10px;
+    }
+
+    select.form-control {
+      margin: 5px 15px 5px;
+    }
+
+  }
+
+} 
 
 .filenames {
   width: 35%;
-  float: left;
-}
-
-.statusField .firstObs li {
-  margin-top: 19px;
-  margin-bottom: 16px;
-}
-
-.statusField .yearsAndCheckboxes,
-.fileDescriptions {
   float: left;
 }
 
@@ -2121,40 +2296,11 @@ div.geoVarInput > div > div.input_field > div.form-control {
   margin-left: 20px;
 }
 
-.statusField .numberFields .form-control,
-.statusField .numberFieldsB .form-control {
-  margin: 0 0 15px;
-  width: 50%;
-}
-
-.statusField .otherInfo .form-control {
-  width: 50%;
-}
-
-.statusField .numberFields div input.form-control {
-  margin: 10px 15px 10px;
-}
-
-.statusField .numberFields div select.form-control {
-  margin: 5px 15px 5px;
-}
-
 .connectedTaxon input.form-control {
   margin-left: 30px;
 }
 
-.statusField .labels {
-  width: 250px;
-}
 
-.statusField .numbers div {
-  margin: 10px 0 5px;
-}
-
-.statusField p {
-  width: 350px;
-  margin-right: 10px;
-}
 .labelsB {
   width: 35%;
 }
@@ -2163,40 +2309,10 @@ div.geoVarInput > div > div.input_field > div.form-control {
   width: 65%;
 }
 
-.statusField .labels p,
-.statusField .labelsB p {
-  margin: 15px 0 25px;
-}
-
-.statusField .labels.distribution {
-  width: 550px;
-}
-.statusField .labels.distribution p {
-  width: 100%;
-  height: 40px;
-  margin: 25px 0 0;
-}
-
-.statusField .labels.distribution.dk p {
-  width: 100%;
-  height: 70px;
-  margin: 85px 0 0;
-}
-
 .labels.distribution > p > b,
 .labels.distribution > div > p > b,
 .well > div > div > p > b {
   margin: 0;
-}
-
-#spreadHistories div, #spreadHistories table, #spreadHistories button {
- // margin-left: 20px;
-  margin-right: 10px;
-}
-
-#spreadHistories td {
-  padding: 10px;
-  height: 180px;
 }
 
 .doorKnockerSpread {
@@ -2206,11 +2322,6 @@ div.geoVarInput > div > div.input_field > div.form-control {
 
 .doorKnocker {
   display: none;
-}
-
-.BCritTable {
-  width: 50%;
-  margin: 20px 0 20px;
 }
 
 table.Bcrit tr label {
@@ -2225,12 +2336,8 @@ table.Bcrit tr label {
     }
 }
 
-#spreadHistories tr.table-disabled, #spreadHistories tr.table-disabled:hover {
-  background-color: #d3d3d3;
-}
-
-.listOfYears p {
-  text-align: center;
+fieldset.well div.spreadArea input {
+  margin: 8px 0 0;
 }
 
 .changedNature {
@@ -2238,6 +2345,10 @@ table.Bcrit tr label {
   .form-control {
     margin-left: 20px;
   }
+}
+
+.listOfYears p {
+  text-align: center;
 }
 
 .listOfYears > li {
@@ -2250,6 +2361,11 @@ table.Bcrit tr label {
       width: 100%;
     }
   }
+}
+
+.statusField .yearsAndCheckboxes,
+.fileDescriptions {
+  float: left;
 }
 
 .yearsAndCheckboxes > ul.listOfYears,
@@ -2288,86 +2404,78 @@ table.distribution {
   }
 }
 
-
-.errorMessages {
-  
-  height: 180px;
-}
-
 div.distribution > h5 {
   text-align: left;
   margin-left: 170px;
 }
 
-
-.filters label, .faner, .nav_menu {
-  font-weight: normal;
-  cursor: pointer;
-}
-.filters input {
-  margin-top: 160px;
-  margin-left: 60px;
+.errorMessages {  
+  height: 180px;
 }
 
-.filters .taxon
- {
-  display: flex;
-  width: 25%;
-  border: none;
-  margin-right: 10px;
-}
-
-.filters p {
-  margin-bottom: 20px;
-}
-
-.scanning, .filters div div.input_field,
-.well div.input_field {
-  margin: 10px 20px 10px;
-}
-
-div.modal-body > div, .bioclimaticZones {
+div.modal-body > div, 
+.bioclimaticZones {
   display: flex;
   margin-bottom: 50px;
 }
 
-.natureTypes div {
-  margin-bottom: 20px;
+.bioclimaticZones { 
+  div {
+  /* -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    transform: rotate(-90deg);*/
+    height: 50px;
+    margin-top: 100px;
+}
+table td input {
+    margin-left: 35px;
+  }
 }
 
-.natureTypes div .form-control, .natureTypes .btn-group {
-  margin: 0 25px 0; 
+.natureTypes div {
+  margin-bottom: 20px;
+
+  .form-control, .natureTypes .btn-group {
+    margin: 0 25px 0; 
+  }
 }
 
 .taxon {
   margin-left: 20px;
+
+  div {
+    display: flex;
+    width: 20%;
+    border: none;
+    margin-right: 10px;
+  }
+
+  li {
+    display: flex;
+  }
+
+  span {
+    margin-bottom: 0;
+  }
+
 }
 
-.taxon div {
-  display: flex;
-  width: 20%;
-  border: none;
-  margin-right: 10px;
-}
-.taxon li {
-  display: flex;
-}
-.taxon span {
-  margin-bottom: 0;
-}
+.comment {
+  span {
+    margin-right: 20px; 
+  }
 
-.comment span {
-  margin-right: 20px; 
-}
+  .checkbox {
+    margin-bottom: 0;
+    margin-left: 10px;
+  }
 
-.comment .checkbox {
-  margin-bottom: 0;
-  margin-left: 10px;
-}
+  .checkbox input {
+    margin-left: -20px;
+  }
 
-.comment .checkbox input {
-  margin-left: -20px;
-}
+} 
 
 .taxon input,
 .comment input {
@@ -2404,29 +2512,6 @@ div.modal-body > div, .bioclimaticZones {
   }
 }
 
-.form_item > table.references > tbody > tr {
-  td:first-child {
-    p {
-      margin-left: 30px;
-      text-indent: -30px;
-    }
-  }
-}
-
-.form_item.row div.newRef {
-  display: flex;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-.form_category .form_item_search > div, .form_item_search > table {
-  margin-left: 15px;
-}
-
-.form_item_search > table.table-striped > tbody > tr {
-  height: 50px;
-}
-
 div.commentField .form-control {
   height: 35%;
   font-family: Arial; 
@@ -2437,17 +2522,13 @@ button.sendComment {
   margin-top: 20px;
 }
 
-.vurderinger > tbody > tr > td.sciName {
-  min-width: 200px;
-}
 .form_category > .form_item > .table-striped > tbody > tr > td{
   vertical-align: top;
 }
 
-.form_item > .table-striped > tbody > tr > td > div {
-  //margin-top: 10px;
-  max-width: 100%;
-}
+.table-striped > tbody > tr > td {
+  padding: 10px;
+} 
 
 .form_category > .form_item > .table-striped > tbody > tr > td > div,
 .form_category > .form_item > .table-striped > tbody > tr > td > div > div,
@@ -2459,10 +2540,6 @@ button.sendComment {
   width: 100%;
 }
 
-.table-striped > tbody > tr > td {
-  padding: 10px;
-} 
-
 .form_category > .form_item > .table-striped > tbody > tr > td > p > span > b {
   font-weight: 400;
 }
@@ -2471,14 +2548,6 @@ button.sendComment {
   height: auto;
   width: 100%;
 }*/
-
-.form_item > .table-striped > tbody > tr > td > div > div > p > sup {
-  line-height: 1.42857143;
-}
-
-table.ecologicalEffect .form-control, table.naturetype .form-control {
-  font-size: 10pt;
-}
 
 fieldset.well table.naturetype {
   font-size: 10pt;
@@ -2524,6 +2593,11 @@ fieldset.well table.ecologicalEffect {
 
   .form-control {
     max-width: 110px;
+    font-size: 10pt;
+  }
+
+  table.naturetype .form-control {
+    font-size: 10pt;
   }
 
   .HCrit .form-control {
@@ -2557,8 +2631,30 @@ fieldset.well table.ecologicalEffect {
 
 }
 
+p.reasonsForChange {
+
+  border: 1px solid gray;
+  background-color: lightgray;
+  border-radius: 28px;
+  padding-left: 20px;
+  width: 50%;
+  min-height: 30px;
+}
+
+div.climateChange {
+  padding: 5px 10px 10px;
+  margin: 10px 20px 10px;
+  border: 1px solid gray;
+  border-radius: 28px;
+}
+
 .table-striped > tbody > tr > td > h1 {
   margin-top: 0; 
+}
+
+
+.table-striped tbody tr td p {
+  margin-left: 0;
 }
 
 .table-striped > tbody > tr > td > p > *,
@@ -2579,22 +2675,6 @@ fieldset.well table.ecologicalEffect {
   font-family: Arial;
 }
 
-p.reasonsForChange {
-
-  border: 1px solid gray;
-  background-color: lightgray;
-  border-radius: 28px;
-  padding-left: 20px;
-  width: 50%;
-  min-height: 30px;
-}
-
-div.climateChange {
-  padding: 5px 10px 10px;
-  margin: 10px 20px 10px;
-  border: 1px solid gray;
-  border-radius: 28px;
-}
 
 
 /*.dropdown-check-list {

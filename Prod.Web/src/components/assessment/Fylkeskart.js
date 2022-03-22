@@ -48,6 +48,7 @@ export default class Fylkeskart extends React.Component {
                     boundaryPath={boundary.regions[kode]}
                     style={style}
                     readonly={readOnly}
+                    disabled={disabled}
                     onMouseLeave={(e) => this.setState({hoveringOver: null})}
                     onMouseOver={(e)=> !readOnly && this.setState({hoveringOver: kode})}
                     onMouseDown={(e)=> !readOnly && this.props.onMouseDown(e, kode)}
@@ -69,14 +70,14 @@ export default class Fylkeskart extends React.Component {
 }
 
 const Region = ({
-        kode, title, boundaryPath, style, readonly, onMouseDown,
+        kode, title, boundaryPath, style, readonly, disabled, onMouseDown,
         onMouseUp, onMouseOver, onMouseLeave}) =>
     {
     return <g
         key={kode}
         stroke={style.stroke}
         fill={style.fill}
-        style={{ cursor: readonly ? "arrow" : "hand" }}
+        style={{ cursor: readonly || disabled ? "arrow" : "hand" }}
         onMouseDown={ onMouseDown }
         onMouseUp={onMouseUp }
         onMouseOver={ onMouseOver }

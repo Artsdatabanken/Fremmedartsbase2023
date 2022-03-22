@@ -20,10 +20,6 @@ export class ObservableMultiselectArrayCheckboxes extends React.Component {
         if(!codes) {
             console.log("ObservableMultiselectArrayCheckboxes - prop:" + prop + " no codes")
         }
-        console.log("Observable value")
-        console.log(observableValue)
-        console.log(codes)
-        console.log("Achtung!")
         return(
             <ul className={className ? className : "" }  >
                 {codes.map(code => 

@@ -422,6 +422,99 @@ namespace Prod.Api.Controllers
 
             return Ok();
         }
+
+
+        private async Task<FA4> moveAssessment(ProdDbContext dbContext, string expertgroup, User user,
+            int scientificNameId, FA4 assessment, int assessmentId) // change taxonomic info
+        {
+            if (string.IsNullOrWhiteSpace(expertgroup))
+            {
+                throw new ArgumentNullException("expertgroup");
+            }
+            if (user == null)
+            {
+                throw new ArgumentNullException("user");
+            }
+            var existingAssessment = await dbContext.Assessments.Where(x => x.ScientificNameId == scientificNameId && x.Expertgroup == expertgroup && x.IsDeleted == false).Select(x => x.Id).FirstOrDefaultAsync();
+            if (existingAssessment > 0 && existingAssessment != assessmentId)
+            {
+                throw new ArgumentException("supplied scientificNameId already exists in database");
+            }
+
+
+            var ts = new Prod.Api.Services.TaxonService();
+            var titask = ts.GetTaxonInfoAsync(scientificNameId);
+            var ti = titask.GetAwaiter().GetResult();
+            var (hierarcy, rank) = TaxonService.GetFullPathScientificName(ti);
+
+            if (scientificNameId != ti.ValidScientificNameId)
+            {
+                throw new ArgumentException("supplied scientificNameId is not ValidScientificNameId");
+            }
+
+            var oldTaxonInfo = new TaxonHistory()
+            {
+                date = DateTime.Now,
+                username = user.UserName,
+                Ekspertgruppe = assessment.ExpertGroup,
+                TaxonId = assessment.TaxonId,
+                //TaxonRank = assessment.TaxonRank,
+                TaxonRank = assessment.EvaluatedScientificNameRank,
+                VitenskapeligNavn = assessment.EvaluatedScientificName,
+                VitenskapeligNavnAutor = assessment.EvaluatedScientificNameAuthor,
+                VitenskapeligNavnHierarki = assessment.TaxonHierarcy,
+                VitenskapeligNavnId = assessment.EvaluatedScientificNameId ?? -1
+            };
+
+            assessment.EvaluatedScientificName = ti.ValidScientificName;
+            assessment.EvaluatedScientificNameId = ti.ValidScientificNameId;
+            assessment.EvaluatedScientificNameAuthor = ti.ValidScientificNameAuthorship;
+            assessment.TaxonHierarcy = hierarcy;
+            //assessment.LatinsknavnId = ti.ValidScientificNameId;
+            assessment.TaxonId = ti.TaxonId;
+            assessment.EvaluatedScientificNameRank = rank;
+            assessment.EvaluatedVernacularName = ti.PrefferedPopularname;
+
+            assessment.TaxonomicHistory.Add(oldTaxonInfo);
+
+            return assessment;
+        }
+
+        [HttpPost("{id}/move")]
+        public async Task<IActionResult> MoveAssessment([FromBody] Taxinfo value, int id)
+        {
+            var now = DateTime.Now;
+            var data = await _dbContext.Assessments.Where(x => x.Id == id).FirstOrDefaultAsync();
+            if (string.IsNullOrWhiteSpace(data.Doc)) return null;
+
+            //var doc = JsonConvert.DeserializeObject<FA4>(data.Doc);
+            var doc = JsonSerializer.Deserialize<FA4>(data.Doc);
+
+            var role = await base.GetRoleInGroup(doc.ExpertGroup);
+            try
+            {
+                //if (role.WriteAccess && (doc.LockedForEditBy == role.User.Brukernavn) && (doc.Ekspertgruppe == value.ExpertGroup))
+                if (doc.ExpertGroup == value.Ekspertgruppe)
+                {
+                    int scientificNameId = value.ScientificNameId;
+                    var assessment = await moveAssessment(_dbContext, value.Ekspertgruppe, role.User, scientificNameId, doc, id);
+                    await StoreAssessment(id, assessment, role.User, true, true);
+                    // 5 lagre
+                }
+                else
+                {
+                    throw new Exception("IKKE SKRIVETILGANG TIL DENNE VURDERINGEN");
+                }
+            }
+            catch (Exception e)
+            {
+                return Unauthorized(e.Message);
+            }
+            return Ok();
+        }
+
+
+
         [HttpGet("{id}/movehorizon/{doorknockerstate}")]
         public async Task<IActionResult> MoveHorizon(int id, string doorknockerstate)
         {

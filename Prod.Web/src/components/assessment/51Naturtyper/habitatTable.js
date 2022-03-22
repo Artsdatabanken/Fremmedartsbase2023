@@ -138,11 +138,11 @@ export class HabitatTableRow extends React.Component {
                     <td>{nt.taxon ? nt.taxon.scientificName : ""}</td>}
                 {this.edit
                 ?
-                <td>{assessment.alienSpeciesCategory == "DoorKnocker" ? koder.timeHorizon[1].Text : 
-                        //kodeTekst(koder.timeHorizon, nt.timeHorizon)
-                        <Xcomp.StringEnum observableValue={[nt, 'timeHorizon']} forceSync codes={koder.timeHorizon} />
-                        }</td> :
-                <td>{kodeTekst(koder.timeHorizon, nt.timeHorizon)}</td>
+                    <td>{(assessment.alienSpeciesCategory == "DoorKnocker" && assessment.speciesStatus == "A") ? koder.timeHorizon[1].Text : 
+                            //kodeTekst(koder.timeHorizon, nt.timeHorizon)
+                            <Xcomp.StringEnum observableValue={[nt, 'timeHorizon']} forceSync codes={koder.timeHorizon} />
+                            }</td> :
+                    <td>{kodeTekst(koder.timeHorizon, nt.timeHorizon)}</td>
                     }
                 {/*<td>{kodeTekst(koder.colonizedArea, nt.colonizedArea)}</td>
                 <td>{stateChangLabel}</td>
@@ -173,6 +173,7 @@ export class HabitatTableRow extends React.Component {
                     ? <NaturtypeModal 
                         naturtype={nt}
                         taxon={taxon} 
+                        assessment={assessment}
                         showModal={[this, "showModal"]}
                         hideStateChange={[this, "hideStateChange"]} 
                         onOk={this.updateNaturetype} 

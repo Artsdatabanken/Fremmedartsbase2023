@@ -6,18 +6,18 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import * as Xcomp from './../observableComponents';
 import { action } from 'mobx';
 
-
 @observer
 export default class LivsmediumSelector extends React.Component {
     constructor(props) {
         console.log("nts: " + JSON.stringify(props.naturtyper, undefined))
         super(props)
+        const ass = props.assessment
         this.setSelectedNT = action ((naturtypekode) => {
             console.log("Livsmedium kode: " + naturtypekode.Id)
             const nnt = props.nyNaturtype
             nnt.niNCode = naturtypekode.Id
             nnt.name = naturtypekode.Text
-            nnt.timeHorizon = null
+            nnt.timeHorizon = (ass.speciesStatus == "A" && ass.alienSpeciesCategory == "DoorKnocker") ? "future" : null,
             nnt.colonizedArea = null
             nnt.taxon = {
                 id: "newHabitatTaxon",

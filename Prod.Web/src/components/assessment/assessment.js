@@ -162,7 +162,7 @@ class AssessmentRoot extends Component {
         }
 
 
-        window.scrollTo(0,0)
+        //window.scrollTo(0,0)
         return (
             <div>
                 {/*{assessment.popularName ? 

@@ -236,7 +236,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
         const critB = riskAssessment.critB
         const critC = riskAssessment.critC
         const textAS = riskAssessment.a1aresulttext
-        console.log(textAS)
+        //console.log(textAS)
         //stringFormat(labels.AcritText.SelfProducing)
         const textDK = riskAssessment.a1bresulttext
         
@@ -297,13 +297,17 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                         <div>
 
                         {assessment.alienSpeciesCategory == "DoorKnocker" ? 
-                        <p>{textDK}
+                        <p
+                            dangerouslySetInnerHTML={{ __html: textDK}}>
                            </p> :
                         <p 
-                        /*dangerouslySetInnerHTML={{
+                        dangerouslySetInnerHTML={{
                             __html: riskAssessment.a1aresulttext
-                        }}*/
-                         >  {riskAssessment.a1aresulttext}</p>}
+                        }}
+                         > 
+                         {/*riskAssessment.a1aresulttext*/}
+                         
+                         </p>}
 
                         <Xcomp.StringEnum observableValue={[riskAssessment, "acceptOrAdjustCritA"]} mode="radio" codes={koder.AcceptOrAdjust}/>   
                                          

@@ -208,8 +208,8 @@ checkStatus = (production) => {
                             <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/>                            
                         }
                     </div>
-                         <p> { assessment.isRegionallyAlien ? labels.SpeciesStatus.statusInNorwayRegionallyAlien : labels.SpeciesStatus.statusInNorway }</p>
-                         <p>{labels.SpeciesStatus.highestCategoryPerToday}</p>
+                         <p> { assessment.isRegionallyAlien ? labels.SpeciesStatus.statusInNorwayRegionallyAlien : labels.SpeciesStatus.statusInNorway } { assessment.expertGroup.indexOf("Svalbard") < 0 ? labels.SpeciesStatus.inNorway : labels.SpeciesStatus.inSvalbard }</p>
+                         <p>{labels.SpeciesStatus.highestCategoryPerToday}{ assessment.expertGroup.indexOf("Svalbard") < 0 ? labels.SpeciesStatus.inNorwayToday : labels.SpeciesStatus.inSvalbardToday }</p>
                          <div style={{display: "flex"}}>
                          <Xcomp.StringEnum className="statusChoice" observableValue={[assessment, "speciesStatus"]} mode="radio" 
                             // checks if the species is a door knocker or not and if it is a production species to determine the available options to choose
@@ -220,6 +220,9 @@ checkStatus = (production) => {
                             </div>
 
                         <p>{labels.SpeciesStatus.codesExplanation}</p>
+                        <p>{labels.SpeciesStatus.uncertainityStatusDescription}</p>
+                            
+                            <Xcomp.HtmlString observableValue={[assessment, 'uncertainityStatusDescription']}/> 
                         <br></br>
                         {
                         //assessment.horizonDoScanning && 
@@ -228,9 +231,10 @@ checkStatus = (production) => {
                         <div>
                             <p>{labels.SpeciesStatus.assumedReproducing50Years}</p>
                             <Xcomp.StringEnum observableValue={[assessment, "assumedReproducing50YearsString"]} mode="radio" codes={codes.yesNo}/>
+                            <br></br>
                         </div>
                         : null} 
-                        <br></br>
+                        
                         <div>
                             <p>{assessment.isRegionallyAlien ? labels.SpeciesStatus.establishedBefore1800RegionallyAlien : labels.SpeciesStatus.establishedBefore1800} </p>
                             <p>{labels.SpeciesStatus.probabilityUncertainity}</p>
@@ -253,8 +257,18 @@ checkStatus = (production) => {
                         <Xcomp.HtmlString observableValue={[assessment, 'changedAssessment']}/>
                     </div> : null }
                     </fieldset>
+
+                    <fieldset 
+                            className={assessment.assessmentConclusion == "" || assessment.assessmentConclusion == "NotDecided" ? "invisible well" : "well"}
+                            >
+                        <h3>{labels.SpeciesStatus.conclusion} </h3>
+                        <p>
+                            {assessment.assessmentConclusion == "" || assessment.assessmentConclusion == "NotDecided" ? "" : assessment.assessmentConclusion == "WillNotBeRiskAssessed" ? labels.SpeciesStatus.willNotBeRiskAssessed : labels.SpeciesStatus.willBeRiskAssessed}
+                            <b> {assessment.assessmentConclusion == "" || assessment.assessmentConclusion == "WillNotBeRiskAssessed" || assessment.assessmentConclusion == "NotDecided" ? "" : assessment.assessmentConclusion == "AssessedSelfReproducing" ? labels.SpeciesStatus.assessedSelfReproducing + "." : labels.SpeciesStatus.assessedDoorknocker + "."}</b>
+                        </p>
+                    </fieldset> 
                     
-                    {assessment.assessmentConclusion != "" &&
+                    {/*assessment.assessmentConclusion != "" &&
                         <fieldset className="well">
                                 { assessment.assessmentConclusion == "AssessedSelfReproducing"
                                     ?  <><h3>{labels.SpeciesStatus.conclusion}</h3>
@@ -271,7 +285,7 @@ checkStatus = (production) => {
                                 }
 
                         </fieldset>
-                    }
+                            */}
 
                     {assessment.isAlienSpecies && 
                        // (!assessment.connectedToAnother || !assessment.connectedToAnother ) &&

@@ -208,6 +208,7 @@ const Fylkesforekomst = ({ assessment, fylkesforekomster }) => {
   return (
     <>
       <div
+      className="spreadArea"
         style={{
           display: "grid",
           gridTemplateColumns: "50% 50%"
@@ -363,6 +364,7 @@ const FylkeslisteLegend = ({ index }) => {
     <div style={{ _textAlign: "center", _width: 10, _height: 10 }}>
       <LegendItem
         showRect={true}
+        filter={true}
         fill={cat.normal.fill}
         x={1}
         y={1}

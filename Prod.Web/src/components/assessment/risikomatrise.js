@@ -27,7 +27,8 @@ export default class Risikomatrise extends React.Component {
                 const yoffset = (3 - eco) * rutesize
                 const isDiagonal = inv != invasjonspotensiale && eco != ecoeffect
                 const strokeColor = isDiagonal ? "#FCA" : "#D84"
-                const elem1 = <rect key={"uncertain" + inv + eco} x={xoffset} y={yoffset} width={rutesize-2} height={rutesize-2} style={{fill:"none", strokeWidth:2, strokeDasharray:"7,0", stroke:strokeColor}} />
+                //const strokeDash = isDiagonal ? "4,4" : "7,0"
+                const elem1 = <rect key={"uncertain" + inv + eco} x={xoffset} y={yoffset} width={rutesize-2} height={rutesize-2} style={{fill:"none", strokeWidth:4, strokeDasharray:"4,4", stroke:strokeColor}} />
                 grid.push(elem1)
             }
         }
