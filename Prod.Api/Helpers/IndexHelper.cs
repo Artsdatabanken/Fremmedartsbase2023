@@ -346,7 +346,10 @@ namespace Prod.Api.Helpers
                 }
                 if (ass2018.MainCategory == "AlienSpecie" || ass2018.MainCategory == "DoorKnocker")
                 {
-                    indexFields.Add(new StringField(Field_2018Status, "establishedAfter1800", Field.Store.NO));
+                    if (ass2018.MainCategory == "AlienSpecie") 
+                    {
+                        indexFields.Add(new StringField(Field_2018Status, "establishedAfter1800", Field.Store.NO));
+                    }
                     
                     if (ass2018.MainCategory == "DoorKnocker" && ass2018.MainSubCategory == "doRiskAssessment")
                     {
