@@ -5138,7 +5138,7 @@
                         {
                             "Id": null,
                             "Value": "statusInNorwayRegionallyAlien",
-                            "Text": "Hvilken status har artens regionalt fremmede forekomster i Norge?",
+                            "Text": "Hvilken status har artens regionalt fremmede forekomster ",
                             "Info": null,
                             "Children": null
                         },

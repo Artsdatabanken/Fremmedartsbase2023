@@ -84,13 +84,13 @@ export default class Assessment30Artsegenskaper extends React.Component {
                 </div>
                 : null}
                 <div>
-                    <h4>{labels.NaturalOrigin.habitat}</h4>
+                    <h3>{labels.NaturalOrigin.habitat}</h3>
                     <Xcomp.Bool observableValue={[vurdering, 'limnic']} label={limnicTerrestrialMarinelabel("limnic")} />            
                     <Xcomp.Bool observableValue={[vurdering, 'terrestrial']} label={limnicTerrestrialMarinelabel("terrestrial")} />            
                     <Xcomp.Bool observableValue={[vurdering, 'marine']} label={limnicTerrestrialMarinelabel("marine")} />   
 
                     {(isLimnicTerrestrial || isMarine) && 
-                        <h2>{labels.NaturalOrigin.globalPrevalence}</h2>
+                        <h3>{labels.NaturalOrigin.globalPrevalence}</h3>
                     } 
                 </div>
                 {(assessment.alienSpeciesCategory == "DoorKnocker" && assessment.speciesStatus == "A") ?
@@ -434,7 +434,7 @@ export default class Assessment30Artsegenskaper extends React.Component {
 
             <fieldset className="well">
                 <div>
-                    <h4>{labels.NaturalOrigin.arrivedCountry}  {vurdering.isRegionallyAlien ? " vurderingsområdet " : vurdering.expertGroup.indexOf("Svalbard") > -1 ? "Svalbard" : "Fastlands-Norge"} {labels.NaturalOrigin.arrivedCountryFrom}</h4>
+                    <h3>{labels.NaturalOrigin.arrivedCountry}  {vurdering.isRegionallyAlien ? " vurderingsområdet " : vurdering.expertGroup.indexOf("Svalbard") > -1 ? "Svalbard" : "Fastlands-Norge"} {labels.NaturalOrigin.arrivedCountryFrom}</h3>
                     {/* <ArrivedCountryFrom vurdering={vurdering} fabModel={fabModel} /> */}
                         <ArrivedCountryFrom assessment={vurdering} appState={appState}/>
                     </div>
@@ -442,7 +442,7 @@ export default class Assessment30Artsegenskaper extends React.Component {
                 <Xcomp.HtmlString observableValue={[vurdering, 'arrivedCountryFromDetails']} /> {/* earlier named: 'NaturalOrigin' */}
             </fieldset>
             <fieldset className="well">
-                <h4>{labels.Reproduction.reproduction}</h4>
+                <h3>{labels.Reproduction.reproduction}</h3>
                 <Xcomp.Bool label={labels.Reproduction.sexual} observableValue={[vurdering, 'reproductionSexual']}/>
                 <Xcomp.Bool label={labels.Reproduction.asexual} observableValue={[vurdering, 'reproductionAsexual']}/>
                 <Xcomp.Number label={labels.Reproduction.generationTime} observableValue={[vurdering, 'reproductionGenerationTime']}/>

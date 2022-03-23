@@ -310,7 +310,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                     <hr/>
                     <p>Legg til grupper av arter</p>
                     <SpeciesNaturetypeTable list={riskAssessment.speciesNaturetypeInteractions} natureTypes={assessment.impactedNatureTypes} newItem={this.newSNITS} addNewItem={this.addSNITS}  koder={koder} labels={labels} disabled={appState.userContext.readonly} naturtypeLabels={appState.naturtypeLabels } showKeyStoneSpecie showEffect showInteractionType />
-                    
+                    <br></br>
                     <Xcomp.HtmlString observableValue={[riskAssessment, 'speciesSpeciesInteractionsSupplementaryInformation']} label="Utfyllende informasjon (f.eks. hvilke(n) artsgruppe i naturtypen påvirkes og hvordan blir disse generelt påvirket):" />
 
                     
