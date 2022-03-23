@@ -513,7 +513,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         get extinctionText() {
             return r.adefaultBest === 0 ? "over 97%"
             : r.adefaultBest == 1 ? "mellom 43% og 97%"
-            : r.adefaultBest == 2 ? "mellom 5% år og 43%"
+            : r.adefaultBest == 2 ? "mellom 5% og 43%"
             : r.adefaultBest == 3 ? "under 5%"
             : "%%#%%"
         },
