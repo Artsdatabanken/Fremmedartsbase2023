@@ -189,8 +189,8 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                                 observableValue={[assessment, 'spreadIndoorFurtherInfo']}
                                 style={{
                                 //width: 800,
-                                height: 250,
-                                maxHeight: 250
+                                height: 150,
+                                maxHeight: 150
                             }}/>
                         </>
                     }
