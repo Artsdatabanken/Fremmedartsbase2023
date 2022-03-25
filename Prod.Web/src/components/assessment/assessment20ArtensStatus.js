@@ -203,7 +203,7 @@ checkStatus = (production) => {
 
                          <p>{labels.SpeciesStatus.isProductionSpecies}</p>                          
                          <Xcomp.StringEnum observableValue={[assessment, "productionSpeciesString"]} mode="radio" codes={codes.yesNo}/> 
-                         {(assessment.productionSpecies == true && !assessment.isAlienSpecies) && 
+                         {(assessment.productionSpecies == true && assessment.notApplicableCategory == "traditionalProductionSpecie") &&  
                             // transfer "notApplicableDescription" from FAB3
                             <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/>                            
                         }
