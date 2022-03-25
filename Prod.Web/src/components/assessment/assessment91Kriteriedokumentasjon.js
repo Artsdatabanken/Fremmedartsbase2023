@@ -157,8 +157,8 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                             observableValue={[riskAssessment, 'criteriaDocumentationSpeciesStatus']}
                             style={{
                             //width: 800,
-                            height: 150,
-                            maxHeight: 150
+                            height: 250,
+                            maxHeight: 250
                         }}/>
                     </fieldset>
                     <fieldset className="well">
@@ -167,8 +167,8 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                             observableValue={[riskAssessment, 'criteriaDocumentationDomesticSpread']}
                             style={{
                             //width: 800,
-                            height: 150,
-                            maxHeight: 150
+                            height: 250,
+                            maxHeight: 250
                         }}/>
                     </fieldset>
                     <fieldset className="well">
@@ -200,8 +200,8 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                             observableValue={[assessment, 'spreadIntroductionFurtherInfo']}
                             style={{
                             //width: 800,
-                            height: 150,
-                            maxHeight: 150
+                            height: 250,
+                            maxHeight: 250
                         }}/>
                         <br></br>
                         <p>{labels.Import.summaryInfoNature}</p>
@@ -235,8 +235,8 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                                 observableValue={[riskAssessment, 'criteriaDocumentationInvationPotential']}
                                 style={{
                             // width: 800,
-                                height: 150,
-                                maxHeight: 150
+                                height: 250,
+                                maxHeight: 250
                         }}/>
                         
                     </fieldset>
@@ -246,8 +246,8 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                             observableValue={[riskAssessment, 'criteriaDocumentationEcoEffect']}
                             style={{
                             //width: 800,
-                            height: 150,
-                            maxHeight: 150
+                            height: 250,
+                            maxHeight: 250
                         }}/>
                     </fieldset>
 
