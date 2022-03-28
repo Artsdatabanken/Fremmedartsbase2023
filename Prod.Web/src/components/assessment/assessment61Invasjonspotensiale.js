@@ -183,9 +183,6 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
 
         const existenceArea35 = assessment.CurrentExistenceAreaCalculated
 
-        // riskAssessment.AOO1 == null ? riskAssessment.AOO1 = riskAssessment.AOOknown1 : riskAssessment.AOO1 = 0
-
-        // riskAssessment.AOO2 == null ? riskAssessment.AOO2 = riskAssessment.AOOknown2 : riskAssessment.AOO2 = 0
         if (assessment.artskartModel) {
         this.props.appState.virtualArtskartModel0 = observable({
             observationFromYear: assessment.artskartModel.observationFromYear,
@@ -706,7 +703,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                 </td>
                                                 <td><Xcomp.Number                            
                                                         observableValue={[riskAssessment, "AOO1"]}
-                                                        observableErrors={[errorhandler, "(a)err7"]}
+                                                        observableErrors={[errorhandler, "(a)err7", "(a)err9"]}
                                                         integer
                                                     />
                                                 </td>
