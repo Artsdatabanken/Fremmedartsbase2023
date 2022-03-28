@@ -22,7 +22,7 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Change this to force index rebuild!
         /// </summary>
-        public const int IndexVersion = 16;
+        public const int IndexVersion = 17;
         private static readonly object IndexingLock = new();
 
         private const string Field_Id = "Id";
@@ -232,7 +232,7 @@ namespace Prod.Api.Helpers
                 new StringField(Field_ScientificNameId, ass.EvaluatedScientificNameId.ToString(), Field.Store.NO),
                 new StringField(Field_ScientificNameAsTerm, ass.EvaluatedScientificName.ToLowerInvariant(),
                     Field.Store.NO), // textfield - ignore case
-                //new StoredField(Field_TaxonHierarcy, ass.VurdertVitenskapeligNavnHierarki),
+                new StoredField(Field_TaxonHierarcy, ass.TaxonHierarcy),
                 //new StringField(Field_Category, GetCategoryFromRiskLevel(ass.RiskAssessment.RiskLevel),
                 //    Field.Store.YES),
 
@@ -631,17 +631,26 @@ namespace Prod.Api.Helpers
             if (!string.IsNullOrWhiteSpace(filter.NameSearch) && filter.NameSearch != "/")
             {
                 var pathSearch = filter.NameSearch.StartsWith("/");
+                var startsWith = filter.NameSearch.StartsWith("!");
+
                 var booleanQuery = new BooleanQuery();
                 var lowerInvariant = WebUtility.UrlDecode(filter.NameSearch.ToLowerInvariant())
                     .Replace("×", "")
                     .Replace("-", " ")
                     .Replace("/", "")
+                    .Replace("!", "")
                     .Split(" ", StringSplitOptions.RemoveEmptyEntries);
                 var booleanQuerySc = new BooleanQuery();
                 var booleanQueryP = new BooleanQuery();
                 foreach (var s in lowerInvariant)
                 {
                     var text = "*" + s + "*";
+                    if (startsWith)
+                    {
+                        booleanQuerySc.Add(
+                            new BooleanClause(new WildcardQuery(new Term(Field_ScientificNameAsTerm, s + "*")),
+                                Occur.MUST)); // lowercase - siden det er indeksert som textfield
+                    }else
                     if (pathSearch)
                     {
                         booleanQuerySc.Add(

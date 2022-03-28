@@ -76,7 +76,7 @@ checkStatus = (production) => {
                             <Xcomp.Bool className={"regionallyAlien"} observableValue={[assessment, "isRegionallyAlien"]} checked={assessment.alienSpeciesCategory == "RegionallyAlien"} label={labels.SpeciesStatus.regionallyAlien} /> : null }
                     <Xcomp.Radio value={'false'} observableValue={[assessment, "isAlienSpeciesString"]} label={labels.General.no} />
                     <p>{labels.SpeciesStatus.unsureAlienDescription}</p>
-                    {assessment.notApplicableCategory == "notAlienSpecie" ?
+                    {!assessment.isAlienSpecies ?
                     // transfer "notApplicableDescription" from FAB3                    
                     
                     <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/> :
@@ -203,7 +203,7 @@ checkStatus = (production) => {
 
                          <p>{labels.SpeciesStatus.isProductionSpecies}</p>                          
                          <Xcomp.StringEnum observableValue={[assessment, "productionSpeciesString"]} mode="radio" codes={codes.yesNo}/> 
-                         {(assessment.productionSpecies == true && assessment.notApplicableCategory == "traditionalProductionSpecie") && 
+                         {(assessment.productionSpecies == true && assessment.notApplicableCategory == "traditionalProductionSpecie") &&  
                             // transfer "notApplicableDescription" from FAB3
                             <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/>                            
                         }
