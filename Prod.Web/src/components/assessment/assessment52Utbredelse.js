@@ -406,7 +406,10 @@ export default class Assessment52Utbredelse extends React.Component {
                                             }
                                         </div>
                                         <ul className="errorMessages">
-                                            {Object.keys(errorhandler.errors).sort().filter(obj => (obj == "(a)err666" || obj == "(a)err18" || obj == "(a)err19" || obj == "(a)err20") && errorhandler.errors[obj] !== null).map(key => <li key={key}><b style={{ color: 'red' }}>{errorhandler.errors[key]}</b></li> )}
+                                            {/* {Object.keys(errorhandler.errors).sort().filter(obj => (obj == "(a)err1" || obj == "(a)err666" || obj == "(a)err18" || obj == "(a)err19" || obj == "(a)err20") && errorhandler.errors[obj] !== null).map(key => <li key={key}><b style={{ color: 'red' }}>{errorhandler.errors[key]}</b></li> )} */}
+                                             {/* "(a)err2",,"(a)err7", "(a)err8", */}
+                                            {Object.keys(errorhandler.errors).sort().filter(obj => (["(a)err1",  "(a)err666", "(a)err18", "(a)err19", "(a)err20"].includes(obj)) && errorhandler.errors[obj] !== null).map(key => <li key={key}><b style={{ color: 'red' }}>{errorhandler.errors[key]}</b></li> )}
+                                            {Object.keys(errorhandler.warnings).sort().filter(obj => (["(a)warn2", "(a)warn3", "(a)warn4"].includes(obj)) && errorhandler.warnings[obj] !== null).map(key => <li key={key}><b style={{ color: 'orange' }}>{errorhandler.warnings[key]}</b></li> )}
                                         </ul>
                                         <p>Forekomstareal <b>om 50 år </b> (km<sup>2</sup>)</p>
                                     </div>
