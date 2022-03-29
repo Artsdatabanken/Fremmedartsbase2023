@@ -64,29 +64,29 @@
         },
         {
             id: "(a)err7",
-            get cond() {return r.doFullAssessment && (r.AOO1 < r.AOOknown1)},
+            get cond() {return a.doFullAssessment && (r.AOO1 < r.AOOknown1)},
             msg: "Det beste anslaget på det totale nåværende forekomstarealet kan ikke være mindre enn det kjente!"
             // for ">"  se: (a)warn2
         },
         {
             id: "(a)err8",
-            get cond() {return r.doFullAssessment && (r.AOO2 < r.AOOknown2)},
+            get cond() {return a.doFullAssessment && (r.AOO2 < r.AOOknown2)},
             msg: "Det beste anslaget på det totale nåværende forekomstarealet kan ikke være mindre enn det kjente!"
             // for ">"  se: (a)warn3
         },
         {
             id: "(a)err9",
-            get cond() {return r.doFullAssessment && (r.bmetodkey === "B2a1") && (r.AOO1 <= 0)},
+            get cond() {return a.doFullAssessment && (r.bmetodkey === "B2a1") && (r.AOO1 <= 0)},
             msg: "Forekomstarealet kan ikke være 0!"
         },
         {
             id: "(a)err10",
-            get cond() {return r.doFullAssessment && (r.bmetodkey === "B2a1") && (r.AOO2 <= 0)},
+            get cond() {return a.doFullAssessment && (r.bmetodkey === "B2a1") && (r.AOO2 <= 0)},
             msg: "Forekomstarealet kan ikke være 0!"
         },
         {
             id: "(a)err11",
-            get cond() {return r.doFullAssessment && !r.doorKnocker && ((r.AOOknownInput % 4) !== 0)},
+            get cond() {return a.doFullAssessment && !r.doorKnocker && ((r.AOOknownInput % 4) !== 0)},
             msg: "Forekomstarealene må være multippel av 4_km²!"
         },
         {
@@ -102,7 +102,7 @@
         {
             id: "(a)err13",
             get cond() {return !r.doorKnocker && r.AOOtotalBestInput % 4 !== 0 },
-                //r.doFullAssessment                
+                //a.doFullAssessment                
                
             msg: "Forekomstarealene må være multippel av 4_km²!"
         },
@@ -143,25 +143,25 @@
         },
         // {
         //     id: "(a)warn1",
-        //     get cond() {return r.doFullAssessment && (!r.doorKnocker && (r.AOOknownInput % 4 || r.AOOtotalLowInput % 4 || r.AOOtotalBestInput % 4 || r.AOOtotalHighInput % 4 || r.AOO50yrLowInput % 4 || r.AOO50yrBestInput % 4 || r.AOO50yrHighInput % 4 || false))},
+        //     get cond() {return a.doFullAssessment && (!r.doorKnocker && (r.AOOknownInput % 4 || r.AOOtotalLowInput % 4 || r.AOOtotalBestInput % 4 || r.AOOtotalHighInput % 4 || r.AOO50yrLowInput % 4 || r.AOO50yrBestInput % 4 || r.AOO50yrHighInput % 4 || false))},
         //     type: "warning",
         //     msg: "MERK: Forekomstarealene vil bli avrundet oppover til nærmeste større multippel av 4_km²."
         // },
         {
             id: "(a)warn2",
-            get cond() {return r.doFullAssessment && (r.AOO1 > r.AOOknown1)},
+            get cond() {return a.doFullAssessment && (r.AOO1 > r.AOOknown1)},
             type: "warning",
             msg: "MERK: Estimatet skal kun justeres om forekomster som er utgått pga. tiltak ble tatt ut av estimatet for kjent forekomstareal"
         },
         {
             id: "(a)warn3",
-            get cond() {return r.doFullAssessment && (r.AOO2 > r.AOOknown2)},
+            get cond() {return a.doFullAssessment && (r.AOO2 > r.AOOknown2)},
             type: "warning",
             msg: "MERK: Estimatet skal kun justeres om forekomster som er utgått pga. tiltak ble tatt ut av estimatet for kjent forekomstareal"
         },
         {
             id: "(a)warn4",
-            get cond() {return r.doFullAssessment && (r.AOO50yrBest < r.AOOtotalBest)},
+            get cond() {return a.doFullAssessment && (r.AOO50yrBest < r.AOOtotalBest)},
             type: "warning",
             msg: "MERK: Er det korrekt at det er forventet en nedgang i artens forekomstareal i løpet av de neste 50 år?"
         },
@@ -178,33 +178,38 @@
         },
         {
             id: "Aerr1",
-            get cond() {return r.doFullAssessment && (r.ametodkey === "AmethodInvalid")},
+            get cond() {return a.doFullAssessment && (r.ametodkey === "AmethodInvalid")},
             msg: "Metode for A-kriteriet er ikke valgt."
         },
         {
             id: "A3err1",
-            get cond() {return r.doFullAssessment && r.ametodkey === "A3" && (r.lifetimeLowerQ > r.medianLifetime)},
+            get cond() {return a.doFullAssessment && r.ametodkey === "A3" && (r.lifetimeLowerQ > r.medianLifetime)},
             msg: "Levetidens nedre kvartil må være mindre enn medianen."
         },
         {
             id: "A3err2",
-            get cond() {return r.doFullAssessment && r.ametodkey === "A3" && (r.lifetimeUpperQ <= r.medianLifetime)},
+            get cond() {return a.doFullAssessment && r.ametodkey === "A3" && (r.lifetimeUpperQ <= r.medianLifetime)},
             msg: "Levetidens øvre kvartil må være større enn medianen."
         },
         {
             id: "Berr1",
-            get cond() {return r.doFullAssessment && ((r.bmetodkey === "BmethodNotChosen") || (r.bmetodkey === "B2bX")) },
+            get cond() {return a.doFullAssessment && ((r.bmetodkey === "BmethodNotChosen") || (r.bmetodkey === "B2bX")) },
             msg: "Metode for B-kriteriet er ikke valgt."
         },
         {
             id: "B1err1",
-            get cond() {return r.doFullAssessment && (r.expansionLowerQ > r.expansionSpeed) },
+            get cond() {return a.doFullAssessment && (r.expansionLowerQ > r.expansionSpeed) },
             msg: "Ekspansjonshastighetens nedre kvartil må være mindre enn medianen."
         },
         {
             id: "B1err2",
-            get cond() {return r.doFullAssessment && (r.expansionUpperQ <= r.expansionSpeed) },
+            get cond() {return a.doFullAssessment && (r.expansionUpperQ <= r.expansionSpeed) },
             msg: "Ekspansjonshastighetens øvre kvartil må være større enn medianen."
+        },
+        {
+            id: "B2err1",
+            get cond() {return a.doFullAssessment && (((r.AOOyear2 - r.AOOyear1) < 10 ) || ((r.AOOyear2 - r.AOOyear1) > 20 )) },
+            msg: "Valgt periode (t2-t1) kan ikke overstige 20 år eller være mindre enn 10 år. Juster perioden."
         }
     ]
     return errorDefinitions
