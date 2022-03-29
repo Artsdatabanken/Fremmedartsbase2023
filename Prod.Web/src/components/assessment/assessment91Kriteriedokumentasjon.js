@@ -7,6 +7,7 @@ import * as Xcomp from './observableComponents';
 import Risikomatrise from './risikomatrise';
 import Documents from '../documents'
 import errorhandler from '../errorhandler';
+import ErrorList from '../errorList';
 import auth from '../authService';
 
 
@@ -66,12 +67,10 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                     ? <h3>{critlabels.status}</h3>
                     : <br/>}
                     <div>
-                        { true && errorhandler.hasErrors
+                        { true && (errorhandler.hasErrors || errorhandler.hasWarnings)
                         ? <fieldset className="well">
                             <h4>{"Feilrapport"}</h4>
-                            <ul>
-                            {Object.keys(errorhandler.errors).sort().filter(key => errorhandler.errors[key] !== null).map(key => <li key={key}><b style={{ color: 'red' }}>{errorhandler.errors[key]}</b></li> )}
-                            </ul>
+                            <ErrorList errorhandler={errorhandler} options={"all"} />
                         </fieldset>
                         : null
                         }
