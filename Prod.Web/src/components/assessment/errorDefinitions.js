@@ -39,27 +39,27 @@
         },
         {
             id: "(a)err2",
-            get cond() {return !r.doorKnocker && (r.AOOtotalLow > r.AOOtotalBest)},
+            get cond() {return !r.doorKnocker && (r.AOOtotalLowInput > r.AOOtotalBestInput)},
             msg: "Det nedre anslaget på forekomstarealet kan ikke være større enn det beste anslaget!"
         },
         {
             id: "(a)err3",
-            get cond() {return !r.doorKnocker && (r.AOOtotalHigh < r.AOOtotalBest)},
+            get cond() {return !r.doorKnocker && (r.AOOtotalHighInput < r.AOOtotalBestInput)},
             msg: "Det øvre anslaget på forekomstarealet kan ikke være mindre enn det beste anslaget!"
         },
         {
             id: "(a)err4",
-            get cond() {return !r.doorKnocker && (r.AOO50yrLow > r.AOO50yrBest)},
+            get cond() {return !r.doorKnocker && (r.AOO50yrLowInput > r.AOO50yrBestInput)},
             msg: "Det nedre anslaget på forekomstarealet kan ikke være større enn det beste anslaget!"
         },
         {
             id: "(a)err5",
-            get cond() {return !r.doorKnocker && (r.AOO50yrHigh < r.AOO50yrBest)},
+            get cond() {return !r.doorKnocker && (r.AOO50yrHighInput < r.AOO50yrBestInput)},
             msg: "Det øvre anslaget på forekomstarealet kan ikke være mindre enn det beste anslaget!"
         },
         {
             id: "(a)err6",
-            get cond() {return !r.doorKnocker && (r.AOOtotalBest < r.AOOknown)},
+            get cond() {return !r.doorKnocker && (r.AOOtotalBestInput < r.AOOknownInput)},
             msg: "Estimatet kan ikke justeres til å være lavere enn kjent forekomstareal!"
         },
         {
@@ -102,8 +102,6 @@
         {
             id: "(a)err13",
             get cond() {return !r.doorKnocker && r.AOOtotalBestInput % 4 !== 0 },
-                //a.doFullAssessment                
-               
             msg: "Forekomstarealene må være multippel av 4_km²!"
         },
         {
@@ -141,6 +139,28 @@
             get cond() {return !r.doorKnocker && (r.AOOtotalBestInput > r.AOOtotalHighInput)},
             msg: "Beste anslag kan ikke være større enn høyt anslag!"
         },
+        {
+            id: "(a)err21",
+            get cond() {return !r.doorKnocker && (r.AOOtotalBestInput < 4)},
+            msg: "En selvstendig reproduserende art må ha et forekomstareal på minst 4_km²!"
+        },
+        {
+            id: "(a)err22",
+            get cond() {return !r.doorKnocker && (r.AOOtotalBestInput < r.AOOknownInput)},
+            msg: "Det beste anslaget på det totale nåværende forekomstarealet kan ikke være mindre enn det kjente!"
+        },
+        {
+            id: "(a)err23",
+            get cond() {return !r.doorKnocker && (r.AOO50yrLowInput > r.AOO50yrBestInput)},
+            msg: "Lavt anslag kan ikke være større enn beste anslag!"
+        },
+        {
+            id: "(a)err24",
+            get cond() {return !r.doorKnocker && (r.AOO50yrHighInput < r.AOO50yrBestInput)},
+            msg: "Beste anslag kan ikke være større enn høyt anslag!"
+        },
+
+
         // {
         //     id: "(a)warn1",
         //     get cond() {return a.doFullAssessment && (!r.doorKnocker && (r.AOOknownInput % 4 || r.AOOtotalLowInput % 4 || r.AOOtotalBestInput % 4 || r.AOOtotalHighInput % 4 || r.AOO50yrLowInput % 4 || r.AOO50yrBestInput % 4 || r.AOO50yrHighInput % 4 || false))},
@@ -161,10 +181,11 @@
         },
         {
             id: "(a)warn4",
-            get cond() {return a.doFullAssessment && (r.AOO50yrBest < r.AOOtotalBest)},
+            get cond() {return !r.doorKnocker && (r.AOO50yrBestInput < r.AOOtotalBestInput)},
             type: "warning",
             msg: "MERK: Er det korrekt at det er forventet en nedgang i artens forekomstareal i løpet av de neste 50 år?"
         },
+
 
         {
             id: "(b)err1",
