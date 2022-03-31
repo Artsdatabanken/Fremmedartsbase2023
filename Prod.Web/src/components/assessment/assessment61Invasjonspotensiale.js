@@ -534,6 +534,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                 <Xcomp.String                            
                                             observableValue={[riskAssessment, "bCritMCount"]}
                                             placeholder={""}
+                                            {/*pattern={"^[0-9]+(\\.\\d+)(\\-\\d+(\.\d+))"}*/}
                                             disabled={disabled}
                                         />  
                                 <Xcomp.StringEnum                            
@@ -758,14 +759,11 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                 <td> <Xcomp.Number   
                                                         disabled                         
                                                         observableValue={[riskAssessment, "AOOendyear1"]}
-                                                        // observableValue={[riskAssessment, "AOOyear1"]}
                                                         className={"BcritYear"}
                                                         integer
                                                         yearRange={true}/> 
                                                 </td>
                                                 <td style={{display: 'flex'}}><Xcomp.Number            
-                                                        //disabled = {!riskAssessment.notUse2021AsEndYear}                
-                                                        // observableValue={[riskAssessment, "AOOendyear2"]} 
                                                         className={"BcritYear"}
                                                         observableValue={[riskAssessment, "AOOyear2"]} 
                                                         observableErrors={[errorhandler, "B2err1"]}
@@ -786,7 +784,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             </tr>
                                             </tbody>                            
                                         </table>
-                                        <ErrorList errorhandler={errorhandler} errorids={["(a)err7","(a)err8","(a)err9","(a)err10", "B2err1"]} />
+                                        <ErrorList errorhandler={errorhandler} errorids={["(a)err7","(a)err8","(a)err9","(a)err10", "B2err1", "(a)warn2", "(a)warn3"]} />
                                         <Xcomp.Bool observableValue={[riskAssessment, "notUseSpeciesMap"]} label={"Ønsker ikke å bruke Artskart for å beregne forekomstareal"} />
                                         {/*<table className="table BCritTable">
                                             <thead>    
