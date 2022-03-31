@@ -335,7 +335,7 @@ namespace Prod.Api.Helpers
         public int RiskAssessmentBlow { get; set; } // nedre skår for B-kriteriet (inkludert usikkerhet) 
         public int RiskAssessmentBhigh { get; set; } // øvre skår for B-kriteriet (inkludert usikkerhet) 
 
-        public int RiskAssessmentBCritMCount { get; set; } = 0;
+        public string RiskAssessmentBCritMCount { get; set; } = "";
         public string RiskAssessmentBCritExact { get; set; } = "false";
         public string RiskAssessmentBCritP { get; set; }
         public string RiskAssessmentBCritNewObs { get; set; } = "True";
