@@ -34,7 +34,7 @@
         },
         {
             id: "(a)err1",
-            get cond() {return !r.doorKnocker && (r.AOOtotalBest === 0)},
+            get cond() {return !r.doorKnocker && (r.AOOtotalBestInput < 4)},
             msg: "En selvstendig reproduserende art må ha et forekomstareal på minst 4_km²!"
         },
         {
@@ -138,11 +138,6 @@
             id: "(a)err20",
             get cond() {return !r.doorKnocker && (r.AOOtotalBestInput > r.AOOtotalHighInput)},
             msg: "Beste anslag kan ikke være større enn høyt anslag!"
-        },
-        {
-            id: "(a)err21",
-            get cond() {return !r.doorKnocker && (r.AOOtotalBestInput < 4)},
-            msg: "En selvstendig reproduserende art må ha et forekomstareal på minst 4_km²!"
         },
         {
             id: "(a)err22",
