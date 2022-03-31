@@ -5,6 +5,9 @@ const errorhandler = observable({
     get hasErrors() {
         return Object.keys(this.errors).filter(key => this.errors[key] !== null).length > 0
     },
+    get hasWarnings() {
+        return Object.keys(this.warnings).filter(key => this.warnings[key] !== null).length > 0
+    },
     addErrors(errorobjectarray) {
         // **** errorobjectarray format ****
         // [ {

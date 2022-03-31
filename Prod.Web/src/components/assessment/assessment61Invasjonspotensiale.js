@@ -16,7 +16,9 @@ import { KeyboardHideSharp } from '@material-ui/icons'
 import {stringFormat} from "../../utils"
 import ModalArtskart from '../artskart/ModalArtskart';
 import errorhandler from '../errorhandler';
-import WaterArea from '../water/WaterArea';
+import ErrorList from '../errorList';
+
+//import WaterArea from '../water/WaterArea';
 import { getWaterAreas } from '../water/apiWaterArea';
 
 @inject('appState')
@@ -199,9 +201,6 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
 
         const existenceArea35 = assessment.CurrentExistenceAreaCalculated
 
-        // riskAssessment.AOO1 == null ? riskAssessment.AOO1 = riskAssessment.AOOknown1 : riskAssessment.AOO1 = 0
-
-        // riskAssessment.AOO2 == null ? riskAssessment.AOO2 = riskAssessment.AOOknown2 : riskAssessment.AOO2 = 0
         if (assessment.artskartModel) {
         this.props.appState.virtualArtskartModel0 = this.props.appState.virtualArtskartModel0 || observable({
             observationFromYear: assessment.artskartModel.observationFromYear,
@@ -709,10 +708,12 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                 <td style={{display: 'flex'}}><Xcomp.Number                            
                                                         // observableValue={[riskAssessment, "AOOendyear1"]}
                                                         observableValue={[riskAssessment, "AOOyear1"]}
+                                                        observableErrors={[errorhandler, "B2err1"]}
                                                         integer
                                                         className={"BcritYear"}
                                                         yearRange={true}
-                                                    /> <span style={{margin: '10px 10px 0'}}>(t<sub>1</sub>)</span>
+                                                    /> 
+                                                    <span style={{margin: '10px 10px 0'}}>(t<sub>1</sub>)</span>
                                                     </td>
                                                 <td><Xcomp.Number                            
                                                         observableValue={[riskAssessment, "AOOknown1"]}
@@ -722,7 +723,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                 </td>
                                                 <td><Xcomp.Number                            
                                                         observableValue={[riskAssessment, "AOO1"]}
-                                                        observableErrors={[errorhandler, "(a)err7"]}
+                                                        observableErrors={[errorhandler, "(a)err7", "(a)err9"]}
                                                         integer
                                                     />
                                                 </td>
@@ -767,7 +768,11 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                         // observableValue={[riskAssessment, "AOOendyear2"]} 
                                                         className={"BcritYear"}
                                                         observableValue={[riskAssessment, "AOOyear2"]} 
-                                                        yearRange={true}/> <span style={{margin: '10px 10px 0'}}>(t<sub>2</sub>)</span>
+                                                        observableErrors={[errorhandler, "B2err1"]}
+                                                        integer
+                                                        yearRange={true}
+                                                        /> 
+                                                        <span style={{margin: '10px 10px 0'}}>(t<sub>2</sub>)</span>
                                                 </td>
                                                 <td>
                                                 <Xcomp.Number observableValue={[riskAssessment, "AOOknown2"]} integer disabled={!riskAssessment.notUseSpeciesMap} /> 
@@ -781,6 +786,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             </tr>
                                             </tbody>                            
                                         </table>
+                                        <ErrorList errorhandler={errorhandler} errorids={["(a)err7","(a)err8","(a)err9","(a)err10", "B2err1"]} />
                                         <Xcomp.Bool observableValue={[riskAssessment, "notUseSpeciesMap"]} label={"Ønsker ikke å bruke Artskart for å beregne forekomstareal"} />
                                         {/*<table className="table BCritTable">
                                             <thead>    

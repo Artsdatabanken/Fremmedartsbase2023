@@ -21,6 +21,7 @@ import WaterArea from '../water/WaterArea';
 import { getWaterAreas } from '../water/apiWaterArea';
 import mapOlFunc from '../map/MapOlFunctions';
 import errorhandler from '../errorhandler';
+import ErrorList from '../errorList';
 import { beskrivTidSiden } from '../../formatting';
 
 
@@ -405,9 +406,7 @@ export default class Assessment52Utbredelse extends React.Component {
                                             </div>
                                             }
                                         </div>
-                                        <ul className="errorMessages">
-                                            {Object.keys(errorhandler.errors).sort().filter(obj => (obj == "(a)err666" || obj == "(a)err18" || obj == "(a)err19" || obj == "(a)err20") && errorhandler.errors[obj] !== null).map(key => <li key={key}><b style={{ color: 'red' }}>{errorhandler.errors[key]}</b></li> )}
-                                        </ul>
+                                        <ErrorList errorhandler={errorhandler} errorids={["(a)err1",  "(a)err666", "(a)err18", "(a)err19", "(a)err20", "(a)err22", "(a)err23", "(a)err24", "(a)warn2", "(a)warn3", "(a)warn4"]} />
                                         <p>Forekomstareal <b>om 50 år </b> (km<sup>2</sup>)</p>
                                     </div>
                                     <div className="distribution">
