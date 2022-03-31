@@ -20,7 +20,44 @@ namespace Prod.Api.Helpers
                     ;
                 cfg.CreateMap<FA4WithComments, FA4Export>()
                     //.ForMember(x => x.DoorKnockerType, opt => opt.MapFrom(src => GetDoorknockerType(src)))
-                    ;
+                    .AfterMap((src, dest) =>
+                    {
+                        var ass2018 = src.PreviousAssessments.SingleOrDefault(x => x.RevisionYear == 2018);
+                        if (ass2018 != null)
+                        {
+                            switch (ass2018.RiskLevel)
+                            {
+                                case 0:
+                                    dest.Category2018 = "NK";
+                                    break;
+                                case 1:
+                                    dest.Category2018 = "LO";
+                                    break;
+                                case 2:
+                                    dest.Category2018 = "PH";
+                                    break;
+                                case 3:
+                                    dest.Category2018 = "HI";
+                                    break;
+                                case 4:
+                                    dest.Category2018 = "SE";
+                                    break;
+                                //case -1: return "-";
+                                default:
+                                    dest.Category2018 = "NR";
+                                    break;
+                            }
+                            
+                            dest.Criteria2018 = ass2018.DecisiveCriteria;
+                        }
+                        else
+                        {
+                            dest.Category2018 = "";
+                            dest.Criteria2018 = "";
+                        }
+                        //AfterFabMap(dest, src);
+                    });
+                ;
             });
             var mapper = new Mapper(mapperConfig);
             return mapper;
@@ -100,6 +137,12 @@ namespace Prod.Api.Helpers
         public string LockedForEditBy { get; set; }
 
         #region RiskAssessment 
+        public string Category { get; set; }
+        public string Criteria { get; set; }
+
+        public string Category2018 { get; set; }
+        public string Criteria2018 { get; set; }
+
         public int RiskAssessmentRiskLevel { get; set; } = -1;
         public string RiskAssessmentDecisiveCriteria { get; set; }
         public string RiskAssessmentRiskLevelCode { get; set; }
@@ -335,7 +378,7 @@ namespace Prod.Api.Helpers
         public int RiskAssessmentBlow { get; set; } // nedre skår for B-kriteriet (inkludert usikkerhet) 
         public int RiskAssessmentBhigh { get; set; } // øvre skår for B-kriteriet (inkludert usikkerhet) 
 
-        public int RiskAssessmentBCritMCount { get; set; } = 0;
+        public string RiskAssessmentBCritMCount { get; set; } = "";
         public string RiskAssessmentBCritExact { get; set; } = "false";
         public string RiskAssessmentBCritP { get; set; }
         public string RiskAssessmentBCritNewObs { get; set; } = "True";

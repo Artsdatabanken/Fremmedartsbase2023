@@ -267,6 +267,11 @@ export default class Assessment42Spredningsveier extends React.Component {
                 <p dangerouslySetInnerHTML={{__html: furtherInfo}}></p>
                 <Xcomp.HtmlString                            
                                 observableValue={observableDef}
+                                style={{
+                                    //width: 800,
+                                    height: 180,
+                                    maxHeight: 200
+                                }}
                                 // observableValue={[riskAssessment, "furtherInfoAboutImport"]}
                                 //label={labels.DEcrit.insecurity}
                                 
