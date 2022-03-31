@@ -112,8 +112,8 @@ export default class DistributionTable extends React.Component {
                 <td>
                 <Xcomp.Number                            
                     observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "introductionsLow"] : [assessment.riskAssessment, "AOOdarkfigureLow"]}
-                    //disabled={disabled}
-                    disabled={assessment.alienSpeciesCategory == "DoorKnocker"}
+                    disabled={disabled}
+                    // disabled={assessment.alienSpeciesCategory == "DoorKnocker"}
                     integer />   
                 </td>                
                 <td>
@@ -125,8 +125,8 @@ export default class DistributionTable extends React.Component {
                <td>
                <Xcomp.Number                            
                     observableValue={assessment.alienSpeciesCategory == "DoorKnocker" ? [assessment.riskAssessment, "introductionsHigh"] : [assessment.riskAssessment, "AOOdarkfigureHigh"]}
-                    //disabled={disabled}
-                    disabled={assessment.alienSpeciesCategory == "DoorKnocker"}
+                    disabled={disabled}
+                    // disabled={assessment.alienSpeciesCategory == "DoorKnocker"}
                     integer />   
               </td>
               {assessment.alienSpeciesCategory != "DoorKnocker" &&
