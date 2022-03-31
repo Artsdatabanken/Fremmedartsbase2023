@@ -531,10 +531,11 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                             
                             </div>
                             <div className="numberFields">
+                                            {/*pattern={"^[0-9]+(\\.\\d+)(\\-\\d+(\.\d+))"}*/}
+
                                 <Xcomp.String                            
                                             observableValue={[riskAssessment, "bCritMCount"]}
                                             placeholder={""}
-                                            {/*pattern={"^[0-9]+(\\.\\d+)(\\-\\d+(\.\d+))"}*/}
                                             disabled={disabled}
                                         />  
                                 <Xcomp.StringEnum                            
