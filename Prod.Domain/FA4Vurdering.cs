@@ -1075,7 +1075,8 @@ public partial class FA4 // (3.2) Artsegenskaper
         public int Blow { get; set; } // nedre skår for B-kriteriet (inkludert usikkerhet) 
         public int Bhigh { get; set; } // øvre skår for B-kriteriet (inkludert usikkerhet) 
 
-        public int BCritMCount { get; set; } = 0;
+        [JsonConverter(typeof(JsonHelpers.CrazyStringJsonConverter))]
+        public string BCritMCount { get; set; } = "";
         public string BCritExact { get; set; } = "false";
         public string BCritP { get; set; }
 
