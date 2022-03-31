@@ -100,6 +100,9 @@ namespace Prod.Api.Helpers
         public string LockedForEditBy { get; set; }
 
         #region RiskAssessment 
+        public string Category { get; set; }
+        public string Criteria { get; set; }
+
         public int RiskAssessmentRiskLevel { get; set; } = -1;
         public string RiskAssessmentDecisiveCriteria { get; set; }
         public string RiskAssessmentRiskLevelCode { get; set; }
