@@ -46,7 +46,12 @@ namespace Prod.Domain.Helpers
                 }
                 if (reader.TokenType == JsonTokenType.Number)
                 {
-                    return reader.GetInt32().ToString();
+                    var int32 = reader.GetInt32();
+                    if (int32 == 0)
+                    {
+                        return string.Empty;
+                    }
+                    return int32.ToString();
                 }
                 
                 return reader.GetString();
