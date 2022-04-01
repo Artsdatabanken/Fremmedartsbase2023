@@ -214,17 +214,17 @@
         },
         {
             id: "B1err1",
-            get cond() {return a.doFullAssessment && (r.expansionLowerQ > r.expansionSpeed) },
+            get cond() {return a.doFullAssessment && r.bmetodkey === "B1" && (r.expansionLowerQInput >= r.expansionSpeedInput) },
             msg: "Ekspansjonshastighetens nedre kvartil må være mindre enn medianen."
         },
         {
             id: "B1err2",
-            get cond() {return a.doFullAssessment && (r.expansionUpperQ <= r.expansionSpeed) },
+            get cond() {return a.doFullAssessment && r.bmetodkey === "B1" && (r.expansionUpperQInput <= r.expansionSpeedInput) },
             msg: "Ekspansjonshastighetens øvre kvartil må være større enn medianen."
         },
         {
             id: "B2err1",
-            get cond() {return a.doFullAssessment && (((r.AOOyear2 - r.AOOyear1) < 10 ) || ((r.AOOyear2 - r.AOOyear1) > 20 )) },
+            get cond() {return a.doFullAssessment && (r.bmetodkey === "B2a1") && (((r.AOOyear2 - r.AOOyear1) < 10 ) || ((r.AOOyear2 - r.AOOyear1) > 20 )) },
             msg: "Valgt periode (t2-t1) kan ikke overstige 20 år eller være mindre enn 10 år. Juster perioden."
         }
     ]

@@ -484,7 +484,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     }}>{labels.AppHeader.assessmentSave}</Xcomp.Button> */}
                 </div> : 
                // riskAssessment.roAscore2018 != null &&
-                <p><b>Den utgåtte metoden c) Rødlistekriterier var brukt på A-kriteriet for denne arten i 2018. Det resulterte i skår {riskAssessment.roAscore2018 + 1} på A-kriteriet.</b></p> }
+               riskAssessment.chosenSpreadMedanLifespan == "RedListCategoryLevel" ?
+                <p><b>Den utgåtte metoden c) Rødlistekriterier var brukt på A-kriteriet for denne arten i 2018. Det resulterte i skår {riskAssessment.roAscore2018 + 1} på A-kriteriet.</b></p>: <p></p> }
 
                 {riskAssessment.chosenSpreadMedanLifespan != "RedListCategoryLevel" && riskAssessment.chosenSpreadMedanLifespan != "" && 
                     <Criterion criterion={critA} 
@@ -531,6 +532,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                             
                             </div>
                             <div className="numberFields">
+                                            {/*pattern={"^[0-9]+(\\.\\d+)(\\-\\d+(\.\d+))"}*/}
+
                                 <Xcomp.String                            
                                             observableValue={[riskAssessment, "bCritMCount"]}
                                             placeholder={""}
@@ -758,14 +761,11 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                 <td> <Xcomp.Number   
                                                         disabled                         
                                                         observableValue={[riskAssessment, "AOOendyear1"]}
-                                                        // observableValue={[riskAssessment, "AOOyear1"]}
                                                         className={"BcritYear"}
                                                         integer
                                                         yearRange={true}/> 
                                                 </td>
                                                 <td style={{display: 'flex'}}><Xcomp.Number            
-                                                        //disabled = {!riskAssessment.notUse2021AsEndYear}                
-                                                        // observableValue={[riskAssessment, "AOOendyear2"]} 
                                                         className={"BcritYear"}
                                                         observableValue={[riskAssessment, "AOOyear2"]} 
                                                         observableErrors={[errorhandler, "B2err1"]}
@@ -786,7 +786,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             </tr>
                                             </tbody>                            
                                         </table>
-                                        <ErrorList errorhandler={errorhandler} errorids={["(a)err7","(a)err8","(a)err9","(a)err10", "B2err1"]} />
+                                        <ErrorList errorhandler={errorhandler} errorids={["(a)err7","(a)err8","(a)err9","(a)err10", "B2err1", "(a)warn2", "(a)warn3"]} />
                                         <Xcomp.Bool observableValue={[riskAssessment, "notUseSpeciesMap"]} label={"Ønsker ikke å bruke Artskart for å beregne forekomstareal"} />
                                         {/*<table className="table BCritTable">
                                             <thead>    
