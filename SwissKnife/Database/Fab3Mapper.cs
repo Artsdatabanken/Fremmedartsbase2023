@@ -1000,6 +1000,13 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.SpreadIntroductionFurtherInfoGeneratedText, opt => opt.Ignore())
                     .ForMember(dest => dest.SpreadFurtherSpreadFurtherInfo, opt => opt.Ignore())
                     .ForMember(dest => dest.SpreadFurtherSpreadFurtherInfoGeneratedText, opt => opt.Ignore())
+                    
+                    .ForMember(dest => dest.ConnectedToHigherLowerTaxonDescription, opt => opt.Ignore())
+                    .ForMember(dest => dest.ConnectedToAnotherTaxonDescription, opt => opt.Ignore())
+                    .ForMember(dest => dest.UncertainityEstablishmentTimeDescription, opt => opt.Ignore())
+                    .ForMember(dest => dest.ProductionSpeciesDescription, opt => opt.Ignore())
+                    .ForMember(dest => dest.UncertainityStatusDescription, opt => opt.Ignore())
+
                     .AfterMap((src, dest) => { AfterFabMap(dest, src); });
 
                 

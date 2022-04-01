@@ -76,12 +76,13 @@ checkStatus = (production) => {
                             <Xcomp.Bool className={"regionallyAlien"} observableValue={[assessment, "isRegionallyAlien"]} checked={assessment.alienSpeciesCategory == "RegionallyAlien"} label={labels.SpeciesStatus.regionallyAlien} /> : null }
                     <Xcomp.Radio value={'false'} observableValue={[assessment, "isAlienSpeciesString"]} label={labels.General.no} />
                     <p>{labels.SpeciesStatus.unsureAlienDescription}</p>
-                    {!assessment.isAlienSpecies ?
+                    <Xcomp.HtmlString observableValue={[assessment, 'isAlien']}/>
+                    {/* {!assessment.isAlienSpecies ?
                     // transfer "notApplicableDescription" from FAB3                    
                     
                     <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/> :
-                    <Xcomp.HtmlString observableValue={[assessment, 'isAlien']}/>
-                }
+                    <Xcomp.HtmlString observableValue={[assessment, 'isAlien']}/> 
+                    }*/}
                     
                     { assessment.isAlienSpecies ?
                     <div>   
@@ -89,7 +90,13 @@ checkStatus = (production) => {
                         <Xcomp.StringEnum mode="radiohorizontal" observableValue={[assessment, "higherOrLowerLevelString"]} 
                                 style={{marginTop: "20px"}}
                                 codes={codes.yesNo}
-                                />     
+                                />
+                        {assessment.higherOrLowerLevel &&
+                        <div> 
+                        <p>Nærmere begrunnelse</p>
+                        <Xcomp.HtmlString observableValue={[assessment, 'connectedToHigherLowerTaxonDescription']}/>
+                        </div>}
+
 
                         {!assessment.higherOrLowerLevel &&
                         <>
@@ -98,6 +105,7 @@ checkStatus = (production) => {
                                 style={{marginTop: "20px"}}
                                 codes={codes.yesNo}
                                 />
+                               
                         
                         {assessment.connectedToAnother || assessment.connectedToAnother ?
                         <div className={"connectedTaxons"}>
@@ -189,7 +197,7 @@ checkStatus = (production) => {
                             </div> }             
 
                             <p>Nærmere begrunnelse</p>
-                            <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/>                
+                            <Xcomp.HtmlString observableValue={[assessment, 'connectedToAnotherTaxonDescription']}/>                
                             </div> : null }
                         </>
                         }           
@@ -205,7 +213,7 @@ checkStatus = (production) => {
                          <Xcomp.StringEnum observableValue={[assessment, "productionSpeciesString"]} mode="radio" codes={codes.yesNo}/> 
                          {(assessment.productionSpecies == true && assessment.notApplicableCategory == "traditionalProductionSpecie") &&  
                             // transfer "notApplicableDescription" from FAB3
-                            <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/>                            
+                            <Xcomp.HtmlString observableValue={[assessment, 'productionSpeciesDescription']}/>                            
                         }
                     </div>
                          <p> { assessment.isRegionallyAlien ? labels.SpeciesStatus.statusInNorwayRegionallyAlien : labels.SpeciesStatus.statusInNorway } { assessment.expertGroup.indexOf("Svalbard") < 0 ? labels.SpeciesStatus.inNorway : labels.SpeciesStatus.inSvalbard }</p>
@@ -243,7 +251,7 @@ checkStatus = (production) => {
 
                             <p>{labels.SpeciesStatus.uncertainityEstablishmentTimeDescription}</p>
                             
-                            <Xcomp.HtmlString observableValue={[assessment, 'assesmentNotApplicableDescription']}/> 
+                            <Xcomp.HtmlString observableValue={[assessment, 'uncertainityEstablishmentTimeDescription']}/> 
                         
                      </div> : null}
                     
