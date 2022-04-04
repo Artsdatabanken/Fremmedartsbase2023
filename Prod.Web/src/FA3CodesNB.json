@@ -3724,7 +3724,7 @@
                 "Id": "Criterion",
                 "Value": "H",
                 "Text": "H-kriteriet: Overføring av genetisk materiale",
-                "Info": "Beskriv overføring av genetisk materiale (introgresjon) til rødlistevurdert art. Det skal være sannsynlighetsovervekt for overføringen",
+                "Info": "Beskriv overføring av genetisk materiale (introgresjon) til rødlistevurdert art.",
                 "Children": {
                     "CritH": [
                         {
@@ -3762,7 +3762,7 @@
                 "Id": "Criterion",
                 "Value": "I",
                 "Text": "I-kriteriet: Overføring av parasitter eller patogener",
-                "Info": "Beskriv overføring av parasitter eller patogener (bakterier og virus inkludert) til stedegne og andre arter som har blitt vurdert for rødlisting. Det skal være sannsynlighetsovervekt for overføringen",
+                "Info": "Beskriv overføring av parasitter eller patogener (bakterier og virus inkludert) til stedegne og andre arter som har blitt vurdert for rødlisting.",
                 "Children": {
                     "CritI": [
                         {
@@ -8630,7 +8630,7 @@
                         {
                             "Id": null,
                             "Value": "colonizedAreaDescription",
-                            "Text": "Anslå kolonisert areal i de naturtypene arten er observert i eller regnes med å observeres i innen 50 år, beskriv artens (eventuelt framtidige) påvirkning i naturtypen og anslå hvor stor andel av naturtypen som blir (eventuelt vil bli) påvirket. Det skal være sannsynlighetsovervekt for at valgt tilstandsendring skjer.",
+                            "Text": "Anslå kolonisert areal i de naturtypene arten er observert i eller regnes med å observeres i innen 50 år, beskriv artens (eventuelt framtidige) påvirkning i naturtypen og anslå hvor stor andel av naturtypen som blir (eventuelt vil bli) påvirket.",
                             "Info": null,
                             "Children": null
                         },

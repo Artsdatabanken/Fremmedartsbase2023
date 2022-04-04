@@ -302,7 +302,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                 <fieldset className="well">
                     <h2>{labels.DEcrit.mainHeading}</h2>
                     <h4>{labels.DEcrit.heading}</h4>
-                    <p>Beskriv artens interaksjon(er) med stedegne og andre arter som har blitt vurdert for rødlisting. Det skal være sannsynlighetsovervekt for interaksjonen</p>
+                    <p>Beskriv artens interaksjon(er) med stedegne og andre arter som har blitt vurdert for rødlisting.</p>
                     <hr/>
                     <SpeciesSpeciesTable list={riskAssessment.speciesSpeciesInteractions} newItem={this.newSSITS} addNewItem={this.addSSITS} koder={koder} labels={labels} disabled={appState.userContext.readonly} showRedlist showKeyStoneSpecie showEffect showInteractionType showConfirmedOrAssumed/>
                     
