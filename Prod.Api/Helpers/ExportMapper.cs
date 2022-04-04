@@ -142,6 +142,14 @@ namespace Prod.Api.Helpers
 
         public string Category2018 { get; set; }
         public string Criteria2018 { get; set; }
+        
+        public string ConnectedToHigherLowerTaxonDescription { get; set; } = "";
+        
+        public string ConnectedToAnotherTaxonDescription { get; set; } = "";
+        
+        public string UncertainityEstablishmentTimeDescription { get; set; } = "";
+        
+        public string ProductionSpeciesDescription { get; set; } = "";
 
         public int RiskAssessmentRiskLevel { get; set; } = -1;
         public string RiskAssessmentDecisiveCriteria { get; set; }
