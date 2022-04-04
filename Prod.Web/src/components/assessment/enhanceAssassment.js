@@ -398,7 +398,7 @@ export default function enhanceAssessment(json, appState) {
         }
     )
 
-    const errorDefinitions = getErrorDefinitions(assessment)
+    const errorDefinitions = getErrorDefinitions(assessment, errorhandler.resolveid)
 
     errorhandler.addErrors(errorDefinitions)
     return assessment
