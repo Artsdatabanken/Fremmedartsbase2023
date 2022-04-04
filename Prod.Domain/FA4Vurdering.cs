@@ -194,7 +194,27 @@ namespace Prod.Domain
         public string DoorKnockerDescription { get; set; } // fab: Door_Knocker_Description
         public string NotReproductiveDescription2012 { get; set; } // fab: Not_Reproductive_Description 
         public string NotReproductiveFutureDescription2012 { get; set; } // fab: Not_Reproductive_Future_Description
-        public string AssesmentNotApplicableDescription { get; set; } // fab: Assesment_Not_Applicable_Description
+        public string AssesmentNotApplicableDescription { get; set; } // todo: fjern dette // fab: Assesment_Not_Applicable_Description
+
+        /// <summary>
+        /// Tekstlig informasjon knytt til at arter er koblet til vurdering for høyere eller lavere taxonomi
+        /// </summary>
+        public string ConnectedToHigherLowerTaxonDescription { get; set; } = "";
+
+        /// <summary>
+        /// Tekstlig informasjon knytt til at art vurderes sammen med ett annet taxon
+        /// </summary>
+        public string ConnectedToAnotherTaxonDescription { get; set; } = "";
+        
+        /// <summary>
+        /// Tekstlig informasjon knytt til usikkerhet rundt etableringstidspunkt
+        /// </summary>
+        public string UncertainityEstablishmentTimeDescription { get; set; } = "";
+
+        /// <summary>
+        /// Tekstlig informasjon knytt til tradisjonell produksjonarter fra 2018
+        /// </summary>
+        public string ProductionSpeciesDescription { get; set; } = "";
 
         public string UncertainityStatusDescription { get; set; }
 
@@ -217,6 +237,9 @@ namespace Prod.Domain
 
         public string ChangedFromAlien { get; set; }
 
+        /// <summary>
+        /// Beskriv hva som ligger til grunn for endringa i artens status
+        /// </summary>
         public string ChangedAssessment { get; set; }
 
         public bool? AlienSpecieUncertainIfEstablishedBefore1800 { get; set; } // lagt til: 19.10.2016 - renamed 15.11.2016
