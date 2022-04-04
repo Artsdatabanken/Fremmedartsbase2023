@@ -1,6 +1,7 @@
-﻿function getErrorDefinitions(assessment) {
+﻿function getErrorDefinitions(assessment, resolveid) {
     const a = assessment
     const r = assessment.riskAssessment
+    const hasnum = (value) => !(value === null || isNaN(value))
     
     
     // DOORKNOCKER
@@ -86,43 +87,48 @@
         },
         {
             id: "(a)err11",
-            get cond() {return a.doFullAssessment && !r.doorKnocker && ((r.AOOknownInput % 4) !== 0)},
+            get cond() {return a.doFullAssessment && !r.doorKnocker && hasnum(r.AOOknownInput) && ((r.AOOknownInput % 4) !== 0)},
             msg: "Forekomstarealene må være multippel av 4_km²!"
         },
         {
-            id: "(a)err666",
-            get cond() {return !r.doorKnocker && ((r.AOOknownInput % 4) !== 0 || (r.AOOtotalLowInput % 4) !== 0 || (r.AOOtotalBestInput % 4) !== 0 || (r.AOOtotalHighInput % 4) !== 0 || (r.AOO50yrLowInput % 4) !== 0 || (r.AOO50yrBestInput % 4) !== 0 || (r.AOO50yrHighInput % 4) !== 0)},
-            msg: "Forekomstarealet er ikke gyldig. Det må være delbart med 4 (forekomstareal = antall forekomster x 4 km²!"
-        },
-        {
             id: "(a)err12",
-            get cond() {return !r.doorKnocker && ((r.AOOtotalLowInput % 4) !== 0)},
+            get cond() {return !r.doorKnocker && hasnum(r.AOOtotalLowInput) && ((r.AOOtotalLowInput % 4) !== 0)},
             msg: "Forekomstarealene må være multippel av 4_km²!"
         },
         {
             id: "(a)err13",
-            get cond() {return !r.doorKnocker && r.AOOtotalBestInput % 4 !== 0 },
+            get cond() {return !r.doorKnocker && hasnum(r.AOOtotalBestInput) && ((r.AOOtotalBestInput % 4) !== 0) },
             msg: "Forekomstarealene må være multippel av 4_km²!"
         },
         {
             id: "(a)err14",
-            get cond() {return !r.doorKnocker && ((r.AOOtotalHighInput % 4) !== 0)},
+            get cond() {return !r.doorKnocker && hasnum(r.AOOtotalHighInput) && ((r.AOOtotalHighInput % 4) !== 0)},
             msg: "Forekomstarealene må være multippel av 4_km²!"
         },
         {
             id: "(a)err15",
-            get cond() {return !r.doorKnocker && ((r.AOO50yrLowInput % 4) !== 0) },
+            get cond() {return !r.doorKnocker && hasnum(r.AOO50yrLowInput) && ((r.AOO50yrLowInput % 4) !== 0) },
             msg: "Forekomstarealene må være multippel av 4_km²!"
         },
         {
             id: "(a)err16",
-            get cond() {return !r.doorKnocker && ((r.AOO50yrBestInput % 4) !== 0)},
+            get cond() {return !r.doorKnocker && hasnum(r.AOO50yrBestInput) && ((r.AOO50yrBestInput % 4) !== 0)},
             msg: "Forekomstarealene må være multippel av 4_km²!"
         },
         {
             id: "(a)err17",
-            get cond() {return !r.doorKnocker && ((r.AOO50yrHighInput % 4) !== 0)},
+            get cond() {return !r.doorKnocker && hasnum(r.AOO50yrHighInput) && ((r.AOO50yrHighInput % 4) !== 0)},
             msg: "Forekomstarealene må være multippel av 4_km²!"
+        },
+        // {
+        //     id: "(a)err666",
+        //     get cond() {return !r.doorKnocker && ((r.AOOknownInput % 4) !== 0 || (r.AOOtotalLowInput % 4) !== 0 || (r.AOOtotalBestInput % 4) !== 0 || (r.AOOtotalHighInput % 4) !== 0 || (r.AOO50yrLowInput % 4) !== 0 || (r.AOO50yrBestInput % 4) !== 0 || (r.AOO50yrHighInput % 4) !== 0)},
+        //     msg: "Forekomstarealet er ikke gyldig. Det må være delbart med 4 (forekomstareal = antall forekomster x 4 km²!"
+        // },
+        {
+            id: "(a)err666",
+            get cond() {return !r.doorKnocker && (resolveid("(a)err11") || resolveid("(a)err12") || resolveid("(a)err13") || resolveid("(a)err14") || resolveid("(a)err15") || resolveid("(a)err16") || resolveid("(a)err17"))},
+            msg: "Forekomstarealet er ikke gyldig. Det må være delbart med 4 (forekomstareal = antall forekomster x 4 km²!"
         },
         {
             id: "(a)err18",
