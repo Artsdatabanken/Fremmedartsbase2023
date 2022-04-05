@@ -213,7 +213,10 @@ checkStatus = (production) => {
                          <Xcomp.StringEnum observableValue={[assessment, "productionSpeciesString"]} mode="radio" codes={codes.yesNo}/> 
                          {(assessment.productionSpecies == true && assessment.notApplicableCategory == "traditionalProductionSpecie") &&  
                             // transfer "notApplicableDescription" from FAB3
-                            <Xcomp.HtmlString observableValue={[assessment, 'productionSpeciesDescription']}/>                            
+                            <div>
+                            <p>Nærmere begrunnelse for tradisjonelle bruksarter (overført fra 2018):</p>
+                            <Xcomp.HtmlString observableValue={[assessment, 'productionSpeciesDescription']}/> 
+                            </div>                           
                         }
                     </div>
                          <p> { assessment.isRegionallyAlien ? labels.SpeciesStatus.statusInNorwayRegionallyAlien : labels.SpeciesStatus.statusInNorway } { assessment.expertGroup.indexOf("Svalbard") < 0 ? labels.SpeciesStatus.inNorway : labels.SpeciesStatus.inSvalbard }</p>
