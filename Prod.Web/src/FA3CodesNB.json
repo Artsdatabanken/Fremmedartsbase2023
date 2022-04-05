@@ -7365,7 +7365,7 @@
                         {
                             "Id": null,
                             "Value": "mCount",
-                            "Text": "Mørketall",
+                            "Text": "Forekomstarealets mørketall",
                             "Info": null,
                             "Children": null
                         },
