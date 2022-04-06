@@ -533,7 +533,7 @@ const MapOpenLayers = ({
                         if (polygonStyle) {
                             polygonFeature.setStyle(polygonStyle);
                         }
-                        areaSource.addFeature(polygonFeature);
+                        // areaSource.addFeature(polygonFeature);
                         geometry = null;
                     }
                 } else {

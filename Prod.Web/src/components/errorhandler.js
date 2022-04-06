@@ -2,6 +2,7 @@ import {observable} from 'mobx';
 const errorhandler = observable({
     _errobjs: [],
     _warnobjs: [],
+    _allids:{},
     get hasErrors() {
         return Object.keys(this.errors).filter(key => this.errors[key] !== null).length > 0
     },
@@ -32,11 +33,15 @@ const errorhandler = observable({
         // ]
         // **********************************
         for(const errobj of errorobjectarray) {
-            if(errobj.type === undefined || errobj.type === "error" ) {
+            if(errobj.type === undefined) {
+                errobj.type = "error"
+            } 
+            if(errobj.type === "error" ) {
                 this._errobjs.push(errobj)
             } else if(errobj.type === "warning" ) {
                 this._warnobjs.push(errobj)
             }
+            this._allids[errobj.id] = errobj
         }
     },
     get errors() {
@@ -61,6 +66,7 @@ const errorhandler = observable({
         }
         return result
     },
+
     // get errorsMsg() {
     //     const result = []
     //     const keys = Object.keys(this.errors)
@@ -77,4 +83,10 @@ const errorhandler = observable({
     //     }
     // }
 })
+errorhandler.resolveid = function(id) {
+    const allids = errorhandler._allids
+    return id in allids ? allids[id].cond : false
+}
+
+
 export default errorhandler

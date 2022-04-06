@@ -205,9 +205,9 @@ const RedigerbartKart = ({
 };
 
 const artskartFilter = (taxonId, kriterier) => {
-  let f = `{"TaxonIds":[${taxonId}],"IncludeSubTaxonIds":true,"Found":[2],"NotRecovered":[2],"UnsureId":[2],"Spontan":[2],"Style":1`;
-  if (kriterier.AOOyear1 !== undefined) f += `,"YearFrom":"${kriterier.AOOyear1}"`;
-  if (kriterier.AOOyear2 !== undefined) f += `,"YearTo":"${kriterier.AOOyear2}"`;
+  let f = `{"TaxonIds":[${taxonId}],"IncludeSubTaxonIds":true,"Found":[2],"NotRecovered":[2],"UnsureId":[2],"Style":1`;
+  if (kriterier.AOOyear1 !== undefined) f += `,"YearFrom":"${kriterier.AOOendyear1}"`;
+  if (kriterier.AOOyear2 !== undefined) f += `,"YearTo":"${kriterier.AOOendyear2}"`;
   f += `,"CoordinatePrecisionTo":"1000"}`;
   return encodeURIComponent(f);
 }
