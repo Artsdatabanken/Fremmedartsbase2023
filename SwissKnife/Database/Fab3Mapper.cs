@@ -922,7 +922,6 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.HCritInsecurity, opt => opt.Ignore()) //Ny av året
                     .ForMember(dest => dest.ICritInsecurity, opt => opt.Ignore()) //Ny av året
 
-                    .ForMember(dest => dest.DescriptionOfReasonsForChangeOfCategory, opt => opt.Ignore()) //Ny av året
 
                     .AfterMap((src, dest) => { AfterRiskAssessmentMap(src, dest); });
                 //.ForMember(dest => dest., opt => opt.MapFrom(src => src.))
@@ -950,6 +949,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.Category, opt => opt.Ignore())
                     .ForMember(dest => dest.Criteria, opt => opt.Ignore())
                     .ForMember(dest => dest.AssessmentConclusion, opt => opt.Ignore())
+                    .ForMember(dest => dest.DescriptionOfReasonsForChangeOfCategory, opt => opt.Ignore()) //Ny av året
                     .ForMember(dest => dest.IsAlien, opt => opt.Ignore())
                     .ForMember(dest => dest.IsAlienSpecies, opt => opt.Ignore())
                     .ForMember(dest => dest.IsRegionallyAlien, opt => opt.Ignore())

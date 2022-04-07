@@ -132,6 +132,8 @@ namespace Prod.Domain
         public string AlienSpeciesCategory { get; set; }
         public string AssessmentConclusion { get; set; }
 
+         public string DescriptionOfReasonsForChangeOfCategory { get; set; }
+
         public List<string> ReasonForChangeOfCategory { get; set; } = new List<string>();
         public DateTime LastUpdatedAt { get; set; }
         public string LastUpdatedBy { get; set; }
@@ -1498,7 +1500,6 @@ public partial class FA4 // (3.2) Artsegenskaper
         public string CriteriaDocumentationInvationPotential { get; set; }
         public string CriteriaDocumentationEcoEffect { get; set; }
 
-        public string DescriptionOfReasonsForChangeOfCategory { get; set; }
 
 
 
