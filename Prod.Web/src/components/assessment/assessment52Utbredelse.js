@@ -406,7 +406,7 @@ export default class Assessment52Utbredelse extends React.Component {
                                             </div>
                                             }
                                         </div>
-                                        <ErrorList errorhandler={errorhandler} errorids={["(a)err1",  "(a)err666", "(a)err18", "(a)err19", "(a)err20", "(a)err22", "(a)err23", "(a)err24", "(a)warn4"]} />
+                                        <ErrorList errorhandler={errorhandler} errorids={["(a)err1",  "(a)err666", "(a)err18", "(a)err19", "(a)err20", "(a)err22", "(a)err23", "(a)err24", "(a)warn4", "(a)warn5"]} />
                                         <p>Forekomstareal <b>om 50 år </b> (km<sup>2</sup>)</p>
                                     </div>
                                     <div className="distribution">
