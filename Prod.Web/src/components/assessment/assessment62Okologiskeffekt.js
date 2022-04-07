@@ -340,7 +340,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                                 firstValue={"scoreD"}
                                 secondValue={"unsureD"}/> */}
                      <Xcomp.HtmlString                            
-                                observableValue={[riskAssessment, "DCritInsecurity"]}
+                                observableValue={[riskAssessment, "dCritInsecurity"]}
                                 label={labels.DEcrit.insecurity}
                             />                      
                     </fieldset>
@@ -352,7 +352,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                                 firstValue={"scoreE"}
                                 secondValue={"unsureE"}/>*/}
                      <Xcomp.HtmlString                            
-                                observableValue={[riskAssessment, "ECritInsecurity"]}
+                                observableValue={[riskAssessment, "eCritInsecurity"]}
                                 label={labels.DEcrit.insecurity}
                             />                      
                 </fieldset>
@@ -390,7 +390,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                    
                     <Criterion criterion={critH} mode="noheading" disabled={appState.userContext.readonly}/>
                      <Xcomp.HtmlString                            
-                                observableValue={[riskAssessment, "HCritInsecurity"]}
+                                observableValue={[riskAssessment, "hCritInsecurity"]}
                                 label={labels.DEcrit.insecurity}
                             />                      
                     {/*{critH.majorUncertainty ?
@@ -416,7 +416,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                     
                     <Criterion criterion={critI} mode="noheading" disabled={appState.userContext.readonly}/>
                      <Xcomp.HtmlString                            
-                                observableValue={[riskAssessment, "ICritInsecurity"]}
+                                observableValue={[riskAssessment, "iCritInsecurity"]}
                                 label={labels.DEcrit.insecurity}
                             />                      
                     {/*{critI.majorUncertainty ?

@@ -829,10 +829,8 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.Occurrences1Low, opt => opt.Ignore())
                     .ForMember(dest => dest.Occurrences1High, opt => opt.Ignore())
 
-                    .ForMember(dest => dest.DCritInsecurity, opt => opt.Ignore()) //Ny av året
-                    .ForMember(dest => dest.ECritInsecurity, opt => opt.Ignore()) //Ny av året
-                    .ForMember(dest => dest.HCritInsecurity, opt => opt.Ignore()) //Ny av året
-                    .ForMember(dest => dest.ICritInsecurity, opt => opt.Ignore()) //Ny av året
+
+
 
                     // følgende blir mappet fra FA3Legacy lenger nede
                     .ForMember(dest => dest.AOOknownInput, opt => opt.Ignore())
@@ -918,6 +916,11 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.YearFirstEstablishedNatureInsecure, opt => opt.Ignore())
                     .ForMember(dest => dest.YearFirstDomesticObservation, opt => opt.Ignore())
                     .ForMember(dest => dest.ExtensionData, opt => opt.Ignore())
+
+                    .ForMember(dest => dest.DCritInsecurity, opt => opt.Ignore()) //Ny av året
+                    .ForMember(dest => dest.ECritInsecurity, opt => opt.Ignore()) //Ny av året
+                    .ForMember(dest => dest.HCritInsecurity, opt => opt.Ignore()) //Ny av året
+                    .ForMember(dest => dest.ICritInsecurity, opt => opt.Ignore()) //Ny av året
                     .AfterMap((src, dest) => { AfterRiskAssessmentMap(src, dest); });
                 //.ForMember(dest => dest., opt => opt.MapFrom(src => src.))
 
@@ -1011,6 +1014,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.UncertainityEstablishmentTimeDescription, opt => opt.Ignore())
                     .ForMember(dest => dest.ProductionSpeciesDescription, opt => opt.Ignore())
                     .ForMember(dest => dest.UncertainityStatusDescription, opt => opt.Ignore())
+
 
                     .AfterMap((src, dest) => { AfterFabMap(dest, src); });
 
