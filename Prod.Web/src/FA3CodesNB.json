@@ -3578,7 +3578,7 @@
                         {
                             "Id": "CritD",
                             "Value": "0",
-                            "Text": "Ingen kjent effekt",
+                            "Text": "Ingen kjent eller sannsynlig effekt",
                             "Info": null,
                             "Children": null
                         },
