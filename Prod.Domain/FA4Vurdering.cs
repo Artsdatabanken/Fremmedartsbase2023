@@ -1498,7 +1498,7 @@ public partial class FA4 // (3.2) Artsegenskaper
         public string CriteriaDocumentationInvationPotential { get; set; }
         public string CriteriaDocumentationEcoEffect { get; set; }
 
-        public string DescriptionOfReasonsForChangeOfCategorytion { get; set; }
+        public string DescriptionOfReasonsForChangeOfCategory { get; set; }
 
 
 

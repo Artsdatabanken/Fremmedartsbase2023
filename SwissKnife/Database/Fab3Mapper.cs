@@ -922,7 +922,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.HCritInsecurity, opt => opt.Ignore()) //Ny av året
                     .ForMember(dest => dest.ICritInsecurity, opt => opt.Ignore()) //Ny av året
 
-                    .ForMember(dest => dest.DescriptionOfReasonsForChangeOfCategorytion, opt => opt.Ignore()) //Ny av året
+                    .ForMember(dest => dest.DescriptionOfReasonsForChangeOfCategory, opt => opt.Ignore()) //Ny av året
 
                     .AfterMap((src, dest) => { AfterRiskAssessmentMap(src, dest); });
                 //.ForMember(dest => dest., opt => opt.MapFrom(src => src.))
