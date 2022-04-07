@@ -1363,6 +1363,8 @@ public partial class FA4 // (3.2) Artsegenskaper
         public List<SpeciesNaturetypeInteraction> SpeciesNaturetypeInteractions { get; set; } = new List<SpeciesNaturetypeInteraction>(); // lagt til 22.12.2016
         public List<SpeciesNaturetypeInteraction> SpeciesNaturetypeInteractions2018 { get; set; } = new List<SpeciesNaturetypeInteraction>();
         public string SpeciesSpeciesInteractionsSupplementaryInformation { get; set; }
+        public string DcritInsecurity { get; set; }
+        public string EcritInsecurity { get; set; }
 
         // - H kriteriet
         public List<SpeciesSpeciesInteraction> GeneticTransferDocumented { get; set; } = new List<SpeciesSpeciesInteraction>(); // lagt til 12.09.2016
@@ -1388,10 +1390,12 @@ public partial class FA4 // (3.2) Artsegenskaper
             //public string NorwayOrAbroad { get; set; }
         }
 
+        public string HcritInsecurity { get; set; }
+
         // I kriterie
         public List<HostParasiteInteraction> HostParasiteInformations { get; set; } = new List<HostParasiteInteraction>(); // lagt til 09.09.2016
 
-
+        public string IcritInsecurity { get; set; }
 
 
         // -- (C) potensiale for å endre én eller flere truete/sjeldne naturtyper
