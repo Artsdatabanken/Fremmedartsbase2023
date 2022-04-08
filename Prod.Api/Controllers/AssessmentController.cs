@@ -309,7 +309,7 @@ namespace Prod.Api.Controllers
         {
             if (value.ExtensionData != null || value.RiskAssessment.ExtensionData != null)
             {
-                if (this.Request.Host.Host == "localhost")
+                if (this.Request.Host.Host == "localhost" || this.Request.Host.Host.Contains("test"))
                 {
                     if (value.ExtensionData != null)
                         foreach (var element in value.ExtensionData.Where(element =>
