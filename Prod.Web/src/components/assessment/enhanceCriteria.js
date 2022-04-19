@@ -530,9 +530,10 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
 
         get invationPotentialUncertainityText() {
-            return !r.invationPotentialUncertaintyLevels || r.invationPotentialUncertaintyLevels == [] || findUncertainityAbove(r.invationPotentialUncertaintyLevels, r.invationPotentialLevel) == 0 ? "" 
-                    : r.invationPotentialUncertaintyLevels.length == 1 && r.invationPotentialUncertaintyLevels[0] > r.invationPotentialLevel ? `(usikkerhet opp mot ${r.invationPotentialUncertaintyLevels[0]})`
-                    : ` (usikkerhet opp mot ${findUncertainityAbove(r.invationPotentialUncertaintyLevels, r.invationPotentialLevel)})`
+            const ul = r.invationpotential.uncertaintyLevels
+            return !ul || ul == [] || findUncertainityAbove(ul, r.invationPotentialLevel) == 0 ? "" 
+                    : ul.length == 1 && ul[0] > r.invationPotentialLevel ? `(usikkerhet opp mot ${ul[0]})`
+                    : ` (usikkerhet opp mot ${findUncertainityAbove(ul, r.invationPotentialLevel)})`
         },
 
         get invationPotentialText() {
