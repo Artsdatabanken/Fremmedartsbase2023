@@ -35,8 +35,8 @@
         },
         {
             id: "(a)err1",
-            get cond() {return !r.doorKnocker && (r.AOOtotalBestInput < 4)},
-            msg: "En selvstendig reproduserende art må ha et forekomstareal på minst 4_km²!"
+            get cond() {return !r.doorKnocker && a.productionSpecies != true && (r.AOOtotalBestInput < 4)},
+            msg: "En selvstendig reproduserende art må ha et forekomstareal på minst 4 km²!"
         },
         {
             id: "(a)err2",
@@ -77,12 +77,12 @@
         },
         {
             id: "(a)err9",
-            get cond() {return a.doFullAssessment && (r.bmetodkey === "B2a1") && (r.AOO1 <= 0)},
+            get cond() {return a.doFullAssessment && (r.bmetodkey === "B2a1") && (r.AOO1 != null) && (r.AOO1 <= 0)},
             msg: "Forekomstarealet kan ikke være 0!"
         },
         {
             id: "(a)err10",
-            get cond() {return a.doFullAssessment && (r.bmetodkey === "B2a1") && (r.AOO2 <= 0)},
+            get cond() {return a.doFullAssessment && (r.bmetodkey === "B2a1") && (r.AOO2 != null) && (r.AOO2 <= 0)},
             msg: "Forekomstarealet kan ikke være 0!"
         },
         {
@@ -172,21 +172,26 @@
             id: "(a)warn2",
             get cond() {return a.doFullAssessment && (r.AOO1 > r.AOOknown1)},
             type: "warning",
-            msg: "MERK: Estimatet skal kun justeres om forekomster som er utgått pga. tiltak ble tatt ut av estimatet for kjent forekomstareal"
+            msg: "Estimatet skal kun justeres om forekomster som er utgått pga. tiltak ble tatt ut av estimatet for kjent forekomstareal"
         },
         {
             id: "(a)warn3",
             get cond() {return a.doFullAssessment && (r.AOO2 > r.AOOknown2)},
             type: "warning",
-            msg: "MERK: Estimatet skal kun justeres om forekomster som er utgått pga. tiltak ble tatt ut av estimatet for kjent forekomstareal"
+            msg: "Estimatet skal kun justeres om forekomster som er utgått pga. tiltak ble tatt ut av estimatet for kjent forekomstareal"
         },
         {
             id: "(a)warn4",
-            get cond() {return !r.doorKnocker && (r.AOO50yrBestInput < r.AOOtotalBestInput)},
+            get cond() {return !r.doorKnocker &&  r.AOO50yrBestInput != null && (r.AOO50yrBestInput < r.AOOtotalBestInput)},
             type: "warning",
-            msg: "MERK: Er det korrekt at det er forventet en nedgang i artens forekomstareal i løpet av de neste 50 år?"
+            msg: "Er det korrekt at det er forventet en nedgang i artens forekomstareal i løpet av de neste 50 år?"
         },
-
+        {
+            id: "(a)warn5",
+            get cond() {return !r.doorKnocker && a.productionSpecies == true && (r.AOOtotalBestInput < 4)},
+            type: "warning",
+            msg: "Er det riktig at arten kun reproduserer i sitt eget produksjonsareal?"
+        },
 
         {
             id: "(b)err1",
@@ -230,7 +235,7 @@
         },
         {
             id: "B2err1",
-            get cond() {return a.doFullAssessment && (r.bmetodkey === "B2a1") && (((r.AOOyear2 - r.AOOyear1) < 10 ) || ((r.AOOyear2 - r.AOOyear1) > 20 )) },
+            get cond() {return a.doFullAssessment && (r.bmetodkey === "B2a1") && (r.AOOyear1 != null) && (r.AOOyear2 != null) && (((r.AOOyear2 - r.AOOyear1) < 10 ) || ((r.AOOyear2 - r.AOOyear1) > 20 )) },
             msg: "Valgt periode (t2-t1) kan ikke overstige 20 år eller være mindre enn 10 år. Juster perioden."
         }
     ]

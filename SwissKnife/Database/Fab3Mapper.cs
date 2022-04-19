@@ -829,6 +829,9 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.Occurrences1Low, opt => opt.Ignore())
                     .ForMember(dest => dest.Occurrences1High, opt => opt.Ignore())
 
+
+
+
                     // følgende blir mappet fra FA3Legacy lenger nede
                     .ForMember(dest => dest.AOOknownInput, opt => opt.Ignore())
                     .ForMember(dest => dest.AOOknown, opt => opt.Ignore())
@@ -913,6 +916,13 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.YearFirstEstablishedNatureInsecure, opt => opt.Ignore())
                     .ForMember(dest => dest.YearFirstDomesticObservation, opt => opt.Ignore())
                     .ForMember(dest => dest.ExtensionData, opt => opt.Ignore())
+
+                    .ForMember(dest => dest.DCritInsecurity, opt => opt.Ignore()) //Ny av året
+                    .ForMember(dest => dest.ECritInsecurity, opt => opt.Ignore()) //Ny av året
+                    .ForMember(dest => dest.HCritInsecurity, opt => opt.Ignore()) //Ny av året
+                    .ForMember(dest => dest.ICritInsecurity, opt => opt.Ignore()) //Ny av året
+
+
                     .AfterMap((src, dest) => { AfterRiskAssessmentMap(src, dest); });
                 //.ForMember(dest => dest., opt => opt.MapFrom(src => src.))
 
@@ -939,6 +949,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.Category, opt => opt.Ignore())
                     .ForMember(dest => dest.Criteria, opt => opt.Ignore())
                     .ForMember(dest => dest.AssessmentConclusion, opt => opt.Ignore())
+                    .ForMember(dest => dest.DescriptionOfReasonsForChangeOfCategory, opt => opt.Ignore()) //Ny av året
                     .ForMember(dest => dest.IsAlien, opt => opt.Ignore())
                     .ForMember(dest => dest.IsAlienSpecies, opt => opt.Ignore())
                     .ForMember(dest => dest.IsRegionallyAlien, opt => opt.Ignore())

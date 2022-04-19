@@ -132,6 +132,8 @@ namespace Prod.Domain
         public string AlienSpeciesCategory { get; set; }
         public string AssessmentConclusion { get; set; }
 
+         public string DescriptionOfReasonsForChangeOfCategory { get; set; }
+
         public List<string> ReasonForChangeOfCategory { get; set; } = new List<string>();
         public DateTime LastUpdatedAt { get; set; }
         public string LastUpdatedBy { get; set; }
@@ -1363,6 +1365,8 @@ public partial class FA4 // (3.2) Artsegenskaper
         public List<SpeciesNaturetypeInteraction> SpeciesNaturetypeInteractions { get; set; } = new List<SpeciesNaturetypeInteraction>(); // lagt til 22.12.2016
         public List<SpeciesNaturetypeInteraction> SpeciesNaturetypeInteractions2018 { get; set; } = new List<SpeciesNaturetypeInteraction>();
         public string SpeciesSpeciesInteractionsSupplementaryInformation { get; set; }
+        public string DCritInsecurity { get; set; }
+        public string ECritInsecurity { get; set; }
 
         // - H kriteriet
         public List<SpeciesSpeciesInteraction> GeneticTransferDocumented { get; set; } = new List<SpeciesSpeciesInteraction>(); // lagt til 12.09.2016
@@ -1388,10 +1392,12 @@ public partial class FA4 // (3.2) Artsegenskaper
             //public string NorwayOrAbroad { get; set; }
         }
 
+        public string HCritInsecurity { get; set; }
+
         // I kriterie
         public List<HostParasiteInteraction> HostParasiteInformations { get; set; } = new List<HostParasiteInteraction>(); // lagt til 09.09.2016
 
-
+        public string ICritInsecurity { get; set; }
 
 
         // -- (C) potensiale for å endre én eller flere truete/sjeldne naturtyper

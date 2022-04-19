@@ -121,7 +121,6 @@ export default class Assessment51Naturtyper extends React.Component {
                     canRenderTable={canRenderTable}
                     labels={labels}
                     codes={koder}
-                    appState={appState}
                     disabled={disabled}
                     desc={ntLabels.colonizedAreaDescription}/>
                 </>
@@ -136,7 +135,6 @@ export default class Assessment51Naturtyper extends React.Component {
                     canRenderTable={canRenderTable}
                     labels={labels}
                     codes={koder}
-                    appState={appState}
                     disabled={true}
                     desc={ntLabels.transferredFromNiN22}/>
                 </div>}
@@ -192,6 +190,8 @@ export default class Assessment51Naturtyper extends React.Component {
 
                 <fieldset className="well">
                 <h4>{ntLabels.regionalNaturetypes}</h4>
+                <p> Mer informasjon og kartvisning av soner og seksjoner finner du <a href="https://nin.artsdatabanken.no/Natur_i_Norge/Natursystem/Beskrivelsessystem/Regional_naturvariasjon?informasjon"> her</a>. </p>
+                <br></br>
                 {marine && 
                 <>
                     <h5 className={"bioCLZone"}>{ntLabels.marineSpecies}</h5>

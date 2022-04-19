@@ -16,6 +16,7 @@ using CsvHelper.Configuration;
 using KellermanSoftware.CompareNetObjects;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal;
 using Prod.Data.EFCore;
 using Prod.Domain;
 using Prod.Domain.Legacy;
@@ -341,6 +342,8 @@ namespace SwissKnife.Database
             var batchsize = 50;
             var count = 0;
             IEnumerable<Prod.Domain.Legacy.FA3Legacy> assessments = GetAssessments(inputFolder);
+
+            List<Tuple<string, string, string>> obsTekster = new List<Tuple<string, string, string>>();
             foreach (var oldAssessment in assessments)
             {
                 var newAssesment = InitialTransformFrom2018to2023(oldAssessment, jsonSerializerOptions, mapper);
@@ -367,9 +370,9 @@ namespace SwissKnife.Database
 
                 // Disse feltene er de som faktisk patches.....
                 Debug.Assert(exAssessment != null, nameof(exAssessment) + " != null");
-                
-                TransferAndFixPropertiesOnAssessmentsFrom2018(exAssessment, newAssesment);
-                FixRedlistOnExistingAssessment(exAssessment, redlistByScientificName, taxonService);
+
+                //TransferAndFixPropertiesOnAssessmentsFrom2018(exAssessment, newAssesment);
+                //FixRedlistOnExistingAssessment(exAssessment, redlistByScientificName, taxonService);
 
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)
@@ -415,9 +418,9 @@ namespace SwissKnife.Database
 
                 Debug.Assert(exAssessment != null, nameof(exAssessment) + " != null");
 
-                FixPropertiesOnNewAssessments(exAssessment);
-                FixRedlistOnExistingAssessment(exAssessment, redlistByScientificName, taxonService);
-
+                //FixPropertiesOnNewAssessments(exAssessment);
+                //FixRedlistOnExistingAssessment(exAssessment, redlistByScientificName, taxonService);
+               
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)
                 {
@@ -439,6 +442,11 @@ namespace SwissKnife.Database
             }
 
             _database.SaveChanges();
+
+            //foreach (var tuple in obsTekster)
+            //{
+            //    console.WriteLine("OBS: " + tuple.Item1 + " " + tuple.Item2 + ":" + tuple.Item3);
+            //}
         }
 
         private static Dictionary<int, Rodliste2021Rad> GetRedlistByScientificNameDictoDictionary(string inputFolder,
@@ -629,6 +637,21 @@ namespace SwissKnife.Database
             //    exAssessment.IsAlienSpecies = true;
             //}
 
+            //if (!string.IsNullOrWhiteSpace(exAssessment.IsAlien))
+            //{
+            //    console.WriteLine("denneisalien:" + exAssessment.ExpertGroup + ":" + exAssessment.EvaluatedScientificName);
+            //}
+
+            //if (exAssessment.IsAlienSpecies.HasValue && exAssessment.IsAlienSpecies.Value == false)
+            //{
+            //    exAssessment.IsAlien = exAssessment.AssesmentNotApplicableDescription;
+            //    if (!string.IsNullOrWhiteSpace(exAssessment.IsAlien))
+            //    {
+            //        obsTekster.Add(new Tuple<string, string, string>(exAssessment.ExpertGroup,
+            //            exAssessment.EvaluatedScientificName, "pot overskrev: " + exAssessment.IsAlien));
+            //    }
+
+            //}
         }
 
         private static void TransferAndFixPropertiesOnAssessmentsFrom2018(FA4? exAssessment, FA4 newAssesment)
@@ -802,11 +825,88 @@ namespace SwissKnife.Database
 
             //exAssessment.IndoorProduktion = newAssesment.IndoorProduktion;
             //exAssessment.SpreadIntroductionFurtherInfo = newAssesment.SpreadIntroductionFurtherInfo;
-            exAssessment.RiskAssessment.SpeciesSpeciesInteractions = newAssesment.RiskAssessment.SpeciesSpeciesInteractions;
-            exAssessment.RiskAssessment.HostParasiteInformations = newAssesment.RiskAssessment.HostParasiteInformations;
-            exAssessment.RiskAssessment.GeneticTransferDocumented = newAssesment.RiskAssessment.GeneticTransferDocumented;
-            exAssessment.RiskAssessment.SpeciesNaturetypeInteractions = newAssesment.RiskAssessment.SpeciesNaturetypeInteractions;
-            exAssessment.RiskAssessment.SpeciesNaturetypeInteractions2018 = newAssesment.RiskAssessment.SpeciesNaturetypeInteractions2018;
+
+            //exAssessment.RiskAssessment.SpeciesSpeciesInteractions = newAssesment.RiskAssessment.SpeciesSpeciesInteractions;
+            //exAssessment.RiskAssessment.HostParasiteInformations = newAssesment.RiskAssessment.HostParasiteInformations;
+            //exAssessment.RiskAssessment.GeneticTransferDocumented = newAssesment.RiskAssessment.GeneticTransferDocumented;
+            //exAssessment.RiskAssessment.SpeciesNaturetypeInteractions = newAssesment.RiskAssessment.SpeciesNaturetypeInteractions;
+            //exAssessment.RiskAssessment.SpeciesNaturetypeInteractions2018 = newAssesment.RiskAssessment.SpeciesNaturetypeInteractions2018;
+
+
+            //if (!string.IsNullOrWhiteSpace(exAssessment.IsAlien))
+            //{
+            //    console.WriteLine("denneisalien:" + exAssessment.ExpertGroup + ":" + exAssessment.EvaluatedScientificName);
+            //    obsTekster.Add(new Tuple<string, string, string>(exAssessment.ExpertGroup,
+            //        exAssessment.EvaluatedScientificName, exAssessment.IsAlien));
+            //}
+
+            //var assesmentNotApplicableDescription = newAssesment.AssesmentNotApplicableDescription;
+            //if (!string.IsNullOrWhiteSpace(exAssessment.AssesmentNotApplicableDescription) &&
+            //    exAssessment.AssesmentNotApplicableDescription != newAssesment.AssesmentNotApplicableDescription)
+            //{
+            //    assesmentNotApplicableDescription = exAssessment.AssesmentNotApplicableDescription;
+            //    obsTekster.Add(new Tuple<string, string, string>(exAssessment.ExpertGroup,
+            //        exAssessment.EvaluatedScientificName, assesmentNotApplicableDescription));
+            //}
+            //else if (string.IsNullOrWhiteSpace(exAssessment.AssesmentNotApplicableDescription) && !string.IsNullOrWhiteSpace(newAssesment.AssesmentNotApplicableDescription))
+            //{
+            //    obsTekster.Add(new Tuple<string, string, string>(exAssessment.ExpertGroup,
+            //        exAssessment.EvaluatedScientificName, assesmentNotApplicableDescription));
+            //}
+
+            //if (!string.IsNullOrWhiteSpace(assesmentNotApplicableDescription))
+            //{
+
+            //    if (newAssesment.AlienSpeciesCategory == "AlienSpecie" ||
+            //        (newAssesment.AlienSpeciesCategory == "NotApplicable" &&
+            //         newAssesment.NotApplicableCategory == "notAlienSpecie"))
+            //    {
+            //        exAssessment.IsAlien = newAssesment.AlienSpeciesCategory == "AlienSpecie"
+            //            ? (string.IsNullOrWhiteSpace(newAssesment.AlienSpecieUncertainDescription)
+            //                ? assesmentNotApplicableDescription
+            //                : newAssesment.AlienSpecieUncertainDescription)
+            //            : assesmentNotApplicableDescription;
+            //    }
+            //    else if ((newAssesment.AlienSpeciesCategory == "NotApplicable" &&
+            //              newAssesment.NotApplicableCategory == "establishedBefore1800") ||
+            //             (newAssesment.AlienSpeciesCategory == "NotApplicable" &&
+            //              newAssesment.NotApplicableCategory == "NotPresentInRegion"))
+            //    {
+            //        exAssessment.UncertainityEstablishmentTimeDescription =
+            //            assesmentNotApplicableDescription;
+            //    }
+            //    else if ((newAssesment.AlienSpeciesCategory == "NotApplicable" &&
+            //              newAssesment.NotApplicableCategory == "traditionalProductionSpecie"))
+            //    {
+            //        exAssessment.ProductionSpeciesDescription = assesmentNotApplicableDescription;
+            //    }
+            //    else if ((newAssesment.AlienSpeciesCategory == "NotApplicable" &&
+            //              newAssesment.NotApplicableCategory == "canNotEstablishWithin50years"))
+            //    {
+            //        if (exAssessment.Id == 1521
+            //            || exAssessment.Id == 1850
+            //            || exAssessment.Id == 2062
+            //            || exAssessment.Id == 2271
+            //            || exAssessment.Id == 2280
+            //            || exAssessment.Id == 2442
+            //            || exAssessment.Id == 2467)
+            //        {
+            //            exAssessment.UncertainityEstablishmentTimeDescription =
+            //                assesmentNotApplicableDescription;
+            //        }
+            //        else
+            //        {
+            //            exAssessment.UncertainityStatusDescription = assesmentNotApplicableDescription;
+            //        }
+            //    }
+            //    else if ((newAssesment.AlienSpeciesCategory == "NotApplicable" &&
+            //              newAssesment.NotApplicableCategory == "taxonIsEvaluatedInHigherRank"))
+            //    {
+            //        exAssessment.ConnectedToAnotherTaxonDescription =
+            //            assesmentNotApplicableDescription;
+            //    }
+
+            //}
         }
     }
 }
