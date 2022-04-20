@@ -211,15 +211,15 @@ function criterionHigh(criterion) {
     return result
 }
 
-function findUncertainityAbove (levels, level){
-    var uncertainityAbove = 0
-    for (var i = 0; i < levels.length; i ++) {
-        if (levels[i] > level && levels[i] > uncertainityAbove) {
-            uncertainityAbove = levels[i];
-        }
-    }
-    return uncertainityAbove == 0 ? "" : uncertainityAbove
-}
+// function findUncertainityAbove (levels, level){
+//     var uncertainityAbove = 0
+//     for (var i = 0; i < levels.length; i ++) {
+//         if (levels[i] > level && levels[i] > uncertainityAbove) {
+//             uncertainityAbove = levels[i];
+//         }
+//     }
+//     return uncertainityAbove == 0 ? "" : uncertainityAbove
+// }
 
 // function enhanceRiskAssessmentAddErrorReportingHandler(riskAssessment) {
 //         extendObservable(riskAssessment, errorhandler)
@@ -531,9 +531,10 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 
         get invationPotentialUncertainityText() {
             const ul = r.invationpotential.uncertaintyLevels
-            return !ul || ul == [] || findUncertainityAbove(ul, r.invationPotentialLevel) == 0 ? "" 
-                    : ul.length == 1 && ul[0] > r.invationPotentialLevel ? `(usikkerhet opp mot ${ul[0]})`
-                    : ` (usikkerhet opp mot ${findUncertainityAbove(ul, r.invationPotentialLevel)})`
+            if (!ul || ul == []) return ""
+            const max = Math.max(...ul)
+            const level = r.invationPotentialLevel
+            return max > level ? `(usikkerhet opp mot ${max})` : ""
         },
 
         get invationPotentialText() {
