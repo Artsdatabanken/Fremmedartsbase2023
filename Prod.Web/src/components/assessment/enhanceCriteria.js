@@ -534,7 +534,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             if (!ul || ul == []) return ""
             const max = Math.max(...ul)
             const level = r.invationPotentialLevel
-            return max > level ? `(usikkerhet opp mot ${max})` : ""
+            return max > level ? `(usikkerhet opp mot ${max + 1})` : ""
         },
 
         get invationPotentialText() {
