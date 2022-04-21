@@ -80,6 +80,8 @@ export default class AppView extends React.Component {
 
         const {appState} = this.props;
         const labels = appState.codeLabels.AppHeader
+        const isLockedByMe = appState.assessment && appState.assessment.lockedForEditByUser === auth.userId
+        const isFinished = appState.assessment && appState.assessment.evaluationStatus && appState.assessment.evaluationStatus === "finished"
 
         // console.log("appvieoaded" + appState.isServicesReady)
         // console.log("appviewisServicesReady" + this.props.isServicesReady)
@@ -95,7 +97,7 @@ export default class AppView extends React.Component {
                 var isdirty = appState.isDirty
                 var skriver = !!appState.roleincurrentgroup && appState.roleincurrentgroup.writeAccess
                 var ok = true;
-                if (isdirty && skriver) {
+                if (isdirty && skriver && !isFinished) {
                     ok = window.confirm("Det er endringer på vurderingen - ønsker du virkelig å gå bort fra den uten å lagre?")
                 }
                 if (ok) {
@@ -104,8 +106,6 @@ export default class AppView extends React.Component {
                 }
         }
 
-        const isLockedByMe = appState.assessment && appState.assessment.lockedForEditByUser === auth.userId
-        const isFinished = appState.assessment && appState.assessment.evaluationStatus && appState.assessment.evaluationStatus === "finished"
         return (
             <div className="_container">
                 {/* <button onClick={action(() => {appState.userContext.readonly=!appState.userContext.readonly})}>readonlytest</button> */}
@@ -194,33 +194,6 @@ export default class AppView extends React.Component {
                     
                 </ul>
     }
-                {/* <ul className="nav_menu">
-                    <div className="dropdown">
-                        <button className="btn btn-secondary dropdown-toggle" type="button" style={{marginTop: '5px'}} id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <b>{labels.information} 
-                            </b>
-                        </button>
-                        <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <li><a className="dropdown-item" target="_blank" href="https://www.artsdatabanken.no/Files/33442/_IUCN_Red_List_Categories_and_Criteria._Version_3.1._Second_edition">{labels.iucnCatAndCrit}</a></li>
-                            <li><a className="dropdown-item" target="_blank" href="https://www.artsdatabanken.no/Files/33443/Guidelines_for_Using_the_IUCN_Red_List_Categories_and_Criteria._Version_14_(August_2019)">{labels.redListguidelines14}</a></li>
-                            <li><a className="dropdown-item" target="_blank" href="https://www.artsdatabanken.no/Files/33444/Guidelines_for_Application_of_IUCN_Red_List_Criteria_at_Regional_and_National_Levels__Version_4.0">{labels.iucnRegionalGuides4}</a></li>
-                            <li><a className="dropdown-item" target="_blank" href="https://www.artsdatabanken.no/Files/33528/Brukerveileder_versjon_2.2.5.1.pdf">{labels.norskVeileder20212251}</a></li>
-                        </div>
-                    </div>
-                    {auth.isLoggedIn && // appState.viewMode !== "choosespecie" &&
-                    <li onClick={action(() => {sjekkForEndringerOgGiAdvarsel()})} disabled={!auth.isLoggedIn}><b>{labels.chooseSpecies}</b></li>
-                    }
-                    {auth.isLoggedIn && appState.viewMode === "choosespecie" &&
-                    <li onClick={action(() => appState.viewMode = "newassessment")} disabled={!auth.isLoggedIn}><b>Opprett vurdering</b></li>
-                    }
-                    {auth.hasAccess && appState.viewMode !== "choosespecie" && isLockedByMe && !isFinished &&
-                    <li onClick={lagreVurdering}><span className="fa fa-floppy-o"></span>&nbsp;<span>{labels.assessmentSave}</span></li>
-                    }
-                    {auth.isAdmin &&
-                    <li role="presentation" onClick={action(() => appState.viewMode = "administrasjon")}><b>{labels.administration}</b></li>
-                    }
-                <li role="presentation" disabled={!auth.isLoggedIn} onClick={auth.logout}><b>&nbsp; {auth.user ? labels.logout : ""} {auth.userName} </b></li>
-                </ul> */}
                 {!auth.isLoggedIn
                     ? <Login authModel={appState.authModel}/>
                     :
