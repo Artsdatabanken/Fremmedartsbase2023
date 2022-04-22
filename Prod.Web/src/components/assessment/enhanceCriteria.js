@@ -211,15 +211,15 @@ function criterionHigh(criterion) {
     return result
 }
 
-function findUncertainityAbove (levels, level){
-    var uncertainityAbove = 0
-    for (var i = 0; i < levels.length; i ++) {
-        if (levels[i] > level && levels[i] > uncertainityAbove) {
-            uncertainityAbove = levels[i];
-        }
-    }
-    return uncertainityAbove == 0 ? "" : uncertainityAbove
-}
+// function findUncertainityAbove (levels, level){
+//     var uncertainityAbove = 0
+//     for (var i = 0; i < levels.length; i ++) {
+//         if (levels[i] > level && levels[i] > uncertainityAbove) {
+//             uncertainityAbove = levels[i];
+//         }
+//     }
+//     return uncertainityAbove == 0 ? "" : uncertainityAbove
+// }
 
 // function enhanceRiskAssessmentAddErrorReportingHandler(riskAssessment) {
 //         extendObservable(riskAssessment, errorhandler)
@@ -530,9 +530,11 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         },
 
         get invationPotentialUncertainityText() {
-            return !r.invationPotentialUncertaintyLevels || r.invationPotentialUncertaintyLevels == [] || findUncertainityAbove(r.invationPotentialUncertaintyLevels, r.invationPotentialLevel) == 0 ? "" 
-                    : r.invationPotentialUncertaintyLevels.length == 1 && r.invationPotentialUncertaintyLevels[0] > r.invationPotentialLevel ? `(usikkerhet opp mot ${r.invationPotentialUncertaintyLevels[0]})`
-                    : ` (usikkerhet opp mot ${findUncertainityAbove(r.invationPotentialUncertaintyLevels, r.invationPotentialLevel)})`
+            const ul = r.invationpotential.uncertaintyLevels
+            if (!ul || ul == []) return ""
+            const max = Math.max(...ul)
+            const level = r.invationPotentialLevel
+            return max > level ? `(usikkerhet opp mot ${max + 1})` : ""
         },
 
         get invationPotentialText() {

@@ -128,20 +128,20 @@ class AssessmentRoot extends Component {
             const isFinished = assessment.evaluationStatus && assessment.evaluationStatus === "finished"
             const canEdit = !isFinished && appState.roleincurrentgroup.skriver && assessment.lockedForEditByUser == null    
             
-            function sjekkForEndringerOgGiAdvarsel(){
-                // var isLockedByMe = appState.assessment && appState.assessment.lockedForEditByUser === auth.userId
-                var isdirty = appState.isDirty
-                var skriver = !!appState.roleincurrentgroup && appState.roleincurrentgroup.skriver
-                var ok = true;
-                // if (isLockedByMe && isdirty && skriver) {
-                if (isdirty && skriver) {
-                    ok = window.confirm("Det er endringer på vurderingen - ønsker du virkelig å gå bort fra den uten å lagre?")
-                }
-                if (ok) {
-                    appState.viewMode = "choosespecie"
-                    appState.updateCurrentAssessment(null)
-                }
-        }
+            // function sjekkForEndringerOgGiAdvarsel(){
+            //     // var isLockedByMe = appState.assessment && appState.assessment.lockedForEditByUser === auth.userId
+            //     var isdirty = appState.isDirty
+            //     var skriver = !!appState.roleincurrentgroup && appState.roleincurrentgroup.skriver
+            //     var ok = true;
+            //     // if (isLockedByMe && isdirty && skriver) {
+            //     if (isdirty && skriver) {
+            //         ok = window.confirm("Det er endringer på vurderingen - ønsker du virkelig å gå bort fra den uten å lagre?")
+            //     }
+            //     if (ok) {
+            //         appState.viewMode = "choosespecie"
+            //         appState.updateCurrentAssessment(null)
+            //     }
+            // }
                 
         // console.log(rolle)
         // console.log(rolle.skriver)

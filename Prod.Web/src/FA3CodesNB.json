@@ -6921,7 +6921,14 @@
                         {
                             "Id": null,
                             "Value": "arrivedCountry",
-                            "Text": "Kom til ",
+                            "Text": "Kom arten til ",
+                            "Info": null,
+                            "Children": null
+                        },
+                        {
+                            "Id": null,
+                            "Value": "arrivedCountryClassA",
+                            "Text": "Kommer arten til ",
                             "Info": null,
                             "Children": null
                         },
