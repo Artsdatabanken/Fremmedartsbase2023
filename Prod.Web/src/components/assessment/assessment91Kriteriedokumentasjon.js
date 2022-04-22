@@ -58,7 +58,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
 
         const changeLabel = (id) => koder.reasonsForCategoryChange.find(code => code.value === id).text
        
-        const category2018 = (riskLevelCode) => labels.RiskLevelCode[riskLevelCode]
+        const category2018 = (prevAss) => prevAss.mainCategory == "NotApplicable" ? "NR" : labels.RiskLevelCode[prevAss.riskLevel]
 
         // console.warn(appState.vurderingsStatus)
         return (
@@ -309,11 +309,11 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                         __html: riskAssessment.criteriaDocumentation
                     }} />
                 </div>*/}
-                {assessment.assessmentConclusion != "NotDecided" && assessment.riskAssessment.riskLevelCode != null && assessment.previousAssessments[0] != null && category2018(assessment.previousAssessments[0].riskLevel) != assessment.riskAssessment.riskLevelCode &&
+                {assessment.assessmentConclusion != "NotDecided" && assessment.riskAssessment.riskLevelCode != null && assessment.previousAssessments[0] != null && category2018(assessment.previousAssessments[0]) != assessment.riskAssessment.riskLevelCode &&
                 <fieldset className="well">
                     <h3>{critlabels.reasonForChangeHeading}</h3>
                         <p> {critlabels.cat2023} {assessment.riskAssessment.riskLevelCode}</p>
-                        <p> {critlabels.cat2018} {category2018(assessment.previousAssessments[0].riskLevel)}</p>
+                        <p> {critlabels.cat2018} {category2018(assessment.previousAssessments[0])}</p>
                        
                         <p>{critlabels.reasonForChange}</p> 
                         <Xcomp.MultiselectArray
