@@ -376,7 +376,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                                 //&& appState.ekspertgruppeRolle 
                                 auth.isAdmin
                                 && 
-                                    <Xcomp.Button 
+                                    <Xcomp.Button disabled={false}
                                             onClick={() => this.resetAssessmentComplete(appState)}
                                             >{critlabels.resetComplete}</Xcomp.Button>
                             }
