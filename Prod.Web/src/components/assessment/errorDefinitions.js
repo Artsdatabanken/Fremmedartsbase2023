@@ -35,7 +35,7 @@
         },
         {
             id: "(a)err1",
-            get cond() {return !r.doorKnocker && a.productionSpecies != true && (r.AOOtotalBestInput < 4)},
+            get cond() {return !r.doorKnocker && a.productionSpecies != true && (hasnum(r.AOOtotalBestInput) && r.AOOtotalBestInput < 4)},
             msg: "En selvstendig reproduserende art må ha et forekomstareal på minst 4 km²!"
         },
         {
