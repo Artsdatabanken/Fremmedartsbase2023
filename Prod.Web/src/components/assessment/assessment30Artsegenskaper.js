@@ -434,7 +434,7 @@ export default class Assessment30Artsegenskaper extends React.Component {
 
             <fieldset className="well">
                 <div>
-                    <h3>{labels.NaturalOrigin.arrivedCountry}  {vurdering.isRegionallyAlien ? " vurderingsområdet " : vurdering.expertGroup.indexOf("Svalbard") > -1 ? "Svalbard" : "Fastlands-Norge"} {labels.NaturalOrigin.arrivedCountryFrom}</h3>
+                    <h3>{vurdering.speciesStatus == "A"? labels.NaturalOrigin.arrivedCountryClassA : labels.NaturalOrigin.arrivedCountry}  {vurdering.isRegionallyAlien ? " vurderingsområdet " : vurdering.expertGroup.indexOf("Svalbard") > -1 ? "Svalbard" : "Fastlands-Norge"} {labels.NaturalOrigin.arrivedCountryFrom}</h3>
                     {/* <ArrivedCountryFrom vurdering={vurdering} fabModel={fabModel} /> */}
                         <ArrivedCountryFrom assessment={vurdering} appState={appState}/>
                     </div>
