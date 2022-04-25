@@ -1104,8 +1104,8 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
             const fullSpeciesList = riskAssessment.speciesSpeciesInteractions
             const speciesList = fullSpeciesList.filter(item => otherRlCats.indexOf(item.redListCategory) > -1 && !item.keyStoneSpecie)
             // const speciesNaturtypeList = riskAssessment.SpeciesNaturetypeInteractions.map(x => x) // yeah - You need the map...
-            // const speciesNaturtypeList = riskAssessment.SpeciesNaturetypeInteractions.filter(item => !item.keyStoneSpecie)
-            const speciesNaturtypeList = riskAssessment.speciesNaturetypeInteractions.map(a => a) // changed 23.02.2017 - let all nature types count for E-criteria (email from Heidi Solstad)
+            const speciesNaturtypeList = riskAssessment.SpeciesNaturetypeInteractions.filter(item => !item.keyStoneSpecie)
+            // const speciesNaturtypeList = riskAssessment.speciesNaturetypeInteractions.map(a => a) // changed 23.02.2017 - let all nature types count for E-criteria (email from Heidi Solstad)
             const list = [].concat(speciesNaturtypeList).concat(speciesList)
             // console.log("#&&runE fullSpeciesList:" + fullSpeciesList.length)
             // console.log("#&&runE spec:" + speciesList.length)
