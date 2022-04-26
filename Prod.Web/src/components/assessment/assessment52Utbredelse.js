@@ -529,6 +529,7 @@ export default class Assessment52Utbredelse extends React.Component {
                         observableValue={[assessment.riskAssessment, 'criteriaDocumentationDomesticSpread']}/>
                     {/*<Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'historyAndAreaInNorway']}/>*/}
                 </fieldset>
+                {assessment.alienSpeciesCategory != "DoorKnocker" && 
                 <fieldset className="well">
                     <h4>Annen informasjon</h4>
                     <div className="statusField">
@@ -552,7 +553,7 @@ export default class Assessment52Utbredelse extends React.Component {
                     </div>
                         
                 </fieldset>
-
+                }
                 {assessment.spreadHistory.length > 0 && 
                     <fieldset className="well" id="spreadHistoryDomestic">
                         <h4>Utbredelseshistorikk 2018</h4>
