@@ -1297,7 +1297,7 @@ public partial class FA4 // (3.2) Artsegenskaper
             //public string TaxonId { get; set; }
             public string RedListCategory { get; set; }
             public bool KeyStoneSpecie { get; set; }
-            public bool KeyStoneOrEndangeredSpecie { get; set; }
+            //public bool KeyStoneOrEndangeredSpecie { get; set; } // fjernet 27.04.2023
             public string Effect { get; set; } // lagt til 10.10.2016
             public bool EffectLocalScale { get; set; } // lagt til 10.10.2016
             public string InteractionType { get; set; }

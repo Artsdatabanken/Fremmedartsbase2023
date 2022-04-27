@@ -641,13 +641,13 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.Scale, opt => opt.Ignore())
                     .ForMember(dest => dest.InteractionTypes, opt => opt.Ignore())
                     .ForMember(dest => dest.BasisOfAssessment, opt => opt.Ignore())
-                    .ForMember(dest => dest.Status, opt => opt.Ignore())
-                    .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.Ignore());
+                    .ForMember(dest => dest.Status, opt => opt.Ignore());
+                    //.ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.Ignore());
                 cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.Interaction, Prod.Domain.RiskAssessment.Interaction>()
                     .ForMember(dest => dest.Scale, opt => opt.Ignore())
                     .ForMember(dest => dest.InteractionTypes, opt => opt.Ignore())
                     .ForMember(dest => dest.BasisOfAssessment, opt => opt.Ignore())
-                    .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.MapFrom(x => x.KeyStoneSpecie))
+                    //.ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.MapFrom(x => x.KeyStoneSpecie))
                     .AfterMap((src, dest) =>
                     {
                         if (src.DomesticOrAbroad == "True" && src.ConfirmedOrAssumed)
@@ -670,7 +670,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.Scale, opt => opt.Ignore())
                     .ForMember(dest => dest.InteractionTypes, opt => opt.Ignore())
                     .ForMember(dest => dest.BasisOfAssessment, opt => opt.Ignore())
-                    .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.MapFrom(x => x.KeyStoneSpecie))
+                    //.ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.MapFrom(x => x.KeyStoneSpecie))
                     .AfterMap((src, dest) =>
                     {
                         if (src.DomesticOrAbroad == "True" && src.ConfirmedOrAssumed)
@@ -693,7 +693,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.Scale, opt => opt.Ignore())
                     .ForMember(dest => dest.InteractionTypes, opt => opt.Ignore())
                     .ForMember(dest => dest.BasisOfAssessment, opt => opt.Ignore())
-                    .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.MapFrom(x => x.KeyStoneSpecie))
+                    //.ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.MapFrom(x => x.KeyStoneSpecie))
                     .AfterMap((src, dest) =>
                     {
                         // dokumentasjon norske forhold
@@ -718,7 +718,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.Name, opt => opt.Ignore())
                     .ForMember(dest => dest.InteractionTypes, opt => opt.Ignore())
                     .ForMember(dest => dest.BasisOfAssessment, opt => opt.Ignore())
-                    .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.MapFrom(x => x.KeyStoneSpecie))
+                    //.ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.MapFrom(x => x.KeyStoneSpecie))
                     .AfterMap((src, dest) =>
                     {
                         if (src.DomesticOrAbroad == "True" && src.ConfirmedOrAssumed)
@@ -741,7 +741,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.Scale, opt => opt.Ignore())
                     .ForMember(dest => dest.InteractionTypes, opt => opt.Ignore())
                     .ForMember(dest => dest.BasisOfAssessment, opt => opt.Ignore())
-                    .ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.MapFrom(x => x.KeyStoneSpecie))
+                    //.ForMember(dest => dest.KeyStoneOrEndangeredSpecie, opt => opt.MapFrom(x => x.KeyStoneSpecie))
                     .AfterMap((src, dest) =>
                     {
                         if (src.DomesticOrAbroad == "True" && src.ConfirmedOrAssumed)
