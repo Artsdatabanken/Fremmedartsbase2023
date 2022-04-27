@@ -793,7 +793,7 @@ class ViewModel {
 
     @action setAssessmentComplete(statusaction) {
         // console.log("#%% ferdigstill")
-        if (!this.roleincurrentgroup.admin) {
+        if (!this.roleincurrentgroup.writeAccess) {
             alert("setAssessmentComplete: 'Not allowed'")
             return
         }

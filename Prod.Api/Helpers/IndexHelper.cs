@@ -22,7 +22,7 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Change this to force index rebuild!
         /// </summary>
-        public const int IndexVersion = 17;
+        public const int IndexVersion = 1;
         private static readonly object IndexingLock = new();
 
         private const string Field_Id = "Id";
@@ -563,7 +563,7 @@ namespace Prod.Api.Helpers
                 ass.AlienSpeciesCategory == "EcoEffectWithoutEstablishment")
                 return true;
             if (ass.AlienSpeciesCategory == "DoorKnocker")
-                return ass.DoorKnockerCategory == "doRiskAssessment";
+                return ass.AssessmentConclusion == "AssessedDoorknocker"; // ass.DoorKnockerCategory == "doRiskAssessment";
             if (ass.AlienSpeciesCategory == "RegionallyAlien")
                 return ass.RegionallyAlienCategory == "doRiskAssessment";
             if (ass.AlienSpeciesCategory == "NotApplicable")
