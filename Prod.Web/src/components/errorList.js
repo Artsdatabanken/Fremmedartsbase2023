@@ -23,7 +23,7 @@ const ErrorList = (props) => <Observer>{() => {
 
     const sortedwarningids = 
         options === "all"  
-        ? Object.keys(errorhandler.warnings).sort().filter(obj => errorhandler.warnings[obj] !== null)
+        ? []//Object.keys(errorhandler.warnings).sort().filter(obj => errorhandler.warnings[obj] !== null)
         : Object.keys(errorhandler.warnings).sort().filter(obj => (errorids.includes(obj)) && errorhandler.warnings[obj] !== null)
 
 
