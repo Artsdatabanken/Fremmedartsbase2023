@@ -278,7 +278,7 @@ namespace Prod.Api.Controllers
 
             var doc = JsonSerializer.Deserialize<FA4>(data.Doc);
             var role = await GetRoleInGroup(doc.ExpertGroup);
-            var force = role.Admin || role.User.IsAdmin;
+            var force = role.Admin || role.WriteAccess || role.User.IsAdmin;
             try
             {
                 if (role.WriteAccess || force)
