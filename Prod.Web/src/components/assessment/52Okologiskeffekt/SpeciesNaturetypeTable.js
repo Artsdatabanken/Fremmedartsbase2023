@@ -127,7 +127,8 @@ const SpeciesNaturetypeTable = observer((props) =>
                         <div className="naturtypeName">{item.name}</div>
                     </div>
                 </td>
-                <td><Xcomp.Bool observableValue={[item, 'keyStoneOrEndangeredSpecie']} disabled={disabled} /></td>
+                {/* <td><Xcomp.Bool observableValue={[item, 'keyStoneOrEndangeredSpecie']} disabled={disabled} /></td> */}
+                <td><Xcomp.Bool observableValue={[item, 'keyStoneSpecie']} disabled={disabled} /></td>
                 <td><Xcomp.StringEnum observableValue={[item, 'effect']} forceSync codes={props.koder.speciesSpeciesEffectType} disabled={disabled} /></td>
                 <td>
                     {/*<Xcomp.Bool observableValue={[item, 'effectLocalScale']} />*/}
@@ -193,7 +194,8 @@ const SpeciesNaturetypeTable = observer((props) =>
                                       
 
                 </td>
-                <td><Xcomp.Bool observableValue={[props.newItem, 'keyStoneOrEndangeredSpecie']} /></td>
+                {/* <td><Xcomp.Bool observableValue={[props.newItem, 'keyStoneOrEndangeredSpecie']} /></td> */}
+                <td><Xcomp.Bool observableValue={[props.newItem, 'keyStoneSpecie']} /></td>
                 <td><Xcomp.StringEnum observableValue={[props.newItem, 'effect']} forceSync codes={props.koder.speciesSpeciesEffectType} /></td>
                 <td>
                     <Xcomp.StringEnum observableValue={[props.newItem, 'scale']} forceSync codes={props.koder.speciesSpeciesScopeType} />
