@@ -227,6 +227,7 @@ function criterionHigh(criterion) {
 
 
 
+
 function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 // ---------------------------------------------------------------
 // --------  List of variables that comes from user input --------
@@ -1509,6 +1510,9 @@ export default function enhanceCriteria(riskAssessment, vurdering, codes, labels
         return result;
     }
     riskAssessment.getCriterion = getCriterion
+    // this one is not observable and is only used for a message that reminds expert that this used a depricated assessment method for the A criteria
+    riskAssessment.chosenSpreadMedanLifespan_Was_RedListCategoryLevel = riskAssessment.chosenSpreadMedanLifespan == "RedListCategoryLevel"
+
     enhanceCriteriaAddLabelsAndAuto(riskAssessment, codes)
     enhanceRiskAssessmentCrits(riskAssessment)
     // enhanceRiskAssessmentAddErrorReportingHandler(riskAssessment)
