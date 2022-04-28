@@ -222,12 +222,12 @@
         },
         {
             id: "A3err1",
-            get cond() {return a.doFullAssessment && r.ametodkey === "A3" && (r.lifetimeLowerQ > r.medianLifetime)},
+            get cond() {return a.doFullAssessment && r.ametodkey === "A3" && hasnum(r.lifetimeLowerQ) && hasnum(r.medianLifetime) && (r.lifetimeLowerQ > r.medianLifetime)},
             msg: "Levetidens nedre kvartil må være mindre enn medianen."
         },
         {
             id: "A3err2",
-            get cond() {return a.doFullAssessment && r.ametodkey === "A3" && (r.lifetimeUpperQ <= r.medianLifetime)},
+            get cond() {return a.doFullAssessment && r.ametodkey === "A3" && hasnum(r.lifetimeUpperQ) && hasnum(r.medianLifetime) && (r.lifetimeUpperQ <= r.medianLifetime)},
             msg: "Levetidens øvre kvartil må være større enn medianen."
         },
         {
