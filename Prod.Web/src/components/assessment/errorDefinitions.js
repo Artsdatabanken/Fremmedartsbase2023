@@ -160,6 +160,18 @@
             get cond() {return !r.doorKnocker && (r.AOO50yrHighInput < r.AOO50yrBestInput)},
             msg: "Beste anslag kan ikke være større enn høyt anslag!"
         },
+        {
+            id: "(a)err25",
+            get cond() {return !r.doorKnocker && r.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && r.acceptOrAdjustCritA == "adjust" && !hasnum(r.AOOtotalBestInput) },
+            msg: "Informasjon om forekomstareal må legges inn før juster skår kan brukes i A-kriteriet"
+        },
+        {
+            id: "(a)err26",
+            get cond() {return r.doorKnocker && r.chosenSpreadYearlyIncrease === "b" && !hasnum(r.occurrences1Best) },
+            msg: "Informasjon om forekomstareal må legges inn før juster skår kan brukes i B-kriteriet"
+        },
+
+
 
 
         // {
