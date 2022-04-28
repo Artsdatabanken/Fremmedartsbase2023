@@ -326,7 +326,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
 
                         <Xcomp.StringEnum observableValue={[riskAssessment, "acceptOrAdjustCritA"]} mode="radio" codes={koder.AcceptOrAdjust}/>   
                                          
-                                            
+                        <ErrorList errorhandler={errorhandler} errorids={["(a)err25"]} />            
                         <div className="adjustScore">
                             {riskAssessment.acceptOrAdjustCritA == "adjust" &&                                
                                 <Xcomp.HtmlString observableValue={[riskAssessment, 'reasonForAdjustmentCritA']} label="Begrunnelse for justering (obligatorisk):" />
@@ -516,6 +516,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                 value={"b"}
                                 disabled={disabled}
                                 observableValue={[riskAssessment, "chosenSpreadYearlyIncrease"]}/>
+                    <ErrorList errorhandler={errorhandler} errorids={["(a)err26"]} />            
+                    
 
                 {riskAssessment.chosenSpreadYearlyIncrease == "a" ? 
                         <div> 
