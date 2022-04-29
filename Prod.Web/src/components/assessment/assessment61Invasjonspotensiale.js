@@ -326,7 +326,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
 
                         <Xcomp.StringEnum observableValue={[riskAssessment, "acceptOrAdjustCritA"]} mode="radio" codes={koder.AcceptOrAdjust}/>   
                                          
-                                            
+                        <ErrorList errorhandler={errorhandler} errorids={["(a)err25"]} />            
                         <div className="adjustScore">
                             {riskAssessment.acceptOrAdjustCritA == "adjust" &&                                
                                 <Xcomp.HtmlString observableValue={[riskAssessment, 'reasonForAdjustmentCritA']} label="Begrunnelse for justering (obligatorisk):" />
@@ -431,61 +431,28 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                 
                     <p>{labels.Acrit.PVAAnalysis}</p>
                     <Xcomp.HtmlString observableValue={[riskAssessment, 'spreadPVAAnalysis']} />
-
-                    
-                    
-                   {/* <div className="numberFields">
-                        
-                       <h4>{labels.Acrit.data}</h4>
-                        <p>{labels.DistributionHistory.noDocuments}.</p>
-                        
-                        <p>{labels.General.upload}</p> 
-                        
-                       <Xcomp.Button primary >{labels.General.chooseFiles}</Xcomp.Button>
-                        <span>{labels.General.noFileChosen}</span>
-                          <Filliste
-                                //baseDirectory={`${appState.vurderingId.split('/').join('_')}/ViableAnalysis`}
-                                vurdering ={assessment}
-                                 labels={labels.DistributionHistory}
-                                 //{...appState.vurdering.Datasett}
-                                 />
-                    </div>*/}
                     <hr></hr>  
                     <div>                       
                         <Documents/>
                     </div>
-                    
-
                     <div className="statusField">
                         <div className="labels" style={{width: "100px"}}>
                         <p>{labels.Acrit.median}</p>
                         <p>{labels.Acrit.lower}</p>
                         <p>{labels.Acrit.upper}</p>
-                        
                    </div>
                    <div className="numberFields">                  
-
                    <Xcomp.Number observableValue={[riskAssessment, "medianLifetimeInput"]} observableErrors={[errorhandler, "A3err1", "A3err2"]} integer />  {/* ACritMedianLifespan */}
                    <Xcomp.Number observableValue={[riskAssessment, "lifetimeLowerQInput"]} observableErrors={[errorhandler, "A3err1"]} integer />  
                    <Xcomp.Number observableValue={[riskAssessment, "lifetimeUpperQInput"]} observableErrors={[errorhandler, "A3err2"]} integer />                     
-                            
                    </div>
                    </div>
                     
-                   {/* <p>{ntLabels.scoreSummary}</p>
-                     <ScoreUnsure appState={appState}
-                                critScores={koder.scoresB}                                
-                                disabled={"false"}
-                                firstValue={"scoreB"}
-                                secondValue={"unsureB"}/>
-                     <Xcomp.Button primary onClick= {() => {
-                         console.log("Save assessment")
-                        appState.saveCurrentAssessment();
-                    }}>{labels.AppHeader.assessmentSave}</Xcomp.Button> */}
                 </div> : 
-               // riskAssessment.roAscore2018 != null &&
-               riskAssessment.chosenSpreadMedanLifespan == "RedListCategoryLevel" ?
-                <p><b>Den utgåtte metoden c) Rødlistekriterier var brukt på A-kriteriet for denne arten i 2018. Det resulterte i skår {riskAssessment.roAscore2018 + 1} på A-kriteriet.</b></p>: <p></p> }
+                // // //    riskAssessment.chosenSpreadMedanLifespan == "RedListCategoryLevel" ?
+                riskAssessment.chosenSpreadMedanLifespan_Was_RedListCategoryLevel 
+                ? <p><b>Den utgåtte metoden c) Rødlistekriterier var brukt på A-kriteriet for denne arten i 2018. Det resulterte i skår {riskAssessment.roAscore2018 + 1} på A-kriteriet.</b></p>
+                : null }
 
                 {riskAssessment.chosenSpreadMedanLifespan != "RedListCategoryLevel" && riskAssessment.chosenSpreadMedanLifespan != "" && 
                     <Criterion criterion={critA} 
@@ -516,6 +483,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                 value={"b"}
                                 disabled={disabled}
                                 observableValue={[riskAssessment, "chosenSpreadYearlyIncrease"]}/>
+                    <ErrorList errorhandler={errorhandler} errorids={["(a)err26"]} />            
+                    
 
                 {riskAssessment.chosenSpreadYearlyIncrease == "a" ? 
                         <div> 

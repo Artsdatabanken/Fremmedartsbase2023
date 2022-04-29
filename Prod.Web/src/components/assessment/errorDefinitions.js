@@ -160,6 +160,18 @@
             get cond() {return !r.doorKnocker && (r.AOO50yrHighInput < r.AOO50yrBestInput)},
             msg: "Beste anslag kan ikke være større enn høyt anslag!"
         },
+        {
+            id: "(a)err25",
+            get cond() {return !r.doorKnocker && r.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && r.acceptOrAdjustCritA == "adjust" && !hasnum(r.AOOtotalBestInput) },
+            msg: "Informasjon om forekomstareal må legges inn før juster skår kan brukes i A-kriteriet"
+        },
+        {
+            id: "(a)err26",
+            get cond() {return r.doorKnocker && r.chosenSpreadYearlyIncrease === "b" && !hasnum(r.occurrences1Best) },
+            msg: "Informasjon om forekomstareal må legges inn før juster skår kan brukes i B-kriteriet"
+        },
+
+
 
 
         // {
@@ -222,12 +234,12 @@
         },
         {
             id: "A3err1",
-            get cond() {return a.doFullAssessment && r.ametodkey === "A3" && (r.lifetimeLowerQ > r.medianLifetime)},
+            get cond() {return a.doFullAssessment && r.ametodkey === "A3" && hasnum(r.lifetimeLowerQ) && hasnum(r.medianLifetime) && (r.lifetimeLowerQ > r.medianLifetime)},
             msg: "Levetidens nedre kvartil må være mindre enn medianen."
         },
         {
             id: "A3err2",
-            get cond() {return a.doFullAssessment && r.ametodkey === "A3" && (r.lifetimeUpperQ <= r.medianLifetime)},
+            get cond() {return a.doFullAssessment && r.ametodkey === "A3" && hasnum(r.lifetimeUpperQ) && hasnum(r.medianLifetime) && (r.lifetimeUpperQ <= r.medianLifetime)},
             msg: "Levetidens øvre kvartil må være større enn medianen."
         },
         {

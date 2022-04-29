@@ -407,7 +407,7 @@ export default class Assessment52Utbredelse extends React.Component {
                                             </div>
                                             }
                                         </div>
-                                        <ErrorList errorhandler={errorhandler} errorids={["(a)err1",  "(a)err666", "(a)err18", "(a)err19", "(a)err20", "(a)err22", "(a)err23", "(a)err24", "(a)warn4", "(a)warn5"]} />
+                                        <ErrorList className="errorMessages180" errorhandler={errorhandler} errorids={["(a)err1",  "(a)err666", "(a)err18", "(a)err19", "(a)err20", "(a)err22", "(a)err23", "(a)err24", "(a)warn4", "(a)warn5"]} />
                                         <p>Forekomstareal <b>om 50 år </b> (km<sup>2</sup>)</p>
                                     </div>
                                     <div className="distribution">
@@ -530,7 +530,7 @@ export default class Assessment52Utbredelse extends React.Component {
                         observableValue={[assessment.riskAssessment, 'criteriaDocumentationDomesticSpread']}/>
                     {/*<Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'historyAndAreaInNorway']}/>*/}
                 </fieldset>
-                {assessment.alienSpeciesCategory != "DoorKnocker" && 
+                {assessment.alienSpeciesCategory != "DoorKnocker" ?
                 <fieldset className="well">
                     <h4>Annen informasjon (ikke obligatorisk)</h4>
                     <div className="statusField">
@@ -554,7 +554,8 @@ export default class Assessment52Utbredelse extends React.Component {
                     </div>
                         
                 </fieldset>
-                }
+                : null }
+
                 {assessment.spreadHistory.length > 0 && 
                     <fieldset className="well" id="spreadHistoryDomestic">
                         <h4>Utbredelseshistorikk 2018</h4>

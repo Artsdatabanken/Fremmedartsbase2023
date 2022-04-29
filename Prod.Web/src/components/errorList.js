@@ -7,7 +7,7 @@ import {Observer} from 'mobx-react';
 const ErrorList = (props) => <Observer>{() => {
     // const context = UserContext.getContext()
     const {errorhandler, errorids, className, options} = props;
-    const ulclassname = className ?? "errorMessages"
+    const ulclassname = className //?? "errorMessages"
 
     if (!errorhandler) {
         console.log("ErrorList: missing errorhandler")
