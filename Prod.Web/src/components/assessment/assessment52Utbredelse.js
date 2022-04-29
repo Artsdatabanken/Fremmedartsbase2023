@@ -318,7 +318,7 @@ export default class Assessment52Utbredelse extends React.Component {
                         <div>
                             <div className="statusField">
                                 <div className="labels distribution dk">
-                                    <p>Hvor mange 2 x 2 km-ruter kan arten kolonisere i løpet av en 10 års-periode basert på én introduksjon til norsk natur? (Innenfor vurderingsperioden på 50 år)?</p>
+                                    <p>Hvor mange 2 km x 2 km-ruter kan arten kolonisere i løpet av en 10 års-periode basert på én introduksjon til norsk natur (innenfor vurderingsperioden på 50 år)?</p>
                                     <p>Hvor mange ytterligere introduksjoner til norsk natur antas arten å få i løpet av samme 10-års periode?</p>
                                     <p style={{marginTop: "180px"}}>Totalt forekomstareal <b> 10 år etter første introduksjon </b> (km<sup>2</sup>)</p>
                                     
@@ -327,6 +327,7 @@ export default class Assessment52Utbredelse extends React.Component {
                                     <DistributionTable/>
                                 </div>
                             </div>
+                            <ErrorList errorhandler={errorhandler} errorids={["(a)warn6", "(a)warn7"]} />
                             <div className="changedNature">
                                 <p>Andel av antatt forekomstareal i sterkt endra natur (%)</p>
                                 <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "spreadHistoryDomesticAreaInStronglyChangedNatureTypes"]} codes={koder.KnownDistributionInNature}/>
@@ -531,7 +532,7 @@ export default class Assessment52Utbredelse extends React.Component {
                 </fieldset>
                 {assessment.alienSpeciesCategory != "DoorKnocker" && 
                 <fieldset className="well">
-                    <h4>Annen informasjon</h4>
+                    <h4>Annen informasjon (ikke obligatorisk)</h4>
                     <div className="statusField">
                         <div className="labels">
                             <p>Kjent utbredelsesområde (km<sup>2</sup>)</p>

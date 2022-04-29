@@ -128,7 +128,7 @@
         {
             id: "(a)err666",
             get cond() {return !r.doorKnocker && (resolveid("(a)err11") || resolveid("(a)err12") || resolveid("(a)err13") || resolveid("(a)err14") || resolveid("(a)err15") || resolveid("(a)err16") || resolveid("(a)err17"))},
-            msg: "Forekomstarealet er ikke gyldig. Det må være delbart med 4 (forekomstareal = antall forekomster x 4 km²!"
+            msg: "Forekomstarealet er ikke gyldig. Det må være delbart med 4 (forekomstareal = antall forekomster x 4 km²)!"
         },
         {
             id: "(a)err18",
@@ -191,6 +191,18 @@
             get cond() {return !r.doorKnocker && a.productionSpecies == true && (r.AOOtotalBestInput < 4)},
             type: "warning",
             msg: "Er det riktig at arten kun reproduserer i sitt eget produksjonsareal?"
+        },
+        {
+            id: "(a)warn6",
+            get cond() {return r.doorKnocker && a.terrestrial == true && a.limnic == false && (r.AOO10yrHigh > 365000)}, //Norges landareal = 365 123 km2
+            type: "warning",
+            msg: "Er det sannsynlig at arten kan kolonisere hele Norges landareal innen 10 år etter første introduksjon?"
+        },
+        {
+            id: "(a)warn7",
+            get cond() {return r.doorKnocker && a.terrestrial == true && a.limnic == false && (r.AOO10yrHigh > 33100 && r.AOO10yrHigh <= 365000)}, //Norges landareal = 365 123 km2
+            type: "warning",
+            msg: "Er det sannsynlig at arten kan ha et større forekomstareal enn hagelupin (33 100 km²) 10 år etter første introduksjon?"
         },
 
         {
