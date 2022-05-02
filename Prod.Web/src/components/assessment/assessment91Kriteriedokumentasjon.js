@@ -67,7 +67,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                     ? <h3>{critlabels.status}</h3>
                     : <br/>}
                     <div>
-                        { true && (errorhandler.hasErrors || errorhandler.hasWarnings)
+                        { true && (errorhandler.hasErrors) // || errorhandler.hasWarnings
                         ? <fieldset className="well">
                             <h4>{"Feilrapport"}</h4>
                             <ErrorList errorhandler={errorhandler} options={"all"} />
