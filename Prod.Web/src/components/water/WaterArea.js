@@ -118,14 +118,17 @@ const WaterArea = ({
           }}
         >
           <div style={{ _paddingBottom: 24 }}></div>
-          {!doorKnocker && <>
-          <ListeLegend index={0} disabled={context.readonly}/>
-          <ListeLegend index={1} disabled={context.readonly}/>
+          {regionSorteringA && regionSorteringA.length > 0
+          ? <>
+            {!doorKnocker && <>
+            <ListeLegend index={0} disabled={context.readonly}/>
+            <ListeLegend index={1} disabled={context.readonly}/>
+            </>
+            }
+            <ListeLegend index={3} disabled={context.readonly} />
+            <ListeLegend index={2} disabled={context.readonly}/>
           </>
-           }
-          <ListeLegend index={3} disabled={context.readonly} />
-          <ListeLegend index={2} disabled={context.readonly}/>
-          
+          : null }
           {regionSorteringA.map((k, index) => {
             if (k.navn) {
               return (
@@ -155,14 +158,17 @@ const WaterArea = ({
           }}
         >
           <div style={{ _paddingBottom: 24 }}></div>
-          {!doorKnocker && <>
-          <ListeLegend index={0} />
-          <ListeLegend index={1} />
+          {regionSorteringB && regionSorteringB.length > 0
+          ? <>
+            {!doorKnocker && <>
+            <ListeLegend index={0} />
+            <ListeLegend index={1} />
+            </>
+            }
+            <ListeLegend index={3} />
+            <ListeLegend index={2} />
           </>
-           }
-          <ListeLegend index={3} />
-          <ListeLegend index={2} />
-          
+          : null }
           {regionSorteringB.map((k, index) => {
             if (k.navn) {
               return (
