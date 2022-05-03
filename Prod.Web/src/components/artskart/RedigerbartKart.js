@@ -3,6 +3,7 @@ import MapOpenLayers from "../map/MapOpenLayers";
 import Loading from "../Loading";
 import useArtskart from "./useArtskart";
 import * as Xcomp from "../observableComponents";
+import artskartModel from "../fylkesforekomst/a"
 
 const RedigerbartKart = ({
   artskartModel,
@@ -173,7 +174,7 @@ const RedigerbartKart = ({
           <span>Merk at ruter (2x2km) basert på funn med dårlig geografisk presisjon (&gt; 1000 m) er ekskludert. </span>
             {taxonId ? (
               <a style={{pointerEvents: 'auto'}}
-                href={`https://artskart.artsdatabanken.no/app/#map/427864,7623020/3/background/greyMap/filter/${artskartFilter(taxonId, kriterier)}`}
+                href={`https://artskart.artsdatabanken.no/app/#map/427864,7623020/3/background/greyMap/filter/${artskartFilter(taxonId, kriterier, artskartModel)}`}
                 target="_blank"
               >
               Se Artskart 🔗
@@ -204,10 +205,10 @@ const RedigerbartKart = ({
   );
 };
 
-const artskartFilter = (taxonId, kriterier) => {
+const artskartFilter = (taxonId, kriterier, artskartModel) => {
   let f = `{"TaxonIds":[${taxonId}],"IncludeSubTaxonIds":true,"Found":[2],"NotRecovered":[2],"UnsureId":[2],"Style":1`;
-  if (kriterier.AOOyear1 !== undefined) f += `,"YearFrom":"${kriterier.AOOendyear1}"`;
-  if (kriterier.AOOyear2 !== undefined) f += `,"YearTo":"${kriterier.AOOendyear2}"`;
+  if (kriterier.AOOyear1 !== undefined) f += `,"YearFrom":"${artskartModel.observationFromYear}"`; 
+  if (kriterier.AOOyear2 !== undefined) f += `,"YearTo":"${artskartModel.observationToYear}"`; //kriterier.AOOendyear2
   f += `,"CoordinatePrecisionTo":"1000"}`;
   return encodeURIComponent(f);
 }
