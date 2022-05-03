@@ -118,6 +118,28 @@ const riskAssessmentNumberFields = [
     "AOO50yrHighInput",
 ]
 
+////////////////////////////////////////////////
+// Some fields are helperfields added to the
+// assessment for convenience, but does not have 
+// fields in the domain model.
+// It is best to remove this fields before
+// saving the document to reduce confusion...
+////////////////////////////////////////////////
+const assessmentHelperFields = [
+]
+const riskAssessmentHelperFields = [
+    "critA", 
+    "critB", 
+    "critC", 
+    "critD", 
+    "critE", 
+    "critF", 
+    "critG", 
+    "critH", 
+    "critI"
+    //"furtherInfoAboutImport" // no longer in use
+]
+
 
 
 
@@ -362,6 +384,8 @@ export default function enhanceAssessment(json, appState) {
             const assra = assessment.riskAssessment
             const obj = toJS(assessment)
             const objra = obj.riskAssessment
+            deleteProps(obj, assessmentHelperFields)
+            deleteProps(objra, riskAssessmentHelperFields)
             copyProps(assessment, obj, assessmentGetterFields)
             copyProps(assra, objra, assessmentGetterFields)
         
