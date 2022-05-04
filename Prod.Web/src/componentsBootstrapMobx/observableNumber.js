@@ -60,7 +60,7 @@ function filterNumericInput(s, integer = false) {
   if (decimalPointOffset === 0) r = '0' + r  
   
   //return integer ? parseInt(r) : parseFloat(r)
-  return integer ? parseInt(r) : r
+  return r == "" ? null : integer ? parseInt(r) : r
 }
 
 
