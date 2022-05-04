@@ -191,24 +191,24 @@ namespace SwissKnife.Database
         }
 
 
-        public async Task<dynamic> getDynamicScientificNameInfo(int taxonId)
-        {
-            var url = taxonApiTaxonIdUrl(taxonId);
-            var taxonInfos = await getDynamicTaxonInfo(url);
-            return taxonInfos;
-        }
-        public async Task<dynamic> getDynamicScientificName2Info(int taxonId)
-        {
-            var url = taxonApiTaxonScientificnameIdUrl(taxonId);
-            var taxonInfos = await getDynamicTaxonInfo(url);
-            return taxonInfos;
-        }
-        public async Task<dynamic> getDynamicScientificName3Info(string name)
-        {
-            var url = taxonApiTaxonScientificnameUrl(name);
-            var taxonInfos = await getDynamicTaxonInfo(url);
-            return taxonInfos;
-        }
+        //public async Task<dynamic> getDynamicScientificNameInfo(int taxonId)
+        //{
+        //    var url = taxonApiTaxonIdUrl(taxonId);
+        //    var taxonInfos = await getDynamicTaxonInfo(url);
+        //    return taxonInfos;
+        //}
+        //public async Task<dynamic> getDynamicScientificName2Info(int taxonId)
+        //{
+        //    var url = taxonApiTaxonScientificnameIdUrl(taxonId);
+        //    var taxonInfos = await getDynamicTaxonInfo(url);
+        //    return taxonInfos;
+        //}
+        //public async Task<dynamic> getDynamicScientificName3Info(string name)
+        //{
+        //    var url = taxonApiTaxonScientificnameUrl(name);
+        //    var taxonInfos = await getDynamicTaxonInfo(url);
+        //    return taxonInfos;
+        //}
 
         public async Task<TaxonInfo> getTaxonInfo(int scientificNameId)
         {
