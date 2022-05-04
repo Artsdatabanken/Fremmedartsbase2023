@@ -111,7 +111,7 @@ namespace Prod.Api.Controllers
         }
 
         [HttpGet("export/{type}/absoluteall")]
-        [Authorize]
+        //[Authorize]
         public FileResult GetExportAbsoluteAll(string type)
         {
             var hor = type == "horizonScanning";

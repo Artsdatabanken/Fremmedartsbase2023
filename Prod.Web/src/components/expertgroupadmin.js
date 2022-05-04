@@ -165,6 +165,8 @@ soknad: "Eg treng tilgang med ein gong" */}
                 </table>
             </section>
             }
+            <input type="button" className="btn btn-primary" value="Last ned export" onClick={() => window.open(config.apiUrl + '/api/ExpertGroupAssessments/export/all/absoluteall')}></input>
+            
             </fieldset>);
     }
 }
