@@ -7,8 +7,7 @@ using System.Threading;
 using AutoMapper;
 using Prod.Domain;
 using Public.Domain;
-//using Prod.Domain.Legacy;
-using RiskAssessment = Prod.Domain.Legacy.RiskAssessment;
+using RiskAssessment = Public.Domain.RiskAssessment;
 
 namespace SwissKnife.Database
 {
@@ -75,30 +74,42 @@ namespace SwissKnife.Database
                 cfg.CreateMap<FA4.NaturalOrigin, FA2023.NaturalOrigin>();
                 cfg.CreateMap<FA4.RedlistedNatureType, FA2023.RedlistedNatureType>();
                 cfg.CreateMap<FA4.SimpleReference, FA2023.SimpleReference>();
-                cfg.CreateMap<FA4.RegionalRiskAssessment, FA2023.RegionalRiskAssessment>();
-                cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.Criterion, Prod.Domain.RiskAssessment.Criterion>();
-                cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.HostParasiteInteraction,
-                        Prod.Domain.RiskAssessment.HostParasiteInteraction>();
-                cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.Interaction, Prod.Domain.RiskAssessment.Interaction>();
-                cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.NaturetypeInteraction,
-                        Prod.Domain.RiskAssessment.NaturetypeInteraction>();
-                cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.SpeciesInteraction,
-                        Prod.Domain.RiskAssessment.SpeciesInteraction>();
-                cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.SpeciesNaturetypeInteraction,
-                        Prod.Domain.RiskAssessment.SpeciesNaturetypeInteraction>();
-                cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment.SpeciesSpeciesInteraction,
-                        Prod.Domain.RiskAssessment.SpeciesSpeciesInteraction>();
+                // cfg.CreateMap<FA4.RegionalRiskAssessment, FA2023.RegionalRiskAssessment>();
+                cfg.CreateMap<Prod.Domain.RiskAssessment.Criterion, Public.Domain.RiskAssessment.Criterion>();
+                cfg.CreateMap<Prod.Domain.RiskAssessment.HostParasiteInteraction,
+                        Public.Domain.RiskAssessment.HostParasiteInteraction>();
+                cfg.CreateMap<Prod.Domain.RiskAssessment.Interaction, Public.Domain.RiskAssessment.Interaction>();
+                cfg.CreateMap<Prod.Domain.RiskAssessment.NaturetypeInteraction,
+                        Public.Domain.RiskAssessment.NaturetypeInteraction>();
+                cfg.CreateMap<Prod.Domain.RiskAssessment.SpeciesInteraction,
+                        Public.Domain.RiskAssessment.SpeciesInteraction>();
+                cfg.CreateMap<Prod.Domain.RiskAssessment.SpeciesNaturetypeInteraction,
+                        Public.Domain.RiskAssessment.SpeciesNaturetypeInteraction>();
+                cfg.CreateMap<Prod.Domain.RiskAssessment.SpeciesSpeciesInteraction,
+                        Public.Domain.RiskAssessment.SpeciesSpeciesInteraction>();
 
-                cfg.CreateMap<Prod.Domain.Legacy.RiskAssessment, Prod.Domain.RiskAssessment>();
+                cfg.CreateMap<Prod.Domain.RiskAssessment, Public.Domain.RiskAssessment>();
 
-                cfg.CreateMap<Prod.Domain.Legacy.MigrationPathway, Prod.Domain.MigrationPathway>();
-                cfg.CreateMap<Prod.Domain.Legacy.MigrationPathwayCode, Prod.Domain.MigrationPathwayCode>();
-                cfg.CreateMap<Prod.Domain.Legacy.SpreadHistory, Prod.Domain.SpreadHistory>();
-                cfg.CreateMap<Prod.Domain.Legacy.RedlistedNatureTypeCode, Prod.Domain.RedlistedNatureTypeCode>();
-                cfg.CreateMap<Prod.Domain.Legacy.RedlistedNatureTypeCodeGroup, Prod.Domain.RedlistedNatureTypeCodeGroup>();
+                cfg.CreateMap<Prod.Domain.CTaxon, Public.Domain.CTaxon>();
+                cfg.CreateMap<Prod.Domain.Fylkesforekomst, Public.Domain.Fylkesforekomst>();
+                cfg.CreateMap<Prod.Domain.ArtskartModel, Public.Domain.ArtskartModel>();
+                cfg.CreateMap<Prod.Domain.ArtskartWaterModel, Public.Domain.ArtskartWaterModel>();
+                cfg.CreateMap<Prod.Domain.ArtskartWaterAreaModel, Public.Domain.ArtskartWaterAreaModel>();
+                cfg.CreateMap<FA4.CoastLineSection, FA2023.CoastLineSection>();
+                cfg.CreateMap<FA4.BioClimateZones, FA2023.BioClimateZones>();
+                cfg.CreateMap<FA4.BioClimateZonesArctic, FA2023.BioClimateZonesArctic>();
+                cfg.CreateMap<FA4.Habitat, FA2023.Habitat>();
+                cfg.CreateMap<FA4.PreviousAssessment, FA2023.PreviousAssessment>();
                 
-                cfg.CreateMap<Prod.Domain.Legacy.RegionalPresence, Prod.Domain.RegionalPresence>();
-                cfg.CreateMap<Prod.Domain.Legacy.RegionalPresenceWithPotential, Prod.Domain.RegionalPresenceWithPotential>();
+
+                cfg.CreateMap<Prod.Domain.MigrationPathway, Public.Domain.MigrationPathway>();
+                cfg.CreateMap<Prod.Domain.MigrationPathwayCode, Public.Domain.MigrationPathwayCode>();
+                cfg.CreateMap<Prod.Domain.SpreadHistory, Public.Domain.SpreadHistory>();
+                cfg.CreateMap<Prod.Domain.RedlistedNatureTypeCode, Public.Domain.RedlistedNatureTypeCode>();
+                cfg.CreateMap<Prod.Domain.RedlistedNatureTypeCodeGroup, Public.Domain.RedlistedNatureTypeCodeGroup>();
+                
+                cfg.CreateMap<Prod.Domain.RegionalPresence, Public.Domain.RegionalPresence>();
+                cfg.CreateMap<Prod.Domain.RegionalPresenceWithPotential, Public.Domain.RegionalPresenceWithPotential>();
                 cfg.CreateMap<FA4.ImpactedNatureType, FA2023.ImpactedNatureType>();
                 cfg.CreateMap<FA4.TimeAndPlace, FA2023.TimeAndPlace>();
                 cfg.CreateMap<FA4.ObservedAndEstablished, FA2023.ObservedAndEstablished>();
@@ -114,21 +125,9 @@ namespace SwissKnife.Database
             return mapper;
         }
 
-        private static void AfterRiskAssessmentMap(RiskAssessment src, Prod.Domain.RiskAssessment dest)
+        private static void AfterRiskAssessmentMap(Prod.Domain.RiskAssessment src, Public.Domain.RiskAssessment dest)
         {
-            if (src.ChosenSpreadYearlyIncrease == "SpreadYearlyIncreaseObservations")
-            {
-                dest.ChosenSpreadYearlyIncrease = "a";
-            }
-
-            dest.ExpansionSpeedInput = ParseLong(src.SpreadYearlyIncreaseObservations);
-            dest.ExpansionLowerQInput = ParseLong(src.SpreadYearlyIncreaseObservationsLowerQuartile);
-            dest.ExpansionUpperQInput = ParseLong(src.SpreadYearlyIncreaseObservationsUpperQuartile);
-
-            if (src.ActiveRedListCategoryLevel)
-            {
-                dest.ROAscore2018 = src.Criteria.Single(x => x.CriteriaLetter == "A").Value;
-            }
+            
         }
 
         //private static void AfterFabMap(FA2023 dest, FA4 src)
@@ -150,7 +149,7 @@ namespace SwissKnife.Database
         //    }
             
 
-        //    // hentet fra det under - slik mapping fungerer ikke - da de blir kallt via convention - og det er ingen tilfeller der den har behov for å mappe fra FA4 til Prod.Domain.RiskAssessment - koden blir ikke kallt
+        //    // hentet fra det under - slik mapping fungerer ikke - da de blir kallt via convention - og det er ingen tilfeller der den har behov for å mappe fra FA4 til Public.Domain.RiskAssessment - koden blir ikke kallt
         //    dest.RiskAssessment.AOOknownInput = src.CurrentExistenceArea;
         //    dest.RiskAssessment.AOOtotalBestInput = src.CurrentExistenceAreaCalculated;
         //    dest.RiskAssessment.AOOtotalLowInput = src.CurrentExistenceAreaLowCalculated;

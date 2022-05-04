@@ -67,6 +67,7 @@ namespace Prod.Api
             //services.AddMvc();
             services.AddSwaggerGen(c =>
             {
+                c.CustomSchemaIds(type => type.ToString());
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Prod.Api", Version = "v1" });
             });
 

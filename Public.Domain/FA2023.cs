@@ -508,14 +508,14 @@ namespace Public.Domain
 
     public partial class FA2023 // (5) Risikovurdering
     {
-        public class RegionalRiskAssessment
-        {
-            public string Name { get; set; }
-            public RiskAssessment RiskAssessment { get; set; }
-        }
+        //public class RegionalRiskAssessment
+        //{
+        //    public string Name { get; set; }
+        //    public RiskAssessment RiskAssessment { get; set; }
+        //}
 
         public RiskAssessment RiskAssessment { get; set; } = new RiskAssessment();
-        public List<RegionalRiskAssessment> RegionalRiskAssessments { get; set; } = new List<RegionalRiskAssessment>();
+        //public List<RegionalRiskAssessment> RegionalRiskAssessments { get; set; } = new List<RegionalRiskAssessment>();
     }
 
 
