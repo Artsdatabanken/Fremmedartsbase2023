@@ -142,9 +142,6 @@ const riskAssessmentHelperFields = [
 ]
 
 
-
-
-
 function getCategoryText(val, pathways) {
     var text = ""
     if (pathways != undefined) {
@@ -239,50 +236,6 @@ export default function enhanceAssessment(json, appState) {
             assessment.productionSpecies = s === "yes"
         },
 
-         /*get alienSpeciesCategory() {
-            const result = 
-                ! assessment.isAlienSpecies
-                ? "NotAlienSpecie"
-                : assessment.alienSpecieUncertainIfEstablishedBefore1800
-                ? "UncertainBefore1800"
-                // : !assessment.horizonDoAssessment
-                // ? "NotDefined1"
-                : !assessment.speciesStatus
-                ? "NotDefined"
-                : assessment.hasEffectWithoutReproduction // todo: property not implemented
-                ? "EffectWithoutReproduction"
-                : assessment.isRegionallyAlien
-                ? "RegionallyAlien"
-                : assessment.speciesStatus.startsWith("C2") || assessment.speciesStatus.startsWith("C3")
-                ? "AlienSpecie"
-                : "DoorKnocker"
-            return result
-        },
-       get assessmentConclusion() {
-            const result = 
-                !assessment.isAlienSpecies 
-                ? "WillNotBeRiskAssessed"
-                : assessment.higherOrLowerLevel 
-                ? "WillNotBeRiskAssessed"
-                : assessment.alienSpeciesCategory == "UncertainBefore1800"
-                ? "WillNotBeRiskAssessed"
-                : assessment.alienSpeciesCategory == "NotDefined"
-                ? "NotDecided"           // todo: This should probably also be "WillNotBeRiskAssessed" (?? check this)
-                : assessment.alienSpeciesCategory == "DoorKnocker"
-                ? "AssessedDoorknocker" 
-                : assessment.alienSpeciesCategory == "AlienSpecie"
-                ? "AssessedSelfReproducing"
-                : assessment.alienSpeciesCategory == "RegionallyAlien"
-                ? "AssessedSelfReproducing"
-                : assessment.alienSpeciesCategory == "EffectWithoutReproduction"
-                ? "WillNotBeRiskAssessed"
-
-                : "WillNotBeRiskAssessed"
-            return result
-        },
-        get doFullAssessment() {
-            return assessment.assessmentConclusion !== "NotDecided" && assessment.assessmentConclusion !== "WillNotBeRiskAssessed" 
-        },*/
         // get category() {
         //     const result =
         //         assessment.assessmentConclusion === "WillNotBeRiskAssessed"
@@ -384,7 +337,6 @@ export default function enhanceAssessment(json, appState) {
         get isDoorKnocker() {
             return assessment.alienSpeciesCategory === "DoorKnocker"
         },
-
     })
     extendObservable(assessment, {
         get toJSON() {
