@@ -93,7 +93,7 @@ export default class Assessment30Artsegenskaper extends React.Component {
                         <h3>{labels.NaturalOrigin.globalPrevalence}</h3>
                     } 
                 </div>
-                {(assessment.alienSpeciesCategory == "DoorKnocker" && assessment.speciesStatus == "A") ?
+                {(assessment.isDoorKnocker && assessment.speciesStatus == "A") ?
 
                 <div>
                     {/*<h4>{labels.NaturalOrigin.habitat}</h4>

@@ -314,7 +314,7 @@ export default class Assessment52Utbredelse extends React.Component {
                         </>
                         }
                         <h4>Forekomstareal</h4>
-                        {assessment.alienSpeciesCategory == "DoorKnocker" ? 
+                        {assessment.isDoorKnocker ? 
                         <div>
                             <div className="statusField">
                                 <div className="labels distribution dk">
@@ -394,7 +394,7 @@ export default class Assessment52Utbredelse extends React.Component {
                                     <div className="labels distribution">
                                         <div style={{display: 'flex', marginTop: '90px'}}>
                                             <p>Forekomstareal <b>i dag</b> (km<sup>2</sup>):</p>
-                                            {assessment.alienSpeciesCategory != "DoorKnocker" && 
+                                            {!assessment.isDoorKnocker && 
                                             <div style={{width: '100px', marginTop: '-5px'}}>
                                                 <b>Kjent</b>
                                                 <Xcomp.Number      
@@ -521,16 +521,15 @@ export default class Assessment52Utbredelse extends React.Component {
                     <Xcomp.HtmlString observableValue={[assessment, 'currentPresenceComment']}/>
                    {/* <p>Beskriv grunnlaget for anslagene (gjelder både forekomstareal og fylkesvis utbredelse)</p>
                     <Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'backgroundRegional']}/>*/}
-                    {assessment.alienSpeciesCategory == "DoorKnocker" ?
+                    {assessment.isDoorKnocker ?
                         <p>Beskriv antatt utbredelse <i>(overføres til oppsummeringen)</i></p> :
-
                         <p>Beskriv utbredelseshistorikk og dagens utbredelse i Norge <i>(overføres til oppsummeringen)</i></p>
                     }
                     <Xcomp.HtmlString
                         observableValue={[assessment.riskAssessment, 'criteriaDocumentationDomesticSpread']}/>
                     {/*<Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'historyAndAreaInNorway']}/>*/}
                 </fieldset>
-                {assessment.alienSpeciesCategory != "DoorKnocker" ?
+                {!assessment.isDoorKnocker ?
                 <fieldset className="well">
                     <h4>Annen informasjon (ikke obligatorisk)</h4>
                     <div className="statusField">

@@ -56,7 +56,7 @@ const regionSorteringB = [
 
 const Fylkesforekomst = ({ assessment, fylkesforekomster }) => {
   const forekomsterAsObject = fylkesforekomster.reduce((acc, e) => {
-    if (assessment.alienSpeciesCategory == "DoorKnocker") {
+    if (assessment.isDoorKnocker) {
       acc[e.fylke] = {
         // state: e.state,
         //state0: e.state0,
@@ -79,7 +79,7 @@ const Fylkesforekomst = ({ assessment, fylkesforekomster }) => {
   }, {});
   const context = UserContext.getContext();
 
-  const doorKnocker = assessment.alienSpeciesCategory == "DoorKnocker";
+  const doorKnocker = assessment.isDoorKnocker;
 
   const handleSwitchOtherCategory = (state, fylke) => {
     for (var ff of assessment.fylkesforekomster) {

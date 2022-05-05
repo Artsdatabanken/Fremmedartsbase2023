@@ -311,7 +311,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     {riskAssessment.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" ? 
                         <div>
 
-                        {assessment.alienSpeciesCategory == "DoorKnocker" ? 
+                        {assessment.isDoorKnocker ? 
                         <p
                             dangerouslySetInnerHTML={{ __html: textDK}}>
                            </p> :
@@ -597,7 +597,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                 }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>*/}
                                 
                         </div> : 
-                        riskAssessment.chosenSpreadYearlyIncrease == "b" && assessment.alienSpeciesCategory == "DoorKnocker" ?
+                        riskAssessment.chosenSpreadYearlyIncrease == "b" && assessment.isDoorKnocker ?
                             <div>
                             <p>{textDKB}</p>
                             
@@ -804,14 +804,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                     display: "inline-block",
                                     marginTop: "10px"
                                     }}>
-                                <Criterion criterion={critB} appState={appState} 
-                                            //disabled={disabled} 
-                                            // according to issues #318 and #319
-                                            // disabled={disabled || riskAssessment.chosenSpreadYearlyIncrease == "a" || (riskAssessment.chosenSpreadYearlyIncrease == "b" && assessment.alienSpeciesCategory == "DoorKnocker")}
-                                            // auto={riskAssessment.chosenSpreadYearlyIncrease == "a" || assessment.alienSpeciesCategory == "DoorKnocker"} 
-                                            mode="noheading"/>
-                               
-                            
+                                <Criterion criterion={critB} appState={appState} mode="noheading"/>
                             </div>
                             }
                            
