@@ -53,7 +53,7 @@ const WaterArea = ({
 
   const context = UserContext.getContext();
 
-  const doorKnocker = assessment.alienSpeciesCategory == "DoorKnocker";
+  const doorKnocker = assessment.isDoorKnocker;
 
   const handleSwitchCategory = (e, area, state, value) => {
     if (context.readonly) return;
