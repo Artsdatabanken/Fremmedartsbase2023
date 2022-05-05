@@ -138,7 +138,7 @@ export class HabitatTableRow extends React.Component {
                     <td>{nt.taxon ? nt.taxon.scientificName : ""}</td>}
                 {this.edit
                 ?
-                    <td>{(assessment.alienSpeciesCategory == "DoorKnocker" && assessment.speciesStatus == "A") ? koder.timeHorizon[1].Text : 
+                    <td>{(assessment.isDoorKnocker && assessment.speciesStatus == "A") ? koder.timeHorizon[1].Text : 
                             //kodeTekst(koder.timeHorizon, nt.timeHorizon)
                             <Xcomp.StringEnum observableValue={[nt, 'timeHorizon']} forceSync codes={koder.timeHorizon} />
                             }</td> :

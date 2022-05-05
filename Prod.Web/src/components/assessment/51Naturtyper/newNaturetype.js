@@ -22,7 +22,7 @@ export default class NewNaturetype extends React.Component {
             nyNaturtype: {
                 niNCode: null,
                 name: null,
-                timeHorizon: (assessment.speciesStatus == "A" && assessment.alienSpeciesCategory == "DoorKnocker") ? "future" : null,
+                timeHorizon: (assessment.speciesStatus == "A" && assessment.isDoorKnocker) ? "future" : null,
                 colonizedArea: null,
                 stateChange: [],
                 background: [],
@@ -31,7 +31,7 @@ export default class NewNaturetype extends React.Component {
             nyttLivsmedium: {
                 niNCode: null,
                 name: null,
-                timeHorizon: (assessment.alienSpeciesCategory == "DoorKnocker" && assessment.speciesStatus == "A") ? "future" : null,
+                timeHorizon: (assessment.isDoorKnocker && assessment.speciesStatus == "A") ? "future" : null,
                 //colonizedArea: null,
                 stateChange: [],
                 //background: [],

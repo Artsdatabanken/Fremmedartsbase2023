@@ -19,7 +19,7 @@ export default class NaturetypeSelector extends React.Component {
             const nnt = props.nyNaturtype
             nnt.niNCode = naturtypekode.Id
             nnt.name = naturtypekode.Text
-            nnt.timeHorizon = (ass.alienSpeciesCategory == "DoorKnocker" && ass.speciesStatus == "A") ? "future" : null,
+            nnt.timeHorizon = (ass.isDoorKnocker && ass.speciesStatus == "A") ? "future" : null,
             nnt.colonizedArea = null
             nnt.stateChange.clear()
             nnt.affectedArea = null

@@ -109,7 +109,7 @@ export default class NaturetypeModal extends React.Component {
                                 forceSync
                                 formlayout/>
                         : null}
-                    {(assessment.alienSpeciesCategory == "DoorKnocker" && assessment.speciesStatus == "A") ? 
+                    {(assessment.isDoorKnocker && assessment.speciesStatus == "A") ? 
                     <div>
                         <label>{ntLabels.timeHorizon}</label><br/>
                         <span>{kodeTekst(koder.timeHorizon, this.editNaturtype.timeHorizon)}</span>

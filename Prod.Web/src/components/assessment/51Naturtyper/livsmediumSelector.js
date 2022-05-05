@@ -17,7 +17,7 @@ export default class LivsmediumSelector extends React.Component {
             const nnt = props.nyNaturtype
             nnt.niNCode = naturtypekode.Id
             nnt.name = naturtypekode.Text
-            nnt.timeHorizon = (ass.speciesStatus == "A" && ass.alienSpeciesCategory == "DoorKnocker") ? "future" : null,
+            nnt.timeHorizon = (ass.speciesStatus == "A" && ass.isDoorKnocker) ? "future" : null,
             nnt.colonizedArea = null
             nnt.taxon = {
                 id: "newHabitatTaxon",
