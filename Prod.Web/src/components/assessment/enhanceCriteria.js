@@ -302,8 +302,8 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         //get notUseSpeciesMap() { return true},
 
         get doorKnocker() {
-            // console.log("#¤% alienSpeciesCategory " + riskAssessment.vurderingAlienSpeciesCategory)
-            return riskAssessment.vurderingAlienSpeciesCategory === "DoorKnocker"
+            // return riskAssessment.vurderingAlienSpeciesCategory === "DoorKnocker"
+            return riskAssessment.vurderingIsDoorKnocker
         },
         get ametodkey() {
             const method = riskAssessment.chosenSpreadMedanLifespan
@@ -912,7 +912,8 @@ function enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering,
     
 
     extendObservable(riskAssessment, {
-        get vurderingAlienSpeciesCategory() {return vurdering.alienSpeciesCategory},
+        // get vurderingAlienSpeciesCategory() {return vurdering.alienSpeciesCategory},
+        get vurderingIsDoorKnocker() {return vurdering.isDoorKnocker},
         get vurderingCurrentExistenceAreaCalculated() {return vurdering.currentExistenceAreaCalculated},
         get vurderingAllImpactedNatureTypes() {return vurdering.impactedNatureTypes.map(x => x)},
         get redlistedNatureTypes() {return riskAssessment.vurderingAllImpactedNatureTypes.map(x => x).filter(x => !isNaN(x.niNCode))},

@@ -381,6 +381,10 @@ export default function enhanceAssessment(json, appState) {
                 : "DoorKnocker"
             return result
         },
+        get isDoorKnocker() {
+            return assessment.alienSpeciesCategory === "DoorKnocker"
+        },
+
     })
     extendObservable(assessment, {
         get toJSON() {
