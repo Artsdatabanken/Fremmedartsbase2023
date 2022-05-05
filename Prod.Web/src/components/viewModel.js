@@ -588,7 +588,7 @@ class ViewModel {
 
     @computed get skalVurderes() {
         // todo. denne er nå knyttet til horisontskanning. Burde kanskje vært generell og hentet verdi fra: assessment.assessmentConclusion
-        return !this.harVurdering ? false : this.assessment.alienSpeciesCategory == "DoorKnocker" && this.assessment.skalVurderes ? true : false
+        return !this.harVurdering ? false : this.assessment.isDoorKnocker && this.assessment.skalVurderes ? true : false
     }
     @computed get doFullAssessment() {
         //console.log("##!doFullAssessment alienSpeciesCategory: " + (this.assessment ? this.assessment.alienSpeciesCategory : " noo"))
