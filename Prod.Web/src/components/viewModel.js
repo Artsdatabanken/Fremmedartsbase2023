@@ -591,10 +591,6 @@ class ViewModel {
         return !this.harVurdering ? false : this.assessment.isDoorKnocker && this.assessment.skalVurderes ? true : false
     }
     @computed get doFullAssessment() {
-        //console.log("##!doFullAssessment alienSpeciesCategory: " + (this.assessment ? this.assessment.alienSpeciesCategory : " noo"))
-        //console.log("##!doFullAssessment connectedToAnother: " + (this.assessment ? this.assessment.connectedToAnother : " nix"))
-        //console.log("##!doFullAssessment assessmentConclusion: " + (this.assessment ? this.assessment.assessmentConclusion : " Nope"))
-        // return !this.harVurdering ? false : this.assessment.assessmentConclusion !== "WillNotBeRiskAssessed" 
         return !this.harVurdering ? false : this.assessment.doFullAssessment 
     }
 

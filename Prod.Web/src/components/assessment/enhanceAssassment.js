@@ -7,9 +7,6 @@ import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils'
 import { string } from 'prop-types'
 import { nothing } from 'ol/pixel'
 
-
-
-
 function deleteProps(obj, proparray) {
     for(const prop of proparray) {
         delete obj[prop]
@@ -236,21 +233,6 @@ export default function enhanceAssessment(json, appState) {
             assessment.productionSpecies = s === "yes"
         },
 
-        // get category() {
-        //     const result =
-        //         assessment.assessmentConclusion === "WillNotBeRiskAssessed"
-        //         ? "NR"
-        //         : assessment.riskAssessment.riskLevelCode
-        //     return result
-        // },
-        // get criteria() {
-        //     const result =
-        //         assessment.assessmentConclusion === "WillNotBeRiskAssessed"
-        //         ? ""
-        //         : assessment.riskAssessment.decisiveCriteria
-        //     return result
-        // },
-
         get spreadIndoorFurtherInfoGeneratedText() {
             const migrationPathways  = assessment.importPathways
             const result = generateFurtherInfoText(migrationPathways, appState)
@@ -321,8 +303,6 @@ export default function enhanceAssessment(json, appState) {
                 ? "TaxonEvaluatedAtAnotherLevel" 
                 : assessment.alienSpecieUncertainIfEstablishedBefore1800
                 ? "UncertainBefore1800"
-                // : !assessment.horizonDoAssessment
-                // ? "NotDefined1"
                 : !assessment.speciesStatus
                 ? "NotDefined"
                 : assessment.hasEffectWithoutReproduction // todo: property not implemented
