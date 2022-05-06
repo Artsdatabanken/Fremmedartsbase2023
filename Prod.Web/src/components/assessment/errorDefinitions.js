@@ -162,15 +162,19 @@
         },
         {
             id: "(a)err25",
-            get cond() {return !r.doorKnocker && r.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && r.acceptOrAdjustCritA == "adjust" && !hasnum(r.AOOtotalBestInput) },
-            msg: "Informasjon om forekomstareal må legges inn før juster skår kan brukes i A-kriteriet"
+            get cond() {return !r.doorKnocker && r.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && !hasnum(r.AOOtotalBestInput) },
+            msg: "Informasjon om forekomstareal må legges inn før metoden Forenklet anslag kan brukes i A-kriteriet"
         },
         {
             id: "(a)err26",
             get cond() {return r.doorKnocker && r.chosenSpreadYearlyIncrease === "b" && !hasnum(r.occurrences1Best) },
-            msg: "Informasjon om forekomstareal må legges inn før juster skår kan brukes i B-kriteriet"
+            msg: "Informasjon om forekomstareal må legges inn før metoden Anslått økning i forekomstareal kan brukes på B-kriteriet"
         },
-
+        {
+            id: "(a)err27",
+            get cond() {return r.doorKnocker && r.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && !hasnum(r.occurrences1Best) },
+            msg: "Informasjon om forekomstareal må legges inn før metoden Forenklet anslag kan brukes på A-kriteriet"
+        },
 
 
 
