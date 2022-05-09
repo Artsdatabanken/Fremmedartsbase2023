@@ -306,6 +306,7 @@ export default function enhanceAssessment(json, appState) {
                 : !assessment.speciesStatus
                 ? "NotDefined"
                 : (assessment.assumedReproducing50Years !== null && !assessment.assumedReproducing50Years)
+                    && (assessment.speciesStatus.startsWith("A") || assessment.speciesStatus.startsWith("C2")|| assessment.speciesStatus.startsWith("C3"))
                 ? "EffectWithoutReproduction"
                 : assessment.isRegionallyAlien
                 ? "RegionallyAlien"
@@ -359,6 +360,19 @@ export default function enhanceAssessment(json, appState) {
                 })()
             }
         }
+        // () => assessment.isDoorKnocker,
+        // (isDoorKnocker, previousIsDoorKnocker) => {
+        //     const change =
+        //     (alienSpeciesCategory == "AlienSpecie" && previousAlienSpeciesCategory == "DoorKnocker") ||
+        //     (alienSpeciesCategory == "DoorKnocker" && previousAlienSpeciesCategory == "AlienSpecie") 
+        //     // console.log("##¤statuschange: " + change + " " + alienSpeciesCategory + " " + previousAlienSpeciesCategory)
+        //     if (assessment.speciesStatus != null) {
+        //         action(() => {
+        //             // console.log("##¤statuschange 2: " + change)
+        //             appState.statusChange = change
+        //         })()
+        //     }
+        // }
     )
 
     const errorDefinitions = getErrorDefinitions(assessment, errorhandler.resolveid)
