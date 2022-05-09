@@ -350,8 +350,8 @@ export default function enhanceAssessment(json, appState) {
         () => assessment.alienSpeciesCategory,
         (alienSpeciesCategory, previousAlienSpeciesCategory) => {
             const change =
-            (alienSpeciesCategory == "AlienSpecie" && previousAlienSpeciesCategory == "DoorKnocker") ||
-            (alienSpeciesCategory == "DoorKnocker" && previousAlienSpeciesCategory == "AlienSpecie") 
+            (alienSpeciesCategory === "AlienSpecie" && (previousAlienSpeciesCategory === "DoorKnocker" || previousAlienSpeciesCategory === "EffectWithoutReproduction" )) ||
+            ((alienSpeciesCategory === "DoorKnocker" || alienSpeciesCategory === "EffectWithoutReproduction") && previousAlienSpeciesCategory === "AlienSpecie") 
             // console.log("##¤statuschange: " + change + " " + alienSpeciesCategory + " " + previousAlienSpeciesCategory)
             if (assessment.speciesStatus != null) {
                 action(() => {
@@ -360,19 +360,6 @@ export default function enhanceAssessment(json, appState) {
                 })()
             }
         }
-        // () => assessment.isDoorKnocker,
-        // (isDoorKnocker, previousIsDoorKnocker) => {
-        //     const change =
-        //     (alienSpeciesCategory == "AlienSpecie" && previousAlienSpeciesCategory == "DoorKnocker") ||
-        //     (alienSpeciesCategory == "DoorKnocker" && previousAlienSpeciesCategory == "AlienSpecie") 
-        //     // console.log("##¤statuschange: " + change + " " + alienSpeciesCategory + " " + previousAlienSpeciesCategory)
-        //     if (assessment.speciesStatus != null) {
-        //         action(() => {
-        //             // console.log("##¤statuschange 2: " + change)
-        //             appState.statusChange = change
-        //         })()
-        //     }
-        // }
     )
 
     const errorDefinitions = getErrorDefinitions(assessment, errorhandler.resolveid)
