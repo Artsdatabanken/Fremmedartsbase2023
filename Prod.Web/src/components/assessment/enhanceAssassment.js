@@ -287,7 +287,7 @@ export default function enhanceAssessment(json, appState) {
                 : assessment.alienSpeciesCategory == "RegionallyAlien"
                 ? "AssessedSelfReproducing"
                 : assessment.alienSpeciesCategory == "EffectWithoutReproduction"
-                ? "WillNotBeRiskAssessed"
+                ? "AssessedDoorknocker"
 
                 : "WillNotBeRiskAssessed"
             return result
@@ -305,7 +305,7 @@ export default function enhanceAssessment(json, appState) {
                 ? "UncertainBefore1800"
                 : !assessment.speciesStatus
                 ? "NotDefined"
-                : assessment.hasEffectWithoutReproduction // todo: property not implemented
+                : !assessment.assumedReproducing50Years
                 ? "EffectWithoutReproduction"
                 : assessment.isRegionallyAlien
                 ? "RegionallyAlien"
