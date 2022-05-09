@@ -71,7 +71,14 @@ namespace Prod.Api.Controllers
             if (doc.Id != id && doc.Id != 0) throw new Exception("Id is corrupt (" + id + "/" + doc.Id + ")");
 
             doc.Id = id;
-
+            if (doc.ExtensionData != null)
+            {
+                doc.ExtensionData = null;
+            }
+            if (doc.RiskAssessment.ExtensionData != null)
+            {
+                doc.RiskAssessment.ExtensionData = null;
+            }
             return doc;
         }
 
