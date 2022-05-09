@@ -305,7 +305,7 @@ export default function enhanceAssessment(json, appState) {
                 ? "UncertainBefore1800"
                 : !assessment.speciesStatus
                 ? "NotDefined"
-                : !assessment.assumedReproducing50Years
+                : (assessment.assumedReproducing50Years !== null && !assessment.assumedReproducing50Years)
                 ? "EffectWithoutReproduction"
                 : assessment.isRegionallyAlien
                 ? "RegionallyAlien"
