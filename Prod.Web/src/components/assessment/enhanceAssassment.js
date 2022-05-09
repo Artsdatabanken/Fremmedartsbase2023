@@ -315,7 +315,7 @@ export default function enhanceAssessment(json, appState) {
             return result
         },
         get isDoorKnocker() {
-            return assessment.alienSpeciesCategory === "DoorKnocker"
+            return assessment.alienSpeciesCategory === "DoorKnocker" || assessment.alienSpeciesCategory === "EffectWithoutReproduction"
         },
     })
     extendObservable(assessment, {
