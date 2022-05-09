@@ -65,16 +65,6 @@ namespace Prod.Api.Controllers
             //    doc.B2BeregnetAreal = "";
             //}
 
-
-            if (doc.Category == "NK")
-            {
-                var ass2018 = doc.PreviousAssessments.FirstOrDefault(x => x.RevisionYear == 2018);
-                if(ass2018 != null && ass2018.MainCategory == "NotApplicable")
-                {
-                    doc.Category = "NR";
-                }
-            }
-
             await SendMessage("assessment", "open");
 
             // Safeguard
