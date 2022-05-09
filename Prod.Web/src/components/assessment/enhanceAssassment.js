@@ -306,7 +306,7 @@ export default function enhanceAssessment(json, appState) {
                 : !assessment.speciesStatus
                 ? "NotDefined"
                 : (assessment.assumedReproducing50Years !== null && !assessment.assumedReproducing50Years)
-                    && (assessment.speciesStatus.startsWith("A") || assessment.speciesStatus.startsWith("C2")|| assessment.speciesStatus.startsWith("C3"))
+                    && (assessment.speciesStatus.startsWith("B1") || assessment.speciesStatus.startsWith("B2") || assessment.speciesStatus.startsWith("C0") || assessment.speciesStatus.startsWith("C1"))
                 ? "EffectWithoutReproduction"
                 : assessment.isRegionallyAlien
                 ? "RegionallyAlien"
