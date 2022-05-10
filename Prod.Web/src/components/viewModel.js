@@ -362,11 +362,13 @@ class ViewModel {
         reaction(
             () => this.assessment.speciesStatus,
             (speciesStatus, previousSpeciesStatus) => {
-                console.log("¤¤¤ statuschange: " + change + " " + speciesStatus + " " + previousSpeciesStatus)
+                // console.log("¤¤¤ statuschange: " + change + " " + speciesStatus + " " + previousSpeciesStatus)
 
                 if (speciesStatus === "C3" && previousSpeciesStatus !== "C3") {
-                    console.log("¤¤¤ reset speciesEstablishmentCategory")
-                    runInAction(() => this.assessment.speciesEstablishmentCategory = "C3")
+                    // console.log("¤¤¤ reset speciesEstablishmentCategory")
+                    if(!this.assessment.speciesEstablishmentCategory) {
+                        runInAction(() => this.assessment.speciesEstablishmentCategory = "C3")
+                    }
                 }
             }
         )
