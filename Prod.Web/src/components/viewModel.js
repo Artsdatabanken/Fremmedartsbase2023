@@ -354,11 +354,20 @@ class ViewModel {
         autorun(() => {
             console.log("viewMode: " + this.viewMode)
         });
-        autorun(() => {
-            if(this.assessment && this.assessment.speciesStatus == "C3") {
-                runInAction(() => this.assessment.speciesEstablishmentCategory = "C3")
+        // autorun(() => {
+        //     if(this.assessment && this.assessment.speciesStatus == "C3") {
+        //         runInAction(() => this.assessment.speciesEstablishmentCategory = "C3")
+        //     }
+        // })
+        reaction(
+            () => this.assessment.speciesStatus,
+            (speciesStatus, previousSpeciesStatus) => {
+                if (speciesStatus === "C3" && previousSpeciesStatus !== "C3") {
+                    runInAction(() => this.assessment.speciesEstablishmentCategory = "C3")
+                }
             }
-        })
+        )
+
         autorun(() => {
             if(this.assessmentTabs && this.assessmentTabs.activeTab ) {
                 console.log("current assessmentTab: " + this.assessmentTabs.activeTab.id )
