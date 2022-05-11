@@ -105,7 +105,7 @@ namespace Prod.Api.Helpers
         public int Id { get; set; }
         public string ExpertGroup { get; set; }
         public string EvaluationContext { get; set; }        
-        public bool IsEvaluated { get; set; }  // ???
+        // public bool IsEvaluated { get; set; }  // ???
         //public bool IsDeleted { get; set; }
         public string EvaluationStatus { get; set; }
 
@@ -127,15 +127,16 @@ namespace Prod.Api.Helpers
         public string LastUpdatedBy { get; set; }
         
 
-        public int TaxonId { get; set; }
+        //public int TaxonId { get; set; }
 
-        public string Citation { get; set; }
+        // public string Citation { get; set; }
         public string AlienSpeciesCategory { get; set; }
         //public List<string> ReasonForChangeOfCategory { get; set; } = new List<string>();
 
-        public DateTime LockedForEditAt { get; set; }
-        public string LockedForEditBy { get; set; }
-
+        // public DateTime LockedForEditAt { get; set; }
+        // public string LockedForEditBy { get; set; }
+        public string HorizonEstablismentPotential { get; set; }
+        public string HorizonEcologicalEffect { get; set; }
         #region RiskAssessment 
         public string Category { get; set; }
         public string Criteria { get; set; }
@@ -149,17 +150,17 @@ namespace Prod.Api.Helpers
         
         public string UncertainityEstablishmentTimeDescription { get; set; } = "";
         
-        public string ProductionSpeciesDescription { get; set; } = "";
+        // public string ProductionSpeciesDescription { get; set; } = "";
 
-        public int RiskAssessmentRiskLevel { get; set; } = -1;
-        public string RiskAssessmentDecisiveCriteria { get; set; }
+        // public int RiskAssessmentRiskLevel { get; set; } = -1;
+        // public string RiskAssessmentDecisiveCriteria { get; set; }
         public string RiskAssessmentRiskLevelCode { get; set; }
-        public string RiskAssessmentRiskLevelText { get; set; }
+        // public string RiskAssessmentRiskLevelText { get; set; }
 
-        public int RiskAssessmentEcoEffectLevel { get; set; }
+        // public int RiskAssessmentEcoEffectLevel { get; set; }
         public int[] RiskAssessmentEcoEffectUncertaintyLevels { get; set; }
 
-        public int RiskAssessmentInvationPotentialLevel { get; set; }
+        // public int RiskAssessmentInvationPotentialLevel { get; set; }
         public int[] RiskAssessmentInvationPotentialUncertaintyLevels { get; set; }
 
 
@@ -179,7 +180,7 @@ namespace Prod.Api.Helpers
         public bool RiskAssessmentYearFirstReproductionNatureInsecure { get; set; }
         public int? RiskAssessmentYearFirstEstablishedNature { get; set; }
         public bool RiskAssessmentYearFirstEstablishedNatureInsecure { get; set; }
-        public string RiskAssessmentYearFirstDomesticObservation { get; set; }
+        // public string RiskAssessmentYearFirstDomesticObservation { get; set; }
 
         //public List<Criterion> Criteria { get; set; }
 
@@ -192,7 +193,7 @@ namespace Prod.Api.Helpers
         public Int64? RiskAssessmentEstimatedSpeciesCount { get; set; }   // Estimated_Species_Count
         public string RiskAssessmentEstimatedSpeciesCountMethod { get; set; }   // Estimated_Species_Count_Estimation_Method
         public string RiskAssessmentEstimatedSpeciesCountAssumption { get; set; }   // Estimated_Species_Count_Assumption
-        public bool? RiskAssessmentEstimatedSpeciesLongevityMoreThan1000Years { get; set; }   // Estimated_Species_Longevity_More_than_1000_years
+        // public bool? RiskAssessmentEstimatedSpeciesLongevityMoreThan1000Years { get; set; }   // Estimated_Species_Longevity_More_than_1000_years
         public string RiskAssessmentEstimatedSpeciesLongevity { get; set; }  // Estimated_Species_Longevity
         public string RiskAssessmentEstimatedSpeciesLongevityMethod { get; set; }  // Estimated_Species_Longevity_Method
 
@@ -313,11 +314,11 @@ namespace Prod.Api.Helpers
 
         //todo: is this section in use???
         //Rødliste info
-        public bool RiskAssessmentActiveRedListCategoryLevel { get; set; } // lagt til 27.09.2016
-        public string RiskAssessmentRedListUsedCriteria { get; set; }  // lagt til 07.09.2016
-        public string RiskAssessmentRedListDataDescription { get; set; }  // lagt til 07.09.2016
-        public string RiskAssessmentRedListCategory { get; set; }  // lagt til 07.09.2016
-        public string RiskAssessmentRedListSubCategory { get; set; }  // lagt til 07.09.2016
+        // public bool RiskAssessmentActiveRedListCategoryLevel { get; set; } // lagt til 27.09.2016
+        // public string RiskAssessmentRedListUsedCriteria { get; set; }  // lagt til 07.09.2016
+        // public string RiskAssessmentRedListDataDescription { get; set; }  // lagt til 07.09.2016
+        // public string RiskAssessmentRedListCategory { get; set; }  // lagt til 07.09.2016
+        // public string RiskAssessmentRedListSubCategory { get; set; }  // lagt til 07.09.2016
                                                         // -----------------------------------------------------------------------------------------
 
 
@@ -374,14 +375,14 @@ namespace Prod.Api.Helpers
         public long? RiskAssessmentLifetimeLowerQInput { get; set; } // nedre kvartil for artens levetid i Norge i år 
         public long RiskAssessmentLifetimeLowerQ { get; set; } // nedre kvartil for artens levetid i Norge i år 
         public long? RiskAssessmentLifetimeUpperQInput { get; set; } // øvre kvartil for artens levetid i Norge i år 
-        public long RiskAssessmentLifetimeUpperQ { get; set; } // øvre kvartil for artens levetid i Norge i år 
+        public long RiskAssessmentLifetimeUpperQ  { get; set; } // øvre kvartil for artens levetid i Norge i år 
         #endregion Median life time
 
-        public string RiskAssessmentAmethod { get; set; } // metode som ble brukt for å beregne A-kriteriet 
+        // public string RiskAssessmentAmethod { get; set; } // metode som ble brukt for å beregne A-kriteriet 
         public int RiskAssessmentAscore { get; set; } // skår for A-kriteriet 
         public int RiskAssessmentAlow { get; set; } // nedre skår for A-kriteriet (inkludert usikkerhet) 
         public int RiskAssessmentAhigh { get; set; } // øvre skår for A-kriteriet (inkludert usikkerhet) 
-        public string RiskAssessmentBmethod { get; set; } // metode som ble brukt for å beregne B-kriteriet 
+        // public string RiskAssessmentBmethod { get; set; } // metode som ble brukt for å beregne B-kriteriet 
         public int RiskAssessmentBscore { get; set; } // skår for B-kriteriet 
         public int RiskAssessmentBlow { get; set; } // nedre skår for B-kriteriet (inkludert usikkerhet) 
         public int RiskAssessmentBhigh { get; set; } // øvre skår for B-kriteriet (inkludert usikkerhet) 
@@ -470,19 +471,19 @@ namespace Prod.Api.Helpers
         // *********************************************************************************
 
 
-        public bool RiskAssessmentActiveSpreadYearlyLiteratureData { get; set; } //lagt til 29.09.2016
-        public string RiskAssessmentSpreadYearlyLiteratureDataExpansionSpeed { get; set; } // lagt til 14.10.2016
-        public string RiskAssessmentSpreadYearlyLiteratureDataUncertainty { get; set; } //lagt til 29.09.2016
-        public string RiskAssessmentSpreadYearlyLiteratureDataNumberOfIntroductionSources { get; set; } //lagt til 29.09.2016  
-        public string RiskAssessmentSpreadYearlyLiteratureData { get; set; } //lagt til 29.09.2016 
-        //public string SpreadYearlyLiteratureDataAssumptions { get; set; } //lagt til 29.09.2016 // fjernet 03.11.2016
-        public string RiskAssessmentSpreadYearlyLiteratureDataSource { get; set; } //lagt til 29.09.2016
+        // public bool RiskAssessmentActiveSpreadYearlyLiteratureData { get; set; } //lagt til 29.09.2016
+        // public string RiskAssessmentSpreadYearlyLiteratureDataExpansionSpeed { get; set; } // lagt til 14.10.2016
+        // public string RiskAssessmentSpreadYearlyLiteratureDataUncertainty { get; set; } //lagt til 29.09.2016
+        // public string RiskAssessmentSpreadYearlyLiteratureDataNumberOfIntroductionSources { get; set; } //lagt til 29.09.2016  
+        // public string RiskAssessmentSpreadYearlyLiteratureData { get; set; } //lagt til 29.09.2016 
+        // //public string SpreadYearlyLiteratureDataAssumptions { get; set; } //lagt til 29.09.2016 // fjernet 03.11.2016
+        // public string RiskAssessmentSpreadYearlyLiteratureDataSource { get; set; } //lagt til 29.09.2016
 
 
-        public bool RiskAssessmentActiveSpreadYearlyIncreaseCalculatedExpansionSpeed { get; set; } //lagt til 29.09.2016 // changed from ActiveSpreadYearlyIncreaseEstimate 09.11.2016
-        public string RiskAssessmentSpreadYearlyIncreaseEstimate { get; set; } //lagt til 29.09.2016
-        public string RiskAssessmentSpreadYearlyIncreaseEstimateDescription { get; set; } //lagt til 29.09.2016
-        public string RiskAssessmentSpreadYearlyIncreaseCalculatedExpansionSpeed { get; set; } //lagt til 14.10.2016
+        // public bool RiskAssessmentActiveSpreadYearlyIncreaseCalculatedExpansionSpeed { get; set; } //lagt til 29.09.2016 // changed from ActiveSpreadYearlyIncreaseEstimate 09.11.2016
+        // public string RiskAssessmentSpreadYearlyIncreaseEstimate { get; set; } //lagt til 29.09.2016
+        // public string RiskAssessmentSpreadYearlyIncreaseEstimateDescription { get; set; } //lagt til 29.09.2016
+        // public string RiskAssessmentSpreadYearlyIncreaseCalculatedExpansionSpeed { get; set; } //lagt til 14.10.2016
 
 
 
@@ -505,37 +506,37 @@ namespace Prod.Api.Helpers
         [Name("Beskrivelse")]
         public string RiskAssessmentSpreadManualEstimate { get; set; } // fab: Spread_Manual_Estimate
         public string RiskAssessmentSpreadManualEstimateSpeciesLongevity { get; set; } // fab: Spread_Manual_Estimate_Species_Longevity
-        public bool? RiskAssessmentSpreadManualEstimateSpeciesLongevityIsMoreThan1000years { get; set; } // fab: Spread_Manual_Estimate_Species_Longevity_More_than_1000_years
+        // public bool? RiskAssessmentSpreadManualEstimateSpeciesLongevityIsMoreThan1000years { get; set; } // fab: Spread_Manual_Estimate_Species_Longevity_More_than_1000_years
 
 
 
         // -- fortetningsrate
-        [Name("Fortetningsrate, konklusjon")]
-        public string RiskAssessmentIncreasingDensity { get; set; }  // Increasing_Density_Conclusion
-        [Name("Grunnlag for fortetningsrate")]
-        public string RiskAssessmentIncreasingDensityMethod { get; set; }  // Increasing_Density_Method
+        // [Name("Fortetningsrate, konklusjon")]
+        // public string RiskAssessmentIncreasingDensity { get; set; }  // Increasing_Density_Conclusion
+        // [Name("Grunnlag for fortetningsrate")]
+        // public string RiskAssessmentIncreasingDensityMethod { get; set; }  // Increasing_Density_Method
         #endregion
 
 
 
 
 
-        #region unused keys fortetningsrate - PVA - manual estimates
-        [Name("Resultat fra script")]
-        public string RiskAssessmentIncreasingDensityPVAAnalysis { get; set; } //Increasing_Density_PVA_Analysis
-        [Name("Verdi")]
-        public string RiskAssessmentIncreasingDensityPercentualComputation { get; set; } //Increasing_Density_Percentual_Computation
-        [Name("Tidsperiode")]
-        public string RiskAssessmentIncreasingDensityPercentualComputationPeriod { get; set; } //Increasing_Density_Percentual_Computation_Period
-        [Name("Anslag")]
-        public string RiskAssessmentIncreasingDensityManualEstimate { get; set; } //Increasing_Density_Manual_Estimate
-        [Name("Begrunnelse")]
-        public string RiskAssessmentIncreasingDensityManualEstimateDescription { get; set; } //Increasing_Density_Manual_Estimate_Description
-        #endregion
+        // #region unused keys fortetningsrate - PVA - manual estimates
+        // [Name("Resultat fra script")]
+        // public string RiskAssessmentIncreasingDensityPVAAnalysis { get; set; } //Increasing_Density_PVA_Analysis
+        // [Name("Verdi")]
+        // public string RiskAssessmentIncreasingDensityPercentualComputation { get; set; } //Increasing_Density_Percentual_Computation
+        // [Name("Tidsperiode")]
+        // public string RiskAssessmentIncreasingDensityPercentualComputationPeriod { get; set; } //Increasing_Density_Percentual_Computation_Period
+        // [Name("Anslag")]
+        // public string RiskAssessmentIncreasingDensityManualEstimate { get; set; } //Increasing_Density_Manual_Estimate
+        // [Name("Begrunnelse")]
+        // public string RiskAssessmentIncreasingDensityManualEstimateDescription { get; set; } //Increasing_Density_Manual_Estimate_Description
+        // #endregion
 
         // -- naturtype forventet kolonisert
-        [Name("Beskrivelse")]
-        public string RiskAssessmentNaturetypeExpectedColonized { get; set; }  // Spread_Naturetype_Expected_Colonization_Description
+        // [Name("Beskrivelse")]
+        // public string RiskAssessmentNaturetypeExpectedColonized { get; set; }  // Spread_Naturetype_Expected_Colonization_Description
 
 
         //public List<SpeciesSpeciesInteraction> SpeciesSpeciesInteractions { get; set; } = new List<SpeciesSpeciesInteraction>(); // lagt til 11.10.2016
@@ -548,11 +549,11 @@ namespace Prod.Api.Helpers
 
         public List<string> RiskAssessmentThreatenedNatureTypes { get; set; } = new List<string>(); // 09.01.2017  // Threatened_Nature_Types
         // public string Threatened_Nature_Types_Affected_Documentation  { get; set; }             // ************ intern informasjon *************
-        public bool? RiskAssessmentThreatenedNatureTypesDomesticObserved { get; set; }  // Threatened_Nature_Types_Affected_Domestic_Observed
-        public bool? RiskAssessmentThreatenedNatureTypesDomesticDocumented { get; set; }  // Threatened_Nature_Types_Affected_Domestic_Documented
-        public bool? RiskAssessmentThreatenedNatureTypesForeignDocumented { get; set; }  // Threatened_Nature_Types_Affected_Foreign_Documented
+        // public bool? RiskAssessmentThreatenedNatureTypesDomesticObserved { get; set; }  // Threatened_Nature_Types_Affected_Domestic_Observed
+        // public bool? RiskAssessmentThreatenedNatureTypesDomesticDocumented { get; set; }  // Threatened_Nature_Types_Affected_Domestic_Documented
+        // public bool? RiskAssessmentThreatenedNatureTypesForeignDocumented { get; set; }  // Threatened_Nature_Types_Affected_Foreign_Documented
         public string RiskAssessmentThreatenedNatureTypesAffectedDomesticDescription { get; set; }    //  Threatened_Nature_Types_Affected_Domestic_Description  ????????????
-        public string RiskAssessmentThreatenedNatureTypesAffectedAbroadDescription { get; set; } = "";   //  lagt til 15.11.2016
+        // public string RiskAssessmentThreatenedNatureTypesAffectedAbroadDescription { get; set; } = "";   //  lagt til 15.11.2016
 
         // -- (D) potensiale for å endre én eller flere øvrige naturtyper
         public List<string> RiskAssessmentCommonNatureTypes { get; set; } = new List<string>(); // 09.01.2017  // Common_Nature_Types
@@ -569,27 +570,27 @@ namespace Prod.Api.Helpers
         public List<string> RiskAssessmentHovedøkosystem { get; set; } = new List<string>();
 
 
-        public string RiskAssessmentNatureAffectedAbroadF { get; set; }
+        // public string RiskAssessmentNatureAffectedAbroadF { get; set; }
 
-        public string RiskAssessmentNatureAffectedAbroadG { get; set; }
+        // public string RiskAssessmentNatureAffectedAbroadG { get; set; }
 
-        public bool? RiskAssessmentCommonNatureTypesDomesticObserved { get; set; }  // Common_Nature_Types_Affected_Domestic_Observed
-        public bool? RiskAssessmentCommonNatureTypesDomesticDocumented { get; set; }  // Common_Nature_Types_Affected_Domestic_Documented
-        public bool? RiskAssessmentCommonNatureTypesForeignDocumented { get; set; }  // Common_Nature_Types_Affected_Foreign_Documented
+        // public bool? RiskAssessmentCommonNatureTypesDomesticObserved { get; set; }  // Common_Nature_Types_Affected_Domestic_Observed
+        // public bool? RiskAssessmentCommonNatureTypesDomesticDocumented { get; set; }  // Common_Nature_Types_Affected_Domestic_Documented
+        // public bool? RiskAssessmentCommonNatureTypesForeignDocumented { get; set; }  // Common_Nature_Types_Affected_Foreign_Documented
         public string RiskAssessmentCommonNatureTypesAffectedDomesticDescription { get; set; }         // Common_Nature_Types_Affected_Domestic_Description??????????????
-        public string RiskAssessmentCommonNatureTypesAffectedAbroadDescription { get; set; } = "";        // lagt til 15.11.2016
+        // public string RiskAssessmentCommonNatureTypesAffectedAbroadDescription { get; set; } = "";        // lagt til 15.11.2016
 
         // -- (E) kan overføre genetisk materiale til stedegne arter
-        public string RiskAssessmentGeneticTransferDomesticDescription { get; set; }        //Genetic_Transfer_Domestic_Description intern informasjon
-        public bool? RiskAssessmentGeneticTransferDomesticObserved { get; set; }  // Genetic_Transfer_Domestic_Observed
-        public bool? RiskAssessmentGeneticTransferDomesticDocumented { get; set; }  // Genetic_Transfer_Domestic_Documented
-        public bool? RiskAssessmentGeneticTransferForeignDocumented { get; set; }  // Genetic_Transfer_Foreign_Documented
+        // public string RiskAssessmentGeneticTransferDomesticDescription { get; set; }        //Genetic_Transfer_Domestic_Description intern informasjon
+        // public bool? RiskAssessmentGeneticTransferDomesticObserved { get; set; }  // Genetic_Transfer_Domestic_Observed
+        // public bool? RiskAssessmentGeneticTransferDomesticDocumented { get; set; }  // Genetic_Transfer_Domestic_Documented
+        // public bool? RiskAssessmentGeneticTransferForeignDocumented { get; set; }  // Genetic_Transfer_Foreign_Documented
 
         // -- (F) Kan overføre bakterier, parasitter eller virus til stedegne arter
-        public string RiskAssessmentVectorBiologicalDiseaseSpreadingDomesticDescription { get; set; }    //Vector_Biological_Disease_Spreading_Domestic_Description intern informasjon
-        public bool? RiskAssessmentBiologicalDiseaseSpreadingDomesticObserved { get; set; }  // Vector_Biological_Disease_Spreading_Domestic_Observed
-        public bool? RiskAssessmentBiologicalDiseaseSpreadingDomesticDocumented { get; set; }  // Vector_Biological_Disease_Spreading_Domestic_Documented
-        public bool? RiskAssessmentBiologicalDiseaseSpreadingForeignDocumented { get; set; }
+        // public string RiskAssessmentVectorBiologicalDiseaseSpreadingDomesticDescription { get; set; }    //Vector_Biological_Disease_Spreading_Domestic_Description intern informasjon
+        // public bool? RiskAssessmentBiologicalDiseaseSpreadingDomesticObserved { get; set; }  // Vector_Biological_Disease_Spreading_Domestic_Observed
+        // public bool? RiskAssessmentBiologicalDiseaseSpreadingDomesticDocumented { get; set; }  // Vector_Biological_Disease_Spreading_Domestic_Documented
+        // public bool? RiskAssessmentBiologicalDiseaseSpreadingForeignDocumented { get; set; }
 
         // (5.3) Geografisk Variasjon
         public List<string> RiskAssessmentGeographicalVariation { get; set; } = new List<string>(); // lagt til 23.09.2016
@@ -616,10 +617,10 @@ namespace Prod.Api.Helpers
 
         // (3.1) Artens status{
         public string AlienSpeciesCategory2012 { get; set; } // added 10.01.2017
-        public string DoorKnockerDescription { get; set; } // fab: Door_Knocker_Description
-        public string NotReproductiveDescription2012 { get; set; } // fab: Not_Reproductive_Description 
-        public string NotReproductiveFutureDescription2012 { get; set; } // fab: Not_Reproductive_Future_Description
-        public string AssesmentNotApplicableDescription { get; set; } // fab: Assesment_Not_Applicable_Description
+        // public string DoorKnockerDescription { get; set; } // fab: Door_Knocker_Description
+        // public string NotReproductiveDescription2012 { get; set; } // fab: Not_Reproductive_Description 
+        // public string NotReproductiveFutureDescription2012 { get; set; } // fab: Not_Reproductive_Future_Description
+        // public string AssesmentNotApplicableDescription { get; set; } // fab: Assesment_Not_Applicable_Description
 
         public bool? IsAlienSpecies { get; set; }
 
@@ -628,30 +629,30 @@ namespace Prod.Api.Helpers
 
         public bool? ConnectedToAnother { get; set; }
 
-        public string Connected { get; set; }
+        // public string Connected { get; set; }
 
         public string SpeciesStatus { get; set; }
 
-        public string ConnectedTaxon1 { get; set; } = "";
+        // public string ConnectedTaxon1 { get; set; } = "";
 
-        public string ConnectedTaxon2 { get; set; } = "";
+        // public string ConnectedTaxon2 { get; set; } = "";
 
         public bool? ProductionSpecies { get; set; } = false;
 
-        public string ChangedFromAlien { get; set; }
+        // public string ChangedFromAlien { get; set; }
 
-        public string ChangedAssessment { get; set; }
+        // public string ChangedAssessment { get; set; }
 
         public bool? AlienSpecieUncertainIfEstablishedBefore1800 { get; set; } // lagt til: 19.10.2016 - renamed 15.11.2016
-        public bool AlienSpecieUncertainAntropochor { get; set; } // lagt til: 19.10.2016
+        // public bool AlienSpecieUncertainAntropochor { get; set; } // lagt til: 19.10.2016
         public string AlienSpecieUncertainDescription { get; set; } // lagt til: 22.12.2016
 
-        public bool SkalVurderes { get; set; }
+        // public bool SkalVurderes { get; set; }
 
         //public string EtableringsmulighetINorge { get; set; } // lagt til 22.08.2016 //fjernet 25.08.2016
-        public string DoorKnockerCategory { get; set; } // lagt til 25.08.2016 // fjernet 14.12.2016 // lagt til 21.12.2016
-        public string RegionallyAlienCategory { get; set; } // lagt til 25.08.2016
-        public string NotApplicableCategory { get; set; } // lagt til 25.08.2016
+        // public string DoorKnockerCategory { get; set; } // lagt til 25.08.2016 // fjernet 14.12.2016 // lagt til 21.12.2016
+        // public string RegionallyAlienCategory { get; set; } // lagt til 25.08.2016
+        // public string NotApplicableCategory { get; set; } // lagt til 25.08.2016
         //public bool LongDistanceEffect { get; set; } // lagt til 22.08.2016 // fjernet 29.08.2016
         //public bool IndoorObserved { get; set; } // lagt til 22.08.2016 // fjernet 30.08.2016
         //public bool IndoorEstablished { get; set; } // lagt til 22.08.2016 // fjernet 30.08.2016
@@ -691,12 +692,12 @@ namespace Prod.Api.Helpers
         public bool Limnic { get; set; } // lagt til 26.9.2016
         public bool Terrestrial { get; set; } // lagt til 26.9.2016
         public bool Marine { get; set; } // lagt til 26.9.2016
-        public bool BrackishWater { get; set; } // lagt til 26.9.2017 (for sfab)
+        // public bool BrackishWater { get; set; } // lagt til 26.9.2017 (for sfab)
 
-        public string FirstDomesticObservation { get; set; } // fab: First_Domestic_Observation
-        public string FirstDomesticObservationLocation { get; set; } // fab: First_Domestic_Observation_Location
-        public string FirstDomesticEstablishmentObserved { get; set; } // fab: First_Domestic_Observed_Establishment
-        public string FirstDomesticEstablishmentObservedLocation { get; set; } // fab: First_Domestic_Observed_Establishment_Location
+        // public string FirstDomesticObservation { get; set; } // fab: First_Domestic_Observation
+        // public string FirstDomesticObservationLocation { get; set; } // fab: First_Domestic_Observation_Location
+        // public string FirstDomesticEstablishmentObserved { get; set; } // fab: First_Domestic_Observed_Establishment
+        // public string FirstDomesticEstablishmentObservedLocation { get; set; } // fab: First_Domestic_Observed_Establishment_Location
 
 
         public List<string> ArrivedCountryFrom { get; set; } = new List<string>(); // fab: string Arived_Norway_From_Code
@@ -737,36 +738,36 @@ namespace Prod.Api.Helpers
         public List<string> CurrentInternationalExistenceMarineAreas { get; set; } = new List<string>(); // lagt til 05.09.2016
         public string CurrentInternationalExistenceMarineAreasDetails { get; set; } // lagt til 21.04.2017
 
-        public bool SurvivalBelow5c { get; set; } // lagt til 27.09.2016
+        // public bool SurvivalBelow5c { get; set; } // lagt til 27.09.2016
 
         public List<string> IntroductionCourse { get; set; } // fab: List<int> Introduction_Course  //Årsak til tilstedeværelse
 
-        public bool? DomesticRiskEvaluationExists { get; set; } // fab: Domestic_RiskEvaluation_Exists
-        public bool? DomesticRiskEvaluationExists2007 { get; set; } // lagt til 26.09.2016
-        public bool? ForeignRiskEvaluationExists { get; set; } // fab: Foreign_RiskEvaluation_Exists_Exists
-        public string ForeignRiskEvaluationComment { get; set; } // fab: Foreign_RiskEvaluation_Comment
+        // public bool? DomesticRiskEvaluationExists { get; set; } // fab: Domestic_RiskEvaluation_Exists
+        // public bool? DomesticRiskEvaluationExists2007 { get; set; } // lagt til 26.09.2016
+        // public bool? ForeignRiskEvaluationExists { get; set; } // fab: Foreign_RiskEvaluation_Exists_Exists
+        // public string ForeignRiskEvaluationComment { get; set; } // fab: Foreign_RiskEvaluation_Comment
 
-        public string Regeneration { get; set; } // fab: Regeneration
-        public int? RegenerationYears { get; set; } // fab: Regeneration_Years
-        public string Reproduction { get; set; } // fab: Reproduction
+        // public string Regeneration { get; set; } // fab: Regeneration
+        // public int? RegenerationYears { get; set; } // fab: Regeneration_Years
+        // public string Reproduction { get; set; } // fab: Reproduction
         public bool? ReproductionAsexual { get; set; } // fab: Reproduction_Asexual
         public double? ReproductionGenerationTime { get; set; } // fab: Reproduction_Geteration_Time
         public bool? ReproductionSexual { get; set; } // fab: Reproduction_Sexual
         //public string ReproductiveCapability { get; set; } // fab: Int64? Reproductive_Capability // removed 17.01.2017
-        public bool? SimilarDemographicComparison { get; set; } // fab: Similar_Demographic_Comparison
+        // public bool? SimilarDemographicComparison { get; set; } // fab: Similar_Demographic_Comparison
 
 
 
         //Ikke-vurderte effekter  - Har vi disse fra 2012?
-        public string HealthEffects { get; set; } // lagt til 31.08.2016
-        public string EconomicEffects { get; set; } // lagt til 31.08.2016
-        //public string EcosystemServiceEffects { get; set; } // lagt til 31.08.2016 // fjernet 16.09.2016
-        public List<string> EcosystemServiceEffectsBasicLifeProcesses { get; set; } = new List<string>(); // lagt til 02.09.2016
-        public List<string> EcosystemServiceEffectsProvisioningServices { get; set; } = new List<string>(); // lagt til 02.09.2016
-        public List<string> EcosystemServiceEffectsRegulatingServices { get; set; } = new List<string>(); // lagt til 02.09.2016
-        public List<string> EcosystemServiceEffectsHumanSpiritualServices { get; set; } = new List<string>(); // :-) // lagt til 02.09.2016
-        public string PositiveEcologicalEffects { get; set; } // lagt til 31.08.2016
-        public string EffectsOnPopulationOfOrigin { get; set; } // lagt til 31.08.2016
+        // public string HealthEffects { get; set; } // lagt til 31.08.2016
+        // public string EconomicEffects { get; set; } // lagt til 31.08.2016
+        // //public string EcosystemServiceEffects { get; set; } // lagt til 31.08.2016 // fjernet 16.09.2016
+        // public List<string> EcosystemServiceEffectsBasicLifeProcesses { get; set; } = new List<string>(); // lagt til 02.09.2016
+        // public List<string> EcosystemServiceEffectsProvisioningServices { get; set; } = new List<string>(); // lagt til 02.09.2016
+        // public List<string> EcosystemServiceEffectsRegulatingServices { get; set; } = new List<string>(); // lagt til 02.09.2016
+        // public List<string> EcosystemServiceEffectsHumanSpiritualServices { get; set; } = new List<string>(); // :-) // lagt til 02.09.2016
+        // public string PositiveEcologicalEffects { get; set; } // lagt til 31.08.2016
+        // public string EffectsOnPopulationOfOrigin { get; set; } // lagt til 31.08.2016
 
         // OsA, He, Fi
         public string RegionalPresenceKnown { get; set; }
@@ -777,45 +778,45 @@ namespace Prod.Api.Helpers
 
         //// (3.3) Import
         //public List<MigrationPathway> ImportPathways { get; set; } = new List<MigrationPathway>();
-        public bool ImportedToIndoorOrProductionArea { get; set; } = false;
+        // public bool ImportedToIndoorOrProductionArea { get; set; } = false;
 
         public string IndoorProduktion { get; set; }
         // (3.4) Spredningsveier
         //public List<MigrationPathway> AssesmentVectors { get; set; } = new List<MigrationPathway>(); // lagt til 09.01.2017
-        public string Vector { get; set; }  // ???!!
+        // public string Vector { get; set; }  // ???!!
 
         // (3.5) Spredningshistorikk
         //public List<SpreadHistory> SpreadHistory { get; set; } = new List<SpreadHistory>();
 
         //[Name("Fremtidig spredningsprognose i Norge, inkl. potensielt utbredelsesområde, antatte kritiske parametre for arten, og forventede endringer i disse:")] // 
-        public string SpreadHistoryDomesticDocumentation { get; set; } // fab: SpreadHistoryDomesticDocumentation
+        // public string SpreadHistoryDomesticDocumentation { get; set; } // fab: SpreadHistoryDomesticDocumentation
         //[Name("Detaljinformasjon for Naturtyper:")] // 
-        public string SpreadHistoryForeignDocumentation { get; set; } // fab: SpreadHistoryForeignDocumentation
+        // public string SpreadHistoryForeignDocumentation { get; set; } // fab: SpreadHistoryForeignDocumentation
 
         //public bool? FutureDistributionChangeExpected { get; set; } // fab: Future_Distribution_Change_Expected // ikke i bruk i 2012
-        public string FutureDistributionChangeExpectedDescription { get; set; } // fab: Future_Distribution_Change_Expected_Description
-        public string FutureDistributionCriticalParameters { get; set; } // fab: Future_Distribution_Critical_Parameters
+        // public string FutureDistributionChangeExpectedDescription { get; set; } // fab: Future_Distribution_Change_Expected_Description
+        // public string FutureDistributionCriticalParameters { get; set; } // fab: Future_Distribution_Critical_Parameters
 
-        public Int64? PotentialAreaDistribution { get; set; } // fab: Potential_Area_Distribution -  ikke i bruk?
-        public string PotentialAreaDistributionInTheFuture { get; set; } // fab: Potential_Area_Distribution_Future_Future @steinho - ikke i bruk?
+        // public Int64? PotentialAreaDistribution { get; set; } // fab: Potential_Area_Distribution -  ikke i bruk?
+        // public string PotentialAreaDistributionInTheFuture { get; set; } // fab: Potential_Area_Distribution_Future_Future @steinho - ikke i bruk?
 
 
 
-        public Int64? CurrentIndividualCount { get; set; }
-        public Int64? CurrentIndividualCountLowCalculated { get; set; }
-        public string CurrentIndividualCountLowMultiplier { get; set; }
-        public Int64? CurrentIndividualCountCalculated { get; set; }
-        public string CurrentIndividualCountMultiplier { get; set; }
-        public string CurrentIndividualCountHighMultiplier { get; set; }
-        public Int64? CurrentIndividualCountHighCalculated { get; set; }
+        // public Int64? CurrentIndividualCount { get; set; }
+        // public Int64? CurrentIndividualCountLowCalculated { get; set; }
+        // public string CurrentIndividualCountLowMultiplier { get; set; }
+        // public Int64? CurrentIndividualCountCalculated { get; set; }
+        // public string CurrentIndividualCountMultiplier { get; set; }
+        // public string CurrentIndividualCountHighMultiplier { get; set; }
+        // public Int64? CurrentIndividualCountHighCalculated { get; set; }
 
         public Int64? CurrentSpreadArea { get; set; }
         //public Int64? CurrentSpreadAreaLowMultiplier { get; set; }
         //public Int64? CurrentSpreadAreaHighMultiplier { get; set; }
         //public Int64? CurrentSpreadAreaMultiplier { get; set; }
-        public Int64? CurrentSpreadAreaLowCalculated { get; set; }
-        public Int64? CurrentSpreadAreaHighCalculated { get; set; }
-        public Int64? CurrentSpreadAreaCalculated { get; set; }
+        // public Int64? CurrentSpreadAreaLowCalculated { get; set; } //Can't find that this is in use in 2023
+        // public Int64? CurrentSpreadAreaHighCalculated { get; set; } //Can't find that this is in use in 2023
+        // public Int64? CurrentSpreadAreaCalculated { get; set; } //Can't find that this is in use in 2023
 
         public string CurrentPresenceComment { get; set; }
 
@@ -832,8 +833,8 @@ namespace Prod.Api.Helpers
 
         //public string SpeciesNatureTypesDetails { get; set; } // fab: SpeciesNatureTypesDetails // removed 03.11.2016
 
-        public bool UsesLivingSpeciesAsHabitat { get; set; }
-        public string UsesLivingSpeciesAsHabitatScientificName { get; set; }
+        // public bool UsesLivingSpeciesAsHabitat { get; set; }
+        // public string UsesLivingSpeciesAsHabitatScientificName { get; set; }
 
         // (5) Risikovurdering
         //public class RegionalRiskAssessment
@@ -850,8 +851,8 @@ namespace Prod.Api.Helpers
 
         //public List<SimpleReference> References { get; set; } = new List<SimpleReference>();
         // comments
-        [Name("DatoForSisteKommentar")]
-        public string NewestCommentDate { get; set; }
+        // [Name("DatoForSisteKommentar")]
+        // public string NewestCommentDate { get; set; }
 
         [Name("AntallBehandledeKommentarer")]
         public int CommentClosed { get; set; }
