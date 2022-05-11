@@ -558,14 +558,14 @@ namespace Prod.Api.Helpers
             if (ass.AlienSpeciesCategory == "UncertainBefore1800") return false;
 
             if (ass.AlienSpeciesCategory == "NotDefined") return false; // todo: This should probably also be "WillNotBeRiskAssessed" (?? check this)
-            if (ass.AlienSpeciesCategory == "EffectWithoutReproduction") return false;
+            if (ass.AlienSpeciesCategory == "EffectWithoutReproduction") return true; //or should we return ass.AssessmentConclusion == "AssessedDoorknocker";
             if (ass.AlienSpeciesCategory == "AlienSpecie" ||
                 ass.AlienSpeciesCategory == "EcoEffectWithoutEstablishment")
                 return true;
             if (ass.AlienSpeciesCategory == "DoorKnocker")
                 return ass.AssessmentConclusion == "AssessedDoorknocker"; // ass.DoorKnockerCategory == "doRiskAssessment";
             if (ass.AlienSpeciesCategory == "RegionallyAlien")
-                return ass.RegionallyAlienCategory == "doRiskAssessment";
+                return true; //ass.RegionallyAlienCategory == "doRiskAssessment"
             if (ass.AlienSpeciesCategory == "NotApplicable")
                 return false;
             return false; // should not be reachable // todo: replace with exception
