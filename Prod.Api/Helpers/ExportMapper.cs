@@ -141,7 +141,7 @@ namespace Prod.Api.Helpers
         public string Category { get; set; }
         public string Criteria { get; set; }
 
-        // public string Category2018 { get; set; }
+        public string Category2018 { get; set; }
         public string Criteria2018 { get; set; }
         
         public string ConnectedToHigherLowerTaxonDescription { get; set; } = "";
