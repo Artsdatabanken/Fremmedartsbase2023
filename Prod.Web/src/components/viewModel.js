@@ -359,20 +359,23 @@ class ViewModel {
         //         runInAction(() => this.assessment.speciesEstablishmentCategory = "C3")
         //     }
         // })
-        reaction(
-            () => this.assessment.speciesStatus,
-            (speciesStatus, previousSpeciesStatus) => {
-                // console.log("¤¤¤ statuschange: " + change + " " + speciesStatus + " " + previousSpeciesStatus)
+        autorun(() => {
+            if(this.assessment && this.assessment.speciesStatus) {
+                reaction(
+                    () => this.assessment.speciesStatus,
+                    (speciesStatus, previousSpeciesStatus) => {
+                        // console.log("¤¤¤ statuschange: " + change + " " + speciesStatus + " " + previousSpeciesStatus)
 
-                if (speciesStatus === "C3" && previousSpeciesStatus !== "C3") {
-                    // console.log("¤¤¤ reset speciesEstablishmentCategory")
-                    if(!this.assessment.speciesEstablishmentCategory) {
-                        runInAction(() => this.assessment.speciesEstablishmentCategory = "C3")
+                        if (speciesStatus === "C3" && previousSpeciesStatus !== "C3") {
+                            // console.log("¤¤¤ reset speciesEstablishmentCategory")
+                            if(!this.assessment.speciesEstablishmentCategory) {
+                                runInAction(() => this.assessment.speciesEstablishmentCategory = "C3")
+                            }
+                        }
                     }
-                }
+                )
             }
-        )
-
+        })
         autorun(() => {
             if(this.assessmentTabs && this.assessmentTabs.activeTab ) {
                 console.log("current assessmentTab: " + this.assessmentTabs.activeTab.id )
