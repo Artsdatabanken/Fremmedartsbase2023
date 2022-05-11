@@ -375,7 +375,7 @@ namespace Prod.Api.Helpers
         public long? RiskAssessmentLifetimeLowerQInput { get; set; } // nedre kvartil for artens levetid i Norge i år 
         public long RiskAssessmentLifetimeLowerQ { get; set; } // nedre kvartil for artens levetid i Norge i år 
         public long? RiskAssessmentLifetimeUpperQInput { get; set; } // øvre kvartil for artens levetid i Norge i år 
-        public long RiskAssessmentLifetimeLowerQ  { get; set; } // øvre kvartil for artens levetid i Norge i år 
+        public long RiskAssessmentLifetimeUpperQ  { get; set; } // øvre kvartil for artens levetid i Norge i år 
         #endregion Median life time
 
         // public string RiskAssessmentAmethod { get; set; } // metode som ble brukt for å beregne A-kriteriet 
