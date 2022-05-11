@@ -725,18 +725,18 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         console.log("ascore: " + r.ascore )
     })
 
-    const ACriteriaSectionNames = [
-        "LifespanA1aSimplifiedEstimate", // changed from  "SpreadPVAAnalysisEstimatedSpeciesLongevity" 11.07.21
-        "SpreadRscriptEstimatedSpeciesLongevity",
-        "ViableAnalysis"                                     // "RedListCategoryLevel"
-    ]
+    // // // const ACriteriaSectionNames = [
+    // // //     "LifespanA1aSimplifiedEstimate", // changed from  "SpreadPVAAnalysisEstimatedSpeciesLongevity" 11.07.21
+    // // //     "SpreadRscriptEstimatedSpeciesLongevity",
+    // // //     "ViableAnalysis"                                     // "RedListCategoryLevel"
+    // // // ]
 
-    const BCriteriaSectionNames = [
-        "SpreadYearlyIncreaseObservations",
-        "SpreadYearlyIncreaseOccurrenceArea",
-        "SpreadYearlyLiteratureData",
-        "SpreadYearlyIncreaseCalculatedExpansionSpeed"
-    ]
+    // // // const BCriteriaSectionNames = [
+    // // //     "SpreadYearlyIncreaseObservations",
+    // // //     "SpreadYearlyIncreaseOccurrenceArea",
+    // // //     "SpreadYearlyLiteratureData",
+    // // //     "SpreadYearlyIncreaseCalculatedExpansionSpeed"
+    // // // ]
     // SpreadYearlyIncreaseEstimate - before
 
     function selectableSection(propName) {
@@ -751,13 +751,13 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         return isActive && hasValue && stringValue
     }
 
-    // create Selectable* observables
-    // todo: trolig noe mobx som ikke virker her!!
-    ACriteriaSectionNames.concat(BCriteriaSectionNames).map(tag => {
-        const obj = {}
-        obj["Selectable" + tag] = () => selectableSection(tag)
-        extendObservable(riskAssessment, obj)
-    })
+    // // // // create Selectable* observables
+    // // // // todo: trolig noe mobx som ikke virker her!!
+    // // // ACriteriaSectionNames.concat(BCriteriaSectionNames).map(tag => {
+    // // //     const obj = {}
+    // // //     obj["Selectable" + tag] = () => selectableSection(tag)
+    // // //     extendObservable(riskAssessment, obj)
+    // // // })
 
 
     extendObservable(riskAssessment, {
@@ -821,32 +821,32 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
            })
     });
 
-    autorun(() => {
-        const sStr = riskAssessment.SpreadYearlyLiteratureDataExpansionSpeed
-        const nStr = riskAssessment.SpreadYearlyLiteratureDataNumberOfIntroductionSources
-        const s = extractFloat(sStr)
-        const n = extractFloat(nStr)
-        const v = s * Math.sqrt(n)
-        const v2 = Math.round(v * 100) / 100
-        // console.log("v2:" + v2)
-        const val = isNaN(v2) ? "" : v2.toString()
-        runInAction(() => {
-            riskAssessment.SpreadYearlyLiteratureData = val
-        })
-    });
-    autorun(() => {
-        // const a = 5.77 // t*d*: use real value from vurdering.CurrentExistenceAreaCalculated
-        const a =  riskAssessment.vurderingCurrentExistenceAreaCalculated
-        const wStr = riskAssessment.SpreadYearlyIncreaseEstimate
-        const w = extractFloat(wStr)
-        // const v = 564 * (Math.sqrt(a + w) - Math.sqrt(a))
-        const v = 564 * (Math.sqrt(a) - Math.sqrt(a - w))
-        const v2 = Math.round(v * 100) / 100
-        const val = isNaN(v2) ? "" : v2.toString()
-        runInAction(() => {
-            riskAssessment.SpreadYearlyIncreaseCalculatedExpansionSpeed = val
-        })
-    });
+    // // // autorun(() => {
+    // // //     const sStr = riskAssessment.SpreadYearlyLiteratureDataExpansionSpeed
+    // // //     const nStr = riskAssessment.SpreadYearlyLiteratureDataNumberOfIntroductionSources
+    // // //     const s = extractFloat(sStr)
+    // // //     const n = extractFloat(nStr)
+    // // //     const v = s * Math.sqrt(n)
+    // // //     const v2 = Math.round(v * 100) / 100
+    // // //     // console.log("v2:" + v2)
+    // // //     const val = isNaN(v2) ? "" : v2.toString()
+    // // //     runInAction(() => {
+    // // //         riskAssessment.SpreadYearlyLiteratureData = val
+    // // //     })
+    // // // });
+    // // // autorun(() => {
+    // // //     // const a = 5.77 // t*d*: use real value from vurdering.CurrentExistenceAreaCalculated
+    // // //     const a =  riskAssessment.vurderingCurrentExistenceAreaCalculated
+    // // //     const wStr = riskAssessment.SpreadYearlyIncreaseEstimate
+    // // //     const w = extractFloat(wStr)
+    // // //     // const v = 564 * (Math.sqrt(a + w) - Math.sqrt(a))
+    // // //     const v = 564 * (Math.sqrt(a) - Math.sqrt(a - w))
+    // // //     const v2 = Math.round(v * 100) / 100
+    // // //     const val = isNaN(v2) ? "" : v2.toString()
+    // // //     runInAction(() => {
+    // // //         riskAssessment.SpreadYearlyIncreaseCalculatedExpansionSpeed = val
+    // // //     })
+    // // // });
 
     reaction(
         () => r.AOOknown1,
@@ -912,7 +912,6 @@ function enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering,
     
 
     extendObservable(riskAssessment, {
-        // get vurderingAlienSpeciesCategory() {return vurdering.alienSpeciesCategory},
         get vurderingIsDoorKnocker() {return vurdering.isDoorKnocker},
         get vurderingCurrentExistenceAreaCalculated() {return vurdering.currentExistenceAreaCalculated},
         get vurderingAllImpactedNatureTypes() {return vurdering.impactedNatureTypes.map(x => x)},
