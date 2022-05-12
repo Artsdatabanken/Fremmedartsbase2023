@@ -1,22 +1,15 @@
 ﻿import React from 'react';
-import PropTypes from 'prop-types'
+//import PropTypes from 'prop-types'
 import {observer, inject} from 'mobx-react';
-// import {action, autorun, autorunAsync, extendObservable, observable, toJS} from 'mobx';
 import {action, extendObservable, runInAction, toJS} from 'mobx'
 
 import config from '../../config';
-import {loadData} from './../../apiService'; 
+// import {loadData} from './../../apiService'; 
 import * as Xcomp from './observableComponents';
 import Criterion from './criterion'
-// import {getCriterion} from '../../utils'
-
 import SpeciesSpeciesTable from './52Okologiskeffekt/SpeciesSpeciesTable'
 import SpeciesNaturetypeTable from './52Okologiskeffekt/SpeciesNaturetypeTable'
-
-
-import ScoreUnsure from './51Naturtyper/scoreUnsure'
 import HostParasiteTable from './52Okologiskeffekt/HostParasiteTable'
-//import createTaxonSearch from './52Okologiskeffekt/createTaxonSearch'
 import createTaxonSearch from '../createTaxonSearch'
 
 
@@ -284,17 +277,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
         const critI = riskAssessment.critI
         const ntLabels = labels.NatureTypes
 
-        console.log(this.newSSITS.taxonSearchResult)
-        // runInAction(() => {
-
-        // critD.auto = true
-        // critE.auto = true
-        // critF.auto = false
-        // critG.auto = false
-        // critH.auto = true
-        // critI.auto = true
-        // })
-        //console.log(appState.userContext.readonly)
+        // console.log(this.newSSITS.taxonSearchResult)
         return(
             <div>
 
@@ -329,16 +312,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                 </fieldset>
                 <fieldset className="well">
                     <Criterion criterion={critD} hideInfo={true} disabled={appState.userContext.readonly}/>
-
         
-
-                   
-                   {/* <b>curr{critD.Value}{critD.currentValueLabel}</b>
-                   
-                   <ScoreUnsure appState={appState}
-                                critScores={koder.scoresD}
-                                firstValue={"scoreD"}
-                                secondValue={"unsureD"}/> */}
                      <Xcomp.HtmlString                            
                                 observableValue={[riskAssessment, "dCritInsecurity"]}
                                 label={labels.DEcrit.insecurity}
@@ -347,10 +321,6 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                     <fieldset className="well">
                     <Criterion criterion={critE} hideInfo={true} disabled={appState.userContext.readonly}/>
                    
-                   {/* <ScoreUnsure appState={appState}
-                                critScores={koder.scoresE}
-                                firstValue={"scoreE"}
-                                secondValue={"unsureE"}/>*/}
                      <Xcomp.HtmlString                            
                                 observableValue={[riskAssessment, "eCritInsecurity"]}
                                 label={labels.DEcrit.insecurity}
@@ -360,20 +330,9 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                     
                     <Criterion criterion={critF} disabled={true}/>
                     
-                   {/* 
-                   <p>{ntLabels.scoreSummary}</p>
-                   <ScoreUnsure appState={appState}
-                                critScores={koder.scoresF}
-                                firstValue={"scoreF"}
-                                secondValue={"unsureF"}/>*/}
                 </fieldset>
                 <fieldset className="well">
                     <Criterion criterion={critG} disabled={true}/>
-                    {/*<p>{ntLabels.scoreSummary}</p>
-                    <ScoreUnsure appState={appState}
-                                critScores={koder.scoresG}
-                                firstValue={"scoreG"}
-                            secondValue={"unsureG"}/>*/}
                 </fieldset> 
                 <fieldset className="well">
                     <h4>{critH.heading}</h4>
@@ -382,49 +341,22 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                     <SpeciesSpeciesTable list={riskAssessment.geneticTransferDocumented} newItem={this.newGTD} addNewItem={this.addGTD} koder={koder} labels={labels} disabled={appState.userContext.readonly} showKeyStoneSpecie showInteractionType showConfirmedOrAssumed HCrit />
                     <hr/>
 
-                   {/* <p>{ntLabels.score}</p>
-                    <ScoreUnsure appState={appState}
-                                critScores={koder.scoresH}
-                                firstValue={"scoreH"}
-                        secondValue={"unsureH"}/> */}
-                   
                     <Criterion criterion={critH} mode="noheading" disabled={appState.userContext.readonly}/>
                      <Xcomp.HtmlString                            
                                 observableValue={[riskAssessment, "hCritInsecurity"]}
                                 label={labels.DEcrit.insecurity}
                             />                      
-                    {/*{critH.majorUncertainty ?
-                    <div>
-                        <span>Beskrivelse</span>
-                        <Xcomp.HtmlString observableValue={[riskAssessment, 'geneticTransferDomesticDescription']} />
-                    </div> : 
-                    null}*/}
-                    
-                    {/*<p>HGeneticTransferLevel: {riskAssessment.HGeneticTransferLevel}</p>*/}
                 </fieldset>
                 <fieldset className="well">
                     <h4>{critI.heading} </h4>
                     <p>{critI.info}</p>
                     <HostParasiteTable list={riskAssessment.hostParasiteInformations} newItem={this.newHPI} addNewItem={this.addHPI} koder={koder} labels={labels} disabled={appState.userContext.readonly} showKeyStoneSpecie />
                     <hr/>
-                   {/* <p>{ntLabels.score}</p>
-                    <ScoreUnsure appState={appState}
-                                critScores={koder.scoresI}
-                                firstValue={"scoreI"}
-                                secondValue={"unsureI"}/>*/}
-
-                    
                     <Criterion criterion={critI} mode="noheading" disabled={appState.userContext.readonly}/>
                      <Xcomp.HtmlString                            
                                 observableValue={[riskAssessment, "iCritInsecurity"]}
                                 label={labels.DEcrit.insecurity}
                             />                      
-                    {/*{critI.majorUncertainty ?
-                    <div>
-                        <span>Beskrivelse</span>
-                        <Xcomp.HtmlString observableValue={[riskAssessment, 'vectorBiologicalDiseaseSpreadingDomesticDescription']} />
-                    </div> : 
-                    null }*/}
                     
                 </fieldset>
             </div>
@@ -432,9 +364,5 @@ export default class Assessment62Okologiskeffekt extends React.Component {
     }
 }
 
-                // Vurdering52Okologiskeffekt.propTypes = {
-                //     viewModel: PropTypes.object.isRequired,
-                //     riskAssessment: PropTypes.object.isRequired
-                // }
 
 
