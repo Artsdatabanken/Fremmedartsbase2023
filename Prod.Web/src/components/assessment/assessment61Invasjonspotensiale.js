@@ -5,7 +5,7 @@ import {action, computed, runInAction, observable, makeObservable, extendObserva
 import * as Xcomp from './observableComponents';
 import Tabs from '../tabs'
 import Criterion from './criterion'
-import Assessment62Okologiskeffekt from './assessment62Okologiskeffekt'
+import Assessment61CriteriaC from './assessment61CriteriaC'
 import config from '../../config'
 // import Filliste from './35Utbredelseshistorikk/Filliste'
 // import FileUpload from '../FileUpload'
@@ -561,11 +561,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                         </div>
                         : null}
                     </fieldset>
-                    <fieldset className="well">
-                        <h4>{critC.heading}</h4>
-                        <p>{critC.info}</p>
-                        <Criterion criterion={critC} mode="noheading" disabled={true} appState={appState}/>
-                    </fieldset>
+                    <Assessment61CriteriaC />
                 </div>
             </div>
         );
