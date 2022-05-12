@@ -815,7 +815,7 @@ class ViewModel {
             alert("Wrong statusaction: " + statusaction)
             return
         }
-        if (errorhandler.hasErrors) {
+        if (statusaction === "finish" && errorhandler.hasErrors) {
             // console.log("#%% kanikke")
             alert("Kan ikke ferdigstille. Vurderingen er ikke korrekt!")
             return
