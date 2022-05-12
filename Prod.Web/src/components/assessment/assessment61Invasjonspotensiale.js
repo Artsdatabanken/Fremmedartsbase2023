@@ -174,17 +174,9 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                         {riskAssessment.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" 
                         ? <div>
 
-                            {assessment.isDoorKnocker ? 
-                            <p
-                                dangerouslySetInnerHTML={{ __html: textDK}}>
-                            </p> :
-                            <p 
-                            dangerouslySetInnerHTML={{
-                                __html: riskAssessment.a1aresulttext
-                            }}
-                            > 
-                            </p>}
-
+                            {assessment.isDoorKnocker 
+                            ? <p dangerouslySetInnerHTML={{ __html: textDK}}></p> 
+                            : <p dangerouslySetInnerHTML={{ __html: riskAssessment.a1aresulttext}}></p>}
                             <Xcomp.StringEnum observableValue={[riskAssessment, "acceptOrAdjustCritA"]} mode="radio" codes={koder.AcceptOrAdjust}/>   
                                             
                             <ErrorList errorhandler={errorhandler} errorids={["(a)err25", "(a)err27"]} />            
@@ -276,8 +268,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                         <ErrorList errorhandler={errorhandler} errorids={["(a)err26"]} />            
                     
 
-                        {riskAssessment.chosenSpreadYearlyIncrease == "a" ? 
-                        <div> 
+                        {riskAssessment.chosenSpreadYearlyIncrease == "a" 
+                        ? <div> 
                             <p> {labels.BcritText.enterParameters}<i>{labels.BcritText.standartSettings}</i></p>
                             <div className="statusField"> 
                                 <div className="labels">
@@ -369,7 +361,11 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                     <tbody>
                                         {(AOO1error || AOO1warn)
                                         ? <tr>
-                                            <td colspan="5">{AOO1error ? <b style={{ color: "red" }}>{AOO1error}</b> : <b style={{ color: "orange" }}> {AOO1warn}</b>}</td>
+                                            <td colspan="5">
+                                                {AOO1error 
+                                                ? <b style={{ color: "red" }}>{AOO1error}</b> 
+                                                : <b style={{ color: "orange" }}> {AOO1warn}</b>}
+                                            </td>
                                         </tr>
                                         : null}
                                         <tr>
@@ -427,7 +423,11 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                         </tr>
                                         {AOO2error || AOO2warn 
                                         ? <tr>
-                                            <td colspan="5">{AOO2error ? <b style={{ color: "red" }}>{AOO2error}</b> : <b style={{ color: "orange" }}> {AOO2warn}</b>}</td>
+                                            <td colspan="5">
+                                                {AOO2error 
+                                                ? <b style={{ color: "red" }}>{AOO2error}</b> 
+                                                : <b style={{ color: "orange" }}> {AOO2warn}</b>}
+                                            </td>
                                         </tr>
                                         : null}
                                         <tr>
@@ -500,9 +500,6 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                             <Criterion criterion={critB} appState={appState} mode="noheading"/>
                         </div>
                         : null}
-
-
-
                        
                         {riskAssessment.activeSpreadYearlyLiteratureData
                         ? <div className="previousAssessment">
