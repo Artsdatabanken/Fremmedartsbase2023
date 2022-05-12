@@ -356,129 +356,135 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                             ? <>
                                 <p style={{marginTop: "10px", marginBottom: "20px", paddingTop: "20px"}} dangerouslySetInnerHTML={{__html: labels.BcritText.SelfProducing}}></p>
                                     
-                                        <table className="table BCritTable">
-                                            <thead>
-                                                <tr>     
-                                                <th></th>                                           
-                                                <th dangerouslySetInnerHTML={{
-                                                     __html: labels.Bcrit.fromYear }}></th>
-                                                <th dangerouslySetInnerHTML={{
-                                                     __html: labels.Bcrit.toYear}}></th>
-                                                <th dangerouslySetInnerHTML={{
-                                                     __html: labels.Bcrit.km2}}></th> 
-                                                <th dangerouslySetInnerHTML={{
-                                                     __html: labels.Bcrit.km2withoutConsideration}}></th>                                                  
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            {(AOO1error || AOO1warn)
-                                            ? <tr><td colspan="5">{AOO1error ? <b style={{ color: "red" }}>{AOO1error}</b> : <b style={{ color: "orange" }}> {AOO1warn}</b>}</td></tr>
-                                            : null
-                                            }
-                                            <tr>
-                                                <td>
-                                                    <div style={{marginBottom: 10}}>
-                                                        <ModalArtskart
-                                                            taxonId={assessment.taxonId}
-                                                            scientificNameId={assessment.evaluatedScientificNameId}
-                                                            evaluationContext={assessment.evaluationContext}
-                                                            showWaterAreas={this.GetIsRegionalAssessment(assessment)}
-                                                            artskartWaterModel={assessment.artskartWaterModel}
-                                                            waterFeatures={this.getWaterFeatures(assessment)}
-                                                            labels={labelsArtskart}
-                                                            utvalg={assessment.riskAssessment}
-                                                            artskartModel={this.props.appState.virtualArtskartModel0}
-                                                            onOverførFraArtskart={action(this.handleDateFromArtskart0)}
-                                                            artskartSelectionGeometry={assessment.artskartSelectionGeometry}
-                                                            artskartAdded={assessment.artskartAdded}
-                                                            artskartRemoved={assessment.artskartRemoved}
-                                                            showTransferRegionlist={false}
-                                                        />
-                                                    </div>
-                                                </td>
-                                                <td> <Xcomp.Number       
-                                                        disabled 
-                                                        className={"BcritYear"}                    
-                                                        observableValue={[riskAssessment, "AOOendyear1"]} 
-                                                        integer 
-                                                    /> 
-                                                </td>
-                                                <td style={{display: 'flex'}}><Xcomp.Number                            
-                                                        observableValue={[riskAssessment, "AOOyear1"]}
-                                                        observableErrors={[errorhandler, "B2err1"]}
-                                                        integer
-                                                        className={"BcritYear"}
-                                                        yearRange={true}
-                                                    /> 
-                                                    <span style={{margin: '10px 10px 0'}}>(t<sub>1</sub>)</span>
-                                                    </td>
-                                                <td><Xcomp.Number                            
-                                                        observableValue={[riskAssessment, "AOOknown1"]}
-                                                        integer
-                                                        disabled={!riskAssessment.notUseSpeciesMap}
+                                <table className="table BCritTable">
+                                    <thead>
+                                        <tr>     
+                                            <th></th>                                           
+                                            <th dangerouslySetInnerHTML={{ __html: labels.Bcrit.fromYear }}></th>
+                                            <th dangerouslySetInnerHTML={{ __html: labels.Bcrit.toYear}}></th>
+                                            <th dangerouslySetInnerHTML={{ __html: labels.Bcrit.km2}}></th> 
+                                            <th dangerouslySetInnerHTML={{ __html: labels.Bcrit.km2withoutConsideration}}></th>                                                  
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {(AOO1error || AOO1warn)
+                                        ? <tr>
+                                            <td colspan="5">{AOO1error ? <b style={{ color: "red" }}>{AOO1error}</b> : <b style={{ color: "orange" }}> {AOO1warn}</b>}</td>
+                                        </tr>
+                                        : null}
+                                        <tr>
+                                            <td>
+                                                <div style={{marginBottom: 10}}>
+                                                    <ModalArtskart
+                                                        taxonId={assessment.taxonId}
+                                                        scientificNameId={assessment.evaluatedScientificNameId}
+                                                        evaluationContext={assessment.evaluationContext}
+                                                        showWaterAreas={this.GetIsRegionalAssessment(assessment)}
+                                                        artskartWaterModel={assessment.artskartWaterModel}
+                                                        waterFeatures={this.getWaterFeatures(assessment)}
+                                                        labels={labelsArtskart}
+                                                        utvalg={assessment.riskAssessment}
+                                                        artskartModel={this.props.appState.virtualArtskartModel0}
+                                                        onOverførFraArtskart={action(this.handleDateFromArtskart0)}
+                                                        artskartSelectionGeometry={assessment.artskartSelectionGeometry}
+                                                        artskartAdded={assessment.artskartAdded}
+                                                        artskartRemoved={assessment.artskartRemoved}
+                                                        showTransferRegionlist={false}
                                                     />
-                                                </td>
-                                                <td><Xcomp.Number                            
-                                                        observableValue={[riskAssessment, "AOO1"]}
-                                                        observableErrors={[errorhandler, "(a)err7", "(a)err9"]}
-                                                        integer
+                                                </div>
+                                            </td>
+                                            <td> 
+                                                <Xcomp.Number       
+                                                    disabled 
+                                                    className={"BcritYear"}                    
+                                                    observableValue={[riskAssessment, "AOOendyear1"]} 
+                                                    integer 
+                                                /> 
+                                            </td>
+                                            <td style={{display: 'flex'}}><Xcomp.Number                            
+                                                    observableValue={[riskAssessment, "AOOyear1"]}
+                                                    observableErrors={[errorhandler, "B2err1"]}
+                                                    integer
+                                                    className={"BcritYear"}
+                                                    yearRange={true}
+                                            /> 
+                                                <span style={{margin: '10px 10px 0'}}>(t<sub>1</sub>)</span>
+                                            </td>
+                                            <td>
+                                                <Xcomp.Number                            
+                                                    observableValue={[riskAssessment, "AOOknown1"]}
+                                                    integer
+                                                    disabled={!riskAssessment.notUseSpeciesMap}
+                                                />
+                                            </td>
+                                            <td>
+                                                <Xcomp.Number                            
+                                                    observableValue={[riskAssessment, "AOO1"]}
+                                                    observableErrors={[errorhandler, "(a)err7", "(a)err9"]}
+                                                    integer
+                                                />
+                                            </td>
+                                        </tr>
+                                        {AOO2error || AOO2warn 
+                                        ? <tr>
+                                            <td colspan="5">{AOO2error ? <b style={{ color: "red" }}>{AOO2error}</b> : <b style={{ color: "orange" }}> {AOO2warn}</b>}</td>
+                                        </tr>
+                                        : null}
+                                        <tr>
+                                            <td>
+                                                <div style={{marginBottom: 10}}>
+                                                    <ModalArtskart
+                                                        taxonId={assessment.taxonId}
+                                                        scientificNameId={assessment.evaluatedScientificNameId}
+                                                        evaluationContext={assessment.evaluationContext}
+                                                        showWaterAreas={this.GetIsRegionalAssessment(assessment)}
+                                                        artskartWaterModel={assessment.artskartWaterModel}
+                                                        waterFeatures={this.getWaterFeatures(assessment)}
+                                                        labels={labelsArtskart}
+                                                        utvalg={assessment.riskAssessment}
+                                                        artskartModel={this.props.appState.virtualArtskartModel}
+                                                        onOverførFraArtskart={action(this.handleDateFromArtskart1)}
+                                                        artskartSelectionGeometry={assessment.artskartSelectionGeometry}
+                                                        artskartAdded={assessment.artskartAdded}
+                                                        artskartRemoved={assessment.artskartRemoved}
+                                                        showTransferRegionlist={false}
                                                     />
-                                                </td>
-                                               
-                                            </tr>
-                                            {AOO2error || AOO2warn 
-                                            ? <tr><td colspan="5">{AOO2error ? <b style={{ color: "red" }}>{AOO2error}</b> : <b style={{ color: "orange" }}> {AOO2warn}</b>}</td></tr>
-                                            : null
-                                            }
-                                            <tr>
-                                                <td>
-                                                    <div style={{marginBottom: 10}}>
-                                                        <ModalArtskart
-                                                            taxonId={assessment.taxonId}
-                                                            scientificNameId={assessment.evaluatedScientificNameId}
-                                                            evaluationContext={assessment.evaluationContext}
-                                                            showWaterAreas={this.GetIsRegionalAssessment(assessment)}
-                                                            artskartWaterModel={assessment.artskartWaterModel}
-                                                            waterFeatures={this.getWaterFeatures(assessment)}
-                                                            labels={labelsArtskart}
-                                                            utvalg={assessment.riskAssessment}
-                                                            artskartModel={this.props.appState.virtualArtskartModel}
-                                                            onOverførFraArtskart={action(this.handleDateFromArtskart1)}
-                                                            artskartSelectionGeometry={assessment.artskartSelectionGeometry}
-                                                            artskartAdded={assessment.artskartAdded}
-                                                            artskartRemoved={assessment.artskartRemoved}
-                                                            showTransferRegionlist={false}
-                                                        />
-                                                    </div>
-                                                </td>
-                                                <td> <Xcomp.Number   
-                                                        disabled                         
-                                                        observableValue={[riskAssessment, "AOOendyear1"]}
-                                                        className={"BcritYear"}
-                                                        integer
-                                                        yearRange={true}/> 
-                                                </td>
-                                                <td style={{display: 'flex'}}><Xcomp.Number            
-                                                        className={"BcritYear"}
-                                                        observableValue={[riskAssessment, "AOOyear2"]} 
-                                                        observableErrors={[errorhandler, "B2err1"]}
-                                                        integer
-                                                        yearRange={true}
-                                                        /> 
-                                                        <span style={{margin: '10px 10px 0'}}>(t<sub>2</sub>)</span>
-                                                </td>
-                                                <td>
+                                                </div>
+                                            </td>
+                                            <td> 
+                                                <Xcomp.Number   
+                                                    disabled                         
+                                                    observableValue={[riskAssessment, "AOOendyear1"]}
+                                                    className={"BcritYear"}
+                                                    integer
+                                                    yearRange={true}/> 
+                                            </td>
+                                            <td style={{display: 'flex'}}>
+                                                <Xcomp.Number            
+                                                    className={"BcritYear"}
+                                                    observableValue={[riskAssessment, "AOOyear2"]} 
+                                                    observableErrors={[errorhandler, "B2err1"]}
+                                                    integer
+                                                    yearRange={true}
+                                                /> 
+                                                <span style={{margin: '10px 10px 0'}}>(t<sub>2</sub>)</span>
+                                            </td>
+                                            <td>
                                                 <Xcomp.Number observableValue={[riskAssessment, "AOOknown2"]} integer disabled={!riskAssessment.notUseSpeciesMap} /> 
-                                                </td> 
-                                                <td><Xcomp.Number                            
-                                                        observableValue={[riskAssessment, "AOO2"]}
-                                                        observableErrors={[errorhandler, "(a)err8"]}
-                                                        integer
-                                                    />
-                                                </td>                                               
-                                            </tr>
-                                            </tbody>                            
-                                        </table>
+                                            </td> 
+                                            <td>    
+                                                <Xcomp.Number                            
+                                                    observableValue={[riskAssessment, "AOO2"]}
+                                                    observableErrors={[errorhandler, "(a)err8"]}
+                                                    integer
+                                                />
+                                            </td>                                               
+                                        </tr>
+                                    </tbody>                            
+                                </table>
+
+
+                                
                                         <ErrorList errorhandler={errorhandler} errorids={["(a)err7","(a)err8","(a)err9","(a)err10", "B2err1"]} />
                                         <Xcomp.Bool observableValue={[riskAssessment, "notUseSpeciesMap"]} label={"Ønsker ikke å bruke Artskart for å beregne forekomstareal"} />
                                                 
