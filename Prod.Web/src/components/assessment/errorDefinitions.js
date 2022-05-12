@@ -177,7 +177,7 @@
         },
         {
             id: "(a)err28",
-            get cond() {return a.productionSpecies == null},
+            get cond() {return a.isAlienSpecies && a.productionSpecies == null},
             msg: "Spørsmål om arten er en bruksart må besvares på fanen Artens status"
         },
 

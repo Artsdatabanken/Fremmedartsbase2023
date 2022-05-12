@@ -123,7 +123,9 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                                 ? (`${ltml("brackishWater")}`)
                                 : "")
                                 }</p>
-                            : <b className="missingInfo">{critlabels.missingEcology}</b>}
+                            : assessment.assessmentConclusion == "WillNotBeRiskAssessed"? 
+                                ""
+                            :    <b className="missingInfo">{critlabels.missingEcology}</b>}
                         
                             <Xcomp.HtmlString
                                 observableValue={[riskAssessment, 'criteriaDocumentationSpeciesStatus']}
@@ -232,7 +234,8 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                     </div>
                     {((assessment.assessmentConclusion != "NotDecided" && assessment.assessmentConclusion != "WillNotBeRiskAssessed" && assessment.riskAssessment.riskLevelCode != null && assessment.previousAssessments[0] != null 
                     && (category2018(assessment.previousAssessments[0].riskLevel) != assessment.riskAssessment.riskLevelCode 
-                        || assessment.previousAssessments[0].mainCategory == "NotApplicable")) || (assessment.assessmentConclusion == "WillNotBeRiskAssessed" && assessment.previousAssessments[0].mainCategory != "NotApplicable")) &&
+                    || assessment.previousAssessments[0].mainCategory == "NotApplicable")) || (assessment.assessmentConclusion == "WillNotBeRiskAssessed" && assessment.riskAssessment.riskLevelCode != null && assessment.previousAssessments[0] != null
+                    && assessment.previousAssessments[0].mainCategory != "NotApplicable" )) &&
                     <fieldset className="well">
                         <h3>{critlabels.reasonForChangeHeading}</h3>
                             <p> {critlabels.cat2023} {assessment.assessmentConclusion === "WillNotBeRiskAssessed"? "NR" : assessment.riskAssessment.riskLevelCode}</p>
