@@ -21,40 +21,40 @@ import ErrorList from '../errorList';
 //import WaterArea from '../water/WaterArea';
 import { getWaterAreas } from '../water/apiWaterArea';
 
-@inject('appState')
-@observer
-class SelectableRadio extends React.Component {
-    // shouldComponentUpdate() {
-    //     return true
-    // }
-    render() {
-        const [obj, prop] = this.props.observableValue
-        // console.log("Selectable" + this.props.value) console.log(" - - " +
-        // obj["Selectable" + this.props.value])
-        const val = this.props.value
-        // const activeVal =  disabled ? "" : val
-        //const disabled = !obj["Selectable" + val] || this.context.readonly
-        //const disabled = false
-        const disabled = this.props.disabled
-        const label = this.props.label + (obj[val]
-            ? "  (" + obj[val] + ")"
-            : "")
-        const dummy = obj[prop]
-        // console.log("dummy:" + dummy) console.log(">" + prop + " (" + obj[prop] + ")
-        // " + val  )
-        return <div className="radio" key={val}>
-            <label className={disabled
-                ? "disabled"
-                : ""}><input
-                type="radio"
-                name={"radio" + prop}
-                value={val}
-                checked={obj[prop] === val}
-                disabled={disabled}
-                onChange={action((e) => obj[prop] = e.currentTarget.value)}/>{label}</label>
-        </div>
-    }
-}
+// // // @inject('appState')
+// // // @observer
+// // // class SelectableRadio extends React.Component {
+// // //     // shouldComponentUpdate() {
+// // //     //     return true
+// // //     // }
+// // //     render() {
+// // //         const [obj, prop] = this.props.observableValue
+// // //         // console.log("Selectable" + this.props.value) console.log(" - - " +
+// // //         // obj["Selectable" + this.props.value])
+// // //         const val = this.props.value
+// // //         // const activeVal =  disabled ? "" : val
+// // //         //const disabled = !obj["Selectable" + val] || this.context.readonly
+// // //         //const disabled = false
+// // //         const disabled = this.props.disabled
+// // //         const label = this.props.label + (obj[val]
+// // //             ? "  (" + obj[val] + ")"
+// // //             : "")
+// // //         const dummy = obj[prop]
+// // //         // console.log("dummy:" + dummy) console.log(">" + prop + " (" + obj[prop] + ")
+// // //         // " + val  )
+// // //         return <div className="radio" key={val}>
+// // //             <label className={disabled
+// // //                 ? "disabled"
+// // //                 : ""}><input
+// // //                 type="radio"
+// // //                 name={"radio" + prop}
+// // //                 value={val}
+// // //                 checked={obj[prop] === val}
+// // //                 disabled={disabled}
+// // //                 onChange={action((e) => obj[prop] = e.currentTarget.value)}/>{label}</label>
+// // //         </div>
+// // //     }
+// // // }
 
 // SelectableRadio.contextTypes = {
 //     readonly: PropTypes.bool
@@ -292,22 +292,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     <h4>{critA.heading}</h4>
                     <p>{critA.info}</p>
                     
-                    {/* <Xcomp.StringEnum observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]} mode="radio" codes={codes.HorizonEstablismentPotential}/> */}
-                    
-                    
                      <Xcomp.StringEnum mode="radio" observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]} codes={koder.AcritSelect} /> 
-                   {/* <SelectableRadio
-                            label={labels.AcritSelect.LifespanA1aSimplifiedEstimate}
-                            value={"LifespanA1aSimplifiedEstimate"}
-                            observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]}/>
-                    <SelectableRadio
-                            label={labels.AcritSelect.SpreadRscriptEstimatedSpeciesLongevity}
-                            value={"SpreadRscriptEstimatedSpeciesLongevity"}
-                            observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]}/>
-                    <SelectableRadio
-                            label={labels.AcritSelect.ViableAnalysis}
-                            value={"ViableAnalysis"}
-                            observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]}/>*/}
                     {riskAssessment.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" ? 
                         <div>
 
@@ -472,13 +457,24 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     <h4>{critB.heading}</h4>
                     <p>{critB.info}</p>
 
-                    <SelectableRadio
+                    {/* <SelectableRadio
                                 label={labels.BcritSelect.a}
                                 value={"a"}
                                 disabled={disabled}
                                 observableValue={[riskAssessment, "chosenSpreadYearlyIncrease"]}/>
                      
                     <SelectableRadio
+                                label={labels.BcritSelect.b}
+                                value={"b"}
+                                disabled={disabled}
+                                observableValue={[riskAssessment, "chosenSpreadYearlyIncrease"]}/> */}
+                    <Xcomp.Radio
+                                label={labels.BcritSelect.a}
+                                value={"a"}
+                                disabled={disabled}
+                                observableValue={[riskAssessment, "chosenSpreadYearlyIncrease"]}/>
+                     
+                    <Xcomp.Radio
                                 label={labels.BcritSelect.b}
                                 value={"b"}
                                 disabled={disabled}

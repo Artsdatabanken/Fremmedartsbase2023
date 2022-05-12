@@ -10,37 +10,37 @@ import MPTable from './40Spredningsveier/MigrationPathwayTable'
 import { DriveEtaRounded } from '@material-ui/icons';
 const labels = config.labels
 
-@observer
-class SelectableRadio extends React.Component {
-    // shouldComponentUpdate() {
-    //     return true
-    // }
-    render() {
-        const [obj, prop] = this.props.observableValue
-        // console.log("Selectable" + this.props.value) console.log(" - - " +
-        // obj["Selectable" + this.props.value])
-        const val = this.props.value
-        // const activeVal =  disabled ? "" : val
-        const disabled = obj["Selectable" + val] || this.context.readonly || this.props.disabled
-        const label = this.props.label + (obj[val]
-            ? "  (" + obj[val] + ")"
-            : "")
-        const dummy = obj[prop]
-        // console.log("dummy:" + dummy) console.log(">" + prop + " (" + obj[prop] + ")
-        // " + val  )
-        return <div className="radio" key={val}>
-            <label className={disabled
-                ? "disabled"
-                : ""}><input
-                type="radio"
-                name={"radio" + prop}
-                value={val}
-                checked={obj[prop] === val || this.props.defaultChecked}
-                disabled={disabled}
-                onChange={action((e) => obj[prop] = e.currentTarget.value)}/>{label}</label>
-        </div>
-    }
-}
+// @observer
+// class SelectableRadio extends React.Component {
+//     // shouldComponentUpdate() {
+//     //     return true
+//     // }
+//     render() {
+//         const [obj, prop] = this.props.observableValue
+//         // console.log("Selectable" + this.props.value) console.log(" - - " +
+//         // obj["Selectable" + this.props.value])
+//         const val = this.props.value
+//         // const activeVal =  disabled ? "" : val
+//         const disabled = obj["Selectable" + val] || this.context.readonly || this.props.disabled
+//         const label = this.props.label + (obj[val]
+//             ? "  (" + obj[val] + ")"
+//             : "")
+//         const dummy = obj[prop]
+//         // console.log("dummy:" + dummy) console.log(">" + prop + " (" + obj[prop] + ")
+//         // " + val  )
+//         return <div className="radio" key={val}>
+//             <label className={disabled
+//                 ? "disabled"
+//                 : ""}><input
+//                 type="radio"
+//                 name={"radio" + prop}
+//                 value={val}
+//                 checked={obj[prop] === val || this.props.defaultChecked}
+//                 disabled={disabled}
+//                 onChange={action((e) => obj[prop] = e.currentTarget.value)}/>{label}</label>
+//         </div>
+//     }
+// }
 
 @inject("appState")
 @observer
