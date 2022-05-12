@@ -6,63 +6,16 @@ import * as Xcomp from './observableComponents';
 import Tabs from '../tabs'
 import Criterion from './criterion'
 import Assessment62Okologiskeffekt from './assessment62Okologiskeffekt'
-//import ScoreUnsure from './51Naturtyper/scoreUnsure';
 import config from '../../config'
-// import {codes2labels, getCriterion} from '../../utils'
-import Filliste from './35Utbredelseshistorikk/Filliste'
-import FileUpload from '../FileUpload'
+// import Filliste from './35Utbredelseshistorikk/Filliste'
+// import FileUpload from '../FileUpload'
 import Documents from '../documents'
-import { KeyboardHideSharp } from '@material-ui/icons'
-import {stringFormat} from "../../utils"
+// import { KeyboardHideSharp } from '@material-ui/icons'
+// import {stringFormat} from "../../utils"
 import ModalArtskart from '../artskart/ModalArtskart';
 import errorhandler from '../errorhandler';
 import ErrorList from '../errorList';
-
-//import WaterArea from '../water/WaterArea';
 import { getWaterAreas } from '../water/apiWaterArea';
-
-// // // @inject('appState')
-// // // @observer
-// // // class SelectableRadio extends React.Component {
-// // //     // shouldComponentUpdate() {
-// // //     //     return true
-// // //     // }
-// // //     render() {
-// // //         const [obj, prop] = this.props.observableValue
-// // //         // console.log("Selectable" + this.props.value) console.log(" - - " +
-// // //         // obj["Selectable" + this.props.value])
-// // //         const val = this.props.value
-// // //         // const activeVal =  disabled ? "" : val
-// // //         //const disabled = !obj["Selectable" + val] || this.context.readonly
-// // //         //const disabled = false
-// // //         const disabled = this.props.disabled
-// // //         const label = this.props.label + (obj[val]
-// // //             ? "  (" + obj[val] + ")"
-// // //             : "")
-// // //         const dummy = obj[prop]
-// // //         // console.log("dummy:" + dummy) console.log(">" + prop + " (" + obj[prop] + ")
-// // //         // " + val  )
-// // //         return <div className="radio" key={val}>
-// // //             <label className={disabled
-// // //                 ? "disabled"
-// // //                 : ""}><input
-// // //                 type="radio"
-// // //                 name={"radio" + prop}
-// // //                 value={val}
-// // //                 checked={obj[prop] === val}
-// // //                 disabled={disabled}
-// // //                 onChange={action((e) => obj[prop] = e.currentTarget.value)}/>{label}</label>
-// // //         </div>
-// // //     }
-// // // }
-
-// SelectableRadio.contextTypes = {
-//     readonly: PropTypes.bool
-// }
-
-// return <Xcomp.Radio         label={this.props.label + (obj[val] ? "  (" +
-// obj[val] + ")" : "")}         value={val}         observableValue={[obj,
-// prop]}         disabled={disabled}         dummy={dummy} />
 
 @inject("appState")
 @observer
@@ -128,24 +81,6 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     .map(x => x.globalId);
                 }
             }
-            // if (assessment.artskartModel) {
-            //     const getValue = (value) => {
-            //         return value !== undefined ? value : undefined;
-            //     };
-            //     runInAction(() => {
-            //         assessment.observationFromYear = getValue(assessment.observationFromYear);
-            //         assessment.observationToYear = getValue(assessment.observationToYear);
-            //         assessment.includeObjects = getValue(assessment.includeObjects);
-            //         assessment.includeNorge = getValue(assessment.includeNorge);
-            //         assessment.includeSvalbard = getValue(assessment.includeSvalbard);
-            //         assessment.excludeObjects = getValue(assessment.excludeObjects);
-            //         assessment.excludeGbif = getValue(assessment.excludeGbif);
-            //     })
-            // } else {
-            //     runInAction(() => {
-            //         assessment.artskartModel = {};
-            //     })
-            // }
         }
     }
 
@@ -164,9 +99,6 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
         }
     }
 
-    // getCriterion(riskAssessment, akse, letter) {     const result =
-    // riskAssessment.criteria.filter(c => c.akse === akse && c.criteriaLetter ===
-    // letter)[0];     return result; }
     handleDateFromArtskart0 = ({ selectionGeometry, countylist, newWaterAreas, areadata, observations, editStats }) => {
         console.log('ToDo: data from Artskart - 0', areadata);
         const aps = this.props.appState;
@@ -191,15 +123,13 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
         const renderAgain = this.isDirty; // code looks unused, but it makes the Artskart-module listen to changes
         const {appState:{assessment, assessment:{riskAssessment}}, appState:{riskAssessmentTabs}, appState, } = this.props;
 
-        // const labels = appState.kodeLabels
         const labels = appState.codeLabels
         const labelsArtskart = appState.codeLabels.DistributionHistory
-        // console.log('labels', labelsArtskart)
         const koder = appState.koder
         const disabled = appState.userContext.readonly
         const ntLabels = labels.NatureTypes
 
-        const existenceArea35 = assessment.CurrentExistenceAreaCalculated
+        // const existenceArea35 = assessment.CurrentExistenceAreaCalculated
 
         if (assessment.artskartModel) {
         this.props.appState.virtualArtskartModel0 = this.props.appState.virtualArtskartModel0 || observable({
@@ -218,60 +148,16 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
         });
     }
 
-        // commented this out. it crashed the application.
-        // if (assessment.artskartModel2 === undefined) {
-        //     // ToDo: Not completed yet...
-        //     assessment.artskartModel2 = {
-        //         observationFromYear: assessment.artskartModel.observationFromYear,
-        //         observationToYear: assessment.artskartModel.observationToYear,
-        //         includeNorge: assessment.artskartModel.includeNorge,
-        //         excludeObjects: assessment.artskartModel.excludeObjects,
-        //         excludeGbif: assessment.artskartModel.excludeGbif,
-        //     };
-        // }
-        // if  (assessment.riskAssessment.AOOyear2 === undefined || assessment.riskAssessment.AOOyear2 == null) assessment.riskAssessment.AOOyear2 = assessment.artskartModel.observationToYear;
-        // if  (assessment.riskAssessment.AOOknown2 === undefined || assessment.riskAssessment.AOOknown2 == null) assessment.riskAssessment.AOOknown2 = assessment.riskAssessment.AOOknownInput;   
-
-        // const bassertpaValues = [
-        //     {
-        //         Value: "Counting",
-        //         Text: "Telling"
-        //     }, {
-        //         Value: "Estimated",
-        //         Text: "Estimert"
-        //     }, {
-        //         Value: "MinimumEstimate",
-        //         Text: "Minimumsanslag"
-        //     }
-        // ];
-        // const critA = getCriterion(riskAssessment, 0, "A")
-        // const critB = getCriterion(riskAssessment, 0, "B")
-        // const critC = getCriterion(riskAssessment, 0, "C")
         const critA = riskAssessment.critA
         const critB = riskAssessment.critB
         const critC = riskAssessment.critC
         const textAS = riskAssessment.a1aresulttext
-        //console.log(textAS)
-        //stringFormat(labels.AcritText.SelfProducing)
         const textDK = riskAssessment.a1bresulttext
-        
-        //stringFormat(labels.AcritText.DoorKnocker)
         const textASB = riskAssessment.b2aresulttext
-        //stringFormat(labels.BcritText.SelfProducing)
         const textDKB = riskAssessment.b2bresulttext
-        //stringFormat(labels.BcritText.DoorKnocker)
-
         const nbsp = "\u00a0"
 
         const presentValue = (f) => f === "" ? <span>᠆᠆᠆᠆᠆</span> : f
-
-        // &#11834;
-        // <h5>** Invasjonspotensiale nivå: {appState.invasjonspotensialeLevel.level + 1}
-        // **</h5> <h5>** Utslagsgivende kriterier:
-        // {appState.invasjonspotensialeLevel.decisiveCriteria.map(crit =>
-        // crit.criteriaLetter).sort().join()} **</h5> <h5>** usikkerhet:
-        // {appState.invasjonspotensialeLevel.uncertaintyLevels.slice().join(';')}
-        // **</h5>**</h5>
 
         const AOO1error = errorhandler.errors["(a)err7"]
         const AOO1warn = errorhandler.warnings["(a)warn2"]
@@ -305,8 +191,6 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                             __html: riskAssessment.a1aresulttext
                         }}
                          > 
-                         {/*riskAssessment.a1aresulttext*/}
-                         
                          </p>}
 
                         <Xcomp.StringEnum observableValue={[riskAssessment, "acceptOrAdjustCritA"]} mode="radio" codes={koder.AcceptOrAdjust}/>   
@@ -316,51 +200,9 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                             {riskAssessment.acceptOrAdjustCritA == "adjust" &&                                
                                 <Xcomp.HtmlString observableValue={[riskAssessment, 'reasonForAdjustmentCritA']} label="Begrunnelse for justering (obligatorisk):" />
                             }
-
-                            {/* <ScoreUnsure appState={appState}
-                                    critScores={koder.scoresA}
-                                    firstValue={"scoreA"}
-                                    secondValue={"unsureA"}/> */}
                         </div> 
-                            {/* : 
-                            <div>
-                                <p>{ntLabels.scoreSummary}</p>
-                                <ScoreUnsure appState={appState}
-                                        critScores={koder.scoresA}                                                        
-                                        disabled={"false"}
-                                        firstValue={"scoreA"}
-                                        secondValue={"unsureA"}/>
-                                </div> } */}
                            
                         </div>      
-                        // : 
-                        // <div>
-                        //     <p>Basert på de beste anslagene på forekomstareal i dag ([X1] km2) og om 50 år ([X2] km2) er A-kriteriet forhåndsskåret som [X3] (med usikkerhet: [X4-X5]). 
-                        //         Dette innebærer at artens mediane levetid ligger [mellom X6 år og X7 år], eller at sannsynligheten for utdøing innen 50 år er på [mellom X8 % og X9 %].</p>
-                        //     <Xcomp.StringEnum observableValue={[riskAssessment, "acceptOrAdjustCritA"]} mode="radio" codes={koder.AcceptOrAdjust}/>   
-
-                        //     {riskAssessment.acceptOrAdjustCritA == "b" ? 
-                        //                     <div>
-                        //                         <Xcomp.HtmlString observableValue={[riskAssessment, 'reasonForAdjustmentCritA']} label="Begrunnelse for justering:" />
-                        //                         <p>{ntLabels.score}</p>
-                        //                         <ScoreUnsure appState={appState}
-                        //                                 critScores={koder.scoresA}
-                        //                                 firstValue={"scoreA"}
-                        //                                 secondValue={"unsureA"}/>
-                        //                     </div> : 
-                        //                     <div>
-                        //                         <p>{ntLabels.scoreSummary}</p>
-                        //                         <ScoreUnsure appState={appState}
-                        //                                 critScores={koder.scoresA}                                                        
-                        //                                 disabled={"false"}
-                        //                                 firstValue={"scoreA"}
-                        //                                 secondValue={"unsureA"}/>
-                        //                     </div> }     
-                        //                     <Xcomp.Button primary onClick= {() => {
-                        //                         //console.log("Save assessment")
-                        //                          appState.saveCurrentAssessment();
-                        //                         }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>                      
-                        // </div>
                     : riskAssessment.chosenSpreadMedanLifespan == "SpreadRscriptEstimatedSpeciesLongevity" ? 
                 <div>
                     <div className="statusField"> 
@@ -394,23 +236,8 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                        <Xcomp.Number observableValue={[riskAssessment, "medianLifetimeInput"]} disabled={disabled} integer />  
                        </div>
                    </div>
-                   
-                    {/* <p>{ntLabels.scoreSummary}</p>
-                    <ScoreUnsure appState={appState}
-                                critScores={koder.scoresB}
-                                disabled={"false"}
-                                firstValue={"scoreB"}
-                                secondValue={"unsureB"}/>
-
-                    <Xcomp.Button primary onClick= {() => {
-                         console.log("Save assessment")
-                        appState.saveCurrentAssessment();
-                    }}>{labels.AppHeader.assessmentSave}</Xcomp.Button> */}
 
                 </div> : 
-                // null }
-                   
-                // {
                 riskAssessment.chosenSpreadMedanLifespan == "ViableAnalysis" ? 
                 <div>
                 
@@ -434,7 +261,6 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                    </div>
                     
                 </div> : 
-                // // //    riskAssessment.chosenSpreadMedanLifespan == "RedListCategoryLevel" ?
                 riskAssessment.chosenSpreadMedanLifespan_Was_RedListCategoryLevel 
                 ? <p><b>Den utgåtte metoden c) Rødlistekriterier var brukt på A-kriteriet for denne arten i 2018. Det resulterte i skår {riskAssessment.roAscore2018 + 1} på A-kriteriet.</b></p>
                 : null }
@@ -444,30 +270,12 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     appState={appState}
                     mode="noheading"
                     disabled = {disabled || (riskAssessment.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && riskAssessment.acceptOrAdjustCritA == "accept")}
-                    // commente out to fix isDirty problem. fix in enhanceCriteria necessery
-                    // auto = {riskAssessment.chosenSpreadMedanLifespan == "ViableAnalysis" ||
-                    //          riskAssessment.chosenSpreadMedanLifespan == "SpreadRscriptEstimatedSpeciesLongevity" ||
-                    //          (riskAssessment.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && riskAssessment.acceptOrAdjustCritA != "adjust") 
-                            
-                    //         }
                     />}
                 </fieldset>
                 <br/>
                 <fieldset className="well">
                     <h4>{critB.heading}</h4>
                     <p>{critB.info}</p>
-
-                    {/* <SelectableRadio
-                                label={labels.BcritSelect.a}
-                                value={"a"}
-                                disabled={disabled}
-                                observableValue={[riskAssessment, "chosenSpreadYearlyIncrease"]}/>
-                     
-                    <SelectableRadio
-                                label={labels.BcritSelect.b}
-                                value={"b"}
-                                disabled={disabled}
-                                observableValue={[riskAssessment, "chosenSpreadYearlyIncrease"]}/> */}
                     <Xcomp.Radio
                                 label={labels.BcritSelect.a}
                                 value={"a"}
@@ -491,10 +299,6 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                     <p>{labels.Bcrit.mCount}</p>
                                     <p>{labels.Bcrit.model}</p>
                                     <p>{labels.Bcrit.occurrencesListed}</p>
-                                    {/*<p>{labels.Bcrit.exact}</p>
-                                    <p>{labels.Bcrit.p}</p>
-                                    <p>{labels.Bcrit.newObs}</p>*/}
-                                                            
                             </div>
                             <div className="numberFields">
                                             {/*pattern={"^[0-9]+(\\.\\d+)(\\-\\d+(\.\d+))"}*/}
@@ -513,22 +317,6 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             observableValue={[riskAssessment, "bCritOccurrences"]}
                                             codes={koder.BCritOccList}
                                         /> 
-                              {/*<Xcomp.StringEnum                            
-                                            observableValue={[riskAssessment, "bCritExact"]}
-                                            //placeholder={"false"}
-                                            codes={koder.TrueOrFalse}
-                                        />  
-                                <Xcomp.StringEnum                            
-                                            observableValue={[riskAssessment, "bCritP"]}
-                                            codes={koder.BCritP}
-                                        />  
-
-                                <Xcomp.String                            
-                                            observableValue={[riskAssessment, "bCritNewObs"]}
-                                            placeholder={"True"}
-                                            disabled={disabled}
-                              />   */}                   
-                                        
                             </div>
                             </div>
 
@@ -559,18 +347,6 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             integer
                                             disabled={disabled}
                                         />  
-                                   {/* <h4>{labels.Bcrit.data}</h4>
-                                    <div className="BCritFiles">
-                                        <div className="filenames">
-                                            <p><b>{labels.DistributionHistory.filename}</b></p>                                            
-                                            
-                                        </div>
-                                        <div className="fileDescriptions">
-                                            <p><b>{labels.DistributionHistory.fileDescription}</b></p>
-                                            <Xcomp.String observableValue={[riskAssessment, 'fileDescription']} placeholder={"Dette er beskrivelsen"}/>
-                                        </div>
-                                    </div> */}
-                                   
                                 </div>
                             </div>
                             <hr></hr>                    
@@ -579,36 +355,11 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                     </div>
 
                             <br></br>
-
-                              {/*   <p>{ntLabels.scoreSummary}</p>
-                               <ScoreUnsure appState={appState}
-                                            critScores={koder.scoresB}
-                                            disabled={"false"}
-                                            firstValue={"scoreB"}
-                                            secondValue={"unsureB"}/>
-                                            
-                                            <Xcomp.Button primary onClick= {() => {
-                                    console.log("Save assessment")
-                                    appState.saveCurrentAssessment();
-                                }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>*/}
                                 
                         </div> : 
                         riskAssessment.chosenSpreadYearlyIncrease == "b" && assessment.isDoorKnocker ?
                             <div>
                             <p>{textDKB}</p>
-                            
-                                              {/*  <p>{ntLabels.scoreSummary}</p>
-                                                <ScoreUnsure appState={appState}
-                                                            critScores={koder.scoresB}
-                                                            disabled={"false"}
-                                                            firstValue={"scoreB"}
-                                                            secondValue={"unsureB"}/>
-                                                            
-                                                            <Xcomp.Button primary onClick= {() => {
-                                                   // console.log("Save assessment")
-                                                    appState.saveCurrentAssessment();
-                                                }}>{labels.AppHeader.assessmentSave}</Xcomp.Button>*/}
-                                                
                             </div> : 
                         riskAssessment.chosenSpreadYearlyIncrease == "b" ?
                             <div>
@@ -618,7 +369,6 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                 <Xcomp.StringEnum 
                                     mode="radio"
                                     observableValue={[riskAssessment, "AOOfirstOccurenceLessThan10Years"]} 
-                                    // style={{marginLeft: "35px"}}
                                     codes={koder.yesNo}
                                 />                  
                                 {riskAssessment.AOOfirstOccurenceLessThan10Years === "yes"
@@ -646,7 +396,6 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             }
                                             <tr>
                                                 <td>
-                                                    {/* <Xcomp.Button primary>{labels.DistributionHistory.speciesMap}</Xcomp.Button> */}
                                                     <div style={{marginBottom: 10}}>
                                                         <ModalArtskart
                                                             taxonId={assessment.taxonId}
@@ -674,7 +423,6 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                     /> 
                                                 </td>
                                                 <td style={{display: 'flex'}}><Xcomp.Number                            
-                                                        // observableValue={[riskAssessment, "AOOendyear1"]}
                                                         observableValue={[riskAssessment, "AOOyear1"]}
                                                         observableErrors={[errorhandler, "B2err1"]}
                                                         integer
@@ -703,7 +451,6 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             }
                                             <tr>
                                                 <td>
-                                                    {/* <Xcomp.Button primary>{labels.DistributionHistory.speciesMap}</Xcomp.Button> */}
                                                     <div style={{marginBottom: 10}}>
                                                         <ModalArtskart
                                                             taxonId={assessment.taxonId}
@@ -753,35 +500,6 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                         </table>
                                         <ErrorList errorhandler={errorhandler} errorids={["(a)err7","(a)err8","(a)err9","(a)err10", "B2err1"]} />
                                         <Xcomp.Bool observableValue={[riskAssessment, "notUseSpeciesMap"]} label={"Ønsker ikke å bruke Artskart for å beregne forekomstareal"} />
-                                        {/*<table className="table BCritTable">
-                                            <thead>    
-                                                <tr>                          
-                                                <th>{labels.Bcrit.fromYear}</th>
-                                                <th>{labels.Bcrit.toYear}</th>
-                                                <th></th>
-                                                <th>{labels.Bcrit.knownExpansion}</th>
-                                                <th></th>
-                                                </tr>  
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td>t1</td>
-                                                <td></td>
-                                                <td dangerouslySetInnerHTML={{
-                                                     __html: labels.Bcrit.km2 }}></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td>t2</td>
-                                                <td></td>
-                                                <td dangerouslySetInnerHTML={{
-                                                     __html: labels.Bcrit.km2 }}></td>
-                                            </tr>
-                                            </tbody>                            
-                                                </table>*/}
                                                 
                                     <p>{labels.Bcrit.commentOrDescription}</p>
                                     <Xcomp.HtmlString                            
@@ -790,8 +508,6 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                     </>
                                     : null }
                                     <p dangerouslySetInnerHTML={{ __html: textASB}}></p>
-                                    {/* Issue #471, #499, #518
-                                    <p dangerouslySetInnerHTML={{ __html: labels.BcritText.DoorKnocker}}></p>*/}
                             </div> : null
                 }
                             {riskAssessment.chosenSpreadYearlyIncrease != "SpreadYearlyLiteratureData" && riskAssessment.chosenSpreadYearlyIncrease != "SpreadYearlyIncreaseCalculatedExpansionSpeed" && riskAssessment.chosenSpreadYearlyIncrease != "SpreadYearlyIncreaseObservations" && riskAssessment.chosenSpreadYearlyIncrease != "" && 
@@ -815,41 +531,6 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                 {labels.BcritText.transferredFromB}
                                             </th>
                                         </tr>
-                                       {/* <tr>
-                                            <td>
-                                                <label htmlFor="spreadYearlyLiteratureDataExpansionSpeed">{labels.Bcrit.literatureDataExpansionSpeed}</label>
-                                            </td>
-                                            <td>
-                                                <Xcomp.String
-                                                    observableValue={[riskAssessment, 'spreadYearlyLiteratureDataExpansionSpeed']}/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label htmlFor="spreadYearlyLiteratureDataUncertainty">{labels.Bcrit.uncertainty}</label>
-                                            </td>
-                                            <td>
-                                                <Xcomp.String
-                                                    observableValue={[riskAssessment, 'spreadYearlyLiteratureDataUncertainty']}/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label htmlFor="spreadYearlyLiteratureDataNumberOfIntroductionSources">{labels.Bcrit.introductionSources}</label>
-                                            </td>
-                                            <td>
-                                                <Xcomp.String
-                                                    observableValue={[riskAssessment, 'spreadYearlyLiteratureDataNumberOfIntroductionSources']}/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label>{labels.Bcrit.expansionSpeed}</label>
-                                            </td>
-                                            <td>
-                                                <b>{presentValue(riskAssessment.spreadYearlyLiteratureData)}</b>
-                                            </td>
-                                       </tr>*/}
                                         <tr>
                                             
                                                 <label htmlFor="spreadYearlyLiteratureDataAssumptions">{labels.Bcrit.literatureDataAssumptions}</label>
@@ -877,20 +558,6 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                 {labels.BcritText.transferredFromC}
                                             </th>
                                         </tr>
-                                        {/*<tr>
-                                            <td>
-                                                <label>{labels.Bcrit.existenceArea}</label>
-                                            </td>
-                                            <td>
-                                                {existenceArea35 || existenceArea35 === 0
-                                                    ? <b>{existenceArea35}</b>
-                                                    : <b
-                                                        style={{
-                                                        color: "red"
-                                                    }}>{labels.Bcrit.existenceAreaRef35}</b>
-                                                }
-                                            </td>
-                                            </tr>*/}
                                         <tr>
                                             <td>
                                                 <label htmlFor="spreadYearlyIncreaseEstimate">{labels.Bcrit.yearlyIncrease}</label>
@@ -928,13 +595,6 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                     
                 </fieldset>
                 <fieldset className="well">
-                    {/* {/*<h4>{critC.heading} &nbsp;{labels.Ccrit.transferedFrom4}</h4>
-                    
-                     <ScoreUnsure appState={appState}
-                                critScores={koder.scoresC}
-                                firstValue={"scoreC"}
-                                secondValue={"unsureC"}/>
-                    */}
                     <h4>{critC.heading}</h4>
                     <p>{critC.info}</p>
                     <Criterion criterion={critC} mode="noheading" disabled={true} appState={appState}/>
@@ -946,7 +606,3 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
         );
     }
 }
-// Vurdering51Invasjonspotensiale.propTypes = {
-//     viewModel: PropTypes.object.isRequired,
-//     riskAssessment: PropTypes.object.isRequired
-// }
