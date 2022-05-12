@@ -92,6 +92,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                 interactionTypes: [],
             },
             newSNITS: {
+                id: "newSpeciesNaturetypeInteractionsTaxonSearch",
                 niNVariation: [],
                 niNCode : "",
                 naturetypes: [],
@@ -257,10 +258,32 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                     <h4>{labels.DEcrit.heading}</h4>
                     <p>Beskriv artens interaksjon(er) med stedegne og andre arter som har blitt vurdert for rødlisting.</p>
                     <hr/>
-                    <SpeciesSpeciesTable list={riskAssessment.speciesSpeciesInteractions} newItem={this.newSSITS} addNewItem={this.addSSITS} koder={koder} labels={labels} disabled={appState.userContext.readonly} showRedlist showKeyStoneSpecie showEffect showInteractionType showConfirmedOrAssumed/>
+                    <SpeciesSpeciesTable 
+                        list={riskAssessment.speciesSpeciesInteractions} 
+                        newItem={this.newSSITS} 
+                        addNewItem={this.addSSITS} 
+                        koder={koder} 
+                        labels={labels} 
+                        disabled={appState.userContext.readonly} 
+                        showRedlist 
+                        showKeyStoneSpecie 
+                        showEffect 
+                        showInteractionType 
+                        showConfirmedOrAssumed/>
                     <hr/>
                     <p>Legg til grupper av arter</p>
-                    <SpeciesNaturetypeTable list={riskAssessment.speciesNaturetypeInteractions} natureTypes={assessment.impactedNatureTypes} newItem={this.newSNITS} addNewItem={this.addSNITS}  koder={koder} labels={labels} disabled={appState.userContext.readonly} naturtypeLabels={appState.naturtypeLabels } showKeyStoneSpecie showEffect showInteractionType />
+                    <SpeciesNaturetypeTable 
+                        list={riskAssessment.speciesNaturetypeInteractions} 
+                        natureTypes={assessment.impactedNatureTypes} 
+                        newItem={this.newSNITS} 
+                        addNewItem={this.addSNITS}  
+                        koder={koder} 
+                        labels={labels} 
+                        disabled={appState.userContext.readonly} 
+                        naturtypeLabels={appState.naturtypeLabels } 
+                        showKeyStoneSpecie 
+                        showEffect 
+                        showInteractionType />
                     <br>
                     </br>
                     <Xcomp.HtmlString observableValue={[riskAssessment, 'speciesSpeciesInteractionsSupplementaryInformation']} label="Utfyllende informasjon (f.eks. hvilke(n) artsgruppe i naturtypen påvirkes og hvordan blir disse generelt påvirket):" />
