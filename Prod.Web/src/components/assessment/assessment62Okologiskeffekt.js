@@ -249,7 +249,9 @@ export default class Assessment62Okologiskeffekt extends React.Component {
         return(
             <div>
 
-                {config.showPageHeaders ? <h3>Økologisk effekt</h3> : <br />}
+                {config.showPageHeaders 
+                ? <h3>Økologisk effekt</h3> 
+                : <br />}
                 <fieldset className="well">
                     <h2>{labels.DEcrit.mainHeading}</h2>
                     <h4>{labels.DEcrit.heading}</h4>
@@ -259,43 +261,36 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                     <hr/>
                     <p>Legg til grupper av arter</p>
                     <SpeciesNaturetypeTable list={riskAssessment.speciesNaturetypeInteractions} natureTypes={assessment.impactedNatureTypes} newItem={this.newSNITS} addNewItem={this.addSNITS}  koder={koder} labels={labels} disabled={appState.userContext.readonly} naturtypeLabels={appState.naturtypeLabels } showKeyStoneSpecie showEffect showInteractionType />
-                    <br></br>
+                    <br>
+                    </br>
                     <Xcomp.HtmlString observableValue={[riskAssessment, 'speciesSpeciesInteractionsSupplementaryInformation']} label="Utfyllende informasjon (f.eks. hvilke(n) artsgruppe i naturtypen påvirkes og hvordan blir disse generelt påvirket):" />
-
-                    
-                    {riskAssessment.speciesNaturetypeInteractions2018.length > 0 && 
-                        <div class="previousAssessment">
-                            <h4>{ntLabels.dataFromPreviousAssessment}</h4>
-                            <SpeciesNaturetypeTable list={riskAssessment.speciesNaturetypeInteractions2018} 
-                                                    natureTypes={assessment.impactedNatureTypesFrom2018} 
-                                                    //newItem={this.newSNITS} addNewItem={this.addSNITS}  
-                                                    koder={koder} labels={labels} 
-                                                    disabled={true} naturtypeLabels={appState.naturtypeLabels } showKeyStoneSpecie showEffect showInteractionType />
-
-                        </div>
-                    }
+                    {riskAssessment.speciesNaturetypeInteractions2018.length > 0 
+                    ? <div class="previousAssessment">
+                        <h4>{ntLabels.dataFromPreviousAssessment}</h4>
+                        <SpeciesNaturetypeTable 
+                            list={riskAssessment.speciesNaturetypeInteractions2018} 
+                            natureTypes={assessment.impactedNatureTypesFrom2018} 
+                            koder={koder} 
+                            labels={labels} 
+                            disabled={true} 
+                            naturtypeLabels={appState.naturtypeLabels } 
+                            showKeyStoneSpecie 
+                            showEffect 
+                            showInteractionType />
+                    </div>
+                    : null}
                     <hr/>
                 </fieldset>
                 <fieldset className="well">
                     <Criterion criterion={critD} hideInfo={true} disabled={appState.userContext.readonly}/>
-        
-                     <Xcomp.HtmlString                            
-                                observableValue={[riskAssessment, "dCritInsecurity"]}
-                                label={labels.DEcrit.insecurity}
-                            />                      
-                    </fieldset>
-                    <fieldset className="well">
-                    <Criterion criterion={critE} hideInfo={true} disabled={appState.userContext.readonly}/>
-                   
-                     <Xcomp.HtmlString                            
-                                observableValue={[riskAssessment, "eCritInsecurity"]}
-                                label={labels.DEcrit.insecurity}
-                            />                      
+                    <Xcomp.HtmlString observableValue={[riskAssessment, "dCritInsecurity"]} label={labels.DEcrit.insecurity}/>                      
                 </fieldset>
                 <fieldset className="well">
-                    
+                    <Criterion criterion={critE} hideInfo={true} disabled={appState.userContext.readonly}/>
+                    <Xcomp.HtmlString observableValue={[riskAssessment, "eCritInsecurity"]} label={labels.DEcrit.insecurity}/>                      
+                </fieldset>
+                <fieldset className="well">
                     <Criterion criterion={critF} disabled={true}/>
-                    
                 </fieldset>
                 <fieldset className="well">
                     <Criterion criterion={critG} disabled={true}/>
@@ -304,26 +299,35 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                     <h4>{critH.heading}</h4>
                     <p>{critH.info}</p>
                     <br></br>
-                    <SpeciesSpeciesTable list={riskAssessment.geneticTransferDocumented} newItem={this.newGTD} addNewItem={this.addGTD} koder={koder} labels={labels} disabled={appState.userContext.readonly} showKeyStoneSpecie showInteractionType showConfirmedOrAssumed HCrit />
+                    <SpeciesSpeciesTable 
+                        list={riskAssessment.geneticTransferDocumented} 
+                        newItem={this.newGTD} 
+                        addNewItem={this.addGTD} 
+                        koder={koder} 
+                        labels={labels} 
+                        disabled={appState.userContext.readonly} 
+                        showKeyStoneSpecie 
+                        showInteractionType 
+                        showConfirmedOrAssumed 
+                        HCrit />
                     <hr/>
-
                     <Criterion criterion={critH} mode="noheading" disabled={appState.userContext.readonly}/>
-                     <Xcomp.HtmlString                            
-                                observableValue={[riskAssessment, "hCritInsecurity"]}
-                                label={labels.DEcrit.insecurity}
-                            />                      
+                    <Xcomp.HtmlString observableValue={[riskAssessment, "hCritInsecurity"]} label={labels.DEcrit.insecurity}/>
                 </fieldset>
                 <fieldset className="well">
                     <h4>{critI.heading} </h4>
                     <p>{critI.info}</p>
-                    <HostParasiteTable list={riskAssessment.hostParasiteInformations} newItem={this.newHPI} addNewItem={this.addHPI} koder={koder} labels={labels} disabled={appState.userContext.readonly} showKeyStoneSpecie />
+                    <HostParasiteTable 
+                        list={riskAssessment.hostParasiteInformations} 
+                        newItem={this.newHPI} 
+                        addNewItem={this.addHPI} 
+                        koder={koder} 
+                        labels={labels} 
+                        disabled={appState.userContext.readonly} 
+                        showKeyStoneSpecie />
                     <hr/>
                     <Criterion criterion={critI} mode="noheading" disabled={appState.userContext.readonly}/>
-                     <Xcomp.HtmlString                            
-                                observableValue={[riskAssessment, "iCritInsecurity"]}
-                                label={labels.DEcrit.insecurity}
-                            />                      
-                    
+                    <Xcomp.HtmlString observableValue={[riskAssessment, "iCritInsecurity"]} label={labels.DEcrit.insecurity}/>                      
                 </fieldset>
             </div>
         );
