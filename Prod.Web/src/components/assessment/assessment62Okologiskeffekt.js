@@ -1,20 +1,14 @@
 ﻿import React from 'react';
-//import PropTypes from 'prop-types'
 import {observer, inject} from 'mobx-react';
 import {action, extendObservable, runInAction, toJS} from 'mobx'
-
 import config from '../../config';
-// import {loadData} from './../../apiService'; 
 import * as Xcomp from './observableComponents';
 import Criterion from './criterion'
 import SpeciesSpeciesTable from './52Okologiskeffekt/SpeciesSpeciesTable'
 import SpeciesNaturetypeTable from './52Okologiskeffekt/SpeciesNaturetypeTable'
 import HostParasiteTable from './52Okologiskeffekt/HostParasiteTable'
 import createTaxonSearch from '../createTaxonSearch'
-
-
-const kodeTekst = (koder, verdi) => koder.filter(item => item.Value === verdi).map(item => item.Text)[0] || verdi 
-
+// const kodeTekst = (koder, verdi) => koder.filter(item => item.Value === verdi).map(item => item.Text)[0] || verdi 
 @inject("appState")
 @observer
 export default class Assessment62Okologiskeffekt extends React.Component {
@@ -44,7 +38,6 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                 scale: "Limited",
                 status: "NewAlien",
                 interactionType : "CompetitionSpace", 
-                //interactionType : [], 
                 longDistanceEffect : false, 
                 confirmedOrAssumed : false, 
                 basisOfAssessment: [],
@@ -68,7 +61,6 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                 scale: "Limited",
                 status: "NewAlien",
                 interactionType : "",
-                //interactionType : [], 
                 longDistanceEffect : false, 
                 confirmedOrAssumed : false, 
                 basisOfAssessment: [],
@@ -109,17 +101,12 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                 keyStoneSpecie : false, 
                 effectLocalScale : false, 
                 scale: "Limited",
-                //status: "NewAlien",
                 effect : "Weak",
                 interactionType : "CompetitionSpace", 
-                //interactionType : [], 
                 longDistanceEffect : false, 
                 confirmedOrAssumed : false,                
                 basisOfAssessment: [],
                 interactionTypes: [],
-                // taxonSearchString: "",
-                // taxonSearchResult: [], 
-                // taxonSearchWaitingForResult: false - should not be observable
             } 
         })
 
@@ -140,7 +127,6 @@ export default class Assessment62Okologiskeffekt extends React.Component {
             newItem.redListCategory = "" 
             newItem.keyStoneSpecie = false
             newItem.interactionType = "CompetitionSpace" 
-            //newItem.interactionType = []
             newItem.effect = "Weak" 
             newItem.scale = "Limited" 
             newItem.effectLocalScale = false 
@@ -160,12 +146,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
             console.log("Clone: " + JSON.stringify(clone))
             const name = assessment.impactedNatureTypes.find(element => element.niNCode == clone.niNCode).name;
             clone.name = name;
-            // clone.taxonSearchString = undefined
-            // clone.taxonSearchResult = undefined
             list.push(clone)
-//            newItem.NiNCode = "",  Dropdown inneholder fortsatt samme naturtype - beholder derfor koden
-            
-           // newItem.niNCode = "",
             newItem.niNVariation.clear(),
             newItem.name = ""
             newItem.redListCategory = "" 
@@ -181,9 +162,6 @@ export default class Assessment62Okologiskeffekt extends React.Component {
             newItem.taxonSearchString = ""
             newItem.basisOfAssessment = []
             newItem.interactionTypes = []
-
-            // newItem.taxonSearchResult.replace([])
-            // newItem.taxonSearchWaitingForResult = false
         })
         this.addGTD = () => {
             const list = riskAssessment.geneticTransferDocumented;
@@ -220,9 +198,6 @@ export default class Assessment62Okologiskeffekt extends React.Component {
             const clone = toJS(newItem);
             clone.taxonSearchString = undefined
             clone.taxonSearchResult = undefined
-
-// console.log("addHPI: " + JSON.stringify(clone))
-
             list.push(clone)
             newItem.scientificName = ""
             newItem.scientificNameId = ""
@@ -250,22 +225,15 @@ export default class Assessment62Okologiskeffekt extends React.Component {
 
         createTaxonSearch(this.newSSITS, evaluationContext,
              tax => tax.rlCategory != null 
-            //&& tax.existsInCountry
             )
-        // createTaxonSearch(this.newSSIDS, "N")
-        //createTaxonSearch(this.newGTD, evaluationContext, tax => tax.existsInCountry)
         createTaxonSearch(this.newGTD, evaluationContext,
             tax => tax.rlCategory != null )
-
-        //createTaxonSearch(this.newHPI, evaluationContext, tax => tax.existsInCountry)
         createTaxonSearch(this.newHPI, evaluationContext,
             tax => tax.rlCategory != null )
     }
 
     render() {
         const {appState:{assessment}, appState:{assessment:{riskAssessment}}, appState, evaluationContext} = this.props;
-        // const {riskAssessment, viewModel, fabModel, evaluationContext} = this.props;
-        // const labels = fabModel.kodeLabels
         const labels = appState.codeLabels
         const koder = appState.koder
         const nbsp = "\u00a0"
@@ -288,8 +256,6 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                     <p>Beskriv artens interaksjon(er) med stedegne og andre arter som har blitt vurdert for rødlisting.</p>
                     <hr/>
                     <SpeciesSpeciesTable list={riskAssessment.speciesSpeciesInteractions} newItem={this.newSSITS} addNewItem={this.addSSITS} koder={koder} labels={labels} disabled={appState.userContext.readonly} showRedlist showKeyStoneSpecie showEffect showInteractionType showConfirmedOrAssumed/>
-                    
-                    
                     <hr/>
                     <p>Legg til grupper av arter</p>
                     <SpeciesNaturetypeTable list={riskAssessment.speciesNaturetypeInteractions} natureTypes={assessment.impactedNatureTypes} newItem={this.newSNITS} addNewItem={this.addSNITS}  koder={koder} labels={labels} disabled={appState.userContext.readonly} naturtypeLabels={appState.naturtypeLabels } showKeyStoneSpecie showEffect showInteractionType />
