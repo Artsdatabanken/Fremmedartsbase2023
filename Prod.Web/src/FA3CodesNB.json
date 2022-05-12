@@ -8637,7 +8637,7 @@
                         {
                             "Id": null,
                             "Value": "colonizedAreaDescription",
-                            "Text": "Anslå kolonisert areal i de naturtypene arten er observert i eller regnes med å observeres i innen 50 år, beskriv artens (eventuelt framtidige) påvirkning i naturtypen og anslå hvor stor andel av naturtypen som blir (eventuelt vil bli) påvirket.",
+                            "Text": "Anslå kolonisert areal i de naturtypene arten er observert i eller regnes med å observeres i innen 50 år eller 5 generasjoner (det av tallene som er størst), beskriv artens (eventuelt framtidige) påvirkning i naturtypen og anslå hvor stor andel av naturtypen som blir (eventuelt vil bli) påvirket.",
                             "Info": null,
                             "Children": null
                         },
@@ -8651,21 +8651,21 @@
                         {
                             "Id": null,
                             "Value": "criteriumC",
-                            "Text": "Andel av forekomstarealet til minst én naturtype som vil være kolonisert etter 50 år, med usikkerhet",
+                            "Text": "Andel av forekomstarealet til minst én naturtype som vil være kolonisert etter 50 år eller 5 generasjoner, med usikkerhet",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "criteriumF",
-                            "Text": "Andel av naturtypeareal som gjennomgår tilstandsendring innen 50 år, med usikkerhet",
+                            "Text": "Andel av naturtypeareal som gjennomgår tilstandsendring innen 50 år eller 5 generasjoner, med usikkerhet",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": null,
                             "Value": "criteriumG",
-                            "Text": "Andel av naturtypeareal som gjennomgår tilstandsendring innen 50 år, med usikkerhet",
+                            "Text": "Andel av naturtypeareal som gjennomgår tilstandsendring innen 50 år eller 5 generasjoner, med usikkerhet",
                             "Info": null,
                             "Children": null
                         },
