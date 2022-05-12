@@ -482,113 +482,97 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                         </tr>
                                     </tbody>                            
                                 </table>
+                                <ErrorList errorhandler={errorhandler} errorids={["(a)err7","(a)err8","(a)err9","(a)err10", "B2err1"]} />
+                                <Xcomp.Bool observableValue={[riskAssessment, "notUseSpeciesMap"]} label={"Ønsker ikke å bruke Artskart for å beregne forekomstareal"} />
+                                <p>{labels.Bcrit.commentOrDescription}</p>
+                                <Xcomp.HtmlString  observableValue={[riskAssessment, "commentOrDescription"]} />                      
+                            </>
+                            : null }
+                            <p dangerouslySetInnerHTML={{ __html: textASB}}></p>
+                        </div> 
+                        : null}
+                        {riskAssessment.chosenSpreadYearlyIncrease != "SpreadYearlyLiteratureData" && riskAssessment.chosenSpreadYearlyIncrease != "SpreadYearlyIncreaseCalculatedExpansionSpeed" && riskAssessment.chosenSpreadYearlyIncrease != "SpreadYearlyIncreaseObservations" && riskAssessment.chosenSpreadYearlyIncrease != "" 
+                        ? <div
+                            style={{
+                                display: "inline-block",
+                                marginTop: "10px"
+                            }}>
+                            <Criterion criterion={critB} appState={appState} mode="noheading"/>
+                        </div>
+                        : null}
 
 
-                                
-                                        <ErrorList errorhandler={errorhandler} errorids={["(a)err7","(a)err8","(a)err9","(a)err10", "B2err1"]} />
-                                        <Xcomp.Bool observableValue={[riskAssessment, "notUseSpeciesMap"]} label={"Ønsker ikke å bruke Artskart for å beregne forekomstareal"} />
-                                                
-                                    <p>{labels.Bcrit.commentOrDescription}</p>
-                                    <Xcomp.HtmlString                            
-                                                observableValue={[riskAssessment, "commentOrDescription"]}                                                
-                                            />                      
-                                    </>
-                                    : null }
-                                    <p dangerouslySetInnerHTML={{ __html: textASB}}></p>
-                            </div> : null
-                }
-                            {riskAssessment.chosenSpreadYearlyIncrease != "SpreadYearlyLiteratureData" && riskAssessment.chosenSpreadYearlyIncrease != "SpreadYearlyIncreaseCalculatedExpansionSpeed" && riskAssessment.chosenSpreadYearlyIncrease != "SpreadYearlyIncreaseObservations" && riskAssessment.chosenSpreadYearlyIncrease != "" && 
-                                <div
-                                    style={{
-                                    display: "inline-block",
-                                    marginTop: "10px"
-                                    }}>
-                                <Criterion criterion={critB} appState={appState} mode="noheading"/>
-                            </div>
-                            }
-                           
+
                        
-                    {riskAssessment.activeSpreadYearlyLiteratureData
+                        {riskAssessment.activeSpreadYearlyLiteratureData
                         ? <div className="previousAssessment">
-                                <table className="formtable Bcrit">
-                                <p>{labels.BcritText.transferredFrom2018}</p>
-                                    <tbody>
-                                        <tr>
-                                            <th colSpan="4">
-                                                {labels.BcritText.transferredFromB}
-                                            </th>
-                                        </tr>
-                                        <tr>
-                                            
-                                                <label htmlFor="spreadYearlyLiteratureDataAssumptions">{labels.Bcrit.literatureDataAssumptions}</label>
-                                           
-                                                <Xcomp.HtmlString
-                                                     disabled={true}
-                                                    observableValue={[riskAssessment, 'spreadYearlyLiteratureDataSource']}/>
-                                            
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                
-                            </div>
-
+                            <table className="formtable Bcrit">
+                                <p>{labels.BcritText.transferredFrom2018}</p>  
+                                <tbody>
+                                    <tr>
+                                        <th colSpan="4">{labels.BcritText.transferredFromB}</th>
+                                    </tr>
+                                    <tr>
+                                        <label htmlFor="spreadYearlyLiteratureDataAssumptions">{labels.Bcrit.literatureDataAssumptions}</label>
+                                        <Xcomp.HtmlString
+                                            disabled={true}
+                                            observableValue={[riskAssessment, 'spreadYearlyLiteratureDataSource']}
+                                        />
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                         : null}
-                    {riskAssessment.activeSpreadYearlyIncreaseCalculatedExpansionSpeed
+                        {riskAssessment.activeSpreadYearlyIncreaseCalculatedExpansionSpeed
                         ? <div className="previousAssessment">
-                                <table className="formtable">
-                                {!riskAssessment.activeSpreadYearlyLiteratureData && 
-                                    <p>{labels.BcritText.transferredFrom2018}</p>
-                                }
-                                    <tbody>
-                                        <tr>
-                                            <th colSpan="2">
-                                                {labels.BcritText.transferredFromC}
-                                            </th>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label htmlFor="spreadYearlyIncreaseEstimate">{labels.Bcrit.yearlyIncrease}</label>
-                                            </td>
-                                            <td>
-                                                <Xcomp.String
-                                                    disabled={true}
-                                                    observableValue={[riskAssessment, 'spreadYearlyIncreaseEstimate']}/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label htmlFor="spreadYearlyIncreaseEstimateDescription">{labels.Bcrit.estimateDescription}</label>
-                                            </td>
-                                            <td>
-                                                <Xcomp.HtmlString
-                                                    disabled={true}
-                                                    observableValue={[riskAssessment, 'spreadYearlyIncreaseEstimateDescription']}/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <label>{labels.Bcrit.expansionSpeed}</label>
-                                            </td>
-                                            <td>
-                                                
-                                                <b>{presentValue(riskAssessment.spreadYearlyIncreaseCalculatedExpansionSpeed)}</b>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                               
-                            </div>
+                            <table className="formtable">
+                                {!riskAssessment.activeSpreadYearlyLiteratureData  
+                                ? <p>{labels.BcritText.transferredFrom2018}</p>
+                                : null}
+                                <tbody>
+                                    <tr>
+                                        <th colSpan="2">{labels.BcritText.transferredFromC}</th>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label htmlFor="spreadYearlyIncreaseEstimate">{labels.Bcrit.yearlyIncrease}</label>
+                                        </td>
+                                        <td>
+                                            <Xcomp.String
+                                                disabled={true}
+                                                observableValue={[riskAssessment, 'spreadYearlyIncreaseEstimate']}/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label htmlFor="spreadYearlyIncreaseEstimateDescription">{labels.Bcrit.estimateDescription}</label>
+                                        </td>
+                                        <td>
+                                            <Xcomp.HtmlString
+                                                disabled={true}
+                                                observableValue={[riskAssessment, 'spreadYearlyIncreaseEstimateDescription']}/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <label>{labels.Bcrit.expansionSpeed}</label>
+                                        </td>
+                                        <td>
+                                            <b>{presentValue(riskAssessment.spreadYearlyIncreaseCalculatedExpansionSpeed)}</b>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                         : null}
-                    
-                </fieldset>
-                <fieldset className="well">
-                    <h4>{critC.heading}</h4>
-                    <p>{critC.info}</p>
-                    <Criterion criterion={critC} mode="noheading" disabled={true} appState={appState}/>
+                    </fieldset>
+                    <fieldset className="well">
+                        <h4>{critC.heading}</h4>
+                        <p>{critC.info}</p>
+                        <Criterion criterion={critC} mode="noheading" disabled={true} appState={appState}/>
                     </fieldset>
                 </div>
                 }
-                
             </div>
         );
     }
