@@ -103,53 +103,112 @@ namespace Prod.Api.Helpers
     public class FA4Export
     {
         public int Id { get; set; }
+        [Name("Ekspertkomite")]
         public string ExpertGroup { get; set; }
+        [Name("Vurderingsområde")]
         public string EvaluationContext { get; set; }        
         // public bool IsEvaluated { get; set; }  // ???
         //public bool IsDeleted { get; set; }
+        [Name("Vurderinsstatus")]
         public string EvaluationStatus { get; set; }
-
-        public string TaxonHierarcy { get; set; }
-
-        //public Datasett Datasett { get; set; } = new Datasett();
-        public string EvaluatedScientificNameRank { get; set; }
-        //public string DoorKnockerType { get; set; }
-
+        [Name("Vitenskapelig navneID")]
         public string EvaluatedScientificNameId { get; set; }
+        //public Datasett Datasett { get; set; } = new Datasett();
 
-
+        [Name("Taksonsomisk sti")]
+        public string TaxonHierarcy { get; set; }
+        //public string DoorKnockerType { get; set; }
+        
+        [Name("Vitenskapelig navn")]
         public string EvaluatedScientificName { get; set; }
-
-        public string EvaluatedVernacularName { get; set; }
+        [Name("Autor")]
         public string EvaluatedScientificNameAuthor { get; set; }
+        [Name("Taksonomisk rang")]
+        public string EvaluatedScientificNameRank { get; set; }
+
+        [Name("Norsk navn")]
+        public string EvaluatedVernacularName { get; set; }
+        [Name("Sist endret")]
         public DateTime LastUpdatedAt { get; set; }
-        [Name("SistOppdatertAv")]
+        [Name("Sist endret av")]
         public string LastUpdatedBy { get; set; }
         
 
         //public int TaxonId { get; set; }
 
         // public string Citation { get; set; }
+        [Name("Fremmedartsstatus")]
         public string AlienSpeciesCategory { get; set; }
         //public List<string> ReasonForChangeOfCategory { get; set; } = new List<string>();
 
         // public DateTime LockedForEditAt { get; set; }
         // public string LockedForEditBy { get; set; }
+        [Name("Horisontskanning etableringspotensial")]
         public string HorizonEstablismentPotential { get; set; }
+        [Name("Horisontskanning økologisk effekt")]
         public string HorizonEcologicalEffect { get; set; }
+        
+        #region Artens status
+
+        // public string Connected { get; set; }
+
+        [Name("Vurderes på høyere/laver taksonomisk nivå, beskrivelse")]
+        public string ConnectedToHigherLowerTaxonDescription { get; set; } = "";
+        [Name("Vurderes sammen med et annet takson")]
+        public bool? ConnectedToAnother { get; set; }
+        [Name("Vurderes sammen med et annet takson, beskrivelse")]
+        public string ConnectedToAnotherTaxonDescription { get; set; } = "";
+        [Name("Bruksart")]
+        public bool? ProductionSpecies { get; set; } = false;
+        [Name("Etableringsklasse")]
+        public string SpeciesStatus { get; set; }
+        [Name("Usikkerhet etableringsklasse, beskrivelse")]
+        public string AlienSpecieUncertainDescription { get; set; } // lagt til: 22.12.2016
+        [Name("Etablert per 1800")]
+        public bool? AlienSpecieUncertainIfEstablishedBefore1800 { get; set; } // lagt til: 19.10.2016 - renamed 15.11.2016
+        [Name("Usikkerhet etableringstidspunkt, beskrivelse")]
+        public string UncertainityEstablishmentTimeDescription { get; set; } = "";
+        [Name("Første obs innendørs")]
+        public int? RiskAssessmentYearFirstIndoors { get; set; }
+        [Name("Usikkerhet Første obs innendørs")]
+        public bool RiskAssessmentYearFirstIndoorsInsecure { get; set; }
+        [Name("Første obs reprod innendørs")]
+        public int? RiskAssessmentYearFirstReproductionIndoors { get; set; }
+        [Name("Usikkerhet Første obs reprod innendørs")]
+        public bool RiskAssessmentYearFirstReproductionIndoorsInsecure { get; set; }
+        [Name("Første obs i produksjonsareal")]
+        public int? RiskAssessmentYearFirstProductionOutdoors { get; set; }
+        [Name("Usikkerhet Første obs i produksjonsareal")]
+        public bool RiskAssessmentYearFirstProductionOutdoorsInsecure { get; set; }
+        [Name("Første obs reprod produksjonsareal")]
+        public int? RiskAssessmentYearFirstReproductionOutdoors { get; set; }
+        [Name("Usikkerhet Første obs reprod produksjonsareal")]
+        public bool RiskAssessmentYearFirstReproductionOutdoorsInsecure { get; set; }
+        [Name("Første obs etablering produsjonsareal")]
+        public int? RiskAssessmentYearFirstEstablishmentProductionArea { get; set; }
+        [Name("Usikkerhet Første obs etablering produsjonsareal")]
+        public bool RiskAssessmentYearFirstEstablishmentProductionAreaInsecure { get; set; }
+        [Name("Første obs norsk natur")]
+        public int? RiskAssessmentYearFirstNature { get; set; }
+        [Name("Usikkerhet Første obs norsk natur")]
+        public bool RiskAssessmentYearFirstNatureInsecure { get; set; }
+        [Name("Første obs reprod norsk natur")]
+        public int? RiskAssessmentYearFirstReproductionNature { get; set; }
+        [Name("Usikkerhet Første obs reprod norsk natur")]
+        public bool RiskAssessmentYearFirstReproductionNatureInsecure { get; set; }
+        [Name("Første obs etablering norsk natur")]
+        public int? RiskAssessmentYearFirstEstablishedNature { get; set; }
+        [Name("Usikkerhet Første obs etablering norsk natur")]
+        public bool RiskAssessmentYearFirstEstablishedNatureInsecure { get; set; }
+        
+        #endregion Artens status
         #region RiskAssessment 
         public string Category { get; set; }
         public string Criteria { get; set; }
 
         public string Category2018 { get; set; }
         public string Criteria2018 { get; set; }
-        
-        public string ConnectedToHigherLowerTaxonDescription { get; set; } = "";
-        
-        public string ConnectedToAnotherTaxonDescription { get; set; } = "";
-        
-        public string UncertainityEstablishmentTimeDescription { get; set; } = "";
-        
+            
         // public string ProductionSpeciesDescription { get; set; } = "";
 
         // public int RiskAssessmentRiskLevel { get; set; } = -1;
@@ -164,22 +223,6 @@ namespace Prod.Api.Helpers
         public int[] RiskAssessmentInvationPotentialUncertaintyLevels { get; set; }
 
 
-        public int? RiskAssessmentYearFirstIndoors { get; set; }
-        public bool RiskAssessmentYearFirstIndoorsInsecure { get; set; }
-        public int? RiskAssessmentYearFirstReproductionIndoors { get; set; }
-        public bool RiskAssessmentYearFirstReproductionIndoorsInsecure { get; set; }
-        public int? RiskAssessmentYearFirstProductionOutdoors { get; set; }
-        public bool RiskAssessmentYearFirstProductionOutdoorsInsecure { get; set; }
-        public int? RiskAssessmentYearFirstReproductionOutdoors { get; set; }
-        public bool RiskAssessmentYearFirstReproductionOutdoorsInsecure { get; set; }
-        public int? RiskAssessmentYearFirstEstablishmentProductionArea { get; set; }
-        public bool RiskAssessmentYearFirstEstablishmentProductionAreaInsecure { get; set; }
-        public int? RiskAssessmentYearFirstNature { get; set; }
-        public bool RiskAssessmentYearFirstNatureInsecure { get; set; }
-        public int? RiskAssessmentYearFirstReproductionNature { get; set; }
-        public bool RiskAssessmentYearFirstReproductionNatureInsecure { get; set; }
-        public int? RiskAssessmentYearFirstEstablishedNature { get; set; }
-        public bool RiskAssessmentYearFirstEstablishedNatureInsecure { get; set; }
         // public string RiskAssessmentYearFirstDomesticObservation { get; set; }
 
         //public List<Criterion> Criteria { get; set; }
@@ -625,27 +668,19 @@ namespace Prod.Api.Helpers
         public bool? IsAlienSpecies { get; set; }
 
         public string IsAlien { get; set; } // new in 2021
-        public bool? IsRegionallyAlien { get; set; }
+        // public bool? IsRegionallyAlien { get; set; } //remove because AlienSpeciesCategory has this info
 
-        public bool? ConnectedToAnother { get; set; }
-
-        // public string Connected { get; set; }
-
-        public string SpeciesStatus { get; set; }
 
         // public string ConnectedTaxon1 { get; set; } = "";
 
         // public string ConnectedTaxon2 { get; set; } = "";
 
-        public bool? ProductionSpecies { get; set; } = false;
 
         // public string ChangedFromAlien { get; set; }
 
         // public string ChangedAssessment { get; set; }
 
-        public bool? AlienSpecieUncertainIfEstablishedBefore1800 { get; set; } // lagt til: 19.10.2016 - renamed 15.11.2016
         // public bool AlienSpecieUncertainAntropochor { get; set; } // lagt til: 19.10.2016
-        public string AlienSpecieUncertainDescription { get; set; } // lagt til: 22.12.2016
 
         // public bool SkalVurderes { get; set; }
 
