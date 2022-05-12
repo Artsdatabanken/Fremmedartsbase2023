@@ -87,7 +87,7 @@ export default class Assessment41Import extends React.Component {
                 <h2>{labels.MigrationPathway.heading}</h2>
                 <div>
                 <p style={{marginLeft: '20px'}}>Spres arten utelukkende direkte til norsk natur (uten å gå veien om innendørsareal eller artens eget produksjonsareal)?</p>
-                <SelectableRadio
+                {/* <SelectableRadio
                             label={labels.indoorProduktionImport.a}
                             value={"positive"}
                             //defaultChecked = {assessment.importedToIndoorOrProductionArea}
@@ -95,6 +95,18 @@ export default class Assessment41Import extends React.Component {
                             observableValue={[assessment, "indoorProduktion"]}/>
                             
                 <SelectableRadio
+                            label={labels.indoorProduktionImport.b}
+                            value={"negative"}
+                            disabled = {disabled}
+                            observableValue={[assessment, "indoorProduktion"]}/> */}
+
+                <Xcomp.Radio
+                            label={labels.indoorProduktionImport.a}
+                            value={"positive"}
+                            //defaultChecked = {assessment.importedToIndoorOrProductionArea}
+                            disabled = {disabled}
+                            observableValue={[assessment, "indoorProduktion"]}/>
+                <Xcomp.Radio
                             label={labels.indoorProduktionImport.b}
                             value={"negative"}
                             disabled = {disabled}
