@@ -18,8 +18,11 @@ export default class Assessment62Okologiskeffekt extends React.Component {
         const evaluationContext = appState.evaluationContext
         const labels = appState.codeLabels
         const koder = appState.koder
+
+        // ------------------------------------
+        // SpeciesSpeciesInteractions (addnewitem)
+        // ------------------------------------
         extendObservable(this, {
-            // showModal: false,
             newSSITS: {
                 id: "newSpeciesSpeciesInteractionsTaxonSearch",
                 scientificName: "",
@@ -42,7 +45,44 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                 confirmedOrAssumed : false, 
                 basisOfAssessment: [],
                 interactionTypes: [],
-            }, 
+            }
+        })
+        createTaxonSearch(this.newSSITS, evaluationContext, tax => tax.rlCategory != null )
+        this.addSSITS = action(() => {
+            const list = riskAssessment.speciesSpeciesInteractions //ThreatenedSpecies;
+            const newItem = this.newSSITS;
+            const clone = toJS(newItem);
+            clone.taxonSearchString = undefined
+            clone.taxonSearchResult = undefined
+            list.push(clone)
+
+            // reset the 'new'item
+            newItem.scientificName = ""
+            newItem.scientificNameId = ""
+            newItem.scientificNameAuthor = ""
+            newItem.vernacularName = ""
+            newItem.taxonRank = ""
+            newItem.taxonId = ""
+            newItem.redListCategory = "" 
+            newItem.keyStoneSpecie = false
+            newItem.interactionType = "CompetitionSpace" 
+            newItem.effect = "Weak" 
+            newItem.scale = "Limited" 
+            newItem.effectLocalScale = false 
+            newItem.longDistanceEffect = false 
+            newItem.confirmedOrAssumed = false
+            newItem.domesticOrAbroad = ""
+            newItem.taxonSearchString = ""
+            newItem.taxonSearchResult.replace([])
+            newItem.basisOfAssessment = []
+            newItem.interactionTypes = []
+            newItem.taxonSearchWaitingForResult = false
+        })
+
+        // ------------------------------------
+        // GeneticTransferDocumented (addnewitem)
+        // ------------------------------------
+        extendObservable(this, {
             newGTD: {
                 id: "newGeneticTransferDocumentedTaxonSearch",
                 scientificName: "",
@@ -65,7 +105,44 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                 confirmedOrAssumed : false, 
                 basisOfAssessment: [],
                 interactionTypes: [],
-            }, 
+            }
+        })
+        createTaxonSearch(this.newGTD, evaluationContext, tax => tax.rlCategory != null )
+        this.addGTD = () => {
+            const list = riskAssessment.geneticTransferDocumented;
+            const newItem = this.newGTD;
+            const clone = toJS(newItem);
+            clone.taxonSearchString = undefined
+            clone.taxonSearchResult = undefined
+            list.push(clone)
+
+            // reset the 'new'item
+            newItem.scientificName = ""
+            newItem.scientificNameId = ""
+            newItem.scientificNameAuthor = ""
+            newItem.vernacularName = ""
+            newItem.taxonRank = ""
+            newItem.taxonId = ""
+            newItem.redListCategory = "" 
+            newItem.keyStoneSpecie = false
+            newItem.interactionType = ""
+            newItem.effect = "Weak"  
+            newItem.scale = "Limited" 
+            newItem.effectLocalScale = false 
+            newItem.basisOfAssessment = []
+            newItem.interactionTypes = []
+            newItem.longDistanceEffect = false
+            newItem.confirmedOrAssumed = false
+            newItem.domesticOrAbroad = "" 
+            newItem.taxonSearchString = ""
+            newItem.taxonSearchResult.replace([])
+            newItem.taxonSearchWaitingForResult = false
+        }
+
+        // ------------------------------------
+        // HostParasiteInformations (addnewitem)
+        // ------------------------------------
+        extendObservable(this, {
             newHPI: {
                 id: "newHostParasiteInformationsTaxonSearch",
                 scientificName: "",
@@ -90,109 +167,9 @@ export default class Assessment62Okologiskeffekt extends React.Component {
                 diseaseConfirmedOrAssumed : false, 
                 basisOfAssessment: [],
                 interactionTypes: [],
-            },
-            newSNITS: {
-                id: "newSpeciesNaturetypeInteractionsTaxonSearch",
-                niNVariation: [],
-                niNCode : "",
-                naturetypes: [],
-                name: "",
-                redListCategory: "", 
-                domesticOrAbroad : "",
-                keyStoneSpecie : false, 
-                effectLocalScale : false, 
-                scale: "Limited",
-                effect : "Weak",
-                interactionType : "CompetitionSpace", 
-                longDistanceEffect : false, 
-                confirmedOrAssumed : false,                
-                basisOfAssessment: [],
-                interactionTypes: [],
-            } 
+            }
         })
-
-        this.addSSITS = action(() => {
-            const list = riskAssessment.speciesSpeciesInteractions //ThreatenedSpecies;
-            const newItem = this.newSSITS;
-            const clone = toJS(newItem);
-            // console.log("Clone: " + JSON.stringify(clone))
-            clone.taxonSearchString = undefined
-            clone.taxonSearchResult = undefined
-            list.push(clone)
-            newItem.scientificName = ""
-            newItem.scientificNameId = ""
-            newItem.scientificNameAuthor = ""
-            newItem.vernacularName = ""
-            newItem.taxonRank = ""
-            newItem.taxonId = ""
-            newItem.redListCategory = "" 
-            newItem.keyStoneSpecie = false
-            newItem.interactionType = "CompetitionSpace" 
-            newItem.effect = "Weak" 
-            newItem.scale = "Limited" 
-            newItem.effectLocalScale = false 
-            newItem.longDistanceEffect = false 
-            newItem.confirmedOrAssumed = false
-            newItem.domesticOrAbroad = ""
-            newItem.taxonSearchString = ""
-            newItem.taxonSearchResult.replace([])
-            newItem.basisOfAssessment = []
-            newItem.interactionTypes = []
-            newItem.taxonSearchWaitingForResult = false
-        })
-        this.addSNITS = action(() => {
-            const list = riskAssessment.speciesNaturetypeInteractions //ThreatenedSpecies;
-            const newItem = this.newSNITS;
-            const clone = toJS(newItem);
-            console.log("Clone: " + JSON.stringify(clone))
-            const name = assessment.impactedNatureTypes.find(element => element.niNCode == clone.niNCode).name;
-            clone.name = name;
-            list.push(clone)
-            newItem.niNVariation.clear(),
-            newItem.name = ""
-            newItem.redListCategory = "" 
-            newItem.keyStoneSpecie = false
-            //newItem.interactionType = []
-            newItem.interactionType = "CompetitionSpace" 
-            newItem.effect = "Weak"              
-            newItem.scale = "Limited" 
-            newItem.effectLocalScale = false 
-            newItem.longDistanceEffect = false 
-            newItem.confirmedOrAssumed = false
-            newItem.domesticOrAbroad = ""
-            newItem.taxonSearchString = ""
-            newItem.basisOfAssessment = []
-            newItem.interactionTypes = []
-        })
-        this.addGTD = () => {
-            const list = riskAssessment.geneticTransferDocumented;
-            const newItem = this.newGTD;
-            const clone = toJS(newItem);
-            clone.taxonSearchString = undefined
-            clone.taxonSearchResult = undefined
-            list.push(clone)
-            newItem.scientificName = ""
-            newItem.scientificNameId = ""
-            newItem.scientificNameAuthor = ""
-            newItem.vernacularName = ""
-            newItem.taxonRank = ""
-            newItem.taxonId = ""
-            newItem.redListCategory = "" 
-            newItem.keyStoneSpecie = false
-            //newItem.interactionType = []
-            newItem.interactionType = ""
-            newItem.effect = "Weak"  
-            newItem.scale = "Limited" 
-            newItem.effectLocalScale = false 
-            newItem.basisOfAssessment = []
-            newItem.interactionTypes = []
-            newItem.longDistanceEffect = false
-            newItem.confirmedOrAssumed = false
-            newItem.domesticOrAbroad = "" 
-            newItem.taxonSearchString = ""
-            newItem.taxonSearchResult.replace([])
-            newItem.taxonSearchWaitingForResult = false
-        }
+        createTaxonSearch(this.newHPI, evaluationContext, tax => tax.rlCategory != null )
         this.addHPI = () => {
             const list = riskAssessment.hostParasiteInformations;
             const newItem = this.newHPI;
@@ -200,6 +177,8 @@ export default class Assessment62Okologiskeffekt extends React.Component {
             clone.taxonSearchString = undefined
             clone.taxonSearchResult = undefined
             list.push(clone)
+
+            // reset the 'new'item
             newItem.scientificName = ""
             newItem.scientificNameId = ""
             newItem.scientificNameAuthor = ""
@@ -224,13 +203,55 @@ export default class Assessment62Okologiskeffekt extends React.Component {
             newItem.taxonSearchWaitingForResult = false
         }
 
-        createTaxonSearch(this.newSSITS, evaluationContext,
-             tax => tax.rlCategory != null 
-            )
-        createTaxonSearch(this.newGTD, evaluationContext,
-            tax => tax.rlCategory != null )
-        createTaxonSearch(this.newHPI, evaluationContext,
-            tax => tax.rlCategory != null )
+        // ------------------------------------
+        // SpeciesNaturetypeInteractions (addnewitem)
+        // ------------------------------------
+        extendObservable(this, {
+            newSNITS: {
+                id: "newSpeciesNaturetypeInteractionsTaxonSearch",
+                niNVariation: [],
+                niNCode : "",
+                naturetypes: [],
+                name: "",
+                redListCategory: "", 
+                domesticOrAbroad : "",
+                keyStoneSpecie : false, 
+                effectLocalScale : false, 
+                scale: "Limited",
+                effect : "Weak",
+                interactionType : "CompetitionSpace", 
+                longDistanceEffect : false, 
+                confirmedOrAssumed : false,                
+                basisOfAssessment: [],
+                interactionTypes: [],
+            } 
+        })
+        this.addSNITS = action(() => {
+            const list = riskAssessment.speciesNaturetypeInteractions //ThreatenedSpecies;
+            const newItem = this.newSNITS;
+            const clone = toJS(newItem);
+            console.log("Clone: " + JSON.stringify(clone))
+            const name = assessment.impactedNatureTypes.find(element => element.niNCode == clone.niNCode).name;
+            clone.name = name;
+            list.push(clone)
+
+            // reset the 'new'item
+            newItem.niNVariation.clear(),
+            newItem.name = ""
+            newItem.redListCategory = "" 
+            newItem.keyStoneSpecie = false
+            newItem.interactionType = "CompetitionSpace" 
+            newItem.effect = "Weak"              
+            newItem.scale = "Limited" 
+            newItem.effectLocalScale = false 
+            newItem.longDistanceEffect = false 
+            newItem.confirmedOrAssumed = false
+            newItem.domesticOrAbroad = ""
+            newItem.taxonSearchString = ""
+            newItem.basisOfAssessment = []
+            newItem.interactionTypes = []
+        })
+        // ------------------------------------
     }
 
     render() {
