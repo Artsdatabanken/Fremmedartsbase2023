@@ -51,8 +51,6 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
         && assessment.expertGroup == "Fisker" 
     }
 
-    // a method to check if a given property is smaller than a given value
-
     constructor(props) {
         super();
         extendObservable(this, {
@@ -98,12 +96,10 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
             }
         }
     }
-
     handleDateFromArtskart0 = ({ selectionGeometry, countylist, newWaterAreas, areadata, observations, editStats }) => {
         console.log('ToDo: data from Artskart - 0', areadata);
         const aps = this.props.appState;
         const ass = aps.assessment;
-        // assessment.riskAssessment.AOOyear1
         ass.riskAssessment.AOOknown1 = areadata.AreaOfOccupancy;
         ass.riskAssessment.AOOyear1 = this.props.appState.virtualArtskartModel0.observationToYear;
     }
@@ -127,31 +123,28 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
         const labelsArtskart = appState.codeLabels.DistributionHistory
         const koder = appState.koder
         const disabled = appState.userContext.readonly
-        const ntLabels = labels.NatureTypes
-
-        // const existenceArea35 = assessment.CurrentExistenceAreaCalculated
-
+        // const ntLabels = labels.NatureTypes
         if (assessment.artskartModel) {
-        this.props.appState.virtualArtskartModel0 = this.props.appState.virtualArtskartModel0 || observable({
-            observationFromYear: assessment.artskartModel.observationFromYear,
-            observationToYear: assessment.riskAssessment.AOOyear1,
-            includeNorge: assessment.artskartModel.includeNorge,
-            excludeObjects: assessment.artskartModel.excludeObjects,
-            excludeGbif: assessment.artskartModel.excludeGbif,
-        });        
-            this.props.appState.virtualArtskartModel = this.props.appState.virtualArtskartModel || observable({
-            observationFromYear: assessment.artskartModel.observationFromYear,
-            observationToYear: assessment.riskAssessment.AOOyear2,
-            includeNorge: assessment.artskartModel.includeNorge,
-            excludeObjects: assessment.artskartModel.excludeObjects,
-            excludeGbif: assessment.artskartModel.excludeGbif,
-        });
-    }
+            this.props.appState.virtualArtskartModel0 = this.props.appState.virtualArtskartModel0 || observable({
+                observationFromYear: assessment.artskartModel.observationFromYear,
+                observationToYear: assessment.riskAssessment.AOOyear1,
+                includeNorge: assessment.artskartModel.includeNorge,
+                excludeObjects: assessment.artskartModel.excludeObjects,
+                excludeGbif: assessment.artskartModel.excludeGbif,
+            });        
+                this.props.appState.virtualArtskartModel = this.props.appState.virtualArtskartModel || observable({
+                observationFromYear: assessment.artskartModel.observationFromYear,
+                observationToYear: assessment.riskAssessment.AOOyear2,
+                includeNorge: assessment.artskartModel.includeNorge,
+                excludeObjects: assessment.artskartModel.excludeObjects,
+                excludeGbif: assessment.artskartModel.excludeGbif,
+            });
+        }
 
         const critA = riskAssessment.critA
         const critB = riskAssessment.critB
         const critC = riskAssessment.critC
-        const textAS = riskAssessment.a1aresulttext
+        // const textAS = riskAssessment.a1aresulttext
         const textDK = riskAssessment.a1bresulttext
         const textASB = riskAssessment.b2aresulttext
         const textDKB = riskAssessment.b2bresulttext
@@ -169,161 +162,151 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                 {config.showPageHeaders
                     ? <h3>Invasjonspotensiale</h3>
                     : <br/>}
-                {
-                riskAssessmentTabs.activeTab.id === 2  ?
-                <Assessment62Okologiskeffekt/> :
-                <div> 
-                <fieldset className="well">
-                    <h2>{labels.Acrit.mainHeading}</h2>
-                    <h4>{critA.heading}</h4>
-                    <p>{critA.info}</p>
-                    
-                     <Xcomp.StringEnum mode="radio" observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]} codes={koder.AcritSelect} /> 
-                    {riskAssessment.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" ? 
-                        <div>
-
-                        {assessment.isDoorKnocker ? 
-                        <p
-                            dangerouslySetInnerHTML={{ __html: textDK}}>
-                           </p> :
-                        <p 
-                        dangerouslySetInnerHTML={{
-                            __html: riskAssessment.a1aresulttext
-                        }}
-                         > 
-                         </p>}
-
-                        <Xcomp.StringEnum observableValue={[riskAssessment, "acceptOrAdjustCritA"]} mode="radio" codes={koder.AcceptOrAdjust}/>   
-                                         
-                        <ErrorList errorhandler={errorhandler} errorids={["(a)err25", "(a)err27"]} />            
-                        <div className="adjustScore">
-                            {riskAssessment.acceptOrAdjustCritA == "adjust" &&                                
-                                <Xcomp.HtmlString observableValue={[riskAssessment, 'reasonForAdjustmentCritA']} label="Begrunnelse for justering (obligatorisk):" />
-                            }
-                        </div> 
-                           
-                        </div>      
-                    : riskAssessment.chosenSpreadMedanLifespan == "SpreadRscriptEstimatedSpeciesLongevity" ? 
-                <div>
-                    <div className="statusField"> 
-                   <div className="labels">
-                        <p>{labels.Acrit.speciesCount}</p>
-                        <p>{labels.Acrit.populationGrowth}</p>
-                        <p>{labels.Acrit.environmantVariance}</p>
-                        <p>{labels.Acrit.demographicVariance}</p>
-                        <p>{labels.Acrit.sustainability}</p>
-                        <p>{labels.Acrit.extinctionThreshold}</p>
+                {riskAssessmentTabs.activeTab.id === 2  
+                ? <Assessment62Okologiskeffekt/> 
+                : <div> 
+                    <fieldset className="well">
+                        <h2>{labels.Acrit.mainHeading}</h2>
+                        <h4>{critA.heading}</h4>
+                        <p>{critA.info}</p>
                         
-                   </div>
-                   <div className="numberFields">
-                   <Xcomp.Number observableValue={[riskAssessment, "populationSize"]} disabled={disabled} integer />  
-                   <Xcomp.Number observableValue={[riskAssessment, "growthRate"]} disabled={disabled}/>  
-                   <Xcomp.Number observableValue={[riskAssessment, "envVariance"]} disabled={disabled}/>  
-                   <Xcomp.Number observableValue={[riskAssessment, "demVariance"]} disabled={disabled}/>  
-                   <Xcomp.Number observableValue={[riskAssessment, "carryingCapacity"]} disabled={disabled} integer />  
-                   <Xcomp.Number observableValue={[riskAssessment, "extinctionThreshold"]} disabled={disabled} integer />  
-                    
+                        <Xcomp.StringEnum mode="radio" observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]} codes={koder.AcritSelect} /> 
+                        {riskAssessment.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" 
+                        ? <div>
+
+                            {assessment.isDoorKnocker ? 
+                            <p
+                                dangerouslySetInnerHTML={{ __html: textDK}}>
+                            </p> :
+                            <p 
+                            dangerouslySetInnerHTML={{
+                                __html: riskAssessment.a1aresulttext
+                            }}
+                            > 
+                            </p>}
+
+                            <Xcomp.StringEnum observableValue={[riskAssessment, "acceptOrAdjustCritA"]} mode="radio" codes={koder.AcceptOrAdjust}/>   
+                                            
+                            <ErrorList errorhandler={errorhandler} errorids={["(a)err25", "(a)err27"]} />            
+                            <div className="adjustScore">
+                                {riskAssessment.acceptOrAdjustCritA == "adjust" &&                                
+                                    <Xcomp.HtmlString observableValue={[riskAssessment, 'reasonForAdjustmentCritA']} label="Begrunnelse for justering (obligatorisk):" />
+                                }
+                            </div> 
                             
-                   </div>
-                   </div>
-                   <a href="http://www.evol.no/hanno/11/levetid.htm" target="_blank">{labels.Acrit.rScriptLongevity}</a>
-                   <div className="statusField">
-                       <div className="labels">
+                        </div>      
+                        : riskAssessment.chosenSpreadMedanLifespan == "SpreadRscriptEstimatedSpeciesLongevity" 
+                        ? <div>
+                            <div className="statusField"> 
+                                <div className="labels">
+                                    <p>{labels.Acrit.speciesCount}</p>
+                                    <p>{labels.Acrit.populationGrowth}</p>
+                                    <p>{labels.Acrit.environmantVariance}</p>
+                                    <p>{labels.Acrit.demographicVariance}</p>
+                                    <p>{labels.Acrit.sustainability}</p>
+                                    <p>{labels.Acrit.extinctionThreshold}</p>
+                                </div>
+                                <div className="numberFields">
+                                    <Xcomp.Number observableValue={[riskAssessment, "populationSize"]} disabled={disabled} integer />  
+                                    <Xcomp.Number observableValue={[riskAssessment, "growthRate"]} disabled={disabled}/>  
+                                    <Xcomp.Number observableValue={[riskAssessment, "envVariance"]} disabled={disabled}/>  
+                                    <Xcomp.Number observableValue={[riskAssessment, "demVariance"]} disabled={disabled}/>  
+                                    <Xcomp.Number observableValue={[riskAssessment, "carryingCapacity"]} disabled={disabled} integer />  
+                                    <Xcomp.Number observableValue={[riskAssessment, "extinctionThreshold"]} disabled={disabled} integer />  
+                                </div>
+                            </div>
+                            <a href="http://www.evol.no/hanno/11/levetid.htm" target="_blank">{labels.Acrit.rScriptLongevity}</a>
+                            <div className="statusField">
+                                <div className="labels">
+                                    <p>{labels.Acrit.median}</p> 
+                                </div>
+                                <div className="numberFields">
+                                    <Xcomp.Number observableValue={[riskAssessment, "medianLifetimeInput"]} disabled={disabled} integer />  
+                                </div>
+                            </div>
+                        </div> 
+                        : riskAssessment.chosenSpreadMedanLifespan == "ViableAnalysis" 
+                        ? <div>
+                            <p>{labels.Acrit.PVAAnalysis}</p>
+                            <Xcomp.HtmlString observableValue={[riskAssessment, 'spreadPVAAnalysis']} />
+                            <hr></hr>  
+                            <div>                       
+                                <Documents/>
+                            </div>
+                            <div className="statusField">
+                                <div className="labels" style={{width: "100px"}}>
+                                    <p>{labels.Acrit.median}</p>
+                                    <p>{labels.Acrit.lower}</p>
+                                    <p>{labels.Acrit.upper}</p>
+                                </div>
+                                <div className="numberFields">                  
+                                    <Xcomp.Number observableValue={[riskAssessment, "medianLifetimeInput"]} observableErrors={[errorhandler, "A3err1", "A3err2"]} integer />  {/* ACritMedianLifespan */}
+                                    <Xcomp.Number observableValue={[riskAssessment, "lifetimeLowerQInput"]} observableErrors={[errorhandler, "A3err1"]} integer />  
+                                    <Xcomp.Number observableValue={[riskAssessment, "lifetimeUpperQInput"]} observableErrors={[errorhandler, "A3err2"]} integer />                     
+                                </div>
+                            </div>
+                        </div> 
+                        : riskAssessment.chosenSpreadMedanLifespan_Was_RedListCategoryLevel 
+                        ? <p><b>Den utgåtte metoden c) Rødlistekriterier var brukt på A-kriteriet for denne arten i 2018. Det resulterte i skår {riskAssessment.roAscore2018 + 1} på A-kriteriet.</b></p>
+                        : null }
+
+                        {riskAssessment.chosenSpreadMedanLifespan != "RedListCategoryLevel" && riskAssessment.chosenSpreadMedanLifespan != "" 
+                            ? <Criterion criterion={critA} 
+                                appState={appState}
+                                mode="noheading"
+                                disabled = {disabled || (riskAssessment.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && riskAssessment.acceptOrAdjustCritA == "accept")}
+                            />
+                            : null}
+                    </fieldset>
+                    <br/>
+                    <fieldset className="well">
+                        <h4>{critB.heading}</h4>
+                        <p>{critB.info}</p>
+                        <Xcomp.Radio
+                                    label={labels.BcritSelect.a}
+                                    value={"a"}
+                                    disabled={disabled}
+                                    observableValue={[riskAssessment, "chosenSpreadYearlyIncrease"]}/>
                         
-                        <p>{labels.Acrit.median}</p> 
-                       </div>
-                       <div className="numberFields">
-                       <Xcomp.Number observableValue={[riskAssessment, "medianLifetimeInput"]} disabled={disabled} integer />  
-                       </div>
-                   </div>
-
-                </div> : 
-                riskAssessment.chosenSpreadMedanLifespan == "ViableAnalysis" ? 
-                <div>
-                
-                    <p>{labels.Acrit.PVAAnalysis}</p>
-                    <Xcomp.HtmlString observableValue={[riskAssessment, 'spreadPVAAnalysis']} />
-                    <hr></hr>  
-                    <div>                       
-                        <Documents/>
-                    </div>
-                    <div className="statusField">
-                        <div className="labels" style={{width: "100px"}}>
-                        <p>{labels.Acrit.median}</p>
-                        <p>{labels.Acrit.lower}</p>
-                        <p>{labels.Acrit.upper}</p>
-                   </div>
-                   <div className="numberFields">                  
-                   <Xcomp.Number observableValue={[riskAssessment, "medianLifetimeInput"]} observableErrors={[errorhandler, "A3err1", "A3err2"]} integer />  {/* ACritMedianLifespan */}
-                   <Xcomp.Number observableValue={[riskAssessment, "lifetimeLowerQInput"]} observableErrors={[errorhandler, "A3err1"]} integer />  
-                   <Xcomp.Number observableValue={[riskAssessment, "lifetimeUpperQInput"]} observableErrors={[errorhandler, "A3err2"]} integer />                     
-                   </div>
-                   </div>
-                    
-                </div> : 
-                riskAssessment.chosenSpreadMedanLifespan_Was_RedListCategoryLevel 
-                ? <p><b>Den utgåtte metoden c) Rødlistekriterier var brukt på A-kriteriet for denne arten i 2018. Det resulterte i skår {riskAssessment.roAscore2018 + 1} på A-kriteriet.</b></p>
-                : null }
-
-                {riskAssessment.chosenSpreadMedanLifespan != "RedListCategoryLevel" && riskAssessment.chosenSpreadMedanLifespan != "" && 
-                    <Criterion criterion={critA} 
-                    appState={appState}
-                    mode="noheading"
-                    disabled = {disabled || (riskAssessment.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && riskAssessment.acceptOrAdjustCritA == "accept")}
-                    />}
-                </fieldset>
-                <br/>
-                <fieldset className="well">
-                    <h4>{critB.heading}</h4>
-                    <p>{critB.info}</p>
-                    <Xcomp.Radio
-                                label={labels.BcritSelect.a}
-                                value={"a"}
-                                disabled={disabled}
-                                observableValue={[riskAssessment, "chosenSpreadYearlyIncrease"]}/>
-                     
-                    <Xcomp.Radio
-                                label={labels.BcritSelect.b}
-                                value={"b"}
-                                disabled={disabled}
-                                observableValue={[riskAssessment, "chosenSpreadYearlyIncrease"]}/>
-                    <ErrorList errorhandler={errorhandler} errorids={["(a)err26"]} />            
+                        <Xcomp.Radio
+                                    label={labels.BcritSelect.b}
+                                    value={"b"}
+                                    disabled={disabled}
+                                    observableValue={[riskAssessment, "chosenSpreadYearlyIncrease"]}/>
+                        <ErrorList errorhandler={errorhandler} errorids={["(a)err26"]} />            
                     
 
-                {riskAssessment.chosenSpreadYearlyIncrease == "a" ? 
+                        {riskAssessment.chosenSpreadYearlyIncrease == "a" ? 
                         <div> 
                             <p> {labels.BcritText.enterParameters}<i>{labels.BcritText.standartSettings}</i></p>
-
                             <div className="statusField"> 
-                            <div className="labels">
+                                <div className="labels">
                                     <p>{labels.Bcrit.mCount}</p>
                                     <p>{labels.Bcrit.model}</p>
                                     <p>{labels.Bcrit.occurrencesListed}</p>
-                            </div>
-                            <div className="numberFields">
-                                            {/*pattern={"^[0-9]+(\\.\\d+)(\\-\\d+(\.\d+))"}*/}
-
-                                <Xcomp.String                            
-                                            observableValue={[riskAssessment, "bCritMCount"]}
-                                            placeholder={""}
-                                            disabled={disabled}
-                                        />  
-                                <Xcomp.StringEnum                            
-                                            observableValue={[riskAssessment, "bCritModel"]}
-                                            //placeholder={"false"}
-                                            codes={koder.BCritMod}
-                                        />  
-                                <Xcomp.StringEnum                            
-                                            observableValue={[riskAssessment, "bCritOccurrences"]}
-                                            codes={koder.BCritOccList}
-                                        /> 
-                            </div>
+                                </div>
+                                <div className="numberFields">
+                                    {/*pattern={"^[0-9]+(\\.\\d+)(\\-\\d+(\.\d+))"}*/}
+                                    <Xcomp.String                            
+                                                observableValue={[riskAssessment, "bCritMCount"]}
+                                                placeholder={""}
+                                                disabled={disabled}
+                                            />  
+                                    <Xcomp.StringEnum                            
+                                                observableValue={[riskAssessment, "bCritModel"]}
+                                                //placeholder={"false"}
+                                                codes={koder.BCritMod}
+                                            />  
+                                    <Xcomp.StringEnum                            
+                                                observableValue={[riskAssessment, "bCritOccurrences"]}
+                                                codes={koder.BCritOccList}
+                                            /> 
+                                </div>
                             </div>
 
                             <a href="https://view.nina.no/expansion/" target="_blank">{labels.Bcrit.rScriptExpansion}</a>
                             <div className="statusField">
                                 <div className="labelsB">
-                                    
                                     <p>{labels.Bcrit.expansion}</p> 
                                     <p>{labels.Bcrit.lower}</p> 
                                     <p>{labels.Bcrit.higher}</p> 
@@ -349,31 +332,29 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                         />  
                                 </div>
                             </div>
-                            <hr></hr>                    
-                                    <div>
-                                        <Documents/>
-                                    </div>
-
-                            <br></br>
-                                
-                        </div> : 
-                        riskAssessment.chosenSpreadYearlyIncrease == "b" && assessment.isDoorKnocker ?
+                            <hr/>                    
                             <div>
+                                <Documents/>
+                            </div>
+                            <br/>
+                        </div> 
+                        : riskAssessment.chosenSpreadYearlyIncrease == "b" && assessment.isDoorKnocker 
+                        ? <div>
                             <p>{textDKB}</p>
-                            </div> : 
-                        riskAssessment.chosenSpreadYearlyIncrease == "b" ?
-                            <div>
-                                <hr />
-                                {/* <p>Er artens første forekomst i norsk natur fra år 2012 eller senere?</p> */}
-                                <p>Det anbefales at ekspansjonshastigheten estimeres med utgangspunkt i kjent forekomstareal ved to ulike år der perioden fra t<sub>1</sub>  til og med år t<sub>2</sub> er på minimum 10 år. Hvis artens første forekomst i norsk natur er fra 2012 eller senere, eller perioden er mindre enn 10 år av andre årsaker, vil ekspansjonshastigheten beregnes med utgangspunkt i beste anslag på forekomstarealet i dag og om 50 år (hentet fra Utbredelse i Norge). Er perioden på minimum 10 år?</p>
-                                <Xcomp.StringEnum 
-                                    mode="radio"
-                                    observableValue={[riskAssessment, "AOOfirstOccurenceLessThan10Years"]} 
-                                    codes={koder.yesNo}
-                                />                  
-                                {riskAssessment.AOOfirstOccurenceLessThan10Years === "yes"
-                                ?<>
-                                    <p style={{marginTop: "10px", marginBottom: "20px", paddingTop: "20px"}} dangerouslySetInnerHTML={{__html: labels.BcritText.SelfProducing}}></p>
+                        </div> 
+                        : riskAssessment.chosenSpreadYearlyIncrease == "b" 
+                        ? <div>
+                            <hr />
+                            {/* <p>Er artens første forekomst i norsk natur fra år 2012 eller senere?</p> */}
+                            <p>Det anbefales at ekspansjonshastigheten estimeres med utgangspunkt i kjent forekomstareal ved to ulike år der perioden fra t<sub>1</sub>  til og med år t<sub>2</sub> er på minimum 10 år. Hvis artens første forekomst i norsk natur er fra 2012 eller senere, eller perioden er mindre enn 10 år av andre årsaker, vil ekspansjonshastigheten beregnes med utgangspunkt i beste anslag på forekomstarealet i dag og om 50 år (hentet fra Utbredelse i Norge). Er perioden på minimum 10 år?</p>
+                            <Xcomp.StringEnum 
+                                mode="radio"
+                                observableValue={[riskAssessment, "AOOfirstOccurenceLessThan10Years"]} 
+                                codes={koder.yesNo}
+                            />                  
+                            {riskAssessment.AOOfirstOccurenceLessThan10Years === "yes"
+                            ? <>
+                                <p style={{marginTop: "10px", marginBottom: "20px", paddingTop: "20px"}} dangerouslySetInnerHTML={{__html: labels.BcritText.SelfProducing}}></p>
                                     
                                         <table className="table BCritTable">
                                             <thead>
