@@ -160,11 +160,9 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
         return (
             <div>
                 {config.showPageHeaders
-                    ? <h3>Invasjonspotensiale</h3>
-                    : <br/>}
-                {riskAssessmentTabs.activeTab.id === 2  
-                ? <Assessment62Okologiskeffekt/> 
-                : <div> 
+                ? <h3>Invasjonspotensiale</h3>
+                : <br/>}
+                <div> 
                     <fieldset className="well">
                         <h2>{labels.Acrit.mainHeading}</h2>
                         <h4>{critA.heading}</h4>
@@ -569,7 +567,6 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                         <Criterion criterion={critC} mode="noheading" disabled={true} appState={appState}/>
                     </fieldset>
                 </div>
-                }
             </div>
         );
     }

@@ -10,12 +10,12 @@ import Assessment30Artsegenskaper from './assessment30Artsegenskaper'
 import Assessment41Import from './assessment41Import'
 import Assessment10Horisontskanning from './assessment10Horisontskanning'
 import Assessment40Spredningsveier from './assessment40Spredningsveier'
-import Assessment52Utbredelse from './assessment52Utbredelse'
-import Assessment51Naturtyper from './assessment51Naturtyper'
-import AssessmentRisikovurdering from './assessmentRisikovurdering'
+// import Assessment52Utbredelse from './assessment52Utbredelse'
+// import Assessment51Naturtyper from './assessment51Naturtyper'
+import Assessment60Risikovurdering from './assessment60Risikovurdering'
 import AssessmentBakgrunnsdata from './assessmentBakgrunnsdata'
-import Assessment61Invasjonspotensiale from './assessment61Invasjonspotensiale'
-import Assessment62Okologiskeffekt from './assessment62Okologiskeffekt'
+// import Assessment61Invasjonspotensiale from './assessment61Invasjonspotensiale'
+// import Assessment62Okologiskeffekt from './assessment62Okologiskeffekt'
 import Assessment80GeografiskVariasjon from './assessment80GeografiskVariasjon'
 import Assessment70Klimaeffekter from './assessment70Klimaeffekter'
 //import VurderingSummary from './vurderingSummary'
@@ -201,7 +201,7 @@ class AssessmentRoot extends Component {
                 : assessmentTabs.activeTab.id === 4  ?
                 <ErrorBoundary><AssessmentBakgrunnsdata/></ErrorBoundary>
                 : assessmentTabs.activeTab.id === 5  ?
-                <ErrorBoundary><AssessmentRisikovurdering/></ErrorBoundary>
+                <ErrorBoundary><Assessment60Risikovurdering/></ErrorBoundary>
                 : assessmentTabs.activeTab.id === 6  ?
                 <ErrorBoundary><Assessment70Klimaeffekter/></ErrorBoundary>
                 : assessmentTabs.activeTab.id === 7  ?
