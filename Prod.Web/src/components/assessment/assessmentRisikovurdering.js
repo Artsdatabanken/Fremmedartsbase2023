@@ -12,38 +12,38 @@ import config from '../../config'
 import Filliste from './35Utbredelseshistorikk/Filliste'
 import { KeyboardHideSharp } from '@material-ui/icons';
 
-@observer
-class SelectableRadio extends React.Component {
-    // shouldComponentUpdate() {
-    //     return true
-    // }
-    render() {
+// // // @observer
+// // // class SelectableRadio extends React.Component {
+// // //     // shouldComponentUpdate() {
+// // //     //     return true
+// // //     // }
+// // //     render() {
         
-        const [obj, prop] = this.props.observableValue
-        // console.log("Selectable" + this.props.value) console.log(" - - " +
-        // obj["Selectable" + this.props.value])
-        const val = this.props.value
-        // const activeVal =  disabled ? "" : val
-        const disabled = !obj["Selectable" + val] || this.context.readonly
-        const label = this.props.label + (obj[val]
-            ? "  (" + obj[val] + ")"
-            : "")
-        const dummy = obj[prop]
-        // console.log("dummy:" + dummy) console.log(">" + prop + " (" + obj[prop] + ")
-        // " + val  )
-        return <div className="radio" key={val}>
-            <label className={disabled
-                ? "disabled"
-                : ""}><input
-                type="radio"
-                name={"radio" + prop}
-                value={val}
-                checked={obj[prop] === val}
-                disabled={disabled}
-                onChange={(e) => obj[prop] = e.currentTarget.value}/>{label}</label>
-        </div>
-    }
-}
+// // //         const [obj, prop] = this.props.observableValue
+// // //         // console.log("Selectable" + this.props.value) console.log(" - - " +
+// // //         // obj["Selectable" + this.props.value])
+// // //         const val = this.props.value
+// // //         // const activeVal =  disabled ? "" : val
+// // //         const disabled = !obj["Selectable" + val] || this.context.readonly
+// // //         const label = this.props.label + (obj[val]
+// // //             ? "  (" + obj[val] + ")"
+// // //             : "")
+// // //         const dummy = obj[prop]
+// // //         // console.log("dummy:" + dummy) console.log(">" + prop + " (" + obj[prop] + ")
+// // //         // " + val  )
+// // //         return <div className="radio" key={val}>
+// // //             <label className={disabled
+// // //                 ? "disabled"
+// // //                 : ""}><input
+// // //                 type="radio"
+// // //                 name={"radio" + prop}
+// // //                 value={val}
+// // //                 checked={obj[prop] === val}
+// // //                 disabled={disabled}
+// // //                 onChange={(e) => obj[prop] = e.currentTarget.value}/>{label}</label>
+// // //         </div>
+// // //     }
+// // // }
 
 // SelectableRadio.contextTypes = {
 //     readonly: PropTypes.bool
