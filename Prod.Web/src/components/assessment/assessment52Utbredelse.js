@@ -3,18 +3,18 @@ import config from '../../config';
 import {observer, inject} from 'mobx-react'
 import * as Xcomp from './observableComponents'
 import Tabs from '../tabs'
-import Assessment51Naturtyper from './assessment51Naturtyper'
+// import Assessment51Naturtyper from './assessment51Naturtyper'
 import DistributionTable from './distributionTable'
 import UtbredelseshistorikkInnenlands from './35Utbredelseshistorikk/UtbredelseshistorikkInnenlands'
-import UtbredelseIDag from './35Utbredelseshistorikk/UtbredelseIDag'
-import Utbredelseshistorikk from './35Utbredelseshistorikk/Utbredelseshistorikk'
+// import UtbredelseIDag from './35Utbredelseshistorikk/UtbredelseIDag'
+// import Utbredelseshistorikk from './35Utbredelseshistorikk/Utbredelseshistorikk'
 import ModalArtskart from '../artskart/ModalArtskart';
 import ModalSimpleMap from '../artskart/ModalSimpleMap';
 import Fylkesforekomst from '../fylkesforekomst/Fylkesforekomst';
-import FileUpload from '../FileUpload'
+// import FileUpload from '../FileUpload'
 import fylker from "../fylkesforekomst/fylker_2017";
 import Documents from '../documents'
-import { ContactsOutlined } from '@material-ui/icons';
+// import { ContactsOutlined } from '@material-ui/icons';
 import { action, computed, observable, extendObservable, runInAction } from 'mobx';
 import SimpleMap from '../map/SimpleMap';
 import WaterArea from '../water/WaterArea';
@@ -42,8 +42,6 @@ export default class Assessment52Utbredelse extends React.Component {
         && assessment.isRegionallyAlien 
         && assessment.expertGroup == "Fisker" 
     }
-
-    // a method to check if a given property is smaller than a given value
 
     constructor(props) {
         super();
@@ -73,24 +71,6 @@ export default class Assessment52Utbredelse extends React.Component {
                     .map(x => x.globalId);
                 }
             }
-            // if (assessment.artskartModel) {
-            //     const getValue = (value) => {
-            //         return value !== undefined ? value : undefined;
-            //     };
-            //     runInAction(() => {
-            //         assessment.observationFromYear = getValue(assessment.observationFromYear);
-            //         assessment.observationToYear = getValue(assessment.observationToYear);
-            //         assessment.includeObjects = getValue(assessment.includeObjects);
-            //         assessment.includeNorge = getValue(assessment.includeNorge);
-            //         assessment.includeSvalbard = getValue(assessment.includeSvalbard);
-            //         assessment.excludeObjects = getValue(assessment.excludeObjects);
-            //         assessment.excludeGbif = getValue(assessment.excludeGbif);
-            //     })
-            // } else {
-            //     runInAction(() => {
-            //         assessment.artskartModel = {};
-            //     })
-            // }
         }
     }
 
@@ -132,9 +112,7 @@ export default class Assessment52Utbredelse extends React.Component {
     addRegion = ({ name, globalId, mapIndex }) => {
         // console.log('clicked:', name, globalId, mapIndex);
         const {appState:{assessment}, appState, appState:{infoTabs}} = this.props;
-        // const waterObject = assessment.artskartWaterModel.isWaterArea ? this.initialWaterAreas.areaState[globalId] : this.initialWaterAreas.regionState[globalId];
         const waterObject = assessment.artskartWaterModel.areas.find(x => x.globalId === globalId);
-
         if (waterObject && !waterObject.disabled) {
             const currentState = mapOlFunc.convertMapIndex2State(mapIndex);
             const areaValue = waterObject[`state${currentState}`] === 0 ? 1 : 0;
@@ -201,13 +179,10 @@ export default class Assessment52Utbredelse extends React.Component {
     }
 
     handleOverførFraArtskart = ({ selectionGeometry, countylist, newWaterAreas, areadata, observations, editStats }) => {
-        // console.log('handleOverførFraArtskart', selectionGeometry, countylist, areadata, observations, editStats);
-        // console.log('handleOverførFraArtskart', newWaterAreas);
         const aps = this.props.appState;
         const ass = aps.assessment;
 
         if (this.GetIsRegionalAssessment(ass)) {
-            // console.log('working with vannområder...', areadata, newWaterAreas);
             if (newWaterAreas) {
                 newWaterAreas.forEach(x => {
                     const area = ass.artskartWaterModel.areas.find(a => a.globalId === x.globalId);
@@ -233,12 +208,6 @@ export default class Assessment52Utbredelse extends React.Component {
         ass.artskartSelectionGeometry = selectionGeometry;
         ass.riskAssessment.AOOendyear1 = ass.artskartModel.observationFromYear;
         ass.riskAssessment.AOOendyear2 = ass.artskartModel.observationToYear;
-        // if (ass.artskartSelectionGeometry != undefined) {
-        //     ass.riskAssessment.AOO2 = areadata.ExcludedLocalities*4;
-        // } else {
-        //     ass.riskAssessment.AOO2 = areadata.AreaOfOccupancy;
-        // }
-        // ass.riskAssessment.yearFirstProductionOutdoors = areadata.AreaExtentOfOccurrence;
         if  (ass.riskAssessment.AOOyear2 === undefined || ass.riskAssessment.AOOyear2 == null) ass.riskAssessment.AOOyear2 = ass.artskartModel.observationToYear;
         if  (ass.riskAssessment.AOOknown2 === undefined || ass.riskAssessment.AOOknown2 == null) ass.riskAssessment.AOOknown2 = ass.riskAssessment.AOOknownInput;   
         
@@ -276,13 +245,8 @@ export default class Assessment52Utbredelse extends React.Component {
     }
 
     render() {
-        // console.log('Assessment52Utbredelse');
         const renderAgain = this.isDirty; // code looks unused, but it makes the Artskart-module listen to changes
         const {appState:{assessment}, appState, appState:{infoTabs}} = this.props;
-        // const {appState:{assessment}, vurdering, fabModel} = this.props
-        // const labels = fabModel.kodeLabels.DistributionHistory
-        
-        // const labels = fabModel.codeLabels.DistributionHistory
         const koder = appState.koder
         const generalLabels = appState.codeLabels 
         const labels = appState.codeLabels.DistributionHistory
@@ -331,12 +295,10 @@ export default class Assessment52Utbredelse extends React.Component {
                             <div className="changedNature">
                                 <p>Andel av antatt forekomstareal i sterkt endra natur (%)</p>
                                 <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "spreadHistoryDomesticAreaInStronglyChangedNatureTypes"]} codes={koder.KnownDistributionInNature}/>
-                             {/*<Xcomp.StringEnum observableValue={[assessment, "spreadAreaInChangedNature"]} codes={koder.KnownDistributionInNature}/> */}
                             </div>
                             </div>
                             :
                             <div>
-                                {/* <span>{labels.goTo}</span> <Xcomp.Button primary>{labels.speciesMap}</Xcomp.Button> */}
                                 <div style={{marginLeft: 20, marginBottom: 30}}>
                                     <ModalArtskart
                                         taxonId={assessment.taxonId}
@@ -376,15 +338,12 @@ export default class Assessment52Utbredelse extends React.Component {
                                         <p> f.o.m. år (t<sub>0</sub>)</p> 
                                         <Xcomp.Number
                                             style={{marginLeft: 20}}
-                                            // observableValue={[assessment.riskAssessment, "AOOyear1"]}
-                                            // About the name of this property: Se domain!
                                             observableValue={[assessment.riskAssessment, "AOOendyear1"]}
                                             yearRange={true}/> 
                                     </div>
                                     <div>
                                         <p>t.o.m. år</p>
                                         <Xcomp.Number                            
-                                            // observableValue={[assessment.riskAssessment, "AOOyear2"]}
                                             // About the name of this property: Se domain!
                                             observableValue={[assessment.riskAssessment, "AOOendyear2"]}
                                             yearRange={true}/> 
@@ -399,10 +358,8 @@ export default class Assessment52Utbredelse extends React.Component {
                                                 <b>Kjent</b>
                                                 <Xcomp.Number      
                                                     className={"knownDistribution"} 
-                                                    //observableValue={[assessment.riskAssessment, "knownDistribution"]}                     
                                                     observableValue={[assessment.riskAssessment, "AOOknownInput"]}
                                                     observableErrors={[errorhandler, "(a)err6", "(a)err11"]}
-
                                                     /> 
                                             </div>
                                             }
@@ -416,37 +373,27 @@ export default class Assessment52Utbredelse extends React.Component {
                                 </div>
                                 <div className="changedNature">
                                     <p>Andel av kjent forekomstareal i sterkt endra natur (%) </p>
-                                    
-                                    {/* ToDo: Bug - speciesDistribution not found 
-                                    <Xcomp.StringEnum observableValue={[assessment, "spreadAreaInChangedNature"]} codes={koder.KnownDistributionInNature}/>*/}
                                     <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "spreadHistoryDomesticAreaInStronglyChangedNatureTypes"]} codes={koder.KnownDistributionInNature}/>
                                 </div>
                                 {assessment.speciesStatus == "C3" && 
                                 <div style={{marginTop: '50px'}}>
                                     <p> {assessment.isRegionallyAlien ? generalLabels.SpeciesStatus.statusInNorwayRegionallyAlien : generalLabels.SpeciesStatus.statusInNorway } {generalLabels.SpeciesStatus.highestCategoryPerToday}</p>  
                                     <br/> 
-                                    {/* ToDo: Bug - speciesDistribution not found */}
                                     <Xcomp.StringEnum observableValue={[assessment, "speciesEstablishmentCategory"]} mode="radio" options={this.checkArea(assessment.riskAssessment.AOOtotalBest)} codes={koder.DistributionOptions}/>
                                 </div>    
                                 }         
-                                {/* <div style={{marginBottom: '20px'}}>
-                                    <span>{labels.goTo}</span> <Xcomp.Button primary >{labels.distributionHistory}</Xcomp.Button>
-                                </div> */}
                             </div>
                         }
                         <hr></hr>  
                             <div>
                                 <Documents/>
                             </div>
-                        
-
                         <div>
                         </div>
                     </fieldset>
                 <fieldset className="well">
                     <h4>Regionvis utbredelse</h4>
-                    {/* <b>[Her kommer det et kart]</b> */}
-                    {/* TODO: remove component refresh hack */ assessment.fylkesforekomster ? (assessment.fylkesforekomster.map(e => e.state ? '' : '')) : ''}
+                    {assessment.fylkesforekomster ? (assessment.fylkesforekomster.map(e => e.state ? '' : '')) : ''}
                     {!(this.GetIsRegionalAssessment(assessment)) &&
                         <Fylkesforekomst
                             evaluationContext={assessment.evaluationContext}
@@ -515,15 +462,11 @@ export default class Assessment52Utbredelse extends React.Component {
                     }
                     <label htmlFor="CurrentPresenceComment">{labels.describeAsumption}</label>
                     <Xcomp.HtmlString observableValue={[assessment, 'currentPresenceComment']}/>
-                   {/* <p>Beskriv grunnlaget for anslagene (gjelder både forekomstareal og fylkesvis utbredelse)</p>
-                    <Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'backgroundRegional']}/>*/}
                     {assessment.isDoorKnocker ?
                         <p>Beskriv antatt utbredelse <i>(overføres til oppsummeringen)</i></p> :
                         <p>Beskriv utbredelseshistorikk og dagens utbredelse i Norge <i>(overføres til oppsummeringen)</i></p>
                     }
-                    <Xcomp.HtmlString
-                        observableValue={[assessment.riskAssessment, 'criteriaDocumentationDomesticSpread']}/>
-                    {/*<Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'historyAndAreaInNorway']}/>*/}
+                    <Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'criteriaDocumentationDomesticSpread']}/>
                 </fieldset>
                 {!assessment.isDoorKnocker ?
                 <fieldset className="well">
@@ -534,17 +477,8 @@ export default class Assessment52Utbredelse extends React.Component {
                             <p>Bestandsstørrelse</p>
                         </div>
                         <div className="numbers otherInfo">
-                            <Xcomp.Number                            
-                                        observableValue={[assessment, "currentSpreadArea"]}
-                                        integer
-                                    />    
-                             <Xcomp.Number                            
-                                    //observableValue={[assessment.riskAssessment, "yearFirstProductionOutdoors"]}
-                                    //observableValue={[assessment.riskAssessment, "populationSize"]}
-                                    observableValue={[assessment, "currentIndividualCount"]}
-                                    
-                                    integer
-                                />
+                            <Xcomp.Number observableValue={[assessment, "currentSpreadArea"]} integer/>    
+                             <Xcomp.Number observableValue={[assessment, "currentIndividualCount"]} integer/>
                         </div>
                     </div>
                         
@@ -554,7 +488,6 @@ export default class Assessment52Utbredelse extends React.Component {
                 {assessment.spreadHistory.length > 0 && 
                     <fieldset className="well" id="spreadHistoryDomestic">
                         <h4>Utbredelseshistorikk 2018</h4>
-                    {/* <h4>{labels.distributionHistory} {appState.evaluationContext.nameWithPreposition}</h4>*/}
                     <UtbredelseshistorikkInnenlands vurdering={assessment} fabModel={appState}/>
                     {assessment.spreadHistoryDomesticDocumentation
                         ? <div>
@@ -578,21 +511,10 @@ export default class Assessment52Utbredelse extends React.Component {
                             
                     </fieldset>
                 }
-            
-                    
                     {config.showPageHeaders
                         ? <h3>{fabModel.kodeLabels.DistributionHistory.heading}</h3>
                         : <br/>}
-                    
-                   {/* <UtbredelseIDag vurdering={assessment} fabModel={appState}/>
-                    <Utbredelseshistorikk vurdering={assessment} fabModel={appState}/>*/}
             </div>
-                
-                {/* <fieldset className="well" id="spreadHistoryForeign">
-                    <h4>{labels.distributionHistoryAbroad}</h4>
-                   <Xcomp.HtmlString
-                        observableValue={[vurdering, 'SpreadHistoryForeignDocumentation']}/> 
-                </fieldset>*/}
             </div>
         )
     }
