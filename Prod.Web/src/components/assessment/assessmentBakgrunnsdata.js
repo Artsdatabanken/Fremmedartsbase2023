@@ -8,7 +8,7 @@ import Assessment52Utbredelse from './assessment52Utbredelse'
 @inject('appState')
 @observer
 
-export default class AssessmentBakgrunnsdata extends React.Component {
+export default class Assessment50Bakgrunnsdata extends React.Component {
     render() {
         const {appState:{assessment}, appState, appState:{infoTabs}} = this.props
         // const {appState:{assessment}, vurdering, fabModel} = this.props
