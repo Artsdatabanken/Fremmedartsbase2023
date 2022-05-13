@@ -3,13 +3,11 @@ import {observer, inject} from 'mobx-react';
 import {action} from 'mobx';
 import * as Xcomp from './observableComponents';
 import Criterion from './criterion'
-// import {getCriterion} from '../../utils'
 import NaturtypeTable from './51Naturtyper/naturtypeTable';
 import HabitatTable from './51Naturtyper/habitatTable';
 import NewNaturetype from './51Naturtyper/newNaturetype';
 import RedlistedNaturetypeTable from './51Naturtyper/redlistedNaturetypeTable';
 import OriginTable from './30Artsegenskaper/originTable'
-//import NewRedlistedNaturetype from './51Naturtyper/newRedlistedNaturetype';
 
 @inject("appState")
 @observer
@@ -17,8 +15,6 @@ export default class Assessment51Naturtyper extends React.Component {
     constructor(props) {
         super(props)
         const {appState:{assessment}, appState} = this.props;
-        
-        // extendObservable(this, { })
         this.addNaturtype = action((nyNt) => {
             assessment
                 .impactedNatureTypes
@@ -29,13 +25,6 @@ export default class Assessment51Naturtyper extends React.Component {
                 .habitats
                 .push(nyLm)
         })
-        // this.addRedlistedNaturetype = action((nyNt) => {
-        //     assessment
-        //         .redlistedNatureTypes
-        //         .push(nyNt)
-        //     // alert("add new redlisted nature type: " + nyNt.RedlistedNatureTypeName + " -
-        //     // " + nyNt.Category)
-        // })
     }
 
     render() {
@@ -45,9 +34,6 @@ export default class Assessment51Naturtyper extends React.Component {
         const koder = appState.koder
         const disabled = appState.userContext.readonly
         const ntLabels = labels.NatureTypes
-        // const critC = getCriterion(riskAssessment, 0, "C")
-        // const critF = getCriterion(riskAssessment, 1, "F")
-        // const critG = getCriterion(riskAssessment, 1, "G")
         const critC = riskAssessment.critC
         const critF = riskAssessment.critF
         const critG = riskAssessment.critG
@@ -63,15 +49,8 @@ export default class Assessment51Naturtyper extends React.Component {
         const coastZoneDisabled = (id, region) => koder.coastZoneDisabled.find(code => code.Value === id) ? koder.coastZoneDisabled.find(code => code.Value === id).Text.indexOf(region) !== -1 : true
         const arcticZoneDisabled = (id, region) => koder.arcticZoneDisabled.find(code => code.Value === id) ? koder.arcticZoneDisabled.find(code => code.Value === id).Text.indexOf(region) !== -1 : true
         const mainlandZoneDisabled = (id, region) => koder.mainlandZoneDisabled.find(code => code.Value === id) ? koder.mainlandZoneDisabled.find(code => code.Value === id).Text.indexOf(region) !== -1 : true
-
-        
-        // action(() => {
-        //     critC.auto = false
-        //     critF.auto = false
-        //     critG.auto = false
-        // })
-        const nts = appState.naturtyper
-        const doms = appState.dominansSkog
+        // const nts = appState.naturtyper
+        // const doms = appState.dominansSkog
         var hasImpactAbroad = false 
         if (assessment.impactedNatureTypes.length > 0) {
             for (var i = 0; i < assessment.impactedNatureTypes.length; i++) {
@@ -100,7 +79,6 @@ export default class Assessment51Naturtyper extends React.Component {
                         </NewNaturetype>
                         : null}
                 </div>
-
                 <NewNaturetype
                     mode="nin"
                     appState={appState}
@@ -111,7 +89,6 @@ export default class Assessment51Naturtyper extends React.Component {
                     header={ntLabels.chooseNT}
                     superheader={ntLabels.effectsNiN23} >
                 </NewNaturetype>
-                
                 {assessment.impactedNatureTypes.length > 0 && 
                 <>
                 <h4>{ntLabels.chosenNatureTypes}</h4>
@@ -125,9 +102,7 @@ export default class Assessment51Naturtyper extends React.Component {
                     desc={ntLabels.colonizedAreaDescription}/>
                 </>
                 }
-                
                 {assessment.impactedNatureTypesFrom2018.length > 0 && <div className="previousAssessment">
-               
                 <h4>{ntLabels.dataFromPreviousAssessment}</h4>
                 <NaturtypeTable
                     naturetypes={assessment.impactedNatureTypesFrom2018}
@@ -138,9 +113,7 @@ export default class Assessment51Naturtyper extends React.Component {
                     disabled={true}
                     desc={ntLabels.transferredFromNiN22}/>
                 </div>}
-
                 {assessment.redlistedNatureTypes.length > 0 && <div className="previousAssessment">
-                
                 {assessment.impactedNatureTypesFrom2018.length == 0 && <h4>{ntLabels.dataFromPreviousAssessment}</h4>}
                 <p>{ntLabels.redlistedNaturetypes2011}</p>
                 <RedlistedNaturetypeTable
@@ -150,14 +123,11 @@ export default class Assessment51Naturtyper extends React.Component {
                     fabModel={appState}/>
                 </div>}
                 </fieldset> 
-                
                 <fieldset className="well">
                     <h4>{ntLabels.critCHeading}</h4>
                     <p>{ntLabels.criteriumC}</p>
                     <Criterion criterion={critC} mode="noheading" disabled={disabled}/>
                 </fieldset>
-  
-
                 <fieldset className="well">
                     <h4>{ntLabels.critFHeading}</h4>
                     <p>{ntLabels.criteriumF}</p>
@@ -165,13 +135,7 @@ export default class Assessment51Naturtyper extends React.Component {
                     <p>{ntLabels.natureAffected}</p>
                     <Xcomp.HtmlString 
                         observableValue={[riskAssessment, 'threatenedNatureTypesAffectedDomesticDescription']} />
-                    {/*hasImpactAbroad ? 
-                    <div>
-                    */}
-                    
-                
                 </fieldset>
-                
                 <fieldset className="well">
                     <h4>{ntLabels.critGHeading}</h4>
                     <p>{ntLabels.criteriumG}</p>
@@ -179,15 +143,7 @@ export default class Assessment51Naturtyper extends React.Component {
                     <p>{ntLabels.natureAffected}</p>
                     <Xcomp.HtmlString
                         observableValue={[riskAssessment, 'commonNatureTypesAffectedDomesticDescription']}/>
-                   { /*hasImpactAbroad ? 
-                    <div>
-                   
-                        <Xcomp.HtmlString observableValue={[riskAssessment, 'natureAffectedAbroadG']}/>
-                        
-                <Xcomp.HtmlString
-                    observableValue={[riskAssessment, 'commonNatureTypesAffectedDomesticDescription']}/>*/}
                 </fieldset>
-
                 <fieldset className="well">
                 <h4>{ntLabels.regionalNaturetypes}</h4>
                 <p> Mer informasjon og kartvisning av soner og seksjoner finner du <a href="https://nin.artsdatabanken.no/Natur_i_Norge/Natursystem/Beskrivelsessystem/Regional_naturvariasjon?informasjon" target="_blank"> her</a>. </p>
@@ -198,32 +154,26 @@ export default class Assessment51Naturtyper extends React.Component {
                     <p className="bioCLZone">{ntLabels.coastWaterSections}</p>
                     <div className="bioclimaticZones">
                     <div>{ntLabels.coastWaterZones}</div>
-                    
                     <OriginTable 
                             mode = {"marine"}
                             origins={assessment.coastLineSections} 
                             climateZoneLabel={coastLineZoneLabel}
-                            //subClimateZoneLabel={subClimateZoneLabel}
                             naturalOriginDisabled={coastZoneDisabled}
                             labels={labels.NaturalOrigin}
                     />
                     </div>
                 </>
                 }
-                
-                
                 {mainland && 
                 <>
                     <h5 className={"bioCLZone"}>{ntLabels.mainlandNorway}</h5>
                     <p className="bioCLZone">{ntLabels.bioClimateSections}</p>
                     <div className="bioclimaticZones">
                     <div>{ntLabels.bioClimateZones}</div>
-                    
                     <OriginTable 
                             mode = {"continental"}
                             origins={assessment.currentBioClimateZones} 
                             climateZoneLabel={contBioClimateZoneLabel}
-                            //subClimateZoneLabel={subClimateZoneLabel}
                             naturalOriginDisabled={mainlandZoneDisabled}
                             labels={labels.NaturalOrigin}
                     />
@@ -240,7 +190,6 @@ export default class Assessment51Naturtyper extends React.Component {
                             mode = {"arctic"}
                             origins={assessment.arcticBioClimateZones} 
                             climateZoneLabel={arcticBioClimateZoneLabel}
-                           // subClimateZoneLabel={subClimateZoneLabel}
                             naturalOriginDisabled={arcticZoneDisabled}
                             labels={labels.NaturalOrigin}
                     />
@@ -248,7 +197,6 @@ export default class Assessment51Naturtyper extends React.Component {
                 </>
                 }
                 </fieldset>
-
             {true || appState.livsmediumEnabled
                 ? <fieldset className="well">
                     {appState.livsmediumCodes
@@ -264,7 +212,6 @@ export default class Assessment51Naturtyper extends React.Component {
                         superheader={"Livsmedium"}
                          >
                         </NewNaturetype>
-                        
                         : null}
                 {assessment.habitats.length > 0 && 
                     <HabitatTable
