@@ -98,9 +98,7 @@ export default class Assessment52Utbredelse extends React.Component {
     checkArea = (property) => {
        // finds all the objects with id's that should be hidden 
        if ( property < 8 ) {
-           
            return "D1D2E"
-           
        } else if (property < 40 ) {
            return "E"
        }
@@ -213,12 +211,10 @@ export default class Assessment52Utbredelse extends React.Component {
         
         // TODO: Fylkesoversikt - avventer data fra API
         if (countylist) {
-            // ass.fylkesforekomster = countylist;
             let fo = countylist.reduce((acc, e) => {
                 acc[e.NAVN] = e.Status;
                 return acc;
             }, {});
-            // ass.fylkesforekomster.forEach(f => f.state = fo[fylker[f.fylke]] > 0 ? 0 : 2);
             ass.fylkesforekomster.forEach(f => {
                 f.state0 = fo[fylker[f.fylke]] > 0 ? 1 : 0;
                 if (f.state0 === 1) {
@@ -253,170 +249,174 @@ export default class Assessment52Utbredelse extends React.Component {
 
         return (
             <div>
-                <div>
-                    <fieldset className="well">
-                        <h2>Utbredelse i Norge</h2>
-                        {!this.initialWaterAreas && this.GetIsRegionalAssessment(assessment) &&
-                            <>
-                                <h4>Vurderingsområde <i>(beta)</i></h4>
-                                <div style={{marginLeft: 20, marginBottom: 30}}>...henter vannregioner og vannområder</div>
-                            </>
-                        }
-                        {this.initialWaterAreas && this.GetIsRegionalAssessment(assessment) &&
-                        <>
-                            <h4>Vurderingsområde <i>(beta)</i></h4>
-                            <div style={{marginLeft: 20, marginBottom: 30}}>
-                                <ModalSimpleMap
-                                    evaluationContext={assessment.evaluationContext}
-                                    labels={labels}
-                                    artskartWaterModel={assessment.artskartWaterModel}
-                                    isWaterArea={assessment.artskartWaterModel.isWaterArea}
-                                    initialWaterAreas={this.initialWaterAreas}
-                                    onOverførFraSimpleMap={action(this.handleOverførFraSimpleMap)}
-                                />
+                <fieldset className="well">
+                    <h2>Utbredelse i Norge</h2>
+                    {!this.initialWaterAreas && this.GetIsRegionalAssessment(assessment)
+                    ? <>
+                    <h4>Vurderingsområde <i>(beta)</i></h4>
+                    <div style={{marginLeft: 20, marginBottom: 30}}>...henter vannregioner og vannområder</div>
+                    </>
+                    : null}
+                    {this.initialWaterAreas && this.GetIsRegionalAssessment(assessment) 
+                    ? <>
+                    <h4>Vurderingsområde <i>(beta)</i></h4>
+                    <div style={{marginLeft: 20, marginBottom: 30}}>
+                        <ModalSimpleMap
+                            evaluationContext={assessment.evaluationContext}
+                            labels={labels}
+                            artskartWaterModel={assessment.artskartWaterModel}
+                            isWaterArea={assessment.artskartWaterModel.isWaterArea}
+                            initialWaterAreas={this.initialWaterAreas}
+                            onOverførFraSimpleMap={action(this.handleOverførFraSimpleMap)}
+                        />
+                    </div>
+                    </>
+                    : null}
+                    <h4>Forekomstareal</h4>
+                    {assessment.isDoorKnocker 
+                    ? <div>
+                        <div className="statusField">
+                            <div className="labels distribution dk">
+                                <p>Hvor mange 2 km x 2 km-ruter kan arten kolonisere i løpet av en 10 års-periode basert på én introduksjon til norsk natur (innenfor vurderingsperioden på 50 år)?</p>
+                                <p>Hvor mange ytterligere introduksjoner til norsk natur antas arten å få i løpet av samme 10-års periode?</p>
+                                <p style={{marginTop: "180px"}}>Totalt forekomstareal <b> 10 år etter første introduksjon </b> (km<sup>2</sup>)</p>
                             </div>
-                        </>
-                        }
-                        <h4>Forekomstareal</h4>
-                        {assessment.isDoorKnocker ? 
-                        <div>
-                            <div className="statusField">
-                                <div className="labels distribution dk">
-                                    <p>Hvor mange 2 km x 2 km-ruter kan arten kolonisere i løpet av en 10 års-periode basert på én introduksjon til norsk natur (innenfor vurderingsperioden på 50 år)?</p>
-                                    <p>Hvor mange ytterligere introduksjoner til norsk natur antas arten å få i løpet av samme 10-års periode?</p>
-                                    <p style={{marginTop: "180px"}}>Totalt forekomstareal <b> 10 år etter første introduksjon </b> (km<sup>2</sup>)</p>
-                                    
-                                </div>
-                                <div className="distribution dk">
-                                    <DistributionTable/>
-                                </div>
+                            <div className="distribution dk">
+                                <DistributionTable/>
                             </div>
-                            <ErrorList errorhandler={errorhandler} errorids={["(a)warn6", "(a)warn7"]} />
-                            <div className="changedNature">
-                                <p>Andel av antatt forekomstareal i sterkt endra natur (%)</p>
-                                <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "spreadHistoryDomesticAreaInStronglyChangedNatureTypes"]} codes={koder.KnownDistributionInNature}/>
-                            </div>
-                            </div>
-                            :
-                            <div>
-                                <div style={{marginLeft: 20, marginBottom: 30}}>
-                                    <ModalArtskart
-                                        taxonId={assessment.taxonId}
-                                        scientificNameId={assessment.evaluatedScientificNameId}
-                                        evaluationContext={assessment.evaluationContext}
-                                        showWaterAreas={this.GetIsRegionalAssessment(assessment)}
-                                        artskartWaterModel={assessment.artskartWaterModel}
-                                        waterFeatures={this.getWaterFeatures(assessment)}
-                                        labels={labels}
-                                        utvalg={assessment.riskAssessment}
-                                        artskartModel={assessment.artskartModel}
-                                        onOverførFraArtskart={action(this.handleOverførFraArtskart)}
-                                        artskartSelectionGeometry={assessment.artskartSelectionGeometry}
-                                        artskartAdded={assessment.artskartAdded}
-                                        artskartRemoved={assessment.artskartRemoved}
-                                        unused={this.waterIsChanged}
-                                    />
-                                </div>
-
-                                <div style={{ paddingBottom: 16 }}>
-                                    {assessment.artskartSistOverført && (!!assessment.artskartAdded || !!assessment.artskartRemoved || assessment.artskartSelectionGeometry) &&
-                                    <span>Sist overført fra Artskart {beskrivTidSiden(assessment.artskartSistOverført, appState.codeLabels.Timing)}. </span>}
-                                    {assessment.artskartManuellAdd > 0 && 
-                                    <span>{assessment.artskartManuellAdd} {assessment.artskartManuellAdd === 1 ? "rute" : "ruter"} ble manuelt lagt til. </span>}
-                                    {assessment.artskartManuellRemove > 0 && <span>{assessment.artskartManuellRemove} {assessment.artskartManuellRemove === 1 ? "rute" : "ruter"} ble manuelt fjernet.</span>}
-                                    {assessment.artskartSelectionGeometry && <span>Et polygon som ekskluderer <b>{assessment.b2ForekomstarealKjentAndel / 4}</b> {assessment.b2ForekomstarealKjentAndel / 4 === 1 ? "rute" : "ruter"} har blitt lagt til.</span>}
-                                </div>
-                                { (!!assessment.artskartAdded || !!assessment.artskartRemoved || assessment.artskartSelectionGeometry) &&
-                                    <div style={{ paddingBottom: 24 }}>
-                                        <Xcomp.HtmlString
-                                            label="Hvis nye lokaliteter legges til eller gamle fjernes, eller man har avgrenset utvalget ved å tegne et polygon, skal det dokumenteres (hvorfor og hva)"
-                                            observableValue={[assessment, "artskartManuellKommentar"]} />
-                                    </div>}
-                                <p>Basert på periode:</p>
-                                <div className="distributionYears">
-                                    <div>
-                                        <p> f.o.m. år (t<sub>0</sub>)</p> 
-                                        <Xcomp.Number
-                                            style={{marginLeft: 20}}
-                                            observableValue={[assessment.riskAssessment, "AOOendyear1"]}
-                                            yearRange={true}/> 
-                                    </div>
-                                    <div>
-                                        <p>t.o.m. år</p>
-                                        <Xcomp.Number                            
-                                            // About the name of this property: Se domain!
-                                            observableValue={[assessment.riskAssessment, "AOOendyear2"]}
-                                            yearRange={true}/> 
-                                    </div> 
-                                </div>
-                                <div className="statusField">
-                                    <div className="labels distribution">
-                                        <div style={{display: 'flex', marginTop: '90px'}}>
-                                            <p>Forekomstareal <b>i dag</b> (km<sup>2</sup>):</p>
-                                            {!assessment.isDoorKnocker && 
-                                            <div style={{width: '100px', marginTop: '-5px'}}>
-                                                <b>Kjent</b>
-                                                <Xcomp.Number      
-                                                    className={"knownDistribution"} 
-                                                    observableValue={[assessment.riskAssessment, "AOOknownInput"]}
-                                                    observableErrors={[errorhandler, "(a)err6", "(a)err11"]}
-                                                    /> 
-                                            </div>
-                                            }
-                                        </div>
-                                        <ErrorList className="errorMessages180" errorhandler={errorhandler} errorids={["(a)err1",  "(a)err666", "(a)err18", "(a)err19", "(a)err20", "(a)err22", "(a)err23", "(a)err24", "(a)warn4", "(a)warn5"]} />
-                                        <p>Forekomstareal <b>om 50 år </b> (km<sup>2</sup>)</p>
-                                    </div>
-                                    <div className="distribution">
-                                        <DistributionTable/>
-                                    </div>
-                                </div>
-                                <div className="changedNature">
-                                    <p>Andel av kjent forekomstareal i sterkt endra natur (%) </p>
-                                    <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "spreadHistoryDomesticAreaInStronglyChangedNatureTypes"]} codes={koder.KnownDistributionInNature}/>
-                                </div>
-                                {assessment.speciesStatus == "C3" && 
-                                <div style={{marginTop: '50px'}}>
-                                    <p> {assessment.isRegionallyAlien ? generalLabels.SpeciesStatus.statusInNorwayRegionallyAlien : generalLabels.SpeciesStatus.statusInNorway } {generalLabels.SpeciesStatus.highestCategoryPerToday}</p>  
-                                    <br/> 
-                                    <Xcomp.StringEnum observableValue={[assessment, "speciesEstablishmentCategory"]} mode="radio" options={this.checkArea(assessment.riskAssessment.AOOtotalBest)} codes={koder.DistributionOptions}/>
-                                </div>    
-                                }         
-                            </div>
-                        }
-                        <hr></hr>  
-                            <div>
-                                <Documents/>
-                            </div>
-                        <div>
                         </div>
-                    </fieldset>
+                        <ErrorList errorhandler={errorhandler} errorids={["(a)warn6", "(a)warn7"]} />
+                        <div className="changedNature">
+                            <p>Andel av antatt forekomstareal i sterkt endra natur (%)</p>
+                            <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "spreadHistoryDomesticAreaInStronglyChangedNatureTypes"]} codes={koder.KnownDistributionInNature}/>
+                        </div>
+                    </div>
+                    : <div>
+                        <div style={{marginLeft: 20, marginBottom: 30}}>
+                            <ModalArtskart
+                                taxonId={assessment.taxonId}
+                                scientificNameId={assessment.evaluatedScientificNameId}
+                                evaluationContext={assessment.evaluationContext}
+                                showWaterAreas={this.GetIsRegionalAssessment(assessment)}
+                                artskartWaterModel={assessment.artskartWaterModel}
+                                waterFeatures={this.getWaterFeatures(assessment)}
+                                labels={labels}
+                                utvalg={assessment.riskAssessment}
+                                artskartModel={assessment.artskartModel}
+                                onOverførFraArtskart={action(this.handleOverførFraArtskart)}
+                                artskartSelectionGeometry={assessment.artskartSelectionGeometry}
+                                artskartAdded={assessment.artskartAdded}
+                                artskartRemoved={assessment.artskartRemoved}
+                                unused={this.waterIsChanged}
+                            />
+                        </div>
+                        <div style={{ paddingBottom: 16 }}>
+                            {assessment.artskartSistOverført && (!!assessment.artskartAdded || !!assessment.artskartRemoved || assessment.artskartSelectionGeometry) 
+                            ? <span>Sist overført fra Artskart {beskrivTidSiden(assessment.artskartSistOverført, appState.codeLabels.Timing)}. </span>
+                            : null}
+                            {assessment.artskartManuellAdd > 0 
+                            ? <span>{assessment.artskartManuellAdd} {assessment.artskartManuellAdd === 1 ? "rute" : "ruter"} ble manuelt lagt til. </span>
+                            : null}
+                            {assessment.artskartManuellRemove > 0 
+                            ? <span>{assessment.artskartManuellRemove} {assessment.artskartManuellRemove === 1 ? "rute" : "ruter"} ble manuelt fjernet.</span>
+                            : null}
+                            {assessment.artskartSelectionGeometry 
+                            ? <span>Et polygon som ekskluderer <b>{assessment.b2ForekomstarealKjentAndel / 4}</b> {assessment.b2ForekomstarealKjentAndel / 4 === 1 ? "rute" : "ruter"} har blitt lagt til.</span>
+                            : null}
+                        </div>
+                        {(!!assessment.artskartAdded || !!assessment.artskartRemoved || assessment.artskartSelectionGeometry) 
+                        ? <div style={{ paddingBottom: 24 }}>
+                            <Xcomp.HtmlString
+                                label="Hvis nye lokaliteter legges til eller gamle fjernes, eller man har avgrenset utvalget ved å tegne et polygon, skal det dokumenteres (hvorfor og hva)"
+                                observableValue={[assessment, "artskartManuellKommentar"]} />
+                        </div>
+                        : null}
+                        <p>Basert på periode:</p>
+                        <div className="distributionYears">
+                            <div>
+                                <p> f.o.m. år (t<sub>0</sub>)</p> 
+                                <Xcomp.Number
+                                    style={{marginLeft: 20}}
+                                    observableValue={[assessment.riskAssessment, "AOOendyear1"]}
+                                    yearRange={true}/> 
+                            </div>
+                            <div>
+                                <p>t.o.m. år</p>
+                                <Xcomp.Number                            
+                                    // About the name of this property: Se domain!
+                                    observableValue={[assessment.riskAssessment, "AOOendyear2"]}
+                                    yearRange={true}/> 
+                            </div> 
+                        </div>
+                        <div className="statusField">
+                            <div className="labels distribution">
+                                <div style={{display: 'flex', marginTop: '90px'}}>
+                                    <p>Forekomstareal <b>i dag</b> (km<sup>2</sup>):</p>
+                                    {!assessment.isDoorKnocker  
+                                    ? <div style={{width: '100px', marginTop: '-5px'}}>
+                                        <b>Kjent</b>
+                                        <Xcomp.Number      
+                                            className={"knownDistribution"} 
+                                            observableValue={[assessment.riskAssessment, "AOOknownInput"]}
+                                            observableErrors={[errorhandler, "(a)err6", "(a)err11"]}
+                                        /> 
+                                    </div>
+                                    : null}
+                                </div>
+                                <ErrorList className="errorMessages180" errorhandler={errorhandler} errorids={["(a)err1",  "(a)err666", "(a)err18", "(a)err19", "(a)err20", "(a)err22", "(a)err23", "(a)err24", "(a)warn4", "(a)warn5"]} />
+                                <p>Forekomstareal <b>om 50 år </b> (km<sup>2</sup>)</p>
+                            </div>
+                            <div className="distribution">
+                                <DistributionTable/>
+                            </div>
+                        </div>
+                        <div className="changedNature">
+                            <p>Andel av kjent forekomstareal i sterkt endra natur (%) </p>
+                            <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "spreadHistoryDomesticAreaInStronglyChangedNatureTypes"]} codes={koder.KnownDistributionInNature}/>
+                        </div>
+                        {assessment.speciesStatus == "C3" 
+                        ? <div style={{marginTop: '50px'}}>
+                            <p> {assessment.isRegionallyAlien ? generalLabels.SpeciesStatus.statusInNorwayRegionallyAlien : generalLabels.SpeciesStatus.statusInNorway } {generalLabels.SpeciesStatus.highestCategoryPerToday}</p>  
+                            <br/> 
+                            <Xcomp.StringEnum observableValue={[assessment, "speciesEstablishmentCategory"]} mode="radio" options={this.checkArea(assessment.riskAssessment.AOOtotalBest)} codes={koder.DistributionOptions}/>
+                        </div>    
+                        : null}         
+                    </div>
+                    }
+                    <hr>
+                    </hr>  
+                    <div>
+                        <Documents/>
+                    </div>
+                    <div>
+                    </div>
+                </fieldset>
                 <fieldset className="well">
                     <h4>Regionvis utbredelse</h4>
-                    {assessment.fylkesforekomster ? (assessment.fylkesforekomster.map(e => e.state ? '' : '')) : ''}
-                    {!(this.GetIsRegionalAssessment(assessment)) &&
-                        <Fylkesforekomst
-                            evaluationContext={assessment.evaluationContext}
-                            taxonId={assessment.TaxonId}
-                            latinsknavnId={assessment.latinsknavnId}
-                            utvalg={assessment.artskartModel}
-                            {...assessment.artskartModel} // Rerender hack
-                            artskartModel={assessment.artskartModel}  // could replace this one?
-                            fylkesforekomster={assessment.fylkesforekomster}
-                            assessment={assessment}
-                            disabled={appState.userContext.readonly}
-                            onOverførFraArtskart={action(this.handleOverførFraArtskart)} />
-                    }
-                    {this.initialWaterAreas && this.GetIsRegionalAssessment(assessment) &&
-                    <div>
-                        {this.initialWaterAreas &&
-                            <WaterArea
+                    {assessment.fylkesforekomster ? (assessment.fylkesforekomster.map(e => e.state ? '' : '')) : '' /* todo: WHAT??? */ } 
+                    {!(this.GetIsRegionalAssessment(assessment)) 
+                    ? <Fylkesforekomst
+                        evaluationContext={assessment.evaluationContext}
+                        taxonId={assessment.TaxonId}
+                        latinsknavnId={assessment.latinsknavnId}
+                        utvalg={assessment.artskartModel}
+                        {...assessment.artskartModel} // Rerender hack
+                        artskartModel={assessment.artskartModel}  // could replace this one?
+                        fylkesforekomster={assessment.fylkesforekomster}
+                        assessment={assessment}
+                        disabled={appState.userContext.readonly}
+                        onOverførFraArtskart={action(this.handleOverførFraArtskart)} />
+                    : null}
+                    {this.initialWaterAreas && this.GetIsRegionalAssessment(assessment) 
+                    ? <div>
+                        {this.initialWaterAreas 
+                        ? <WaterArea
                                 assessment={assessment}
                                 initialWaterAreas={this.initialWaterAreas}
                                 onWaterCheck={action(this.handleWaterCheck)}
                                 waterIsChanged={this.waterIsChanged}
-                                />
-                        }
+                        />
+                        : null}
                         <div style={{display: 'inline-flex', width: '100%'}}>
                             <div className="waterAreas">
                                 <p>Kjent utbredelse i dag</p>
@@ -459,17 +459,17 @@ export default class Assessment52Utbredelse extends React.Component {
                             </div>
                         </div>
                     </div>
-                    }
+                    : null}
                     <label htmlFor="CurrentPresenceComment">{labels.describeAsumption}</label>
                     <Xcomp.HtmlString observableValue={[assessment, 'currentPresenceComment']}/>
-                    {assessment.isDoorKnocker ?
-                        <p>Beskriv antatt utbredelse <i>(overføres til oppsummeringen)</i></p> :
-                        <p>Beskriv utbredelseshistorikk og dagens utbredelse i Norge <i>(overføres til oppsummeringen)</i></p>
+                    {assessment.isDoorKnocker 
+                    ? <p>Beskriv antatt utbredelse <i>(overføres til oppsummeringen)</i></p> 
+                    : <p>Beskriv utbredelseshistorikk og dagens utbredelse i Norge <i>(overføres til oppsummeringen)</i></p>
                     }
                     <Xcomp.HtmlString observableValue={[assessment.riskAssessment, 'criteriaDocumentationDomesticSpread']}/>
                 </fieldset>
-                {!assessment.isDoorKnocker ?
-                <fieldset className="well">
+                {!assessment.isDoorKnocker
+                ? <fieldset className="well">
                     <h4>Annen informasjon (ikke obligatorisk)</h4>
                     <div className="statusField">
                         <div className="labels">
@@ -478,43 +478,36 @@ export default class Assessment52Utbredelse extends React.Component {
                         </div>
                         <div className="numbers otherInfo">
                             <Xcomp.Number observableValue={[assessment, "currentSpreadArea"]} integer/>    
-                             <Xcomp.Number observableValue={[assessment, "currentIndividualCount"]} integer/>
+                            <Xcomp.Number observableValue={[assessment, "currentIndividualCount"]} integer/>
                         </div>
                     </div>
-                        
                 </fieldset>
                 : null }
 
-                {assessment.spreadHistory.length > 0 && 
-                    <fieldset className="well" id="spreadHistoryDomestic">
-                        <h4>Utbredelseshistorikk 2018</h4>
+                {assessment.spreadHistory.length > 0 
+                ? <fieldset className="well" id="spreadHistoryDomestic">
+                    <h4>Utbredelseshistorikk 2018</h4>
                     <UtbredelseshistorikkInnenlands vurdering={assessment} fabModel={appState}/>
                     {assessment.spreadHistoryDomesticDocumentation
-                        ? <div>
-                            <h4>{labels.previousInfo}. <b>{labels.mustTransfer}</b></h4>
-                            <p
-                                dangerouslySetInnerHTML={{
-                                    __html: assessment.spreadHistoryDomesticDocumentation
-                                }} />
-                            <Xcomp.Button onClick={() => {
-                                const existing = assessment.riskAssessment.criteriaDocumentationDomesticSpread
-                                const newstring = !existing
-                                    ? assessment.spreadHistoryDomesticDocumentation
-                                    : existing + assessment.spreadHistoryDomesticDocumentation
-                                    assessment.riskAssessment.criteriaDocumentationDomesticSpread = newstring
-                                assessment.spreadHistoryDomesticDocumentation = null
-                            }}>{labels.transfer}</Xcomp.Button>
-                            <hr />
-                        </div>
-                        : null } 
-                        
-                            
-                    </fieldset>
-                }
-                    {config.showPageHeaders
-                        ? <h3>{fabModel.kodeLabels.DistributionHistory.heading}</h3>
-                        : <br/>}
-            </div>
+                    ? <div>
+                        <h4>{labels.previousInfo}. <b>{labels.mustTransfer}</b></h4>
+                        <p dangerouslySetInnerHTML={{ __html: assessment.spreadHistoryDomesticDocumentation}} />
+                        <Xcomp.Button onClick={() => {
+                            const existing = assessment.riskAssessment.criteriaDocumentationDomesticSpread
+                            const newstring = !existing
+                                ? assessment.spreadHistoryDomesticDocumentation
+                                : existing + assessment.spreadHistoryDomesticDocumentation
+                            assessment.riskAssessment.criteriaDocumentationDomesticSpread = newstring
+                            assessment.spreadHistoryDomesticDocumentation = null
+                        }}>{labels.transfer}</Xcomp.Button>
+                        <hr />
+                    </div>
+                    : null } 
+                </fieldset>
+                : null}
+                {config.showPageHeaders
+                ? <h3>{fabModel.kodeLabels.DistributionHistory.heading}</h3>
+                : <br/>}
             </div>
         )
     }
