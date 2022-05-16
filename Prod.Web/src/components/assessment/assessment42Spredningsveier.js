@@ -14,7 +14,6 @@ export default class Assessment42Spredningsveier extends React.Component {
         extendObservable(this, {
             visibleDefinitions: false,
         })
-
         this.toggleDefinitions = (e) => {
             action(() => {
                 this.visibleDefinitions = !this.visibleDefinitions
@@ -27,11 +26,11 @@ export default class Assessment42Spredningsveier extends React.Component {
         var text = ""
         if (pathways != undefined) {
             pathways.map (pathway => pathway.children.map(higherLevel => { 
-                higherLevel.children.map(lowerLevel => {if (lowerLevel.value === val) { 
-                                                                            text = higherLevel.name + " - " + lowerLevel.name + ": "
-                                                                            }})     
+                higherLevel.children.map(lowerLevel => {
+                    if (lowerLevel.value === val) { 
+                        text = higherLevel.name + " - " + lowerLevel.name + ": "
+                    }})     
             }))
-            
         }
         return text
     }
@@ -43,7 +42,7 @@ export default class Assessment42Spredningsveier extends React.Component {
     }
 
     // changing the category of "Direkte import" til "Rømning/forvilling"
-    changeCategory (cat) {
+    transformCode (cat) {
         switch (cat) {
             case 'importAgriculture' : 
                 return 'agriculture';
@@ -73,7 +72,6 @@ export default class Assessment42Spredningsveier extends React.Component {
                 return ""
         }
     }
-
    
     @action saveMigrationPathway(vurdering, mp, name, migrationPathways) {
         const mps = name == "Til innendørs- eller produksjonsareal" ? vurdering.importPathways : vurdering.assesmentVectors
@@ -81,14 +79,12 @@ export default class Assessment42Spredningsveier extends React.Component {
         const introSpread = name == "Videre spredning i natur" ? "spread" : "introduction"
         mp.introductionSpread = introSpread
         const newMp = compstr(mp)
-        const existing = mps.filter(oldMp =>  compstr(oldMp) === newMp
-        )
+        const existing = mps.filter(oldMp =>  compstr(oldMp) === newMp)
         if (existing.length > 0) {
             console.log("Spredningsvei finnes allerede i vurderingen")
         } else {
             const clone = toJS(mp)
             mps.push(clone); // must use clone to avoid that multiple items in the list is the same instance! 
-
             // if the migration pathway is in "Til innendørs- eller produksjonsareal", then we have to add a matching pathway into "Introduksjon..."
             if (name == "Til innendørs- eller produksjonsareal") {
                 
@@ -106,33 +102,26 @@ export default class Assessment42Spredningsveier extends React.Component {
                     // changing the main category
                     copy.mainCategory = "Rømning/forvilling"
 
-                    copy.codeItem = this.changeCategory(mp.codeItem)
-                    console.log(copy.codeItem)
-
+                    copy.codeItem = this.transformCode(mp.codeItem)
+                    // console.log(copy.codeItem)
                     if (copy.codeItem != ""){
                         var cat = this.getCategoryText(copy.codeItem, migrationPathways).split("-")
                         copy.category = cat[1].substr(1, cat[1].length-3)
                     } else {
                         copy.category = ""
                     }
-                    
-                     // setting influence factor, magnitude and time of incident of the new pathway as null
-                     copy.influenceFactor = null
-                     copy.magnitude = null
-                     copy.timeOfIncident = null
-                     
-                     // if there is a matching category in "Rømning/forvilling", add the migration pathway to the "Introduction" table
-                     if (copy.category != "") {
-
+                    // setting influence factor, magnitude and time of incident of the new pathway as null
+                    copy.influenceFactor = null
+                    copy.magnitude = null
+                    copy.timeOfIncident = null
+                    // if there is a matching category in "Rømning/forvilling", add the migration pathway to the "Introduction" table
+                    if (copy.category != "") {
                         const newCopy = toJS(copy)          
                         console.log(newCopy)           
                         vurdering.assesmentVectors.push(newCopy)
-                     }
-                     
+                    }
                 }
-                
             }
-            
         }
     }
 
@@ -194,45 +183,42 @@ export default class Assessment42Spredningsveier extends React.Component {
             <fieldset className="well">
                 <h4>{name}</h4>
                 <div className="import">
-                <div className="well">
-                    <h5>Legg til spredningsvei</h5>
-                    <NewMigrationPathwaySelector migrationPathways={migrationPathwayKoder} onSave={mp => this.saveMigrationPathway(vurdering, mp, name, appState.spredningsveier.children)} mainCodes={koder} koder={importationCodes} vurdering={vurdering} labels={labels} />
+                    <div className="well">
+                        <h5>Legg til spredningsvei</h5>
+                        <NewMigrationPathwaySelector migrationPathways={migrationPathwayKoder} onSave={mp => this.saveMigrationPathway(vurdering, mp, name, appState.spredningsveier.children)} mainCodes={koder} koder={importationCodes} vurdering={vurdering} labels={labels} />
+                    </div>
+                    <div className="definitions">
+                        <button className="btn btn-primary" onClick={this.toggleDefinitions}>Se definisjoner</button>
+                        {this.visibleDefinitions 
+                        ? <p>
+                            {name == "Til innendørs- eller produksjonsareal" && <><b>Direkte import: </b> {directImport} <br/></>  }
+                            {(name == "Introduksjon til natur" || name == "Videre spredning i natur") && <><b>Tilsiktet utsetting: </b> {release} <br/></> }
+                            {name == "Introduksjon til natur" &&  <><b>Rømning/forvilling: </b> {escape} <br/></> }
+                            <b>Forurensning av vare: </b>Arten følger utilsikta med under transport av andre arter eller gjenstander (vektorer) og har en spesifikk økologisk tilknytning til den andre arten eller til det organiske mediet som ble transportert.
+                            <br/>
+                            <b>Blindpassasjer med transport: </b>Arten følger utilsikta med under transport av andre arter eller gjenstander (vektorer), men har bare en nokså tilfeldig tilknytning til varen eller gjenstanden som ble transportert, eller til selve transportmiddelet.
+                            <br/>
+                            {(name == "Introduksjon til natur" || name == "Videre spredning i natur") && <><b>Korridor: </b> {corridor} <br/>
+                                                                    <b>Egenspredning: </b> {naturalDispersal}</>  }
+                        </p>
+                        : null}
+                    </div>
                 </div>
-                <div className="definitions">
-                    <button className="btn btn-primary" onClick={this.toggleDefinitions}>Se definisjoner</button>
-                    
-                    {this.visibleDefinitions && 
-                    <p>
-                        {name == "Til innendørs- eller produksjonsareal" && <><b>Direkte import: </b> {directImport} <br/></>  }
-                        {(name == "Introduksjon til natur" || name == "Videre spredning i natur") && <><b>Tilsiktet utsetting: </b> {release} <br/></> }
-                        {name == "Introduksjon til natur" &&  <><b>Rømning/forvilling: </b> {escape} <br/></> }
-                        <b>Forurensning av vare: </b>Arten følger utilsikta med under transport av andre arter eller gjenstander (vektorer) og har en spesifikk økologisk tilknytning til den andre arten eller til det organiske mediet som ble transportert.
-                        <br/>
-                        <b>Blindpassasjer med transport: </b>Arten følger utilsikta med under transport av andre arter eller gjenstander (vektorer), men har bare en nokså tilfeldig tilknytning til varen eller gjenstanden som ble transportert, eller til selve transportmiddelet.
-                        <br/>
-                        {(name == "Introduksjon til natur" || name == "Videre spredning i natur") && <><b>Korridor: </b> {corridor} <br/>
-                                                                <b>Egenspredning: </b> {naturalDispersal}</>  }
-                    </p>
-                }
-                </div>
-                </div>
-                {migrationPathways.length > 0 &&
-                <>
-                    <h4>{labels.MigrationPathway.chosenPathways}</h4>
-                    <MPTable migrationPathways={migrationPathways} removeMigrationPathway={fjernSpredningsvei} showIntroductionSpread getCategoryText={this.getCategoryText} migrationPathwayCodes={appState.spredningsveier.children}/>
+                {migrationPathways.length > 0 
+                ? <>
+                <h4>{labels.MigrationPathway.chosenPathways}</h4>
+                <MPTable migrationPathways={migrationPathways} removeMigrationPathway={fjernSpredningsvei} showIntroductionSpread getCategoryText={this.getCategoryText} migrationPathwayCodes={appState.spredningsveier.children}/>
                 </>
-                     
-                }
+                : null}
                 <hr/>
-                
                 <p dangerouslySetInnerHTML={{__html: furtherInfo}}></p>
                 <Xcomp.HtmlString                            
-                                observableValue={observableDef}
-                                style={{
-                                    height: 180,
-                                    maxHeight: 200
-                                }}
-                                />
+                    observableValue={observableDef}
+                    style={{
+                        height: 180,
+                        maxHeight: 200
+                    }}
+                />
                 <Xcomp.HtmlString className="generatedText" observableValue={observableGeneratedStringDef} disabled />
             </fieldset>
         );
