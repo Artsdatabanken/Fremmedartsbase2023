@@ -191,15 +191,35 @@ export default class Assessment42Spredningsveier extends React.Component {
                         <button className="btn btn-primary" onClick={this.toggleDefinitions}>Se definisjoner</button>
                         {this.visibleDefinitions 
                         ? <p>
-                            {name == "Til innendørs- eller produksjonsareal" && <><b>Direkte import: </b> {directImport} <br/></>  }
-                            {(name == "Introduksjon til natur" || name == "Videre spredning i natur") && <><b>Tilsiktet utsetting: </b> {release} <br/></> }
-                            {name == "Introduksjon til natur" &&  <><b>Rømning/forvilling: </b> {escape} <br/></> }
+                            {name == "Til innendørs- eller produksjonsareal" 
+                            ? <>
+                            <b>Direkte import: </b> {directImport} 
+                            <br/>
+                            </>
+                            : null}
+                            {(name == "Introduksjon til natur" || name == "Videre spredning i natur") 
+                            ? <>
+                            <b>Tilsiktet utsetting: </b> {release} 
+                            <br/>
+                            </> 
+                            : null}
+                            {name == "Introduksjon til natur" 
+                            ? <>
+                            <b>Rømning/forvilling: </b> {escape} 
+                            <br/>
+                            </> 
+                            : null}
                             <b>Forurensning av vare: </b>Arten følger utilsikta med under transport av andre arter eller gjenstander (vektorer) og har en spesifikk økologisk tilknytning til den andre arten eller til det organiske mediet som ble transportert.
                             <br/>
                             <b>Blindpassasjer med transport: </b>Arten følger utilsikta med under transport av andre arter eller gjenstander (vektorer), men har bare en nokså tilfeldig tilknytning til varen eller gjenstanden som ble transportert, eller til selve transportmiddelet.
                             <br/>
-                            {(name == "Introduksjon til natur" || name == "Videre spredning i natur") && <><b>Korridor: </b> {corridor} <br/>
-                                                                    <b>Egenspredning: </b> {naturalDispersal}</>  }
+                            {(name == "Introduksjon til natur" || name == "Videre spredning i natur")
+                            ?<>
+                            <b>Korridor: </b> {corridor} 
+                            <br/>
+                            <b>Egenspredning: </b> {naturalDispersal}
+                            </>  
+                            : null}
                         </p>
                         : null}
                     </div>
