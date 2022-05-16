@@ -35,32 +35,32 @@
         },
         {
             id: "(a)err1",
-            get cond() {return !r.doorKnocker && a.productionSpecies != true && (hasnum(r.AOOtotalBestInput) && r.AOOtotalBestInput < 4)},
+            get cond() {return a.isAlienSpecies && !r.doorKnocker && a.productionSpecies != true && (hasnum(r.AOOtotalBestInput) && r.AOOtotalBestInput < 4)},
             msg: "En selvstendig reproduserende art må ha et forekomstareal på minst 4 km²!"
         },
         {
             id: "(a)err2",
-            get cond() {return !r.doorKnocker && (r.AOOtotalLowInput > r.AOOtotalBestInput)},
+            get cond() {return a.isAlienSpecies && !r.doorKnocker && (r.AOOtotalLowInput > r.AOOtotalBestInput)},
             msg: "Det nedre anslaget på forekomstarealet kan ikke være større enn det beste anslaget!"
         },
         {
             id: "(a)err3",
-            get cond() {return !r.doorKnocker && (r.AOOtotalHighInput < r.AOOtotalBestInput)},
+            get cond() {return a.isAlienSpecies && !r.doorKnocker && (r.AOOtotalHighInput < r.AOOtotalBestInput)},
             msg: "Det øvre anslaget på forekomstarealet kan ikke være mindre enn det beste anslaget!"
         },
         {
             id: "(a)err4",
-            get cond() {return !r.doorKnocker && (r.AOO50yrLowInput > r.AOO50yrBestInput)},
+            get cond() {return a.isAlienSpecies && !r.doorKnocker && (r.AOO50yrLowInput > r.AOO50yrBestInput)},
             msg: "Det nedre anslaget på forekomstarealet kan ikke være større enn det beste anslaget!"
         },
         {
             id: "(a)err5",
-            get cond() {return !r.doorKnocker && (r.AOO50yrHighInput < r.AOO50yrBestInput)},
+            get cond() {return a.isAlienSpecies && !r.doorKnocker && (r.AOO50yrHighInput < r.AOO50yrBestInput)},
             msg: "Det øvre anslaget på forekomstarealet kan ikke være mindre enn det beste anslaget!"
         },
         {
             id: "(a)err6",
-            get cond() {return !r.doorKnocker && (r.AOOtotalBestInput < r.AOOknownInput)},
+            get cond() {return a.isAlienSpecies && !r.doorKnocker && (r.AOOtotalBestInput < r.AOOknownInput)},
             msg: "Estimatet kan ikke justeres til å være lavere enn kjent forekomstareal!"
         },
         {
@@ -92,32 +92,32 @@
         },
         {
             id: "(a)err12",
-            get cond() {return !r.doorKnocker && hasnum(r.AOOtotalLowInput) && ((r.AOOtotalLowInput % 4) !== 0)},
+            get cond() {return a.isAlienSpecies && !r.doorKnocker && hasnum(r.AOOtotalLowInput) && ((r.AOOtotalLowInput % 4) !== 0)},
             msg: "Forekomstarealene må være multippel av 4_km²!"
         },
         {
             id: "(a)err13",
-            get cond() {return !r.doorKnocker && hasnum(r.AOOtotalBestInput) && ((r.AOOtotalBestInput % 4) !== 0) },
+            get cond() {return a.isAlienSpecies && !r.doorKnocker && hasnum(r.AOOtotalBestInput) && ((r.AOOtotalBestInput % 4) !== 0) },
             msg: "Forekomstarealene må være multippel av 4_km²!"
         },
         {
             id: "(a)err14",
-            get cond() {return !r.doorKnocker && hasnum(r.AOOtotalHighInput) && ((r.AOOtotalHighInput % 4) !== 0)},
+            get cond() {return a.isAlienSpecies && !r.doorKnocker && hasnum(r.AOOtotalHighInput) && ((r.AOOtotalHighInput % 4) !== 0)},
             msg: "Forekomstarealene må være multippel av 4_km²!"
         },
         {
             id: "(a)err15",
-            get cond() {return !r.doorKnocker && hasnum(r.AOO50yrLowInput) && ((r.AOO50yrLowInput % 4) !== 0) },
+            get cond() {return a.isAlienSpecies && !r.doorKnocker && hasnum(r.AOO50yrLowInput) && ((r.AOO50yrLowInput % 4) !== 0) },
             msg: "Forekomstarealene må være multippel av 4_km²!"
         },
         {
             id: "(a)err16",
-            get cond() {return !r.doorKnocker && hasnum(r.AOO50yrBestInput) && ((r.AOO50yrBestInput % 4) !== 0)},
+            get cond() {return a.isAlienSpecies && !r.doorKnocker && hasnum(r.AOO50yrBestInput) && ((r.AOO50yrBestInput % 4) !== 0)},
             msg: "Forekomstarealene må være multippel av 4_km²!"
         },
         {
             id: "(a)err17",
-            get cond() {return !r.doorKnocker && hasnum(r.AOO50yrHighInput) && ((r.AOO50yrHighInput % 4) !== 0)},
+            get cond() {return a.isAlienSpecies && !r.doorKnocker && hasnum(r.AOO50yrHighInput) && ((r.AOO50yrHighInput % 4) !== 0)},
             msg: "Forekomstarealene må være multippel av 4_km²!"
         },
         // {
@@ -127,42 +127,42 @@
         // },
         {
             id: "(a)err666",
-            get cond() {return !r.doorKnocker && (resolveid("(a)err11") || resolveid("(a)err12") || resolveid("(a)err13") || resolveid("(a)err14") || resolveid("(a)err15") || resolveid("(a)err16") || resolveid("(a)err17"))},
+            get cond() {return a.isAlienSpecies && !r.doorKnocker && (resolveid("(a)err11") || resolveid("(a)err12") || resolveid("(a)err13") || resolveid("(a)err14") || resolveid("(a)err15") || resolveid("(a)err16") || resolveid("(a)err17"))},
             msg: "Forekomstarealet er ikke gyldig. Det må være delbart med 4 (forekomstareal = antall forekomster x 4 km²)!"
         },
         {
             id: "(a)err18",
-            get cond() {return !r.doorKnocker && (r.AOOtotalLowInput > r.AOOtotalBestInput)},
+            get cond() {return a.isAlienSpecies && !r.doorKnocker && (r.AOOtotalLowInput > r.AOOtotalBestInput)},
             msg: "Lavt anslag kan ikke være større enn beste anslag!"
         },
         {
             id: "(a)err19",
-            get cond() {return !r.doorKnocker && (r.AOOtotalLowInput > r.AOOtotalHighInput)},
+            get cond() {return a.isAlienSpecies && !r.doorKnocker && (r.AOOtotalLowInput > r.AOOtotalHighInput)},
             msg: "Lavt anslag kan ikke være større enn høyt anslag!"
         },
         {
             id: "(a)err20",
-            get cond() {return !r.doorKnocker && (r.AOOtotalBestInput > r.AOOtotalHighInput)},
+            get cond() {return a.isAlienSpecies && !r.doorKnocker && (r.AOOtotalBestInput > r.AOOtotalHighInput)},
             msg: "Beste anslag kan ikke være større enn høyt anslag!"
         },
         {
             id: "(a)err22",
-            get cond() {return !r.doorKnocker && (r.AOOtotalBestInput < r.AOOknownInput)},
+            get cond() {return a.isAlienSpecies && !r.doorKnocker && (r.AOOtotalBestInput < r.AOOknownInput)},
             msg: "Det beste anslaget på det totale nåværende forekomstarealet kan ikke være mindre enn det kjente!"
         },
         {
             id: "(a)err23",
-            get cond() {return !r.doorKnocker && (r.AOO50yrLowInput > r.AOO50yrBestInput)},
+            get cond() {return a.isAlienSpecies && !r.doorKnocker && (r.AOO50yrLowInput > r.AOO50yrBestInput)},
             msg: "Lavt anslag kan ikke være større enn beste anslag!"
         },
         {
             id: "(a)err24",
-            get cond() {return !r.doorKnocker && (r.AOO50yrHighInput < r.AOO50yrBestInput)},
+            get cond() {return a.isAlienSpecies && !r.doorKnocker && (r.AOO50yrHighInput < r.AOO50yrBestInput)},
             msg: "Beste anslag kan ikke være større enn høyt anslag!"
         },
         {
             id: "(a)err25",
-            get cond() {return !r.doorKnocker && r.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && !hasnum(r.AOOtotalBestInput) },
+            get cond() {return a.isAlienSpecies && !r.doorKnocker && r.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && !hasnum(r.AOOtotalBestInput) },
             msg: "Informasjon om forekomstareal må legges inn før metoden Forenklet anslag kan brukes på A-kriteriet"
         },
         {
