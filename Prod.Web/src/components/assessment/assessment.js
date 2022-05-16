@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { observer, inject } from 'mobx-react'
 import {action, observable, extendObservable} from 'mobx'
-import auth from '../authService'
+// import auth from '../authService'
 import * as Xcomp from '../observableComponents'
 import Tabs from '../tabs'
 import Assessment10Horisontskanning from './assessment10Horisontskanning'
@@ -80,24 +80,23 @@ class AssessmentRoot extends Component {
         createTaxonSearch(this.newTaxon, this.props.appState.evaluationContext)
     }
 
-        lockAssessment(e, assessment, appState) {
-                e.stopPropagation()
-                appState.lockFraHode(assessment)
-        }
-        @observable move = false
+    // lockAssessment(e, assessment, appState) {
+    //         e.stopPropagation()
+    //         appState.lockFraHode(assessment)
+    // }
+    // @observable move = false
         
-        render() {
-            const {appState, appState:{assessment}, appState:{assessmentTabs}} = this.props
-            const rolle = appState.roleincurrentgroup
-            const isSuperUser = rolle.admin
-            const isFinished = assessment.evaluationStatus && assessment.evaluationStatus === "finished"
-            const canEdit = !isFinished && appState.roleincurrentgroup.skriver && assessment.lockedForEditByUser == null    
+    render() {
+        const {appState, appState:{assessment}, appState:{assessmentTabs}} = this.props
+        // const rolle = appState.roleincurrentgroup
+        // const isSuperUser = rolle.admin
+        // const isFinished = assessment.evaluationStatus && assessment.evaluationStatus === "finished"
+        // const canEdit = !isFinished && appState.roleincurrentgroup.skriver && assessment.lockedForEditByUser == null    
         if (window.appInsights) {
             window.appInsights.trackPageView({
             name: 'Assessment ' + assessment.evaluatedScientificName, 
             properties: { SpeciesGroup: assessment.expertGroup }});
         }
-
         const kritDocInfo = {
             alienSpeciesCategory: assessment.alienSpeciesCategory || "AlienSpecie",
             limnic: assessment.limnic,
@@ -108,50 +107,54 @@ class AssessmentRoot extends Component {
         return (
             <div>
                 <Tabs clName={"nav_menu faner"} tabData={assessmentTabs}/> 
-                {
-                assessmentTabs.activeTab.id === 0  ?
-                <ErrorBoundary><Assessment10Horisontskanning/></ErrorBoundary> :
-                assessmentTabs.activeTab.id === 1  ?
-                <ErrorBoundary><Assessment20ArtensStatus newTaxon={this.newTaxon}/></ErrorBoundary>
-                : assessmentTabs.activeTab.id === 2  ?
-                <ErrorBoundary><Assessment30Artsegenskaper /></ErrorBoundary>
-                : assessmentTabs.activeTab.id === 3  ?
-                <ErrorBoundary><Assessment41Import/></ErrorBoundary>
-                : assessmentTabs.activeTab.id === 4  ?
-                <ErrorBoundary><Assessment50Bakgrunnsdata/></ErrorBoundary>
-                : assessmentTabs.activeTab.id === 5  ?
-                <ErrorBoundary><Assessment60Risikovurdering/></ErrorBoundary>
-                : assessmentTabs.activeTab.id === 6  ?
-                <ErrorBoundary><Assessment70Klimaeffekter/></ErrorBoundary>
-                : assessmentTabs.activeTab.id === 7  ?
-                <ErrorBoundary><Assessment80GeografiskVariasjon/></ErrorBoundary>
-                : assessmentTabs.activeTab.id === 8  ?
-                <ErrorBoundary><Assessment91Kriteriedokumentasjon kritDocInfo={kritDocInfo}/></ErrorBoundary>
-                : assessmentTabs.activeTab.id === 9  ?
-                <ErrorBoundary><AssessmentReferences/></ErrorBoundary>
-                : assessmentTabs.activeTab.id === 10  ?
-                <ErrorBoundary><AssessmentComments/></ErrorBoundary>
-                : assessmentTabs.activeTab.id === 11  ?
-                <AssessmentDiff/>
+                {assessmentTabs.activeTab.id === 0
+                ? <ErrorBoundary><Assessment10Horisontskanning/></ErrorBoundary>
+                : assessmentTabs.activeTab.id === 1 
+                ? <ErrorBoundary><Assessment20ArtensStatus newTaxon={this.newTaxon}/></ErrorBoundary>
+                : assessmentTabs.activeTab.id === 2
+                ? <ErrorBoundary><Assessment30Artsegenskaper /></ErrorBoundary>
+                : assessmentTabs.activeTab.id === 3
+                ? <ErrorBoundary><Assessment41Import/></ErrorBoundary>
+                : assessmentTabs.activeTab.id === 4
+                ? <ErrorBoundary><Assessment50Bakgrunnsdata/></ErrorBoundary>
+                : assessmentTabs.activeTab.id === 5
+                ? <ErrorBoundary><Assessment60Risikovurdering/></ErrorBoundary>
+                : assessmentTabs.activeTab.id === 6
+                ? <ErrorBoundary><Assessment70Klimaeffekter/></ErrorBoundary>
+                : assessmentTabs.activeTab.id === 7
+                ? <ErrorBoundary><Assessment80GeografiskVariasjon/></ErrorBoundary>
+                : assessmentTabs.activeTab.id === 8
+                ? <ErrorBoundary><Assessment91Kriteriedokumentasjon kritDocInfo={kritDocInfo}/></ErrorBoundary>
+                : assessmentTabs.activeTab.id === 9
+                ? <ErrorBoundary><AssessmentReferences/></ErrorBoundary>
+                : assessmentTabs.activeTab.id === 10
+                ? <ErrorBoundary><AssessmentComments/></ErrorBoundary>
+                : assessmentTabs.activeTab.id === 11
+                ? <AssessmentDiff/>
                 :<h1>Oooops?? artinfotab:{assessmentTabs.activeTab.id}</h1>}
-                {assessmentTabs.activeTab.id != 12 && assessmentTabs.activeTab.id != 11 && assessment && assessment.evaluationStatus !== 'finished' &&     
-                <Xcomp.Button primary disabled={assessmentTabs.activeTab.id === 7 && assessment.riskAssessment.riskLevelCode == "NK"} style={{marginTop: '10px', marginBottom: '10px'}} onClick= {() => {
-                    console.log("Save assessment");
-                    appState.saveCurrentAssessment();
-                  }}>Lagre</Xcomp.Button>}
+                {assessmentTabs.activeTab.id !== 12 && assessmentTabs.activeTab.id !== 11 && assessment && assessment.evaluationStatus !== 'finished'
+                ? <Xcomp.Button 
+                    primary 
+                    disabled={assessmentTabs.activeTab.id === 7 && assessment.riskAssessment.riskLevelCode === "NK"} 
+                    style={{marginTop: '10px', marginBottom: '10px'}} 
+                    onClick= {() => {
+                        console.log("Save assessment");
+                        appState.saveCurrentAssessment();
+                    }}>Lagre</Xcomp.Button>
+                : null}
             </div>
         )
     }
 
-    isFinished() {
-        const isfinished = this.props.appState.asssessment.evaluationStatus === "finished"
-        return isfinished
-    }
+    // isFinished() {
+    //     const isfinished = this.props.appState.asssessment.evaluationStatus === "finished"
+    //     return isfinished
+    // }
 
-    isReadOnly() {
-        const isreadonly = this.props.appState.asssessment.lockedForEditByUser !== auth.userId
-        return isreadonly || this.isFinished()
-    }
+    // isReadOnly() {
+    //     const isreadonly = this.props.appState.asssessment.lockedForEditByUser !== auth.userId
+    //     return isreadonly || this.isFinished()
+    // }
 }
 
 export default function Assessment(props) {
