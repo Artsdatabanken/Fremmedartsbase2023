@@ -1,15 +1,11 @@
-// import config from '../../config';
 import config from '../../config';
 import React from 'react';
-import PropTypes from 'prop-types'
 import {observer, inject} from 'mobx-react';
-
 import * as Xcomp from './observableComponents';
 import {action, autorun, computed, extendObservable, observable, toJS} from 'mobx';
 import NewMigrationPathwaySelector from './40Spredningsveier/NewMigrationPathwaySelector'
 import MPTable from './40Spredningsveier/MigrationPathwayTable'
 const labels = config.labels
-
 @inject("appState")
 @observer
 export default class Assessment42Spredningsveier extends React.Component {
@@ -21,12 +17,10 @@ export default class Assessment42Spredningsveier extends React.Component {
 
         this.toggleDefinitions = (e) => {
             action(() => {
-               // e.stopPropagation();
                 this.visibleDefinitions = !this.visibleDefinitions
                 console.log(this.visibleDefinitions)
             })()
         }
-
     }
     // searches through the code tree to find the category name and the main category name
     getCategoryText(val, pathways) {
@@ -84,11 +78,8 @@ export default class Assessment42Spredningsveier extends React.Component {
     @action saveMigrationPathway(vurdering, mp, name, migrationPathways) {
         const mps = name == "Til innendørs- eller produksjonsareal" ? vurdering.importPathways : vurdering.assesmentVectors
         const compstr = (mp) => ""+mp.codeItem+mp.introductionSpread+mp.influenceFactor+mp.magnitude+mp.timeOfIncident
-
-       
         const introSpread = name == "Videre spredning i natur" ? "spread" : "introduction"
         mp.introductionSpread = introSpread
-        
         const newMp = compstr(mp)
         const existing = mps.filter(oldMp =>  compstr(oldMp) === newMp
         )
@@ -143,11 +134,7 @@ export default class Assessment42Spredningsveier extends React.Component {
             }
             
         }
-        // this.showEditMigrationPathway = false;
     }
-
-    
-   
 
     @action fjernSpredningsvei = (vurdering, value, name) => {
         const result = name == "Til innendørs- eller produksjonsareal" ?  vurdering.importPathways.remove(value) : vurdering.assesmentVectors.remove(value);
@@ -195,29 +182,7 @@ export default class Assessment42Spredningsveier extends React.Component {
             ? [assessment, "spreadFurtherSpreadFurtherInfoGeneratedText"] 
             : [assessment, "spreadIntroductionFurtherInfoGeneratedText"] 
         
-    //     // sets the string composed of all elaborate information and related categories
-    //     var elaborateInformation = ""
-
-    //     if (migrationPathways != []) {
-
-    //         for (var i = 0; i < migrationPathways.length; i++) {
-    //             if (migrationPathways[i].elaborateInformation != "") {
-    //                 var categoryText = this.getCategoryText(migrationPathways[i].codeItem, appState.spredningsveier.children)
-    //                 elaborateInformation += categoryText + this.removeBreaks(migrationPathways[i].elaborateInformation) + "." + "<br>"                       
-    //             }
-                
-    //         }
-    //     }
-    //    riskAssessment.furtherInfoAboutImport = elaborateInformation
-
-
-        //console.log(appState.spredningsveier.children)
-        // const labels = fabModel.kodeLabels
-        // console.log("''''''''''''''''''''''")
-        // console.log(JSON.stringify(migrationPathwayKoder))
         const nbsp = "\u00a0"
-        // console.log("fabModel" + fabModel.toString() )
-        // console.log("koder" + fabModel.koder.toString() )
         const fjernSpredningsvei = (mp) => this.fjernSpredningsvei(vurdering, mp, name)
         const directImport = "Arten blir tilsikta satt ut i et innendørs-miljø eller på produksjonsareal."
         const release = "Arten blir tilsikta satt ut direkte i norsk natur (utenfor artens eventuelle produksjonsareal), med den hensikt at arten overlever i naturen."
@@ -227,10 +192,6 @@ export default class Assessment42Spredningsveier extends React.Component {
         
         return(
             <fieldset className="well">
-                
-               {/* 
-                    div style={{marginBottom: "30px"}}
-                { true || config.showPageHeaders ? <h4 style={{marginTop: "25px"}} >{labels.MigrationPathway.introductionSpread}</h4> : <br />} */}
                 <h4>{name}</h4>
                 <div className="import">
                 <div className="well">
@@ -268,27 +229,12 @@ export default class Assessment42Spredningsveier extends React.Component {
                 <Xcomp.HtmlString                            
                                 observableValue={observableDef}
                                 style={{
-                                    //width: 800,
                                     height: 180,
                                     maxHeight: 200
                                 }}
-                                // observableValue={[riskAssessment, "furtherInfoAboutImport"]}
-                                //label={labels.DEcrit.insecurity}
-                                
-                               // value={elaborateInformation}
-                                //placeholder={labels.Import.furtherInfoComment}
                                 />
                 <Xcomp.HtmlString className="generatedText" observableValue={observableGeneratedStringDef} disabled />
-
             </fieldset>
         );
     }
 }
-
-
-
-
-// Assessment42Spredningsveier.propTypes = {
-// 	viewModel: PropTypes.object.isRequired,
-// 	vurdering: PropTypes.object.isRequired
-// }
