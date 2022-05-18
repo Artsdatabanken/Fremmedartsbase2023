@@ -4,8 +4,7 @@ import {observer, inject} from 'mobx-react';
 import {action, autorun, computed, extendObservable, observable, toJS} from 'mobx';
 import * as Xcomp from './observableComponents';
 import Assessment42Spredningsveier from './assessment42Spredningsveier'
-const labels = config.labels
-
+// const labels = config.labelss
 
 @inject("appState")
 @observer

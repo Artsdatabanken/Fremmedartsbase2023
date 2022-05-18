@@ -1,11 +1,11 @@
-import config from '../../config';
+// import config from '../../config';
 import React from 'react';
 import {observer, inject} from 'mobx-react';
 import * as Xcomp from './observableComponents';
 import {action, autorun, computed, extendObservable, observable, toJS} from 'mobx';
 import NewMigrationPathwaySelector from './40Spredningsveier/NewMigrationPathwaySelector'
 import MPTable from './40Spredningsveier/MigrationPathwayTable'
-const labels = config.labels
+// const labels = config.labels
 @inject("appState")
 @observer
 export default class Assessment42Spredningsveier extends React.Component {
