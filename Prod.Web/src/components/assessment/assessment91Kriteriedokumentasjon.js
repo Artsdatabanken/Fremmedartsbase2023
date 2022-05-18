@@ -1,23 +1,18 @@
 import config from '../../config';
 import React from 'react';
-import PropTypes from 'prop-types'
 import {observer, inject} from 'mobx-react';
-import {autorun, extendObservable, observable} from 'mobx';
 import * as Xcomp from './observableComponents';
 import Risikomatrise from './risikomatrise';
 import Documents from '../documents'
 import errorhandler from '../errorhandler';
 import ErrorList from '../errorList';
 import auth from '../authService';
-
-
 @inject("appState")
 @observer
 export default class Assessment91Kriteriedokumentasjon extends React.Component {
     constructor(props) {
         super(props)
     }
-
     setAssessmentComplete(appState) {
         // console.log("#&% setAssessmentComplete")
         const r = window.confirm("Er du sikker på at du vil ferdigstille vurderingen?")
@@ -25,14 +20,12 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
             appState.setAssessmentComplete("finish")
         }
     }
-
     resetAssessmentComplete(appState) {
         const r = window.confirm("Er du sikker på at du vil åpne for videre vurdering?")
         if (r) {
             appState.setAssessmentComplete("unfinish")
         }
     }
-
     render() {
         const {appState:{assessment}, appState:{assessment:{riskAssessment}}, appState, kritDocInfo} = this.props;
         const labels = appState.codeLabels
@@ -43,19 +36,14 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
         const ltml = val => koder.limnicTerrestrialMarine.filter(kode => kode.Value === val)[0].Text
         const _alienSpeciesCategoryLabel = koder.AlienSpeciesCategory.filter(kode => kode.Value === kdi.alienSpeciesCategory  )
         const alienSpeciesCategoryLabel = _alienSpeciesCategoryLabel ? _alienSpeciesCategoryLabel[0] ? _alienSpeciesCategoryLabel[0].Text : "not set" : "net set"
-
-        const changeLabel = (id) => koder.reasonsForCategoryChange.find(code => code.value === id).text
-       
         const category2018 = (riskLevelCode) => labels.RiskLevelCode[riskLevelCode]
-
-        // console.warn(appState.vurderingsStatus)
         return (
             <div>
             {config.showPageHeaders
             ? <h3>{critlabels.status}</h3>
             : <br/>}
                 <div>
-                    { true && (errorhandler.hasErrors) // || errorhandler.hasWarnings
+                    { true && (errorhandler.hasErrors)
                     ? <fieldset className="well">
                         <h4>{"Feilrapport"}</h4>
                         <ErrorList errorhandler={errorhandler} options={"all"} />
@@ -84,18 +72,9 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                             ? <h4>{critlabels.decisiveCriteria}: <b> {assessment.criteria}</b></h4>
                             : null}
                     </fieldset> 
-
-                    {/* if there is no conclusion in species status
-                    
-                        Isuue #517
-
-                    */}
-                        
                     <div>
                         <fieldset className="well">
                             <h4>{critlabels.speciesDescription}</h4>
-                            {/* <b>Slekt: {viewModel.navnabaseGenus}</b> */}
-                        
                             {hasEcology
                             ? <p>{critlabels.ecology}: {
                                 (kdi.limnic
@@ -140,7 +119,6 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                             <Xcomp.HtmlString
                                 observableValue={[riskAssessment, 'criteriaDocumentationDomesticSpread']}
                                 style={{
-                                //width: 800,
                                 height: 250,
                                 maxHeight: 250
                             }}/>
@@ -155,7 +133,6 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                             <Xcomp.HtmlString
                                 observableValue={[assessment, 'spreadIndoorFurtherInfo']}
                                 style={{
-                                //width: 800,
                                 height: 150,
                                 maxHeight: 150
                             }}/>
@@ -166,7 +143,6 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                             <Xcomp.HtmlString
                                 observableValue={[assessment, 'spreadIntroductionFurtherInfo']}
                                 style={{
-                                //width: 800,
                                 height: 250,
                                 maxHeight: 250
                             }}/>
@@ -175,7 +151,6 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                             <Xcomp.HtmlString
                                 observableValue={[assessment, 'spreadFurtherSpreadFurtherInfo']}
                                 style={{
-                                //width: 800,
                                 height: 150,
                                 maxHeight: 150
                             }}/>
@@ -185,18 +160,15 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                             <Xcomp.HtmlString
                                     observableValue={[riskAssessment, 'criteriaDocumentationInvationPotential']}
                                     style={{
-                                // width: 800,
                                     height: 250,
                                     maxHeight: 250
                             }}/>
-                            
                         </fieldset>
                         <fieldset className="well">
                             <h4>{critlabels.ecologicalEffect}</h4>
                             <Xcomp.HtmlString
                                 observableValue={[riskAssessment, 'criteriaDocumentationEcoEffect']}
                                 style={{
-                                //width: 800,
                                 height: 250,
                                 maxHeight: 250
                             }}/>
@@ -207,7 +179,6 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                             <Xcomp.HtmlString
                                 observableValue={[riskAssessment, 'criteriaDocumentation']}
                                 style={{
-                            // width: 800,
                                 height: 150,
                                 maxHeight: 150
                             }}/>
@@ -251,7 +222,6 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                             <Xcomp.HtmlString
                                 observableValue={[assessment, 'descriptionOfReasonsForChangeOfCategory']}
                                 style={{
-                            // width: 800,
                                 height: 150,
                                 maxHeight: 150
                             }}/>                           
@@ -288,8 +258,3 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
         );
     }
 }
-
-// Vurdering55Kriteriedokumentasjon.propTypes = {
-//     viewModel: PropTypes.object.isRequired,
-//     riskAssessment: PropTypes.object.isRequired
-// }
