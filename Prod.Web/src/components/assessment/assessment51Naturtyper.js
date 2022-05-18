@@ -40,25 +40,12 @@ export default class Assessment51Naturtyper extends React.Component {
         const marine = (assessment.expertGroup == "Marine invertebrater" || assessment.expertGroup == "Marine invertebrater (Svalbard)" || assessment.expertGroup == "Alger" || assessment.expertGroup == "Fisker" || assessment.expertGroup == "Fisker (Svalbard)")
         const mainland = assessment.expertGroup != "Marine invertebrater" && assessment.expertGroup.indexOf ("Svalbard") < 0
         const svalbard = (assessment.expertGroup == "Karplanter (Svalbard)" || assessment.expertGroup == "Pattedyr (Svalbard)")
-        // const climateZoneLabel = (id) => koder.naturalOriginClimateZone.find(code => code.Value === id).Text
         const contBioClimateZoneLabel = (id) => koder.continentalBioClimateZone.find(code => code.Value === id) ? koder.continentalBioClimateZone.find(code => code.Value === id).Text : id
         const arcticBioClimateZoneLabel = (id) => koder.arcticBioCLimateZone.find(code => code.Value === id) ? koder.arcticBioCLimateZone.find(code => code.Value === id).Text : id
         const coastLineZoneLabel = (id) => koder.coastLineZone.find(code => code.Value === id) ? koder.coastLineZone.find(code => code.Value === id).Text : id
-        // const subClimateZoneLabel = (id) => koder.naturalOriginSubClimateZone.find(code => code.Value === id).Text
-        // const naturalOriginDisabled = (id, region) => koder.naturalOriginDisabled.find(code => code.Value === id).Text.indexOf(region) !== -1
         const coastZoneDisabled = (id, region) => koder.coastZoneDisabled.find(code => code.Value === id) ? koder.coastZoneDisabled.find(code => code.Value === id).Text.indexOf(region) !== -1 : true
         const arcticZoneDisabled = (id, region) => koder.arcticZoneDisabled.find(code => code.Value === id) ? koder.arcticZoneDisabled.find(code => code.Value === id).Text.indexOf(region) !== -1 : true
         const mainlandZoneDisabled = (id, region) => koder.mainlandZoneDisabled.find(code => code.Value === id) ? koder.mainlandZoneDisabled.find(code => code.Value === id).Text.indexOf(region) !== -1 : true
-        // const nts = appState.naturtyper
-        // const doms = appState.dominansSkog
-        // var hasImpactAbroad = false 
-        // if (assessment.impactedNatureTypes.length > 0) {
-        //     for (var i = 0; i < assessment.impactedNatureTypes.length; i++) {
-        //         if (assessment.impactedNatureTypes[i].background.indexOf("ObservationAbroad") > -1 || assessment.impactedNatureTypes[i].background.indexOf("WrittenDocumentationAbroad") > -1){
-        //             hasImpactAbroad = true;
-        //         }
-        //     }
-        // }
         const canRenderTable = !!appState.naturtypeLabels
         return (
             <div>
