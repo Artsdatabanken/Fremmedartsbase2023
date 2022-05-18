@@ -1,14 +1,10 @@
 ﻿import React from 'react';
-// import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types'
 import {observer, inject} from 'mobx-react';
 import {observable, autorun} from 'mobx';
-// import RadioGroup from './radioGroup'
 import config from '../../config';
 import * as Xcomp from './observableComponents';
 import UploadPicturesButton from './30Artsegenskaper/uploadPicturesButton'
 import OriginTable from './30Artsegenskaper/originTable'
-//import ArrivedCountryFrom from './30Artsegenskaper/arrivedCountryFrom'
 import ArrivedCountryFrom from './arrivedCountryFrom'
 
 @inject("appState")
@@ -41,7 +37,6 @@ export default class Assessment30Artsegenskaper extends React.Component {
         for(let n = 0; n < origins.length; n++) {
             const origin = origins[n]
             const dest = destinations[n]
-            // for (let key of Object.keys(origin))
             for (const key in origin) {
                 if (key != "climateZone" && origin[key]) {
                     dest[key] = true
@@ -54,15 +49,9 @@ export default class Assessment30Artsegenskaper extends React.Component {
         const vurdering = assessment
         const labels = appState.codeLabels
         const koder = appState.koder
-        //console.log(assessment.naturalOrigins)
-
-        // const {vurdering, viewModel, fabModel} = this.props;
         const nbsp = "\u00a0"
-        // const labels = config.labels
-        // const labels = fabModel.codeLabels
-        // const isMarine = vurdering.Marine && !vurdering.Terrestrial && !vurdering.Limnic
         const isMarine = vurdering.marine || vurdering.brackishWater
-        const isLimnic = vurdering.limnic && !vurdering.terrestrial && !vurdering.marine  && !vurdering.brackishWater
+        // const isLimnic = vurdering.limnic && !vurdering.terrestrial && !vurdering.marine  && !vurdering.brackishWater
         const isLimnicTerrestrial = vurdering.terrestrial || vurdering.limnic
         const limnicTerrestrialMarinelabel = (id) => koder.limnicTerrestrialMarine.find(code => code.Value === id).Text
         const climateZoneLabel = (id) => koder.naturalOriginClimateZone.find(code => code.Value === id).Text
@@ -75,12 +64,12 @@ export default class Assessment30Artsegenskaper extends React.Component {
             <fieldset className="well">
 
                 <h2>Artsinformasjon</h2>
-                {config.showPageHeaders ? <h3>Artsegenskaper</h3> : null }
-                
+                {config.showPageHeaders 
+                ? <h3>Artsegenskaper</h3> 
+                : null }
                 {appState.imageUploadEnabled
                 ? <div>
                     <UploadPicturesButton scientificName={vurdering.evaluatedScientificName}/>
-                    
                 </div>
                 : null}
                 <div>
@@ -88,7 +77,6 @@ export default class Assessment30Artsegenskaper extends React.Component {
                     <Xcomp.Bool observableValue={[vurdering, 'limnic']} label={limnicTerrestrialMarinelabel("limnic")} />            
                     <Xcomp.Bool observableValue={[vurdering, 'terrestrial']} label={limnicTerrestrialMarinelabel("terrestrial")} />            
                     <Xcomp.Bool observableValue={[vurdering, 'marine']} label={limnicTerrestrialMarinelabel("marine")} />   
-
                     {(isLimnicTerrestrial || isMarine) && 
                         <h3>{labels.NaturalOrigin.globalPrevalence}</h3>
                     } 
@@ -96,15 +84,6 @@ export default class Assessment30Artsegenskaper extends React.Component {
                 {(assessment.isDoorKnocker && assessment.speciesStatus == "A") ?
 
                 <div>
-                    {/*<h4>{labels.NaturalOrigin.habitat}</h4>
-                    <Xcomp.Bool observableValue={[vurdering, 'limnic']} label={limnicTerrestrialMarinelabel("limnic")} />            
-                    <Xcomp.Bool observableValue={[vurdering, 'terrestrial']} label={limnicTerrestrialMarinelabel("terrestrial")} />            
-                <Xcomp.Bool observableValue={[vurdering, 'marine']} label={limnicTerrestrialMarinelabel("marine")} />    */}
-                    
-                    {/* <Xcomp.Bool observableValue={[vurdering, 'brackishWater']} label={limnicTerrestrialMarinelabel("brackishWater")} />         
-                   appState.showBrackishWater
-                    ? <Xcomp.Bool observableValue={[vurdering, 'brackishWater']} label={limnicTerrestrialMarinelabel("brackishWater")} />            
-                    : null*/}
                     {
                     isLimnicTerrestrial ?
                     //vurdering.limnic || vurdering.terrestrial ?
@@ -160,12 +139,6 @@ export default class Assessment30Artsegenskaper extends React.Component {
                         </div>
                     </div> :
                     null}
-                    {/*isLimnic ?
-                    <div>
-                        <Xcomp.Bool observableValue={[vurdering, 'survivalBelow5c']} label={labels.NaturalOrigin.survivalBelow5c}/>
-                        <hr/>
-                    </div> :
-                    null */}
                     {isMarine ?
                     <div>
                         <div className="well">
@@ -180,12 +153,6 @@ export default class Assessment30Artsegenskaper extends React.Component {
                         </div> 
                     </div>:
                     null }                
-               {/*<div className="well">
-                    <h4>{labels.Reproduction.reproduction}</h4>
-                    <Xcomp.Bool label={labels.Reproduction.sexual} observableValue={[vurdering, 'reproductionSexual']}/>
-                    <Xcomp.Bool label={labels.Reproduction.asexual} observableValue={[vurdering, 'reproductionAsexual']}/>
-                    <Xcomp.Number label={labels.Reproduction.generationTime} observableValue={[vurdering, 'reproductionGenerationTime']}/>
-                    </div>*/}
                 {appState.otherEffectsEnabled 
                 ? <div className="well">
                         <Xcomp.Button 
@@ -217,15 +184,9 @@ export default class Assessment30Artsegenskaper extends React.Component {
                  : assessment.isRegionallyAlien == true ? 
 
             <div>
-                      
-               {/* <Xcomp.Bool observableValue={[vurdering, 'brackishWater']} label={limnicTerrestrialMarinelabel("brackishWater")} />         
-                appState.showBrackishWater
-                ? <Xcomp.Bool observableValue={[vurdering, 'brackishWater']} label={limnicTerrestrialMarinelabel("brackishWater")} />            
-                : null*/}
                 
                 {
                 isLimnicTerrestrial ?
-                //vurdering.limnic || vurdering.terrestrial ?
                 <div>
                     <div className="well">
                     <h4>{labels.NaturalOrigin.naturalOrigin}</h4>
@@ -278,12 +239,6 @@ export default class Assessment30Artsegenskaper extends React.Component {
                     </div>
                 </div> :
                 null}
-                {/*isLimnic ?
-                <div>
-                    <Xcomp.Bool observableValue={[vurdering, 'survivalBelow5c']} label={labels.NaturalOrigin.survivalBelow5c}/>
-                    <hr/>
-                </div> :
-                null */}
                 {isMarine ?
                 <div>
                     <div className="well">
@@ -298,21 +253,6 @@ export default class Assessment30Artsegenskaper extends React.Component {
                     </div> 
                 </div>:
                 null }
-                {/*<div className="well">
-                    <div>
-                        <h4>{labels.NaturalOrigin.arrivedCountry} {" vurderingsområdet "} {labels.NaturalOrigin.arrivedCountryFrom}</h4>
-                        {/* <ArrivedCountryFrom vurdering={vurdering} fabModel={fabModel} /> */}
-                       {/* <ArrivedCountryFrom assessment={assessment} appState={appState} />
-                    </div>
-                    <label>{labels.NaturalOrigin.arrivedCountryFromDetails}</label>
-                    <Xcomp.HtmlString observableValue={[vurdering, 'arrivedCountryFromDetails']} /> {/* earlier named: 'NaturalOrigin' */}
-               {/* </div>
-               <div className="well">
-                    <h4>{labels.Reproduction.reproduction}</h4>
-                    <Xcomp.Bool label={labels.Reproduction.sexual} observableValue={[vurdering, 'reproductionSexual']}/>
-                    <Xcomp.Bool label={labels.Reproduction.asexual} observableValue={[vurdering, 'reproductionAsexual']}/>
-                    <Xcomp.Number label={labels.Reproduction.generationTime} observableValue={[vurdering, 'reproductionGenerationTime']}/>
-                </div> */}
                 {appState.otherEffectsEnabled 
                 ? <div className="well">
                         <Xcomp.Button 
@@ -343,18 +283,8 @@ export default class Assessment30Artsegenskaper extends React.Component {
             </div> :
                  
             <div>
-                     {/*<h4>{labels.NaturalOrigin.habitat}</h4>
-                    <Xcomp.Bool observableValue={[vurdering, 'limnic']} label={limnicTerrestrialMarinelabel("limnic")} />            
-                    <Xcomp.Bool observableValue={[vurdering, 'terrestrial']} label={limnicTerrestrialMarinelabel("terrestrial")} />            
-                        <Xcomp.Bool observableValue={[vurdering, 'marine']} label={limnicTerrestrialMarinelabel("marine")} />     */}
-                
-                {/*<Xcomp.Bool observableValue={[vurdering, 'brackishWater']} label={limnicTerrestrialMarinelabel("brackishWater")} />         
-                appState.showBrackishWater
-                ? <Xcomp.Bool observableValue={[vurdering, 'brackishWater']} label={limnicTerrestrialMarinelabel("brackishWater")} />            
-                : null*/}
                 {
                 isLimnicTerrestrial ?
-                //vurdering.limnic || vurdering.terrestrial ?
                 <div>
                     <div className="well">
                     <h4>{labels.NaturalOrigin.naturalOrigin}</h4>
@@ -407,12 +337,6 @@ export default class Assessment30Artsegenskaper extends React.Component {
                     </div>
                 </div> :
                 null}
-                {/*isLimnic ?
-                <div>
-                    <Xcomp.Bool observableValue={[vurdering, 'survivalBelow5c']} label={labels.NaturalOrigin.survivalBelow5c}/>
-                    <hr/>
-                </div> :
-                null */}
                 {isMarine ?
                 <div>
                     <div className="well">
@@ -479,10 +403,3 @@ export default class Assessment30Artsegenskaper extends React.Component {
         );
 	}
 }
-
-
-
-// Vurdering32Artsegenskaper.propTypes = {
-// 	viewModel: PropTypes.object.isRequired,
-// 	vurdering: PropTypes.object.isRequired
-// }
