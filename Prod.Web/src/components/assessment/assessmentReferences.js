@@ -5,18 +5,11 @@ import {deleteData, loadData, postData, putData} from './../../apiService';
 import * as Xcomp from './observableComponents';
 import config from './../../config';
 import auth from './../authService'
-import { LabelSharp } from '@material-ui/icons';
 
 export default inject('appState')(observer(class AssessmentReferences extends Component {
 
     constructor(props) {
         super()
-        //const {appState, appState:{assessment, koder}} = this.props
-        // let references = assessment.references;
-        // console.log(JSON.stringify(references));
-        //const references = vurdering.References
-        //event.on('addreference', (arg) => console.log("new reference added: " + arg))
-
         extendObservable(this, {
             redigeringsType: 'Reference',
             editMode: false,
@@ -47,8 +40,6 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
 
                 allowEdit: false,
                 allowDelete: false
-                
-                
             },
             sokeresultat: [],
             antallSider: 0,
@@ -81,90 +72,33 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                             )
                 }
         })
-
-        // this.sorteringsVerdier = [
-        //     {
-        //         text: 'Tittel',
-        //         value: "Title;asc"
-        //     }, {
-        //         text: 'Tittel - omv',
-        //         value: "Title;desc"
-        //     }, {
-        //         text: 'Author',
-        //         value: "Author;asc"
-        //     }, {
-        //         text: 'Author - omv',
-        //         value: "Author;desc"
-        //     }, {
-        //         text: 'År',
-        //         value: "Year;asc"
-        //     }, {
-        //         text: 'År - omv',
-        //         value: "Year;desc"
-        //     }
-        // ];
-        // this.contextVerdier = [
-        //     {
-        //         text: 'Alle referanser',
-        //         value: "None"
-        //     }, {
-        //         text: 'Referanser knytt til FAB 3',
-        //         value: "Local"
-        //     }, {
-        //         text: 'Egne registrerte referanser',
-        //         value: "Personal"
-        //     }
-        // ];
         this.typeVerdier = [
-          /*   {
-                text: 'Alle felt',
-                 value: "All"
-             }, 
-             */{
+            {
                 text: 'Referansetekst',
-                 value: "Reference"
-             }, {
+                value: "Reference"
+            }, {
                 text: 'Publikasjoner',
-                 value: "Publication"             
-             },  {
+                value: "Publication"             
+            },  {
                 text: 'Personer',
                 value: "Person"
-             }, {
-                 text: 'Url',
-                 value: "Url"
-             }
-         ];
+            }, {
+                text: 'Url',
+                value: "Url"
+            }
+        ];
 
         // autorun(() => {
         //     console.log(`side: ${  this.side} type: ${this.redigeringsType }`)
         // })
 
         autorun(() => {
-            //const side = 0;
-             //const pageSize = 10;
-            // const sortering = this.valgtSortering
-            // const res = sortering.split(";")
-            // const restrictType = this.valgtContext
-            // const subSearch = this.sokestreng
-            // const ref = {
-            //     pageIndex: this.side,
-            //     pageSize,
-            //     sidx: res[0], // sorteringsfelt
-            //     sord: res[1], // sortorder
-            //     restrictType, // applikasjon/person
-            //     subSelect: this.valgtType, // person/URSl (/publikasjon??) (?!)
-            //     subSearch // søketekst
-            // }
-            // storeData("api/referansesok/", ref, this.updateSearchResult.bind(this), 'post')
-            
-           // if (this.assessment && auth.isLoggedIn)
             this.doReferenceSearch()
         })
         autorun(() => {
             if(this.valgtReferanseId) {
                 loadData(config.referenceApiUrl + "api/References/" + this.valgtReferanseId, this.updateValgtReferanse)
             }
-          // if (this.assessment && auth.isLoggedIn)
             this.doReferenceSearch()        
         })
     }
@@ -186,24 +120,16 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
         r.referencePresentation = '',
         r.referenceString = '',
         r.userId = auth.userId,
-        // r.editDate = '',
         r.applicationId = null,
-
         r.lastname = '',
         r.middlename = '',
         r.firstname = '',
-
-        // r.title = '',
         r.url = ''
-
         r.allowEdit= true, 
         r.allowDelete= true
-
-        // r.kanLagres= false
     })
 
     doReferenceSearch = () => {
-       // const side = 0;
         const pageSize = 10;
         const sortering = this.valgtSortering
         const res = sortering.split(";")
@@ -212,10 +138,7 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
         const ref = {
             pageIndex: this.side,
             pageSize,
-            //sidx: res[0], // sorteringsfelt
-            //sord: res[1], // sortorder
-            //restrictType, // applikasjon/person
-            subSelect: this.valgtType, // person/URSl (/publikasjon??) (?!)
+            subSelect: this.valgtType,
             subSearch // søketekst
         }
         const url = config.referenceApiUrl + "api/References?offset=0&limit=50&search="+subSearch
@@ -230,16 +153,10 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
             clone.id = "00000000-0000-0000-0000-000000000000"
             postData(
                 config.getUrl("Reference"),
-                //config.referenceApiUrl+"api/References",
                 clone,
                 data => {
                     this.updateValgtReferanse(data)
-                    //todo: oppdater redigeringstype
                     this.doReferenceSearch()
-
-                    // redigeringsType(thingy.type());
-                    //sokeresultat([{ id: data.id, type: data.type, referenceString: data.referenceString }]);
-                    //console.log(sokeresultat)
                 }
             )
             this.addNew = true
@@ -251,22 +168,14 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                 clone,
                 data => {
                     this.updateValgtReferanse(data)
-                    //todo: oppdater redigeringstype
                     this.doReferenceSearch()
                     this.updateReferenceFromAssessment(this.theAssessment, data)
-                    // redigeringsType(thingy.type());
-                    //sokeresultat([{ id: data.id, type: data.type, referenceString: data.referenceString }]);
-                    //console.log(sokeresultat)
                 }
             )            
         }
-        //this.editMode = false
         this.valgtReferanse.allowDelete = true
-        
         this.alreadySaved = true
-        // console.log("Lagret referanse")
     })
-
     getFirstLine(string) {
         var modified = string.split(/\s+/)
         var kort = true
@@ -281,16 +190,13 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                 kort = false
             }
         }        
-        
         return firstLine
     }
-
     getRestOfLines(string) {
         var startPosition = this.getFirstLine(string).length
         var restOfLines = string.substring(startPosition, string.length)
         return restOfLines
     }
-
     removeReferenceFromAssessment = action((assessment, id) => {        
         const refs = assessment.references
         console.log(refs)
@@ -311,7 +217,6 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
             ref.url = value.url
         }
     })
-
     slettReferanse = action(() => {
         const clone = toJS(this.valgtReferanse)
         if (clone.id != "NY_REFERANSE") {
@@ -326,7 +231,6 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
         this.valgtReferanse.allowDelete = false
         console.log("Slettet referansen")
     })
-
     fjernReferanse = action((assessment, ref) => {             
         const result = assessment.references.remove(ref);
         console.log(`item removed : ${  result}`)
@@ -352,7 +256,6 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                 document.getElementById(value.id).setAttribute('disabled', 'true')
                 document.getElementById(value.id).style.visibility = "hidden"
         }
-        //this.addNew = true
         this.addNew = false
         console.log("Already saved: " + this.alreadySaved + " can add: " + this.addNew)
     })
@@ -447,10 +350,8 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
     }
 
     render() {
-        //const {vurdering, viewModel, labels, codes} = this.props;
         const {appState, appState:{assessment, assessment:{referanser}, koder, refcodes}} = this.props
         const labels = appState.codeLabels
-        //console.log(JSON.stringify(references));
         const kodeTekst = (kodegruppe, id) => {
             const gr = koder[kodegruppe]
             console.log(gr)
@@ -461,7 +362,6 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
         this.theAssessment = assessment        
         var sortedReferences = assessment.references.slice().sort(this.compare)
         const disabled = appState.userContext.readonly
-                
         return (
             <div className="page_container">
                 <div className="page_wrapper">
@@ -469,8 +369,6 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                 <div className="form_category">
                     <h2>{labels.references.heading}</h2>
                         <div className="form_item">
-                            
-                            {/*<div>Ingen referanser knyttet til vurderingen...</div>*/}
                             <table className="table table-striped references">
                                 <thead>
                                     <tr>
@@ -529,10 +427,7 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                                             <td>
                                                  <button className="btn btn-primary btn-xs"
                                                     id={reference.id}   
-                                                    //invisible unless the user has write access    
-                                                    // to do: disable if the reference is already added to the assessment
                                                     style={{visibility: this.context.readonly ? "hidden" : "visible"}}                                               
-                                                    //visible={!this.context.readonly}                                                     
                                                     onClick={() => {this.leggTilReferanse(assessment, reference)}}>{labels.references.add}</button>
                                              </td>
                                              <td dangerouslySetInnerHTML={{
@@ -605,15 +500,6 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                                     <td className="ref">{labels.references.year}</td>
                                     <td><Xcomp.String className="ref" onFocus={action(() => {this.alreadySaved = false})} observableValue={[this.valgtReferanse, 'year']}/></td>
                                 </tr>
-                                {/* <div className="form_item">
-                                    <div>Endringsdato:</div>
-                                    <div><Xcomp.String observableValue={[this.valgtReferanse, 'editDate']}/></div>
-                                </div> */}
-                                {/* <div className="form_item">
-                                    <div>Bruker-ID:</div>
-                                    <div><input className="form-control" defaultValue={this.valgtReferanse.userId} /></div>
-                                </div> */} 
-                                
                                 <tr>
                                     <td className="ref">{labels.references.title}</td>
                                     <td><Xcomp.String className="longRef" onFocus={action(() => {this.alreadySaved = false})} observableValue={[this.valgtReferanse, 'title']}/></td>
