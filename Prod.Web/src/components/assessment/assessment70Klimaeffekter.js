@@ -1,35 +1,26 @@
 ﻿import config from '../../config';
 import React from 'react';
-import PropTypes from 'prop-types'
 import {observer, inject} from 'mobx-react';
-import {observable, autorun} from 'mobx';
+//import {observable, autorun} from 'mobx';
 import * as Xcomp from './observableComponents';
-
-
-@inject("appState")
+nject("appState")
 @observer
 export default class Assessment70Klimaeffekter extends React.Component {
     render() {
 		const {appState:{assessment:{riskAssessment}}, appState} = this.props;
         const labels = appState.codeLabels
 		const koder = appState.koder
-        // const {riskAssessment, viewModel, fabModel} = this.props;
         const climatelabel = (id) => koder.climateEffects.find(code => code.Value === id).Text
-
         const ecoEffect = riskAssessment.ecoEffectText
-
         const invasionPotential = riskAssessment.invationPotentialText
-
         return(
             <div>
    				{config.showPageHeaders ? <h3>Klimaeffekter</h3> : <br />}
-                
                 <fieldset className="well">
                 <h2>{climatelabel("heading")}</h2>
                     {riskAssessment.riskLevelCode == "NK" ? 
                     <p>{climatelabel("categoryNK")}</p> : 
                     <div>
-                    {/*<p>{climatelabel("timePerspective")}</p>*/}
                         <hr></hr>
                         <p>{invasionPotential}</p>
                         <div>
@@ -48,14 +39,8 @@ export default class Assessment70Klimaeffekter extends React.Component {
                         <Xcomp.HtmlString observableValue={[riskAssessment, 'climateEffectsDocumentation']} style={{minHeight: '150px'}} />
                     </div>
                 }
-                
                 </fieldset>
             </div>
         );
     }
 }
-
-// Vurdering54Klimaeffekter.propTypes = {
-//     viewModel: PropTypes.object.isRequired,
-//     riskAssessment: PropTypes.object.isRequired
-// }
