@@ -8,37 +8,36 @@ nject("appState")
 export default class Assessment70Klimaeffekter extends React.Component {
     render() {
 		const {appState:{assessment:{riskAssessment}}, appState} = this.props;
-        const labels = appState.codeLabels
+        // const labels = appState.codeLabels
 		const koder = appState.koder
         const climatelabel = (id) => koder.climateEffects.find(code => code.Value === id).Text
         const ecoEffect = riskAssessment.ecoEffectText
         const invasionPotential = riskAssessment.invationPotentialText
         return(
             <div>
-   				{config.showPageHeaders ? <h3>Klimaeffekter</h3> : <br />}
+   				{config.showPageHeaders 
+                ? <h3>Klimaeffekter</h3> 
+                : <br />}
                 <fieldset className="well">
-                <h2>{climatelabel("heading")}</h2>
-                    {riskAssessment.riskLevelCode == "NK" ? 
-                    <p>{climatelabel("categoryNK")}</p> : 
-                    <div>
-                        <hr></hr>
+                    <h2>{climatelabel("heading")}</h2>
+                    {riskAssessment.riskLevelCode == "NK"
+                    ? <p>{climatelabel("categoryNK")}</p>
+                    : <div>
+                        <hr />
                         <p>{invasionPotential}</p>
                         <div>
-                            <p dangerouslySetInnerHTML={{
-                                                __html: climatelabel("climateChangeAffectsInvationPotential")}}></p>
+                            <p dangerouslySetInnerHTML={{ __html: climatelabel("climateChangeAffectsInvationPotential")}}></p>
                             <Xcomp.StringEnum observableValue={[riskAssessment, 'climateEffectsInvationpotential']} codes={koder.yesNo} mode="radio" />
                         </div>
-                        <hr></hr>
+                        <hr/>
                         <p>{ecoEffect}</p>
                         <div>
-                            <p dangerouslySetInnerHTML={{
-                                            __html: climatelabel("climateChangeAffectsEcoeffect") }}></p>
+                            <p dangerouslySetInnerHTML={{ __html: climatelabel("climateChangeAffectsEcoeffect") }}></p>
                             <Xcomp.StringEnum observableValue={[riskAssessment, 'climateEffectsEcoEffect']} codes={koder.yesNo} mode="radio" />
                         </div>
                         <p>{climatelabel("climateEffectsDocumentation")}</p>
                         <Xcomp.HtmlString observableValue={[riskAssessment, 'climateEffectsDocumentation']} style={{minHeight: '150px'}} />
-                    </div>
-                }
+                    </div>}
                 </fieldset>
             </div>
         );
