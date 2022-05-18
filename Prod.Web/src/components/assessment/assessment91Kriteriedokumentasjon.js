@@ -80,31 +80,28 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                                 (kdi.limnic
                                 ? (`${ltml("limnic")}`)
                                 : "") +
-
                                 (kdi.limnic && (kdi.terrestrial || kdi.marine || kdi.brackishWater)
-                                    ? ", "
-                                    : "") +
+                                ? ", "
+                                : "") +
                                 (kdi.terrestrial
                                 ? (`${ltml("terrestrial")}`)
                                 : "") +
-
                                 (kdi.terrestrial && (kdi.marine || kdi.brackishWater)
                                 ? ", "
-                                    : "") +
+                                : "") +
                                 (kdi.marine
                                 ? (`${ltml("marine")}`)
                                 : "") +
-
                                 (kdi.marine && kdi.brackishWater
-                                    ? ", "
-                                    : "") +
+                                ? ", "
+                                : "") +
                                 (kdi.brackishWater
                                 ? (`${ltml("brackishWater")}`)
                                 : "")
                                 }</p>
-                            : assessment.assessmentConclusion == "WillNotBeRiskAssessed"? 
-                                ""
-                            :    <b className="missingInfo">{critlabels.missingEcology}</b>}
+                            : assessment.assessmentConclusion == "WillNotBeRiskAssessed" 
+                            ? ""
+                            : <b className="missingInfo">{critlabels.missingEcology}</b>}
                         
                             <Xcomp.HtmlString
                                 observableValue={[riskAssessment, 'criteriaDocumentationSpeciesStatus']}
