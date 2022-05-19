@@ -270,6 +270,12 @@
             id: "B2err1",
             get cond() {return a.doFullAssessment && (r.bmetodkey === "B2a1") && (r.AOOyear1 != null) && (r.AOOyear2 != null) && (((r.AOOyear2 - r.AOOyear1) < 10 ) || ((r.AOOyear2 - r.AOOyear1) > 20 )) },
             msg: "Valgt periode (t2-t1) kan ikke overstige 20 år eller være mindre enn 10 år. Juster perioden."
+        },
+
+        {
+            id: "(sum)err1",
+            get cond() {return assessment.categoryHasChangedFromPreviousAssessment && assessment.reasonForChangeOfCategory.length === 0 },
+            msg: "Årsak til endring i kategori er ikke oppgitt."
         }
     ]
     return errorDefinitions

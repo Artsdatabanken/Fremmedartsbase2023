@@ -200,15 +200,17 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                         ? <div>{critlabels.assessmentComplete}<p/><Xcomp.Button onClick={() => this.resetAssessmentComplete(appState)}>{critlabels.resetComplete}</Xcomp.Button></div>
                         : null}
                     </div>
-                    {((assessment.assessmentConclusion != "NotDecided" && assessment.assessmentConclusion != "WillNotBeRiskAssessed" && assessment.riskAssessment.riskLevelCode != null && assessment.previousAssessments[0] != null 
+                    {/* {((assessment.assessmentConclusion != "NotDecided" && assessment.assessmentConclusion != "WillNotBeRiskAssessed" && assessment.riskAssessment.riskLevelCode != null && assessment.previousAssessments[0] != null 
                     && (category2018(assessment.previousAssessments[0].riskLevel) != assessment.riskAssessment.riskLevelCode 
                     || assessment.previousAssessments[0].mainCategory == "NotApplicable")) || (assessment.assessmentConclusion == "WillNotBeRiskAssessed" && assessment.riskAssessment.riskLevelCode != null && assessment.previousAssessments[0] != null
-                    && assessment.previousAssessments[0].mainCategory != "NotApplicable" )) &&
-                    <fieldset className="well">
+                    && assessment.previousAssessments[0].mainCategory != "NotApplicable" )) && */}
+                    {assessment.categoryHasChangedFromPreviousAssessment
+                    ? <fieldset className="well">
                         <h3>{critlabels.reasonForChangeHeading}</h3>
                             <p> {critlabels.cat2023} {assessment.assessmentConclusion === "WillNotBeRiskAssessed"? "NR" : assessment.riskAssessment.riskLevelCode}</p>
                             <p> {critlabels.cat2018} {assessment.previousAssessments[0].mainCategory == "NotApplicable"? "NR" : category2018(assessment.previousAssessments[0].riskLevel)}</p>
-                        
+                            {/* <h2>{assessment.categoryHasChangedFromPreviousAssessment.toString()}</h2> */}
+                            <ErrorList errorhandler={errorhandler} errorids={["(sum)err1"]} />            
                             <p>{critlabels.reasonForChange}</p> 
                             <Xcomp.MultiselectArray
                                     observableValue={[assessment, 'reasonForChangeOfCategory']}                                 
@@ -224,7 +226,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                             }}/>                           
                                         
                     </fieldset>
-                    }
+                    : null}
 
                     <fieldset className="well">
                         <div>

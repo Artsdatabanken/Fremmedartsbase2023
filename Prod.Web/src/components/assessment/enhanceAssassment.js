@@ -318,6 +318,28 @@ export default function enhanceAssessment(json, appState) {
         get isDoorKnocker() {
             return assessment.alienSpeciesCategory === "DoorKnocker" || assessment.alienSpeciesCategory === "EffectWithoutReproduction"
         },
+
+        get categoryHasChangedFromPreviousAssessment() {
+            const result =
+                (
+                    (assessment.assessmentConclusion != "NotDecided" 
+                        && assessment.assessmentConclusion != "WillNotBeRiskAssessed" 
+                        && assessment.riskAssessment.riskLevelCode != null 
+                        && assessment.previousAssessments[0] != null 
+                        && (assessment.previousAssessments[0].riskLevel !== assessment.riskAssessment.riskLevel
+                            || assessment.previousAssessments[0].mainCategory == "NotApplicable")
+                    ) 
+                    || (
+                        assessment.assessmentConclusion == "WillNotBeRiskAssessed" 
+                        && assessment.riskAssessment.riskLevelCode != null 
+                        && assessment.previousAssessments[0] != null
+                        && assessment.previousAssessments[0].mainCategory != "NotApplicable" 
+                    )
+                )
+
+            return result
+        },
+
     })
     extendObservable(assessment, {
         get toJSON() {
@@ -343,6 +365,12 @@ export default function enhanceAssessment(json, appState) {
     autorun(() => {
         const ss = assessment.speciesStatus
         console.log("¤¤¤ speciesStatus: '" + ss + "'")
+    
+    })
+
+    autorun(() => {
+        const ss = assessment.categoryHasChangedFromPreviousAssessment
+        console.log("¤!¤ categoryHasChangedFromPreviousAssessment: '" + ss + "'")
     
     })
 
