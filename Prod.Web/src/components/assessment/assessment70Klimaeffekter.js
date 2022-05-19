@@ -3,7 +3,7 @@ import React from 'react';
 import {observer, inject} from 'mobx-react';
 //import {observable, autorun} from 'mobx';
 import * as Xcomp from './observableComponents';
-nject("appState")
+inject("appState")
 @observer
 export default class Assessment70Klimaeffekter extends React.Component {
     render() {
