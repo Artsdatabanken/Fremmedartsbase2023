@@ -253,13 +253,12 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                     .push(reference);
         }        
         if (document.getElementById(value.id) != null) {
-                document.getElementById(value.id).setAttribute('disabled', 'true')
-                document.getElementById(value.id).style.visibility = "hidden"
+            document.getElementById(value.id).setAttribute('disabled', 'true')
+            document.getElementById(value.id).style.visibility = "hidden"
         }
         this.addNew = false
         console.log("Already saved: " + this.alreadySaved + " can add: " + this.addNew)
     })
-
     updateValgtReferanse = action((item) => {
         console.log("update valgt ref: " + JSON.stringify(item))
         const r = this.valgtReferanse
@@ -267,7 +266,6 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
         r.referencePresentation = item.referencePresentation
         r.applicationId = item.applicationId
         r.author = item.author
-        // r.editDate = item.editDate.substring(0,10)
         r.userId = item.userId
         r.referenceString = item.referenceString
         r.referenceType = item.referenceType
@@ -288,7 +286,6 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
         r.allowEdit= item.userId == auth.isAdmin || (auth.userId && (item.referenceUsage.length == 0 || (item.referenceUsage.every(x => x.userId == auth.userId))))
         r.allowDelete= item.userId == auth.userId && (!item.referenceUsage || item.referenceUsage.length == 0)
         this.redigeringsType = item.referenceType
-        // r.kanLagres= false
     })
     compare(a, b) {
         
@@ -312,7 +309,7 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
           comparison = -1;
         }
         return comparison;
-      }
+    }
     updateSearchResult = action((data) => {
         let result = data.slice().sort(this.compare)
         this.sokeresultat = result
@@ -323,19 +320,12 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
             this.endIndex = Math.min(this.startIndex + this.pageSize - 1, this.sokeresultat.length - 1)
             this.referencePage = this.sokeresultat.slice(this.startIndex, this.endIndex +1)
         }    
-        
     })
-
     visDetalj = action((value) => {
         this.valgtReferanseId = value.id
         this.editMode = true
         this.alreadySaved = false
     })
-
-    
-        
-    
-
     linkify(text) {
         var urlRegex =/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
         var showUrl = ""
@@ -348,7 +338,6 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
             }            
         });
     }
-
     render() {
         const {appState, appState:{assessment, assessment:{referanser}, koder, refcodes}} = this.props
         const labels = appState.codeLabels
@@ -378,23 +367,28 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                                     </tr>
                                 </thead>
                                 <tbody>
-                                     <tr>
-                               
-                                {sortedReferences ? <td> {null} </td> : <td>{labels.references.noReferences}</td>}
-                                </tr>                                
-                                    {sortedReferences != null && sortedReferences.map ((referanse) => {         
-                                        return (<tr key={referanse.referenceId}>
-                                            <td><p dangerouslySetInnerHTML={{
-                                            __html: this.linkify(referanse.formattedReference)
-                                                }}/> </td>
-                                            <td><span>{referanse.type}</span> </td>
-                                            <td><Xcomp.Button className="btn btn-primary btn-xs"  title={labels.General.remove} onClick={() => {this.removeReferenceFromAssessment(assessment, referanse.referenceId)}}>
-                                                {/*{labels.references.remove}*/}
+                                    <tr>
+                                        {sortedReferences 
+                                        ? <td> {null} </td> 
+                                        : <td>
+                                            {labels.references.noReferences}
+                                        </td>}
+                                    </tr>                                
+                                    {sortedReferences != null && sortedReferences.map ((referanse) => {return (
+                                    <tr key={referanse.referenceId}>
+                                        <td>
+                                            <p dangerouslySetInnerHTML={{  __html: this.linkify(referanse.formattedReference)}}/>
+                                        </td>
+                                        <td>
+                                            <span>{referanse.type}</span>
+                                        </td>
+                                        <td>
+                                            <Xcomp.Button className="btn btn-primary btn-xs"  title={labels.General.remove} onClick={() => {this.removeReferenceFromAssessment(assessment, referanse.referenceId)}}>
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
                                                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                                                     <path fillRule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
                                                 </svg>
-                                                </Xcomp.Button></td>
+                                            </Xcomp.Button></td>
                                      </tr>)
                                     })}
                                 </tbody>
@@ -420,27 +414,32 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                             </tr>
                         </thead>
                         <tbody>                           
-
-                            {this.sokestreng != "" && this.sokeresultat.length > 0 &&             
-                                      this.referencePage.map ((reference) => {
-                                        return (<tr key={reference.id}> 
-                                            <td>
-                                                 <button className="btn btn-primary btn-xs"
-                                                    id={reference.id}   
-                                                    style={{visibility: this.context.readonly ? "hidden" : "visible"}}                                               
-                                                    onClick={() => {this.leggTilReferanse(assessment, reference)}}>{labels.references.add}</button>
-                                             </td>
-                                             <td dangerouslySetInnerHTML={{
-                                                    __html: this.linkify(reference.referencePresentation) }} />
-                                             <td>
-                                                 <span>{reference.referenceType}</span>
-                                            </td>
-                                            <td>
-                                                 <Xcomp.Button primary xs
-                                                     disabled={this.context.readonly}
-                                                     onClick={() => {this.visDetalj(reference)}}>{labels.references.showDetails}</Xcomp.Button>
-                                            </td></tr>) 
-                                            })}     
+                        {this.sokestreng != "" && this.sokeresultat.length > 0 &&             
+                            this.referencePage.map ((reference) => {return (
+                            <tr key={reference.id}> 
+                                <td>
+                                    <button className="btn btn-primary btn-xs"
+                                        id={reference.id}   
+                                        style={{visibility: this.context.readonly ? "hidden" : "visible"}}                                               
+                                        onClick={() => {this.leggTilReferanse(assessment, reference)}}>
+                                        {labels.references.add}
+                                    </button>
+                                </td>
+                                <td dangerouslySetInnerHTML={{
+                                    __html: this.linkify(reference.referencePresentation) }} />
+                                <td>
+                                    <span>{reference.referenceType}</span>
+                                </td>
+                                <td>
+                                    <Xcomp.Button primary xs
+                                        disabled={this.context.readonly}
+                                        onClick={() => {this.visDetalj(reference)}}>
+                                        {labels.references.showDetails}
+                                    </Xcomp.Button>
+                                </td>
+                            </tr>
+                            )})
+                        }     
                         </tbody>
                     </table>
                     {this.sokestreng != "" && this.sokeresultat.length > 0 && <> <Xcomp.Button primary xs
@@ -582,12 +581,18 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
                             || this.valgtReferanse.url
                             ) 
                             } onClick={() => {this.lagreReferanse()}}> {labels.references.saveOrUpdate}</Xcomp.Button>
-                            <Xcomp.Button primary disabled={(!(this.valgtReferanse.allowDelete && this.valgtReferanse.id != 'NY_REFERANSE')) }                                      
-                                        onClick={() => {this.slettReferanse()}}>{labels.references.removeReference}</Xcomp.Button>
+                            <Xcomp.Button 
+                                primary 
+                                disabled={(!(this.valgtReferanse.allowDelete && this.valgtReferanse.id != 'NY_REFERANSE')) } 
+                                onClick={() => {this.slettReferanse()}}>
+                                {labels.references.removeReference}
+                            </Xcomp.Button>
                             <Xcomp.Button primary 
                             // not visible until it's possible to add
-                                        style={{visibility: this.addNew ? "visible" : "hidden"}}                                       
-                                        onClick={() => {this.leggTilReferanse(assessment, this.valgtReferanse)}}>{labels.references.add}</Xcomp.Button>
+                                style={{visibility: this.addNew ? "visible" : "hidden"}}                                       
+                                onClick={() => {this.leggTilReferanse(assessment, this.valgtReferanse)}}>
+                                {labels.references.add}
+                            </Xcomp.Button>
                     </div>}                    
                 </div>
             </div>
