@@ -1,51 +1,16 @@
 ﻿import React from 'react';
 import {observer} from 'mobx-react';
-import {action, autorun, extendObservable, observable, useStrict} from 'mobx';
+import {extendObservable} from 'mobx';
 import * as Xcomp from '../observableComponents';
-import {loadData, storeData} from '../../stores/apiService';
-
 import EditReference from './editReference'
-
 @observer
 export default class ReferenceDetailsPane extends React.Component {
     constructor() {
         super()
         extendObservable(this, {
-
             redigeringsType: 'All',
-            // kanLagres: false,
         })
-
-        // this.contextVerdier = [
-        //     {
-        //         text: 'Alle referanser',
-        //         value: "None"
-        //     }, {
-        //         text: 'Referanser knytt til FAB 3',
-        //         value: "Local"
-        //     }, {
-        //         text: 'Egne registrerte referanser',
-        //         value: "Personal"
-        //     }
-        // ];
-        // this.typeVerdier = [
-        //     {
-        //         text: 'Alle felt',
-        //         value: "All"
-        //     }, {
-        //         text: 'Publikasjoner',
-        //         value: "Publication"
-        //     }, {
-        //         text: 'Personer',
-        //         value: "Person"
-        //     }, {
-        //         text: 'Url',
-        //         value: "Url"
-        //     }
-        // ];
-
     }
-   
     render() {
         const {valgtReferanse, nyReferanse, lagreReferanse, slettReferanse, codes, labels} = this.props;
         // const nbsp = "\u00a0"

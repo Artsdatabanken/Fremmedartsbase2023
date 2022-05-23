@@ -2,11 +2,6 @@
 import {observer} from 'mobx-react';
 import {action, autorun, extendObservable, observable, useStrict} from 'mobx';
 import * as Xcomp from '../observableComponents';
-// import {loadData, storeData} from '../stores/apiService';
-
-
-
-
 @observer
 export class EditReferenceRow extends React.Component {
     render() {
@@ -19,7 +14,6 @@ export class EditReferenceRow extends React.Component {
         )
     }
 }
-
 @observer
 export class NoEditReferenceRow extends React.Component {
     render() {
@@ -32,76 +26,16 @@ export class NoEditReferenceRow extends React.Component {
         )
     }
 }
-
-
-
 @observer
 export default class EditReference extends React.Component {
     constructor({reference, referenceContext}) {
         super()
-
-        //event.on('addreference', (arg) => console.log("new reference added: " + arg))
-
         extendObservable(this, {
-            // redigeringsType: referenceContext ? referenceContext.redigeringsType : "All"
             redigeringsType: "All"
         })
-
         autorun(() => {
-            // this.redigeringsType = referenceContext ? referenceContext.redigeringsType : this.redigeringsType
-            
         })
-    //     this.referenceFields = [
-    //         {
-    //             type:"Publication",
-    //             fields: [
-    //                 {label:"Author", fieldName:"author"},
-    //                 {label:"Årstall", fieldName:"year"},
-    //                 {label:"Tittel", fieldName:"title"},
-    //                 {label:"Summary", fieldName:"summary"},
-    //                 {label:"Journal", fieldName:"journal"},
-    //                 {label:"Volum", fieldName:"volume"},
-    //                 {label:"Sider", fieldName:"pages"},
-    //                 {label:"Bibliografi", fieldName:"bibliography"},
-    //                 {label:"Nøkkelord", fieldName:"keywords"}
-    //             ]
-    //         },
-    //         {
-    //             type:"Person",
-    //             fields: [
-    //                 {label:"Etternavn", fieldName:"lastname"},
-    //                 {label:"Mellomnavn", fieldName:"middlename"},
-    //                 {label:"Fornavn", fieldName:"firstname"}
-    //             ]
-    //         },
-    //         {
-    //             type:"Url",
-    //             fields: [
-    //                 {label:"Tittel", fieldName:"title"},
-    //                 {label:"URL", fieldName:"url"}
-    //             ]
-    //         }
-    //     ]
-    
-
     }
-
-
-
-            /*{this.referenceFields.map(group => 
-                this.redigeringsType === group.type || this.redigeringsType === 'All'
-                ? <div key={group.type}>
-                    {group.fields.map(f => 
-                        (reference.allowEdit
-                        ? <EditReferenceRow key={f.fieldName} label={f.label} fieldName={f.fieldName} reference={reference} />
-                        : <NoEditReferenceRow key={f.fieldName} label={f.label} fieldName={f.fieldName} reference={reference} />)
-                    )}
-                </div>
-            : null)}*/
-
-
-
-
 
     render() {
         const {reference, referenceContext, refcodes} = this.props
