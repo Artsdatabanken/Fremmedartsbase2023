@@ -43,13 +43,9 @@ function assessmentTabdefs(appState) {
         get tabList() { return tabItems(this.tabinfos) },
         setActiveTab: (tab) => {
             action(() => {
-                //console.log('xxx', appState.selectAssessmentTabs.activeTab)
-                //console.log('xxx', tab)
                 if(tab.enabled) {
                     appState.spredningsveierTabs.activeTab.id = tab.id
                     window.scrollTo(0,0)
-                    //appState.assessmentId = null
-                    // appState.router.hash = "#" + tab.url + "/" + appState.assessmentId
                 }
             })()
         }

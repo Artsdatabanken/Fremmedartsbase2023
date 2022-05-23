@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import { observer, inject } from 'mobx-react'
-import {action, observable, extendObservable} from 'mobx'
-// import auth from '../authService'
+import {action, extendObservable} from 'mobx'
 import * as Xcomp from '../observableComponents'
 import Tabs from '../tabs'
 import Assessment10Horisontskanning from './assessment10Horisontskanning'
@@ -79,19 +78,8 @@ class AssessmentRoot extends Component {
         })
         createTaxonSearch(this.newTaxon, this.props.appState.evaluationContext)
     }
-
-    // lockAssessment(e, assessment, appState) {
-    //         e.stopPropagation()
-    //         appState.lockFraHode(assessment)
-    // }
-    // @observable move = false
-        
     render() {
         const {appState, appState:{assessment}, appState:{assessmentTabs}} = this.props
-        // const rolle = appState.roleincurrentgroup
-        // const isSuperUser = rolle.admin
-        // const isFinished = assessment.evaluationStatus && assessment.evaluationStatus === "finished"
-        // const canEdit = !isFinished && appState.roleincurrentgroup.skriver && assessment.lockedForEditByUser == null    
         if (window.appInsights) {
             window.appInsights.trackPageView({
             name: 'Assessment ' + assessment.evaluatedScientificName, 
@@ -145,16 +133,6 @@ class AssessmentRoot extends Component {
             </div>
         )
     }
-
-    // isFinished() {
-    //     const isfinished = this.props.appState.asssessment.evaluationStatus === "finished"
-    //     return isfinished
-    // }
-
-    // isReadOnly() {
-    //     const isreadonly = this.props.appState.asssessment.lockedForEditByUser !== auth.userId
-    //     return isreadonly || this.isFinished()
-    // }
 }
 
 export default function Assessment(props) {
