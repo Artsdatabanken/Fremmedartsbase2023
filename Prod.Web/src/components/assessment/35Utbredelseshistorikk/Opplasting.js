@@ -1,8 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {observer} from 'mobx-react'
-// import {upload} from '../../stores/apiService'
-
 @observer
 export default class Opplasting extends React.Component {
     constructor(props) {
@@ -50,7 +48,6 @@ export default class Opplasting extends React.Component {
             .push(newUpload)
         const reader = new FileReader()
         reader.onload = ((file) => (e) => {
-            // upload(newUpload, this.props.onUploadComplete)
             alert("upload not implemented")
         })(file)
         reader.readAsBinaryString(file)

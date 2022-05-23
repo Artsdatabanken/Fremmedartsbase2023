@@ -1,12 +1,6 @@
 import React from 'react';
-// import {action} from 'mobx';
-// import {observer} from 'mobx-react';
 import * as Xcomp from '../../observableComponents';
-
-
 const nbsp = "\u00a0"
-
-
 const OriginRow = (props) =>
     !props.mode ? 
         <tr>
@@ -68,11 +62,9 @@ const OriginTable = (props) =>
             </tr>
         </thead>
         </> :
-
         props.mode == "continental" ? 
-
         <>
-            <colgroup>
+        <colgroup>
             <col className="col-md-1" />
             <col className="col-md-2" />
             <col className="col-md-2" />
@@ -92,9 +84,8 @@ const OriginTable = (props) =>
         </thead>
         </> :
         props.mode == "arctic" ? 
-
         <>
-            <colgroup>
+        <colgroup>
             <col className="col-md-2" />
             <col className="col-md-2" />
             <col className="col-md-2" />

@@ -1,10 +1,10 @@
-import config from '../../../config';
+// import config from '../../../config';
 import React from 'react';
 import {observer} from 'mobx-react';
-import {action, autorun, computed, extendObservable, observable} from 'mobx';
+import {extendObservable} from 'mobx';
 import * as Xcomp from '../observableComponents';
 import BsModal from '../../bootstrapModal'
-const labels = config.labels
+// const labels = config.labels
 
 const lisenskoder = [
     {

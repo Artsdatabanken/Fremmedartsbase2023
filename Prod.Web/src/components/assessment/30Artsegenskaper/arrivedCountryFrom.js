@@ -1,7 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 import {observer, inject} from 'mobx-react';
-import * as Xcomp from '../observableComponents';
+// import * as Xcomp from '../observableComponents';
 
 @inject("appState")
 @observer
@@ -12,22 +12,14 @@ export default class ArrivedCountryFrom extends React.Component {
     render() {
         const {appState:{assessment}, appState} = this.props;
         const vurdering = assessment
-        const labels = appState.codeLabels
+        // const labels = appState.codeLabels
         const koder = appState.koder
-
-
-        // const {vurdering, fabModel} = this.props;
         const values = vurdering.arrivedCountryFrom
-        // const labels = config.labels
         const codes = koder.ArrivedCountryFrom
         const originCode = codes.find(code => code.Value === "origin")
         const otherCode = codes.find(code => code.Value === "other")
         const otherRegionCode = codes.find(code => code.Value === "otherRegion")
         const unknownCode = codes.find(code => code.Value === "unknown")
-
-// observableValue={[vurdering, 'ArrivedCountryFrom']} 
-// codes={fabModel.koder.ArrivedCountryFrom}
-
         return(
             <ul style={{paddingLeft: "0px"}}>
                 {vurdering.alienSpeciesCategory === 'RegionallyAlien' 
@@ -90,7 +82,6 @@ export default class ArrivedCountryFrom extends React.Component {
                                     values.remove(otherCode.Value)
                                 }
                             }}
-
                         />{otherCode.Text}
                     </label>
                 </li>
@@ -101,7 +92,6 @@ export default class ArrivedCountryFrom extends React.Component {
                             onChange={e => {
                                 if(e.target.checked) {
                                     if(values.indexOf(unknownCode.Value) === -1) {
-                                        //    values.replace([unknownCode.Value])}
                                         values.push(unknownCode.Value)
                                     }
                                 }
@@ -109,7 +99,6 @@ export default class ArrivedCountryFrom extends React.Component {
                                     values.remove(unknownCode.Value)
                                 }
                             }}
-
                         />{unknownCode.Text}
                     </label>
                 </li>

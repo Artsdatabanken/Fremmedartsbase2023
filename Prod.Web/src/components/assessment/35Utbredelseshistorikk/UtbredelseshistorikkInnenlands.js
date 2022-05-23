@@ -17,18 +17,6 @@ export default class UtbredelseshistorikkInnenlands extends React.Component {
             <div>
                 <div id="spreadHistories">
                     <h5>{labels.distributionHistory} {fabModel.evaluationContext.nameWithPreposition}</h5>
-                    {/*<div>{labels.domesticDescribe} {fabModel.evaluationContext.nameWithPreposition}</div>
-                    <Button
-                        disabled={this.context.readonly}
-                        //bsStyle="primary"
-                        className="primary"
-                        onClick={() => {
-                        fabModel
-                            .artskartModel
-                            .addSpreadHistory(fabModel.vurdering)
-                    }}>
-                        {labels.domesticAddHistory}
-                </Button> */}
                     <HistorikkTabell disabled historikk={history} fabModel={fabModel}/>
                     {fabModel.fileUploadEnabled
                     ? <div>

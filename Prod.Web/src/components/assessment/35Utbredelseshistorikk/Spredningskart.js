@@ -85,9 +85,6 @@ export default class Spredningskart extends React.Component {
                         disabled={disabled}
                         />
                 </div>
-                {/*showLegend &&
-                  <Legend states={states} styles={styles} />
-                */}
             </div>
         )
     }
@@ -95,10 +92,6 @@ export default class Spredningskart extends React.Component {
     static getCurrentState(fylke, states) {
         var defaultState = states[0]
         for (var i = 0; i < states.length; i++) {
-            //const state = states[i]
-            /*if (!state.values)
-             defaultState = state
-            else if (state.values.indexOf(fylke) > -1)*/
             if (states[i].values) {
                 if (states[i].values.indexOf(fylke) > -1 )
                 defaultState = states[i]
@@ -118,29 +111,22 @@ export default class Spredningskart extends React.Component {
 
     throw new Error(`Unknown map state ${key}`)
     }
-
     handleMouseOver(e, fylke) {
-       
             e.stopPropagation()
             if (this.paintWithState == null)
                 return
             this.check(fylke, this.paintWithState)
-        
-       
     }
     handleMouseUp(e) {
         e.stopPropagation()
         this.paintWithState = null
     }
     handleMouseDown(e, fylke) {
-        
             e.stopPropagation()
             const states = this.props.states
             const curState = Spredningskart.getCurrentState(fylke, states)
             this.paintWithState = this.getNextState(curState)
             this.check(fylke, this.paintWithState)
-        
-        
     }
     check(fylke, state) {
         const states = this.props.states
