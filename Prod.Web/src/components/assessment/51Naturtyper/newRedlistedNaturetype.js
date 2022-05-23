@@ -30,14 +30,10 @@ export default class NewRedlistedNaturetype extends React.Component {
                 nnt.Category = naturtypekode.category,
                 nnt.TimeHorizon = null
                 nnt.ColonizedArea = null
-                nnt
-                    .StateChange
-                    .clear()
+                nnt.StateChange.clear()
                 nnt.AffectedArea = null
-
                 this.showModal = true
             }
-
             this.hideModal = () => this.showModal = false
             this.onOk = () => {
                 this.hideModal()

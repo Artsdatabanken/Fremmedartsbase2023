@@ -32,10 +32,7 @@ export default class NewNaturetype extends React.Component {
                 niNCode: null,
                 name: null,
                 timeHorizon: (assessment.isDoorKnocker && assessment.speciesStatus == "A") ? "future" : null,
-                //colonizedArea: null,
                 stateChange: [],
-                //background: [],
-                //affectedArea: null,
                 taxon: {
                     id: "newHabitatTaxon",
                     scientificName: "",
@@ -54,17 +51,15 @@ export default class NewNaturetype extends React.Component {
 
 
         })
-        //createTaxonSearch(taxonSearchState, appState.evaluationContext, tax => tax.existsInCountry)
         createTaxonSearch(taxonSearchState, appState.evaluationContext)
     }
 
     render() {
         const {appState, addNaturtype, labels, codes, header, superheader, config, assessment} = this.props;        
-        //const nts = appState.naturtyper
-        const nts =  codes
+        // const nts =  codes
         const lms = appState.livsmediumCodes
-        const doms = appState.dominansSkog
-        const koder = appState.koder
+        // const doms = appState.dominansSkog
+        // const koder = appState.koder
         const livsmedium = superheader === "Livsmedium"
         console.log("lms" + lms)
         return <div className="natureType">

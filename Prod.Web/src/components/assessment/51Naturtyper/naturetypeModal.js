@@ -4,9 +4,7 @@ import {observer, inject} from 'mobx-react';
 import * as Xcomp from '../observableComponents';
 import BsModal from '../../bootstrapModal'
 import { selectTaxonSearchState } from '../../createTaxonSearch'
-
 const kodeTekst = (koder, verdi) => koder.filter(item => item.Value === verdi).map(item => item.Text)[0] || verdi 
-
 @inject("appState")
 @observer
 export class StringEnum2 extends React.Component {
@@ -19,9 +17,6 @@ export class StringEnum2 extends React.Component {
             : disabledTypeBool
             ? !props.observableDisabled
             : !props.observableDisabled[0][props.observableDisabled[1]]
-        // const [objD,
-        //     propD] = props.observableDisabled;
-        // return <Xcomp.StringEnum {...props} disabled={!objD[propD] || props.disabled}/>
         return <Xcomp.StringEnum {...props} disabled={disabled}/>
     }
 }
@@ -40,13 +35,9 @@ export default class NaturetypeModal extends React.Component {
             taxon: naturtype.taxon
         })
         this.hideModal  = action(() => sm[smprop]  = false)
-
         this.onOk = action (() => {
-           
             this.hideModal()
-            
             const clone = toJS(this.editNaturtype) // clone once more to be sure...
-            
             onOk(clone)
         })
         autorun(() => {
@@ -77,17 +68,9 @@ export default class NaturetypeModal extends React.Component {
         const [hsc, hscprop] = hideStateChange
         this.hideStateChange = hsc[hscprop]
         const ntLabels = labels.NatureTypes
-        // const natureTypeCodes = require('./../../../Nin2_3.json')
-        // const redListCodes = require('./../../../TrueteOgSjeldneNaturtyper2018.json')
         const doms = fabModel.dominansSkog
         const koder = fabModel.koder
         const disabled = fabModel.userContext.readonly
-        
-        // const addNaturtype = naturtype       
-        
-        // console.log("render naturtypeModal ")
-        // console.log("render naturtypeModal: " + JSON.stringify(taxon))
-        // console.log("render naturtypeModal taxonSearchResult: " + taxon.taxonSearchResult.length)
         return <div>
             {sm[smprop]
                 ? <BsModal
@@ -137,23 +120,19 @@ export default class NaturetypeModal extends React.Component {
                             codes={koder.tilstandsendringer}
                             forceSync
                             formlayout/>}
-
                     {!livsmedium &&  <StringEnum2
                         label={ntLabels.affectedArea}
                         observableValue={[this.editNaturtype, 'affectedArea']}
                         codes={koder.affectedArea}
                         forceSync
-                        //observableDisabled={hsc[hscprop] || [this, "hasStateChange"]}
                         />
                     }
-
                     {!livsmedium && <Xcomp.MultiselectArray
                             label={ntLabels.assessmentBackground}
                             observableValue={[this.editNaturtype, 'background']} 
                             codes={koder.assessmentBackgrounds}
                             forceSync
                             formlayout
-                            // mode="check"
                             />}
 
                     {livsmedium &&
@@ -187,26 +166,12 @@ export default class NaturetypeModal extends React.Component {
                             observableValue={[taxon, 'taxonSearchString']} placeholder={labels.General.searchSpecies} />
 
                         {taxon.taxonSearchResult.length > 0 ? 
-                        <div className="speciesSearchList" 
-                                // style={{position: 'absolute', top: "36px", left:"15px"}}
-                        >
+                        <div className="speciesSearchList" >
                             <ul className="panel list-unstyled">
                             {taxon.taxonSearchResult.map(item =>
-                                <li onClick={action(() => selectTaxonSearchState(this.taxon, item),
-                                     
-                                    /*this.editNaturtype.taxon.taxonId = item.taxonId,
-                                    this.editNaturtype.taxon.taxonRank = item.taxonRank,
-                                    this.editNaturtype.taxon.scientificName = item.scientificName,
-                                    this.editNaturtype.taxon.scientificNameId = item.scientificNameId,
-                                    this.editNaturtype.taxon.scientificNameAuthor = item.author,
-                                    this.editNaturtype.taxon.vernacularName = item.popularName,
-
-                                    this.editNaturtype.taxon.redListCategory = item.rlCategory,
-                                    this.editNaturtype.taxon.taxonSearchResult.replace([]), 
-                                    this.editNaturtype.taxon.taxonSearchString = "" */
-                                )}
-                                
-                                key={item.scientificName}
+                                <li 
+                                    onClick={action(() => selectTaxonSearchState(this.taxon, item))}
+                                    key={item.scientificName}
                                 >
                                     <div className="speciesSearchItem">
                                         <div className={"rlCategory " + item.rlCategory}>{item.rlCategory}</div>
