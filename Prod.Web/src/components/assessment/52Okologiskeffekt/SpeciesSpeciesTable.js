@@ -2,19 +2,15 @@ import React from 'react';
 import {action} from 'mobx';
 import {observer} from 'mobx-react';
 import * as Xcomp from '../observableComponents';
-
-
-const kodeTekst = (koder, verdi) => koder.filter(item => item.Value === verdi).map(item => item.Text)[0] || verdi 
+// const kodeTekst = (koder, verdi) => koder.filter(item => item.Value === verdi).map(item => item.Text)[0] || verdi 
 
 const SpeciesSpeciesTable = observer((props) => 
 {
     const labels = props.labels
     const disabled = props.disabled
-   // console.log("Disabled: " + disabled)
     return <table className="table ecologicalEffect">
-        
-        {!props.HCrit ? 
-        <colgroup>
+        {!props.HCrit 
+        ? <colgroup>
             <col style={{width: "20%"}} />
             <col style={{width: "5%"}} />
             <col style={{width: "10%"}} />
@@ -23,35 +19,30 @@ const SpeciesSpeciesTable = observer((props) =>
             <col style={{width: "20%"}} />
             <col style={{width: "15%"}} />
         </colgroup>
-             :
-             <colgroup>
+        : <colgroup>
              <col style={{width: "25%"}} />
              <col style={{width: "10%"}} />
              <col style={{width: "25%"}} />
              <col style={{width: "25%"}} />
              <col style={{width: "15%"}} />
-         </colgroup>
-              }
-            {/*<col style={{width: "5%"}} />
-            <col style={{width: "8%"}} />*/}
+        </colgroup>}
 
-        
         <thead>
-        <p>Legg til enkeltarter</p>
+            <p>Legg til enkeltarter</p>
             <tr>
-            
                 <th dangerouslySetInnerHTML={{__html: labels.DEcrit.localSpecies}} ></th>
-                {props.showKeyStoneSpecie ? <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.keystoneSpecies}} ></th> : null}
-                {props.showEffect ? <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.effect}} ></th> : null}
+                {props.showKeyStoneSpecie 
+                ? <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.keystoneSpecies}} ></th> 
+                : null}
+                {props.showEffect 
+                ? <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.effect}} ></th> 
+                : null}
                 <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.scope}} ></th>
-                {props.showInteractionType && !props.HCrit ? <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.interactionType}} ></th> : null}
-                <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.assessmentBasis}}> 
-                    </th>
+                {props.showInteractionType && !props.HCrit 
+                ? <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.interactionType}} ></th> 
+                : null}
+                <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.assessmentBasis}}></th>
                 <th>&nbsp;</th>
-               {/* <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.longDistanceEffect}} ></th>
-                {props.showConfirmedOrAssumed ? <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.documented}} ></th> : null}
-                <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.domesticOrAbroad}} ></th>
- */}
             </tr>
         </thead>
         <tbody>
@@ -68,39 +59,30 @@ const SpeciesSpeciesTable = observer((props) =>
                 {props.showKeyStoneSpecie ? <td><Xcomp.Bool observableValue={[item, 'keyStoneSpecie']} /></td> : null}
                 {props.showEffect ? <td><Xcomp.StringEnum observableValue={[item, 'effect']} forceSync codes={props.koder.speciesSpeciesEffectType} /></td> : null}
                 <td>
-                <Xcomp.StringEnum observableValue={[item, 'scale']} forceSync codes={props.koder.speciesSpeciesScopeType}/>
-                  {/*  <Xcomp.Bool observableValue={[item, 'effectLocalScale']} />*/}
-                    </td>
-                {props.showInteractionType && !props.HCrit ? <td>
-                  <Xcomp.StringEnum observableValue={[item, 'interactionType']}   
-                                    forceSync                                
-                                    codes={props.koder.speciesSpeciesInteractionType} />
-                    {/*<Xcomp.MultiselectArray
-                                observableValue={[item, 'interactionTypes']} 
-                    codes={props.koder.speciesSpeciesInteractionTypes}
-                    mode="check"/> */}
+                    <Xcomp.StringEnum 
+                        observableValue={[item, 'scale']} 
+                        forceSync codes={props.koder.speciesSpeciesScopeType}/>
+                </td>
+                {props.showInteractionType && !props.HCrit 
+                ? <td>
+                    <Xcomp.StringEnum 
+                        observableValue={[item, 'interactionType']}   
+                        forceSync                                
+                        codes={props.koder.speciesSpeciesInteractionType} />
                     </td> : null}
                 <td>
-                <Xcomp.MultiselectArray
-                                observableValue={[item, 'basisOfAssessment']} 
-                                codes={props.koder.assessmentBackgrounds}
-                                hideUnchecked
-                                disabled={disabled}
-                                //heading={props.koder.assessmentBackgrounds[0].text}
-                                //mode="check"
-                                />
-                <Xcomp.MultiselectArray
-                                observableValue={[item, 'basisOfAssessment']} 
-                                codes={props.koder.assessmentBackgrounds}
-                                disabled={disabled}
-                                mode="check"
-                                hideUnchecked/>
-                            
-                    {/*<Xcomp.Bool observableValue={[item, 'longDistanceEffect']} />*/}
-                    </td>
-                {/*{props.showConfirmedOrAssumed ? <td><Xcomp.Bool observableValue={[item, 'confirmedOrAssumed']} /></td> : null}
-                <td><Xcomp.Bool observableValue={[item, 'domesticOrAbroad']} stringBool="True,False" /></td> */}
-
+                    <Xcomp.MultiselectArray
+                        observableValue={[item, 'basisOfAssessment']} 
+                        codes={props.koder.assessmentBackgrounds}
+                        hideUnchecked
+                        disabled={disabled}/>
+                    <Xcomp.MultiselectArray
+                        observableValue={[item, 'basisOfAssessment']} 
+                        codes={props.koder.assessmentBackgrounds}
+                        disabled={disabled}
+                        mode="check"
+                        hideUnchecked/>
+                </td>
                 <td><Xcomp.Button primary xs onClick={() => props.list.remove(item) }>
                     {/*{labels.General.delete}*/}
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
@@ -113,8 +95,8 @@ const SpeciesSpeciesTable = observer((props) =>
             <tr className="newRow">
                 <td>
                     <div style={{position: 'relative'}}>
-                        {props.newItem.scientificName.length > 0 ?
-                        <div 
+                        {props.newItem.scientificName.length > 0 
+                        ? <div 
                             className="speciesNewItem"
                             onClick={action(() => {
                                 props.newItem.taxonId = "";
@@ -132,10 +114,14 @@ const SpeciesSpeciesTable = observer((props) =>
                             <div className="vernacularName">{props.newItem.vernacularName}</div>
                             <div className="scientificName">{props.newItem.scientificName}</div>
                             <div className="author">{"(" + props.newItem.scientificNameAuthor + ")"}</div>
-                        </div> :
-                        <Xcomp.String className={props.HCrit ? "HCrit" : ""}  disabled={disabled} observableValue={[props.newItem, 'taxonSearchString']} placeholder={labels.General.searchSpecies} />}
-                        {props.newItem.taxonSearchResult.length > 0 ?
-                        <div className="speciesSearchList" style={{position: 'absolute', top: "36px"}}>
+                        </div> 
+                        : <Xcomp.String 
+                            className={props.HCrit ? "HCrit" : ""}  
+                            disabled={disabled} 
+                            observableValue={[props.newItem, 'taxonSearchString']} 
+                            placeholder={labels.General.searchSpecies} />}
+                        {props.newItem.taxonSearchResult.length > 0 
+                        ? <div className="speciesSearchList" style={{position: 'absolute', top: "36px"}}>
                             <ul className="panel list-unstyled">
                             {props.newItem.taxonSearchResult.map(item =>
                                 <li onClick={action(e => {
@@ -160,87 +146,51 @@ const SpeciesSpeciesTable = observer((props) =>
                                 </li>
                             )}
                             </ul>
-                        </div> :
-                        null}
-                        {props.newItem.taxonSearchWaitingForResult ?
-                        <div  style={{zIndex: 10000, position: 'absolute', top: "40px", left:"35px"}}>
+                        </div> 
+                        : null}
+                        {props.newItem.taxonSearchWaitingForResult 
+                        ? <div  style={{zIndex: 10000, position: 'absolute', top: "40px", left:"35px"}}>
                             <div  className={"three-bounce"}>
                                 <div className="bounce1" />
                                 <div className="bounce2" />
                                 <div className="bounce3" />
                             </div>
-                        </div> :
-                        null}
-                        </div> 
+                        </div>
+                        : null}
+                    </div> 
                 </td>
-                {props.showKeyStoneSpecie ? <td><Xcomp.Bool observableValue={[props.newItem, 'keyStoneSpecie']} /></td> : null}
-                {props.showEffect ? <td><Xcomp.StringEnum observableValue={[props.newItem, 'effect']} forceSync codes={props.koder.speciesSpeciesEffectType} /></td> : null}
+                {props.showKeyStoneSpecie 
+                ? <td><Xcomp.Bool observableValue={[props.newItem, 'keyStoneSpecie']} /></td> 
+                : null}
+                {props.showEffect 
+                ? <td>
+                    <Xcomp.StringEnum 
+                        observableValue={[props.newItem, 'effect']} 
+                        forceSync 
+                        codes={props.koder.speciesSpeciesEffectType} />
+                </td> 
+                : null}
                 <td>
                     <Xcomp.StringEnum observableValue={[props.newItem, 'scale']} forceSync codes={props.koder.speciesSpeciesScopeType} />
-                  {/*  <Xcomp.Bool observableValue={[props.newItem, 'effectLocalScale']} /> */}
                 </td>
-                {props.showInteractionType && !props.HCrit ? <td>
-                    {/* <Xcomp.MultiselectArray
-                                observableValue={[props.newItem, 'interactionTypes']} 
-                                codes={props.koder.speciesSpeciesInteractionTypes}
-                                mode="check"/>*/}
+                {props.showInteractionType && !props.HCrit 
+                ? <td>
                    <Xcomp.StringEnum observableValue={[props.newItem, 'interactionType']} forceSync codes={props.koder.speciesSpeciesInteractionType} />
-                    
-                    
-                    </td> : null}
+                </td> 
+                : null}
                 <td>
-                <Xcomp.MultiselectArray
-                                observableValue={[props.newItem, 'basisOfAssessment']} 
-                                codes={props.koder.assessmentBackgrounds}
-                                hideUnchecked
-                                disabled={disabled}
-                                //heading={props.koder.assessmentBackgrounds[0].text}
-                                //mode="check"
-                                />
-                <Xcomp.MultiselectArray
-                                observableValue={[props.newItem, 'basisOfAssessment']} 
-                                codes={props.koder.assessmentBackgrounds}
-                                mode="check"
-                                hideUnchecked
-                                disabled={disabled}
-                                />
-
-                    {/*<div className="option" tabindex="0">
-                                <div class="row filter" style="margin: 0; padding-top: 5px" 
-                                //data-bind="click: function () {toggleArrow('svalbard', svalbardVisible)}"
-                                >
-                                    <span>@fbLabel("searchChooseArea")</span>
-                                    <span class="arrow_down" id="svalbard">
-                                        <img src="/Content/images/keyboard_arrow_down-24px.svg" alt="Arrow down"></img>
-                                    </span>
-                                </div>
-                                <div class="filter-group" style="cursor: pointer">
-                                    <ul style="padding-left: 0">
-                                        <li class="checkbox" style="margin-top: 0;" 
-                                        //data-bind="visible: svalbardFilter.indexOf('N') > -1 || svalbardVisible"
-                                        >
-                                            <label class="checkbox">
-                                                <input type="checkbox" name="vurderingsområde" value="N" 
-                                                //data-bind="checked: svalbardFilter" 
-                                                />Norge
-                                            </label>
-                                        </li>
-                                        <li class="checkbox" style="margin-top: 0;" 
-                                        //data-bind="visible: svalbardFilter.indexOf('S') > -1 || svalbardVisible"
-                                        >
-                                            <label class="checkbox">
-                                                <input type="checkbox" name="vurderingsområde" value="S" 
-                                                //data-bind="checked: svalbardFilter" 
-                                                />Svalbard
-                                            </label>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>*/}
-                    {/*<Xcomp.Bool observableValue={[props.newItem, 'longDistanceEffect']} />*/}
+                    <Xcomp.MultiselectArray
+                        observableValue={[props.newItem, 'basisOfAssessment']} 
+                        codes={props.koder.assessmentBackgrounds}
+                        hideUnchecked
+                        disabled={disabled}/>
+                    <Xcomp.MultiselectArray
+                        observableValue={[props.newItem, 'basisOfAssessment']} 
+                        codes={props.koder.assessmentBackgrounds}
+                        mode="check"
+                        hideUnchecked
+                        disabled={disabled}/>
                 </td>
-               {/* {props.showConfirmedOrAssumed ? <td><Xcomp.Bool observableValue={[props.newItem, 'confirmedOrAssumed']} /></td> : null}
-                <td><Xcomp.Bool observableValue={[props.newItem, 'domesticOrAbroad']} stringBool="True,False" /></td> */}
                 <td>
                     <div>
                         <Xcomp.Button primary xs 

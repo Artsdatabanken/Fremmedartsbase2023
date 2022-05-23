@@ -3,21 +3,12 @@ import React from 'react';
 import {action} from 'mobx';
 import {observer} from 'mobx-react';
 import * as Xcomp from '../observableComponents';
-
-const kodeTekst = (koder, verdi) => koder.filter(item => item.Value === verdi).map(item => item.Text)[0] || verdi 
-
+//const kodeTekst = (koder, verdi) => koder.filter(item => item.Value === verdi).map(item => item.Text)[0] || verdi 
 const HostParasiteTable = observer((props) => 
 {
-    // const {appState} = props;
-    // const labels = appState.codeLabels
-    // const koder = appState.koder
     const labels = props.labels
     const koder = props.koder
     const disabled = props.disabled
-    // console.log("hostkoder: "  + JSON.stringify(Object.keys(koder)))
-    // console.log("ParasiteEcoEffectCodes: "  + JSON.stringify(koder.ParasiteEcoEffectCodes))
-
-
     return <table className="table ecologicalEffect">
         <colgroup>
             <col style={{width: "10%"}} />
@@ -27,8 +18,6 @@ const HostParasiteTable = observer((props) =>
             <col style={{width: "10%"}} />
             <col style={{width: "10%"}} />
             <col style={{width: "10%"}} />
-            {/*<col style={{width: "5%"}} />
-            <col style={{width: "5%"}} />*/}
             <col style={{width: "5%"}} />
         </colgroup>
         <thead>
@@ -40,12 +29,6 @@ const HostParasiteTable = observer((props) =>
                 <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.scope}}></th>
                 <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.parasiteEffectScore}}></th>
                 <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.assessmentBasis}}></th>
-               {/* <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.parasiteEcoEffect}}></th>
-                <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.localScale}} ></th>
-                <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.parasiteNew}}></th>
-                <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.parasiteAlien}}></th>
-                <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.diseaseDocumented}}></th>
-        <th dangerouslySetInnerHTML={{ __html: labels.DEcrit.domesticOrAbroad}} ></th>*/}
                 <th>&nbsp;</th>
             </tr>
         </thead>
@@ -62,7 +45,6 @@ const HostParasiteTable = observer((props) =>
                 item.diseaseConfirmedOrAssumed+
                 item.domesticOrAbroad
                 }>
-                    {/* <td>Item:{JSON.stringify(item)}</td> */}
                 <td>
                     <div className="speciesItem">
                         <div className={"rlCategory " + item.redListCategory}>{item.redListCategory}</div>
@@ -84,43 +66,32 @@ const HostParasiteTable = observer((props) =>
                 </td>
                 <td>
                 <Xcomp.MultiselectArray
-                                observableValue={[item, 'basisOfAssessment']} 
-                                codes={props.koder.assessmentBackgrounds}
-                                //heading={labels.DEcrit.assessmentBasis}
-                                hideUnchecked
-                                disabled={disabled}
-                                //mode="check"
-                                />
+                    observableValue={[item, 'basisOfAssessment']} 
+                    codes={props.koder.assessmentBackgrounds}
+                    hideUnchecked
+                    disabled={disabled}/>
                 <Xcomp.MultiselectArray
-                                observableValue={[item, 'basisOfAssessment']} 
-                                codes={koder.assessmentBackgrounds}
-                                mode="check"
-                                disabled={disabled}
-                                hideUnchecked/>
+                    observableValue={[item, 'basisOfAssessment']} 
+                    codes={koder.assessmentBackgrounds}
+                    mode="check"
+                    disabled={disabled}
+                    hideUnchecked/>
                 </td>
-                {/*<td><Xcomp.StringEnum observableValue={[item, 'parasiteEcoEffect']} forceSync codes={koder.ParasiteEcoEffectCodes} /></td>
-                <td><Xcomp.Bool observableValue={[item, 'effectLocalScale']} /></td>
-                <td><Xcomp.Bool observableValue={[item, 'parasiteNewForHost']} /></td>
-                <td><Xcomp.Bool observableValue={[item, 'parasiteIsAlien']} /></td>
-                <td><Xcomp.Bool observableValue={[item, 'diseaseConfirmedOrAssumed']} /></td>
-            <td><Xcomp.Bool observableValue={[item, 'domesticOrAbroad']} stringBool="True,False" /></td>*/}
-
-                <td><Xcomp.Button primary xs onClick={() => props.list.remove(item) }>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
+                <td>
+                    <Xcomp.Button primary xs onClick={() => props.list.remove(item) }>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
                             <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
                             <path fillRule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
                         </svg>
-                   {/* {labels.General.delete}*/}
-                   
                    </Xcomp.Button>
-                   </td> 
+                </td> 
             </tr>
             )}
             <tr className="newRow">
                 <td>
                     <div style={{position: 'relative'}}>
-                        {props.newItem.scientificName.length > 0 ?
-                        <div 
+                        {props.newItem.scientificName.length > 0 
+                        ? <div 
                             className="speciesNewItem"
                             disabled={disabled}
                             onClick={action(() => {
@@ -139,12 +110,12 @@ const HostParasiteTable = observer((props) =>
                             <div className="vernacularName">{props.newItem.vernacularName}</div>
                             <div className="scientificName">{props.newItem.scientificName}</div>
                             <div className="author">{"(" + props.newItem.scientificNameAuthor + ")"}</div>
-                        </div> :
-                        <Xcomp.String observableValue={[props.newItem, 'taxonSearchString']}  disabled={disabled} placeholder={labels.DEcrit.searchSpecies} />}
+                        </div> 
+                        : <Xcomp.String observableValue={[props.newItem, 'taxonSearchString']}  disabled={disabled} placeholder={labels.DEcrit.searchSpecies} />}
                         {props.newItem.taxonSearchResult.length > 0 ?
                         <div className="speciesSearchList" style={{position: 'absolute', top: "36px", left:"15px"}}>
                             <ul className="panel list-unstyled">
-                            {props.newItem.taxonSearchResult.map(item =>
+                                {props.newItem.taxonSearchResult.map(item =>
                                 <li onClick={action(e => {
                                     props.newItem.taxonId = item.taxonId;
                                     props.newItem.taxonRank = item.taxonRank;
@@ -179,7 +150,6 @@ const HostParasiteTable = observer((props) =>
                         null}
                     </div>
                 </td>
-               {/* {props.showRedlist ? <td><Xcomp.String observableValue={[props.newItem, 'redListCategory']} /></td> : null}*/}
                 {props.showKeyStoneSpecie ? <td><Xcomp.Bool observableValue={[props.newItem, 'keyStoneSpecie']} /></td> : null}
                 <td><Xcomp.String className="parasiteName"  disabled={disabled} observableValue={[props.newItem, 'parasiteScientificName']} /></td>
                 <td>
@@ -194,28 +164,17 @@ const HostParasiteTable = observer((props) =>
                 <td>
                 
                  <Xcomp.MultiselectArray
-                                observableValue={[props.newItem, 'basisOfAssessment']} 
-                                codes={props.koder.assessmentBackgrounds}
-                                hideUnchecked
-                                disabled={disabled}
-                                //heading={labels.DEcrit.assessmentBasis}
-                                //mode="check"
-                                />
+                    observableValue={[props.newItem, 'basisOfAssessment']} 
+                    codes={props.koder.assessmentBackgrounds}
+                    hideUnchecked
+                    disabled={disabled}/>
                 <Xcomp.MultiselectArray
-                                observableValue={[props.newItem, 'basisOfAssessment']} 
-                                codes={props.koder.assessmentBackgrounds}
-                                mode="check"
-                                disabled={disabled}
-                                hideUnchecked
-                                />
-                                
+                    observableValue={[props.newItem, 'basisOfAssessment']} 
+                    codes={props.koder.assessmentBackgrounds}
+                    mode="check"
+                    disabled={disabled}
+                    hideUnchecked/>
                 </td>
-                {/*<td><Xcomp.StringEnum observableValue={[props.newItem, 'parasiteEcoEffect']} forceSync codes={koder.ParasiteEcoEffectCodes} /></td>
-                <td><Xcomp.Bool observableValue={[props.newItem, 'effectLocalScale']} /></td>
-                <td><Xcomp.Bool observableValue={[props.newItem, 'parasiteNewForHost']} /></td>
-                <td><Xcomp.Bool observableValue={[props.newItem, 'parasiteIsAlien']} /></td>
-                <td><Xcomp.Bool observableValue={[props.newItem, 'diseaseConfirmedOrAssumed']} /></td>
-                        <td><Xcomp.Bool observableValue={[props.newItem, 'domesticOrAbroad']} stringBool="True,False" /></td>*/}
                 <td>
                     <Xcomp.Button primary xs
                         onClick={props.addNewItem}
