@@ -1,12 +1,6 @@
 ﻿import {action, autorun, extendObservable, observable, reaction, runInAction, trace} from 'mobx';
 import RiskLevel from './riskLevel';
-// import {extractFloat, getCriterion} from '../../utils'
 import {arrayConditionalReplace, extractFloat} from '../../utils'
-import { EventNote } from '@material-ui/icons';
-import config from '../../config';
-// import errorhandler from '../errorhandler';
-import { JsonHubProtocol } from '@microsoft/signalr';
-import { lineToPolygon } from '@turf/turf';
 
 function round(num){return Math.round(num)}
 function ceil(num){return Math.ceil(num)}
@@ -16,7 +10,6 @@ function max(num1,num2){return Math.max(num1,num2)}
 function sqrt(num){return Math.sqrt(num)}
 const pi = Math.PI
 function roundToSignificantDecimals(num) {
-    // console.log("run roundToSignificantDecimals")
     if (num === null) return 0;
     const result =
         (num >= 10000000) ? trunc(num / 1000000) * 1000000 :
@@ -42,15 +35,15 @@ function roundToSignificantDecimals2(num) {
         (num >= 995     ) ? round(num / 100  )      * 100     :
         (num >= 99.5    ) ? round(num / 10   )      * 10      :
         (num >= 9.95    ) ? round(num / 1    )      * 1       :
-        (num >= 2    ) ?  (round(num / 0.1 ) * 100) / 1000    : // multiplying with 0.1 gives floating point inaccuracy
+        (num >= 2    ) ?  (round(num / 0.1 ) * 100) / 1000    : // multiplying with 0.1 gives floating point inaccuracy!!
         (num <  2    ) ?  (round(num / 0.01) * 100) / 10000   :
         num
-    console.log("¤¤¤¤ roundToSignificantDecimals2 " + num + " ! " + result)
+    // console.log("¤¤¤¤ roundToSignificantDecimals2 " + num + " ! " + result)
     return result
 }
 
 const nonCountingNaturetypes = [
-    // F9–F13, H4, L14–L17, O6+O7, T35–T45 og V11–V13.
+    // spec: F9–F13, H4, L14–L17, O6+O7, T35–T45 og V11–V13.
     "F9","F10","F11","F12","F13",
     "H4",
     "L14","L15","L16","L17",
@@ -66,7 +59,7 @@ function getBaseNaturetypeCode(nincode) {
 }
 
 function yearlyIncreaseLevel(numMYear) {
-    const num = numMYear // numKmYear * 1000
+    const num = numMYear
     const result =
         num >= 500 ? 3
         : num >= 160 ? 2
@@ -74,15 +67,6 @@ function yearlyIncreaseLevel(numMYear) {
         : 0
     return result
 }
-// function medianLifespanLevel(num) {
-//     const result =
-//         num >= 650 ? 3
-//         : num >= 60 ? 2
-//         : num >= 10 ? 1
-//         : 0
-//     return result
-// }
-
 const introLowTable = {
     1: 1,
     5: 2,
@@ -110,7 +94,6 @@ const introHighTable = {
 
 function introductionNum(table, best) {
     const keys = Object.keys(table).reverse()
-    // console.log("¤&introductionNum keys: " + JSON.stringify(keys))
     var i = 0
     for(const key of keys) {
         if(best >= key) {
@@ -122,24 +105,13 @@ function introductionNum(table, best) {
     return i
 }
 
-
-
-
-
-// function levelFloor(level) {
-//     return level === NaN ? NaN
-//     : typeof(level) === "number"
-//     ? Math.max(0, level - 1)
-//     : NaN
-// }
-
 // for nullableints: give 0 if null. (undefined and NaN is unchanged!)
 function n0(num) {
     return num === null
         ? 0
         : num
 }
-// for divisor = 0 or null give 1
+// for divisor = 0 or null give 1 (!...)
 function d1(num) {
     return num === null || num === 0
         ? 1
@@ -151,7 +123,6 @@ function uncertaintyArray(low, high) {
     const _high = Math.min(high, 3)
     const arr = []
     for (let n = 0; n < 4 ; n++) {
-        //if(!(_low >= n && _high <= n)) {
         if(n < _low || n > _high) {
             arr.push(n)
         }
@@ -169,7 +140,6 @@ function uncertaintyArrayReverse(uarray) {
     }
     return arr
 }
-
 
 function filterUncertaintyArray(orgarr, filterarr) {
     const result = []
@@ -210,24 +180,6 @@ function criterionHigh(criterion) {
         : Math.max(...unc)
     return result
 }
-
-// function findUncertainityAbove (levels, level){
-//     var uncertainityAbove = 0
-//     for (var i = 0; i < levels.length; i ++) {
-//         if (levels[i] > level && levels[i] > uncertainityAbove) {
-//             uncertainityAbove = levels[i];
-//         }
-//     }
-//     return uncertainityAbove == 0 ? "" : uncertainityAbove
-// }
-
-// function enhanceRiskAssessmentAddErrorReportingHandler(riskAssessment) {
-//         extendObservable(riskAssessment, errorhandler)
-// }
-
-
-
-
 function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 // ---------------------------------------------------------------
 // --------  List of variables that comes from user input --------
@@ -268,9 +220,6 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 //occurrences1Low		#integer?	# lavt anslag på antall forekomster fra 1 introduksjon
 //occurrences1High	    #integer?	# høyt anslag på antall forekomster fra 1 introduksjon
 
-
-
-
     const r = riskAssessment
     function adjustAOOInput(input) {
         const inputvalue = input === NaN ? 0 : input
@@ -299,10 +248,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
     }
 
     extendObservable(riskAssessment, {
-        //get notUseSpeciesMap() { return true},
-
         get doorKnocker() {
-            // return riskAssessment.vurderingAlienSpeciesCategory === "DoorKnocker"
             return riskAssessment.vurderingIsDoorKnocker
         },
         get ametodkey() {
@@ -324,21 +270,6 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 : "AmethodInvalid"
             return result
         },
-        // get bmetodkey() {
-        //     const method = riskAssessment.chosenSpreadYearlyIncrease
-        //     const result =
-        //         method === "a"
-        //         ? "B1"
-        //         : method === "b"
-        //         ? !r.doorKnocker
-        //             ? "B2a"
-        //             : "B2b"
-        //         : method === "c"  // no longer in use (??)
-        //         ? "B2bX"
-        //         : "BmethodNotChosen"
-        //     console.log("##¤bmetod " + result + " doorKnocker: " + r.doorKnocker)
-        //     return result
-        // },
         get bmetodkey() {
             const method = riskAssessment.chosenSpreadYearlyIncrease
             // B2a1, B2a2 og B2b
@@ -381,9 +312,6 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             return result
         },
 
-        // get AOOchangeBest() { return r.AOOtotalBest < 4 ? 1 : n0(r.AOO50yrBest) / d1(r.AOOtotalBest) }, // nb AOOtotalBest is allways >= 4 (so really no need to check)
-        // get AOOchangeLow() { return r.AOOtotalBest < 4 ? 1 : n0(r.AOO50yrLow) / d1(r.AOOtotalBest) },   // nb AOOtotalBest is allways >= 4 (so really no need to check)
-        // get AOOchangeHigh() { return r.AOOtotalBest >= 4 ? 1 : n0(r.AOO50yrHigh) / d1(r.AOOtotalBest) }, // nb AOOtotalBest is allways >= 4 (so really no need to check)
         get AOOchangeBest() { return n0(r.AOO50yrBest) / d1(r.AOOtotalBest) }, // nb AOOtotalBest is allways >= 4 (so really no need to check)
         get AOOchangeLow() { return n0(r.AOO50yrLow) / d1(r.AOOtotalBest) },   // nb AOOtotalBest is allways >= 4 (so really no need to check)
         get AOOchangeHigh() { return n0(r.AOO50yrHigh) / d1(r.AOOtotalBest) }, // nb AOOtotalBest is allways >= 4 (so really no need to check)
@@ -423,7 +351,6 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             : r.AOO50yrHigh >= 20 && r.AOOchangeHigh > 0.05 ?  min(2, r.adefaultBest + 1)
             : r.AOO50yrHigh >= 8 && r.AOOchangeHigh > 0.2 ? min(2, r.adefaultBest + 1)
             : r.AOO50yrHigh >= 4 ? 1
-            // : r.AOO50yrHigh < 4 ? 0
             : 0
         },
         get apossibleLow() {
@@ -442,8 +369,8 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             return r.doorKnocker ?
             r.AOO10yrBest < 4 ? 0 
             : 3
-            : (r.AOO50yrBest < 20 && r.AOOchangeBest <= 0.05) ? 2  // todo: check! is this right?
-            : (r.AOO50yrBest < 4) ? 1 // todo: check! is this right?
+            : (r.AOO50yrBest < 20 && r.AOOchangeBest <= 0.05) ? 2
+            : (r.AOO50yrBest < 4) ? 1 
             : 3
         },
         get ascore() {
@@ -457,7 +384,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 : r.medianLifetime >= 10 ? 1
                 : r.medianLifetime < 10 ? 0
                 : 0
-            : 0 // NaN?
+            : 0 
         },
         get alow() {
             const k = r.ametodkey
@@ -470,7 +397,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 r.lifetimeLowerQ >= 10 ? max(1, r.ascore - 1)  :
                 r.lifetimeLowerQ < 10 ? max(0, r.ascore - 1)  :
                 0
-            : 0 // 1 / NaN?
+            : 0 
         },
         get ahigh() {
             const k = r.ametodkey
@@ -483,7 +410,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 r.lifetimeUpperQ >= 10 ? 1 :
                 r.lifetimeUpperQ < 10 ? 0 :
                 0
-            : 0 // 1 / NaN?
+            : 0
         },
         get medianLifetime() {
             const k = r.ametodkey
@@ -556,29 +483,23 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 : r.expansionSpeed >= 160 ? 2
                 : r.expansionSpeed >= 50 ? 1
                 : r.expansionSpeed < 50 ? 0
-                : 0 // ?
+                : 0 
         },
         get blow() {
             const k = r.bmetodkey
-            // return ["B2a1", "B2a2"].includes(k) ?
-            //     criterionLow(riskAssessment.critB)
-            // : 
             return r.expansionLowerQ >= 500 ? 3
             : r.expansionLowerQ >= 160 ? 2
             : r.expansionLowerQ >= 50 ? max(1, r.bscore - 1)
             : r.expansionLowerQ < 50 ? max(0, r.bscore - 1)
-            : 1 // ?
+            : 1 
         },
         get bhigh() {
             const k = r.bmetodkey
-            // const result = ["B2a1", "B2a2"].includes(k)
-            //     ? criterionHigh(riskAssessment.critB)
-            //     : 
             const result = r.expansionUpperQ >= 500 ? min(3, r.bscore + 1)
                 : r.expansionUpperQ >= 160 ? min(2, r.bscore + 1)
                 : r.expansionUpperQ >= 50 ? 1
                 : r.expansionUpperQ < 50 ? 0
-                : 1 // ?
+                : 1
                 // console.log("#bhigh: " + r.bmetodkey + " expansionUpperQ: " + r.expansionUpperQ + " result: " + result)
                 return result
         },
@@ -603,23 +524,15 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             }))
             return result
         },
-        // get expansionSpeedB2b() {
-        //     const result =
-        //         trunc(200 * (sqrt(r.AOO10yrBest / 4) - 1) / sqrt(pi))
-        //     console.log("##!expansionSpeedB2b data: " + JSON.stringify({
-        //         AOO10yrBest: r.AOO10yrBest
-        //     }))
-        //     return result
-        // },
         get expansionSpeed() {
             const k = r.bmetodkey
-            console.log("##¤ expansionSpeed " + r.bmetodkey + " " + r.AOO10yrBest)
+            // console.log("##¤ expansionSpeed " + r.bmetodkey + " " + r.AOO10yrBest)
             const result =
                 k === "B1" ? r.expansionSpeedInput
                 : ["B2a1", "B2a2"].includes(k) ? this.expansionSpeedB2a 
                 : k === "B2b" ? trunc(200 * (sqrt(r.AOO10yrBest / 4) - 1) / sqrt(pi))
-                : 0 // ?
-            console.log("##!expansionSpeed: key:" + k + " unroundedresult: " + result)
+                : 0 
+            // console.log("##!expansionSpeed: key:" + k + " unroundedresult: " + result)
             return roundToSignificantDecimals(result)
         },
         get expansionLowerQB2a() {
@@ -637,7 +550,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 k === "B1" ? r.expansionLowerQInput
                 : ["B2a1", "B2a2"].includes(k) ? r.expansionLowerQB2a
                 : k === "B2b" ? trunc(200 * (sqrt(r.AOO10yrLow / 4) - 1) / sqrt(pi))
-                : 0 // ?
+                : 0
             return roundToSignificantDecimals(result)
         },
         get expansionUpperQB2a() {
@@ -655,7 +568,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 k === "B1" ? r.expansionUpperQInput
                 : ["B2a1", "B2a2"].includes(k) ? r.expansionUpperQB2a
                 : k === "B2b" ? trunc(200 * (sqrt(r.AOO10yrHigh / 4) - 1) / sqrt(pi))
-                : 0 // ?
+                : 0 
             return roundToSignificantDecimals(result)
         },
         get AOOknown() {
@@ -716,7 +629,6 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 : r.bscore === 3 ? "over 500 m/år"
                 : null
         }
-
     })
     autorun(() => {
         console.log("MedianLifetime: " + r.medianLifetime + " | " + r.medianLifetimeInput )
@@ -724,41 +636,6 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
     autorun(() => {
         console.log("ascore: " + r.ascore )
     })
-
-    // // // const ACriteriaSectionNames = [
-    // // //     "LifespanA1aSimplifiedEstimate", // changed from  "SpreadPVAAnalysisEstimatedSpeciesLongevity" 11.07.21
-    // // //     "SpreadRscriptEstimatedSpeciesLongevity",
-    // // //     "ViableAnalysis"                                     // "RedListCategoryLevel"
-    // // // ]
-
-    // // // const BCriteriaSectionNames = [
-    // // //     "SpreadYearlyIncreaseObservations",
-    // // //     "SpreadYearlyIncreaseOccurrenceArea",
-    // // //     "SpreadYearlyLiteratureData",
-    // // //     "SpreadYearlyIncreaseCalculatedExpansionSpeed"
-    // // // ]
-    // SpreadYearlyIncreaseEstimate - before
-
-    function selectableSection(propName) {
-        const isActive = riskAssessment["Active" + propName]
-        // console.log(propName + " is" + (isActive ? "" : " not") + " active")
-        const stringValue = riskAssessment["" + propName]
-        const floatValue = extractFloat(stringValue)
-        // console.log("floatValue: '" + floatValue + "' stringValue: " + stringValue)
-        // const hasValue = 0 < floatValue
-        const hasValue = 0 <= floatValue
-        // console.log(propName + " has" + (hasValue ? "" : " no") + " value")
-        return isActive && hasValue && stringValue
-    }
-
-    // // // // create Selectable* observables
-    // // // // todo: trolig noe mobx som ikke virker her!!
-    // // // ACriteriaSectionNames.concat(BCriteriaSectionNames).map(tag => {
-    // // //     const obj = {}
-    // // //     obj["Selectable" + tag] = () => selectableSection(tag)
-    // // //     extendObservable(riskAssessment, obj)
-    // // // })
-
 
     extendObservable(riskAssessment, {
         get ChosenSpreadYearlyIncreaseLevel() {
@@ -785,68 +662,25 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
     autorun(() => {
         const k = r.ametodkey
         if(!(k === "A1a2" || k === "A1b2")) {
-            // const criterionA = getCriterion(riskAssessment, 0, "A")
             const criterionA = riskAssessment.critA
-            console.log("##&Autorun criterionA old value: " + criterionA.value)
-            // const nv = riskAssessment.CalculatedCritALevel // .ChosenSpreadYearlyIncreaseLevel
-            //   console.log("Autorun criterionA CalculatedCritALevel nv: " + JSON.stringify(nv))
             const avalue = r.ascore
             runInAction(() => {
                 criterionA.value = avalue
             })
-            console.log("##&Autorun criterionA new value: " + criterionA.value)
         }
     })
 
     autorun(() => {
-        // const criterionB = getCriterion(riskAssessment, 0, "B")
         const criterionB = riskAssessment.critB
-        console.log("##&Autorun criterionB old value: " + criterionB.value)
         const bvalue = r.bscore
-        runInAction(() => {
-            criterionB.value = bvalue
-        })
-        console.log("##&Autorun criterionB new value: " + criterionB.value)
+        runInAction(() => {criterionB.value = bvalue})
     })
 
     autorun(() => {
-        // const criterionC = getCriterion(riskAssessment, 0, "C")
         const criterionC = riskAssessment.critC
-           console.log("##&Autorun criterionC .value: " + criterionC.value)
         const nv = riskAssessment.impactedNaturtypesColonizedAreaLevel
-           console.log("##&Autorun criterionC new value: " + nv)
-        //    console.log("Autorun criterionC not equal: " + (nv != criterionC.value))
-           runInAction(() => {
-               criterionC.value = nv
-           })
+        runInAction(() => {criterionC.value = nv})
     });
-
-    // // // autorun(() => {
-    // // //     const sStr = riskAssessment.SpreadYearlyLiteratureDataExpansionSpeed
-    // // //     const nStr = riskAssessment.SpreadYearlyLiteratureDataNumberOfIntroductionSources
-    // // //     const s = extractFloat(sStr)
-    // // //     const n = extractFloat(nStr)
-    // // //     const v = s * Math.sqrt(n)
-    // // //     const v2 = Math.round(v * 100) / 100
-    // // //     // console.log("v2:" + v2)
-    // // //     const val = isNaN(v2) ? "" : v2.toString()
-    // // //     runInAction(() => {
-    // // //         riskAssessment.SpreadYearlyLiteratureData = val
-    // // //     })
-    // // // });
-    // // // autorun(() => {
-    // // //     // const a = 5.77 // t*d*: use real value from vurdering.CurrentExistenceAreaCalculated
-    // // //     const a =  riskAssessment.vurderingCurrentExistenceAreaCalculated
-    // // //     const wStr = riskAssessment.SpreadYearlyIncreaseEstimate
-    // // //     const w = extractFloat(wStr)
-    // // //     // const v = 564 * (Math.sqrt(a + w) - Math.sqrt(a))
-    // // //     const v = 564 * (Math.sqrt(a) - Math.sqrt(a - w))
-    // // //     const v2 = Math.round(v * 100) / 100
-    // // //     const val = isNaN(v2) ? "" : v2.toString()
-    // // //     runInAction(() => {
-    // // //         riskAssessment.SpreadYearlyIncreaseCalculatedExpansionSpeed = val
-    // // //     })
-    // // // });
 
     reaction(
         () => r.AOOknown1,
@@ -882,11 +716,6 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
 }
 
 function enhanceRiskAssessmentCrits(riskAssessment) {
-    // function getCriterion(letter) {
-    //     const result = riskAssessment.criteria.filter(c => c.criteriaLetter === letter)[0]; 
-    //     return result;
-    // }
-    // riskAssessment.getCriterion = getCriterion
     extendObservable(riskAssessment, {
         critA: riskAssessment.getCriterion("A"),
         critB: riskAssessment.getCriterion("B"),
@@ -907,26 +736,12 @@ function enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering,
     // autorun(() => riskAssessment.redlistedNatureTypes.map(x => console.log("##!redlistedNatureTypes code: " + x.niNCode )))
     // autorun(() => riskAssessment.NiNNatureTypes.map(x => console.log("##!NiNNatureTypes code: " + x.niNCode )))
 
-    // const artificialAndConstructedSites = ["F4", "F5", "H4", "L7", "L8", "M14", "M15", "T35", "T36", "T37", "T38", "T39", "T40", "T41", "T42", "T43", "T44", "T45", "V11", "V12", "V13"]
-
-    
-
     extendObservable(riskAssessment, {
         get vurderingIsDoorKnocker() {return vurdering.isDoorKnocker},
         get vurderingCurrentExistenceAreaCalculated() {return vurdering.currentExistenceAreaCalculated},
         get vurderingAllImpactedNatureTypes() {return vurdering.impactedNatureTypes.map(x => x)},
         get redlistedNatureTypes() {return riskAssessment.vurderingAllImpactedNatureTypes.map(x => x).filter(x => !isNaN(x.niNCode))},
         get NiNNatureTypes() {return riskAssessment.vurderingAllImpactedNatureTypes.map(x => x).filter(x => isNaN(x.niNCode))},
-        // critA: riskAssessment.getCriterion("A"),
-        // critB: riskAssessment.getCriterion("B"),
-        // critC: riskAssessment.getCriterion("C"),
-        // critD: riskAssessment.getCriterion("D"),
-        // critE: riskAssessment.getCriterion("E"),
-        // critF: riskAssessment.getCriterion("F"),
-        // critG: riskAssessment.getCriterion("G"),
-        // critH: riskAssessment.getCriterion("H"),
-        // critI: riskAssessment.getCriterion("I"),
-
 
         // C criteria
         get impactedNaturtypesColonizedAreaLevel() {
@@ -998,24 +813,18 @@ function parasiteIsAlien(item) {
 }
 
 function effectLocalScale(item) {
-    // item.scale
     // "Limited", "Large",
     return item.scale === "Limited" 
 }
 
-
-
-
 export const critILevel = list => {
     const rlCats = ["LC","DD","NT"]
     const rlThreatCats = ["VU","EN","CR"]
-    // const list = riskAssessment.HostParasiteInformations
-
-    list.map(item => {
-        console.log("#!% item: " + JSON.stringify(item))
-        console.log("#!% item parasiteNewForHost type: " + typeof(parasiteNewForHost(item)))
-        console.log("#!% item parasiteNewForHost value: " + parasiteNewForHost(item))
-    })
+    // list.map(item => {
+    //     console.log("#!% item: " + JSON.stringify(item))
+    //     console.log("#!% item parasiteNewForHost type: " + typeof(parasiteNewForHost(item)))
+    //     console.log("#!% item parasiteNewForHost value: " + parasiteNewForHost(item))
+    // })
     const list4 = list.filter(item =>
         parasiteIsAlien(item) ||
         (rlThreatCats.indexOf(item.redListCategory) > -1 && parasiteNewForHost(item) && !effectLocalScale(item)) ||
@@ -1036,34 +845,25 @@ export const critILevel = list => {
             (!parasiteNewForHost(item) && !effectLocalScale(item))
         )
     )
-    console.log("#!%list2 " + JSON.stringify(list2)   )
-    console.log("#!%list3 " + JSON.stringify(list3)   )
-    console.log("#!%list4 " + JSON.stringify(list4)   )
-
+    // console.log("#!%list2 " + JSON.stringify(list2)   )
+    // console.log("#!%list3 " + JSON.stringify(list3)   )
+    // console.log("#!%list4 " + JSON.stringify(list4)   )
 
     const maxEffect4 = Math.max(...list4.map(item => parseInt(item.parasiteEcoEffect)))
     const maxEffect3 = Math.max(...list3.map(item => parseInt(item.parasiteEcoEffect)))
     const maxEffect2 = Math.max(...list2.map(item => parseInt(item.parasiteEcoEffect)))
 
-    console.log("#!%maxeffect2 " + maxEffect2)
-    console.log("#!%maxeffect3 " + maxEffect3)
-    console.log("#!%maxeffect4 " + maxEffect4)
+    // console.log("#!%maxeffect2 " + maxEffect2)
+    // console.log("#!%maxeffect3 " + maxEffect3)
+    // console.log("#!%maxeffect4 " + maxEffect4)
 
-
-    // console.log("maxEffect4: " + maxEffect4)
-    // console.log("maxEffect3: " + maxEffect3)
-    // console.log("maxEffect2: " + maxEffect2)
-    // const maxEffect4 = 3
-    // const maxEffect3 = 3
-    // const maxEffect2 = 3
     const effect4 = list4.length > 0 ? Math.min(4, maxEffect4) : 1
     const effect3 = list3.length > 0 ? Math.min(3, maxEffect3) : 1
     const effect2 = list2.length > 0 ? Math.min(2, maxEffect2) : 1
     const result = Math.max(effect4, effect3, effect2)
-    console.log("#!%Ihostparasitelevel " + result)
+    // console.log("#!%Ihostparasitelevel " + result)
     return result - 1;
 }
-
 
 function enhanceRiskAssessmentEcoEffect(riskAssessment) {
     extendObservable(riskAssessment, {
@@ -1072,30 +872,27 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
             const otherRlCats = ["LC","DD","NT"]
             const isThreatened = cat => threatenedCats.indexOf(cat) > -1
             const isOther = cat => otherRlCats.indexOf(cat) > -1
-
             const fullSpeciesList = riskAssessment.speciesSpeciesInteractions
             const speciesList = fullSpeciesList.filter(item =>
                 isThreatened(item.redListCategory) ||
                 (isOther(item.redListCategory) && item.keyStoneSpecie)) // speciesSpeciesInteractions bruker keyStoneSpecie!
-
             const speciesNaturtypeList = riskAssessment.speciesNaturetypeInteractions.filter(item => item.keyStoneSpecie)
-            // const speciesNaturtypeList = riskAssessment.speciesNaturetypeInteractions.filter(item => item.keyStoneOrEndangeredSpecie)
             const list = [].concat(speciesNaturtypeList).concat(speciesList)
             // console.log("runD nat:" + speciesNaturtypeList.length)
             // console.log("runD spec:" + speciesList.length)
             // console.log("runD:" + list.length)
             const result = list.filter(item =>
                     (item.effect === "Displacement") ||
-                    (item.effect === "Moderate" && !effectLocalScale(item))).length > 0 ?
-                4 :
-                list.filter(item =>
+                    (item.effect === "Moderate" && !effectLocalScale(item))).length > 0 
+                ? 4 
+                : list.filter(item =>
                     (item.effect === "Moderate" && effectLocalScale(item)) ||
-                    (item.effect === "Weak" && !effectLocalScale(item)) ).length > 0 ?
-                3 :
-                list.filter(item =>
-                    (item.effect === "Weak" && effectLocalScale(item)) ).length > 0 ?
-                2 :
-                1
+                    (item.effect === "Weak" && !effectLocalScale(item)) ).length > 0 
+                ? 3 
+                : list.filter(item =>
+                    (item.effect === "Weak" && effectLocalScale(item)) ).length > 0 
+                ? 2 
+                : 1
             return result - 1;
         }
     });
@@ -1104,12 +901,7 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
             const otherRlCats = ["LC","DD","NT"]
             const fullSpeciesList = riskAssessment.speciesSpeciesInteractions
             const speciesList = fullSpeciesList.filter(item => otherRlCats.indexOf(item.redListCategory) > -1 && !item.keyStoneSpecie)
-            // const speciesNaturtypeList = riskAssessment.SpeciesNaturetypeInteractions.map(x => x) // yeah - You need the map...
-            // const speciesNaturtypeList = riskAssessment.SpeciesNaturetypeInteractions.filter(item => !item.keyStoneSpecie)
             const speciesNaturtypeList = riskAssessment.speciesNaturetypeInteractions.map(a => a) // changed 23.02.2017 - let all nature types count for E-criteria (email from Heidi Solstad)
-            // const speciesNaturtypeList = riskAssessment.SpeciesNaturetypeInteractions.filter(item => !item.keyStoneOrEndangeredSpecie)
-           
-
             const list = [].concat(speciesNaturtypeList).concat(speciesList)
             // console.log("#&&runE fullSpeciesList:" + fullSpeciesList.length)
             // console.log("#&&runE spec:" + speciesList.length)
@@ -1117,52 +909,31 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
             // console.log("#&&runE total length:" + list.length)
 
             const result = list.filter(item =>
-                    item.effect === "Displacement" && !effectLocalScale(item)).length > 0 ?
-
-                    // (item.effect === "Displacement") ||
-                    // // (item.effect === "Displacement" && item.keyStoneSpecie) ||
-                    // (item.effect === "Displacement" && !item.keyStoneSpecie && !item.effectLocalScale) ||
-                    // (item.effect === "Moderate" && item.keyStoneSpecie && !item.effectLocalScale)).length > 0 ?
-                4 :
-                list.filter(item =>
-                    item.effect === "Displacement" && effectLocalScale(item)).length > 0 ?
-                    // (item.effect === "Displacement" && !item.keyStoneSpecie && item.effectLocalScale) ||
-                    // (item.effect === "Moderate" && item.keyStoneSpecie && item.effectLocalScale) ||
-                    // (item.effect === "Weak" && item.keyStoneSpecie && !item.effectLocalScale)).length > 0 ?
-                3 :
-                list.filter(item =>
-                    item.effect === "Moderate" && !effectLocalScale(item)).length > 0 ?
-                    // (item.effect === "Moderate" && !item.keyStoneSpecie && !item.effectLocalScale) ||
-                    // (item.effect === "Weak" && item.keyStoneSpecie && item.effectLocalScale)).length > 0 ?
-                2 :
-                1
+                    item.effect === "Displacement" && !effectLocalScale(item)).length > 0 
+                ? 4 
+                : list.filter(item =>
+                    item.effect === "Displacement" && effectLocalScale(item)).length > 0 
+                ? 3 
+                : list.filter(item =>
+                    item.effect === "Moderate" && !effectLocalScale(item)).length > 0 
+                ? 2 
+                : 1
             return result - 1;
         }
     });
 
     autorun(() => {
-        // const criterionF = getCriterion(riskAssessment, 1, "F")
         const criterionF = riskAssessment.critF
-          console.log("##&Autorun criterionF .value: " + criterionF.value)
-        // const nv = riskAssessment.effectOnThreathenedNaturetypesLevel
         const nv = riskAssessment.effectOnThreathenedNaturetypesLevel
-          console.log("##&Autorun criterionF new value: " + nv)
-        //   console.log("Autorun criterionF not equal: " + (nv != criterionF.value))
-        runInAction(() => {
-            criterionF.value = nv
-        })
+        runInAction(() => {criterionF.value = nv})
     });
 
     autorun(() => {
-        // const criterionG = getCriterion(riskAssessment, 1, "G")
         const criterionG = riskAssessment.critG
-        console.log("##&Autorun criterionG .value: " + criterionG.value)
+        // console.log("##&Autorun criterionG .value: " + criterionG.value)
         const nv = riskAssessment.effectOnOtherNaturetypesLevel
-          console.log("##&Autorun criterionG new value: " + nv)
-        //   console.log("Autorun criterionG not equal: " + (nv != criterionG.value))
-        runInAction(() => {
-            criterionG.value = nv
-        })
+        // console.log("##&Autorun criterionG new value: " + nv)
+        runInAction(() => {criterionG.value = nv})
     });
 
     extendObservable(riskAssessment, {
@@ -1171,21 +942,20 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
             const rlThreatCats = ["VU","EN","CR"]
             const list = riskAssessment.geneticTransferDocumented
             // list.map(item => console.log("#&& hcritlevel: " + !effectLocalScale(item) + "!" + item.keyStoneSpecie + "¤" + item.redListCategory + " " + rlThreatCats.indexOf(item.redListCategory) ))
-
             const result = list.filter(item =>
                     !effectLocalScale(item) &&
                         (item.keyStoneSpecie ||
-                        (rlThreatCats.indexOf(item.redListCategory) > -1))).length > 0 ?
-                4 :
-                list.filter(item =>
+                        (rlThreatCats.indexOf(item.redListCategory) > -1))).length > 0 
+                ? 4 
+                : list.filter(item =>
                     (!effectLocalScale(item) && !item.keyStoneSpecie && (rlCats.indexOf(item.redListCategory) > -1)) ||
                     (effectLocalScale(item) && (rlThreatCats.indexOf(item.redListCategory) > -1)) ||
-                    (effectLocalScale(item) && item.keyStoneSpecie && (rlCats.indexOf(item.redListCategory) > -1))).length > 0 ?
-                3 :
-                list.filter(item =>
-                    (effectLocalScale(item) && !item.keyStoneSpecie && (rlCats.indexOf(item.redListCategory) > -1))).length > 0 ?
-                2 :
-                1
+                    (effectLocalScale(item) && item.keyStoneSpecie && (rlCats.indexOf(item.redListCategory) > -1))).length > 0 
+                ? 3 
+                : list.filter(item =>
+                    (effectLocalScale(item) && !item.keyStoneSpecie && (rlCats.indexOf(item.redListCategory) > -1))).length > 0 
+                ? 2 
+                : 1
             // console.log("#&& hcritlevel: " +  result)
             return result - 1;
         }
@@ -1200,16 +970,12 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
         // console.log("Autorun criterionD: " + criterionD.value)
         const nv = riskAssessment.dThreathenedSpeciesLevel
         // console.log("Autorun criterionD nv: " + nv)
-        runInAction(() => {
-            riskAssessment.critD.value = nv
-        })
+        runInAction(() => { riskAssessment.critD.value = nv})
     });
     autorun(() => {
         // const criterionE = getCriterion(riskAssessment, 1, "E")
         const nv = riskAssessment.EDomesticSpeciesLevel
-        runInAction(() => {
-            riskAssessment.critE.value = nv
-        })
+        runInAction(() => { riskAssessment.critE.value = nv})
     });
     autorun(() => {
         // const criterionH = getCriterion(riskAssessment, 1, "H")
@@ -1230,7 +996,6 @@ function enhanceRiskAssessmentEcoEffect(riskAssessment) {
 }
 
 function enhanceRiskAssessmentLevel(riskAssessment, labels) {
-    // console.log("run enhanceRiskAssessmentLevel")
     extendObservable(riskAssessment, {
         get invationpotential() {
             const result = RiskLevel.invasjonspotensiale(riskAssessment)
@@ -1270,20 +1035,14 @@ function enhanceRiskAssessmentLevel(riskAssessment, labels) {
             return this.riskLevelObj.decisiveCriteriaLabel
         }
     });
-    // console.log("end run enhanceRiskAssessmentLevel")
-
 }
 
 function enhanceCriteriaAddLabelsAndAuto(riskAssessment, codes) {
-    // console.log("has CODES:" + JSON.stringify( codes))
     const axis = {A:0,B:0,C:0,D:1,E:1,F:1,G:1,H:1,I:1}
-
-
     for (const cr of codes.Criterion) {
         const crit = {}
         const levs = []
         const letter = cr.Value
-
         // console.log("Crit>: " + letter)
         for (const levdef of cr.Children["Crit" + letter]) {
             const lev = {
@@ -1296,17 +1055,8 @@ function enhanceCriteriaAddLabelsAndAuto(riskAssessment, codes) {
         crit.heading = cr.Text
         crit.info = cr.Info
         crit.codes = levs
-
-        // const criteria = getCriterion(riskAssessment, axis[letter], letter)
         const criteria = riskAssessment.getCriterion(letter)
         Object.assign(criteria, crit)
-
-        // extendObservable(criteria, {currentValueLabel: computed(function() {
-        //     const v = criteria.value
-        //     const result = criteria.codes[v]
-        //     console.log("Curr crit value: " + criteria.criteriaLetter+ v+result)
-        //     return result
-        // })})
         extendObservable(criteria, {
             get currentValueLabel() {
                 const v = this.value
@@ -1417,38 +1167,9 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
 
     for(const crit of [r.critB]) { // just to get scope
         extdendCriteriaProps(crit)
-        // autorun(() => {
-        //     const auto = (r.bmetodkey === "B1" || r.bmetodkey === "B2b")
-        //     runInAction(() => {
-        //         crit.auto = auto
-        //     })
-        // })
         runInAction(() => {
             crit.auto = true
         })
-
-        // autorun(() => {
-        //     let ud // uncertaintyDisabled 
-        //     if (r.bmetodkey === "B1" 
-        //        || r.bmetodkey === "B2b"
-        //        || r.bmetodkey === "B2a1")
-        //     //    || (r.bmetodkey === "B2a" && r.AOOfirstOccurenceLessThan10Years === "yes"))
-        //     {
-        //         // console.log("¤¤¤ uncertaintyDisabled - 1")
-        //         ud = [0,1,2,3]
-        //     } else if (r.bmetodkey === "B2a2") {
-        //         // console.log("¤¤¤ uncertaintyDisabled - 2")
-        //         ud = uncertaintyArray(r.blow, r.bhigh)
-        //     } else {
-        //         // console.log("¤¤¤ uncertaintyDisabled - 3")
-        //         ud = uncertaintyArray(r.bscore - 1, r.bscore + 1)
-        //     }
-        //     // console.log("¤¤¤ uncertaintyDisabled: " + JSON.stringify(ud) + " " + r.bmetodkey + " " + r.AOOfirstOccurenceLessThan10Years)
-        //     runInAction(() => {
-        //         arrayConditionalReplace(crit.uncertaintyDisabled, ud)
-        //     })
-        //     // if (!config.isRelease) trace()  // leave this line here! Se comments above to learn when to uncomment.
-        // })
 
         runInAction(() => {
             arrayConditionalReplace(crit.uncertaintyDisabled, [0,1,2,3])
@@ -1456,16 +1177,8 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
 
         let firstrun = true
         autorun(() => {
-            // let uv // uncentaintyValues (selected by program)
-            // if (r.bmetodkey === "B1" || r.bmetodkey === "B2b") {
-            //     uv = uncertaintyArrayReverse(uncertaintyArray(r.blow, r.bhigh))
-            // } else {
-            //     uv = [crit.value]
-            // }
             const uv = uncertaintyArrayReverse(uncertaintyArray(r.blow, r.bhigh))
-            runInAction(() => {
-                setUncertaintyValues(firstrun, crit, uv)
-            })
+            runInAction(() => { setUncertaintyValues(firstrun, crit, uv) })
             firstrun = false
             //if (!config.isRelease) trace()  // leave this line here! Se comments above to learn when to uncomment.
         })
@@ -1494,15 +1207,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
             //if (!config.isRelease) trace()  // leave this line here! Se comments above to learn when to uncomment.
         })
     }
-    // autorun(() => {console.log("#¤# critA value**: " + r.critA.value + " | " + r.ascore)})
 }
-
-// function enhanceCriteriaAddErrorReportingForAutoMode(riskAssessment) {
-//     for(const crit of riskAssessment.criteria) {
-//         extendObservable(crit, errorhandler)
-//     }
-// }
-
 
 export default function enhanceCriteria(riskAssessment, vurdering, codes, labels, artificialAndConstructedSites) {
     function getCriterion(letter) {
@@ -1515,13 +1220,9 @@ export default function enhanceCriteria(riskAssessment, vurdering, codes, labels
 
     enhanceCriteriaAddLabelsAndAuto(riskAssessment, codes)
     enhanceRiskAssessmentCrits(riskAssessment)
-    // enhanceRiskAssessmentAddErrorReportingHandler(riskAssessment)
-    // enhanceCriteriaAddErrorReportingForAutoMode(riskAssessment)
     enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering, artificialAndConstructedSites)
     enhanceRiskAssessmentLevel(riskAssessment, labels)
     enhanceRiskAssessmentEcoEffect(riskAssessment)
     enhanceRiskAssessmentInvasjonspotensiale(riskAssessment)
     enhanceCriteriaAddUncertaintyRules(riskAssessment)
-    //enhanceCriteriaAddScale(riskAssessment)
-    //enhanceCriteriaAddStatus(riskAssessment)
 }
