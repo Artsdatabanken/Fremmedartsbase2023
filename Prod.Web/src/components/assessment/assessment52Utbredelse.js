@@ -2,20 +2,14 @@ import React from 'react'
 import config from '../../config';
 import {observer, inject} from 'mobx-react'
 import * as Xcomp from './observableComponents'
-import Tabs from '../tabs'
-// import Assessment51Naturtyper from './assessment51Naturtyper'
 import DistributionTable from './distributionTable'
 import UtbredelseshistorikkInnenlands from './35Utbredelseshistorikk/UtbredelseshistorikkInnenlands'
-// import UtbredelseIDag from './35Utbredelseshistorikk/UtbredelseIDag'
-// import Utbredelseshistorikk from './35Utbredelseshistorikk/Utbredelseshistorikk'
 import ModalArtskart from '../artskart/ModalArtskart';
 import ModalSimpleMap from '../artskart/ModalSimpleMap';
 import Fylkesforekomst from '../fylkesforekomst/Fylkesforekomst';
-// import FileUpload from '../FileUpload'
 import fylker from "../fylkesforekomst/fylker_2017";
 import Documents from '../documents'
-// import { ContactsOutlined } from '@material-ui/icons';
-import { action, computed, observable, extendObservable, runInAction } from 'mobx';
+import { action, computed, extendObservable, runInAction } from 'mobx';
 import SimpleMap from '../map/SimpleMap';
 import WaterArea from '../water/WaterArea';
 import { getWaterAreas } from '../water/apiWaterArea';
@@ -23,8 +17,6 @@ import mapOlFunc from '../map/MapOlFunctions';
 import errorhandler from '../errorhandler';
 import ErrorList from '../errorList';
 import { beskrivTidSiden } from '../../formatting';
-
-
 @inject('appState')
 @observer
 export default class Assessment52Utbredelse extends React.Component {

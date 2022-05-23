@@ -1,21 +1,10 @@
 ﻿import React from 'react';
 import {observer, inject} from 'mobx-react';
-// import PropTypes from 'prop-types';
 import config from '../../config';
-// import RadioGroup from './radioGroup'
 import * as Xcomp from './observableComponents';
-// import DomesticObservedAndEstablished from './20ArtensStatus/DomesticObservedAndEstablished';
 
 import {action, autorun, extendObservable, observable, toJS} from "mobx"
-
-// import createTaxonSearch from '../createTaxonSearch'
-
-// const SkalVurderesLabel = ({skalVurderes}) => (skalVurderes
-//     ? <label>Arten skal risikovurderes videre</label>
-//     : <label className="important-info">Arter som faller innenfor denne gruppen skal ikke risikovurderes videre</label>)
-
 const nbsp = "\u00a0"
-
 @inject("appState")
 @observer
 export default class Assessment20ArtensStatus extends React.Component {
@@ -44,21 +33,21 @@ checkStatus = (production) => {
         // console.log("labels" + JSON.stringify(labels.FirstObservation))
         
         const codes = appState.koder
-        const standardPeriods = [
-            nbsp,
-            "-1800",
-            "1800-1849",
-            "1850-1899",
-            "1900-1949",
-            "1950-1959",
-            "1960-1969",
-            "1970-1979",
-            "1980-1989",
-            "1990-1999",
-            "2000-2009",
-            "2010-",
-            labels.FirstObservation.dontknow
-        ];
+        // const standardPeriods = [
+        //     nbsp,
+        //     "-1800",
+        //     "1800-1849",
+        //     "1850-1899",
+        //     "1900-1949",
+        //     "1950-1959",
+        //     "1960-1969",
+        //     "1970-1979",
+        //     "1980-1989",
+        //     "1990-1999",
+        //     "2000-2009",
+        //     "2010-",
+        //    labels.FirstObservation.dontknow
+        //];
 
         return (
             <div>
@@ -415,8 +404,3 @@ checkStatus = (production) => {
         );
     }
 }
-
-// vurdering31ArtensStatus.propTypes = {
-//     viewModel: PropTypes.object.isRequired,
-//     vurdering: PropTypes.object.isRequired
-// }

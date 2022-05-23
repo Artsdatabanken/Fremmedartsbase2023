@@ -1,6 +1,5 @@
 ﻿import React from 'react';
 import {observer, inject} from 'mobx-react';
-// import {observable, autorun} from 'mobx';
 import config from '../../config';
 import * as Xcomp from './observableComponents';
 import UploadPicturesButton from './30Artsegenskaper/uploadPicturesButton'

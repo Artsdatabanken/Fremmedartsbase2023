@@ -16,8 +16,8 @@ export default class Assessment62Okologiskeffekt extends React.Component {
         super(props)
         const {appState:{assessment}, appState:{assessment:{riskAssessment}}, appState} = this.props;
         const evaluationContext = appState.evaluationContext
-        const labels = appState.codeLabels
-        const koder = appState.koder
+        // const labels = appState.codeLabels
+        // const koder = appState.koder
 
         // ------------------------------------
         // SpeciesSpeciesInteractions (addnewitem)

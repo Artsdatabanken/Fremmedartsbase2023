@@ -1,14 +1,12 @@
 ﻿import config from '../../config';
 import React from 'react';
 import {observer, inject} from 'mobx-react';
-//import {observable, autorun} from 'mobx';
 import * as Xcomp from './observableComponents';
 inject("appState")
 @observer
 export default class Assessment70Klimaeffekter extends React.Component {
     render() {
 		const {appState:{assessment:{riskAssessment}}, appState} = this.props;
-        // const labels = appState.codeLabels
 		const koder = appState.koder
         const climatelabel = (id) => koder.climateEffects.find(code => code.Value === id).Text
         const ecoEffect = riskAssessment.ecoEffectText

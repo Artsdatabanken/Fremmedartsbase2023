@@ -1,8 +1,6 @@
 ﻿import config from '../../config';
 import React from 'react';
-import PropTypes from 'prop-types'
 import {observer, inject} from 'mobx-react';
-import {observable, autorun} from 'mobx';
 import * as Xcomp from './observableComponents';
 @inject("appState")
 @observer

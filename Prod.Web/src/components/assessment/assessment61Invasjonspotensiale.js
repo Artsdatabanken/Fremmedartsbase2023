@@ -1,22 +1,15 @@
 ﻿import React from 'react';
-import PropTypes from 'prop-types'
 import {observer, inject} from 'mobx-react';
-import {action, computed, runInAction, observable, makeObservable, extendObservable} from 'mobx'
+import {action, computed, runInAction, observable, extendObservable} from 'mobx'
 import * as Xcomp from './observableComponents';
-import Tabs from '../tabs'
 import Criterion from './criterion'
 import Assessment61CriteriaC from './assessment61CriteriaC'
 import config from '../../config'
-// import Filliste from './35Utbredelseshistorikk/Filliste'
-// import FileUpload from '../FileUpload'
 import Documents from '../documents'
-// import { KeyboardHideSharp } from '@material-ui/icons'
-// import {stringFormat} from "../../utils"
 import ModalArtskart from '../artskart/ModalArtskart';
 import errorhandler from '../errorhandler';
 import ErrorList from '../errorList';
 import { getWaterAreas } from '../water/apiWaterArea';
-
 @inject("appState")
 @observer
 export default class Assessment61Invasjonspotensiale extends React.Component {

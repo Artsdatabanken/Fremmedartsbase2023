@@ -1,10 +1,9 @@
 import config from '../../config';
 import React from 'react';
 import {observer, inject} from 'mobx-react';
-import {action, autorun, computed, extendObservable, observable, toJS} from 'mobx';
+import {action, toJS} from 'mobx';
 import * as Xcomp from './observableComponents';
 import Assessment42Spredningsveier from './assessment42Spredningsveier'
-// const labels = config.labelss
 
 @inject("appState")
 @observer
@@ -26,21 +25,11 @@ export default class Assessment41Import extends React.Component {
         }
     }
 
-    // @action removeImportPathway = (vurdering, value) => {
-    //     const result = vurdering.importPathways.remove(value);
-    //     // console.log("item removed : " + result)
-    // };
-
     render() {
         const {appState:{assessment:{riskAssessment}}, appState:{assessment}, appState} = this.props;
-        // const vurdering = assessment
         const labels = appState.codeLabels
-        // const koder = appState.koder
         const disabled = appState.userContext.readonly
-        // const importPathways = vurdering.importPathways
-        // const importPathwayKoder = appState.spredningsveier.children.filter(child => child.name === "Import")
         const nbsp = "\u00a0"
-        // const removeImportPathway = (mp) => this.removeImportPathway(vurdering, mp)
 
         return(
         <div>
