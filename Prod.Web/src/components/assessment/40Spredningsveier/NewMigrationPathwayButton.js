@@ -1,4 +1,4 @@
-import config from '../../../config';
+// import config from '../../../config';
 import React from 'react';
 import {observer} from 'mobx-react';
 import {action, computed, extendObservable, observable} from 'mobx';
@@ -14,8 +14,6 @@ export default class NewMigrationPathwayButton extends React.Component {
         extendObservable(this, {
             visibleModal: false,
             newMigrationPathway: {
-                // Category : props.migrationPathway.parentValue ? props.migrationPathway.parentValue : props.migrationPathway.value,
-                // CodeItem : props.migrationPathway.parentValue ? props.migrationPathway.value : null,
                 mainCategory: props.mainCat,
                 category: props.migrationPathway.name,
                 codeItem : props.migrationPathway.value,
@@ -23,9 +21,6 @@ export default class NewMigrationPathwayButton extends React.Component {
                 influenceFactor : null, 
                 magnitude : null,
                 timeOfIncident : null,               
-                /*influenceFactor : "unknown", 
-                magnitude : "unknown",
-                timeOfIncident : "unknown",*/
                 elaborateInformation : ""
             },
         })
@@ -34,16 +29,13 @@ export default class NewMigrationPathwayButton extends React.Component {
                 this.newMigrationPathway.influenceFactor === "unknown" 
                 && this.newMigrationPathway.magnitude === "unknown" 
                 && this.newMigrationPathway.timeOfIncident === "unknown"
-                //&& !this.newMigrationPathway.elaborateInformation 
                 )
         })
-       // this.showModal = () => this.visibleModal = true
 
        this.showModal = (e) => {
             action(() => {
                 e.stopPropagation();
                 this.visibleModal = true;
-               // this.visibleModal = !this.visibleModal
             })()
         }
       
@@ -61,40 +53,43 @@ export default class NewMigrationPathwayButton extends React.Component {
         const mplabels = labels.MigrationPathway
         const disable = disabled && (migrationPathway.name != "direkte til forbruker per post" && migrationPathway.name != "privatpersoners egenimport" && migrationPathway.name != "med annet formål" && migrationPathway.name != "øvrig rømning/forvilling" && migrationPathway.name != "fra forskning" && migrationPathway.name != "til forskning" && migrationPathway.name != "fra botaniske/zoologiske hager / akvarier (ikke privat)" && migrationPathway.name != "til botaniske/zoologiske hager / akvarier (ikke privat)")
         const heading = mainCat + " " + migrationPathway.name
-        // this.newMigrationPathway.Category = migrationPathway.name
-        // try {
-        //   console.log("koder4" + koder.toString() )
-        // } 
-        // catch (e) {console.log(e.message) }
-        //  console.log("koder4b" + koder.migrationPathwayFrequency[0].Value )
-        // const a = koder.migrationPathwayFrequency[0]
         return(
 
             <div className="btn-flat btn migration" disabled={disable} style={{textTransform: "none"}} onClick={this.showModal} >{migrationPathway.name}
-                {this.visibleModal ?
-                <BsModal 
+                {this.visibleModal 
+                ? <BsModal 
                     heading={heading} 
                     onCancel={this.hideModal} 
                     onOk={this.onOk} 
                     okEnabled={this.okEnabled}
                     labels={labels.General}
                     children={migrationPathway.children}>
-                    
-                    {/*<Xcomp.StringEnum observableValue={[this.newMigrationPathway, 'codeItem']} mode="radio" codes={migrationPathway.children}/>*/}
-            
-               {hideIntroductionSpread ? null :
-                <Xcomp.StringEnum label={mplabels.introductionSpread} className="intro" observableValue={[this.newMigrationPathway, 'introductionSpread']} 
-                //style={{display: 'none'}} 
-                forceSync codes={mainCodes.migrationPathwayIntroductionSpread}/>}
+                    {hideIntroductionSpread 
+                    ? null 
+                    : <Xcomp.StringEnum 
+                        label={mplabels.introductionSpread} 
+                        className="intro" 
+                        observableValue={[this.newMigrationPathway, 'introductionSpread']} 
+                        forceSync 
+                        codes={mainCodes.migrationPathwayIntroductionSpread}/>}
                 
-                <Xcomp.StringEnum label={mplabels.influenceFactor} observableValue={[this.newMigrationPathway, 'influenceFactor']} forceSync codes={mainCodes.migrationPathwayFrequency}/>
-                <Xcomp.StringEnum label={mplabels.magnitude} observableValue={[this.newMigrationPathway, 'magnitude']} forceSync codes={mainCodes.migrationPathwayAbundance}/>
-                <Xcomp.StringEnum label={mplabels.timeOfIncident} observableValue={[this.newMigrationPathway, 'timeOfIncident']} forceSync codes={mainCodes.migrationPathwayTime}/>
-               {/*<Xcomp.HtmlString label={mplabels.elaborateInformation} observableValue={[this.newMigrationPathway, 'elaborateInformation']} /> */}
-            </BsModal> :
-                null}
-                
-                 
+                    <Xcomp.StringEnum 
+                        label={mplabels.influenceFactor} 
+                        observableValue={[this.newMigrationPathway, 'influenceFactor']} 
+                        forceSync 
+                        codes={mainCodes.migrationPathwayFrequency}/>
+                    <Xcomp.StringEnum 
+                        label={mplabels.magnitude} 
+                        observableValue={[this.newMigrationPathway, 'magnitude']} 
+                        forceSync 
+                        codes={mainCodes.migrationPathwayAbundance}/>
+                    <Xcomp.StringEnum 
+                        label={mplabels.timeOfIncident} 
+                        observableValue={[this.newMigrationPathway, 'timeOfIncident']} 
+                        forceSync 
+                        codes={mainCodes.migrationPathwayTime}/>
+                </BsModal> 
+                : null}
             </div>
         )}
 }

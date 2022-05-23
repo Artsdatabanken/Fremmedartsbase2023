@@ -1,37 +1,24 @@
-// import config from '../../../config';
 import React from 'react';
 import PropTypes from 'prop-types'
 import {observer, inject} from 'mobx-react';
 import {action, extendObservable, observable} from 'mobx';
 import * as Xcomp from '../../observableComponents';
-
 import {processTree} from '../../../utils'
-//const labels = config.labels
-
 @inject("appState")
 @observer
 export default class MigrationPathwayTable extends React.Component {
     constructor(props) {
         super(props);
-       
     }
     @observable editMode = false
-
     @action toggleEdit = () => {
         this.editMode = !this.editMode
     }
-
     render() {
         const {migrationPathways, appState, removeMigrationPathway, showIntroductionSpread, hideIntroductionSpread, getCategoryText, migrationPathwayCodes} = this.props;
-        // const {appState:{assessment}, appState} = this.props;
-        // const vurdering = assessment
         const labels = appState.codeLabels
         const koder = appState.koder
         const spredningsveier = koder.migrationPathways[0]
-        
-
-        // const {migrationPathways, fabModel, removeMigrationPathway, showIntroductionSpread} = this.props;
-        // const labels = fabModel.kodeLabels
         const nbsp = "\u00a0"
         return(
             <table className="table migrationPathways">
@@ -45,15 +32,6 @@ export default class MigrationPathwayTable extends React.Component {
                     <th>{nbsp}</th>
                     <th>{nbsp}</th>
                     <th>{nbsp}</th>
-                   
-                    {/*<th>{labels.migrationPathway.CodeItem}</th>
-                    {showIntroductionSpread ? <th>{labels.MigrationPathway.introductionSpread}</th> : null}
-                    <th>{labels.MigrationPathway.influenceFactor}</th>
-                    <th>{labels.MigrationPathway.magnitude}</th>
-                    <th>{labels.MigrationPathway.timeOfIncident}</th>
-                    <th>{labels.MigrationPathway.elaborateInformation}</th>
-                    <th>{nbsp}</th>
-                    <th>{nbsp}</th>*/}
                 </tr>
                 </thead>
                 <tbody>
@@ -78,15 +56,10 @@ export default class MigrationPathwayTable extends React.Component {
         );
     }
 }
-
 MigrationPathwayTable.contextTypes = {
     readonly: PropTypes.bool
 }
-
-
-
 @observer
-//@inject("appState")
 class MigrationPathwayTableRow extends React.Component {
     constructor(props) {
         super(props);
@@ -95,7 +68,6 @@ class MigrationPathwayTableRow extends React.Component {
             open: false
         })
     }
-
     findSV(mpk, value) {
         const iterable = processTree(mpk)
         // console.log("___mpk: " + JSON.stringify(mpk))
@@ -108,13 +80,10 @@ class MigrationPathwayTableRow extends React.Component {
         }
         return undefined
     }
-
-
     trunc(s, n){
         n = n === undefined ? 15 : n
         return s.substr(0, n-1) + (s.length > n ? '&hellip;' : '')
     }
-
     getCategoryPart (s, level) {
         s = s.split("-")
         var result = null
@@ -122,12 +91,9 @@ class MigrationPathwayTableRow extends React.Component {
         s != null && s.length > 1 ? level == 1 ? result = s[0] : result = s[1].substr(1, s[1].length-3) : null
         return result
     }
-
     render() {
-        const {appState, item, codes, migrationPathways, showIntroductionSpread, removeMigrationPathway, labels, getCategoryText, migrationPathwayCodes, editMode, toggleEdit } = this.props;
+        const {appState, item, codes, migrationPathways, removeMigrationPathway, labels, getCategoryText, migrationPathwayCodes, editMode, toggleEdit } = this.props;
         const mp = item
-
-
         // console.log("___mp: " + JSON.stringify(migrationPathways))
         console.log("___: " + JSON.stringify(codes.migrationPathwayIntroductionSpread))
         // console.log("___: " + JSON.stringify(Object.keys(clabels)))
@@ -144,8 +110,6 @@ class MigrationPathwayTableRow extends React.Component {
         const elobTxt = this.open ? eloborateText : this.trunc(eloborateText)
         return(
             <tr>
-                {/*<td>{codeItemLabel(mp.codeItem)}</td>
-                showIntroductionSpread || !hideIntroductionSpread ? <td>{introductionSpreadLabel(mp.introductionSpread)}</td> : null*/}
                 <td>{mp.mainCategory ? mp.mainCategory : this.getCategoryPart(getCategoryText(mp.codeItem, migrationPathwayCodes), 1)}</td>
                 <td>{mp.category ? mp.category : this.getCategoryPart(getCategoryText(mp.codeItem, migrationPathwayCodes), 2)}</td>
                 {this.edit
@@ -186,8 +150,3 @@ class MigrationPathwayTableRow extends React.Component {
         )
     }
 }
-
-
-                    // <Xcomp.StringEnum label={labels.migrationPathway.InfluenceFactor} observableValue={[this.newMigrationPathway, 'InfluenceFactor']} forceSync codes={koder.migrationPathwayFrequency}/>
-                    // <Xcomp.StringEnum label={labels.migrationPathway.Magnitude} observableValue={[this.newMigrationPathway, 'Magnitude']} forceSync codes={koder.migrationPathwayAbundance}/>
-                    // <Xcomp.StringEnum label={labels.migrationPathway.TimeOfIncident} observableValue={[this.newMigrationPathway, 'TimeOfIncident']} forceSync codes={koder.migrationPathwayTime}/>
