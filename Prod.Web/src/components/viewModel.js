@@ -204,12 +204,17 @@ class ViewModel {
         this.livsmediumCodes = grupper
         // --------------------------
 
-        // load livsmedium codes ----
+        // load truede naturtyper codes ----
         const togsnt = require('../TrueteOgSjeldneNaturtyper2018.json')
         const nt = this.transformtrueteogsjeldnenaturtyper(togsnt)
         // console.log("trueteogsjeldnenaturtyper: " +  JSON.stringify(nt))
         const tsgrupper = nt.Children
         this.trueteogsjeldneCodes = tsgrupper
+
+        this.trueteogsjeldnenaturtypercodes = []
+        this.gettrueteogsjeldnenaturtypercodes(togsnt)
+
+
         // --------------------------
 
 
@@ -881,6 +886,22 @@ class ViewModel {
         return nt
     }
 
+
+    gettrueteogsjeldnenaturtypercodes(nt) {
+        this.trueteogsjeldnenaturtypercodes.push("NA " + nt.Value)
+        if(nt.Children) {
+            for ( var i = 0; i < nt.Children.length; ++i )
+            {
+                this.gettrueteogsjeldnenaturtypercodes(nt.Children[i])
+            }
+        }
+        //console.log("!!! trueteogsjeldnenaturtypercodes: " + JSON.stringify(this.trueteogsjeldnenaturtypercodes))
+    }
+
+    isTrueteogsjeldnenaturtype(ntcode) {
+        return this.trueteogsjeldnenaturtypercodes.includes(ntcode)
+    }
+    
     transformnaturtyperNIN2(nin2codes) {
         const r = {}
         r.Id = nin2codes.Id
