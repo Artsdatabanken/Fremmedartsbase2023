@@ -1,6 +1,8 @@
-﻿function getErrorDefinitions(assessment, resolveid) {
+﻿function getErrorDefinitions(assessment, errorHelper) {
     const a = assessment
     const r = assessment.riskAssessment
+    const resolveid = errorHelper.resolveid
+    const isTrueteogsjeldnenaturtype = errorHelper.isTrueteogsjeldnenaturtype
     const hasnum = (value) => !(value === null || isNaN(value))
     
     

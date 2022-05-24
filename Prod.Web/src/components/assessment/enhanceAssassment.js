@@ -390,7 +390,14 @@ export default function enhanceAssessment(json, appState) {
         }
     )
 
-    const errorDefinitions = getErrorDefinitions(assessment, errorhandler.resolveid)
+
+    const errorHelpers = {
+        resolveid: errorhandler.resolveid,
+        isTrueteogsjeldnenaturtype: appState.isTrueteogsjeldnenaturtype
+    }
+
+    // const errorDefinitions = getErrorDefinitions(assessment, errorhandler.resolveid)
+    const errorDefinitions = getErrorDefinitions(assessment, errorHelpers)
 
     errorhandler.addErrors(errorDefinitions)
     return assessment
