@@ -138,7 +138,7 @@ export default class Assessment51Naturtyper extends React.Component {
                     <h4>{ntLabels.regionalNaturetypes}</h4>
                     <p> Mer informasjon og kartvisning av soner og seksjoner finner du <a href="https://nin.artsdatabanken.no/Natur_i_Norge/Natursystem/Beskrivelsessystem/Regional_naturvariasjon?informasjon" target="_blank"> her</a>. </p>
                     <br/>
-                    {marine 
+                    {marine && assessment.marine
                     ? <>
                         <h5 className={"bioCLZone"}>{ntLabels.marineSpecies}</h5>
                         <p className="bioCLZone">{ntLabels.coastWaterSections}</p>
@@ -154,7 +154,7 @@ export default class Assessment51Naturtyper extends React.Component {
                         </div>
                     </>
                     : null}
-                    {mainland 
+                    {mainland && (assessment.limnic || assessment.terrestrial)
                     ? <>
                         <h5 className={"bioCLZone"}>{ntLabels.mainlandNorway}</h5>
                         <p className="bioCLZone">{ntLabels.bioClimateSections}</p>
