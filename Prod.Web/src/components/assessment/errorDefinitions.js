@@ -1,10 +1,9 @@
-﻿function getErrorDefinitions(assessment, errorHelper) {
+﻿function getErrorDefinitions(assessment, errorHelpers) {
     const a = assessment
     const r = assessment.riskAssessment
-    const resolveid = errorHelper.resolveid
-    const isTrueteogsjeldnenaturtype = errorHelper.isTrueteogsjeldnenaturtype
+    const resolveid = errorHelpers.resolveid
+    const isTrueteogsjeldnenaturtype = errorHelpers.isTrueteogsjeldnenaturtype
     const hasnum = (value) => !(value === null || isNaN(value))
-    
     
     // DOORKNOCKER
     // occurrences1Low
@@ -273,7 +272,14 @@
             get cond() {return a.doFullAssessment && (r.bmetodkey === "B2a1") && (r.AOOyear1 != null) && (r.AOOyear2 != null) && (((r.AOOyear2 - r.AOOyear1) < 10 ) || ((r.AOOyear2 - r.AOOyear1) > 20 )) },
             msg: "Valgt periode (t2-t1) kan ikke overstige 20 år eller være mindre enn 10 år. Juster perioden."
         },
-
+        {
+            id: "(nat)err1",
+            // get cond() {return  a.impactedNatureTypes.length > 0 && a.impactedNatureTypes.some(element => element.niNCode.substr(3) === errorDefinitions.trueteogsjeldneCodes) === true},
+            get cond() {return a.doFullAssessment && a.impactedNatureTypes.length > 0 && isTrueteogsjeldnenaturtype(a.impactedNatureTypes) === true},
+            // get cond() {return  a.impactedNatureTypes.length > 0 && a.impactedNatureTypes.some(element => isTrueteogsjeldnenaturtype.indexOf(element) >= 0) === true}, 
+            // get cond() {return  a.impactedNatureTypes.length > 0 && a.impactedNatureTypes.filter(element => element.niNCode.substr(3) === errorDefinitions.trueteogsjeldneCodes.includes(element)).length > 0},
+            msg: "Naturtypen er rødlistet. Velg gjeldende naturtype fra Rødlista for naturtyper!"
+        },
         {
             id: "(sum)err1",
             get cond() {return assessment.categoryHasChangedFromPreviousAssessment && assessment.reasonForChangeOfCategory.length === 0 },
