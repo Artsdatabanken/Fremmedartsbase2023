@@ -279,7 +279,7 @@
             get cond() {return a.doFullAssessment && a.impactedNatureTypes.length > 0 && a.impactedNatureTypes.some((nt) => isTrueteogsjeldnenaturtype(nt.niNCode)) },
             // get cond() {return  a.impactedNatureTypes.length > 0 && a.impactedNatureTypes.some(element => isTrueteogsjeldnenaturtype.indexOf(element) >= 0) === true}, 
             // get cond() {return  a.impactedNatureTypes.length > 0 && a.impactedNatureTypes.filter(element => element.niNCode.substr(3) === errorDefinitions.trueteogsjeldneCodes.includes(element)).length > 0},
-            msg: "Naturtypen er rødlistet. Velg gjeldende naturtype fra Rødlista for naturtyper!"
+            msg: "Naturtypen valgt fra NiN 2.3 er truet eller sjelden. Velg tilsvarende naturtype fra Rødlista for naturtyper!"
         },
         {
             id: "(sum)err1",

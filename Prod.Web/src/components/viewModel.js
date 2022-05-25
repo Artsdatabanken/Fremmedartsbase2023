@@ -909,7 +909,7 @@ class ViewModel {
     //         }    
     //     }
     //     // console.log("!!! r.Id: " + JSON.stringify(r.Id))
-    //     return this.trueteogsjeldnenaturtypercodes.includes(r.Id)
+    //     return this.trueteogsjeldnenaturtypercodes.some(element => r.Id.includes(element))
     // }
     
     isTrueteogsjeldnenaturtype = (ntcode) => {
