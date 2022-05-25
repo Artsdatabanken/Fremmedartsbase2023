@@ -277,7 +277,8 @@ export default class Assessment52Utbredelse extends React.Component {
                                 <DistributionTable/>
                             </div>
                         </div>
-                        <ErrorList errorhandler={errorhandler} errorids={["(a)warn6", "(a)warn7"]} />
+                        <ErrorList errorhandler={errorhandler} errorids={["(a)warn6", "(a)warn7", "(b)err1", "(b)err2"]} />
+                        <br/> 
                         <div className="changedNature">
                             <p>Andel av antatt forekomstareal i sterkt endra natur (%)</p>
                             <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "spreadHistoryDomesticAreaInStronglyChangedNatureTypes"]} codes={koder.KnownDistributionInNature}/>
@@ -355,13 +356,15 @@ export default class Assessment52Utbredelse extends React.Component {
                                     </div>
                                     : null}
                                 </div>
-                                <ErrorList className="errorMessages180" errorhandler={errorhandler} errorids={["(a)err1",  "(a)err666", "(a)err18", "(a)err19", "(a)err20", "(a)err22", "(a)err23", "(a)err24", "(a)warn4", "(a)warn5"]} />
+                                <ErrorList className="errorMessages180" errorhandler={errorhandler} errorids={[]} />
                                 <p>Forekomstareal <b>om 50 år </b> (km<sup>2</sup>)</p>
                             </div>
                             <div className="distribution">
                                 <DistributionTable/>
                             </div>
                         </div>
+                        <ErrorList  errorhandler={errorhandler} errorids={["(a)err1",  "(a)err666", "(a)err18", "(a)err19", "(a)err20", "(a)err22", "(a)err23", "(a)err24", "(a)warn4", "(a)warn5"]} />
+                        <br/>
                         <div className="changedNature">
                             <p>Andel av kjent forekomstareal i sterkt endra natur (%) </p>
                             <Xcomp.StringEnum observableValue={[assessment.riskAssessment, "spreadHistoryDomesticAreaInStronglyChangedNatureTypes"]} codes={koder.KnownDistributionInNature}/>
