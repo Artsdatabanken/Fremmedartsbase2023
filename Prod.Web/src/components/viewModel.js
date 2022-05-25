@@ -211,9 +211,10 @@ class ViewModel {
         const tsgrupper = nt.Children
         this.trueteogsjeldneCodes = tsgrupper
 
+
         this.trueteogsjeldnenaturtypercodes = []
         this.gettrueteogsjeldnenaturtypercodes(togsnt)
-
+        console.log("!!! gettrueteogsjeldnenaturtypercodes" + JSON.stringify(this.trueteogsjeldnenaturtypercodes))
 
         // --------------------------
 
@@ -898,22 +899,22 @@ class ViewModel {
         // console.log("!!! trueteogsjeldnenaturtypercodes: " + JSON.stringify(this.trueteogsjeldnenaturtypercodes))
     }
 
-    isTrueteogsjeldnenaturtype = (ntcode) => {
-        const r = {}
-        r.Id = [ntcode.niNCode]
-        if(ntcode.length > 1) {
-            for(var i = 1; i < ntcode.length; ++i)
-            {
-                r.Id.push(ntcode[i].niNCode)
-            }    
-        }
-        // console.log("!!! r.Id: " + JSON.stringify(r.Id))
-        return this.trueteogsjeldnenaturtypercodes.includes(r.Id)
-    }
-    
     // isTrueteogsjeldnenaturtype = (ntcode) => {
-    //     return this.trueteogsjeldnenaturtypercodes.includes(ntcode)
+    //     const r = {}
+    //     r.Id = [ntcode.niNCode]
+    //     if(ntcode.length > 1) {
+    //         for(var i = 1; i < ntcode.length; ++i)
+    //         {
+    //             r.Id.push(ntcode[i].niNCode)
+    //         }    
+    //     }
+    //     // console.log("!!! r.Id: " + JSON.stringify(r.Id))
+    //     return this.trueteogsjeldnenaturtypercodes.includes(r.Id)
     // }
+    
+    isTrueteogsjeldnenaturtype = (ntcode) => {
+        return this.trueteogsjeldnenaturtypercodes.includes(ntcode)
+    }
 
     transformnaturtyperNIN2(nin2codes) {
         const r = {}
