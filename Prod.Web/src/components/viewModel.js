@@ -320,7 +320,7 @@ class ViewModel {
 
 
 
-            
+
             this._evaluationStatus = !this.assessment || this.assessment.evaluationStatus
             // ******************************************************************************
             runInAction(() => {
@@ -984,69 +984,68 @@ class ViewModel {
     //     runInAction(() => this.påvirkningsfaktorer = pvf)
     // }
 
-    @computed get canAddSelectedPåvirkningsfaktor() {
-        var sp = this.selectedPåvirkningsfaktor
-        var validsp = (sp.id === "11." || sp.id === "0.") ?  // ukjent og ingen trussel
-            // sp.tidspunkt === "-" &&
-            // sp.omfang === "-" &&
-            // sp.alvorlighetsgrad === "-"
-            true :
-            // sp.forkortelse &&
-            sp.beskrivelse &&
-            sp.tidspunkt != "-" &&
-            sp.omfang != "-" &&
-            sp.alvorlighetsgrad != "-"
-        return validsp
-    }
+    // @computed get canAddSelectedPåvirkningsfaktor() {
+    //     var sp = this.selectedPåvirkningsfaktor
+    //     var validsp = (sp.id === "11." || sp.id === "0.") ?  // ukjent og ingen trussel
+    //         // sp.tidspunkt === "-" &&
+    //         // sp.omfang === "-" &&
+    //         // sp.alvorlighetsgrad === "-"
+    //         true :
+    //         // sp.forkortelse &&
+    //         sp.beskrivelse &&
+    //         sp.tidspunkt != "-" &&
+    //         sp.omfang != "-" &&
+    //         sp.alvorlighetsgrad != "-"
+    //     return validsp
+    // }
 
-    @action clearSelectedPåvirkningsfaktor() {
-        transaction(() => {
-            const sp = this.selectedPåvirkningsfaktor
-            sp.id = null
-            sp.forkortelse = null
-            sp.overordnetTittel = null
-            sp.beskrivelse = null
-            sp.tidspunkt = null
-            sp.omfang = null
-            sp.alvorlighetsgrad = null
-            sp.comment = null
-        })
-    }
+    // @action clearSelectedPåvirkningsfaktor() {
+    //     transaction(() => {
+    //         const sp = this.selectedPåvirkningsfaktor
+    //         sp.id = null
+    //         sp.forkortelse = null
+    //         sp.overordnetTittel = null
+    //         sp.beskrivelse = null
+    //         sp.tidspunkt = null
+    //         sp.omfang = null
+    //         sp.alvorlighetsgrad = null
+    //         sp.comment = null
+    //     })
+    // }
 
-    @action addSelectedPåvirkningsfaktor() {
-        const påv = toJS(this.selectedPåvirkningsfaktor)
-        const existing = this.assessment.påvirkningsfaktorer.find(item =>
-            item.id == påv.id)
-        if(existing) {
-            // console.log("existing:" + JSON.stringify(existing))
-            this.assessment.påvirkningsfaktorer.remove(existing)
-        }
-        this.assessment.påvirkningsfaktorer.push(påv)
-        this.clearSelectedPåvirkningsfaktor()
-    }
+    // @action addSelectedPåvirkningsfaktor() {
+    //     const påv = toJS(this.selectedPåvirkningsfaktor)
+    //     const existing = this.assessment.påvirkningsfaktorer.find(item =>
+    //         item.id == påv.id)
+    //     if(existing) {
+    //         // console.log("existing:" + JSON.stringify(existing))
+    //         this.assessment.påvirkningsfaktorer.remove(existing)
+    //     }
+    //     this.assessment.påvirkningsfaktorer.push(påv)
+    //     this.clearSelectedPåvirkningsfaktor()
+    // }
 
-    @action removeSelectedPåvirkningsfaktor(påv) {
-        //const påv = this.selectedPåvirkningsfaktor
+    // @action removeSelectedPåvirkningsfaktor(påv) {
+    //     //const påv = this.selectedPåvirkningsfaktor
+    //     this.assessment.påvirkningsfaktorer.remove(påv)
+    //     console.log("Removed " + påv.beskrivelse)
+    // }
 
-        this.assessment.påvirkningsfaktorer.remove(påv)
-        console.log("Removed " + påv.beskrivelse)
-    }
+    // @action editPåvirkningsfaktor(påv) {
+    //     console.log("Edit " + JSON.stringify(påv))
 
-    @action editPåvirkningsfaktor(påv) {
-        console.log("Edit " + JSON.stringify(påv))
-
-        transaction(() => {
-            const sp = this.selectedPåvirkningsfaktor
-            sp.id = påv.id
-            sp.forkortelse = påv.forkortelse
-            sp.overordnetTittel = påv.overordnetTittel
-            sp.beskrivelse = påv.beskrivelse
-            sp.tidspunkt = påv.tidspunkt
-            sp.omfang = påv.omfang
-            sp.alvorlighetsgrad = påv.alvorlighetsgrad
-            sp.comment = påv.comment
-        })
-    }
+    //     transaction(() => {
+    //         const sp = this.selectedPåvirkningsfaktor
+    //         sp.id = påv.id
+    //         sp.forkortelse = påv.forkortelse
+    //         sp.overordnetTittel = påv.overordnetTittel
+    //         sp.beskrivelse = påv.beskrivelse
+    //         sp.tidspunkt = påv.tidspunkt
+    //         sp.omfang = påv.omfang
+    //         sp.alvorlighetsgrad = påv.alvorlighetsgrad
+    //         sp.comment = påv.comment
+    //     })
+    // }
     // ################# end section unused code!! ##################
 
 
@@ -1114,7 +1113,7 @@ class ViewModel {
             this.assessment.påvirkningsfaktorer.remove(existing)
         }
         this.assessment.påvirkningsfaktorer.push(påv)
-        this.clearSelectedPåvirkningsfaktor()
+        // this.clearSelectedPåvirkningsfaktor()
     }
 
     async loadExpertgroupAssessmentList(expertgroupId) {
