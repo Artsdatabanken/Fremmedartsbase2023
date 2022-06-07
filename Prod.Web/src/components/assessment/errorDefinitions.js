@@ -274,13 +274,15 @@
         },
         {
             id: "(nat)err1",
-            // get cond() {return  a.impactedNatureTypes.length > 0 && a.impactedNatureTypes.some(element => element.niNCode.substr(3) === errorDefinitions.trueteogsjeldneCodes) === true},
-            // get cond() {return a.doFullAssessment && a.impactedNatureTypes.length > 0 && isTrueteogsjeldnenaturtype(a.impactedNatureTypes) === true},
             get cond() {return a.doFullAssessment && a.impactedNatureTypes.length > 0 && a.impactedNatureTypes.some((nt) => isTrueteogsjeldnenaturtype(nt.niNCode)) },
-            // get cond() {return  a.impactedNatureTypes.length > 0 && a.impactedNatureTypes.some(element => isTrueteogsjeldnenaturtype.indexOf(element) >= 0) === true}, 
-            // get cond() {return  a.impactedNatureTypes.length > 0 && a.impactedNatureTypes.filter(element => element.niNCode.substr(3) === errorDefinitions.trueteogsjeldneCodes.includes(element)).length > 0},
-            msg: "Naturtypen er rødlistet. Velg gjeldende naturtype fra Rødlista for naturtyper!"
+            get msg() {return "Naturtypen " + a.impactedNatureTypes.find((nt) => isTrueteogsjeldnenaturtype(nt.niNCode)).name.toLowerCase() + " valgt fra NiN 2.3 er truet eller sjelden. Velg i stedet " + a.impactedNatureTypes.find((nt) => isTrueteogsjeldnenaturtype(nt.niNCode)).name.toLowerCase() + " fra Rødlista for naturtyper og slett rad med kode " + a.impactedNatureTypes.find((nt) => isTrueteogsjeldnenaturtype(nt.niNCode)).niNCode + "."}
         },
+        // {
+        //     id: "(nat)warn1",
+        //     get cond() {return a.doFullAssessment && a.impactedNatureTypes.length > 0 && a.impactedNatureTypes.Redlisted !a.impactedNatureTypes.some((nt) => isTrueteogsjeldnenaturtype(nt.niNCode)) },
+        //     type: "warning",
+        //     get msg() {"Naturtypen valgt fra NiN 2.3 er truet eller sjelden. Velg tilsvarende naturtype fra Rødlista for naturtyper!"}
+        // },
         {
             id: "(sum)err1",
             get cond() {return assessment.categoryHasChangedFromPreviousAssessment && assessment.reasonForChangeOfCategory.length === 0 },

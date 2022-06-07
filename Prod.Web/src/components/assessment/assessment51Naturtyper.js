@@ -8,6 +8,8 @@ import HabitatTable from './51Naturtyper/habitatTable';
 import NewNaturetype from './51Naturtyper/newNaturetype';
 import RedlistedNaturetypeTable from './51Naturtyper/redlistedNaturetypeTable';
 import OriginTable from './30Artsegenskaper/originTable'
+import errorhandler from '../errorhandler';
+import ErrorList from '../errorList';
 
 @inject("appState")
 @observer
@@ -114,6 +116,7 @@ export default class Assessment51Naturtyper extends React.Component {
                         fabModel={appState}/>
                     </div>
                     : null}
+                    <ErrorList errorhandler={errorhandler} errorids={["(nat)err1"]} />  
                 </fieldset> 
                 <fieldset className="well">
                     <h4>{ntLabels.critCHeading}</h4>
