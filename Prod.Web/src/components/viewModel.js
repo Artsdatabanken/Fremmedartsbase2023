@@ -78,7 +78,6 @@ class ViewModel {
             naturtypeLabels: {},
             livsmediumLabels: null,
             livsmediumCodes: null,
-            livsmediumEnabled: true,
             trueteogsjeldneCodes: null,
             naturtyperNIN2: null,
 
@@ -97,19 +96,6 @@ class ViewModel {
             showTheCat: false,
 
 
-            artskartModel: {},
-            påvirkningsfaktorer: [],
-            spredningsveier: null,
-            selectedPåvirkningsfaktor: {
-                id: null,
-                forkortelse: null,
-                overordnetTittel: null,
-                beskrivelse: null,
-                tidspunkt: null,
-                omfang: null,
-                alvorlighetsgrad: null,
-                comment: null
-            },
             artificialAndConstructedSites: ["F4", "F5", "H4", "L7", "L8", "M14", "M15", "T35", "T36", "T37", "T38", "T39", "T40", "T41", "T42", "T43", "T44", "T45", "V11", "V12", "V13"],
             assessmentTypeFilter: "riskAssessment",
 
@@ -166,6 +152,12 @@ class ViewModel {
             antallTaxonEndring: 0,
             antallNavnEndret: 0,
             loadingExpertGroup: false,
+
+
+            // ************************************************
+            // ********  Assessment props *********************
+            // ************************************************
+
             evaluationContext: 'N',
             //todo: this thing should go to the code file
             evaluationContexts: {
@@ -180,6 +172,24 @@ class ViewModel {
                     map: 'svalbard'
                 }
             },
+
+            
+            livsmediumEnabled: true,
+            artskartModel: {},
+            påvirkningsfaktorer: [],
+            spredningsveier: null,
+            selectedPåvirkningsfaktor: {
+                id: null,
+                forkortelse: null,
+                overordnetTittel: null,
+                beskrivelse: null,
+                tidspunkt: null,
+                omfang: null,
+                alvorlighetsgrad: null,
+                comment: null
+            },
+
+
             statusChange: false
         })
 
@@ -305,6 +315,12 @@ class ViewModel {
             // **** Lurer Mobx til å kjøre koden... TODO: Gjør dette på en "riktig" måte ****
             this._viewMode = this.viewMode
             this._assessment = this.assessment
+
+
+
+
+
+            
             this._evaluationStatus = !this.assessment || this.assessment.evaluationStatus
             // ******************************************************************************
             runInAction(() => {
