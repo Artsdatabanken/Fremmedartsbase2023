@@ -100,6 +100,7 @@ namespace Prod.Api.Helpers
         public string LastUpdatedBy { get; set; }
 
     }
+   
     public class FA4Export
     {
         public int Id { get; set; }
@@ -202,6 +203,133 @@ namespace Prod.Api.Helpers
         public bool RiskAssessmentYearFirstEstablishedNatureInsecure { get; set; }
         
         #endregion Artens status
+        
+        #region Artsinformasjon
+        [Name("Limnisk")]
+        public bool Limnic { get; set; } // lagt til 26.9.2016
+        [Name("Terrestrisk")]
+        public bool Terrestrial { get; set; } // lagt til 26.9.2016
+        [Name("Marint")]
+        public bool Marine { get; set; } // lagt til 26.9.2016
+
+        //terrestrisk og limnisk utbredelse
+        // [Name("Naturlig utbredelse terrestrisk og limnisk")]
+        // public List<NaturalOrigin> NaturalOrigins { get; set; } = new List<NaturalOrigin>(); // lagt til 09.01.2017
+        [Name("Naturlig utbredelse terrestrisk og limnisk, beskrivelse")]
+        public string NaturalOriginUnknownDocumentation { get; set; }
+        // [Name("Nåværende utbredelse terrestrisk og limnisk")]
+        // public List<NaturalOrigin> CurrentInternationalExistenceAreas { get; set; } = new List<NaturalOrigin>(); // lagt til 09.01.2017
+        [Name("Nåværende utbredelse terrestrisk og limnisk, beskrivelse")]
+        public string CurrentInternationalExistenceAreasUnknownDocumentation { get; set; }
+
+        // public NaturalOrigin createDefaultNaturalOrigin(string climateZone, string climateZoneSubType)
+        // {
+        //    return new NaturalOrigin()
+        //    {
+        //        ClimateZone = climateZone,
+        //        ClimateZoneSubtype = climateZoneSubType,
+        //    };
+        // }
+        // public List<NaturalOrigin> createDefaultNaturalOrigins()
+        // {
+        //    return new List<NaturalOrigin> {
+        //        createDefaultNaturalOrigin("polart","inkl alpint"),
+        //        createDefaultNaturalOrigin("temperert","boreal"),
+        //        createDefaultNaturalOrigin("temperert","nemoral"),
+        //        createDefaultNaturalOrigin("temperert","tørt"),
+        //        createDefaultNaturalOrigin("subtropisk","middelhavsklima"),
+        //        createDefaultNaturalOrigin("subtropisk","fuktig"),
+        //        createDefaultNaturalOrigin("subtropisk","tørt"),
+        //        createDefaultNaturalOrigin("subtropisk","høydeklima"),
+        //        createDefaultNaturalOrigin("subtropisk","kappregionen"),
+        //        createDefaultNaturalOrigin("tropisk","")
+        //    };
+        // }
+
+        //marin utbredelse
+        [Name("Naturlig utbredelse marint")]
+        public List<string> NaturalOriginMarine { get; set; } = new List<string>(); // lagt til 05.09.2016
+        [Name("Naturlig utbredelse marint, beskrivelse")]
+        public string NaturalOriginMarineDetails { get; set; } // lagt til 21.04.2017
+        [Name("Nåværende utbredelse marint")]
+        public List<string> CurrentInternationalExistenceMarineAreas { get; set; } = new List<string>(); // lagt til 05.09.2016
+        [Name("Nåværende utbredelse marint, beskrivelse")]
+        public string CurrentInternationalExistenceMarineAreasDetails { get; set; } // lagt til 21.04.2017
+
+        [Name("Kom til Fastlands-Norge fra")]
+        public List<string> ArrivedCountryFrom { get; set; } = new List<string>(); // fab: string Arived_Norway_From_Code
+         [Name("Kom til Fastlands-Norge fra, beskrivelse")]
+        public string ArrivedCountryFromDetails { get; set; } = ""; // fab: Natural_Origin 'NaturalOrigin'  - lagt til 14.11.2016
+        [Name("Ukjønnet formering")]
+        public bool? ReproductionAsexual { get; set; } // fab: Reproduction_Asexual
+        [Name("Kjønnet formering")]
+        public bool? ReproductionSexual { get; set; } // fab: Reproduction_Sexual
+        [Name("Generasjonstid")]
+        public double? ReproductionGenerationTime { get; set; } // fab: Reproduction_Geteration_Time
+        #endregion Artsinformasjon
+
+        #region Spredningsveier
+        [Name("Spres arten utelukkende direkte til norsk natur?")]
+        public string IndoorProduktion { get; set; }
+        // Jeg er usikker på om vi får med feltene nedenfor - Kanskje som en liste med paste(mainCategory, category)? Altså [Korridor gjennom menneskeskapt vannforbindelse; Egenspredning naturlig; ...]
+        //Til innendørsareal
+        //public List<MigrationPathway> ImportPathways { get; set; } = new List<MigrationPathway>();
+        //til naturen - dette skal kun være de med "introductionSpread": "introduction"
+        //public List<MigrationPathway> AssesmentVectors { get; set; } = new List<MigrationPathway>(); // lagt til 09.01.2017
+        //videre i naturen - dette skal kun være de med "introductionSpread": "spread"
+        //public List<MigrationPathway> AssesmentVectors { get; set; } = new List<MigrationPathway>();
+        #endregion Spredningsveier
+
+        #region Bakgrunnsdata for risikovurdering
+            #region Utbredelse
+            [Name("Andel av kjent forekomstareal i sterkt endra natur (%)")]
+            public double? RiskAssessmentSpreadHistoryDomesticAreaInStronglyChangedNatureTypes { get; set; }
+            //Forekomstareal selvstendig reproduserende
+            [Name("AOO kjent")]
+            public Int64? RiskAssessmentAOOknown { get; set; }
+            [Name("AOO antatt lavt anslag")]
+            public Int64? RiskAssessmentAOOtotalLow { get; set; }
+            [Name("AOO antatt beste anslag")]
+            public Int64? RiskAssessmentAOOtotalBest { get; set; }
+            [Name("AOO antatt høyt anslag")]
+            public Int64? RiskAssessmentAOOtotalHigh { get; set; }
+            // [Name("AOOchangeBest")]
+            // public double? RiskAssessmentAOOchangeBest { get; set; } - 07.06.22 - trenger ikke disse i eksporten da de kun brukes på baksiden for A-kriteriet
+            // [Name("AOOchangeLow")]
+            // public double? RiskAssessmentAOOchangeLow { get; set; } - 07.06.22 - trenger ikke disse i eksporten da de kun brukes på baksiden for A-kriteriet
+            // [Name("AOOchangeHigh")]
+            // public double? RiskAssessmentAOOchangeHigh { get; set; } - 07.06.22 - trenger ikke disse i eksporten da de kun brukes på baksiden for A-kriteriet
+            [Name("AOO mørketall lavt anslag")]
+            public float? RiskAssessmentAOOdarkfigureLow { get; set; } // lavt anslag på forekomstarealets mørketall 
+            [Name("AOO mørketall beste anslag")]
+            public float? RiskAssessmentAOOdarkfigureBest { get; set; } // beste anslag på forekomstarealets mørketall 
+            [Name("AOO mørketall høyt anslag")]
+            public float? RiskAssessmentAOOdarkfigureHigh { get; set; } // høyt anslag på forekomstarealets mørketall 
+            
+            //Forekomstareal dørstokkarter
+            [Name("Ant. forekomster fra én introduksjon lavt anslag")]
+            public long? RiskAssessmentOccurrences1Low { get; set; }	// lavt anslag på antall forekomster fra 1 introduksjon 
+            [Name("AntForekomster fra én introduksjon beste anslag")]
+            public long? RiskAssessmentOccurrences1Best { get; set; }	// beste anslag på antall forekomster fra 1 introduksjon 
+            [Name("Ant. forekomster fra én introduksjon høyt anslag")]
+            public long? RiskAssessmentOccurrences1High { get; set; }	// høyt anslag på antall forekomster fra 1 introduksjon 
+            [Name("Ant. introduksjoner ila 10 år lavt anslag")]
+            public long? RiskAssessmentIntroductionsLow { get; set; }	    // lavt anslag på antall introduksjoner i løpet av 10 år 
+            [Name("Ant. introduksjoner ila 10 år beste anslag")]
+            public long? RiskAssessmentIntroductionsBest { get; set; }	// beste anslag på antall introduksjoner i løpet av 10 år 
+            [Name("Ant. introduksjoner ila 10 år høyt anslag")]
+            public long? RiskAssessmentIntroductionsHigh { get; set; }	// høyt anslag på antall introduksjoner i løpet av 10 år 
+            [Name("AOO 10 år etter første introduksjon lavt anslag")]
+            public long? RiskAssessmentAOO10yrLow { get; set; } // lavt anslag på totalt forekomstareal om 10 år
+             [Name("AOO 10 år etter første introduksjon beste anslag")]
+            public long? RiskAssessmentAOO10yrBest { get; set; } // beste anslag på totalt forekomstareal om 10 år
+            [Name("AOO 10 år etter første introduksjon høyt anslag")]
+            public long? RiskAssessmentAOO10yrHigh { get; set; } // høyt anslag på totalt forekomstareal om 10 år
+
+
+
+            #endregion Utbredelse
+        #endregion Bakgrunnsdata for risikovurdering
         #region RiskAssessment 
         public string Category { get; set; }
         public string Criteria { get; set; }
@@ -240,26 +368,6 @@ namespace Prod.Api.Helpers
         public string RiskAssessmentEstimatedSpeciesLongevity { get; set; }  // Estimated_Species_Longevity
         public string RiskAssessmentEstimatedSpeciesLongevityMethod { get; set; }  // Estimated_Species_Longevity_Method
 
-
-
-
-
-        //*************** Forekomstareal i dag ************************************
-        [Name("AOOknown")]
-        public Int64? RiskAssessmentAOOknown { get; set; }
-        [Name("AOOtotalBest")]
-        public Int64? RiskAssessmentAOOtotalBest { get; set; }
-        [Name("AOOtotalLow")]
-        public Int64? RiskAssessmentAOOtotalLow { get; set; }
-        [Name("AOOtotalHigh")]
-        public Int64? RiskAssessmentAOOtotalHigh { get; set; }
-
-        [Name("AOOchangeBest")]
-        public double? RiskAssessmentAOOchangeBest { get; set; }
-        [Name("AOOchangeLow")]
-        public double? RiskAssessmentAOOchangeLow { get; set; }
-        [Name("AOOchangeHigh")]
-        public double? RiskAssessmentAOOchangeHigh { get; set; }
 
 
         public int? RiskAssessmentAdefaultBest { get; set; }
@@ -325,10 +433,9 @@ namespace Prod.Api.Helpers
         //public Int64? SpeciesCount { get; set; } // fab: Species_Count  // ikke i bruk som egen attributt (ligger i spredningshistorikk item) i 2012
 
 
-        public double? RiskAssessmentSpreadHistoryDomesticAreaInStronglyChangedNatureTypes { get; set; }
-        public double? RiskAssessmentSpreadHistoryDomesticAreaInStronglyChangedNatureTypesLow { get; set; }
-        public double? RiskAssessmentSpreadHistoryDomesticAreaInStronglyChangedNatureTypesBest { get; set; }
-        public double? RiskAssessmentSpreadHistoryDomesticAreaInStronglyChangedNatureTypesHigh { get; set; }
+        // public double? RiskAssessmentSpreadHistoryDomesticAreaInStronglyChangedNatureTypesLow { get; set; }
+        // public double? RiskAssessmentSpreadHistoryDomesticAreaInStronglyChangedNatureTypesBest { get; set; }
+        // public double? RiskAssessmentSpreadHistoryDomesticAreaInStronglyChangedNatureTypesHigh { get; set; }
 
 
 
@@ -440,19 +547,6 @@ namespace Prod.Api.Helpers
 
         public int RiskAssessmentEndYear { get; set; } // sluttår for B-kriteriet / utbredelse
 
-        [Name("AOOdarkfigureBest")]
-        public float? RiskAssessmentAOOdarkfigureBest { get; set; } // beste anslag på forekomstarealets mørketall 
-        [Name("AOOdarkfigureLow")]
-        public float? RiskAssessmentAOOdarkfigureLow { get; set; } // lavt anslag på forekomstarealets mørketall 
-        [Name("AOOdarkfigureHigh")]
-        public float? RiskAssessmentAOOdarkfigureHigh { get; set; } // høyt anslag på forekomstarealets mørketall 
-        [Name("AOO10yrBest")]
-        public long? RiskAssessmentAOO10yrBest { get; set; } // beste anslag på totalt forekomstareal om 10 år
-        [Name("AOO10yrLow")]
-        public long? RiskAssessmentAOO10yrLow { get; set; } // lavt anslag på totalt forekomstareal om 10 år
-        [Name("AOO10yrHigh")]
-        public long? RiskAssessmentAOO10yrHigh { get; set; } // høyt anslag på totalt forekomstareal om 10 år
-
 
         //-----------------------------------------------------------------------
         // todo: slett dette (etter hvert)
@@ -480,13 +574,6 @@ namespace Prod.Api.Helpers
         public bool RiskAssessmentActiveSpreadYearlyIncreaseObservations { get; set; } //lagt til 29.09.2016
 
 
-        // ********************** (b) Forekomstareal – dørstokkarter  ****************************
-        public long? RiskAssessmentOccurrences1Best { get; set; }	// beste anslag på antall forekomster fra 1 introduksjon 
-        public long? RiskAssessmentOccurrences1Low { get; set; }	// lavt anslag på antall forekomster fra 1 introduksjon 
-        public long? RiskAssessmentOccurrences1High { get; set; }	// høyt anslag på antall forekomster fra 1 introduksjon 
-        public long? RiskAssessmentIntroductionsBest { get; set; }	// beste anslag på antall introduksjoner i løpet av 10 år 
-        public long? RiskAssessmentIntroductionsLow { get; set; }	    // lavt anslag på antall introduksjoner i løpet av 10 år 
-        public long? RiskAssessmentIntroductionsHigh { get; set; }	// høyt anslag på antall introduksjoner i løpet av 10 år 
         // -------- disse (forekomstareal - dørstokkarter) er erstattet:  
         //todo: *sjekk konvertering fra FAB3 før sletting av utkommentert kode*
         //public string SpreadYearlyIncreaseObservations { get; set; } //lagt til 29.09.2016
@@ -719,14 +806,12 @@ namespace Prod.Api.Helpers
         // todo: pakke ut denne flatt
         //public ObservedAndEstablishedInCountry ObservedAndEstablishedStatusInCountry { get; set; } = new ObservedAndEstablishedInCountry(); // lagt til 30.08.2016 //
 
-        // todo: fylkesforekomster...
+        // todo: fylkesforekomster...Akkurat ja.
 
         // (3.2) Artsegenskaper
     
         //public string LimnicTerrestrialMarine { get; set; } // lagt til 2.9.2016 // fjernet 26.09.2016
-        public bool Limnic { get; set; } // lagt til 26.9.2016
-        public bool Terrestrial { get; set; } // lagt til 26.9.2016
-        public bool Marine { get; set; } // lagt til 26.9.2016
+        
         // public bool BrackishWater { get; set; } // lagt til 26.9.2017 (for sfab)
 
         // public string FirstDomesticObservation { get; set; } // fab: First_Domestic_Observation
@@ -735,43 +820,7 @@ namespace Prod.Api.Helpers
         // public string FirstDomesticEstablishmentObservedLocation { get; set; } // fab: First_Domestic_Observed_Establishment_Location
 
 
-        public List<string> ArrivedCountryFrom { get; set; } = new List<string>(); // fab: string Arived_Norway_From_Code
-        public string ArrivedCountryFromDetails { get; set; } = ""; // fab: Natural_Origin 'NaturalOrigin'  - lagt til 14.11.2016
 
-
-        //public List<NaturalOrigin> NaturalOrigins { get; set; } = new List<NaturalOrigin>(); // lagt til 09.01.2017
-        public string NaturalOriginUnknownDocumentation { get; set; }
-        //public List<NaturalOrigin> CurrentInternationalExistenceAreas { get; set; } = new List<NaturalOrigin>(); // lagt til 09.01.2017
-        public string CurrentInternationalExistenceAreasUnknownDocumentation { get; set; }
-
-        //public NaturalOrigin createDefaultNaturalOrigin(string climateZone, string climateZoneSubType)
-        //{
-        //    return new NaturalOrigin()
-        //    {
-        //        ClimateZone = climateZone,
-        //        ClimateZoneSubtype = climateZoneSubType,
-        //    };
-        //}
-        //public List<NaturalOrigin> createDefaultNaturalOrigins()
-        //{
-        //    return new List<NaturalOrigin> {
-        //        createDefaultNaturalOrigin("polart","inkl alpint"),
-        //        createDefaultNaturalOrigin("temperert","boreal"),
-        //        createDefaultNaturalOrigin("temperert","nemoral"),
-        //        createDefaultNaturalOrigin("temperert","tørt"),
-        //        createDefaultNaturalOrigin("subtropisk","middelhavsklima"),
-        //        createDefaultNaturalOrigin("subtropisk","fuktig"),
-        //        createDefaultNaturalOrigin("subtropisk","tørt"),
-        //        createDefaultNaturalOrigin("subtropisk","høydeklima"),
-        //        createDefaultNaturalOrigin("subtropisk","kappregionen"),
-        //        createDefaultNaturalOrigin("tropisk","")
-        //    };
-        //}
-
-        public List<string> NaturalOriginMarine { get; set; } = new List<string>(); // lagt til 05.09.2016
-        public string NaturalOriginMarineDetails { get; set; } // lagt til 21.04.2017
-        public List<string> CurrentInternationalExistenceMarineAreas { get; set; } = new List<string>(); // lagt til 05.09.2016
-        public string CurrentInternationalExistenceMarineAreasDetails { get; set; } // lagt til 21.04.2017
 
         // public bool SurvivalBelow5c { get; set; } // lagt til 27.09.2016
 
@@ -785,9 +834,6 @@ namespace Prod.Api.Helpers
         // public string Regeneration { get; set; } // fab: Regeneration
         // public int? RegenerationYears { get; set; } // fab: Regeneration_Years
         // public string Reproduction { get; set; } // fab: Reproduction
-        public bool? ReproductionAsexual { get; set; } // fab: Reproduction_Asexual
-        public double? ReproductionGenerationTime { get; set; } // fab: Reproduction_Geteration_Time
-        public bool? ReproductionSexual { get; set; } // fab: Reproduction_Sexual
         //public string ReproductiveCapability { get; set; } // fab: Int64? Reproductive_Capability // removed 17.01.2017
         // public bool? SimilarDemographicComparison { get; set; } // fab: Similar_Demographic_Comparison
 
@@ -805,20 +851,11 @@ namespace Prod.Api.Helpers
         // public string EffectsOnPopulationOfOrigin { get; set; } // lagt til 31.08.2016
 
         // OsA, He, Fi
-        public string RegionalPresenceKnown { get; set; }
+        public string RegionalPresenceKnown { get; set; } //Er disse døde? - vi skulle hatt noe lignende for FAL 2023
         public string RegionalPresenceAssumed { get; set; }
         public string RegionalPresencePotential { get; set; }
         // slutt artsegenskaper
 
-
-        //// (3.3) Import
-        //public List<MigrationPathway> ImportPathways { get; set; } = new List<MigrationPathway>();
-        // public bool ImportedToIndoorOrProductionArea { get; set; } = false;
-
-        public string IndoorProduktion { get; set; }
-        // (3.4) Spredningsveier
-        //public List<MigrationPathway> AssesmentVectors { get; set; } = new List<MigrationPathway>(); // lagt til 09.01.2017
-        // public string Vector { get; set; }  // ???!!
 
         // (3.5) Spredningshistorikk
         //public List<SpreadHistory> SpreadHistory { get; set; } = new List<SpreadHistory>();
@@ -898,6 +935,5 @@ namespace Prod.Api.Helpers
 
         [Name("VentendeTaksonomiskeEndringer")]
         public int TaxonChange { get; set; }
-
     }
 }
