@@ -180,7 +180,7 @@ export default class HabitatTable extends React.Component {
                 interactionTypes: [],
             }, 
         })
-        createTaxonSearch(this.taxon, props.appState.evaluationContext)
+        createTaxonSearch(this.taxon, props.appState.assessment.evaluationContext)
     }
             
     @observable editMode = false

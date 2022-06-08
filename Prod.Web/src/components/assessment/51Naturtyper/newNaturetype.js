@@ -51,7 +51,7 @@ export default class NewNaturetype extends React.Component {
 
 
         })
-        createTaxonSearch(taxonSearchState, appState.evaluationContext)
+        createTaxonSearch(taxonSearchState, appState.assessment.evaluationContext)
     }
 
     render() {
