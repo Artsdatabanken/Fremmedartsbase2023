@@ -70,6 +70,12 @@ namespace Prod.Api.Helpers
                         dest.NaturalOriginAfrica = GetNaturalOrigins(src.NaturalOrigins, "africa");
                         dest.NaturalOriginNorthAndCentralAmerica = GetNaturalOrigins(src.NaturalOrigins, "northAndCentralAmerica");
                         dest.NaturalOriginSouthAmerica = GetNaturalOrigins(src.NaturalOrigins, "southAmerica");
+                        dest.CurrentInternationalExistenceAreasEurope = GetCurrentInternationalExistenceAreas(src.CurrentInternationalExistenceAreas, "europe");
+                        dest.CurrentInternationalExistenceAreasAsia = GetCurrentInternationalExistenceAreas(src.CurrentInternationalExistenceAreas, "asia");
+                        dest.CurrentInternationalExistenceAreasOceania = GetCurrentInternationalExistenceAreas(src.CurrentInternationalExistenceAreas, "oceania");
+                        dest.CurrentInternationalExistenceAreasAfrica = GetCurrentInternationalExistenceAreas(src.CurrentInternationalExistenceAreas, "africa");
+                        dest.CurrentInternationalExistenceAreasNorthAndCentralAmerica = GetCurrentInternationalExistenceAreas(src.CurrentInternationalExistenceAreas, "northAndCentralAmerica");
+                        dest.CurrentInternationalExistenceAreasSouthAmerica = GetCurrentInternationalExistenceAreas(src.CurrentInternationalExistenceAreas, "southAmerica");
 
                     });
 
@@ -77,6 +83,26 @@ namespace Prod.Api.Helpers
             });
             var mapper = new Mapper(mapperConfig);
             return mapper;
+        }
+
+        private static string GetCurrentInternationalExistenceAreas(List<FA4.NaturalOrigin> currentInternationalExistenceAreas, string area)
+        {
+            if (currentInternationalExistenceAreas == null || currentInternationalExistenceAreas.Count == 0)
+            {
+                return string.Empty;
+            }
+
+            var zones = new List<string>();
+
+            foreach (var origin in currentInternationalExistenceAreas)
+            {
+                if (CheckForArea(area, origin))
+                {
+                    zones.Add(origin.ClimateZone.Replace(";", "\\"));
+                }
+            }
+
+            return string.Join("; ", zones);
         }
 
         private static string GetNaturalOrigins(List<FA4.NaturalOrigin> naturalOrigins, string area)
@@ -299,38 +325,36 @@ namespace Prod.Api.Helpers
         public bool Marine { get; set; } // lagt til 26.9.2016
 
         //terrestrisk og limnisk utbredelse
-        // [Name("Naturlig utbredelse terrestrisk og limnisk")]
-        // public List<NaturalOrigin> NaturalOrigins { get; set; } = new List<NaturalOrigin>(); // lagt til 09.01.2017
-        [Name("Naturlig utbredelse terrestrisk og limnisk, beskrivelse")]
+        [Name("NaturligUtbredelseTerrestriskOgLimniskEuropa")]
+        public string NaturalOriginEurope { get; set; }
+        [Name("NaturligUtbredelseTerrestriskOgLimniskAsia")]
+        public string NaturalOriginAsia { get; set; }
+        [Name("NaturligUtbredelseTerrestriskOgLimniskAfrika")]
+        public string NaturalOriginAfrica { get; set; }
+        [Name("NaturligUtbredelseTerrestriskOgLimniskOseania")]
+        public string NaturalOriginOceania { get; set; }
+        [Name("NaturligUtbredelseTerrestriskOgLimniskNordSentralAmerika")]
+        public string NaturalOriginNorthAndCentralAmerica { get; set; }
+        [Name("NaturligUtbredelseTerrestriskOgLimniskSorAmerika")]
+        public string NaturalOriginSouthAmerica { get; set; }
+        [Name("NaturligUtbredelseTerrestriskOgLimniskBeskrivelse")]
         public string NaturalOriginUnknownDocumentation { get; set; }
-        // [Name("Nåværende utbredelse terrestrisk og limnisk")]
-        // public List<NaturalOrigin> CurrentInternationalExistenceAreas { get; set; } = new List<NaturalOrigin>(); // lagt til 09.01.2017
-        [Name("Nåværende utbredelse terrestrisk og limnisk, beskrivelse")]
+        [Name("NaavaerendeUtbredelseTerrestriskOgLimniskEuropa")]
+        public string CurrentInternationalExistenceAreasEurope {get; set; }
+        [Name("NaavaerendeUtbredelseTerrestriskOgLimniskAsia")]
+        public object CurrentInternationalExistenceAreasAsia { get; set; }
+        [Name("NaavaerendeUtbredelseTerrestriskOgLimniskOseania")]
+        public object CurrentInternationalExistenceAreasOceania { get; set; }
+        [Name("NaavaerendeUtbredelseTerrestriskOgLimniskAfrika")]
+        public object CurrentInternationalExistenceAreasAfrica { get; set; }
+        [Name("NaavaerendeUtbredelseTerrestriskOgLimniskNordSentralAmerika")]
+        public object CurrentInternationalExistenceAreasNorthAndCentralAmerica { get; set; }
+        [Name("NaavaerendeUtbredelseTerrestriskOgLimniskSorAmerika")]
+        public object CurrentInternationalExistenceAreasSouthAmerica { get; set; }
+        
+        [Name("NaavaerendeUtbredelseTerrestriskOgLimniskBeskrivelse")]
         public string CurrentInternationalExistenceAreasUnknownDocumentation { get; set; }
-
-        // public NaturalOrigin createDefaultNaturalOrigin(string climateZone, string climateZoneSubType)
-        // {
-        //    return new NaturalOrigin()
-        //    {
-        //        ClimateZone = climateZone,
-        //        ClimateZoneSubtype = climateZoneSubType,
-        //    };
-        // }
-        // public List<NaturalOrigin> createDefaultNaturalOrigins()
-        // {
-        //    return new List<NaturalOrigin> {
-        //        createDefaultNaturalOrigin("polart","inkl alpint"),
-        //        createDefaultNaturalOrigin("temperert","boreal"),
-        //        createDefaultNaturalOrigin("temperert","nemoral"),
-        //        createDefaultNaturalOrigin("temperert","tørt"),
-        //        createDefaultNaturalOrigin("subtropisk","middelhavsklima"),
-        //        createDefaultNaturalOrigin("subtropisk","fuktig"),
-        //        createDefaultNaturalOrigin("subtropisk","tørt"),
-        //        createDefaultNaturalOrigin("subtropisk","høydeklima"),
-        //        createDefaultNaturalOrigin("subtropisk","kappregionen"),
-        //        createDefaultNaturalOrigin("tropisk","")
-        //    };
-        // }
+        
 
         //marin utbredelse
         [Name("Naturlig utbredelse marint")]
@@ -909,12 +933,6 @@ namespace Prod.Api.Helpers
 
 
         //public List<NaturalOrigin> NaturalOrigins { get; set; } = new List<NaturalOrigin>(); // lagt til 09.01.2017
-        public string NaturalOriginEurope { get; set; }
-        public string NaturalOriginAsia { get; set; }
-        public string NaturalOriginAfrica { get; set; }
-        public string NaturalOriginOceania { get; set; }
-        public string NaturalOriginNorthAndCentralAmerica { get; set; }
-        public string NaturalOriginSouthAmerica { get; set; }
         
         //public List<NaturalOrigin> CurrentInternationalExistenceAreas { get; set; } = new List<NaturalOrigin>(); // lagt til 09.01.2017
 
