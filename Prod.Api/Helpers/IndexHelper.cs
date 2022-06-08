@@ -386,6 +386,11 @@ namespace Prod.Api.Helpers
                     indexFields.Add(new StringField(Field_2018Status, "sharesMotherSpeciesStatus", Field.Store.NO));
                 }
 
+                if (ass2018.MainCategory == "NotApplicable" && ass2018.MainSubCategory == "notAlienSpecie")
+                {
+                    indexFields.Add(new StringField(Field_2018Status, "notAlienInNorway", Field.Store.NO));
+                }
+
                 if (ass2018.MainCategory == "EcoEffectWithoutEstablishment")
                 {
                     indexFields.Add(new StringField(Field_2018Status, "effectWithoutEstablishment", Field.Store.NO));
