@@ -249,6 +249,7 @@ class ViewModel {
 
 
 
+
         // console.log("labels keys: " + JSON.stringify(Object.keys(clabels)))
         // console.log("codes keys: " + JSON.stringify(Object.keys(codes.Children)))
         // console.log("codes json: " + JSON.stringify(codes))
@@ -633,12 +634,12 @@ class ViewModel {
         return !this.harVurdering ? false : this.assessment.doFullAssessment 
     }
 
-    @computed get unresolvedComments() {
-        const comments = this.assessmentComments
-        const unresolvedComments = comments.filter(comment => !comment.resolved)
-        const count = unresolvedComments.count
-        return count
-    }
+    // @computed get unresolvedComments() {
+    //     const comments = this.assessmentComments
+    //     const unresolvedComments = comments.filter(comment => !comment.resolved)
+    //     const count = unresolvedComments.count
+    //     return count
+    // }
 
     // ################ Start section expert groups ##################
     async loadExpertGroups() {
@@ -656,7 +657,7 @@ class ViewModel {
         this.loadExpertgroupAssessmentList(expertgroupId)
         
     }
-    // ################ Start section expert groups ##################
+    // ################ End section expert groups ##################
 
 
     // ################ Start section current assessment ##################
@@ -734,10 +735,6 @@ class ViewModel {
          
     }
 
-
-
-
-
     // assessmentExists(
     //     expertgroup, 
     //     scientificNameId, 
@@ -799,12 +796,11 @@ class ViewModel {
     //     return result
     // }
 
-    findSciName = (name) => {
-        const dividedName = name.split(" ")
-        const result = dividedName[0] + " " + dividedName[1]
-
-        return result
-    }
+    // findSciName = (name) => {
+    //     const dividedName = name.split(" ")
+    //     const result = dividedName[0] + " " + dividedName[1]
+    //     return result
+    // }
 
     @action finishassessment(statusaction, assessment) {
         let status = statusaction === "finish" ? "finished" : statusaction === "unfinish" ? "inprogress" : ""
