@@ -225,13 +225,13 @@ class ViewModel {
         const nin2grupper = nin2root.Children
         this.naturtyperNIN2 = nin2grupper
 
-        // const nin2codes = this.koder.naturtyperNIN2
-        // const nin2 = this.transformnaturtyperNIN2(nin2codes)
+        const nin2codes = this.koder.naturtyperNIN2
+        const nin2 = this.transformnaturtyperNIN2(nin2codes)
         // console.log("nin2 transformed: " +  JSON.stringify(nin2))
         // const nin2grupper = nin2.Children
         // this.naturtyperNIN2 = nin2grupper
         // --------------------------
-
+        this.nin2codes = nin2codes
 
 
 
@@ -922,13 +922,17 @@ class ViewModel {
         r.Value = nin2codes.Id
         r.Text = nin2codes.Text
         r.Collapsed = true
+        if(nin2codes.Redlisted) {
+            r.Redlisted = nin2codes.Redlisted
+        }
         r.Children = []
         if(nin2codes.Children) {
             for ( var i = 0; i < nin2codes.Children.length; ++i )
             {
-                r.Children.push(this.livsmedium2nt(nin2codes.Children[i]));
+                r.Children.push(this.transformnaturtyperNIN2(nin2codes.Children[i]));
             }
         }
+        // console.log("!!! r.Id: " + JSON.stringify(r.Id))
         return r
     }
 
