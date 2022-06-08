@@ -6,6 +6,7 @@ using AutoMapper;
 using CsvHelper.Configuration.Attributes;
 using Prod.Domain;
 using Prod.Domain.Legacy;
+using SpreadHistory = Prod.Domain.SpreadHistory;
 
 namespace Prod.Api.Helpers
 {
@@ -18,6 +19,10 @@ namespace Prod.Api.Helpers
                 cfg.CreateMap<FA4WithComments, FA4HorizonScanExport>()
                     .ForMember(x => x.DoorKnockerType, opt => opt.MapFrom(src => GetDoorknockerType(src)))
                     ;
+
+                // eksempel på mapåping der alt fra ett listeobjekt skal inn i en celle
+                cfg.CreateMap<List<SpreadHistory>, string>().ConvertUsing<CustomSpreadHistoryConverter>();
+
                 cfg.CreateMap<FA4WithComments, FA4Export>()
                     //.ForMember(x => x.DoorKnockerType, opt => opt.MapFrom(src => GetDoorknockerType(src)))
                     .AfterMap((src, dest) =>
@@ -47,7 +52,7 @@ namespace Prod.Api.Helpers
                                     dest.Category2018 = "NR";
                                     break;
                             }
-                            
+
                             dest.Criteria2018 = ass2018.DecisiveCriteria;
                         }
                         else
@@ -56,12 +61,77 @@ namespace Prod.Api.Helpers
                             dest.Criteria2018 = "";
                         }
                         //AfterFabMap(dest, src);
+
+
+                        // eksempel på mapping der man splitter informasjon fra ett listeobjekt inn i flere nye kolonner
+                        dest.NaturalOriginEurope = GetNaturalOrigins(src.NaturalOrigins, "europe");
+                        dest.NaturalOriginAsia = GetNaturalOrigins(src.NaturalOrigins, "asia");
+                        dest.NaturalOriginOceania = GetNaturalOrigins(src.NaturalOrigins, "oceania");
+                        dest.NaturalOriginAfrica = GetNaturalOrigins(src.NaturalOrigins, "africa");
+                        dest.NaturalOriginNorthAndCentralAmerica = GetNaturalOrigins(src.NaturalOrigins, "northAndCentralAmerica");
+                        dest.NaturalOriginSouthAmerica = GetNaturalOrigins(src.NaturalOrigins, "southAmerica");
+
                     });
-                ;
+
+
             });
             var mapper = new Mapper(mapperConfig);
             return mapper;
         }
+
+        private static string GetNaturalOrigins(List<FA4.NaturalOrigin> naturalOrigins, string area)
+        {
+            if (naturalOrigins == null || naturalOrigins.Count == 0)
+            {
+                return string.Empty;
+            }
+
+            var zones = new List<string>();
+
+            foreach (var origin in naturalOrigins)
+            {
+                if (CheckForArea(area, origin))
+                {
+                    zones.Add(origin.ClimateZone.Replace(";", "\\"));
+                }
+            }
+
+            return string.Join("; ", zones);
+
+        }
+
+        private static bool CheckForArea(string area, FA4.NaturalOrigin origin)
+        {
+            bool b;
+            switch (area)
+            {
+                case "europe":
+                    b = origin.Europe;
+                    break;
+                case "asia":
+                    b = origin.Asia;
+                    break;
+                case "africa":
+                    b = origin.Africa;
+                    break;
+                case "oceania":
+                    b = origin.Oceania;
+                    break;
+                case "northAndCentralAmerica":
+                    b = origin.NorthAndCentralAmerica;
+                    break;
+                case "southAmerica":
+                    b = origin.SouthAmerica;
+                    break;
+                default:
+                    b = false;
+                    break;
+            }
+
+            return b;
+        }
+
+
         private static string GetDoorknockerType(FA4WithComments args)
         {
             var ass = args;
@@ -75,6 +145,22 @@ namespace Prod.Api.Helpers
             if (ass2018.MainCategory == "DoorKnocker" && ass2018.MainSubCategory == "noRiskAssessment")
                 return "Not assessed doorknocker";
             return "Other NR 2018";
+        }
+    }
+
+    public class CustomSpreadHistoryConverter : ITypeConverter<List<SpreadHistory>, string>
+    {
+        public string Convert(List<SpreadHistory> source, string destination, ResolutionContext context)
+        {
+            var thing = source;
+            if (thing == null || thing.Count == 0)
+            {
+                return string.Empty;
+            }
+
+            var simpleList = thing.Select(history => $"{history.Id}").ToList();
+
+            return string.Join(", ", simpleList);
         }
     }
 
@@ -822,6 +908,41 @@ namespace Prod.Api.Helpers
 
 
 
+        //public List<NaturalOrigin> NaturalOrigins { get; set; } = new List<NaturalOrigin>(); // lagt til 09.01.2017
+        public string NaturalOriginEurope { get; set; }
+        public string NaturalOriginAsia { get; set; }
+        public string NaturalOriginAfrica { get; set; }
+        public string NaturalOriginOceania { get; set; }
+        public string NaturalOriginNorthAndCentralAmerica { get; set; }
+        public string NaturalOriginSouthAmerica { get; set; }
+        
+        //public List<NaturalOrigin> CurrentInternationalExistenceAreas { get; set; } = new List<NaturalOrigin>(); // lagt til 09.01.2017
+
+        //public NaturalOrigin createDefaultNaturalOrigin(string climateZone, string climateZoneSubType)
+        //{
+        //    return new NaturalOrigin()
+        //    {
+        //        ClimateZone = climateZone,
+        //        ClimateZoneSubtype = climateZoneSubType,
+        //    };
+        //}
+        //public List<NaturalOrigin> createDefaultNaturalOrigins()
+        //{
+        //    return new List<NaturalOrigin> {
+        //        createDefaultNaturalOrigin("polart","inkl alpint"),
+        //        createDefaultNaturalOrigin("temperert","boreal"),
+        //        createDefaultNaturalOrigin("temperert","nemoral"),
+        //        createDefaultNaturalOrigin("temperert","tørt"),
+        //        createDefaultNaturalOrigin("subtropisk","middelhavsklima"),
+        //        createDefaultNaturalOrigin("subtropisk","fuktig"),
+        //        createDefaultNaturalOrigin("subtropisk","tørt"),
+        //        createDefaultNaturalOrigin("subtropisk","høydeklima"),
+        //        createDefaultNaturalOrigin("subtropisk","kappregionen"),
+        //        createDefaultNaturalOrigin("tropisk","")
+        //    };
+        //}
+
+
         // public bool SurvivalBelow5c { get; set; } // lagt til 27.09.2016
 
         public List<string> IntroductionCourse { get; set; } // fab: List<int> Introduction_Course  //Årsak til tilstedeværelse
@@ -859,6 +980,7 @@ namespace Prod.Api.Helpers
 
         // (3.5) Spredningshistorikk
         //public List<SpreadHistory> SpreadHistory { get; set; } = new List<SpreadHistory>();
+        public string SpreadHistory { get; set; } = "";
 
         //[Name("Fremtidig spredningsprognose i Norge, inkl. potensielt utbredelsesområde, antatte kritiske parametre for arten, og forventede endringer i disse:")] // 
         // public string SpreadHistoryDomesticDocumentation { get; set; } // fab: SpreadHistoryDomesticDocumentation
