@@ -6,9 +6,9 @@ import EkspandertSpredningsrad from './EkspandertSpredningsrad'
 @observer
 export default class HistorikkTabell extends React.Component {
     render() {
-        const {historikk, fabModel, disabled} = this.props
-        const labels = fabModel.codeLabels.DistributionHistory
-        const vurdering = fabModel.assessment
+        const {historikk, appState, disabled} = this.props
+        const labels = appState.codeLabels.DistributionHistory
+        const vurdering = appState.assessment
         const scientificNameId = vurdering.evaluatedScientificNameId
         const taxonId = vurdering.taxonId
         const list = historikk
@@ -29,20 +29,20 @@ export default class HistorikkTabell extends React.Component {
                     </tr>
                 </thead>
                 <tbody>
-                    {HistorikkTabell.renderRows(list, fabModel, taxonId, scientificNameId, vurdering, disabled)}
+                    {HistorikkTabell.renderRows(list, appState, taxonId, scientificNameId, vurdering, disabled)}
                 </tbody>
             </table>
         )
     }
 
-    static renderRows(list, fabModel, taxonId, scientificNameId, vurdering, disabled) {
+    static renderRows(list, appState, taxonId, scientificNameId, vurdering, disabled) {
         const rows = []
         list.forEach((sh) => {
             rows.push(<EkspandertSpredningsrad
                 id={sh.id}
                 key={`Expanded${sh.id}`}
                 detaljer={sh}
-                fabModel={fabModel}
+                appState={appState}
                 taxonId={taxonId}
                 scientificNameId={scientificNameId}
                 assessment={vurdering}

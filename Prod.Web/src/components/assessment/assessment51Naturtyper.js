@@ -113,7 +113,7 @@ export default class Assessment51Naturtyper extends React.Component {
                         naturetypes={assessment.redlistedNatureTypes}
                         canRenderTable={canRenderTable}
                         labels={labels}
-                        fabModel={appState}/>
+                        appState={appState}/>
                     </div>
                     : null}
                     <ErrorList errorhandler={errorhandler} errorids={["(nat)err1"]} />  
@@ -210,7 +210,7 @@ export default class Assessment51Naturtyper extends React.Component {
                         canRenderTable={canRenderTable}
                         naturetypes={assessment.habitats}
                         labels={labels}
-                        fabModel={appState}
+                        appState={appState}
                         />
                     : null}
                 </fieldset>

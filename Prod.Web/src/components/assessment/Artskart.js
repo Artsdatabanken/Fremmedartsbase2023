@@ -117,7 +117,7 @@ export default class Artskart extends React.Component {
 
                         {this.visUtvalgsparametre && <Artskartparametre
                             utvalg={props.utvalgsparametre}
-                            fabModel={props.fabModel}
+                            appState={props.appState}
                             onOk={() => (this.visUtvalgsparametre = false)} />}
                     </div>
 

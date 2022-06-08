@@ -5,10 +5,10 @@ import * as Xcomp from '../observableComponents'
 @observer
 export default class Utbredelseshistorikk extends React.Component {
     render() {
-        const {appState:{assessment}, vurdering, fabModel} = this.props
-        //const labels = fabModel.kodeLabels.DistributionHistory
+        const {appState:{assessment}, vurdering, appState} = this.props
+        //const labels = appState.kodeLabels.DistributionHistory
         
-        const labels = fabModel.codeLabels.DistributionHistory
+        const labels = appState.codeLabels.DistributionHistory
         return (
             <div>
                 <fieldset>
@@ -73,7 +73,7 @@ export default class Utbredelseshistorikk extends React.Component {
                 </fieldset>
                 <fieldset className="well" id="spreadHistoryDomestic">
                     <h2>Utbredelseshistorikk 2018</h2>
-                    {/* <h4>{labels.distributionHistory} {fabModel.evaluationContext.nameWithPreposition}</h4>
+                    {/* <h4>{labels.distributionHistory} {appState.evaluationContext.nameWithPreposition}</h4>
                    {vurdering.SpreadHistoryDomesticDocumentation
                     ? <div>
                         <h4>{labels.previousInfo}. <b>{labels.mustTransfer}</b></h4>

@@ -6,7 +6,7 @@ import {Button, Modal} from 'react-bootstrap'
 @observer
 export default class Artskartparametre extends React.Component {
     render() {
-        const {utvalg, fabModel} = this.props
+        const {utvalg, appState} = this.props
         return (
             <Modal onHide={() => this.props.onOk()} show bsSize="small">
                 <Modal.Header closeButton>
@@ -27,7 +27,7 @@ export default class Artskartparametre extends React.Component {
                         observableValue={[utvalg, 'toMonth']}
                         integer
                     />
-                        {fabModel.language === "NO" && <span>
+                        {appState.language === "NO" && <span>
                     <Xcomp.Bool label='I Norge' observableValue={[utvalg, 'includeNorge']}/>
                     <Xcomp.Bool label='På Svalbard' observableValue={[utvalg, 'includeSvalbard']}/>
                     </span>}

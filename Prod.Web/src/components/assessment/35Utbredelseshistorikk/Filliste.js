@@ -13,7 +13,7 @@ export default class Filliste extends React.Component {
     }
     render() {
         const {vurdering, labels} = this.props
-        // const labels = fabModel.kodeLabels.DistributionHistory
+        // const labels = appState.kodeLabels.DistributionHistory
         const docs = Filliste.isEmpty(this.props.Files) && Filliste.isEmpty(this.props.activeUploads)
             ? (
                 <tr>

@@ -96,7 +96,7 @@ export default class NewNaturetype extends React.Component {
                 assessment={assessment}
                 hideStateChange={[this, "hideStateChange"]}
                 naturtype={this.props.mode === "livsmedium" ? this.nyttLivsmedium : this.nyNaturtype}
-                fabModel={appState}
+                appState={appState}
                 livsmedium={livsmedium}
                 showModal={[this, "showModal"]}
                 onOk={addNaturtype}
