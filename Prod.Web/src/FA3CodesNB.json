@@ -593,7 +593,7 @@
             {
                 "Id": "DistributionOptions",
                 "Value": "C3",
-                "Text": "Arten forekommer kun der den er introdusert og der er den også etablert (C3)"
+                "Text": "Arten forekommer kun der den er introdusert og den er etablert på minst ett introduksjonssted (C3)"
             }
         ],
 
