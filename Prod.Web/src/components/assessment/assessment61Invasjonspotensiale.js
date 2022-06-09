@@ -25,6 +25,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
             excludeObjects: this.props.appState.assessment.artskartModel.excludeObjects,
             excludeGbif: this.props.appState.assessment.artskartModel.excludeGbif,
         }
+        // todo: (!!) appState.virtualArtskartModel0 is not defined anywhere. So it is not observable!! This might be the reason that the "isDirty" trick used to refresh artskart data!!!!
         const d = JSON.stringify(this.props.appState.virtualArtskartModel0);
         const e = {
             observationFromYear: this.props.appState.assessment.artskartModel.observationFromYear,
