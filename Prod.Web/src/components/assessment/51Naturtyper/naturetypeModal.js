@@ -25,7 +25,7 @@ export class StringEnum2 extends React.Component {
 export default class NaturetypeModal extends React.Component {
     constructor(props) {
         super()
-        const {fabModel, naturtype, onOk, showModal, taxon} = props;
+        const {appState, naturtype, onOk, showModal, taxon} = props;
         const [sm, smprop] = showModal
         // console.log("NaturetypeModal taxon " + JSON.stringify(taxon))
         extendObservable(this, {
@@ -41,8 +41,8 @@ export default class NaturetypeModal extends React.Component {
             onOk(clone)
         })
         autorun(() => {
-            if (fabModel.naturtypeLabels && this.editNaturtype && this.editNaturtype.niNCode) {
-                this.naturtypeLabel = fabModel.naturtypeLabels[this.editNaturtype.niNCode]
+            if (appState.naturtypeLabels && this.editNaturtype && this.editNaturtype.niNCode) {
+                this.naturtypeLabel = appState.naturtypeLabels[this.editNaturtype.niNCode]
             }
         })
         autorun(() => {
@@ -63,14 +63,14 @@ export default class NaturetypeModal extends React.Component {
         return result
     }
     render() {
-        const {fabModel, naturtype, labels, showModal, hideStateChange, livsmedium, taxon, assessment} = this.props;
+        const {appState, naturtype, labels, showModal, hideStateChange, livsmedium, taxon, assessment} = this.props;
         const [sm, smprop] = showModal
         const [hsc, hscprop] = hideStateChange
         this.hideStateChange = hsc[hscprop]
         const ntLabels = labels.NatureTypes
-        const doms = fabModel.dominansSkog
-        const koder = fabModel.koder
-        const disabled = fabModel.userContext.readonly
+        const doms = appState.dominansSkog
+        const koder = appState.koder
+        const disabled = appState.userContext.readonly
         return <div>
             {sm[smprop]
                 ? <BsModal

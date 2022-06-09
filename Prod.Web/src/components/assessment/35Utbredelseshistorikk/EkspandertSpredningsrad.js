@@ -10,7 +10,7 @@ export default class EkspandertSpredningsrad extends React.Component {
     @observable visArtskart = false
 
     render() {
-        const {detaljer, fabModel, assessment, disabled} = this.props
+        const {detaljer, appState, assessment, disabled} = this.props
         const artskartModel = assessment.artskartModel
         return (
             <tr
@@ -28,7 +28,7 @@ export default class EkspandertSpredningsrad extends React.Component {
                                     }}/>
                 {this.visArtskart && 
                 <Artskart
-                    fabModel={this.props.fabModel}
+                    appState={this.props.appState}
                     onSave={(resultat) => this.handleSave(resultat)}
                     onCancel={() => this.handleCancel()}
                     id={this.props.id}
@@ -49,7 +49,7 @@ export default class EkspandertSpredningsrad extends React.Component {
 
     handleSave(artskartRespons) {
         this.visArtskart = false
-        const artskartModel = this.props.fabModel.artskartModel
+        const artskartModel = this.props.appState.artskartModel
         const detaljer = this.props.detaljer
         detaljer.observations = artskartRespons.observations
         detaljer.existenceArea = artskartRespons.existenceArea
@@ -63,8 +63,8 @@ export default class EkspandertSpredningsrad extends React.Component {
 }
 @observer export class EkspandertSpredningsradDetaljer extends React.Component {
     render() {
-        const {fabModel, detaljer, assessment, disabled} = this.props
-        const labels = fabModel.codeLabels.DistributionHistory
+        const {appState, detaljer, assessment, disabled} = this.props
+        const labels = appState.codeLabels.DistributionHistory
         return (
            
             <>
@@ -78,11 +78,11 @@ export default class EkspandertSpredningsrad extends React.Component {
             <td> {detaljer.comment}</td>
             <td>
                 <Spredningskart
-                    map={this.props.fabModel.evaluationContexts.map}
+                    map={this.props.appState.evaluationContexts.map}
                     showLegend
                     disabled={disabled}
                     width={"150px"}
-                    fabModel={fabModel}
+                    appState={appState}
                     states={[
                         {
                             key: 'none',
@@ -99,7 +99,7 @@ export default class EkspandertSpredningsrad extends React.Component {
                             values: detaljer.regionsAssumed
                         }
                     ]}
-                    countyListLand={this.props.fabModel.koder.countyListLand}
+                    countyListLand={this.props.appState.koder.countyListLand}
                 />
             </td>
             <td>&nbsp;</td>
@@ -107,7 +107,7 @@ export default class EkspandertSpredningsrad extends React.Component {
         )
     }
     copyToCurrentAndPotential(row) {
-        const v = this.props.fabModel.vurdering
+        const v = this.props.appState.vurdering
         EkspandertSpredningsradDetaljer.copyCheckmarks(row.regionalPresenceKnown, v.knownRegionalPresence)
         EkspandertSpredningsradDetaljer.copyCheckmarks(row.regionalPresenceAssumed, v.assumedRegionalPresence)
         EkspandertSpredningsradDetaljer.clearCheckmarks(v.potentialRegionalPresence)

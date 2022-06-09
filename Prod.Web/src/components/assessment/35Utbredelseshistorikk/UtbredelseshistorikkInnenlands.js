@@ -9,20 +9,20 @@ import Filliste from './Filliste'
 @observer
 export default class UtbredelseshistorikkInnenlands extends React.Component {
     render() {
-        const {vurdering, fabModel} = this.props
+        const {vurdering, appState} = this.props
         
-        const labels = fabModel.codeLabels.DistributionHistory
+        const labels = appState.codeLabels.DistributionHistory
         const history = vurdering.spreadHistory
         return (
             <div>
                 <div id="spreadHistories">
-                    <h5>{labels.distributionHistory} {fabModel.evaluationContext.nameWithPreposition}</h5>
-                    <HistorikkTabell disabled historikk={history} fabModel={fabModel}/>
-                    {fabModel.fileUploadEnabled
+                    <h5>{labels.distributionHistory} {appState.evaluationContext.nameWithPreposition}</h5>
+                    <HistorikkTabell disabled historikk={history} appState={appState}/>
+                    {appState.fileUploadEnabled
                     ? <div>
                         <h4>{labels.domesticDataset}</h4>
                         <Filliste
-                            baseDirectory={`${fabModel
+                            baseDirectory={`${appState
                             .vurderingId
                             .split('/').join('_')}/SpreadHistory`}
                             {...vurdering.Datasett}

@@ -12,7 +12,7 @@ const kodeTekst = (koder, verdi) => koder.filter(item => item.Value === verdi).m
 export class HabitatTableRow extends React.Component {
     constructor(props) {
         super()
-        const {naturtype, fabModel, deleteRow, taxon} = props;
+        const {naturtype, appState, deleteRow, taxon} = props;
         extendObservable(this, {
             showModal: false,
             hideStateChange: false,
@@ -32,16 +32,16 @@ export class HabitatTableRow extends React.Component {
     }
 
     render() {
-        const {naturtype, fabModel, assessment, deleteRow, labels, toggleEdit, editMode, taxon} = this.props;
+        const {naturtype, appState, assessment, deleteRow, labels, toggleEdit, editMode, taxon} = this.props;
         const gLabels = labels.General
         const nt = naturtype
-        const disabled = fabModel.userContext.readonly
+        const disabled = appState.userContext.readonly
         console.log(nt)
         const newTaxon = nt.taxon
-        const koder = fabModel.koder
+        const koder = appState.koder
         const ntlabel = (nt.niNCode && nt.niNCode.length > 3 && nt.niNCode.startsWith("LI "))
-            ? fabModel.livsmediumLabels[nt.niNCode]
-            : fabModel.naturtypeLabels[nt.niNCode]
+            ? appState.livsmediumLabels[nt.niNCode]
+            : appState.naturtypeLabels[nt.niNCode]
         const stateChangLabel = nt.StateChange ? nt.StateChange.map(sc => kodeTekst(koder.tilstandsendringer, sc)).join('\n') : ""
         return(
             <tr>
@@ -141,7 +141,7 @@ export class HabitatTableRow extends React.Component {
                         hideStateChange={[this, "hideStateChange"]} 
                         onOk={this.updateNaturetype} 
                         livsmedium ={true}
-                        fabModel={fabModel} 
+                        appState={appState} 
                         labels={labels}/>
                     : null}
                 </td>               
@@ -180,7 +180,7 @@ export default class HabitatTable extends React.Component {
                 interactionTypes: [],
             }, 
         })
-        createTaxonSearch(this.taxon, props.fabModel.evaluationContext)
+        createTaxonSearch(this.taxon, props.appState.assessment.evaluationContext)
     }
             
     @observable editMode = false
@@ -189,9 +189,9 @@ export default class HabitatTable extends React.Component {
         this.editMode = !this.editMode
     }
     render() {
-        const {naturetypes, labels, canRenderTable, fabModel, desc} = this.props;
+        const {naturetypes, labels, canRenderTable, appState, desc} = this.props;
         const ntLabels = labels.NatureTypes
-        const assessment = fabModel.assessment
+        const assessment = appState.assessment
         // console.log("naturtyperader#: " + naturetypes.length)
         return(
             <div>
@@ -222,7 +222,7 @@ export default class HabitatTable extends React.Component {
                                 naturtype={nt} 
                                 taxon={this.taxon} 
                                 deleteRow={deleteRow} 
-                                fabModel={fabModel} 
+                                appState={appState} 
                                 toggleEdit={this.toggleEdit} 
                                 editMode={this.editMode} 
                                 labels={labels} 

@@ -48,7 +48,7 @@ export default class Spredningskart extends React.Component {
                 }
             }
         }
-        const {map, countyListLand, states, showLegend, fabModel, disabled} = this.props
+        const {map, countyListLand, states, showLegend, appState, disabled} = this.props
         const fylkerArray = countyListLand.map((fylke) => {
             const active = Spredningskart.getCurrentState(fylke.Value, states)           
             return {id: fylke.Value, title: `${fylke.Text}: ${active.title}`, style: active.key}
@@ -68,7 +68,7 @@ export default class Spredningskart extends React.Component {
                 }}>
                     <Fylkeskart
                         language={
-                            !fabModel.language ? "NB" : fabModel.language // todo: change this... ( this is done for the English language demo)
+                            !appState.language ? "NB" : appState.language // todo: change this... ( this is done for the English language demo)
                         }
                         map={map}
                         readonly={this.props.readonly}

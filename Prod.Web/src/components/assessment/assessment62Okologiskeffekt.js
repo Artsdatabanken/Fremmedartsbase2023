@@ -15,7 +15,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
     constructor(props) {
         super(props)
         const {appState:{assessment}, appState:{assessment:{riskAssessment}}, appState} = this.props;
-        const evaluationContext = appState.evaluationContext
+        const evaluationContext = assessment.evaluationContext
         // const labels = appState.codeLabels
         // const koder = appState.koder
 
@@ -255,7 +255,7 @@ export default class Assessment62Okologiskeffekt extends React.Component {
     }
 
     render() {
-        const {appState:{assessment}, appState:{assessment:{riskAssessment}}, appState, evaluationContext} = this.props;
+        const {appState:{assessment}, appState:{assessment:{riskAssessment}}, appState} = this.props;
         const labels = appState.codeLabels
         const koder = appState.koder
         const nbsp = "\u00a0"

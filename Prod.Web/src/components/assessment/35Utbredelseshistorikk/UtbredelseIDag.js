@@ -7,9 +7,9 @@ import Spredningskart from './Spredningskart'
 @observer
 export default class UtbredelseIDag extends React.Component {
     render() {
-        const {vurdering, fabModel} = this.props
-        const labels=fabModel.codeLabels.DistributionHistory
-        const artskartModel = fabModel.artskartModel
+        const {vurdering, appState} = this.props
+        const labels=appState.codeLabels.DistributionHistory
+        const artskartModel = appState.artskartModel
         const headerStyle = {
             textAlign: 'center',
             borderBottom: '1px solid #000'
@@ -126,7 +126,7 @@ export default class UtbredelseIDag extends React.Component {
                                 position: "relative",
                                 width: "35%"
                             }}>
-                                {fabModel.evaluationContext.map == 'norge' && (
+                                {appState.evaluationContext.map == 'norge' && (
                                     <span>
                                         <h4
                                             style={{
@@ -134,7 +134,7 @@ export default class UtbredelseIDag extends React.Component {
                                             top: "7px"
                                         }}>{labels.currentDistribution}</h4>
                                         <Spredningskart
-                                            map={fabModel.evaluationContext.map}
+                                            map={appState.evaluationContext.map}
                                             showLegend
                                             states={[
                                             {
@@ -158,14 +158,14 @@ export default class UtbredelseIDag extends React.Component {
                                 position: "relative",
                                 width: "35%"
                             }}>
-                                {fabModel.evaluationContext.map == 'norge' && (
+                                {appState.evaluationContext.map == 'norge' && (
                                     <span>
                                         <h4
                                             style={{
                                             position: "absolute",
                                             top: "7px"
                                         }}>{labels.futureDistribution}</h4><Spredningskart
-                                            map={fabModel.evaluationContext.map}
+                                            map={appState.evaluationContext.map}
                                             showLegend
                                             states={[
                                         {

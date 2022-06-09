@@ -482,7 +482,7 @@ export default class Assessment52Utbredelse extends React.Component {
                 {assessment.spreadHistory.length > 0 
                 ? <fieldset className="well" id="spreadHistoryDomestic">
                     <h4>Utbredelseshistorikk 2018</h4>
-                    <UtbredelseshistorikkInnenlands vurdering={assessment} fabModel={appState}/>
+                    <UtbredelseshistorikkInnenlands vurdering={assessment} appState={appState}/>
                     {assessment.spreadHistoryDomesticDocumentation
                     ? <div>
                         <h4>{labels.previousInfo}. <b>{labels.mustTransfer}</b></h4>
@@ -501,7 +501,7 @@ export default class Assessment52Utbredelse extends React.Component {
                 </fieldset>
                 : null}
                 {config.showPageHeaders
-                ? <h3>{fabModel.kodeLabels.DistributionHistory.heading}</h3>
+                ? <h3>{appState.kodeLabels.DistributionHistory.heading}</h3>
                 : <br/>}
             </div>
         )

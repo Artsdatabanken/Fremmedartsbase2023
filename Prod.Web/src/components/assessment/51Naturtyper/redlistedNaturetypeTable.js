@@ -9,7 +9,7 @@ inject('appState')
 export class RedlistedNaturetypeRad extends React.Component {
     constructor(props) {
         super()
-        const {naturtype, fabModel, deleteRow} = props;
+        const {naturtype, appState, deleteRow} = props;
         extendObservable(this, {
             showModal: false,
             hideStateChange: false
@@ -27,11 +27,11 @@ export class RedlistedNaturetypeRad extends React.Component {
     }
     
     render() {
-        const {naturtype, fabModel, deleteRow, labels} = this.props;
+        const {naturtype, appState, deleteRow, labels} = this.props;
         const gLabels = labels.General
         const nt = naturtype
         console.log(nt)
-        const koder = fabModel.koder
+        const koder = appState.koder
         const stateChangLabel = nt.stateChange.map(sc => kodeTekst(koder.tilstandsendringer, sc)).join('\n')
         return(
             <tr>
@@ -48,7 +48,7 @@ export class RedlistedNaturetypeRad extends React.Component {
 @observer
 export default class RedlistedNaturetypeTable extends React.Component {
     render() {
-        const {naturetypes, labels, canRenderTable, fabModel} = this.props;
+        const {naturetypes, labels, canRenderTable, appState} = this.props;
         const ntLabels = labels.NatureTypes
         console.log(naturetypes)
         return(
@@ -78,7 +78,7 @@ export default class RedlistedNaturetypeTable extends React.Component {
                     ? naturetypes.map(nt => { 
                         const deleteRow = () => naturetypes.remove(nt)
                         const key = nt.redlistedNatureTypeName + nt.timeHorizon + nt.colonizedArea + nt.stateChange.join(';') + nt.affectedArea
-                        return <RedlistedNaturetypeRad key={key} naturtype={nt} deleteRow={deleteRow} fabModel={fabModel} labels={labels}/> }) 
+                        return <RedlistedNaturetypeRad key={key} naturtype={nt} deleteRow={deleteRow} appState={appState} labels={labels}/> }) 
                     : null}
                 </tbody>
             </table>
