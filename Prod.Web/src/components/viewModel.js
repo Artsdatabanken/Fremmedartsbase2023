@@ -153,11 +153,7 @@ class ViewModel {
             antallNavnEndret: 0,
             loadingExpertGroup: false,
 
-
-            // ************************************************
-            // ********  Assessment props *********************
-            // ************************************************
-
+            // NB! evaluationContext also exist on the assessment. This one is for general taxonSearch, maps++
             evaluationContext: 'N',
             //todo: this thing should go to the code file
             evaluationContexts: {
@@ -174,20 +170,28 @@ class ViewModel {
             },
 
             
-            livsmediumEnabled: true,
-            artskartModel: {},
-            påvirkningsfaktorer: [],
+            livsmediumEnabled: true, // just a manual flag!
             spredningsveier: null,
-            selectedPåvirkningsfaktor: {
-                id: null,
-                forkortelse: null,
-                overordnetTittel: null,
-                beskrivelse: null,
-                tidspunkt: null,
-                omfang: null,
-                alvorlighetsgrad: null,
-                comment: null
-            },
+
+
+            // ************************************************
+            // ********  Assessment props *********************
+            // ************************************************
+
+            //todo: test if this is actually in use!! artskartModel is also defined(?) on the assessment, which is where it should be!
+            artskartModel: {},
+
+            // påvirkningsfaktorer: [],
+            // selectedPåvirkningsfaktor: {
+            //     id: null,
+            //     forkortelse: null,
+            //     overordnetTittel: null,
+            //     beskrivelse: null,
+            //     tidspunkt: null,
+            //     omfang: null,
+            //     alvorlighetsgrad: null,
+            //     comment: null
+            // },
 
 
             statusChange: false
@@ -1104,17 +1108,17 @@ class ViewModel {
           );
     }
 
-    @action getAssessmentsForFilter() {
-        const påv = toJS(this.selectedPåvirkningsfaktor)
-        const existing = this.assessment.påvirkningsfaktorer.find(item =>
-            item.id == påv.id)
-        if(existing) {
-            // console.log("existing:" + JSON.stringify(existing))
-            this.assessment.påvirkningsfaktorer.remove(existing)
-        }
-        this.assessment.påvirkningsfaktorer.push(påv)
-        // this.clearSelectedPåvirkningsfaktor()
-    }
+    // @action getAssessmentsForFilter() {
+    //     const påv = toJS(this.selectedPåvirkningsfaktor)
+    //     const existing = this.assessment.påvirkningsfaktorer.find(item =>
+    //         item.id == påv.id)
+    //     if(existing) {
+    //         // console.log("existing:" + JSON.stringify(existing))
+    //         this.assessment.påvirkningsfaktorer.remove(existing)
+    //     }
+    //     this.assessment.påvirkningsfaktorer.push(påv)
+    //     // this.clearSelectedPåvirkningsfaktor()
+    // }
 
     async loadExpertgroupAssessmentList(expertgroupId) {
         runInAction(() => this.loadingExpertGroup = true)
