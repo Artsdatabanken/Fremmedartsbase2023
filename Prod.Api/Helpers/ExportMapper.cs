@@ -22,7 +22,6 @@ namespace Prod.Api.Helpers
 
                 // eksempel på mapåping der alt fra ett listeobjekt skal inn i en celle
                 cfg.CreateMap<List<SpreadHistory>, string>().ConvertUsing<CustomSpreadHistoryConverter>();
-
                 cfg.CreateMap<FA4WithComments, FA4Export>()
                     //.ForMember(x => x.DoorKnockerType, opt => opt.MapFrom(src => GetDoorknockerType(src)))
                     .AfterMap((src, dest) =>
@@ -76,6 +75,7 @@ namespace Prod.Api.Helpers
                         dest.CurrentInternationalExistenceAreasAfrica = GetCurrentInternationalExistenceAreas(src.CurrentInternationalExistenceAreas, "africa");
                         dest.CurrentInternationalExistenceAreasNorthAndCentralAmerica = GetCurrentInternationalExistenceAreas(src.CurrentInternationalExistenceAreas, "northAndCentralAmerica");
                         dest.CurrentInternationalExistenceAreasSouthAmerica = GetCurrentInternationalExistenceAreas(src.CurrentInternationalExistenceAreas, "southAmerica");
+                        dest.NaturalOriginMarine = GetNaturalOriginsMarine(src.NaturalOriginMarine);
 
                     });
 
@@ -83,6 +83,18 @@ namespace Prod.Api.Helpers
             });
             var mapper = new Mapper(mapperConfig);
             return mapper;
+        }
+
+        private static string GetNaturalOriginsMarine(List<string> naturalOriginMarine)
+        {
+            if (naturalOriginMarine == null || naturalOriginMarine.Count == 0)
+            {
+                return string.Empty;
+            }
+            // var oceans = new List<string>();
+            // if()
+            // return string.Join(", ", oceans);
+            return string.Join(", ", naturalOriginMarine);
         }
 
         private static string GetCurrentInternationalExistenceAreas(List<FA4.NaturalOrigin> currentInternationalExistenceAreas, string area)
@@ -102,7 +114,7 @@ namespace Prod.Api.Helpers
                 }
             }
 
-            return string.Join("; ", zones);
+            return string.Join(", ", zones);
         }
 
         private static string GetNaturalOrigins(List<FA4.NaturalOrigin> naturalOrigins, string area)
@@ -122,7 +134,7 @@ namespace Prod.Api.Helpers
                 }
             }
 
-            return string.Join("; ", zones);
+            return string.Join(", ", zones);
 
         }
 
@@ -342,28 +354,29 @@ namespace Prod.Api.Helpers
         [Name("NaavaerendeUtbredelseTerrestriskOgLimniskEuropa")]
         public string CurrentInternationalExistenceAreasEurope {get; set; }
         [Name("NaavaerendeUtbredelseTerrestriskOgLimniskAsia")]
-        public object CurrentInternationalExistenceAreasAsia { get; set; }
+        public string CurrentInternationalExistenceAreasAsia { get; set; }
         [Name("NaavaerendeUtbredelseTerrestriskOgLimniskOseania")]
-        public object CurrentInternationalExistenceAreasOceania { get; set; }
+        public string CurrentInternationalExistenceAreasOceania { get; set; }
         [Name("NaavaerendeUtbredelseTerrestriskOgLimniskAfrika")]
-        public object CurrentInternationalExistenceAreasAfrica { get; set; }
+        public string CurrentInternationalExistenceAreasAfrica { get; set; }
         [Name("NaavaerendeUtbredelseTerrestriskOgLimniskNordSentralAmerika")]
-        public object CurrentInternationalExistenceAreasNorthAndCentralAmerica { get; set; }
+        public string CurrentInternationalExistenceAreasNorthAndCentralAmerica { get; set; }
         [Name("NaavaerendeUtbredelseTerrestriskOgLimniskSorAmerika")]
-        public object CurrentInternationalExistenceAreasSouthAmerica { get; set; }
+        public string CurrentInternationalExistenceAreasSouthAmerica { get; set; }
         
         [Name("NaavaerendeUtbredelseTerrestriskOgLimniskBeskrivelse")]
         public string CurrentInternationalExistenceAreasUnknownDocumentation { get; set; }
         
 
         //marin utbredelse
-        [Name("Naturlig utbredelse marint")]
-        public List<string> NaturalOriginMarine { get; set; } = new List<string>(); // lagt til 05.09.2016
-        [Name("Naturlig utbredelse marint, beskrivelse")]
+        [Name("NaturligUtbredelseMarint")]
+        public string NaturalOriginMarine { get; set; } 
+        // public List<string> NaturalOriginMarine { get; set; } = new List<string>(); // lagt til 05.09.2016 //To do: pakk ut denne listen til en string - 08.06.22
+        [Name("NaturligUtbredelseMarintBeskrivelse")]
         public string NaturalOriginMarineDetails { get; set; } // lagt til 21.04.2017
-        [Name("Nåværende utbredelse marint")]
+        [Name("NaavaerendeUtbredelseMarint")]
         public List<string> CurrentInternationalExistenceMarineAreas { get; set; } = new List<string>(); // lagt til 05.09.2016
-        [Name("Nåværende utbredelse marint, beskrivelse")]
+        [Name("NaavaerendeUtbredelseMarintBeskrivelse")]
         public string CurrentInternationalExistenceMarineAreasDetails { get; set; } // lagt til 21.04.2017
 
         [Name("Kom til Fastlands-Norge fra")]
