@@ -13,6 +13,8 @@ import enhanceAssessment from './assessment/enhanceAssassment.js'
 import { checkStatus, loadData } from '../apiService'
 import tabdefs from './tabdefs'
 import assessmentTabdefs from './assessment/assessmentTabdefs'
+import {codeLists, isTrueteogsjeldnenaturtype} from './codeLists'
+
 
 import { any } from 'prop-types'
 import { Console } from 'console'
@@ -200,71 +202,76 @@ class ViewModel {
 
         this.initializeServices()
         // ---------------
-
-        const codes = require('../FA3CodesNB.json')
-        this.koder = codes.Children
-        const clabels =  codes2labels(this.koder.labels[0].Children)
-        this.codeLabels = clabels
-
-
-        // load livsmedium codes ----
-        const ninlm = require('../nin-livsmedium.json')
-        const lm = this.transformlivsmedium(ninlm)
-        // console.log("livsmedium2nt: " +  JSON.stringify(lm))
-        const lmlabels = this.transformlivsmediumlabels(ninlm, {})
-        // console.log(JSON.stringify(lmlabels))
-        const grupper = lm.Children
-        this.livsmediumLabels = lmlabels
-        this.livsmediumCodes = grupper
-        // --------------------------
-
-        // load truede naturtyper codes ----
-        const togsnt = require('../TrueteOgSjeldneNaturtyper2018.json')
-        const nt = this.transformtrueteogsjeldnenaturtyper(togsnt)
-        // console.log("trueteogsjeldnenaturtyper: " +  JSON.stringify(nt))
-        const tsgrupper = nt.Children
-        this.trueteogsjeldneCodes = tsgrupper
-
-
-        this.trueteogsjeldnenaturtypercodes = []
-        this.gettrueteogsjeldnenaturtypercodes(togsnt)
-        console.log("!!! gettrueteogsjeldnenaturtypercodes" + JSON.stringify(this.trueteogsjeldnenaturtypercodes))
-
-        // --------------------------
-
-
-        // load NiN2 codes ----
-        const nin2root = require('../Nin2_3.json')
-        // console.log("nin2naturtyper: " +  JSON.stringify(nin2root))
-        const nin2grupper = nin2root.Children
-        this.naturtyperNIN2 = nin2grupper
-
-        const nin2codes = this.koder.naturtyperNIN2
-        const nin2 = this.transformnaturtyperNIN2(nin2codes)
-        // console.log("nin2 transformed: " +  JSON.stringify(nin2))
-        // const nin2grupper = nin2.Children
-        // this.naturtyperNIN2 = nin2grupper
-        // --------------------------
-        this.nin2codes = nin2codes
+        Object.assign(this,codeLists)
+        this.isTrueteogsjeldnenaturtype = isTrueteogsjeldnenaturtype
 
 
 
 
+        // // // const codes = require('../FA3CodesNB.json')
+        // // // this.koder = codes.Children
+        // // // const clabels =  codes2labels(this.koder.labels[0].Children)
+        // // // this.codeLabels = clabels
+
+
+        // // // // load livsmedium codes ----
+        // // // const ninlm = require('../nin-livsmedium.json')
+        // // // const lm = this.transformlivsmedium(ninlm)
+        // // // // console.log("livsmedium2nt: " +  JSON.stringify(lm))
+        // // // const lmlabels = this.transformlivsmediumlabels(ninlm, {})
+        // // // // console.log(JSON.stringify(lmlabels))
+        // // // const grupper = lm.Children
+        // // // this.livsmediumLabels = lmlabels
+        // // // this.livsmediumCodes = grupper
+        // // // // --------------------------
+
+        // // // // load truede naturtyper codes ----
+        // // // const togsnt = require('../TrueteOgSjeldneNaturtyper2018.json')
+        // // // const nt = this.transformtrueteogsjeldnenaturtyper(togsnt)
+        // // // // console.log("trueteogsjeldnenaturtyper: " +  JSON.stringify(nt))
+        // // // const tsgrupper = nt.Children
+        // // // this.trueteogsjeldneCodes = tsgrupper
+
+
+        // // // this.trueteogsjeldnenaturtypercodes = []
+        // // // this.gettrueteogsjeldnenaturtypercodes(togsnt)
+        // // // console.log("!!! gettrueteogsjeldnenaturtypercodes" + JSON.stringify(this.trueteogsjeldnenaturtypercodes))
+
+        // // // // --------------------------
+
+
+        // // // // load NiN2 codes ----
+        // // // const nin2root = require('../Nin2_3.json')
+        // // // // console.log("nin2naturtyper: " +  JSON.stringify(nin2root))
+        // // // const nin2grupper = nin2root.Children
+        // // // this.naturtyperNIN2 = nin2grupper
+
+        // // // const nin2codes = this.koder.naturtyperNIN2
+        // // // const nin2 = this.transformnaturtyperNIN2(nin2codes)
+        // // // // console.log("nin2 transformed: " +  JSON.stringify(nin2))
+        // // // // const nin2grupper = nin2.Children
+        // // // // this.naturtyperNIN2 = nin2grupper
+        // // // // --------------------------
+        // // // this.nin2codes = nin2codes
 
 
 
 
-        // console.log("labels keys: " + JSON.stringify(Object.keys(clabels)))
-        // console.log("codes keys: " + JSON.stringify(Object.keys(codes.Children)))
-        // console.log("codes json: " + JSON.stringify(codes))
-        // console.log("----------------------------------------------+++")
-        // console.log(JSON.stringify(clabels))
 
-        //-----------------------------------------------------
 
-        const mp = this.koder.migrationPathways[0]
-        this.spredningsveier = this.koder2migrationPathways(mp)
-        //-----------------------------------------------------
+
+
+        // // // // console.log("labels keys: " + JSON.stringify(Object.keys(clabels)))
+        // // // // console.log("codes keys: " + JSON.stringify(Object.keys(codes.Children)))
+        // // // // console.log("codes json: " + JSON.stringify(codes))
+        // // // // console.log("----------------------------------------------+++")
+        // // // // console.log(JSON.stringify(clabels))
+
+        // // // //-----------------------------------------------------
+
+        // // // const mp = this.koder.migrationPathways[0]
+        // // // this.spredningsveier = this.koder2migrationPathways(mp)
+        // // // //-----------------------------------------------------
 
 
         this.theUserContext = createContext(this.userContext)
@@ -851,104 +858,104 @@ class ViewModel {
 
 
 
-    koder2migrationPathways(mp) {
-        const r = {}
-        r.name = mp.Text
-        // console.log(r.name)
-        r.value = mp.Value
-        if(mp.Children) {
-            r.children = []
-            const mpckey = Object.keys(mp.Children)[0]
-            const mpc = mp.Children[mpckey]
-            for ( var i = 0; i < mpc.length; ++i )
-            {
-                r.children.push(this.koder2migrationPathways(mpc[i]));
-            }
-        }
-        return r
-    }
+    // // // koder2migrationPathways(mp) {
+    // // //     const r = {}
+    // // //     r.name = mp.Text
+    // // //     // console.log(r.name)
+    // // //     r.value = mp.Value
+    // // //     if(mp.Children) {
+    // // //         r.children = []
+    // // //         const mpckey = Object.keys(mp.Children)[0]
+    // // //         const mpc = mp.Children[mpckey]
+    // // //         for ( var i = 0; i < mpc.length; ++i )
+    // // //         {
+    // // //             r.children.push(this.koder2migrationPathways(mpc[i]));
+    // // //         }
+    // // //     }
+    // // //     return r
+    // // // }
 
-    transformlivsmedium(mp) {
-        const r = {}
-        r.Id = mp.Id
-        r.Value = mp.Id
-        // console.log(r.name)
-        r.Text = mp.navn
-        r.Collapsed = true
-        r.Children = []
-        if(mp.children) {
-            for ( var i = 0; i < mp.children.length; ++i )
-            {
-                r.Children.push(this.transformlivsmedium(mp.children[i]));
-            }
-        }
-        return r
-    }
+    // // // transformlivsmedium(mp) {
+    // // //     const r = {}
+    // // //     r.Id = mp.Id
+    // // //     r.Value = mp.Id
+    // // //     // console.log(r.name)
+    // // //     r.Text = mp.navn
+    // // //     r.Collapsed = true
+    // // //     r.Children = []
+    // // //     if(mp.children) {
+    // // //         for ( var i = 0; i < mp.children.length; ++i )
+    // // //         {
+    // // //             r.Children.push(this.transformlivsmedium(mp.children[i]));
+    // // //         }
+    // // //     }
+    // // //     return r
+    // // // }
 
-    transformlivsmediumlabels(mp, acc) {
-        acc[mp.Id] = mp.navn
-        if(mp.children) {
-            for ( var i = 0; i < mp.children.length; ++i )
-            {
-                this.transformlivsmediumlabels(mp.children[i], acc)
-            }
-        }
-        return acc
-    }
-
-
-    transformtrueteogsjeldnenaturtyper(nt) {
-        return nt
-    }
+    // // // transformlivsmediumlabels(mp, acc) {
+    // // //     acc[mp.Id] = mp.navn
+    // // //     if(mp.children) {
+    // // //         for ( var i = 0; i < mp.children.length; ++i )
+    // // //         {
+    // // //             this.transformlivsmediumlabels(mp.children[i], acc)
+    // // //         }
+    // // //     }
+    // // //     return acc
+    // // // }
 
 
-    gettrueteogsjeldnenaturtypercodes(nt) {
-        this.trueteogsjeldnenaturtypercodes.push("NA " + nt.Value)
-        if(nt.Children) {
-            for ( var i = 0; i < nt.Children.length; ++i )
-            {
-                this.gettrueteogsjeldnenaturtypercodes(nt.Children[i])
-            }
-        }
-        // console.log("!!! trueteogsjeldnenaturtypercodes: " + JSON.stringify(this.trueteogsjeldnenaturtypercodes))
-    }
+    // // // transformtrueteogsjeldnenaturtyper(nt) {
+    // // //     return nt
+    // // // }
 
-    // isTrueteogsjeldnenaturtype = (ntcode) => {
-    //     const r = {}
-    //     r.Id = [ntcode.niNCode]
-    //     if(ntcode.length > 1) {
-    //         for(var i = 1; i < ntcode.length; ++i)
-    //         {
-    //             r.Id.push(ntcode[i].niNCode)
-    //         }    
-    //     }
-    //     // console.log("!!! r.Id: " + JSON.stringify(r.Id))
-    //     return this.trueteogsjeldnenaturtypercodes.some(element => r.Id.includes(element))
-    // }
+
+    // // // gettrueteogsjeldnenaturtypercodes(nt) {
+    // // //     this.trueteogsjeldnenaturtypercodes.push("NA " + nt.Value)
+    // // //     if(nt.Children) {
+    // // //         for ( var i = 0; i < nt.Children.length; ++i )
+    // // //         {
+    // // //             this.gettrueteogsjeldnenaturtypercodes(nt.Children[i])
+    // // //         }
+    // // //     }
+    // // //     // console.log("!!! trueteogsjeldnenaturtypercodes: " + JSON.stringify(this.trueteogsjeldnenaturtypercodes))
+    // // // }
+
+    // // // // isTrueteogsjeldnenaturtype = (ntcode) => {
+    // // // //     const r = {}
+    // // // //     r.Id = [ntcode.niNCode]
+    // // // //     if(ntcode.length > 1) {
+    // // // //         for(var i = 1; i < ntcode.length; ++i)
+    // // // //         {
+    // // // //             r.Id.push(ntcode[i].niNCode)
+    // // // //         }    
+    // // // //     }
+    // // // //     // console.log("!!! r.Id: " + JSON.stringify(r.Id))
+    // // // //     return this.trueteogsjeldnenaturtypercodes.some(element => r.Id.includes(element))
+    // // // // }
     
-    isTrueteogsjeldnenaturtype = (ntcode) => {
-        return this.trueteogsjeldnenaturtypercodes.includes(ntcode)
-    }
+    // // // isTrueteogsjeldnenaturtype = (ntcode) => {
+    // // //     return this.trueteogsjeldnenaturtypercodes.includes(ntcode)
+    // // // }
 
-    transformnaturtyperNIN2(nin2codes) {
-        const r = {}
-        r.Id = nin2codes.Id
-        r.Value = nin2codes.Id
-        r.Text = nin2codes.Text
-        r.Collapsed = true
-        if(nin2codes.Redlisted) {
-            r.Redlisted = nin2codes.Redlisted
-        }
-        r.Children = []
-        if(nin2codes.Children) {
-            for ( var i = 0; i < nin2codes.Children.length; ++i )
-            {
-                r.Children.push(this.transformnaturtyperNIN2(nin2codes.Children[i]));
-            }
-        }
-        // console.log("!!! r.Id: " + JSON.stringify(r.Id))
-        return r
-    }
+    // // // transformnaturtyperNIN2(nin2codes) {
+    // // //     const r = {}
+    // // //     r.Id = nin2codes.Id
+    // // //     r.Value = nin2codes.Id
+    // // //     r.Text = nin2codes.Text
+    // // //     r.Collapsed = true
+    // // //     if(nin2codes.Redlisted) {
+    // // //         r.Redlisted = nin2codes.Redlisted
+    // // //     }
+    // // //     r.Children = []
+    // // //     if(nin2codes.Children) {
+    // // //         for ( var i = 0; i < nin2codes.Children.length; ++i )
+    // // //         {
+    // // //             r.Children.push(this.transformnaturtyperNIN2(nin2codes.Children[i]));
+    // // //         }
+    // // //     }
+    // // //     // console.log("!!! r.Id: " + JSON.stringify(r.Id))
+    // // //     return r
+    // // // }
 
 
 
