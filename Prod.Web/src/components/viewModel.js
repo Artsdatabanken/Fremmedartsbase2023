@@ -4,7 +4,7 @@ import events from './event-pubsub'
 // import {HttpTransportType, HubConnectionBuilder, JsonHubProtocol, LogLevel} from "@microsoft/signalr"
 import * as signalR from "@microsoft/signalr"
 // import enhanceWithRiskEvaluation from "./CategoryCriteria"
-import {codes2labels} from '../utils'
+// import {codes2labels} from '../utils'
 import config from '../config'
 import auth from './authService'
 import createContext from './createContext'
@@ -16,8 +16,8 @@ import assessmentTabdefs from './assessment/assessmentTabdefs'
 import {codeLists, isTrueteogsjeldnenaturtype} from './codeLists'
 
 
-import { any } from 'prop-types'
-import { Console } from 'console'
+// import { any } from 'prop-types'
+// import { Console } from 'console'
 // import { ConfigurationManager } from '../../dist/Prod.Web.e31bb0bc'
 
 
@@ -322,6 +322,108 @@ class ViewModel {
         //     console.log("selectedPåvirkningsfaktor: " + (this.selectedPåvirkningsfaktor ? this.selectedPåvirkningsfaktor.id : "None"))
         // });
 
+        
+        // **** set assessment and assessmentId ****
+        reaction(() => this.assessmentId,
+            assessmentId => {
+                console.log("x: " + this.assessmentId + " " + typeof(this.assessmentId) + " " + (this.assessment ? this.assessment.id : "nix"))
+                if (assessmentId) {
+                    this.setCurrentAssessment(assessmentId)
+                } else {
+                    this.setCurrentAssessment(null)
+                    action(() => this.viewMode = "choosespecie")
+                }
+            }
+        );
+        reaction(
+            () => this.assessmentId,
+            async assessmentId => {
+                console.log("ny assessmentId: " + assessmentId)
+            }
+        )
+        autorun(() => {
+            if (this.viewMode === "choosespecie") {
+                this.setCurrentAssessment(null)
+            }
+        });
+        reaction(
+            () => this.assessment,
+            assessment => {
+                console.log(assessment ? "ny assessment: " + assessment.id : "no assessment")
+                if (assessment && this.isServicesReady) {
+                    // console.log("viewMode = 'assessment' - before:" + this.viewMode)
+                    this.viewMode = "assessment"
+                }
+            }
+        )
+        // ***************************************
+
+        // **** sett expert group ****
+        reaction(
+            () => [this.expertgroup, auth.isLoggedIn, this.assessmentTypeFilter, this.expertgroupAssessmentFilter,
+                this.horizonScanFilter.notAssessedDoorKnocker.length, 
+                this.horizonScanFilter.potentialDoorKnockers.length,
+                this.horizonScanFilter.hsNotStarted, this.horizonScanFilter.hsFinished, this.horizonScanFilter.toAssessment, this.horizonScanFilter.notAssessed,
+                this.responsible.length, this.kunUbehandlede,
+                this.hSStatus,
+                this.workStatus.length, this.otherComments.length,
+
+                this.historyFilter.riskCategoryFilter.length, this.historyFilter.decisiveCriteriaFilter.length,
+                this.historyFilter.riskAssessedFilter.length, this.historyFilter.riskNotAssessedFilter.length, this.historyFilter.ikkevurdert, this.historyFilter.vurdert,
+
+                this.currentFilter.riskCategoryFilter.length, this.currentFilter.decisiveCriteriaFilter.length,
+                this.currentFilter.riskAssessedFilter.length, this.currentFilter.riskNotAssessedFilter.length, this.currentFilter.ikkevurdert, this.currentFilter.vurdert,
+
+            ],
+            ([expertgroupId, isLoggedIn])  => {
+                //console.log("react to expertgroup: " + expertgroupId + "," + isLoggedIn)
+                if(isLoggedIn && expertgroupId) {
+                    this.loadCurrentExpertgroupAssessmentList()
+                } else {
+                    this.expertgroupAssessmentList = []
+                }
+            }
+        )
+        // ***************************************
+
+        autorun(() => {
+            console.log("har vurdering: " + this.harVurdering)
+        });
+
+        // **** initialize tabs ****
+        extendObservable(this, tabdefs(this))
+        assessmentTabdefs(this)
+        // **** end initialize tabs ****
+
+        const createRoutes = tablist => {
+            const items = []
+            tablist.forEach(tabitem => {
+                const item = [tabitem.url + "/:id", params => this.navigate(tabitem.id, params.id)]
+                items.push(item)
+            })
+            return items
+        }
+
+        const routes = createRoutes(this.assessmentTabs.tabList)
+
+        autorun(() => {
+            if (this.router && this.assessmentTabs) {
+                const hash = this.router.hash.substr(1) // when user changes the url hash -
+                router(hash, routes) // - then navigate
+            }
+        })
+
+
+
+
+
+
+        // #######################################################################################################
+        // #######################################################################################################
+        // ##################################  assessment reactions  #############################################
+        // #######################################################################################################
+        // #######################################################################################################
+
 
         autorun(() => {
             // **** Lurer Mobx til å kjøre koden... TODO: Gjør dette på en "riktig" måte ****
@@ -414,103 +516,14 @@ class ViewModel {
             }
         });
         autorun(() => {
-            console.log("har vurdering: " + this.harVurdering)
-        });
-        autorun(() => {
             console.log("skal vurderes: " + this.skalVurderes)
         });
+        // #######################################################################################################
+        // #######################################################################################################
 
-        // **** set assessment and assessmentId ****
-        reaction(() => this.assessmentId,
-            assessmentId => {
-                console.log("x: " + this.assessmentId + " " + typeof(this.assessmentId) + " " + (this.assessment ? this.assessment.id : "nix"))
-                if (assessmentId) {
-                    this.setCurrentAssessment(assessmentId)
-                } else {
-                    this.setCurrentAssessment(null)
-                    action(() => this.viewMode = "choosespecie")
-                }
-            }
-        );
-        reaction(
-            () => this.assessmentId,
-            async assessmentId => {
-                console.log("ny assessmentId: " + assessmentId)
-            }
-        )
-        autorun(() => {
-            if (this.viewMode === "choosespecie") {
-                this.setCurrentAssessment(null)
-            }
-        });
-        reaction(
-            () => this.assessment,
-            assessment => {
-                console.log(assessment ? "ny assessment: " + assessment.id : "no assessment")
-                if (assessment && this.isServicesReady) {
-                    // console.log("viewMode = 'assessment' - before:" + this.viewMode)
-                    this.viewMode = "assessment"
-                }
-            }
-        )
-        // ***************************************
+        
 
 
-        // **** sett expert group ****
-        reaction(
-            () => [this.expertgroup, auth.isLoggedIn, this.assessmentTypeFilter, this.expertgroupAssessmentFilter,
-                this.horizonScanFilter.notAssessedDoorKnocker.length, 
-                this.horizonScanFilter.potentialDoorKnockers.length,
-                this.horizonScanFilter.hsNotStarted, this.horizonScanFilter.hsFinished, this.horizonScanFilter.toAssessment, this.horizonScanFilter.notAssessed,
-                this.responsible.length, this.kunUbehandlede,
-                this.hSStatus,
-                this.workStatus.length, this.otherComments.length,
-
-                this.historyFilter.riskCategoryFilter.length, this.historyFilter.decisiveCriteriaFilter.length,
-                this.historyFilter.riskAssessedFilter.length, this.historyFilter.riskNotAssessedFilter.length, this.historyFilter.ikkevurdert, this.historyFilter.vurdert,
-
-                this.currentFilter.riskCategoryFilter.length, this.currentFilter.decisiveCriteriaFilter.length,
-                this.currentFilter.riskAssessedFilter.length, this.currentFilter.riskNotAssessedFilter.length, this.currentFilter.ikkevurdert, this.currentFilter.vurdert,
-
-            ],
-            ([expertgroupId, isLoggedIn])  => {
-                //console.log("react to expertgroup: " + expertgroupId + "," + isLoggedIn)
-                if(isLoggedIn && expertgroupId) {
-                    this.loadCurrentExpertgroupAssessmentList()
-                } else {
-                    this.expertgroupAssessmentList = []
-                }
-            }
-        )
-        // ***************************************
-
-        // **** initialize tabs ****
-        extendObservable(this, tabdefs(this))
-        assessmentTabdefs(this)
-        // **** end initialize tabs ****
-
-
-        const createRoutes = tablist => {
-            const items = []
-            tablist.forEach(tabitem => {
-                const item = [tabitem.url + "/:id", params => this.navigate(tabitem.id, params.id)]
-                items.push(item)
-            })
-            return items
-        }
-
-        const routes = createRoutes(this.assessmentTabs.tabList)
-
-        autorun(() => {
-            if (this.router && this.assessmentTabs) {
-                const hash = this.router.hash.substr(1) // when user changes the url hash -
-                router(hash, routes) // - then navigate
-            }
-        })
-
-        // makeObservable(this)
-
-        //this.assessmentId = 3155 //1231
 
     }  // ########### end constructor ###########
     //    #######################################
@@ -717,22 +730,6 @@ class ViewModel {
     //     }
     // }
 
-    moveAssessmentHorizon = (riskhorizon) => {
-        const doorknockerstate = riskhorizon.potensiellDørstokkart
-        const id = this.assessmentId
-        console.log("onMoveAssessmentHorizon: " + doorknockerstate)
-
-       
-        console.log("Show the cat")
-		action(() => this.showTheCat = true)()
-				savetimer = setTimeout(() => events.trigger("moveAssessment", "timeout"), 30000)
-				console.log("Move assessment starter -")
-        this.movehorizon(id, doorknockerstate)
-        action(() => {
-            this.viewMode = "choosespecie"
-            this.assessmentId = null
-        })()
-    }
    
     checkForExistingAssessment = (expertgroup, scientificNameId, ) => {
         return new Promise((resolve, reject) => {
@@ -1303,15 +1300,6 @@ class ViewModel {
         );
     }
 
-    movehorizon(id, doorknockerstate) {
-        loadData(
-            config.getUrl("assessment/" + id + "/movehorizon/" + doorknockerstate),
-            data => {
-                this.loadExpertgroupAssessmentList(this.expertgroup)
-            },
-            error => alert("Feil ved flytting mellom horisontskanning og risikovurdering:" + error)
-        )
-    }
 
 
     lockFraHode(v) {
@@ -1462,6 +1450,34 @@ class ViewModel {
     @computed get doFullAssessment() {
         return !this.harVurdering ? false : this.assessment.doFullAssessment 
     }
+
+    moveAssessmentHorizon = (riskhorizon) => {
+        const doorknockerstate = riskhorizon.potensiellDørstokkart
+        const id = this.assessmentId
+        console.log("onMoveAssessmentHorizon: " + doorknockerstate)
+
+       
+        console.log("Show the cat")
+		action(() => this.showTheCat = true)()
+				savetimer = setTimeout(() => events.trigger("moveAssessment", "timeout"), 30000)
+				console.log("Move assessment starter -")
+        this.movehorizon(id, doorknockerstate)
+        action(() => {
+            this.viewMode = "choosespecie"
+            this.assessmentId = null
+        })()
+    }
+
+    movehorizon(id, doorknockerstate) {
+        loadData(
+            config.getUrl("assessment/" + id + "/movehorizon/" + doorknockerstate),
+            data => {
+                this.loadExpertgroupAssessmentList(this.expertgroup)
+            },
+            error => alert("Feil ved flytting mellom horisontskanning og risikovurdering:" + error)
+        )
+    }
+
 
     // ######################################################################################################################################
     // ######################################################################################################################################
