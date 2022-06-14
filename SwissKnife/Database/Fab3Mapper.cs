@@ -928,7 +928,8 @@ namespace SwissKnife.Database
 
 
 
-                cfg.CreateMap<Prod.Domain.Legacy.MigrationPathway, Prod.Domain.MigrationPathway>();
+                cfg.CreateMap<Prod.Domain.Legacy.MigrationPathway, Prod.Domain.MigrationPathway>()
+                    .ForMember(x => x.MainCategory, opt => opt.Ignore());
                 cfg.CreateMap<Prod.Domain.Legacy.MigrationPathwayCode, Prod.Domain.MigrationPathwayCode>();
                 cfg.CreateMap<Prod.Domain.Legacy.SpreadHistory, Prod.Domain.SpreadHistory>();
                 //cfg.CreateMap<Prod.Domain.Legacy.Kode, Prod.Domain.Kode>();
