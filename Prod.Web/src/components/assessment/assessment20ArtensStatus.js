@@ -210,7 +210,7 @@ checkStatus = (production) => {
                                 // checks if the species is a door knocker or not and if it is a production species to determine the available options to choose
                                 options={this.checkStatus(assessment.productionSpecies)}
                                 codes={codes.EstablishmentCategory}/>        
-                            <span className="statusWarning">{appState.statusChange 
+                            <span className="statusWarning">{assessment.statusChange 
                             ? assessment.isDoorKnocker 
                                 ? "Arten har nå endret status fra å være selvstendig reproduserende til å være en dørstokkart. Er dette riktig?" 
                                 : "Arten har nå endret status fra å være en dørstokkart til å være selvstendig reproduserende i norsk natur." 

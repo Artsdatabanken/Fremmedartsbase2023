@@ -190,7 +190,7 @@ export default class Assessment51Naturtyper extends React.Component {
                     </>
                     : null}
                 </fieldset>
-                {true || appState.livsmediumEnabled
+                {appState.livsmediumEnabled
                 ? <fieldset className="well">
                     {appState.livsmediumCodes
                     ? <NewNaturetype

@@ -17,7 +17,6 @@ const  state = observable({
 export default class AssessmentMoveHorizon extends React.Component {
     constructor(props) {
         super(props)
-        const {evaluationContext} = props
         this.onMoveAssessmentHorizon = () => {
             const stateclone = toJS(state)
             props.onMoveAssessmentHorizon(stateclone)

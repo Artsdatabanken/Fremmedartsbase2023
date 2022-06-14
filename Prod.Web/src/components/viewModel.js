@@ -4,7 +4,7 @@ import events from './event-pubsub'
 // import {HttpTransportType, HubConnectionBuilder, JsonHubProtocol, LogLevel} from "@microsoft/signalr"
 import * as signalR from "@microsoft/signalr"
 // import enhanceWithRiskEvaluation from "./CategoryCriteria"
-import {codes2labels} from '../utils'
+// import {codes2labels} from '../utils'
 import config from '../config'
 import auth from './authService'
 import createContext from './createContext'
@@ -13,9 +13,11 @@ import enhanceAssessment from './assessment/enhanceAssassment.js'
 import { checkStatus, loadData } from '../apiService'
 import tabdefs from './tabdefs'
 import assessmentTabdefs from './assessment/assessmentTabdefs'
+import {codeLists, isTrueteogsjeldnenaturtype} from './codeLists'
 
-import { any } from 'prop-types'
-import { Console } from 'console'
+
+// import { any } from 'prop-types'
+// import { Console } from 'console'
 // import { ConfigurationManager } from '../../dist/Prod.Web.e31bb0bc'
 
 
@@ -153,11 +155,7 @@ class ViewModel {
             antallNavnEndret: 0,
             loadingExpertGroup: false,
 
-
-            // ************************************************
-            // ********  Assessment props *********************
-            // ************************************************
-
+            // NB! evaluationContext also exist on the assessment. This one is for general taxonSearch, maps++
             evaluationContext: 'N',
             //todo: this thing should go to the code file
             evaluationContexts: {
@@ -174,93 +172,106 @@ class ViewModel {
             },
 
             
-            livsmediumEnabled: true,
-            artskartModel: {},
-            påvirkningsfaktorer: [],
+            livsmediumEnabled: true, // just a manual flag!
             spredningsveier: null,
-            selectedPåvirkningsfaktor: {
-                id: null,
-                forkortelse: null,
-                overordnetTittel: null,
-                beskrivelse: null,
-                tidspunkt: null,
-                omfang: null,
-                alvorlighetsgrad: null,
-                comment: null
-            },
 
 
-            statusChange: false
+            // ************************************************
+            // ********  Assessment props *********************
+            // ************************************************
+
+            //todo: test if this is actually in use!! artskartModel is also defined(?) on the assessment, which is where it should be!
+            artskartModel: {},
+
+            // påvirkningsfaktorer: [],
+            // selectedPåvirkningsfaktor: {
+            //     id: null,
+            //     forkortelse: null,
+            //     overordnetTittel: null,
+            //     beskrivelse: null,
+            //     tidspunkt: null,
+            //     omfang: null,
+            //     alvorlighetsgrad: null,
+            //     comment: null
+            // },
+
+
+            // statusChange: false
         })
 
 
         this.initializeServices()
         // ---------------
-
-        const codes = require('../FA3CodesNB.json')
-        this.koder = codes.Children
-        const clabels =  codes2labels(this.koder.labels[0].Children)
-        this.codeLabels = clabels
-
-
-        // load livsmedium codes ----
-        const ninlm = require('../nin-livsmedium.json')
-        const lm = this.transformlivsmedium(ninlm)
-        // console.log("livsmedium2nt: " +  JSON.stringify(lm))
-        const lmlabels = this.transformlivsmediumlabels(ninlm, {})
-        // console.log(JSON.stringify(lmlabels))
-        const grupper = lm.Children
-        this.livsmediumLabels = lmlabels
-        this.livsmediumCodes = grupper
-        // --------------------------
-
-        // load truede naturtyper codes ----
-        const togsnt = require('../TrueteOgSjeldneNaturtyper2018.json')
-        const nt = this.transformtrueteogsjeldnenaturtyper(togsnt)
-        // console.log("trueteogsjeldnenaturtyper: " +  JSON.stringify(nt))
-        const tsgrupper = nt.Children
-        this.trueteogsjeldneCodes = tsgrupper
-
-
-        this.trueteogsjeldnenaturtypercodes = []
-        this.gettrueteogsjeldnenaturtypercodes(togsnt)
-        console.log("!!! gettrueteogsjeldnenaturtypercodes" + JSON.stringify(this.trueteogsjeldnenaturtypercodes))
-
-        // --------------------------
-
-
-        // load NiN2 codes ----
-        const nin2root = require('../Nin2_3.json')
-        // console.log("nin2naturtyper: " +  JSON.stringify(nin2root))
-        const nin2grupper = nin2root.Children
-        this.naturtyperNIN2 = nin2grupper
-
-        const nin2codes = this.koder.naturtyperNIN2
-        const nin2 = this.transformnaturtyperNIN2(nin2codes)
-        // console.log("nin2 transformed: " +  JSON.stringify(nin2))
-        // const nin2grupper = nin2.Children
-        // this.naturtyperNIN2 = nin2grupper
-        // --------------------------
-        this.nin2codes = nin2codes
+        Object.assign(this,codeLists)
+        this.isTrueteogsjeldnenaturtype = isTrueteogsjeldnenaturtype
 
 
 
 
+        // // // const codes = require('../FA3CodesNB.json')
+        // // // this.koder = codes.Children
+        // // // const clabels =  codes2labels(this.koder.labels[0].Children)
+        // // // this.codeLabels = clabels
+
+
+        // // // // load livsmedium codes ----
+        // // // const ninlm = require('../nin-livsmedium.json')
+        // // // const lm = this.transformlivsmedium(ninlm)
+        // // // // console.log("livsmedium2nt: " +  JSON.stringify(lm))
+        // // // const lmlabels = this.transformlivsmediumlabels(ninlm, {})
+        // // // // console.log(JSON.stringify(lmlabels))
+        // // // const grupper = lm.Children
+        // // // this.livsmediumLabels = lmlabels
+        // // // this.livsmediumCodes = grupper
+        // // // // --------------------------
+
+        // // // // load truede naturtyper codes ----
+        // // // const togsnt = require('../TrueteOgSjeldneNaturtyper2018.json')
+        // // // const nt = this.transformtrueteogsjeldnenaturtyper(togsnt)
+        // // // // console.log("trueteogsjeldnenaturtyper: " +  JSON.stringify(nt))
+        // // // const tsgrupper = nt.Children
+        // // // this.trueteogsjeldneCodes = tsgrupper
+
+
+        // // // this.trueteogsjeldnenaturtypercodes = []
+        // // // this.gettrueteogsjeldnenaturtypercodes(togsnt)
+        // // // console.log("!!! gettrueteogsjeldnenaturtypercodes" + JSON.stringify(this.trueteogsjeldnenaturtypercodes))
+
+        // // // // --------------------------
+
+
+        // // // // load NiN2 codes ----
+        // // // const nin2root = require('../Nin2_3.json')
+        // // // // console.log("nin2naturtyper: " +  JSON.stringify(nin2root))
+        // // // const nin2grupper = nin2root.Children
+        // // // this.naturtyperNIN2 = nin2grupper
+
+        // // // const nin2codes = this.koder.naturtyperNIN2
+        // // // const nin2 = this.transformnaturtyperNIN2(nin2codes)
+        // // // // console.log("nin2 transformed: " +  JSON.stringify(nin2))
+        // // // // const nin2grupper = nin2.Children
+        // // // // this.naturtyperNIN2 = nin2grupper
+        // // // // --------------------------
+        // // // this.nin2codes = nin2codes
 
 
 
 
-        // console.log("labels keys: " + JSON.stringify(Object.keys(clabels)))
-        // console.log("codes keys: " + JSON.stringify(Object.keys(codes.Children)))
-        // console.log("codes json: " + JSON.stringify(codes))
-        // console.log("----------------------------------------------+++")
-        // console.log(JSON.stringify(clabels))
 
-        //-----------------------------------------------------
 
-        const mp = this.koder.migrationPathways[0]
-        this.spredningsveier = this.koder2migrationPathways(mp)
-        //-----------------------------------------------------
+
+
+        // // // // console.log("labels keys: " + JSON.stringify(Object.keys(clabels)))
+        // // // // console.log("codes keys: " + JSON.stringify(Object.keys(codes.Children)))
+        // // // // console.log("codes json: " + JSON.stringify(codes))
+        // // // // console.log("----------------------------------------------+++")
+        // // // // console.log(JSON.stringify(clabels))
+
+        // // // //-----------------------------------------------------
+
+        // // // const mp = this.koder.migrationPathways[0]
+        // // // this.spredningsveier = this.koder2migrationPathways(mp)
+        // // // //-----------------------------------------------------
 
 
         this.theUserContext = createContext(this.userContext)
@@ -310,6 +321,108 @@ class ViewModel {
         // autorun(() => {
         //     console.log("selectedPåvirkningsfaktor: " + (this.selectedPåvirkningsfaktor ? this.selectedPåvirkningsfaktor.id : "None"))
         // });
+
+        
+        // **** set assessment and assessmentId ****
+        reaction(() => this.assessmentId,
+            assessmentId => {
+                console.log("x: " + this.assessmentId + " " + typeof(this.assessmentId) + " " + (this.assessment ? this.assessment.id : "nix"))
+                if (assessmentId) {
+                    this.setCurrentAssessment(assessmentId)
+                } else {
+                    this.setCurrentAssessment(null)
+                    action(() => this.viewMode = "choosespecie")
+                }
+            }
+        );
+        reaction(
+            () => this.assessmentId,
+            async assessmentId => {
+                console.log("ny assessmentId: " + assessmentId)
+            }
+        )
+        autorun(() => {
+            if (this.viewMode === "choosespecie") {
+                this.setCurrentAssessment(null)
+            }
+        });
+        reaction(
+            () => this.assessment,
+            assessment => {
+                console.log(assessment ? "ny assessment: " + assessment.id : "no assessment")
+                if (assessment && this.isServicesReady) {
+                    // console.log("viewMode = 'assessment' - before:" + this.viewMode)
+                    this.viewMode = "assessment"
+                }
+            }
+        )
+        // ***************************************
+
+        // **** sett expert group ****
+        reaction(
+            () => [this.expertgroup, auth.isLoggedIn, this.assessmentTypeFilter, this.expertgroupAssessmentFilter,
+                this.horizonScanFilter.notAssessedDoorKnocker.length, 
+                this.horizonScanFilter.potentialDoorKnockers.length,
+                this.horizonScanFilter.hsNotStarted, this.horizonScanFilter.hsFinished, this.horizonScanFilter.toAssessment, this.horizonScanFilter.notAssessed,
+                this.responsible.length, this.kunUbehandlede,
+                this.hSStatus,
+                this.workStatus.length, this.otherComments.length,
+
+                this.historyFilter.riskCategoryFilter.length, this.historyFilter.decisiveCriteriaFilter.length,
+                this.historyFilter.riskAssessedFilter.length, this.historyFilter.riskNotAssessedFilter.length, this.historyFilter.ikkevurdert, this.historyFilter.vurdert,
+
+                this.currentFilter.riskCategoryFilter.length, this.currentFilter.decisiveCriteriaFilter.length,
+                this.currentFilter.riskAssessedFilter.length, this.currentFilter.riskNotAssessedFilter.length, this.currentFilter.ikkevurdert, this.currentFilter.vurdert,
+
+            ],
+            ([expertgroupId, isLoggedIn])  => {
+                //console.log("react to expertgroup: " + expertgroupId + "," + isLoggedIn)
+                if(isLoggedIn && expertgroupId) {
+                    this.loadCurrentExpertgroupAssessmentList()
+                } else {
+                    this.expertgroupAssessmentList = []
+                }
+            }
+        )
+        // ***************************************
+
+        autorun(() => {
+            console.log("har vurdering: " + this.harVurdering)
+        });
+
+        // **** initialize tabs ****
+        extendObservable(this, tabdefs(this))
+        assessmentTabdefs(this)
+        // **** end initialize tabs ****
+
+        const createRoutes = tablist => {
+            const items = []
+            tablist.forEach(tabitem => {
+                const item = [tabitem.url + "/:id", params => this.navigate(tabitem.id, params.id)]
+                items.push(item)
+            })
+            return items
+        }
+
+        const routes = createRoutes(this.assessmentTabs.tabList)
+
+        autorun(() => {
+            if (this.router && this.assessmentTabs) {
+                const hash = this.router.hash.substr(1) // when user changes the url hash -
+                router(hash, routes) // - then navigate
+            }
+        })
+
+
+
+
+
+
+        // #######################################################################################################
+        // #######################################################################################################
+        // ##################################  assessment reactions  #############################################
+        // #######################################################################################################
+        // #######################################################################################################
 
 
         autorun(() => {
@@ -387,8 +500,6 @@ class ViewModel {
                 reaction(
                     () => this.assessment.speciesStatus,
                     (speciesStatus, previousSpeciesStatus) => {
-                        // console.log("¤¤¤ statuschange: " + change + " " + speciesStatus + " " + previousSpeciesStatus)
-
                         if (speciesStatus === "C3" && previousSpeciesStatus !== "C3") {
                             // console.log("¤¤¤ reset speciesEstablishmentCategory")
                             if(!this.assessment.speciesEstablishmentCategory) {
@@ -405,103 +516,14 @@ class ViewModel {
             }
         });
         autorun(() => {
-            console.log("har vurdering: " + this.harVurdering)
-        });
-        autorun(() => {
             console.log("skal vurderes: " + this.skalVurderes)
         });
+        // #######################################################################################################
+        // #######################################################################################################
 
-        // **** set assessment and assessmentId ****
-        reaction(() => this.assessmentId,
-            assessmentId => {
-                console.log("x: " + this.assessmentId + " " + typeof(this.assessmentId) + " " + (this.assessment ? this.assessment.id : "nix"))
-                if (assessmentId) {
-                    this.setCurrentAssessment(assessmentId)
-                } else {
-                    this.setCurrentAssessment(null)
-                    action(() => this.viewMode = "choosespecie")
-                }
-            }
-        );
-        reaction(
-            () => this.assessmentId,
-            async assessmentId => {
-                console.log("ny assessmentId: " + assessmentId)
-            }
-        )
-        autorun(() => {
-            if (this.viewMode === "choosespecie") {
-                this.setCurrentAssessment(null)
-            }
-        });
-        reaction(
-            () => this.assessment,
-            assessment => {
-                console.log(assessment ? "ny assessment: " + assessment.id : "no assessment")
-                if (assessment && this.isServicesReady) {
-                    // console.log("viewMode = 'assessment' - before:" + this.viewMode)
-                    this.viewMode = "assessment"
-                }
-            }
-        )
-        // ***************************************
+        
 
 
-        // **** sett expert group ****
-        reaction(
-            () => [this.expertgroup, auth.isLoggedIn, this.assessmentTypeFilter, this.expertgroupAssessmentFilter,
-                this.horizonScanFilter.notAssessedDoorKnocker.length, 
-                this.horizonScanFilter.potentialDoorKnockers.length,
-                this.horizonScanFilter.hsNotStarted, this.horizonScanFilter.hsFinished, this.horizonScanFilter.toAssessment, this.horizonScanFilter.notAssessed,
-                this.responsible.length, this.kunUbehandlede,
-                this.hSStatus,
-                this.workStatus.length, this.otherComments.length,
-
-                this.historyFilter.riskCategoryFilter.length, this.historyFilter.decisiveCriteriaFilter.length,
-                this.historyFilter.riskAssessedFilter.length, this.historyFilter.riskNotAssessedFilter.length, this.historyFilter.ikkevurdert, this.historyFilter.vurdert,
-
-                this.currentFilter.riskCategoryFilter.length, this.currentFilter.decisiveCriteriaFilter.length,
-                this.currentFilter.riskAssessedFilter.length, this.currentFilter.riskNotAssessedFilter.length, this.currentFilter.ikkevurdert, this.currentFilter.vurdert,
-
-            ],
-            ([expertgroupId, isLoggedIn])  => {
-                //console.log("react to expertgroup: " + expertgroupId + "," + isLoggedIn)
-                if(isLoggedIn && expertgroupId) {
-                    this.loadCurrentExpertgroupAssessmentList()
-                } else {
-                    this.expertgroupAssessmentList = []
-                }
-            }
-        )
-        // ***************************************
-
-        // **** initialize tabs ****
-        extendObservable(this, tabdefs(this))
-        assessmentTabdefs(this)
-        // **** end initialize tabs ****
-
-
-        const createRoutes = tablist => {
-            const items = []
-            tablist.forEach(tabitem => {
-                const item = [tabitem.url + "/:id", params => this.navigate(tabitem.id, params.id)]
-                items.push(item)
-            })
-            return items
-        }
-
-        const routes = createRoutes(this.assessmentTabs.tabList)
-
-        autorun(() => {
-            if (this.router && this.assessmentTabs) {
-                const hash = this.router.hash.substr(1) // when user changes the url hash -
-                router(hash, routes) // - then navigate
-            }
-        })
-
-        // makeObservable(this)
-
-        //this.assessmentId = 3155 //1231
 
     }  // ########### end constructor ###########
     //    #######################################
@@ -583,56 +605,12 @@ class ViewModel {
         );
     };
 
-    @computed get canEdit() {
-        return true
-        // if (!auth.hasAccess) return false;
-        // if (appState.viewMode === "choosespecie") return false;
-        // return isLockedByMe() && !isFinished();
-    };
-
-    @computed get isDirty() {
-        if (!this.assessmentId || !this.assessment) return false
-        // const a = JSON.stringify(this.assessment)
-        const a = this.assessment.toJSON
-        const b = this.assessmentSavedVersionString
-        return a != b
-    }
-
-
 
 
     @computed get harVurdering() {
         return !!this.assessment
     }
 
-    @computed get horizonDoAssessment() {
-        if (!this.assessment) return false;
-        const result =
-            !this.assessment.horizonEstablismentPotential || !this.assessment.horizonEcologicalEffect ?
-            false :
-            this.assessment.horizonEstablismentPotential == "2" 
-            || (this.assessment.horizonEstablismentPotential == "1" && this.assessment.horizonEcologicalEffect != "no") 
-            || (this.assessment.horizonEstablismentPotential == "0" && this.assessment.horizonEcologicalEffect == "yesAfterGone")
-        return result
-    }
-
-    @computed get horizonDoScanning() {
-        return !this.harVurdering ? false : this.assessment.horizonDoScanning
-    }
-
-    @computed get horizonScanned() {
-        return !this.harVurdering ? false : (this.assessment.horizonEstablismentPotential == 2
-                                            || (this.assessment.horizonEstablismentPotential == 1 && this.assessment.horizonEcologicalEffect != "no")
-                                            || (this.assessment.horizonEstablismentPotential == 0 && this.assessment.horizonEcologicalEffect == "yesAfterGone"))
-    }
-
-    @computed get skalVurderes() {
-        // todo. denne er nå knyttet til horisontskanning. Burde kanskje vært generell og hentet verdi fra: assessment.assessmentConclusion
-        return !this.harVurdering ? false : this.assessment.isDoorKnocker && this.assessment.skalVurderes ? true : false
-    }
-    @computed get doFullAssessment() {
-        return !this.harVurdering ? false : this.assessment.doFullAssessment 
-    }
 
     // @computed get unresolvedComments() {
     //     const comments = this.assessmentComments
@@ -752,22 +730,6 @@ class ViewModel {
     //     }
     // }
 
-    moveAssessmentHorizon = (riskhorizon) => {
-        const doorknockerstate = riskhorizon.potensiellDørstokkart
-        const id = this.assessmentId
-        console.log("onMoveAssessmentHorizon: " + doorknockerstate)
-
-       
-        console.log("Show the cat")
-		action(() => this.showTheCat = true)()
-				savetimer = setTimeout(() => events.trigger("moveAssessment", "timeout"), 30000)
-				console.log("Move assessment starter -")
-        this.movehorizon(id, doorknockerstate)
-        action(() => {
-            this.viewMode = "choosespecie"
-            this.assessmentId = null
-        })()
-    }
    
     checkForExistingAssessment = (expertgroup, scientificNameId, ) => {
         return new Promise((resolve, reject) => {
@@ -849,104 +811,104 @@ class ViewModel {
 
 
 
-    koder2migrationPathways(mp) {
-        const r = {}
-        r.name = mp.Text
-        // console.log(r.name)
-        r.value = mp.Value
-        if(mp.Children) {
-            r.children = []
-            const mpckey = Object.keys(mp.Children)[0]
-            const mpc = mp.Children[mpckey]
-            for ( var i = 0; i < mpc.length; ++i )
-            {
-                r.children.push(this.koder2migrationPathways(mpc[i]));
-            }
-        }
-        return r
-    }
+    // // // koder2migrationPathways(mp) {
+    // // //     const r = {}
+    // // //     r.name = mp.Text
+    // // //     // console.log(r.name)
+    // // //     r.value = mp.Value
+    // // //     if(mp.Children) {
+    // // //         r.children = []
+    // // //         const mpckey = Object.keys(mp.Children)[0]
+    // // //         const mpc = mp.Children[mpckey]
+    // // //         for ( var i = 0; i < mpc.length; ++i )
+    // // //         {
+    // // //             r.children.push(this.koder2migrationPathways(mpc[i]));
+    // // //         }
+    // // //     }
+    // // //     return r
+    // // // }
 
-    transformlivsmedium(mp) {
-        const r = {}
-        r.Id = mp.Id
-        r.Value = mp.Id
-        // console.log(r.name)
-        r.Text = mp.navn
-        r.Collapsed = true
-        r.Children = []
-        if(mp.children) {
-            for ( var i = 0; i < mp.children.length; ++i )
-            {
-                r.Children.push(this.transformlivsmedium(mp.children[i]));
-            }
-        }
-        return r
-    }
+    // // // transformlivsmedium(mp) {
+    // // //     const r = {}
+    // // //     r.Id = mp.Id
+    // // //     r.Value = mp.Id
+    // // //     // console.log(r.name)
+    // // //     r.Text = mp.navn
+    // // //     r.Collapsed = true
+    // // //     r.Children = []
+    // // //     if(mp.children) {
+    // // //         for ( var i = 0; i < mp.children.length; ++i )
+    // // //         {
+    // // //             r.Children.push(this.transformlivsmedium(mp.children[i]));
+    // // //         }
+    // // //     }
+    // // //     return r
+    // // // }
 
-    transformlivsmediumlabels(mp, acc) {
-        acc[mp.Id] = mp.navn
-        if(mp.children) {
-            for ( var i = 0; i < mp.children.length; ++i )
-            {
-                this.transformlivsmediumlabels(mp.children[i], acc)
-            }
-        }
-        return acc
-    }
-
-
-    transformtrueteogsjeldnenaturtyper(nt) {
-        return nt
-    }
+    // // // transformlivsmediumlabels(mp, acc) {
+    // // //     acc[mp.Id] = mp.navn
+    // // //     if(mp.children) {
+    // // //         for ( var i = 0; i < mp.children.length; ++i )
+    // // //         {
+    // // //             this.transformlivsmediumlabels(mp.children[i], acc)
+    // // //         }
+    // // //     }
+    // // //     return acc
+    // // // }
 
 
-    gettrueteogsjeldnenaturtypercodes(nt) {
-        this.trueteogsjeldnenaturtypercodes.push("NA " + nt.Value)
-        if(nt.Children) {
-            for ( var i = 0; i < nt.Children.length; ++i )
-            {
-                this.gettrueteogsjeldnenaturtypercodes(nt.Children[i])
-            }
-        }
-        // console.log("!!! trueteogsjeldnenaturtypercodes: " + JSON.stringify(this.trueteogsjeldnenaturtypercodes))
-    }
+    // // // transformtrueteogsjeldnenaturtyper(nt) {
+    // // //     return nt
+    // // // }
 
-    // isTrueteogsjeldnenaturtype = (ntcode) => {
-    //     const r = {}
-    //     r.Id = [ntcode.niNCode]
-    //     if(ntcode.length > 1) {
-    //         for(var i = 1; i < ntcode.length; ++i)
-    //         {
-    //             r.Id.push(ntcode[i].niNCode)
-    //         }    
-    //     }
-    //     // console.log("!!! r.Id: " + JSON.stringify(r.Id))
-    //     return this.trueteogsjeldnenaturtypercodes.some(element => r.Id.includes(element))
-    // }
+
+    // // // gettrueteogsjeldnenaturtypercodes(nt) {
+    // // //     this.trueteogsjeldnenaturtypercodes.push("NA " + nt.Value)
+    // // //     if(nt.Children) {
+    // // //         for ( var i = 0; i < nt.Children.length; ++i )
+    // // //         {
+    // // //             this.gettrueteogsjeldnenaturtypercodes(nt.Children[i])
+    // // //         }
+    // // //     }
+    // // //     // console.log("!!! trueteogsjeldnenaturtypercodes: " + JSON.stringify(this.trueteogsjeldnenaturtypercodes))
+    // // // }
+
+    // // // // isTrueteogsjeldnenaturtype = (ntcode) => {
+    // // // //     const r = {}
+    // // // //     r.Id = [ntcode.niNCode]
+    // // // //     if(ntcode.length > 1) {
+    // // // //         for(var i = 1; i < ntcode.length; ++i)
+    // // // //         {
+    // // // //             r.Id.push(ntcode[i].niNCode)
+    // // // //         }    
+    // // // //     }
+    // // // //     // console.log("!!! r.Id: " + JSON.stringify(r.Id))
+    // // // //     return this.trueteogsjeldnenaturtypercodes.some(element => r.Id.includes(element))
+    // // // // }
     
-    isTrueteogsjeldnenaturtype = (ntcode) => {
-        return this.trueteogsjeldnenaturtypercodes.includes(ntcode)
-    }
+    // // // isTrueteogsjeldnenaturtype = (ntcode) => {
+    // // //     return this.trueteogsjeldnenaturtypercodes.includes(ntcode)
+    // // // }
 
-    transformnaturtyperNIN2(nin2codes) {
-        const r = {}
-        r.Id = nin2codes.Id
-        r.Value = nin2codes.Id
-        r.Text = nin2codes.Text
-        r.Collapsed = true
-        if(nin2codes.Redlisted) {
-            r.Redlisted = nin2codes.Redlisted
-        }
-        r.Children = []
-        if(nin2codes.Children) {
-            for ( var i = 0; i < nin2codes.Children.length; ++i )
-            {
-                r.Children.push(this.transformnaturtyperNIN2(nin2codes.Children[i]));
-            }
-        }
-        // console.log("!!! r.Id: " + JSON.stringify(r.Id))
-        return r
-    }
+    // // // transformnaturtyperNIN2(nin2codes) {
+    // // //     const r = {}
+    // // //     r.Id = nin2codes.Id
+    // // //     r.Value = nin2codes.Id
+    // // //     r.Text = nin2codes.Text
+    // // //     r.Collapsed = true
+    // // //     if(nin2codes.Redlisted) {
+    // // //         r.Redlisted = nin2codes.Redlisted
+    // // //     }
+    // // //     r.Children = []
+    // // //     if(nin2codes.Children) {
+    // // //         for ( var i = 0; i < nin2codes.Children.length; ++i )
+    // // //         {
+    // // //             r.Children.push(this.transformnaturtyperNIN2(nin2codes.Children[i]));
+    // // //         }
+    // // //     }
+    // // //     // console.log("!!! r.Id: " + JSON.stringify(r.Id))
+    // // //     return r
+    // // // }
 
 
 
@@ -1104,17 +1066,17 @@ class ViewModel {
           );
     }
 
-    @action getAssessmentsForFilter() {
-        const påv = toJS(this.selectedPåvirkningsfaktor)
-        const existing = this.assessment.påvirkningsfaktorer.find(item =>
-            item.id == påv.id)
-        if(existing) {
-            // console.log("existing:" + JSON.stringify(existing))
-            this.assessment.påvirkningsfaktorer.remove(existing)
-        }
-        this.assessment.påvirkningsfaktorer.push(påv)
-        // this.clearSelectedPåvirkningsfaktor()
-    }
+    // @action getAssessmentsForFilter() {
+    //     const påv = toJS(this.selectedPåvirkningsfaktor)
+    //     const existing = this.assessment.påvirkningsfaktorer.find(item =>
+    //         item.id == påv.id)
+    //     if(existing) {
+    //         // console.log("existing:" + JSON.stringify(existing))
+    //         this.assessment.påvirkningsfaktorer.remove(existing)
+    //     }
+    //     this.assessment.påvirkningsfaktorer.push(påv)
+    //     // this.clearSelectedPåvirkningsfaktor()
+    // }
 
     async loadExpertgroupAssessmentList(expertgroupId) {
         runInAction(() => this.loadingExpertGroup = true)
@@ -1338,15 +1300,6 @@ class ViewModel {
         );
     }
 
-    movehorizon(id, doorknockerstate) {
-        loadData(
-            config.getUrl("assessment/" + id + "/movehorizon/" + doorknockerstate),
-            data => {
-                this.loadExpertgroupAssessmentList(this.expertgroup)
-            },
-            error => alert("Feil ved flytting mellom horisontskanning og risikovurdering:" + error)
-        )
-    }
 
 
     lockFraHode(v) {
@@ -1446,5 +1399,92 @@ class ViewModel {
     }
     // ################# end section API stuff ##################
 
+
+
+    // ######################################################################################################################################
+    // ######################################################################################################################################
+    // ######################################    Move this code to enhance assessment    ####################################################
+    // ######################################################################################################################################
+    // ######################################################################################################################################
+
+    @computed get canEdit() {
+        return true
+        // if (!auth.hasAccess) return false;
+        // if (appState.viewMode === "choosespecie") return false;
+        // return isLockedByMe() && !isFinished();
+    };
+
+    @computed get isDirty() {
+        if (!this.assessmentId || !this.assessment) return false
+        // const a = JSON.stringify(this.assessment)
+        const a = this.assessment.toJSON
+        const b = this.assessmentSavedVersionString
+        return a != b
+    }
+
+    @computed get horizonDoAssessment() {
+        if (!this.assessment) return false;
+        const result =
+            !this.assessment.horizonEstablismentPotential || !this.assessment.horizonEcologicalEffect ?
+            false :
+            this.assessment.horizonEstablismentPotential == "2" 
+            || (this.assessment.horizonEstablismentPotential == "1" && this.assessment.horizonEcologicalEffect != "no") 
+            || (this.assessment.horizonEstablismentPotential == "0" && this.assessment.horizonEcologicalEffect == "yesAfterGone")
+        return result
+    }
+
+    @computed get horizonDoScanning() {
+        return !this.harVurdering ? false : this.assessment.horizonDoScanning
+    }
+
+    @computed get horizonScanned() {
+        return !this.harVurdering ? false : (this.assessment.horizonEstablismentPotential == 2
+                                            || (this.assessment.horizonEstablismentPotential == 1 && this.assessment.horizonEcologicalEffect != "no")
+                                            || (this.assessment.horizonEstablismentPotential == 0 && this.assessment.horizonEcologicalEffect == "yesAfterGone"))
+    }
+
+    @computed get skalVurderes() {
+        // todo. denne er nå knyttet til horisontskanning. Burde kanskje vært generell og hentet verdi fra: assessment.assessmentConclusion
+        return !this.harVurdering ? false : this.assessment.isDoorKnocker && this.assessment.skalVurderes ? true : false
+    }
+    @computed get doFullAssessment() {
+        return !this.harVurdering ? false : this.assessment.doFullAssessment 
+    }
+
+    moveAssessmentHorizon = (riskhorizon) => {
+        const doorknockerstate = riskhorizon.potensiellDørstokkart
+        const id = this.assessmentId
+        console.log("onMoveAssessmentHorizon: " + doorknockerstate)
+
+       
+        console.log("Show the cat")
+		action(() => this.showTheCat = true)()
+				savetimer = setTimeout(() => events.trigger("moveAssessment", "timeout"), 30000)
+				console.log("Move assessment starter -")
+        this.movehorizon(id, doorknockerstate)
+        action(() => {
+            this.viewMode = "choosespecie"
+            this.assessmentId = null
+        })()
+    }
+
+    movehorizon(id, doorknockerstate) {
+        loadData(
+            config.getUrl("assessment/" + id + "/movehorizon/" + doorknockerstate),
+            data => {
+                this.loadExpertgroupAssessmentList(this.expertgroup)
+            },
+            error => alert("Feil ved flytting mellom horisontskanning og risikovurdering:" + error)
+        )
+    }
+
+
+    // ######################################################################################################################################
+    // ######################################################################################################################################
+    // ######################################################################################################################################
+
 }
+
+
+
 export default new ViewModel()

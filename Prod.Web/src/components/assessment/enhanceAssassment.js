@@ -123,6 +123,7 @@ const riskAssessmentNumberFields = [
 // saving the document to reduce confusion...
 ////////////////////////////////////////////////
 const assessmentHelperFields = [
+    "statusChange",
 ]
 const riskAssessmentHelperFields = [
     "critA", 
@@ -134,7 +135,7 @@ const riskAssessmentHelperFields = [
     "critG", 
     "critH", 
     "critI",
-    "chosenSpreadMedanLifespan_Was_RedListCategoryLevel"
+    "chosenSpreadMedanLifespan_Was_RedListCategoryLevel",
     //"furtherInfoAboutImport" // no longer in use
 ]
 
@@ -340,6 +341,8 @@ export default function enhanceAssessment(json, appState) {
             return result
         },
 
+        statusChange: false,
+
     })
     extendObservable(assessment, {
         get toJSON() {
@@ -384,7 +387,7 @@ export default function enhanceAssessment(json, appState) {
             if (assessment.speciesStatus != null) {
                 action(() => {
                     // console.log("##¤statuschange 2: " + change)
-                    appState.statusChange = change
+                    assessment.statusChange = change
                 })()
             }
         }
@@ -400,5 +403,6 @@ export default function enhanceAssessment(json, appState) {
     const errorDefinitions = getErrorDefinitions(assessment, errorHelpers)
 
     errorhandler.addErrors(errorDefinitions)
+
     return assessment
 }
