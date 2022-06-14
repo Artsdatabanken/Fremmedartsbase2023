@@ -1816,6 +1816,7 @@ public partial class FA4 // (3.2) Artsegenskaper
 
         //public string ItemPath { get; set; }
         public string Category { get; set; }
+        public string MainCategory { get; set; } //Added 14.06.2022
         //public bool IsValid { get; set; } = false;  // IsValid == false means this MigrationPathway is depricated and should be edited/removed // removed 15.12.2016 - no longer needed becaus we no longer import MigrationPathways
     }
 

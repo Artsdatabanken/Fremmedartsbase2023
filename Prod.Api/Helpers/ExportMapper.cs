@@ -76,6 +76,9 @@ namespace Prod.Api.Helpers
                         dest.CurrentInternationalExistenceAreasNorthAndCentralAmerica = GetCurrentInternationalExistenceAreas(src.CurrentInternationalExistenceAreas, "northAndCentralAmerica");
                         dest.CurrentInternationalExistenceAreasSouthAmerica = GetCurrentInternationalExistenceAreas(src.CurrentInternationalExistenceAreas, "southAmerica");
                         dest.NaturalOriginMarine = GetNaturalOriginsMarine(src.NaturalOriginMarine);
+                        dest.CurrentInternationalExistenceMarineAreas = GetCurrentInternationalExistenceMarineAreas(src.CurrentInternationalExistenceMarineAreas);
+                        dest.ArrivedCountryFrom = GetArrivedCountryFrom(src.ArrivedCountryFrom);
+                        dest.IndoorProduktionMainCatAndCat = GetIndoorProduktionMainCatAndCat(src.ImportPathways);
 
                     });
 
@@ -85,16 +88,54 @@ namespace Prod.Api.Helpers
             return mapper;
         }
 
+        private static string GetIndoorProduktionMainCatAndCat(List<Domain.MigrationPathway> importPathways)
+        {
+            if(importPathways == null || importPathways.Count == 0)
+            {
+                return string.Empty;
+            }
+
+            var MainCatCat = new List<string>();
+            //kategorier er importPathways.Category 
+            //Hovedkat er importPathways.MainCategory (hvis jeg fikk til dette..)
+            //vil sette disse sammen med "//" som separator innad et listeelement, så sette disse sammen med ; som separator mellom listelement
+            for (var i = 0; i < importPathways.Count; ++i) 
+            { 
+                string newcat = importPathways[i].MainCategory + "//" + importPathways[i].Category;
+                MainCatCat.Add(newcat);
+            }
+
+            return string.Join("; ", MainCatCat);
+        }
+
         private static string GetNaturalOriginsMarine(List<string> naturalOriginMarine)
         {
             if (naturalOriginMarine == null || naturalOriginMarine.Count == 0)
             {
                 return string.Empty;
             }
-            // var oceans = new List<string>();
-            // if()
-            // return string.Join(", ", oceans);
-            return string.Join(", ", naturalOriginMarine);
+
+            return string.Join("; ", naturalOriginMarine);
+        }
+
+        private static string GetCurrentInternationalExistenceMarineAreas(List<string> currentInternationalExistenceMarineAreas)
+        {
+            if (currentInternationalExistenceMarineAreas == null || currentInternationalExistenceMarineAreas.Count == 0)
+            {
+                return string.Empty;
+            }
+
+            return string.Join("; ", currentInternationalExistenceMarineAreas);
+        }
+
+        private static string GetArrivedCountryFrom(List<string> arrivedCountryFrom)
+        {
+            if (arrivedCountryFrom == null || arrivedCountryFrom.Count == 0)
+            {
+                return string.Empty;
+            }
+
+            return string.Join("; ", arrivedCountryFrom);
         }
 
         private static string GetCurrentInternationalExistenceAreas(List<FA4.NaturalOrigin> currentInternationalExistenceAreas, string area)
@@ -110,11 +151,11 @@ namespace Prod.Api.Helpers
             {
                 if (CheckForArea(area, origin))
                 {
-                    zones.Add(origin.ClimateZone.Replace(";", "\\"));
+                    zones.Add(origin.ClimateZone.Replace(";", "//"));
                 }
             }
 
-            return string.Join(", ", zones);
+            return string.Join("; ", zones);
         }
 
         private static string GetNaturalOrigins(List<FA4.NaturalOrigin> naturalOrigins, string area)
@@ -130,11 +171,11 @@ namespace Prod.Api.Helpers
             {
                 if (CheckForArea(area, origin))
                 {
-                    zones.Add(origin.ClimateZone.Replace(";", "\\"));
+                    zones.Add(origin.ClimateZone.Replace(";", "//"));
                 }
             }
 
-            return string.Join(", ", zones);
+            return string.Join("; ", zones);
 
         }
 
@@ -371,21 +412,20 @@ namespace Prod.Api.Helpers
         //marin utbredelse
         [Name("NaturligUtbredelseMarint")]
         public string NaturalOriginMarine { get; set; } 
-        // public List<string> NaturalOriginMarine { get; set; } = new List<string>(); // lagt til 05.09.2016 //To do: pakk ut denne listen til en string - 08.06.22
         [Name("NaturligUtbredelseMarintBeskrivelse")]
         public string NaturalOriginMarineDetails { get; set; } // lagt til 21.04.2017
         [Name("NaavaerendeUtbredelseMarint")]
-        public List<string> CurrentInternationalExistenceMarineAreas { get; set; } = new List<string>(); // lagt til 05.09.2016
+        public string CurrentInternationalExistenceMarineAreas { get; set; } 
         [Name("NaavaerendeUtbredelseMarintBeskrivelse")]
         public string CurrentInternationalExistenceMarineAreasDetails { get; set; } // lagt til 21.04.2017
 
-        [Name("Kom til Fastlands-Norge fra")]
-        public List<string> ArrivedCountryFrom { get; set; } = new List<string>(); // fab: string Arived_Norway_From_Code
-         [Name("Kom til Fastlands-Norge fra, beskrivelse")]
+        [Name("KomTilFastlands-NorgeFra")]
+        public string ArrivedCountryFrom { get; set; } // fab: string Arived_Norway_From_Code
+         [Name("KomTilFastlands-NorgeFraBeskrivelse")]
         public string ArrivedCountryFromDetails { get; set; } = ""; // fab: Natural_Origin 'NaturalOrigin'  - lagt til 14.11.2016
-        [Name("Ukjønnet formering")]
+        [Name("UkjønnetFormering")]
         public bool? ReproductionAsexual { get; set; } // fab: Reproduction_Asexual
-        [Name("Kjønnet formering")]
+        [Name("KjønnetFormering")]
         public bool? ReproductionSexual { get; set; } // fab: Reproduction_Sexual
         [Name("Generasjonstid")]
         public double? ReproductionGenerationTime { get; set; } // fab: Reproduction_Geteration_Time
@@ -396,6 +436,8 @@ namespace Prod.Api.Helpers
         public string IndoorProduktion { get; set; }
         // Jeg er usikker på om vi får med feltene nedenfor - Kanskje som en liste med paste(mainCategory, category)? Altså [Korridor gjennom menneskeskapt vannforbindelse; Egenspredning naturlig; ...]
         //Til innendørsareal
+        [Name("TilInnendorsProdArealHovedkatOgKat")]
+        public string IndoorProduktionMainCatAndCat {get; set;} //added 14.06.2022
         //public List<MigrationPathway> ImportPathways { get; set; } = new List<MigrationPathway>();
         //til naturen - dette skal kun være de med "introductionSpread": "introduction"
         //public List<MigrationPathway> AssesmentVectors { get; set; } = new List<MigrationPathway>(); // lagt til 09.01.2017
