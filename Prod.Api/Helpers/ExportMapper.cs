@@ -84,6 +84,7 @@ namespace Prod.Api.Helpers
                         dest.IntroNatureFreqNumTime = GetIntroSpreadInfo(src.AssesmentVectors, "intro", "freqs");
                         dest.SpreadNatureMainCatAndCat = GetIntroSpreadInfo(src.AssesmentVectors, "spread", "cat");
                         dest.SpreadNatureFreqNumTime = GetIntroSpreadInfo(src.AssesmentVectors, "spread", "freqs");
+                        dest.RegionalDistribution = GetRegionalDistribution(src.Fylkesforekomster);
 
                     });
 
@@ -91,6 +92,21 @@ namespace Prod.Api.Helpers
             });
             var mapper = new Mapper(mapperConfig);
             return mapper;
+        }
+
+        private static string GetRegionalDistribution(List<Fylkesforekomst> fylkesforekomster)
+        {
+            if (fylkesforekomster == null || fylkesforekomster.Count == 0)
+            {
+                return string.Empty;
+            }
+            var fylkesliste = new List<string>();
+            for (var i = 0; i < fylkesforekomster.Count; ++i)
+            {
+                string newreg = fylkesforekomster[i].Fylke + "//" + fylkesforekomster[i].State0 + "//" + fylkesforekomster[i].State1 + "//" + fylkesforekomster[i].State3;
+                fylkesliste.Add(newreg);
+            }
+            return string.Join("; ", fylkesliste);
         }
 
         private static string GetIndoorProductionMainCatAndCat(List<Domain.MigrationPathway> importPathways, string col)
@@ -522,7 +538,6 @@ namespace Prod.Api.Helpers
         #region Spredningsveier
         [Name("SpresArtenUtelukkendeDirekteTilNorskNatur?")]
         public string IndoorProduktion { get; set; }
-        // Jeg er usikker på om vi får med feltene nedenfor - Kanskje som en liste med paste(mainCategory, category)? Altså [Korridor gjennom menneskeskapt vannforbindelse; Egenspredning naturlig; ...]
         //Til innendørsareal
         [Name("TilInnendorsProdArealHovedkatOgKat")]
         public string IndoorProductionMainCatAndCat {get; set;} //added 14.06.2022
@@ -546,26 +561,34 @@ namespace Prod.Api.Helpers
             public double? RiskAssessmentSpreadHistoryDomesticAreaInStronglyChangedNatureTypes { get; set; }
             //Forekomstareal selvstendig reproduserende
             [Name("AOOKjent")]
-            public Int64? RiskAssessmentAOOknown { get; set; }
+            public Int64? RiskAssessmentAOOknownInput { get; set; }
             [Name("AOOAntattLavtAnslag")]
-            public Int64? RiskAssessmentAOOtotalLow { get; set; }
+            public Int64? RiskAssessmentAOOtotalLowInput { get; set; }
             [Name("AOOAntattBesteAnslag")]
-            public Int64? RiskAssessmentAOOtotalBest { get; set; }
-            [Name("AOOAntattHøytAnslag")]
-            public Int64? RiskAssessmentAOOtotalHigh { get; set; }
+            public Int64? RiskAssessmentAOOtotalBestInput { get; set; }
+            [Name("AOOAntattHoytAnslag")]
+            public Int64? RiskAssessmentAOOtotalHighInput { get; set; }
+            [Name("AOO50aarLavtAnslag")]
+            public Int64? RiskAssessmentAOO50yrLowInput { get; set; } // lavt anslag på totalt forekomstareal om 50 år 
+            [Name("AOO50aarBesteAnslag")]
+            public Int64? RiskAssessmentAOO50yrBestInput { get; set; } // beste anslag på totalt forekomstareal om 50 år 
+            [Name("AOO50aarHoytAnslag")]
+            public Int64? RiskAssessmentAOO50yrHighInput { get; set; }
             // [Name("AOOchangeBest")]
             // public double? RiskAssessmentAOOchangeBest { get; set; } - 07.06.22 - trenger ikke disse i eksporten da de kun brukes på baksiden for A-kriteriet
             // [Name("AOOchangeLow")]
             // public double? RiskAssessmentAOOchangeLow { get; set; } - 07.06.22 - trenger ikke disse i eksporten da de kun brukes på baksiden for A-kriteriet
             // [Name("AOOchangeHigh")]
             // public double? RiskAssessmentAOOchangeHigh { get; set; } - 07.06.22 - trenger ikke disse i eksporten da de kun brukes på baksiden for A-kriteriet
-            [Name("AOO mørketall lavt anslag")]
-            public float? RiskAssessmentAOOdarkfigureLow { get; set; } // lavt anslag på forekomstarealets mørketall 
-            [Name("AOO mørketall beste anslag")]
-            public float? RiskAssessmentAOOdarkfigureBest { get; set; } // beste anslag på forekomstarealets mørketall 
-            [Name("AOO mørketall høyt anslag")]
-            public float? RiskAssessmentAOOdarkfigureHigh { get; set; } // høyt anslag på forekomstarealets mørketall 
-            
+            // [Name("AOOMorketallLavtAnslag")]
+            // public float? RiskAssessmentAOOdarkfigureLow { get; set; } // lavt anslag på forekomstarealets mørketall 
+            // [Name("AOOMorketallBesteAnslag")]
+            // public float? RiskAssessmentAOOdarkfigureBest { get; set; } // beste anslag på forekomstarealets mørketall 
+            // [Name("AOOMorketallHoytAnslag")]
+            // public float? RiskAssessmentAOOdarkfigureHigh { get; set; } // høyt anslag på forekomstarealets mørketall 
+            [Name("Etableringsklasse2")] //to do: kanskje lage funksjon for å klemme etableringsklasse og etableringsklasse2 inn i en og samme kolonne? if "C3" ... 
+            public string SpeciesEstablishmentCategory { get; set; }
+
             //Forekomstareal dørstokkarter
             [Name("Ant. forekomster fra én introduksjon lavt anslag")]
             public long? RiskAssessmentOccurrences1Low { get; set; }	// lavt anslag på antall forekomster fra 1 introduksjon 
@@ -586,8 +609,10 @@ namespace Prod.Api.Helpers
             [Name("AOO 10 år etter første introduksjon høyt anslag")]
             public long? RiskAssessmentAOO10yrHigh { get; set; } // høyt anslag på totalt forekomstareal om 10 år
 
-
-
+            //Regionvis utbredelse "fylkesforekomst"
+            [Name("RegionvisUtbredelse")]
+            public string RegionalDistribution {get; set;}
+            
             #endregion Utbredelse
         #endregion Bakgrunnsdata for risikovurdering
         #region RiskAssessment 
@@ -673,12 +698,7 @@ namespace Prod.Api.Helpers
 
 
         //*************** Forekomstareal om 50år ************************************
-        [Name("AOO50yrBest")]
-        public Int64? RiskAssessmentAOO50yrBest { get; set; } // beste anslag på totalt forekomstareal om 50 år 
-        [Name("AOO50yrLow")]
-        public Int64? RiskAssessmentAOO50yrLow { get; set; } // lavt anslag på totalt forekomstareal om 50 år 
-        [Name("AOO50yrHigh")]
-        public Int64? RiskAssessmentAOO50yrHigh { get; set; }
+    
         // -------- disse (forekomstareal om 50år) er erstattet:  
         //todo: *sjekk konvertering fra FAB3 før sletting av utkommentert kode*
         //public Int64? PotentialExistenceAreaLowQuartile { get; set; }
@@ -1140,10 +1160,10 @@ namespace Prod.Api.Helpers
         // public string EffectsOnPopulationOfOrigin { get; set; } // lagt til 31.08.2016
 
         // OsA, He, Fi
-        public string RegionalPresenceKnown { get; set; } //Er disse døde? - vi skulle hatt noe lignende for FAL 2023
-        public string RegionalPresenceAssumed { get; set; }
-        public string RegionalPresencePotential { get; set; }
-        // slutt artsegenskaper
+        // public string RegionalPresenceKnown { get; set; } //Er disse døde? - ja, dette er valget fra 2018 - kommentert ut 15.06.22
+        // public string RegionalPresenceAssumed { get; set; }
+        // public string RegionalPresencePotential { get; set; }
+        // // slutt artsegenskaper
 
 
         // (3.5) Spredningshistorikk
@@ -1184,7 +1204,7 @@ namespace Prod.Api.Helpers
 
         public string SpreadAreaInChangedNature { get; set; }
 
-        public string SpeciesEstablishmentCategory { get; set; }
+
 
         // (4) Naturtyper
         //public List<ImpactedNatureType> ImpactedNatureTypes { get; set; } = new List<ImpactedNatureType>();
