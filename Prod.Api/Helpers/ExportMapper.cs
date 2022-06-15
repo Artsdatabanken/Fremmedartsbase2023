@@ -76,6 +76,14 @@ namespace Prod.Api.Helpers
                         dest.CurrentInternationalExistenceAreasNorthAndCentralAmerica = GetCurrentInternationalExistenceAreas(src.CurrentInternationalExistenceAreas, "northAndCentralAmerica");
                         dest.CurrentInternationalExistenceAreasSouthAmerica = GetCurrentInternationalExistenceAreas(src.CurrentInternationalExistenceAreas, "southAmerica");
                         dest.NaturalOriginMarine = GetNaturalOriginsMarine(src.NaturalOriginMarine);
+                        dest.CurrentInternationalExistenceMarineAreas = GetCurrentInternationalExistenceMarineAreas(src.CurrentInternationalExistenceMarineAreas);
+                        dest.ArrivedCountryFrom = GetArrivedCountryFrom(src.ArrivedCountryFrom);
+                        dest.IndoorProductionMainCatAndCat = GetIndoorProductionMainCatAndCat(src.ImportPathways, "cat");
+                        dest.IndoorProductionFreqNumTime = GetIndoorProductionMainCatAndCat(src.ImportPathways, "freqs");
+                        dest.IntroNatureMainCatAndCat = GetIntroSpreadInfo(src.AssesmentVectors, "intro", "cat");
+                        dest.IntroNatureFreqNumTime = GetIntroSpreadInfo(src.AssesmentVectors, "intro", "freqs");
+                        dest.SpreadNatureMainCatAndCat = GetIntroSpreadInfo(src.AssesmentVectors, "spread", "cat");
+                        dest.SpreadNatureFreqNumTime = GetIntroSpreadInfo(src.AssesmentVectors, "spread", "freqs");
 
                     });
 
@@ -85,16 +93,137 @@ namespace Prod.Api.Helpers
             return mapper;
         }
 
+        private static string GetIndoorProductionMainCatAndCat(List<Domain.MigrationPathway> importPathways, string col)
+        {
+            if (importPathways == null || importPathways.Count == 0)
+            {
+                return string.Empty;
+            }
+            if (col == "cat")
+            {
+                var MainCatCat = new List<string>();
+                
+                for (var i = 0; i < importPathways.Count; ++i) 
+                { 
+                    string newcat = importPathways[i].MainCategory + "//" + importPathways[i].Category;
+                    MainCatCat.Add(newcat);
+                }
+
+                return string.Join("; ", MainCatCat);
+            }
+            if (col == "freqs")
+            {
+                var FreqNT = new List<string>();
+                for (var i = 0; i < importPathways.Count; ++i) 
+                { 
+                    string newcat = importPathways[i].InfluenceFactor + "//" + importPathways[i].Magnitude + "//" + importPathways[i].TimeOfIncident;
+                    FreqNT.Add(newcat);
+                }
+
+                return string.Join("; ", FreqNT);
+            }
+            
+            return string.Empty;
+        }
+        
+        private static string GetIntroSpreadInfo(List<Domain.MigrationPathway> assesmentVectors, string introspread, string col)
+        {
+            if (assesmentVectors == null || assesmentVectors.Count == 0)
+            {
+                return string.Empty;
+            }
+
+            if (introspread == "intro") 
+            {
+                var sourcelist = assesmentVectors.FindAll(vector => vector.IntroductionSpread == "introduction");
+                if (col == "cat")
+                {
+                    var MainCatCat = new List<string>();
+                
+                    for (var i = 0; i < sourcelist.Count; ++i) 
+                    { 
+                   
+                        string newcat = sourcelist[i].MainCategory + "//" + sourcelist[i].Category;
+                        MainCatCat.Add(newcat);
+                  
+                    }
+
+                    return string.Join("; ", MainCatCat);
+                }
+                if (col == "freqs")
+                {
+                    var FreqNT = new List<string>();
+                    for (var i = 0; i < sourcelist.Count; ++i) 
+                    { 
+                        string newcat = sourcelist[i].InfluenceFactor + "//" + sourcelist[i].Magnitude + "//" + sourcelist[i].TimeOfIncident;
+                        FreqNT.Add(newcat);
+                    }
+
+                    return string.Join("; ", FreqNT);
+                }
+            }
+            if (introspread == "spread") 
+            {
+                var sourcelist = assesmentVectors.FindAll(vector => vector.IntroductionSpread == "spread");
+                if (col == "cat")
+                {
+                    var MainCatCat = new List<string>();
+                
+                    for (var i = 0; i < sourcelist.Count; ++i) 
+                    { 
+                   
+                        string newcat = sourcelist[i].MainCategory + "//" + sourcelist[i].Category;
+                        MainCatCat.Add(newcat);
+                  
+                    }
+
+                    return string.Join("; ", MainCatCat);
+                }
+                if (col == "freqs")
+                {
+                    var FreqNT = new List<string>();
+                    for (var i = 0; i < sourcelist.Count; ++i) 
+                    { 
+                        string newcat = sourcelist[i].InfluenceFactor + "//" + sourcelist[i].Magnitude + "//" + sourcelist[i].TimeOfIncident;
+                        FreqNT.Add(newcat);
+                    }
+
+                    return string.Join("; ", FreqNT);
+                }
+            }
+            
+        
+            return string.Empty;
+        }
+
         private static string GetNaturalOriginsMarine(List<string> naturalOriginMarine)
         {
             if (naturalOriginMarine == null || naturalOriginMarine.Count == 0)
             {
                 return string.Empty;
             }
-            // var oceans = new List<string>();
-            // if()
-            // return string.Join(", ", oceans);
-            return string.Join(", ", naturalOriginMarine);
+
+            return string.Join("; ", naturalOriginMarine);
+        }
+
+        private static string GetCurrentInternationalExistenceMarineAreas(List<string> currentInternationalExistenceMarineAreas)
+        {
+            if (currentInternationalExistenceMarineAreas == null || currentInternationalExistenceMarineAreas.Count == 0)
+            {
+                return string.Empty;
+            }
+
+            return string.Join("; ", currentInternationalExistenceMarineAreas);
+        }
+
+        private static string GetArrivedCountryFrom(List<string> arrivedCountryFrom)
+        {
+            if (arrivedCountryFrom == null || arrivedCountryFrom.Count == 0)
+            {
+                return string.Empty;
+            }
+
+            return string.Join("; ", arrivedCountryFrom);
         }
 
         private static string GetCurrentInternationalExistenceAreas(List<FA4.NaturalOrigin> currentInternationalExistenceAreas, string area)
@@ -110,11 +239,11 @@ namespace Prod.Api.Helpers
             {
                 if (CheckForArea(area, origin))
                 {
-                    zones.Add(origin.ClimateZone.Replace(";", "\\"));
+                    zones.Add(origin.ClimateZone.Replace(";", "//"));
                 }
             }
 
-            return string.Join(", ", zones);
+            return string.Join("; ", zones);
         }
 
         private static string GetNaturalOrigins(List<FA4.NaturalOrigin> naturalOrigins, string area)
@@ -130,11 +259,11 @@ namespace Prod.Api.Helpers
             {
                 if (CheckForArea(area, origin))
                 {
-                    zones.Add(origin.ClimateZone.Replace(";", "\\"));
+                    zones.Add(origin.ClimateZone.Replace(";", "//"));
                 }
             }
 
-            return string.Join(", ", zones);
+            return string.Join("; ", zones);
 
         }
 
@@ -371,50 +500,58 @@ namespace Prod.Api.Helpers
         //marin utbredelse
         [Name("NaturligUtbredelseMarint")]
         public string NaturalOriginMarine { get; set; } 
-        // public List<string> NaturalOriginMarine { get; set; } = new List<string>(); // lagt til 05.09.2016 //To do: pakk ut denne listen til en string - 08.06.22
         [Name("NaturligUtbredelseMarintBeskrivelse")]
         public string NaturalOriginMarineDetails { get; set; } // lagt til 21.04.2017
         [Name("NaavaerendeUtbredelseMarint")]
-        public List<string> CurrentInternationalExistenceMarineAreas { get; set; } = new List<string>(); // lagt til 05.09.2016
+        public string CurrentInternationalExistenceMarineAreas { get; set; } 
         [Name("NaavaerendeUtbredelseMarintBeskrivelse")]
         public string CurrentInternationalExistenceMarineAreasDetails { get; set; } // lagt til 21.04.2017
 
-        [Name("Kom til Fastlands-Norge fra")]
-        public List<string> ArrivedCountryFrom { get; set; } = new List<string>(); // fab: string Arived_Norway_From_Code
-         [Name("Kom til Fastlands-Norge fra, beskrivelse")]
+        [Name("KomTilFastlands-NorgeFra")]
+        public string ArrivedCountryFrom { get; set; } // fab: string Arived_Norway_From_Code
+         [Name("KomTilFastlands-NorgeFraBeskrivelse")]
         public string ArrivedCountryFromDetails { get; set; } = ""; // fab: Natural_Origin 'NaturalOrigin'  - lagt til 14.11.2016
-        [Name("Ukjønnet formering")]
+        [Name("UkjønnetFormering")]
         public bool? ReproductionAsexual { get; set; } // fab: Reproduction_Asexual
-        [Name("Kjønnet formering")]
+        [Name("KjønnetFormering")]
         public bool? ReproductionSexual { get; set; } // fab: Reproduction_Sexual
         [Name("Generasjonstid")]
         public double? ReproductionGenerationTime { get; set; } // fab: Reproduction_Geteration_Time
         #endregion Artsinformasjon
 
         #region Spredningsveier
-        [Name("Spres arten utelukkende direkte til norsk natur?")]
+        [Name("SpresArtenUtelukkendeDirekteTilNorskNatur?")]
         public string IndoorProduktion { get; set; }
         // Jeg er usikker på om vi får med feltene nedenfor - Kanskje som en liste med paste(mainCategory, category)? Altså [Korridor gjennom menneskeskapt vannforbindelse; Egenspredning naturlig; ...]
         //Til innendørsareal
-        //public List<MigrationPathway> ImportPathways { get; set; } = new List<MigrationPathway>();
+        [Name("TilInnendorsProdArealHovedkatOgKat")]
+        public string IndoorProductionMainCatAndCat {get; set;} //added 14.06.2022
+        [Name("TilInnendorsProdArealHyppAntTid")]
+        public string IndoorProductionFreqNumTime {get; set;} //added 15.06.2022
         //til naturen - dette skal kun være de med "introductionSpread": "introduction"
-        //public List<MigrationPathway> AssesmentVectors { get; set; } = new List<MigrationPathway>(); // lagt til 09.01.2017
+        [Name("IntroduksjonNaturHovedkatOgKat")]
+        public string IntroNatureMainCatAndCat {get; set;} //added 15.06.2022
+        [Name("IntroduksjonNaturHyppAntTid")]
+        public string IntroNatureFreqNumTime {get; set;} //added 15.06.2022
         //videre i naturen - dette skal kun være de med "introductionSpread": "spread"
-        //public List<MigrationPathway> AssesmentVectors { get; set; } = new List<MigrationPathway>();
+        [Name("VidereSpredningNaturHovedkatOgKat")]
+        public string SpreadNatureMainCatAndCat {get; set;} //added 15.06.2022
+        [Name("VidereSpredningNaturHyppAntTid")]
+        public string SpreadNatureFreqNumTime {get; set;} //added 15.06.2022
         #endregion Spredningsveier
 
         #region Bakgrunnsdata for risikovurdering
             #region Utbredelse
-            [Name("Andel av kjent forekomstareal i sterkt endra natur (%)")]
+            [Name("AndelAvKjentForekomstarealISterktEndraNatur(%)")]
             public double? RiskAssessmentSpreadHistoryDomesticAreaInStronglyChangedNatureTypes { get; set; }
             //Forekomstareal selvstendig reproduserende
-            [Name("AOO kjent")]
+            [Name("AOOKjent")]
             public Int64? RiskAssessmentAOOknown { get; set; }
-            [Name("AOO antatt lavt anslag")]
+            [Name("AOOAntattLavtAnslag")]
             public Int64? RiskAssessmentAOOtotalLow { get; set; }
-            [Name("AOO antatt beste anslag")]
+            [Name("AOOAntattBesteAnslag")]
             public Int64? RiskAssessmentAOOtotalBest { get; set; }
-            [Name("AOO antatt høyt anslag")]
+            [Name("AOOAntattHøytAnslag")]
             public Int64? RiskAssessmentAOOtotalHigh { get; set; }
             // [Name("AOOchangeBest")]
             // public double? RiskAssessmentAOOchangeBest { get; set; } - 07.06.22 - trenger ikke disse i eksporten da de kun brukes på baksiden for A-kriteriet
