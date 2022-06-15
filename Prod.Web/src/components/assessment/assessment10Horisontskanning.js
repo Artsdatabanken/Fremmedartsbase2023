@@ -45,7 +45,7 @@ export default class Assessment10Horisontskanning extends React.Component {
             ? <fieldset className="well">
                 <b>{labels.SpeciesStatus.answerEstablishmentQuestionReminder}</b>
             </fieldset>
-            : appState.horizonDoAssessment
+            : assessment.horizonDoAssessment
             ? <fieldset className="well">
                 <h3>{labels.SpeciesStatus.conclusion}</h3> 
                 <p>{labels.SpeciesStatus.willBeAssessed}</p>
