@@ -418,12 +418,6 @@ class ViewModel {
 
 
 
-        // #######################################################################################################
-        // #######################################################################################################
-        // ##################################  assessment reactions  #############################################
-        // #######################################################################################################
-        // #######################################################################################################
-
 
         autorun(() => {
             // **** Lurer Mobx til å kjøre koden... TODO: Gjør dette på en "riktig" måte ****
@@ -480,6 +474,15 @@ class ViewModel {
                 })()
             }
         });
+
+
+        // #######################################################################################################
+        // #######################################################################################################
+        // ##################################  assessment reactions  #############################################
+        // #######################################################################################################
+        // #######################################################################################################
+
+
         autorun(() => {
             console.log("isServicesReady: " + this.isServicesReady)
             console.log("exp" + (this.expertgroups != null))
@@ -515,13 +518,13 @@ class ViewModel {
                 console.log("current assessmentTab: " + this.assessmentTabs.activeTab.id )
             }
         });
-        autorun(() => {
-            console.log("skal vurderes: " + this.skalVurderes)
-        });
+        // autorun(() => {
+        //     console.log("skal vurderes: " + this.skalVurderes)
+        // });
         // #######################################################################################################
         // #######################################################################################################
 
-        
+
 
 
 
@@ -1399,21 +1402,6 @@ class ViewModel {
     }
     // ################# end section API stuff ##################
 
-
-
-    // ######################################################################################################################################
-    // ######################################################################################################################################
-    // ######################################    Move this code to enhance assessment    ####################################################
-    // ######################################################################################################################################
-    // ######################################################################################################################################
-
-    @computed get canEdit() {
-        return true
-        // if (!auth.hasAccess) return false;
-        // if (appState.viewMode === "choosespecie") return false;
-        // return isLockedByMe() && !isFinished();
-    };
-
     @computed get isDirty() {
         if (!this.assessmentId || !this.assessment) return false
         // const a = JSON.stringify(this.assessment)
@@ -1422,35 +1410,64 @@ class ViewModel {
         return a != b
     }
 
-    @computed get horizonDoAssessment() {
-        if (!this.assessment) return false;
-        const result =
-            !this.assessment.horizonEstablismentPotential || !this.assessment.horizonEcologicalEffect ?
-            false :
-            this.assessment.horizonEstablismentPotential == "2" 
-            || (this.assessment.horizonEstablismentPotential == "1" && this.assessment.horizonEcologicalEffect != "no") 
-            || (this.assessment.horizonEstablismentPotential == "0" && this.assessment.horizonEcologicalEffect == "yesAfterGone")
-        return result
-    }
 
-    @computed get horizonDoScanning() {
-        return !this.harVurdering ? false : this.assessment.horizonDoScanning
-    }
+    // ######################################################################################################################################
+    // ######################################################################################################################################
+    // ######################################    Move this code to enhance assessment    ####################################################
+    // ######################################################################################################################################
+    // ######################################################################################################################################
 
-    @computed get horizonScanned() {
-        return !this.harVurdering ? false : (this.assessment.horizonEstablismentPotential == 2
-                                            || (this.assessment.horizonEstablismentPotential == 1 && this.assessment.horizonEcologicalEffect != "no")
-                                            || (this.assessment.horizonEstablismentPotential == 0 && this.assessment.horizonEcologicalEffect == "yesAfterGone"))
-    }
+    // // // @computed get canEdit() {
+    // // //     return true
+    // // //     // if (!auth.hasAccess) return false;
+    // // //     // if (appState.viewMode === "choosespecie") return false;
+    // // //     // return isLockedByMe() && !isFinished();
+    // // // };
 
-    @computed get skalVurderes() {
-        // todo. denne er nå knyttet til horisontskanning. Burde kanskje vært generell og hentet verdi fra: assessment.assessmentConclusion
-        return !this.harVurdering ? false : this.assessment.isDoorKnocker && this.assessment.skalVurderes ? true : false
-    }
-    @computed get doFullAssessment() {
-        return !this.harVurdering ? false : this.assessment.doFullAssessment 
-    }
 
+    // @computed get horizonDoAssessment() {
+    //     if (!this.assessment) return false;
+    //     const result =
+    //         !this.assessment.horizonEstablismentPotential || !this.assessment.horizonEcologicalEffect ?
+    //         false :
+    //         this.assessment.horizonEstablismentPotential == "2" 
+    //         || (this.assessment.horizonEstablismentPotential == "1" && this.assessment.horizonEcologicalEffect != "no") 
+    //         || (this.assessment.horizonEstablismentPotential == "0" && this.assessment.horizonEcologicalEffect == "yesAfterGone")
+    //     return result
+    // }
+
+    // @computed get horizonDoScanning() {
+    //     return !this.harVurdering ? false : this.assessment.horizonDoScanning
+    // }
+
+    // @computed get horizonScanned() {
+    //     return !this.harVurdering ? false : (this.assessment.horizonEstablismentPotential == 2
+    //                                         || (this.assessment.horizonEstablismentPotential == 1 && this.assessment.horizonEcologicalEffect != "no")
+    //                                         || (this.assessment.horizonEstablismentPotential == 0 && this.assessment.horizonEcologicalEffect == "yesAfterGone"))
+    // }
+
+    // @computed get skalVurderes() {
+    //     // todo. denne er nå knyttet til horisontskanning. Burde kanskje vært generell og hentet verdi fra: assessment.assessmentConclusion
+    //     return !this.harVurdering ? false : this.assessment.isDoorKnocker && this.assessment.skalVurderes ? true : false
+    // }
+    // @computed get doFullAssessment() {
+    //     return !this.harVurdering ? false : this.assessment.doFullAssessment 
+    // }
+
+
+    // ######################################################################################################################################
+    // ######################################################################################################################################
+    // ######################################################################################################################################
+
+
+
+
+
+    // ######################################################################################################################################
+    // ######################################################################################################################################
+    // ###############  This code is for FAB assessment and is put her for for UI desitions (!?)  ###########################################
+    // ######################################################################################################################################
+    // ######################################################################################################################################
     moveAssessmentHorizon = (riskhorizon) => {
         const doorknockerstate = riskhorizon.potensiellDørstokkart
         const id = this.assessmentId
@@ -1477,11 +1494,11 @@ class ViewModel {
             error => alert("Feil ved flytting mellom horisontskanning og risikovurdering:" + error)
         )
     }
+    // ######################################################################################################################################
+    // ######################################################################################################################################
+    // ######################################################################################################################################
 
 
-    // ######################################################################################################################################
-    // ######################################################################################################################################
-    // ######################################################################################################################################
 
 }
 
