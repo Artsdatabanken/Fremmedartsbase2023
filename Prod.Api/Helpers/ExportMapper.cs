@@ -85,6 +85,7 @@ namespace Prod.Api.Helpers
                         dest.SpreadNatureMainCatAndCat = GetIntroSpreadInfo(src.AssesmentVectors, "spread", "cat");
                         dest.SpreadNatureFreqNumTime = GetIntroSpreadInfo(src.AssesmentVectors, "spread", "freqs");
                         dest.RegionalDistribution = GetRegionalDistribution(src.Fylkesforekomster);
+                        dest.SpeciesStatus = GetSpeciesStatus(src.SpeciesStatus, src.SpeciesEstablishmentCategory);
 
                     });
 
@@ -93,6 +94,17 @@ namespace Prod.Api.Helpers
             var mapper = new Mapper(mapperConfig);
             return mapper;
         }
+
+        private static string GetSpeciesStatus(string speciesStatus, string speciesEstablishmentCategory)
+        {
+            if (speciesStatus != "C3")
+            {
+                return speciesStatus;
+            }
+            return speciesEstablishmentCategory;
+        }
+
+        // SpeciesEstablishmentCategory SpeciesStatus
 
         private static string GetRegionalDistribution(List<Fylkesforekomst> fylkesforekomster)
         {
@@ -103,6 +115,10 @@ namespace Prod.Api.Helpers
             var fylkesliste = new List<string>();
             for (var i = 0; i < fylkesforekomster.Count; ++i)
             {
+                if (fylkesforekomster[i].State0 == 0 && fylkesforekomster[i].State1 == 0 && fylkesforekomster[i].State3 == 0)
+                {
+                    return string.Empty; //TO DO: sjekk om dette funker! 15.06.22
+                }
                 string newreg = fylkesforekomster[i].Fylke + "//" + fylkesforekomster[i].State0 + "//" + fylkesforekomster[i].State1 + "//" + fylkesforekomster[i].State3;
                 fylkesliste.Add(newreg);
             }
@@ -413,9 +429,9 @@ namespace Prod.Api.Helpers
 
         // public DateTime LockedForEditAt { get; set; }
         // public string LockedForEditBy { get; set; }
-        [Name("Horisontskanning etableringspotensial")]
+        [Name("HorisontskanningEtableringspotensial")]
         public string HorizonEstablismentPotential { get; set; }
-        [Name("Horisontskanning økologisk effekt")]
+        [Name("HorisontskanningOkologiskEffekt")]
         public string HorizonEcologicalEffect { get; set; }
         
         #region Artens status
@@ -590,11 +606,11 @@ namespace Prod.Api.Helpers
             public string SpeciesEstablishmentCategory { get; set; }
 
             //Forekomstareal dørstokkarter
-            [Name("Ant. forekomster fra én introduksjon lavt anslag")]
+            [Name("AntForekomsterFraEnIntroduksjonLavtAnslag")]
             public long? RiskAssessmentOccurrences1Low { get; set; }	// lavt anslag på antall forekomster fra 1 introduksjon 
-            [Name("AntForekomster fra én introduksjon beste anslag")]
+            [Name("AntForekomsterFraEnIntroduksjonBesteAnslag")]
             public long? RiskAssessmentOccurrences1Best { get; set; }	// beste anslag på antall forekomster fra 1 introduksjon 
-            [Name("Ant. forekomster fra én introduksjon høyt anslag")]
+            [Name("AntForekomsterFraEnIntroduksjonHøytAnslag")]
             public long? RiskAssessmentOccurrences1High { get; set; }	// høyt anslag på antall forekomster fra 1 introduksjon 
             [Name("Ant. introduksjoner ila 10 år lavt anslag")]
             public long? RiskAssessmentIntroductionsLow { get; set; }	    // lavt anslag på antall introduksjoner i løpet av 10 år 
