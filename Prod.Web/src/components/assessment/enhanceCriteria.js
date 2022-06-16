@@ -1186,9 +1186,9 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
 
     for(const crit of [r.critC, r.critD, r.critE, r.critF, r.critG, r.critH, r.critI]) {
         extdendCriteriaProps(crit)
-        runInAction(() => {
-            crit.auto = !["F", "G"].includes(crit.criteriaLetter)
-        })
+        // runInAction(() => {
+        //     crit.auto = !["C", "F", "G"].includes(crit.criteriaLetter)
+        // })
 
         autorun(() => {
             const ud = uncertaintyArray(crit.value - 1, crit.value + 1)
