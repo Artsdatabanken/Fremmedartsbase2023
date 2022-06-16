@@ -341,6 +341,38 @@ export default function enhanceAssessment(json, appState) {
             return result
         },
 
+
+
+
+
+
+    
+        get horizonDoAssessment() {
+            const result =
+                !this.horizonEstablismentPotential || !this.horizonEcologicalEffect 
+                ? false 
+                : this.horizonEstablismentPotential == "2" 
+                  || (this.horizonEstablismentPotential == "1" && this.horizonEcologicalEffect != "no") 
+                  || (this.horizonEstablismentPotential == "0" && this.horizonEcologicalEffect == "yesAfterGone")
+            return result
+        },
+    
+    
+        get horizonScanned() {
+            return (this.horizonEstablismentPotential == 2
+                || (this.horizonEstablismentPotential == 1 && this.horizonEcologicalEffect != "no")
+                || (this.horizonEstablismentPotential == 0 && this.horizonEcologicalEffect == "yesAfterGone"))
+        },
+    
+        get doDoorKnockerAssessment() { // skalVurderes() {
+            // todo. denne er nå knyttet til horisontskanning. Burde kanskje vært generell og hentet verdi fra: assessment.assessmentConclusion
+            return this.isDoorKnocker && this.skalVurderes ? true : false
+        },
+
+
+
+
+
         statusChange: false,
 
     })
@@ -376,6 +408,23 @@ export default function enhanceAssessment(json, appState) {
         console.log("¤!¤ categoryHasChangedFromPreviousAssessment: '" + ss + "'")
     
     })
+
+    autorun(() => {
+        if(assessment.speciesStatus) {
+            reaction(
+                () => assessment.speciesStatus,
+                (speciesStatus, previousSpeciesStatus) => {
+                    if (speciesStatus === "C3" && previousSpeciesStatus !== "C3") {
+                        // console.log("¤¤¤ reset speciesEstablishmentCategory")
+                        if(!assessment.speciesEstablishmentCategory) {
+                            runInAction(() => assessment.speciesEstablishmentCategory = "C3")
+                        }
+                    }
+                }
+            )
+        }
+    })
+
 
     reaction(
         () => assessment.alienSpeciesCategory,

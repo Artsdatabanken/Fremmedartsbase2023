@@ -181,7 +181,7 @@ class ViewModel {
             // ************************************************
 
             //todo: test if this is actually in use!! artskartModel is also defined(?) on the assessment, which is where it should be!
-            artskartModel: {},
+            // artskartModel: {},
 
             // påvirkningsfaktorer: [],
             // selectedPåvirkningsfaktor: {
@@ -418,12 +418,6 @@ class ViewModel {
 
 
 
-        // #######################################################################################################
-        // #######################################################################################################
-        // ##################################  assessment reactions  #############################################
-        // #######################################################################################################
-        // #######################################################################################################
-
 
         autorun(() => {
             // **** Lurer Mobx til å kjøre koden... TODO: Gjør dette på en "riktig" måte ****
@@ -490,38 +484,47 @@ class ViewModel {
         autorun(() => {
             console.log("viewMode: " + this.viewMode)
         });
+
+
+        // #######################################################################################################
+        // #######################################################################################################
+        // ##################################  assessment reactions  #############################################
+        // #######################################################################################################
+        // #######################################################################################################
+
+
         // autorun(() => {
         //     if(this.assessment && this.assessment.speciesStatus == "C3") {
         //         runInAction(() => this.assessment.speciesEstablishmentCategory = "C3")
         //     }
         // })
-        autorun(() => {
-            if(this.assessment && this.assessment.speciesStatus) {
-                reaction(
-                    () => this.assessment.speciesStatus,
-                    (speciesStatus, previousSpeciesStatus) => {
-                        if (speciesStatus === "C3" && previousSpeciesStatus !== "C3") {
-                            // console.log("¤¤¤ reset speciesEstablishmentCategory")
-                            if(!this.assessment.speciesEstablishmentCategory) {
-                                runInAction(() => this.assessment.speciesEstablishmentCategory = "C3")
-                            }
-                        }
-                    }
-                )
-            }
-        })
-        autorun(() => {
-            if(this.assessmentTabs && this.assessmentTabs.activeTab ) {
-                console.log("current assessmentTab: " + this.assessmentTabs.activeTab.id )
-            }
-        });
-        autorun(() => {
-            console.log("skal vurderes: " + this.skalVurderes)
-        });
+        // autorun(() => {
+        //     if(this.assessment && this.assessment.speciesStatus) {
+        //         reaction(
+        //             () => this.assessment.speciesStatus,
+        //             (speciesStatus, previousSpeciesStatus) => {
+        //                 if (speciesStatus === "C3" && previousSpeciesStatus !== "C3") {
+        //                     // console.log("¤¤¤ reset speciesEstablishmentCategory")
+        //                     if(!this.assessment.speciesEstablishmentCategory) {
+        //                         runInAction(() => this.assessment.speciesEstablishmentCategory = "C3")
+        //                     }
+        //                 }
+        //             }
+        //         )
+        //     }
+        // })
+        // autorun(() => {
+        //     if(this.assessmentTabs && this.assessmentTabs.activeTab ) {
+        //         console.log("current assessmentTab: " + this.assessmentTabs.activeTab.id )
+        //     }
+        // });
+        // autorun(() => {
+        //     console.log("skal vurderes: " + this.skalVurderes)
+        // });
         // #######################################################################################################
         // #######################################################################################################
 
-        
+
 
 
 
@@ -1399,21 +1402,6 @@ class ViewModel {
     }
     // ################# end section API stuff ##################
 
-
-
-    // ######################################################################################################################################
-    // ######################################################################################################################################
-    // ######################################    Move this code to enhance assessment    ####################################################
-    // ######################################################################################################################################
-    // ######################################################################################################################################
-
-    @computed get canEdit() {
-        return true
-        // if (!auth.hasAccess) return false;
-        // if (appState.viewMode === "choosespecie") return false;
-        // return isLockedByMe() && !isFinished();
-    };
-
     @computed get isDirty() {
         if (!this.assessmentId || !this.assessment) return false
         // const a = JSON.stringify(this.assessment)
@@ -1422,35 +1410,64 @@ class ViewModel {
         return a != b
     }
 
-    @computed get horizonDoAssessment() {
-        if (!this.assessment) return false;
-        const result =
-            !this.assessment.horizonEstablismentPotential || !this.assessment.horizonEcologicalEffect ?
-            false :
-            this.assessment.horizonEstablismentPotential == "2" 
-            || (this.assessment.horizonEstablismentPotential == "1" && this.assessment.horizonEcologicalEffect != "no") 
-            || (this.assessment.horizonEstablismentPotential == "0" && this.assessment.horizonEcologicalEffect == "yesAfterGone")
-        return result
-    }
 
-    @computed get horizonDoScanning() {
-        return !this.harVurdering ? false : this.assessment.horizonDoScanning
-    }
+    // ######################################################################################################################################
+    // ######################################################################################################################################
+    // ######################################    Move this code to enhance assessment    ####################################################
+    // ######################################################################################################################################
+    // ######################################################################################################################################
 
-    @computed get horizonScanned() {
-        return !this.harVurdering ? false : (this.assessment.horizonEstablismentPotential == 2
-                                            || (this.assessment.horizonEstablismentPotential == 1 && this.assessment.horizonEcologicalEffect != "no")
-                                            || (this.assessment.horizonEstablismentPotential == 0 && this.assessment.horizonEcologicalEffect == "yesAfterGone"))
-    }
+    // // // @computed get canEdit() {
+    // // //     return true
+    // // //     // if (!auth.hasAccess) return false;
+    // // //     // if (appState.viewMode === "choosespecie") return false;
+    // // //     // return isLockedByMe() && !isFinished();
+    // // // };
 
-    @computed get skalVurderes() {
-        // todo. denne er nå knyttet til horisontskanning. Burde kanskje vært generell og hentet verdi fra: assessment.assessmentConclusion
-        return !this.harVurdering ? false : this.assessment.isDoorKnocker && this.assessment.skalVurderes ? true : false
-    }
-    @computed get doFullAssessment() {
-        return !this.harVurdering ? false : this.assessment.doFullAssessment 
-    }
 
+    // @computed get horizonDoAssessment() {
+    //     if (!this.assessment) return false;
+    //     const result =
+    //         !this.assessment.horizonEstablismentPotential || !this.assessment.horizonEcologicalEffect ?
+    //         false :
+    //         this.assessment.horizonEstablismentPotential == "2" 
+    //         || (this.assessment.horizonEstablismentPotential == "1" && this.assessment.horizonEcologicalEffect != "no") 
+    //         || (this.assessment.horizonEstablismentPotential == "0" && this.assessment.horizonEcologicalEffect == "yesAfterGone")
+    //     return result
+    // }
+
+    // @computed get horizonDoScanning() {
+    //     return !this.harVurdering ? false : this.assessment.horizonDoScanning
+    // }
+
+    // @computed get horizonScanned() {
+    //     return !this.harVurdering ? false : (this.assessment.horizonEstablismentPotential == 2
+    //                                         || (this.assessment.horizonEstablismentPotential == 1 && this.assessment.horizonEcologicalEffect != "no")
+    //                                         || (this.assessment.horizonEstablismentPotential == 0 && this.assessment.horizonEcologicalEffect == "yesAfterGone"))
+    // }
+
+    // @computed get skalVurderes() {
+    //     // todo. denne er nå knyttet til horisontskanning. Burde kanskje vært generell og hentet verdi fra: assessment.assessmentConclusion
+    //     return !this.harVurdering ? false : this.assessment.isDoorKnocker && this.assessment.skalVurderes ? true : false
+    // }
+    // @computed get doFullAssessment() {
+    //     return !this.harVurdering ? false : this.assessment.doFullAssessment 
+    // }
+
+
+    // ######################################################################################################################################
+    // ######################################################################################################################################
+    // ######################################################################################################################################
+
+
+
+
+
+    // ######################################################################################################################################
+    // ######################################################################################################################################
+    // ###############  This code is for FAB assessment and is put her for for UI desitions (!?)  ###########################################
+    // ######################################################################################################################################
+    // ######################################################################################################################################
     moveAssessmentHorizon = (riskhorizon) => {
         const doorknockerstate = riskhorizon.potensiellDørstokkart
         const id = this.assessmentId
@@ -1477,11 +1494,11 @@ class ViewModel {
             error => alert("Feil ved flytting mellom horisontskanning og risikovurdering:" + error)
         )
     }
+    // ######################################################################################################################################
+    // ######################################################################################################################################
+    // ######################################################################################################################################
 
 
-    // ######################################################################################################################################
-    // ######################################################################################################################################
-    // ######################################################################################################################################
 
 }
 

@@ -5,21 +5,39 @@ import auth from '../authService';
 function assessmentTabdefs(appState) {
     extendObservable(appState, {
     assessmentTabs: {
-        activeTab: {id: appState.horizonDoScanning ? 0 : 1},
-        get tabinfos() {return [
-            {id: 0, label:"Horisontskanning", enabled: appState.harVurdering, visible: (appState.horizonDoScanning || appState.horizonScanned), url: "horisontskanning" },
-            {id: 1, label:"Artens status", enabled: !appState.horizonDoScanning, url: "artensstatus" },
-            {id: 2, label:"Artsinformasjon", enabled: !appState.horizonDoScanning, notrequired: !appState.skalVurderes, url: "artinformasjon" },
-            {id: 3, label:"Spredningsveier", enabled: !appState.horizonDoScanning, notrequired: !appState.skalVurderes, url: "spredningsveier" },
-            {id: 4, label:"Bakgrunnsdata for risikovurdering", enabled: !appState.horizonDoScanning, notrequired: !appState.skalVurderes, url: "bakgrunnsdata" },
-            {id: 5, label:"Risikovurdering", enabled: appState.doFullAssessment && !appState.horizonDoScanning, notrequired: !appState.skalVurderes, url: "risikovurdering" },
-            {id: 6, label:"Klimaeffekter", enabled: appState.doFullAssessment && !appState.horizonDoScanning, notrequired: !appState.skalVurderes, url: "klimaeffekter" },
-            {id: 7, label:"Geografisk variasjon", enabled: appState.doFullAssessment && !appState.horizonDoScanning, notrequired: !appState.skalVurderes, url: "geografiskvariasjon" },
-            {id: 8, label:"Oppsummering", enabled: !appState.horizonDoScanning, url: "oppsummmering"},
-            {id: 9, label:"Referanser", enabled: appState.harVurdering, url: "referanser"},
-            {id: 10, label:"Kommentar på vurdering", enabled:appState.harVurdering, url: "kommentar"},
-            {id: 11, label:"JSON", enabled: appState.harVurdering && auth.user.profile.email.indexOf("artsdatabanken.no") > -1, url: "diff"}
-        ]},
+        activeTab: {id: (!appState.assessment ? 1 : appState.assessment.horizonDoScanning ? 0 : 1)},
+        get tabinfos() {
+            const ass = appState.assessment
+            if (!ass) return []
+            return [
+                {id: 0, label:"Horisontskanning", enabled: !!ass, visible: (ass.horizonDoScanning || ass.horizonScanned), url: "horisontskanning" },
+                {id: 1, label:"Artens status", enabled: !ass.horizonDoScanning, url: "artensstatus" },
+                {id: 2, label:"Artsinformasjon", enabled: !ass.horizonDoScanning, notrequired: !ass.doDoorKnockerAssessment, url: "artinformasjon" },
+                {id: 3, label:"Spredningsveier", enabled: !ass.horizonDoScanning, notrequired: !ass.doDoorKnockerAssessment, url: "spredningsveier" },
+                {id: 4, label:"Bakgrunnsdata for risikovurdering", enabled: !ass.horizonDoScanning, notrequired: !ass.doDoorKnockerAssessment, url: "bakgrunnsdata" },
+                {id: 5, label:"Risikovurdering", enabled: ass.doFullAssessment && !ass.horizonDoScanning, notrequired: !ass.doDoorKnockerAssessment, url: "risikovurdering" },
+                {id: 6, label:"Klimaeffekter", enabled: ass.doFullAssessment && !ass.horizonDoScanning, notrequired: !ass.doDoorKnockerAssessment, url: "klimaeffekter" },
+                {id: 7, label:"Geografisk variasjon", enabled: ass.doFullAssessment && !ass.horizonDoScanning, notrequired: !ass.doDoorKnockerAssessment, url: "geografiskvariasjon" },
+                {id: 8, label:"Oppsummering", enabled: !ass.horizonDoScanning, url: "oppsummmering"},
+                {id: 9, label:"Referanser", enabled: !!ass, url: "referanser"},
+                {id: 10, label:"Kommentar på vurdering", enabled:!!ass, url: "kommentar"},
+                {id: 11, label:"JSON", enabled: !!ass && auth.user.profile.email.indexOf("artsdatabanken.no") > -1, url: "diff"}
+            ]
+        },
+        // get tabinfos() {return [
+        //     {id: 0, label:"Horisontskanning", enabled: appState.harVurdering, visible: (appState.horizonDoScanning || appState.horizonScanned), url: "horisontskanning" },
+        //     {id: 1, label:"Artens status", enabled: !appState.horizonDoScanning, url: "artensstatus" },
+        //     {id: 2, label:"Artsinformasjon", enabled: !appState.horizonDoScanning, notrequired: !appState.skalVurderes, url: "artinformasjon" },
+        //     {id: 3, label:"Spredningsveier", enabled: !appState.horizonDoScanning, notrequired: !appState.skalVurderes, url: "spredningsveier" },
+        //     {id: 4, label:"Bakgrunnsdata for risikovurdering", enabled: !appState.horizonDoScanning, notrequired: !appState.skalVurderes, url: "bakgrunnsdata" },
+        //     {id: 5, label:"Risikovurdering", enabled: appState.doFullAssessment && !appState.horizonDoScanning, notrequired: !appState.skalVurderes, url: "risikovurdering" },
+        //     {id: 6, label:"Klimaeffekter", enabled: appState.doFullAssessment && !appState.horizonDoScanning, notrequired: !appState.skalVurderes, url: "klimaeffekter" },
+        //     {id: 7, label:"Geografisk variasjon", enabled: appState.doFullAssessment && !appState.horizonDoScanning, notrequired: !appState.skalVurderes, url: "geografiskvariasjon" },
+        //     {id: 8, label:"Oppsummering", enabled: !appState.horizonDoScanning, url: "oppsummmering"},
+        //     {id: 9, label:"Referanser", enabled: appState.harVurdering, url: "referanser"},
+        //     {id: 10, label:"Kommentar på vurdering", enabled:appState.harVurdering, url: "kommentar"},
+        //     {id: 11, label:"JSON", enabled: appState.harVurdering && auth.user.profile.email.indexOf("artsdatabanken.no") > -1, url: "diff"}
+        // ]},
         get tabList() {
             // console.log("##" + this.tabinfos.length)
             return tabItems(this.tabinfos)
