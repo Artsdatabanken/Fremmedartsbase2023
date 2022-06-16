@@ -6,6 +6,7 @@ using AutoMapper;
 using CsvHelper.Configuration.Attributes;
 using Prod.Domain;
 using Prod.Domain.Legacy;
+using RiskAssessment = Prod.Domain.RiskAssessment;
 using SpreadHistory = Prod.Domain.SpreadHistory;
 
 namespace Prod.Api.Helpers
@@ -210,6 +211,97 @@ namespace Prod.Api.Helpers
             return b;
         }
 
+        private static Dictionary<int, int> introLowTable = new Dictionary<int, int>()
+        {
+            { 1, 1 },
+            { 5, 2 },
+            { 13, 3 },
+            { 26, 4 },
+            { 43, 5 },
+            { 65, 6 },
+            { 91, 7 },
+            { 121, 8 },
+            { 156, 9 },
+            { 195, 10 }
+        };
+
+        private static Dictionary<int, int> introHighTable = new Dictionary<int, int>()
+        {
+            { 1, 1 },
+            { 6, 2 },
+            { 15, 3 },
+            { 29, 4 },
+            { 47, 5 },
+            { 69, 6 },
+            { 96, 7 },
+            { 127, 8 },
+            { 163, 9 },
+            { 204, 10 }
+        };
+
+        private static int introductionNum(Dictionary<int, int> table, long? best)
+        {
+            var keys = table.Keys.Reverse();
+            var i = 0;
+            foreach (var key in keys)
+            {
+                if (best >= key)
+                {
+                    i = table[key];
+                }
+            }
+            // console.log("¤&introductionNum result: " + i + " type:" + typeof(i))
+            return i;
+        }
+
+        private static long introductionsLow(RiskAssessment ra)
+        {
+            long num = introductionNum(introLowTable, ra.IntroductionsBest);
+            return (long)(num == 0 ? 0 : ra.IntroductionsBest - num);
+        }
+
+        private static long introductionsHigh(RiskAssessment ra)
+        {
+            long num = introductionNum(introHighTable, ra.IntroductionsBest);
+            return (long)(num == 0 ? 0 : ra.IntroductionsBest + num);
+        }
+
+        private static long? AOO10yr(long? occurrences1, long? introductions)
+        {
+            if (introductions.HasValue == false || occurrences1.HasValue == false)
+            {
+                return null;
+            }
+            var occ = occurrences1.Value;
+            var intr = introductions.Value;
+            long result = occ == 0 && intr == 0
+                    ? 0
+                    : occ == 0
+                        ? (long)(4 * Math.Round(0.64 + 0.36 * intr, 0))
+                        : (long)(4 * Math.Round(occ + Math.Pow(intr, ((double)occ + 9) / 10)));
+            //console.log("#&! AOO10yr occ: " + occ.toString() + " intr: " + intr.toString() + " result: " + result.toString())
+            return result;
+        }
+        
+        private static long? AOO10yrBest(RiskAssessment ra)
+        {
+            //console.log("#&! AOO10yrBest")
+            var result = AOO10yr(ra.Occurrences1Best, ra.IntroductionsBest);
+            return result;
+        }
+
+        private static long? AOO10yrLow(RiskAssessment ra)
+        {
+            //console.log("#&! AOO10yrLow")
+            var result = AOO10yr(ra.Occurrences1Low, ra.IntroductionsLow);
+            return result;
+        }
+        private static long? AOO10yrHigh(RiskAssessment ra)
+        {
+            //console.log("#&! AOO10yrHigh")
+            var result = AOO10yr(ra.Occurrences1High, ra.IntroductionsHigh);
+            return result;
+        }
 
         private static string GetDoorknockerType(FA4WithComments args)
         {
