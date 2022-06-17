@@ -71,7 +71,7 @@ export default class NaturetypeSelector extends React.Component {
                                             onClick={() => grunntype.Collapsed = !grunntype.Collapsed}>
                                             {grunntype.Children.length > 0 ? grunntype.Collapsed == false? <ExpandMoreIcon/> : <NavigateNextIcon/> : <div style={{width: '24px'}}></div>} {/* <-- to align all the choice buttons even though they don't have an arrow to expand */}
                                         </div>
-                                        <div className="grunntype tree-view-label btn-flat"  onClick={() => this.setSelectedNT(hovedtype)}>
+                                        <div className="grunntype tree-view-label btn-flat"  onClick={() => this.setSelectedNT(grunntype)}>
                                             <span className="naturtype-kode">{grunntype.Text}</span>
                                             <span className="nt-code">{"'" + grunntype.Value + "'"}</span>
                                         </div>
