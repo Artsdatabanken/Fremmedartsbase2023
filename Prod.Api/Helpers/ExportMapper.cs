@@ -6,6 +6,7 @@ using AutoMapper;
 using CsvHelper.Configuration.Attributes;
 using Prod.Domain;
 using Prod.Domain.Legacy;
+using RiskAssessment = Prod.Domain.RiskAssessment;
 using SpreadHistory = Prod.Domain.SpreadHistory;
 
 namespace Prod.Api.Helpers
@@ -86,6 +87,7 @@ namespace Prod.Api.Helpers
                         dest.SpreadNatureFreqNumTime = GetIntroSpreadInfo(src.AssesmentVectors, "spread", "freqs");
                         dest.RegionalDistribution = GetRegionalDistribution(src.Fylkesforekomster);
                         dest.SpeciesStatus = GetSpeciesStatus(src.SpeciesStatus, src.SpeciesEstablishmentCategory);
+                        dest.IntroductionsLow = introductionsLow(src.RiskAssessment);
 
                     });
 
@@ -104,8 +106,6 @@ namespace Prod.Api.Helpers
             return speciesEstablishmentCategory;
         }
 
-        // SpeciesEstablishmentCategory SpeciesStatus
-
         private static string GetRegionalDistribution(List<Fylkesforekomst> fylkesforekomster)
         {
             if (fylkesforekomster == null || fylkesforekomster.Count == 0)
@@ -117,10 +117,13 @@ namespace Prod.Api.Helpers
             {
                 if (fylkesforekomster[i].State0 == 0 && fylkesforekomster[i].State1 == 0 && fylkesforekomster[i].State3 == 0)
                 {
-                    return string.Empty; //TO DO: sjekk om dette funker! 15.06.22
+                    break; // fylkesliste.Add(""); //TO DO: sjekk om dette funker! 15.06.22
                 }
+                // else
+                // {
                 string newreg = fylkesforekomster[i].Fylke + "//" + fylkesforekomster[i].State0 + "//" + fylkesforekomster[i].State1 + "//" + fylkesforekomster[i].State3;
                 fylkesliste.Add(newreg);
+                // }
             }
             return string.Join("; ", fylkesliste);
         }
@@ -330,6 +333,96 @@ namespace Prod.Api.Helpers
             return b;
         }
 
+        private static Dictionary<int, int> introLowTable = new Dictionary<int, int>()
+        {
+            { 1, 1 },
+            { 5, 2 },
+            { 13, 3 },
+            { 26, 4 },
+            { 43, 5 },
+            { 65, 6 },
+            { 91, 7 },
+            { 121, 8 },
+            { 156, 9 },
+            { 195, 10 }
+        };
+
+        private static Dictionary<int, int> introHighTable = new Dictionary<int, int>()
+        {
+            { 1, 1 },
+            { 6, 2 },
+            { 15, 3 },
+            { 29, 4 },
+            { 47, 5 },
+            { 69, 6 },
+            { 96, 7 },
+            { 127, 8 },
+            { 163, 9 },
+            { 204, 10 }
+        };
+
+        private static int introductionNum(Dictionary<int, int> table, long? best)
+        {
+            var keys = table.Keys.Reverse();
+            var i = 0;
+            foreach (var key in keys)
+            {
+                if (best >= key)
+                {
+                    i = table[key];
+                }
+            }
+            return i;
+        }
+
+        private static long introductionsLow(RiskAssessment ra)
+        {
+            long num = introductionNum(introLowTable, ra.IntroductionsBest);
+            return (long)(num == 0 ? 0 : ra.IntroductionsBest - num);
+        }
+
+        private static long introductionsHigh(RiskAssessment ra)
+        {
+            long num = introductionNum(introHighTable, ra.IntroductionsBest);
+            return (long)(num == 0 ? 0 : ra.IntroductionsBest + num);
+        }
+
+        private static long? AOO10yr(long? occurrences1, long? introductions)
+        {
+            if (introductions.HasValue == false || occurrences1.HasValue == false)
+            {
+                return null;
+            }
+            var occ = occurrences1.Value;
+            var intr = introductions.Value;
+            long result = occ == 0 && intr == 0
+                    ? 0
+                    : occ == 0
+                        ? (long)(4 * Math.Round(0.64 + 0.36 * intr, 0))
+                        : (long)(4 * Math.Round(occ + Math.Pow(intr, ((double)occ + 9) / 10)));
+            //console.log("#&! AOO10yr occ: " + occ.toString() + " intr: " + intr.toString() + " result: " + result.toString())
+            return result;
+        }
+        
+        private static long? AOO10yrBest(RiskAssessment ra)
+        {
+            //console.log("#&! AOO10yrBest")
+            var result = AOO10yr(ra.Occurrences1Best, ra.IntroductionsBest);
+            return result;
+        }
+
+        private static long? AOO10yrLow(RiskAssessment ra)
+        {
+            //console.log("#&! AOO10yrLow")
+            var result = AOO10yr(ra.Occurrences1Low, ra.IntroductionsLow);
+            return result;
+        }
+        private static long? AOO10yrHigh(RiskAssessment ra)
+        {
+            //console.log("#&! AOO10yrHigh")
+            var result = AOO10yr(ra.Occurrences1High, ra.IntroductionsHigh);
+            return result;
+        }
 
         private static string GetDoorknockerType(FA4WithComments args)
         {
@@ -602,34 +695,39 @@ namespace Prod.Api.Helpers
             // public float? RiskAssessmentAOOdarkfigureBest { get; set; } // beste anslag på forekomstarealets mørketall 
             // [Name("AOOMorketallHoytAnslag")]
             // public float? RiskAssessmentAOOdarkfigureHigh { get; set; } // høyt anslag på forekomstarealets mørketall 
-            [Name("Etableringsklasse2")] //to do: kanskje lage funksjon for å klemme etableringsklasse og etableringsklasse2 inn i en og samme kolonne? if "C3" ... 
-            public string SpeciesEstablishmentCategory { get; set; }
 
             //Forekomstareal dørstokkarter
             [Name("AntForekomsterFraEnIntroduksjonLavtAnslag")]
             public long? RiskAssessmentOccurrences1Low { get; set; }	// lavt anslag på antall forekomster fra 1 introduksjon 
             [Name("AntForekomsterFraEnIntroduksjonBesteAnslag")]
             public long? RiskAssessmentOccurrences1Best { get; set; }	// beste anslag på antall forekomster fra 1 introduksjon 
-            [Name("AntForekomsterFraEnIntroduksjonHøytAnslag")]
+            [Name("AntForekomsterFraEnIntroduksjonHoytAnslag")]
             public long? RiskAssessmentOccurrences1High { get; set; }	// høyt anslag på antall forekomster fra 1 introduksjon 
-            [Name("Ant. introduksjoner ila 10 år lavt anslag")]
-            public long? RiskAssessmentIntroductionsLow { get; set; }	    // lavt anslag på antall introduksjoner i løpet av 10 år 
-            [Name("Ant. introduksjoner ila 10 år beste anslag")]
+            [Name("AntIntroduksjonerIla10aarLavtAnslag")]
+            public long? IntroductionsLow { get; set; }	    // lavt anslag på antall introduksjoner i løpet av 10 år - Tester...
+            [Name("AntIntroduksjonerIla10aarBesteAnslag")]
             public long? RiskAssessmentIntroductionsBest { get; set; }	// beste anslag på antall introduksjoner i løpet av 10 år 
-            [Name("Ant. introduksjoner ila 10 år høyt anslag")]
-            public long? RiskAssessmentIntroductionsHigh { get; set; }	// høyt anslag på antall introduksjoner i løpet av 10 år 
-            [Name("AOO 10 år etter første introduksjon lavt anslag")]
-            public long? RiskAssessmentAOO10yrLow { get; set; } // lavt anslag på totalt forekomstareal om 10 år
+            [Name("AntIntroduksjonerIla10aarHoytAnslag")]
+            public long? AssessmentIntroductionsHigh { get; set; }	// høyt anslag på antall introduksjoner i løpet av 10 år - VIRKER IKKE
+            [Name("AOO10aarEtterForsteIntroduksjonLavtAnslag")]
+            public long? RiskAssessmentAOO10yrLow { get; set; } // lavt anslag på totalt forekomstareal om 10 år - VIRKER IKKE
              [Name("AOO 10 år etter første introduksjon beste anslag")]
-            public long? RiskAssessmentAOO10yrBest { get; set; } // beste anslag på totalt forekomstareal om 10 år
+            public long? AOO10yrBest { get; set; } // beste anslag på totalt forekomstareal om 10 år - Tester..
             [Name("AOO 10 år etter første introduksjon høyt anslag")]
-            public long? RiskAssessmentAOO10yrHigh { get; set; } // høyt anslag på totalt forekomstareal om 10 år
+            public long? RiskAssessmentAOO10yrHigh { get; set; } // høyt anslag på totalt forekomstareal om 10 år - VIRKER IKKE
 
             //Regionvis utbredelse "fylkesforekomst"
             [Name("RegionvisUtbredelse")]
             public string RegionalDistribution {get; set;}
-            
+            [Name("RegionvisUtbredelseKommentar")]
+            public string CurrentPresenceComment { get; set; }
             #endregion Utbredelse
+            
+            #region Naturtyper
+            //public List<ImpactedNatureType> ImpactedNatureTypes { get; set; } = new List<ImpactedNatureType>(); TO DO - lag en string av de valgte naturtypene 16.06.22
+            [Name("EffektPaaTruetSjeldenNaturtypeBeskrivelse")] //Todo: Hvilket felt er dette? 16.06.22
+            public string RiskAssessmentThreatenedNatureTypesAffectedDomesticDescription { get; set; }  
+            #endregion Naturtyper
         #endregion Bakgrunnsdata for risikovurdering
         #region RiskAssessment 
         public string Category { get; set; }
@@ -978,7 +1076,7 @@ namespace Prod.Api.Helpers
         // public bool? RiskAssessmentThreatenedNatureTypesDomesticObserved { get; set; }  // Threatened_Nature_Types_Affected_Domestic_Observed
         // public bool? RiskAssessmentThreatenedNatureTypesDomesticDocumented { get; set; }  // Threatened_Nature_Types_Affected_Domestic_Documented
         // public bool? RiskAssessmentThreatenedNatureTypesForeignDocumented { get; set; }  // Threatened_Nature_Types_Affected_Foreign_Documented
-        public string RiskAssessmentThreatenedNatureTypesAffectedDomesticDescription { get; set; }    //  Threatened_Nature_Types_Affected_Domestic_Description  ????????????
+        
         // public string RiskAssessmentThreatenedNatureTypesAffectedAbroadDescription { get; set; } = "";   //  lagt til 15.11.2016
 
         // -- (D) potensiale for å endre én eller flere øvrige naturtyper
@@ -1208,7 +1306,7 @@ namespace Prod.Api.Helpers
         // public string CurrentIndividualCountHighMultiplier { get; set; }
         // public Int64? CurrentIndividualCountHighCalculated { get; set; }
 
-        public Int64? CurrentSpreadArea { get; set; }
+        //public Int64? CurrentSpreadArea { get; set; } //Utkommentert 16.06.22 - bruker ikke EOO i grunn
         //public Int64? CurrentSpreadAreaLowMultiplier { get; set; }
         //public Int64? CurrentSpreadAreaHighMultiplier { get; set; }
         //public Int64? CurrentSpreadAreaMultiplier { get; set; }
@@ -1216,14 +1314,12 @@ namespace Prod.Api.Helpers
         // public Int64? CurrentSpreadAreaHighCalculated { get; set; } //Can't find that this is in use in 2023
         // public Int64? CurrentSpreadAreaCalculated { get; set; } //Can't find that this is in use in 2023
 
-        public string CurrentPresenceComment { get; set; }
 
         public string SpreadAreaInChangedNature { get; set; }
 
 
 
         // (4) Naturtyper
-        //public List<ImpactedNatureType> ImpactedNatureTypes { get; set; } = new List<ImpactedNatureType>();
 
         //public List<RedlistedNatureType> RedlistedNatureTypes { get; set; } = new List<RedlistedNatureType>(); //lagt til 18.11.2016
 
