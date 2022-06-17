@@ -409,6 +409,23 @@ export default function enhanceAssessment(json, appState) {
     
     })
 
+    autorun(() => {
+        if(assessment.speciesStatus) {
+            reaction(
+                () => assessment.speciesStatus,
+                (speciesStatus, previousSpeciesStatus) => {
+                    if (speciesStatus === "C3" && previousSpeciesStatus !== "C3") {
+                        // console.log("¤¤¤ reset speciesEstablishmentCategory")
+                        if(!assessment.speciesEstablishmentCategory) {
+                            runInAction(() => assessment.speciesEstablishmentCategory = "C3")
+                        }
+                    }
+                }
+            )
+        }
+    })
+
+
     reaction(
         () => assessment.alienSpeciesCategory,
         (alienSpeciesCategory, previousAlienSpeciesCategory) => {

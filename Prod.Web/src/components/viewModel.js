@@ -181,7 +181,7 @@ class ViewModel {
             // ************************************************
 
             //todo: test if this is actually in use!! artskartModel is also defined(?) on the assessment, which is where it should be!
-            artskartModel: {},
+            // artskartModel: {},
 
             // påvirkningsfaktorer: [],
             // selectedPåvirkningsfaktor: {
@@ -474,15 +474,6 @@ class ViewModel {
                 })()
             }
         });
-
-
-        // #######################################################################################################
-        // #######################################################################################################
-        // ##################################  assessment reactions  #############################################
-        // #######################################################################################################
-        // #######################################################################################################
-
-
         autorun(() => {
             console.log("isServicesReady: " + this.isServicesReady)
             console.log("exp" + (this.expertgroups != null))
@@ -493,31 +484,40 @@ class ViewModel {
         autorun(() => {
             console.log("viewMode: " + this.viewMode)
         });
+
+
+        // #######################################################################################################
+        // #######################################################################################################
+        // ##################################  assessment reactions  #############################################
+        // #######################################################################################################
+        // #######################################################################################################
+
+
         // autorun(() => {
         //     if(this.assessment && this.assessment.speciesStatus == "C3") {
         //         runInAction(() => this.assessment.speciesEstablishmentCategory = "C3")
         //     }
         // })
-        autorun(() => {
-            if(this.assessment && this.assessment.speciesStatus) {
-                reaction(
-                    () => this.assessment.speciesStatus,
-                    (speciesStatus, previousSpeciesStatus) => {
-                        if (speciesStatus === "C3" && previousSpeciesStatus !== "C3") {
-                            // console.log("¤¤¤ reset speciesEstablishmentCategory")
-                            if(!this.assessment.speciesEstablishmentCategory) {
-                                runInAction(() => this.assessment.speciesEstablishmentCategory = "C3")
-                            }
-                        }
-                    }
-                )
-            }
-        })
-        autorun(() => {
-            if(this.assessmentTabs && this.assessmentTabs.activeTab ) {
-                console.log("current assessmentTab: " + this.assessmentTabs.activeTab.id )
-            }
-        });
+        // autorun(() => {
+        //     if(this.assessment && this.assessment.speciesStatus) {
+        //         reaction(
+        //             () => this.assessment.speciesStatus,
+        //             (speciesStatus, previousSpeciesStatus) => {
+        //                 if (speciesStatus === "C3" && previousSpeciesStatus !== "C3") {
+        //                     // console.log("¤¤¤ reset speciesEstablishmentCategory")
+        //                     if(!this.assessment.speciesEstablishmentCategory) {
+        //                         runInAction(() => this.assessment.speciesEstablishmentCategory = "C3")
+        //                     }
+        //                 }
+        //             }
+        //         )
+        //     }
+        // })
+        // autorun(() => {
+        //     if(this.assessmentTabs && this.assessmentTabs.activeTab ) {
+        //         console.log("current assessmentTab: " + this.assessmentTabs.activeTab.id )
+        //     }
+        // });
         // autorun(() => {
         //     console.log("skal vurderes: " + this.skalVurderes)
         // });
