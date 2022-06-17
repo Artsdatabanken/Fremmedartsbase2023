@@ -87,6 +87,7 @@ namespace Prod.Api.Helpers
                         dest.SpreadNatureFreqNumTime = GetIntroSpreadInfo(src.AssesmentVectors, "spread", "freqs");
                         dest.RegionalDistribution = GetRegionalDistribution(src.Fylkesforekomster);
                         dest.SpeciesStatus = GetSpeciesStatus(src.SpeciesStatus, src.SpeciesEstablishmentCategory);
+                        dest.IntroductionsLow = introductionsLow(src.RiskAssessment);
 
                     });
 
@@ -105,8 +106,6 @@ namespace Prod.Api.Helpers
             return speciesEstablishmentCategory;
         }
 
-        // SpeciesEstablishmentCategory SpeciesStatus
-
         private static string GetRegionalDistribution(List<Fylkesforekomst> fylkesforekomster)
         {
             if (fylkesforekomster == null || fylkesforekomster.Count == 0)
@@ -118,10 +117,13 @@ namespace Prod.Api.Helpers
             {
                 if (fylkesforekomster[i].State0 == 0 && fylkesforekomster[i].State1 == 0 && fylkesforekomster[i].State3 == 0)
                 {
-                    fylkesliste.Add(""); //TO DO: sjekk om dette funker! 15.06.22
+                    break; // fylkesliste.Add(""); //TO DO: sjekk om dette funker! 15.06.22
                 }
+                // else
+                // {
                 string newreg = fylkesforekomster[i].Fylke + "//" + fylkesforekomster[i].State0 + "//" + fylkesforekomster[i].State1 + "//" + fylkesforekomster[i].State3;
                 fylkesliste.Add(newreg);
+                // }
             }
             return string.Join("; ", fylkesliste);
         }
@@ -370,7 +372,6 @@ namespace Prod.Api.Helpers
                     i = table[key];
                 }
             }
-            // console.log("¤&introductionNum result: " + i + " type:" + typeof(i))
             return i;
         }
 
@@ -703,7 +704,7 @@ namespace Prod.Api.Helpers
             [Name("AntForekomsterFraEnIntroduksjonHoytAnslag")]
             public long? RiskAssessmentOccurrences1High { get; set; }	// høyt anslag på antall forekomster fra 1 introduksjon 
             [Name("AntIntroduksjonerIla10aarLavtAnslag")]
-            public long? IntroductionsLow { get; set; }	    // lavt anslag på antall introduksjoner i løpet av 10 år - VIRKER IKKE
+            public long? IntroductionsLow { get; set; }	    // lavt anslag på antall introduksjoner i løpet av 10 år - Tester...
             [Name("AntIntroduksjonerIla10aarBesteAnslag")]
             public long? RiskAssessmentIntroductionsBest { get; set; }	// beste anslag på antall introduksjoner i løpet av 10 år 
             [Name("AntIntroduksjonerIla10aarHoytAnslag")]
@@ -711,7 +712,7 @@ namespace Prod.Api.Helpers
             [Name("AOO10aarEtterForsteIntroduksjonLavtAnslag")]
             public long? RiskAssessmentAOO10yrLow { get; set; } // lavt anslag på totalt forekomstareal om 10 år - VIRKER IKKE
              [Name("AOO 10 år etter første introduksjon beste anslag")]
-            public long? RiskAssessmentAOO10yrBest { get; set; } // beste anslag på totalt forekomstareal om 10 år - VIRKER IKKE
+            public long? AOO10yrBest { get; set; } // beste anslag på totalt forekomstareal om 10 år - Tester..
             [Name("AOO 10 år etter første introduksjon høyt anslag")]
             public long? RiskAssessmentAOO10yrHigh { get; set; } // høyt anslag på totalt forekomstareal om 10 år - VIRKER IKKE
 
