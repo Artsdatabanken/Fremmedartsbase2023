@@ -117,7 +117,7 @@ namespace Prod.Api.Helpers
             {
                 if (fylkesforekomster[i].State0 == 0 && fylkesforekomster[i].State1 == 0 && fylkesforekomster[i].State3 == 0)
                 {
-                    return string.Empty; //TO DO: sjekk om dette funker! 15.06.22
+                    fylkesliste.Add(""); //TO DO: sjekk om dette funker! 15.06.22
                 }
                 string newreg = fylkesforekomster[i].Fylke + "//" + fylkesforekomster[i].State0 + "//" + fylkesforekomster[i].State1 + "//" + fylkesforekomster[i].State3;
                 fylkesliste.Add(newreg);
@@ -602,34 +602,39 @@ namespace Prod.Api.Helpers
             // public float? RiskAssessmentAOOdarkfigureBest { get; set; } // beste anslag på forekomstarealets mørketall 
             // [Name("AOOMorketallHoytAnslag")]
             // public float? RiskAssessmentAOOdarkfigureHigh { get; set; } // høyt anslag på forekomstarealets mørketall 
-            [Name("Etableringsklasse2")] //to do: kanskje lage funksjon for å klemme etableringsklasse og etableringsklasse2 inn i en og samme kolonne? if "C3" ... 
-            public string SpeciesEstablishmentCategory { get; set; }
 
             //Forekomstareal dørstokkarter
             [Name("AntForekomsterFraEnIntroduksjonLavtAnslag")]
             public long? RiskAssessmentOccurrences1Low { get; set; }	// lavt anslag på antall forekomster fra 1 introduksjon 
             [Name("AntForekomsterFraEnIntroduksjonBesteAnslag")]
             public long? RiskAssessmentOccurrences1Best { get; set; }	// beste anslag på antall forekomster fra 1 introduksjon 
-            [Name("AntForekomsterFraEnIntroduksjonHøytAnslag")]
+            [Name("AntForekomsterFraEnIntroduksjonHoytAnslag")]
             public long? RiskAssessmentOccurrences1High { get; set; }	// høyt anslag på antall forekomster fra 1 introduksjon 
-            [Name("Ant. introduksjoner ila 10 år lavt anslag")]
-            public long? RiskAssessmentIntroductionsLow { get; set; }	    // lavt anslag på antall introduksjoner i løpet av 10 år 
-            [Name("Ant. introduksjoner ila 10 år beste anslag")]
+            [Name("AntIntroduksjonerIla10aarLavtAnslag")]
+            public long? IntroductionsLow { get; set; }	    // lavt anslag på antall introduksjoner i løpet av 10 år - VIRKER IKKE
+            [Name("AntIntroduksjonerIla10aarBesteAnslag")]
             public long? RiskAssessmentIntroductionsBest { get; set; }	// beste anslag på antall introduksjoner i løpet av 10 år 
-            [Name("Ant. introduksjoner ila 10 år høyt anslag")]
-            public long? RiskAssessmentIntroductionsHigh { get; set; }	// høyt anslag på antall introduksjoner i løpet av 10 år 
-            [Name("AOO 10 år etter første introduksjon lavt anslag")]
-            public long? RiskAssessmentAOO10yrLow { get; set; } // lavt anslag på totalt forekomstareal om 10 år
+            [Name("AntIntroduksjonerIla10aarHoytAnslag")]
+            public long? AssessmentIntroductionsHigh { get; set; }	// høyt anslag på antall introduksjoner i løpet av 10 år - VIRKER IKKE
+            [Name("AOO10aarEtterForsteIntroduksjonLavtAnslag")]
+            public long? RiskAssessmentAOO10yrLow { get; set; } // lavt anslag på totalt forekomstareal om 10 år - VIRKER IKKE
              [Name("AOO 10 år etter første introduksjon beste anslag")]
-            public long? RiskAssessmentAOO10yrBest { get; set; } // beste anslag på totalt forekomstareal om 10 år
+            public long? RiskAssessmentAOO10yrBest { get; set; } // beste anslag på totalt forekomstareal om 10 år - VIRKER IKKE
             [Name("AOO 10 år etter første introduksjon høyt anslag")]
-            public long? RiskAssessmentAOO10yrHigh { get; set; } // høyt anslag på totalt forekomstareal om 10 år
+            public long? RiskAssessmentAOO10yrHigh { get; set; } // høyt anslag på totalt forekomstareal om 10 år - VIRKER IKKE
 
             //Regionvis utbredelse "fylkesforekomst"
             [Name("RegionvisUtbredelse")]
             public string RegionalDistribution {get; set;}
-            
+            [Name("RegionvisUtbredelseKommentar")]
+            public string CurrentPresenceComment { get; set; }
             #endregion Utbredelse
+            
+            #region Naturtyper
+            //public List<ImpactedNatureType> ImpactedNatureTypes { get; set; } = new List<ImpactedNatureType>(); TO DO - lag en string av de valgte naturtypene 16.06.22
+            [Name("EffektPaaTruetSjeldenNaturtypeBeskrivelse")] //Todo: Hvilket felt er dette? 16.06.22
+            public string RiskAssessmentThreatenedNatureTypesAffectedDomesticDescription { get; set; }  
+            #endregion Naturtyper
         #endregion Bakgrunnsdata for risikovurdering
         #region RiskAssessment 
         public string Category { get; set; }
@@ -978,7 +983,7 @@ namespace Prod.Api.Helpers
         // public bool? RiskAssessmentThreatenedNatureTypesDomesticObserved { get; set; }  // Threatened_Nature_Types_Affected_Domestic_Observed
         // public bool? RiskAssessmentThreatenedNatureTypesDomesticDocumented { get; set; }  // Threatened_Nature_Types_Affected_Domestic_Documented
         // public bool? RiskAssessmentThreatenedNatureTypesForeignDocumented { get; set; }  // Threatened_Nature_Types_Affected_Foreign_Documented
-        public string RiskAssessmentThreatenedNatureTypesAffectedDomesticDescription { get; set; }    //  Threatened_Nature_Types_Affected_Domestic_Description  ????????????
+        
         // public string RiskAssessmentThreatenedNatureTypesAffectedAbroadDescription { get; set; } = "";   //  lagt til 15.11.2016
 
         // -- (D) potensiale for å endre én eller flere øvrige naturtyper
@@ -1208,7 +1213,7 @@ namespace Prod.Api.Helpers
         // public string CurrentIndividualCountHighMultiplier { get; set; }
         // public Int64? CurrentIndividualCountHighCalculated { get; set; }
 
-        public Int64? CurrentSpreadArea { get; set; }
+        //public Int64? CurrentSpreadArea { get; set; } //Utkommentert 16.06.22 - bruker ikke EOO i grunn
         //public Int64? CurrentSpreadAreaLowMultiplier { get; set; }
         //public Int64? CurrentSpreadAreaHighMultiplier { get; set; }
         //public Int64? CurrentSpreadAreaMultiplier { get; set; }
@@ -1216,14 +1221,12 @@ namespace Prod.Api.Helpers
         // public Int64? CurrentSpreadAreaHighCalculated { get; set; } //Can't find that this is in use in 2023
         // public Int64? CurrentSpreadAreaCalculated { get; set; } //Can't find that this is in use in 2023
 
-        public string CurrentPresenceComment { get; set; }
 
         public string SpreadAreaInChangedNature { get; set; }
 
 
 
         // (4) Naturtyper
-        //public List<ImpactedNatureType> ImpactedNatureTypes { get; set; } = new List<ImpactedNatureType>();
 
         //public List<RedlistedNatureType> RedlistedNatureTypes { get; set; } = new List<RedlistedNatureType>(); //lagt til 18.11.2016
 
