@@ -88,7 +88,9 @@ namespace Prod.Api.Helpers
                         dest.RegionalDistribution = GetRegionalDistribution(src.Fylkesforekomster);
                         dest.SpeciesStatus = GetSpeciesStatus(src.SpeciesStatus, src.SpeciesEstablishmentCategory);
                         dest.IntroductionsLow = introductionsLow(src.RiskAssessment);
-
+                        
+                        // overkjøre status for vurderinger som kom fra horizontscanning
+                        dest.EvaluationStatus = GetProgress(src);
                     });
 
 
@@ -422,6 +424,26 @@ namespace Prod.Api.Helpers
             //console.log("#&! AOO10yrHigh")
             var result = AOO10yr(ra.Occurrences1High, ra.IntroductionsHigh);
             return result;
+        }
+
+        private static string GetProgress(FA4 ass)
+        {
+            if (ass.EvaluationStatus == "imported" || (ass.HorizonDoScanning == false &&
+                                                       ass.LastUpdatedAt < IndexHelper._dateTimeForHorScanDone))
+            {
+                return "notStarted";
+            }
+
+            if (ass.EvaluationStatus == "inprogress")
+            {
+                return "inprogress";
+            }
+            else if (ass.EvaluationStatus == "finished")
+            {
+                return "finished";
+            }
+
+            return string.Empty;
         }
 
         private static string GetDoorknockerType(FA4WithComments args)
