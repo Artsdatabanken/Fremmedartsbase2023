@@ -93,6 +93,9 @@ namespace Prod.Api.Helpers
                         dest.AOO10yrLow = AOO10yrLow(src.RiskAssessment); //returnerer nada 
                         dest.AOO10yrHigh = AOO10yrHigh(src.RiskAssessment); //returnerer nada 
 
+                        
+                        // overkjøre status for vurderinger som kom fra horizontscanning
+                        dest.EvaluationStatus = GetProgress(src);
                     });
 
 
@@ -426,6 +429,26 @@ namespace Prod.Api.Helpers
             //kan vurdere å legge inn en spørring på om arten er en dørstokkart..
             var result = AOO10yr(ra.Occurrences1High, ra.IntroductionsHigh);
             return result;
+        }
+
+        private static string GetProgress(FA4 ass)
+        {
+            if (ass.EvaluationStatus == "imported" || (ass.HorizonDoScanning == false &&
+                                                       ass.LastUpdatedAt < IndexHelper._dateTimeForHorScanDone))
+            {
+                return "notStarted";
+            }
+
+            if (ass.EvaluationStatus == "inprogress")
+            {
+                return "inprogress";
+            }
+            else if (ass.EvaluationStatus == "finished")
+            {
+                return "finished";
+            }
+
+            return string.Empty;
         }
 
         private static string GetDoorknockerType(FA4WithComments args)

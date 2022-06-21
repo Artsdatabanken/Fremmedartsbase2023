@@ -190,8 +190,10 @@ export default class Assessment52Utbredelse extends React.Component {
             }
         }
 
+        
         ass.riskAssessment.AOOknownInput = areadata.AreaOfOccupancy;
         ass.currentSpreadArea = areadata.AreaExtentOfOccurrence;
+        ass.artskartExcludedLocalities = areadata.ExcludedLocalities;
         ass.artskartManuellAdd = editStats.add;
         ass.artskartManuellRemove = editStats.remove;
         ass.artskartSistOverført = new Date();
@@ -314,7 +316,7 @@ export default class Assessment52Utbredelse extends React.Component {
                             ? <span>{assessment.artskartManuellRemove} {assessment.artskartManuellRemove === 1 ? "rute" : "ruter"} ble manuelt fjernet.</span>
                             : null}
                             {assessment.artskartSelectionGeometry 
-                            ? <span>Et polygon som ekskluderer <b>{assessment.b2ForekomstarealKjentAndel / 4}</b> {assessment.b2ForekomstarealKjentAndel / 4 === 1 ? "rute" : "ruter"} har blitt lagt til.</span>
+                            ? <span>Et polygon som ekskluderer <b>{assessment.artskartExcludedLocalities}</b> {assessment.artskartExcludedLocalities=== 1 ? "rute" : "ruter"} har blitt lagt til.</span>
                             : null}
                         </div>
                         {(!!assessment.artskartAdded || !!assessment.artskartRemoved || assessment.artskartSelectionGeometry) 

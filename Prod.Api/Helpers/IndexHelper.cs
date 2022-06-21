@@ -83,7 +83,7 @@ namespace Prod.Api.Helpers
 
         private static readonly string Field_TaxonChange = "TaxonChange";
 
-        private static DateTime _dateTimeForHorScanDone = new DateTime(2022, 2,22);
+        internal static DateTime _dateTimeForHorScanDone = new DateTime(2022, 2,22);
         //private const string PotensiellTaksonomiskEndring = "Potensiell taksonomisk endring: ";
         //private const string TaksonomiskEndring = "Automatisk endring av navn: ";
 
