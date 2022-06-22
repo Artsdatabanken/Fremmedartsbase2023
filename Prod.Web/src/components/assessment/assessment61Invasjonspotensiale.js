@@ -490,6 +490,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                 marginTop: "10px"
                             }}>
                             <Criterion criterion={critB} appState={appState} mode="noheading"/>
+                            <ErrorList errorhandler={errorhandler} errorids={["(b)info1"]} />
                         </div>
                         : null}
                        
