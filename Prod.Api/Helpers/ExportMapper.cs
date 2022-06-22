@@ -88,7 +88,14 @@ namespace Prod.Api.Helpers
                         dest.RegionalDistribution = GetRegionalDistribution(src.Fylkesforekomster);
                         dest.SpeciesStatus = GetSpeciesStatus(src.SpeciesStatus, src.SpeciesEstablishmentCategory);
                         dest.IntroductionsLow = introductionsLow(src.RiskAssessment);
+                        dest.IntroductionsHigh = introductionsHigh(src.RiskAssessment);
+                        dest.AOO10yrBest = AOO10yrBest(src.RiskAssessment);
+                        dest.AOO10yrLow = AOO10yrLow(src.RiskAssessment); //returnerer nada 
+                        dest.AOO10yrHigh = AOO10yrHigh(src.RiskAssessment); //returnerer nada 
 
+                        
+                        // overkjøre status for vurderinger som kom fra horizontscanning
+                        dest.EvaluationStatus = GetProgress(src);
                     });
 
 
@@ -117,7 +124,7 @@ namespace Prod.Api.Helpers
             {
                 if (fylkesforekomster[i].State0 == 0 && fylkesforekomster[i].State1 == 0 && fylkesforekomster[i].State3 == 0)
                 {
-                    break; // fylkesliste.Add(""); //TO DO: sjekk om dette funker! 15.06.22
+                    break; 
                 }
                 // else
                 // {
@@ -406,22 +413,42 @@ namespace Prod.Api.Helpers
         
         private static long? AOO10yrBest(RiskAssessment ra)
         {
-            //console.log("#&! AOO10yrBest")
+            //kan vurdere å legge inn en spørring på om arten er en dørstokkart..
             var result = AOO10yr(ra.Occurrences1Best, ra.IntroductionsBest);
             return result;
         }
 
         private static long? AOO10yrLow(RiskAssessment ra)
         {
-            //console.log("#&! AOO10yrLow")
+            //kan vurdere å legge inn en spørring på om arten er en dørstokkart..
             var result = AOO10yr(ra.Occurrences1Low, ra.IntroductionsLow);
             return result;
         }
         private static long? AOO10yrHigh(RiskAssessment ra)
         {
-            //console.log("#&! AOO10yrHigh")
+            //kan vurdere å legge inn en spørring på om arten er en dørstokkart..
             var result = AOO10yr(ra.Occurrences1High, ra.IntroductionsHigh);
             return result;
+        }
+
+        private static string GetProgress(FA4 ass)
+        {
+            if (ass.EvaluationStatus == "imported" || (ass.HorizonDoScanning == false &&
+                                                       ass.LastUpdatedAt < IndexHelper._dateTimeForHorScanDone))
+            {
+                return "notStarted";
+            }
+
+            if (ass.EvaluationStatus == "inprogress")
+            {
+                return "inprogress";
+            }
+            else if (ass.EvaluationStatus == "finished")
+            {
+                return "finished";
+            }
+
+            return string.Empty;
         }
 
         private static string GetDoorknockerType(FA4WithComments args)
@@ -577,7 +604,7 @@ namespace Prod.Api.Helpers
         public bool RiskAssessmentYearFirstReproductionNatureInsecure { get; set; }
         [Name("Første obs etablering norsk natur")]
         public int? RiskAssessmentYearFirstEstablishedNature { get; set; }
-        [Name("Usikkerhet Første obs etablering norsk natur")]
+        [Name("UsikkerhetForsteObsEtableringNorskNatur")]
         public bool RiskAssessmentYearFirstEstablishedNatureInsecure { get; set; }
         
         #endregion Artens status
@@ -704,17 +731,17 @@ namespace Prod.Api.Helpers
             [Name("AntForekomsterFraEnIntroduksjonHoytAnslag")]
             public long? RiskAssessmentOccurrences1High { get; set; }	// høyt anslag på antall forekomster fra 1 introduksjon 
             [Name("AntIntroduksjonerIla10aarLavtAnslag")]
-            public long? IntroductionsLow { get; set; }	    // lavt anslag på antall introduksjoner i løpet av 10 år - Tester...
+            public long? IntroductionsLow { get; set; }	    // lavt anslag på antall introduksjoner i løpet av 10 år - Denne funker!!
             [Name("AntIntroduksjonerIla10aarBesteAnslag")]
             public long? RiskAssessmentIntroductionsBest { get; set; }	// beste anslag på antall introduksjoner i løpet av 10 år 
             [Name("AntIntroduksjonerIla10aarHoytAnslag")]
-            public long? AssessmentIntroductionsHigh { get; set; }	// høyt anslag på antall introduksjoner i løpet av 10 år - VIRKER IKKE
+            public long? IntroductionsHigh { get; set; }	// høyt anslag på antall introduksjoner i løpet av 10 år - VIRKER IKKE
             [Name("AOO10aarEtterForsteIntroduksjonLavtAnslag")]
-            public long? RiskAssessmentAOO10yrLow { get; set; } // lavt anslag på totalt forekomstareal om 10 år - VIRKER IKKE
+            public long? AOO10yrLow { get; set; } // lavt anslag på totalt forekomstareal om 10 år - VIRKER IKKE 
              [Name("AOO 10 år etter første introduksjon beste anslag")]
-            public long? AOO10yrBest { get; set; } // beste anslag på totalt forekomstareal om 10 år - Tester..
+            public long? AOO10yrBest { get; set; } // beste anslag på totalt forekomstareal om 10 år - Tester.. - her trengs nok en justering i koden. spytter ut feil tall!
             [Name("AOO 10 år etter første introduksjon høyt anslag")]
-            public long? RiskAssessmentAOO10yrHigh { get; set; } // høyt anslag på totalt forekomstareal om 10 år - VIRKER IKKE
+            public long? AOO10yrHigh { get; set; } // høyt anslag på totalt forekomstareal om 10 år - VIRKER IKKE 
 
             //Regionvis utbredelse "fylkesforekomst"
             [Name("RegionvisUtbredelse")]

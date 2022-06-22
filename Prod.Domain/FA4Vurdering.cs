@@ -1666,6 +1666,7 @@ public partial class FA4 // (3.2) Artsegenskaper
 
         public int ArtskartManuellAdd { get; set; }
         public int ArtskartManuellRemove { get; set; }
+        public int ArtskartExcludedLocalities { get; set; }
 
     }
 
