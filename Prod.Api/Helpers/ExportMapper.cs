@@ -92,6 +92,7 @@ namespace Prod.Api.Helpers
                         dest.AOO10yrBest = AOO10yrBest(src.RiskAssessment);
                         dest.AOO10yrLow = AOO10yrLow(src.RiskAssessment); //returnerer nada 
                         dest.AOO10yrHigh = AOO10yrHigh(src.RiskAssessment); //returnerer nada 
+                        dest.ImpactedNatureTypes = GetimpactedNatureTypes(src.ImpactedNatureTypes);
 
                         
                         // overkjøre status for vurderinger som kom fra horizontscanning
@@ -102,6 +103,67 @@ namespace Prod.Api.Helpers
             });
             var mapper = new Mapper(mapperConfig);
             return mapper;
+        }
+
+        private static Dictionary<string, string> tilstandsendringer = new Dictionary<string, string>()
+        {
+            {"ER", "Erosjonsutsatthet" },
+            {"OM","Oksygenmangel"},
+            {"SS","Sandstabilisering" },
+            {"VM","Vannmetning"},
+            {"1AE","Enkeltarts-sammensetning"},
+            {"1AG","Artsgruppe-sammensetning"},
+            {"1AR","Relativ del-artsgruppe-sammensetning"},
+            {"7EU","Eutrofiering"},
+            {"7RA","Rask suksesjon"},
+            {"7SN","Naturlig bestandsreduksjon på tresatt areal"},
+            {"7UB","Ubalanse mellom trofiske nivåer"},
+            {"9TS", "Tresjiktstruktur"},
+            {"other","Annen tilstandsendring"},
+            {"F11", "F11"},
+            {"F13", "F13"}
+        };
+
+        private static List<string> GetTilstandsendringer(Dictionary<string, string> table, List <string> statecode)
+        {
+            List <string> navn = new List<string>();
+            for (var i = 0; i < statecode.Count; ++i)
+            {
+                navn.Add(table[statecode[i]]);
+            }
+            return navn;
+        }
+
+        private static string GetimpactedNatureTypes(List<FA4.ImpactedNatureType> impactedNatureTypes)
+        {
+            if (impactedNatureTypes == null || impactedNatureTypes.Count == 0)
+            {
+                return string.Empty;
+            }
+                //Interessert i: niNCode name timeHorizon colonizedArea affectedArea og stateChange - sistnevnte er en liste i seg selv, f.eks.: ["OM", "1AE", "1AG"]
+                //ninCode//name//timeHorizon//
+                var NatDat = new List<string>();
+                
+                for (var i = 0; i < impactedNatureTypes.Count; ++i) 
+                { 
+                    if(impactedNatureTypes[i].StateChange.Count > 0)
+                    {
+                        List <string> navn = GetTilstandsendringer(tilstandsendringer, impactedNatureTypes[i].StateChange);
+                        string StateChange = string.Join("|", navn);
+
+                        string newcats = impactedNatureTypes[i].NiNCode + "//" + impactedNatureTypes[i].Name + "//" + impactedNatureTypes[i].TimeHorizon + "//" + impactedNatureTypes[i].ColonizedArea + "//" + impactedNatureTypes[i].AffectedArea + "//" + StateChange;
+                        NatDat.Add(newcats);
+
+                    }
+                    else
+                    {
+                        string newcat = impactedNatureTypes[i].NiNCode + "//" + impactedNatureTypes[i].Name + "//" + impactedNatureTypes[i].TimeHorizon + "//" + impactedNatureTypes[i].ColonizedArea + "//" + impactedNatureTypes[i].AffectedArea + "//" + "";
+                        NatDat.Add(newcat);
+                    }
+                }
+
+                return string.Join("; ", NatDat);
+            
         }
 
         private static string GetSpeciesStatus(string speciesStatus, string speciesEstablishmentCategory)
@@ -377,6 +439,7 @@ namespace Prod.Api.Helpers
                 if (best >= key)
                 {
                     i = table[key];
+                    break;
                 }
             }
             return i;
@@ -418,7 +481,7 @@ namespace Prod.Api.Helpers
             return result;
         }
 
-        private static long? AOO10yrLow(RiskAssessment ra)
+        private static long? AOO10yrLow(RiskAssessment ra) //, FA4Export fA
         {
             //kan vurdere å legge inn en spørring på om arten er en dørstokkart..
             var result = AOO10yr(ra.Occurrences1Low, ra.IntroductionsLow);
@@ -751,6 +814,8 @@ namespace Prod.Api.Helpers
             #endregion Utbredelse
             
             #region Naturtyper
+            [Name("EffektPaaNaturtyper")] 
+            public string ImpactedNatureTypes {get; set;}
             //public List<ImpactedNatureType> ImpactedNatureTypes { get; set; } = new List<ImpactedNatureType>(); TO DO - lag en string av de valgte naturtypene 16.06.22
             [Name("EffektPaaTruetSjeldenNaturtypeBeskrivelse")] //Todo: Hvilket felt er dette? 16.06.22
             public string RiskAssessmentThreatenedNatureTypesAffectedDomesticDescription { get; set; }  
