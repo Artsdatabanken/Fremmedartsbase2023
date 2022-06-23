@@ -324,7 +324,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             : r.AOO50yrBest >= 20 && r.AOOchangeBest > 0.2 ? 3
             : r.AOO50yrBest >= 20 && r.AOOchangeBest > 0.05 ? 2
             : r.AOO50yrBest >= 8 && r.AOOchangeBest > 0.2 ? 2
-            : r.AOO50yrBest >= 4 ? 1
+        : r.AOO50yrBest >= 4 ? 1
             : 0
         },
         get adefaultLow() {
@@ -738,10 +738,33 @@ function enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering,
 
     extendObservable(riskAssessment, {
         get vurderingIsDoorKnocker() {return vurdering.isDoorKnocker},
-        get vurderingCurrentExistenceAreaCalculated() {return vurdering.currentExistenceAreaCalculated},
+        // get vurderingCurrentExistenceAreaCalculated() {return vurdering.currentExistenceAreaCalculated},
         get vurderingAllImpactedNatureTypes() {return vurdering.impactedNatureTypes.map(x => x)},
         get redlistedNatureTypes() {return riskAssessment.vurderingAllImpactedNatureTypes.map(x => x).filter(x => !isNaN(x.niNCode))},
         get NiNNatureTypes() {return riskAssessment.vurderingAllImpactedNatureTypes.map(x => x).filter(x => isNaN(x.niNCode))},
+
+        get existenceAreaIn50Yr() {
+            //A2 = (sqrt(A1) + vTsqrt(pi)/1000)^2
+            // A1 == AOOtotalBest
+            // T == 50
+            // v == Expansionspeed [fra brukte modell]
+            const a1 = riskAssessment.AOOtotalBest
+            const t = 50 // ??
+            const v = riskAssessment.expansionSpeed
+            const a2 = Math.pow(sqrt(a1) + (v*t*sqrt(pi))/1000, 2)
+
+            // assessment.assessmentConclusion == "AssessedSelfReproducing"
+            const result = 
+                riskAssessment.bmetodkey === "B1" || riskAssessment.bmetodkey === "B2a1"
+                ? a2
+                : NaN
+            return result
+        },
+        
+
+
+
+
 
         // C criteria
         get impactedNaturtypesColonizedAreaLevel() {

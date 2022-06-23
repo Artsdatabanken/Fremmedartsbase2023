@@ -365,7 +365,7 @@ export default class Assessment52Utbredelse extends React.Component {
                                 <DistributionTable/>
                             </div>
                         </div>
-                        <ErrorList  errorhandler={errorhandler} errorids={["(a)err1",  "(a)err666", "(a)err18", "(a)err19", "(a)err20", "(a)err22", "(a)err23", "(a)err24", "(a)warn4", "(a)warn5"]} />
+                        <ErrorList  errorhandler={errorhandler} errorids={["(a)err1",  "(a)err666", "(a)err18", "(a)err19", "(a)err20", "(a)err22", "(a)err23", "(a)err24", "(a)warn4", "(a)warn5", "(b)info1"]} />
                         <br/>
                         <div className="changedNature">
                             <p>Andel av kjent forekomstareal i sterkt endra natur (%) </p>
