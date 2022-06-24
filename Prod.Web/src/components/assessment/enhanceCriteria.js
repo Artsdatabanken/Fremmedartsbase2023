@@ -756,7 +756,7 @@ function enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering,
             // assessment.assessmentConclusion == "AssessedSelfReproducing"
             const result = 
                 riskAssessment.bmetodkey === "B1" || riskAssessment.bmetodkey === "B2a1"
-                ? a2
+                ? Math.round(a2)
                 : NaN
             return result
         },

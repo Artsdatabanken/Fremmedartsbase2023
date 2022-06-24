@@ -2,12 +2,16 @@ import {observable} from 'mobx';
 const errorhandler = observable({
     _errobjs: [],
     _warnobjs: [],
+    _infoobjs: [],
     _allids:{},
     get hasErrors() {
         return Object.keys(this.errors).filter(key => this.errors[key] !== null).length > 0
     },
     get hasWarnings() {
         return Object.keys(this.warnings).filter(key => this.warnings[key] !== null).length > 0
+    },
+    get hasInfos() {
+        return Object.keys(this.infos).filter(key => this.infos[key] !== null).length > 0
     },
     addErrors(errorobjectarray) {
         // **** errorobjectarray format ****
@@ -40,6 +44,8 @@ const errorhandler = observable({
                 this._errobjs.push(errobj)
             } else if(errobj.type === "warning" ) {
                 this._warnobjs.push(errobj)
+            } else if(errobj.type === "info" ) {
+                this._infoobjs.push(errobj)
             }
             this._allids[errobj.id] = errobj
         }
@@ -62,6 +68,18 @@ const errorhandler = observable({
                 result[warnobj.id] = warnobj.msg
             } else {
                 result[warnobj.id] = null
+            }
+        }
+        return result
+    },
+
+    get infos() {
+        const result = {}
+        for(const infoobj of this._infoobjs) {
+            if(infoobj.cond) {
+                result[infoobj.id] = infoobj.msg
+            } else {
+                result[infoobj.id] = null
             }
         }
         return result
