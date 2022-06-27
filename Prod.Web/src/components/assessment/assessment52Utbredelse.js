@@ -471,11 +471,11 @@ export default class Assessment52Utbredelse extends React.Component {
                     <div className="statusField">
                         <div className="labels">
                             <p>Kjent utbredelsesområde (km<sup>2</sup>)</p>
-                            <p>Bestandsstørrelse</p>
+                            {/* <p>Bestandsstørrelse</p> */}
                         </div>
                         <div className="numbers otherInfo">
                             <Xcomp.Number observableValue={[assessment, "currentSpreadArea"]} integer/>    
-                            <Xcomp.Number observableValue={[assessment, "currentIndividualCount"]} integer/>
+                            {/* <Xcomp.Number observableValue={[assessment, "currentIndividualCount"]} integer/> */}
                         </div>
                     </div>
                 </fieldset>
