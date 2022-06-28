@@ -766,12 +766,15 @@ namespace Prod.Api.Controllers
             if (!string.IsNullOrWhiteSpace(fab4.ArtskartSelectionGeometry))
             {
                 queryparams += $"&geojsonPolygon=";
-                dynamic json = JsonSerializer.Deserialize<dynamic>(fab4.ArtskartSelectionGeometry);
-                dynamic coordinates = json.geometry.coordinates;
-                dynamic items = coordinates[0];
-                foreach (dynamic item in items)
+                JsonElement json = JsonSerializer.Deserialize<JsonElement>(fab4.ArtskartSelectionGeometry);
+                var coordinates = json.GetProperty("geometry")
+                    .GetProperty("coordinates")
+                    .EnumerateArray();//.TryGetStringArray("coordinates");
+                //dynamic items = coordinates[0];
+                foreach (JsonElement item in coordinates)
                 {
-                    foreach (dynamic o in item)
+                    //var list = item.TryGetStringArray()
+                    foreach (JsonElement o in item.EnumerateArray())
                     {
                         string s = o.ToString();
                         queryparams += s.Replace(",", ".") + ",";
