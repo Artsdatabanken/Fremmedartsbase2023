@@ -90,9 +90,10 @@ namespace Prod.Api.Helpers
                         dest.IntroductionsLow = introductionsLow(src.RiskAssessment);
                         dest.IntroductionsHigh = introductionsHigh(src.RiskAssessment);
                         dest.AOO10yrBest = AOO10yrBest(src.RiskAssessment);
-                        dest.AOO10yrLow = AOO10yrLow(src.RiskAssessment); //returnerer nada 
-                        dest.AOO10yrHigh = AOO10yrHigh(src.RiskAssessment); //returnerer nada 
+                        dest.AOO10yrLow = AOO10yrLow(src.RiskAssessment); 
+                        dest.AOO10yrHigh = AOO10yrHigh(src.RiskAssessment); 
                         dest.ImpactedNatureTypes = GetimpactedNatureTypes(src.ImpactedNatureTypes);
+                        dest.coastLineSections = GetCoastLineSections(src.CoastLineSections);
 
                         
                         // overkjøre status for vurderinger som kom fra horizontscanning
@@ -103,6 +104,23 @@ namespace Prod.Api.Helpers
             });
             var mapper = new Mapper(mapperConfig);
             return mapper;
+        }
+
+        private static string GetCoastLineSections(List<FA4.CoastLineSection> coastLineSections)
+        {
+            var ZoneSections = new List<string>();
+            
+                for (var i = 0; i < coastLineSections.Count; ++i) 
+                { 
+                    if (coastLineSections[i].None.Equals(true) || coastLineSections[i].OpenCoastLine.Equals(true) || coastLineSections[i].Skagerrak.Equals(true))
+                    {
+                        string newcat = coastLineSections[i].ClimateZone + "-" + (coastLineSections[i].None.Equals(true)? "None//" : "") + (coastLineSections[i].OpenCoastLine.Equals(true)? "OpenCoastLine//" : "") + (coastLineSections[i].Skagerrak.Equals(true)? "Skagerrak//" : "");
+                        ZoneSections.Add(newcat);
+                    }
+
+                }
+                return string.Join("; ", ZoneSections);
+            
         }
 
         private static Dictionary<string, string> tilstandsendringer = new Dictionary<string, string>()
@@ -470,29 +488,27 @@ namespace Prod.Api.Helpers
                     : occ == 0
                         ? (long)(4 * Math.Round(0.64 + 0.36 * intr, 0))
                         : (long)(4 * Math.Round(occ + Math.Pow(intr, ((double)occ + 9) / 10)));
-            //console.log("#&! AOO10yr occ: " + occ.toString() + " intr: " + intr.toString() + " result: " + result.toString())
+            
             return result;
         }
         
         private static long? AOO10yrBest(RiskAssessment ra)
         {
-            //kan vurdere å legge inn en spørring på om arten er en dørstokkart..
             var result = AOO10yr(ra.Occurrences1Best, ra.IntroductionsBest);
             return result;
         }
 
-        private static long? AOO10yrLow(RiskAssessment ra) //, FA4Export fA
+        private static long? AOO10yrLow(RiskAssessment ra)
         {
-            //kan vurdere å legge inn en spørring på om arten er en dørstokkart..
-            var result = AOO10yr(ra.Occurrences1Low, ra.IntroductionsLow);
+            var result = AOO10yr(ra.Occurrences1Low, introductionsLow(ra));
             return result;
         }
         private static long? AOO10yrHigh(RiskAssessment ra)
         {
-            //kan vurdere å legge inn en spørring på om arten er en dørstokkart..
-            var result = AOO10yr(ra.Occurrences1High, ra.IntroductionsHigh);
+            var result = AOO10yr(ra.Occurrences1High, introductionsHigh(ra));
             return result;
         }
+
 
         private static string GetProgress(FA4 ass)
         {
@@ -514,7 +530,7 @@ namespace Prod.Api.Helpers
             return string.Empty;
         }
 
-        private static string GetDoorknockerType(FA4WithComments args)
+        private static string GetDoorknockerType(FA4WithComments args) //Denne brukes vel ikke lengre?! 23.06.22
         {
             var ass = args;
             var ass2018 = ass.PreviousAssessments.FirstOrDefault(x => x.RevisionYear == 2018);
@@ -574,32 +590,32 @@ namespace Prod.Api.Helpers
         public int Id { get; set; }
         [Name("Ekspertkomite")]
         public string ExpertGroup { get; set; }
-        [Name("Vurderingsområde")]
+        [Name("Vurderingsomraade")]
         public string EvaluationContext { get; set; }        
         // public bool IsEvaluated { get; set; }  // ???
         //public bool IsDeleted { get; set; }
         [Name("Vurderinsstatus")]
         public string EvaluationStatus { get; set; }
-        [Name("Vitenskapelig navneID")]
+        [Name("VitenskapeligNavneID")]
         public string EvaluatedScientificNameId { get; set; }
         //public Datasett Datasett { get; set; } = new Datasett();
 
-        [Name("Taksonsomisk sti")]
+        [Name("TaksonsomiskSti")]
         public string TaxonHierarcy { get; set; }
         //public string DoorKnockerType { get; set; }
         
-        [Name("Vitenskapelig navn")]
+        [Name("VitenskapeligNavn")]
         public string EvaluatedScientificName { get; set; }
         [Name("Autor")]
         public string EvaluatedScientificNameAuthor { get; set; }
-        [Name("Taksonomisk rang")]
+        [Name("TaksonomiskRang")]
         public string EvaluatedScientificNameRank { get; set; }
 
-        [Name("Norsk navn")]
+        [Name("NorskNavn")]
         public string EvaluatedVernacularName { get; set; }
-        [Name("Sist endret")]
+        [Name("SistEndret")]
         public DateTime LastUpdatedAt { get; set; }
-        [Name("Sist endret av")]
+        [Name("SistEndretAv")]
         public string LastUpdatedBy { get; set; }
         
 
@@ -794,17 +810,17 @@ namespace Prod.Api.Helpers
             [Name("AntForekomsterFraEnIntroduksjonHoytAnslag")]
             public long? RiskAssessmentOccurrences1High { get; set; }	// høyt anslag på antall forekomster fra 1 introduksjon 
             [Name("AntIntroduksjonerIla10aarLavtAnslag")]
-            public long? IntroductionsLow { get; set; }	    // lavt anslag på antall introduksjoner i løpet av 10 år - Denne funker!!
+            public long? IntroductionsLow { get; set; }	    // lavt anslag på antall introduksjoner i løpet av 10 år 
             [Name("AntIntroduksjonerIla10aarBesteAnslag")]
             public long? RiskAssessmentIntroductionsBest { get; set; }	// beste anslag på antall introduksjoner i løpet av 10 år 
             [Name("AntIntroduksjonerIla10aarHoytAnslag")]
-            public long? IntroductionsHigh { get; set; }	// høyt anslag på antall introduksjoner i løpet av 10 år - VIRKER IKKE
+            public long? IntroductionsHigh { get; set; }	// høyt anslag på antall introduksjoner i løpet av 10 år 
             [Name("AOO10aarEtterForsteIntroduksjonLavtAnslag")]
-            public long? AOO10yrLow { get; set; } // lavt anslag på totalt forekomstareal om 10 år - VIRKER IKKE 
+            public long? AOO10yrLow { get; set; } // lavt anslag på totalt forekomstareal om 10 år
              [Name("AOO 10 år etter første introduksjon beste anslag")]
-            public long? AOO10yrBest { get; set; } // beste anslag på totalt forekomstareal om 10 år - Tester.. - her trengs nok en justering i koden. spytter ut feil tall!
+            public long? AOO10yrBest { get; set; } // beste anslag på totalt forekomstareal om 10 år 
             [Name("AOO 10 år etter første introduksjon høyt anslag")]
-            public long? AOO10yrHigh { get; set; } // høyt anslag på totalt forekomstareal om 10 år - VIRKER IKKE 
+            public long? AOO10yrHigh { get; set; } // høyt anslag på totalt forekomstareal om 10 år 
 
             //Regionvis utbredelse "fylkesforekomst"
             [Name("RegionvisUtbredelse")]
@@ -816,9 +832,17 @@ namespace Prod.Api.Helpers
             #region Naturtyper
             [Name("EffektPaaNaturtyper")] 
             public string ImpactedNatureTypes {get; set;}
-            //public List<ImpactedNatureType> ImpactedNatureTypes { get; set; } = new List<ImpactedNatureType>(); TO DO - lag en string av de valgte naturtypene 16.06.22
-            [Name("EffektPaaTruetSjeldenNaturtypeBeskrivelse")] //Todo: Hvilket felt er dette? 16.06.22
-            public string RiskAssessmentThreatenedNatureTypesAffectedDomesticDescription { get; set; }  
+            [Name("EffektPaaTruetSjeldenNaturtypeBeskrivelse")]
+            public string RiskAssessmentThreatenedNatureTypesAffectedDomesticDescription { get; set; }   //Skrivefelt F-kriteriet
+            [Name("EffektOvrigeNaturtyperBeskrivelse")] 
+            public string RiskAssessmentCommonNatureTypesAffectedDomesticDescription { get; set; }       //skrivefelt G-krit
+            [Name("RegionalNaturvariasjonFastlandsNorge")] 
+            public string currentBioClimateZones {get; set;}
+            [Name("KystvannssonerOgSeksjoner")]
+            public string coastLineSections {get; set;}
+            [Name("RegionalNaturvariasjonSvalbard")]
+            public string arcticBioClimateZones {get; set;}
+            
             #endregion Naturtyper
         #endregion Bakgrunnsdata for risikovurdering
         #region RiskAssessment 
@@ -1193,7 +1217,6 @@ namespace Prod.Api.Helpers
         // public bool? RiskAssessmentCommonNatureTypesDomesticObserved { get; set; }  // Common_Nature_Types_Affected_Domestic_Observed
         // public bool? RiskAssessmentCommonNatureTypesDomesticDocumented { get; set; }  // Common_Nature_Types_Affected_Domestic_Documented
         // public bool? RiskAssessmentCommonNatureTypesForeignDocumented { get; set; }  // Common_Nature_Types_Affected_Foreign_Documented
-        public string RiskAssessmentCommonNatureTypesAffectedDomesticDescription { get; set; }         // Common_Nature_Types_Affected_Domestic_Description??????????????
         // public string RiskAssessmentCommonNatureTypesAffectedAbroadDescription { get; set; } = "";        // lagt til 15.11.2016
 
         // -- (E) kan overføre genetisk materiale til stedegne arter
