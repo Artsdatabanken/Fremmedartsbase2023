@@ -774,10 +774,13 @@ namespace Prod.Api.Controllers
                 foreach (JsonElement item in coordinates)
                 {
                     //var list = item.TryGetStringArray()
-                    foreach (JsonElement o in item.EnumerateArray())
+                    foreach (JsonElement i in item.EnumerateArray())
                     {
-                        string s = o.ToString();
-                        queryparams += s.Replace(",", ".") + ",";
+                        foreach (JsonElement o in i.EnumerateArray())
+                        {
+                            string s = o.ToString();
+                            queryparams += s.Replace(",", ".") + ",";
+                        }
                     }
                 }
 
