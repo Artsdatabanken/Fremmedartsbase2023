@@ -93,7 +93,9 @@ namespace Prod.Api.Helpers
                         dest.AOO10yrLow = AOO10yrLow(src.RiskAssessment); 
                         dest.AOO10yrHigh = AOO10yrHigh(src.RiskAssessment); 
                         dest.ImpactedNatureTypes = GetimpactedNatureTypes(src.ImpactedNatureTypes);
-                        dest.coastLineSections = GetCoastLineSections(src.CoastLineSections);
+                        dest.CoastLineSections = GetCoastLineSections(src.CoastLineSections);
+                        dest.CurrentBioClimateZones = GetCurrentBioClimateZones(src.CurrentBioClimateZones);
+                        dest.ArcticBioClimateZones = GetArcticBioClimateZones(src.ArcticBioClimateZones);
 
                         
                         // overkjøre status for vurderinger som kom fra horizontscanning
@@ -104,6 +106,41 @@ namespace Prod.Api.Helpers
             });
             var mapper = new Mapper(mapperConfig);
             return mapper;
+        }
+
+        private static string GetArcticBioClimateZones(List<FA4.BioClimateZonesArctic> arcticBioClimateZones)
+        {
+            var ZoneSections = new List<string>();
+            
+                for (var i = 0; i < arcticBioClimateZones.Count; ++i) 
+                { 
+                    if (arcticBioClimateZones[i].WeakOceanic.Equals(true) ||arcticBioClimateZones[i].TransferSection.Equals(true) || arcticBioClimateZones[i].WeakContinental.Equals(true) || arcticBioClimateZones[i].ClearContinental.Equals(true) )
+                    {
+                        string newcat = arcticBioClimateZones[i].ClimateZone + "-" + (arcticBioClimateZones[i].WeakOceanic.Equals(true)? "WeakOceanic//" : "") + ( arcticBioClimateZones[i].TransferSection.Equals(true)? "TransferSection//" : "") + (arcticBioClimateZones[i].WeakContinental.Equals(true)? "WeakContinental//" : "")
+                        + (arcticBioClimateZones[i].ClearContinental.Equals(true)? "ClearContinental//" : "");
+                        ZoneSections.Add(newcat);
+                    }
+
+                }
+                return string.Join("; ", ZoneSections);
+        }
+
+        private static string GetCurrentBioClimateZones(List<FA4.BioClimateZones> currentBioClimateZones)
+        {
+            var ZoneSections = new List<string>();
+            
+                for (var i = 0; i < currentBioClimateZones.Count; ++i) 
+                { 
+                    if (currentBioClimateZones[i].StrongOceanic.Equals(true) || currentBioClimateZones[i].ClearOceanic.Equals(true) || currentBioClimateZones[i].WeakOceanic.Equals(true) || currentBioClimateZones[i].TransferSection.Equals(true) || currentBioClimateZones[i].WeakContinental.Equals(true))
+                    {
+                        string newcat = currentBioClimateZones[i].ClimateZone + "-" + (currentBioClimateZones[i].StrongOceanic.Equals(true)? "StrongOceanic//" : "") + ( currentBioClimateZones[i].ClearOceanic.Equals(true)? "ClearOceanic//" : "") + (currentBioClimateZones[i].WeakOceanic.Equals(true)? "WeakOceanic//" : "")
+                        + (currentBioClimateZones[i].TransferSection.Equals(true)? "TransferSection//" : "")+ (currentBioClimateZones[i].WeakContinental.Equals(true)? "WeakContinental//" : "");
+                        ZoneSections.Add(newcat);
+                    }
+
+                }
+                return string.Join("; ", ZoneSections);
+            
         }
 
         private static string GetCoastLineSections(List<FA4.CoastLineSection> coastLineSections)
@@ -837,11 +874,11 @@ namespace Prod.Api.Helpers
             [Name("EffektOvrigeNaturtyperBeskrivelse")] 
             public string RiskAssessmentCommonNatureTypesAffectedDomesticDescription { get; set; }       //skrivefelt G-krit
             [Name("RegionalNaturvariasjonFastlandsNorge")] 
-            public string currentBioClimateZones {get; set;}
+            public string CurrentBioClimateZones {get; set;}
             [Name("KystvannssonerOgSeksjoner")]
-            public string coastLineSections {get; set;}
+            public string CoastLineSections {get; set;}
             [Name("RegionalNaturvariasjonSvalbard")]
-            public string arcticBioClimateZones {get; set;}
+            public string ArcticBioClimateZones {get; set;}
             
             #endregion Naturtyper
         #endregion Bakgrunnsdata for risikovurdering
