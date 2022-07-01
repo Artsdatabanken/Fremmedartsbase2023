@@ -139,6 +139,7 @@ export default class Assessment51Naturtyper extends React.Component {
                 </fieldset>
                 <fieldset className="well">
                     <h4>{ntLabels.regionalNaturetypes}</h4>
+                    <p> Angi kombinasjoner av soner og seksjoner hvor arten finnes i dag, eller antas å kunne finnes i framtiden </p>
                     <p> Mer informasjon og kartvisning av soner og seksjoner finner du <a href="https://nin.artsdatabanken.no/Natur_i_Norge/Natursystem/Beskrivelsessystem/Regional_naturvariasjon?informasjon" target="_blank"> her</a>. </p>
                     <br/>
                     {marine && assessment.marine
