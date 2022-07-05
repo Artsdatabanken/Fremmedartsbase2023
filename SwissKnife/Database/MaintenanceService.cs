@@ -5,10 +5,12 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using CsvHelper;
 using CsvHelper.Configuration;
+using Prod.Infrastructure.Helpers;
 
 namespace SwissKnife.Database
 {
@@ -23,7 +25,7 @@ namespace SwissKnife.Database
         //    _database = new Prod.Data.EFCore.SqlServerProdDbContext(connectionString);
         //}
 
-        internal static void RunTaxonomyWash(SqlServerProdDbContext _database, string speciesGroup = "" ,
+        internal static void RunTaxonomyWash(SqlServerProdDbContext _database, string speciesGroup = "",
             bool firstrun = false, bool autoUpdate = false)
         {
             var ts = new TaksonService();
@@ -35,24 +37,33 @@ namespace SwissKnife.Database
                 var batchChanges = false;
                 Console.WriteLine(pointer);
                 _database.ChangeTracker.Clear();
-                var assessments = speciesGroup == "" ? _database.Assessments.OrderBy(x => x.Id).Skip(pointer).Take(batchSize).ToArray() : _database.Assessments.Where(x=>x.Expertgroup == speciesGroup).OrderBy(x => x.Id).Skip(pointer).Take(batchSize).ToArray();
+                var assessments = speciesGroup == ""
+                    ? _database.Assessments.OrderBy(x => x.Id).Skip(pointer).Take(batchSize).ToArray()
+                    : _database.Assessments.Where(x => x.Expertgroup == speciesGroup).OrderBy(x => x.Id).Skip(pointer)
+                        .Take(batchSize).ToArray();
                 if (assessments.Length == 0)
                 {
                     break;
                 }
-                pointer+= assessments.Length;
+
+                pointer += assessments.Length;
 
                 foreach (var item in assessments)
                 {
                     var doc = System.Text.Json.JsonSerializer.Deserialize<FA4>(item.Doc);
-                    var prosessContext = new ProsessContext { assessment = doc, changes = false, DbAssessment = item, dbcontext = _database, historyWorthyChanges = false };
+                    var prosessContext = new ProsessContext
+                    {
+                        assessment = doc, changes = false, DbAssessment = item, dbcontext = _database,
+                        historyWorthyChanges = false
+                    };
 
                     var result = prosessContext
-                        //.BatchSetAssessmentsToResult()
-                        .CheckTaxonomyForChanges(ts, firstrun, autoUpdate);
-                        //.CheckReferencesForChanges(refDict)
+                            //.BatchSetAssessmentsToResult()
+                            .CheckTaxonomyForChanges(ts, firstrun, autoUpdate)
+                        //.CheckReferencesForChanges(refDict);
                         //.DownLoadArtskartDataIfMissing()
-                        //;
+                        ;
+                    //;
                     //.Fix0AndNullFields(dict)
                     //.FixArtskartUtvalg()
                     //.DownLoadArtskartDataIfMissing();
@@ -67,6 +78,7 @@ namespace SwissKnife.Database
                         {
                             UpdateNoHistory(_database, item, result.assessment);
                         }
+
                         commentdatetime = item.LastUpdatedAt;
                         batchChanges = true;
                     }
@@ -77,6 +89,7 @@ namespace SwissKnife.Database
                     _database.SaveChanges();
                 }
             }
+
             if (commentdatetime > DateTime.MinValue)
             {
 
@@ -90,6 +103,7 @@ namespace SwissKnife.Database
 
             }
         }
+
         internal static void TransferFromHs(SqlServerProdDbContext _database)
         {
             var ts = new TaksonService();
@@ -106,6 +120,7 @@ namespace SwissKnife.Database
                 {
                     break;
                 }
+
                 pointer += assessments.Length;
 
                 foreach (var item in assessments)
@@ -122,7 +137,9 @@ namespace SwissKnife.Database
                         continue;
                     }
 
-                    doc.HorizonScanResult = horizonScanResult.Value == true ? "scanned_fullAssessment" : "scanned_noAssessment";
+                    doc.HorizonScanResult = horizonScanResult.Value == true
+                        ? "scanned_fullAssessment"
+                        : "scanned_noAssessment";
                     doc.HorizonDoScanning = horizonScanResult.Value != true;
                     // todo fix potensielt vurderingsendringer her....
                     if (doc.HorizonScanResult == "scanned_fullAssessment")
@@ -142,7 +159,7 @@ namespace SwissKnife.Database
                     item.LastUpdatedAt = docLastUpdatedOn;
                     commentdatetime = item.LastUpdatedAt;
                     batchChanges = true;
-                    
+
                 }
 
                 if (batchChanges)
@@ -150,6 +167,7 @@ namespace SwissKnife.Database
                     _database.SaveChanges();
                 }
             }
+
             if (commentdatetime > DateTime.MinValue)
             {
 
@@ -163,10 +181,15 @@ namespace SwissKnife.Database
 
             }
         }
+
         private static void UpdateAndCreateHistory(SqlServerProdDbContext dbcontext, Assessment assessment, FA4 doc)
         {
             var docLastUpdatedOn = DateTime.Now;
-            var history = new AssessmentHistory() { Id = assessment.Id, Doc = assessment.Doc, HistoryAt = docLastUpdatedOn, UserId = assessment.LastUpdatedByUserId };
+            var history = new AssessmentHistory()
+            {
+                Id = assessment.Id, Doc = assessment.Doc, HistoryAt = docLastUpdatedOn,
+                UserId = assessment.LastUpdatedByUserId
+            };
             dbcontext.AssessmentHistories.Add(history);
 
             doc.LastUpdatedAt = docLastUpdatedOn;
@@ -176,6 +199,7 @@ namespace SwissKnife.Database
             assessment.LastUpdatedAt = docLastUpdatedOn;
             dbcontext.SaveChanges();
         }
+
         private static void UpdateNoHistory(SqlServerProdDbContext dbcontext, Assessment assessment, FA4 doc)
         {
             //var docLastUpdatedOn = DateTime.Now;
@@ -190,13 +214,15 @@ namespace SwissKnife.Database
             dbcontext.SaveChanges();
         }
 
-        public static ProsessContext CheckTaxonomyForChanges(this ProsessContext context, TaksonService ts, bool firstRun = false, bool autoUpdate = false)
+        public static ProsessContext CheckTaxonomyForChanges(this ProsessContext context, TaksonService ts,
+            bool firstRun = false, bool autoUpdate = false)
         {
             var assessment = context.assessment;
             if (assessment.IsDeleted)
             {
                 return context;
             }
+
             var currentTaxonomy = ts.getTaxonInfo(assessment.EvaluatedScientificNameId.Value).GetAwaiter().GetResult();
 
             var caseString = string.Empty;
@@ -216,14 +242,16 @@ namespace SwissKnife.Database
             if (assessment.EvaluatedScientificNameId.Value != currentTaxonomy.ValidScientificNameId)
             {
                 scientificNameIdChange = true;
-                caseString += $"Navnid endret {assessment.EvaluatedScientificNameId.Value} => {currentTaxonomy.ValidScientificNameId}. {(nameChange ? preName + " => " + postName + ". " : string.Empty)}";
+                caseString +=
+                    $"Navnid endret {assessment.EvaluatedScientificNameId.Value} => {currentTaxonomy.ValidScientificNameId}. {(nameChange ? preName + " => " + postName + ". " : string.Empty)}";
             }
             else
             {
                 //sjekk om populærnavn eller sti er feil...
                 if (currentTaxonomy.PrefferedPopularname != null && (assessment.EvaluatedVernacularName == null ||
-                                                                     !assessment.EvaluatedVernacularName.Equals(currentTaxonomy
-                                                                         .PrefferedPopularname)))
+                                                                     !assessment.EvaluatedVernacularName.Equals(
+                                                                         currentTaxonomy
+                                                                             .PrefferedPopularname)))
                 {
                     Console.WriteLine(
                         $"Populærnavn {assessment.EvaluatedVernacularName} => {currentTaxonomy.PrefferedPopularname}");
@@ -231,7 +259,8 @@ namespace SwissKnife.Database
                     context.changes = true;
                 }
 
-                var assessmentVurdertVitenskapeligNavnHierarki = TaksonService.GetFullPathScientificName(currentTaxonomy).Item1;
+                var assessmentVurdertVitenskapeligNavnHierarki =
+                    TaksonService.GetFullPathScientificName(currentTaxonomy).Item1;
 
                 if (assessmentVurdertVitenskapeligNavnHierarki != assessment.TaxonHierarcy)
                 {
@@ -327,7 +356,8 @@ namespace SwissKnife.Database
             assessment.EvaluatedScientificNameRank = currentTaxonomy.CategoryValue;
         }
 
-        private static void CreateOrAddTaxonomicCommentToAssessment(ProsessContext context, int dbAssessmentId, string message)
+        private static void CreateOrAddTaxonomicCommentToAssessment(ProsessContext context, int dbAssessmentId,
+            string message)
         {
             AssessmentComment eksisting = null;
             var eksistings = context.dbcontext.Comments.Where(x =>
@@ -437,6 +467,7 @@ namespace SwissKnife.Database
             public string ScientificNameAuthor { get; set; }
 
         }
+
         public class VascularPlantsImportFormat
         {
             public string ExpertGroup { get; set; }
@@ -455,7 +486,8 @@ namespace SwissKnife.Database
         public static void RunImportNewAssessments(SqlServerProdDbContext _database, string speciesGroup,
             string inputFolder)
         {
-            var existing = _database.Assessments.Where(x=>x.IsDeleted == false).Select(x => new { x.Expertgroup, x.ScientificNameId }).ToArray();
+            var existing = _database.Assessments.Where(x => x.IsDeleted == false)
+                .Select(x => new { x.Expertgroup, x.ScientificNameId }).ToArray();
 
             var theCsvConfiguration = new CsvConfiguration(new CultureInfo("nb-NO"))
             {
@@ -480,7 +512,11 @@ namespace SwissKnife.Database
                     fa4.LastUpdatedAt = DateTime.Now;
                     var doc = System.Text.Json.JsonSerializer.Serialize<FA4>(fa4);
 
-                    var prosessContext = new ProsessContext { assessment = fa4, changes = false, DbAssessment = null, dbcontext = _database, historyWorthyChanges = false };
+                    var prosessContext = new ProsessContext
+                    {
+                        assessment = fa4, changes = false, DbAssessment = null, dbcontext = _database,
+                        historyWorthyChanges = false
+                    };
 
                     var result = prosessContext
                         //.BatchSetAssessmentsToResult()
@@ -493,26 +529,37 @@ namespace SwissKnife.Database
                         ScientificNameId = fa4.EvaluatedScientificNameId.Value,
                         ChangedAt = fa4.LastUpdatedAt
                     };
-                    if (fa4.EvaluatedScientificNameId != importFormat.ScientificNameId || fa4.EvaluatedScientificName != importFormat.ScientificName || (fa4.EvaluatedScientificNameAuthor == null ? string.Empty : fa4.EvaluatedScientificNameAuthor.ToLowerInvariant()) != (importFormat.ScientificNameAuthor == null ? string.Empty : importFormat.ScientificNameAuthor.ToLowerInvariant()))
+                    if (fa4.EvaluatedScientificNameId != importFormat.ScientificNameId ||
+                        fa4.EvaluatedScientificName != importFormat.ScientificName ||
+                        (fa4.EvaluatedScientificNameAuthor == null
+                            ? string.Empty
+                            : fa4.EvaluatedScientificNameAuthor.ToLowerInvariant()) !=
+                        (importFormat.ScientificNameAuthor == null
+                            ? string.Empty
+                            : importFormat.ScientificNameAuthor.ToLowerInvariant()))
                     {
                         Console.WriteLine(
                             $" ERROR - not imported {fa4.EvaluatedScientificNameId} <> {importFormat.ScientificNameId}  {fa4.EvaluatedScientificName} {fa4.EvaluatedScientificNameAuthor} <> {importFormat.ScientificNameAuthor}");
                     }
                     else
                     {
-                        if (existing.Any(x=>x.ScientificNameId == fa4.EvaluatedScientificNameId && x.Expertgroup == fa4.ExpertGroup))
+                        if (existing.Any(x =>
+                                x.ScientificNameId == fa4.EvaluatedScientificNameId &&
+                                x.Expertgroup == fa4.ExpertGroup))
                         {
                             Console.WriteLine(
                                 $" Warn Existing Assessment {fa4.EvaluatedScientificNameId} {fa4.EvaluatedScientificName} {fa4.EvaluatedScientificNameAuthor}");
                         }
                         else
                         {
-                            var exst = existing.FirstOrDefault(x => x.ScientificNameId == fa4.EvaluatedScientificNameId);
+                            var exst = existing.FirstOrDefault(x =>
+                                x.ScientificNameId == fa4.EvaluatedScientificNameId);
                             if (exst != null)
                             {
                                 Console.WriteLine(
                                     $" There is an existing Assessment for this name in expertgroup {exst.Expertgroup} {fa4.EvaluatedScientificNameId} {fa4.EvaluatedScientificName} {fa4.EvaluatedScientificNameAuthor}");
                             }
+
                             _database.Assessments.Add(assessment);
                             datetime = assessment.LastUpdatedAt;
                             _database.SaveChanges();
@@ -521,7 +568,7 @@ namespace SwissKnife.Database
 
                 }
 
-                if (datetime>DateTime.MinValue)
+                if (datetime > DateTime.MinValue)
                 {
                     var timestamp = _database.TimeStamp.Single();
                     timestamp.DateTimeUpdated = datetime;
@@ -529,9 +576,11 @@ namespace SwissKnife.Database
                 }
             }
         }
+
         public static void RunImportHSAssessments(SqlServerProdDbContext _database, string inputFolder)
         {
-            var existing = _database.Assessments.Where(x => x.IsDeleted == false).Select(x => new { x.Expertgroup, x.ScientificNameId }).ToArray();
+            var existing = _database.Assessments.Where(x => x.IsDeleted == false)
+                .Select(x => new { x.Expertgroup, x.ScientificNameId }).ToArray();
 
             var theCsvConfiguration = new CsvConfiguration(new CultureInfo("nb-NO"))
             {
@@ -567,7 +616,9 @@ namespace SwissKnife.Database
                             $"ERROR - could not find in Artsnavnebase: {importFormat.EvaluatedScientificNameId} {importFormat.EvaluatedScientificName} {importFormat.EvaluatedScientificNameAuthor}");
                         continue;
                     }
-                    var fa4 = CreateNewAssessment(importFormat.ExpertGroup, user, importFormat.EvaluatedScientificNameId, horisontScanning, ti);
+
+                    var fa4 = CreateNewAssessment(importFormat.ExpertGroup, user,
+                        importFormat.EvaluatedScientificNameId, horisontScanning, ti);
                     fa4.EvaluationStatus = "inprogress";
                     fa4.LastUpdatedAt = DateTime.Now;
 
@@ -600,11 +651,17 @@ namespace SwissKnife.Database
                             fa4.HorizonEcologicalEffect = importFormat.HorizonEcologicalEffect;
                         if (!string.IsNullOrWhiteSpace(importFormat.HorizonEcologicalEffectDescription))
                             fa4.HorizonEcologicalEffectDescription = importFormat.HorizonEcologicalEffectDescription;
-                        if (fa4.HorizonEcologicalEffect != null && fa4.HorizonEcologicalEffect.ToLowerInvariant() == "yeswhilepresent" && fa4.HorizonEcologicalEffect != "yesWhilePresent")
+                        if (fa4.HorizonEcologicalEffect != null &&
+                            fa4.HorizonEcologicalEffect.ToLowerInvariant() == "yeswhilepresent" &&
+                            fa4.HorizonEcologicalEffect != "yesWhilePresent")
                             fa4.HorizonEcologicalEffect = "yesWhilePresent";
-                        if (fa4.HorizonEcologicalEffect != null && fa4.HorizonEcologicalEffect.ToLowerInvariant() == "no" && fa4.HorizonEcologicalEffect != "no")
+                        if (fa4.HorizonEcologicalEffect != null &&
+                            fa4.HorizonEcologicalEffect.ToLowerInvariant() == "no" &&
+                            fa4.HorizonEcologicalEffect != "no")
                             fa4.HorizonEcologicalEffect = "no";
-                        if (fa4.HorizonEcologicalEffect != null && fa4.HorizonEcologicalEffect.ToLowerInvariant() == "yesaftergone" && fa4.HorizonEcologicalEffect != "yesAfterGone")
+                        if (fa4.HorizonEcologicalEffect != null &&
+                            fa4.HorizonEcologicalEffect.ToLowerInvariant() == "yesaftergone" &&
+                            fa4.HorizonEcologicalEffect != "yesAfterGone")
                             fa4.HorizonEcologicalEffect = "yesAfterGone";
                     }
 
@@ -627,7 +684,7 @@ namespace SwissKnife.Database
                         ScientificNameId = fa4.EvaluatedScientificNameId.Value,
                         ChangedAt = fa4.LastUpdatedAt
                     };
-                    if (fa4.EvaluatedScientificNameId != importFormat.EvaluatedScientificNameId 
+                    if (fa4.EvaluatedScientificNameId != importFormat.EvaluatedScientificNameId
                         //||
                         //fa4.EvaluatedScientificName != importFormat.EvaluatedScientificName ||
                         //(fa4.EvaluatedScientificNameAuthor == null
@@ -636,7 +693,7 @@ namespace SwissKnife.Database
                         //(importFormat.EvaluatedScientificNameAuthor == null
                         //    ? string.Empty
                         //    : importFormat.EvaluatedScientificNameAuthor.ToLowerInvariant())
-                        )
+                       )
                     {
                         Console.WriteLine(
                             $" ERROR - not imported {fa4.EvaluatedScientificNameId} <> {importFormat.EvaluatedScientificNameId}  {fa4.EvaluatedScientificName} {fa4.EvaluatedScientificNameAuthor} <> {importFormat.EvaluatedScientificNameAuthor}");
@@ -644,8 +701,11 @@ namespace SwissKnife.Database
                     else
                     {
                         var alternativeIds = ti.ScientificNames.Select(x => x.ScientificNameId).ToArray()
-                            .Union(new[] { importFormat.EvaluatedScientificNameId, fa4.EvaluatedScientificNameId.Value}).Distinct().ToArray();
-                        var allmatch = existing.Where(x => alternativeIds.Contains(x.ScientificNameId) && x.Expertgroup == fa4.ExpertGroup).ToArray();
+                            .Union(new[]
+                                { importFormat.EvaluatedScientificNameId, fa4.EvaluatedScientificNameId.Value })
+                            .Distinct().ToArray();
+                        var allmatch = existing.Where(x =>
+                            alternativeIds.Contains(x.ScientificNameId) && x.Expertgroup == fa4.ExpertGroup).ToArray();
                         //var exst = existing.SingleOrDefault(x => x.ScientificNameId == fa4.EvaluatedScientificNameId && x.Expertgroup != "Testedyr");
 
                         if (allmatch.Length > 0)
@@ -657,10 +717,11 @@ namespace SwissKnife.Database
 
                             var theDoc = System.Text.Json.JsonSerializer.Deserialize<FA4>(ex.Doc);
                             theDoc.HorizonEstablismentPotential = fa4.HorizonEstablismentPotential;
-                            theDoc.HorizonEstablismentPotentialDescription = fa4.HorizonEstablismentPotentialDescription;
+                            theDoc.HorizonEstablismentPotentialDescription =
+                                fa4.HorizonEstablismentPotentialDescription;
                             theDoc.HorizonEcologicalEffect = fa4.HorizonEcologicalEffect;
                             theDoc.HorizonEcologicalEffectDescription = fa4.HorizonEcologicalEffectDescription;
-                            
+
                             theDoc.HorizonDoScanning = fa4.HorizonDoScanning;
                             if (string.IsNullOrEmpty(theDoc.HorizonScanningStatus) && theDoc.HorizonDoScanning)
                             {
@@ -724,6 +785,7 @@ namespace SwissKnife.Database
                 }
             }
         }
+
         private static FA4 CreateNewAssessment(string expertgroup, User user, int scientificNameId, bool DoorKnocker,
             TaxonInfo ti)
         {
@@ -731,17 +793,19 @@ namespace SwissKnife.Database
             {
                 throw new ArgumentNullException(nameof(expertgroup));
             }
+
             if (user == null)
             {
                 throw new ArgumentNullException(nameof(user));
             }
+
             var vurderingscontext = expertgroup.Contains("Svalbard") ? "S" : "N";
             var vurderingsår = 2021;
             var createdby = "createdbyloading";
 
             //var ts = new Prod.Api.Services.TaxonService();
 
-            
+
             var (hierarcy, rank) = GetFullPathScientificName(ti);
 
 
@@ -765,6 +829,7 @@ namespace SwissKnife.Database
                 rl.HorizonDoScanning = true;
                 rl.HorizonScanningStatus = "notStarted";
             }
+
             //rl.OverordnetKlassifiseringGruppeKode = "rodlisteVurdertArt";
             //rl.RodlisteVurdertArt = "etablertBestandINorge";
             rl.EvaluatedScientificName = ti.ValidScientificName;
@@ -821,9 +886,11 @@ namespace SwissKnife.Database
             //SetArtskartImportSettings(rl);
             return rl;
         }
+
         public static (string, string) GetFullPathScientificName(TaxonInfo ti)
         {
-            string[] ranks = {
+            string[] ranks =
+            {
                 "Kingdom",
                 "Phylum",
                 "Class",
@@ -835,7 +902,8 @@ namespace SwissKnife.Database
             };
 
             var result = ti.Kingdom;
-            var names = new List<string>() {
+            var names = new List<string>()
+            {
                 ti.Phylum,
                 ti.Class,
                 ti.Order,
@@ -853,7 +921,159 @@ namespace SwissKnife.Database
                     result += "/" + name;
                 }
             }
+
             return (result, ranks[n]);
+        }
+
+        public static void RunNightTasks(SqlServerProdDbContext _database)
+        {
+            var ts = new TaksonService();
+            var batchSize = 1000;
+            var pointer = 0;
+            var commentdatetime = DateTime.MinValue;
+
+            var client = new HttpClient();
+            var referenceClient =
+                new Prod.Infrastructure.Services.Client("https://referenceapi.artsdatabanken.no/", client);
+            var references = referenceClient.ReferencesAllAsync(0, 50000, "").GetAwaiter().GetResult();
+            var refDict = references.ToDictionary(x => x.Id, y => y.ReferencePresentation);
+
+            while (true)
+            {
+                var batchChanges = false;
+                Console.WriteLine(pointer);
+                _database.ChangeTracker.Clear();
+                var assessments = _database.Assessments.OrderBy(x => x.Id).Skip(pointer).Take(batchSize).ToArray();
+                if (assessments.Length == 0)
+                {
+                    break;
+                }
+
+                pointer += assessments.Length;
+
+                foreach (var item in assessments)
+                {
+                    var doc = System.Text.Json.JsonSerializer.Deserialize<FA4>(item.Doc);
+                    var prosessContext = new ProsessContext
+                    {
+                        assessment = doc, changes = false, DbAssessment = item, dbcontext = _database,
+                        historyWorthyChanges = false
+                    };
+
+                    var result = prosessContext
+                        //.BatchSetAssessmentsToResult()
+                        //.CheckTaxonomyForChanges(ts)
+                        .CheckReferencesForChanges(refDict)
+                        .DownLoadArtskartDataIfMissing();
+                    //;
+                    //.Fix0AndNullFields(dict)
+                    //.FixArtskartUtvalg()
+                    //.DownLoadArtskartDataIfMissing();
+
+                    if (result.changes)
+                    {
+                        if (result.historyWorthyChanges)
+                        {
+                            UpdateAndCreateHistory(_database, item, result.assessment);
+                        }
+                        else
+                        {
+                            UpdateNoHistory(_database, item, result.assessment);
+                        }
+
+                        commentdatetime = item.LastUpdatedAt;
+                        batchChanges = true;
+                    }
+                }
+
+                if (batchChanges)
+                {
+                    //_database.SaveChanges();
+                }
+            }
+
+            if (commentdatetime > DateTime.MinValue)
+            {
+
+                var stamp = _database.TimeStamp.SingleOrDefault();
+                if (stamp != null && stamp.DateTimeUpdated < commentdatetime)
+                {
+                    stamp.DateTimeUpdated = commentdatetime;
+                }
+
+                //_database.SaveChanges();
+
+            }
+        }
+
+        public static ProsessContext CheckReferencesForChanges(this ProsessContext context,
+            Dictionary<Guid, string> refDict)
+        {
+
+            foreach (var reference in context.assessment.References)
+            {
+                var refr = refDict.ContainsKey(reference.ReferenceId) ? refDict[reference.ReferenceId] : null;
+                if (refr == null) continue;
+                if (reference.FormattedReference == refr) continue;
+                reference.FormattedReference = refr;
+                context.changes = true;
+            }
+
+            return context;
+
+        }
+
+        public static ProsessContext DownLoadArtskartDataIfMissing(this ProsessContext context)
+        {
+            var name = "Datagrunnlag fra Artskart";
+            var fileName = "ArtskartData.zip";
+            var filetype = "application/zip";
+            var assessment = context.assessment;
+            if (assessment.ArtskartSistOverført != null)
+            {
+                var attachDate = context.dbcontext.Attachments.Where(x =>
+                    x.AssessmentId == context.DbAssessment.Id && x.Name == name && x.Type == filetype &&
+                    x.FileName == fileName).Select(x => new {x.Date, x.File.LongLength}).FirstOrDefault();
+
+                if (attachDate == null || attachDate.LongLength < 100 ||
+                    (attachDate.Date == DateTime.MinValue || attachDate.Date < DateTime.Parse(assessment.ArtskartSistOverført,
+                        null, System.Globalization.DateTimeStyles.AdjustToUniversal)))
+                {
+                    var zipfile = ArtskartHelper.GetZipDataFromArtskart(assessment).GetAwaiter().GetResult();
+                    if (zipfile.Length > 0)
+                    {
+                        var attach = context.dbcontext.Attachments.FirstOrDefault(x =>
+                            x.AssessmentId == assessment.Id && x.Name == name && x.Type == filetype &&
+                            x.FileName == fileName);
+                        if (attach != null)
+                        {
+                            attach.File = zipfile;
+                            attach.IsDeleted = false;
+                            attach.Date = DateTime.Now;
+                            attach.UserId = context.DbAssessment.LastUpdatedByUserId;
+                        }
+                        else
+                        {
+                            attach = new Attachment
+                            {
+                                AssessmentId = assessment.Id,
+                                Date = DateTime.Now,
+                                File = zipfile,
+                                FileName = fileName,
+                                Name = name,
+                                Type = filetype,
+                                UserId = context.DbAssessment.LastUpdatedByUserId
+                            };
+                            context.dbcontext.Attachments.Add(attach);
+                        }
+
+                        context.changes = true;
+                    }
+                }
+
+            }
+
+            return context;
         }
     }
 }

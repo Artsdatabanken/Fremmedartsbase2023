@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using IdentityModel.Client;
+using Prod.Infrastructure.Services;
+
 // ReSharper disable AsyncConverter.ConfigureAwaitHighlighting
 
 namespace Prod.Api.Services

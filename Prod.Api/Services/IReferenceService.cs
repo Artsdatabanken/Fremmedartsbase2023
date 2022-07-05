@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Prod.Infrastructure.Services;
 
 namespace Prod.Api.Services
 {
