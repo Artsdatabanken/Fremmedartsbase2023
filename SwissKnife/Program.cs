@@ -26,7 +26,7 @@ namespace SwissKnife
         }
 
         [Command("maintenance", Description = "Run tasks for maintaining database")]
-        [Subcommand(typeof(TaxonomyWash), typeof(TaxonomyWashDirect), typeof(ImportNames), typeof(ImportHSData), typeof(PatchMigration), typeof(TransferFromHorizonScan))]
+        [Subcommand(typeof(TaxonomyWash),typeof(NightTasks), typeof(TaxonomyWashDirect), typeof(ImportNames), typeof(ImportHSData), typeof(PatchMigration), typeof(TransferFromHorizonScan))]
         [HelpOption("--help")]
         internal class Maintenance {
             private int OnExecute(IConsole console)
@@ -49,6 +49,14 @@ namespace SwissKnife
                 private void OnExecute(IConsole console)
                 {
                     MaintenanceService.RunTaxonomyWash(new Prod.Data.EFCore.SqlServerProdDbContext(ConnectionString));
+                }
+            }
+            [Command("nighttasks", Description = "nightly maintenance")]
+            internal class NightTasks : MaintananceBase
+            {
+                private void OnExecute(IConsole console)
+                {
+                    MaintenanceService.RunNightTasks(new Prod.Data.EFCore.SqlServerProdDbContext(ConnectionString));
                 }
             }
 

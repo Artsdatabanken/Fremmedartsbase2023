@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Prod.Api.Services;
 using Prod.Data.EFCore;
+using Prod.Infrastructure.Services;
+
 // ReSharper disable AsyncConverter.ConfigureAwaitHighlighting
 
 namespace Prod.Api.Controllers
