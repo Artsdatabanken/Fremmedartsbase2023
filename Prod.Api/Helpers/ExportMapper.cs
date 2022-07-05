@@ -96,6 +96,7 @@ namespace Prod.Api.Helpers
                         dest.CoastLineSections = GetCoastLineSections(src.CoastLineSections);
                         dest.CurrentBioClimateZones = GetCurrentBioClimateZones(src.CurrentBioClimateZones);
                         dest.ArcticBioClimateZones = GetArcticBioClimateZones(src.ArcticBioClimateZones);
+                        dest.RiskAssessmentMedianLifetime = GetMedianLifetime(src.RiskAssessment);
 
                         
                         // overkjøre status for vurderinger som kom fra horizontscanning
@@ -546,7 +547,37 @@ namespace Prod.Api.Helpers
             return result;
         }
 
-
+        private static int roundToSignificantDecimals(double? num) 
+            {
+                if (!num.HasValue) return 0;
+                int result =
+                    (num >= 10000000) ? (int)Math.Floor((double)(num / 1000000)) * 1000000 :
+                    (num >= 1000000 ) ? (int)Math.Floor((double)(num / 100000))  * 100000  :
+                    (num >= 100000  ) ? (int)Math.Floor((double)(num / 10000))   * 10000   :
+                    (num >= 10000   ) ? (int)Math.Floor((double)(num / 1000))    * 1000    :
+                    (num >= 1000    ) ? (int)Math.Floor((double)(num / 100))     * 100     :
+                    (num >= 100     ) ? (int)Math.Floor((double)(num / 10))      * 10      :
+                    (int)num.Value;
+                return result;
+             }
+        private static int GetMedianLifetime(RiskAssessment ra) {
+            //const k = r.ametodkey
+            int result = (ra.ChosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && ra.AcceptOrAdjustCritA == "accept") ? 
+                ra.Criteria[0].Value == 0 ? 3
+                : ra.Criteria[0].Value == 1 ? 25
+                : ra.Criteria[0].Value == 2 ? 200
+                : ra.Criteria[0].Value == 3 ? 2000
+                : 0
+            : roundToSignificantDecimals(ra.MedianLifetimeInput);
+            // console.log("medianLifetime result: " + result)
+            return result;
+        }
+        // get lifetimeLowerQ() { //TO DO: IMPLEMENTER DISSE
+        //     return roundToSignificantDecimals(r.lifetimeLowerQInput)
+        // },
+        // get lifetimeUpperQ() {
+        //     return roundToSignificantDecimals(r.lifetimeUpperQInput)
+        // }
         private static string GetProgress(FA4 ass)
         {
             if (ass.EvaluationStatus == "imported" || (ass.HorizonDoScanning == false &&
@@ -879,10 +910,39 @@ namespace Prod.Api.Helpers
             public string CoastLineSections {get; set;}
             [Name("RegionalNaturvariasjonSvalbard")]
             public string ArcticBioClimateZones {get; set;}
-            
+            //Vurder her å ta med "habitats" (livsmedium). Må i tilfelle lages en funksjon da livsmedium er ei liste. 
+            //public List<Habitat> Habitats { get; set; } = new List<Habitat>(); - (fra 2018?!)
             #endregion Naturtyper
         #endregion Bakgrunnsdata for risikovurdering
         #region RiskAssessment 
+            #region Invasjonspotensialet
+            //A-kriteriet//
+            [Name("A-kriterietMetode")]
+            public string RiskAssessmentChosenSpreadMedanLifespan { get; set; } //= "";  // ametod (radio)
+            [Name("A-ForenkletGodtaBeregnetSkaar")]
+            public string RiskAssessmentAcceptOrAdjustCritA { get; set; } //= "accept";  // ametod submetod (radio)
+            [Name("A-ForenkletBegrunnelseForJustering")]
+            public string RiskAssessmentReasonForAdjustmentCritA { get; set; }// = ""; // added 06.01.2022
+            [Name("A-NumeriskEstimeringNaavaerendeBestandsstorrelse")]
+            public long? RiskAssessmentPopulationSize { get; set; } // bestandens nåværende størrelse (individtall)
+            [Name("A-NumeriskEstimeringVekstrate")]
+            public double? RiskAssessmentGrowthRate { get; set; } // bestandens multiplikative vekstrate 
+            [Name("A-NumeriskEstimeringMiljovarians")]
+            public double? RiskAssessmentEnvVariance { get; set; } // miljøvarians 
+            [Name("A-NumeriskEstimeringDemografiskVarians")]
+            public double? RiskAssessmentDemVariance { get; set; } // demografisk varians 
+            [Name("A-NumeriskEstimeringBaereevne")]
+            public long? RiskAssessmentCarryingCapacity { get; set; } // bestandens bæreevne (individtall) 
+            [Name("A-NumeriskEstimeringTerskelForKvasiutdoing")]
+            public long? RiskAssessmentExtinctionThreshold { get; set; } // kvasiutdøingsterskel (individtall) 
+             public double? RiskAssessmentMedianLifetimeInput { get; set; } // artens mediane levetid i Norge i år (brukerinput)
+            public long RiskAssessmentMedianLifetime { get; set; } // artens mediane levetid i Norge i år (beregnet/avrundet) - funksjon legges til her
+            public long? RiskAssessmentLifetimeLowerQInput { get; set; } // nedre kvartil for artens levetid i Norge i år 
+            public long RiskAssessmentLifetimeLowerQ { get; set; } // nedre kvartil for artens levetid i Norge i år  - funksjon legges til her
+            public long? RiskAssessmentLifetimeUpperQInput { get; set; } // øvre kvartil for artens levetid i Norge i år 
+            public long RiskAssessmentLifetimeUpperQ  { get; set; } // øvre kvartil for artens levetid i Norge i år - funksjon legges til her
+
+            #endregion Invasjonspotensialet
         public string Category { get; set; }
         public string Criteria { get; set; }
 
@@ -992,9 +1052,7 @@ namespace Prod.Api.Helpers
         // ikke i bruk i 2012 applikasjon (?)
         //public string SpreadingDescription { get; set; } //Spreading_Description
 
-        public string RiskAssessmentAcceptOrAdjustCritA { get; set; } = "accept";  // ametod submetod (radio)
-        public string RiskAssessmentChosenSpreadMedanLifespan { get; set; } = "";  // ametod (radio)
-        public string RiskAssessmentReasonForAdjustmentCritA { get; set; } = ""; // added 06.01.2022
+       
 
         public bool RiskAssessmentActiveSpreadPVAAnalysisSpeciesLongevity { get; set; } // added 27.09.2016
 
@@ -1021,12 +1079,7 @@ namespace Prod.Api.Helpers
 
 
         // ****************************  (A2) Numerisk estimering  ****************************
-        public long? RiskAssessmentPopulationSize { get; set; } // bestandens nåværende størrelse (individtall) 
-        public double? RiskAssessmentGrowthRate { get; set; } // bestandens multiplikative vekstrate 
-        public double? RiskAssessmentEnvVariance { get; set; } // miljøvarians 
-        public double? RiskAssessmentDemVariance { get; set; } // demografisk varians 
-        public long? RiskAssessmentCarryingCapacity { get; set; } // bestandens bæreevne (individtall) 
-        public long? RiskAssessmentExtinctionThreshold { get; set; } // kvasiutdøingsterskel (individtall) 
+        
         // -------- disse ((A2) Numerisk estimering) er erstattet:  
         //todo: *sjekk konvertering fra FAB3 før sletting av utkommentert kode*
         //////public bool ActiveSpreadRscriptSpeciesCount { get; set; } // lagt til 27.09.2016
@@ -1066,14 +1119,6 @@ namespace Prod.Api.Helpers
         // ************************************************************************************
         #endregion
 
-        #region Median life time
-        public double? RiskAssessmentMedianLifetimeInput { get; set; } // artens mediane levetid i Norge i år (brukerinput)
-        public long RiskAssessmentMedianLifetime { get; set; } // artens mediane levetid i Norge i år (beregnet/avrundet)
-        public long? RiskAssessmentLifetimeLowerQInput { get; set; } // nedre kvartil for artens levetid i Norge i år 
-        public long RiskAssessmentLifetimeLowerQ { get; set; } // nedre kvartil for artens levetid i Norge i år 
-        public long? RiskAssessmentLifetimeUpperQInput { get; set; } // øvre kvartil for artens levetid i Norge i år 
-        public long RiskAssessmentLifetimeUpperQ  { get; set; } // øvre kvartil for artens levetid i Norge i år 
-        #endregion Median life time
 
         // public string RiskAssessmentAmethod { get; set; } // metode som ble brukt for å beregne A-kriteriet 
         public int RiskAssessmentAscore { get; set; } // skår for A-kriteriet 
@@ -1473,9 +1518,6 @@ namespace Prod.Api.Helpers
 
         // (4) Naturtyper
 
-        //public List<RedlistedNatureType> RedlistedNatureTypes { get; set; } = new List<RedlistedNatureType>(); //lagt til 18.11.2016
-
-        //public List<Habitat> Habitats { get; set; } = new List<Habitat>();
 
         //public string SpeciesNatureTypesDetails { get; set; } // fab: SpeciesNatureTypesDetails // removed 03.11.2016
 
