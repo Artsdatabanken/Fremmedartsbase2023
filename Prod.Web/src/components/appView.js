@@ -183,7 +183,7 @@ export default class AppView extends React.Component {
                             </b>
                         </button>
                         <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <li><a className="dropdown-item" target="_blank" href="https://www.artsdatabanken.no/Files/42912/Retningslinjer_for__kologisk_risikovurdering_av_fremmede_arter._Versjon_4.4">{labels.guidelines}</a></li>
+                            <li><a className="dropdown-item" target="_blank" href="https://www.artsdatabanken.no/Files/42948/Retningslinjer_for__kologisk_risikovurdering_av_fremmede_arter._Versjon_4.4">{labels.guidelines}</a></li>
                             <li><a className="dropdown-item" target="_blank" href="https://www.artsdatabanken.no/Files/42913/Brukermanual_for_FremmedArtsBasen_2023._Horisontskanning_og__kologisk_risikovurdering_av_fremmede_arter.">{labels.userManual}</a></li>
                             <li><a className="dropdown-item" target="_blank" href="https://brage.nina.no/nina-xmlui/handle/11250/2975978">{labels.changesSince2018}</a></li>
                         </div>
