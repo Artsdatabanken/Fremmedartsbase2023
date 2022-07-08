@@ -306,7 +306,7 @@ export default function enhanceAssessment(json, appState) {
                 ? "UncertainBefore1800"
                 : !assessment.speciesStatus
                 ? "NotDefined"
-                : (assessment.assumedReproducing50Years !== null && !assessment.assumedReproducing50Years)
+                : ((assessment.assumedReproducing50Years !== null && !assessment.assumedReproducing50Years) || (assessment.horizonEstablismentPotential == "0" && assessment.horizonEcologicalEffect == "yesAfterGone"))
                     && (assessment.speciesStatus.startsWith("B1") || assessment.speciesStatus.startsWith("B2") || assessment.speciesStatus.startsWith("C0") || assessment.speciesStatus.startsWith("C1"))
                 ? "EffectWithoutReproduction"
                 : assessment.isRegionallyAlien
