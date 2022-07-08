@@ -1,6 +1,6 @@
 import enhanceCriteria from './enhanceCriteria'
 import fixFylker from './fixFylker'
-import { action, autorun, extendObservable, observable, reaction, toJS} from 'mobx'
+import { action, autorun, extendObservable, observable, reaction, toJS, runInAction} from 'mobx'
 import errorhandler from '../errorhandler';
 import getErrorDefinitions from './errorDefinitions';
 import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils'
@@ -326,6 +326,7 @@ export default function enhanceAssessment(json, appState) {
                     (assessment.assessmentConclusion != "NotDecided" 
                         && assessment.assessmentConclusion != "WillNotBeRiskAssessed" 
                         && assessment.riskAssessment.riskLevelCode != null 
+                        && assessment.previousAssessments.length != 0 //Attempt to fix warning "Attempt to read an array index (0) that is out of bounds (0)". Warning shows for species that was not assessed in 2018 ("previousAssessments": []). 
                         && assessment.previousAssessments[0] != null 
                         && (assessment.previousAssessments[0].riskLevel !== assessment.riskAssessment.riskLevel
                             || assessment.previousAssessments[0].mainCategory == "NotApplicable")
@@ -333,6 +334,7 @@ export default function enhanceAssessment(json, appState) {
                     || (
                         assessment.assessmentConclusion == "WillNotBeRiskAssessed" 
                         && assessment.riskAssessment.riskLevelCode != null 
+                        && assessment.previousAssessments.length != 0 
                         && assessment.previousAssessments[0] != null
                         && assessment.previousAssessments[0].mainCategory != "NotApplicable" 
                     )
