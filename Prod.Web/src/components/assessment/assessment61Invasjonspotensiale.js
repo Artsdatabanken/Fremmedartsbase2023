@@ -474,7 +474,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                         </tr>
                                     </tbody>                            
                                 </table>
-                                <ErrorList errorhandler={errorhandler} errorids={["(a)err7","(a)err8","(a)err9","(a)err10", "B2err1"]} />
+                                <ErrorList errorhandler={errorhandler} errorids={["(a)err9","(a)err10", "B2err1"]} />
                                 <Xcomp.Bool observableValue={[riskAssessment, "notUseSpeciesMap"]} label={"Ønsker ikke å bruke Artskart for å beregne forekomstareal"} />
                                 <p>{labels.Bcrit.commentOrDescription}</p>
                                 <Xcomp.HtmlString  observableValue={[riskAssessment, "commentOrDescription"]} />                      

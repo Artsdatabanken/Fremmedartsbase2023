@@ -61,19 +61,19 @@
         },
         {
             id: "(a)err6",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && (r.AOOtotalBestInput < r.AOOknownInput)},
-            msg: "Estimatet kan ikke justeres til å være lavere enn kjent forekomstareal!"
+            get cond() {return a.isAlienSpecies && !r.doorKnocker && !isNaN(r.AOOtotalBestInput) && (r.AOOtotalBestInput < r.AOOknownInput)},
+            msg: "Det beste anslaget på det totale nåværende forekomstarealet kan ikke være mindre enn det kjente!"
         },
         {
             id: "(a)err7",
-            get cond() {return a.doFullAssessment && (r.AOO1 < r.AOOknown1)},
-            msg: "Det beste anslaget på det totale nåværende forekomstarealet kan ikke være mindre enn det kjente!"
-            // for ">"  se: (a)warn2
+            get cond() {return a.doFullAssessment && (r.bmetodkey === "B2a1") && !isNaN(r.AOO1) && (r.AOO1 < r.AOOknown1)},
+            msg: "Estimatet kan ikke justeres til å være lavere enn kjent forekomstareal!"
+            // for ">"  se: (a)warn2 
         },
         {
             id: "(a)err8",
-            get cond() {return a.doFullAssessment && (r.AOO2 < r.AOOknown2)},
-            msg: "Det beste anslaget på det totale nåværende forekomstarealet kan ikke være mindre enn det kjente!"
+            get cond() {return a.doFullAssessment && (r.bmetodkey === "B2a1") && !isNaN(r.AOO2) &&(r.AOO2 < r.AOOknown2)},
+            msg: "Estimatet kan ikke justeres til å være lavere enn kjent forekomstareal!"
             // for ">"  se: (a)warn3
         },
         {
@@ -146,11 +146,11 @@
             get cond() {return a.isAlienSpecies && !r.doorKnocker && (r.AOOtotalBestInput > r.AOOtotalHighInput)},
             msg: "Beste anslag kan ikke være større enn høyt anslag!"
         },
-        {
-            id: "(a)err22",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && (r.AOOtotalBestInput < r.AOOknownInput)},
-            msg: "Det beste anslaget på det totale nåværende forekomstarealet kan ikke være mindre enn det kjente!"
-        },
+        // {
+        //     id: "(a)err22", //Dette er en duplikat av "(a)err6"
+        //     get cond() {return a.isAlienSpecies && !r.doorKnocker && (r.AOOtotalBestInput < r.AOOknownInput)},
+        //     msg: "Det beste anslaget på det totale nåværende forekomstarealet kan ikke være mindre enn det kjente!"
+        // },
         {
             id: "(a)err23",
             get cond() {return a.isAlienSpecies && !r.doorKnocker && (r.AOO50yrLowInput > r.AOO50yrBestInput)},
