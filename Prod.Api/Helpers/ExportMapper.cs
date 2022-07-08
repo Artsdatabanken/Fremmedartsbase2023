@@ -97,8 +97,9 @@ namespace Prod.Api.Helpers
                         dest.CurrentBioClimateZones = GetCurrentBioClimateZones(src.CurrentBioClimateZones);
                         dest.ArcticBioClimateZones = GetArcticBioClimateZones(src.ArcticBioClimateZones);
                         dest.RiskAssessmentMedianLifetime = GetMedianLifetime(src.RiskAssessment);
-
-                        
+                        dest.RiskAssessmentLifetimeUpperQ = GetLifetimeUpperQ(src.RiskAssessment);  
+                        dest.RiskAssessmentLifetimeLowerQ = GetLifetimeLowerQ(src.RiskAssessment);
+                        dest.RiskAssessmentCriteriaA = GetRiskAssessmentCritera(src.RiskAssessment.Criteria, "A");
                         // overkjøre status for vurderinger som kom fra horizontscanning
                         dest.EvaluationStatus = GetProgress(src);
                     });
@@ -107,6 +108,27 @@ namespace Prod.Api.Helpers
             });
             var mapper = new Mapper(mapperConfig);
             return mapper;
+        }
+
+        private static int GetRiskAssessmentCritera(List<RiskAssessment.Criterion> criteria, string critLetter)
+        { //utvid denne til økologisk effekt også, samt vurder å legge til usikkerheten her 08.07.22.
+            int CritScore = 0;
+            if (critLetter == "A")
+            {
+                CritScore = criteria[0].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
+            }
+
+            if (critLetter == "B")
+            {
+                CritScore = criteria[1].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
+            }
+
+            if (critLetter == "C")
+            {
+                CritScore = criteria[2].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
+            }
+
+            return CritScore;
         }
 
         private static string GetArcticBioClimateZones(List<FA4.BioClimateZonesArctic> arcticBioClimateZones)
@@ -560,8 +582,8 @@ namespace Prod.Api.Helpers
                     (int)num.Value;
                 return result;
              }
-        private static int GetMedianLifetime(RiskAssessment ra) {
-            //const k = r.ametodkey
+        private static int GetMedianLifetime(RiskAssessment ra) 
+        {
             int result = (ra.ChosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && ra.AcceptOrAdjustCritA == "accept") ? 
                 ra.Criteria[0].Value == 0 ? 3
                 : ra.Criteria[0].Value == 1 ? 25
@@ -569,15 +591,16 @@ namespace Prod.Api.Helpers
                 : ra.Criteria[0].Value == 3 ? 2000
                 : 0
             : roundToSignificantDecimals(ra.MedianLifetimeInput);
-            // console.log("medianLifetime result: " + result)
             return result;
         }
-        // get lifetimeLowerQ() { //TO DO: IMPLEMENTER DISSE
-        //     return roundToSignificantDecimals(r.lifetimeLowerQInput)
-        // },
-        // get lifetimeUpperQ() {
-        //     return roundToSignificantDecimals(r.lifetimeUpperQInput)
-        // }
+        private static int GetLifetimeLowerQ(RiskAssessment ra) 
+        { 
+            return roundToSignificantDecimals(ra.LifetimeLowerQInput);
+        }
+        private static int GetLifetimeUpperQ(RiskAssessment ra) 
+        {
+            return roundToSignificantDecimals(ra.LifetimeUpperQInput);
+        }
         private static string GetProgress(FA4 ass)
         {
             if (ass.EvaluationStatus == "imported" || (ass.HorizonDoScanning == false &&
@@ -935,13 +958,20 @@ namespace Prod.Api.Helpers
             public long? RiskAssessmentCarryingCapacity { get; set; } // bestandens bæreevne (individtall) 
             [Name("A-NumeriskEstimeringTerskelForKvasiutdoing")]
             public long? RiskAssessmentExtinctionThreshold { get; set; } // kvasiutdøingsterskel (individtall) 
-             public double? RiskAssessmentMedianLifetimeInput { get; set; } // artens mediane levetid i Norge i år (brukerinput)
-            public long RiskAssessmentMedianLifetime { get; set; } // artens mediane levetid i Norge i år (beregnet/avrundet) - funksjon legges til her
+            [Name("A-NumeriskEstimeringEllerLevedyktighetMedianLevetidBrukerinput")]
+            public double? RiskAssessmentMedianLifetimeInput { get; set; } // artens mediane levetid i Norge i år (brukerinput)
+            [Name("A-KriterietMedianLevetidAvrundet")]
+            public long RiskAssessmentMedianLifetime { get; set; } // artens mediane levetid i Norge i år (beregnet/avrundet) 
+            [Name("A-LevedyktighetsanalyseNedreKvartilBrukerinput")]
             public long? RiskAssessmentLifetimeLowerQInput { get; set; } // nedre kvartil for artens levetid i Norge i år 
-            public long RiskAssessmentLifetimeLowerQ { get; set; } // nedre kvartil for artens levetid i Norge i år  - funksjon legges til her
+            [Name("A-LevedyktighetsanalyseNedreKvartilAvrundet")]
+            public long RiskAssessmentLifetimeLowerQ { get; set; } // nedre kvartil for artens levetid i Norge i år  
+            [Name("A-LevedyktighetsanalyseOvreKvartilBrukerinput")]
             public long? RiskAssessmentLifetimeUpperQInput { get; set; } // øvre kvartil for artens levetid i Norge i år 
-            public long RiskAssessmentLifetimeUpperQ  { get; set; } // øvre kvartil for artens levetid i Norge i år - funksjon legges til her
-
+            [Name("A-LevedyktighetsanalyseOvreKvartilAvrundet")]
+            public long RiskAssessmentLifetimeUpperQ  { get; set; } // øvre kvartil for artens levetid i Norge i år 
+            [Name("A-Skaar")]
+            public int RiskAssessmentCriteriaA  { get; set; } // Gir riktig skår for oppdaterte vurderinger, men gir skår fra 2018 (av en for meg ukjent grunn jeg ikke har rukket å sjekke..) om vurderingen ikke er påbegynt.
             #endregion Invasjonspotensialet
         public string Category { get; set; }
         public string Criteria { get; set; }
@@ -1121,7 +1151,7 @@ namespace Prod.Api.Helpers
 
 
         // public string RiskAssessmentAmethod { get; set; } // metode som ble brukt for å beregne A-kriteriet 
-        public int RiskAssessmentAscore { get; set; } // skår for A-kriteriet 
+        //public int RiskAssessmentAscore { get; set; } // skår for A-kriteriet - returnerer kun 0. Erstattet med RiskassessmentCriteriaA 08.07.22
         public int RiskAssessmentAlow { get; set; } // nedre skår for A-kriteriet (inkludert usikkerhet) 
         public int RiskAssessmentAhigh { get; set; } // øvre skår for A-kriteriet (inkludert usikkerhet) 
         // public string RiskAssessmentBmethod { get; set; } // metode som ble brukt for å beregne B-kriteriet 
