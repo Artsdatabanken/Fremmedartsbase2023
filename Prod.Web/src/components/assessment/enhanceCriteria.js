@@ -745,10 +745,10 @@ function enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering,
 
         get existenceAreaIn50Yr() {
             //A2 = (sqrt(A1) + vTsqrt(pi)/1000)^2
-            // A1 == AOOtotalBest
+            // A1 == AOOtotalBestInput - endret til "Input" 03.08.22 ettersom det er denne ekspertene bruker og ser
             // T == 50
             // v == Expansionspeed [fra brukte modell]
-            const a1 = riskAssessment.AOOtotalBest
+            const a1 = riskAssessment.AOOtotalBestInput
             const t = 50 // ??
             const v = riskAssessment.expansionSpeed
             const a2 = Math.pow(sqrt(a1) + (v*t*sqrt(pi))/1000, 2)

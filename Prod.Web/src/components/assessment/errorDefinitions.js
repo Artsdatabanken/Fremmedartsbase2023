@@ -239,9 +239,9 @@
         },
         {
             id: "(b)info1",
-            get cond() {return a.assessmentConclusion == "AssessedSelfReproducing" && !isNaN(r.existenceAreaIn50Yr) && (r.chosenSpreadYearlyIncrease == "a" || (r.chosenSpreadYearlyIncrease == "b" && r.AOOfirstOccurenceLessThan10Years != "no"))}, //&& !isEmpty(chosenSpreadYearlyIncrease) && (chosenSpreadYearlyIncrease == "a" || (chosenSpreadYearlyIncrease == "b" && AOOfirstOccurenceLessThan10Years == "yes"))
+            get cond() {return a.assessmentConclusion == "AssessedSelfReproducing" && !isNaN(r.existenceAreaIn50Yr) && hasnum(r.AOO50yrBestInput) && r.existenceAreaIn50Yr != r.AOO50yrBestInput && (r.chosenSpreadYearlyIncrease == "a" || (r.chosenSpreadYearlyIncrease == "b" && r.AOOfirstOccurenceLessThan10Years != "no"))}, //&& !isEmpty(chosenSpreadYearlyIncrease) && (chosenSpreadYearlyIncrease == "a" || (chosenSpreadYearlyIncrease == "b" && AOOfirstOccurenceLessThan10Years == "yes"))
             type: "info",
-            get msg() {return `Basert på det antatte forekomstarealet i dag på ${r.AOOtotalBest} km² og en ekspansjonshastighet på ${r.expansionSpeed} meter/år, beregnes forekomstarealet om 50 år å være ${r.existenceAreaIn50Yr} km². Under fanen Utbredelse i Norge er forekomstarealet om 50 år anslått til ${r.AOO50yrBest} km². Vurder om dette stemmer overens`}
+            get msg() {return `Basert på det antatte forekomstarealet i dag på ${r.AOOtotalBest} km² og en ekspansjonshastighet på ${r.expansionSpeed} meter/år, beregnes forekomstarealet om 50 år å være ${r.existenceAreaIn50Yr} km². Under fanen Utbredelse i Norge er forekomstarealet om 50 år anslått til ${r.AOO50yrBestInput} km². Vurder om dette stemmer overens.`}
         },
         {
             id: "Aerr1",
