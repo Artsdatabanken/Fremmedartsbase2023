@@ -100,6 +100,7 @@ namespace Prod.Api.Helpers
                         dest.RiskAssessmentLifetimeUpperQ = GetLifetimeUpperQ(src.RiskAssessment);  
                         dest.RiskAssessmentLifetimeLowerQ = GetLifetimeLowerQ(src.RiskAssessment);
                         dest.RiskAssessmentCriteriaA = GetRiskAssessmentCritera(src.RiskAssessment.Criteria, "A");
+                        dest.RiskAssessmentChosenMethodBcrit = GetRiskAssessmentChosenMethodBcrit(src.RiskAssessment, src.AssessmentConclusion);
                         // overkjøre status for vurderinger som kom fra horizontscanning
                         dest.EvaluationStatus = GetProgress(src);
                     });
@@ -108,6 +109,17 @@ namespace Prod.Api.Helpers
             });
             var mapper = new Mapper(mapperConfig);
             return mapper;
+        }
+
+        private static string GetRiskAssessmentChosenMethodBcrit(RiskAssessment ra, string assConc)
+        {
+            string result = //using terms suggested by Hanno
+            (ra.ChosenSpreadYearlyIncrease == "a") ? "modelling" : 
+            (assConc == "AssessedDoorknocker" && ra.ChosenSpreadYearlyIncrease == "b") ? "introductionpressure":
+            (assConc == "AssessedSelfReproducing" && ra.ChosenSpreadYearlyIncrease == "b" && ra.AOOfirstOccurenceLessThan10Years == "yes") ? "AOO":
+            (assConc == "AssessedSelfReproducing" && ra.ChosenSpreadYearlyIncrease == "b" && ra.AOOfirstOccurenceLessThan10Years == "no") ? "AOO_periodlessthan10years":
+            ""; //retun empty for species not assessed
+            return result;
         }
 
         private static int GetRiskAssessmentCritera(List<RiskAssessment.Criterion> criteria, string critLetter)
@@ -972,6 +984,11 @@ namespace Prod.Api.Helpers
             public long RiskAssessmentLifetimeUpperQ  { get; set; } // øvre kvartil for artens levetid i Norge i år 
             [Name("A-Skaar")]
             public int RiskAssessmentCriteriaA  { get; set; } // Gir riktig skår for oppdaterte vurderinger, men gir skår fra 2018 (av en for meg ukjent grunn jeg ikke har rukket å sjekke..) om vurderingen ikke er påbegynt.
+            //B-kriteriet//
+            [Name("B-kriterietMetode")]
+            public string RiskAssessmentChosenMethodBcrit { get; set; }  // bmetod - must make this using  chosenSpreadYearlyIncrease, AOOfirstOccurenceLessThan10Years and isdoorknocker
+            [Name("B-GjennomsnittligEkspansjonshastighet(mperaar)")]
+            public long? RiskAssessmentExpansionSpeedInput { get; set; }  // ekspansjonshastighet i meter per år - brukerinput -TO DO (03-08-22): BYTT UT DENNE med en som enten bruker Input (hvis bmethod = modelling, eller bruker de FAB-beregnede expansionspeed hvis metoden ikke er "modelling")! 
             #endregion Invasjonspotensialet
         public string Category { get; set; }
         public string Criteria { get; set; }
@@ -1192,7 +1209,7 @@ namespace Prod.Api.Helpers
 
         #region (B) Ekspansjonshastighet
 
-        public string RiskAssessmentChosenSpreadYearlyIncrease { get; set; } = "";  // bmetod (radio)
+       
         public bool RiskAssessmentActiveSpreadYearlyIncreaseObservations { get; set; } //lagt til 29.09.2016
 
 
@@ -1205,7 +1222,7 @@ namespace Prod.Api.Helpers
 
 
         // ********************** ((B1) ekspansjonshastighet  ****************************
-        public long? RiskAssessmentExpansionSpeedInput { get; set; }  // ekspansjonshastighet i meter per år 
+        
         public long? RiskAssessmentExpansionSpeed { get; set; }  // ekspansjonshastighet i meter per år 
         public long? RiskAssessmentExpansionLowerQInput { get; set; } // nedre kvartil for ekspansjonshastighet i meter per år 
         public long? RiskAssessmentExpansionLowerQ { get; set; } // nedre kvartil for ekspansjonshastighet i meter per år 
