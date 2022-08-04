@@ -324,6 +324,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                         </div> 
                         : riskAssessment.chosenSpreadYearlyIncrease == "b" && assessment.isDoorKnocker 
                         ? <div>
+                            <ErrorList errorhandler={errorhandler} errorids={["B2err2"]} />
                             <p>{textDKB}</p>
                         </div> 
                         : riskAssessment.chosenSpreadYearlyIncrease == "b" 
