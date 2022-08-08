@@ -167,11 +167,6 @@
             msg: "Informasjon om forekomstareal må legges inn før metoden Forenklet anslag kan brukes på A-kriteriet"
         },
         {
-            id: "(a)err26",//egentlig en b-error ?
-            get cond() {return r.doorKnocker && r.chosenSpreadYearlyIncrease === "b" && !hasnum(r.occurrences1Best) },
-            msg: "Informasjon om forekomstareal må legges inn før metoden Anslått økning i forekomstareal kan brukes på B-kriteriet"
-        },
-        {
             id: "(a)err27",
             get cond() {return r.doorKnocker && r.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && !hasnum(r.occurrences1Best) },
             msg: "Informasjon om forekomstareal må legges inn før metoden Forenklet anslag kan brukes på A-kriteriet"
@@ -281,7 +276,7 @@
         {
             id: "B2err2",
             get cond() {return a.doFullAssessment && r.doorKnocker && r.bmetodkey === "B2b" && (!hasnum(r.AOO10yrBest) || !hasnum(r.AOO10yrLow) || !hasnum(r.AOO10yrHigh))},
-            msg: "Alle felt angående forekomstareal under fanen Bakgrunnsdata for risikovurdering - Utbredelse må være fylt ut før metoden Anslått økning i forekomstareal kan benyttes."
+            msg: "Informasjon om forekomstareal må legges inn før metoden Anslått økning i forekomstareal kan brukes på B-kriteriet"
         },
         {
             id: "(nat)err1",

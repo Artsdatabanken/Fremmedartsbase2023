@@ -257,7 +257,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                     value={"b"}
                                     disabled={disabled}
                                     observableValue={[riskAssessment, "chosenSpreadYearlyIncrease"]}/>
-                        <ErrorList errorhandler={errorhandler} errorids={["(a)err26","(b)info1"]} />            
+                        <ErrorList errorhandler={errorhandler} errorids={["(b)info1"]} />            
                     
 
                         {riskAssessment.chosenSpreadYearlyIncrease == "a" 
