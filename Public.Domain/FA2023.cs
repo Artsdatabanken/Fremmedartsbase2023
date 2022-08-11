@@ -182,6 +182,8 @@ namespace Public.Domain
         public string RegionallyAlienCategory { get; set; }
         public string NotApplicableCategory { get; set; }
 
+        public string FurtherInfo { get; set; } = "";
+
         public class TimeAndPlace
         {
             public string Place { get; set; }
