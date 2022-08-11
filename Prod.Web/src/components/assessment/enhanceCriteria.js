@@ -620,7 +620,11 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
              return result
         },
         get b2bresulttext() {
-            return `Basert på det beste anslaget på ${r.occurrences1Best} forekomster i løpet av 10 år og ${r.introductionsBest} ytterligere introduksjon(er) i samme tidsperiode er B-kriteriet skåret som ${r.bscore + 1} (med usikkerhet: ${r.blow + 1}–${r.bhigh + 1}). Dette innebærer at artens ekspansjonshastighet ligger ${r.expansionText} (beste anslag: ${r.expansionSpeed} m/år).`
+            const result =
+                (r.occurrences1Best != null && r.introductionsBest != null)
+                ? `Basert på det beste anslaget på ${r.occurrences1Best} forekomster i løpet av 10 år og ${r.introductionsBest} ytterligere introduksjon(er) i samme tidsperiode er B-kriteriet skåret som ${r.bscore + 1} (med usikkerhet: ${r.blow + 1}–${r.bhigh + 1}). Dette innebærer at artens ekspansjonshastighet ligger ${r.expansionText} (beste anslag: ${r.expansionSpeed} m/år).`
+                : ""
+            return result
         },
         get expansionText() {
             return r.bscore === 0 ? "under 50 m/år"
@@ -745,10 +749,10 @@ function enhanceRiskAssessmentComputedVurderingValues(riskAssessment, vurdering,
 
         get existenceAreaIn50Yr() {
             //A2 = (sqrt(A1) + vTsqrt(pi)/1000)^2
-            // A1 == AOOtotalBest
+            // A1 == AOOtotalBestInput - endret til "Input" 03.08.22 ettersom det er denne ekspertene bruker og ser
             // T == 50
             // v == Expansionspeed [fra brukte modell]
-            const a1 = riskAssessment.AOOtotalBest
+            const a1 = riskAssessment.AOOtotalBestInput
             const t = 50 // ??
             const v = riskAssessment.expansionSpeed
             const a2 = Math.pow(sqrt(a1) + (v*t*sqrt(pi))/1000, 2)

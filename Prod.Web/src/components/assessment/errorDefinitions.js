@@ -167,11 +167,6 @@
             msg: "Informasjon om forekomstareal må legges inn før metoden Forenklet anslag kan brukes på A-kriteriet"
         },
         {
-            id: "(a)err26",//egentlig en b-error ?
-            get cond() {return r.doorKnocker && r.chosenSpreadYearlyIncrease === "b" && !hasnum(r.occurrences1Best) },
-            msg: "Informasjon om forekomstareal må legges inn før metoden Anslått økning i forekomstareal kan brukes på B-kriteriet"
-        },
-        {
             id: "(a)err27",
             get cond() {return r.doorKnocker && r.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && !hasnum(r.occurrences1Best) },
             msg: "Informasjon om forekomstareal må legges inn før metoden Forenklet anslag kan brukes på A-kriteriet"
@@ -239,9 +234,9 @@
         },
         {
             id: "(b)info1",
-            get cond() {return a.assessmentConclusion == "AssessedSelfReproducing" && !isNaN(r.existenceAreaIn50Yr) && (r.chosenSpreadYearlyIncrease == "a" || (r.chosenSpreadYearlyIncrease == "b" && r.AOOfirstOccurenceLessThan10Years != "no"))}, //&& !isEmpty(chosenSpreadYearlyIncrease) && (chosenSpreadYearlyIncrease == "a" || (chosenSpreadYearlyIncrease == "b" && AOOfirstOccurenceLessThan10Years == "yes"))
+            get cond() {return a.assessmentConclusion == "AssessedSelfReproducing" && !isNaN(r.existenceAreaIn50Yr) && hasnum(r.AOO50yrBestInput) && r.existenceAreaIn50Yr != r.AOO50yrBestInput && (r.chosenSpreadYearlyIncrease == "a" || (r.chosenSpreadYearlyIncrease == "b" && r.AOOfirstOccurenceLessThan10Years != "no"))}, //&& !isEmpty(chosenSpreadYearlyIncrease) && (chosenSpreadYearlyIncrease == "a" || (chosenSpreadYearlyIncrease == "b" && AOOfirstOccurenceLessThan10Years == "yes"))
             type: "info",
-            get msg() {return `Basert på det antatte forekomstarealet i dag på ${r.AOOtotalBest} km² og en ekspansjonshastighet på ${r.expansionSpeed} meter/år, beregnes forekomstarealet om 50 år å være ${r.existenceAreaIn50Yr} km². Under fanen Utbredelse i Norge er forekomstarealet om 50 år anslått til ${r.AOO50yrBest} km². Vurder om dette stemmer overens`}
+            get msg() {return `Basert på det antatte forekomstarealet i dag på ${r.AOOtotalBest} km² og en ekspansjonshastighet på ${r.expansionSpeed} meter/år, beregnes forekomstarealet om 50 år å være ${r.existenceAreaIn50Yr} km². Under fanen Utbredelse i Norge er forekomstarealet om 50 år anslått til ${r.AOO50yrBestInput} km². Vurder om dette stemmer overens.`}
         },
         {
             id: "Aerr1",
@@ -277,6 +272,11 @@
             id: "B2err1",
             get cond() {return a.doFullAssessment && (r.bmetodkey === "B2a1") && (r.AOOyear1 != null) && (r.AOOyear2 != null) && (((r.AOOyear2 - r.AOOyear1) < 10 ) || ((r.AOOyear2 - r.AOOyear1) > 20 )) },
             msg: "Valgt periode (t2-t1) kan ikke overstige 20 år eller være mindre enn 10 år. Juster perioden."
+        },
+        {
+            id: "B2err2",
+            get cond() {return a.doFullAssessment && r.doorKnocker && r.bmetodkey === "B2b" && (!hasnum(r.AOO10yrBest) || !hasnum(r.AOO10yrLow) || !hasnum(r.AOO10yrHigh))},
+            msg: "Informasjon om forekomstareal må legges inn før metoden Anslått økning i forekomstareal kan brukes på B-kriteriet"
         },
         {
             id: "(nat)err1",

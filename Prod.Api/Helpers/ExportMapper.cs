@@ -99,7 +99,23 @@ namespace Prod.Api.Helpers
                         dest.RiskAssessmentMedianLifetime = GetMedianLifetime(src.RiskAssessment);
                         dest.RiskAssessmentLifetimeUpperQ = GetLifetimeUpperQ(src.RiskAssessment);  
                         dest.RiskAssessmentLifetimeLowerQ = GetLifetimeLowerQ(src.RiskAssessment);
-                        dest.RiskAssessmentCriteriaA = GetRiskAssessmentCritera(src.RiskAssessment.Criteria, "A");
+                        dest.RiskAssessmentCriteriaA = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "A");
+                        dest.RiskAssessmentCriteriaB = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "B");
+                        dest.RiskAssessmentCriteriaC = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "C");
+                        dest.RiskAssessmentCriteriaD = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "D");
+                        dest.RiskAssessmentCriteriaE = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "E");
+                        dest.RiskAssessmentCriteriaF = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "F");
+                        dest.RiskAssessmentCriteriaG = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "G");
+                        dest.RiskAssessmentCriteriaH = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "H");
+                        dest.RiskAssessmentCriteriaI = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "I");
+                        dest.RiskAssessmentChosenMethodBcrit = GetRiskAssessmentChosenMethodBcrit(src.RiskAssessment, src.AssessmentConclusion);
+                        dest.RiskAssessmentExpansionSpeed = GetRiskAssessmentExpansionSpeed(src.RiskAssessment, "50", src.AssessmentConclusion);
+                        dest.RiskAssessmentExpansionLowerQ = GetRiskAssessmentExpansionSpeed(src.RiskAssessment, "25", src.AssessmentConclusion);
+                        dest.RiskAssessmentExpansionUpperQ = GetRiskAssessmentExpansionSpeed(src.RiskAssessment, "75", src.AssessmentConclusion);
+                        dest.ImpactedRedlistEvaluatedSpecies = GetDEcritInformation(src.RiskAssessment.SpeciesSpeciesInteractions);
+                        dest.ImpactedRedlistEvaluatedSpeciesEnsemble = GetDEcritInformationNaturetypes(src.RiskAssessment.SpeciesNaturetypeInteractions);
+                        dest.IntrogressionRedlistedSpecies = GetHcritInformation(src.RiskAssessment.GeneticTransferDocumented);
+                        
                         // overkjøre status for vurderinger som kom fra horizontscanning
                         dest.EvaluationStatus = GetProgress(src);
                     });
@@ -110,22 +126,251 @@ namespace Prod.Api.Helpers
             return mapper;
         }
 
-        private static int GetRiskAssessmentCritera(List<RiskAssessment.Criterion> criteria, string critLetter)
+        private static string GetHcritInformation(List<RiskAssessment.SpeciesSpeciesInteraction> genTrans)
+        {
+            if (genTrans == null || genTrans.Count == 0)
+            {
+                return string.Empty;
+            }
+            var Redlistinfo = new List<string>();
+            for (var i = 0; i < genTrans.Count; ++i) 
+            {
+                string interact = genTrans[i].ScientificName + "//" + genTrans[i].RedListCategory + "//" + genTrans[i].KeyStoneSpecie + "//" + genTrans[i].Scale;
+                Redlistinfo.Add(interact);
+            }
+            return string.Join("; ", Redlistinfo);
+        }
+
+        private static string GetDEcritInformationNaturetypes(List<RiskAssessment.SpeciesNaturetypeInteraction> speciesNatInt)
+        {
+            if (speciesNatInt == null || speciesNatInt.Count == 0)
+            {
+                return string.Empty;
+            }
+            var Redlistinfo = new List<string>();
+            for (var i = 0; i < speciesNatInt.Count; ++i) 
+            {
+                string interact = speciesNatInt[i].NiNCode + "//" + speciesNatInt[i].KeyStoneSpecie 
+                + "//" + speciesNatInt[i].Effect + "//" + speciesNatInt[i].Scale + "//" + speciesNatInt[i].InteractionType;
+                Redlistinfo.Add(interact);
+            }
+            return string.Join("; ", Redlistinfo);
+        }
+
+        private static string GetDEcritInformation(List<RiskAssessment.SpeciesSpeciesInteraction> speciesSpeciesInteractions)
+        {
+            if (speciesSpeciesInteractions == null || speciesSpeciesInteractions.Count == 0)
+            {
+                return string.Empty;
+            }
+            var Redlistinfo = new List<string>();
+            for (var i = 0; i < speciesSpeciesInteractions.Count; ++i) 
+            {
+                string interact = speciesSpeciesInteractions[i].ScientificName + "//" + speciesSpeciesInteractions[i].RedListCategory + "//" + speciesSpeciesInteractions[i].KeyStoneSpecie 
+                + "//" + speciesSpeciesInteractions[i].Effect + "//" + speciesSpeciesInteractions[i].Scale + "//" + speciesSpeciesInteractions[i].InteractionType;
+                Redlistinfo.Add(interact);
+            }
+            return string.Join("; ", Redlistinfo);
+
+        }
+
+        private static long? GetExpansionSpeedB2a(RiskAssessment ra) 
+        {
+            decimal result;
+            if(ra.AOOfirstOccurenceLessThan10Years == "yes")
+            { 
+              result =  
+              (ra.AOOyear2 == 0 || ra.AOOyear2 == null || ra.AOOyear1 == 0 || ra.AOOyear1 == null || (ra.AOOyear2 - ra.AOOyear1) < 10 || ra.AOO1 <= 0 || ra.AOO2 <= 0) ? 
+                0
+                :  Math.Truncate((decimal)(Math.Sqrt((double)(ra.AOOtotalBestInput/ra.AOOknownInput)) * 2000 * (Math.Sqrt(Math.Ceiling((double)(ra.AOO2 / 4))) - Math.Sqrt(Math.Ceiling((double)(ra.AOO1 / 4)))) / ((ra.AOOyear2 - ra.AOOyear1) * Math.Sqrt(Math.PI)))); //js: trunc(sqrt(r.AOOdarkfigureBest) * 2000 * (sqrt(ceil(r.AOO2 / 4)) - sqrt(ceil(r.AOO1 / 4))) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
+                //darkfigures is not saved. Use r.AOOtotalBest / r.AOOknown 
+            }
+
+            else result = (decimal)Math.Truncate(20 * (Math.Sqrt((double)ra.AOO50yrBestInput) - Math.Sqrt((double)ra.AOOtotalBestInput)) / Math.Sqrt(Math.PI));
+
+            return (long?)result;
+        }
+
+        private static long? GetExpansionLowerQB2a(RiskAssessment ra) 
+        {
+            decimal result;
+            if(ra.AOOfirstOccurenceLessThan10Years == "yes")
+            { 
+              result =  
+              (ra.AOOyear2 == 0 || ra.AOOyear2 == null || ra.AOOyear1 == 0 || ra.AOOyear1 == null || (ra.AOOyear2 - ra.AOOyear1) < 10 || ra.AOO1 <= 0 || ra.AOO2 <= 0) ? 
+                0
+                :  Math.Truncate((decimal)(Math.Sqrt((double)(ra.AOOtotalLowInput/ra.AOOknownInput)) * 2000 * (Math.Sqrt(Math.Ceiling((double)(ra.AOO2 / 4))) - Math.Sqrt(Math.Ceiling((double)(ra.AOO1 / 4)))) / ((ra.AOOyear2 - ra.AOOyear1) * Math.Sqrt(Math.PI)))); //js: trunc(sqrt(r.AOOdarkfigureBest) * 2000 * (sqrt(ceil(r.AOO2 / 4)) - sqrt(ceil(r.AOO1 / 4))) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
+                //darkfigures is not saved. Use ra.AOOtotalLow / ra.AOOknown 
+            }
+
+            else result = (decimal)Math.Truncate(20 * (Math.Sqrt((double)ra.AOO50yrLowInput) - Math.Sqrt((double)ra.AOOtotalBestInput)) / Math.Sqrt(Math.PI));
+
+            return (long?)result;
+        }
+
+        private static long? GetExpansionUpperQB2a(RiskAssessment ra) 
+        {
+            decimal result;
+            if(ra.AOOfirstOccurenceLessThan10Years == "yes")
+            { 
+              result =  
+              (ra.AOOyear2 == 0 || ra.AOOyear2 == null || ra.AOOyear1 == 0 || ra.AOOyear1 == null || (ra.AOOyear2 - ra.AOOyear1) < 10 || ra.AOO1 <= 0 || ra.AOO2 <= 0) ? 
+                0
+                :  Math.Truncate((decimal)(Math.Sqrt((double)(ra.AOOtotalHighInput/ra.AOOknownInput)) * 2000 * (Math.Sqrt(Math.Ceiling((double)(ra.AOO2 / 4))) - Math.Sqrt(Math.Ceiling((double)(ra.AOO1 / 4)))) / ((ra.AOOyear2 - ra.AOOyear1) * Math.Sqrt(Math.PI)))); //js: trunc(sqrt(r.AOOdarkfigureBest) * 2000 * (sqrt(ceil(r.AOO2 / 4)) - sqrt(ceil(r.AOO1 / 4))) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
+                //darkfigures is not saved. Use ra.AOOtotalHigh / ra.AOOknown 
+            }
+
+            else result = (decimal)Math.Truncate(20 * (Math.Sqrt((double)ra.AOO50yrHighInput) - Math.Sqrt((double)ra.AOOtotalBestInput)) / Math.Sqrt(Math.PI));
+
+            return (long?)result;
+        }
+        private static long? GetRiskAssessmentExpansionSpeed(RiskAssessment ra, string quant, string assConc) 
+        {
+            long? exspeed;
+            long? exspeedLow;
+            long? exspeedHigh;
+            if(ra.ChosenSpreadYearlyIncrease == "a") 
+            {
+                exspeed = ra.ExpansionSpeedInput; 
+                exspeedLow = ra.ExpansionLowerQInput; 
+                exspeedHigh = ra.ExpansionUpperQInput; 
+            }
+
+            else if(assConc == "AssessedSelfReproducing" && ra.ChosenSpreadYearlyIncrease == "b") 
+            {
+                exspeed = GetExpansionSpeedB2a(ra);
+                exspeedLow = GetExpansionLowerQB2a(ra); 
+                exspeedHigh = GetExpansionUpperQB2a(ra); 
+            }
+
+            else if(assConc == "AssessedDoorknocker" && ra.ChosenSpreadYearlyIncrease == "b") 
+            {
+                var localvarB = AOO10yrBest(ra);
+                var localvarL = AOO10yrLow(ra);
+                var localvarH = AOO10yrHigh(ra);
+        
+                exspeed = 
+                    (localvarB == null) ? 0 :
+                    (long?)Math.Truncate(200 * (Math.Sqrt((double)(localvarB/ 4)) - 1) / Math.Sqrt(Math.PI));
+                
+                exspeedLow = 
+                    (localvarL == null)? 0 :
+                    (long?)Math.Truncate(200 * (Math.Sqrt((double)(localvarL/ 4)) - 1) / Math.Sqrt(Math.PI));
+                
+                exspeedHigh = 
+                    (localvarH == null)? 0 :
+                    (long?)Math.Truncate(200 * (Math.Sqrt((double)(localvarH/ 4)) - 1) / Math.Sqrt(Math.PI));
+            }
+            else 
+            
+            {
+                exspeed = 0;
+                exspeedLow = 0;
+                exspeedHigh = 0;
+            }
+            
+            return  ( quant == "50")? roundToSignificantDecimals(exspeed) : //note that this will return rounded values for ExpansionSpeedInput (same goes for lower and higher)
+                    ( quant == "25")? roundToSignificantDecimals(exspeedLow) : 
+                    ( quant == "75")? roundToSignificantDecimals(exspeedHigh) :
+                    0; 
+        }
+
+        private static string GetRiskAssessmentChosenMethodBcrit(RiskAssessment ra, string assConc)
+        {
+            string result = //using terms suggested by Hanno
+            (ra.ChosenSpreadYearlyIncrease == "a") ? "modelling" : 
+            (assConc == "AssessedDoorknocker" && ra.ChosenSpreadYearlyIncrease == "b") ? "introductionpressure":
+            (assConc == "AssessedSelfReproducing" && ra.ChosenSpreadYearlyIncrease == "b" && ra.AOOfirstOccurenceLessThan10Years == "yes") ? "AOO":
+            (assConc == "AssessedSelfReproducing" && ra.ChosenSpreadYearlyIncrease == "b" && ra.AOOfirstOccurenceLessThan10Years == "no") ? "AOO_periodlessthan10years":
+            ""; //retun empty for species not assessed
+            return result;
+        }
+
+        private static int? GetRiskAssessmentCritera(FA4 ass, List<RiskAssessment.Criterion> criteria, string critLetter)
         { //utvid denne til økologisk effekt også, samt vurder å legge til usikkerheten her 08.07.22.
-            int CritScore = 0;
+           int? CritScore = 0;
             if (critLetter == "A")
             {
+                if(GetProgress(ass) == "notStarted" || ass.RiskAssessment.ChosenSpreadMedanLifespan == "RedListCategoryLevel") 
+                {
+                    CritScore = null;
+                }
+                else
                 CritScore = criteria[0].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
             }
 
             if (critLetter == "B")
             {
+                if(GetProgress(ass) == "notStarted" || GetRiskAssessmentChosenMethodBcrit(ass.RiskAssessment, ass.AssessmentConclusion) == "") 
+                {
+                    CritScore = null;
+                }
+                else
                 CritScore = criteria[1].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
             }
 
             if (critLetter == "C")
             {
+                if(GetProgress(ass) == "notStarted") 
+                {
+                    CritScore = null;
+                }
+                else
                 CritScore = criteria[2].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
+            }
+            if (critLetter == "D")
+            {
+                if(GetProgress(ass) == "notStarted") 
+                {
+                    CritScore = null;
+                }
+                else
+                CritScore = criteria[3].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
+            }
+            if (critLetter == "E")
+            {
+                if(GetProgress(ass) == "notStarted") 
+                {
+                    CritScore = null;
+                }
+                else
+                CritScore = criteria[4].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
+            }
+            if (critLetter == "F")
+            {
+                if(GetProgress(ass) == "notStarted") 
+                {
+                    CritScore = null;
+                }
+                else
+                CritScore = criteria[5].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
+            }
+            if (critLetter == "G")
+            {
+                if(GetProgress(ass) == "notStarted") 
+                {
+                    CritScore = null;
+                }
+                else
+                CritScore = criteria[6].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
+            }
+            if (critLetter == "H")
+            {
+                if(GetProgress(ass) == "notStarted") 
+                {
+                    CritScore = null;
+                }
+                else
+                CritScore = criteria[7].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
+            }
+            if (critLetter == "I")
+            {
+                if(GetProgress(ass) == "notStarted") 
+                {
+                    CritScore = null;
+                }
+                else
+                CritScore = criteria[8].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
             }
 
             return CritScore;
@@ -715,6 +960,8 @@ namespace Prod.Api.Helpers
         // public string Citation { get; set; }
         [Name("Fremmedartsstatus")]
         public string AlienSpeciesCategory { get; set; }
+        [Name("FremmedartsstatusKommentar")]
+        public string IsAlien { get; set; } // new in 2021
         //public List<string> ReasonForChangeOfCategory { get; set; } = new List<string>();
 
         // public DateTime LockedForEditAt { get; set; }
@@ -866,6 +1113,10 @@ namespace Prod.Api.Helpers
             [Name("AndelAvKjentForekomstarealISterktEndraNatur(%)")]
             public double? RiskAssessmentSpreadHistoryDomesticAreaInStronglyChangedNatureTypes { get; set; }
             //Forekomstareal selvstendig reproduserende
+            [Name("PeriodeAOOfraaar(t0)")]
+            public long? RiskAssessmentAOOendyear1 { get; set; } // basert på periode: f.o.m. år (t0) - (NB!! //todo: denne egenskaper bør skifte navn i neste FAB)
+            [Name("PeriodeAOOtilaar")]
+            public long? RiskAssessmentAOOendyear2 { get; set; } // basert på periode: t.o.m. år  - (NB!! //todo: denne egenskaper bør skifte navn i neste FAB)
             [Name("AOOKjent")]
             public Int64? RiskAssessmentAOOknownInput { get; set; }
             [Name("AOOAntattLavtAnslag")]
@@ -908,9 +1159,9 @@ namespace Prod.Api.Helpers
             public long? IntroductionsHigh { get; set; }	// høyt anslag på antall introduksjoner i løpet av 10 år 
             [Name("AOO10aarEtterForsteIntroduksjonLavtAnslag")]
             public long? AOO10yrLow { get; set; } // lavt anslag på totalt forekomstareal om 10 år
-             [Name("AOO 10 år etter første introduksjon beste anslag")]
+             [Name("AOO10aarEtterForsteIntroduksjonBesteAnslag")]
             public long? AOO10yrBest { get; set; } // beste anslag på totalt forekomstareal om 10 år 
-            [Name("AOO 10 år etter første introduksjon høyt anslag")]
+            [Name("AOO10aarEtterForsteIntroduksjonHoytAnslag")]
             public long? AOO10yrHigh { get; set; } // høyt anslag på totalt forekomstareal om 10 år 
 
             //Regionvis utbredelse "fylkesforekomst"
@@ -939,7 +1190,7 @@ namespace Prod.Api.Helpers
         #endregion Bakgrunnsdata for risikovurdering
         #region RiskAssessment 
             #region Invasjonspotensialet
-            //A-kriteriet//
+            //////A-kriteriet///////
             [Name("A-kriterietMetode")]
             public string RiskAssessmentChosenSpreadMedanLifespan { get; set; } //= "";  // ametod (radio)
             [Name("A-ForenkletGodtaBeregnetSkaar")]
@@ -958,6 +1209,8 @@ namespace Prod.Api.Helpers
             public long? RiskAssessmentCarryingCapacity { get; set; } // bestandens bæreevne (individtall) 
             [Name("A-NumeriskEstimeringTerskelForKvasiutdoing")]
             public long? RiskAssessmentExtinctionThreshold { get; set; } // kvasiutdøingsterskel (individtall) 
+            [Name("A-PVA-AnalyseBeskrivelse")]
+            public string RiskAssessmentSpreadPVAAnalysis { get; set; } 
             [Name("A-NumeriskEstimeringEllerLevedyktighetMedianLevetidBrukerinput")]
             public double? RiskAssessmentMedianLifetimeInput { get; set; } // artens mediane levetid i Norge i år (brukerinput)
             [Name("A-KriterietMedianLevetidAvrundet")]
@@ -971,19 +1224,75 @@ namespace Prod.Api.Helpers
             [Name("A-LevedyktighetsanalyseOvreKvartilAvrundet")]
             public long RiskAssessmentLifetimeUpperQ  { get; set; } // øvre kvartil for artens levetid i Norge i år 
             [Name("A-Skaar")]
-            public int RiskAssessmentCriteriaA  { get; set; } // Gir riktig skår for oppdaterte vurderinger, men gir skår fra 2018 (av en for meg ukjent grunn jeg ikke har rukket å sjekke..) om vurderingen ikke er påbegynt.
+            public int? RiskAssessmentCriteriaA  { get; set; } 
+            // [Name("A-skaarLavtanslag")]
+            // public int RiskAssessmentCriteriaALow { get; set; } - skal vi ha med slike, eller er det nok med høyt og lavt anslag i selve variabelen?
+            //////B-kriteriet///////
+            [Name("B-kriterietMetode")]
+            public string RiskAssessmentChosenMethodBcrit { get; set; }   
+            [Name("AOO(t1)")]
+            public long? RiskAssessmentAOOyear1 { get; set; } // fra-årstallet for det første forekomstarealet
+            [Name("AOO(t2)")]
+            public long? RiskAssessmentAOOyear2 { get; set; } // fra-årstallet for det andre forekomstarealet 
+            [Name("AOOEkspansjonsperiodeStart")]
+            public long? RiskAssessmentAOO1 { get; set; } // forekomstarealet i år 1 (inkl. korrigering for tiltak)
+            [Name("AOOEkspansjonsperiodeSlutt")]
+            public long? RiskAssessmentAOO2 { get; set; } // forekomstarealet i år 2  (inkl. korrigering for tiltak)
+            [Name("B-EkspansjonshastighetNedreKvartil")]
+            public long? RiskAssessmentExpansionLowerQ { get; set; } // nedre kvartil for ekspansjonshastighet i meter per år 
+            [Name("B-GjennomsnittligEkspansjonshastighet(mperaar)")]
+            public long? RiskAssessmentExpansionSpeed { get; set; }  // ekspansjonshastighet i meter per år 
+            [Name("B-EkspansjonshastighetOvreKvartil")]
+            public long? RiskAssessmentExpansionUpperQ { get; set; } // øvre kvartil for ekspansjonshastighet i meter per år 
+            [Name("B-Skaar")]
+            public int? RiskAssessmentCriteriaB  { get; set; }
+            //////C-kriteriet//////
+            [Name("C-Skaar")]
+            public int? RiskAssessmentCriteriaC { get; set; }
             #endregion Invasjonspotensialet
-        public string Category { get; set; }
+            #region Økologisk effekt
+            /////D og E-kriteriet////
+            [Name("EffekterPaaRodlistevurderteArter")]
+            public string ImpactedRedlistEvaluatedSpecies {get; set;} //påvirkning på enkeltarter
+            [Name("EffekterPaaRodlistevurderteArterINaturtypen")]
+            public string ImpactedRedlistEvaluatedSpeciesEnsemble {get; set;} //påvirkning på artene i en naturtype
+            [Name("EffekterPaaRodlistevurderteArterINaturtypenBeskrivelse")]
+            public string RiskAssessmentSpeciesSpeciesInteractionsSupplementaryInformation { get; set; } //Sjekk om denne blir med rett - 10.08.22!
+            [Name("D-Skaar")]
+            public int? RiskAssessmentCriteriaD { get; set; }
+            [Name("D-SkaarBeskrivelse")]
+            public string RiskAssessmentDCritInsecurity {get; set;}
+            [Name("E-Skaar")]
+            public int? RiskAssessmentCriteriaE { get; set; }
+            [Name("E-SkaarBeskrivelse")]
+            public string RiskAssessmentECritInsecurity {get; set;}
+            [Name("F-Skaar")]
+            public int? RiskAssessmentCriteriaF { get; set; }
+            [Name("G-Skaar")]
+            public int? RiskAssessmentCriteriaG { get; set; }
+            [Name("OverføringAvGenetiskMateriale")]
+            public string IntrogressionRedlistedSpecies {get; set;}
+            [Name("H-Skaar")]
+            public int? RiskAssessmentCriteriaH { get; set; }
+            [Name("H-SkaarBeskrivelse")]
+            public string RiskAssessmentHCritInsecurity {get; set;}
+            [Name("I-Skaar")]
+            public int? RiskAssessmentCriteriaI { get; set; }
+            [Name("I-SkaarBeskrivelse")]
+            public string RiskAssessmentICritInsecurity {get; set;}
+            #endregion Økologisk effekt
+        [Name("Kategori2023")]
+        public string Category { get; set; } //We can use this, but need to make sure NR vs NK will be correct!
         public string Criteria { get; set; }
 
-        public string Category2018 { get; set; }
+        public string Category2018 { get; set; } //Use this
         public string Criteria2018 { get; set; }
             
         // public string ProductionSpeciesDescription { get; set; } = "";
 
         // public int RiskAssessmentRiskLevel { get; set; } = -1;
         // public string RiskAssessmentDecisiveCriteria { get; set; }
-        public string RiskAssessmentRiskLevelCode { get; set; }
+        //public string RiskAssessmentRiskLevelCode { get; set; }
         // public string RiskAssessmentRiskLevelText { get; set; }
 
         // public int RiskAssessmentEcoEffectLevel { get; set; }
@@ -1035,25 +1344,6 @@ namespace Prod.Api.Helpers
         //*******************************************************************
 
 
-
-
-
-        // *******  (B2a) Økning i forekomstareal – selvstendig reproduserende arter  **********
-        [Name("AOOyear1")]
-        public long? RiskAssessmentAOOyear1 { get; set; } // fra-årstallet for det første forekomstarealet 
-        [Name("AOOendyear1")]
-        public long? RiskAssessmentAOOendyear1 { get; set; } // basert på periode: f.o.m. år (t0) - (NB!! //todo: denne egenskaper bør skifte navn i neste FAB)
-        [Name("AOOyear2")]
-        public long? RiskAssessmentAOOyear2 { get; set; } // fra-årstallet for det andre forekomstarealet 
-        [Name("AOOendyear2")]
-        public long? RiskAssessmentAOOendyear2 { get; set; } // basert på periode: t.o.m. år  - (NB!! //todo: denne egenskaper bør skifte navn i neste FAB)
-        [Name("AOO1")]
-        public long? RiskAssessmentAOO1 { get; set; } // forekomstarealet i år 1 
-        [Name("AOO2")]
-        public long? RiskAssessmentAOO2 { get; set; } // forekomstarealet i år 2 
-        // ************************************************************************************
-
-
         //*************** Forekomstareal om 50år ************************************
     
         // -------- disse (forekomstareal om 50år) er erstattet:  
@@ -1086,13 +1376,12 @@ namespace Prod.Api.Helpers
 
         public bool RiskAssessmentActiveSpreadPVAAnalysisSpeciesLongevity { get; set; } // added 27.09.2016
 
-        [Name("PVA-analyse beskrivelse")]
-        public string RiskAssessmentSpreadPVAAnalysis { get; set; } //Spread_PVA_Analysis
-        [Name("Forventet levetid")]
-        public bool RiskAssessmentActiveSpreadPVAAnalysisEstimatedSpeciesLongevity { get; set; } // lagt til 27.09.2016
-        public string RiskAssessmentSpreadPVAAnalysisEstimatedSpeciesLongevity { get; set; }  //Spread_PVA_Analysis_Estimated_Species_Longevity
-        public string RiskAssessmentSpreadPVAAnalysisEstimatedSpeciesLongevityLowerQuartile { get; set; }  // lagt til 07.09.2016
-        public string RiskAssessmentSpreadPVAAnalysisEstimatedSpeciesLongevityUpperQuartile { get; set; }  // lagt til 07.09.2016 
+       //Spread_PVA_Analysis
+        // [Name("Forventet levetid")]
+        // public bool RiskAssessmentActiveSpreadPVAAnalysisEstimatedSpeciesLongevity { get; set; } // lagt til 27.09.2016
+        // public string RiskAssessmentSpreadPVAAnalysisEstimatedSpeciesLongevity { get; set; }  //Spread_PVA_Analysis_Estimated_Species_Longevity
+        // public string RiskAssessmentSpreadPVAAnalysisEstimatedSpeciesLongevityLowerQuartile { get; set; }  // lagt til 07.09.2016
+        // public string RiskAssessmentSpreadPVAAnalysisEstimatedSpeciesLongevityUpperQuartile { get; set; }  // lagt til 07.09.2016 
 
         public string RiskAssessmentFilesDescription { get; set; } //Spread_PVA_Analysis
 
@@ -1152,12 +1441,12 @@ namespace Prod.Api.Helpers
 
         // public string RiskAssessmentAmethod { get; set; } // metode som ble brukt for å beregne A-kriteriet 
         //public int RiskAssessmentAscore { get; set; } // skår for A-kriteriet - returnerer kun 0. Erstattet med RiskassessmentCriteriaA 08.07.22
-        public int RiskAssessmentAlow { get; set; } // nedre skår for A-kriteriet (inkludert usikkerhet) 
-        public int RiskAssessmentAhigh { get; set; } // øvre skår for A-kriteriet (inkludert usikkerhet) 
-        // public string RiskAssessmentBmethod { get; set; } // metode som ble brukt for å beregne B-kriteriet 
-        public int RiskAssessmentBscore { get; set; } // skår for B-kriteriet 
-        public int RiskAssessmentBlow { get; set; } // nedre skår for B-kriteriet (inkludert usikkerhet) 
-        public int RiskAssessmentBhigh { get; set; } // øvre skår for B-kriteriet (inkludert usikkerhet) 
+        // public int RiskAssessmentAlow { get; set; } // nedre skår for A-kriteriet (inkludert usikkerhet) 
+        // public int RiskAssessmentAhigh { get; set; } // øvre skår for A-kriteriet (inkludert usikkerhet) 
+        // // public string RiskAssessmentBmethod { get; set; } // metode som ble brukt for å beregne B-kriteriet 
+        // public int RiskAssessmentBscore { get; set; } // skår for B-kriteriet 
+        // public int RiskAssessmentBlow { get; set; } // nedre skår for B-kriteriet (inkludert usikkerhet) 
+        // public int RiskAssessmentBhigh { get; set; } // øvre skår for B-kriteriet (inkludert usikkerhet) 
 
         public string RiskAssessmentBCritMCount { get; set; } = "";
         public string RiskAssessmentBCritExact { get; set; } = "false";
@@ -1165,9 +1454,9 @@ namespace Prod.Api.Helpers
         public string RiskAssessmentBCritNewObs { get; set; } = "True";
 
 
-        public int RiskAssessmentStartYear { get; set; } // startår for B-kriteriet / utbredelse
+        // public int RiskAssessmentStartYear { get; set; } // startår for B-kriteriet / utbredelse
 
-        public int RiskAssessmentEndYear { get; set; } // sluttår for B-kriteriet / utbredelse
+        // public int RiskAssessmentEndYear { get; set; } // sluttår for B-kriteriet / utbredelse
 
 
         //-----------------------------------------------------------------------
@@ -1192,7 +1481,7 @@ namespace Prod.Api.Helpers
 
         #region (B) Ekspansjonshastighet
 
-        public string RiskAssessmentChosenSpreadYearlyIncrease { get; set; } = "";  // bmetod (radio)
+       
         public bool RiskAssessmentActiveSpreadYearlyIncreaseObservations { get; set; } //lagt til 29.09.2016
 
 
@@ -1205,12 +1494,7 @@ namespace Prod.Api.Helpers
 
 
         // ********************** ((B1) ekspansjonshastighet  ****************************
-        public long? RiskAssessmentExpansionSpeedInput { get; set; }  // ekspansjonshastighet i meter per år 
-        public long? RiskAssessmentExpansionSpeed { get; set; }  // ekspansjonshastighet i meter per år 
-        public long? RiskAssessmentExpansionLowerQInput { get; set; } // nedre kvartil for ekspansjonshastighet i meter per år 
-        public long? RiskAssessmentExpansionLowerQ { get; set; } // nedre kvartil for ekspansjonshastighet i meter per år 
-        public long? RiskAssessmentExpansionUpperQInput { get; set; } // øvre kvartil for ekspansjonshastighet i meter per år 
-        public long? RiskAssessmentExpansionUpperQ { get; set; } // øvre kvartil for ekspansjonshastighet i meter per år 
+        
         // -------- disse ((B1) ekspansjonshastighet) er erstattet:  
         //todo: *sjekk konvertering fra FAB3 før sletting av utkommentert kode*
         //public bool ActiveSpreadYearlyIncreaseOccurrenceArea { get; set; } //lagt til 29.09.2016
@@ -1254,11 +1538,11 @@ namespace Prod.Api.Helpers
 
 
 
-        #region unused ???????
-        [Name("Beskrivelse")]
-        public string RiskAssessmentSpreadManualEstimate { get; set; } // fab: Spread_Manual_Estimate
-        public string RiskAssessmentSpreadManualEstimateSpeciesLongevity { get; set; } // fab: Spread_Manual_Estimate_Species_Longevity
-        // public bool? RiskAssessmentSpreadManualEstimateSpeciesLongevityIsMoreThan1000years { get; set; } // fab: Spread_Manual_Estimate_Species_Longevity_More_than_1000_years
+        // #region unused ???????
+        // [Name("Beskrivelse")]
+        // public string RiskAssessmentSpreadManualEstimate { get; set; } // fab: Spread_Manual_Estimate
+        // public string RiskAssessmentSpreadManualEstimateSpeciesLongevity { get; set; } // fab: Spread_Manual_Estimate_Species_Longevity
+        // // public bool? RiskAssessmentSpreadManualEstimateSpeciesLongevityIsMoreThan1000years { get; set; } // fab: Spread_Manual_Estimate_Species_Longevity_More_than_1000_years
 
 
 
@@ -1267,7 +1551,7 @@ namespace Prod.Api.Helpers
         // public string RiskAssessmentIncreasingDensity { get; set; }  // Increasing_Density_Conclusion
         // [Name("Grunnlag for fortetningsrate")]
         // public string RiskAssessmentIncreasingDensityMethod { get; set; }  // Increasing_Density_Method
-        #endregion
+        // #endregion
 
 
 
@@ -1293,7 +1577,7 @@ namespace Prod.Api.Helpers
 
         //public List<SpeciesSpeciesInteraction> SpeciesSpeciesInteractions { get; set; } = new List<SpeciesSpeciesInteraction>(); // lagt til 11.10.2016
         //public List<SpeciesNaturetypeInteraction> SpeciesNaturetypeInteractions { get; set; } = new List<SpeciesNaturetypeInteraction>(); // lagt til 22.12.2016
-        //public string SpeciesSpeciesInteractionsSupplementaryInformation { get; set; }
+        
 
         //// - H kriteriet
         //public List<SpeciesSpeciesInteraction> GeneticTransferDocumented { get; set; } = new List<SpeciesSpeciesInteraction>(); // lagt til 12.09.2016
@@ -1373,9 +1657,9 @@ namespace Prod.Api.Helpers
         // public string NotReproductiveFutureDescription2012 { get; set; } // fab: Not_Reproductive_Future_Description
         // public string AssesmentNotApplicableDescription { get; set; } // fab: Assesment_Not_Applicable_Description
 
-        public bool? IsAlienSpecies { get; set; }
+        // public bool? IsAlienSpecies { get; set; }
 
-        public string IsAlien { get; set; } // new in 2021
+        
         // public bool? IsRegionallyAlien { get; set; } //remove because AlienSpeciesCategory has this info
 
 

@@ -257,7 +257,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                     value={"b"}
                                     disabled={disabled}
                                     observableValue={[riskAssessment, "chosenSpreadYearlyIncrease"]}/>
-                        <ErrorList errorhandler={errorhandler} errorids={["(a)err26","(b)info1"]} />            
+                        <ErrorList errorhandler={errorhandler} errorids={["(b)info1"]} />            
                     
 
                         {riskAssessment.chosenSpreadYearlyIncrease == "a" 
@@ -324,6 +324,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                         </div> 
                         : riskAssessment.chosenSpreadYearlyIncrease == "b" && assessment.isDoorKnocker 
                         ? <div>
+                            <ErrorList errorhandler={errorhandler} errorids={["B2err2"]} />
                             <p>{textDKB}</p>
                         </div> 
                         : riskAssessment.chosenSpreadYearlyIncrease == "b" 
