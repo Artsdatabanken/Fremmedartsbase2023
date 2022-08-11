@@ -263,6 +263,8 @@ namespace Prod.Domain
         //public bool OutdoorEstablished { get; set; } // lagt til 22.08.2016 // fjernet 30.08.2016
         //public bool NorwegianNatureObserved { get; set; } // lagt til 22.08.2016 // fjernet 30.08.2016
         //public bool NorwegianNatureEstablished { get; set; } // lagt til 22.08.2016 // fjernet 30.08.2016
+        
+        public string FurtherInfo { get; set; } = ""; // ny
 
         public class TimeAndPlace
         {
@@ -1501,11 +1503,6 @@ public partial class FA4 // (3.2) Artsegenskaper
         //public string CriteriaDocumentationMigrationPathways { get; set; } // fjernet 20.02.2020 - erstattet av spreadIntroductionFurtherInfo
         public string CriteriaDocumentationInvationPotential { get; set; }
         public string CriteriaDocumentationEcoEffect { get; set; }
-
-        public string FurtherInfo { get; set; } = "";
-
-
-
 
 
         //public string NotEvaluatedBackgroundInformation { get; set; } // Dette var et aggregat av beskrivelser i 'artens status'. Vi bruker de sepparate egenskapene
