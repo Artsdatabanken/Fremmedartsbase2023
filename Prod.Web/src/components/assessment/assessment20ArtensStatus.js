@@ -395,7 +395,7 @@ checkStatus = (production) => {
                     <p className="furtherInfo">{labels.SpeciesStatus.furtherInformationRegardingReproductionOfSpecies}</p>
                     }
                     {assessment.speciesStatus != "C3" && assessment.speciesStatus != null &&
-                    <Xcomp.HtmlString className="furtherInfo" observableValue={[assessment.riskAssessment, 'furtherInfo']}/> 
+                    <Xcomp.HtmlString className="furtherInfo" observableValue={[assessment, 'furtherInfo']}/> 
                     }
                 </fieldset> 
                 : null }

@@ -263,6 +263,8 @@ namespace Prod.Domain
         //public bool OutdoorEstablished { get; set; } // lagt til 22.08.2016 // fjernet 30.08.2016
         //public bool NorwegianNatureObserved { get; set; } // lagt til 22.08.2016 // fjernet 30.08.2016
         //public bool NorwegianNatureEstablished { get; set; } // lagt til 22.08.2016 // fjernet 30.08.2016
+        
+        public string FurtherInfo { get; set; } = ""; // ny
 
         public class TimeAndPlace
         {
@@ -956,6 +958,9 @@ public partial class FA4 // (3.2) Artsegenskaper
         public long? AOO1 { get; set; } // forekomstarealet i år 1 
         [System.Text.Json.Serialization.JsonPropertyName("AOO2")]
         public long? AOO2 { get; set; } // forekomstarealet i år 2 
+        [System.Text.Json.Serialization.JsonPropertyName("AOOfirstOccurenceLessThan10Years")]
+        public string AOOfirstOccurenceLessThan10Years { get; set; } = "yes";
+        public string CommentOrDescription {get; set;} //fritekstfelt metode B2a
         // ************************************************************************************
 
 
@@ -972,8 +977,7 @@ public partial class FA4 // (3.2) Artsegenskaper
         public Int64? AOO50yrHighInput { get; set; }
         [System.Text.Json.Serialization.JsonPropertyName("AOO50yrHigh")]
         public Int64? AOO50yrHigh { get; set; }
-        [System.Text.Json.Serialization.JsonPropertyName("AOOfirstOccurenceLessThan10Years")]
-        public string AOOfirstOccurenceLessThan10Years { get; set; } = "yes";
+       
         //[System.Text.Json.Serialization.JsonPropertyName("AOOestimationPeriod10yrPossible")]
         //public string AOOestimationPeriod10yrPossible { get; set; } = "yes";
         // -------- disse (forekomstareal om 50år) er erstattet:  
@@ -1499,10 +1503,6 @@ public partial class FA4 // (3.2) Artsegenskaper
         //public string CriteriaDocumentationMigrationPathways { get; set; } // fjernet 20.02.2020 - erstattet av spreadIntroductionFurtherInfo
         public string CriteriaDocumentationInvationPotential { get; set; }
         public string CriteriaDocumentationEcoEffect { get; set; }
-
-
-
-
 
 
         //public string NotEvaluatedBackgroundInformation { get; set; } // Dette var et aggregat av beskrivelser i 'artens status'. Vi bruker de sepparate egenskapene

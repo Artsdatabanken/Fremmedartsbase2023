@@ -858,13 +858,15 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.AOO10yrHigh, opt => opt.Ignore())
                     .ForMember(dest => dest.AOO1, opt => opt.Ignore())
                     .ForMember(dest => dest.AOO2, opt => opt.Ignore())
+                    .ForMember(dest => dest.AOOfirstOccurenceLessThan10Years, opt => opt.Ignore())
+                    .ForMember(dest => dest.CommentOrDescription, opt => opt.Ignore())
                     .ForMember(dest => dest.AOOchangeBest, opt => opt.Ignore())
                     .ForMember(dest => dest.AOOchangeLow, opt => opt.Ignore())
                     .ForMember(dest => dest.AOOchangeHigh, opt => opt.Ignore())
                     .ForMember(dest => dest.AOO50yrBestInput, opt => opt.Ignore())
                     .ForMember(dest => dest.AOO50yrLowInput, opt => opt.Ignore())
                     .ForMember(dest => dest.AOO50yrHighInput, opt => opt.Ignore())
-                    .ForMember(dest => dest.AOOfirstOccurenceLessThan10Years, opt => opt.Ignore())
+                    
                     //.ForMember(dest => dest.AOOestimationPeriod10yrPossible, opt => opt.Ignore())
 
                     .ForMember(dest => dest.NotUseSpeciesMap, opt => opt.Ignore())                    
@@ -921,7 +923,6 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.ECritInsecurity, opt => opt.Ignore()) //Ny av året
                     .ForMember(dest => dest.HCritInsecurity, opt => opt.Ignore()) //Ny av året
                     .ForMember(dest => dest.ICritInsecurity, opt => opt.Ignore()) //Ny av året
-
 
                     .AfterMap((src, dest) => { AfterRiskAssessmentMap(src, dest); });
                 //.ForMember(dest => dest., opt => opt.MapFrom(src => src.))
@@ -1019,7 +1020,8 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.UncertainityEstablishmentTimeDescription, opt => opt.Ignore())
                     .ForMember(dest => dest.ProductionSpeciesDescription, opt => opt.Ignore())
                     .ForMember(dest => dest.UncertainityStatusDescription, opt => opt.Ignore())
-
+                    .ForMember(dest => dest.FurtherInfo, opt => opt.Ignore()) //Ny av året?
+                                                                              //        public string FurtherInfo { get; set; } = "";
                     .AfterMap((src, dest) => { AfterFabMap(dest, src); });
 
                 
