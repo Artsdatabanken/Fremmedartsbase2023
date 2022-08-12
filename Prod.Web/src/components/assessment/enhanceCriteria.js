@@ -1177,7 +1177,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
 
         autorun(() => {                   //                  !!%
             let vd // valuesDisabled (only some values/levels is alowed)
-            if ((r.ametodkey === "A1a2" || r.ametodkey === "A1b2") && crit.auto === true) {
+            if (r.ametodkey === "A1a2" || r.ametodkey === "A1b2") {
                 vd = uncertaintyArray(r.apossibleLow, r.apossibleHigh)
             } else {
                 vd = []
@@ -1187,7 +1187,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
             // }
             runInAction(() => {
                 arrayConditionalReplace(crit.valueDisabled, vd)
-                if (vd.includes(crit.value)) {
+                if (vd.includes(crit.value) && crit.auto === true) {
                     crit.value = r.apossibleLow
                 }
             })
