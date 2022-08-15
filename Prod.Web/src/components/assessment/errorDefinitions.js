@@ -1,4 +1,6 @@
-﻿function getErrorDefinitions(assessment, errorHelpers) {
+﻿import { has } from "mobx"
+
+function getErrorDefinitions(assessment, errorHelpers) {
     const a = assessment
     const r = assessment.riskAssessment
     const resolveid = errorHelpers.resolveid
@@ -163,7 +165,7 @@
         },
         {
             id: "(a)err25",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && r.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && !hasnum(r.AOOtotalBestInput) },
+            get cond() {return a.isAlienSpecies && !r.doorKnocker && r.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && (!hasnum(r.AOOtotalBestInput) || !hasnum(r.AOOtotalLowInput) || !hasnum(r.AOOtotalHighInput) || !hasnum(r.AOOtotalLowInput) || !hasnum(r.AOO50yrLowInput) || !hasnum(r.AOO50yrBestInput) || !hasnum(r.AOO50yrHighInput)) },
             msg: "Informasjon om forekomstareal må legges inn før metoden Forenklet anslag kan brukes på A-kriteriet"
         },
         {
@@ -172,9 +174,14 @@
             msg: "Informasjon om forekomstareal må legges inn før metoden Forenklet anslag kan brukes på A-kriteriet"
         },
         {
-            id: "(a)err28",
+            id: "(a)err28", //egentlig en Artens status -error
             get cond() {return a.isAlienSpecies && a.productionSpecies == null},
             msg: "Spørsmål om arten er en bruksart må besvares på fanen Artens status"
+        },
+        {
+            id: "(a)err29",
+            get cond() {return a.isAlienSpecies && !r.doorKnocker && (!hasnum(r.AOOknownInput) || !hasnum(r.AOO50yrLowInput) || !hasnum(r.AOOtotalLowInput))},
+            msg: "Informasjon om forekomstareal må angis før vurderingen kan ferdigstilles"
         },
 
 
