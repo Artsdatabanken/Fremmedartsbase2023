@@ -462,7 +462,7 @@ namespace Prod.Api.Helpers
             //foreach (var tuple in newCommentsForUserId.Where(x=>x.Item2 > 0))
             //    document.Add(new StringField(Field_CommentsNew, tuple.Item1 + ";" + tuple.Item2, Field.Store.YES));
             indexFields.Add(new StringField(Field_CommentsOpen, open.ToString(), Field.Store.YES));
-            indexFields.Add(new StringField(Field_HasCommentsOpen, open > 0 ? "1" : "0", Field.Store.YES));
+            indexFields.Add(new StringField(Field_HasCommentsOpen, open > 0 ? "1" : "0", Field.Store.NO));
             indexFields.Add(new StringField(Field_TaxonChange, taxonchange.ToString(), Field.Store.YES));
 
 
@@ -702,7 +702,7 @@ namespace Prod.Api.Helpers
                     queryElements.Add(new BooleanClause(QueryGetFieldQuery(Field_HsResult, new[] { "0" }), Occur.SHOULD));
 
                 if (filter.Comments.KunUbehandlede)
-                    queryElements.Add(new BooleanClause(QueryGetFieldQuery(Field_CommentsOpen, new[] { "1" }), Occur.MUST));
+                    queryElements.Add(new BooleanClause(QueryGetFieldQuery(Field_HasCommentsOpen, new[] { "1" }), Occur.MUST));
                 QueryAddOrElements(queryElements, query);
 
                 if (filter.Horizon.NR2018.Any())
@@ -757,7 +757,7 @@ namespace Prod.Api.Helpers
                     ((BooleanQuery)query).Add(new BooleanClause(QueryGetFieldQuery(Field_HsResult, new[] { "1" }), Occur.MUST));
                 // filtrer på kommentarer
                 if (filter.Comments.CommentType.Contains("allAssessmentsWithComments"))
-                    ((BooleanQuery)query).Add(new BooleanClause(QueryGetFieldQuery(Field_CommentsOpen, new[] { "1" }), Occur.MUST));
+                    ((BooleanQuery)query).Add(new BooleanClause(QueryGetFieldQuery(Field_HasCommentsOpen, new[] { "1" }), Occur.MUST));
                 if (filter.Comments.CommentType.Contains("newComments") && filter.Comments.UserId != Guid.Empty)
                     ((BooleanQuery)query).Add(new BooleanClause(QueryGetFieldQuery(Field_CommentsNew, new[] { filter.Comments.UserId.ToString() }), Occur.MUST)); //new PrefixQuery(new Term(Field_CommentsNew, filter.Comments.UserId.ToString() + ";*")), Occur.MUST));
                 // autoTaxonChange,taxonChangeRequiresUpdate
