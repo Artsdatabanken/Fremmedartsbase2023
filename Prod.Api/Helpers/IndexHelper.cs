@@ -79,6 +79,7 @@ namespace Prod.Api.Helpers
         private static readonly string[] _criterias = { "A", "B", "C", "D", "E", "F", "G", "H", "I" };
         private static readonly string Field_CommentsClosed = "CommentsClosed";
         private static readonly string Field_CommentsOpen = "CommentsOpen";
+        private static readonly string Field_HasCommentsOpen = "HasCommentsOpen";
         private static readonly string Field_CommentsNew = "CommentsNew";
 
         private static readonly string Field_TaxonChange = "TaxonChange";
@@ -417,16 +418,16 @@ namespace Prod.Api.Helpers
             }
 
             //var ids = result.Select(x => int.Parse(x.Id)).ToArray();
-            var comments = assessment.Comments.ToArray();
+            var comments = assessment.Comments.Where(x=>x.IsDeleted == false).ToArray();
             var latest = comments.Any() ? comments.Max(x => x.CommentDate) : DateTime.MinValue;
             var closed = comments.Count(x => x.Closed);
             var open = comments.Count(y =>
                 !y.Closed); // && !y.Comment.StartsWith(TaksonomiskEndring) &&
             //!y.Comment.StartsWith(PotensiellTaksonomiskEndring));
-            var comenters = comments
+            var commenters = comments
                 .Where(y => y.IsDeleted == false && y.Closed == false)
                 .GroupBy(x=>x.UserId).Select(x => new {x.Key, maxDate = x.Max(y=>y.CommentDate) }).ToArray();
-            foreach (var comenter in comenters)
+            foreach (var comenter in commenters)
             {
                 var newCount = comments.Count(y => y.IsDeleted == false && y.Closed == false && y.UserId != comenter.Key &&
                                                    y.CommentDate > comenter.maxDate);
@@ -461,6 +462,7 @@ namespace Prod.Api.Helpers
             //foreach (var tuple in newCommentsForUserId.Where(x=>x.Item2 > 0))
             //    document.Add(new StringField(Field_CommentsNew, tuple.Item1 + ";" + tuple.Item2, Field.Store.YES));
             indexFields.Add(new StringField(Field_CommentsOpen, open.ToString(), Field.Store.YES));
+            indexFields.Add(new StringField(Field_HasCommentsOpen, open > 0 ? "1" : "0", Field.Store.NO));
             indexFields.Add(new StringField(Field_TaxonChange, taxonchange.ToString(), Field.Store.YES));
 
 
@@ -700,7 +702,7 @@ namespace Prod.Api.Helpers
                     queryElements.Add(new BooleanClause(QueryGetFieldQuery(Field_HsResult, new[] { "0" }), Occur.SHOULD));
 
                 if (filter.Comments.KunUbehandlede)
-                    queryElements.Add(new BooleanClause(QueryGetFieldQuery(Field_CommentsOpen, new[] { "1" }), Occur.MUST));
+                    queryElements.Add(new BooleanClause(QueryGetFieldQuery(Field_HasCommentsOpen, new[] { "1" }), Occur.MUST));
                 QueryAddOrElements(queryElements, query);
 
                 if (filter.Horizon.NR2018.Any())
@@ -755,7 +757,7 @@ namespace Prod.Api.Helpers
                     ((BooleanQuery)query).Add(new BooleanClause(QueryGetFieldQuery(Field_HsResult, new[] { "1" }), Occur.MUST));
                 // filtrer på kommentarer
                 if (filter.Comments.CommentType.Contains("allAssessmentsWithComments"))
-                    ((BooleanQuery)query).Add(new BooleanClause(QueryGetFieldQuery(Field_CommentsOpen, new[] { "1" }), Occur.MUST));
+                    ((BooleanQuery)query).Add(new BooleanClause(QueryGetFieldQuery(Field_HasCommentsOpen, new[] { "1" }), Occur.MUST));
                 if (filter.Comments.CommentType.Contains("newComments") && filter.Comments.UserId != Guid.Empty)
                     ((BooleanQuery)query).Add(new BooleanClause(QueryGetFieldQuery(Field_CommentsNew, new[] { filter.Comments.UserId.ToString() }), Occur.MUST)); //new PrefixQuery(new Term(Field_CommentsNew, filter.Comments.UserId.ToString() + ";*")), Occur.MUST));
                 // autoTaxonChange,taxonChangeRequiresUpdate
