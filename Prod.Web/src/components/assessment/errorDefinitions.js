@@ -165,12 +165,12 @@ function getErrorDefinitions(assessment, errorHelpers) {
         },
         {
             id: "(a)err25",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && r.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && (!hasnum(r.AOOtotalBestInput) || !hasnum(r.AOOtotalLowInput) || !hasnum(r.AOOtotalHighInput) || !hasnum(r.AOOtotalLowInput) || !hasnum(r.AOO50yrLowInput) || !hasnum(r.AOO50yrBestInput) || !hasnum(r.AOO50yrHighInput)) },
+            get cond() {return a.doFullAssessment && a.isAlienSpecies && !r.doorKnocker && r.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && (!hasnum(r.AOOtotalBestInput) || !hasnum(r.AOOtotalLowInput) || !hasnum(r.AOOtotalHighInput) || !hasnum(r.AOOtotalLowInput) || !hasnum(r.AOO50yrLowInput) || !hasnum(r.AOO50yrBestInput) || !hasnum(r.AOO50yrHighInput)) },
             msg: "Informasjon om forekomstareal må legges inn før metoden Forenklet anslag kan brukes på A-kriteriet"
         },
         {
             id: "(a)err27",
-            get cond() {return r.doorKnocker && r.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && (!hasnum(r.AOO10yrBest) || !hasnum(r.AOO10yrLow) || !hasnum(r.AOO10yrHigh)) },
+            get cond() {return a.doFullAssessment && r.doorKnocker && r.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && (!hasnum(r.AOO10yrBest) || !hasnum(r.AOO10yrLow) || !hasnum(r.AOO10yrHigh)) },
             msg: "Informasjon om forekomstareal må legges inn før metoden Forenklet anslag kan brukes på A-kriteriet"
         },
         {
@@ -180,7 +180,7 @@ function getErrorDefinitions(assessment, errorHelpers) {
         },
         {
             id: "(a)err29",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && (!hasnum(r.AOOknownInput) || !hasnum(r.AOO50yrLowInput) || !hasnum(r.AOOtotalLowInput))},
+            get cond() {return a.doFullAssessment && a.isAlienSpecies && !r.doorKnocker && (!hasnum(r.AOOknownInput) || !hasnum(r.AOO50yrLowInput) || !hasnum(r.AOOtotalLowInput))},
             msg: "Informasjon om forekomstareal må angis før vurderingen kan ferdigstilles"
         },
 
