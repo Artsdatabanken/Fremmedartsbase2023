@@ -663,7 +663,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
         }
     })
 
-    autorun(() => {
+    autorun(() => {                                                             //   !!%
         const k = r.ametodkey
         if(!(k === "A1a2" || k === "A1b2")) {
             const criterionA = riskAssessment.critA
@@ -1134,7 +1134,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
     const r = riskAssessment
     for(const crit of [r.critA]) {  // just to get scope
         extdendCriteriaProps(crit)
-        autorun(() => {
+        autorun(() => {                      //   !!%
             const auto = !(
                 (r.ametodkey === "A1a2" || r.ametodkey === "A1b2") &&
                 r.reasonForAdjustmentCritA !== null &&
@@ -1144,7 +1144,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
             })
         })
 
-        autorun(() => {
+        autorun(() => {                //     !!%
             let ud // uncertaintyDisabled 
             if (r.ametodkey === "A1a1" || r.ametodkey === "A1b1" || r.ametodkey === "A3") {
                 ud = [0,1,2,3]
@@ -1158,7 +1158,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
         })
 
         let firstrun = true
-        autorun(() => {
+        autorun(() => {                   //   !!%
             let uv // uncentaintyValues (selected by program)
             if (r.ametodkey === "A1a1" || r.ametodkey === "A1b1" || r.ametodkey === "A3") {
                 uv = uncertaintyArrayReverse(uncertaintyArray(r.alow, r.ahigh))
@@ -1175,16 +1175,19 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
             //if (!config.isRelease) trace()  // leave this line here! Se comments above to learn when to uncomment.
         })
 
-        autorun(() => {
+        autorun(() => {                   //                  !!%
             let vd // valuesDisabled (only some values/levels is alowed)
             if (r.ametodkey === "A1a2" || r.ametodkey === "A1b2") {
                 vd = uncertaintyArray(r.apossibleLow, r.apossibleHigh)
             } else {
                 vd = []
             }
+            // if(crit.criteriaLetter=== "A") {
+                console.log("!!% " + crit.criteriaLetter + " crit value: " + crit.value + " uncentainty posible" + vd.toString())
+            // }
             runInAction(() => {
                 arrayConditionalReplace(crit.valueDisabled, vd)
-                if (vd.includes(crit.value)) {
+                if (vd.includes(crit.value) && crit.auto === true) {
                     crit.value = r.apossibleLow
                 }
             })

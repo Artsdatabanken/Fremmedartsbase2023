@@ -1,4 +1,6 @@
-﻿function getErrorDefinitions(assessment, errorHelpers) {
+﻿import { has } from "mobx"
+
+function getErrorDefinitions(assessment, errorHelpers) {
     const a = assessment
     const r = assessment.riskAssessment
     const resolveid = errorHelpers.resolveid
@@ -163,18 +165,23 @@
         },
         {
             id: "(a)err25",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && r.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && !hasnum(r.AOOtotalBestInput) },
+            get cond() {return a.isAlienSpecies && !r.doorKnocker && r.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && (!hasnum(r.AOOtotalBestInput) || !hasnum(r.AOOtotalLowInput) || !hasnum(r.AOOtotalHighInput) || !hasnum(r.AOOtotalLowInput) || !hasnum(r.AOO50yrLowInput) || !hasnum(r.AOO50yrBestInput) || !hasnum(r.AOO50yrHighInput)) },
             msg: "Informasjon om forekomstareal må legges inn før metoden Forenklet anslag kan brukes på A-kriteriet"
         },
         {
             id: "(a)err27",
-            get cond() {return r.doorKnocker && r.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && !hasnum(r.occurrences1Best) },
+            get cond() {return r.doorKnocker && r.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && (!hasnum(r.AOO10yrBest) || !hasnum(r.AOO10yrLow) || !hasnum(r.AOO10yrHigh)) },
             msg: "Informasjon om forekomstareal må legges inn før metoden Forenklet anslag kan brukes på A-kriteriet"
         },
         {
-            id: "(a)err28",
+            id: "(a)err28", //egentlig en Artens status -error
             get cond() {return a.isAlienSpecies && a.productionSpecies == null},
             msg: "Spørsmål om arten er en bruksart må besvares på fanen Artens status"
+        },
+        {
+            id: "(a)err29",
+            get cond() {return a.isAlienSpecies && !r.doorKnocker && (!hasnum(r.AOOknownInput) || !hasnum(r.AOO50yrLowInput) || !hasnum(r.AOOtotalLowInput))},
+            msg: "Informasjon om forekomstareal må angis før vurderingen kan ferdigstilles"
         },
 
 
@@ -282,6 +289,11 @@
             id: "(nat)err1",
             get cond() {return a.doFullAssessment && a.impactedNatureTypes.length > 0 && a.impactedNatureTypes.some((nt) => isTrueteogsjeldnenaturtype(nt.niNCode)) },
             get msg() {return "Naturtypen " + a.impactedNatureTypes.find((nt) => isTrueteogsjeldnenaturtype(nt.niNCode)).name.toLowerCase() + " valgt fra NiN 2.3 er truet eller sjelden. Velg i stedet " + a.impactedNatureTypes.find((nt) => isTrueteogsjeldnenaturtype(nt.niNCode)).name.toLowerCase() + " fra Rødlista for naturtyper og slett rad med kode " + a.impactedNatureTypes.find((nt) => isTrueteogsjeldnenaturtype(nt.niNCode)).niNCode + "."}
+        },
+        {
+            id: "(nat)err2",
+            get cond() {return a.doFullAssessment && !a.limnic && !a.marine && !a.terrestrial},
+            get msg() {return "Livsmiljø må angis under Artsinformasjon."}
         },
         // {
         //     id: "(nat)warn1",

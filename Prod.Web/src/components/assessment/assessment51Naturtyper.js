@@ -137,11 +137,23 @@ export default class Assessment51Naturtyper extends React.Component {
                     <p>{ntLabels.natureAffected}</p>
                     <Xcomp.HtmlString observableValue={[riskAssessment, 'commonNatureTypesAffectedDomesticDescription']}/>
                 </fieldset>
+                
                 <fieldset className="well">
                     <h4>{ntLabels.regionalNaturetypes}</h4>
+                    {(!assessment.limnic && !assessment.marine && !assessment.terrestrial) ?
+                    <>
+                    <ErrorList errorhandler={errorhandler} errorids={["(nat)err2"]} />
+                    </>
+                    :(assessment.limnic && !assessment.marine && !assessment.terrestrial) ?
+                    <>
+                    <p> Reginal naturvariasjon skal ikke fylles ut for limniske arter ettersom bioklimatiske seksjoner er lite relevant for ferskvannssystemer </p>
+                    </>
+                    :
+                    <>
                     <p> Angi kombinasjoner av soner og seksjoner hvor arten finnes i dag, eller antas å kunne finnes i framtiden </p>
                     <p> Mer informasjon og kartvisning av soner og seksjoner finner du <a href="https://nin.artsdatabanken.no/Natur_i_Norge/Natursystem/Beskrivelsessystem/Regional_naturvariasjon?informasjon" target="_blank"> her</a>. </p>
                     <br/>
+                    </> }
                     {marine && assessment.marine
                     ? <>
                         <h5 className={"bioCLZone"}>{ntLabels.marineSpecies}</h5>
@@ -160,6 +172,8 @@ export default class Assessment51Naturtyper extends React.Component {
                     : null}
                     {mainland && (assessment.limnic || assessment.terrestrial)
                     ? <>
+                        {assessment.terrestrial ?
+                        <>
                         <h5 className={"bioCLZone"}>{ntLabels.mainlandNorway}</h5>
                         <p className="bioCLZone">{ntLabels.bioClimateSections}</p>
                         <div className="bioclimaticZones">
@@ -172,6 +186,8 @@ export default class Assessment51Naturtyper extends React.Component {
                                 labels={labels.NaturalOrigin}
                         />
                         </div>
+                        </>
+                        : null }
                     </>
                     : null}
                     {svalbard 

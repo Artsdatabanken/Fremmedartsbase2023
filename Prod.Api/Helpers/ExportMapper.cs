@@ -23,37 +23,47 @@ namespace Prod.Api.Helpers
 
                 // eksempel på mapåping der alt fra ett listeobjekt skal inn i en celle
                 cfg.CreateMap<List<SpreadHistory>, string>().ConvertUsing<CustomSpreadHistoryConverter>();
+                // cfg.CreateMap<List<FA4.Habitat> , string>().ConvertUsing<CustomHabitatsConverter>();
                 cfg.CreateMap<FA4WithComments, FA4Export>()
                     //.ForMember(x => x.DoorKnockerType, opt => opt.MapFrom(src => GetDoorknockerType(src)))
                     .AfterMap((src, dest) =>
                     {
                         var ass2018 = src.PreviousAssessments.SingleOrDefault(x => x.RevisionYear == 2018);
                         if (ass2018 != null)
-                        {
-                            switch (ass2018.RiskLevel)
-                            {
-                                case 0:
-                                    dest.Category2018 = "NK";
-                                    break;
-                                case 1:
-                                    dest.Category2018 = "LO";
-                                    break;
-                                case 2:
-                                    dest.Category2018 = "PH";
-                                    break;
-                                case 3:
-                                    dest.Category2018 = "HI";
-                                    break;
-                                case 4:
-                                    dest.Category2018 = "SE";
-                                    break;
-                                //case -1: return "-";
-                                default:
-                                    dest.Category2018 = "NR";
-                                    break;
+                        {   
+                            if(ass2018.MainCategory == "NotApplicable" || (ass2018.MainCategory == "DoorKnocker" && ass2018.MainSubCategory == "noRiskAssessment")|| (ass2018.MainCategory == "RegionallyAlien" && ass2018.MainSubCategory == "noRiskAssessment")) //many of these has rislevel = 0. Therefore, this test must be performed first.
+                            {//Erysiphe russellii - soppart å sjekke (skal være NR 2018)
+                                dest.Category2018 = "NR";
+                                dest.Criteria2018 = "";
                             }
+                            else
+                            {
 
-                            dest.Criteria2018 = ass2018.DecisiveCriteria;
+                                switch (ass2018.RiskLevel)
+                                {
+                                    case 0:
+                                        dest.Category2018 = "NK";
+                                        break;
+                                    case 1:
+                                        dest.Category2018 = "LO";
+                                        break;
+                                    case 2:
+                                        dest.Category2018 = "PH";
+                                        break;
+                                    case 3:
+                                        dest.Category2018 = "HI";
+                                        break;
+                                    case 4:
+                                        dest.Category2018 = "SE";
+                                        break;
+                                    //case -1: return "-";
+                                    default:
+                                        dest.Category2018 = "NR";
+                                        break;
+                                }
+
+                                dest.Criteria2018 = ass2018.DecisiveCriteria;
+                            }
                         }
                         else
                         {
@@ -115,7 +125,7 @@ namespace Prod.Api.Helpers
                         dest.ImpactedRedlistEvaluatedSpecies = GetDEcritInformation(src.RiskAssessment.SpeciesSpeciesInteractions);
                         dest.ImpactedRedlistEvaluatedSpeciesEnsemble = GetDEcritInformationNaturetypes(src.RiskAssessment.SpeciesNaturetypeInteractions);
                         dest.IntrogressionRedlistedSpecies = GetHcritInformation(src.RiskAssessment.GeneticTransferDocumented);
-                        
+                        dest.Habitats = GetHabitats(src.Habitats);
                         // overkjøre status for vurderinger som kom fra horizontscanning
                         dest.EvaluationStatus = GetProgress(src);
                     });
@@ -124,6 +134,29 @@ namespace Prod.Api.Helpers
             });
             var mapper = new Mapper(mapperConfig);
             return mapper;
+        }
+
+        private static string GetHabitats(List<FA4.Habitat> habitats)
+        {
+            if(habitats == null || habitats.Count == 0)
+            {
+                return string.Empty;
+            }
+            var habinfo = new List<string>();
+            for (var i = 0; i < habitats.Count; ++i)
+            {
+                if(habitats[i].Taxon == null || habitats[i].Taxon.ScientificName == "")
+                {
+                    string tjohei = habitats[i].NiNCode + "//" + habitats[i].Name + "//" + habitats[i].TimeHorizon;
+                    habinfo.Add(tjohei);
+                }
+                else 
+                {
+                    string tjohei = habitats[i].NiNCode + "//" + habitats[i].Name + "//" + habitats[i].TimeHorizon + "//" + habitats[i].Taxon.ScientificName;
+                    habinfo.Add(tjohei);
+                }
+            }
+            return string.Join("; ", habinfo);
         }
 
         private static string GetHcritInformation(List<RiskAssessment.SpeciesSpeciesInteraction> genTrans)
@@ -882,7 +915,11 @@ namespace Prod.Api.Helpers
         }
     }
 
-    public class CustomSpreadHistoryConverter : ITypeConverter<List<SpreadHistory>, string>
+    // public class CustomHabitatsConverter
+    // {
+    // }
+
+    public class CustomSpreadHistoryConverter : ITypeConverter<List<SpreadHistory>, string> //how to take one element from a list to one column in export (here column SpreadHistory using "id" from the list)
     {
         public string Convert(List<SpreadHistory> source, string destination, ResolutionContext context)
         {
@@ -1186,6 +1223,8 @@ namespace Prod.Api.Helpers
             public string ArcticBioClimateZones {get; set;}
             //Vurder her å ta med "habitats" (livsmedium). Må i tilfelle lages en funksjon da livsmedium er ei liste. 
             //public List<Habitat> Habitats { get; set; } = new List<Habitat>(); - (fra 2018?!)
+            [Name("Livsmiljø")]
+            public string Habitats {get; set;}
             #endregion Naturtyper
         #endregion Bakgrunnsdata for risikovurdering
         #region RiskAssessment 
@@ -1282,10 +1321,12 @@ namespace Prod.Api.Helpers
             public string RiskAssessmentICritInsecurity {get; set;}
             #endregion Økologisk effekt
         [Name("Kategori2023")]
-        public string Category { get; set; } //We can use this, but need to make sure NR vs NK will be correct!
+        public string Category { get; set; } //We can use this!
+        [Name("Kriterier2023")]
         public string Criteria { get; set; }
-
+        [Name("Kategori2018")]
         public string Category2018 { get; set; } //Use this
+        [Name("Kriterier2018")]
         public string Criteria2018 { get; set; }
             
         // public string ProductionSpeciesDescription { get; set; } = "";
@@ -1321,13 +1362,13 @@ namespace Prod.Api.Helpers
 
 
 
-        public int? RiskAssessmentAdefaultBest { get; set; }
-        public int? RiskAssessmentAdefaultLow { get; set; }
-        public int? RiskAssessmentAdefaultHigh { get; set; }
+        // public int? RiskAssessmentAdefaultBest { get; set; } //denne, og de 4 neste brukes på baksiden for å bestemme A-skår og usikkkerhet opp og ned. Trengs ikke i eksporten.
+        // public int? RiskAssessmentAdefaultLow { get; set; }
+        // public int? RiskAssessmentAdefaultHigh { get; set; }
 
 
-        public int? RiskAssessmentApossibleLow { get; set; }
-        public int? RiskAssessmentApossibleHigh { get; set; }
+        // public int? RiskAssessmentApossibleLow { get; set; }
+        // public int? RiskAssessmentApossibleHigh { get; set; }
 
 
 
@@ -1651,7 +1692,7 @@ namespace Prod.Api.Helpers
 
 
         // (3.1) Artens status{
-        public string AlienSpeciesCategory2012 { get; set; } // added 10.01.2017
+        // public string AlienSpeciesCategory2012 { get; set; } // added 10.01.2017
         // public string DoorKnockerDescription { get; set; } // fab: Door_Knocker_Description
         // public string NotReproductiveDescription2012 { get; set; } // fab: Not_Reproductive_Description 
         // public string NotReproductiveFutureDescription2012 { get; set; } // fab: Not_Reproductive_Future_Description
@@ -1793,7 +1834,7 @@ namespace Prod.Api.Helpers
 
         // (3.5) Spredningshistorikk
         //public List<SpreadHistory> SpreadHistory { get; set; } = new List<SpreadHistory>();
-        public string SpreadHistory { get; set; } = "";
+        // public string SpreadHistory { get; set; } = ""; //data from 2018 - not need in export
 
         //[Name("Fremtidig spredningsprognose i Norge, inkl. potensielt utbredelsesområde, antatte kritiske parametre for arten, og forventede endringer i disse:")] // 
         // public string SpreadHistoryDomesticDocumentation { get; set; } // fab: SpreadHistoryDomesticDocumentation
