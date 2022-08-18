@@ -22,7 +22,7 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Change this to force index rebuild!
         /// </summary>
-        public const int IndexVersion = 1;
+        public const int IndexVersion = 6;
         private static readonly object IndexingLock = new();
 
         private const string Field_Id = "Id";
@@ -78,9 +78,11 @@ namespace Prod.Api.Helpers
         private static readonly string Field_NR2018 = "S2018";
         private static readonly string[] _criterias = { "A", "B", "C", "D", "E", "F", "G", "H", "I" };
         private static readonly string Field_CommentsClosed = "CommentsClosed";
+        private static readonly string Field_HasCommentsClosed = "HasCommentsClosed";
         private static readonly string Field_CommentsOpen = "CommentsOpen";
         private static readonly string Field_HasCommentsOpen = "HasCommentsOpen";
         private static readonly string Field_CommentsNew = "CommentsNew";
+        private static readonly string Field_NoAdbComments = "CommentsNoAdb";
 
         private static readonly string Field_TaxonChange = "TaxonChange";
 
@@ -98,7 +100,7 @@ namespace Prod.Api.Helpers
             {
                 var result = await _dbContext.Assessments.Include(x => x.LastUpdatedByUser)
                     .Include(x => x.LockedForEditByUser)
-                    .Include(x => x.Comments)
+                    .Include(x => x.Comments).ThenInclude(x=>x.User)
                     .Where(x =>
                         //x.IsDeleted == false && 
                         x.LastUpdatedAt > minDate || x.Comments.Any(y => y.CommentDate > minDate))
@@ -166,9 +168,11 @@ namespace Prod.Api.Helpers
                     var result = _dbContext.Assessments
                         .Include(x => x.LastUpdatedByUser)
                         .Include(x => x.LockedForEditByUser)
-                        .Include(x => x.Comments)
+                        .Include(x => x.Comments).ThenInclude(x => x.User)
                         .Where(x => x.IsDeleted == false).OrderBy(x => x.Id)
                         .Skip(pointer).Take(batchSize)
+                        .AsSplitQuery()
+                        .AsNoTracking()
                         .ToArray();
                     if (result.Length == 0) break;
                     pointer += result.Length;
@@ -418,12 +422,13 @@ namespace Prod.Api.Helpers
             }
 
             //var ids = result.Select(x => int.Parse(x.Id)).ToArray();
-            var comments = assessment.Comments.Where(x=>x.IsDeleted == false).ToArray();
+            var comments = assessment.Comments.Where(x=>x.IsDeleted == false && (x.Type == CommentType.System || x.Type == CommentType.Ordinary )).ToArray();
             var latest = comments.Any() ? comments.Max(x => x.CommentDate) : DateTime.MinValue;
             var closed = comments.Count(x => x.Closed);
             var open = comments.Count(y =>
                 !y.Closed); // && !y.Comment.StartsWith(TaksonomiskEndring) &&
             //!y.Comment.StartsWith(PotensiellTaksonomiskEndring));
+            var noAdbComments = comments.All(x => !x.User.Email.ToLowerInvariant().Contains("@artsdatabanken.no"));
             var commenters = comments
                 .Where(y => y.IsDeleted == false && y.Closed == false)
                 .GroupBy(x=>x.UserId).Select(x => new {x.Key, maxDate = x.Max(y=>y.CommentDate) }).ToArray();
@@ -446,23 +451,26 @@ namespace Prod.Api.Helpers
             //                                              .Max(z => z.CommentDate)
             //                                          : DateTime.Now))
             //    select new Tuple<Guid, int>(commenter, newones)).ToList();
-
-            var taxonchange = comments.Any(y =>
+            var taxoncomments = assessment.Comments.Where(x => x.IsDeleted == false);
+            var taxonchange = taxoncomments.Any(y =>
                 y.Type == CommentType.PotentialTaxonomicChange && y.IsDeleted == false &&
                 y.Closed == false)
                 ? 2
-                : comments.Any(y =>
+                : taxoncomments.Any(y =>
                     y.Type == CommentType.TaxonomicChange && y.IsDeleted == false &&
                     y.Closed == false)
                     ? 1
                     : 0;
 
             indexFields.Add(new StringField(Field_NewestComment, latest.ToString("yyyy-dd-MM HH:mm"), Field.Store.YES));
-            indexFields.Add(new StringField(Field_CommentsClosed, closed.ToString(), Field.Store.YES));
+            indexFields.Add(new StoredField(Field_CommentsClosed, closed.ToString()));
+            indexFields.Add(new StringField(Field_HasCommentsClosed, closed > 0 ? "1" : "0", Field.Store.YES));
             //foreach (var tuple in newCommentsForUserId.Where(x=>x.Item2 > 0))
             //    document.Add(new StringField(Field_CommentsNew, tuple.Item1 + ";" + tuple.Item2, Field.Store.YES));
             indexFields.Add(new StringField(Field_CommentsOpen, open.ToString(), Field.Store.YES));
             indexFields.Add(new StringField(Field_HasCommentsOpen, open > 0 ? "1" : "0", Field.Store.NO));
+            indexFields.Add(new StringField(Field_NoAdbComments, noAdbComments ? "1" : "0", Field.Store.NO));
+
             indexFields.Add(new StringField(Field_TaxonChange, taxonchange.ToString(), Field.Store.YES));
 
 
@@ -756,8 +764,31 @@ namespace Prod.Api.Helpers
                 if (filter.HSStatus)
                     ((BooleanQuery)query).Add(new BooleanClause(QueryGetFieldQuery(Field_HsResult, new[] { "1" }), Occur.MUST));
                 // filtrer på kommentarer
-                if (filter.Comments.CommentType.Contains("allAssessmentsWithComments"))
+                if (filter.Comments.CommentType.Contains("allAssessmentsWithOpenComments"))
                     ((BooleanQuery)query).Add(new BooleanClause(QueryGetFieldQuery(Field_HasCommentsOpen, new[] { "1" }), Occur.MUST));
+                if (filter.Comments.CommentType.Contains("allAssessmentsWithComments"))
+                {
+                    var booleanQuery = new BooleanQuery
+                    {
+                        new(QueryGetFieldQuery(Field_HasCommentsOpen, new[] { "1" }), Occur.SHOULD),
+                        new(QueryGetFieldQuery(Field_HasCommentsClosed, new[] { "1" }), Occur.SHOULD)
+                    };
+                    ((BooleanQuery)query).Add(booleanQuery, Occur.MUST);
+                }
+
+                if (filter.Comments.CommentType.Contains("allAssessmentsWithoutComments"))
+                {
+                    ((BooleanQuery)query).Add(new BooleanClause(QueryGetFieldQuery(Field_NoAdbComments, new[] { "1" }), Occur.MUST));
+                }
+                //if (filter.Comments.CommentType.Contains("allAssessmentsWithoutComments"))
+                //{
+                //    var booleanQuery = new BooleanQuery
+                //    {
+                //        new(QueryGetFieldQuery(Field_HasCommentsOpen, new[] { "1" }), Occur.SHOULD),
+                //        new(QueryGetFieldQuery(Field_HasCommentsClosed, new[] { "1" }), Occur.SHOULD)
+                //    };
+                //    ((BooleanQuery)query).Add(booleanQuery, Occur.MUST_NOT);
+                //}
                 if (filter.Comments.CommentType.Contains("newComments") && filter.Comments.UserId != Guid.Empty)
                     ((BooleanQuery)query).Add(new BooleanClause(QueryGetFieldQuery(Field_CommentsNew, new[] { filter.Comments.UserId.ToString() }), Occur.MUST)); //new PrefixQuery(new Term(Field_CommentsNew, filter.Comments.UserId.ToString() + ";*")), Occur.MUST));
                 // autoTaxonChange,taxonChangeRequiresUpdate

@@ -333,8 +333,16 @@
                 "value": "newComments"
             },
             {
-                "text": "Alle vurderinger med kommentarer",
+                "text": "Ubehandlede kommentarer",
+                "value": "allAssessmentsWithOpenComments"
+            },
+            {
+                "text": "Alle kommentarer",
                 "value": "allAssessmentsWithComments"
+            },
+            {
+                "text": "Ingen kommentarer",
+                "value": "allAssessmentsWithoutComments"
             },
             {
 
