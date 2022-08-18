@@ -758,6 +758,10 @@ namespace Prod.Api.Helpers
                 // filtrer på kommentarer
                 if (filter.Comments.CommentType.Contains("allAssessmentsWithComments"))
                     ((BooleanQuery)query).Add(new BooleanClause(QueryGetFieldQuery(Field_HasCommentsOpen, new[] { "1" }), Occur.MUST));
+                if (filter.Comments.CommentType.Contains("allAssessmentsWithAllComments"))
+                    ((BooleanQuery)query).Add(new BooleanClause(QueryGetFieldQuery(Field_CommentsClosed, new[] { "1" }), Occur.MUST));
+                if (filter.Comments.CommentType.Contains("allAssessmentsWithoutComments"))
+                    ((BooleanQuery)query).Add(new BooleanClause(QueryGetFieldQuery(Field_CommentsClosed, new[] { "0" }), Occur.MUST));
                 if (filter.Comments.CommentType.Contains("newComments") && filter.Comments.UserId != Guid.Empty)
                     ((BooleanQuery)query).Add(new BooleanClause(QueryGetFieldQuery(Field_CommentsNew, new[] { filter.Comments.UserId.ToString() }), Occur.MUST)); //new PrefixQuery(new Term(Field_CommentsNew, filter.Comments.UserId.ToString() + ";*")), Occur.MUST));
                 // autoTaxonChange,taxonChangeRequiresUpdate
