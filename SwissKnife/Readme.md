@@ -99,6 +99,8 @@ Commands:
 
 
 dotnet run -- maintenance patchmigration --connectionstring "Server=localhost;Database=fab4;Integrated Security=true;MultipleActiveResultSets=true" --inputfolder ./Dump
+
+dotnet run -- maintenance nighttasks --connectionstring "Server=localhost;Database=fab4;Integrated Security=true;MultipleActiveResultSets=true"
 ```
 
 

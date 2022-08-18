@@ -334,11 +334,11 @@
             },
             {
                 "text": "Ubehandlede kommentarer",
-                "value": "allAssessmentsWithComments"
+                "value": "allAssessmentsWithOpenComments"
             },
             {
                 "text": "Alle kommentarer",
-                "value": "allAssessmentsWithAllComments"
+                "value": "allAssessmentsWithComments"
             },
             {
                 "text": "Ingen kommentarer",

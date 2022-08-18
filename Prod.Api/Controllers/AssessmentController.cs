@@ -636,7 +636,7 @@ namespace Prod.Api.Controllers
             //doc.LastUpdatedAt = now;
 
             var assessment = await _dbContext.Assessments.Include(x => x.LastUpdatedByUser)
-                .Include(x => x.LockedForEditByUser).Include(x => x.Comments).SingleOrDefaultAsync(x => x.Id == id);
+                .Include(x => x.LockedForEditByUser).Include(x => x.Comments).ThenInclude(x => x.User).SingleOrDefaultAsync(x => x.Id == id);
 
             if (!forceStore && assessment.LockedForEditByUser != null && assessment.LockedForEditByUser.Id != user.Id)
                 throw new Exception("IKKE SKRIVETILGANG TIL DENNE VURDERINGEN - Låst av annen bruker");
