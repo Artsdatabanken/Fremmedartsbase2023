@@ -329,7 +329,7 @@
 
         "comments": [
             {
-                "text": "Nye kommentarer",
+                "text": "Nye kommentarer på mine kommentarer",
                 "value": "newComments"
             },
             {
@@ -341,7 +341,7 @@
                 "value": "allAssessmentsWithComments"
             },
             {
-                "text": "Ingen kommentarer",
+                "text": "Ikke kvalitetssikret",
                 "value": "allAssessmentsWithoutComments"
             },
             {
