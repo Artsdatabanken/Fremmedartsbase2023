@@ -109,15 +109,33 @@ namespace Prod.Api.Helpers
                         dest.RiskAssessmentMedianLifetime = GetMedianLifetime(src.RiskAssessment);
                         dest.RiskAssessmentLifetimeUpperQ = GetLifetimeUpperQ(src.RiskAssessment);  
                         dest.RiskAssessmentLifetimeLowerQ = GetLifetimeLowerQ(src.RiskAssessment);
-                        dest.RiskAssessmentCriteriaA = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "A");
-                        dest.RiskAssessmentCriteriaB = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "B");
-                        dest.RiskAssessmentCriteriaC = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "C");
-                        dest.RiskAssessmentCriteriaD = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "D");
-                        dest.RiskAssessmentCriteriaE = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "E");
-                        dest.RiskAssessmentCriteriaF = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "F");
-                        dest.RiskAssessmentCriteriaG = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "G");
-                        dest.RiskAssessmentCriteriaH = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "H");
-                        dest.RiskAssessmentCriteriaI = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "I");
+                        dest.RiskAssessmentCriteriaA = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "A", "score");
+                        dest.RiskAssessmentCriteriaB = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "B","score");
+                        dest.RiskAssessmentCriteriaC = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "C","score");
+                        dest.RiskAssessmentCriteriaD = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "D","score");
+                        dest.RiskAssessmentCriteriaE = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "E","score");
+                        dest.RiskAssessmentCriteriaF = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "F","score");
+                        dest.RiskAssessmentCriteriaG = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "G","score");
+                        dest.RiskAssessmentCriteriaH = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "H","score");
+                        dest.RiskAssessmentCriteriaI = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "I","score");
+                        dest.RiskAssessmentCriteriaALow = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "A", "low");
+                        dest.RiskAssessmentCriteriaAHigh= GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "A", "high");
+                        dest.RiskAssessmentCriteriaBLow = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "B", "low");
+                        dest.RiskAssessmentCriteriaBHigh= GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "B", "high");
+                        dest.RiskAssessmentCriteriaCLow = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "C", "low");
+                        dest.RiskAssessmentCriteriaCHigh= GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "C", "high");
+                        dest.RiskAssessmentCriteriaDLow = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "D", "low");
+                        dest.RiskAssessmentCriteriaDHigh= GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "D", "high");
+                        dest.RiskAssessmentCriteriaELow = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "E", "low");
+                        dest.RiskAssessmentCriteriaEHigh= GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "E", "high");
+                        dest.RiskAssessmentCriteriaFLow = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "F", "low");
+                        dest.RiskAssessmentCriteriaFHigh= GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "F", "high");
+                        dest.RiskAssessmentCriteriaGLow = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "G", "low");
+                        dest.RiskAssessmentCriteriaGHigh= GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "G", "high");
+                        dest.RiskAssessmentCriteriaHLow = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "H", "low");
+                        dest.RiskAssessmentCriteriaHHigh= GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "H", "high");
+                        dest.RiskAssessmentCriteriaILow = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "I", "low");
+                        dest.RiskAssessmentCriteriaIHigh= GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "I", "high");
                         dest.RiskAssessmentChosenMethodBcrit = GetRiskAssessmentChosenMethodBcrit(src.RiskAssessment, src.AssessmentConclusion);
                         dest.RiskAssessmentExpansionSpeed = GetRiskAssessmentExpansionSpeed(src.RiskAssessment, "50", src.AssessmentConclusion);
                         dest.RiskAssessmentExpansionLowerQ = GetRiskAssessmentExpansionSpeed(src.RiskAssessment, "25", src.AssessmentConclusion);
@@ -209,51 +227,67 @@ namespace Prod.Api.Helpers
 
         private static long? GetExpansionSpeedB2a(RiskAssessment ra) 
         {
-            decimal result;
+            decimal? result;
             if(ra.AOOfirstOccurenceLessThan10Years == "yes")
             { 
-              result =  
-              (ra.AOOyear2 == 0 || ra.AOOyear2 == null || ra.AOOyear1 == 0 || ra.AOOyear1 == null || (ra.AOOyear2 - ra.AOOyear1) < 10 || ra.AOO1 <= 0 || ra.AOO2 <= 0) ? 
+                result = 
+                (ra.AOOknownInput == null || ra.AOOtotalBestInput == null) ?
+                null 
+                : (ra.AOOyear2 == 0 || ra.AOOyear2 == null || ra.AOOyear1 == 0 || ra.AOOyear1 == null || (ra.AOOyear2 - ra.AOOyear1) < 10 || ra.AOO1 <= 0 || ra.AOO2 <= 0) ? 
                 0
                 :  Math.Truncate((decimal)(Math.Sqrt((double)(ra.AOOtotalBestInput/ra.AOOknownInput)) * 2000 * (Math.Sqrt(Math.Ceiling((double)(ra.AOO2 / 4))) - Math.Sqrt(Math.Ceiling((double)(ra.AOO1 / 4)))) / ((ra.AOOyear2 - ra.AOOyear1) * Math.Sqrt(Math.PI)))); //js: trunc(sqrt(r.AOOdarkfigureBest) * 2000 * (sqrt(ceil(r.AOO2 / 4)) - sqrt(ceil(r.AOO1 / 4))) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
                 //darkfigures is not saved. Use r.AOOtotalBest / r.AOOknown 
             }
 
-            else result = (decimal)Math.Truncate(20 * (Math.Sqrt((double)ra.AOO50yrBestInput) - Math.Sqrt((double)ra.AOOtotalBestInput)) / Math.Sqrt(Math.PI));
-
+            else result = 
+                (ra.AOO50yrBestInput == null || ra.AOOtotalBestInput == null) ?
+                null 
+                : (decimal)Math.Truncate(20 * (Math.Sqrt((double)ra.AOO50yrBestInput) - Math.Sqrt((double)ra.AOOtotalBestInput)) / Math.Sqrt(Math.PI));
             return (long?)result;
         }
 
         private static long? GetExpansionLowerQB2a(RiskAssessment ra) 
         {
-            decimal result;
+            decimal? result;
             if(ra.AOOfirstOccurenceLessThan10Years == "yes")
             { 
-              result =  
-              (ra.AOOyear2 == 0 || ra.AOOyear2 == null || ra.AOOyear1 == 0 || ra.AOOyear1 == null || (ra.AOOyear2 - ra.AOOyear1) < 10 || ra.AOO1 <= 0 || ra.AOO2 <= 0) ? 
+                result =  
+                (ra.AOOknownInput == null || ra.AOOtotalLowInput == null) ?
+                null 
+                : 
+                (ra.AOOyear2 == 0 || ra.AOOyear2 == null || ra.AOOyear1 == 0 || ra.AOOyear1 == null || (ra.AOOyear2 - ra.AOOyear1) < 10 || ra.AOO1 <= 0 || ra.AOO2 <= 0) ? 
                 0
                 :  Math.Truncate((decimal)(Math.Sqrt((double)(ra.AOOtotalLowInput/ra.AOOknownInput)) * 2000 * (Math.Sqrt(Math.Ceiling((double)(ra.AOO2 / 4))) - Math.Sqrt(Math.Ceiling((double)(ra.AOO1 / 4)))) / ((ra.AOOyear2 - ra.AOOyear1) * Math.Sqrt(Math.PI)))); //js: trunc(sqrt(r.AOOdarkfigureBest) * 2000 * (sqrt(ceil(r.AOO2 / 4)) - sqrt(ceil(r.AOO1 / 4))) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
                 //darkfigures is not saved. Use ra.AOOtotalLow / ra.AOOknown 
             }
 
-            else result = (decimal)Math.Truncate(20 * (Math.Sqrt((double)ra.AOO50yrLowInput) - Math.Sqrt((double)ra.AOOtotalBestInput)) / Math.Sqrt(Math.PI));
+            else result = 
+                (ra.AOO50yrLowInput == null || ra.AOOtotalBestInput == null) ?
+                null 
+                : (decimal)Math.Truncate(20 * (Math.Sqrt((double)ra.AOO50yrLowInput) - Math.Sqrt((double)ra.AOOtotalBestInput)) / Math.Sqrt(Math.PI));
 
             return (long?)result;
         }
 
         private static long? GetExpansionUpperQB2a(RiskAssessment ra) 
         {
-            decimal result;
+            decimal? result;
             if(ra.AOOfirstOccurenceLessThan10Years == "yes")
             { 
-              result =  
-              (ra.AOOyear2 == 0 || ra.AOOyear2 == null || ra.AOOyear1 == 0 || ra.AOOyear1 == null || (ra.AOOyear2 - ra.AOOyear1) < 10 || ra.AOO1 <= 0 || ra.AOO2 <= 0) ? 
+                result =  
+                (ra.AOOknownInput == null || ra.AOOtotalHighInput == null) ?
+                null 
+                :
+                (ra.AOOyear2 == 0 || ra.AOOyear2 == null || ra.AOOyear1 == 0 || ra.AOOyear1 == null || (ra.AOOyear2 - ra.AOOyear1) < 10 || ra.AOO1 <= 0 || ra.AOO2 <= 0) ? 
                 0
                 :  Math.Truncate((decimal)(Math.Sqrt((double)(ra.AOOtotalHighInput/ra.AOOknownInput)) * 2000 * (Math.Sqrt(Math.Ceiling((double)(ra.AOO2 / 4))) - Math.Sqrt(Math.Ceiling((double)(ra.AOO1 / 4)))) / ((ra.AOOyear2 - ra.AOOyear1) * Math.Sqrt(Math.PI)))); //js: trunc(sqrt(r.AOOdarkfigureBest) * 2000 * (sqrt(ceil(r.AOO2 / 4)) - sqrt(ceil(r.AOO1 / 4))) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
-                //darkfigures is not saved. Use ra.AOOtotalHigh / ra.AOOknown 
+                    //darkfigures is not saved. Use ra.AOOtotalHigh / ra.AOOknown 
             }
 
-            else result = (decimal)Math.Truncate(20 * (Math.Sqrt((double)ra.AOO50yrHighInput) - Math.Sqrt((double)ra.AOOtotalBestInput)) / Math.Sqrt(Math.PI));
+            else result = 
+                (ra.AOO50yrHighInput == null || ra.AOOtotalBestInput == null) ?
+                null 
+                : (decimal)Math.Truncate(20 * (Math.Sqrt((double)ra.AOO50yrHighInput) - Math.Sqrt((double)ra.AOOtotalBestInput)) / Math.Sqrt(Math.PI));
 
             return (long?)result;
         }
@@ -319,17 +353,26 @@ namespace Prod.Api.Helpers
             return result;
         }
 
-        private static int? GetRiskAssessmentCritera(FA4 ass, List<RiskAssessment.Criterion> criteria, string critLetter)
-        { //utvid denne til økologisk effekt også, samt vurder å legge til usikkerheten her 08.07.22.
+        private static int? GetRiskAssessmentCritera(FA4 ass, List<RiskAssessment.Criterion> criteria, string critLetter, string scoretab)
+        { 
            int? CritScore = 0;
+           int? CritLow = 0;
+           int? CritHigh = 0;
             if (critLetter == "A")
             {
                 if(GetProgress(ass) == "notStarted" || ass.RiskAssessment.ChosenSpreadMedanLifespan == "RedListCategoryLevel") 
                 {
                     CritScore = null;
+                    CritHigh = null;
+                    CritLow = null;
                 }
                 else
-                CritScore = criteria[0].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
+                {
+                    CritScore = criteria[0].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
+                    //UncertaintyValues not always ordered from smallest to largest - sometimes high comes at [0] and low at [1]..
+                    CritLow = (criteria[0].UncertaintyValues == null || criteria[0].UncertaintyValues.Length == 0) ? null : Math.Min(criteria[0].UncertaintyValues[0] + 1 ,criteria[0].UncertaintyValues[criteria[0].UncertaintyValues.Length-1] + 1);
+                    CritHigh = (criteria[0].UncertaintyValues == null || criteria[0].UncertaintyValues.Length == 0) ? null : Math.Max(criteria[0].UncertaintyValues[0] + 1 ,criteria[0].UncertaintyValues[criteria[0].UncertaintyValues.Length-1] + 1);
+                }
             }
 
             if (critLetter == "B")
@@ -337,9 +380,15 @@ namespace Prod.Api.Helpers
                 if(GetProgress(ass) == "notStarted" || GetRiskAssessmentChosenMethodBcrit(ass.RiskAssessment, ass.AssessmentConclusion) == "") 
                 {
                     CritScore = null;
+                    CritHigh = null;
+                    CritLow = null;
                 }
                 else
-                CritScore = criteria[1].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
+                {
+                    CritScore = criteria[1].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
+                    CritLow = (criteria[1].UncertaintyValues == null || criteria[1].UncertaintyValues.Length == 0) ? null : Math.Min(criteria[1].UncertaintyValues[0] + 1,criteria[1].UncertaintyValues[criteria[1].UncertaintyValues.Length-1] + 1);
+                    CritHigh = (criteria[1].UncertaintyValues == null || criteria[1].UncertaintyValues.Length == 0) ? null : Math.Max(criteria[1].UncertaintyValues[0] + 1,criteria[1].UncertaintyValues[criteria[1].UncertaintyValues.Length-1] + 1);
+                }
             }
 
             if (critLetter == "C")
@@ -347,66 +396,111 @@ namespace Prod.Api.Helpers
                 if(GetProgress(ass) == "notStarted") 
                 {
                     CritScore = null;
+                    CritHigh = null;
+                    CritLow = null;
                 }
                 else
-                CritScore = criteria[2].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
+                {
+                    CritScore = criteria[2].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
+                    CritLow = (criteria[2].UncertaintyValues == null || criteria[2].UncertaintyValues.Length == 0) ? null : Math.Min(criteria[2].UncertaintyValues[0] + 1, criteria[2].UncertaintyValues[criteria[2].UncertaintyValues.Length-1] + 1);
+                    CritHigh = (criteria[2].UncertaintyValues == null || criteria[2].UncertaintyValues.Length == 0) ? null : Math.Max(criteria[2].UncertaintyValues[0] + 1, criteria[2].UncertaintyValues[criteria[2].UncertaintyValues.Length-1] + 1);
+                }
             }
             if (critLetter == "D")
             {
                 if(GetProgress(ass) == "notStarted") 
                 {
                     CritScore = null;
+                    CritHigh = null;
+                    CritLow = null;
                 }
                 else
-                CritScore = criteria[3].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
+                {
+                    CritScore = criteria[3].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
+                    CritLow = (criteria[3].UncertaintyValues == null || criteria[3].UncertaintyValues.Length == 0) ? null : Math.Min(criteria[3].UncertaintyValues[0] + 1,criteria[3].UncertaintyValues[criteria[3].UncertaintyValues.Length-1] + 1);
+                    CritHigh = (criteria[3].UncertaintyValues == null || criteria[3].UncertaintyValues.Length == 0) ? null : Math.Max(criteria[3].UncertaintyValues[0] + 1,criteria[3].UncertaintyValues[criteria[3].UncertaintyValues.Length-1] + 1);
+                    // CritLow = Math.Min(CritLow1, CritHigh1);
+                }
             }
             if (critLetter == "E")
             {
                 if(GetProgress(ass) == "notStarted") 
                 {
                     CritScore = null;
+                    CritHigh = null;
+                    CritLow = null;
                 }
                 else
-                CritScore = criteria[4].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
+                {
+                    CritScore = criteria[4].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
+                    CritLow = (criteria[4].UncertaintyValues == null || criteria[4].UncertaintyValues.Length == 0) ? null : Math.Min(criteria[4].UncertaintyValues[0] + 1, criteria[4].UncertaintyValues[criteria[4].UncertaintyValues.Length-1] + 1);
+                    CritHigh = (criteria[4].UncertaintyValues == null || criteria[4].UncertaintyValues.Length == 0) ? null : Math.Max(criteria[4].UncertaintyValues[0] + 1, criteria[4].UncertaintyValues[criteria[4].UncertaintyValues.Length-1] + 1);
+                }
             }
             if (critLetter == "F")
             {
                 if(GetProgress(ass) == "notStarted") 
                 {
                     CritScore = null;
+                    CritHigh = null;
+                    CritLow = null;
                 }
                 else
-                CritScore = criteria[5].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
+                {
+                    CritScore = criteria[5].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
+                    CritLow = (criteria[5].UncertaintyValues == null || criteria[5].UncertaintyValues.Length == 0) ? null : Math.Min(criteria[5].UncertaintyValues[0] + 1, criteria[5].UncertaintyValues[criteria[5].UncertaintyValues.Length-1]+1);
+                    CritHigh = (criteria[5].UncertaintyValues == null || criteria[5].UncertaintyValues.Length == 0) ? null : Math.Max(criteria[5].UncertaintyValues[0] + 1, criteria[5].UncertaintyValues[criteria[5].UncertaintyValues.Length-1]+1);
+                }
             }
             if (critLetter == "G")
             {
                 if(GetProgress(ass) == "notStarted") 
                 {
                     CritScore = null;
+                    CritHigh = null;
+                    CritLow = null;
                 }
                 else
-                CritScore = criteria[6].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
+                {
+                    CritScore = criteria[6].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
+                    CritLow = (criteria[6].UncertaintyValues == null || criteria[6].UncertaintyValues.Length == 0) ? null : Math.Min(criteria[6].UncertaintyValues[0] + 1, criteria[6].UncertaintyValues[criteria[6].UncertaintyValues.Length-1] + 1);
+                    CritHigh = (criteria[6].UncertaintyValues == null || criteria[6].UncertaintyValues.Length == 0) ? null : Math.Max(criteria[6].UncertaintyValues[0] + 1, criteria[6].UncertaintyValues[criteria[6].UncertaintyValues.Length-1] + 1);
+                }
             }
             if (critLetter == "H")
             {
                 if(GetProgress(ass) == "notStarted") 
                 {
                     CritScore = null;
+                    CritHigh = null;
+                    CritLow = null;
                 }
                 else
-                CritScore = criteria[7].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
+                {
+                    CritScore = criteria[7].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
+                    CritLow = (criteria[7].UncertaintyValues == null || criteria[7].UncertaintyValues.Length == 0) ? null : Math.Min(criteria[7].UncertaintyValues[0] + 1, criteria[7].UncertaintyValues[criteria[7].UncertaintyValues.Length-1] + 1);
+                    CritHigh = (criteria[7].UncertaintyValues == null || criteria[7].UncertaintyValues.Length == 0) ? null : Math.Max(criteria[7].UncertaintyValues[0] + 1, criteria[7].UncertaintyValues[criteria[7].UncertaintyValues.Length-1] + 1);
+                }
             }
             if (critLetter == "I")
             {
                 if(GetProgress(ass) == "notStarted") 
                 {
                     CritScore = null;
+                    CritHigh = null;
+                    CritLow = null;
                 }
-                else
-                CritScore = criteria[8].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
+                else 
+                {
+                    CritScore = criteria[8].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
+                    CritLow = (criteria[8].UncertaintyValues == null || criteria[8].UncertaintyValues.Length == 0) ? null : Math.Min(criteria[8].UncertaintyValues[0] + 1, criteria[8].UncertaintyValues[criteria[8].UncertaintyValues.Length-1] + 1);
+                    CritHigh = (criteria[8].UncertaintyValues == null || criteria[8].UncertaintyValues.Length == 0) ? null : Math.Max(criteria[8].UncertaintyValues[0] + 1, criteria[8].UncertaintyValues[criteria[8].UncertaintyValues.Length-1] + 1);
+                }
             }
 
-            return CritScore;
+            return  (scoretab == "score") ? CritScore   :
+                    (scoretab == "low")   ? CritLow     :
+                    CritHigh;
         }
 
         private static string GetArcticBioClimateZones(List<FA4.BioClimateZonesArctic> arcticBioClimateZones)
@@ -1264,8 +1358,10 @@ namespace Prod.Api.Helpers
             public long RiskAssessmentLifetimeUpperQ  { get; set; } // øvre kvartil for artens levetid i Norge i år 
             [Name("A-Skaar")]
             public int? RiskAssessmentCriteriaA  { get; set; } 
-            // [Name("A-skaarLavtanslag")]
-            // public int RiskAssessmentCriteriaALow { get; set; } - skal vi ha med slike, eller er det nok med høyt og lavt anslag i selve variabelen?
+            [Name("A-skaarLavtanslag")]
+            public int? RiskAssessmentCriteriaALow { get; set; } 
+            [Name("A-skaarHoytanslag")]
+            public int? RiskAssessmentCriteriaAHigh { get; set; }
             //////B-kriteriet///////
             [Name("B-kriterietMetode")]
             public string RiskAssessmentChosenMethodBcrit { get; set; }   
@@ -1285,9 +1381,17 @@ namespace Prod.Api.Helpers
             public long? RiskAssessmentExpansionUpperQ { get; set; } // øvre kvartil for ekspansjonshastighet i meter per år 
             [Name("B-Skaar")]
             public int? RiskAssessmentCriteriaB  { get; set; }
+            [Name("B-skaarLavtanslag")]
+            public int? RiskAssessmentCriteriaBLow { get; set; } 
+            [Name("B-skaarHoytanslag")]
+            public int? RiskAssessmentCriteriaBHigh { get; set; }
             //////C-kriteriet//////
             [Name("C-Skaar")]
             public int? RiskAssessmentCriteriaC { get; set; }
+            [Name("C-skaarLavtanslag")]
+            public int? RiskAssessmentCriteriaCLow { get; set; } 
+            [Name("C-skaarHoytanslag")]
+            public int? RiskAssessmentCriteriaCHigh { get; set; }
             #endregion Invasjonspotensialet
             #region Økologisk effekt
             /////D og E-kriteriet////
@@ -1299,24 +1403,48 @@ namespace Prod.Api.Helpers
             public string RiskAssessmentSpeciesSpeciesInteractionsSupplementaryInformation { get; set; } //Sjekk om denne blir med rett - 10.08.22!
             [Name("D-Skaar")]
             public int? RiskAssessmentCriteriaD { get; set; }
+            [Name("D-skaarLavtanslag")]
+            public int? RiskAssessmentCriteriaDLow { get; set; } 
+            [Name("D-skaarHoytanslag")]
+            public int? RiskAssessmentCriteriaDHigh { get; set; }
             [Name("D-SkaarBeskrivelse")]
             public string RiskAssessmentDCritInsecurity {get; set;}
             [Name("E-Skaar")]
             public int? RiskAssessmentCriteriaE { get; set; }
+            [Name("E-skaarLavtanslag")]
+            public int? RiskAssessmentCriteriaELow { get; set; } 
+            [Name("E-skaarHoytanslag")]
+            public int? RiskAssessmentCriteriaEHigh { get; set; }
             [Name("E-SkaarBeskrivelse")]
             public string RiskAssessmentECritInsecurity {get; set;}
             [Name("F-Skaar")]
             public int? RiskAssessmentCriteriaF { get; set; }
+            [Name("F-skaarLavtanslag")]
+            public int? RiskAssessmentCriteriaFLow { get; set; } 
+            [Name("F-skaarHoytanslag")]
+            public int? RiskAssessmentCriteriaFHigh { get; set; }
             [Name("G-Skaar")]
             public int? RiskAssessmentCriteriaG { get; set; }
+            [Name("G-skaarLavtanslag")]
+            public int? RiskAssessmentCriteriaGLow { get; set; } 
+            [Name("G-skaarHoytanslag")]
+            public int? RiskAssessmentCriteriaGHigh { get; set; }
             [Name("OverføringAvGenetiskMateriale")]
             public string IntrogressionRedlistedSpecies {get; set;}
             [Name("H-Skaar")]
             public int? RiskAssessmentCriteriaH { get; set; }
+            [Name("H-skaarLavtanslag")]
+            public int? RiskAssessmentCriteriaHLow { get; set; } 
+            [Name("H-skaarHoytanslag")]
+            public int? RiskAssessmentCriteriaHHigh { get; set; }
             [Name("H-SkaarBeskrivelse")]
             public string RiskAssessmentHCritInsecurity {get; set;}
             [Name("I-Skaar")]
             public int? RiskAssessmentCriteriaI { get; set; }
+            [Name("I-skaarLavtanslag")]
+            public int? RiskAssessmentCriteriaILow { get; set; } 
+            [Name("I-skaarHoytanslag")]
+            public int? RiskAssessmentCriteriaIHigh { get; set; }
             [Name("I-SkaarBeskrivelse")]
             public string RiskAssessmentICritInsecurity {get; set;}
             #endregion Økologisk effekt
