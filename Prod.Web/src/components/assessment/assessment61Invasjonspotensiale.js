@@ -161,8 +161,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                         <h2>{labels.Acrit.mainHeading}</h2>
                         <h4>{critA.heading}</h4>
                         <p>{critA.info}</p>
-                        
-                        <Xcomp.StringEnum mode="radio" observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]} codes={koder.AcritSelect} /> 
+                        <Xcomp.StringEnum mode="radio" disabled={riskAssessment.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && riskAssessment.acceptOrAdjustCritA == "adjust"} observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]} codes={koder.AcritSelect} /> 
                         {riskAssessment.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" 
                         ? <div>
 
