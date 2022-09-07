@@ -87,7 +87,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                         <h3>{assessment.category === "NR"
                             ? ""
                             : riskAssessment.riskLevelText} 
-                            <b> {assessment.category} Usikkerhet {uncertainlyCategories.join(',')}</b>
+                            <b> {assessment.category} </b> {uncertainlyCategories.length >0 ? "(" + uncertainlyCategories.join(', ')+ ")": ""}
                         </h3>
                         {assessment.criteria !== "" 
                             ? <h4>{critlabels.decisiveCriteria}: <b> {assessment.criteria}</b></h4>
