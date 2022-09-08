@@ -430,7 +430,7 @@ namespace Prod.Api.Helpers
             //!y.Comment.StartsWith(PotensiellTaksonomiskEndring));
             var noAdbComments = comments.All(x => !x.User.Email.ToLowerInvariant().Contains("@artsdatabanken.no"));
             var commenters = comments
-                .Where(y => y.IsDeleted == false && y.Closed == false)
+                .Where(y => y.IsDeleted == false) // && y.Closed == false)
                 .GroupBy(x=>x.UserId).Select(x => new {x.Key, maxDate = x.Max(y=>y.CommentDate) }).ToArray();
             foreach (var comenter in commenters)
             {
