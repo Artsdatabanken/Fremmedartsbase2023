@@ -100,7 +100,7 @@ namespace Prod.Api.Controllers
             if (comment.UserId == user.Id || user.IsAdmin)
             {
                 var commentDate = DateTime.Now;
-                comment.CommentDate = commentDate;
+                // comment.CommentDate = commentDate;
                 comment.IsDeleted = true;
                 comment.Assessment.ChangedAt = commentDate;
                 await _dbContext.SaveChangesAsync();
@@ -127,7 +127,7 @@ namespace Prod.Api.Controllers
                 comment.Closed = true;
                 var commentClosedDate = DateTime.Now;
                 comment.ClosedDate = commentClosedDate;
-                comment.CommentDate = commentClosedDate;
+                // comment.CommentDate = commentClosedDate;
                 comment.ClosedById = roleInGroup.UserId;
                 comment.Assessment.ChangedAt = commentClosedDate;
                 await _dbContext.SaveChangesAsync();
