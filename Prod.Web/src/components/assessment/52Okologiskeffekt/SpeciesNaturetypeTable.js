@@ -59,7 +59,7 @@ const SpeciesNaturetypeTable = observer((props) =>
                     <Xcomp.StringEnum observableValue={[item, 'scale']} forceSync codes={props.koder.speciesSpeciesScopeType} disabled={disabled} />
                 </td>
                 <td>
-                    <Xcomp.StringEnum observableValue={[item, 'interactionType']} forceSync codes={props.koder.speciesSpeciesInteractionType} disabled={disabled} />
+                    <Xcomp.StringEnum className= "typeInteract" observableValue={[item, 'interactionType']} forceSync codes={props.koder.speciesSpeciesInteractionType} disabled={disabled} />
                 </td>
                 <td>
                 <Xcomp.MultiselectArray
@@ -96,7 +96,7 @@ const SpeciesNaturetypeTable = observer((props) =>
                     <Xcomp.StringEnum observableValue={[props.newItem, 'scale']} forceSync codes={props.koder.speciesSpeciesScopeType} />
                 </td>
                 <td>
-                   <Xcomp.StringEnum observableValue={[props.newItem, 'interactionType']} forceSync codes={props.koder.speciesSpeciesInteractionType} /> 
+                   <Xcomp.StringEnum className= "typeInteract" observableValue={[props.newItem, 'interactionType']} forceSync codes={props.koder.speciesSpeciesInteractionType} /> 
                 </td>
                 <td>
                     <Xcomp.MultiselectArray
