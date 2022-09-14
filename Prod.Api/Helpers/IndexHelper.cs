@@ -22,7 +22,7 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Change this to force index rebuild!
         /// </summary>
-        public const int IndexVersion = 7;
+        public const int IndexVersion = 8;
         private static readonly object IndexingLock = new();
 
         private const string Field_Id = "Id";
