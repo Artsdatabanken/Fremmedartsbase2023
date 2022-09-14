@@ -393,15 +393,17 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                     observableValue={[riskAssessment, "AOOyear1"]}
                                                     observableErrors={[errorhandler, "B2err1"]}
                                                     integer
-                                                    className={"BcritYear"}
+                                                    className={"BcritYearPeriodend"} 
+                                                    // style={{margin: '10px 0 10px'}}
                                                     yearRange={true}
                                             /> 
-                                                <span style={{margin: '10px 10px 0'}}>(t<sub>1</sub>)</span>
+                                                <span style={{margin: '20px 10px 0'}}>(t<sub>1</sub>)</span>
                                             </td>
                                             <td>
                                                 <Xcomp.Number                            
                                                     observableValue={[riskAssessment, "AOOknown1"]}
                                                     integer
+                                                    className={"BcritAOO"}
                                                     disabled={!riskAssessment.notUseSpeciesMap}
                                                 />
                                             </td>
@@ -410,6 +412,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                     observableValue={[riskAssessment, "AOO1"]}
                                                     observableErrors={[errorhandler, "(a)err7", "(a)err9"]}
                                                     integer
+                                                    className={"BcritAOO"}
                                                 />
                                             </td>
                                         </tr>
@@ -453,22 +456,26 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             </td>
                                             <td style={{display: 'flex'}}>
                                                 <Xcomp.Number            
-                                                    className={"BcritYear"}
+                                                    className={"BcritYearPeriodend"}
                                                     observableValue={[riskAssessment, "AOOyear2"]} 
                                                     observableErrors={[errorhandler, "B2err1"]}
                                                     integer
                                                     yearRange={true}
                                                 /> 
-                                                <span style={{margin: '10px 10px 0'}}>(t<sub>2</sub>)</span>
+                                                <span style={{margin: '20px 10px 0'}}>(t<sub>2</sub>)</span>
                                             </td>
                                             <td>
-                                                <Xcomp.Number observableValue={[riskAssessment, "AOOknown2"]} integer disabled={!riskAssessment.notUseSpeciesMap} /> 
+                                                <Xcomp.Number observableValue={[riskAssessment, "AOOknown2"]} 
+                                                integer 
+                                                className={"BcritAOO"}
+                                                disabled={!riskAssessment.notUseSpeciesMap} /> 
                                             </td> 
                                             <td>    
                                                 <Xcomp.Number                            
                                                     observableValue={[riskAssessment, "AOO2"]}
                                                     observableErrors={[errorhandler, "(a)err8"]}
                                                     integer
+                                                    className={"BcritAOO"}
                                                 />
                                             </td>                                               
                                         </tr>
