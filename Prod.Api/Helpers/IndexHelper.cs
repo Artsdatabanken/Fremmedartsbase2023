@@ -22,7 +22,7 @@ namespace Prod.Api.Helpers
         /// <summary>
         ///     Change this to force index rebuild!
         /// </summary>
-        public const int IndexVersion = 6;
+        public const int IndexVersion = 7;
         private static readonly object IndexingLock = new();
 
         private const string Field_Id = "Id";
@@ -422,19 +422,21 @@ namespace Prod.Api.Helpers
             }
 
             //var ids = result.Select(x => int.Parse(x.Id)).ToArray();
-            var comments = assessment.Comments.Where(x=>x.IsDeleted == false && (x.Type == CommentType.System || x.Type == CommentType.Ordinary )).ToArray();
-            var latest = comments.Any() ? comments.Max(x => x.CommentDate) : DateTime.MinValue;
-            var closed = comments.Count(x => x.Closed);
-            var open = comments.Count(y =>
+            var userComments = assessment.Comments.Where(x=>x.IsDeleted == false && (x.Type == CommentType.System || x.Type == CommentType.Ordinary )).ToArray();
+            var allComments = assessment.Comments.Where(x => x.IsDeleted == false).ToArray();
+
+            var latest = userComments.Any() ? userComments.Max(x => x.CommentDate) : DateTime.MinValue;
+            var closed = userComments.Count(x => x.Closed);
+            var open = userComments.Count(y =>
                 !y.Closed); // && !y.Comment.StartsWith(TaksonomiskEndring) &&
             //!y.Comment.StartsWith(PotensiellTaksonomiskEndring));
-            var noAdbComments = comments.All(x => !x.User.Email.ToLowerInvariant().Contains("@artsdatabanken.no"));
-            var commenters = comments
+            var noAdbComments = userComments.All(x => !x.User.Email.ToLowerInvariant().Contains("@artsdatabanken.no"));
+            var commenters = userComments
                 .Where(y => y.IsDeleted == false) // && y.Closed == false)
                 .GroupBy(x=>x.UserId).Select(x => new {x.Key, maxDate = x.Max(y=>y.CommentDate) }).ToArray();
             foreach (var comenter in commenters)
             {
-                var newCount = comments.Count(y => y.IsDeleted == false && y.Closed == false && y.UserId != comenter.Key &&
+                var newCount = userComments.Count(y => y.IsDeleted == false && y.Closed == false && y.UserId != comenter.Key &&
                                                    y.CommentDate > comenter.maxDate);
                 if (newCount > 0)
                 {
@@ -463,11 +465,12 @@ namespace Prod.Api.Helpers
                     : 0;
 
             indexFields.Add(new StringField(Field_NewestComment, latest.ToString("yyyy-dd-MM HH:mm"), Field.Store.YES));
-            indexFields.Add(new StoredField(Field_CommentsClosed, closed.ToString()));
+            indexFields.Add(new StoredField(Field_CommentsClosed, allComments.Count(x => x.Closed).ToString()));
             indexFields.Add(new StringField(Field_HasCommentsClosed, closed > 0 ? "1" : "0", Field.Store.YES));
             //foreach (var tuple in newCommentsForUserId.Where(x=>x.Item2 > 0))
             //    document.Add(new StringField(Field_CommentsNew, tuple.Item1 + ";" + tuple.Item2, Field.Store.YES));
-            indexFields.Add(new StringField(Field_CommentsOpen, open.ToString(), Field.Store.YES));
+            indexFields.Add(new StringField(Field_CommentsOpen, allComments.Count(y =>
+                !y.Closed).ToString(), Field.Store.YES));
             indexFields.Add(new StringField(Field_HasCommentsOpen, open > 0 ? "1" : "0", Field.Store.NO));
             indexFields.Add(new StringField(Field_NoAdbComments, noAdbComments ? "1" : "0", Field.Store.NO));
 
