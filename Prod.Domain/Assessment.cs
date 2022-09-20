@@ -12,7 +12,6 @@ namespace Prod.Domain
         /// </summary>
         public DateTime ChangedAt { get; set; }
         public string Expertgroup { get; set; }
-        //public string EvaluationStatus { get; set; }
         public User LastUpdatedByUser { get; set; }
         public Guid LastUpdatedByUserId { get; set; }
         public DateTime LastUpdatedAt { get; set; }
@@ -20,20 +19,8 @@ namespace Prod.Domain
         public Guid? LockedForEditByUserId { get; set; }
         public DateTime LockedForEditAt { get; set; }
         public string Doc { get; set; }
-        //public string ScientificName { get; set; }
-        //public string PopularName { get; set; }
-        //public string TaxonHierarcy { get; set; }
         public bool IsDeleted { get; set; }
-        //public string Category { get; set; }
-        //public string Criteria { get; set; }
-        //public string[] MainCriteria { get; set; }
         public int ScientificNameId { get; set; }
-        //public int AssessmentYear { get; set; } //Vurderingsår
-        //public string CategoryLastRedList { get; set; } //KategoriFraForrigeListe
-        ////public List<string> NatureTypes { get; set; } = new List<string>(); //NaturtypeHovedenhet (Hovendhabitat)
-        //public string NatureTypes { get; set; } //NaturtypeHovedenhet (Hovendhabitat)         List or string ????
-        //public string RedListAssessedSpecies { get; set; }
-        //public string AssessmentContext { get; set; }
 
         public List<AssessmentComment> Comments { get; set; }
         public List<Attachment> Attachments { get; set; }

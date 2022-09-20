@@ -26,7 +26,7 @@ namespace SwissKnife
         }
 
         [Command("maintenance", Description = "Run tasks for maintaining database")]
-        [Subcommand(typeof(TaxonomyWash),typeof(NightTasks), typeof(TaxonomyWashDirect), typeof(ImportNames), typeof(ImportHSData), typeof(PatchMigration), typeof(TransferFromHorizonScan))]
+        [Subcommand(typeof(TaxonomyWash),typeof(NightTasks), typeof(TaxonomyWashDirect), typeof(ImportNames), typeof(ImportGTData), typeof(ImportHSData), typeof(PatchMigration), typeof(TransferFromHorizonScan))]
         [HelpOption("--help")]
         internal class Maintenance {
             private int OnExecute(IConsole console)
@@ -97,6 +97,7 @@ namespace SwissKnife
                     MaintenanceService.RunImportNewAssessments(new Prod.Data.EFCore.SqlServerProdDbContext(ConnectionString), SpeciesGroup, InputFolder);
                 }
             }
+
             [Command("importhsdata", Description = "Import and create assessments from names with data from horisontscanning")]
             internal class ImportHSData : MaintananceBase
             {
@@ -110,6 +111,22 @@ namespace SwissKnife
                 private void OnExecute(IConsole console)
                 {
                     MaintenanceService.RunImportHSAssessments(new Prod.Data.EFCore.SqlServerProdDbContext(ConnectionString), InputFolder);
+                }
+            }
+
+            [Command("importgenerationtime", Description = "update generaiontime on assessments")]
+            internal class ImportGTData : MaintananceBase
+            {
+                //[Option("--speciesgroup", Description = "SpeciesGroup to put assessments in")]
+                //[Required]
+                //public string SpeciesGroup { get; }
+
+                [Option("--csvfile", Description = "CvsFile with path")]
+                [Required]
+                public string InputFolder { get; }
+                private void OnExecute(IConsole console)
+                {
+                    MaintenanceService.RunImportGTData(new Prod.Data.EFCore.SqlServerProdDbContext(ConnectionString), InputFolder);
                 }
             }
 
