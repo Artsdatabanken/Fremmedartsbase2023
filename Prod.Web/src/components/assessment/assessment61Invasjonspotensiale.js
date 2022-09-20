@@ -404,6 +404,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                     observableValue={[riskAssessment, "AOOknown1"]}
                                                     integer
                                                     className={"BcritAOO"}
+                                                    observableErrors={[errorhandler, "B2err3"]}
                                                     disabled={!riskAssessment.notUseSpeciesMap}
                                                 />
                                             </td>
@@ -468,6 +469,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                 <Xcomp.Number observableValue={[riskAssessment, "AOOknown2"]} 
                                                 integer 
                                                 className={"BcritAOO"}
+                                                observableErrors={[errorhandler, "B2err4"]}
                                                 disabled={!riskAssessment.notUseSpeciesMap} /> 
                                             </td> 
                                             <td>    
@@ -481,7 +483,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                         </tr>
                                     </tbody>                            
                                 </table>
-                                <ErrorList errorhandler={errorhandler} errorids={["(a)err9","(a)err10", "B2err1"]} />
+                                <ErrorList errorhandler={errorhandler} errorids={["(a)err9","(a)err10", "B2err1", "B2err3", "B2err4"]} />
                                 <Xcomp.Bool observableValue={[riskAssessment, "notUseSpeciesMap"]} label={"Ønsker ikke å bruke Artskart for å beregne forekomstareal"} />
                                 <p>{labels.Bcrit.commentOrDescription}</p>
                                 <Xcomp.HtmlString  observableValue={[riskAssessment, "commentOrDescription"]} />                      
