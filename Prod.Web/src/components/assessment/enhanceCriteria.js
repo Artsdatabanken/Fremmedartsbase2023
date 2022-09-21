@@ -530,7 +530,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             const result =
                 k === "B1" ? r.expansionSpeedInput
                 : ["B2a1", "B2a2"].includes(k) ? this.expansionSpeedB2a 
-                : k === "B2b" ? trunc(200 * (sqrt(r.AOO10yrBest / 4) - 1) / sqrt(pi))
+                : k === "B2b" ? Math.max(0,  trunc(200 * (sqrt(r.AOO10yrBest / 4) - 1) / sqrt(pi)))
                 : 0 
             // console.log("##!expansionSpeed: key:" + k + " unroundedresult: " + result)
             return roundToSignificantDecimals(result)
