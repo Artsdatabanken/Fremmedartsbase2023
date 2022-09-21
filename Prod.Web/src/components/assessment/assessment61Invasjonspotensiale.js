@@ -161,8 +161,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                         <h2>{labels.Acrit.mainHeading}</h2>
                         <h4>{critA.heading}</h4>
                         <p>{critA.info}</p>
-                        
-                        <Xcomp.StringEnum mode="radio" observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]} codes={koder.AcritSelect} /> 
+                        <Xcomp.StringEnum mode="radio" disabled={riskAssessment.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && riskAssessment.acceptOrAdjustCritA == "adjust"} observableValue={[riskAssessment, "chosenSpreadMedanLifespan"]} codes={koder.AcritSelect} /> 
                         {riskAssessment.chosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" 
                         ? <div>
 
@@ -394,15 +393,18 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                     observableValue={[riskAssessment, "AOOyear1"]}
                                                     observableErrors={[errorhandler, "B2err1"]}
                                                     integer
-                                                    className={"BcritYear"}
+                                                    className={"BcritYearPeriodend"} 
+                                                    // style={{margin: '10px 0 10px'}}
                                                     yearRange={true}
                                             /> 
-                                                <span style={{margin: '10px 10px 0'}}>(t<sub>1</sub>)</span>
+                                                <span style={{margin: '20px 10px 0'}}>(t<sub>1</sub>)</span>
                                             </td>
                                             <td>
                                                 <Xcomp.Number                            
                                                     observableValue={[riskAssessment, "AOOknown1"]}
                                                     integer
+                                                    className={"BcritAOO"}
+                                                    observableErrors={[errorhandler, "B2err3"]}
                                                     disabled={!riskAssessment.notUseSpeciesMap}
                                                 />
                                             </td>
@@ -411,6 +413,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                                     observableValue={[riskAssessment, "AOO1"]}
                                                     observableErrors={[errorhandler, "(a)err7", "(a)err9"]}
                                                     integer
+                                                    className={"BcritAOO"}
                                                 />
                                             </td>
                                         </tr>
@@ -454,28 +457,33 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             </td>
                                             <td style={{display: 'flex'}}>
                                                 <Xcomp.Number            
-                                                    className={"BcritYear"}
+                                                    className={"BcritYearPeriodend"}
                                                     observableValue={[riskAssessment, "AOOyear2"]} 
                                                     observableErrors={[errorhandler, "B2err1"]}
                                                     integer
                                                     yearRange={true}
                                                 /> 
-                                                <span style={{margin: '10px 10px 0'}}>(t<sub>2</sub>)</span>
+                                                <span style={{margin: '20px 10px 0'}}>(t<sub>2</sub>)</span>
                                             </td>
                                             <td>
-                                                <Xcomp.Number observableValue={[riskAssessment, "AOOknown2"]} integer disabled={!riskAssessment.notUseSpeciesMap} /> 
+                                                <Xcomp.Number observableValue={[riskAssessment, "AOOknown2"]} 
+                                                integer 
+                                                className={"BcritAOO"}
+                                                observableErrors={[errorhandler, "B2err4"]}
+                                                disabled={!riskAssessment.notUseSpeciesMap} /> 
                                             </td> 
                                             <td>    
                                                 <Xcomp.Number                            
                                                     observableValue={[riskAssessment, "AOO2"]}
                                                     observableErrors={[errorhandler, "(a)err8"]}
                                                     integer
+                                                    className={"BcritAOO"}
                                                 />
                                             </td>                                               
                                         </tr>
                                     </tbody>                            
                                 </table>
-                                <ErrorList errorhandler={errorhandler} errorids={["(a)err9","(a)err10", "B2err1"]} />
+                                <ErrorList errorhandler={errorhandler} errorids={["(a)err9","(a)err10", "B2err1", "B2err3", "B2err4"]} />
                                 <Xcomp.Bool observableValue={[riskAssessment, "notUseSpeciesMap"]} label={"Ønsker ikke å bruke Artskart for å beregne forekomstareal"} />
                                 <p>{labels.Bcrit.commentOrDescription}</p>
                                 <Xcomp.HtmlString  observableValue={[riskAssessment, "commentOrDescription"]} />                      

@@ -7,6 +7,7 @@ import Documents from '../documents'
 import errorhandler from '../errorhandler';
 import ErrorList from '../errorList';
 import auth from '../authService';
+import riskLevel from './riskLevel';
 @inject("appState")
 @observer
 export default class Assessment91Kriteriedokumentasjon extends React.Component {
@@ -37,6 +38,26 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
         const _alienSpeciesCategoryLabel = koder.AlienSpeciesCategory.filter(kode => kode.Value === kdi.alienSpeciesCategory  )
         const alienSpeciesCategoryLabel = _alienSpeciesCategoryLabel ? _alienSpeciesCategoryLabel[0] ? _alienSpeciesCategoryLabel[0].Text : "not set" : "net set"
         const category2018 = (riskLevelCode) => labels.RiskLevelCode[riskLevelCode]
+
+        const uncertainlyCategories = riskLevel.uncertaintyCategories(riskAssessment.riskLevel, riskAssessment.invationpotential.uncertaintyLevels, riskAssessment.ecoeffect.uncertaintyLevels)
+        // const categoryText = ['NK','LO','PH','HI','SE']
+        // console.log(riskLevel.riskLevelMatrise);
+        // let usikkerhetskategorier = [];
+        // for (let index = 0; index < riskAssessment.invationpotential.uncertaintyLevels.length; index++) {
+        //     const invEl = riskAssessment.invationpotential.uncertaintyLevels[index];
+        //     for (let index = 0; index < riskAssessment.ecoeffect.uncertaintyLevels.length; index++) {
+        //         const ecoEl = riskAssessment.ecoeffect.uncertaintyLevels[index];
+        //         const newLocal = riskLevel.riskLevelMatrise[3 - ecoEl][invEl];
+        //         if (newLocal != riskAssessment.riskLevel)
+        //         {
+        //             usikkerhetskategorier.push(newLocal);
+        //         }
+        //     }
+        // }
+        // usikkerhetskategorier=[...new Set(usikkerhetskategorier)]
+        // console.log(usikkerhetskategorier);
+        // let usikkerhetskategorierText = usikkerhetskategorier.map(x=>categoryText[x]);
+        // console.log(usikkerhetskategorierText);
         return (
             <div>
             {config.showPageHeaders
@@ -66,7 +87,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                         <h3>{assessment.category === "NR"
                             ? ""
                             : riskAssessment.riskLevelText} 
-                            <b> {assessment.category}</b>
+                            <b> {assessment.category} </b> {uncertainlyCategories.length >0 ? "(" + uncertainlyCategories.join(', ')+ ")": ""}
                         </h3>
                         {assessment.criteria !== "" 
                             ? <h4>{critlabels.decisiveCriteria}: <b> {assessment.criteria}</b></h4>

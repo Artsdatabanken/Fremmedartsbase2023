@@ -66,7 +66,7 @@ const SpeciesSpeciesTable = observer((props) =>
                 {props.showInteractionType && !props.HCrit 
                 ? <td>
                     <Xcomp.StringEnum 
-                        observableValue={[item, 'interactionType']}   
+                        className= "typeInteract" observableValue={[item, 'interactionType']}   
                         forceSync                                
                         codes={props.koder.speciesSpeciesInteractionType} />
                     </td> : null}
@@ -175,7 +175,7 @@ const SpeciesSpeciesTable = observer((props) =>
                 </td>
                 {props.showInteractionType && !props.HCrit 
                 ? <td>
-                   <Xcomp.StringEnum observableValue={[props.newItem, 'interactionType']} forceSync codes={props.koder.speciesSpeciesInteractionType} />
+                   <Xcomp.StringEnum className= "typeInteract" observableValue={[props.newItem, 'interactionType']} forceSync codes={props.koder.speciesSpeciesInteractionType} />
                 </td> 
                 : null}
                 <td>

@@ -293,15 +293,10 @@ export default inject('appState')(observer(class AssessmentReferences extends Co
         let bandB = ""
 
         // Use toUpperCase() to ignore character casing
-        if (a.formattedReference && b.formattedReference) {            
-            bandA = a.formattedReference.toUpperCase();
-            bandB = b.formattedReference.toUpperCase();
-        } 
-            
-        else {
-            bandA = a.referencePresentation.toUpperCase();
-            bandB = b.referencePresentation.toUpperCase();
-        }
+        
+        bandA = a.formattedReference ? a.formattedReference.toUpperCase() : a.formattedReference;
+        bandB = b.formattedReference ? b.formattedReference.toUpperCase() : b.formattedReference;
+
         let comparison = 0;
         if (bandA > bandB) {
           comparison = 1;

@@ -2,7 +2,27 @@
   "profiles": {
     "SwissKnife": {
       "commandName": "Project",
-      "commandLineArgs": "maintenance importnames --connectionstring \"Server=localhost;Database=FAB2023;Integrated Security=true;MultipleActiveResultSets=true\" --speciesgroup \"Terrestriske invertebrater\" --csvfile ../../../Importfiler/TerrestriskeInvertebrater.txt"
+      "commandLineArgs": "maintenance taxonomywash --connectionstring \"Server=localhost;Database=FAB4;Integrated Security=true;MultipleActiveResultSets=true\""
+    },
+    "Patchmigration": {
+      "commandName": "Project",
+      "commandLineArgs": "maintenance patchmigration --connectionstring \"Server=localhost;Database=fab4;Integrated Security=true;MultipleActiveResultSets=true\" --inputfolder ./../../.././Dump2\r\n"
+    },
+    "NightTask": {
+      "commandName": "Project",
+      "commandLineArgs": "maintenance nighttasks --connectionstring \"Server=localhost;Database=fab4;Integrated Security=true;MultipleActiveResultSets=true\"\r\n"
+    },
+    "Taxonomywash": {
+      "commandName": "Project",
+      "commandLineArgs": "maintenance taxonomywash --connectionstring \"Server=localhost;Database=fab4;Integrated Security=true;MultipleActiveResultSets=true\""
+    },
+    "Taxonomywashdirect": {
+      "commandName": "Project",
+      "commandLineArgs": "maintenance taxonomywashdirect --connectionstring \"Server=localhost;Database=fab4;Integrated Security=true;MultipleActiveResultSets=true\" --speciesgroup Karplanter\r\n"
+    },
+    "ImportGTdata": {
+      "commandName": "Project",
+      "commandLineArgs": "maintenance importgenerationtime --connectionstring \"Server=localhost;Database=fab4;Integrated Security=true;MultipleActiveResultSets=true\" --csvfile \"..\\..\\..\\Importfiler\\Generasjonstid_revidert_karplanter_til_FAB.csv\"\r\n"
     }
   }
 }

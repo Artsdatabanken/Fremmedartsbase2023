@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ using CsvHelper.Configuration;
 using KellermanSoftware.CompareNetObjects;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.EntityFrameworkCore.Sqlite.Storage.Internal;
 using Prod.Data.EFCore;
 using Prod.Domain;
@@ -308,6 +310,69 @@ namespace SwissKnife.Database
                 writer.WriteNullValue();
             }
         }
+
+        private static JsonNode? ParseJson(string filen)
+        {
+            return JsonNode.Parse(File.Exists("../../../.." + filen) ? File.ReadAllText("../../../.." + filen) : File.ReadAllText(".." + filen));
+        }
+        private static List<Tuple<string, string>> DrillDown(JsonArray array, string child = "Children")
+        {
+            var result = new List<Tuple<string, string>>();
+            foreach (var node in array)
+            {
+                var value =  node["Value"].GetValue<string>() + "|" + node["Id"].GetValue<string>();
+                result.Add(new Tuple<string, string>(value, node["Text"].GetValue<string>()));
+                result.AddRange(DrillDown(node[child].AsArray(), child));
+            }
+
+            return result;
+        }
+
+        private static List<Tuple<string, string>> DrillDown2(JsonArray array, string id = "Id", string text = "Category", string child = "Children", string parentCategory = "")
+        {
+            var result = new List<Tuple<string, string>>();
+            foreach (var node in array)
+            {
+                var idn = node[id].GetValue<string>();
+                var category = node[text].GetValue<string>();
+                if (parentCategory == "Hovedtype" && category == "Grunntype")
+                {
+                    result.Add(new Tuple<string, string>(idn, category));
+                }
+                if (parentCategory == "Hovedtype" && category == "Kartleggingsenhet")
+                {
+                    result.Add(new Tuple<string, string>(idn, category));
+                }
+
+                result.AddRange(DrillDown2(node[child].AsArray(), id, text, child, category));
+            }
+
+            return result;
+        }
+        private static List<Tuple<string, string, string>> DrillDown3(JsonArray array, string parentCategory = "")
+        {
+            var result = new List<Tuple<string, string, string>>();
+            foreach (var node in array)
+            {
+                string category = string.Empty;
+                if (node["Value"] != null)
+                {
+                    var code = node["Value"].GetValue<string>();
+                    category = node["Text"].GetValue<string>();
+
+                    result.Add(new Tuple<string, string, string>(code, category, parentCategory));
+                }
+
+                var jsonNode = node["Children"];
+                if (jsonNode == null) continue;
+                var jsonObject = jsonNode.AsObject().First();
+                var jsonArray = jsonObject.Value.AsArray();
+                result.AddRange(DrillDown3(jsonArray, category));
+            }
+
+            return result;
+        }
+
         public void PatchImport(IConsole console, string inputFolder)
         {
             var jsonSerializerOptions = new JsonSerializerOptions
@@ -332,8 +397,31 @@ namespace SwissKnife.Database
             var taxonService = new SwissKnife.Database.TaksonService();
 
             var datetime = DateTime.MinValue;
-            var redlistByScientificName = GetRedlistByScientificNameDictoDictionary(inputFolder, theCsvConfiguration);
+            //var redlistByScientificName = GetRedlistByScientificNameDictoDictionary(inputFolder, theCsvConfiguration);
 
+            var nin = ParseJson("/Prod.Web/src/Nin2_3.json");
+            var dictNin = DrillDown2(nin["Children"].AsArray()).ToDictionary(item => item.Item1.Substring(3), item => item.Item2);
+
+            //var nin = ParseJson("/Prod.Web/src/Nin2_3.json");
+            var nin2 = ParseJson("/Prod.Web/src/TrueteOgSjeldneNaturtyper2018.json");
+            // key = "NA T12|124" altså med kode og value 
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+            //dict = DrillDown(nin2["Children"].AsArray()).ToDictionary(item => item.Item1.Substring(3), item => item.Item2);
+            foreach (var item in DrillDown(nin2["Children"].AsArray()))
+            {
+                var key = item.Item1;
+                if (!dict.ContainsKey(key)) dict.Add(key, item.Item2);
+            }
+
+            // hele koderøkla
+            var codes = ParseJson("/Prod.Web/src/FA3CodesNB.json");
+            //var migrationPathway = codes["Children"]["migrationPathways"].AsArray()[0]["Children"]["mp"][0]["Children"]["mpimport"].AsArray();
+           // var dictPath = DrillDown3(migrationPathway)
+           //     .ToDictionary(item => item.Item1, item => item);
+
+
+            var RedList = dict.Select(x => x.Key.Split("|").First()).Union(dict.Select(x => "NA " + x.Key.Split("|").First())).ToArray();
+            
 
             var existing = _database.Assessments.ToDictionary(x => x.Id, x => JsonSerializer.Deserialize<FA4>(x.Doc, jsonSerializerOptions));
             var seen = new List<int>();
@@ -342,6 +430,15 @@ namespace SwissKnife.Database
             var batchsize = 50;
             var count = 0;
             IEnumerable<Prod.Domain.Legacy.FA3Legacy> assessments = GetAssessments(inputFolder);
+
+            foreach (var assessment in assessments)
+            {
+                if (!string.IsNullOrWhiteSpace(assessment.RiskAssessment.SpreadYearlyIncreaseCalculatedExpansionSpeed))
+                {
+                    
+                }
+            }
+
 
             List<Tuple<string, string, string>> obsTekster = new List<Tuple<string, string, string>>();
             foreach (var oldAssessment in assessments)
@@ -373,6 +470,7 @@ namespace SwissKnife.Database
 
                 //TransferAndFixPropertiesOnAssessmentsFrom2018(exAssessment, newAssesment);
                 //FixRedlistOnExistingAssessment(exAssessment, redlistByScientificName, taxonService);
+                TestForNaturetypeTrouble(console, exAssessment, RedList, dict, dictNin);
 
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)
@@ -389,7 +487,7 @@ namespace SwissKnife.Database
                 //{
                 //     real.Doc = JsonSerializer.Serialize<FA4>(exAssessment); 
                 //}
-                
+
                 //               _database.Assessments.Add(dbAssessment);
                 count++;
 
@@ -420,7 +518,8 @@ namespace SwissKnife.Database
 
                 //FixPropertiesOnNewAssessments(exAssessment);
                 //FixRedlistOnExistingAssessment(exAssessment, redlistByScientificName, taxonService);
-               
+                TestForNaturetypeTrouble(console, exAssessment, RedList, dict, dictNin);
+
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)
                 {
@@ -447,6 +546,125 @@ namespace SwissKnife.Database
             //{
             //    console.WriteLine("OBS: " + tuple.Item1 + " " + tuple.Item2 + ":" + tuple.Item3);
             //}
+        }
+
+        private static void TestForNaturetypeTrouble(IConsole console, FA4 exAssessment, string[] RedList,
+            Dictionary<string, string> dictionary, Dictionary<string, string> dictNin)
+        {
+            if (exAssessment.ImpactedNatureTypes.Any())
+            {
+                foreach (var impactedNatureType in exAssessment.ImpactedNatureTypes)
+                {
+                    var natureTypeArea = impactedNatureType.AffectedArea;
+
+
+                    if (RedList.Contains(impactedNatureType.NiNCode) && exAssessment.EvaluationStatus == "finished" &&
+                        natureTypeArea != "0")
+                    {
+                        console.WriteLine(
+                            $"{(exAssessment.EvaluationStatus == "finished" ? "Ferdigstillt:" : string.Empty)} {exAssessment.ExpertGroup} {impactedNatureType.NiNCode} {natureTypeArea} {exAssessment.EvaluatedScientificName} {exAssessment.EvaluatedVernacularName}");
+
+                    }
+                    //if (RedList.Contains(impactedNatureType.NiNCode)) // && exAssessment.EvaluationStatus == "finished") // && natureTypeArea != "0")
+                    //{
+                    //    if (exAssessment.ExpertGroup.ToLowerInvariant().Contains("svalbard"))
+                    //    {
+                    //        // svalbard
+                    //        var newCode = dictionary.Where(x => x.Key.Split("|").First() == impactedNatureType.NiNCode)
+                    //            .First().Key.Split("|").Last();
+                    //        if (newCode == "75")
+                    //        {
+                    //            newCode = "124";
+                    //        }
+                    //        console.WriteLine(
+                    //            $"{exAssessment.ExpertGroup} {impactedNatureType.NiNCode} -> {newCode} {natureTypeArea} {exAssessment.EvaluatedScientificName} {exAssessment.EvaluatedVernacularName}");
+
+                    //        impactedNatureType.NiNCode = newCode;
+                    //    }
+                    //    else
+                    //    {
+                    //        // annet
+                    //        var newCode = dictionary.Where(x => x.Key.Split("|").First() == impactedNatureType.NiNCode)
+                    //            .First().Key.Split("|").Last();
+                    //        if (newCode == "124")
+                    //        {
+                    //            newCode = "75";
+                    //        }
+                    //        console.WriteLine(
+                    //            $"{exAssessment.ExpertGroup} {impactedNatureType.NiNCode} -> {newCode} {natureTypeArea} {exAssessment.EvaluatedScientificName} {exAssessment.EvaluatedVernacularName}");
+
+                    //        impactedNatureType.NiNCode = newCode;
+                    //    }
+
+                    //    //console.WriteLine(
+                    //    //    $"{(exAssessment.EvaluationStatus == "finished" ? "Ferdigstillt:": string.Empty)} {exAssessment.ExpertGroup} {impactedNatureType.NiNCode} {natureTypeArea} {exAssessment.EvaluatedScientificName} {exAssessment.EvaluatedVernacularName}");
+                    //}
+                }
+
+                var test = exAssessment.ImpactedNatureTypes.GroupBy(x => x.NiNCode)
+                    .Select(x => new { NiNCode = x.Key, ImpactedNatureTypes = x.ToArray() });
+                foreach (var group in test)
+                {
+                    if (dictNin.Any(x => "NA " + x.Key.Split("-").First() == group.NiNCode))
+                    {
+                        //console.WriteLine(
+                        //    $"{(exAssessment.EvaluationStatus == "imported" ? "Ikkje påbegynt:" : string.Empty)} {group.NiNCode} {exAssessment.ExpertGroup}  {exAssessment.EvaluatedScientificName} {exAssessment.EvaluatedVernacularName}");
+
+                    }
+
+                    if (group.ImpactedNatureTypes.Length > 1)
+                    {
+                        if (dictNin.Any(x=>"NA " + x.Key.Split("-").First() == group.NiNCode) )
+                        {
+                            console.WriteLine(
+                                $"{(exAssessment.EvaluationStatus == "finished" ? "Ferdigstillt:" : string.Empty)} {group.NiNCode} {exAssessment.ExpertGroup}  {exAssessment.EvaluatedScientificName} {exAssessment.EvaluatedVernacularName}");
+
+                        }
+                        if (dictNin.Any(x => x.Key.Split("-").First() == group.NiNCode))
+                        {
+                            //console.WriteLine(
+                            //    $"{(exAssessment.EvaluationStatus == "finished" ? "Ferdigstillt:" : string.Empty)} {group.NiNCode} {exAssessment.ExpertGroup}  {exAssessment.EvaluatedScientificName} {exAssessment.EvaluatedVernacularName}");
+                        }
+
+                        var test2 = group.ImpactedNatureTypes.Select(x => x.TimeHorizon).Distinct().ToArray();
+                        if (test2.Length != group.ImpactedNatureTypes.Length && exAssessment.EvaluationStatus == "imported")
+                        {
+
+                            // hvis status = ''
+                            //console.WriteLine(
+                            //    $"{(exAssessment.EvaluationStatus == "imported" ? "Ikkje påbegynt:" : string.Empty)} {exAssessment.ExpertGroup}  {exAssessment.EvaluatedScientificName} {exAssessment.EvaluatedVernacularName}");
+                            var naturtyper = group.ImpactedNatureTypes.ToArray();
+
+                            var naturtyperLength = naturtyper.Length;
+                            var removed = new List<FA4.ImpactedNatureType>();
+                            for (var i = 0; i < naturtyperLength; i++)
+                            {
+                                var outer = naturtyper[i];
+                                if (removed.Contains(outer)) continue;
+                                
+                                for (int j = i+1; j < naturtyperLength; j++)
+                                {
+                                    var inner = naturtyper[j];
+                                    if (removed.Contains(inner)) continue;
+
+                                    if (outer.NiNCode == inner.NiNCode &&
+                                        outer.TimeHorizon == inner.TimeHorizon &&
+                                        outer.ColonizedArea == inner.ColonizedArea &&
+                                        outer.AffectedArea == inner.AffectedArea &&
+                                        outer.StateChange.All(x=> inner.StateChange.Contains(x)) &&
+                                        outer.Background.All(x => inner.Background.Contains(x))
+                                        )
+                                    {
+                                        removed.Add(inner);
+                                        exAssessment.ImpactedNatureTypes.Remove(inner);
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
         }
 
         private static Dictionary<int, Rodliste2021Rad> GetRedlistByScientificNameDictoDictionary(string inputFolder,

@@ -1,4 +1,5 @@
 ﻿const self = {
+    categoryText : ['NK','LO','PH','HI','SE'],
     riskColors: ["#9ba963","#5ea4a1", "#185a6c", "#1b386f", "#5e3063" ],
     riskLevelMatrise: [ 
         // invasjonspotensiale -->
@@ -78,6 +79,7 @@
 
         const sweepingUncertaintyLevels = decisiveUncertainties.reduce((acc, uv) => acc.filter(n => n >= level || uv.indexOf(n) > -1), allUncertaintyLevels) 
         const result = {level: level, decisiveCriteria:decisiveCrits, uncertaintyLevels: sweepingUncertaintyLevels} // uncertaintyLevels }
+        console.log("invationpot uncertanylevels  " + sweepingUncertaintyLevels    )
         return result;
     },
     ecoeffect: (riskAssessment) => {
@@ -96,6 +98,7 @@
         const uncertaintyLevels = [...new Set(alluncertentyLevels)].sort()
         const sweepingUncertaintyLevels = decisiveCrits.reduce((acc, crit) => acc.filter(n => n >= level || crit.uncertaintyValues.indexOf(n) > -1), uncertaintyLevels) 
         const result = {level: level, decisiveCriteria:decisiveCrits, uncertaintyLevels: sweepingUncertaintyLevels} // uncertaintyLevels }
+        console.log("ecoeffect uncertanylevels  " + sweepingUncertaintyLevels    )
         return result;
     },
     riskLevel: (invasjonspotensiale, ecoeffect) => {
@@ -110,7 +113,29 @@
         const decisiveCriteriaLabel = "" + (invasjonspotensiale.level + 1) +  invLetters2 + "," + (ecoeffect.level + 1) + ecoLetters2
         const result = {level: lev,   decisiveCriteriaLabel:decisiveCriteriaLabel}
         return result;
+    },
+    uncertaintyCategories: (riskLevel, invationpotentialUncertaintyLevels, ecoeffectUncertaintyLevels) => {
+        // const categoryText = ['NK','LO','PH','HI','SE']
+        // console.log(riskLevel.riskLevelMatrise);
+        let usikkerhetskategorier = [];
+        for (let index = 0; index < invationpotentialUncertaintyLevels.length; index++) {
+            const invEl = invationpotentialUncertaintyLevels[index];
+            for (let index = 0; index < ecoeffectUncertaintyLevels.length; index++) {
+                const ecoEl = ecoeffectUncertaintyLevels[index];
+                const newLocal = self.riskLevelMatrise[3 - ecoEl][invEl];
+                if (newLocal != riskLevel)
+                {
+                    usikkerhetskategorier.push(newLocal);
+                }
+            }
+        }
+        usikkerhetskategorier=[...new Set(usikkerhetskategorier)]
+        // console.log(usikkerhetskategorier);
+        return usikkerhetskategorier.map(x=>self.categoryText[x]);
+        // console.log(usikkerhetskategorierText);
     }
+
+
 }
 
 export default self

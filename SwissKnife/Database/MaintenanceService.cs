@@ -239,15 +239,11 @@ namespace SwissKnife.Database
             var scientificNameIdChange = false;
             var scientificNameChange = false;
             var taxonIdChange = false;
-            if (assessment.EvaluatedScientificNameId.Value != currentTaxonomy.ValidScientificNameId)
+            var canAutoUpdate = false;
+
+            if (assessment.EvaluatedScientificNameId.Value == currentTaxonomy.ValidScientificNameId)
             {
-                scientificNameIdChange = true;
-                caseString +=
-                    $"Navnid endret {assessment.EvaluatedScientificNameId.Value} => {currentTaxonomy.ValidScientificNameId}. {(nameChange ? preName + " => " + postName + ". " : string.Empty)}";
-            }
-            else
-            {
-                //sjekk om populærnavn eller sti er feil...
+                //sjekk om populærnavn er feil...
                 if (currentTaxonomy.PrefferedPopularname != null && (assessment.EvaluatedVernacularName == null ||
                                                                      !assessment.EvaluatedVernacularName.Equals(
                                                                          currentTaxonomy
@@ -262,6 +258,7 @@ namespace SwissKnife.Database
                 var assessmentVurdertVitenskapeligNavnHierarki =
                     TaksonService.GetFullPathScientificName(currentTaxonomy).Item1;
 
+                // eller sti
                 if (assessmentVurdertVitenskapeligNavnHierarki != assessment.TaxonHierarcy)
                 {
                     Console.WriteLine(
@@ -269,6 +266,12 @@ namespace SwissKnife.Database
                     assessment.TaxonHierarcy = assessmentVurdertVitenskapeligNavnHierarki;
                     context.changes = true;
                 }
+            }
+            else
+            {
+                scientificNameIdChange = true;
+                caseString +=
+                    $"Navnid endret {assessment.EvaluatedScientificNameId.Value} => {currentTaxonomy.ValidScientificNameId}. {(nameChange ? preName + " => " + postName + ". " : string.Empty)}";
             }
 
             if (assessment.TaxonId > 0 && assessment.TaxonId != currentTaxonomy.TaxonId)
@@ -280,6 +283,7 @@ namespace SwissKnife.Database
             if (assessment.EvaluatedScientificName != currentTaxonomy.ValidScientificName ||
                 assessment.EvaluatedScientificNameAuthor != currentTaxonomy.ValidScientificNameAuthorship)
             {
+                // navnet er endret
                 scientificNameChange = true;
                 if (!taxonIdChange && !scientificNameIdChange) // ingen endring på taxonid!
                 {
@@ -288,6 +292,19 @@ namespace SwissKnife.Database
                         $"Navn endret {assessment.EvaluatedScientificName + " " + assessment.EvaluatedScientificNameAuthor} => {currentTaxonomy.ValidScientificName + " " + currentTaxonomy.ValidScientificNameAuthorship}. ";
                     // her endrer vi automagisk navn
                     UpdateTaxonomicInfoOnAssessment(assessment, currentTaxonomy);
+                    canAutoUpdate = true;
+                    //assessment.LatinsknavnId = currentTaxonomy.ValidScientificNameId;
+                    context.changes = true;
+                    context.historyWorthyChanges = firstRun == false;
+                }
+                else if (taxonIdChange && !scientificNameIdChange) // ingen endring på taxonid!
+                {
+
+                    caseString +=
+                        $"Navn redigert {assessment.EvaluatedScientificName + " " + assessment.EvaluatedScientificNameAuthor} => {currentTaxonomy.ValidScientificName + " " + currentTaxonomy.ValidScientificNameAuthorship}. ";
+                    // her endrer vi automagisk navn
+                    UpdateTaxonomicInfoOnAssessment(assessment, currentTaxonomy);
+                    canAutoUpdate = true;
                     //assessment.LatinsknavnId = currentTaxonomy.ValidScientificNameId;
                     context.changes = true;
                     context.historyWorthyChanges = firstRun == false;
@@ -297,12 +314,18 @@ namespace SwissKnife.Database
             {
                 caseString +=
                     $"Navn ikke endret {assessment.EvaluatedScientificName + " " + assessment.EvaluatedScientificNameAuthor}. ";
+                UpdateTaxonomicInfoOnAssessment(assessment, currentTaxonomy);
+                canAutoUpdate = true; // taxonid endret eller uendret men navnet indetisk
+
+                context.changes = true;
+                context.historyWorthyChanges = firstRun == false;
             }
 
             if ((taxonIdChange || scientificNameIdChange) && autoUpdate && context.historyWorthyChanges == false)
             {
-                caseString = ""; // blank ut denne for å fjerne kommentarer under 
+                //caseString = ""; // blank ut denne for å fjerne kommentarer under 
                 UpdateTaxonomicInfoOnAssessment(assessment, currentTaxonomy);
+                canAutoUpdate = true;
                 context.changes = true;
                 context.historyWorthyChanges = firstRun == false;
             }
@@ -310,24 +333,24 @@ namespace SwissKnife.Database
 
             if (!string.IsNullOrWhiteSpace(caseString) && !firstRun)
             {
-                var endring = caseString.StartsWith("Navn endret") ? TaksonomiskEndring : PotensiellTaksonomiskEndring;
+                var endring = canAutoUpdate ? TaksonomiskEndring : PotensiellTaksonomiskEndring;
                 var message = endring + caseString +
                               " http://www.artsportalen.artsdatabanken.no/#/Artsnavn/ref/" +
                               (currentTaxonomy == null
                                   ? assessment.EvaluatedScientificNameId
                                   : currentTaxonomy.ValidScientificNameId)
                               + " " +
-                              (caseString.StartsWith("Navn endret")
+                              (canAutoUpdate
                                   ? "Dette kan skyldes at et synonym er lagt til, at populærnavn er lagt til/endret eller lignende. Denne kommentaren er bare til opplysning og trenger ingen handling fra komitéen."
                                   : "Fremmedartsteamet trenger bekreftelse på denne endringen før vurderingen flyttes over på nytt navn. Svar på denne kommentaren eller send en mail til fremmedearter@artsdatabanken.no"
                               );
 
                 CreateOrAddTaxonomicCommentToAssessment(context, context.DbAssessment.Id, message);
             }
-            else if (context.DbAssessment != null)
-            {
-                RemoveTaxonomicalCommentsFromAssessment(context, context.DbAssessment.Id);
-            }
+            //else if (context.DbAssessment != null)
+            //{
+            //    RemoveTaxonomicalCommentsFromAssessment(context, context.DbAssessment.Id);
+            //}
 
             return context;
         }
@@ -381,6 +404,9 @@ namespace SwissKnife.Database
             }
 
 
+            var commentType = message.StartsWith(PotensiellTaksonomiskEndring)
+                ? CommentType.PotentialTaxonomicChange
+                : CommentType.TaxonomicChange;
             if (eksisting == null)
             {
                 eksisting = new AssessmentComment
@@ -390,17 +416,16 @@ namespace SwissKnife.Database
                     CommentDate = DateTime.Today,
                     // todo: put in config - think sweeden
                     UserId = new Guid("00000000-0000-0000-0000-000000000001"),
-                    Type = message.StartsWith(PotensiellTaksonomiskEndring)
-                        ? CommentType.PotentialTaxonomicChange
-                        : CommentType.TaxonomicChange
+                    Type = commentType
                 }; // siris id
                 context.dbcontext.Comments.Add(eksisting);
                 context.changes = true;
                 Console.WriteLine(message);
             }
-            else if (eksisting.Comment != message)
+            else if (eksisting.Comment != message || eksisting.Type != commentType)
             {
                 eksisting.Comment = message;
+                eksisting.Type = commentType;
                 eksisting.CommentDate = DateTime.Today;
                 context.changes = true;
                 Console.WriteLine(message);
@@ -1033,10 +1058,11 @@ namespace SwissKnife.Database
             {
                 var attachDate = context.dbcontext.Attachments.Where(x =>
                     x.AssessmentId == context.DbAssessment.Id && x.Name == name && x.Type == filetype &&
-                    x.FileName == fileName).Select(x => new {x.Date, x.File.LongLength}).FirstOrDefault();
+                    x.FileName == fileName).Select(x => new { x.Date, x.File.LongLength }).FirstOrDefault();
 
                 if (attachDate == null || attachDate.LongLength < 100 ||
-                    (attachDate.Date == DateTime.MinValue || attachDate.Date < DateTime.Parse(assessment.ArtskartSistOverført,
+                    (attachDate.Date == DateTime.MinValue || attachDate.Date < DateTime.Parse(
+                        assessment.ArtskartSistOverført,
                         null, System.Globalization.DateTimeStyles.AdjustToUniversal)))
                 {
                     var zipfile = ArtskartHelper.GetZipDataFromArtskart(assessment).GetAwaiter().GetResult();
@@ -1075,5 +1101,77 @@ namespace SwissKnife.Database
 
             return context;
         }
+
+        public static void RunImportGTData(SqlServerProdDbContext _database, string inputFolder)
+        {
+            var existing = _database.Assessments.Where(x => x.IsDeleted == false)
+                .Select(x => new { x.Id, x.Expertgroup, x.ScientificNameId }).ToArray();
+
+            var theCsvConfiguration = new CsvConfiguration(new CultureInfo("nb-NO"))
+            {
+                Delimiter = ";",
+                Encoding = Encoding.UTF8
+            };
+            var taxonService = new SwissKnife.Database.TaksonService();
+            var datetime = DateTime.MinValue;
+            using (var reader = new StreamReader(inputFolder))
+            using (var csv = new CsvReader(reader, theCsvConfiguration))
+            {
+                var records = csv.GetRecords<GTFormat>();
+                foreach (var importFormat in records)
+                {
+                    if (importFormat.EvaluatedScientificNameAuthor == "null")
+                        importFormat.EvaluatedScientificNameAuthor = null;
+                    Console.WriteLine(
+                        $"{importFormat.EvaluatedScientificNameId} {importFormat.EvaluatedScientificName} {importFormat.EvaluatedScientificNameAuthor}");
+
+                    //var ti = taxonService.getTaxonInfo(importFormat.EvaluatedScientificNameId).GetAwaiter().GetResult();
+                    //if (ti == null)
+                    //{
+                    //    Console.WriteLine(
+                    //        $"ERROR - could not find in Artsnavnebase: {importFormat.EvaluatedScientificNameId} {importFormat.EvaluatedScientificName} {importFormat.EvaluatedScientificNameAuthor}");
+                    //    continue;
+                    //}
+
+                    var assessment = existing.SingleOrDefault(x => x.Id == importFormat.Id);
+
+                    if (assessment == null)
+                    {
+                        // sikkert ok
+                    }
+                    else
+                    {
+                        var ass = _database.Assessments.Single(x => x.Id == importFormat.Id);
+                        var doc = System.Text.Json.JsonSerializer.Deserialize<FA4>(ass.Doc);
+                        if (doc.ReproductionGenerationTime != importFormat.reproductionGenerationTime)
+                        {
+                            Console.WriteLine($"Endret fra {doc.ReproductionGenerationTime} til {importFormat.reproductionGenerationTime}");
+                        }
+                        doc.ReproductionGenerationTime = importFormat.reproductionGenerationTime;
+                        ass.Doc = System.Text.Json.JsonSerializer.Serialize<FA4>(doc);
+                    }
+
+                    //var doc = System.Text.Json.JsonSerializer.Serialize<FA4>(fa4);
+                    //var allmatch = existing.Where(x =>
+                    //                        alternativeIds.Contains(x.ScientificNameId) && x.Expertgroup == fa4.ExpertGroup).ToArray();
+                    //var exst = existing.SingleOrDefault(x => x.ScientificNameId == fa4.EvaluatedScientificNameId && x.Expertgroup != "Testedyr");
+
+                    // _database.SaveChanges();
+                }
+
+                _database.SaveChanges();
+            }
+        }
+    }
+
+
+internal class GTFormat
+    {
+        public int Id { get; set; }
+        public string ExpertGroup { get; set; }
+        public int EvaluatedScientificNameId { get; set; }
+        public string EvaluatedScientificName { get; set; }
+        public string EvaluatedScientificNameAuthor { get; set; }
+        public int reproductionGenerationTime { get; set; }
     }
 }

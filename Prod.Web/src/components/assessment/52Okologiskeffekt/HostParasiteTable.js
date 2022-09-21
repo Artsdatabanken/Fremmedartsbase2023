@@ -56,7 +56,7 @@ const HostParasiteTable = observer((props) =>
                 {props.showKeyStoneSpecie ? <td><Xcomp.Bool observableValue={[item, 'keyStoneSpecie']} /></td> : null}
                 <td style={{maxWidth: '160px'}}>{item.parasiteScientificName}</td>
                 <td>
-                    <Xcomp.StringEnum observableValue={[item, 'status']} forceSync codes={koder.ParasiteStatus}/>   
+                    <Xcomp.StringEnum className="parasiteStatus1"  observableValue={[item, 'status']} forceSync codes={koder.ParasiteStatus}/>   
                 </td>
                 <td>
                     <Xcomp.StringEnum observableValue={[item, 'scale']} forceSync codes={koder.speciesSpeciesScopeType}/>
@@ -153,7 +153,7 @@ const HostParasiteTable = observer((props) =>
                 {props.showKeyStoneSpecie ? <td><Xcomp.Bool observableValue={[props.newItem, 'keyStoneSpecie']} /></td> : null}
                 <td><Xcomp.String className="parasiteName"  disabled={disabled} observableValue={[props.newItem, 'parasiteScientificName']} /></td>
                 <td>
-                    <Xcomp.StringEnum observableValue={[props.newItem, 'status']}  codes={koder.ParasiteStatus}/>                
+                    <Xcomp.StringEnum className= "parasiteStatus2" observableValue={[props.newItem, 'status']}  codes={koder.ParasiteStatus}/>                
                 </td>
                 <td>
                     <Xcomp.StringEnum observableValue={[props.newItem, 'scale']} forceSync codes={koder.speciesSpeciesScopeType}/>
