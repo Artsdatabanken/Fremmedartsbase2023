@@ -39,7 +39,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
         const alienSpeciesCategoryLabel = _alienSpeciesCategoryLabel ? _alienSpeciesCategoryLabel[0] ? _alienSpeciesCategoryLabel[0].Text : "not set" : "net set"
         const category2018 = (riskLevelCode) => labels.RiskLevelCode[riskLevelCode]
 
-        const uncertainlyCategories = riskLevel.uncertaintyCategories(riskAssessment.riskLevel, riskAssessment.invationpotential.uncertaintyLevels, riskAssessment.ecoeffect.uncertaintyLevels)
+        const uncertainlyCategories = riskLevel.uncertaintyCategories(riskAssessment.riskLevel, riskAssessment.invationpotential , riskAssessment.ecoeffect) //, riskAssessment.invationpotential.uncertaintyLevels, riskAssessment.ecoeffect.uncertaintyLevels)
         // const categoryText = ['NK','LO','PH','HI','SE']
         // console.log(riskLevel.riskLevelMatrise);
         // let usikkerhetskategorier = [];

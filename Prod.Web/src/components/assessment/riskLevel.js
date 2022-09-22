@@ -114,7 +114,7 @@
         const result = {level: lev,   decisiveCriteriaLabel:decisiveCriteriaLabel}
         return result;
     },
-    uncertaintyCategories: (riskLevel, invationpotentialUncertaintyLevels, ecoeffectUncertaintyLevels) => {
+    uncertaintyCategories_depricated: (riskLevel, invationpotentialUncertaintyLevels, ecoeffectUncertaintyLevels) => {
         // const categoryText = ['NK','LO','PH','HI','SE']
         // console.log(riskLevel.riskLevelMatrise);
         let usikkerhetskategorier = [];
@@ -127,6 +127,31 @@
                 {
                     usikkerhetskategorier.push(newLocal);
                 }
+            }
+        }
+
+        usikkerhetskategorier=[...new Set(usikkerhetskategorier)]
+        // console.log(usikkerhetskategorier);
+        return usikkerhetskategorier.map(x=>self.categoryText[x]);
+        // console.log(usikkerhetskategorierText);
+    },
+    uncertaintyCategories: (riskLevel, invasjonspotensiale, ecoeffect) => {
+        let usikkerhetskategorier = [];
+        // , invationpotentialUncertaintyLevels, ecoeffectUncertaintyLevels)
+        for (let index = 0; index < invasjonspotensiale.uncertaintyLevels.length; index++) {
+            const invEl = invasjonspotensiale.uncertaintyLevels[index];
+            const newLocal = self.riskLevelMatrise[3 - ecoeffect.level][invEl];
+            if (newLocal != riskLevel)
+            {
+                usikkerhetskategorier.push(newLocal);
+            }
+        }
+        for (let index = 0; index < ecoeffect.uncertaintyLevels.length; index++) {
+            const ecoEl = ecoeffect.uncertaintyLevels[index];
+            const newLocal = self.riskLevelMatrise[3 - ecoEl][invasjonspotensiale.level];
+            if (newLocal != riskLevel)
+            {
+                usikkerhetskategorier.push(newLocal);
             }
         }
         usikkerhetskategorier=[...new Set(usikkerhetskategorier)]
