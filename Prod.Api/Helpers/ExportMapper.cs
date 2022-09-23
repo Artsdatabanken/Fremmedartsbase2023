@@ -154,7 +154,7 @@ namespace Prod.Api.Helpers
             var mapper = new Mapper(mapperConfig);
             return mapper;
         }
-
+        ///TO DO - legg til dictionary slik at eksporten får ut årsakene med norsk navn!!
         private static string GetReasonForChangeOfCategory(List<string> reasonForChangeOfCategory, string Category, string Cat2018)
         {
             if(reasonForChangeOfCategory == null || reasonForChangeOfCategory.Count == 0)
@@ -1470,10 +1470,10 @@ namespace Prod.Api.Helpers
         [Name("Kriterier2018")]
         public string Criteria2018 { get; set; }
         [Name("AarsakTilEndringIKategori")]
-        public string ReasonForChangeOfCategory { get; set; } 
-            
+        public string ReasonForChangeOfCategory { get; set; }  
+        [Name("AarsakTilEndringIKategoriBeskrivelse")]
+        public string DescriptionOfReasonsForChangeOfCategory { get; set; }     
         // public string ProductionSpeciesDescription { get; set; } = "";
-
         // public int RiskAssessmentRiskLevel { get; set; } = -1;
         // public string RiskAssessmentDecisiveCriteria { get; set; }
         //public string RiskAssessmentRiskLevelCode { get; set; }
