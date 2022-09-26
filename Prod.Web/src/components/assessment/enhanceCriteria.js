@@ -1134,7 +1134,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
     const r = riskAssessment
     for(const crit of [r.critA]) {  // just to get scope
         extdendCriteriaProps(crit)
-        crit.uncertaintyDisabled = [0,1,2,3]
+        // crit.uncertaintyDisabled = [0,1,2,3]
         autorun(() => {                      //   !!%
             const auto = !(
                 (r.ametodkey === "A1a2" || r.ametodkey === "A1b2") &&
@@ -1147,12 +1147,14 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
 
         autorun(() => {                //     !!%
             let ud // uncertaintyDisabled 
-            if (r.ametodkey === "A1a1" || r.ametodkey === "A1b1" || r.ametodkey === "A3") {
+            if (r.ametodkey === "A1a1" || r.ametodkey === "A1b1") {
                 ud = [0,1,2,3]
+            } else if (r.ametodkey === "A3") {
+                ud = uncertaintyArray(r.apossibleLow, r.apossibleHigh)
             } else {
                 ud = uncertaintyArrayReverse(uncertaintyArray(r.ascore - 1, r.ascore + 1))
-            }
-            runInAction(() => {
+        }
+        runInAction(() => {
                 arrayConditionalReplace(crit.uncertaintyDisabled, ud)
             })
             //if (!config.isRelease) trace()  // leave this line here! Se comments above to learn when to uncomment.
