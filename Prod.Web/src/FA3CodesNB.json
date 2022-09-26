@@ -558,8 +558,13 @@
               },
               {
     
-                "text": "Endrede kriterier, avgrensninger eller retningslinjer",
+                "text": "Endrede avgrensninger eller retningslinjer",
                 "value": "changedCriteria"
+              },
+              {
+    
+                "text": "Endret tolkning av retningslinjer",
+                "value": "changedCriteriaInterpretation"
               },
               
               {
