@@ -1152,7 +1152,8 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
             } else if (r.ametodkey === "A3") {
                 ud = uncertaintyArray(r.apossibleLow, r.apossibleHigh)
             } else {
-                ud = uncertaintyArrayReverse(uncertaintyArray(r.ascore - 1, r.ascore + 1))
+                // ud = uncertaintyArrayReverse(uncertaintyArray(r.ascore - 1, r.ascore + 1))
+                ud = uncertaintyArray(r.ascore - 1, r.ascore + 1)
         }
         runInAction(() => {
                 arrayConditionalReplace(crit.uncertaintyDisabled, ud)
@@ -1163,7 +1164,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
         let firstrun = true
         autorun(() => {                   //   !!%
             let uv // uncentaintyValues (selected by program)
-            if (r.ametodkey === "A1a1" || r.ametodkey === "A1b1") {  // || r.ametodkey === "A3"
+            if (r.ametodkey === "A1a1" || r.ametodkey === "A1b1" ) {  // || r.ametodkey === "A3"
                 uv = uncertaintyArrayReverse(uncertaintyArray(r.alow, r.ahigh))
             } else if (r.ametodkey === "A1a2" || r.ametodkey === "A1b2") {
                 const ud = uncertaintyArray(r.ascore - 1, r.ascore + 1)
