@@ -185,6 +185,9 @@ export default function enhanceAssessment(json, appState) {
     if(jsonra.chosenSpreadYearlyIncrease === "c") {
         jsonra.chosenSpreadYearlyIncrease = "a"
     }
+    if(jsonra.riskLevelCode === "NK") {
+        jsonra.possibleLowerCategory = "no"
+    }
     // *****
 
     const assessment = observable.object(json)

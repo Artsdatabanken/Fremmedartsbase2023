@@ -1109,7 +1109,7 @@ function setUncertaintyValues(isFirstrun, crit, uvalues) {
         // In the hope that this does not mess tings up
         // this code is introduced to update illegal uncertainty values that
         // are introduced when criteria rules are changed
-        // This functionality is also dependent on a well working "firstrun"; se comment above
+        // This functionality is also dependent on a well working "firstrun"; see comment above
         // e.g. the criteria must not have a default value that is updated from db after the first run!
 
         // console.log("#¤#uncertainty firstrun1 : " + crit.criteriaLetter )
@@ -1134,6 +1134,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
     const r = riskAssessment
     for(const crit of [r.critA]) {  // just to get scope
         extdendCriteriaProps(crit)
+        // crit.uncertaintyDisabled = [0,1,2,3]
         autorun(() => {                      //   !!%
             const auto = !(
                 (r.ametodkey === "A1a2" || r.ametodkey === "A1b2") &&
@@ -1146,12 +1147,15 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
 
         autorun(() => {                //     !!%
             let ud // uncertaintyDisabled 
-            if (r.ametodkey === "A1a1" || r.ametodkey === "A1b1" || r.ametodkey === "A3") {
+            if (r.ametodkey === "A1a1" || r.ametodkey === "A1b1") {
                 ud = [0,1,2,3]
+            } else if (r.ametodkey === "A3") {
+                ud = uncertaintyArray(r.apossibleLow, r.apossibleHigh)
             } else {
+                // ud = uncertaintyArrayReverse(uncertaintyArray(r.ascore - 1, r.ascore + 1))
                 ud = uncertaintyArray(r.ascore - 1, r.ascore + 1)
-            }
-            runInAction(() => {
+        }
+        runInAction(() => {
                 arrayConditionalReplace(crit.uncertaintyDisabled, ud)
             })
             //if (!config.isRelease) trace()  // leave this line here! Se comments above to learn when to uncomment.
@@ -1160,7 +1164,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
         let firstrun = true
         autorun(() => {                   //   !!%
             let uv // uncentaintyValues (selected by program)
-            if (r.ametodkey === "A1a1" || r.ametodkey === "A1b1" || r.ametodkey === "A3") {
+            if (r.ametodkey === "A1a1" || r.ametodkey === "A1b1" ) {  // || r.ametodkey === "A3"
                 uv = uncertaintyArrayReverse(uncertaintyArray(r.alow, r.ahigh))
             } else if (r.ametodkey === "A1a2" || r.ametodkey === "A1b2") {
                 const ud = uncertaintyArray(r.ascore - 1, r.ascore + 1)
@@ -1180,7 +1184,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
             if (r.ametodkey === "A1a2" || r.ametodkey === "A1b2") {
                 vd = uncertaintyArray(r.apossibleLow, r.apossibleHigh)
             } else {
-                vd = []
+                vd = [crit.value]
             }
             // if(crit.criteriaLetter=== "A") {
                 console.log("!!% " + crit.criteriaLetter + " crit value: " + crit.value + " uncentainty posible" + vd.toString())
