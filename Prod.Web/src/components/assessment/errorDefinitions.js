@@ -312,6 +312,11 @@ function getErrorDefinitions(assessment, errorHelpers) {
         //     get msg() {"Naturtypen valgt fra NiN 2.3 er truet eller sjelden. Velg tilsvarende naturtype fra Rødlista for naturtyper!"}
         // },
         {
+            id: "Climateerr1",
+            get cond() {return a.doFullAssessment && r.riskLevelCode != "NK" && (r.climateEffectsInvationpotential === null || r.climateEffectsEcoEffect === null)},
+            msg: "Hvorvidt klimaendringer påvirker risikovurderingen må angis under fanen Klimaeffekter"
+        },
+        {
             id: "(sum)err1",
             get cond() {return assessment.categoryHasChangedFromPreviousAssessment && assessment.reasonForChangeOfCategory.length === 0 },
             msg: "Årsak til endring i kategori er ikke oppgitt."
