@@ -786,7 +786,7 @@
         "migrationPathwayTime": [
             {
                 "Id": "migrationPathwayTime",
-                "Value": null,
+                "Value": "",
                 "Text": " ",
                 "Info": null,
                 "Children": null
@@ -830,7 +830,7 @@
         "migrationPathwayFrequency": [
             {
                 "Id": "migrationPathwayFrequency",
-                "Value": null,
+                "Value": "",
                 "Text": " ",
                 "Info": null,
                 "Children": null
@@ -874,7 +874,7 @@
         "migrationPathwayAbundance": [       
             {
                 "Id": "migrationPathwayAbundance",
-                "Value": null,
+                "Value": "",
                 "Text": " ",
                 "Info": null,
                 "Children": null
