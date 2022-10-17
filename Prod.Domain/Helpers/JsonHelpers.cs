@@ -72,6 +72,8 @@ namespace Prod.Domain.Helpers
         }
         public class NotNullableStringJsonConverter : JsonConverter<string>
         {
+            // Override default null handling
+            public override bool HandleNull => true;
             public override string Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 if (reader.TokenType == JsonTokenType.Null)
@@ -87,7 +89,7 @@ namespace Prod.Domain.Helpers
                     }
                     return int32.ToString();
                 }
-
+                
                 return reader.GetString();
             }
 
@@ -97,7 +99,7 @@ namespace Prod.Domain.Helpers
                 if (value == null)
                 {
                     writer.WriteStringValue(string.Empty);
-                    writer.WriteNullValue();
+                    //writer.WriteNullValue();
                 }
                 else
                 {
