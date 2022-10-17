@@ -787,7 +787,7 @@
             {
                 "Id": "migrationPathwayTime",
                 "Value": "",
-                "Text": " ",
+                "Text": "Vennligst velg...",
                 "Info": null,
                 "Children": null
             },
@@ -831,7 +831,7 @@
             {
                 "Id": "migrationPathwayFrequency",
                 "Value": "",
-                "Text": " ",
+                "Text": "Vennligst velg...",
                 "Info": null,
                 "Children": null
             },
@@ -875,7 +875,7 @@
             {
                 "Id": "migrationPathwayAbundance",
                 "Value": "",
-                "Text": " ",
+                "Text": "Vennligst velg...",
                 "Info": null,
                 "Children": null
             },    
