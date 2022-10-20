@@ -1808,9 +1808,15 @@ public partial class FA4 // (3.2) Artsegenskaper
         //public string Factor { get; set; }
         //public int Id { get; set; }
         public string IntroductionSpread { get; set; } //lagt til 07.09.2016
-        public string InfluenceFactor { get; set; }
-        public string Magnitude { get; set; }
-        public string TimeOfIncident { get; set; }
+
+        [JsonConverter(typeof(JsonHelpers.NotNullableStringJsonConverter))]
+        public string InfluenceFactor { get; set; } = string.Empty;
+
+        [JsonConverter(typeof(JsonHelpers.NotNullableStringJsonConverter))]
+        public string Magnitude { get; set; } = string.Empty;
+
+        [JsonConverter(typeof(JsonHelpers.NotNullableStringJsonConverter))]
+        public string TimeOfIncident { get; set; } = string.Empty;
         public string ElaborateInformation { get; set; }
 
 
