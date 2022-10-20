@@ -34,7 +34,22 @@ function getErrorDefinitions(assessment, errorHelpers) {
         {
             id: "Error1",
             get cond() {return a.alienSpeciesCategory === "NotDefined"},
-            msg: "Etableringsklasse på fanen Artens Status er ikke valgt!"
+            msg: "Fanen Artens status: Etableringsklasse er ikke valgt!"
+        },
+        {
+            id: "RegAlienerr1",
+            get cond() {return a.isAlienSpecies && a.isRegionallyAlien == true && a.expertGroup != "Fisker"},
+            msg: "Kun fisker kan vurderes som regionalt fremmed i Fremmedartslista 2023. Vennligst fjern avhaking."
+        },
+        {
+            id: "(IntroNature)err1",
+            get cond() {return a.doFullAssessment && a.importPathways.length > 0 && a.importPathways.some((path) => path.influenceFactor == "" || path.magnitude == "" || path.timeOfIncident == "") },
+            msg: "Fanen Spredningsveier: Hyppighet, antall individer eller tidsrom er ikke valgt for minst en spredningsvei til innendørs- eller produksjonsareal."
+        },
+        {
+            id: "(IntroNature)err2",
+            get cond() {return a.doFullAssessment && a.assesmentVectors.length > 0 && a.assesmentVectors.some((path) => path.influenceFactor == "" || path.magnitude == "" || path.timeOfIncident == "") },
+            msg: "Fanen Spredningsveier: Hyppighet, antall individer eller tidsrom er ikke valgt for minst en spredningsvei til eller i naturen."
         },
         {
             id: "(a)err1",

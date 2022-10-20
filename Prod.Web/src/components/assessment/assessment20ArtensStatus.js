@@ -2,6 +2,8 @@
 import {observer, inject} from 'mobx-react';
 import config from '../../config';
 import * as Xcomp from './observableComponents';
+import errorhandler from '../errorhandler';
+import ErrorList from '../errorList';
 
 import {action, autorun, extendObservable, observable, toJS} from "mobx"
 const nbsp = "\u00a0"
@@ -62,6 +64,7 @@ checkStatus = (production) => {
                     { assessment.isAlienSpecies && assessment.isAlienSpecies 
                     ? <Xcomp.Bool className={"regionallyAlien"} observableValue={[assessment, "isRegionallyAlien"]} checked={assessment.alienSpeciesCategory == "RegionallyAlien"} label={labels.SpeciesStatus.regionallyAlien} /> 
                     : null }
+                    <ErrorList errorhandler={errorhandler} errorids={["RegAlienerr1"]} />
                     <Xcomp.Radio value={'false'} observableValue={[assessment, "isAlienSpeciesString"]} label={labels.General.no} />
                     <p>{labels.SpeciesStatus.unsureAlienDescription}</p>
                     <Xcomp.HtmlString observableValue={[assessment, 'isAlien']}/>
