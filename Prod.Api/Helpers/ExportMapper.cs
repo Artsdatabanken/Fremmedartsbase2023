@@ -31,7 +31,7 @@ namespace Prod.Api.Helpers
                         var ass2018 = src.PreviousAssessments.SingleOrDefault(x => x.RevisionYear == 2018);
                         if (ass2018 != null)
                         {   
-                            if(ass2018.MainCategory == "NotApplicable" || (ass2018.MainCategory == "DoorKnocker" && ass2018.MainSubCategory == "noRiskAssessment")|| (ass2018.MainCategory == "RegionallyAlien" && ass2018.MainSubCategory == "noRiskAssessment")) //many of these has rislevel = 0. Therefore, this test must be performed first.
+                            if(ass2018.MainCategory == "NotApplicable" || (ass2018.MainCategory == "DoorKnocker" && ass2018.MainSubCategory == "noRiskAssessment")|| (ass2018.MainCategory == "RegionallyAlien" && ass2018.MainSubCategory == "noRiskAssessment")) //many of these has risklevel = 0. Therefore, this test must be performed first.
                             {
                                 dest.Category2018 = "NR";
                                 dest.Criteria2018 = "";
@@ -89,8 +89,8 @@ namespace Prod.Api.Helpers
                         dest.NaturalOriginMarine = GetNaturalOriginsMarine(src.NaturalOriginMarine);
                         dest.CurrentInternationalExistenceMarineAreas = GetCurrentInternationalExistenceMarineAreas(src.CurrentInternationalExistenceMarineAreas);
                         dest.ArrivedCountryFrom = GetArrivedCountryFrom(src.ArrivedCountryFrom);
-                        dest.IndoorProductionMainCatAndCat = GetIndoorProductionMainCatAndCat(src.ImportPathways, "cat");
-                        dest.IndoorProductionFreqNumTime = GetIndoorProductionMainCatAndCat(src.ImportPathways, "freqs");
+                        dest.IndoorProductionMainCatAndCat = GetIndoorProduction(src.ImportPathways, "cat");
+                        dest.IndoorProductionFreqNumTime = GetIndoorProduction(src.ImportPathways, "freqs");
                         dest.IntroNatureMainCatAndCat = GetIntroSpreadInfo(src.AssesmentVectors, "intro", "cat");
                         dest.IntroNatureFreqNumTime = GetIntroSpreadInfo(src.AssesmentVectors, "intro", "freqs");
                         dest.SpreadNatureMainCatAndCat = GetIntroSpreadInfo(src.AssesmentVectors, "spread", "cat");
@@ -161,7 +161,7 @@ namespace Prod.Api.Helpers
             {
                 return string.Empty;
             }
-            // if(Category != ) //ideelt sett skulle vi hatt en test på om kat 2023 er ulik kat 2018 - men det krever litt kode.. 
+            // if(Category == ) //ideelt sett skulle vi hatt en test på om kat 2023 er (u)lik kat 2018 - men det krever litt kode.. 
             // {
             //     return string.Empty;
             // }
@@ -179,13 +179,13 @@ namespace Prod.Api.Helpers
             {
                 if(habitats[i].Taxon == null || habitats[i].Taxon.ScientificName == "")
                 {
-                    string tjohei = habitats[i].NiNCode + "//" + habitats[i].Name + "//" + habitats[i].TimeHorizon;
-                    habinfo.Add(tjohei);
+                    string hab = habitats[i].NiNCode + "//" + habitats[i].Name + "//" + habitats[i].TimeHorizon;
+                    habinfo.Add(hab);
                 }
                 else 
                 {
-                    string tjohei = habitats[i].NiNCode + "//" + habitats[i].Name + "//" + habitats[i].TimeHorizon + "//" + habitats[i].Taxon.ScientificName;
-                    habinfo.Add(tjohei);
+                    string hab = habitats[i].NiNCode + "//" + habitats[i].Name + "//" + habitats[i].TimeHorizon + "//" + habitats[i].Taxon.ScientificName;
+                    habinfo.Add(hab);
                 }
             }
             return string.Join("; ", habinfo);
@@ -661,7 +661,7 @@ namespace Prod.Api.Helpers
             return string.Join("; ", fylkesliste);
         }
 
-        private static string GetIndoorProductionMainCatAndCat(List<Domain.MigrationPathway> importPathways, string col)
+        private static string GetIndoorProduction(List<Domain.MigrationPathway> importPathways, string col)
         {
             if (importPathways == null || importPathways.Count == 0)
             {
@@ -1007,7 +1007,7 @@ namespace Prod.Api.Helpers
             return string.Empty;
         }
 
-        private static string GetDoorknockerType(FA4WithComments args) //Denne brukes vel ikke lengre?! 23.06.22
+        private static string GetDoorknockerType(FA4WithComments args)
         {
             var ass = args;
             var ass2018 = ass.PreviousAssessments.FirstOrDefault(x => x.RevisionYear == 2018);
@@ -1073,8 +1073,6 @@ namespace Prod.Api.Helpers
         public string ExpertGroup { get; set; }
         [Name("Vurderingsomraade")]
         public string EvaluationContext { get; set; }        
-        // public bool IsEvaluated { get; set; }  // ???
-        //public bool IsDeleted { get; set; }
         [Name("Vurderinsstatus")]
         public string EvaluationStatus { get; set; }
         [Name("VitenskapeligNavneID")]
@@ -1090,7 +1088,7 @@ namespace Prod.Api.Helpers
         [Name("Autor")]
         public string EvaluatedScientificNameAuthor { get; set; }
         [Name("TaksonomiskRang")]
-        public string EvaluatedScientificNameRank { get; set; }
+        public string EvaluatedScientificNameRank { get; set; } //06.10.22: WTF. Dette er bare et tall for enkelte (22)? Og de fleste har null. Mulig fjern denne eller hvertfall bytt den ut med "Species" ...!
 
         [Name("NorskNavn")]
         public string EvaluatedVernacularName { get; set; }
@@ -1108,7 +1106,6 @@ namespace Prod.Api.Helpers
         [Name("FremmedartsstatusKommentar")]
         public string IsAlien { get; set; } // new in 2021
 
-        // public DateTime LockedForEditAt { get; set; }
         // public string LockedForEditBy { get; set; }
         [Name("HorisontskanningEtableringspotensial")]
         public string HorizonEstablismentPotential { get; set; }
@@ -1116,9 +1113,10 @@ namespace Prod.Api.Helpers
         public string HorizonEcologicalEffect { get; set; }
         
         #region Artens status
-
-        // public string Connected { get; set; }
-
+        [Name("EndretStatusFraFremmedAarsak")]
+        public string ChangedFromAlien { get; set; }
+        [Name("EndretStatusFraFremmedAarsakBeskrivelse")]
+        public string ChangedAssessment { get; set; }
         [Name("VurderesPaaHoyereLavereTaksonomiskNivaBeskrivelse")]
         public string ConnectedToHigherLowerTaxonDescription { get; set; } = "";
         [Name("VurderesSammenMedEtAnnetTakson")]
@@ -1130,7 +1128,7 @@ namespace Prod.Api.Helpers
         [Name("Etableringsklasse")]
         public string SpeciesStatus { get; set; }
         [Name("UsikkerhetEtableringsklasseBeskrivelse")]
-        public string AlienSpecieUncertainDescription { get; set; } // lagt til: 22.12.2016
+        public string UncertainityStatusDescription { get; set; } 
         [Name("EtablertPer1800")]
         public bool? AlienSpecieUncertainIfEstablishedBefore1800 { get; set; } // lagt til: 19.10.2016 - renamed 15.11.2016
         [Name("UsikkerhetEtableringstidspunktBeskrivelse")]
@@ -1167,6 +1165,8 @@ namespace Prod.Api.Helpers
         public int? RiskAssessmentYearFirstEstablishedNature { get; set; }
         [Name("UsikkerhetForsteObsEtableringNorskNatur")]
         public bool RiskAssessmentYearFirstEstablishedNatureInsecure { get; set; }
+        [Name("ForsteObsINorgeBeskrivelse")]
+        public string FurtherInfo {get; set;}
         
         #endregion Artens status
         
@@ -1328,9 +1328,7 @@ namespace Prod.Api.Helpers
             public string CoastLineSections {get; set;}
             [Name("RegionalNaturvariasjonSvalbard")]
             public string ArcticBioClimateZones {get; set;}
-            //Vurder her å ta med "habitats" (livsmedium). Må i tilfelle lages en funksjon da livsmedium er ei liste. 
-            //public List<Habitat> Habitats { get; set; } = new List<Habitat>(); - (fra 2018?!)
-            [Name("Livsmiljø")]
+            [Name("Livsmedium")]
             public string Habitats {get; set;}
             #endregion Naturtyper
         #endregion Bakgrunnsdata for risikovurdering
@@ -1461,18 +1459,27 @@ namespace Prod.Api.Helpers
             [Name("I-SkaarBeskrivelse")]
             public string RiskAssessmentICritInsecurity {get; set;}
             #endregion Økologisk effekt
-        [Name("Kategori2023")]
-        public string Category { get; set; } //We can use this!
-        [Name("Kriterier2023")]
-        public string Criteria { get; set; }
-        [Name("Kategori2018")]
-        public string Category2018 { get; set; } //Use this
-        [Name("Kriterier2018")]
-        public string Criteria2018 { get; set; }
-        [Name("AarsakTilEndringIKategori")]
-        public string ReasonForChangeOfCategory { get; set; }  
-        [Name("AarsakTilEndringIKategoriBeskrivelse")]
-        public string DescriptionOfReasonsForChangeOfCategory { get; set; }     
+            #region Oppsummering
+            
+            [Name("Kategori2023")]
+            public string Category { get; set; } //We can use this!
+            [Name("Kriterier2023")]
+            public string Criteria { get; set; }
+            [Name("Kategori2018")]
+            public string Category2018 { get; set; } //Use this
+            [Name("Kriterier2018")]
+            public string Criteria2018 { get; set; }
+            [Name("AarsakTilEndringIKategori")]
+            public string ReasonForChangeOfCategory { get; set; }  
+            [Name("AarsakTilEndringIKategoriBeskrivelse")]
+            public string DescriptionOfReasonsForChangeOfCategory { get; set; }   
+            [Name("SpredningsmaaterTilInnendorsOgProdarealBeskrivelse")]
+            public string SpreadIndoorFurtherInfo {get; set;}
+            [Name("SpredningsmaaterIntroduksjonNaturBeskrivelse")]
+            public string SpreadIntroductionFurtherInfo {get; set;}
+            [Name("SpredningsmaaterVidereSpredningInaturenBeskrivelse")]
+            public string spreadFurtherSpreadFurtherInfo {get; set;}
+            #endregion Oppsummering  
         // public string ProductionSpeciesDescription { get; set; } = "";
         // public int RiskAssessmentRiskLevel { get; set; } = -1;
         // public string RiskAssessmentDecisiveCriteria { get; set; }
@@ -1539,15 +1546,6 @@ namespace Prod.Api.Helpers
         //*******************************************************************
 
         // end nye
-
-
-        //public Int64? SpeciesCount { get; set; } // fab: Species_Count  // ikke i bruk som egen attributt (ligger i spredningshistorikk item) i 2012
-
-
-        // public double? RiskAssessmentSpreadHistoryDomesticAreaInStronglyChangedNatureTypesLow { get; set; }
-        // public double? RiskAssessmentSpreadHistoryDomesticAreaInStronglyChangedNatureTypesBest { get; set; }
-        // public double? RiskAssessmentSpreadHistoryDomesticAreaInStronglyChangedNatureTypesHigh { get; set; }
-
 
 
         //        public bool hasPVA { get; set; } // = !string.IsNullOrWhiteSpace(detailsinfo.Spread_PVA_Analysis);
@@ -1813,9 +1811,11 @@ namespace Prod.Api.Helpers
 
         // (5.3) Geografisk Variasjon
         public List<string> RiskAssessmentGeographicalVariation { get; set; } = new List<string>(); // lagt til 23.09.2016
-        public string RiskAssessmentGeographicalVariationDocumentation { get; set; } // lagt til 23.09.2016
-
+        
+        [Name("GeogragiskVariasjonIRisiko")]
         public string RiskAssessmentPossibleLowerCategory { get; set; }
+        [Name("GeogragiskVariasjoniRisikoBeskrivelse")]
+        public string RiskAssessmentGeographicalVariationDocumentation { get; set; } // lagt til 23.09.2016
 
         // (5.4) Klimaeffekter
         public string RiskAssessmentClimateEffectsInvationpotential { get; set; } // lagt til 23.09.2016
@@ -1836,15 +1836,10 @@ namespace Prod.Api.Helpers
 
         // (3.1) Artens status{
         // public string AlienSpeciesCategory2012 { get; set; } // added 10.01.2017
-        // public string DoorKnockerDescription { get; set; } // fab: Door_Knocker_Description
         // public string NotReproductiveDescription2012 { get; set; } // fab: Not_Reproductive_Description 
         // public string NotReproductiveFutureDescription2012 { get; set; } // fab: Not_Reproductive_Future_Description
         // public string AssesmentNotApplicableDescription { get; set; } // fab: Assesment_Not_Applicable_Description
 
-        // public bool? IsAlienSpecies { get; set; }
-
-        
-        // public bool? IsRegionallyAlien { get; set; } //remove because AlienSpeciesCategory has this info
 
 
         // public string ConnectedTaxon1 { get; set; } = "";
@@ -1852,9 +1847,6 @@ namespace Prod.Api.Helpers
         // public string ConnectedTaxon2 { get; set; } = "";
 
 
-        // public string ChangedFromAlien { get; set; }
-
-        // public string ChangedAssessment { get; set; }
 
         // public bool AlienSpecieUncertainAntropochor { get; set; } // lagt til: 19.10.2016
 
@@ -1895,7 +1887,6 @@ namespace Prod.Api.Helpers
         // todo: pakke ut denne flatt
         //public ObservedAndEstablishedInCountry ObservedAndEstablishedStatusInCountry { get; set; } = new ObservedAndEstablishedInCountry(); // lagt til 30.08.2016 //
 
-        // todo: fylkesforekomster...Akkurat ja.
 
         // (3.2) Artsegenskaper
     
@@ -1940,18 +1931,7 @@ namespace Prod.Api.Helpers
         //}
 
 
-        // public bool SurvivalBelow5c { get; set; } // lagt til 27.09.2016
 
-        public List<string> IntroductionCourse { get; set; } // fab: List<int> Introduction_Course  //Årsak til tilstedeværelse
-
-        // public bool? DomesticRiskEvaluationExists { get; set; } // fab: Domestic_RiskEvaluation_Exists
-        // public bool? DomesticRiskEvaluationExists2007 { get; set; } // lagt til 26.09.2016
-        // public bool? ForeignRiskEvaluationExists { get; set; } // fab: Foreign_RiskEvaluation_Exists_Exists
-        // public string ForeignRiskEvaluationComment { get; set; } // fab: Foreign_RiskEvaluation_Comment
-
-        // public string Regeneration { get; set; } // fab: Regeneration
-        // public int? RegenerationYears { get; set; } // fab: Regeneration_Years
-        // public string Reproduction { get; set; } // fab: Reproduction
         //public string ReproductiveCapability { get; set; } // fab: Int64? Reproductive_Capability // removed 17.01.2017
         // public bool? SimilarDemographicComparison { get; set; } // fab: Similar_Demographic_Comparison
 
@@ -1976,13 +1956,7 @@ namespace Prod.Api.Helpers
 
 
         // (3.5) Spredningshistorikk
-        //public List<SpreadHistory> SpreadHistory { get; set; } = new List<SpreadHistory>();
-        // public string SpreadHistory { get; set; } = ""; //data from 2018 - not need in export
 
-        //[Name("Fremtidig spredningsprognose i Norge, inkl. potensielt utbredelsesområde, antatte kritiske parametre for arten, og forventede endringer i disse:")] // 
-        // public string SpreadHistoryDomesticDocumentation { get; set; } // fab: SpreadHistoryDomesticDocumentation
-        //[Name("Detaljinformasjon for Naturtyper:")] // 
-        // public string SpreadHistoryForeignDocumentation { get; set; } // fab: SpreadHistoryForeignDocumentation
 
         //public bool? FutureDistributionChangeExpected { get; set; } // fab: Future_Distribution_Change_Expected // ikke i bruk i 2012
         // public string FutureDistributionChangeExpectedDescription { get; set; } // fab: Future_Distribution_Change_Expected_Description
@@ -1993,14 +1967,6 @@ namespace Prod.Api.Helpers
 
 
 
-        // public Int64? CurrentIndividualCount { get; set; }
-        // public Int64? CurrentIndividualCountLowCalculated { get; set; }
-        // public string CurrentIndividualCountLowMultiplier { get; set; }
-        // public Int64? CurrentIndividualCountCalculated { get; set; }
-        // public string CurrentIndividualCountMultiplier { get; set; }
-        // public string CurrentIndividualCountHighMultiplier { get; set; }
-        // public Int64? CurrentIndividualCountHighCalculated { get; set; }
-
         //public Int64? CurrentSpreadArea { get; set; } //Utkommentert 16.06.22 - bruker ikke EOO i grunn
         //public Int64? CurrentSpreadAreaLowMultiplier { get; set; }
         //public Int64? CurrentSpreadAreaHighMultiplier { get; set; }
@@ -2010,7 +1976,7 @@ namespace Prod.Api.Helpers
         // public Int64? CurrentSpreadAreaCalculated { get; set; } //Can't find that this is in use in 2023
 
 
-        public string SpreadAreaInChangedNature { get; set; }
+        // public string SpreadAreaInChangedNature { get; set; }
 
 
 
@@ -2031,7 +1997,6 @@ namespace Prod.Api.Helpers
 
         // todo: den store risikovurdering
         //public RiskAssessment RiskAssessment { get; set; } = new RiskAssessment();
-        //public List<RegionalRiskAssessment> RegionalRiskAssessments { get; set; } = new List<RegionalRiskAssessment>();
 
 
 
