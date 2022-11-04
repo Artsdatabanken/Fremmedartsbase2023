@@ -145,6 +145,9 @@ namespace Prod.Api.Helpers
                         dest.IntrogressionRedlistedSpecies = GetHcritInformation(src.RiskAssessment.GeneticTransferDocumented);
                         dest.Habitats = GetHabitats(src.Habitats);
                         dest.ReasonForChangeOfCategory = GetReasonForChangeOfCategory(src.ReasonForChangeOfCategory, src.Category, "Cat2018");
+                        dest.AlienSpeciesCategory = GetAlienSpeciesCategory(src.AlienSpeciesCategory);
+                        dest.InvationScore = GetScores(src.Category, src.Criteria, "inv");
+                        dest.EcoEffectScore = GetScores(src.Category, src.Criteria, "eco");
                         // overkjøre status for vurderinger som kom fra horizontscanning
                         dest.EvaluationStatus = GetProgress(src);
                     });
@@ -154,7 +157,22 @@ namespace Prod.Api.Helpers
             var mapper = new Mapper(mapperConfig);
             return mapper;
         }
-        ///TO DO - legg til dictionary slik at eksporten får ut årsakene med norsk navn!!
+
+        private static int? GetScores(string category, string criteria, string v)
+        {
+            if (category == "NR" || category == "" || category == null)
+            {
+                return null;
+            }
+            else 
+            {
+                int SInv = (int)Char.GetNumericValue(criteria[0]);
+                string SEco = criteria.Split(",")[1];
+                int SEco2 = (int)Char.GetNumericValue(SEco[0]);
+                return  v == "inv"? SInv: SEco2;
+            }
+        }
+
         private static string GetReasonForChangeOfCategory(List<string> reasonForChangeOfCategory, string Category, string Cat2018)
         {
             if(reasonForChangeOfCategory == null || reasonForChangeOfCategory.Count == 0)
@@ -629,7 +647,27 @@ namespace Prod.Api.Helpers
                 return string.Join("; ", NatDat);
             
         }
-
+        private static Dictionary<string, string> AlienSpeciesCat = new Dictionary<string, string>()
+        {
+            {"AlienSpecie", "Selvstendig reproduserende" },
+            {"DoorKnocker","Dørstokkart"},
+            {"EffectWithoutReproduction","Effekt uten selvstendig reproduksjon"},
+            {"RegionallyAlien","Regionalt fremmed"},
+            {"NotAlienSpecie", "Ikke fremmed"},
+            {"TaxonEvaluatedAtAnotherLevel","Vurderes på et annet taksonomisk nivå"},
+            {"UncertainBefore1800", "Etablert per 1800"},
+            {"NotDefined", "Ikke definert"},
+            {"NotApplicable", ""},
+            {"EcoEffectWithoutEstablishment", ""}
+        };
+        private static string GetAlienSpeciesCategory(string AlienCat)
+        {
+            if(AlienCat == null || AlienCat == "")
+            {
+                return string.Empty;
+            }
+            return AlienSpeciesCat[AlienCat];
+        }
         private static string GetSpeciesStatus(string speciesStatus, string speciesEstablishmentCategory)
         {
             if (speciesStatus != "C3")
@@ -1130,7 +1168,7 @@ namespace Prod.Api.Helpers
         [Name("UsikkerhetEtableringsklasseBeskrivelse")]
         public string UncertainityStatusDescription { get; set; } 
         [Name("EtablertPer1800")]
-        public bool? AlienSpecieUncertainIfEstablishedBefore1800 { get; set; } // lagt til: 19.10.2016 - renamed 15.11.2016
+        public bool? AlienSpecieUncertainIfEstablishedBefore1800 { get; set; } 
         [Name("UsikkerhetEtableringstidspunktBeskrivelse")]
         public string UncertainityEstablishmentTimeDescription { get; set; } = "";
         [Name("ForsteObsInnendors")]
@@ -1465,6 +1503,10 @@ namespace Prod.Api.Helpers
             public string Category { get; set; } //We can use this!
             [Name("Kriterier2023")]
             public string Criteria { get; set; }
+            [Name("SkaarInvasjonspotensial")]
+            public int? InvationScore {get; set; }
+            [Name("SkaarOkologiskEffekt")]
+            public int? EcoEffectScore {get; set; }
             [Name("Kategori2018")]
             public string Category2018 { get; set; } //Use this
             [Name("Kriterier2018")]
@@ -1556,11 +1598,9 @@ namespace Prod.Api.Helpers
 
        
 
-        // public bool RiskAssessmentActiveSpreadPVAAnalysisSpeciesLongevity { get; set; } // added 27.09.2016 - ikke i bruk 2023
-
+        
        //Spread_PVA_Analysis
-        // [Name("Forventet levetid")]
-        // public bool RiskAssessmentActiveSpreadPVAAnalysisEstimatedSpeciesLongevity { get; set; } // lagt til 27.09.2016
+       
         // public string RiskAssessmentSpreadPVAAnalysisEstimatedSpeciesLongevity { get; set; }  //Spread_PVA_Analysis_Estimated_Species_Longevity
         // public string RiskAssessmentSpreadPVAAnalysisEstimatedSpeciesLongevityLowerQuartile { get; set; }  // lagt til 07.09.2016
         // public string RiskAssessmentSpreadPVAAnalysisEstimatedSpeciesLongevityUpperQuartile { get; set; }  // lagt til 07.09.2016 
@@ -1664,7 +1704,7 @@ namespace Prod.Api.Helpers
         #region (B) Ekspansjonshastighet
 
        
-        public bool RiskAssessmentActiveSpreadYearlyIncreaseObservations { get; set; } //lagt til 29.09.2016
+        // public bool RiskAssessmentActiveSpreadYearlyIncreaseObservations { get; set; } //lagt til 29.09.2016
 
 
         // -------- disse (forekomstareal - dørstokkarter) er erstattet:  
@@ -1698,7 +1738,6 @@ namespace Prod.Api.Helpers
         // public string RiskAssessmentSpreadYearlyLiteratureDataSource { get; set; } //lagt til 29.09.2016
 
 
-        // public bool RiskAssessmentActiveSpreadYearlyIncreaseCalculatedExpansionSpeed { get; set; } //lagt til 29.09.2016 // changed from ActiveSpreadYearlyIncreaseEstimate 09.11.2016
         // public string RiskAssessmentSpreadYearlyIncreaseEstimate { get; set; } //lagt til 29.09.2016
         // public string RiskAssessmentSpreadYearlyIncreaseEstimateDescription { get; set; } //lagt til 29.09.2016
         // public string RiskAssessmentSpreadYearlyIncreaseCalculatedExpansionSpeed { get; set; } //lagt til 14.10.2016
@@ -1818,8 +1857,11 @@ namespace Prod.Api.Helpers
         public string RiskAssessmentGeographicalVariationDocumentation { get; set; } // lagt til 23.09.2016
 
         // (5.4) Klimaeffekter
+        [Name("KlimaeffekterInvasjonspotensial")]
         public string RiskAssessmentClimateEffectsInvationpotential { get; set; } // lagt til 23.09.2016
+        [Name("KlimaeffekterOkologiskEffekt")]
         public string RiskAssessmentClimateEffectsEcoEffect { get; set; } // lagt til 23.09.2016
+        [Name("KlimaeffekterBeskrivelse")]
         public string RiskAssessmentClimateEffectsDocumentation { get; set; } // lagt til 23.09.2016
 
         // (5.5) Kriteriedokumentasjon
