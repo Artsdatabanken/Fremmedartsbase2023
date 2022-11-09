@@ -323,7 +323,7 @@ namespace SwissKnife.Database
                                   : "Fremmedartsteamet trenger bekreftelse på denne endringen før vurderingen flyttes over på nytt navn. Svar på denne kommentaren eller send en mail til fremmedearter@artsdatabanken.no"
                               );
 
-                CreateOrAddTaxonomicCommentToAssessment(context, context.DbAssessment.Id, message);
+                CreateOrAddTaxonomicCommentToAssessment(context, context.DbAssessment.Id, message, canAutoUpdate);
             }
             //else if (context.DbAssessment != null)
             //{
@@ -410,7 +410,7 @@ namespace SwissKnife.Database
         }
 
         private static void CreateOrAddTaxonomicCommentToAssessment(ProsessContext context, int dbAssessmentId,
-            string message)
+            string message, bool canAutoUpdate)
         {
             AssessmentComment eksisting = null;
             var eksistings = context.dbcontext.Comments.Where(x =>
@@ -434,9 +434,9 @@ namespace SwissKnife.Database
             }
 
 
-            var commentType = message.StartsWith(PotensiellTaksonomiskEndring)
-                ? CommentType.PotentialTaxonomicChange
-                : CommentType.TaxonomicChange;
+            var commentType = canAutoUpdate || !message.StartsWith(PotensiellTaksonomiskEndring)
+                ? CommentType.TaxonomicChange
+                : CommentType.PotentialTaxonomicChange;
             if (eksisting == null)
             {
                 eksisting = new AssessmentComment
