@@ -46,9 +46,12 @@ namespace SwissKnife
             [Command("taxonomywash", Description = "Check and update taxonomy on assessments")]
             internal class TaxonomyWash : MaintananceBase
             {
+                [Option("--autoupdate", Description = "Automatically update all taxonomy")]
+                public bool AutoUpdate { get; } = false;
+
                 private void OnExecute(IConsole console)
                 {
-                    MaintenanceService.RunTaxonomyWash(new Prod.Data.EFCore.SqlServerProdDbContext(ConnectionString));
+                    MaintenanceService.RunTaxonomyWash(new Prod.Data.EFCore.SqlServerProdDbContext(ConnectionString), "", false, AutoUpdate);
                 }
             }
             [Command("nighttasks", Description = "nightly maintenance")]

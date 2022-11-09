@@ -29,6 +29,7 @@ namespace SwissKnife.Database
     public class ImportDataService
     {
         private SqlServerProdDbContext _database;
+        private int[] _disse = new[] { 3068}; //2753, 1718, 1684, 2584, 444, 1784, 485, 1717 };
 
         public ImportDataService(string connectionString)
         {
@@ -397,7 +398,7 @@ namespace SwissKnife.Database
             var taxonService = new SwissKnife.Database.TaksonService();
 
             var datetime = DateTime.MinValue;
-            //var redlistByScientificName = GetRedlistByScientificNameDictoDictionary(inputFolder, theCsvConfiguration);
+            var redlistByScientificName = GetRedlistByScientificNameDictoDictionary(inputFolder, theCsvConfiguration);
 
             var nin = ParseJson("/Prod.Web/src/Nin2_3.json");
             var dictNin = DrillDown2(nin["Children"].AsArray()).ToDictionary(item => item.Item1.Substring(3), item => item.Item2);
@@ -469,8 +470,12 @@ namespace SwissKnife.Database
                 Debug.Assert(exAssessment != null, nameof(exAssessment) + " != null");
 
                 //TransferAndFixPropertiesOnAssessmentsFrom2018(exAssessment, newAssesment);
-                //FixRedlistOnExistingAssessment(exAssessment, redlistByScientificName, taxonService);
-                TestForNaturetypeTrouble(console, exAssessment, RedList, dict, dictNin);
+                if (_disse.Contains(real.Id))
+                {
+                    FixRedlistOnExistingAssessment(exAssessment, redlistByScientificName, taxonService);      
+                }
+                //TestForNaturetypeTrouble(console, exAssessment, RedList, dict, dictNin);
+                //FixSpeciesNatureTypeInteractionsWithLI(exAssessment, real.Id);
 
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)
@@ -518,7 +523,7 @@ namespace SwissKnife.Database
 
                 //FixPropertiesOnNewAssessments(exAssessment);
                 //FixRedlistOnExistingAssessment(exAssessment, redlistByScientificName, taxonService);
-                TestForNaturetypeTrouble(console, exAssessment, RedList, dict, dictNin);
+                //TestForNaturetypeTrouble(console, exAssessment, RedList, dict, dictNin);
 
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)
@@ -546,6 +551,20 @@ namespace SwissKnife.Database
             //{
             //    console.WriteLine("OBS: " + tuple.Item1 + " " + tuple.Item2 + ":" + tuple.Item3);
             //}
+        }
+
+        private void FixSpeciesNatureTypeInteractionsWithLI(FA4 exAssessment, int realId)
+        {
+            if (!_disse.Contains(realId)) return;
+
+            var sjekk = exAssessment.RiskAssessment.SpeciesNaturetypeInteractions.ToArray();
+            foreach (var speciesNaturetypeInteraction in sjekk)
+            {
+                if (speciesNaturetypeInteraction.NiNCode.StartsWith("LI"))
+                {
+                    exAssessment.RiskAssessment.SpeciesNaturetypeInteractions.Remove(speciesNaturetypeInteraction);
+                }
+            }
         }
 
         private static void TestForNaturetypeTrouble(IConsole console, FA4 exAssessment, string[] RedList,
@@ -667,17 +686,17 @@ namespace SwissKnife.Database
             }
         }
 
-        private static Dictionary<int, Rodliste2021Rad> GetRedlistByScientificNameDictoDictionary(string inputFolder,
+        private static Dictionary<int, Rodliste2021Rad[]> GetRedlistByScientificNameDictoDictionary(string inputFolder,
             CsvConfiguration theCsvConfiguration)
         {
-            Dictionary<int, Rodliste2021Rad> redlistByScientificName;
+            Dictionary<int, Rodliste2021Rad[]> redlistByScientificName;
             using (var reader = new StreamReader(inputFolder + "\\..\\Importfiler\\rødliste-2021.csv"))
             {
                 using (var csv = new CsvReader(reader, theCsvConfiguration))
                 {
                     var records = csv.GetRecords<Models.Rodliste2021Rad>();
                     redlistByScientificName = records.GroupBy(x => x.VitenskapeligId)
-                        .ToDictionary(x => x.Key, y => y.OrderBy(x=>x.Region).First());
+                        .ToDictionary(x => x.Key, y => y.OrderBy(x=>x.Region).ToArray());
                 }
             }
 
@@ -685,7 +704,7 @@ namespace SwissKnife.Database
         }
 
         private static void FixRedlistOnExistingAssessment(FA4? exAssessment,
-            Dictionary<int, Rodliste2021Rad> redlistByScientificName, TaksonService taksonService)
+            Dictionary<int, Rodliste2021Rad[]> redlistByScientificName, TaksonService taksonService)
         {
             //tryfixredlist
             foreach (var interaction in exAssessment.RiskAssessment.SpeciesSpeciesInteractions)
@@ -693,7 +712,8 @@ namespace SwissKnife.Database
                 var currentSciId = interaction.ScientificNameId;
                 if (redlistByScientificName.ContainsKey(currentSciId))
                 {
-                    var hit = redlistByScientificName[currentSciId];
+                    var hit = GetRegionalRedlist(redlistByScientificName, currentSciId, exAssessment.ExpertGroup);
+
                     var interactionRedListCategory = hit.Kategori.Substring(0, 2);
                     if (interaction.RedListCategory != interactionRedListCategory)
                     {
@@ -708,7 +728,7 @@ namespace SwissKnife.Database
                     {
                         if (redlistByScientificName.ContainsKey(ti.ValidScientificNameId))
                         {
-                            var hit = redlistByScientificName[ti.ValidScientificNameId];
+                            var hit = GetRegionalRedlist(redlistByScientificName, ti.ValidScientificNameId, exAssessment.ExpertGroup);
                             var interactionRedListCategory = hit.Kategori.Substring(0, 2);
                             if (interaction.RedListCategory != interactionRedListCategory)
                             {
@@ -732,7 +752,7 @@ namespace SwissKnife.Database
                 var currentSciId = interaction.ScientificNameId;
                 if (redlistByScientificName.ContainsKey(currentSciId))
                 {
-                    var hit = redlistByScientificName[currentSciId];
+                    var hit = GetRegionalRedlist(redlistByScientificName, currentSciId, exAssessment.ExpertGroup);
                     var interactionRedListCategory = hit.Kategori.Substring(0, 2);
                     if (interaction.RedListCategory != interactionRedListCategory)
                     {
@@ -747,7 +767,7 @@ namespace SwissKnife.Database
                     {
                         if (redlistByScientificName.ContainsKey(ti.ValidScientificNameId))
                         {
-                            var hit = redlistByScientificName[ti.ValidScientificNameId];
+                            var hit = GetRegionalRedlist(redlistByScientificName, ti.ValidScientificNameId, exAssessment.ExpertGroup);
                             var interactionRedListCategory = hit.Kategori.Substring(0, 2);
                             if (interaction.RedListCategory != interactionRedListCategory)
                             {
@@ -771,7 +791,7 @@ namespace SwissKnife.Database
                 var currentSciId = interaction.ScientificNameId;
                 if (redlistByScientificName.ContainsKey(currentSciId))
                 {
-                    var hit = redlistByScientificName[currentSciId];
+                    var hit = GetRegionalRedlist(redlistByScientificName, currentSciId, exAssessment.ExpertGroup);
                     var interactionRedListCategory = hit.Kategori.Substring(0, 2);
                     if (interaction.RedListCategory != interactionRedListCategory)
                     {
@@ -786,7 +806,7 @@ namespace SwissKnife.Database
                     {
                         if (redlistByScientificName.ContainsKey(ti.ValidScientificNameId))
                         {
-                            var hit = redlistByScientificName[ti.ValidScientificNameId];
+                            var hit = GetRegionalRedlist(redlistByScientificName, ti.ValidScientificNameId, exAssessment.ExpertGroup);
                             var interactionRedListCategory = hit.Kategori.Substring(0, 2);
                             if (interaction.RedListCategory != interactionRedListCategory)
                             {
@@ -805,6 +825,23 @@ namespace SwissKnife.Database
 
                 }
             }
+        }
+
+        private static Rodliste2021Rad GetRegionalRedlist(Dictionary<int, Rodliste2021Rad[]> redlistByScientificName,
+            int currentSciId, string exAssessmentExpertGroup)
+        {
+            if (!redlistByScientificName.ContainsKey(currentSciId)) return null;
+            var hits = redlistByScientificName[currentSciId];
+            var svalbard = exAssessmentExpertGroup.ToLowerInvariant().Contains("svalbard");
+            if (hits.Length == 0) return null;
+            if (!svalbard && hits.Length == 1 && hits[0].Region == "Svalbard") return null;
+            if (hits.Length == 1) return hits[0];
+            var svalbardvurdering = hits.SingleOrDefault(x => x.Region == "Svalbard");
+            var fastlandsvurdering = hits.SingleOrDefault(x => x.Region != "Svalbard");
+            if (svalbard && svalbardvurdering != null) return svalbardvurdering;
+            if (svalbard && svalbardvurdering == null) return fastlandsvurdering;
+            if (!svalbard && fastlandsvurdering != null) return fastlandsvurdering;
+            return fastlandsvurdering;
         }
 
         private static void FixPropertiesOnNewAssessments(FA4? exAssessment)
