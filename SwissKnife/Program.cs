@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using McMaster.Extensions.CommandLineUtils;
 using SwissKnife.Database;
@@ -49,9 +50,12 @@ namespace SwissKnife
                 [Option("--autoupdate", Description = "Automatically update all taxonomy")]
                 public bool AutoUpdate { get; } = false;
 
+                [Option("--assessmentId", Description = "selected assessment id")]
+                public int Id { get; } = 0;
+
                 private void OnExecute(IConsole console)
                 {
-                    MaintenanceService.RunTaxonomyWash(new Prod.Data.EFCore.SqlServerProdDbContext(ConnectionString), "", false, AutoUpdate);
+                    MaintenanceService.RunTaxonomyWash(new Prod.Data.EFCore.SqlServerProdDbContext(ConnectionString), "", false, AutoUpdate, Id);
                 }
             }
             [Command("nighttasks", Description = "nightly maintenance")]

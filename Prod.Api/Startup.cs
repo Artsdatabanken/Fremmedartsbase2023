@@ -10,7 +10,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using IdentityModel.Client;
-using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -79,7 +78,6 @@ namespace Prod.Api
                 hubOptions.KeepAliveInterval = TimeSpan.FromMinutes(1);
             });
             services.AddResponseCompression();
-            services.AddApplicationInsightsTelemetry();
             services.AddHealthChecks()
                 .AddDbContextCheck<ProdDbContext>(); ;
         }
@@ -175,24 +173,33 @@ namespace Prod.Api
                 ReferenceApiClientId = Configuration.GetValue("ReferenceApiClientId", "redlistapi")
             };
             services.AddSingleton<IReferenceService>(new ReferenceService(options));
-
+            //services.AddHttpClient();
             services.AddSingleton<IDiscoveryCache>(r =>
             {
-                var factory = r.GetRequiredService<IHttpClientFactory>();
-                return new DiscoveryCache(options.AuthAuthority, () => factory.CreateClient());
+                //var factory = r.GetRequiredService<IHttpClientFactory>();
+                return new DiscoveryCache(options.AuthAuthority, () => new HttpClient()); // factory.CreateClient()); // factory fails - should cache it for 24 hours anyway....
             });
 
-            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
-                .AddIdentityServerAuthentication(identityServerAuthenticationOptions =>
+            services.AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(identityServerAuthenticationOptions =>
                 {
                     // base-address of your identityserver
                     identityServerAuthenticationOptions.Authority = options.AuthAuthority;
 
                     // name of the API resource
-                    identityServerAuthenticationOptions.ApiName = "fab4api";
+                    //identityServerAuthenticationOptions.ApiName = "fab4api";
                     identityServerAuthenticationOptions.RequireHttpsMetadata = false;
+                    identityServerAuthenticationOptions.TokenValidationParameters.ValidAudiences = new List<string>()
+                    {
+                        "fab4api"
+                    };
+
                     IdentityModelEventSource.ShowPII = true;
-                    identityServerAuthenticationOptions.JwtBearerEvents = new JwtBearerEvents
+                    identityServerAuthenticationOptions.Events = new JwtBearerEvents
                     {
                         OnMessageReceived = e =>
                         {

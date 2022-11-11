@@ -26,7 +26,7 @@ namespace SwissKnife.Database
         //}
 
         internal static void RunTaxonomyWash(SqlServerProdDbContext _database, string speciesGroup = "",
-            bool firstrun = false, bool autoUpdate = false)
+            bool firstrun = false, bool autoUpdate = false, int id = 0)
         {
             var ts = new TaksonService();
             var batchSize = 1000;
@@ -37,10 +37,13 @@ namespace SwissKnife.Database
                 var batchChanges = false;
                 Console.WriteLine(pointer);
                 _database.ChangeTracker.Clear();
-                var assessments = speciesGroup == ""
+                var assessments = 
+                    id > 0 ? _database.Assessments.Where(x => x.Id == id).Skip(pointer)
+                            .Take(batchSize).ToArray() :
+                    (speciesGroup == ""
                     ? _database.Assessments.OrderBy(x => x.Id).Skip(pointer).Take(batchSize).ToArray()
                     : _database.Assessments.Where(x => x.Expertgroup == speciesGroup).OrderBy(x => x.Id).Skip(pointer)
-                        .Take(batchSize).ToArray();
+                        .Take(batchSize).ToArray());
                 if (assessments.Length == 0)
                 {
                     break;
