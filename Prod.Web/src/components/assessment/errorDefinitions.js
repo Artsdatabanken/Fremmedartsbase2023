@@ -53,12 +53,12 @@ function getErrorDefinitions(assessment, errorHelpers) {
         },
         {
             id: "(a)err1",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && a.productionSpecies != true && (hasnum(r.AOOtotalBestInput) && r.AOOtotalBestInput < 4)},
+            get cond() {return a.doFullAssessment && !r.doorKnocker && a.productionSpecies != true && (hasnum(r.AOOtotalBestInput) && r.AOOtotalBestInput < 4)},
             msg: "En selvstendig reproduserende art må ha et forekomstareal på minst 4 km²!"
         },
         {
             id: "(a)err2",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && (r.AOOtotalLowInput > r.AOOtotalBestInput)},
+            get cond() {return a.doFullAssessment && !r.doorKnocker && (r.AOOtotalLowInput > r.AOOtotalBestInput)},
             msg: "Det nedre anslaget på forekomstarealet kan ikke være større enn det beste anslaget!"
         },
         {
@@ -105,32 +105,32 @@ function getErrorDefinitions(assessment, errorHelpers) {
         },
         {
             id: "(a)err12",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && hasnum(r.AOOtotalLowInput) && ((r.AOOtotalLowInput % 4) !== 0)},
+            get cond() {return a.doFullAssessment  && !r.doorKnocker && hasnum(r.AOOtotalLowInput) && ((r.AOOtotalLowInput % 4) !== 0)},
             msg: "Forekomstarealene må være multippel av 4_km²!"
         },
         {
             id: "(a)err13",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && hasnum(r.AOOtotalBestInput) && ((r.AOOtotalBestInput % 4) !== 0) },
+            get cond() {return a.doFullAssessment  && !r.doorKnocker && hasnum(r.AOOtotalBestInput) && ((r.AOOtotalBestInput % 4) !== 0) },
             msg: "Forekomstarealene må være multippel av 4_km²!"
         },
         {
             id: "(a)err14",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && hasnum(r.AOOtotalHighInput) && ((r.AOOtotalHighInput % 4) !== 0)},
+            get cond() {return a.doFullAssessment  && !r.doorKnocker && hasnum(r.AOOtotalHighInput) && ((r.AOOtotalHighInput % 4) !== 0)},
             msg: "Forekomstarealene må være multippel av 4_km²!"
         },
         {
             id: "(a)err15",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && hasnum(r.AOO50yrLowInput) && ((r.AOO50yrLowInput % 4) !== 0) },
+            get cond() {return a.doFullAssessment  && !r.doorKnocker && hasnum(r.AOO50yrLowInput) && ((r.AOO50yrLowInput % 4) !== 0) },
             msg: "Forekomstarealene må være multippel av 4_km²!"
         },
         {
             id: "(a)err16",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && hasnum(r.AOO50yrBestInput) && ((r.AOO50yrBestInput % 4) !== 0)},
+            get cond() {return a.doFullAssessment  && !r.doorKnocker && hasnum(r.AOO50yrBestInput) && ((r.AOO50yrBestInput % 4) !== 0)},
             msg: "Forekomstarealene må være multippel av 4_km²!"
         },
         {
             id: "(a)err17",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && hasnum(r.AOO50yrHighInput) && ((r.AOO50yrHighInput % 4) !== 0)},
+            get cond() {return a.doFullAssessment  && !r.doorKnocker && hasnum(r.AOO50yrHighInput) && ((r.AOO50yrHighInput % 4) !== 0)},
             msg: "Forekomstarealene må være multippel av 4_km²!"
         },
         // {
@@ -185,7 +185,7 @@ function getErrorDefinitions(assessment, errorHelpers) {
         },
         {
             id: "(a)err28", //egentlig en Artens status -error
-            get cond() {return a.isAlienSpecies && a.productionSpecies == null},
+            get cond() {return a.doFullAssessment && a.productionSpecies == null},
             msg: "Fanen Artens status: Spørsmål om arten er en bruksart må besvares"
         },
         {
