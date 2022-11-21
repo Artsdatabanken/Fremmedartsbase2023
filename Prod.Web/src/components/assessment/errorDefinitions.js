@@ -63,22 +63,17 @@ function getErrorDefinitions(assessment, errorHelpers) {
         },
         {
             id: "(a)err3",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && (r.AOOtotalHighInput < r.AOOtotalBestInput)},
+            get cond() {return a.doFullAssessment && !r.doorKnocker && (r.AOOtotalHighInput < r.AOOtotalBestInput)},
             msg: "Det øvre anslaget på forekomstarealet kan ikke være mindre enn det beste anslaget!"
         },
         {
             id: "(a)err4",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && (r.AOO50yrLowInput > r.AOO50yrBestInput)},
+            get cond() {return a.doFullAssessment && !r.doorKnocker && (r.AOO50yrLowInput > r.AOO50yrBestInput)},
             msg: "Det nedre anslaget på forekomstarealet kan ikke være større enn det beste anslaget!"
         },
         {
-            id: "(a)err5",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && (r.AOO50yrHighInput < r.AOO50yrBestInput)},
-            msg: "Det øvre anslaget på forekomstarealet kan ikke være mindre enn det beste anslaget!"
-        },
-        {
             id: "(a)err6",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && !isNaN(r.AOOtotalBestInput) && (r.AOOtotalBestInput < r.AOOknownInput)},
+            get cond() {return a.doFullAssessment && !r.doorKnocker && !isNaN(r.AOOtotalBestInput) && (r.AOOtotalBestInput < r.AOOknownInput)},
             msg: "Det beste anslaget på det totale nåværende forekomstarealet kan ikke være mindre enn det kjente!"
         },
         {
@@ -150,17 +145,17 @@ function getErrorDefinitions(assessment, errorHelpers) {
         },
         {
             id: "(a)err18",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && (r.AOOtotalLowInput > r.AOOtotalBestInput)},
+            get cond() {return a.doFullAssessment && !r.doorKnocker && (r.AOOtotalLowInput > r.AOOtotalBestInput)},
             msg: "Lavt anslag kan ikke være større enn beste anslag!"
         },
         {
             id: "(a)err19",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && (r.AOOtotalLowInput > r.AOOtotalHighInput)},
+            get cond() {return a.doFullAssessment && !r.doorKnocker && (r.AOOtotalLowInput > r.AOOtotalHighInput)},
             msg: "Lavt anslag kan ikke være større enn høyt anslag!"
         },
         {
             id: "(a)err20",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && (r.AOOtotalBestInput > r.AOOtotalHighInput)},
+            get cond() {return a.doFullAssessment && !r.doorKnocker && (r.AOOtotalBestInput > r.AOOtotalHighInput)},
             msg: "Beste anslag kan ikke være større enn høyt anslag!"
         },
         // {
@@ -170,12 +165,12 @@ function getErrorDefinitions(assessment, errorHelpers) {
         // },
         {
             id: "(a)err23",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && (r.AOO50yrLowInput > r.AOO50yrBestInput)},
+            get cond() {return a.doFullAssessment && !r.doorKnocker && (r.AOO50yrLowInput > r.AOO50yrBestInput)},
             msg: "Lavt anslag kan ikke være større enn beste anslag!"
         },
         {
             id: "(a)err24",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && (r.AOO50yrHighInput < r.AOO50yrBestInput)},
+            get cond() {return a.doFullAssessment && !r.doorKnocker && (r.AOO50yrHighInput < r.AOO50yrBestInput)},
             msg: "Beste anslag kan ikke være større enn høyt anslag!"
         },
         {
@@ -191,12 +186,17 @@ function getErrorDefinitions(assessment, errorHelpers) {
         {
             id: "(a)err28", //egentlig en Artens status -error
             get cond() {return a.isAlienSpecies && a.productionSpecies == null},
-            msg: "Spørsmål om arten er en bruksart må besvares på fanen Artens status"
+            msg: "Fanen Artens status: Spørsmål om arten er en bruksart må besvares"
         },
         {
             id: "(a)err29",
             get cond() {return a.doFullAssessment && a.isAlienSpecies && !r.doorKnocker && (!hasnum(r.AOOknownInput) || !hasnum(r.AOO50yrLowInput) || !hasnum(r.AOOtotalLowInput))},
-            msg: "Informasjon om forekomstareal må angis før vurderingen kan ferdigstilles"
+            msg: "Fanen Utbredelse: Informasjon om forekomstareal må angis før vurderingen kan ferdigstilles"
+        },
+        {
+            id: "(a)err30",
+            get cond() {return a.doFullAssessment && r.doorKnocker && (!hasnum(r.AOO10yrBest) || !hasnum(r.AOO10yrLow) || !hasnum(r.AOO10yrHigh)) },
+            msg: "Fanen Utbredelse: Informasjon om forekomstareal må legges inn før vurderingen kan ferdigstilles"
         },
 
 

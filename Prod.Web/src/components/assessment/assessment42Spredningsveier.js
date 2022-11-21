@@ -88,7 +88,7 @@ export default class Assessment42Spredningsveier extends React.Component {
                 
                 if (mp.mainCategory != "Direkte import") {
                     var copy = mp
-                    // setting influence factor, magnitude and time of incident of the new pathway as null
+                    // setting influence factor, magnitude and time of incident of the new pathway as ""
                     copy.influenceFactor = ""
                     copy.magnitude = ""
                     copy.timeOfIncident = ""
@@ -108,7 +108,7 @@ export default class Assessment42Spredningsveier extends React.Component {
                     } else {
                         copy.category = ""
                     }
-                    // setting influence factor, magnitude and time of incident of the new pathway as null
+                    // setting influence factor, magnitude and time of incident of the new pathway as ""
                     copy.influenceFactor = ""
                     copy.magnitude = ""
                     copy.timeOfIncident = ""
