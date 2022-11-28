@@ -30,6 +30,9 @@ namespace SwissKnife.Database
     {
         private SqlServerProdDbContext _database;
         private int[] _disse = new[] { 3068}; //2753, 1718, 1684, 2584, 444, 1784, 485, 1717 };
+        private bool _dataBoreonemoralClearOceanic;
+        private static string[] _importantCategories = new[] { "HI", "LO","NK", "PH","SE" };
+        private static DateTime _magicemaildatedateTime = new DateTime(2022, 9, 23, 14, 8, 0);
 
         public ImportDataService(string connectionString)
         {
@@ -376,6 +379,63 @@ namespace SwissKnife.Database
 
         public void PatchImport(IConsole console, string inputFolder)
         {
+            void FixZones(Dictionary<int, BioClimData> bioClimDatas, FA4 exAssessment, int realId)
+            {
+                bool ZonesHasValue(List<FA4.BioClimateZones> bioClimateZones, string sonen)
+                {
+                    var zone = bioClimateZones.First(x => x.ClimateZone == sonen);
+                    return zone.ClearOceanic || zone.StrongOceanic || zone.TransferSection || zone.WeakOceanic ||
+                           zone.WeakContinental;
+                }
+
+                void SetZones(List<FA4.BioClimateZones> bioClimateZones, string boreonemoral, bool clearOceanic,
+                    bool strongOceanic, bool transferSection1,
+                    bool weakOceanic1, bool? weakContinental)
+                {
+                    var zone = bioClimateZones.First(x => x.ClimateZone == boreonemoral);
+                    zone.ClearOceanic = clearOceanic;
+                    zone.StrongOceanic = strongOceanic;
+                    zone.TransferSection = transferSection1;
+                    zone.WeakOceanic = weakOceanic1;
+                    if (weakContinental.HasValue)
+                    {
+                        zone.WeakContinental = weakContinental.Value;
+                    }
+                }
+
+                {
+                    if (bioClimDatas.ContainsKey(realId))
+                    {
+                        // men bare hvis alt er false
+                        var data = bioClimDatas[realId];
+                        if (!(ZonesHasValue(exAssessment.CurrentBioClimateZones, "boreonemoral")
+                              || ZonesHasValue(exAssessment.CurrentBioClimateZones, "southBoreal")
+                              || ZonesHasValue(exAssessment.CurrentBioClimateZones, "midBoreal")
+                              || ZonesHasValue(exAssessment.CurrentBioClimateZones, "northBoreal")
+                              || ZonesHasValue(exAssessment.CurrentBioClimateZones, "alpineZones"))
+                           )
+                        {
+                            exAssessment.Id = realId;
+                            SetZones(exAssessment.CurrentBioClimateZones, "boreonemoral", data.boreonemoral_clearOceanic,
+                                data.boreonemoral_strongOceanic, data.boreonemoral_transferSection,
+                                data.boreonemoral_weakOceanic, null);
+                            SetZones(exAssessment.CurrentBioClimateZones, "southBoreal", data.southBoreal_clearOceanic,
+                                data.southBoreal_strongOceanic, data.southBoreal_transferSection,
+                                data.southBoreal_weakOceanic, null);
+                            SetZones(exAssessment.CurrentBioClimateZones, "midBoreal", data.midBoreal_clearOceanic,
+                                data.midBoreal_strongOceanic, data.midBoreal_transferSection, data.midBoreal_weakOceanic,
+                                data.midBoreal_weakContinental);
+                            SetZones(exAssessment.CurrentBioClimateZones, "northBoreal", data.northBoreal_clearOceanic,
+                                data.northBoreal_strongOceanic, data.northBoreal_transferSection,
+                                data.northBoreal_weakOceanic, data.northBoreal_weakContinental);
+                            SetZones(exAssessment.CurrentBioClimateZones, "alpineZones", data.alpineZones_clearOceanic,
+                                data.alpineZones_strongOceanic, data.alpineZones_transferSection,
+                                data.alpineZones_weakOceanic, data.alpineZones_weakContinental);
+                        }
+                    }
+                }
+            }
+
             var jsonSerializerOptions = new JsonSerializerOptions
             {
                 Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
@@ -415,11 +475,12 @@ namespace SwissKnife.Database
             }
 
             // hele koderøkla
-            var codes = ParseJson("/Prod.Web/src/FA3CodesNB.json");
+            //var codes = ParseJson("/Prod.Web/src/FA3CodesNB.json");
             //var migrationPathway = codes["Children"]["migrationPathways"].AsArray()[0]["Children"]["mp"][0]["Children"]["mpimport"].AsArray();
-           // var dictPath = DrillDown3(migrationPathway)
-           //     .ToDictionary(item => item.Item1, item => item);
+            //var dictPath = DrillDown3(migrationPathway)
+            //    .ToDictionary(item => item.Item1, item => item);
 
+            var bioklimImport = GetBioClimDataFromFile(theCsvConfiguration, inputFolder);
 
             var RedList = dict.Select(x => x.Key.Split("|").First()).Union(dict.Select(x => "NA " + x.Key.Split("|").First())).ToArray();
             
@@ -470,12 +531,15 @@ namespace SwissKnife.Database
                 Debug.Assert(exAssessment != null, nameof(exAssessment) + " != null");
 
                 //TransferAndFixPropertiesOnAssessmentsFrom2018(exAssessment, newAssesment);
-                if (_disse.Contains(real.Id))
-                {
-                    FixRedlistOnExistingAssessment(exAssessment, redlistByScientificName, taxonService);      
-                }
+                //if (_disse.Contains(real.Id))
+                //{
+                //    // FixRedlistOnExistingAssessment(exAssessment, redlistByScientificName, taxonService);      
+                //}
                 //TestForNaturetypeTrouble(console, exAssessment, RedList, dict, dictNin);
                 //FixSpeciesNatureTypeInteractionsWithLI(exAssessment, real.Id);
+
+                //FixZones(bioklimImport, exAssessment, real.Id);
+                FixReasonForChangeBasedOn2018(exAssessment, oldAssessment);
 
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)
@@ -525,6 +589,8 @@ namespace SwissKnife.Database
                 //FixRedlistOnExistingAssessment(exAssessment, redlistByScientificName, taxonService);
                 //TestForNaturetypeTrouble(console, exAssessment, RedList, dict, dictNin);
 
+                //FixZones(bioklimImport, exAssessment, real.Id);
+
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)
                 {
@@ -551,6 +617,62 @@ namespace SwissKnife.Database
             //{
             //    console.WriteLine("OBS: " + tuple.Item1 + " " + tuple.Item2 + ":" + tuple.Item3);
             //}
+        }
+
+        private static void FixReasonForChangeBasedOn2018(FA4 exAssessment, FA3Legacy oldAssessment)
+        {
+            if (exAssessment.EvaluationStatus == "finished" &&
+                exAssessment.LastUpdatedAt <= _magicemaildatedateTime)
+            {
+                if (oldAssessment.RiskAssessment.RedListUsedCriteria != null && (
+                        (oldAssessment.RiskAssessment.RedListUsedCriteria.Contains("B") ||
+                         oldAssessment.RiskAssessment.RedListUsedCriteria.Contains("D2"))
+                        && !oldAssessment.RiskAssessment.RedListUsedCriteria.Contains("D1")))
+                {
+                    if (oldAssessment.RiskAssessment.ChosenSpreadMedanLifespan == "RedListCategoryLevel")
+                    {
+                        if (oldAssessment.AlienSpeciesCategory != "NotApplicable" &&
+                            _importantCategories.Contains(oldAssessment.RiskAssessment.RiskLevelCode))
+                        {
+                            if (oldAssessment.RiskAssessment.RiskLevelCode != exAssessment.Category)
+                            {
+                                var oldValue = oldAssessment.RiskAssessment.Criteria.First(x => x.CriteriaLetter == "A").Value;
+                                var newValue = exAssessment.RiskAssessment.Criteria.First(x => x.CriteriaLetter == "A").Value;
+                                if ((oldAssessment.RiskAssessment.DecisiveCriteria.Contains("A")
+                                     || oldAssessment.RiskAssessment.DecisiveCriteria == "1,1")
+                                    && oldValue < newValue)
+                                {
+                                    if (exAssessment.ReasonForChangeOfCategory.Any(x => x == "changedCriteria"))
+                                    {
+                                        exAssessment.ReasonForChangeOfCategory.Remove("changedCriteria");
+                                        if (exAssessment.ReasonForChangeOfCategory.All(
+                                                x => x != "changedCriteriaInterpretation"))
+                                        {
+                                            exAssessment.ReasonForChangeOfCategory.Add(
+                                                "changedCriteriaInterpretation");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private Dictionary<int, BioClimData> GetBioClimDataFromFile(CsvConfiguration theCsvConfiguration,
+            string inputFolder)
+        {
+            var result = new Dictionary<int, BioClimData>();
+            using (var reader = new StreamReader(inputFolder + "\\..\\Importfiler\\soneseksjon_mean_current_karplanter_til_FAB.csv"))
+            {
+                using (var csv = new CsvReader(reader, theCsvConfiguration))
+                {
+                    var records = csv.GetRecords<BioClimData>();
+                    result = records.ToDictionary(x => x.Id, y => y);
+                }
+            }
+            return result;
         }
 
         private void FixSpeciesNatureTypeInteractionsWithLI(FA4 exAssessment, int realId)
@@ -1163,5 +1285,35 @@ namespace SwissKnife.Database
 
             //}
         }
+    }
+
+    internal class BioClimData
+    {
+        public int Id { get; set; }
+        public string Vitenskapelig_navn { get; set; }
+        public bool boreonemoral_strongOceanic { get; set; }
+        public bool boreonemoral_clearOceanic { get; set; }
+        public bool boreonemoral_weakOceanic { get; set; }
+        public bool boreonemoral_transferSection { get; set; }
+        public bool southBoreal_strongOceanic { get; set; }
+        public bool southBoreal_clearOceanic { get; set; }
+        public bool southBoreal_weakOceanic { get; set; }
+        public bool southBoreal_transferSection { get; set; }
+        public bool southBoreal_weakContinental { get; set; }
+        public bool midBoreal_strongOceanic { get; set; }
+        public bool midBoreal_clearOceanic { get; set; }
+        public bool midBoreal_weakOceanic { get; set; }
+        public bool midBoreal_transferSection { get; set; }
+        public bool midBoreal_weakContinental { get; set; }
+        public bool northBoreal_strongOceanic { get; set; }
+        public bool northBoreal_clearOceanic { get; set; }
+        public bool northBoreal_weakOceanic { get; set; }
+        public bool northBoreal_transferSection { get; set; }
+        public bool northBoreal_weakContinental { get; set; }
+        public bool alpineZones_strongOceanic { get; set; }
+        public bool alpineZones_clearOceanic { get; set; }
+        public bool alpineZones_weakOceanic { get; set; }
+        public bool alpineZones_transferSection { get; set; }
+        public bool alpineZones_weakContinental { get; set; }
     }
 }
