@@ -66,7 +66,7 @@ export default function createTaxonSearch(newObj, contextLetter, filter) {
 
         var config = {taxonApiUrl: "https://artskart.artsdatabanken.no/publicapi/api/taxon?take=35&term="} // "https://artsdatabanken.no/api/taxon/ScientificName?scientificName="}
 
-        const url = config.taxonApiUrl + searchString + "*"
+        const url = config.taxonApiUrl + searchString; // + "*"
         // console.log("url:" + url)
         if(searchString && searchString.length >= 2) {
             action(() => newObj.taxonSearchWaitingForResult = true)()
