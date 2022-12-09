@@ -303,6 +303,8 @@ export default function enhanceAssessment(json, appState) {
             const result = 
                 ! assessment.isAlienSpecies
                 ? "NotAlienSpecie"
+                : assessment.MisIdentified
+                ? "MisIdentified"
                 : assessment.higherOrLowerLevel
                 ? "TaxonEvaluatedAtAnotherLevel" 
                 : assessment.alienSpecieUncertainIfEstablishedBefore1800
