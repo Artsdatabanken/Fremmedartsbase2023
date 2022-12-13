@@ -656,6 +656,7 @@ namespace Prod.Api.Helpers
             {"NotAlienSpecie", "Ikke fremmed"},
             {"TaxonEvaluatedAtAnotherLevel","Vurderes på et annet taksonomisk nivå"},
             {"UncertainBefore1800", "Etablert per 1800"},
+            {"MisIdentified", "Feilbestemt i 2018"},
             {"NotDefined", "Ikke definert"},
             {"NotApplicable", ""},
             {"EcoEffectWithoutEstablishment", ""}
@@ -690,11 +691,10 @@ namespace Prod.Api.Helpers
                 {
                     break; 
                 }
-                // else
-                // {
+                
                 string newreg = fylkesforekomster[i].Fylke + "//" + fylkesforekomster[i].State0 + "//" + fylkesforekomster[i].State1 + "//" + fylkesforekomster[i].State3;
                 fylkesliste.Add(newreg);
-                // }
+                
             }
             return string.Join("; ", fylkesliste);
         }
