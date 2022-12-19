@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -16,15 +17,16 @@ using Microsoft.EntityFrameworkCore;
 using Prod.Data.EFCore;
 using Prod.Domain;
 using Prod.Domain.Legacy;
+using SwissKnife.Database.CsvModels;
 
 namespace SwissKnife.Database
 {
     public partial class ImportDataService
     {
         private SqlServerProdDbContext _database;
-        internal static int[] _disse = new[] { 3068}; //2753, 1718, 1684, 2584, 444, 1784, 485, 1717 };
+        internal static int[] _disse = new[] { 3068 }; //2753, 1718, 1684, 2584, 444, 1784, 485, 1717 };
         private bool _dataBoreonemoralClearOceanic;
-        internal static string[] _importantCategories = new[] { "HI", "LO","NK", "PH","SE" };
+        internal static string[] _importantCategories = new[] { "HI", "LO", "NK", "PH", "SE" };
         internal static DateTime _magicemaildatedateTime = new DateTime(2022, 9, 23, 14, 8, 0);
         internal static readonly JsonSerializerOptions _jsonSerializerOptions = GetJsonSerializerOptions();
         private static TaksonService _taxonService = new TaksonService();
@@ -45,7 +47,7 @@ namespace SwissKnife.Database
             };
 
             var brukere = GetBrukers(inputFolder);
-            var dummyDate = new DateTime(2018,1,1);
+            var dummyDate = new DateTime(2018, 1, 1);
             foreach (var bruker in brukere)
             {
                 _database.Users.Add(new User()
@@ -73,7 +75,8 @@ namespace SwissKnife.Database
             foreach (var oldAssessment in assessments)
             {
                 var newAssesment = ImportDataServiceHelper.TransformFromFa3ToFa4(oldAssessment, mapper);
-                var dbAssessment = new Assessment { Doc = JsonSerializer.Serialize(newAssesment, jsonSerializerOptions) };
+                var dbAssessment = new Assessment
+                    { Doc = JsonSerializer.Serialize(newAssesment, jsonSerializerOptions) };
                 if (string.IsNullOrWhiteSpace(oldAssessment.SistOppdatertAv))
                 {
                     dbAssessment.LastUpdatedByUserId = new Guid("00000000-0000-0000-0000-000000000001");
@@ -88,14 +91,19 @@ namespace SwissKnife.Database
                     dbAssessment.ScientificNameId = newAssesment.EvaluatedScientificNameId.Value;
                     dbAssessment.ChangedAt = oldAssessment.SistOppdatert;
                 }
-                
+
                 _database.Assessments.Add(dbAssessment);
                 count++;
 
-                string assessmentCommentString(string fieldName, string subFieldName, string oldValue, string newValue) 
+                string assessmentCommentString(string fieldName, string subFieldName, string oldValue, string newValue)
                 {
-                    var baseString = $"Verdi fra 2018 ('{oldValue}') på '{fieldName}' ved estimeringsmetode '{subFieldName}' er satt til: {newValue}.";
-                    string notTrillions(string newValue) => oldValue != "mer enn én billion år" ? " Vennligst endre til estimert verdi." : "";
+                    var baseString =
+                        $"Verdi fra 2018 ('{oldValue}') på '{fieldName}' ved estimeringsmetode '{subFieldName}' er satt til: {newValue}.";
+
+                    string notTrillions(string newValue) => oldValue != "mer enn én billion år"
+                        ? " Vennligst endre til estimert verdi."
+                        : "";
+
                     return baseString + notTrillions(newValue);
                 }
 
@@ -105,32 +113,41 @@ namespace SwissKnife.Database
                     {
                         return false;
                     }
+
                     return oldValue != newValue.ToString();
 
                 }
 
-            dbAssessment.Comments = new List<AssessmentComment>();
+                dbAssessment.Comments = new List<AssessmentComment>();
 
                 if (oldAssessment.RiskAssessment.SpreadRscriptEstimatedSpeciesLongevity != null &&
                     newAssesment.RiskAssessment.MedianLifetimeInput != null &&
-                    valueHasChanged(oldAssessment.RiskAssessment.SpreadRscriptEstimatedSpeciesLongevity, newAssesment.RiskAssessment.MedianLifetimeInput))
+                    valueHasChanged(oldAssessment.RiskAssessment.SpreadRscriptEstimatedSpeciesLongevity,
+                        newAssesment.RiskAssessment.MedianLifetimeInput))
                 {
                     dbAssessment.Comments.Add(new AssessmentComment()
                     {
-                        Comment = assessmentCommentString("Median levetid", "Numerisk estimering på A-kriteriet", oldAssessment.RiskAssessment.SpreadRscriptEstimatedSpeciesLongevity, newAssesment.RiskAssessment.MedianLifetimeInput.ToString()),
+                        Comment = assessmentCommentString("Median levetid", "Numerisk estimering på A-kriteriet",
+                            oldAssessment.RiskAssessment.SpreadRscriptEstimatedSpeciesLongevity,
+                            newAssesment.RiskAssessment.MedianLifetimeInput.ToString()),
                         CommentDate = DateTime.Now,
                         UserId = new Guid("00000000-0000-0000-0000-000000000001"),
                         ClosedById = new Guid("00000000-0000-0000-0000-000000000001"),
                         Type = CommentType.System
                     });
                 }
+
                 if (oldAssessment.RiskAssessment.SpreadYearlyIncreaseObservations != null &&
                     newAssesment.RiskAssessment.Occurrences1Best != null &&
-                    valueHasChanged(oldAssessment.RiskAssessment.SpreadYearlyIncreaseObservations, newAssesment.RiskAssessment.Occurrences1Best))
+                    valueHasChanged(oldAssessment.RiskAssessment.SpreadYearlyIncreaseObservations,
+                        newAssesment.RiskAssessment.Occurrences1Best))
                 {
                     dbAssessment.Comments.Add(new AssessmentComment()
                     {
-                        Comment = assessmentCommentString("Gjennomsnittlig ekspansjonshastighet (m/år)", "Datasett med tid- og stedfesta observasjoner på B-kriteriet", oldAssessment.RiskAssessment.SpreadYearlyIncreaseObservations, newAssesment.RiskAssessment.Occurrences1Best.ToString()),
+                        Comment = assessmentCommentString("Gjennomsnittlig ekspansjonshastighet (m/år)",
+                            "Datasett med tid- og stedfesta observasjoner på B-kriteriet",
+                            oldAssessment.RiskAssessment.SpreadYearlyIncreaseObservations,
+                            newAssesment.RiskAssessment.Occurrences1Best.ToString()),
                         CommentDate = DateTime.Now,
                         UserId = new Guid("00000000-0000-0000-0000-000000000001"),
                         ClosedById = new Guid("00000000-0000-0000-0000-000000000001"),
@@ -152,7 +169,7 @@ namespace SwissKnife.Database
             // add files
             count = 0;
             var dummydate = dummyDate;
-            var array = _database.Assessments.Include(x=>x.Attachments).ToArray();
+            var array = _database.Assessments.Include(x => x.Attachments).ToArray();
             foreach (var assessment in array)
             {
                 var doc = JsonSerializer.Deserialize<FA4>(assessment.Doc);
@@ -170,15 +187,20 @@ namespace SwissKnife.Database
                                 assessment.Attachments.Add(new Attachment()
                                 {
                                     FileName = datasettFile.Filename,
-                                    Date = (string.IsNullOrWhiteSpace(datasettFile.LastModified) || datasettFile.LastModified.StartsWith("0001-01-01") ? dummydate : DateTimeOffset
-                                        .FromUnixTimeMilliseconds(long.Parse(datasettFile.LastModified)).DateTime),
+                                    Date = (string.IsNullOrWhiteSpace(datasettFile.LastModified) ||
+                                            datasettFile.LastModified.StartsWith("0001-01-01")
+                                        ? dummydate
+                                        : DateTimeOffset
+                                            .FromUnixTimeMilliseconds(long.Parse(datasettFile.LastModified)).DateTime),
                                     Name = datasettFile.Filename,
                                     Description = string.IsNullOrWhiteSpace(datasettFile.Description)
                                         ? ""
                                         : datasettFile.Description,
                                     File = readAllBytes,
                                     UserId = users[doc.LastUpdatedBy].Id,
-                                    Type = datasettFile.Filename.ToLowerInvariant().EndsWith("zip") ? "application/zip" : "application/csv"
+                                    Type = datasettFile.Filename.ToLowerInvariant().EndsWith("zip")
+                                        ? "application/zip"
+                                        : "application/csv"
                                 });
                             }
 
@@ -193,6 +215,7 @@ namespace SwissKnife.Database
                     }
                 }
             }
+
             _database.SaveChanges();
 
         }
@@ -218,6 +241,7 @@ namespace SwissKnife.Database
 
             } while (hasLine);
         }
+
         private IEnumerable<Bruker> GetBrukers(string inputFolder)
         {
             var dir = Directory.CreateDirectory(inputFolder);
@@ -241,7 +265,9 @@ namespace SwissKnife.Database
 
         private static JsonNode? ParseJson(string filen)
         {
-            return JsonNode.Parse(File.Exists("../../../.." + filen) ? File.ReadAllText("../../../.." + filen) : File.ReadAllText(".." + filen));
+            return JsonNode.Parse(File.Exists("../../../.." + filen)
+                ? File.ReadAllText("../../../.." + filen)
+                : File.ReadAllText(".." + filen));
         }
 
         public void PatchImport(IConsole console, string inputFolder)
@@ -258,17 +284,20 @@ namespace SwissKnife.Database
                 Encoding = Encoding.UTF8
             };
 
-            var redlistByScientificNameDictionary = ImportDataServiceHelper.GetRedlistByScientificNameDictionary(inputFolder, theCsvConfiguration);
+            var redlistByScientificNameDictionary =
+                ImportDataServiceHelper.GetRedlistByScientificNameDictionary(inputFolder, theCsvConfiguration);
 
             var nin23 = ParseJson("/Prod.Web/src/Nin2_3.json");
-            var dictNin23 = ImportDataServiceHelper.DrillDownNaturetypes23(nin23["Children"].AsArray()).ToDictionary(item => item.Item1.Substring(3), item => item.Item2);
+            var dictNin23 = ImportDataServiceHelper.DrillDownNaturetypes23(nin23["Children"].AsArray())
+                .ToDictionary(item => item.Item1.Substring(3), item => item.Item2);
 
             //var nin = ParseJson("/Prod.Web/src/Nin2_3.json");
             var redlistNin = ParseJson("/Prod.Web/src/TrueteOgSjeldneNaturtyper2018.json");
             // key = "NA T12|124" altså med kode og value 
             var dict = new Dictionary<string, string>();
             //dict = DrillDown(nin2["Children"].AsArray()).ToDictionary(item => item.Item1.Substring(3), item => item.Item2);
-            foreach (var item in ImportDataServiceHelper.DrillDownRedlistedNaturetypes(redlistNin["Children"].AsArray()))
+            foreach (var item in
+                     ImportDataServiceHelper.DrillDownRedlistedNaturetypes(redlistNin["Children"].AsArray()))
             {
                 var key = item.Item1;
                 if (!dict.ContainsKey(key)) dict.Add(key, item.Item2);
@@ -279,14 +308,21 @@ namespace SwissKnife.Database
             //var migrationPathway = codes["Children"]["migrationPathways"].AsArray()[0]["Children"]["mp"][0]["Children"]["mpimport"].AsArray();
             //var dictPath = ImportDataServiceHelper.DrillDownCodeList(migrationPathway)
             //    .ToDictionary(item => item.Item1, item => item);
-            var bioklimPrevoisImport = ImportDataServiceHelper.GetBioClimDataFromFile(theCsvConfiguration, inputFolder, "soneseksjon_mean_current_karplanter_til_FAB.csv");
-            var bioklimImport = ImportDataServiceHelper.GetBioClimDataFromFile(theCsvConfiguration, inputFolder, "soneseksjon_mean_current_karplanter_NoBug_til_FAB.csv");
-            var misIdentifiedDataset = ImportDataServiceHelper.GetMisIdentifiedDataFromFile(theCsvConfiguration, inputFolder, "MisAppliedData.csv");
-            var RedList = dict.Select(x => x.Key.Split("|").First()).Union(dict.Select(x => "NA " + x.Key.Split("|").First())).ToArray();
-            
-            var assessmaents2012Connection = ImportDataServiceHelper.Get2012DataFromFile(theCsvConfiguration, inputFolder, "Fab2012koplinger.csv");
+            var bioklimPrevoisImport = ImportDataServiceHelper.GetBioClimDataFromFile(theCsvConfiguration, inputFolder,
+                "soneseksjon_mean_current_karplanter_til_FAB.csv");
+            var bioklimImport = ImportDataServiceHelper.GetBioClimDataFromFile(theCsvConfiguration, inputFolder,
+                "soneseksjon_mean_current_karplanter_NoBug_til_FAB.csv");
+            var misIdentifiedDataset =
+                ImportDataServiceHelper.GetMisIdentifiedDataFromFile(theCsvConfiguration, inputFolder,
+                    "MisAppliedData.csv");
+            var RedList = dict.Select(x => x.Key.Split("|").First())
+                .Union(dict.Select(x => "NA " + x.Key.Split("|").First())).ToArray();
 
-            var existing = _database.Assessments.ToDictionary(x => x.Id, x => JsonSerializer.Deserialize<FA4>(x.Doc, _jsonSerializerOptions));
+            var assessmaents2012Connection =
+                ImportDataServiceHelper.Get2012DataFromFile(theCsvConfiguration, inputFolder, "Fab2012koplinger.csv");
+
+            var existing = _database.Assessments.ToDictionary(x => x.Id,
+                x => JsonSerializer.Deserialize<FA4>(x.Doc, _jsonSerializerOptions));
             var seen = new List<int>();
             // mapping
             var mapper = Fab3Mapper.CreateMappingFromOldToNew();
@@ -298,12 +334,12 @@ namespace SwissKnife.Database
             {
                 if (!string.IsNullOrWhiteSpace(assessment.RiskAssessment.SpreadYearlyIncreaseCalculatedExpansionSpeed))
                 {
-                    
+
                 }
             }
-            
+
             //List<Tuple<string, string, string>> obsTekster = new List<Tuple<string, string, string>>();
-            
+
             foreach (var oldAssessment in assessments)
             {
                 var newAssesment = ImportDataServiceHelper.TransformFromFa3ToFa4(oldAssessment, mapper);
@@ -317,6 +353,7 @@ namespace SwissKnife.Database
                 {
                     continue;
                 }
+
                 var real = _database.Assessments.Single(x => x.Id == theMatchingAssessment.Key);
                 seen.Add(theMatchingAssessment.Key);
 
@@ -337,7 +374,8 @@ namespace SwissKnife.Database
                     ImportDataServiceHelper.TransferAndFixPropertiesOnAssessmentsFrom2018(exAssessment, newAssesment);
                     if (_disse.Contains(real.Id))
                     {
-                        ImportDataServiceHelper.FixRedlistOnExistingAssessment(exAssessment, redlistByScientificNameDictionary,
+                        ImportDataServiceHelper.FixRedlistOnExistingAssessment(exAssessment,
+                            redlistByScientificNameDictionary,
                             _taxonService);
                     }
 
@@ -347,7 +385,7 @@ namespace SwissKnife.Database
                     ImportDataServiceHelper.FixReasonForChangeBasedOn2018(exAssessment, oldAssessment);
                 }
 
-                //ImportDataServiceHelper.FixMisIdentified(exAssessment, misIdentifiedDataset, real);
+                ImportDataServiceHelper.FixMisIdentified(exAssessment, misIdentifiedDataset, real);
                 ImportDataServiceHelper.Fix2012Assessment(exAssessment, assessmaents2012Connection);
 
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
@@ -358,7 +396,8 @@ namespace SwissKnife.Database
 
                 if (comparisonResult.AreEqual == false)
                 {
-                    console.WriteLine($"Endring på doc {exAssessment.Id} {exAssessment.ExpertGroup} {exAssessment.EvaluatedScientificName} {comparisonResult.DifferencesString}");
+                    console.WriteLine(
+                        $"Endring på doc {exAssessment.Id} {exAssessment.ExpertGroup} {exAssessment.EvaluatedScientificName} {comparisonResult.DifferencesString}");
                     real.Doc = JsonSerializer.Serialize<FA4>(exAssessment);
                 }
 
@@ -372,7 +411,7 @@ namespace SwissKnife.Database
             }
 
             // fiks ting på vurderinger som er nye for 2023
-            var notSeen = existing.Where(x => !seen.Contains(x.Key)).Select(y=>y.Key).ToArray();
+            var notSeen = existing.Where(x => !seen.Contains(x.Key)).Select(y => y.Key).ToArray();
             foreach (var item in notSeen)
             {
                 var real = _database.Assessments.Single(x => x.Id == item);
@@ -393,21 +432,24 @@ namespace SwissKnife.Database
                 {
                     // tidligere fikser kjørt i drift
                     ImportDataServiceHelper.FixPropertiesOnNewAssessments(exAssessment);
-                    ImportDataServiceHelper.FixRedlistOnExistingAssessment(exAssessment, redlistByScientificNameDictionary, _taxonService);
+                    ImportDataServiceHelper.FixRedlistOnExistingAssessment(exAssessment,
+                        redlistByScientificNameDictionary, _taxonService);
                     ImportDataServiceHelper.TestForNaturetypeTrouble(console, exAssessment, RedList, dict, dictNin23);
                     ImportDataServiceHelper.FixZones(bioklimImport, bioklimPrevoisImport, exAssessment, real);
                 }
 
-                //ImportDataServiceHelper.FixMisIdentified(exAssessment, misIdentifiedDataset, real);
+                ImportDataServiceHelper.FixMisIdentified(exAssessment, misIdentifiedDataset, real);
 
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)
                 {
                     real.ScientificNameId = exAssessment.EvaluatedScientificNameId.Value;
                 }
+
                 if (comparisonResult.AreEqual == false)
                 {
-                    console.WriteLine($"Endring på doc {exAssessment.Id} {exAssessment.ExpertGroup} {exAssessment.EvaluatedScientificName} {comparisonResult.DifferencesString}");
+                    console.WriteLine(
+                        $"Endring på doc {exAssessment.Id} {exAssessment.ExpertGroup} {exAssessment.EvaluatedScientificName} {comparisonResult.DifferencesString}");
                     real.Doc = JsonSerializer.Serialize<FA4>(exAssessment);
                 }
 
@@ -439,5 +481,60 @@ namespace SwissKnife.Database
             jsonSerializerOptions.Converters.Add(new BoolNullableJsonConverter());
             return jsonSerializerOptions;
         }
+
+        public void TransferData(IConsole console, string inputFolder)
+        {
+            var comparer = new CompareLogic(new ComparisonConfig()
+            {
+                IgnoreUnknownObjectTypes = true,
+                TreatStringEmptyAndNullTheSame = true,
+                //MaxDifferences = 50
+            });
+
+            var theCsvConfiguration = new CsvConfiguration(new CultureInfo("nb-NO"))
+            {
+                Delimiter = ";",
+                Encoding = Encoding.UTF8
+            };
+
+
+            var TransferList = ImportDataServiceHelper.GetTransferDataList(inputFolder, theCsvConfiguration);
+            var theseIds = TransferList.Where(x => x.ReadyToTransfer).Select(x => x.FromId)
+                .Union(TransferList.Where(x => x.ReadyToTransfer).Select(x => x.ToId)).ToArray();
+            var existing = _database.Assessments
+                .Include(x => x.Attachments)
+                .Where(x=> theseIds.Contains(x.Id))
+                .ToDictionary(x => x.Id, x => x);
+
+
+            foreach (var rad in TransferList.Where(x => x.ReadyToTransfer))
+            {
+                var fromAssessment = existing[rad.FromId];
+                var from = JsonSerializer.Deserialize<FA4>(fromAssessment.Doc, _jsonSerializerOptions);
+                var toAssessment = existing[rad.ToId];
+                var to = JsonSerializer.Deserialize<FA4>(toAssessment.Doc, _jsonSerializerOptions);
+                var orgCopy = JsonSerializer.Deserialize<FA4>(toAssessment.Doc, _jsonSerializerOptions);
+
+                var conf = new TranferConfig
+                {
+                    Artsegenskaper = rad.TransferSpeciesCharacteristics,
+                    Spredningsveier = rad.TransferPathways,
+                    ArtsStatus = rad.TransferSpeciesStatus,
+                };
+
+                ImportDataServiceHelper.TransferAssessmentInfo(conf, from, to, fromAssessment, toAssessment);
+                var comparisonResult = comparer.Compare(orgCopy, to);
+
+                if (comparisonResult.AreEqual == false)
+                {
+                    console.WriteLine(
+                        $"Endring på doc {to.Id} {to.ExpertGroup} {to.EvaluatedScientificName} {comparisonResult.DifferencesString}");
+                    toAssessment.Doc = JsonSerializer.Serialize<FA4>(to);
+                }
+
+                _database.SaveChanges();
+            }
+        }
+
     }
 }

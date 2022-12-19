@@ -15,3 +15,15 @@ internal class Rodliste2021Rad
     public int År { get; set; }
     public string Kategori { get; set; }
 }
+
+internal class TransferDataRad
+{
+    public int FromId { get; set; }
+    public string FromScientificName { get; set; }
+    public int ToId { get; set; }
+    public string ToScientificName { get; set; }
+    public bool TransferSpeciesStatus { get; set; }
+    public bool TransferSpeciesCharacteristics { get; set; }
+    public bool TransferPathways { get; set; }
+    public bool ReadyToTransfer { get; set; }
+}

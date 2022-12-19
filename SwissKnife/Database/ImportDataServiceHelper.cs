@@ -44,7 +44,7 @@ internal static class ImportDataServiceHelper
     ///     Copy set of properties from one assessment to another
     /// </summary>
     /// <param name="conf">Define which optional set of information to include </param>
-    private static void TransferAssessmentInfo(TranferConfig conf, FA4 from, FA4 to, Assessment fromAssessment,
+    public static void TransferAssessmentInfo(TranferConfig conf, FA4 from, FA4 to, Assessment fromAssessment,
         Assessment toAssessment)
     {
         to.Category = from.Category;
@@ -108,27 +108,44 @@ internal static class ImportDataServiceHelper
             JsonSerializer.Deserialize<RiskAssessment>(JsonSerializer.Serialize(from.RiskAssessment),
                 ImportDataService._jsonSerializerOptions);
         Debug.Assert(riskAssessmentClone != null, nameof(riskAssessmentClone) + " != null");
+        if (conf.ArtsStatus)
+        {
+            // kopierer da hele riskAssesment +
+            to.ProductionSpecies = from.ProductionSpecies;
+            to.ProductionSpeciesDescription = from.ProductionSpeciesDescription;
+            to.UncertainityEstablishmentTimeDescription = from.UncertainityEstablishmentTimeDescription;
+            to.UncertainityStatusDescription = from.UncertainityStatusDescription;
+            to.SpeciesStatus = from.SpeciesStatus;
+            to.AlienSpecieUncertainIfEstablishedBefore1800 = from.AlienSpecieUncertainIfEstablishedBefore1800;
+            to.UncertainityEstablishmentTimeDescription = from.UncertainityEstablishmentTimeDescription;
+            to.FurtherInfo = from.FurtherInfo;
+        }
+        else
+        {
 
-        var ra = to.RiskAssessment;
+            // kopierer da hele riskAssesment minus feltene under som beholdes
+            var ra = to.RiskAssessment;
 
-        riskAssessmentClone.YearFirstIndoors = ra.YearFirstIndoors;
-        riskAssessmentClone.YearFirstIndoorsInsecure = ra.YearFirstIndoorsInsecure;
-        riskAssessmentClone.YearFirstReproductionIndoors = ra.YearFirstReproductionIndoors;
-        riskAssessmentClone.YearFirstReproductionIndoorsInsecure = ra.YearFirstReproductionIndoorsInsecure;
-        riskAssessmentClone.YearFirstProductionOutdoors = ra.YearFirstProductionOutdoors;
-        riskAssessmentClone.YearFirstProductionOutdoorsInsecure = ra.YearFirstProductionOutdoorsInsecure;
-        riskAssessmentClone.YearFirstReproductionOutdoors = ra.YearFirstReproductionOutdoors;
-        riskAssessmentClone.YearFirstReproductionOutdoorsInsecure = ra.YearFirstReproductionOutdoorsInsecure;
-        riskAssessmentClone.YearFirstEstablishmentProductionArea = ra.YearFirstEstablishmentProductionArea;
-        riskAssessmentClone.YearFirstEstablishmentProductionAreaInsecure =
-            ra.YearFirstEstablishmentProductionAreaInsecure;
-        riskAssessmentClone.YearFirstNature = ra.YearFirstNature;
-        riskAssessmentClone.YearFirstNatureInsecure = ra.YearFirstNatureInsecure;
-        riskAssessmentClone.YearFirstReproductionNature = ra.YearFirstReproductionNature;
-        riskAssessmentClone.YearFirstReproductionNatureInsecure = ra.YearFirstReproductionNatureInsecure;
-        riskAssessmentClone.YearFirstEstablishedNature = ra.YearFirstEstablishedNature;
-        riskAssessmentClone.YearFirstEstablishedNatureInsecure = ra.YearFirstEstablishedNatureInsecure;
-        riskAssessmentClone.YearFirstDomesticObservation = ra.YearFirstDomesticObservation;
+            riskAssessmentClone.YearFirstIndoors = ra.YearFirstIndoors;
+            riskAssessmentClone.YearFirstIndoorsInsecure = ra.YearFirstIndoorsInsecure;
+            riskAssessmentClone.YearFirstReproductionIndoors = ra.YearFirstReproductionIndoors;
+            riskAssessmentClone.YearFirstReproductionIndoorsInsecure = ra.YearFirstReproductionIndoorsInsecure;
+            riskAssessmentClone.YearFirstProductionOutdoors = ra.YearFirstProductionOutdoors;
+            riskAssessmentClone.YearFirstProductionOutdoorsInsecure = ra.YearFirstProductionOutdoorsInsecure;
+            riskAssessmentClone.YearFirstReproductionOutdoors = ra.YearFirstReproductionOutdoors;
+            riskAssessmentClone.YearFirstReproductionOutdoorsInsecure = ra.YearFirstReproductionOutdoorsInsecure;
+            riskAssessmentClone.YearFirstEstablishmentProductionArea = ra.YearFirstEstablishmentProductionArea;
+            riskAssessmentClone.YearFirstEstablishmentProductionAreaInsecure =
+                ra.YearFirstEstablishmentProductionAreaInsecure;
+            riskAssessmentClone.YearFirstNature = ra.YearFirstNature;
+            riskAssessmentClone.YearFirstNatureInsecure = ra.YearFirstNatureInsecure;
+            riskAssessmentClone.YearFirstReproductionNature = ra.YearFirstReproductionNature;
+            riskAssessmentClone.YearFirstReproductionNatureInsecure = ra.YearFirstReproductionNatureInsecure;
+            riskAssessmentClone.YearFirstEstablishedNature = ra.YearFirstEstablishedNature;
+            riskAssessmentClone.YearFirstEstablishedNatureInsecure = ra.YearFirstEstablishedNatureInsecure;
+            riskAssessmentClone.YearFirstDomesticObservation = ra.YearFirstDomesticObservation;
+            //riskAssessmentClone.furt
+        }
 
         to.RiskAssessment = riskAssessmentClone;
 
@@ -800,6 +817,22 @@ internal static class ImportDataServiceHelper
         return redlistByScientificName;
     }
 
+    public static TransferDataRad[] GetTransferDataList(string inputFolder,
+        CsvConfiguration theCsvConfiguration)
+    {
+        TransferDataRad[] dataRad;
+        using (var reader = new StreamReader(inputFolder + "\\..\\Importfiler\\transferdata.csv"))
+        {
+            using (var csv = new CsvReader(reader, theCsvConfiguration))
+            {
+                var records = csv.GetRecords<TransferDataRad>();
+                dataRad = records.ToArray();
+            }
+        }
+
+        return dataRad;
+    }
+
     private static Rodliste2021Rad GetRegionalRedlist(Dictionary<int, Rodliste2021Rad[]> redlistByScientificName,
         int currentSciId, string exAssessmentExpertGroup)
     {
@@ -978,16 +1011,37 @@ internal static class ImportDataServiceHelper
     {
         if (exAssessment.PreviousAssessments.Any(x=>x.RevisionYear == 2012))
         {
-            var row = exAssessment.PreviousAssessments.Single(x => x.RevisionYear == 2012);
-            var key = (exAssessment.EvaluationContext == "Svalbard" ? "S" : "N") + ":" + row.AssessmentId;
+            var previousAssessment = exAssessment.PreviousAssessments.Single(x => x.RevisionYear == 2012);
+            var key = (exAssessment.EvaluationContext == "Svalbard" || exAssessment.EvaluationContext == "S" ? "S" : "N") + ":" + previousAssessment.AssessmentId;
             if (assessmaents2012Connection.ContainsKey(key))
             {
                 var oldie = assessmaents2012Connection[key];
+                if (!previousAssessment.AssessmentId.Contains(":"))
+                {
+                    previousAssessment.AssessmentId = previousAssessment.AssessmentId + ":" + oldie.EvaluationContext + oldie.TaxonId;
+                }
 
+                previousAssessment.EcologicalRiskLevel =oldie.EcologicalEffectRiskLevel ?? 0;
+                previousAssessment.SpreadRiskLevel = oldie.SpreadRiskLevel ?? 0;
+                previousAssessment.RiskLevel = oldie.RiskLevel ?? 0;
+                var a = (oldie.SpreadRiskLevel.HasValue
+                    ? oldie.SpreadRiskLevel.Value + oldie.SpreadRiskDecisiveCriterias.ToUpperInvariant().Replace(",","") : string.Empty);
+                var b = (oldie.EcologicalEffectRiskLevel.HasValue
+                        ? oldie.EcologicalEffectRiskLevel.Value + oldie.EcologicalEffectDecisiveCriterias.ToUpperInvariant().Replace(",", "") : string.Empty);
+                if (!string.IsNullOrWhiteSpace(a) && !string.IsNullOrWhiteSpace(b))
+                {
+                    previousAssessment.DecisiveCriteria = a + "," + b;
+                }
+
+                previousAssessment.MainCategory = oldie.AlienSpeciesCategory;
+                previousAssessment.MainSubCategory = oldie.IsEvaluated ? "RiskAssessed" : "noRiskAssessment";
             }
             else
             {
-                
+                if (previousAssessment.AssessmentId != "0" && exAssessment.ExpertGroup != "Testedyr")
+                {
+                    
+                }
             }
         }
     }
