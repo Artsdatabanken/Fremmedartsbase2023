@@ -161,6 +161,9 @@ namespace Prod.Domain
 
         //        public string SynonymSpecies_________ { get; set; } // fab: Synonym_Species
 
+        /// <summary>
+        /// Denne er ikke i bruk i 2023 - data som eventuelt ligger her er fra 2018. I 2023 er dette egen tabell i databasen Attatchments .... knytt til en vurdering
+        /// </summary>
         public Datasett Datasett { get; set; } = new Datasett();
         public string EvaluatedScientificNameRank { get; set; }
     }
