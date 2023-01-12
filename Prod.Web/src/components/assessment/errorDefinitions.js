@@ -311,6 +311,11 @@ function getErrorDefinitions(assessment, errorHelpers) {
             get msg() {return "Kjent forekomstareal per år "+ r.AOOyear2 + " må angis"}
         },
         {
+            id: "B2err5",
+            get cond() {return a.doFullAssessment && (r.bmetodkey === "B2a1") && !hasnum(r.AOOyear1)},
+            msg: "B-kriteriet: Årstall for periodens start må angis"
+        },
+        {
             id: "(nat)err1",
             get cond() {return a.doFullAssessment && a.impactedNatureTypes.length > 0 && a.impactedNatureTypes.some((nt) => isTrueteogsjeldnenaturtype(nt.niNCode)) },
             get msg() {return "Naturtypen " + a.impactedNatureTypes.find((nt) => isTrueteogsjeldnenaturtype(nt.niNCode)).name.toLowerCase() + " valgt fra NiN 2.3 er truet eller sjelden. Velg i stedet " + a.impactedNatureTypes.find((nt) => isTrueteogsjeldnenaturtype(nt.niNCode)).name.toLowerCase() + " fra Rødlista for naturtyper og slett rad med kode " + a.impactedNatureTypes.find((nt) => isTrueteogsjeldnenaturtype(nt.niNCode)).niNCode + "."}
