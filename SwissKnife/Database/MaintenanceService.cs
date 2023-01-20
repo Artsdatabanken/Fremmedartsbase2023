@@ -26,7 +26,7 @@ namespace SwissKnife.Database
         //}
 
         internal static void RunTaxonomyWash(SqlServerProdDbContext _database, string speciesGroup = "",
-            bool firstrun = false, bool autoUpdate = false)
+            bool firstrun = false, bool autoUpdate = false, int id = 0)
         {
             var ts = new TaksonService();
             var batchSize = 1000;
@@ -37,10 +37,13 @@ namespace SwissKnife.Database
                 var batchChanges = false;
                 Console.WriteLine(pointer);
                 _database.ChangeTracker.Clear();
-                var assessments = speciesGroup == ""
+                var assessments = 
+                    id > 0 ? _database.Assessments.Where(x => x.Id == id).Skip(pointer)
+                            .Take(batchSize).ToArray() :
+                    (speciesGroup == ""
                     ? _database.Assessments.OrderBy(x => x.Id).Skip(pointer).Take(batchSize).ToArray()
                     : _database.Assessments.Where(x => x.Expertgroup == speciesGroup).OrderBy(x => x.Id).Skip(pointer)
-                        .Take(batchSize).ToArray();
+                        .Take(batchSize).ToArray());
                 if (assessments.Length == 0)
                 {
                     break;
@@ -243,29 +246,7 @@ namespace SwissKnife.Database
 
             if (assessment.EvaluatedScientificNameId.Value == currentTaxonomy.ValidScientificNameId)
             {
-                //sjekk om populærnavn er feil...
-                if (currentTaxonomy.PrefferedPopularname != null && (assessment.EvaluatedVernacularName == null ||
-                                                                     !assessment.EvaluatedVernacularName.Equals(
-                                                                         currentTaxonomy
-                                                                             .PrefferedPopularname)))
-                {
-                    Console.WriteLine(
-                        $"Populærnavn {assessment.EvaluatedVernacularName} => {currentTaxonomy.PrefferedPopularname}");
-                    assessment.EvaluatedVernacularName = currentTaxonomy.PrefferedPopularname;
-                    context.changes = true;
-                }
-
-                var assessmentVurdertVitenskapeligNavnHierarki =
-                    TaksonService.GetFullPathScientificName(currentTaxonomy).Item1;
-
-                // eller sti
-                if (assessmentVurdertVitenskapeligNavnHierarki != assessment.TaxonHierarcy)
-                {
-                    Console.WriteLine(
-                        $"Sti {assessment.TaxonHierarcy} => {assessmentVurdertVitenskapeligNavnHierarki}");
-                    assessment.TaxonHierarcy = assessmentVurdertVitenskapeligNavnHierarki;
-                    context.changes = true;
-                }
+                FixPopulernavnAndPath(context, currentTaxonomy, assessment);
             }
             else
             {
@@ -291,7 +272,7 @@ namespace SwissKnife.Database
                     caseString +=
                         $"Navn endret {assessment.EvaluatedScientificName + " " + assessment.EvaluatedScientificNameAuthor} => {currentTaxonomy.ValidScientificName + " " + currentTaxonomy.ValidScientificNameAuthorship}. ";
                     // her endrer vi automagisk navn
-                    UpdateTaxonomicInfoOnAssessment(assessment, currentTaxonomy);
+                    UpdateTaxonomicInfoOnAssessment(context, assessment, currentTaxonomy);
                     canAutoUpdate = true;
                     //assessment.LatinsknavnId = currentTaxonomy.ValidScientificNameId;
                     context.changes = true;
@@ -303,7 +284,7 @@ namespace SwissKnife.Database
                     caseString +=
                         $"Navn redigert {assessment.EvaluatedScientificName + " " + assessment.EvaluatedScientificNameAuthor} => {currentTaxonomy.ValidScientificName + " " + currentTaxonomy.ValidScientificNameAuthorship}. ";
                     // her endrer vi automagisk navn
-                    UpdateTaxonomicInfoOnAssessment(assessment, currentTaxonomy);
+                    UpdateTaxonomicInfoOnAssessment(context, assessment, currentTaxonomy);
                     canAutoUpdate = true;
                     //assessment.LatinsknavnId = currentTaxonomy.ValidScientificNameId;
                     context.changes = true;
@@ -314,7 +295,7 @@ namespace SwissKnife.Database
             {
                 caseString +=
                     $"Navn ikke endret {assessment.EvaluatedScientificName + " " + assessment.EvaluatedScientificNameAuthor}. ";
-                UpdateTaxonomicInfoOnAssessment(assessment, currentTaxonomy);
+                UpdateTaxonomicInfoOnAssessment(context, assessment, currentTaxonomy);
                 canAutoUpdate = true; // taxonid endret eller uendret men navnet indetisk
 
                 context.changes = true;
@@ -324,7 +305,7 @@ namespace SwissKnife.Database
             if ((taxonIdChange || scientificNameIdChange) && autoUpdate && context.historyWorthyChanges == false)
             {
                 //caseString = ""; // blank ut denne for å fjerne kommentarer under 
-                UpdateTaxonomicInfoOnAssessment(assessment, currentTaxonomy);
+                UpdateTaxonomicInfoOnAssessment(context, assessment, currentTaxonomy);
                 canAutoUpdate = true;
                 context.changes = true;
                 context.historyWorthyChanges = firstRun == false;
@@ -345,7 +326,7 @@ namespace SwissKnife.Database
                                   : "Fremmedartsteamet trenger bekreftelse på denne endringen før vurderingen flyttes over på nytt navn. Svar på denne kommentaren eller send en mail til fremmedearter@artsdatabanken.no"
                               );
 
-                CreateOrAddTaxonomicCommentToAssessment(context, context.DbAssessment.Id, message);
+                CreateOrAddTaxonomicCommentToAssessment(context, context.DbAssessment.Id, message, canAutoUpdate);
             }
             //else if (context.DbAssessment != null)
             //{
@@ -355,8 +336,61 @@ namespace SwissKnife.Database
             return context;
         }
 
-        private static void UpdateTaxonomicInfoOnAssessment(FA4 assessment, TaxonInfo currentTaxonomy)
+        private static void FixPopulernavnAndPath(ProsessContext context, TaxonInfo currentTaxonomy, FA4 assessment)
         {
+            //sjekk om populærnavn er feil...
+            if (currentTaxonomy.PrefferedPopularname != null && (assessment.EvaluatedVernacularName == null ||
+                                                                 !assessment.EvaluatedVernacularName.Equals(
+                                                                     currentTaxonomy
+                                                                         .PrefferedPopularname)))
+            {
+                Console.WriteLine(
+                    $"Populærnavn {assessment.EvaluatedVernacularName} => {currentTaxonomy.PrefferedPopularname}");
+                assessment.EvaluatedVernacularName = currentTaxonomy.PrefferedPopularname;
+                context.changes = true;
+            }
+
+            var assessmentVurdertVitenskapeligNavnHierarki =
+                TaksonService.GetFullPathScientificName(currentTaxonomy).Item1;
+
+            // eller sti
+            if (assessmentVurdertVitenskapeligNavnHierarki != assessment.TaxonHierarcy)
+            {
+                Console.WriteLine(
+                    $"Sti {assessment.TaxonHierarcy} => {assessmentVurdertVitenskapeligNavnHierarki}");
+                assessment.TaxonHierarcy = assessmentVurdertVitenskapeligNavnHierarki;
+                context.changes = true;
+            }
+
+            var assessmentEvaluatedScientificNameRank = currentTaxonomy.CategoryValue; //GetCategory(currentTaxonomy);
+            if (assessment.EvaluatedScientificNameRank != assessmentEvaluatedScientificNameRank)
+            {
+                assessment.EvaluatedScientificNameRank = assessmentEvaluatedScientificNameRank;
+                context.changes = true;
+            }
+        }
+
+        private static string GetCategory(TaxonInfo currentTaxonomy)
+        {
+            switch (currentTaxonomy.CategoryValue)
+            {
+                case "21": return "Section";
+                case "22": return "Species";
+                case "23": return "SubSpecies";
+                case "24": return "Variety";
+                case "25": return "Form";
+                default:
+                    return "Species";
+
+            }
+            return currentTaxonomy.CategoryValue;
+        }
+
+        private static void UpdateTaxonomicInfoOnAssessment(ProsessContext context, FA4 assessment,
+            TaxonInfo currentTaxonomy)
+        {
+            FixPopulernavnAndPath(context, currentTaxonomy, assessment);
+
             var oldTaxonInfo = new TaxonHistory()
             {
                 date = DateTime.Now,
@@ -376,11 +410,10 @@ namespace SwissKnife.Database
             assessment.TaxonHierarcy =
                 TaksonService.GetFullPathScientificName(currentTaxonomy).Item1;
             assessment.TaxonId = currentTaxonomy.TaxonId;
-            assessment.EvaluatedScientificNameRank = currentTaxonomy.CategoryValue;
         }
 
         private static void CreateOrAddTaxonomicCommentToAssessment(ProsessContext context, int dbAssessmentId,
-            string message)
+            string message, bool canAutoUpdate)
         {
             AssessmentComment eksisting = null;
             var eksistings = context.dbcontext.Comments.Where(x =>
@@ -404,9 +437,9 @@ namespace SwissKnife.Database
             }
 
 
-            var commentType = message.StartsWith(PotensiellTaksonomiskEndring)
-                ? CommentType.PotentialTaxonomicChange
-                : CommentType.TaxonomicChange;
+            var commentType = canAutoUpdate || !message.StartsWith(PotensiellTaksonomiskEndring)
+                ? CommentType.TaxonomicChange
+                : CommentType.PotentialTaxonomicChange;
             if (eksisting == null)
             {
                 eksisting = new AssessmentComment

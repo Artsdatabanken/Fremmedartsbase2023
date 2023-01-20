@@ -1134,7 +1134,6 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
     const r = riskAssessment
     for(const crit of [r.critA]) {  // just to get scope
         extdendCriteriaProps(crit)
-        // crit.uncertaintyDisabled = [0,1,2,3]
         autorun(() => {                      //   !!%
             const auto = !(
                 (r.ametodkey === "A1a2" || r.ametodkey === "A1b2") &&
@@ -1147,14 +1146,14 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
 
         autorun(() => {                //     !!%
             let ud // uncertaintyDisabled 
-            if (r.ametodkey === "A1a1" || r.ametodkey === "A1b1") {
+            if (r.ametodkey === "A1a1" || r.ametodkey === "A1b1" || r.ametodkey === "A3") 
+            {
                 ud = [0,1,2,3]
-            } else if (r.ametodkey === "A3") {
-                ud = uncertaintyArray(r.apossibleLow, r.apossibleHigh)
-            } else {
-                // ud = uncertaintyArrayReverse(uncertaintyArray(r.ascore - 1, r.ascore + 1))
+            } 
+            else 
+            {
                 ud = uncertaintyArray(r.ascore - 1, r.ascore + 1)
-        }
+            }
         runInAction(() => {
                 arrayConditionalReplace(crit.uncertaintyDisabled, ud)
             })
@@ -1164,7 +1163,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
         let firstrun = true
         autorun(() => {                   //   !!%
             let uv // uncentaintyValues (selected by program)
-            if (r.ametodkey === "A1a1" || r.ametodkey === "A1b1" ) {  // || r.ametodkey === "A3"
+            if (r.ametodkey === "A1a1" || r.ametodkey === "A1b1" || r.ametodkey === "A3") { 
                 uv = uncertaintyArrayReverse(uncertaintyArray(r.alow, r.ahigh))
             } else if (r.ametodkey === "A1a2" || r.ametodkey === "A1b2") {
                 const ud = uncertaintyArray(r.ascore - 1, r.ascore + 1)
@@ -1184,7 +1183,7 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
             if (r.ametodkey === "A1a2" || r.ametodkey === "A1b2") {
                 vd = uncertaintyArray(r.apossibleLow, r.apossibleHigh)
             } else {
-                vd = [crit.value]
+                vd = [] //crit.value
             }
             // if(crit.criteriaLetter=== "A") {
                 console.log("!!% " + crit.criteriaLetter + " crit value: " + crit.value + " uncentainty posible" + vd.toString())

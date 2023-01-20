@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using McMaster.Extensions.CommandLineUtils;
 using SwissKnife.Database;
@@ -26,7 +27,7 @@ namespace SwissKnife
         }
 
         [Command("maintenance", Description = "Run tasks for maintaining database")]
-        [Subcommand(typeof(TaxonomyWash),typeof(NightTasks), typeof(TaxonomyWashDirect), typeof(ImportNames), typeof(ImportGTData), typeof(ImportHSData), typeof(PatchMigration), typeof(TransferFromHorizonScan))]
+        [Subcommand(typeof(TaxonomyWash),typeof(NightTasks), typeof(TaxonomyWashDirect), typeof(ImportNames), typeof(ImportGTData), typeof(ImportHSData), typeof(PatchMigration), typeof(TransferFromHorizonScan), typeof(TransferDataAcrossAssessments))]
         [HelpOption("--help")]
         internal class Maintenance {
             private int OnExecute(IConsole console)
@@ -46,9 +47,15 @@ namespace SwissKnife
             [Command("taxonomywash", Description = "Check and update taxonomy on assessments")]
             internal class TaxonomyWash : MaintananceBase
             {
+                [Option("--autoupdate", Description = "Automatically update all taxonomy")]
+                public bool AutoUpdate { get; } = false;
+
+                [Option("--assessmentId", Description = "selected assessment id")]
+                public int Id { get; } = 0;
+
                 private void OnExecute(IConsole console)
                 {
-                    MaintenanceService.RunTaxonomyWash(new Prod.Data.EFCore.SqlServerProdDbContext(ConnectionString));
+                    MaintenanceService.RunTaxonomyWash(new Prod.Data.EFCore.SqlServerProdDbContext(ConnectionString), "", false, AutoUpdate, Id);
                 }
             }
             [Command("nighttasks", Description = "nightly maintenance")]
@@ -141,6 +148,20 @@ namespace SwissKnife
                     var maintenance = new ImportDataService(ConnectionString);
                     maintenance.PatchImport(console, InputFolder);
                     
+                }
+            }
+
+            [Command("transferacrossassessments", Description = "Transfer information from-to assessment")]
+            internal class TransferDataAcrossAssessments : MaintananceBase
+            {
+                [Option("--csvfile", Description = "CvsFile with path")]
+                [Required]
+                public string InputFolder { get; }
+                private void OnExecute(IConsole console)
+                {
+                    var maintenance = new ImportDataService(ConnectionString);
+                    maintenance.TransferData(console, InputFolder);
+
                 }
             }
         }

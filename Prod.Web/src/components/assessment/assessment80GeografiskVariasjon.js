@@ -19,8 +19,10 @@ export default class Assessment80GeografiskVariasjon extends React.Component {
 					<h2>{geolabels.heading}</h2>
 					{riskAssessment.riskLevelCode === "NK" 
 					? <p dangerouslySetInnerHTML={{ __html: labels.geographicVariation.possibleLowerCategoryNK }}></p>
-					: riskAssessment.riskLevelCode === "SE" || riskAssessment.riskLevelCode == "HI" 
-					? <p dangerouslySetInnerHTML={{ __html: labels.geographicVariation.possibleLowerCategorySEHI }}></p>
+					: riskAssessment.riskLevelCode === "SE"
+					? <p dangerouslySetInnerHTML={{ __html: labels.geographicVariation.possibleLowerCategorySE }}></p>
+					: riskAssessment.riskLevelCode === "HI" 
+					? <p dangerouslySetInnerHTML={{ __html: labels.geographicVariation.possibleLowerCategoryHI }}></p>
 					: riskAssessment.riskLevelCode === "PH"
 					? <p dangerouslySetInnerHTML={{ __html: labels.geographicVariation.possibleLowerCategoryPH }}></p>
 					: riskAssessment.riskLevelCode === "LO"

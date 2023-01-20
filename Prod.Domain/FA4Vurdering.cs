@@ -161,6 +161,9 @@ namespace Prod.Domain
 
         //        public string SynonymSpecies_________ { get; set; } // fab: Synonym_Species
 
+        /// <summary>
+        /// Denne er ikke i bruk i 2023 - data som eventuelt ligger her er fra 2018. I 2023 er dette egen tabell i databasen Attatchments .... knytt til en vurdering
+        /// </summary>
         public Datasett Datasett { get; set; } = new Datasett();
         public string EvaluatedScientificNameRank { get; set; }
     }
@@ -226,6 +229,16 @@ namespace Prod.Domain
         public bool? IsRegionallyAlien { get; set; }
 
         public bool? ConnectedToAnother { get; set; }
+
+        /// <summary>
+        /// The species was misidentified in previous assessment
+        /// </summary>
+        public bool MisIdentified { get; set; } = false;
+
+        /// <summary>
+        /// Reason for misidentification
+        /// </summary>
+        public string MisIdentifiedDescription { get; set; } = "";
 
         public bool? HigherOrLowerLevel { get; set; }
 
@@ -1808,9 +1821,15 @@ public partial class FA4 // (3.2) Artsegenskaper
         //public string Factor { get; set; }
         //public int Id { get; set; }
         public string IntroductionSpread { get; set; } //lagt til 07.09.2016
-        public string InfluenceFactor { get; set; }
-        public string Magnitude { get; set; }
-        public string TimeOfIncident { get; set; }
+
+        [JsonConverter(typeof(JsonHelpers.NotNullableStringJsonConverter))]
+        public string InfluenceFactor { get; set; } = string.Empty;
+
+        [JsonConverter(typeof(JsonHelpers.NotNullableStringJsonConverter))]
+        public string Magnitude { get; set; } = string.Empty;
+
+        [JsonConverter(typeof(JsonHelpers.NotNullableStringJsonConverter))]
+        public string TimeOfIncident { get; set; } = string.Empty;
         public string ElaborateInformation { get; set; }
 
 

@@ -278,6 +278,8 @@ export default function enhanceAssessment(json, appState) {
             const result = 
                 !assessment.isAlienSpecies 
                 ? "WillNotBeRiskAssessed"
+                : assessment.misIdentified
+                ? "WillNotBeRiskAssessed"
                 : assessment.higherOrLowerLevel 
                 ? "WillNotBeRiskAssessed"
                 : assessment.alienSpeciesCategory == "UncertainBefore1800"
@@ -301,7 +303,9 @@ export default function enhanceAssessment(json, appState) {
         },
         get alienSpeciesCategory() {
             const result = 
-                ! assessment.isAlienSpecies
+                assessment.misIdentified
+                ? "MisIdentified"
+                : ! assessment.isAlienSpecies
                 ? "NotAlienSpecie"
                 : assessment.higherOrLowerLevel
                 ? "TaxonEvaluatedAtAnotherLevel" 

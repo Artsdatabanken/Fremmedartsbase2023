@@ -34,36 +34,46 @@ function getErrorDefinitions(assessment, errorHelpers) {
         {
             id: "Error1",
             get cond() {return a.alienSpeciesCategory === "NotDefined"},
-            msg: "Etableringsklasse på fanen Artens Status er ikke valgt!"
+            msg: "Fanen Artens status: Etableringsklasse er ikke valgt!"
+        },
+        {
+            id: "RegAlienerr1",
+            get cond() {return a.isAlienSpecies && a.isRegionallyAlien == true && a.expertGroup != "Fisker"},
+            msg: "Kun fisker kan vurderes som regionalt fremmed i Fremmedartslista 2023. Vennligst fjern avhaking."
+        },
+        {
+            id: "(IntroNature)err1",
+            get cond() {return a.doFullAssessment && a.importPathways.length > 0 && a.importPathways.some((path) => path.influenceFactor == "" || path.magnitude == "" || path.timeOfIncident == "") },
+            msg: "Fanen Spredningsveier: Hyppighet, antall individer eller tidsrom er ikke valgt for minst en spredningsvei til innendørs- eller produksjonsareal."
+        },
+        {
+            id: "(IntroNature)err2",
+            get cond() {return a.doFullAssessment && a.assesmentVectors.length > 0 && a.assesmentVectors.some((path) => path.influenceFactor == "" || path.magnitude == "" || path.timeOfIncident == "") },
+            msg: "Fanen Spredningsveier: Hyppighet, antall individer eller tidsrom er ikke valgt for minst en spredningsvei til eller i naturen."
         },
         {
             id: "(a)err1",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && a.productionSpecies != true && (hasnum(r.AOOtotalBestInput) && r.AOOtotalBestInput < 4)},
+            get cond() {return a.doFullAssessment && !r.doorKnocker && a.productionSpecies != true && (hasnum(r.AOOtotalBestInput) && r.AOOtotalBestInput < 4)},
             msg: "En selvstendig reproduserende art må ha et forekomstareal på minst 4 km²!"
         },
         {
             id: "(a)err2",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && (r.AOOtotalLowInput > r.AOOtotalBestInput)},
+            get cond() {return a.doFullAssessment && !r.doorKnocker && (r.AOOtotalLowInput > r.AOOtotalBestInput)},
             msg: "Det nedre anslaget på forekomstarealet kan ikke være større enn det beste anslaget!"
         },
         {
             id: "(a)err3",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && (r.AOOtotalHighInput < r.AOOtotalBestInput)},
+            get cond() {return a.doFullAssessment && !r.doorKnocker && (r.AOOtotalHighInput < r.AOOtotalBestInput)},
             msg: "Det øvre anslaget på forekomstarealet kan ikke være mindre enn det beste anslaget!"
         },
         {
             id: "(a)err4",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && (r.AOO50yrLowInput > r.AOO50yrBestInput)},
+            get cond() {return a.doFullAssessment && !r.doorKnocker && (r.AOO50yrLowInput > r.AOO50yrBestInput)},
             msg: "Det nedre anslaget på forekomstarealet kan ikke være større enn det beste anslaget!"
         },
         {
-            id: "(a)err5",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && (r.AOO50yrHighInput < r.AOO50yrBestInput)},
-            msg: "Det øvre anslaget på forekomstarealet kan ikke være mindre enn det beste anslaget!"
-        },
-        {
             id: "(a)err6",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && !isNaN(r.AOOtotalBestInput) && (r.AOOtotalBestInput < r.AOOknownInput)},
+            get cond() {return a.doFullAssessment && !r.doorKnocker && !isNaN(r.AOOtotalBestInput) && (r.AOOtotalBestInput < r.AOOknownInput)},
             msg: "Det beste anslaget på det totale nåværende forekomstarealet kan ikke være mindre enn det kjente!"
         },
         {
@@ -95,32 +105,32 @@ function getErrorDefinitions(assessment, errorHelpers) {
         },
         {
             id: "(a)err12",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && hasnum(r.AOOtotalLowInput) && ((r.AOOtotalLowInput % 4) !== 0)},
+            get cond() {return a.doFullAssessment  && !r.doorKnocker && hasnum(r.AOOtotalLowInput) && ((r.AOOtotalLowInput % 4) !== 0)},
             msg: "Forekomstarealene må være multippel av 4_km²!"
         },
         {
             id: "(a)err13",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && hasnum(r.AOOtotalBestInput) && ((r.AOOtotalBestInput % 4) !== 0) },
+            get cond() {return a.doFullAssessment  && !r.doorKnocker && hasnum(r.AOOtotalBestInput) && ((r.AOOtotalBestInput % 4) !== 0) },
             msg: "Forekomstarealene må være multippel av 4_km²!"
         },
         {
             id: "(a)err14",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && hasnum(r.AOOtotalHighInput) && ((r.AOOtotalHighInput % 4) !== 0)},
+            get cond() {return a.doFullAssessment  && !r.doorKnocker && hasnum(r.AOOtotalHighInput) && ((r.AOOtotalHighInput % 4) !== 0)},
             msg: "Forekomstarealene må være multippel av 4_km²!"
         },
         {
             id: "(a)err15",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && hasnum(r.AOO50yrLowInput) && ((r.AOO50yrLowInput % 4) !== 0) },
+            get cond() {return a.doFullAssessment  && !r.doorKnocker && hasnum(r.AOO50yrLowInput) && ((r.AOO50yrLowInput % 4) !== 0) },
             msg: "Forekomstarealene må være multippel av 4_km²!"
         },
         {
             id: "(a)err16",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && hasnum(r.AOO50yrBestInput) && ((r.AOO50yrBestInput % 4) !== 0)},
+            get cond() {return a.doFullAssessment  && !r.doorKnocker && hasnum(r.AOO50yrBestInput) && ((r.AOO50yrBestInput % 4) !== 0)},
             msg: "Forekomstarealene må være multippel av 4_km²!"
         },
         {
             id: "(a)err17",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && hasnum(r.AOO50yrHighInput) && ((r.AOO50yrHighInput % 4) !== 0)},
+            get cond() {return a.doFullAssessment  && !r.doorKnocker && hasnum(r.AOO50yrHighInput) && ((r.AOO50yrHighInput % 4) !== 0)},
             msg: "Forekomstarealene må være multippel av 4_km²!"
         },
         // {
@@ -135,17 +145,17 @@ function getErrorDefinitions(assessment, errorHelpers) {
         },
         {
             id: "(a)err18",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && (r.AOOtotalLowInput > r.AOOtotalBestInput)},
+            get cond() {return a.doFullAssessment && !r.doorKnocker && (r.AOOtotalLowInput > r.AOOtotalBestInput)},
             msg: "Lavt anslag kan ikke være større enn beste anslag!"
         },
         {
             id: "(a)err19",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && (r.AOOtotalLowInput > r.AOOtotalHighInput)},
+            get cond() {return a.doFullAssessment && !r.doorKnocker && (r.AOOtotalLowInput > r.AOOtotalHighInput)},
             msg: "Lavt anslag kan ikke være større enn høyt anslag!"
         },
         {
             id: "(a)err20",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && (r.AOOtotalBestInput > r.AOOtotalHighInput)},
+            get cond() {return a.doFullAssessment && !r.doorKnocker && (r.AOOtotalBestInput > r.AOOtotalHighInput)},
             msg: "Beste anslag kan ikke være større enn høyt anslag!"
         },
         // {
@@ -155,12 +165,12 @@ function getErrorDefinitions(assessment, errorHelpers) {
         // },
         {
             id: "(a)err23",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && (r.AOO50yrLowInput > r.AOO50yrBestInput)},
+            get cond() {return a.doFullAssessment && !r.doorKnocker && (r.AOO50yrLowInput > r.AOO50yrBestInput)},
             msg: "Lavt anslag kan ikke være større enn beste anslag!"
         },
         {
             id: "(a)err24",
-            get cond() {return a.isAlienSpecies && !r.doorKnocker && (r.AOO50yrHighInput < r.AOO50yrBestInput)},
+            get cond() {return a.doFullAssessment && !r.doorKnocker && (r.AOO50yrHighInput < r.AOO50yrBestInput)},
             msg: "Beste anslag kan ikke være større enn høyt anslag!"
         },
         {
@@ -175,13 +185,18 @@ function getErrorDefinitions(assessment, errorHelpers) {
         },
         {
             id: "(a)err28", //egentlig en Artens status -error
-            get cond() {return a.isAlienSpecies && a.productionSpecies == null},
-            msg: "Spørsmål om arten er en bruksart må besvares på fanen Artens status"
+            get cond() {return a.doFullAssessment && a.productionSpecies == null},
+            msg: "Fanen Artens status: Spørsmål om arten er en bruksart må besvares"
         },
         {
             id: "(a)err29",
             get cond() {return a.doFullAssessment && a.isAlienSpecies && !r.doorKnocker && (!hasnum(r.AOOknownInput) || !hasnum(r.AOO50yrLowInput) || !hasnum(r.AOOtotalLowInput))},
-            msg: "Informasjon om forekomstareal må angis før vurderingen kan ferdigstilles"
+            msg: "Fanen Utbredelse: Informasjon om forekomstareal må angis før vurderingen kan ferdigstilles"
+        },
+        {
+            id: "(a)err30",
+            get cond() {return a.doFullAssessment && r.doorKnocker && (!hasnum(r.AOO10yrBest) || !hasnum(r.AOO10yrLow) || !hasnum(r.AOO10yrHigh)) },
+            msg: "Fanen Utbredelse: Informasjon om forekomstareal må legges inn før vurderingen kan ferdigstilles"
         },
 
 
@@ -296,6 +311,11 @@ function getErrorDefinitions(assessment, errorHelpers) {
             get msg() {return "Kjent forekomstareal per år "+ r.AOOyear2 + " må angis"}
         },
         {
+            id: "B2err5",
+            get cond() {return a.doFullAssessment && (r.bmetodkey === "B2a1") && !hasnum(r.AOOyear1)},
+            msg: "B-kriteriet: Årstall for periodens start må angis"
+        },
+        {
             id: "(nat)err1",
             get cond() {return a.doFullAssessment && a.impactedNatureTypes.length > 0 && a.impactedNatureTypes.some((nt) => isTrueteogsjeldnenaturtype(nt.niNCode)) },
             get msg() {return "Naturtypen " + a.impactedNatureTypes.find((nt) => isTrueteogsjeldnenaturtype(nt.niNCode)).name.toLowerCase() + " valgt fra NiN 2.3 er truet eller sjelden. Velg i stedet " + a.impactedNatureTypes.find((nt) => isTrueteogsjeldnenaturtype(nt.niNCode)).name.toLowerCase() + " fra Rødlista for naturtyper og slett rad med kode " + a.impactedNatureTypes.find((nt) => isTrueteogsjeldnenaturtype(nt.niNCode)).niNCode + "."}
@@ -311,6 +331,11 @@ function getErrorDefinitions(assessment, errorHelpers) {
         //     type: "warning",
         //     get msg() {"Naturtypen valgt fra NiN 2.3 er truet eller sjelden. Velg tilsvarende naturtype fra Rødlista for naturtyper!"}
         // },
+        {
+            id: "Climateerr1",
+            get cond() {return a.doFullAssessment && r.riskLevelCode != "NK" && (r.climateEffectsInvationpotential === null || r.climateEffectsEcoEffect === null)},
+            msg: "Hvorvidt klimaendringer påvirker risikovurderingen må angis under fanen Klimaeffekter"
+        },
         {
             id: "(sum)err1",
             get cond() {return assessment.categoryHasChangedFromPreviousAssessment && assessment.reasonForChangeOfCategory.length === 0 },

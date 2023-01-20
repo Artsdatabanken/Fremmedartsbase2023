@@ -87,6 +87,10 @@ namespace Prod.Api.Helpers
         private static readonly string Field_TaxonChange = "TaxonChange";
 
         internal static DateTime _dateTimeForHorScanDone = new DateTime(2022, 2,22);
+
+        private static Guid _ronjasId = Guid.Parse("64D95718-16D3-4C05-88E1-A5E2192D9192");
+
+        private static Guid _tanjasId = Guid.Parse("95F6AB94-6380-473A-82B1-3D9556149E0C");
         //private const string PotensiellTaksonomiskEndring = "Potensiell taksonomisk endring: ";
         //private const string TaksonomiskEndring = "Automatisk endring av navn: ";
 
@@ -423,6 +427,9 @@ namespace Prod.Api.Helpers
 
             //var ids = result.Select(x => int.Parse(x.Id)).ToArray();
             var userComments = assessment.Comments.Where(x=>x.IsDeleted == false && (x.Type == CommentType.System || x.Type == CommentType.Ordinary )).ToArray();
+            
+            ReplaceCommentsFromRonjaWithTanja(userComments);
+
             var allComments = assessment.Comments.Where(x => x.IsDeleted == false).ToArray();
 
             var latest = userComments.Any() ? userComments.Max(x => x.CommentDate) : DateTime.MinValue;
@@ -478,6 +485,14 @@ namespace Prod.Api.Helpers
 
 
             return indexFields;
+        }
+
+        private static void ReplaceCommentsFromRonjaWithTanja(AssessmentComment[] userComments)
+        {
+            foreach (var comment in userComments.Where(x => x.UserId == _ronjasId))
+            {
+                comment.UserId = _tanjasId;
+            }
         }
 
         private static S2018 ExtractPotentialDoorKnocker(S2018 s2018)

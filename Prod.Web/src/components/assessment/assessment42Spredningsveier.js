@@ -88,10 +88,10 @@ export default class Assessment42Spredningsveier extends React.Component {
                 
                 if (mp.mainCategory != "Direkte import") {
                     var copy = mp
-                    // setting influence factor, magnitude and time of incident of the new pathway as null
-                    copy.influenceFactor = null
-                    copy.magnitude = null
-                    copy.timeOfIncident = null
+                    // setting influence factor, magnitude and time of incident of the new pathway as ""
+                    copy.influenceFactor = ""
+                    copy.magnitude = ""
+                    copy.timeOfIncident = ""
                     
                     const newCopy = toJS(copy)
                     vurdering.assesmentVectors.push(newCopy)
@@ -108,10 +108,10 @@ export default class Assessment42Spredningsveier extends React.Component {
                     } else {
                         copy.category = ""
                     }
-                    // setting influence factor, magnitude and time of incident of the new pathway as null
-                    copy.influenceFactor = null
-                    copy.magnitude = null
-                    copy.timeOfIncident = null
+                    // setting influence factor, magnitude and time of incident of the new pathway as ""
+                    copy.influenceFactor = ""
+                    copy.magnitude = ""
+                    copy.timeOfIncident = ""
                     // if there is a matching category in "Rømning/forvilling", add the migration pathway to the "Introduction" table
                     if (copy.category != "") {
                         const newCopy = toJS(copy)          

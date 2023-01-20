@@ -9,6 +9,23 @@ Krever følgende for å kunne bygges:
 * [.net core SDK](https://dotnet.microsoft.com/en-us/download)
 * [node](https://nodejs.org/en/)
 
+## Arkitektur 
+```mermaid
+graph TD
+    A[[Fab4 gui]] ==>B([Fab4 api])
+    A -->|get-occurences| W(artskart-api)
+    A -->|authentication| U(identityserver)
+    B -->|store-datasets| W
+    B ==>|store-references| R
+    B ==>|storage| D[(sql-server)]
+    B -->|auth| U
+    R -->|auth| U
+    A -->|get-taxonomy| T(taxonomy-api)
+    A -->|get-reference| R(references-api)
+
+
+```
+
 [Projektstruktur](ProjectStructure.md)
 
 Todo: 
