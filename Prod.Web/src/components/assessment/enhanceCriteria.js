@@ -1108,7 +1108,7 @@ function setUncertaintyValues(isFirstrun, crit, uvalues) {
         // added 27.2.2017
         // In the hope that this does not mess tings up
         // this code is introduced to update illegal uncertainty values that
-        // are introduced when criteria rules are changed
+        // are introduced when the criteria rules are changed
         // This functionality is also dependent on a well working "firstrun"; see comment above
         // e.g. the criteria must not have a default value that is updated from db after the first run!
 
