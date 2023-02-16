@@ -69,7 +69,7 @@ namespace Prod.Domain
         public string TaxonSearchString { get; set; }
 
         public string TaxonRank { get; set; }
-
+        public int AssessmentId { get; set; } // lagt til 16.02.2023
     }
 
 
@@ -152,11 +152,14 @@ namespace Prod.Domain
         /// Scientific name used for Risk Evaluation (at the time of evaluation)
         /// </summary>
         public string EvaluatedScientificName { get; set; }
+
+        public string EvaluatedScientificNameFormatted { get; set; } // added 16.02.2023
         public string EvaluatedScientificNameAuthor { get; set; } //added 23.08.2017
         public string EvaluatedVernacularName { get; set; } //added 29.09.2017
 
-        public string TaxonHierarcy { get; set; }
+        public string TaxonHierarcy { get; set; } // added 16.02.2023
 
+        public List<ScientificNameWithRankId> NameHiearchy { get; set; } // added 16.02.2023
         //public string VurdertVitenskapeligNavn { get; set; }
 
         //        public string SynonymSpecies_________ { get; set; } // fab: Synonym_Species
@@ -1525,6 +1528,13 @@ public partial class FA4 // (3.2) Artsegenskaper
     public partial class FA4 // (8) Referanser
     {
         public List<SimpleReference> References { get; set; } = new List<SimpleReference>();
+
+        public class ScientificNameWithRankId
+        {
+            public string ScientificName { get; set; }
+            public string Author { get; set; }
+            public int Rank { get; set; }
+        }
     }
     public partial class FA4 // History
     { 
@@ -1680,7 +1690,6 @@ public partial class FA4 // (3.2) Artsegenskaper
         public int ArtskartManuellAdd { get; set; }
         public int ArtskartManuellRemove { get; set; }
         public int ArtskartExcludedLocalities { get; set; }
-
     }
 
     public class ArtskartModel
