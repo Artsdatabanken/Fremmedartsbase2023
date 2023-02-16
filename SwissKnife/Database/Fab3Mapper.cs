@@ -1023,7 +1023,9 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.ProductionSpeciesDescription, opt => opt.Ignore())
                     .ForMember(dest => dest.UncertainityStatusDescription, opt => opt.Ignore())
                     .ForMember(dest => dest.FurtherInfo, opt => opt.Ignore()) //Ny av året?
-                                                                              //        public string FurtherInfo { get; set; } = "";
+                    .ForMember(dest => dest.EvaluatedScientificNameFormatted, opt => opt.Ignore()) //Ny 
+                    .ForMember(dest => dest.NameHiearchy, opt => opt.Ignore()) //Ny 
+                                                                                   //        public string FurtherInfo { get; set; } = "";
                     .AfterMap((src, dest) => { AfterFabMap(dest, src); });
 
                 
