@@ -280,6 +280,10 @@ export default function enhanceAssessment(json, appState) {
                 ? "WillNotBeRiskAssessed"
                 : assessment.misIdentified
                 ? "WillNotBeRiskAssessed"
+                : assessment.allSubTaxaAssessedSeparately
+                ? "WillNotBeRiskAssessed"
+                : assessment.isHybridWithoutOwnRiskAssessment
+                ? "WillNotBeRiskAssessed"
                 : assessment.higherOrLowerLevel 
                 ? "WillNotBeRiskAssessed"
                 : assessment.alienSpeciesCategory == "UncertainBefore1800"
@@ -305,6 +309,10 @@ export default function enhanceAssessment(json, appState) {
             const result = 
                 assessment.misIdentified
                 ? "MisIdentified"
+                : assessment.allSubTaxaAssessedSeparately
+                ? "AllSubTaxaAssessedSeparately"
+                : assessment.isHybridWithoutOwnRiskAssessment
+                ? "HybridWithoutOwnRiskAssessment"
                 : ! assessment.isAlienSpecies
                 ? "NotAlienSpecie"
                 : assessment.higherOrLowerLevel
