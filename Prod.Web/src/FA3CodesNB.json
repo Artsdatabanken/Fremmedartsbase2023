@@ -3795,14 +3795,14 @@
                         {
                             "Id": "CritI",
                             "Value": "2",
-                            "Text": "Storskala av rødlistevurdert parasitt til ny vert / Begrenset til ny truet verter",
+                            "Text": "Storskala av rødlistevurdert parasitt til ny vert / Begrenset til nye truede verter",
                             "Info": null,
                             "Children": null
                         },
                         {
                             "Id": "CritI",
                             "Value": "3",
-                            "Text": "Storskala av rødlistevurdert til ny truet vert /Storskala eller begrenset av en fremmed parasitt",
+                            "Text": "Storskala av rødlistevurdert parasitt til ny truet vert / Storskala eller begrenset av en fremmed parasitt",
                             "Info": null,
                             "Children": null
                         }
