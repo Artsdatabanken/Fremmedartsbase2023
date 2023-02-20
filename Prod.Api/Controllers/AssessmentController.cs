@@ -643,7 +643,7 @@ namespace Prod.Api.Controllers
 
             var realUser = await _dbContext.Users.SingleOrDefaultAsync(x => x.Id == user.Id);
             // check and update referenceUsages
-            var usedReferences = doc.References.Select(x => x.ReferenceId).ToArray();
+            var usedReferences = doc.References.Select(x => x.ReferenceId).Distinct().ToArray();
             if (!forceStore && usedReferences.Any())
             {
                 bool ok = await _referenceService.SignalUsage(usedReferences, user.Id);

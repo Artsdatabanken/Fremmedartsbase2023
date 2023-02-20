@@ -91,6 +91,8 @@ namespace Prod.Api.Helpers
         private static Guid _ronjasId = Guid.Parse("64D95718-16D3-4C05-88E1-A5E2192D9192");
 
         private static Guid _tanjasId = Guid.Parse("95F6AB94-6380-473A-82B1-3D9556149E0C");
+
+        private static Guid _siriaId = Guid.Parse("6C42FDCD-788F-48A0-A7EF-365C2EB067C2");
         //private const string PotensiellTaksonomiskEndring = "Potensiell taksonomisk endring: ";
         //private const string TaksonomiskEndring = "Automatisk endring av navn: ";
 
@@ -489,7 +491,7 @@ namespace Prod.Api.Helpers
 
         private static void ReplaceCommentsFromRonjaWithTanja(AssessmentComment[] userComments)
         {
-            foreach (var comment in userComments.Where(x => x.UserId == _ronjasId))
+            foreach (var comment in userComments.Where(x => x.UserId == _ronjasId || x.UserId == _siriaId))
             {
                 comment.UserId = _tanjasId;
             }
