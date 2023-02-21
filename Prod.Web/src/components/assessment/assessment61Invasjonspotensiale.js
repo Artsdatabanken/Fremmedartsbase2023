@@ -391,7 +391,7 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
                                             </td>
                                             <td style={{display: 'flex'}}><Xcomp.Number                            
                                                     observableValue={[riskAssessment, "AOOyear1"]}
-                                                    observableErrors={[errorhandler, "B2err1"]}
+                                                    observableErrors={[errorhandler, "B2err1", "B2err5"]}
                                                     integer
                                                     className={"BcritYearPeriodend"} 
                                                     // style={{margin: '10px 0 10px'}}

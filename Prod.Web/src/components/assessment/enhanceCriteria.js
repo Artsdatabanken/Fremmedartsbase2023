@@ -324,7 +324,7 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
             : r.AOO50yrBest >= 20 && r.AOOchangeBest > 0.2 ? 3
             : r.AOO50yrBest >= 20 && r.AOOchangeBest > 0.05 ? 2
             : r.AOO50yrBest >= 8 && r.AOOchangeBest > 0.2 ? 2
-        : r.AOO50yrBest >= 4 ? 1
+            : r.AOO50yrBest >= 4 ? 1
             : 0
         },
         get adefaultLow() {
