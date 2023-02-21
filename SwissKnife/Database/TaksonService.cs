@@ -23,6 +23,7 @@ namespace SwissKnife.Database
         public string CategoryValue { get; set; } // "kingdom" || "phylum" || "class" || "order" || ....
         public string Name { get; set; }
         public string ValidScientificName { get; set; }
+        public string ValidScientificNameFormatted { get; set; }
         public int ValidScientificNameId { get; set; }
         public string ValidScientificNameAuthorship { get; set; }
         public int TaxonId { get; set; }
@@ -37,13 +38,15 @@ namespace SwissKnife.Database
         public string Species { get; set; }
         public string SubSpecies { get; set; }
         public ScientificName[] ScientificNames { get; set; }
+        public int[] ScientificNameIdHiarchy { get; set; }
 
         public class ScientificName
         {
             public int ScientificNameId { get; set; }
             public bool Accepted { get; set; }
             public string scientificName { get; set; }
-        public string ScientificNameAuthorship { get; set; }
+            public string ScientificNameFormatted { get; set; }
+            public string ScientificNameAuthorship { get; set; }
         }
 
         // public bool IsDeleted { get; set; } // dont care. always false from the nbic service

@@ -14,7 +14,7 @@
     },
     "Taxonomywash": {
       "commandName": "Project",
-      "commandLineArgs": "maintenance taxonomywash --connectionstring \"Server=localhost;Database=fab4;Integrated Security=true;MultipleActiveResultSets=true\""
+      "commandLineArgs": "maintenance taxonomywash --assessmentId 1 --autoupdate --connectionstring \"Server=localhost;Database=fab4;Integrated Security=true;MultipleActiveResultSets=true\""
     },
     "Taxonomywashdirect": {
       "commandName": "Project",
@@ -23,6 +23,10 @@
     "ImportGTdata": {
       "commandName": "Project",
       "commandLineArgs": "maintenance importgenerationtime --connectionstring \"Server=localhost;Database=fab4;Integrated Security=true;MultipleActiveResultSets=true\" --csvfile \"..\\..\\..\\Importfiler\\Generasjonstid_revidert_karplanter_til_FAB.csv\"\r\n"
+    },
+    "TransferData": {
+      "commandName": "Project",
+      "commandLineArgs": "maintenance transferacrossassessments --connectionstring \"Server=localhost;Database=fab4;Integrated Security=true;MultipleActiveResultSets=true\" --csvfile ./../../\r\n"
     }
   }
 }

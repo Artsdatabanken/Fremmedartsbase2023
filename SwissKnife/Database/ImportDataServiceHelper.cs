@@ -8,11 +8,13 @@ using System.Text.Json.Nodes;
 using AutoMapper;
 using CsvHelper;
 using CsvHelper.Configuration;
+using KellermanSoftware.CompareNetObjects;
 using McMaster.Extensions.CommandLineUtils;
 using Prod.Domain;
 using Prod.Domain.Legacy;
 using SwissKnife.Database.CsvModels;
 using SwissKnife.Models;
+using MigrationPathway = Prod.Domain.MigrationPathway;
 using RiskAssessment = Prod.Domain.RiskAssessment;
 
 namespace SwissKnife.Database;
@@ -151,6 +153,15 @@ internal static class ImportDataServiceHelper
 
         to.References = from.References;
         to.ArtskartManuellKommentar = from.ArtskartManuellKommentar;
+
+        to.ConnectedTaxon = new CTaxon()
+        {
+            TaxonID = from.TaxonId,
+            TaxonRank = from.EvaluatedScientificNameRank,
+            ScientificName = from.EvaluatedScientificName,
+            ScientificNameId = (int)from.EvaluatedScientificNameId,
+            AssessmentId = from.Id
+        };
     }
 
 
@@ -608,25 +619,46 @@ internal static class ImportDataServiceHelper
         return result;
     }
 
-    public static List<Tuple<string, string>> DrillDownNaturetypes23(JsonArray array, string id = "Id", string text = "Category",
+    public static List<Tuple<string, string, string>> DrillDownNaturetypes23(JsonArray array, string id = "Id", string cat = "Category",
         string child = "Children", string parentCategory = "")
     {
-        var result = new List<Tuple<string, string>>();
+        var result = new List<Tuple<string, string,string>>();
         foreach (var node in array)
         {
             var idn = node[id].GetValue<string>();
-            var category = node[text].GetValue<string>();
+            var category = node[cat].GetValue<string>();
+            var tekst = node["Text"].GetValue<string>();
             if (parentCategory == "Hovedtype" && category == "Grunntype")
-                result.Add(new Tuple<string, string>(idn, category));
+                result.Add(new Tuple<string, string,string>(idn, category, tekst));
             if (parentCategory == "Hovedtype" && category == "Kartleggingsenhet")
-                result.Add(new Tuple<string, string>(idn, category));
+                result.Add(new Tuple<string, string,string>(idn, category, tekst));
 
-            result.AddRange(DrillDownNaturetypes23(node[child].AsArray(), id, text, child, category));
+            result.AddRange(DrillDownNaturetypes23(node[child].AsArray(), id, cat, child, category));
         }
 
         return result;
     }
+    public static List<Tuple<string, string, string>> DrillDownNaturetypes23H(JsonArray array, string id = "Id", string cat = "Category",
+        string child = "Children", string parentCategory = "")
+    {
+        var result = new List<Tuple<string, string, string>>();
+        foreach (var node in array)
+        {
+            var idn = node[id].GetValue<string>();
+            var category = node[cat].GetValue<string>();
+            var tekst = node["Text"].GetValue<string>();
+            if (category == "Hovedtype")
+                result.Add(new Tuple<string, string, string>(idn, category, tekst));
+            if (parentCategory == "Hovedtype" && category == "Grunntype")
+                result.Add(new Tuple<string, string, string>(idn, category, tekst));
+            if (parentCategory == "Hovedtype" && category == "Kartleggingsenhet")
+                result.Add(new Tuple<string, string, string>(idn, category, tekst));
 
+            result.AddRange(DrillDownNaturetypes23H(node[child].AsArray(), id, cat, child, category));
+        }
+
+        return result;
+    }
     internal static List<Tuple<string, string, string>> DrillDownCodeList(JsonArray array, string parentCategory = "")
     {
         var result = new List<Tuple<string, string, string>>();
@@ -646,6 +678,36 @@ internal static class ImportDataServiceHelper
             var jsonObject = jsonNode.AsObject().First();
             var jsonArray = jsonObject.Value.AsArray();
             result.AddRange(DrillDownCodeList(jsonArray, category));
+        }
+
+        return result;
+    }
+
+    internal static List<Tuple<string, string, string, string>> DrillDownCodeList2(JsonArray array, string text = "", string parentCategory = "")
+    {
+        var result = new List<Tuple<string, string, string, string>>();
+        var toplevel = string.IsNullOrWhiteSpace(text);
+        foreach (var node in array)
+        {
+            var category = string.Empty;
+            var textValue = toplevel ? node["Text"].GetValue<string>() : text;
+            //if (string.IsNullOrWhiteSpace(text))
+            //{
+            //    text = node["Text"].GetValue<string>();
+            //}
+            if (node["Value"] != null)
+            {
+                var code = node["Value"].GetValue<string>();
+                category = node["Text"].GetValue<string>();
+
+                result.Add(new Tuple<string, string, string, string>(code, category, parentCategory, textValue));
+            }
+
+            var jsonNode = node["Children"];
+            if (jsonNode == null) continue;
+            var jsonObject = jsonNode.AsObject().First();
+            var jsonArray = jsonObject.Value.AsArray();
+            result.AddRange(DrillDownCodeList2(jsonArray, textValue, category));
         }
 
         return result;
@@ -691,7 +753,7 @@ internal static class ImportDataServiceHelper
     /// Litt usikker på hva denne var for igjen...
     /// </summary>
     public static void TestForNaturetypeTrouble(IConsole console, FA4 exAssessment, string[] RedList,
-        Dictionary<string, string> dictionary, Dictionary<string, string> dictNin)
+        Dictionary<string, string> dictionary, Dictionary<string, Tuple<string, string>> dictNin)
     {
         if (exAssessment.ImpactedNatureTypes.Any())
         {
@@ -950,6 +1012,79 @@ internal static class ImportDataServiceHelper
         }
     }
 
+    /// <summary>
+    /// Import and fix bioclimateZones from file - was changed after initial import as first file had errors and went live, third time krøll from olav
+    /// </summary>
+    public static void FixZonesOlavsArter(Dictionary<int, BioClimData> bioClimDatas, FA4 fa4, Assessment assessment)
+    {
+        bool ZonesHasValue(List<FA4.BioClimateZones> bioClimateZones, string sonen)
+        {
+            var zone = bioClimateZones.First(x => x.ClimateZone == sonen);
+            return zone.ClearOceanic || zone.StrongOceanic || zone.TransferSection || zone.WeakOceanic ||
+                   zone.WeakContinental;
+        }
+
+        void SetZones(List<FA4.BioClimateZones> bioClimateZones, string boreonemoral, bool clearOceanic,
+            bool strongOceanic, bool transferSection1,
+            bool weakOceanic1, bool? weakContinental)
+        {
+            var zone = bioClimateZones.First(x => x.ClimateZone == boreonemoral);
+            zone.ClearOceanic = clearOceanic;
+            zone.StrongOceanic = strongOceanic;
+            zone.TransferSection = transferSection1;
+            zone.WeakOceanic = weakOceanic1;
+            if (weakContinental.HasValue) zone.WeakContinental = weakContinental.Value;
+        }
+
+        bool MatchesZones(List<FA4.BioClimateZones> bioClimateZones, string boreonemoral, bool clearOceanic,
+            bool strongOceanic, bool transferSection1,
+            bool weakOceanic1, bool? weakContinental)
+        {
+            var zone = bioClimateZones.First(x => x.ClimateZone == boreonemoral);
+            var isMatch = zone.ClearOceanic == clearOceanic && zone.StrongOceanic == strongOceanic &&
+                          zone.TransferSection == transferSection1 && zone.WeakOceanic == weakOceanic1;
+            if (isMatch && weakContinental.HasValue) isMatch = zone.WeakContinental == weakContinental.Value;
+            return isMatch;
+        }
+
+        if (bioClimDatas.ContainsKey(assessment.Id))
+            //var data = bioClimDatas[realId];
+            if ((assessment.LastUpdatedByUserId == Guid.Parse("A0083D39-683B-4475-B7D9-9F3996F2CA6C")) &&
+                // men bare hvis alt er false
+                !(ZonesHasValue(fa4.CurrentBioClimateZones, "boreonemoral")
+                  || ZonesHasValue(fa4.CurrentBioClimateZones, "southBoreal")
+                  || ZonesHasValue(fa4.CurrentBioClimateZones, "midBoreal")
+                  || ZonesHasValue(fa4.CurrentBioClimateZones, "northBoreal")
+                  || ZonesHasValue(fa4.CurrentBioClimateZones, "alpineZones")))
+            {
+                var bioClimData = bioClimDatas[assessment.Id];
+
+                fa4.Id = assessment.Id;
+                SetZones(fa4.CurrentBioClimateZones, "boreonemoral",
+                    bioClimData.boreonemoral_clearOceanic,
+                    bioClimData.boreonemoral_strongOceanic,
+                    bioClimData.boreonemoral_transferSection,
+                    bioClimData.boreonemoral_weakOceanic, null);
+                SetZones(fa4.CurrentBioClimateZones, "southBoreal",
+                    bioClimData.southBoreal_clearOceanic,
+                    bioClimData.southBoreal_strongOceanic, bioClimData.southBoreal_transferSection,
+                    bioClimData.southBoreal_weakOceanic, null);
+                SetZones(fa4.CurrentBioClimateZones, "midBoreal",
+                    bioClimData.midBoreal_clearOceanic,
+                    bioClimData.midBoreal_strongOceanic, bioClimData.midBoreal_transferSection,
+                    bioClimData.midBoreal_weakOceanic,
+                    bioClimData.midBoreal_weakContinental);
+                SetZones(fa4.CurrentBioClimateZones, "northBoreal",
+                    bioClimData.northBoreal_clearOceanic,
+                    bioClimData.northBoreal_strongOceanic, bioClimData.northBoreal_transferSection,
+                    bioClimData.northBoreal_weakOceanic, bioClimData.northBoreal_weakContinental);
+                SetZones(fa4.CurrentBioClimateZones, "alpineZones",
+                    bioClimData.alpineZones_clearOceanic,
+                    bioClimData.alpineZones_strongOceanic, bioClimData.alpineZones_transferSection,
+                    bioClimData.alpineZones_weakOceanic, bioClimData.alpineZones_weakContinental);
+            }
+    }
+
     public static Dictionary<int, BioClimData> GetBioClimDataFromFile(CsvConfiguration theCsvConfiguration,
         string inputFolder, string file)
     {
@@ -1041,6 +1176,196 @@ internal static class ImportDataServiceHelper
                 if (previousAssessment.AssessmentId != "0" && exAssessment.ExpertGroup != "Testedyr")
                 {
                     
+                }
+            }
+        }
+    }
+
+    public static void FixMainCategoryWhenMissing(FA4 assessment, List<Tuple<string, string, string, string>> migrationPathway)
+    {
+        bool Tryfind(Tuple<string, string, string, string>[] filtrert, MigrationPathway vector, string codeItem)
+        {
+            var found = false;
+            var thisOne = filtrert.Where(x => x.Item1 == codeItem).ToArray();
+            if (thisOne.Length == 1)
+            {
+                vector.Category = thisOne[0].Item2;
+                vector.MainCategory = thisOne[0].Item3;
+                found = true;
+            }
+            else
+            {
+                Console.WriteLine(
+                    $"Hits: {thisOne.Length} : {codeItem} - introductionSpread: {vector.IntroductionSpread} Assessment: {assessment.EvaluatedScientificName} {assessment.ExpertGroup}");
+            }
+            return found;
+        }
+
+        if (assessment.ImportPathways.Any())
+        {
+            foreach (var importPathway in assessment.ImportPathways)
+            {
+                if (string.IsNullOrWhiteSpace(importPathway.Category) || string.IsNullOrWhiteSpace(importPathway.MainCategory))
+                {
+                    if (importPathway.CodeItem == "" || importPathway.CodeItem == "importContaminantNurseryMaterial" || importPathway.CodeItem == "contaminantOnPlantsCommercial")
+                    {
+                        importPathway.CodeItem = "importContaminantOnPlantsCommercial";
+                    }
+                    var filtrert = migrationPathway.Where(x => x.Item4 == "Import").ToArray();
+                    var thisOne = filtrert.Where(x => x.Item1 == importPathway.CodeItem).ToArray();
+                    if (thisOne.Length == 1)
+                    {
+                        importPathway.Category = thisOne[0].Item2;
+                        importPathway.MainCategory = thisOne[0].Item3;
+
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Hits: {thisOne.Length} : {importPathway.CodeItem} Assessment: {assessment.EvaluatedScientificName} {assessment.ExpertGroup}");
+                    }
+                }
+            }
+        }
+
+        if (assessment.AssesmentVectors.Any())
+        {
+            var assessmentAssesmentVectors = assessment.AssesmentVectors.ToArray();
+            foreach (var vector in assessmentAssesmentVectors)
+            {
+                if (string.IsNullOrWhiteSpace(vector.Category) ||
+                    string.IsNullOrWhiteSpace(vector.MainCategory))
+                {
+
+                    switch (vector.CodeItem)
+                    {
+                        case "importContaminantNurseryMaterial":
+                            vector.CodeItem = "contaminantOnPlantsCommercial";
+                            break;
+                        case "otherUnknownContaminant":
+                            vector.CodeItem = "other/unknown contaminant";
+                            break;
+                        case "otherUnknownEscape":
+                            if (assessment.EvaluatedScientificName == "Cryptomeria japonica")
+                            {
+                                vector.CodeItem = "otherEscape";
+                            }
+                            break;
+                        case "contaminantNurseryMaterial":
+                            vector.CodeItem = "contaminantOnPlantsCommercial";
+                            break;                        
+                        case "ContaminantOnPlantsCommercial":
+                            vector.CodeItem = "contaminantOnPlantsCommercial";
+                            break;
+                    }
+
+                    switch (vector.IntroductionSpread)
+                    {
+                        case "introduction":
+                            var filtrert = migrationPathway.Where(x => x.Item4 == "Innførsel" || x.Item4 == "Spredning")
+                                .ToArray();
+                            var found =  Tryfind(filtrert, vector, vector.CodeItem);
+                            if (found == false && vector.CodeItem.StartsWith("import"))
+                            {
+                                var codeItem = FirstCharToLowerCase(vector.CodeItem.Substring(6));
+                                found = Tryfind(filtrert, vector, codeItem);
+                                if (found) vector.CodeItem = codeItem;
+                            }
+                            break;
+                        case "spread":
+                            var filtrert2 = migrationPathway.Where(x => x.Item4 == "Videre spredning" || x.Item4 == "Spredning").ToArray();
+                            var found2 = Tryfind(filtrert2, vector, vector.CodeItem);
+                            if (found2 == false && vector.CodeItem.StartsWith("import"))
+                            {
+                                var codeItem = FirstCharToLowerCase(vector.CodeItem.Substring(6));
+                                found2 = Tryfind(filtrert2, vector, codeItem);
+                                if (found2) vector.CodeItem = codeItem;
+                            }
+
+                            break;
+                        default:
+                            Console.WriteLine($"Type : {vector.IntroductionSpread}");
+                            break;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(vector.Category) ||
+                        string.IsNullOrWhiteSpace(vector.MainCategory))
+                    {
+                        switch (vector.CodeItem)
+                        {
+                            case "aquaculture":
+                            case "horticulture":
+                            case "forestry":
+                            case "liveAnimalFoodBait":
+                            case "otherIntentionalRelease":
+                            case "botanicalGardenZooAquarium":
+                            case "otherEscape":
+                            case "research":
+                            //case "":
+                                assessment.AssesmentVectors.Remove(vector);
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    public static string? FirstCharToLowerCase(this string? str)
+    {
+        if (!string.IsNullOrEmpty(str) && char.IsUpper(str[0]))
+            return str.Length == 1 ? char.ToLower(str[0]).ToString() : char.ToLower(str[0]) + str[1..];
+
+        return str;
+    }
+
+    public static void FixMissingNaturtypeName(FA4 exAssessment, Dictionary<string, Tuple<string, string>> dictNin23,
+        Dictionary<string, string> dict)
+    {
+        // key = "NA T12|124" altså med kode og value 
+        // var dict
+        foreach (var interaction in exAssessment.RiskAssessment.SpeciesNaturetypeInteractions)
+        {
+            if  (string.IsNullOrWhiteSpace(interaction.Name))
+            {
+                var hit = exAssessment.ImpactedNatureTypes
+                    .FirstOrDefault(x => x.NiNCode == interaction.NiNCode);
+                var hit2 = exAssessment.ImpactedNatureTypes
+                    .FirstOrDefault(x => x.NiNCode == "NA " + interaction.NiNCode);
+                if (hit != null)
+                {
+                    interaction.Name = hit.Name;
+                }
+                else if (hit2 != null)
+                {
+                    interaction.Name = hit2.Name;
+                }
+                else
+                {
+                    var redhit = dict.FirstOrDefault(x => x.Key.Split("|")[0] == interaction.NiNCode);
+                    var hit3 = dictNin23
+                        .FirstOrDefault(x => x.Key == interaction.NiNCode);
+                    var hit4 = dictNin23
+                        .FirstOrDefault(x => x.Key == "NA " + interaction.NiNCode);
+                    if (!string.IsNullOrWhiteSpace(redhit.Key))
+                    {
+                        interaction.Name = redhit.Value;
+                    }
+                    else if (!string.IsNullOrWhiteSpace(hit3.Key))
+                    {
+                        interaction.Name = hit3.Value.Item2;
+                    }
+                    else if (!string.IsNullOrWhiteSpace(hit4.Key))
+                    {
+                        interaction.Name = hit4.Value.Item2;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Ikke Treff på: {interaction.NiNCode} For { exAssessment.ExpertGroup} { exAssessment.EvaluatedScientificName}");
+                    }
+
+                    //var hit3 = dictNin23
+                    //    .FirstOrDefault(x => x.Key == interaction.NiNCode);
+                    //var hit4 = dictNin23
+                    //    .FirstOrDefault(x => x.Key == "NA " + interaction.NiNCode);
                 }
             }
         }
