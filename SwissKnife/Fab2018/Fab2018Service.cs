@@ -47,9 +47,8 @@ namespace SwissKnife.Fab2018
             InfoFor(console, verbose, "MigrationPathwayCode", GetMigrationPathwayCode());
             InfoFor(console, verbose, "RedlistedNaturetypeGroup", GetRedlistedNaturetypeGroups());
             InfoFor(console, verbose, "Fab2018", GetFab2018());
-
-            InfoForFiles(console, verbose, "Fab2018Files", GetFab2018Files());
             InfoFor(console, verbose, "Brukere", GetUsers());
+            InfoForFiles(console, verbose, "Fab2018Files", GetFab2018Files());
         }
 
         private void InfoForFiles(IConsole console, bool verbose, string s, IEnumerable<FileHeader> all)
@@ -107,8 +106,8 @@ namespace SwissKnife.Fab2018
             console.WriteLine(DumpToJsonFile(path, "MigrationPathwayCode.json", GetMigrationPathwayCode()));
             console.WriteLine(DumpToJsonFile(path, "RedlistedNaturetypeGroups.json", GetRedlistedNaturetypeGroups()));
             console.WriteLine(DumpToJsonFile(path, "Fa3.json", GetFab2018()));
-            console.WriteLine(DumpFiles(path, GetFab2018Files()));
             console.WriteLine(DumpToJsonFile(path, "Brukere.json", GetUsers()));
+            console.WriteLine(DumpFiles(path, GetFab2018Files()));
             console.WriteLine("done...");
         }
 

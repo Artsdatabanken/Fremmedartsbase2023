@@ -11,11 +11,14 @@ using System.Threading.Tasks;
 using CsvHelper;
 using CsvHelper.Configuration;
 using Prod.Infrastructure.Helpers;
+using System.Collections;
 
 namespace SwissKnife.Database
 {
     internal static class MaintenanceService
     {
+        private static Dictionary<int, TaxonInfo> _cacheTaxonInfos = new Dictionary<int, TaxonInfo>();
+
         //private readonly SqlServerProdDbContext _database;
         private const string PotensiellTaksonomiskEndring = "Potensiell taksonomisk endring: ";
         private const string TaksonomiskEndring = "Automatisk endring av navn: ";
@@ -228,6 +231,7 @@ namespace SwissKnife.Database
 
             var currentTaxonomy = ts.getTaxonInfo(assessment.EvaluatedScientificNameId.Value).GetAwaiter().GetResult();
 
+
             var caseString = string.Empty;
             if (currentTaxonomy == null)
             {
@@ -236,6 +240,34 @@ namespace SwissKnife.Database
                 return context;
             }
 
+            if (!_cacheTaxonInfos.ContainsKey(currentTaxonomy.ValidScientificNameId))
+            {
+                _cacheTaxonInfos.Add(currentTaxonomy.ValidScientificNameId, currentTaxonomy);
+            }
+
+            var higherNotInCache =
+                currentTaxonomy.ScientificNameIdHiarchy.Where(x => !_cacheTaxonInfos.ContainsKey(x)).ToArray();
+            foreach (var i in higherNotInCache)
+            {
+                var highTaxonInfo = ts.getTaxonInfo(i).GetAwaiter().GetResult();
+                if (highTaxonInfo == null)
+                {
+
+                }
+                else if (!_cacheTaxonInfos.ContainsKey(highTaxonInfo.ValidScientificNameId))
+                {
+                    _cacheTaxonInfos.Add(highTaxonInfo.ValidScientificNameId, highTaxonInfo);
+                }
+            }
+
+            var higherHirachy = currentTaxonomy
+                .ScientificNameIdHiarchy.Where(x => _cacheTaxonInfos.ContainsKey(x)).Select(x => _cacheTaxonInfos[x])
+                .Select(y => new FA4.ScientificNameWithRankId()
+                {
+                    ScientificName = y.ValidScientificNameFormatted,
+                    Author = y.ValidScientificNameAuthorship,
+                    Rank = Convert.ToInt32(y.CategoryValue)
+                }).ToList();
             var preName = assessment.EvaluatedScientificName + " " + assessment.EvaluatedScientificNameAuthor;
             var postName = currentTaxonomy.ValidScientificName + " " + currentTaxonomy.ValidScientificNameAuthorship;
             var nameChange = !preName.Equals(postName);
@@ -262,7 +294,11 @@ namespace SwissKnife.Database
             }
 
             if (assessment.EvaluatedScientificName != currentTaxonomy.ValidScientificName ||
-                assessment.EvaluatedScientificNameAuthor != currentTaxonomy.ValidScientificNameAuthorship)
+                assessment.EvaluatedScientificNameAuthor != currentTaxonomy.ValidScientificNameAuthorship || 
+                assessment.EvaluatedScientificNameFormatted != currentTaxonomy.ValidScientificNameFormatted ||
+                (assessment.NameHiearchy == null || assessment.NameHiearchy.Except(higherHirachy).Any() || higherHirachy.Except(assessment.NameHiearchy).Any()
+                )
+                )
             {
                 // navnet er endret
                 scientificNameChange = true;
@@ -272,7 +308,7 @@ namespace SwissKnife.Database
                     caseString +=
                         $"Navn endret {assessment.EvaluatedScientificName + " " + assessment.EvaluatedScientificNameAuthor} => {currentTaxonomy.ValidScientificName + " " + currentTaxonomy.ValidScientificNameAuthorship}. ";
                     // her endrer vi automagisk navn
-                    UpdateTaxonomicInfoOnAssessment(context, assessment, currentTaxonomy);
+                    UpdateTaxonomicInfoOnAssessment(context, assessment, currentTaxonomy, higherHirachy);
                     canAutoUpdate = true;
                     //assessment.LatinsknavnId = currentTaxonomy.ValidScientificNameId;
                     context.changes = true;
@@ -284,7 +320,7 @@ namespace SwissKnife.Database
                     caseString +=
                         $"Navn redigert {assessment.EvaluatedScientificName + " " + assessment.EvaluatedScientificNameAuthor} => {currentTaxonomy.ValidScientificName + " " + currentTaxonomy.ValidScientificNameAuthorship}. ";
                     // her endrer vi automagisk navn
-                    UpdateTaxonomicInfoOnAssessment(context, assessment, currentTaxonomy);
+                    UpdateTaxonomicInfoOnAssessment(context, assessment, currentTaxonomy, higherHirachy);
                     canAutoUpdate = true;
                     //assessment.LatinsknavnId = currentTaxonomy.ValidScientificNameId;
                     context.changes = true;
@@ -295,7 +331,7 @@ namespace SwissKnife.Database
             {
                 caseString +=
                     $"Navn ikke endret {assessment.EvaluatedScientificName + " " + assessment.EvaluatedScientificNameAuthor}. ";
-                UpdateTaxonomicInfoOnAssessment(context, assessment, currentTaxonomy);
+                UpdateTaxonomicInfoOnAssessment(context, assessment, currentTaxonomy, higherHirachy);
                 canAutoUpdate = true; // taxonid endret eller uendret men navnet indetisk
 
                 context.changes = true;
@@ -305,7 +341,7 @@ namespace SwissKnife.Database
             if ((taxonIdChange || scientificNameIdChange) && autoUpdate && context.historyWorthyChanges == false)
             {
                 //caseString = ""; // blank ut denne for å fjerne kommentarer under 
-                UpdateTaxonomicInfoOnAssessment(context, assessment, currentTaxonomy);
+                UpdateTaxonomicInfoOnAssessment(context, assessment, currentTaxonomy, higherHirachy);
                 canAutoUpdate = true;
                 context.changes = true;
                 context.historyWorthyChanges = firstRun == false;
@@ -326,7 +362,11 @@ namespace SwissKnife.Database
                                   : "Fremmedartsteamet trenger bekreftelse på denne endringen før vurderingen flyttes over på nytt navn. Svar på denne kommentaren eller send en mail til fremmedearter@artsdatabanken.no"
                               );
 
-                CreateOrAddTaxonomicCommentToAssessment(context, context.DbAssessment.Id, message, canAutoUpdate);
+                if (!autoUpdate && !canAutoUpdate)
+                {
+                    CreateOrAddTaxonomicCommentToAssessment(context, context.DbAssessment.Id, message, canAutoUpdate);
+                }
+                
             }
             //else if (context.DbAssessment != null)
             //{
@@ -387,7 +427,7 @@ namespace SwissKnife.Database
         }
 
         private static void UpdateTaxonomicInfoOnAssessment(ProsessContext context, FA4 assessment,
-            TaxonInfo currentTaxonomy)
+            TaxonInfo currentTaxonomy, List<FA4.ScientificNameWithRankId> higherHirachy)
         {
             FixPopulernavnAndPath(context, currentTaxonomy, assessment);
 
@@ -404,11 +444,14 @@ namespace SwissKnife.Database
                 VitenskapeligNavnId = assessment.EvaluatedScientificNameId.Value
             };
             assessment.TaxonomicHistory.Add(oldTaxonInfo);
+            assessment.EvaluatedScientificNameId = currentTaxonomy.ValidScientificNameId;
             assessment.EvaluatedScientificNameAuthor = currentTaxonomy.ValidScientificNameAuthorship;
             assessment.EvaluatedScientificName = currentTaxonomy.ValidScientificName;
+            assessment.EvaluatedScientificNameFormatted = currentTaxonomy.ValidScientificNameFormatted;
             assessment.EvaluatedVernacularName = currentTaxonomy.PrefferedPopularname;
             assessment.TaxonHierarcy =
                 TaksonService.GetFullPathScientificName(currentTaxonomy).Item1;
+            assessment.NameHiearchy = higherHirachy;
             assessment.TaxonId = currentTaxonomy.TaxonId;
         }
 
@@ -986,7 +1029,7 @@ namespace SwissKnife.Database
         public static void RunNightTasks(SqlServerProdDbContext _database)
         {
             var ts = new TaksonService();
-            var batchSize = 1000;
+            var batchSize = 100;
             var pointer = 0;
             var commentdatetime = DateTime.MinValue;
 
@@ -1020,7 +1063,7 @@ namespace SwissKnife.Database
 
                     var result = prosessContext
                         //.BatchSetAssessmentsToResult()
-                        //.CheckTaxonomyForChanges(ts)
+                        .CheckTaxonomyForChanges(ts, false, true)
                         .CheckReferencesForChanges(refDict)
                         .DownLoadArtskartDataIfMissing();
                     //;

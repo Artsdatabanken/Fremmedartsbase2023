@@ -24,7 +24,10 @@ namespace SwissKnife.Database
     public partial class ImportDataService
     {
         private SqlServerProdDbContext _database;
-        internal static int[] _disse = new[] { 3068 }; //2753, 1718, 1684, 2584, 444, 1784, 485, 1717 };
+        /// <summary>
+        /// Kan settes for å delprosessere i noen tilfeller
+        /// </summary>
+        internal static int[] _disse = new[] { 1604 }; //2753, 1718, 1684, 2584, 444, 1784, 485, 1717 };
         private bool _dataBoreonemoralClearOceanic;
         internal static string[] _importantCategories = new[] { "HI", "LO", "NK", "PH", "SE" };
         internal static DateTime _magicemaildatedateTime = new DateTime(2022, 9, 23, 14, 8, 0);
@@ -289,7 +292,10 @@ namespace SwissKnife.Database
 
             var nin23 = ParseJson("/Prod.Web/src/Nin2_3.json");
             var dictNin23 = ImportDataServiceHelper.DrillDownNaturetypes23(nin23["Children"].AsArray())
-                .ToDictionary(item => item.Item1.Substring(3), item => item.Item2);
+                .ToDictionary(item => item.Item1.Substring(3), item => new Tuple<string, string>(item.Item2, item.Item3));
+
+            var dictNin23H = ImportDataServiceHelper.DrillDownNaturetypes23H(nin23["Children"].AsArray())
+                .ToDictionary(item => item.Item1.Substring(3), item => new Tuple<string, string>(item.Item2, item.Item3));
 
             //var nin = ParseJson("/Prod.Web/src/Nin2_3.json");
             var redlistNin = ParseJson("/Prod.Web/src/TrueteOgSjeldneNaturtyper2018.json");
@@ -304,14 +310,17 @@ namespace SwissKnife.Database
             }
 
             // hele koderøkla
-            //var codes = ParseJson("/Prod.Web/src/FA3CodesNB.json");
-            //var migrationPathway = codes["Children"]["migrationPathways"].AsArray()[0]["Children"]["mp"][0]["Children"]["mpimport"].AsArray();
+            var codes = ParseJson("/Prod.Web/src/FA3CodesNB.json");
+            var jsonNode = codes["Children"]["migrationPathways"].AsArray()[0]["Children"]["mp"].AsArray();
+            var migrationPathway = ImportDataServiceHelper.DrillDownCodeList2(jsonNode); // jsonNode[0]["Children"]["mpimport"].AsArray();
             //var dictPath = ImportDataServiceHelper.DrillDownCodeList(migrationPathway)
             //    .ToDictionary(item => item.Item1, item => item);
             var bioklimPrevoisImport = ImportDataServiceHelper.GetBioClimDataFromFile(theCsvConfiguration, inputFolder,
                 "soneseksjon_mean_current_karplanter_til_FAB.csv");
             var bioklimImport = ImportDataServiceHelper.GetBioClimDataFromFile(theCsvConfiguration, inputFolder,
                 "soneseksjon_mean_current_karplanter_NoBug_til_FAB.csv");
+            var bioklimImport2 = ImportDataServiceHelper.GetBioClimDataFromFile(theCsvConfiguration, inputFolder,
+                "soneseksjon_mean_current_karplanter_AbsolutelyLast_til_FAB.csv");
             var misIdentifiedDataset =
                 ImportDataServiceHelper.GetMisIdentifiedDataFromFile(theCsvConfiguration, inputFolder,
                     "MisAppliedData.csv");
@@ -346,7 +355,7 @@ namespace SwissKnife.Database
                 var previd = newAssesment.PreviousAssessments
                     .Single(y => y.RevisionYear == 2018).AssessmentId;
                 var theMatchingAssessment = existing.SingleOrDefault(x =>
-                    x.Key != 7349 &&
+                    x.Key != 7349 && x.Value.IsDeleted == false &&
                     x.Value.PreviousAssessments.Any(y => y.RevisionYear == 2018 && y.AssessmentId == previd));
 
                 if (theMatchingAssessment.Value == null)
@@ -357,6 +366,7 @@ namespace SwissKnife.Database
                 var real = _database.Assessments.Single(x => x.Id == theMatchingAssessment.Key);
                 seen.Add(theMatchingAssessment.Key);
 
+                
                 // todo: overfør manglende morro
                 var exAssessment = JsonSerializer.Deserialize<FA4>(real.Doc, _jsonSerializerOptions);
                 var orgCopy = JsonSerializer.Deserialize<FA4>(real.Doc, _jsonSerializerOptions);
@@ -383,10 +393,16 @@ namespace SwissKnife.Database
                     ImportDataServiceHelper.FixSpeciesNatureTypeInteractionsWithLI(exAssessment, real.Id);
                     ImportDataServiceHelper.FixZones(bioklimImport, bioklimPrevoisImport, exAssessment, real);
                     ImportDataServiceHelper.FixReasonForChangeBasedOn2018(exAssessment, oldAssessment);
+                    ImportDataServiceHelper.Fix2012Assessment(exAssessment, assessmaents2012Connection);
                 }
 
+                ImportDataServiceHelper.FixMainCategoryWhenMissing(exAssessment, migrationPathway);
+
                 ImportDataServiceHelper.FixMisIdentified(exAssessment, misIdentifiedDataset, real);
-                ImportDataServiceHelper.Fix2012Assessment(exAssessment, assessmaents2012Connection);
+                
+                ImportDataServiceHelper.FixZonesOlavsArter(bioklimImport2, exAssessment, real);
+
+                ImportDataServiceHelper.FixMissingNaturtypeName(exAssessment, dictNin23H, dict);
 
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)
@@ -414,6 +430,7 @@ namespace SwissKnife.Database
             var notSeen = existing.Where(x => !seen.Contains(x.Key)).Select(y => y.Key).ToArray();
             foreach (var item in notSeen)
             {
+                //continue;
                 var real = _database.Assessments.Single(x => x.Id == item);
 
                 // todo: overfør manglende morro
@@ -439,6 +456,10 @@ namespace SwissKnife.Database
                 }
 
                 ImportDataServiceHelper.FixMisIdentified(exAssessment, misIdentifiedDataset, real);
+
+                ImportDataServiceHelper.FixZonesOlavsArter(bioklimImport2, exAssessment, real);
+
+                ImportDataServiceHelper.FixMissingNaturtypeName(exAssessment, dictNin23H, dict);
 
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)
