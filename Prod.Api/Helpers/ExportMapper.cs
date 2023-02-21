@@ -657,6 +657,8 @@ namespace Prod.Api.Helpers
             {"TaxonEvaluatedAtAnotherLevel","Vurderes på et annet taksonomisk nivå"},
             {"UncertainBefore1800", "Etablert per 1800"},
             {"MisIdentified", "Feilbestemt i 2018"},
+            {"AllSubTaxaAssessedSeparately", "Vurderes ikke fordi det foreligger separate vurderinger av infraspesifikke taksa"},
+            {"HybridWithoutOwnRiskAssessment", "Utenfor avgrensningen"},
             {"NotDefined", "Ikke definert"},
             {"NotApplicable", ""},
             {"EcoEffectWithoutEstablishment", ""}
@@ -993,22 +995,22 @@ namespace Prod.Api.Helpers
             return result;
         }
 
-        private static int roundToSignificantDecimals(double? num) 
+        private static long roundToSignificantDecimals(double? num) //median lifetime can be a larger number than long can handle..
             {
                 if (!num.HasValue) return 0;
-                int result =
-                    (num >= 10000000) ? (int)Math.Floor((double)(num / 1000000)) * 1000000 :
-                    (num >= 1000000 ) ? (int)Math.Floor((double)(num / 100000))  * 100000  :
-                    (num >= 100000  ) ? (int)Math.Floor((double)(num / 10000))   * 10000   :
-                    (num >= 10000   ) ? (int)Math.Floor((double)(num / 1000))    * 1000    :
-                    (num >= 1000    ) ? (int)Math.Floor((double)(num / 100))     * 100     :
-                    (num >= 100     ) ? (int)Math.Floor((double)(num / 10))      * 10      :
-                    (int)num.Value;
+                long result =
+                    (num >= 10000000) ? (long)Math.Floor((double)(num / 1000000)) * 1000000 :
+                    (num >= 1000000 ) ? (long)Math.Floor((double)(num / 100000))  * 100000  :
+                    (num >= 100000  ) ? (long)Math.Floor((double)(num / 10000))   * 10000   :
+                    (num >= 10000   ) ? (long)Math.Floor((double)(num / 1000))    * 1000    :
+                    (num >= 1000    ) ? (long)Math.Floor((double)(num / 100))     * 100     :
+                    (num >= 100     ) ? (long)Math.Floor((double)(num / 10))      * 10      :
+                    (long)num.Value;
                 return result;
              }
-        private static int GetMedianLifetime(RiskAssessment ra) 
+        private static long GetMedianLifetime(RiskAssessment ra) 
         {
-            int result = (ra.ChosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && ra.AcceptOrAdjustCritA == "accept") ? 
+            long result = (ra.ChosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && ra.AcceptOrAdjustCritA == "accept") ? 
                 ra.Criteria[0].Value == 0 ? 3
                 : ra.Criteria[0].Value == 1 ? 25
                 : ra.Criteria[0].Value == 2 ? 200
@@ -1017,11 +1019,11 @@ namespace Prod.Api.Helpers
             : roundToSignificantDecimals(ra.MedianLifetimeInput);
             return result;
         }
-        private static int GetLifetimeLowerQ(RiskAssessment ra) 
+        private static long GetLifetimeLowerQ(RiskAssessment ra) 
         { 
             return roundToSignificantDecimals(ra.LifetimeLowerQInput);
         }
-        private static int GetLifetimeUpperQ(RiskAssessment ra) 
+        private static long GetLifetimeUpperQ(RiskAssessment ra) 
         {
             return roundToSignificantDecimals(ra.LifetimeUpperQInput);
         }
@@ -1314,8 +1316,8 @@ namespace Prod.Api.Helpers
             [Name("AOO50aarHoytAnslag")]
             public Int64? RiskAssessmentAOO50yrHighInput { get; set; }
             // [Name("AOOchangeBest")]
-            // public double? RiskAssessmentAOOchangeBest { get; set; } - 07.06.22 - trenger ikke disse i eksporten da de kun brukes på baksiden for A-kriteriet
-            // [Name("AOOchangeLow")]
+            // public double? RiskAssessmentAOOchangeBest { get; set; } //- 07.06.22 - trenger ikke disse i eksporten da de kun brukes på baksiden for A-kriteriet (de lagres heller ikke på modellen..)
+            // // [Name("AOOchangeLow")]
             // public double? RiskAssessmentAOOchangeLow { get; set; } - 07.06.22 - trenger ikke disse i eksporten da de kun brukes på baksiden for A-kriteriet
             // [Name("AOOchangeHigh")]
             // public double? RiskAssessmentAOOchangeHigh { get; set; } - 07.06.22 - trenger ikke disse i eksporten da de kun brukes på baksiden for A-kriteriet
@@ -1556,7 +1558,7 @@ namespace Prod.Api.Helpers
 
         // public int? RiskAssessmentAdefaultBest { get; set; } //denne, og de 4 neste brukes på baksiden for å bestemme A-skår og usikkkerhet opp og ned. Trengs ikke i eksporten.
         // public int? RiskAssessmentAdefaultLow { get; set; }
-        // public int? RiskAssessmentAdefaultHigh { get; set; }
+        // // public int? RiskAssessmentAdefaultHigh { get; set; }
 
 
         // public int? RiskAssessmentApossibleLow { get; set; }
