@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.ComponentModel;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Prod.Domain.Helpers;
+using System.Xml.Linq;
 
 //using System.Text.Json.Serialization;
 
@@ -1529,11 +1531,18 @@ public partial class FA4 // (3.2) Artsegenskaper
     {
         public List<SimpleReference> References { get; set; } = new List<SimpleReference>();
 
-        public class ScientificNameWithRankId
+        public class ScientificNameWithRankId : IEquatable<ScientificNameWithRankId>
         {
             public string ScientificName { get; set; }
             public string Author { get; set; }
             public int Rank { get; set; }
+
+            public bool Equals(ScientificNameWithRankId other)
+            {
+                return other != null && this.Rank == other.Rank && this.ScientificName == other.ScientificName && this.Author == other.Author;
+            }
+            public override bool Equals(object obj) => Equals(obj as ScientificNameWithRankId);
+            public override int GetHashCode() => (ScientificName, Author, Rank).GetHashCode();
         }
     }
     public partial class FA4 // History
