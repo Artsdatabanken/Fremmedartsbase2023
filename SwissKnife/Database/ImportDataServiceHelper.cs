@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using AutoMapper;
@@ -1369,5 +1370,67 @@ internal static class ImportDataServiceHelper
                 }
             }
         }
+    }
+
+    public static List<(int AssessmentId, bool AllSubTaxaAssessedSeparately, bool IsHybridWithoutOwnRiskAssessment, string AlienSpeciesCategory, string AllSubTaxaAssessedSeparatelyDescription, string IsHybridWithoutOwnRiskAssessmentDescription, string AssessmentConclusion, string Category, string EvaluationStatus)> CrazySpeciesList()
+    {
+        return new List<(
+            int AssessmentId,
+            bool AllSubTaxaAssessedSeparately,
+            bool IsHybridWithoutOwnRiskAssessment,
+            string AlienSpeciesCategory,
+            string AllSubTaxaAssessedSeparatelyDescription,
+            string IsHybridWithoutOwnRiskAssessmentDescription,
+            string AssessmentConclusion,
+            string Category,
+            string EvaluationStatus)>()
+        {
+            (
+                1413,
+                true,
+                false,
+                "AllSubTaxaAssessedSeparately",
+                "Det gis ingen fellesvurdering for arten; subsp.cruentus, subsp.hypochondriacus og subsp.quitensis ble alle sjaltet ut i horisontskanningen høsten 2021.Subsp.cruentus ble i FAB2018 vurdert på artsnivå som A.cruentus(som NR).Subsp.hypochondriacus ble i FAB2018 vurdert som egen underart(som NR) under arten A.hypochondriacus hvor også subsp.powellii hørte til den gangen.Se Elven mfl. 2022 for oppdatert taksonomi. Det som nå gjenstår i dette artskomplekset er A.hybridus subsp.powellii(tidligere A.hypochondriacus subsp.powellii), og denne risikovurderes separat.",
+                "",
+                "WillNotBeRiskAssessed",
+                "NR",
+                "finished"
+            ),
+            (1913,
+                false,
+                true,
+                "HybridWithoutOwnRiskAssessment",
+                "",
+                "Hagtornen Crataegus x macrocarpa er en hybrid eller hybridart mellom den fremmede arten parkhagtorn C.laevigata og den hjemlige arten begerhagtorn C.rhipidophylla.Den er fertil og krysser seg trolig tilbake med foreldrene, og den oppstår spontant og er ikke en hageplante(se Elven mfl. 2022).Vi behandler den som et hybridiseringsproblem under C.laevigata og ikke som en separat art.",
+                "WillNotBeRiskAssessed",
+                "NR",
+                "finished"
+            ),
+            (
+                1914,
+                false,
+                true,
+                "HybridWithoutOwnRiskAssessment",
+                "",
+                "Hagtornen Crataegus x media er en hybrid eller hybridart mellom den fremmede arten parkhagtorn C.laevigata og den hjemlige arten hagtorn C.monogyna.Den er fertil og krysser seg trolig tilbake med foreldrene, og den oppstår spontant og er ikke en hageplante(se Elven mfl. 2022).Vi behandler den som et hybridiseringsproblem under C.laevigata og ikke som en separat art.",
+                "WillNotBeRiskAssessed",
+                "NR",
+                "finished")
+        };    }
+
+    public static void FixCrazySpecies(FA4 fa4, List<(int AssessmentId, bool AllSubTaxaAssessedSeparately, bool IsHybridWithoutOwnRiskAssessment, string AlienSpeciesCategory, string AllSubTaxaAssessedSeparatelyDescription, string IsHybridWithoutOwnRiskAssessmentDescription, string AssessmentConclusion, string Category, string EvaluationStatus)> crazySpecies)
+    {
+        var thisone = crazySpecies.SingleOrDefault(x=>x.AssessmentId == fa4.Id);
+
+        if (thisone.AssessmentId == 0) return;
+
+        fa4.AllSubTaxaAssessedSeparately = thisone.AllSubTaxaAssessedSeparately;
+        fa4.AllSubTaxaAssessedSeparatelyDescription = thisone.AllSubTaxaAssessedSeparatelyDescription;
+        fa4.IsHybridWithoutOwnRiskAssessment = thisone.IsHybridWithoutOwnRiskAssessment;
+        fa4.IsHybridWithoutOwnRiskAssessmentDescription = thisone.IsHybridWithoutOwnRiskAssessmentDescription;
+        fa4.AlienSpeciesCategory = thisone.AlienSpeciesCategory;
+        //fa4.AssessmentConclusion
+        //fa4.Category
+        //fa4.EvaluationStatus
     }
 }

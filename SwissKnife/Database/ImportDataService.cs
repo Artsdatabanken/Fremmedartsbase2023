@@ -330,6 +330,8 @@ namespace SwissKnife.Database
             var assessmaents2012Connection =
                 ImportDataServiceHelper.Get2012DataFromFile(theCsvConfiguration, inputFolder, "Fab2012koplinger.csv");
 
+            var CrazySpecies = ImportDataServiceHelper.CrazySpeciesList();
+
             var existing = _database.Assessments.ToDictionary(x => x.Id,
                 x => JsonSerializer.Deserialize<FA4>(x.Doc, _jsonSerializerOptions));
             var seen = new List<int>();
@@ -404,6 +406,8 @@ namespace SwissKnife.Database
 
                 ImportDataServiceHelper.FixMissingNaturtypeName(exAssessment, dictNin23H, dict);
 
+                ImportDataServiceHelper.FixCrazySpecies(exAssessment, CrazySpecies);
+
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)
                 {
@@ -460,6 +464,8 @@ namespace SwissKnife.Database
                 ImportDataServiceHelper.FixZonesOlavsArter(bioklimImport2, exAssessment, real);
 
                 ImportDataServiceHelper.FixMissingNaturtypeName(exAssessment, dictNin23H, dict);
+
+                ImportDataServiceHelper.FixCrazySpecies(exAssessment, CrazySpecies);
 
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)
