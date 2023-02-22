@@ -474,6 +474,7 @@ namespace Prod.Api.Controllers
             };
 
             assessment.EvaluatedScientificName = ti.ValidScientificName;
+            assessment.EvaluatedScientificNameFormatted = ti.ValidScientificNameFormatted;
             assessment.EvaluatedScientificNameId = ti.ValidScientificNameId;
             assessment.EvaluatedScientificNameAuthor = ti.ValidScientificNameAuthorship;
             assessment.TaxonHierarcy = hierarcy;

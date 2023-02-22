@@ -18,6 +18,7 @@ namespace Prod.Api.Services
         public int CategoryValue { get; set; } // "kingdom" || "phylum" || "class" || "order" || ....
         public string Name { get; set; }
         public string ValidScientificName { get; set; }
+        public string ValidScientificNameFormatted { get; set; }
         public int ValidScientificNameId { get; set; }
         public string ValidScientificNameAuthorship { get; set; }
         public int TaxonId { get; set; }
