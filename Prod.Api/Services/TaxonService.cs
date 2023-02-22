@@ -33,6 +33,7 @@ namespace Prod.Api.Services
         public string Species { get; set; }
         public string SubSpecies { get; set; }
 
+        public int[] ScientificNameIdHiarchy { get; set; }
         // public bool IsDeleted { get; set; } // dont care. always false from the nbic service
     }
     public class TaxonService

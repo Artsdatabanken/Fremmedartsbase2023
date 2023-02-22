@@ -475,6 +475,16 @@ namespace Prod.Api.Controllers
 
             assessment.EvaluatedScientificName = ti.ValidScientificName;
             assessment.EvaluatedScientificNameFormatted = ti.ValidScientificNameFormatted;
+            var higherHirachy = ti
+                .ScientificNameIdHiarchy.Select(x =>
+                    ts.GetTaxonInfoAsync(x).GetAwaiter().GetResult())
+                .Select(y => new FA4.ScientificNameWithRankId()
+                {
+                    ScientificName = y.ValidScientificNameFormatted,
+                    Author = y.ValidScientificNameAuthorship,
+                    Rank = Convert.ToInt32(y.CategoryValue)
+                }).ToList();
+            assessment.NameHiearchy = higherHirachy;
             assessment.EvaluatedScientificNameId = ti.ValidScientificNameId;
             assessment.EvaluatedScientificNameAuthor = ti.ValidScientificNameAuthorship;
             assessment.TaxonHierarcy = hierarcy;
