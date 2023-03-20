@@ -26,6 +26,18 @@ namespace Prod.Api.Helpers
                 // cfg.CreateMap<List<FA4.Habitat> , string>().ConvertUsing<CustomHabitatsConverter>();
                 cfg.CreateMap<FA4WithComments, FA4Export>()
                     //.ForMember(x => x.DoorKnockerType, opt => opt.MapFrom(src => GetDoorknockerType(src)))
+                    .ForMember(dest => dest.RiskAssessmentAOOknownInput, opt => opt.PreCondition(src => src.AssessmentConclusion != "AssessedDoorknocker"))
+                    .ForMember(dest => dest.RiskAssessmentAOOtotalLowInput, opt => opt.PreCondition(src => src.AssessmentConclusion != "AssessedDoorknocker"))
+                    .ForMember(dest => dest.RiskAssessmentAOOtotalBestInput, opt => opt.PreCondition(src => src.AssessmentConclusion != "AssessedDoorknocker"))
+                    .ForMember(dest => dest.RiskAssessmentAOOtotalHighInput, opt => opt.PreCondition(src => src.AssessmentConclusion != "AssessedDoorknocker"))
+                    .ForMember(dest => dest.RiskAssessmentAOO50yrLowInput, opt => opt.PreCondition(src => src.AssessmentConclusion != "AssessedDoorknocker"))
+                    .ForMember(dest => dest.RiskAssessmentAOO50yrBestInput, opt => opt.PreCondition(src => src.AssessmentConclusion != "AssessedDoorknocker"))
+                    .ForMember(dest => dest.RiskAssessmentAOO50yrHighInput, opt => opt.PreCondition(src => src.AssessmentConclusion != "AssessedDoorknocker"))
+                    .ForMember(dest => dest.RiskAssessmentIntroductionsBest, opt => opt.PreCondition(src => src.AssessmentConclusion == "AssessedDoorknocker"))
+                    .ForMember(dest => dest.RiskAssessmentOccurrences1Low, opt => opt.PreCondition(src => src.AssessmentConclusion == "AssessedDoorknocker"))
+                    .ForMember(dest => dest.RiskAssessmentOccurrences1Best, opt => opt.PreCondition(src => src.AssessmentConclusion == "AssessedDoorknocker"))
+                    .ForMember(dest => dest.RiskAssessmentOccurrences1High, opt => opt.PreCondition(src => src.AssessmentConclusion == "AssessedDoorknocker"))
+                    
                     .AfterMap((src, dest) =>
                     {
                         var ass2018 = src.PreviousAssessments.SingleOrDefault(x => x.RevisionYear == 2018);
@@ -97,11 +109,11 @@ namespace Prod.Api.Helpers
                         dest.SpreadNatureFreqNumTime = GetIntroSpreadInfo(src.AssesmentVectors, "spread", "freqs");
                         dest.RegionalDistribution = GetRegionalDistribution(src.Fylkesforekomster);
                         dest.SpeciesStatus = GetSpeciesStatus(src.SpeciesStatus, src.SpeciesEstablishmentCategory);
-                        dest.IntroductionsLow = introductionsLow(src.RiskAssessment);
-                        dest.IntroductionsHigh = introductionsHigh(src.RiskAssessment);
-                        dest.AOO10yrBest = AOO10yrBest(src.RiskAssessment);
-                        dest.AOO10yrLow = AOO10yrLow(src.RiskAssessment); 
-                        dest.AOO10yrHigh = AOO10yrHigh(src.RiskAssessment); 
+                        dest.IntroductionsLow = introductionsLow(src, src.RiskAssessment);
+                        dest.IntroductionsHigh = introductionsHigh(src, src.RiskAssessment);
+                        dest.AOO10yrBest = AOO10yrBest(src, src.RiskAssessment);
+                        dest.AOO10yrLow = AOO10yrLow(src, src.RiskAssessment); 
+                        dest.AOO10yrHigh = AOO10yrHigh(src, src.RiskAssessment); 
                         dest.ImpactedNatureTypes = GetimpactedNatureTypes(src.ImpactedNatureTypes);
                         dest.CoastLineSections = GetCoastLineSections(src.CoastLineSections);
                         dest.CurrentBioClimateZones = GetCurrentBioClimateZones(src.CurrentBioClimateZones);
@@ -137,9 +149,9 @@ namespace Prod.Api.Helpers
                         dest.RiskAssessmentCriteriaILow = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "I", "low");
                         dest.RiskAssessmentCriteriaIHigh= GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "I", "high");
                         dest.RiskAssessmentChosenMethodBcrit = GetRiskAssessmentChosenMethodBcrit(src.RiskAssessment, src.AssessmentConclusion);
-                        dest.RiskAssessmentExpansionSpeed = GetRiskAssessmentExpansionSpeed(src.RiskAssessment, "50", src.AssessmentConclusion);
-                        dest.RiskAssessmentExpansionLowerQ = GetRiskAssessmentExpansionSpeed(src.RiskAssessment, "25", src.AssessmentConclusion);
-                        dest.RiskAssessmentExpansionUpperQ = GetRiskAssessmentExpansionSpeed(src.RiskAssessment, "75", src.AssessmentConclusion);
+                        dest.RiskAssessmentExpansionSpeed = GetRiskAssessmentExpansionSpeed(src, src.RiskAssessment, "50", src.AssessmentConclusion);
+                        dest.RiskAssessmentExpansionLowerQ = GetRiskAssessmentExpansionSpeed(src, src.RiskAssessment, "25", src.AssessmentConclusion);
+                        dest.RiskAssessmentExpansionUpperQ = GetRiskAssessmentExpansionSpeed(src, src.RiskAssessment, "75", src.AssessmentConclusion);
                         dest.ImpactedRedlistEvaluatedSpecies = GetDEcritInformation(src.RiskAssessment.SpeciesSpeciesInteractions);
                         dest.ImpactedRedlistEvaluatedSpeciesEnsemble = GetDEcritInformationNaturetypes(src.RiskAssessment.SpeciesNaturetypeInteractions);
                         dest.IntrogressionRedlistedSpecies = GetHcritInformation(src.RiskAssessment.GeneticTransferDocumented);
@@ -323,7 +335,7 @@ namespace Prod.Api.Helpers
 
             return (long?)result;
         }
-        private static long? GetRiskAssessmentExpansionSpeed(RiskAssessment ra, string quant, string assConc) 
+        private static long? GetRiskAssessmentExpansionSpeed(FA4 assessment, RiskAssessment ra, string quant, string assConc) 
         {
             long? exspeed;
             long? exspeedLow;
@@ -344,9 +356,9 @@ namespace Prod.Api.Helpers
 
             else if(assConc == "AssessedDoorknocker" && ra.ChosenSpreadYearlyIncrease == "b") 
             {
-                var localvarB = AOO10yrBest(ra);
-                var localvarL = AOO10yrLow(ra);
-                var localvarH = AOO10yrHigh(ra);
+                var localvarB = AOO10yrBest(assessment, ra);
+                var localvarL = AOO10yrLow(assessment, ra);
+                var localvarH = AOO10yrHigh(assessment, ra);
         
                 exspeed = 
                     (localvarB == null) ? 0 :
@@ -949,14 +961,24 @@ namespace Prod.Api.Helpers
             return i;
         }
 
-        private static long introductionsLow(RiskAssessment ra)
+        private static long? introductionsLow(FA4 assessment, RiskAssessment ra)
         {
+            if(assessment.AssessmentConclusion != "AssessedDoorknocker")
+            {
+                return null;
+            }
+
             long num = introductionNum(introLowTable, ra.IntroductionsBest);
             return (long)(num == 0 ? 0 : ra.IntroductionsBest - num);
         }
 
-        private static long introductionsHigh(RiskAssessment ra)
+        private static long? introductionsHigh(FA4 assessment, RiskAssessment ra)
         {
+            if(assessment.AssessmentConclusion != "AssessedDoorknocker")
+            {
+                return null;
+            }
+
             long num = introductionNum(introHighTable, ra.IntroductionsBest);
             return (long)(num == 0 ? 0 : ra.IntroductionsBest + num);
         }
@@ -978,20 +1000,35 @@ namespace Prod.Api.Helpers
             return result;
         }
         
-        private static long? AOO10yrBest(RiskAssessment ra)
+        private static long? AOO10yrBest(FA4 assessment, RiskAssessment ra)
         {
+            if(assessment.AssessmentConclusion != "AssessedDoorknocker")
+            {
+                return null;
+            }
+
             var result = AOO10yr(ra.Occurrences1Best, ra.IntroductionsBest);
             return result;
         }
 
-        private static long? AOO10yrLow(RiskAssessment ra)
+        private static long? AOO10yrLow(FA4 assessment, RiskAssessment ra)
         {
-            var result = AOO10yr(ra.Occurrences1Low, introductionsLow(ra));
+            if(assessment.AssessmentConclusion != "AssessedDoorknocker")
+            {
+                return null;
+            }
+
+            var result = AOO10yr(ra.Occurrences1Low, introductionsLow(assessment, ra));
             return result;
         }
-        private static long? AOO10yrHigh(RiskAssessment ra)
+        private static long? AOO10yrHigh(FA4 assessment, RiskAssessment ra)
         {
-            var result = AOO10yr(ra.Occurrences1High, introductionsHigh(ra));
+            if(assessment.AssessmentConclusion != "AssessedDoorknocker")
+            {
+                return null;
+            }
+
+            var result = AOO10yr(ra.Occurrences1High, introductionsHigh(assessment, ra));
             return result;
         }
 
@@ -1146,6 +1183,10 @@ namespace Prod.Api.Helpers
         [Name("FremmedartsstatusKommentar")]
         public string IsAlien { get; set; } // new in 2021
 
+        [Name("Kategori2023")]
+        public string Category { get; set; } //We can use this!
+        [Name("Kriterier2023")]
+        public string Criteria { get; set; }
         // public string LockedForEditBy { get; set; }
         [Name("HorisontskanningEtableringspotensial")]
         public string HorizonEstablismentPotential { get; set; }
@@ -1500,11 +1541,7 @@ namespace Prod.Api.Helpers
             public string RiskAssessmentICritInsecurity {get; set;}
             #endregion Økologisk effekt
             #region Oppsummering
-            
-            [Name("Kategori2023")]
-            public string Category { get; set; } //We can use this!
-            [Name("Kriterier2023")]
-            public string Criteria { get; set; }
+        
             [Name("SkaarInvasjonspotensial")]
             public int? InvationScore {get; set; }
             [Name("SkaarOkologiskEffekt")]
@@ -1751,12 +1788,12 @@ namespace Prod.Api.Helpers
 
 
 
-        #region unused ???????
-        // -- spredningshastighet
+        // #region unused ???????
+        // // -- spredningshastighet
 
-        public double? RiskAssessmentSpreadYearlyIncrease { get; set; }   // Spread_Yearly_Increase
-        public string RiskAssessmentSpreadYearlyIncreaseMethod { get; set; }  // Spread_Yearly_Increase_EstimationMethod
-        #endregion unused ???????
+        // // public double? RiskAssessmentSpreadYearlyIncrease { get; set; }   // Spread_Yearly_Increase
+        // public string RiskAssessmentSpreadYearlyIncreaseMethod { get; set; }  // Spread_Yearly_Increase_EstimationMethod
+        // #endregion unused ???????
 
 
 
