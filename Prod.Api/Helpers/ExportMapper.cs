@@ -156,7 +156,7 @@ namespace Prod.Api.Helpers
                         dest.ImpactedRedlistEvaluatedSpeciesEnsemble = GetDEcritInformationNaturetypes(src.RiskAssessment.SpeciesNaturetypeInteractions);
                         dest.IntrogressionRedlistedSpecies = GetHcritInformation(src.RiskAssessment.GeneticTransferDocumented);
                         dest.Habitats = GetHabitats(src.Habitats);
-                        dest.ReasonForChangeOfCategory = GetReasonForChangeOfCategory(src.ReasonForChangeOfCategory, src.Category, "Cat2018");
+                        dest.ReasonForChangeOfCategory = GetReasonForChangeOfCategory(src.ReasonForChangeOfCategory, src.Category, dest.Category2018);
                         dest.AlienSpeciesCategory = GetAlienSpeciesCategory(src.AlienSpeciesCategory);
                         dest.InvationScore = GetScores(src.Category, src.Criteria, "inv");
                         dest.EcoEffectScore = GetScores(src.Category, src.Criteria, "eco");
@@ -185,16 +185,13 @@ namespace Prod.Api.Helpers
             }
         }
 
-        private static string GetReasonForChangeOfCategory(List<string> reasonForChangeOfCategory, string Category, string Cat2018)
+        private static string GetReasonForChangeOfCategory(List<string> reasonForChangeOfCategory, string category, string cat2018)
         {
-            if(reasonForChangeOfCategory == null || reasonForChangeOfCategory.Count == 0)
+            if (reasonForChangeOfCategory == null || reasonForChangeOfCategory.Count == 0 || category == cat2018)
             {
                 return string.Empty;
             }
-            // if(Category == ) //ideelt sett skulle vi hatt en test på om kat 2023 er (u)lik kat 2018 - men det krever litt kode.. 
-            // {
-            //     return string.Empty;
-            // }
+            
             else return string.Join("; ", reasonForChangeOfCategory);
         }
 
@@ -235,7 +232,6 @@ namespace Prod.Api.Helpers
             }
             return string.Join("; ", Redlistinfo);
         }
-
         private static string GetDEcritInformationNaturetypes(List<RiskAssessment.SpeciesNaturetypeInteraction> speciesNatInt)
         {
             if (speciesNatInt == null || speciesNatInt.Count == 0)
@@ -634,29 +630,31 @@ namespace Prod.Api.Helpers
             {
                 return string.Empty;
             }
-                //Interessert i: niNCode name timeHorizon colonizedArea affectedArea og stateChange - sistnevnte er en liste i seg selv, f.eks.: ["OM", "1AE", "1AG"]
+                //Interessert i: niNCode name timeHorizon colonizedArea affectedArea, stateChange og background - de to sistnevnte er en liste i seg selv, f.eks.: ["OM", "1AE", "1AG"]
                 //ninCode//name//timeHorizon//
-                var NatDat = new List<string>();
+                var natDat = new List<string>();
                 
                 for (var i = 0; i < impactedNatureTypes.Count; ++i) 
                 { 
-                    if(impactedNatureTypes[i].StateChange.Count > 0)
+                    string stateChange = string.Empty;
+                    string background = string.Empty;
+
+                    if (impactedNatureTypes[i].StateChange.Count > 0)
                     {
                         List <string> navn = GetTilstandsendringer(tilstandsendringer, impactedNatureTypes[i].StateChange);
-                        string StateChange = string.Join("|", navn);
-
-                        string newcats = impactedNatureTypes[i].NiNCode + "//" + impactedNatureTypes[i].Name + "//" + impactedNatureTypes[i].TimeHorizon + "//" + impactedNatureTypes[i].ColonizedArea + "//" + impactedNatureTypes[i].AffectedArea + "//" + StateChange;
-                        NatDat.Add(newcats);
-
+                        stateChange = string.Join("|", navn);
                     }
-                    else
+
+                    if (impactedNatureTypes[i].Background.Count > 0)
                     {
-                        string newcat = impactedNatureTypes[i].NiNCode + "//" + impactedNatureTypes[i].Name + "//" + impactedNatureTypes[i].TimeHorizon + "//" + impactedNatureTypes[i].ColonizedArea + "//" + impactedNatureTypes[i].AffectedArea + "//" + "";
-                        NatDat.Add(newcat);
+                        background = string.Join("|", impactedNatureTypes[i].Background.ToArray());
                     }
+
+                    string newcats = impactedNatureTypes[i].NiNCode + "//" + impactedNatureTypes[i].Name + "//" + impactedNatureTypes[i].TimeHorizon + "//" + impactedNatureTypes[i].ColonizedArea + "//" + impactedNatureTypes[i].AffectedArea + "//" + stateChange + "//" + background;
+                    natDat.Add(newcats);
                 }
 
-                return string.Join("; ", NatDat);
+                return string.Join("; ", natDat);
             
         }
         private static Dictionary<string, string> AlienSpeciesCat = new Dictionary<string, string>()
