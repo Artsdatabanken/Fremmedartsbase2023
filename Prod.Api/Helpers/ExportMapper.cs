@@ -101,8 +101,8 @@ namespace Prod.Api.Helpers
                         dest.NaturalOriginMarine = GetNaturalOriginsMarine(src.NaturalOriginMarine);
                         dest.CurrentInternationalExistenceMarineAreas = GetCurrentInternationalExistenceMarineAreas(src.CurrentInternationalExistenceMarineAreas);
                         dest.ArrivedCountryFrom = GetArrivedCountryFrom(src.ArrivedCountryFrom);
-                        dest.IndoorProductionMainCatAndCat = GetIndoorProduction(src.ImportPathways, "cat");
-                        dest.IndoorProductionFreqNumTime = GetIndoorProduction(src.ImportPathways, "freqs");
+                        dest.IndoorProductionMainCatAndCat = GetIndoorProduction(src.IndoorProduktion, src.ImportPathways, "cat");
+                        dest.IndoorProductionFreqNumTime = GetIndoorProduction(src.IndoorProduktion, src.ImportPathways, "freqs");
                         dest.IntroNatureMainCatAndCat = GetIntroSpreadInfo(src.AssesmentVectors, "intro", "cat");
                         dest.IntroNatureFreqNumTime = GetIntroSpreadInfo(src.AssesmentVectors, "intro", "freqs");
                         dest.SpreadNatureMainCatAndCat = GetIntroSpreadInfo(src.AssesmentVectors, "spread", "cat");
@@ -630,7 +630,7 @@ namespace Prod.Api.Helpers
             {
                 return string.Empty;
             }
-                //Interessert i: niNCode name timeHorizon colonizedArea affectedArea, stateChange og background - de to sistnevnte er en liste i seg selv, f.eks.: ["OM", "1AE", "1AG"]
+                //Interessert i: MajorTypeGroup niNCode name timeHorizon colonizedArea affectedArea, stateChange og background - de to sistnevnte er en liste i seg selv, f.eks.: ["OM", "1AE", "1AG"]
                 //ninCode//name//timeHorizon//
                 var natDat = new List<string>();
                 
@@ -650,7 +650,7 @@ namespace Prod.Api.Helpers
                         background = string.Join("|", impactedNatureTypes[i].Background.ToArray());
                     }
 
-                    string newcats = impactedNatureTypes[i].NiNCode + "//" + impactedNatureTypes[i].Name + "//" + impactedNatureTypes[i].TimeHorizon + "//" + impactedNatureTypes[i].ColonizedArea + "//" + impactedNatureTypes[i].AffectedArea + "//" + stateChange + "//" + background;
+                    string newcats = impactedNatureTypes[i].MajorTypeGroup + "//" + impactedNatureTypes[i].NiNCode + "//" + impactedNatureTypes[i].Name + "//" + impactedNatureTypes[i].TimeHorizon + "//" + impactedNatureTypes[i].ColonizedArea + "//" + impactedNatureTypes[i].AffectedArea + "//" + stateChange + "//" + background;
                     natDat.Add(newcats);
                 }
 
@@ -711,9 +711,9 @@ namespace Prod.Api.Helpers
             return string.Join("; ", fylkesliste);
         }
 
-        private static string GetIndoorProduction(List<Domain.MigrationPathway> importPathways, string col)
+        private static string GetIndoorProduction(string indoorPathway, List<Domain.MigrationPathway> importPathways, string col)
         {
-            if (importPathways == null || importPathways.Count == 0)
+            if (importPathways == null || importPathways.Count == 0 || indoorPathway == "positive")
             {
                 return string.Empty;
             }
