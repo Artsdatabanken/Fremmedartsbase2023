@@ -146,7 +146,7 @@ export default class Assessment51Naturtyper extends React.Component {
                     </>
                     :(assessment.limnic && !assessment.marine && !assessment.terrestrial) ?
                     <>
-                    <p> Reginal naturvariasjon skal ikke fylles ut for limniske arter ettersom bioklimatiske seksjoner er lite relevant for ferskvannssystemer </p>
+                    <p> Regional naturvariasjon skal ikke fylles ut for limniske arter ettersom bioklimatiske seksjoner er lite relevant for ferskvannssystemer </p>
                     </>
                     :
                     <>

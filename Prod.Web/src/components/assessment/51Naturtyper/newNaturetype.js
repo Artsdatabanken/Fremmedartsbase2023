@@ -20,6 +20,7 @@ export default class NewNaturetype extends React.Component {
             showModal: false,
             hideStateChange: hideStateChange,
             nyNaturtype: {
+                majorTypeGroup: null,
                 niNCode: null,
                 name: null,
                 timeHorizon: (assessment.speciesStatus == "A" && assessment.isDoorKnocker) ? "future" : null,
@@ -100,7 +101,7 @@ export default class NewNaturetype extends React.Component {
                 livsmedium={livsmedium}
                 showModal={[this, "showModal"]}
                 onOk={addNaturtype}
-                appState={appState}
+                // appState={appState}
                 labels={labels}/>
             : null}
         </div>

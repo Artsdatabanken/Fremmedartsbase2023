@@ -4,15 +4,17 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import * as Xcomp from './../observableComponents';
 import { action } from 'mobx';
+import { find } from 'ol/array';
 @observer
 export default class NaturetypeSelector extends React.Component {
     constructor(props) {
         console.log("nts: " + JSON.stringify(props.naturtyper, undefined))
         super(props)
         const ass = props.assessment
-        this.setSelectedNT = action ((naturtypekode) => {
+        this.setSelectedNT = action ((hovedtypegruppe, naturtypekode) => {
             console.log("Truet kode: " + naturtypekode.Id)
             const nnt = props.nyNaturtype
+            nnt.majorTypeGroup = hovedtypegruppe.Text
             nnt.niNCode = naturtypekode.Id
             nnt.name = naturtypekode.Text
             nnt.timeHorizon = (ass.isDoorKnocker && ass.speciesStatus == "A") ? "future" : null,
@@ -57,7 +59,7 @@ export default class NaturetypeSelector extends React.Component {
                                         : <NavigateNextIcon/> 
                                     : <div style={{width: '24px'}}></div>} {/* <-- to align all the choice buttons even though they don't have an arrow to expand */}
                                 </div>
-                                <div className="hovedtype tree-view-label btn-flat"  onClick={() => this.setSelectedNT(hovedtype)}>
+                                <div className="hovedtype tree-view-label btn-flat"  onClick={() => this.setSelectedNT(hovedtypegruppe, hovedtype)}>
                                     <span className="naturtype-kode">{hovedtype.Text}</span>
                                     <span className="nt-code">{"'"+hovedtype.Value+"'"}</span>
                                 </div>
@@ -71,14 +73,14 @@ export default class NaturetypeSelector extends React.Component {
                                             onClick={() => grunntype.Collapsed = !grunntype.Collapsed}>
                                             {grunntype.Children.length > 0 ? grunntype.Collapsed == false? <ExpandMoreIcon/> : <NavigateNextIcon/> : <div style={{width: '24px'}}></div>} {/* <-- to align all the choice buttons even though they don't have an arrow to expand */}
                                         </div>
-                                        <div className="grunntype tree-view-label btn-flat"  onClick={() => this.setSelectedNT(grunntype)}>
+                                        <div className="grunntype tree-view-label btn-flat"  onClick={() => this.setSelectedNT(hovedtypegruppe, grunntype)}>
                                             <span className="naturtype-kode">{grunntype.Text}</span>
                                             <span className="nt-code">{"'" + grunntype.Value + "'"}</span>
                                         </div>
                                         {!grunntype.Collapsed && grunntype.Children 
                                         ? <div className="tree-view-children">
                                         {grunntype.Children.map(kegrtype =>
-                                            <div key={kegrtype.Id} onClick={() => this.setSelectedNT(kegrtype)}>
+                                            <div key={kegrtype.Id} onClick={() => this.setSelectedNT(hovedtypegruppe, kegrtype)}>
                                                 <span className="grunntype btn-flat">
                                                     <span className="naturtype-kode">{kegrtype.Id}</span>
                                                     <span>{kegrtype.Text}</span>

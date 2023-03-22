@@ -13,11 +13,12 @@ export default class TruetSelector extends React.Component {
         console.log("nts: " + JSON.stringify(props.naturtyper, undefined))
         super(props)
         const ass = props.assessment
-        this.setSelectedNT = action ((naturtypekode) => {
+        this.setSelectedNT = action ((hovedtypegruppe, naturtypekode) => {
             console.log("Truet kode: " + naturtypekode.Id)
             const nnt = props.nyNaturtype
             //nnt.niNCode = naturtypekode.Id
             // set the code as null because the codes are too long (see Eveliina's comment in issue #250)
+            nnt.majorTypeGroup = hovedtypegruppe.Text
             nnt.niNCode = naturtypekode.Id
             nnt.name = naturtypekode.Text
             nnt.timeHorizon = (ass.isDoorKnocker && ass.speciesStatus == "A") ? "future" : null,
@@ -56,7 +57,7 @@ export default class TruetSelector extends React.Component {
                         <div className="tree-view-children">
                             {hovedtypegruppe.Children.map(hovedtype =>
 
-                            <div key={hovedtype.Id} className="tree-view-label btn-flat" onClick={() => this.setSelectedNT(hovedtype)}>
+                            <div key={hovedtype.Id} className="tree-view-label btn-flat" onClick={() => this.setSelectedNT(hovedtypegruppe, hovedtype)}>
                                 <div className="hovedtypegruppe">
                                     <span className="naturtype-kode">{hovedtype.Text + " ("+hovedtype.Category.substring(0,2)+")"}</span>
                                     {/*<span className="nt-code">{"'"+hovedtype.Value+"'"}</span>
