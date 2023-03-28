@@ -37,6 +37,7 @@ namespace Prod.Api.Helpers
                     .ForMember(dest => dest.RiskAssessmentOccurrences1Low, opt => opt.PreCondition(src => src.AssessmentConclusion == "AssessedDoorknocker"))
                     .ForMember(dest => dest.RiskAssessmentOccurrences1Best, opt => opt.PreCondition(src => src.AssessmentConclusion == "AssessedDoorknocker"))
                     .ForMember(dest => dest.RiskAssessmentOccurrences1High, opt => opt.PreCondition(src => src.AssessmentConclusion == "AssessedDoorknocker"))
+                    .ForMember(dest => dest.ProductionSpecies, opt => opt.PreCondition(src => src.AlienSpeciesCategory != "NotAlienSpecie"))
                     
                     .AfterMap((src, dest) =>
                     {
@@ -197,23 +198,22 @@ namespace Prod.Api.Helpers
 
         private static string GetHabitats(List<FA4.Habitat> habitats)
         {
-            if(habitats == null || habitats.Count == 0)
+            if (habitats == null || habitats.Count == 0)
             {
                 return string.Empty;
             }
             var habinfo = new List<string>();
             for (var i = 0; i < habitats.Count; ++i)
             {
-                if(habitats[i].Taxon == null || habitats[i].Taxon.ScientificName == "")
+                string taxonScientificName = string.Empty;
+                if (habitats[i].Taxon != null)
                 {
-                    string hab = habitats[i].NiNCode + "//" + habitats[i].Name + "//" + habitats[i].TimeHorizon;
-                    habinfo.Add(hab);
+                    taxonScientificName = habitats[i].Taxon.ScientificName;
                 }
-                else 
-                {
-                    string hab = habitats[i].NiNCode + "//" + habitats[i].Name + "//" + habitats[i].TimeHorizon + "//" + habitats[i].Taxon.ScientificName;
-                    habinfo.Add(hab);
-                }
+                
+                string hab = habitats[i].NiNCode + "//" + habitats[i].Name + "//" + habitats[i].TimeHorizon + "//" + taxonScientificName;
+                habinfo.Add(hab);
+                
             }
             return string.Join("; ", habinfo);
         }
@@ -1203,7 +1203,7 @@ namespace Prod.Api.Helpers
         [Name("VurderesSammenMedEtAnnetTaksonBeskrivelse")]
         public string ConnectedToAnotherTaxonDescription { get; set; } = "";
         [Name("Bruksart")]
-        public bool? ProductionSpecies { get; set; } = false;
+        public bool? ProductionSpecies { get; set; }
         [Name("Etableringsklasse")]
         public string SpeciesStatus { get; set; }
         [Name("UsikkerhetEtableringsklasseBeskrivelse")]
@@ -1708,9 +1708,9 @@ namespace Prod.Api.Helpers
         // public int RiskAssessmentBhigh { get; set; } // øvre skår for B-kriteriet (inkludert usikkerhet) 
         [Name("ForekomstarealetsMorketall")]
         public string RiskAssessmentBCritMCount { get; set; } = "";
-        public string RiskAssessmentBCritExact { get; set; } = "false";
-        public string RiskAssessmentBCritP { get; set; }
-        public string RiskAssessmentBCritNewObs { get; set; } = "True";
+        // public string RiskAssessmentBCritExact { get; set; } = "false";
+        // public string RiskAssessmentBCritP { get; set; }
+        // public string RiskAssessmentBCritNewObs { get; set; } = "True";
 
 
         // public int RiskAssessmentStartYear { get; set; } // startår for B-kriteriet / utbredelse
