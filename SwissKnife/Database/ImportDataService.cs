@@ -295,19 +295,23 @@ namespace SwissKnife.Database
                 .ToDictionary(item => item.Item1.Substring(3), item => new Tuple<string, string>(item.Item2, item.Item3));
 
             var dictNin23H = ImportDataServiceHelper.DrillDownNaturetypes23H(nin23["Children"].AsArray())
-                .ToDictionary(item => item.Item1.Substring(3), item => new Tuple<string, string>(item.Item2, item.Item3));
+                .ToDictionary(item => item.Item1.Substring(3), item => new Tuple<string, string, string>(item.Item2, item.Item3, item.Item4));
 
             //var nin = ParseJson("/Prod.Web/src/Nin2_3.json");
             var redlistNin = ParseJson("/Prod.Web/src/TrueteOgSjeldneNaturtyper2018.json");
             // key = "NA T12|124" altså med kode og value 
-            var dict = new Dictionary<string, string>();
+            var dict = new Dictionary<string, Tuple<string,string>>();
             //dict = DrillDown(nin2["Children"].AsArray()).ToDictionary(item => item.Item1.Substring(3), item => item.Item2);
             foreach (var item in
                      ImportDataServiceHelper.DrillDownRedlistedNaturetypes(redlistNin["Children"].AsArray()))
             {
                 var key = item.Item1;
-                if (!dict.ContainsKey(key)) dict.Add(key, item.Item2);
+                if (!dict.ContainsKey(key)) dict.Add(key, new Tuple<string, string>(item.Item2, item.Item3));
             }
+
+            var redlistedNaturetypes = dict
+                .Select(x => x)
+                .ToDictionary(x => x.Key.Split("|").Last(), y => y.Value);
 
             // hele koderøkla
             var codes = ParseJson("/Prod.Web/src/FA3CodesNB.json");
@@ -408,6 +412,8 @@ namespace SwissKnife.Database
 
                 ImportDataServiceHelper.FixCrazySpecies(exAssessment, CrazySpecies);
 
+                ImportDataServiceHelper.FixMainNaturetype(console, exAssessment, RedList, redlistedNaturetypes, dictNin23H);
+
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)
                 {
@@ -458,6 +464,8 @@ namespace SwissKnife.Database
                     ImportDataServiceHelper.TestForNaturetypeTrouble(console, exAssessment, RedList, dict, dictNin23);
                     ImportDataServiceHelper.FixZones(bioklimImport, bioklimPrevoisImport, exAssessment, real);
                 }
+
+                ImportDataServiceHelper.FixMainCategoryWhenMissing(exAssessment, migrationPathway);
 
                 ImportDataServiceHelper.FixMisIdentified(exAssessment, misIdentifiedDataset, real);
 

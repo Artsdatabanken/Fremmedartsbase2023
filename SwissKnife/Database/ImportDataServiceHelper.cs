@@ -607,14 +607,16 @@ internal static class ImportDataServiceHelper
         }
     }
 
-    public static List<Tuple<string, string>> DrillDownRedlistedNaturetypes(JsonArray array, string child = "Children")
+    public static List<Tuple<string, string, string>> DrillDownRedlistedNaturetypes(JsonArray array, string child = "Children", string parent = "")
     {
-        var result = new List<Tuple<string, string>>();
+        var result = new List<Tuple<string, string, string>>();
         foreach (var node in array)
         {
             var value = node["Value"].GetValue<string>() + "|" + node["Id"].GetValue<string>();
-            result.Add(new Tuple<string, string>(value, node["Text"].GetValue<string>()));
-            result.AddRange(DrillDownRedlistedNaturetypes(node[child].AsArray(), child));
+            var text = node["Text"].GetValue<string>();
+            var transferParent = (parent == "" ? text : parent);
+            result.Add(new Tuple<string, string, string>(value, text, transferParent));
+            result.AddRange(DrillDownRedlistedNaturetypes(node[child].AsArray(), child, transferParent));
         }
 
         return result;
@@ -639,23 +641,27 @@ internal static class ImportDataServiceHelper
 
         return result;
     }
-    public static List<Tuple<string, string, string>> DrillDownNaturetypes23H(JsonArray array, string id = "Id", string cat = "Category",
-        string child = "Children", string parentCategory = "")
+    public static List<Tuple<string, string, string, string>> DrillDownNaturetypes23H(JsonArray array, string id = "Id", string cat = "Category",
+        string child = "Children", string parentCategory = "", string parentText = "")
     {
-        var result = new List<Tuple<string, string, string>>();
+        var result = new List<Tuple<string, string, string, string>>();
         foreach (var node in array)
         {
             var idn = node[id].GetValue<string>();
             var category = node[cat].GetValue<string>();
             var tekst = node["Text"].GetValue<string>();
+            if (category == "Hovedtypegruppe")
+                parentText = tekst;
             if (category == "Hovedtype")
-                result.Add(new Tuple<string, string, string>(idn, category, tekst));
+                result.Add(new Tuple<string, string, string, string>(idn, category, tekst, parentText));
             if (parentCategory == "Hovedtype" && category == "Grunntype")
-                result.Add(new Tuple<string, string, string>(idn, category, tekst));
+                result.Add(new Tuple<string, string, string, string>(idn, category, tekst, parentText));
             if (parentCategory == "Hovedtype" && category == "Kartleggingsenhet")
-                result.Add(new Tuple<string, string, string>(idn, category, tekst));
+                result.Add(new Tuple<string, string, string, string>(idn, category, tekst, parentText));
+            if (parentCategory == "Kartleggingsenhet" && category == "Grunntype")
+                result.Add(new Tuple<string, string, string, string>(idn, category, tekst, parentText));
 
-            result.AddRange(DrillDownNaturetypes23H(node[child].AsArray(), id, cat, child, category));
+            result.AddRange(DrillDownNaturetypes23H(node[child].AsArray(), id, cat, child, category, parentText));
         }
 
         return result;
@@ -754,7 +760,7 @@ internal static class ImportDataServiceHelper
     /// Litt usikker på hva denne var for igjen...
     /// </summary>
     public static void TestForNaturetypeTrouble(IConsole console, FA4 exAssessment, string[] RedList,
-        Dictionary<string, string> dictionary, Dictionary<string, Tuple<string, string>> dictNin)
+        Dictionary<string, Tuple<string, string>> dictionary, Dictionary<string, Tuple<string, string>> dictNin)
     {
         if (exAssessment.ImpactedNatureTypes.Any())
         {
@@ -862,6 +868,123 @@ internal static class ImportDataServiceHelper
             }
         }
     }
+
+    /// <summary>
+    /// Litt usikker på hva denne var for igjen...
+    /// </summary>
+    public static void FixMainNaturetype(IConsole console, FA4 exAssessment, string[] RedList,
+        Dictionary<string, Tuple<string, string>> redlistedNaturetypes, Dictionary<string, Tuple<string, string, string>> dictNin) {
+        if (exAssessment.ImpactedNatureTypes.Any()) {
+            foreach (var impactedNatureType in exAssessment.ImpactedNatureTypes) {
+                var natureTypeArea = impactedNatureType.AffectedArea;
+
+
+                if (redlistedNaturetypes.ContainsKey(impactedNatureType.NiNCode))
+                {
+                    var denne = redlistedNaturetypes[impactedNatureType.NiNCode];
+                    impactedNatureType.MajorTypeGroup = denne.Item2;
+                }
+                else if (dictNin.ContainsKey(impactedNatureType.NiNCode)) {
+                    var denne = dictNin[impactedNatureType.NiNCode];
+                    impactedNatureType.MajorTypeGroup = denne.Item3;
+                }
+                else if (dictNin.ContainsKey(impactedNatureType.NiNCode.Replace("NA ",""))) {
+                    var denne = dictNin[impactedNatureType.NiNCode.Replace("NA ", "")];
+                    impactedNatureType.MajorTypeGroup = denne.Item3;
+                }
+                else
+                {
+                    console.WriteLine(
+                     $"{exAssessment.ExpertGroup} {impactedNatureType.NiNCode} -> NOTFOUND {natureTypeArea} {exAssessment.EvaluatedScientificName} {exAssessment.EvaluatedVernacularName}");
+                }
+                //if (RedList.Contains(impactedNatureType.NiNCode)) // && exAssessment.EvaluationStatus == "finished") // && natureTypeArea != "0")
+                //{
+                //    if (exAssessment.ExpertGroup.ToLowerInvariant().Contains("svalbard"))
+                //    {
+                //        // svalbard
+                //        var newCode = dictionary.Where(x => x.Key.Split("|").First() == impactedNatureType.NiNCode)
+                //            .First().Key.Split("|").Last();
+                //        if (newCode == "75")
+                //        {
+                //            newCode = "124";
+                //        }
+                //        console.WriteLine(
+                //            $"{exAssessment.ExpertGroup} {impactedNatureType.NiNCode} -> {newCode} {natureTypeArea} {exAssessment.EvaluatedScientificName} {exAssessment.EvaluatedVernacularName}");
+
+                //        impactedNatureType.NiNCode = newCode;
+                //    }
+                //    else
+                //    {
+                //        // annet
+                //        var newCode = dictionary.Where(x => x.Key.Split("|").First() == impactedNatureType.NiNCode)
+                //            .First().Key.Split("|").Last();
+                //        if (newCode == "124")
+                //        {
+                //            newCode = "75";
+                //        }
+                //        console.WriteLine(
+                //            $"{exAssessment.ExpertGroup} {impactedNatureType.NiNCode} -> {newCode} {natureTypeArea} {exAssessment.EvaluatedScientificName} {exAssessment.EvaluatedVernacularName}");
+
+                //        impactedNatureType.NiNCode = newCode;
+                //    }
+
+                //    //console.WriteLine(
+                //    //    $"{(exAssessment.EvaluationStatus == "finished" ? "Ferdigstillt:": string.Empty)} {exAssessment.ExpertGroup} {impactedNatureType.NiNCode} {natureTypeArea} {exAssessment.EvaluatedScientificName} {exAssessment.EvaluatedVernacularName}");
+                //}
+            }
+
+            //var test = exAssessment.ImpactedNatureTypes.GroupBy(x => x.NiNCode)
+            //    .Select(x => new { NiNCode = x.Key, ImpactedNatureTypes = x.ToArray() });
+            //foreach (var group in test) {
+            //    if (dictNin.Any(x => "NA " + x.Key.Split("-").First() == group.NiNCode)) {
+            //        //console.WriteLine(
+            //        //    $"{(exAssessment.EvaluationStatus == "imported" ? "Ikkje påbegynt:" : string.Empty)} {group.NiNCode} {exAssessment.ExpertGroup}  {exAssessment.EvaluatedScientificName} {exAssessment.EvaluatedVernacularName}");
+            //    }
+
+            //    if (group.ImpactedNatureTypes.Length > 1) {
+            //        if (dictNin.Any(x => "NA " + x.Key.Split("-").First() == group.NiNCode))
+            //            console.WriteLine(
+            //                $"{(exAssessment.EvaluationStatus == "finished" ? "Ferdigstillt:" : string.Empty)} {group.NiNCode} {exAssessment.ExpertGroup}  {exAssessment.EvaluatedScientificName} {exAssessment.EvaluatedVernacularName}");
+            //        if (dictNin.Any(x => x.Key.Split("-").First() == group.NiNCode)) {
+            //            //console.WriteLine(
+            //            //    $"{(exAssessment.EvaluationStatus == "finished" ? "Ferdigstillt:" : string.Empty)} {group.NiNCode} {exAssessment.ExpertGroup}  {exAssessment.EvaluatedScientificName} {exAssessment.EvaluatedVernacularName}");
+            //        }
+
+            //        var test2 = group.ImpactedNatureTypes.Select(x => x.TimeHorizon).Distinct().ToArray();
+            //        if (test2.Length != group.ImpactedNatureTypes.Length && exAssessment.EvaluationStatus == "imported") {
+            //            // hvis status = ''
+            //            //console.WriteLine(
+            //            //    $"{(exAssessment.EvaluationStatus == "imported" ? "Ikkje påbegynt:" : string.Empty)} {exAssessment.ExpertGroup}  {exAssessment.EvaluatedScientificName} {exAssessment.EvaluatedVernacularName}");
+            //            var naturtyper = group.ImpactedNatureTypes.ToArray();
+
+            //            var naturtyperLength = naturtyper.Length;
+            //            var removed = new List<FA4.ImpactedNatureType>();
+            //            for (var i = 0; i < naturtyperLength; i++) {
+            //                var outer = naturtyper[i];
+            //                if (removed.Contains(outer)) continue;
+
+            //                for (var j = i + 1; j < naturtyperLength; j++) {
+            //                    var inner = naturtyper[j];
+            //                    if (removed.Contains(inner)) continue;
+
+            //                    if (outer.NiNCode == inner.NiNCode &&
+            //                        outer.TimeHorizon == inner.TimeHorizon &&
+            //                        outer.ColonizedArea == inner.ColonizedArea &&
+            //                        outer.AffectedArea == inner.AffectedArea &&
+            //                        outer.StateChange.All(x => inner.StateChange.Contains(x)) &&
+            //                        outer.Background.All(x => inner.Background.Contains(x))
+            //                       ) {
+            //                        removed.Add(inner);
+            //                        exAssessment.ImpactedNatureTypes.Remove(inner);
+            //                    }
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
+        }
+    }
+
 
     public static Dictionary<int, Rodliste2021Rad[]> GetRedlistByScientificNameDictionary(string inputFolder,
         CsvConfiguration theCsvConfiguration)
@@ -1318,8 +1441,8 @@ internal static class ImportDataServiceHelper
         return str;
     }
 
-    public static void FixMissingNaturtypeName(FA4 exAssessment, Dictionary<string, Tuple<string, string>> dictNin23,
-        Dictionary<string, string> dict)
+    public static void FixMissingNaturtypeName(FA4 exAssessment, Dictionary<string, Tuple<string, string, string>> dictNin23,
+        Dictionary<string, Tuple<string, string>> dict)
     {
         // key = "NA T12|124" altså med kode og value 
         // var dict
@@ -1348,7 +1471,7 @@ internal static class ImportDataServiceHelper
                         .FirstOrDefault(x => x.Key == "NA " + interaction.NiNCode);
                     if (!string.IsNullOrWhiteSpace(redhit.Key))
                     {
-                        interaction.Name = redhit.Value;
+                        interaction.Name = redhit.Value.Item1;
                     }
                     else if (!string.IsNullOrWhiteSpace(hit3.Key))
                     {
