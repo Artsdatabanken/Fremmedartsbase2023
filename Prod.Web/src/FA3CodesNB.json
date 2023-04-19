@@ -6067,7 +6067,7 @@
                         {
                             "Id": null,
                             "Value": "testVersion",
-                            "Text": "Dette er en testversjon. Driftversjonen finner du ",
+                            "Text": "Dette er en testversjon av FremmedArtsBasen (FAB).",
                             "Info": null,
                             "Children": null
                         },

@@ -210,8 +210,8 @@ export default class SelectAssessment extends Component {
             <div>
                 {!config.isNotTest && config.isRelease && <table className="table warning table-striped">
                     <tr>
-                        <td><b>{labels.SelectAssessment.testVersion}<a href="https://fab4.artsdatabanken.no/">{labels.SelectAssessment.here}</a>.</b></td>
-                    </tr>
+                        <td><b>{labels.SelectAssessment.testVersion}</b></td> {/* link to drift:<a href="https://fab4.artsdatabanken.no/">{labels.SelectAssessment.here}</a>. */}
+                    </tr>    
                 </table>}              
 
                  <Xcomp.StringEnum 
