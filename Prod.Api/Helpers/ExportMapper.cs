@@ -38,6 +38,16 @@ namespace Prod.Api.Helpers
                     .ForMember(dest => dest.RiskAssessmentOccurrences1Best, opt => opt.PreCondition(src => src.AssessmentConclusion == "AssessedDoorknocker"))
                     .ForMember(dest => dest.RiskAssessmentOccurrences1High, opt => opt.PreCondition(src => src.AssessmentConclusion == "AssessedDoorknocker"))
                     .ForMember(dest => dest.ProductionSpecies, opt => opt.PreCondition(src => src.AlienSpeciesCategory != "NotAlienSpecie"))
+                    .ForMember(dest => dest.SpeciesStatus, opt => 
+                    {
+                        opt.PreCondition(src => src.AlienSpeciesCategory is not "NotAlienSpecie" or "MisIdentified");
+                        opt.MapFrom(src => src.SpeciesStatus != "C3" ? src.SpeciesStatus : src.SpeciesEstablishmentCategory);
+                    })
+                    .ForMember(dest => dest.AlienSpeciesCategory2018, opt => 
+                    {
+                        opt.PreCondition(src => src.PreviousAssessments.SingleOrDefault(x => x.RevisionYear == 2018) is not null);
+                        opt.MapFrom(src => src.PreviousAssessments.SingleOrDefault(x => x.RevisionYear == 2018).MainCategory == "NotApplicable" ? src.PreviousAssessments.SingleOrDefault(x => x.RevisionYear == 2018).MainSubCategory : src.PreviousAssessments.SingleOrDefault(x => x.RevisionYear == 2018).MainCategory);
+                    })
                     .ForMember(dest => dest.GeographicalVariationCauses, opt => 
                     {
                         opt.PreCondition(src => src.RiskAssessment.PossibleLowerCategory is "yes" && src.Category is not "NR");
@@ -48,8 +58,13 @@ namespace Prod.Api.Helpers
                         opt.PreCondition(src => src.RiskAssessment.PossibleLowerCategory is "yes" && src.Category is not "NR");
                         opt.MapFrom(src => src.RiskAssessment.GeographicalVariationDocumentation);
                     })
+                    .ForMember(dest => dest.InvationScore, opt => opt.MapFrom(src => ExportMapperHelper.GetScores(src.Category, src.Criteria, "inv")))
+                    .ForMember(dest => dest.EcoEffectScore, opt => opt.MapFrom(src => ExportMapperHelper.GetScores(src.Category, src.Criteria, "eco")))
                     .ForMember(dest => dest.ImpactedRedlistEvaluatedSpecies, opt => opt.MapFrom(src => ExportMapperHelper.GetDEcritInformation(src.RiskAssessment.SpeciesSpeciesInteractions)))
                     .ForMember(dest => dest.ImpactedRedlistEvaluatedSpeciesEnsemble, opt => opt.MapFrom(src => ExportMapperHelper.GetDEcritInformationNaturetypes(src.RiskAssessment.SpeciesNaturetypeInteractions)))
+                    .ForMember(dest => dest.IntrogressionRedlistedSpecies, opt => opt.MapFrom(src => ExportMapperHelper.GetHcritInformation(src.RiskAssessment.GeneticTransferDocumented)))
+                    .ForMember(dest => dest.ParasiteTransferRedlistedSpecies, opt => opt.MapFrom(src => ExportMapperHelper.GetIcritInformation(src.RiskAssessment.HostParasiteInformations)))
+                        
                     .AfterMap((src, dest) =>
                     {
                         var ass2018 = src.PreviousAssessments.SingleOrDefault(x => x.RevisionYear == 2018);
@@ -120,7 +135,6 @@ namespace Prod.Api.Helpers
                         dest.SpreadNatureMainCatAndCat = GetIntroSpreadInfo(src.AssesmentVectors, "spread", "cat");
                         dest.SpreadNatureFreqNumTime = GetIntroSpreadInfo(src.AssesmentVectors, "spread", "freqs");
                         dest.RegionalDistribution = GetRegionalDistribution(src.Fylkesforekomster);
-                        dest.SpeciesStatus = GetSpeciesStatus(src.SpeciesStatus, src.SpeciesEstablishmentCategory);
                         dest.IntroductionsLow = introductionsLow(src, src.RiskAssessment);
                         dest.IntroductionsHigh = introductionsHigh(src, src.RiskAssessment);
                         dest.AOO10yrBest = AOO10yrBest(src, src.RiskAssessment);
@@ -164,12 +178,9 @@ namespace Prod.Api.Helpers
                         dest.RiskAssessmentExpansionSpeed = GetRiskAssessmentExpansionSpeed(src, src.RiskAssessment, "50", src.AssessmentConclusion);
                         dest.RiskAssessmentExpansionLowerQ = GetRiskAssessmentExpansionSpeed(src, src.RiskAssessment, "25", src.AssessmentConclusion);
                         dest.RiskAssessmentExpansionUpperQ = GetRiskAssessmentExpansionSpeed(src, src.RiskAssessment, "75", src.AssessmentConclusion);
-                        dest.IntrogressionRedlistedSpecies = GetHcritInformation(src.RiskAssessment.GeneticTransferDocumented);
                         dest.Habitats = GetHabitats(src.Habitats);
                         dest.ReasonForChangeOfCategory = GetReasonForChangeOfCategory(src.ReasonForChangeOfCategory, src.Category, dest.Category2018);
-                        dest.AlienSpeciesCategory = GetAlienSpeciesCategory(src.AlienSpeciesCategory);
-                        dest.InvationScore = GetScores(src.Category, src.Criteria, "inv");
-                        dest.EcoEffectScore = GetScores(src.Category, src.Criteria, "eco");
+                        // dest.AlienSpeciesCategory = GetAlienSpeciesCategory(src.AlienSpeciesCategory);
                         // overkjøre status for vurderinger som kom fra horizontscanning
                         dest.EvaluationStatus = GetProgress(src);
                     });
@@ -180,20 +191,6 @@ namespace Prod.Api.Helpers
             return mapper;
         }
 
-        private static int? GetScores(string category, string criteria, string v)
-        {
-            if (category == "NR" || category == "" || category == null)
-            {
-                return null;
-            }
-            else 
-            {
-                int SInv = (int)Char.GetNumericValue(criteria[0]);
-                string SEco = criteria.Split(",")[1];
-                int SEco2 = (int)Char.GetNumericValue(SEco[0]);
-                return  v == "inv"? SInv: SEco2;
-            }
-        }
 
         private static string GetReasonForChangeOfCategory(List<string> reasonForChangeOfCategory, string category, string cat2018)
         {
@@ -227,20 +224,6 @@ namespace Prod.Api.Helpers
             return string.Join("; ", habinfo);
         }
 
-        private static string GetHcritInformation(List<RiskAssessment.SpeciesSpeciesInteraction> genTrans)
-        {
-            if (genTrans == null || genTrans.Count == 0)
-            {
-                return string.Empty;
-            }
-            var Redlistinfo = new List<string>();
-            for (var i = 0; i < genTrans.Count; ++i) 
-            {
-                string interact = genTrans[i].ScientificName + "//" + genTrans[i].RedListCategory + "//" + genTrans[i].KeyStoneSpecie + "//" + genTrans[i].Scale;
-                Redlistinfo.Add(interact);
-            }
-            return string.Join("; ", Redlistinfo);
-        }
 
         private static long? GetExpansionSpeedB2a(RiskAssessment ra) 
         {
@@ -566,7 +549,6 @@ namespace Prod.Api.Helpers
                         string newcat = coastLineSections[i].ClimateZone + "-" + (coastLineSections[i].None.Equals(true)? "None//" : "") + (coastLineSections[i].OpenCoastLine.Equals(true)? "OpenCoastLine//" : "") + (coastLineSections[i].Skagerrak.Equals(true)? "Skagerrak//" : "");
                         ZoneSections.Add(newcat);
                     }
-
                 }
                 return string.Join("; ", ZoneSections);
             
@@ -634,38 +616,30 @@ namespace Prod.Api.Helpers
                 return string.Join("; ", natDat);
             
         }
-        private static Dictionary<string, string> AlienSpeciesCat = new Dictionary<string, string>()
-        {
-            {"AlienSpecie", "Selvstendig reproduserende" },
-            {"DoorKnocker","Dørstokkart"},
-            {"EffectWithoutReproduction","Effekt uten selvstendig reproduksjon"},
-            {"RegionallyAlien","Regionalt fremmed"},
-            {"NotAlienSpecie", "Ikke fremmed"},
-            {"TaxonEvaluatedAtAnotherLevel","Vurderes på et annet taksonomisk nivå"},
-            {"UncertainBefore1800", "Etablert per 1800"},
-            {"MisIdentified", "Feilbestemt i 2018"},
-            {"AllSubTaxaAssessedSeparately", "Vurderes ikke fordi det foreligger separate vurderinger av infraspesifikke taksa"},
-            {"HybridWithoutOwnRiskAssessment", "Utenfor avgrensningen"},
-            {"NotDefined", "Ikke definert"},
-            {"NotApplicable", ""},
-            {"EcoEffectWithoutEstablishment", ""}
-        };
-        private static string GetAlienSpeciesCategory(string AlienCat)
-        {
-            if(AlienCat == null || AlienCat == "")
-            {
-                return string.Empty;
-            }
-            return AlienSpeciesCat[AlienCat];
-        }
-        private static string GetSpeciesStatus(string speciesStatus, string speciesEstablishmentCategory)
-        {
-            if (speciesStatus != "C3")
-            {
-                return speciesStatus;
-            }
-            return speciesEstablishmentCategory;
-        }
+        // private static Dictionary<string, string> AlienSpeciesCat = new Dictionary<string, string>()
+        // {
+        //     {"AlienSpecie", "Selvstendig reproduserende" },
+        //     {"DoorKnocker","Dørstokkart"},
+        //     {"EffectWithoutReproduction","Effekt uten selvstendig reproduksjon"},
+        //     {"RegionallyAlien","Regionalt fremmed"},
+        //     {"NotAlienSpecie", "Ikke fremmed"},
+        //     {"TaxonEvaluatedAtAnotherLevel","Vurderes på et annet taksonomisk nivå"},
+        //     {"UncertainBefore1800", "Etablert per 1800"},
+        //     {"MisIdentified", "Feilbestemt i 2018"},
+        //     {"AllSubTaxaAssessedSeparately", "Vurderes ikke fordi det foreligger separate vurderinger av infraspesifikke taksa"},
+        //     {"HybridWithoutOwnRiskAssessment", "Utenfor avgrensningen"},
+        //     {"NotDefined", "Ikke definert"},
+        //     {"NotApplicable", ""},
+        //     {"EcoEffectWithoutEstablishment", ""}
+        // };
+        // private static string GetAlienSpeciesCategory(string AlienCat)
+        // {
+        //     if(AlienCat == null || AlienCat == "")
+        //     {
+        //         return string.Empty;
+        //     }
+        //     return AlienSpeciesCat[AlienCat];
+        // }
 
         private static string GetRegionalDistribution(List<Fylkesforekomst> fylkesforekomster)
         {
@@ -1075,10 +1049,6 @@ namespace Prod.Api.Helpers
         }
     }
 
-    // public class CustomHabitatsConverter
-    // {
-    // }
-
     public class CustomSpreadHistoryConverter : ITypeConverter<List<SpreadHistory>, string> //how to take one element from a list to one column in export (here column SpreadHistory using "id" from the list)
     {
         public string Convert(List<SpreadHistory> source, string destination, ResolutionContext context)
@@ -1169,6 +1139,8 @@ namespace Prod.Api.Helpers
         public int? EcoEffectScore {get; set; }
         [Name("Kategori2018")]
         public string Category2018 { get; set; }
+        [Name("Fremmedartsstatus2018")]
+        public string AlienSpeciesCategory2018 { get; set; }
         [Name("Kriterier2018")]
         public string Criteria2018 { get; set; }
         [Name("AarsakTilEndringIKategori")]
@@ -1519,6 +1491,8 @@ namespace Prod.Api.Helpers
             public int? RiskAssessmentCriteriaHHigh { get; set; }
             [Name("H-SkaarBeskrivelse")]
             public string RiskAssessmentHCritInsecurity {get; set;}
+            [Name("OverføringAvParasitterPatogener")]
+            public string ParasiteTransferRedlistedSpecies {get; set;}
             [Name("I-Skaar")]
             public int? RiskAssessmentCriteriaI { get; set; }
             [Name("I-skaarLavtanslag")]
