@@ -64,6 +64,11 @@ namespace Prod.Api.Helpers
                     .ForMember(dest => dest.ImpactedRedlistEvaluatedSpeciesEnsemble, opt => opt.MapFrom(src => ExportMapperHelper.GetDEcritInformationNaturetypes(src.RiskAssessment.SpeciesNaturetypeInteractions)))
                     .ForMember(dest => dest.IntrogressionRedlistedSpecies, opt => opt.MapFrom(src => ExportMapperHelper.GetHcritInformation(src.RiskAssessment.GeneticTransferDocumented)))
                     .ForMember(dest => dest.ParasiteTransferRedlistedSpecies, opt => opt.MapFrom(src => ExportMapperHelper.GetIcritInformation(src.RiskAssessment.HostParasiteInformations)))
+                    .ForMember(dest => dest.RiskAssessmentPossibleLowerCategory, opt => opt.MapFrom(src => src.Category == "NK" ? "no" : src.RiskAssessment.PossibleLowerCategory))
+                    .ForMember(dest => dest.RiskAssessmentClimateEffectsInvationpotential, opt => opt.MapFrom(src => src.Category == "NK" ? "no" : src.RiskAssessment.ClimateEffectsInvationpotential))
+                    .ForMember(dest => dest.RiskAssessmentClimateEffectsEcoEffect, opt => opt.MapFrom(src => src.Category == "NK" ? "no" : src.RiskAssessment.ClimateEffectsEcoEffect))
+
+
                         
                     .AfterMap((src, dest) =>
                     {
