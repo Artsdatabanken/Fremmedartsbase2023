@@ -475,6 +475,8 @@ namespace SwissKnife.Database
 
                 ImportDataServiceHelper.FixCrazySpecies(exAssessment, CrazySpecies);
 
+                ImportDataServiceHelper.FixMainNaturetype(console, exAssessment, RedList, redlistedNaturetypes, dictNin23H);
+
                 var comparisonResult = comparer.Compare(orgCopy, exAssessment);
                 if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)
                 {
