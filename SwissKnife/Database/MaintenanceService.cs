@@ -7,11 +7,16 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using CsvHelper;
 using CsvHelper.Configuration;
 using Prod.Infrastructure.Helpers;
 using System.Collections;
+using System.ComponentModel.Design;
+using Microsoft.EntityFrameworkCore;
 
 namespace SwissKnife.Database
 {
@@ -1237,6 +1242,125 @@ namespace SwissKnife.Database
 
                 _database.SaveChanges();
             }
+        }
+        public static void RunImportFileData(SqlServerProdDbContext _database, string inputFolder)
+        {
+            var existing = _database.Assessments.Where(x => x.IsDeleted == false).Where(x=>x.Expertgroup == "Karplanter")
+                .Select(x => new { x.Id, x.Expertgroup, x.ScientificNameId, x.Doc }).ToArray()
+                .Select(x => new { x.Id, x.Expertgroup, x.ScientificNameId, Doc = JsonSerializer.Deserialize<FA4>(x.Doc)})
+                .Where(x=>x.Doc.HorizonDoScanning == false)
+                .Select(x=> new {x.Id, x.Expertgroup, x.ScientificNameId, ScientificName = x.Doc.EvaluatedScientificName
+                    .Replace("subsp. ","")
+                    .Replace("var. ","")
+                    //.Replace((char)39 ,'"').Replace("\"", "")
+                    .Replace("'", "")
+                    .Replace("\\u0027", "")})
+                .ToArray();
+
+
+            var files = System.IO.Directory.GetFiles(inputFolder);
+            var user = _database.Users.Single(x => x.Email == "olav.skarpaas@nhm.uio.no");
+            foreach (var file in files)
+            {
+                var filename = file.Replace(inputFolder + "\\", "");
+                var scientificname = file.Split("\\").Last().Split(" ekspansjonsdata", StringSplitOptions.RemoveEmptyEntries)[0].Replace("'", "");
+                var steg1 = existing.Where(x => x.ScientificName == scientificname).ToArray();
+                if (steg1.Length > 1)
+                {
+                    Console.WriteLine("Flere treff på " + scientificname);
+
+                }else{
+
+                var assessment = existing.Where(x => x.ScientificName == scientificname).SingleOrDefault();
+                    if (assessment != null)
+                    {
+                        var docAssessment = _database.Assessments.Include(x => x.Attachments).Single(x => x.Id == assessment.Id);
+                        if (docAssessment.Attachments.Any(x => x.FileName == file))
+                        {
+                            
+                        }
+                        else
+                        {
+                            docAssessment.Attachments.Add(new Attachment()
+                            {
+                                Type = "text/csv",
+                                Date = DateTime.Today,
+                                FileName = filename,
+                                Name = "Ekspansjonsdata",
+                                UserId = user.Id,
+                                File = File.ReadAllBytes(file)
+                            });
+                            _database.SaveChanges();
+                            Console.WriteLine("La til " + file + " til vurdering for " + scientificname);
+                        }
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("Ingen Match på " + scientificname);
+                    }
+
+                }
+            }
+
+
+            //var existing = _database.Assessments.Where(x => x.IsDeleted == false)
+            //    .Select(x => new { x.Id, x.Expertgroup, x.ScientificNameId }).ToArray();
+
+            //var theCsvConfiguration = new CsvConfiguration(new CultureInfo("nb-NO"))
+            //{
+            //    Delimiter = ";",
+            //    Encoding = Encoding.UTF8
+            //};
+            //var taxonService = new SwissKnife.Database.TaksonService();
+            //var datetime = DateTime.MinValue;
+            //using (var reader = new StreamReader(inputFolder))
+            //using (var csv = new CsvReader(reader, theCsvConfiguration))
+            //{
+            //    var records = csv.GetRecords<GTFormat>();
+            //    foreach (var importFormat in records)
+            //    {
+            //        if (importFormat.EvaluatedScientificNameAuthor == "null")
+            //            importFormat.EvaluatedScientificNameAuthor = null;
+            //        Console.WriteLine(
+            //            $"{importFormat.EvaluatedScientificNameId} {importFormat.EvaluatedScientificName} {importFormat.EvaluatedScientificNameAuthor}");
+
+            //        //var ti = taxonService.getTaxonInfo(importFormat.EvaluatedScientificNameId).GetAwaiter().GetResult();
+            //        //if (ti == null)
+            //        //{
+            //        //    Console.WriteLine(
+            //        //        $"ERROR - could not find in Artsnavnebase: {importFormat.EvaluatedScientificNameId} {importFormat.EvaluatedScientificName} {importFormat.EvaluatedScientificNameAuthor}");
+            //        //    continue;
+            //        //}
+
+            //        var assessment = existing.SingleOrDefault(x => x.Id == importFormat.Id);
+
+            //        if (assessment == null)
+            //        {
+            //            // sikkert ok
+            //        }
+            //        else
+            //        {
+            //            var ass = _database.Assessments.Single(x => x.Id == importFormat.Id);
+            //            var doc = System.Text.Json.JsonSerializer.Deserialize<FA4>(ass.Doc);
+            //            if (doc.ReproductionGenerationTime != importFormat.reproductionGenerationTime)
+            //            {
+            //                Console.WriteLine($"Endret fra {doc.ReproductionGenerationTime} til {importFormat.reproductionGenerationTime}");
+            //            }
+            //            doc.ReproductionGenerationTime = importFormat.reproductionGenerationTime;
+            //            ass.Doc = System.Text.Json.JsonSerializer.Serialize<FA4>(doc);
+            //        }
+
+            //        //var doc = System.Text.Json.JsonSerializer.Serialize<FA4>(fa4);
+            //        //var allmatch = existing.Where(x =>
+            //        //                        alternativeIds.Contains(x.ScientificNameId) && x.Expertgroup == fa4.ExpertGroup).ToArray();
+            //        //var exst = existing.SingleOrDefault(x => x.ScientificNameId == fa4.EvaluatedScientificNameId && x.Expertgroup != "Testedyr");
+
+            //        // _database.SaveChanges();
+            //    }
+
+            //    _database.SaveChanges();
+            //}
         }
     }
 

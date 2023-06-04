@@ -543,7 +543,7 @@ namespace SwissKnife.Database
                 .Where(x=> theseIds.Contains(x.Id))
                 .ToDictionary(x => x.Id, x => x);
 
-
+            var liste = new List<Tuple<CTaxon,CTaxon>>();
             foreach (var rad in TransferList.Where(x => x.ReadyToTransfer))
             {
                 var fromAssessment = existing[rad.FromId];
@@ -569,8 +569,34 @@ namespace SwissKnife.Database
                     toAssessment.Doc = JsonSerializer.Serialize<FA4>(to);
                 }
 
+                liste.Add(new Tuple<CTaxon, CTaxon>(new CTaxon()
+                {
+                    TaxonID = from.TaxonId,
+                    TaxonRank = from.EvaluatedScientificNameRank,
+                    ScientificName = from.EvaluatedScientificName,
+                    ScientificNameId = (int)from.EvaluatedScientificNameId,
+                    AssessmentId = from.Id
+                }, new CTaxon()
+                {
+                    TaxonID = to.TaxonId,
+                    TaxonRank = to.EvaluatedScientificNameRank,
+                    ScientificName = to.EvaluatedScientificName,
+                    ScientificNameId = (int)to.EvaluatedScientificNameId,
+                    AssessmentId = to.Id
+                }));
                 _database.SaveChanges();
             }
+
+            foreach (var items in existing.Values)
+            {
+                var connections = liste.Where(x => x.Item1.AssessmentId == items.Id)
+                    .Select(x => x.Item2)
+                    .Union(liste.Where(x => x.Item2.AssessmentId == items.Id).Select(x => x.Item2)).ToArray();
+                var denne = JsonSerializer.Deserialize<FA4>(items.Doc, _jsonSerializerOptions);
+                denne.ConnectedTaxons = connections;
+                items.Doc = JsonSerializer.Serialize<FA4>(denne);
+            }
+            _database.SaveChanges();
         }
 
     }

@@ -118,7 +118,6 @@ internal static class ImportDataServiceHelper
             to.ProductionSpeciesDescription = from.ProductionSpeciesDescription;
             to.UncertainityEstablishmentTimeDescription = from.UncertainityEstablishmentTimeDescription;
             to.UncertainityStatusDescription = from.UncertainityStatusDescription;
-            to.SpeciesStatus = from.SpeciesStatus;
             to.AlienSpecieUncertainIfEstablishedBefore1800 = from.AlienSpecieUncertainIfEstablishedBefore1800;
             to.UncertainityEstablishmentTimeDescription = from.UncertainityEstablishmentTimeDescription;
             to.FurtherInfo = from.FurtherInfo;
@@ -151,6 +150,8 @@ internal static class ImportDataServiceHelper
         }
 
         to.RiskAssessment = riskAssessmentClone;
+
+        to.SpeciesStatus = from.SpeciesStatus;
 
         to.References = from.References;
         to.ArtskartManuellKommentar = from.ArtskartManuellKommentar;

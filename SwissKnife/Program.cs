@@ -27,7 +27,7 @@ namespace SwissKnife
         }
 
         [Command("maintenance", Description = "Run tasks for maintaining database")]
-        [Subcommand(typeof(TaxonomyWash),typeof(NightTasks), typeof(TaxonomyWashDirect), typeof(ImportNames), typeof(ImportGTData), typeof(ImportHSData), typeof(PatchMigration), typeof(TransferFromHorizonScan), typeof(TransferDataAcrossAssessments))]
+        [Subcommand(typeof(TaxonomyWash),typeof(NightTasks), typeof(TaxonomyWashDirect), typeof(ImportNames), typeof(ImportGTData), typeof(ImportHSData), typeof(PatchMigration), typeof(TransferFromHorizonScan), typeof(TransferDataAcrossAssessments), typeof(ImportAttachementData))]
         [HelpOption("--help")]
         internal class Maintenance {
             private int OnExecute(IConsole console)
@@ -120,6 +120,23 @@ namespace SwissKnife
                     MaintenanceService.RunImportHSAssessments(new Prod.Data.EFCore.SqlServerProdDbContext(ConnectionString), InputFolder);
                 }
             }
+
+            [Command("importfiles", Description = "update generaiontime on assessments")]
+            internal class ImportAttachementData : MaintananceBase
+            {
+                //[Option("--speciesgroup", Description = "SpeciesGroup to put assessments in")]
+                //[Required]
+                //public string SpeciesGroup { get; }
+
+                [Option("--folder", Description = "CvsFile with path")]
+                [Required]
+                public string InputFolder { get; }
+                private void OnExecute(IConsole console)
+                {
+                    MaintenanceService.RunImportFileData(new Prod.Data.EFCore.SqlServerProdDbContext(ConnectionString), InputFolder);
+                }
+            }
+
 
             [Command("importgenerationtime", Description = "update generaiontime on assessments")]
             internal class ImportGTData : MaintananceBase

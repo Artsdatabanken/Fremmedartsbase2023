@@ -273,6 +273,11 @@ namespace Prod.Domain
 
         public CTaxon ConnectedTaxon { get; set; }
 
+        /// <summary>
+        /// List of all conneted taxons
+        /// </summary>
+        public CTaxon[] ConnectedTaxons { get; set; }
+
         public string SpeciesStatus { get; set; }
 
         public bool? ProductionSpecies { get; set; } // = false; sah #358
