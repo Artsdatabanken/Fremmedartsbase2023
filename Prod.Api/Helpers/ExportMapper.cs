@@ -37,7 +37,39 @@ namespace Prod.Api.Helpers
                     .ForMember(dest => dest.RiskAssessmentOccurrences1Low, opt => opt.PreCondition(src => src.AssessmentConclusion == "AssessedDoorknocker"))
                     .ForMember(dest => dest.RiskAssessmentOccurrences1Best, opt => opt.PreCondition(src => src.AssessmentConclusion == "AssessedDoorknocker"))
                     .ForMember(dest => dest.RiskAssessmentOccurrences1High, opt => opt.PreCondition(src => src.AssessmentConclusion == "AssessedDoorknocker"))
-                    
+                    .ForMember(dest => dest.ProductionSpecies, opt => opt.PreCondition(src => src.AlienSpeciesCategory != "NotAlienSpecie"))
+                    .ForMember(dest => dest.SpeciesStatus, opt => 
+                    {
+                        opt.PreCondition(src => src.AlienSpeciesCategory is not "NotAlienSpecie" or "MisIdentified");
+                        opt.MapFrom(src => src.SpeciesStatus != "C3" ? src.SpeciesStatus : src.SpeciesEstablishmentCategory);
+                    })
+                    .ForMember(dest => dest.AlienSpeciesCategory2018, opt => 
+                    {
+                        opt.PreCondition(src => src.PreviousAssessments.SingleOrDefault(x => x.RevisionYear == 2018) is not null);
+                        opt.MapFrom(src => src.PreviousAssessments.SingleOrDefault(x => x.RevisionYear == 2018).MainCategory == "NotApplicable" ? src.PreviousAssessments.SingleOrDefault(x => x.RevisionYear == 2018).MainSubCategory : src.PreviousAssessments.SingleOrDefault(x => x.RevisionYear == 2018).MainCategory);
+                    })
+                    .ForMember(dest => dest.GeographicalVariationCauses, opt => 
+                    {
+                        opt.PreCondition(src => src.RiskAssessment.PossibleLowerCategory is "yes" && src.Category is not "NR");
+                        opt.MapFrom(src => src.RiskAssessment.GeographicalVariation.Count > 0 ? string.Join(",", src.RiskAssessment.GeographicalVariation) : string.Empty);
+                    })
+                    .ForMember(dest => dest.GeographicalVariationDocumentation, opt => 
+                    {
+                        opt.PreCondition(src => src.RiskAssessment.PossibleLowerCategory is "yes" && src.Category is not "NR");
+                        opt.MapFrom(src => src.RiskAssessment.GeographicalVariationDocumentation);
+                    })
+                    .ForMember(dest => dest.InvationScore, opt => opt.MapFrom(src => ExportMapperHelper.GetScores(src.Category, src.Criteria, "inv")))
+                    .ForMember(dest => dest.EcoEffectScore, opt => opt.MapFrom(src => ExportMapperHelper.GetScores(src.Category, src.Criteria, "eco")))
+                    .ForMember(dest => dest.ImpactedRedlistEvaluatedSpecies, opt => opt.MapFrom(src => ExportMapperHelper.GetDEcritInformation(src.RiskAssessment.SpeciesSpeciesInteractions)))
+                    .ForMember(dest => dest.ImpactedRedlistEvaluatedSpeciesEnsemble, opt => opt.MapFrom(src => ExportMapperHelper.GetDEcritInformationNaturetypes(src.RiskAssessment.SpeciesNaturetypeInteractions)))
+                    .ForMember(dest => dest.IntrogressionRedlistedSpecies, opt => opt.MapFrom(src => ExportMapperHelper.GetHcritInformation(src.RiskAssessment.GeneticTransferDocumented)))
+                    .ForMember(dest => dest.ParasiteTransferRedlistedSpecies, opt => opt.MapFrom(src => ExportMapperHelper.GetIcritInformation(src.RiskAssessment.HostParasiteInformations)))
+                    .ForMember(dest => dest.RiskAssessmentPossibleLowerCategory, opt => opt.MapFrom(src => src.Category == "NK" ? "no" : src.RiskAssessment.PossibleLowerCategory))
+                    .ForMember(dest => dest.RiskAssessmentClimateEffectsInvationpotential, opt => opt.MapFrom(src => src.Category == "NK" ? "no" : src.RiskAssessment.ClimateEffectsInvationpotential))
+                    .ForMember(dest => dest.RiskAssessmentClimateEffectsEcoEffect, opt => opt.MapFrom(src => src.Category == "NK" ? "no" : src.RiskAssessment.ClimateEffectsEcoEffect))
+
+
+                        
                     .AfterMap((src, dest) =>
                     {
                         var ass2018 = src.PreviousAssessments.SingleOrDefault(x => x.RevisionYear == 2018);
@@ -108,7 +140,6 @@ namespace Prod.Api.Helpers
                         dest.SpreadNatureMainCatAndCat = GetIntroSpreadInfo(src.AssesmentVectors, "spread", "cat");
                         dest.SpreadNatureFreqNumTime = GetIntroSpreadInfo(src.AssesmentVectors, "spread", "freqs");
                         dest.RegionalDistribution = GetRegionalDistribution(src.Fylkesforekomster);
-                        dest.SpeciesStatus = GetSpeciesStatus(src.SpeciesStatus, src.SpeciesEstablishmentCategory);
                         dest.IntroductionsLow = introductionsLow(src, src.RiskAssessment);
                         dest.IntroductionsHigh = introductionsHigh(src, src.RiskAssessment);
                         dest.AOO10yrBest = AOO10yrBest(src, src.RiskAssessment);
@@ -152,14 +183,9 @@ namespace Prod.Api.Helpers
                         dest.RiskAssessmentExpansionSpeed = GetRiskAssessmentExpansionSpeed(src, src.RiskAssessment, "50", src.AssessmentConclusion);
                         dest.RiskAssessmentExpansionLowerQ = GetRiskAssessmentExpansionSpeed(src, src.RiskAssessment, "25", src.AssessmentConclusion);
                         dest.RiskAssessmentExpansionUpperQ = GetRiskAssessmentExpansionSpeed(src, src.RiskAssessment, "75", src.AssessmentConclusion);
-                        dest.ImpactedRedlistEvaluatedSpecies = GetDEcritInformation(src.RiskAssessment.SpeciesSpeciesInteractions);
-                        dest.ImpactedRedlistEvaluatedSpeciesEnsemble = GetDEcritInformationNaturetypes(src.RiskAssessment.SpeciesNaturetypeInteractions);
-                        dest.IntrogressionRedlistedSpecies = GetHcritInformation(src.RiskAssessment.GeneticTransferDocumented);
                         dest.Habitats = GetHabitats(src.Habitats);
                         dest.ReasonForChangeOfCategory = GetReasonForChangeOfCategory(src.ReasonForChangeOfCategory, src.Category, dest.Category2018);
-                        dest.AlienSpeciesCategory = GetAlienSpeciesCategory(src.AlienSpeciesCategory);
-                        dest.InvationScore = GetScores(src.Category, src.Criteria, "inv");
-                        dest.EcoEffectScore = GetScores(src.Category, src.Criteria, "eco");
+                        // dest.AlienSpeciesCategory = GetAlienSpeciesCategory(src.AlienSpeciesCategory);
                         // overkjøre status for vurderinger som kom fra horizontscanning
                         dest.EvaluationStatus = GetProgress(src);
                     });
@@ -170,20 +196,6 @@ namespace Prod.Api.Helpers
             return mapper;
         }
 
-        private static int? GetScores(string category, string criteria, string v)
-        {
-            if (category == "NR" || category == "" || category == null)
-            {
-                return null;
-            }
-            else 
-            {
-                int SInv = (int)Char.GetNumericValue(criteria[0]);
-                string SEco = criteria.Split(",")[1];
-                int SEco2 = (int)Char.GetNumericValue(SEco[0]);
-                return  v == "inv"? SInv: SEco2;
-            }
-        }
 
         private static string GetReasonForChangeOfCategory(List<string> reasonForChangeOfCategory, string category, string cat2018)
         {
@@ -197,73 +209,26 @@ namespace Prod.Api.Helpers
 
         private static string GetHabitats(List<FA4.Habitat> habitats)
         {
-            if(habitats == null || habitats.Count == 0)
+            if (habitats == null || habitats.Count == 0)
             {
                 return string.Empty;
             }
             var habinfo = new List<string>();
             for (var i = 0; i < habitats.Count; ++i)
             {
-                if(habitats[i].Taxon == null || habitats[i].Taxon.ScientificName == "")
+                string taxonScientificName = string.Empty;
+                if (habitats[i].Taxon != null)
                 {
-                    string hab = habitats[i].NiNCode + "//" + habitats[i].Name + "//" + habitats[i].TimeHorizon;
-                    habinfo.Add(hab);
+                    taxonScientificName = habitats[i].Taxon.ScientificName;
                 }
-                else 
-                {
-                    string hab = habitats[i].NiNCode + "//" + habitats[i].Name + "//" + habitats[i].TimeHorizon + "//" + habitats[i].Taxon.ScientificName;
-                    habinfo.Add(hab);
-                }
+                
+                string hab = habitats[i].NiNCode + "//" + habitats[i].Name + "//" + habitats[i].TimeHorizon + "//" + taxonScientificName;
+                habinfo.Add(hab);
+                
             }
             return string.Join("; ", habinfo);
         }
 
-        private static string GetHcritInformation(List<RiskAssessment.SpeciesSpeciesInteraction> genTrans)
-        {
-            if (genTrans == null || genTrans.Count == 0)
-            {
-                return string.Empty;
-            }
-            var Redlistinfo = new List<string>();
-            for (var i = 0; i < genTrans.Count; ++i) 
-            {
-                string interact = genTrans[i].ScientificName + "//" + genTrans[i].RedListCategory + "//" + genTrans[i].KeyStoneSpecie + "//" + genTrans[i].Scale;
-                Redlistinfo.Add(interact);
-            }
-            return string.Join("; ", Redlistinfo);
-        }
-        private static string GetDEcritInformationNaturetypes(List<RiskAssessment.SpeciesNaturetypeInteraction> speciesNatInt)
-        {
-            if (speciesNatInt == null || speciesNatInt.Count == 0)
-            {
-                return string.Empty;
-            }
-            var Redlistinfo = new List<string>();
-            for (var i = 0; i < speciesNatInt.Count; ++i) 
-            {
-                string interact = speciesNatInt[i].NiNCode + "//" + speciesNatInt[i].KeyStoneSpecie 
-                + "//" + speciesNatInt[i].Effect + "//" + speciesNatInt[i].Scale + "//" + speciesNatInt[i].InteractionType;
-                Redlistinfo.Add(interact);
-            }
-            return string.Join("; ", Redlistinfo);
-        }
-
-        private static string GetDEcritInformation(List<RiskAssessment.SpeciesSpeciesInteraction> speciesSpeciesInteractions)
-        {
-            if (speciesSpeciesInteractions == null || speciesSpeciesInteractions.Count == 0)
-            {
-                return string.Empty;
-            }
-            var Redlistinfo = new List<string>();
-            for (var i = 0; i < speciesSpeciesInteractions.Count; ++i) 
-            {
-                string interact = speciesSpeciesInteractions[i].ScientificName + "//" + speciesSpeciesInteractions[i].RedListCategory + "//" + speciesSpeciesInteractions[i].KeyStoneSpecie 
-                + "//" + speciesSpeciesInteractions[i].Effect + "//" + speciesSpeciesInteractions[i].Scale + "//" + speciesSpeciesInteractions[i].InteractionType;
-                Redlistinfo.Add(interact);
-            }
-            return string.Join("; ", Redlistinfo);
-
-        }
 
         private static long? GetExpansionSpeedB2a(RiskAssessment ra) 
         {
@@ -589,7 +554,6 @@ namespace Prod.Api.Helpers
                         string newcat = coastLineSections[i].ClimateZone + "-" + (coastLineSections[i].None.Equals(true)? "None//" : "") + (coastLineSections[i].OpenCoastLine.Equals(true)? "OpenCoastLine//" : "") + (coastLineSections[i].Skagerrak.Equals(true)? "Skagerrak//" : "");
                         ZoneSections.Add(newcat);
                     }
-
                 }
                 return string.Join("; ", ZoneSections);
             
@@ -657,38 +621,30 @@ namespace Prod.Api.Helpers
                 return string.Join("; ", natDat);
             
         }
-        private static Dictionary<string, string> AlienSpeciesCat = new Dictionary<string, string>()
-        {
-            {"AlienSpecie", "Selvstendig reproduserende" },
-            {"DoorKnocker","Dørstokkart"},
-            {"EffectWithoutReproduction","Effekt uten selvstendig reproduksjon"},
-            {"RegionallyAlien","Regionalt fremmed"},
-            {"NotAlienSpecie", "Ikke fremmed"},
-            {"TaxonEvaluatedAtAnotherLevel","Vurderes på et annet taksonomisk nivå"},
-            {"UncertainBefore1800", "Etablert per 1800"},
-            {"MisIdentified", "Feilbestemt i 2018"},
-            {"AllSubTaxaAssessedSeparately", "Vurderes ikke fordi det foreligger separate vurderinger av infraspesifikke taksa"},
-            {"HybridWithoutOwnRiskAssessment", "Utenfor avgrensningen"},
-            {"NotDefined", "Ikke definert"},
-            {"NotApplicable", ""},
-            {"EcoEffectWithoutEstablishment", ""}
-        };
-        private static string GetAlienSpeciesCategory(string AlienCat)
-        {
-            if(AlienCat == null || AlienCat == "")
-            {
-                return string.Empty;
-            }
-            return AlienSpeciesCat[AlienCat];
-        }
-        private static string GetSpeciesStatus(string speciesStatus, string speciesEstablishmentCategory)
-        {
-            if (speciesStatus != "C3")
-            {
-                return speciesStatus;
-            }
-            return speciesEstablishmentCategory;
-        }
+        // private static Dictionary<string, string> AlienSpeciesCat = new Dictionary<string, string>()
+        // {
+        //     {"AlienSpecie", "Selvstendig reproduserende" },
+        //     {"DoorKnocker","Dørstokkart"},
+        //     {"EffectWithoutReproduction","Effekt uten selvstendig reproduksjon"},
+        //     {"RegionallyAlien","Regionalt fremmed"},
+        //     {"NotAlienSpecie", "Ikke fremmed"},
+        //     {"TaxonEvaluatedAtAnotherLevel","Vurderes på et annet taksonomisk nivå"},
+        //     {"UncertainBefore1800", "Etablert per 1800"},
+        //     {"MisIdentified", "Feilbestemt i 2018"},
+        //     {"AllSubTaxaAssessedSeparately", "Vurderes ikke fordi det foreligger separate vurderinger av infraspesifikke taksa"},
+        //     {"HybridWithoutOwnRiskAssessment", "Utenfor avgrensningen"},
+        //     {"NotDefined", "Ikke definert"},
+        //     {"NotApplicable", ""},
+        //     {"EcoEffectWithoutEstablishment", ""}
+        // };
+        // private static string GetAlienSpeciesCategory(string AlienCat)
+        // {
+        //     if(AlienCat == null || AlienCat == "")
+        //     {
+        //         return string.Empty;
+        //     }
+        //     return AlienSpeciesCat[AlienCat];
+        // }
 
         private static string GetRegionalDistribution(List<Fylkesforekomst> fylkesforekomster)
         {
@@ -1098,10 +1054,6 @@ namespace Prod.Api.Helpers
         }
     }
 
-    // public class CustomHabitatsConverter
-    // {
-    // }
-
     public class CustomSpreadHistoryConverter : ITypeConverter<List<SpreadHistory>, string> //how to take one element from a list to one column in export (here column SpreadHistory using "id" from the list)
     {
         public string Convert(List<SpreadHistory> source, string destination, ResolutionContext context)
@@ -1185,6 +1137,21 @@ namespace Prod.Api.Helpers
         public string Category { get; set; } //We can use this!
         [Name("Kriterier2023")]
         public string Criteria { get; set; }
+
+        [Name("SkaarInvasjonspotensial")]
+        public int? InvationScore {get; set; }
+        [Name("SkaarOkologiskEffekt")]
+        public int? EcoEffectScore {get; set; }
+        [Name("Kategori2018")]
+        public string Category2018 { get; set; }
+        [Name("Fremmedartsstatus2018")]
+        public string AlienSpeciesCategory2018 { get; set; }
+        [Name("Kriterier2018")]
+        public string Criteria2018 { get; set; }
+        [Name("AarsakTilEndringIKategori")]
+        public string ReasonForChangeOfCategory { get; set; }  
+        [Name("AarsakTilEndringIKategoriBeskrivelse")]
+        public string DescriptionOfReasonsForChangeOfCategory { get; set; }   
         // public string LockedForEditBy { get; set; }
         [Name("HorisontskanningEtableringspotensial")]
         public string HorizonEstablismentPotential { get; set; }
@@ -1203,7 +1170,7 @@ namespace Prod.Api.Helpers
         [Name("VurderesSammenMedEtAnnetTaksonBeskrivelse")]
         public string ConnectedToAnotherTaxonDescription { get; set; } = "";
         [Name("Bruksart")]
-        public bool? ProductionSpecies { get; set; } = false;
+        public bool? ProductionSpecies { get; set; }
         [Name("Etableringsklasse")]
         public string SpeciesStatus { get; set; }
         [Name("UsikkerhetEtableringsklasseBeskrivelse")]
@@ -1529,6 +1496,8 @@ namespace Prod.Api.Helpers
             public int? RiskAssessmentCriteriaHHigh { get; set; }
             [Name("H-SkaarBeskrivelse")]
             public string RiskAssessmentHCritInsecurity {get; set;}
+            [Name("OverføringAvParasitterPatogener")]
+            public string ParasiteTransferRedlistedSpecies {get; set;}
             [Name("I-Skaar")]
             public int? RiskAssessmentCriteriaI { get; set; }
             [Name("I-skaarLavtanslag")]
@@ -1538,20 +1507,28 @@ namespace Prod.Api.Helpers
             [Name("I-SkaarBeskrivelse")]
             public string RiskAssessmentICritInsecurity {get; set;}
             #endregion Økologisk effekt
+
+            #region Geographic variation and Climate
+            [Name("GeografiskVariasjonIRisiko")]
+            public string RiskAssessmentPossibleLowerCategory { get; set; }
+
+            [Name("GeografiskVariasjonIRisikoAarsak")]
+            public string GeographicalVariationCauses { get; set; }  // lagt til 23.09.2016
+
+            [Name("GeografiskVariasjoniRisikoBeskrivelse")]
+            public string GeographicalVariationDocumentation { get; set; } // lagt til 23.09.2016
+
+            // (5.4) Klimaeffekter
+            [Name("KlimaeffekterInvasjonspotensial")]
+            public string RiskAssessmentClimateEffectsInvationpotential { get; set; } // lagt til 23.09.2016
+            [Name("KlimaeffekterOkologiskEffekt")]
+            public string RiskAssessmentClimateEffectsEcoEffect { get; set; } // lagt til 23.09.2016
+            [Name("KlimaeffekterBeskrivelse")]
+            public string RiskAssessmentClimateEffectsDocumentation { get; set; } // lagt til 23.09.2016
+            #endregion Geographic variation and Climate
+            
             #region Oppsummering
         
-            [Name("SkaarInvasjonspotensial")]
-            public int? InvationScore {get; set; }
-            [Name("SkaarOkologiskEffekt")]
-            public int? EcoEffectScore {get; set; }
-            [Name("Kategori2018")]
-            public string Category2018 { get; set; } //Use this
-            [Name("Kriterier2018")]
-            public string Criteria2018 { get; set; }
-            [Name("AarsakTilEndringIKategori")]
-            public string ReasonForChangeOfCategory { get; set; }  
-            [Name("AarsakTilEndringIKategoriBeskrivelse")]
-            public string DescriptionOfReasonsForChangeOfCategory { get; set; }   
             [Name("SpredningsmaaterTilInnendorsOgProdarealBeskrivelse")]
             public string SpreadIndoorFurtherInfo {get; set;}
             [Name("SpredningsmaaterIntroduksjonNaturBeskrivelse")]
@@ -1708,9 +1685,9 @@ namespace Prod.Api.Helpers
         // public int RiskAssessmentBhigh { get; set; } // øvre skår for B-kriteriet (inkludert usikkerhet) 
         [Name("ForekomstarealetsMorketall")]
         public string RiskAssessmentBCritMCount { get; set; } = "";
-        public string RiskAssessmentBCritExact { get; set; } = "false";
-        public string RiskAssessmentBCritP { get; set; }
-        public string RiskAssessmentBCritNewObs { get; set; } = "True";
+        // public string RiskAssessmentBCritExact { get; set; } = "false";
+        // public string RiskAssessmentBCritP { get; set; }
+        // public string RiskAssessmentBCritNewObs { get; set; } = "True";
 
 
         // public int RiskAssessmentStartYear { get; set; } // startår for B-kriteriet / utbredelse
@@ -1884,22 +1861,6 @@ namespace Prod.Api.Helpers
         // public bool? RiskAssessmentBiologicalDiseaseSpreadingDomesticObserved { get; set; }  // Vector_Biological_Disease_Spreading_Domestic_Observed
         // public bool? RiskAssessmentBiologicalDiseaseSpreadingDomesticDocumented { get; set; }  // Vector_Biological_Disease_Spreading_Domestic_Documented
         // public bool? RiskAssessmentBiologicalDiseaseSpreadingForeignDocumented { get; set; }
-
-        // (5.3) Geografisk Variasjon
-        public List<string> RiskAssessmentGeographicalVariation { get; set; } = new List<string>(); // lagt til 23.09.2016
-        
-        [Name("GeogragiskVariasjonIRisiko")]
-        public string RiskAssessmentPossibleLowerCategory { get; set; }
-        [Name("GeogragiskVariasjoniRisikoBeskrivelse")]
-        public string RiskAssessmentGeographicalVariationDocumentation { get; set; } // lagt til 23.09.2016
-
-        // (5.4) Klimaeffekter
-        [Name("KlimaeffekterInvasjonspotensial")]
-        public string RiskAssessmentClimateEffectsInvationpotential { get; set; } // lagt til 23.09.2016
-        [Name("KlimaeffekterOkologiskEffekt")]
-        public string RiskAssessmentClimateEffectsEcoEffect { get; set; } // lagt til 23.09.2016
-        [Name("KlimaeffekterBeskrivelse")]
-        public string RiskAssessmentClimateEffectsDocumentation { get; set; } // lagt til 23.09.2016
 
         // (5.5) Kriteriedokumentasjon
         public string RiskAssessmentCriteriaDocumentation { get; set; }
