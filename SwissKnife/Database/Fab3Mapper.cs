@@ -923,7 +923,6 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.ECritInsecurity, opt => opt.Ignore()) //Ny av året
                     .ForMember(dest => dest.HCritInsecurity, opt => opt.Ignore()) //Ny av året
                     .ForMember(dest => dest.ICritInsecurity, opt => opt.Ignore()) //Ny av året
-
                     .AfterMap((src, dest) => { AfterRiskAssessmentMap(src, dest); });
                 //.ForMember(dest => dest., opt => opt.MapFrom(src => src.))
 
@@ -1030,7 +1029,7 @@ namespace SwissKnife.Database
                     .ForMember(dest => dest.FurtherInfo, opt => opt.Ignore()) //Ny av året?
                     .ForMember(dest => dest.EvaluatedScientificNameFormatted, opt => opt.Ignore()) //Ny 
                     .ForMember(dest => dest.NameHiearchy, opt => opt.Ignore()) //Ny 
-                                                                                   //        public string FurtherInfo { get; set; } = "";
+                    .ForMember(dest => dest.ConnectedTaxons, opt => opt.Ignore()) //Ny 
                     .AfterMap((src, dest) => { AfterFabMap(dest, src); });
 
                 
