@@ -18,6 +18,7 @@ using Prod.Data.EFCore;
 using Prod.Domain;
 using Prod.Domain.Legacy;
 using SwissKnife.Database.CsvModels;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace SwissKnife.Database
 {
@@ -536,6 +537,13 @@ namespace SwissKnife.Database
 
 
             var TransferList = ImportDataServiceHelper.GetTransferDataList(inputFolder, theCsvConfiguration);
+            if (TransferList.Length == 0)
+            {
+                console.WriteLine("no inputfile data");
+                return; 
+            }
+            console.WriteLine("Prosessing " + TransferList.Length + " lines of data");
+
             var theseIds = TransferList.Where(x => x.ReadyToTransfer).Select(x => x.FromId)
                 .Union(TransferList.Where(x => x.ReadyToTransfer).Select(x => x.ToId)).ToArray();
             var existing = _database.Assessments
@@ -589,9 +597,16 @@ namespace SwissKnife.Database
 
             foreach (var items in existing.Values)
             {
-                var connections = liste.Where(x => x.Item1.AssessmentId == items.Id)
-                    .Select(x => x.Item2)
-                    .Union(liste.Where(x => x.Item2.AssessmentId == items.Id).Select(x => x.Item2)).ToArray();
+                var connections = liste
+                    .Where(x => x.Item1.AssessmentId == items.Id).Select(x => x.Item2)
+                    .Union(liste.Where(x => x.Item2.AssessmentId == items.Id).Select(x => x.Item1))
+                    .ToArray();
+                var otherIds = connections.Select(x => x.AssessmentId).ToArray();
+                connections = connections.Union(liste
+                    .Where(x => otherIds.Contains(x.Item1.AssessmentId) && x.Item2.AssessmentId != items.Id).Select(x => x.Item2)
+                    .Union(liste.Where(x => otherIds.Contains(x.Item2.AssessmentId) && x.Item1.AssessmentId != items.Id).Select(x => x.Item1))
+                    ).ToArray();
+
                 var denne = JsonSerializer.Deserialize<FA4>(items.Doc, _jsonSerializerOptions);
                 denne.ConnectedTaxons = connections;
                 items.Doc = JsonSerializer.Serialize<FA4>(denne);

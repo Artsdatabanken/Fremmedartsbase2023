@@ -51,7 +51,7 @@ internal static class ImportDataServiceHelper
         Assessment toAssessment)
     {
         to.Category = from.Category;
-        to.Citation = from.Citation;
+        //to.Citation = from.Citation;
         to.Criteria = from.Criteria;
         to.AlienSpeciesCategory = from.AlienSpeciesCategory;
         to.AssessmentConclusion = from.AssessmentConclusion;

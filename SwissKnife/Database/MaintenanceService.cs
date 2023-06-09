@@ -16,6 +16,7 @@ using CsvHelper.Configuration;
 using Prod.Infrastructure.Helpers;
 using System.Collections;
 using System.ComponentModel.Design;
+using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 
 namespace SwissKnife.Database
@@ -1068,7 +1069,8 @@ namespace SwissKnife.Database
 
                     var result = prosessContext
                         //.BatchSetAssessmentsToResult()
-                        .CheckTaxonomyForChanges(ts, false, true)
+                        //.CheckTaxonomyForChanges(ts, false, true)
+                        //.CheckForOldTaxonomyInTexts();
                         .CheckReferencesForChanges(refDict)
                         .DownLoadArtskartDataIfMissing();
                     //;
@@ -1127,6 +1129,29 @@ namespace SwissKnife.Database
 
             return context;
 
+        }
+
+        public static ProsessContext CheckForOldTaxonomyInTexts(this ProsessContext context)
+        {
+            var assessment = context.assessment;
+            var gyldigNavn = Regex.Replace(assessment.EvaluatedScientificName, @"\([^()]*\)", "").Replace("  ", " ");
+
+            var oldNames = assessment.TaxonomicHistory.Where(x=> Regex.Replace(x.VitenskapeligNavn, @"\([^()]*\)", "").Replace("  ", " ") != gyldigNavn).Select(x => Regex.Replace(x.VitenskapeligNavn, @"\([^()]*\)", "").Replace("  ", " ")).Distinct().ToArray();
+            if (oldNames.Length == 0) return context;
+            foreach (var oldName in oldNames.Where(x=>x != gyldigNavn))
+            {
+                if (assessment.RiskAssessment.CriteriaDocumentationSpeciesStatus != null)
+                {
+                    var clean = Regex.Replace(assessment.RiskAssessment.CriteriaDocumentationSpeciesStatus,"<[^>]*>", "");
+                    
+                    if (clean.Contains(oldName) && !clean.Contains(gyldigNavn))
+                    {
+                        Console.WriteLine("Navn avvik i text: " + gyldigNavn + "; " + clean);
+                    }
+                }
+            }
+
+            return context;
         }
 
         public static ProsessContext DownLoadArtskartDataIfMissing(this ProsessContext context)

@@ -1,5 +1,4 @@
 FromId;FromScientificName;ToId;ToScientificName;TransferSpeciesStatus;TransferSpeciesCharacteristics;TransferPathways;ReadyToTransfer
-2625;Pinus mugo uncinata;2616;Pinus mugo;true;true;true;true
 744;Larix kaempferi;745;Larix ×marschlinsii;false;false;true;true
 1330;Pinus cembra;787;Pinus sibirica;true;false;true;true
 2618;Picea sitchensis;743;Picea ×lutzii;false;false;true;true
