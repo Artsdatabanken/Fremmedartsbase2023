@@ -591,6 +591,7 @@ namespace Prod.Api.Helpers
             if (!(ass.IsAlienSpecies.HasValue && ass.IsAlienSpecies.Value == true)) return false;
 
             if (ass.AlienSpeciesCategory == "UncertainBefore1800") return false;
+            if (ass.AlienSpeciesCategory == "RegionallyAlienEstablishedBefore1800") return false;
 
             if (ass.AlienSpeciesCategory == "NotDefined") return false; // todo: This should probably also be "WillNotBeRiskAssessed" (?? check this)
             if (ass.AlienSpeciesCategory == "EffectWithoutReproduction") return true; //or should we return ass.AssessmentConclusion == "AssessedDoorknocker";

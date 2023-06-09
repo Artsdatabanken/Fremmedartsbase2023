@@ -288,6 +288,8 @@ export default function enhanceAssessment(json, appState) {
                 ? "WillNotBeRiskAssessed"
                 : assessment.alienSpeciesCategory == "UncertainBefore1800"
                 ? "WillNotBeRiskAssessed"
+                : assessment.alienSpeciesCategory == "RegionallyAlienEstablishedBefore1800"
+                ? "WillNotBeRiskAssessed"
                 : assessment.alienSpeciesCategory == "NotDefined"
                 ? "NotDecided"           // todo: This should probably also be "WillNotBeRiskAssessed" (?? check this)
                 : assessment.alienSpeciesCategory == "DoorKnocker"
@@ -316,7 +318,9 @@ export default function enhanceAssessment(json, appState) {
                 : ! assessment.isAlienSpecies
                 ? "NotAlienSpecie"
                 : assessment.higherOrLowerLevel
-                ? "TaxonEvaluatedAtAnotherLevel" 
+                ? "TaxonEvaluatedAtAnotherLevel"
+                : assessment.alienSpecieUncertainIfEstablishedBefore1800 && assessment.isRegionallyAlien
+                ? "RegionallyAlienEstablishedBefore1800" 
                 : assessment.alienSpecieUncertainIfEstablishedBefore1800
                 ? "UncertainBefore1800"
                 : !assessment.speciesStatus

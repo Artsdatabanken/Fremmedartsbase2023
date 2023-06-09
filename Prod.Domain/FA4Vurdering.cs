@@ -274,7 +274,7 @@ namespace Prod.Domain
         public CTaxon ConnectedTaxon { get; set; }
 
         /// <summary>
-        /// List of all conneted taxons
+        /// List of all connected taxons
         /// </summary>
         public CTaxon[] ConnectedTaxons { get; set; }
 
