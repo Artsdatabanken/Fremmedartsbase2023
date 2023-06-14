@@ -63,9 +63,13 @@ namespace Prod.Api.Helpers
                     .ForMember(dest => dest.InvationScore2018, opt => 
                     {
                         opt.PreCondition(src => src.PreviousAssessments.SingleOrDefault(x => x.RevisionYear == 2018) is not null);
-                        opt.MapFrom(src => src.PreviousAssessments.SingleOrDefault(x => x.RevisionYear == 2018).MainCategory != "NotApplicable" ? null : ExportMapperHelper.GetScores("Assessed", src.PreviousAssessments.SingleOrDefault(x => x.RevisionYear == 2018).DecisiveCriteria, "inv"));
+                        opt.MapFrom(src => src.PreviousAssessments.SingleOrDefault(x => x.RevisionYear == 2018).MainCategory == "NotApplicable" ? null : ExportMapperHelper.GetScores("Assessed", src.PreviousAssessments.SingleOrDefault(x => x.RevisionYear == 2018).DecisiveCriteria, "inv"));
                     })
-                    .ForMember(dest => dest.EcoEffectScore2018, opt => opt.MapFrom((src, dest) => ExportMapperHelper.GetScores(dest.Category2018, dest.Criteria2018, "eco")))
+                    .ForMember(dest => dest.EcoEffectScore2018, opt => 
+                    {
+                        opt.PreCondition(src => src.PreviousAssessments.SingleOrDefault(x => x.RevisionYear == 2018) is not null);
+                        opt.MapFrom(src => src.PreviousAssessments.SingleOrDefault(x => x.RevisionYear == 2018).MainCategory == "NotApplicable" ? null : ExportMapperHelper.GetScores("Assessed", src.PreviousAssessments.SingleOrDefault(x => x.RevisionYear == 2018).DecisiveCriteria, "eco"));
+                    })
                     .ForMember(dest => dest.ImpactedRedlistEvaluatedSpecies, opt => opt.MapFrom(src => ExportMapperHelper.GetDEcritInformation(src.RiskAssessment.SpeciesSpeciesInteractions)))
                     .ForMember(dest => dest.ImpactedRedlistEvaluatedSpeciesEnsemble, opt => opt.MapFrom(src => ExportMapperHelper.GetDEcritInformationNaturetypes(src.RiskAssessment.SpeciesNaturetypeInteractions)))
                     .ForMember(dest => dest.IntrogressionRedlistedSpecies, opt => opt.MapFrom(src => ExportMapperHelper.GetHcritInformation(src.RiskAssessment.GeneticTransferDocumented)))
