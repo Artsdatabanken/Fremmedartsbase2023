@@ -162,6 +162,7 @@ internal static class ImportDataServiceHelper
             TaxonRank = from.EvaluatedScientificNameRank,
             ScientificName = from.EvaluatedScientificName,
             ScientificNameId = (int)from.EvaluatedScientificNameId,
+            ScientificNameFormatted = from.EvaluatedScientificNameFormatted,
             AssessmentId = from.Id
         };
     }
