@@ -582,6 +582,7 @@ namespace SwissKnife.Database
                     TaxonID = from.TaxonId,
                     TaxonRank = from.EvaluatedScientificNameRank,
                     ScientificName = from.EvaluatedScientificName,
+                    ScientificNameFormatted = from.EvaluatedScientificNameFormatted,
                     ScientificNameId = (int)from.EvaluatedScientificNameId,
                     AssessmentId = from.Id
                 }, new CTaxon()
@@ -589,6 +590,7 @@ namespace SwissKnife.Database
                     TaxonID = to.TaxonId,
                     TaxonRank = to.EvaluatedScientificNameRank,
                     ScientificName = to.EvaluatedScientificName,
+                    ScientificNameFormatted = from.EvaluatedScientificNameFormatted,
                     ScientificNameId = (int)to.EvaluatedScientificNameId,
                     AssessmentId = to.Id
                 }));

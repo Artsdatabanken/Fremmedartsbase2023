@@ -14,6 +14,7 @@ namespace Public.Domain
         public string Id { get; set; }
         public int TaxonID { get; set; }
         public string ScientificName { get; set; }
+        public string ScientificNameFormatted { get; set; }
         public int ScientificNameId { get; set; }
 
         public string ScientificNameAuthor { get; set; }
