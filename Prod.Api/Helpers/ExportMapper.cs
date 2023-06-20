@@ -48,6 +48,16 @@ namespace Prod.Api.Helpers
                         opt.PreCondition(src => src.PreviousAssessments.SingleOrDefault(x => x.RevisionYear == 2018) is not null);
                         opt.MapFrom(src => src.PreviousAssessments.SingleOrDefault(x => x.RevisionYear == 2018).MainCategory == "NotApplicable" ? src.PreviousAssessments.SingleOrDefault(x => x.RevisionYear == 2018).MainSubCategory : src.PreviousAssessments.SingleOrDefault(x => x.RevisionYear == 2018).MainCategory);
                     })
+                    .ForMember(dest => dest.AssessmentId2018, opt => 
+                    {
+                        opt.PreCondition(src => src.PreviousAssessments.SingleOrDefault(x => x.RevisionYear == 2018) is not null);
+                        opt.MapFrom(src => src.PreviousAssessments.SingleOrDefault(x => x.RevisionYear == 2018).AssessmentId);
+                    })
+                    .ForMember(dest => dest.ConnectedTaxa, opt => 
+                    {
+                        opt.PreCondition(src => src.ConnectedTaxons is not null);
+                        opt.MapFrom(src => string.Join(", ", src.ConnectedTaxons.Select(x => x.ScientificName).ToArray() )); //src.ConnectedTaxons.Length == 1 ? src.ConnectedTaxons[0].ScientificName : 
+                    })
                     .ForMember(dest => dest.GeographicalVariationCauses, opt => 
                     {
                         opt.PreCondition(src => src.RiskAssessment.PossibleLowerCategory is "yes" && src.Category is not "NR");
@@ -1106,12 +1116,18 @@ namespace Prod.Api.Helpers
     public class FA4Export
     {
         public int Id { get; set; }
+        [Name("Id2018")]
+        public string AssessmentId2018 { get; set; }
+        
         [Name("Ekspertkomite")]
         public string ExpertGroup { get; set; }
+        
         [Name("Vurderingsomraade")]
         public string EvaluationContext { get; set; }        
-        [Name("Vurderinsstatus")]
+        
+        [Name("Vurderingsstatus")]
         public string EvaluationStatus { get; set; }
+        
         [Name("VitenskapeligNavneID")]
         public string EvaluatedScientificNameId { get; set; }
         //public Datasett Datasett { get; set; } = new Datasett();
@@ -1122,109 +1138,149 @@ namespace Prod.Api.Helpers
         
         [Name("VitenskapeligNavn")]
         public string EvaluatedScientificName { get; set; }
+        
         [Name("Autor")]
         public string EvaluatedScientificNameAuthor { get; set; }
+        
         [Name("TaksonomiskRang")]
         public string EvaluatedScientificNameRank { get; set; } //06.10.22: WTF. Dette er bare et tall for enkelte (22)? Og de fleste har null. Mulig fjern denne eller hvertfall bytt den ut med "Species" ...!
 
         [Name("NorskNavn")]
         public string EvaluatedVernacularName { get; set; }
+        
         [Name("SistEndret")]
         public DateTime LastUpdatedAt { get; set; }
+        
         [Name("SistEndretAv")]
         public string LastUpdatedBy { get; set; }
         
-
-        //public int TaxonId { get; set; }
-
-        // public string Citation { get; set; }
         [Name("Fremmedartsstatus")]
         public string AlienSpeciesCategory { get; set; }
+        
         [Name("FremmedartsstatusKommentar")]
         public string IsAlien { get; set; } // new in 2021
 
         [Name("Kategori2023")]
         public string Category { get; set; } //We can use this!
+        
         [Name("Kriterier2023")]
         public string Criteria { get; set; }
 
         [Name("SkaarInvasjonspotensial")]
         public int? InvationScore {get; set; }
+        
         [Name("SkaarOkologiskEffekt")]
         public int? EcoEffectScore {get; set; }
+        
         [Name("Kategori2018")]
         public string Category2018 { get; set; }
+        
         [Name("Fremmedartsstatus2018")]
         public string AlienSpeciesCategory2018 { get; set; }
+        
         [Name("Kriterier2018")]
         public string Criteria2018 { get; set; }
+        
         [Name("SkaarInvasjonspotensial2018")]
         public int? InvationScore2018 {get; set; }
+        
         [Name("SkaarOkologiskEffekt2018")]
         public int? EcoEffectScore2018 {get; set; }
+        
         [Name("AarsakTilEndringIKategori")]
         public string ReasonForChangeOfCategory { get; set; }  
+        
         [Name("AarsakTilEndringIKategoriBeskrivelse")]
         public string DescriptionOfReasonsForChangeOfCategory { get; set; }   
-        // public string LockedForEditBy { get; set; }
+        
         [Name("HorisontskanningEtableringspotensial")]
         public string HorizonEstablismentPotential { get; set; }
+        
         [Name("HorisontskanningOkologiskEffekt")]
         public string HorizonEcologicalEffect { get; set; }
         
         #region Artens status
         [Name("EndretStatusFraFremmedAarsak")]
         public string ChangedFromAlien { get; set; }
+        
         [Name("EndretStatusFraFremmedAarsakBeskrivelse")]
         public string ChangedAssessment { get; set; }
+        
         [Name("VurderesPaaHoyereLavereTaksonomiskNivaBeskrivelse")]
         public string ConnectedToHigherLowerTaxonDescription { get; set; } = "";
+        
         [Name("VurderesSammenMedEtAnnetTakson")]
         public bool? ConnectedToAnother { get; set; }
+        
         [Name("VurderesSammenMedEtAnnetTaksonBeskrivelse")]
         public string ConnectedToAnotherTaxonDescription { get; set; } = "";
+        
+        [Name("VurderesSammenMedEtAnnetTaksonArtsnavn")]
+        public string ConnectedTaxa { get; set; } = "";
+        
         [Name("Bruksart")]
         public bool? ProductionSpecies { get; set; }
+        
         [Name("Etableringsklasse")]
         public string SpeciesStatus { get; set; }
+        
         [Name("UsikkerhetEtableringsklasseBeskrivelse")]
         public string UncertainityStatusDescription { get; set; } 
+        
         [Name("EtablertPer1800")]
         public bool? AlienSpecieUncertainIfEstablishedBefore1800 { get; set; } 
+        
         [Name("UsikkerhetEtableringstidspunktBeskrivelse")]
         public string UncertainityEstablishmentTimeDescription { get; set; } = "";
+        
         [Name("ForsteObsInnendors")]
         public int? RiskAssessmentYearFirstIndoors { get; set; }
+        
         [Name("UsikkerhetForsteObsInnendors")]
         public bool RiskAssessmentYearFirstIndoorsInsecure { get; set; }
+        
         [Name("ForsteObsReprodInnendors")]
         public int? RiskAssessmentYearFirstReproductionIndoors { get; set; }
+        
         [Name("UsikkerhetForsteObsReprodInnendors")]
         public bool RiskAssessmentYearFirstReproductionIndoorsInsecure { get; set; }
+        
         [Name("ForsteObsIProduksjonsareal")]
         public int? RiskAssessmentYearFirstProductionOutdoors { get; set; }
+        
         [Name("UsikkerhetForsteObsIProduksjonsareal")]
         public bool RiskAssessmentYearFirstProductionOutdoorsInsecure { get; set; }
+        
         [Name("ForsteObsReprodProduksjonsareal")]
         public int? RiskAssessmentYearFirstReproductionOutdoors { get; set; }
+        
         [Name("UsikkerhetForsteObsReprodProduksjonsareal")]
         public bool RiskAssessmentYearFirstReproductionOutdoorsInsecure { get; set; }
+        
         [Name("ForsteObsEtableringProdusjonsareal")]
         public int? RiskAssessmentYearFirstEstablishmentProductionArea { get; set; }
+        
         [Name("UsikkerhetForsteObsEtableringProdusjonsareal")]
         public bool RiskAssessmentYearFirstEstablishmentProductionAreaInsecure { get; set; }
+        
         [Name("ForsteObsNorskNatur")]
         public int? RiskAssessmentYearFirstNature { get; set; }
+        
         [Name("UsikkerhetForsteObsNorskNatur")]
         public bool RiskAssessmentYearFirstNatureInsecure { get; set; }
+        
         [Name("ForsteObsReprodNorskNatur")]
         public int? RiskAssessmentYearFirstReproductionNature { get; set; }
+        
         [Name("UsikkerhetForsteObsReprodNorskNatur")]
         public bool RiskAssessmentYearFirstReproductionNatureInsecure { get; set; }
+        
         [Name("ForsteObsEtableringNorskNatur")]
         public int? RiskAssessmentYearFirstEstablishedNature { get; set; }
+        
         [Name("UsikkerhetForsteObsEtableringNorskNatur")]
         public bool RiskAssessmentYearFirstEstablishedNatureInsecure { get; set; }
+        
         [Name("ForsteObsINorgeBeskrivelse")]
         public string FurtherInfo {get; set;}
         
@@ -1233,8 +1289,10 @@ namespace Prod.Api.Helpers
         #region Artsinformasjon
         [Name("Limnisk")]
         public bool Limnic { get; set; } // lagt til 26.9.2016
+        
         [Name("Terrestrisk")]
         public bool Terrestrial { get; set; } // lagt til 26.9.2016
+        
         [Name("Marint")]
         public bool Marine { get; set; } // lagt til 26.9.2016
 
@@ -1284,9 +1342,9 @@ namespace Prod.Api.Helpers
         public string ArrivedCountryFrom { get; set; } // fab: string Arived_Norway_From_Code
          [Name("KomTilFastlands-NorgeFraBeskrivelse")]
         public string ArrivedCountryFromDetails { get; set; } = ""; // fab: Natural_Origin 'NaturalOrigin'  - lagt til 14.11.2016
-        [Name("UkjønnetFormering")]
+        [Name("UkjonnetFormering")]
         public bool? ReproductionAsexual { get; set; } // fab: Reproduction_Asexual
-        [Name("KjønnetFormering")]
+        [Name("KjonnetFormering")]
         public bool? ReproductionSexual { get; set; } // fab: Reproduction_Sexual
         [Name("Generasjonstid")]
         public double? ReproductionGenerationTime { get; set; } // fab: Reproduction_Geteration_Time
@@ -1436,31 +1494,46 @@ namespace Prod.Api.Helpers
             //////B-kriteriet///////
             [Name("B-kriterietMetode")]
             public string RiskAssessmentChosenMethodBcrit { get; set; }   
+            
             [Name("AOO(t1)")]
             public long? RiskAssessmentAOOyear1 { get; set; } // fra-årstallet for det første forekomstarealet
+            
             [Name("AOO(t2)")]
             public long? RiskAssessmentAOOyear2 { get; set; } // fra-årstallet for det andre forekomstarealet 
+            
             [Name("AOOEkspansjonsperiodeStart")]
             public long? RiskAssessmentAOO1 { get; set; } // forekomstarealet i år 1 (inkl. korrigering for tiltak)
+            
             [Name("AOOEkspansjonsperiodeSlutt")]
             public long? RiskAssessmentAOO2 { get; set; } // forekomstarealet i år 2  (inkl. korrigering for tiltak)
+            
+            [Name("ForekomstarealetsMorketall")]
+            public string RiskAssessmentBCritMCount { get; set; } = "";
+            
             [Name("B-EkspansjonshastighetNedreKvartil")]
             public long? RiskAssessmentExpansionLowerQ { get; set; } // nedre kvartil for ekspansjonshastighet i meter per år 
+            
             [Name("B-GjennomsnittligEkspansjonshastighet(mperaar)")]
             public long? RiskAssessmentExpansionSpeed { get; set; }  // ekspansjonshastighet i meter per år 
+            
             [Name("B-EkspansjonshastighetOvreKvartil")]
             public long? RiskAssessmentExpansionUpperQ { get; set; } // øvre kvartil for ekspansjonshastighet i meter per år 
+            
             [Name("B-Skaar")]
             public int? RiskAssessmentCriteriaB  { get; set; }
+            
             [Name("B-skaarLavtanslag")]
             public int? RiskAssessmentCriteriaBLow { get; set; } 
+            
             [Name("B-skaarHoytanslag")]
             public int? RiskAssessmentCriteriaBHigh { get; set; }
             //////C-kriteriet//////
             [Name("C-Skaar")]
             public int? RiskAssessmentCriteriaC { get; set; }
+            
             [Name("C-skaarLavtanslag")]
             public int? RiskAssessmentCriteriaCLow { get; set; } 
+            
             [Name("C-skaarHoytanslag")]
             public int? RiskAssessmentCriteriaCHigh { get; set; }
             #endregion Invasjonspotensialet
@@ -1500,7 +1573,7 @@ namespace Prod.Api.Helpers
             public int? RiskAssessmentCriteriaGLow { get; set; } 
             [Name("G-skaarHoytanslag")]
             public int? RiskAssessmentCriteriaGHigh { get; set; }
-            [Name("OverføringAvGenetiskMateriale")]
+            [Name("OverfoeringAvGenetiskMateriale")]
             public string IntrogressionRedlistedSpecies {get; set;}
             [Name("H-Skaar")]
             public int? RiskAssessmentCriteriaH { get; set; }
@@ -1510,7 +1583,7 @@ namespace Prod.Api.Helpers
             public int? RiskAssessmentCriteriaHHigh { get; set; }
             [Name("H-SkaarBeskrivelse")]
             public string RiskAssessmentHCritInsecurity {get; set;}
-            [Name("OverføringAvParasitterPatogener")]
+            [Name("OverfoeringAvParasitterPatogener")]
             public string ParasiteTransferRedlistedSpecies {get; set;}
             [Name("I-Skaar")]
             public int? RiskAssessmentCriteriaI { get; set; }
@@ -1532,7 +1605,7 @@ namespace Prod.Api.Helpers
             [Name("GeografiskVariasjoniRisikoBeskrivelse")]
             public string GeographicalVariationDocumentation { get; set; } // lagt til 23.09.2016
 
-            // (5.4) Klimaeffekter
+            // Klimaeffekter
             [Name("KlimaeffekterInvasjonspotensial")]
             public string RiskAssessmentClimateEffectsInvationpotential { get; set; } // lagt til 23.09.2016
             [Name("KlimaeffekterOkologiskEffekt")]
@@ -1542,14 +1615,40 @@ namespace Prod.Api.Helpers
             #endregion Geographic variation and Climate
             
             #region Oppsummering
-        
-            [Name("SpredningsmaaterTilInnendorsOgProdarealBeskrivelse")]
+            [Name("OppsummeringGenereltOmArten")]
+            public string RiskAssessmentCriteriaDocumentationSpeciesStatus { get; set; }
+            
+            [Name("OppsummeringUtbredelseINorge")]
+            public string RiskAssessmentCriteriaDocumentationDomesticSpread { get; set; }
+            
+            [Name("OppsummeringSpredningsmaaterTilInnendorsOgProdarealBeskrivelse")]
             public string SpreadIndoorFurtherInfo {get; set;}
-            [Name("SpredningsmaaterIntroduksjonNaturBeskrivelse")]
+            
+            [Name("OppsummeringSpredningsmaaterIntroduksjonNaturBeskrivelse")]
             public string SpreadIntroductionFurtherInfo {get; set;}
-            [Name("SpredningsmaaterVidereSpredningInaturenBeskrivelse")]
+            
+            [Name("OppsummeringSpredningsmaaterVidereSpredningInaturenBeskrivelse")]
             public string spreadFurtherSpreadFurtherInfo {get; set;}
+
+            [Name("OppsummeringInvasjonspotensial")]
+            public string RiskAssessmentCriteriaDocumentationInvationPotential { get; set; }
+            
+            [Name("OppsummeringOkologiskEffekt")]
+            public string RiskAssessmentCriteriaDocumentationEcoEffect { get; set; }
+            
+            [Name("OppsummeringKonklusjon")]
+            public string RiskAssessmentCriteriaDocumentation { get; set; }
             #endregion Oppsummering  
+
+            [Name("AntallBehandledeKommentarer")]
+            public int CommentClosed { get; set; }
+
+            [Name("AntallÅpneKommentarer")]
+            public int CommentOpen { get; set; }
+            //public int CommentNew { get; set; }
+
+            [Name("VentendeTaksonomiskeEndringer")]
+            public int TaxonChange { get; set; }
         // public string ProductionSpeciesDescription { get; set; } = "";
         // public int RiskAssessmentRiskLevel { get; set; } = -1;
         // public string RiskAssessmentDecisiveCriteria { get; set; }
@@ -1697,8 +1796,7 @@ namespace Prod.Api.Helpers
         // public int RiskAssessmentBscore { get; set; } // skår for B-kriteriet 
         // public int RiskAssessmentBlow { get; set; } // nedre skår for B-kriteriet (inkludert usikkerhet) 
         // public int RiskAssessmentBhigh { get; set; } // øvre skår for B-kriteriet (inkludert usikkerhet) 
-        [Name("ForekomstarealetsMorketall")]
-        public string RiskAssessmentBCritMCount { get; set; } = "";
+        
         // public string RiskAssessmentBCritExact { get; set; } = "false";
         // public string RiskAssessmentBCritP { get; set; }
         // public string RiskAssessmentBCritNewObs { get; set; } = "True";
@@ -1729,7 +1827,7 @@ namespace Prod.Api.Helpers
 
 
 
-        #region (B) Ekspansjonshastighet
+        //#region (B) Ekspansjonshastighet
 
        
         // public bool RiskAssessmentActiveSpreadYearlyIncreaseObservations { get; set; } //lagt til 29.09.2016
@@ -1773,7 +1871,7 @@ namespace Prod.Api.Helpers
 
 
 
-        #endregion (B) Ekspansjonshastighet
+        //#endregion (B) Ekspansjonshastighet
 
 
 
@@ -1844,17 +1942,6 @@ namespace Prod.Api.Helpers
         // public List<string> RiskAssessmentCommonNatureTypes { get; set; } = new List<string>(); // 09.01.2017  // Common_Nature_Types
         //public string Common_Nature_Types_Affected_Documentation { get; set; }               //intern informasjon
 
-        public List<string> RiskAssessmentNaturetype2018 { get; set; } = new List<string>();
-        public List<string> RiskAssessmentNaturetypeNIN2 { get; set; } = new List<string>();
-
-        public List<string> RiskAssessmentBackgroundC { get; set; } = new List<string>();
-
-        public List<string> RiskAssessmentBackgroundF { get; set; } = new List<string>();
-
-        public List<string> RiskAssessmentBackgroundG { get; set; } = new List<string>();
-        public List<string> RiskAssessmentHovedøkosystem { get; set; } = new List<string>();
-
-
         // public string RiskAssessmentNatureAffectedAbroadF { get; set; }
 
         // public string RiskAssessmentNatureAffectedAbroadG { get; set; }
@@ -1877,13 +1964,7 @@ namespace Prod.Api.Helpers
         // public bool? RiskAssessmentBiologicalDiseaseSpreadingForeignDocumented { get; set; }
 
         // (5.5) Kriteriedokumentasjon
-        public string RiskAssessmentCriteriaDocumentation { get; set; }
-        public string RiskAssessmentCriteriaDocumentationSpeciesStatus { get; set; }
-        public string RiskAssessmentCriteriaDocumentationDomesticSpread { get; set; }
-        public string RiskAssessmentCriteriaDocumentationMigrationPathways { get; set; }
-        public string RiskAssessmentCriteriaDocumentationInvationPotential { get; set; }
-        public string RiskAssessmentCriteriaDocumentationEcoEffect { get; set; }
-
+       
         #endregion
 
 
@@ -2059,14 +2140,5 @@ namespace Prod.Api.Helpers
         // [Name("DatoForSisteKommentar")]
         // public string NewestCommentDate { get; set; }
 
-        [Name("AntallBehandledeKommentarer")]
-        public int CommentClosed { get; set; }
-
-        [Name("AntallÅpneKommentarer")]
-        public int CommentOpen { get; set; }
-        //public int CommentNew { get; set; }
-
-        [Name("VentendeTaksonomiskeEndringer")]
-        public int TaxonChange { get; set; }
     }
 }
