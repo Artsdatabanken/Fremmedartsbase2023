@@ -590,7 +590,7 @@ namespace SwissKnife.Database
                     TaxonID = to.TaxonId,
                     TaxonRank = to.EvaluatedScientificNameRank,
                     ScientificName = to.EvaluatedScientificName,
-                    ScientificNameFormatted = from.EvaluatedScientificNameFormatted,
+                    ScientificNameFormatted = to.EvaluatedScientificNameFormatted,
                     ScientificNameId = (int)to.EvaluatedScientificNameId,
                     AssessmentId = to.Id
                 }));
