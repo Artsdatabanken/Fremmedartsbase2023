@@ -70,6 +70,9 @@ namespace Prod.Api.Helpers
                     })
                     .ForMember(dest => dest.InvationScore, opt => opt.MapFrom(src => ExportMapperHelper.GetScores(src.Category, src.Criteria, "inv")))
                     .ForMember(dest => dest.EcoEffectScore, opt => opt.MapFrom(src => ExportMapperHelper.GetScores(src.Category, src.Criteria, "eco")))
+                    .ForMember(dest => dest.EcoEffectScoreHigh, opt => opt.MapFrom(src => ExportMapperHelper.GetScoreUncertainties(src.Category, src.Criteria, src.RiskAssessment.Criteria, "yAxis", "high")))
+                    .ForMember(dest => dest.EcoEffectScoreLow, opt => opt.MapFrom(src => ExportMapperHelper.GetScoreUncertainties(src.Category, src.Criteria, src.RiskAssessment.Criteria, "yAxis", "low")))
+                    
                     .ForMember(dest => dest.InvationScore2018, opt => 
                     {
                         opt.PreCondition(src => src.PreviousAssessments.SingleOrDefault(x => x.RevisionYear == 2018) is not null);
@@ -87,8 +90,35 @@ namespace Prod.Api.Helpers
                     .ForMember(dest => dest.RiskAssessmentPossibleLowerCategory, opt => opt.MapFrom(src => src.Category == "NK" ? "no" : src.RiskAssessment.PossibleLowerCategory))
                     .ForMember(dest => dest.RiskAssessmentClimateEffectsInvationpotential, opt => opt.MapFrom(src => src.Category == "NK" ? "no" : src.RiskAssessment.ClimateEffectsInvationpotential))
                     .ForMember(dest => dest.RiskAssessmentClimateEffectsEcoEffect, opt => opt.MapFrom(src => src.Category == "NK" ? "no" : src.RiskAssessment.ClimateEffectsEcoEffect))
-
-
+                    .ForMember(dest =>dest.EvaluationStatus,  opt => opt.MapFrom(src => ExportMapperHelper.GetProgress(src)))
+                    .ForMember(dest => dest.RiskAssessmentCriteriaA, opt => opt.MapFrom(src => ExportMapperHelper.GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "A", "score")))
+                    .ForMember(dest => dest.RiskAssessmentCriteriaB, opt => opt.MapFrom(src => ExportMapperHelper.GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "B", "score")))
+                    .ForMember(dest => dest.RiskAssessmentCriteriaC, opt => opt.MapFrom(src => ExportMapperHelper.GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "C", "score")))
+                    .ForMember(dest => dest.RiskAssessmentCriteriaD, opt => opt.MapFrom(src => ExportMapperHelper.GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "D", "score")))
+                    .ForMember(dest => dest.RiskAssessmentCriteriaE, opt => opt.MapFrom(src => ExportMapperHelper.GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "E", "score")))
+                    .ForMember(dest => dest.RiskAssessmentCriteriaF, opt => opt.MapFrom(src => ExportMapperHelper.GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "F", "score")))
+                    .ForMember(dest => dest.RiskAssessmentCriteriaG, opt => opt.MapFrom(src => ExportMapperHelper.GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "G", "score")))
+                    .ForMember(dest => dest.RiskAssessmentCriteriaH, opt => opt.MapFrom(src => ExportMapperHelper.GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "H", "score")))
+                    .ForMember(dest => dest.RiskAssessmentCriteriaI, opt => opt.MapFrom(src => ExportMapperHelper.GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "I", "score")))
+                    .ForMember(dest => dest.RiskAssessmentCriteriaALow, opt => opt.MapFrom(src => ExportMapperHelper.GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "A", "low")))
+                    .ForMember(dest => dest.RiskAssessmentCriteriaBLow, opt => opt.MapFrom(src => ExportMapperHelper.GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "B", "low")))
+                    .ForMember(dest => dest.RiskAssessmentCriteriaCLow, opt => opt.MapFrom(src => ExportMapperHelper.GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "C", "low")))
+                    .ForMember(dest => dest.RiskAssessmentCriteriaDLow, opt => opt.MapFrom(src => ExportMapperHelper.GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "D", "low")))
+                    .ForMember(dest => dest.RiskAssessmentCriteriaELow, opt => opt.MapFrom(src => ExportMapperHelper.GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "E", "low")))
+                    .ForMember(dest => dest.RiskAssessmentCriteriaFLow, opt => opt.MapFrom(src => ExportMapperHelper.GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "F", "low")))
+                    .ForMember(dest => dest.RiskAssessmentCriteriaGLow, opt => opt.MapFrom(src => ExportMapperHelper.GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "G", "low")))
+                    .ForMember(dest => dest.RiskAssessmentCriteriaHLow, opt => opt.MapFrom(src => ExportMapperHelper.GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "H", "low")))
+                    .ForMember(dest => dest.RiskAssessmentCriteriaILow, opt => opt.MapFrom(src => ExportMapperHelper.GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "I", "low")))
+                    .ForMember(dest => dest.RiskAssessmentCriteriaAHigh, opt => opt.MapFrom(src => ExportMapperHelper.GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "A", "high")))
+                    .ForMember(dest => dest.RiskAssessmentCriteriaBHigh, opt => opt.MapFrom(src => ExportMapperHelper.GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "B", "high")))
+                    .ForMember(dest => dest.RiskAssessmentCriteriaCHigh, opt => opt.MapFrom(src => ExportMapperHelper.GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "C", "high")))
+                    .ForMember(dest => dest.RiskAssessmentCriteriaDHigh, opt => opt.MapFrom(src => ExportMapperHelper.GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "D", "high")))
+                    .ForMember(dest => dest.RiskAssessmentCriteriaEHigh, opt => opt.MapFrom(src => ExportMapperHelper.GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "E", "high")))
+                    .ForMember(dest => dest.RiskAssessmentCriteriaFHigh, opt => opt.MapFrom(src => ExportMapperHelper.GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "F", "high")))
+                    .ForMember(dest => dest.RiskAssessmentCriteriaGHigh, opt => opt.MapFrom(src => ExportMapperHelper.GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "G", "high")))
+                    .ForMember(dest => dest.RiskAssessmentCriteriaHHigh, opt => opt.MapFrom(src => ExportMapperHelper.GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "G", "high")))
+                    .ForMember(dest => dest.RiskAssessmentCriteriaIHigh, opt => opt.MapFrom(src => ExportMapperHelper.GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "I", "high")))
+                    .ForMember(dest => dest.RiskAssessmentChosenMethodBcrit, opt => opt.MapFrom(src => ExportMapperHelper.GetRiskAssessmentChosenMethodBcrit(src.RiskAssessment, src.AssessmentConclusion)))
                         
                     .AfterMap((src, dest) =>
                     {
@@ -172,34 +202,6 @@ namespace Prod.Api.Helpers
                         dest.RiskAssessmentMedianLifetime = GetMedianLifetime(src.RiskAssessment);
                         dest.RiskAssessmentLifetimeUpperQ = GetLifetimeUpperQ(src.RiskAssessment);  
                         dest.RiskAssessmentLifetimeLowerQ = GetLifetimeLowerQ(src.RiskAssessment);
-                        dest.RiskAssessmentCriteriaA = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "A", "score");
-                        dest.RiskAssessmentCriteriaB = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "B","score");
-                        dest.RiskAssessmentCriteriaC = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "C","score");
-                        dest.RiskAssessmentCriteriaD = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "D","score");
-                        dest.RiskAssessmentCriteriaE = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "E","score");
-                        dest.RiskAssessmentCriteriaF = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "F","score");
-                        dest.RiskAssessmentCriteriaG = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "G","score");
-                        dest.RiskAssessmentCriteriaH = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "H","score");
-                        dest.RiskAssessmentCriteriaI = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "I","score");
-                        dest.RiskAssessmentCriteriaALow = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "A", "low");
-                        dest.RiskAssessmentCriteriaAHigh= GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "A", "high");
-                        dest.RiskAssessmentCriteriaBLow = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "B", "low");
-                        dest.RiskAssessmentCriteriaBHigh= GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "B", "high");
-                        dest.RiskAssessmentCriteriaCLow = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "C", "low");
-                        dest.RiskAssessmentCriteriaCHigh= GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "C", "high");
-                        dest.RiskAssessmentCriteriaDLow = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "D", "low");
-                        dest.RiskAssessmentCriteriaDHigh= GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "D", "high");
-                        dest.RiskAssessmentCriteriaELow = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "E", "low");
-                        dest.RiskAssessmentCriteriaEHigh= GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "E", "high");
-                        dest.RiskAssessmentCriteriaFLow = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "F", "low");
-                        dest.RiskAssessmentCriteriaFHigh= GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "F", "high");
-                        dest.RiskAssessmentCriteriaGLow = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "G", "low");
-                        dest.RiskAssessmentCriteriaGHigh= GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "G", "high");
-                        dest.RiskAssessmentCriteriaHLow = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "H", "low");
-                        dest.RiskAssessmentCriteriaHHigh= GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "H", "high");
-                        dest.RiskAssessmentCriteriaILow = GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "I", "low");
-                        dest.RiskAssessmentCriteriaIHigh= GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "I", "high");
-                        dest.RiskAssessmentChosenMethodBcrit = GetRiskAssessmentChosenMethodBcrit(src.RiskAssessment, src.AssessmentConclusion);
                         dest.RiskAssessmentExpansionSpeed = GetRiskAssessmentExpansionSpeed(src, src.RiskAssessment, "50", src.AssessmentConclusion);
                         dest.RiskAssessmentExpansionLowerQ = GetRiskAssessmentExpansionSpeed(src, src.RiskAssessment, "25", src.AssessmentConclusion);
                         dest.RiskAssessmentExpansionUpperQ = GetRiskAssessmentExpansionSpeed(src, src.RiskAssessment, "75", src.AssessmentConclusion);
@@ -207,7 +209,6 @@ namespace Prod.Api.Helpers
                         dest.ReasonForChangeOfCategory = GetReasonForChangeOfCategory(src.ReasonForChangeOfCategory, src.Category, dest.Category2018);
                         // dest.AlienSpeciesCategory = GetAlienSpeciesCategory(src.AlienSpeciesCategory);
                         // overkjøre status for vurderinger som kom fra horizontscanning
-                        dest.EvaluationStatus = GetProgress(src);
                     });
 
 
@@ -367,166 +368,6 @@ namespace Prod.Api.Helpers
                     0; 
         }
 
-        private static string GetRiskAssessmentChosenMethodBcrit(RiskAssessment ra, string assConc)
-        {
-            string result = //using terms suggested by Hanno
-            (ra.ChosenSpreadYearlyIncrease == "a") ? "modelling" : 
-            (assConc == "AssessedDoorknocker" && ra.ChosenSpreadYearlyIncrease == "b") ? "introductionpressure":
-            (assConc == "AssessedSelfReproducing" && ra.ChosenSpreadYearlyIncrease == "b" && ra.AOOfirstOccurenceLessThan10Years == "yes") ? "AOO":
-            (assConc == "AssessedSelfReproducing" && ra.ChosenSpreadYearlyIncrease == "b" && ra.AOOfirstOccurenceLessThan10Years == "no") ? "AOO_periodlessthan10years":
-            ""; //retun empty for species not assessed
-            return result;
-        }
-
-        private static int? GetRiskAssessmentCritera(FA4 ass, List<RiskAssessment.Criterion> criteria, string critLetter, string scoretab)
-        { 
-           int? CritScore = 0;
-           int? CritLow = 0;
-           int? CritHigh = 0;
-            if (critLetter == "A")
-            {
-                if(GetProgress(ass) == "notStarted" || ass.RiskAssessment.ChosenSpreadMedanLifespan == "RedListCategoryLevel") 
-                {
-                    CritScore = null;
-                    CritHigh = null;
-                    CritLow = null;
-                }
-                else
-                {
-                    CritScore = criteria[0].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
-                    //UncertaintyValues not always ordered from smallest to largest - sometimes high comes at [0] and low at [1]..
-                    CritLow = (criteria[0].UncertaintyValues == null || criteria[0].UncertaintyValues.Length == 0) ? null : Math.Min(criteria[0].UncertaintyValues[0] + 1 ,criteria[0].UncertaintyValues[criteria[0].UncertaintyValues.Length-1] + 1);
-                    CritHigh = (criteria[0].UncertaintyValues == null || criteria[0].UncertaintyValues.Length == 0) ? null : Math.Max(criteria[0].UncertaintyValues[0] + 1 ,criteria[0].UncertaintyValues[criteria[0].UncertaintyValues.Length-1] + 1);
-                }
-            }
-
-            if (critLetter == "B")
-            {
-                if(GetProgress(ass) == "notStarted" || GetRiskAssessmentChosenMethodBcrit(ass.RiskAssessment, ass.AssessmentConclusion) == "") 
-                {
-                    CritScore = null;
-                    CritHigh = null;
-                    CritLow = null;
-                }
-                else
-                {
-                    CritScore = criteria[1].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
-                    CritLow = (criteria[1].UncertaintyValues == null || criteria[1].UncertaintyValues.Length == 0) ? null : Math.Min(criteria[1].UncertaintyValues[0] + 1,criteria[1].UncertaintyValues[criteria[1].UncertaintyValues.Length-1] + 1);
-                    CritHigh = (criteria[1].UncertaintyValues == null || criteria[1].UncertaintyValues.Length == 0) ? null : Math.Max(criteria[1].UncertaintyValues[0] + 1,criteria[1].UncertaintyValues[criteria[1].UncertaintyValues.Length-1] + 1);
-                }
-            }
-
-            if (critLetter == "C")
-            {
-                if(GetProgress(ass) == "notStarted") 
-                {
-                    CritScore = null;
-                    CritHigh = null;
-                    CritLow = null;
-                }
-                else
-                {
-                    CritScore = criteria[2].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
-                    CritLow = (criteria[2].UncertaintyValues == null || criteria[2].UncertaintyValues.Length == 0) ? null : Math.Min(criteria[2].UncertaintyValues[0] + 1, criteria[2].UncertaintyValues[criteria[2].UncertaintyValues.Length-1] + 1);
-                    CritHigh = (criteria[2].UncertaintyValues == null || criteria[2].UncertaintyValues.Length == 0) ? null : Math.Max(criteria[2].UncertaintyValues[0] + 1, criteria[2].UncertaintyValues[criteria[2].UncertaintyValues.Length-1] + 1);
-                }
-            }
-            if (critLetter == "D")
-            {
-                if(GetProgress(ass) == "notStarted") 
-                {
-                    CritScore = null;
-                    CritHigh = null;
-                    CritLow = null;
-                }
-                else
-                {
-                    CritScore = criteria[3].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
-                    CritLow = (criteria[3].UncertaintyValues == null || criteria[3].UncertaintyValues.Length == 0) ? null : Math.Min(criteria[3].UncertaintyValues[0] + 1,criteria[3].UncertaintyValues[criteria[3].UncertaintyValues.Length-1] + 1);
-                    CritHigh = (criteria[3].UncertaintyValues == null || criteria[3].UncertaintyValues.Length == 0) ? null : Math.Max(criteria[3].UncertaintyValues[0] + 1,criteria[3].UncertaintyValues[criteria[3].UncertaintyValues.Length-1] + 1);
-                    // CritLow = Math.Min(CritLow1, CritHigh1);
-                }
-            }
-            if (critLetter == "E")
-            {
-                if(GetProgress(ass) == "notStarted") 
-                {
-                    CritScore = null;
-                    CritHigh = null;
-                    CritLow = null;
-                }
-                else
-                {
-                    CritScore = criteria[4].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
-                    CritLow = (criteria[4].UncertaintyValues == null || criteria[4].UncertaintyValues.Length == 0) ? null : Math.Min(criteria[4].UncertaintyValues[0] + 1, criteria[4].UncertaintyValues[criteria[4].UncertaintyValues.Length-1] + 1);
-                    CritHigh = (criteria[4].UncertaintyValues == null || criteria[4].UncertaintyValues.Length == 0) ? null : Math.Max(criteria[4].UncertaintyValues[0] + 1, criteria[4].UncertaintyValues[criteria[4].UncertaintyValues.Length-1] + 1);
-                }
-            }
-            if (critLetter == "F")
-            {
-                if(GetProgress(ass) == "notStarted") 
-                {
-                    CritScore = null;
-                    CritHigh = null;
-                    CritLow = null;
-                }
-                else
-                {
-                    CritScore = criteria[5].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
-                    CritLow = (criteria[5].UncertaintyValues == null || criteria[5].UncertaintyValues.Length == 0) ? null : Math.Min(criteria[5].UncertaintyValues[0] + 1, criteria[5].UncertaintyValues[criteria[5].UncertaintyValues.Length-1]+1);
-                    CritHigh = (criteria[5].UncertaintyValues == null || criteria[5].UncertaintyValues.Length == 0) ? null : Math.Max(criteria[5].UncertaintyValues[0] + 1, criteria[5].UncertaintyValues[criteria[5].UncertaintyValues.Length-1]+1);
-                }
-            }
-            if (critLetter == "G")
-            {
-                if(GetProgress(ass) == "notStarted") 
-                {
-                    CritScore = null;
-                    CritHigh = null;
-                    CritLow = null;
-                }
-                else
-                {
-                    CritScore = criteria[6].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
-                    CritLow = (criteria[6].UncertaintyValues == null || criteria[6].UncertaintyValues.Length == 0) ? null : Math.Min(criteria[6].UncertaintyValues[0] + 1, criteria[6].UncertaintyValues[criteria[6].UncertaintyValues.Length-1] + 1);
-                    CritHigh = (criteria[6].UncertaintyValues == null || criteria[6].UncertaintyValues.Length == 0) ? null : Math.Max(criteria[6].UncertaintyValues[0] + 1, criteria[6].UncertaintyValues[criteria[6].UncertaintyValues.Length-1] + 1);
-                }
-            }
-            if (critLetter == "H")
-            {
-                if(GetProgress(ass) == "notStarted") 
-                {
-                    CritScore = null;
-                    CritHigh = null;
-                    CritLow = null;
-                }
-                else
-                {
-                    CritScore = criteria[7].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
-                    CritLow = (criteria[7].UncertaintyValues == null || criteria[7].UncertaintyValues.Length == 0) ? null : Math.Min(criteria[7].UncertaintyValues[0] + 1, criteria[7].UncertaintyValues[criteria[7].UncertaintyValues.Length-1] + 1);
-                    CritHigh = (criteria[7].UncertaintyValues == null || criteria[7].UncertaintyValues.Length == 0) ? null : Math.Max(criteria[7].UncertaintyValues[0] + 1, criteria[7].UncertaintyValues[criteria[7].UncertaintyValues.Length-1] + 1);
-                }
-            }
-            if (critLetter == "I")
-            {
-                if(GetProgress(ass) == "notStarted") 
-                {
-                    CritScore = null;
-                    CritHigh = null;
-                    CritLow = null;
-                }
-                else 
-                {
-                    CritScore = criteria[8].Value + 1; //Add one to get score from 1 to 4 (not 0 to 3)
-                    CritLow = (criteria[8].UncertaintyValues == null || criteria[8].UncertaintyValues.Length == 0) ? null : Math.Min(criteria[8].UncertaintyValues[0] + 1, criteria[8].UncertaintyValues[criteria[8].UncertaintyValues.Length-1] + 1);
-                    CritHigh = (criteria[8].UncertaintyValues == null || criteria[8].UncertaintyValues.Length == 0) ? null : Math.Max(criteria[8].UncertaintyValues[0] + 1, criteria[8].UncertaintyValues[criteria[8].UncertaintyValues.Length-1] + 1);
-                }
-            }
-
-            return  (scoretab == "score") ? CritScore   :
-                    (scoretab == "low")   ? CritLow     :
-                    CritHigh;
-        }
 
         private static string GetArcticBioClimateZones(List<FA4.BioClimateZonesArctic> arcticBioClimateZones)
         {
@@ -1038,25 +879,7 @@ namespace Prod.Api.Helpers
         {
             return roundToSignificantDecimals(ra.LifetimeUpperQInput);
         }
-        private static string GetProgress(FA4 ass)
-        {
-            if (ass.EvaluationStatus == "imported" || (ass.HorizonDoScanning == false &&
-                                                       ass.LastUpdatedAt < IndexHelper._dateTimeForHorScanDone))
-            {
-                return "notStarted";
-            }
-
-            if (ass.EvaluationStatus == "inprogress")
-            {
-                return "inprogress";
-            }
-            else if (ass.EvaluationStatus == "finished")
-            {
-                return "finished";
-            }
-
-            return string.Empty;
-        }
+        
 
         private static string GetDoorknockerType(FA4WithComments args)
         {
@@ -1171,6 +994,12 @@ namespace Prod.Api.Helpers
         
         [Name("SkaarOkologiskEffekt")]
         public int? EcoEffectScore {get; set; }
+
+        [Name("SkaarOkologiskEffektUsikkerhetHoy")]
+        public int? EcoEffectScoreHigh {get; set; }
+        
+        [Name("SkaarOkologiskEffektUsikkerhetLav")]
+        public int? EcoEffectScoreLow {get; set; }
         
         [Name("Kategori2018")]
         public string Category2018 { get; set; }
