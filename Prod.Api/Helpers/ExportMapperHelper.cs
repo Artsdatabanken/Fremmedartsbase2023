@@ -22,6 +22,27 @@ namespace Prod.Api.Helpers
             }
         }
 
+        private static int GetABScoreUncertainties(int AValue, int BValue)
+        {
+            int ABValue = int.Parse(AValue.ToString() + BValue.ToString());
+            return (ABValue) switch 
+            {
+                12 => 2,
+                13 => 2,
+                14 => 3,
+                21 => 1,
+                23 => 3,
+                24 => 3,
+                31 => 2,
+                32 => 3,
+                34 => 4,
+                41 => 2,
+                42 => 3,
+                43 => 4,
+                _ => AValue //when A = B, the result is their value
+            };
+        }
+
         internal static int? GetScoreUncertainties(string category, string decisiveCriteria, List<RiskAssessment.Criterion> criteria, string matrixAxis, string uncertainty)
         {
             if (category == "NR" || category == "" || category == null)
@@ -31,33 +52,93 @@ namespace Prod.Api.Helpers
             
             bool ecologicalEffectAxis = matrixAxis == "yAxis";
             bool uncertaintyHigh = uncertainty == "high";
-            if (ecologicalEffectAxis) 
+            if (ecologicalEffectAxis) //y-axis
             {
-                List<RiskAssessment.Criterion> criteriaEcologicalEffectAxis = criteria.Where(x => new[] {"D", "E", "F", "G", "H", "I"}.Any(y => x.CriteriaLetter.Contains(y))).ToList();
-                // Only use decisive criteria:
+                List<RiskAssessment.Criterion> criteriaAxis = criteria.Where(x => new[] {"D", "E", "F", "G", "H", "I"}.Any(y => x.CriteriaLetter.Contains(y))).ToList();
+                // Only use decisive criteria (i.e. criteria with value equal to axis-score):
                 int? ecologicalEffectAxisScore = GetScores(category, decisiveCriteria, "eco");
-                criteriaEcologicalEffectAxis.RemoveAll(s => (s.Value + 1 != ecologicalEffectAxisScore));   
-                if (criteriaEcologicalEffectAxis == null || criteriaEcologicalEffectAxis.Count == 0) 
-                {
-                    return null;
-                }
-                var uncertaintyValuesLow = criteriaEcologicalEffectAxis.Select(x => x.UncertaintyValues.Min()).Distinct();
+                criteriaAxis.RemoveAll(s => (s.Value + 1 != ecologicalEffectAxisScore)); 
+                var uncertaintyValuesLow = criteriaAxis.Select(x => x.UncertaintyValues.Min()).Distinct();
                 var uncertaintyValueLow = uncertaintyValuesLow.Count() == 1 ? uncertaintyValuesLow.FirstOrDefault() + 1 : ecologicalEffectAxisScore;
-                return uncertaintyHigh ? criteriaEcologicalEffectAxis.Select(x => x.UncertaintyValues.Max()).Max() + 1
+                
+                return uncertaintyHigh ? criteriaAxis.Select(x => x.UncertaintyValues.Max()).Max() + 1
                 : uncertaintyValueLow;
             }
 
-            else return 0;
+            else //x-axis
+            {
+                List<RiskAssessment.Criterion> criteriaAxis = criteria.Where(x => new[] {"A", "B", "C"}.Any(y => x.CriteriaLetter.Contains(y))).ToList();
+                
+                //when no uncertainties, A and B values are equal to score
+                int AValue = criteriaAxis.Where(x => x.CriteriaLetter == "A").Select(x => x.Value).FirstOrDefault();
+                int BValue = criteriaAxis.Where(x => x.CriteriaLetter == "B").Select(x => x.Value).FirstOrDefault();
+                int CValue = criteriaAxis.Where(x => x.CriteriaLetter == "C").Select(x => x.Value).FirstOrDefault();
+                
+                if (uncertaintyHigh)
+                {
+                    int AValueUncertain = criteriaAxis.Where(x => x.CriteriaLetter == "A").Select(x => x.UncertaintyValues.Max()).FirstOrDefault() + 1;   
+                    int BValueUncertain = criteriaAxis.Where(x => x.CriteriaLetter == "B").Select(x => x.UncertaintyValues.Max()).FirstOrDefault() + 1;    
+                    CValue = criteriaAxis.Where(x => x.CriteriaLetter == "C").Select(x => x.UncertaintyValues.Max()).FirstOrDefault() + 1; 
+                    int scoreAB = GetABScoreUncertainties(AValueUncertain, BValueUncertain);
+                    //difference from score cannot exceed 1:
+                    int resultScoreAB = (int)(scoreAB - GetScores(category, decisiveCriteria, "inv") > 1 ? GetScores(category, decisiveCriteria, "inv") + 1 : scoreAB);
+                    //Always return maximum value:
+                    return (Math.Max(resultScoreAB, CValue));
+                }
+
+                else
+                {
+                    //Only use decisive criteria for lower uncertainty:
+                    var listOfLetters = new List<string>();
+                    if (decisiveCriteria.Contains("A") || decisiveCriteria.Contains("B")) 
+                    {
+                        listOfLetters.AddRange(new List<string>
+                        {
+                            "A",
+                            "B",
+                        });
+                    }
+
+                    if (decisiveCriteria.Contains("C")) 
+                    {
+                        listOfLetters.Add("C");
+                    }  
+
+                    //Get uncertaintyvalues from decisive criteria 
+                    if (listOfLetters.Count == 3)
+                    {
+                        AValue = criteriaAxis.Where(x => x.CriteriaLetter == "A").Select(x => x.UncertaintyValues.Min()).FirstOrDefault() + 1;   
+                        BValue = criteriaAxis.Where(x => x.CriteriaLetter == "B").Select(x => x.UncertaintyValues.Min()).FirstOrDefault() + 1;   
+                        CValue = criteriaAxis.Where(x => x.CriteriaLetter == "C").Select(x => x.UncertaintyValues.Min()).FirstOrDefault() + 1; 
+                        int scoreAB = GetABScoreUncertainties(AValue, BValue);
+                        //difference from axis-score cannot exceed 1:
+                        int resultScoreAB = (int)(GetScores(category, decisiveCriteria, "inv") - scoreAB > 1 ? GetScores(category, decisiveCriteria, "inv") - 1 : scoreAB);
+                        //only return minimum value if all values are equal:
+                        return resultScoreAB == CValue ? CValue : Math.Max(resultScoreAB, CValue);
+                    }
+                    
+                    if (listOfLetters.Count == 2)
+                    {
+                        AValue = criteriaAxis.Where(x => x.CriteriaLetter == "A").Select(x => x.UncertaintyValues.Min()).FirstOrDefault() + 1;   
+                        BValue = criteriaAxis.Where(x => x.CriteriaLetter == "B").Select(x => x.UncertaintyValues.Min()).FirstOrDefault() + 1;   
+                        int scoreAB = GetABScoreUncertainties(AValue, BValue);
+                        //difference from axis-score cannot exceed 1:
+                        int resultScoreAB = (int)(GetScores(category, decisiveCriteria, "inv") - scoreAB > 1 ? GetScores(category, decisiveCriteria, "inv") - 1 : scoreAB);
+                        return resultScoreAB;
+                    }
+
+                    if (listOfLetters.Count == 1)
+                    {
+                        CValue = criteriaAxis.Where(x => x.CriteriaLetter == "C").Select(x => x.UncertaintyValues.Min()).FirstOrDefault() + 1; 
+                        int scoreAB = GetABScoreUncertainties(AValue, BValue);
+                        return CValue;
+                    }
+
+                    else return 1; //NK-species has lowest value 1
+                }
+            }
         }
 
-        private static string GetAlienSpeciesCategory2018(string AlienCategory)
-        {
-            if(AlienCategory == null || AlienCategory == "")
-            {
-                return string.Empty;
-            }
-            return AlienCategory;
-        }
         internal static string GetDEcritInformation(List<RiskAssessment.SpeciesSpeciesInteraction> speciesSpeciesInteractions)
         {
             if (speciesSpeciesInteractions == null || speciesSpeciesInteractions.Count == 0)

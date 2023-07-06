@@ -68,10 +68,12 @@ namespace Prod.Api.Helpers
                         opt.PreCondition(src => src.RiskAssessment.PossibleLowerCategory is "yes" && src.Category is not "NR");
                         opt.MapFrom(src => src.RiskAssessment.GeographicalVariationDocumentation);
                     })
-                    .ForMember(dest => dest.InvationScore, opt => opt.MapFrom(src => ExportMapperHelper.GetScores(src.Category, src.Criteria, "inv")))
+                    .ForMember(dest => dest.InvasionScore, opt => opt.MapFrom(src => ExportMapperHelper.GetScores(src.Category, src.Criteria, "inv")))
                     .ForMember(dest => dest.EcoEffectScore, opt => opt.MapFrom(src => ExportMapperHelper.GetScores(src.Category, src.Criteria, "eco")))
                     .ForMember(dest => dest.EcoEffectScoreHigh, opt => opt.MapFrom(src => ExportMapperHelper.GetScoreUncertainties(src.Category, src.Criteria, src.RiskAssessment.Criteria, "yAxis", "high")))
                     .ForMember(dest => dest.EcoEffectScoreLow, opt => opt.MapFrom(src => ExportMapperHelper.GetScoreUncertainties(src.Category, src.Criteria, src.RiskAssessment.Criteria, "yAxis", "low")))
+                    .ForMember(dest => dest.InvasionScoreLow, opt => opt.MapFrom(src => ExportMapperHelper.GetScoreUncertainties(src.Category, src.Criteria, src.RiskAssessment.Criteria, "xAxis", "low")))
+                    .ForMember(dest => dest.InvasionScoreHigh, opt => opt.MapFrom(src => ExportMapperHelper.GetScoreUncertainties(src.Category, src.Criteria, src.RiskAssessment.Criteria, "xAxis", "high")))
                     
                     .ForMember(dest => dest.InvationScore2018, opt => 
                     {
@@ -990,16 +992,22 @@ namespace Prod.Api.Helpers
         public string Criteria { get; set; }
 
         [Name("SkaarInvasjonspotensial")]
-        public int? InvationScore {get; set; }
+        public int? InvasionScore {get; set; }
+
+        [Name("SkaarInvasjonspotensialUsikkerhetLav")]
+        public int? InvasionScoreLow {get; set; }
+
+        [Name("SkaarInvasjonspotensialUsikkerhetHoy")]
+        public int? InvasionScoreHigh {get; set; }
         
         [Name("SkaarOkologiskEffekt")]
         public int? EcoEffectScore {get; set; }
-
-        [Name("SkaarOkologiskEffektUsikkerhetHoy")]
-        public int? EcoEffectScoreHigh {get; set; }
         
         [Name("SkaarOkologiskEffektUsikkerhetLav")]
         public int? EcoEffectScoreLow {get; set; }
+
+        [Name("SkaarOkologiskEffektUsikkerhetHoy")]
+        public int? EcoEffectScoreHigh {get; set; }
         
         [Name("Kategori2018")]
         public string Category2018 { get; set; }
@@ -1342,7 +1350,7 @@ namespace Prod.Api.Helpers
             [Name("B-EkspansjonshastighetNedreKvartil")]
             public long? RiskAssessmentExpansionLowerQ { get; set; } // nedre kvartil for ekspansjonshastighet i meter per år 
             
-            [Name("B-GjennomsnittligEkspansjonshastighet(mperaar)")]
+            [Name("B-GjennomsnittligEkspansjonshastighet")]
             public long? RiskAssessmentExpansionSpeed { get; set; }  // ekspansjonshastighet i meter per år 
             
             [Name("B-EkspansjonshastighetOvreKvartil")]
