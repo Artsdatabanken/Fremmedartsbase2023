@@ -58,10 +58,10 @@ namespace Prod.Api.Helpers
                 // Only use decisive criteria (i.e. criteria with value equal to axis-score):
                 int? ecologicalEffectAxisScore = GetScores(category, decisiveCriteria, "eco");
                 criteriaAxis.RemoveAll(s => (s.Value + 1 != ecologicalEffectAxisScore)); 
-                var uncertaintyValuesLow = criteriaAxis.Select(x => x.UncertaintyValues.Min()).Distinct();
+                var uncertaintyValuesLow = criteriaAxis.Select(x => x.UncertaintyValues.DefaultIfEmpty().Min()).Distinct();
                 var uncertaintyValueLow = uncertaintyValuesLow.Count() == 1 ? uncertaintyValuesLow.FirstOrDefault() + 1 : ecologicalEffectAxisScore;
                 
-                return uncertaintyHigh ? criteriaAxis.Select(x => x.UncertaintyValues.Max()).Max() + 1
+                return uncertaintyHigh ? criteriaAxis.Select(x => x.UncertaintyValues.DefaultIfEmpty().Max()).Max() + 1
                 : uncertaintyValueLow;
             }
 
@@ -76,9 +76,9 @@ namespace Prod.Api.Helpers
                 
                 if (uncertaintyHigh)
                 {
-                    int AValueUncertain = criteriaAxis.Where(x => x.CriteriaLetter == "A").Select(x => x.UncertaintyValues.Max()).FirstOrDefault() + 1;   
-                    int BValueUncertain = criteriaAxis.Where(x => x.CriteriaLetter == "B").Select(x => x.UncertaintyValues.Max()).FirstOrDefault() + 1;    
-                    CValue = criteriaAxis.Where(x => x.CriteriaLetter == "C").Select(x => x.UncertaintyValues.Max()).FirstOrDefault() + 1; 
+                    int AValueUncertain = criteriaAxis.Where(x => x.CriteriaLetter == "A").Select(x => x.UncertaintyValues.DefaultIfEmpty().Max()).FirstOrDefault() + 1;   
+                    int BValueUncertain = criteriaAxis.Where(x => x.CriteriaLetter == "B").Select(x => x.UncertaintyValues.DefaultIfEmpty().Max()).FirstOrDefault() + 1;    
+                    CValue = criteriaAxis.Where(x => x.CriteriaLetter == "C").Select(x => x.UncertaintyValues.DefaultIfEmpty().Max()).FirstOrDefault() + 1; 
                     int scoreAB = GetABScoreUncertainties(AValueUncertain, BValueUncertain);
                     //difference from score cannot exceed 1:
                     int resultScoreAB = (int)(scoreAB - GetScores(category, decisiveCriteria, "inv") > 1 ? GetScores(category, decisiveCriteria, "inv") + 1 : scoreAB);
@@ -107,9 +107,9 @@ namespace Prod.Api.Helpers
                     //Get uncertaintyvalues from decisive criteria 
                     if (listOfLetters.Count == 3)
                     {
-                        AValue = criteriaAxis.Where(x => x.CriteriaLetter == "A").Select(x => x.UncertaintyValues.Min()).FirstOrDefault() + 1;   
-                        BValue = criteriaAxis.Where(x => x.CriteriaLetter == "B").Select(x => x.UncertaintyValues.Min()).FirstOrDefault() + 1;   
-                        CValue = criteriaAxis.Where(x => x.CriteriaLetter == "C").Select(x => x.UncertaintyValues.Min()).FirstOrDefault() + 1; 
+                        AValue = criteriaAxis.Where(x => x.CriteriaLetter == "A").Select(x => x.UncertaintyValues.DefaultIfEmpty().Min()).FirstOrDefault() + 1;   
+                        BValue = criteriaAxis.Where(x => x.CriteriaLetter == "B").Select(x => x.UncertaintyValues.DefaultIfEmpty().Min()).FirstOrDefault() + 1;   
+                        CValue = criteriaAxis.Where(x => x.CriteriaLetter == "C").Select(x => x.UncertaintyValues.DefaultIfEmpty().Min()).FirstOrDefault() + 1; 
                         int scoreAB = GetABScoreUncertainties(AValue, BValue);
                         //difference from axis-score cannot exceed 1:
                         int resultScoreAB = (int)(GetScores(category, decisiveCriteria, "inv") - scoreAB > 1 ? GetScores(category, decisiveCriteria, "inv") - 1 : scoreAB);
@@ -119,8 +119,8 @@ namespace Prod.Api.Helpers
                     
                     if (listOfLetters.Count == 2)
                     {
-                        AValue = criteriaAxis.Where(x => x.CriteriaLetter == "A").Select(x => x.UncertaintyValues.Min()).FirstOrDefault() + 1;   
-                        BValue = criteriaAxis.Where(x => x.CriteriaLetter == "B").Select(x => x.UncertaintyValues.Min()).FirstOrDefault() + 1;   
+                        AValue = criteriaAxis.Where(x => x.CriteriaLetter == "A").Select(x => x.UncertaintyValues.DefaultIfEmpty().Min()).FirstOrDefault() + 1;   
+                        BValue = criteriaAxis.Where(x => x.CriteriaLetter == "B").Select(x => x.UncertaintyValues.DefaultIfEmpty().Min()).FirstOrDefault() + 1;   
                         int scoreAB = GetABScoreUncertainties(AValue, BValue);
                         //difference from axis-score cannot exceed 1:
                         int resultScoreAB = (int)(GetScores(category, decisiveCriteria, "inv") - scoreAB > 1 ? GetScores(category, decisiveCriteria, "inv") - 1 : scoreAB);
@@ -129,7 +129,7 @@ namespace Prod.Api.Helpers
 
                     if (listOfLetters.Count == 1)
                     {
-                        CValue = criteriaAxis.Where(x => x.CriteriaLetter == "C").Select(x => x.UncertaintyValues.Min()).FirstOrDefault() + 1; 
+                        CValue = criteriaAxis.Where(x => x.CriteriaLetter == "C").Select(x => x.UncertaintyValues.DefaultIfEmpty().Min()).FirstOrDefault() + 1; 
                         int scoreAB = GetABScoreUncertainties(AValue, BValue);
                         return CValue;
                     }
