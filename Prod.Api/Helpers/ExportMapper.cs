@@ -864,7 +864,7 @@ namespace Prod.Api.Helpers
              }
         private static long GetMedianLifetime(RiskAssessment ra) 
         {
-            long result = (ra.ChosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate" && ra.AcceptOrAdjustCritA == "accept") ? 
+            long result = (ra.ChosenSpreadMedanLifespan == "LifespanA1aSimplifiedEstimate") ?
                 ra.Criteria[0].Value == 0 ? 3
                 : ra.Criteria[0].Value == 1 ? 25
                 : ra.Criteria[0].Value == 2 ? 200
