@@ -121,7 +121,12 @@ namespace Prod.Api.Helpers
                     .ForMember(dest => dest.RiskAssessmentCriteriaHHigh, opt => opt.MapFrom(src => ExportMapperHelper.GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "G", "high")))
                     .ForMember(dest => dest.RiskAssessmentCriteriaIHigh, opt => opt.MapFrom(src => ExportMapperHelper.GetRiskAssessmentCritera(src, src.RiskAssessment.Criteria, "I", "high")))
                     .ForMember(dest => dest.RiskAssessmentChosenMethodBcrit, opt => opt.MapFrom(src => ExportMapperHelper.GetRiskAssessmentChosenMethodBcrit(src.RiskAssessment, src.AssessmentConclusion)))
-                        
+                    .ForMember(dest => dest.References, opt => 
+                    {
+                        opt.PreCondition(src => src.References is not null & src.References.Count != 0);
+                        opt.MapFrom(src => string.Join(" && ", src.References.Select(x => x.FormattedReference)));
+                    })
+
                     .AfterMap((src, dest) =>
                     {
                         var ass2018 = src.PreviousAssessments.SingleOrDefault(x => x.RevisionYear == 2018);
@@ -1475,6 +1480,9 @@ namespace Prod.Api.Helpers
             
             [Name("OppsummeringKonklusjon")]
             public string RiskAssessmentCriteriaDocumentation { get; set; }
+
+            [Name("Referanser")]
+            public string References { get; set; }
             #endregion Oppsummering  
 
             [Name("AntallBehandledeKommentarer")]
