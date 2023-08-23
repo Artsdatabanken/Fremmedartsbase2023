@@ -1,16 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using McMaster.Extensions.CommandLineUtils;
 using Prod.Domain;
 using Prod.Domain.Legacy;
-using Raven.Abstractions.FileSystem;
-using Raven.Client;
-using Raven.Client.Connection;
-using Raven.Client.Document;
-using Raven.Client.FileSystem;
+using Raven.Client.Documents;
+using Raven.Client.Documents.Conventions;
+using Raven.Client.Documents.Session;
 using Code = Prod.Domain.Legacy.Code;
 using KodeGrupper = Prod.Domain.Legacy.KodeGrupper;
 using MigrationPathwayCode = Prod.Domain.MigrationPathwayCode;
@@ -19,23 +18,42 @@ namespace SwissKnife.Fab2018
 {
     internal class Fab2018Service
     {
-        private readonly IFilesStore _fileStore;
         private readonly IDocumentStore _store;
 
         public Fab2018Service(string ravenDbUrl, string fab2018Db, string fab2018Dfs)
         {
-            _store = new DocumentStore
+            _store = new DocumentStore()
             {
-                Url = ravenDbUrl,
-                DefaultDatabase = fab2018Db
+                // Define the cluster node URLs (required)
+                Urls = new[] { ravenDbUrl, 
+                    /*some additional nodes of this cluster*/ },
+
+                // Set conventions as necessary (optional)
+                Conventions =
+                {
+                    MaxNumberOfRequestsPerSession = 10,
+                    UseOptimisticConcurrency = true
+                },
+
+                // Define a default database (optional)
+                Database = fab2018Db
+
+                // Initialize the Document Store
             }.Initialize();
 
-            if (!string.IsNullOrWhiteSpace(fab2018Dfs))
-                _fileStore = new FilesStore
-                {
-                    Url = ravenDbUrl,
-                    DefaultFileSystem = fab2018Dfs
-                }.Initialize();
+            //return store;
+            //_store = new DocumentStore
+            //{
+            //    Url = ravenDbUrl,
+            //    DefaultDatabase = fab2018Db
+            //}.Initialize();
+
+            //if (!string.IsNullOrWhiteSpace(fab2018Dfs))
+            //    _fileStore = new FilesStore
+            //    {
+            //        Url = ravenDbUrl,
+            //        DefaultFileSystem = fab2018Dfs
+            //    }.Initialize();
         }
 
 
@@ -48,25 +66,25 @@ namespace SwissKnife.Fab2018
             InfoFor(console, verbose, "RedlistedNaturetypeGroup", GetRedlistedNaturetypeGroups());
             InfoFor(console, verbose, "Fab2018", GetFab2018());
             InfoFor(console, verbose, "Brukere", GetUsers());
-            InfoForFiles(console, verbose, "Fab2018Files", GetFab2018Files());
+            //InfoForFiles(console, verbose, "Fab2018Files", GetFab2018Files());
         }
 
-        private void InfoForFiles(IConsole console, bool verbose, string s, IEnumerable<FileHeader> all)
-        {
-            console.WriteLine(s + ":");
+        //private void InfoForFiles(IConsole console, bool verbose, string s, IEnumerable<FileHeader> all)
+        //{
+        //    console.WriteLine(s + ":");
 
-            var count = 0;
-            foreach (var fileHeader in all)
-            {
-                count++;
-                if (verbose) console.WriteLine(fileHeader.FullPath);
-            }
+        //    var count = 0;
+        //    foreach (var fileHeader in all)
+        //    {
+        //        count++;
+        //        if (verbose) console.WriteLine(fileHeader.FullPath);
+        //    }
 
-            console.WriteLine($"Found {count} item of {s}");
-            if (verbose)
-                // extra line
-                console.WriteLine("");
-        }
+        //    console.WriteLine($"Found {count} item of {s}");
+        //    if (verbose)
+        //        // extra line
+        //        console.WriteLine("");
+        //}
 
         private static void InfoFor(IConsole console, bool verbose, string s, IEnumerable<object> all)
         {
@@ -107,36 +125,36 @@ namespace SwissKnife.Fab2018
             console.WriteLine(DumpToJsonFile(path, "RedlistedNaturetypeGroups.json", GetRedlistedNaturetypeGroups()));
             console.WriteLine(DumpToJsonFile(path, "Fa3.json", GetFab2018()));
             console.WriteLine(DumpToJsonFile(path, "Brukere.json", GetUsers()));
-            console.WriteLine(DumpFiles(path, GetFab2018Files()));
+            //console.WriteLine(DumpFiles(path, GetFab2018Files()));
             console.WriteLine("done...");
         }
 
-        private string DumpFiles(string path, IEnumerable<FileHeader> items)
-        {
-            var count = 0;
-            var allItems = items.ToArray();
-            foreach (var item in allItems)
-            {
-                count++;
-                var dest = path + "\\Files\\" + item.FullPath.Replace("/", "\\");
+        //private string DumpFiles(string path, IEnumerable<FileHeader> items)
+        //{
+        //    var count = 0;
+        //    var allItems = items.ToArray();
+        //    foreach (var item in allItems)
+        //    {
+        //        count++;
+        //        var dest = path + "\\Files\\" + item.FullPath.Replace("/", "\\");
 
-                using (var sess = _fileStore.OpenAsyncSession())
-                {
-                    var file =
-                        sess.DownloadAsync(item).Result;
-                    Directory.CreateDirectory(path + "\\Files\\" + item.Directory.Replace("/", "\\"));
-                    using (var fileStream = File.Create(dest))
-                    {
-                        //file.Seek(0, SeekOrigin.Begin);
-                        file.CopyTo(fileStream);
-                    }
+        //        using (var sess = _fileStore.OpenAsyncSession())
+        //        {
+        //            var file =
+        //                sess.DownloadAsync(item).Result;
+        //            Directory.CreateDirectory(path + "\\Files\\" + item.Directory.Replace("/", "\\"));
+        //            using (var fileStream = File.Create(dest))
+        //            {
+        //                //file.Seek(0, SeekOrigin.Begin);
+        //                file.CopyTo(fileStream);
+        //            }
 
-                    //WriteToFile(file, dest);
-                }
-            }
+        //            //WriteToFile(file, dest);
+        //        }
+        //    }
 
-            return $"Dumped {count} files";
-        }
+        //    return $"Dumped {count} files";
+        //}
 
         public static void WriteToFile(Stream stream, string destinationFile, int bufferSize = 4096,
             FileMode mode = FileMode.OpenOrCreate, FileAccess access = FileAccess.ReadWrite,
@@ -183,30 +201,30 @@ namespace SwissKnife.Fab2018
         private IEnumerable<Code> GetCodes()
         {
             using var session = _store.OpenSession();
-            return session.Query<Code>().AsEnumerable();
+            return session.Query<Code>().ToArray();
         }
         private IEnumerable<Bruker> GetUsers()
         {
             using var session = _store.OpenSession();
-            return session.Query<Bruker>().AsEnumerable();
+            return session.Query<Bruker>().ToArray();
         }
 
         private IEnumerable<Livsmedium> GetLivsmedium()
         {
             using var session = _store.OpenSession();
-            return session.Query<Livsmedium>().AsEnumerable();
+            return session.Query<Livsmedium>().ToArray();
         }
 
         private IEnumerable<KodeGrupper> GetKodeGrupper()
         {
             using var session = _store.OpenSession();
-            return session.Query<KodeGrupper>().ProjectFromIndexFieldsInto<KodeGrupper>().AsEnumerable();
+            return session.Query<KodeGrupper>().ToArray();
         }
 
         private IEnumerable<MigrationPathwayCode> GetMigrationPathwayCode()
         {
             using var session = _store.OpenSession();
-            return session.Query<MigrationPathwayCode>().AsEnumerable();
+            return session.Query<MigrationPathwayCode>().ToArray();
         }
 
         private IEnumerable<RedlistedNaturetypeGroups> GetRedlistedNaturetypeGroups()
@@ -222,35 +240,39 @@ namespace SwissKnife.Fab2018
         {
             using var session = _store.OpenSession();
 
-            var enumerator = _store.DatabaseCommands.StreamDocs(null, "FA3/");
+            //var query = session.Query<FA3Legacy>();
+            IRawDocumentQuery<FA3Legacy> query = session
+                .Advanced
+                .RawQuery<FA3Legacy>("from FA3s");
+            var enumerator = session.Advanced.Stream<FA3Legacy>(query);
 
-            var documentConvention = new DocumentConvention();
+            var documentConvention = new DocumentConventions();
             while (enumerator.MoveNext())
             {
                 var document = enumerator.Current;
                 if (document != null)
                 {
-                    document.TryGetValue("@metadata", out var item2);
-                    var fa3LegacyId = item2.Value<string>("@id");
-                    if (fa3LegacyId.Contains("revision")) continue;
-                    var fa3Legacy = document.Deserialize<FA3Legacy>(documentConvention);
-                    fa3Legacy.Id = fa3LegacyId;
+                    //document.TryGetValue("@metadata", out var item2);
+                    //var fa3LegacyId = item2.Value<string>("@id");
+                    //if (fa3LegacyId.Contains("revision")) continue;
+                    var fa3Legacy = document.Document; //.Deserialize<FA3Legacy>(documentConvention);
+                    //fa3Legacy.Id = document.Id;
                     yield return fa3Legacy;
                 }
             }
         }
 
-        private IEnumerable<FileHeader> GetFab2018Files()
-        {
-            using var session = _fileStore.OpenAsyncSession();
+        //private IEnumerable<FileHeader> GetFab2018Files()
+        //{
+        //    using var session = _fileStore.OpenAsyncSession();
 
-            var enumerator = session.Commands.StreamQueryAsync("").Result;
+        //    var enumerator = session.Commands.StreamQueryAsync("").Result;
 
-            while (enumerator.MoveNextAsync().Result)
-            {
-                var document = enumerator.Current;
-                if (document != null) yield return document;
-            }
-        }
+        //    while (enumerator.MoveNextAsync().Result)
+        //    {
+        //        var document = enumerator.Current;
+        //        if (document != null) yield return document;
+        //    }
+        //}
     }
 }

@@ -34,7 +34,7 @@
     },
     "ExportOldDb": {
       "commandName": "Project",
-      "commandLineArgs": "olddb dump --url http://localhost:8080 --db fab3 --fs fab3fs --outputfolder ../../../dumpsfab"
+      "commandLineArgs": "olddb dump --url http://127.0.0.1:8080/ --db sfab --outputfolder ../../../dumpsfab4"
     }
   }
 }
