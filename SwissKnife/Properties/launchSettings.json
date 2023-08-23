@@ -14,19 +14,27 @@
     },
     "Taxonomywash": {
       "commandName": "Project",
-      "commandLineArgs": "maintenance taxonomywash --assessmentId 1 --autoupdate --connectionstring \"Server=localhost;Database=fab4;Integrated Security=true;MultipleActiveResultSets=true\""
+      "commandLineArgs": "maintenance taxonomywash --connectionstring \"Server=localhost;Database=fab4;Integrated Security=true;MultipleActiveResultSets=true\""
     },
     "Taxonomywashdirect": {
       "commandName": "Project",
       "commandLineArgs": "maintenance taxonomywashdirect --connectionstring \"Server=localhost;Database=fab4;Integrated Security=true;MultipleActiveResultSets=true\" --speciesgroup Karplanter\r\n"
     },
-    "ImportGTdata": {
-      "commandName": "Project",
-      "commandLineArgs": "maintenance importgenerationtime --connectionstring \"Server=localhost;Database=fab4;Integrated Security=true;MultipleActiveResultSets=true\" --csvfile \"..\\..\\..\\Importfiler\\Generasjonstid_revidert_karplanter_til_FAB.csv\"\r\n"
-    },
     "TransferData": {
       "commandName": "Project",
-      "commandLineArgs": "maintenance transferacrossassessments --connectionstring \"Server=localhost;Database=fab4;Integrated Security=true;MultipleActiveResultSets=true\" --csvfile ./../../\r\n"
+      "commandLineArgs": "maintenance transferacrossassessments --connectionstring \"data source=it-sqladbag02.it.ntnu.no;initial catalog=FAB4;User Id=fab4; Password=S0sXYrV1gKj2poeBewr7;MultipleActiveResultSets=True;App=FAB4\" --csvfile ./../../\r\n"
+    },
+    "ImportFilesdata": {
+      "commandName": "Project",
+      "commandLineArgs": "maintenance importfiles --connectionstring \"Server=localhost;Database=fab4;Integrated Security=true;MultipleActiveResultSets=true\" --folder \"D:\\test\\Ekspansjonsdata\"\r\n"
+    },
+    "ImportOldDb": {
+      "commandName": "Project",
+      "commandLineArgs": "newDb import --connectionstring \"Server=localhost;Database=sfab4;Integrated Security=true;MultipleActiveResultSets=true\"  --inputfolder ../../../dumpsfab"
+    },
+    "ExportOldDb": {
+      "commandName": "Project",
+      "commandLineArgs": "olddb dump --url http://localhost:8080 --db fab3 --fs fab3fs --outputfolder ../../../dumpsfab"
     }
   }
 }
