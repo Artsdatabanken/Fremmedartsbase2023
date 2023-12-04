@@ -4,7 +4,7 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "dev": "parcel index.html --port 22333",
+    "dev": "parcel index.html --port 12345",
     "build": "parcel build index.html --no-scope-hoist",
     "test": "jest",
     "testWatch": "jest --watch",
