@@ -393,5 +393,23 @@ namespace Prod.Api.Helpers
                     (scoretab == "low")   ? CritLow     :
                     CritHigh;
         }
+        internal static string GetRegionalDistribution(List<Fylkesforekomst> fylkesforekomster)
+        {
+            if (fylkesforekomster == null || fylkesforekomster.Count == 0)
+            {
+                return string.Empty;
+            }
+            var regionList = new List<string>();
+            for (var i = 0; i < fylkesforekomster.Count; ++i)
+            {
+                if (fylkesforekomster[i].State0 != 0 || fylkesforekomster[i].State1 != 0 || fylkesforekomster[i].State3 != 0)
+                {
+                    string newreg = fylkesforekomster[i].Fylke + "//" + fylkesforekomster[i].State0 + "//" + fylkesforekomster[i].State1 + "//" + fylkesforekomster[i].State3;
+                    regionList.Add(newreg);
+                }
+                
+            }
+            return string.Join("; ", regionList);
+        }
     }
 }

@@ -126,6 +126,7 @@ namespace Prod.Api.Helpers
                         opt.PreCondition(src => src.References is not null & src.References.Count != 0);
                         opt.MapFrom(src => string.Join(" && ", src.References.Select(x => x.FormattedReference)));
                     })
+                    .ForMember(dest => dest.RegionalDistribution, opt => opt.MapFrom(src => ExportMapperHelper.GetRegionalDistribution(src.Fylkesforekomster)))
 
                     .AfterMap((src, dest) =>
                     {
@@ -196,7 +197,6 @@ namespace Prod.Api.Helpers
                         dest.IntroNatureFreqNumTime = GetIntroSpreadInfo(src.AssesmentVectors, "intro", "freqs");
                         dest.SpreadNatureMainCatAndCat = GetIntroSpreadInfo(src.AssesmentVectors, "spread", "cat");
                         dest.SpreadNatureFreqNumTime = GetIntroSpreadInfo(src.AssesmentVectors, "spread", "freqs");
-                        dest.RegionalDistribution = GetRegionalDistribution(src.Fylkesforekomster);
                         dest.IntroductionsLow = introductionsLow(src, src.RiskAssessment);
                         dest.IntroductionsHigh = introductionsHigh(src, src.RiskAssessment);
                         dest.AOO10yrBest = AOO10yrBest(src, src.RiskAssessment);
@@ -514,26 +514,6 @@ namespace Prod.Api.Helpers
         //     return AlienSpeciesCat[AlienCat];
         // }
 
-        private static string GetRegionalDistribution(List<Fylkesforekomst> fylkesforekomster)
-        {
-            if (fylkesforekomster == null || fylkesforekomster.Count == 0)
-            {
-                return string.Empty;
-            }
-            var fylkesliste = new List<string>();
-            for (var i = 0; i < fylkesforekomster.Count; ++i)
-            {
-                if (fylkesforekomster[i].State0 == 0 && fylkesforekomster[i].State1 == 0 && fylkesforekomster[i].State3 == 0)
-                {
-                    break; 
-                }
-                
-                string newreg = fylkesforekomster[i].Fylke + "//" + fylkesforekomster[i].State0 + "//" + fylkesforekomster[i].State1 + "//" + fylkesforekomster[i].State3;
-                fylkesliste.Add(newreg);
-                
-            }
-            return string.Join("; ", fylkesliste);
-        }
 
         private static string GetIndoorProduction(string indoorPathway, List<Domain.MigrationPathway> importPathways, string col)
         {
