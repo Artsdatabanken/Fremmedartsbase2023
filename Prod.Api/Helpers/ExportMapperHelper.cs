@@ -393,22 +393,23 @@ namespace Prod.Api.Helpers
                     (scoretab == "low")   ? CritLow     :
                     CritHigh;
         }
+        
         internal static string GetRegionalDistribution(List<Fylkesforekomst> fylkesforekomster)
         {
-            if (fylkesforekomster == null || fylkesforekomster.Count == 0)
+            if (fylkesforekomster == null || fylkesforekomster.Count == 0 || fylkesforekomster.All(x => x.State2 == 1))
             {
                 return string.Empty;
             }
-            var regionList = new List<string>();
-            for (var i = 0; i < fylkesforekomster.Count; ++i)
+
+            List<string> regionList = new List<string>();
+            List<Fylkesforekomst> regionalDistribution = fylkesforekomster.FindAll(x => x.State3 != 0 || x.State1 != 0 || x.State0 != 0);
+            
+            for (var i = 0; i < regionalDistribution.Count; ++i)
             {
-                if (fylkesforekomster[i].State0 != 0 || fylkesforekomster[i].State1 != 0 || fylkesforekomster[i].State3 != 0)
-                {
-                    string newreg = fylkesforekomster[i].Fylke + "//" + fylkesforekomster[i].State0 + "//" + fylkesforekomster[i].State1 + "//" + fylkesforekomster[i].State3;
-                    regionList.Add(newreg);
-                }
-                
+                string newreg = regionalDistribution[i].Fylke + "//" + regionalDistribution[i].State0 + "//" + regionalDistribution[i].State1 + "//" + regionalDistribution[i].State3;
+                regionList.Add(newreg);
             }
+
             return string.Join("; ", regionList);
         }
     }
