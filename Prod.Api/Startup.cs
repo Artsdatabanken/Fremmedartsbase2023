@@ -193,10 +193,11 @@ namespace Prod.Api
                     // name of the API resource
                     //identityServerAuthenticationOptions.ApiName = "fab4api";
                     identityServerAuthenticationOptions.RequireHttpsMetadata = false;
-                    identityServerAuthenticationOptions.TokenValidationParameters.ValidAudiences = new List<string>()
-                    {
-                        "fab4api"
-                    };
+                    identityServerAuthenticationOptions.TokenValidationParameters.ValidateAudience = false;
+                    //identityServerAuthenticationOptions.TokenValidationParameters.ValidAudiences = new List<string>()
+                    //{
+                    //    "fab4api"
+                    //};
 
                     IdentityModelEventSource.ShowPII = true;
                     identityServerAuthenticationOptions.Events = new JwtBearerEvents
