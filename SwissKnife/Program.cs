@@ -27,7 +27,7 @@ namespace SwissKnife
         }
 
         [Command("maintenance", Description = "Run tasks for maintaining database")]
-        [Subcommand(typeof(TaxonomyWash),typeof(NightTasks), typeof(TaxonomyWashDirect), typeof(ImportNames), typeof(ImportGTData), typeof(ImportHSData), typeof(PatchMigration), typeof(TransferFromHorizonScan), typeof(TransferDataAcrossAssessments), typeof(ImportAttachementData))]
+        [Subcommand(typeof(TaxonomyWash),typeof(NightTasks), typeof(TaxonomyWashDirect), typeof(ImportNames), typeof(ImportGTData), typeof(ImportHSData), typeof(PatchMigration), typeof(PatchHsScans), typeof(TransferFromHorizonScan), typeof(TransferDataAcrossAssessments), typeof(ImportAttachementData))]
         [HelpOption("--help")]
         internal class Maintenance {
             private int OnExecute(IConsole console)
@@ -165,6 +165,17 @@ namespace SwissKnife
                     var maintenance = new ImportDataService(ConnectionString);
                     maintenance.PatchImport(console, InputFolder);
                     
+                }
+            }
+
+            [Command("patchhs", Description = "Patch horizon scanned assessments")]
+            internal class PatchHsScans : MaintananceBase
+            {
+                private void OnExecute(IConsole console)
+                {
+                    var maintenance = new ImportDataService(ConnectionString);
+                    maintenance.PatchHsScans(console);
+
                 }
             }
 

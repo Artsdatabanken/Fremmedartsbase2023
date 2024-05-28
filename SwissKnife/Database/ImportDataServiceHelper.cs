@@ -256,6 +256,15 @@ internal static class ImportDataServiceHelper
         }
     }
 
+    public static void FixHsProperties(FA4 assessment)
+    {
+        if (assessment.HorizonDoScanning && !(assessment.HorizonEstablismentPotential == "2" || assessment.HorizonEcologicalEffect == "yesAfterGone" || (assessment.HorizonEstablismentPotential == "1" && assessment.HorizonEcologicalEffect == "yesWhilePresent")))
+        {
+            assessment.Category = "NR";
+            assessment.AlienSpeciesCategory = "HorizonScannedButNotRiskAssessed";
+        }
+    }
+
     /// <summary>
     ///     Fix existing assessments - based on info from fresh transform and changes in autoMapper
     /// </summary>

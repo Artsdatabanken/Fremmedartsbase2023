@@ -507,7 +507,71 @@ namespace SwissKnife.Database
             //    console.WriteLine("OBS: " + tuple.Item1 + " " + tuple.Item2 + ":" + tuple.Item3);
             //}
         }
+        public void PatchHsScans(IConsole console)
+        {
+            var comparer = new CompareLogic(new ComparisonConfig()
+            {
+                IgnoreUnknownObjectTypes = true,
+                TreatStringEmptyAndNullTheSame = true
+            });
+            
+            var existing = _database.Assessments.ToDictionary(x => x.Id,
+                x => JsonSerializer.Deserialize<FA4>(x.Doc, _jsonSerializerOptions));
 
+            var batchsize = 50;
+            var count = 0;
+
+
+            // fiks ting på vurderinger som er nye for 2023
+            foreach (var item in existing.Select(y => y.Key).ToArray())
+            {
+                //continue;
+                var real = _database.Assessments.Single(x => x.Id == item);
+
+                // todo: overfør manglende morro
+                var exAssessment = JsonSerializer.Deserialize<FA4>(real.Doc, _jsonSerializerOptions);
+                var orgCopy = JsonSerializer.Deserialize<FA4>(real.Doc, _jsonSerializerOptions);
+
+                exAssessment.ExtensionData = null;
+                exAssessment.RiskAssessment.ExtensionData = null;
+
+                orgCopy.ExtensionData = null;
+                orgCopy.RiskAssessment.ExtensionData = null;
+
+                Debug.Assert(exAssessment != null, nameof(exAssessment) + " != null");
+                
+                ImportDataServiceHelper.FixHsProperties(exAssessment);
+               
+
+                var comparisonResult = comparer.Compare(orgCopy, exAssessment);
+                if (real.ScientificNameId != exAssessment.EvaluatedScientificNameId)
+                {
+                    real.ScientificNameId = exAssessment.EvaluatedScientificNameId.Value;
+                }
+
+                if (comparisonResult.AreEqual == false)
+                {
+                    console.WriteLine(
+                        $"Endring på doc {exAssessment.Id} {exAssessment.ExpertGroup} {exAssessment.EvaluatedScientificName} {comparisonResult.DifferencesString}");
+                    real.Doc = JsonSerializer.Serialize<FA4>(exAssessment);
+                }
+
+                count++;
+
+                if (count > batchsize)
+                {
+                    _database.SaveChanges();
+                    count = 0;
+                }
+            }
+
+            _database.SaveChanges();
+
+            //foreach (var tuple in obsTekster)
+            //{
+            //    console.WriteLine("OBS: " + tuple.Item1 + " " + tuple.Item2 + ":" + tuple.Item3);
+            //}
+        }
         private static JsonSerializerOptions GetJsonSerializerOptions()
         {
             var jsonSerializerOptions = new JsonSerializerOptions
