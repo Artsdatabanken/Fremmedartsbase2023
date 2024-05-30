@@ -309,7 +309,9 @@ export default function enhanceAssessment(json, appState) {
         },
         get alienSpeciesCategory() {
             const result = 
-                assessment.misIdentified
+                assessment.horizonDoScanning && !(assessment.horizonEstablismentPotential == "2" || assessment.horizonEcologicalEffect == "yesAfterGone" || (assessment.horizonEstablismentPotential == "1" && assessment.horizonEcologicalEffect == "yesWhilePresent"))
+                ? "HorizonScannedButNotRiskAssessed"
+                : assessment.misIdentified
                 ? "MisIdentified"
                 : assessment.allSubTaxaAssessedSeparately
                 ? "AllSubTaxaAssessedSeparately"
