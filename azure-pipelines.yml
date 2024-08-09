@@ -1,0 +1,60 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+  branches:
+    include:
+      - master
+      - main 
+    exclude:
+      - develop
+      - staging
+  paths:
+    exclude:
+      - README.md
+
+pr:
+  branches:
+    include:
+      - master 
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+# - script: dotnet build --configuration $(buildConfiguration)
+#   displayName: 'dotnet build $(buildConfiguration)'
+- task: DotNetCoreCLI@2
+  inputs:
+    projects: Prod.Api/*.csproj
+    command: 'publish'
+    publishWebProjects: false
+    zipAfterPublish: false
+- task: NodeTool@0
+  inputs:
+    versionSource: 'spec'
+    versionSpec: '20.x'
+
+
+- task: CmdLine@2
+  inputs:
+    script: |
+      npm install
+      npm run buildprod
+      mkdir ../Prod.Api/bin/Release/net8.0/publish/frontend
+      cp dist/* -R ../Prod.Api/bin/Release/net8.0/publish/frontend/
+    workingDirectory: 'Prod.Web'
+
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: 'Prod.Api/bin/Release/net8.0/publish/'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/drop.zip'
+    replaceExistingArchive: true
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
