@@ -34,14 +34,15 @@ steps:
 - task: NodeTool@0
   inputs:
     versionSource: 'spec'
-    versionSpec: '20.x'
+    versionSpec: '16.x'
 
 
 - task: CmdLine@2
   inputs:
     script: |
       npm install
-      npm run buildprod
+      npm run build
+      cp static/robots.txt dist/
       mkdir ../Prod.Api/bin/Release/net8.0/publish/frontend
       cp dist/* -R ../Prod.Api/bin/Release/net8.0/publish/frontend/
     workingDirectory: 'Prod.Web'
