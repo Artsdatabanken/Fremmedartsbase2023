@@ -17,8 +17,8 @@ const ModalArtskart = ({
   artskartRemoved,
   artskartSelectionGeometry,
   onOverførFraArtskart,
-  showTransferRegionlist
-  
+  showTransferRegionlist,
+  token,
 }) => {
   const ref = useRef();
   const [visArtskart, setVisArtskart] = useState(false);
@@ -28,7 +28,7 @@ const ModalArtskart = ({
     <div ref={ref}>
       <Artskart
         evaluationContext={evaluationContext}
-        onSave={resultat => this.handleSave(resultat)}
+        onSave={(resultat) => this.handleSave(resultat)}
         onCancel={() => setVisArtskart(false)}
         showWaterAreas={showWaterAreas}
         artskartWaterModel={artskartWaterModel}
@@ -42,12 +42,20 @@ const ModalArtskart = ({
         artskartRemoved={artskartRemoved}
         artskartSelectionGeometry={artskartSelectionGeometry}
         showTransferRegionlist={showTransferRegionlist}
+        token={token}
       />
       )
     </div>
   ) : (
     <div>
-      <span>{labels.goTo}</span> <Xcomp.Button primary onClick={() => setVisArtskart(true)} alwaysEnabled={true}>{labels.speciesMap}</Xcomp.Button>
+      <span>{labels.goTo}</span>{" "}
+      <Xcomp.Button
+        primary
+        onClick={() => setVisArtskart(true)}
+        alwaysEnabled={true}
+      >
+        {labels.speciesMap}
+      </Xcomp.Button>
     </div>
   );
   // return (

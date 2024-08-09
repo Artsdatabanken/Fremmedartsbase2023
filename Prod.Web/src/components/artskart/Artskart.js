@@ -7,12 +7,12 @@ import * as Xcomp from "../observableComponents";
 const mapBounds = {
   S: [
     [73, 13],
-    [83, 23]
+    [83, 23],
   ],
   N: [
     [57, 4.3],
-    [71.5, 32.5]
-  ]
+    [71.5, 32.5],
+  ],
 };
 
 const Artskart = ({
@@ -29,7 +29,8 @@ const Artskart = ({
   artskartAdded,
   artskartRemoved,
   onCancel,
-  showTransferRegionlist
+  showTransferRegionlist,
+  token,
 }) => {
   // console.log('Artskart', taxonId, scientificNameId, evaluationContext);
   return (
@@ -40,13 +41,13 @@ const Artskart = ({
           top: 16,
           right: 56,
           float: "right",
-          zIndex: 1000
+          zIndex: 1000,
         }}
       >
         <Utvalg utvalg={utvalg} artskartModel={artskartModel} />
         <Xcomp.Button
-          alwaysEnabled = {true}
-          onClick={e => {
+          alwaysEnabled={true}
+          onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
             onCancel();
@@ -72,6 +73,7 @@ const Artskart = ({
         artskartSelectionGeometry={artskartSelectionGeometry}
         onCancel={onCancel}
         showTransferRegionlist={showTransferRegionlist}
+        token={token}
       ></RedigerbartKart>
     </div>
   );
