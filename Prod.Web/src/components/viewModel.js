@@ -235,7 +235,7 @@ class ViewModel {
       try {
         const result = await fetch(url);
         const t = await result.text();
-        self.token = t; //              return JSON.parse(t);
+        self.token = JSON.parse(t); //              return JSON.parse(t);
         console.log("got new token" + t);
       } catch (err) {
         console.error("token troubles", url, err);
