@@ -43,13 +43,13 @@ steps:
       npm install
       npm run build
       cp static/robots.txt dist/
-      mkdir ../Prod.Api/bin/Release/net8.0/publish/frontend
-      cp dist/* -R ../Prod.Api/bin/Release/net8.0/publish/frontend/
+      mkdir ../Prod.Api/bin/Release/net6.0/publish/Frontend
+      cp dist/* -R ../Prod.Api/bin/Release/net6.0/publish/Frontend/
     workingDirectory: 'Prod.Web'
 
 - task: ArchiveFiles@2
   inputs:
-    rootFolderOrFile: 'Prod.Api/bin/Release/net8.0/publish/'
+    rootFolderOrFile: 'Prod.Api/bin/Release/net6.0/publish/'
     includeRootFolder: false
     archiveType: 'zip'
     archiveFile: '$(Build.ArtifactStagingDirectory)/drop.zip'
