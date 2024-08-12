@@ -31,7 +31,8 @@ steps:
     command: 'publish'
     publishWebProjects: false
     zipAfterPublish: false
-    configuration: 'Release'
+    arguments: '-c Release'
+
 - task: NodeTool@0
   inputs:
     versionSource: 'spec'
