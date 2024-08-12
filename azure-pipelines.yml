@@ -42,7 +42,7 @@ steps:
     script: |
       npm install
       npm run build
-      cp static/robots.txt dist/
+      cp static/robots.txt dist/robots.txt
       mkdir ../Prod.Api/bin/Release/net6.0/publish/Frontend
       cp dist/* -R ../Prod.Api/bin/Release/net6.0/publish/Frontend/
     workingDirectory: 'Prod.Web'
