@@ -68,6 +68,19 @@ namespace Nbic.Indexer
                 _lockWasTaken = true;
             }
 
+            if (deleteAndCreateIndex)
+            {
+                System.IO.DirectoryInfo di = new DirectoryInfo(indexLocation.Replace("index",""));
+
+                foreach (FileInfo file in di.GetFiles())
+                {
+                    file.Delete();
+                }
+                foreach (DirectoryInfo dir in di.GetDirectories())
+                {
+                    dir.Delete(true);
+                }
+            }
 
             _dir = FSDirectory.Open(indexLocation);
             _taxonomydir = FSDirectory.Open(indexLocation.Replace("index","facets"));
