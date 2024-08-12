@@ -160,7 +160,17 @@ namespace Prod.Api
             //}
 
             services.AddDbContext<ProdDbContext>(opt => opt.UseSqlServer(connectionString));
-            services.AddSingleton(new Index());
+            Index implementationInstance;
+            try
+            {
+                implementationInstance = new Index();
+            }
+            catch (Exception e)
+            {
+                implementationInstance = new Index(false, true);
+                throw;
+            }
+            services.AddSingleton(implementationInstance);
             var options = new ReferenceServiceOptions()
             {
                 AuthAuthority = Configuration.GetValue("AuthAuthority", "https://demo.identityserver.io"),
