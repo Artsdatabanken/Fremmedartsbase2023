@@ -8,9 +8,8 @@ import errorhandler from '../errorhandler';
 import ErrorList from '../errorList';
 import auth from '../authService';
 import riskLevel from './riskLevel';
-@inject("appState")
-@observer
-export default class Assessment91Kriteriedokumentasjon extends React.Component {
+
+class Assessment91Kriteriedokumentasjon extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -380,3 +379,5 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
     );
   }
 }
+
+export default inject("appState")(observer(Assessment91Kriteriedokumentasjon));

@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 import riskLevel from './riskLevel';
 import {observer} from 'mobx-react';
 
-@observer
-export default class Risikomatrise extends React.Component {
+class Risikomatrise extends React.Component {
     renderRisikomatrise(size, invasjonspotensiale, ecoeffect, invasjonUncertainty, ecoeffectUncertainty ) {
         const grid = []
         const rutesize = size/4;
@@ -151,6 +150,8 @@ export default class Risikomatrise extends React.Component {
         );
 	}
 }
+
+export default observer(Risikomatrise);
 
 Risikomatrise.propTypes = {
     invasjonspotensiale: PropTypes.number.isRequired,

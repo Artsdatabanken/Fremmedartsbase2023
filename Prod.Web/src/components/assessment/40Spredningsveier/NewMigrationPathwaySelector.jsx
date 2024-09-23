@@ -2,8 +2,7 @@ import React from 'react';
 import {observer} from 'mobx-react';
 import NewMigrationPathwaySection from './NewMigrationPathwaySection'
 
-@observer
-export default class NewMigrationPathwaySelector extends React.Component {
+class NewMigrationPathwaySelector extends React.Component {
     render() {
         const {migrationPathways, onSave, koder, hideIntroductionSpread, labels, vurdering, mainCodes} = this.props;
         //  console.log("koder2" + koder.toString() )
@@ -18,3 +17,5 @@ export default class NewMigrationPathwaySelector extends React.Component {
             </div>
         )}
 }
+
+export default observer(NewMigrationPathwaySelector);

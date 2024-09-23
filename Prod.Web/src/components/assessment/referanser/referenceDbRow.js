@@ -1,8 +1,8 @@
 ﻿import React from 'react';
 import {observer} from 'mobx-react';
 import * as Xcomp from '../observableComponents';
-@observer
-export default class ReferenceDbRow extends React.Component {
+
+class ReferenceDbRow extends React.Component {
     constructor() {
         super()
     }
@@ -34,3 +34,5 @@ export default class ReferenceDbRow extends React.Component {
         )
     }
 }
+
+export default observer(ReferenceDbRow);

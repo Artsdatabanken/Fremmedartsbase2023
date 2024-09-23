@@ -6,8 +6,7 @@ import * as Xcomp from '../observableComponents';
 import BsModal from '../../bootstrapModal'
 import {StringEnum2} from './naturetypeModal'
 
-@observer
-export default class NewRedlistedNaturetype extends React.Component {
+class NewRedlistedNaturetype extends React.Component {
     constructor(props) {
         super()
         const {appState, addNaturtype} = props;
@@ -106,3 +105,5 @@ export default class NewRedlistedNaturetype extends React.Component {
             </div>
         }
     }
+
+export default observer(NewRedlistedNaturetype);

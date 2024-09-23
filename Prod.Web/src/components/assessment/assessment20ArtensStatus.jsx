@@ -7,9 +7,8 @@ import ErrorList from '../errorList';
 
 import {action, autorun, extendObservable, observable, toJS} from "mobx"
 const nbsp = "\u00a0"
-@inject("appState")
-@observer
-export default class Assessment20ArtensStatus extends React.Component {
+
+class Assessment20ArtensStatus extends React.Component {
 //@observer
     constructor(props) {
         super(props)
@@ -407,3 +406,5 @@ checkStatus = (production) => {
         );
     }
 }
+
+export default inject("appState")(observer(Assessment20ArtensStatus));

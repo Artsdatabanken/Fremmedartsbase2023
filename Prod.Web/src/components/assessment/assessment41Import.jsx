@@ -1,17 +1,19 @@
 import config from '../../config';
 import React from 'react';
 import {observer, inject} from 'mobx-react';
-import {action, toJS} from 'mobx';
+import { action, toJS, makeObservable } from 'mobx';
 import * as Xcomp from './observableComponents';
 import Assessment42Spredningsveier from './assessment42Spredningsveier'
 
-@inject("appState")
-@observer
-export default class Assessment41Import extends React.Component {
+class Assessment41Import extends React.Component {
     constructor(props) {
         super(props);
+
+        makeObservable(this, {
+            saveImportPathway: action
+        });
     }
-    @action saveImportPathway(vurdering, mp) {
+    saveImportPathway(vurdering, mp) {
         const mps = vurdering.ImportPathways
         const compstr = (mp) => `${mp.codeItem}${mp.influenceFactor}${mp.magnitude}${mp.timeOfIncident}`
         const newMp = compstr(mp)
@@ -66,3 +68,5 @@ export default class Assessment41Import extends React.Component {
         )
     }
 }
+
+export default inject("appState")(observer(Assessment41Import));

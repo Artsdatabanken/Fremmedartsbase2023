@@ -3,17 +3,24 @@ import { observer, inject } from 'mobx-react';
 import {upload} from '../apiService'
 import Documents from './documents'
 
-import { toJS, observable, extendObservable } from 'mobx';
+import { toJS, observable, extendObservable, makeObservable } from 'mobx';
 import * as Xcomp from './observableComponents'
 
-@inject('appState')
-@observer
-export default class FileUpload extends Component {
+class FileUpload extends Component {
     selectedFile = observable({
         name: ''
     })
 
-    @observable activeUploads = []
+    activeUploads = [];
+
+    constructor(props) {
+        super(props);
+
+        makeObservable(this, {
+            activeUploads: observable
+        });
+    }
+
     startOpplastinger(e,assessmentId) {
         this
             .activeUploads
@@ -49,7 +56,7 @@ export default class FileUpload extends Component {
 
     thisFileUpload() {
         document.getElementById("file").click();
-    };
+    }
 
     render() {
         const {appState, appState:{assessment}, showButtonOnly, labels, attachments} = this.props
@@ -74,3 +81,5 @@ export default class FileUpload extends Component {
         </div>);
     }
 }
+
+export default inject('appState')(observer(FileUpload));

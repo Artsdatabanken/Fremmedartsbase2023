@@ -6,8 +6,7 @@ import {UserContext} from './components'
 
 
 
-@observer
-export default class ObservableStringCombobox extends React.Component {
+class ObservableStringCombobox extends React.Component {
     constructor(props) {
         super(props)
         // this.expanded = observable(false)
@@ -37,6 +36,8 @@ export default class ObservableStringCombobox extends React.Component {
         )
 	}
 }
+
+export default observer(ObservableStringCombobox);
 
 // ObservableStringCombobox.contextTypes = {
 //     readonly: PropTypes.bool

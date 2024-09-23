@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 import Fylkeskart from '../Fylkeskart'
 import {observer} from 'mobx-react'
 
-@observer
-export default class Spredningskart extends React.Component {
+class Spredningskart extends React.Component {
     render() {
         const styles = {
             none: {
@@ -135,6 +134,8 @@ export default class Spredningskart extends React.Component {
                 states[i].values[fylke] = state == i
     }
 }
+
+export default observer(Spredningskart);
 
 Spredningskart.contextTypes = {
     language: PropTypes.string,

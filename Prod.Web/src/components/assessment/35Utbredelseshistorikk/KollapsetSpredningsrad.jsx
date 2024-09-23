@@ -4,8 +4,7 @@ import {observer} from 'mobx-react'
 import {toJS} from "mobx"
 import Spredningskart from './Spredningskart'
 
-@observer
-export default class KollapsetSpredningsrad extends React.Component {
+class KollapsetSpredningsrad extends React.Component {
     render() {
         const expanded = this.props.expanded
         const style = expanded
@@ -152,6 +151,8 @@ export default class KollapsetSpredningsrad extends React.Component {
             .expandSpreadHistory(rad)
     }
 }
+
+export default observer(KollapsetSpredningsrad);
 KollapsetSpredningsrad.contextTypes = {
     readonly: PropTypes.bool
 }

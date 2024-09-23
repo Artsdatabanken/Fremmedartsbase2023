@@ -13,6 +13,7 @@ import {
   toJS,
   isObservable,
   isObservableProp,
+  makeObservable,
 } from "mobx";
 import { router } from "./routeMatcher";
 import events from "./event-pubsub";
@@ -36,6 +37,24 @@ import { codeLists, isTrueteogsjeldnenaturtype } from "./codeLists";
 
 class ViewModel {
   constructor() {
+    makeObservable(this, {
+      getStatisticsFor: computed,
+      navigate: action,
+      isServicesReady: computed,
+      isLockedByMe: computed,
+      isFinnished: computed,
+      harVurdering: computed,
+      updateAssessmentSavedVersion: action,
+      updateCurrentAssessment: action,
+      finishassessment: action,
+      setAssessmentComplete: action,
+      AssessmentReportLink: computed,
+      createNewAssessment: action,
+      moveAssessmentScientificName: action,
+      copyThisAssessmentToTestarter: action,
+      isDirty: computed
+    });
+
     const options = {
       skipNegotiation: true,
       transport: signalR.HttpTransportType.WebSockets,
@@ -574,7 +593,7 @@ class ViewModel {
     // #######################################################################################################
   } // ########### end constructor ###########
   //    #######################################
-  @computed getStatisticsFor(facets, facetname, facetitem) {
+  getStatisticsFor(facets, facetname, facetitem) {
     //const facets = this.assessmentsStatistics;
     const facet = facets.find((element) => element.name == facetname);
     if (facet) {
@@ -613,7 +632,7 @@ class ViewModel {
   }
 
   // todo: of some unknown reason this does not seem to work. It is currently used only in routing, so it is not critical
-  @action navigate(assessmentTabId, id) {
+  navigate(assessmentTabId, id) {
     console.log(
       "navigate: " + this.assessmentTabs.activeTab.id + " to:" + assessmentTabId
     );
@@ -625,19 +644,19 @@ class ViewModel {
     console.log("navigate set: " + this.assessmentTabs.activeTab.id);
   }
 
-  @computed get isServicesReady() {
+  get isServicesReady() {
     return this.expertgroups != null;
     // this.koder != null &&
     // this.expertgroups != null &&
     // this.codeLabels != null)
   }
 
-  @computed get isLockedByMe() {
+  get isLockedByMe() {
     if (!this.assessment) return false;
     return this.assessment.lockedForEditByUser === auth.userId;
   }
 
-  @computed get isFinnished() {
+  get isFinnished() {
     if (!this.assessment) return false;
     return (
       this.assessment.evaluationStatus &&
@@ -645,7 +664,7 @@ class ViewModel {
     );
   }
 
-  @computed get harVurdering() {
+  get harVurdering() {
     return !!this.assessment;
   }
 
@@ -696,7 +715,7 @@ class ViewModel {
     }
   }
 
-  @action updateAssessmentSavedVersion(assessment) {
+  updateAssessmentSavedVersion(assessment) {
     if (assessment && assessment.id) {
       const assessmentStringCopy = JSON.stringify(assessment, undefined, 2);
       const jsoncopy = JSON.parse(assessmentStringCopy);
@@ -709,7 +728,7 @@ class ViewModel {
     }
   }
 
-  @action updateCurrentAssessment(json) {
+  updateCurrentAssessment(json) {
     // that is: open new assessment (and replace current) with data from server
     // console.log("updateCurrentAssessment: " + JSON.stringify(json))
     const codegroups = this.koder;
@@ -804,7 +823,7 @@ class ViewModel {
   //     return result
   // }
 
-  @action finishassessment(statusaction, assessment) {
+  finishassessment(statusaction, assessment) {
     let status =
       statusaction === "finish"
         ? "finished"
@@ -828,7 +847,7 @@ class ViewModel {
     }
   }
 
-  @action setAssessmentComplete(statusaction) {
+  setAssessmentComplete(statusaction) {
     // console.log("#%% ferdigstill")
     if (!this.roleincurrentgroup.writeAccess) {
       alert("setAssessmentComplete: 'Not allowed'");
@@ -1044,7 +1063,7 @@ class ViewModel {
   // ################# section API stuff ##################
   getUrl = config.getUrl;
 
-  @computed get AssessmentReportLink() {
+  get AssessmentReportLink() {
     if (!this.assessment) {
       return null;
     }
@@ -1337,7 +1356,7 @@ class ViewModel {
     return json;
   }
 
-  @action createNewAssessment(taxinfo) {
+  createNewAssessment(taxinfo) {
     console.log(
       "opprett ny vurdering: " +
         taxinfo.ScientificName +
@@ -1369,7 +1388,7 @@ class ViewModel {
       });
   }
 
-  @action moveAssessmentScientificName(taxinfo) {
+  moveAssessmentScientificName(taxinfo) {
     const id = this.assessmentId;
     console.log(
       "flytt vurdering til nytt navn: " +
@@ -1471,7 +1490,7 @@ class ViewModel {
       });
   }
 
-  @action copyThisAssessmentToTestarter() {
+  copyThisAssessmentToTestarter() {
     if (!this.roleincurrentgroup.admin) {
       console.warn("copyThisAssessmentToTestarter: 'Not allowed'");
       alert("copyThisAssessmentToTestarter: 'Not allowed'");
@@ -1492,7 +1511,7 @@ class ViewModel {
   }
   // ################# end section API stuff ##################
 
-  @computed get isDirty() {
+  get isDirty() {
     if (!this.assessmentId || !this.assessment) return false;
     // const a = JSON.stringify(this.assessment)
     const a = this.assessment.toJSON;

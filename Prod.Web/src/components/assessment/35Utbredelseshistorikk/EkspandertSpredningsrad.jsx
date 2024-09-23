@@ -1,13 +1,20 @@
 import React from 'react'
 import {observer} from 'mobx-react'
-import {observable} from 'mobx'
+import { observable, makeObservable } from 'mobx';
 // import * as Xcomp from '../observableComponents'
 import Artskart from '../Artskart'
 import Spredningskart from './Spredningskart'
 
-@observer
-export default class EkspandertSpredningsrad extends React.Component {
-    @observable visArtskart = false
+class EkspandertSpredningsrad extends React.Component {
+    visArtskart = false;
+
+    constructor(props) {
+        super(props);
+
+        makeObservable(this, {
+            visArtskart: observable
+        });
+    }
 
     render() {
         const {detaljer, appState, assessment, disabled} = this.props
@@ -61,7 +68,9 @@ export default class EkspandertSpredningsrad extends React.Component {
         detaljer.regionalPresenceAssumed = artskartModel.enhanceRegionalPresence(detaljer.regionsAssumed)
     }
 }
-@observer export class EkspandertSpredningsradDetaljer extends React.Component {
+
+export default observer(EkspandertSpredningsrad);
+export class EkspandertSpredningsradDetaljer extends React.Component {
     render() {
         const {appState, detaljer, assessment, disabled} = this.props
         const labels = appState.codeLabels.DistributionHistory

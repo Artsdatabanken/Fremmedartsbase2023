@@ -3,9 +3,8 @@ import {observer, inject} from 'mobx-react'
 import Tabs from '../tabs'
 import Assessment51Naturtyper from './assessment51Naturtyper'
 import Assessment52Utbredelse from './assessment52Utbredelse'
-@inject('appState')
-@observer
-export default class Assessment50Bakgrunnsdata extends React.Component {
+
+class Assessment50Bakgrunnsdata extends React.Component {
     render() {
         const {appState:{infoTabs}} = this.props
         return (
@@ -19,3 +18,5 @@ export default class Assessment50Bakgrunnsdata extends React.Component {
         )
     }
 }
+
+export default inject('appState')(observer(Assessment50Bakgrunnsdata));

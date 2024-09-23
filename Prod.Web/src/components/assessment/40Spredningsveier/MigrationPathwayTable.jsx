@@ -1,19 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 import {observer, inject} from 'mobx-react';
-import {action, extendObservable, observable} from 'mobx';
+import { action, extendObservable, observable, makeObservable } from 'mobx';
 import * as Xcomp from '../../observableComponents';
 import {processTree} from '../../../utils'
-@inject("appState")
-@observer
-export default class MigrationPathwayTable extends React.Component {
+
+class MigrationPathwayTable extends React.Component {
     constructor(props) {
         super(props);
+
+        makeObservable(this, {
+            editMode: observable,
+            toggleEdit: action
+        });
     }
-    @observable editMode = false
-    @action toggleEdit = () => {
+    editMode = false;
+    toggleEdit = () => {
         this.editMode = !this.editMode
-    }
+    };
     render() {
         const {migrationPathways, appState, removeMigrationPathway, showIntroductionSpread, hideIntroductionSpread, getCategoryText, migrationPathwayCodes} = this.props;
         const labels = appState.codeLabels
@@ -56,10 +60,11 @@ export default class MigrationPathwayTable extends React.Component {
         );
     }
 }
+
+export default inject("appState")(observer(MigrationPathwayTable));
 MigrationPathwayTable.contextTypes = {
     readonly: PropTypes.bool
 }
-@observer
 class MigrationPathwayTableRow extends React.Component {
     constructor(props) {
         super(props);

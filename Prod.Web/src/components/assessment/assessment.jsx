@@ -18,8 +18,6 @@ import createTaxonSearch from '../createTaxonSearch'
 import ErrorBoundary from '../errorBoundary'
 import AssessmentDiff from '../assessmentDiff'
 
-@inject('appState')
-@observer
 class AssessmentRoot extends Component {
     constructor(props) {
         super(props)
@@ -137,8 +135,10 @@ class AssessmentRoot extends Component {
 
 export default function Assessment(props) {
     const UserContext = props.appState.UserContext
-    return <UserContext.Provider>
-        <AssessmentRoot />
-    </UserContext.Provider>
+    return (
+        <UserContext.Provider>
+            <inject('appState')(observer(AssessmentRoot)) />
+        </UserContext.Provider>
+    );
 }
 

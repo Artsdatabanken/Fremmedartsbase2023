@@ -5,9 +5,7 @@ import Tabs from './tabs'
 import AssessmentMoveScientificName from './assessmentMoveScientificName';
 import AssessmentMoveHorizon from './assessmentMoveHorizon';
 
-@inject('appState')
-@observer
-export default class AssessmentMove extends React.Component {
+class AssessmentMove extends React.Component {
     render() {
         const {appState, appState:{moveAssessmentTabs}}  = this.props
         return (
@@ -22,6 +20,8 @@ export default class AssessmentMove extends React.Component {
         )
     }
 }
+
+export default inject('appState')(observer(AssessmentMove));
 
 
 

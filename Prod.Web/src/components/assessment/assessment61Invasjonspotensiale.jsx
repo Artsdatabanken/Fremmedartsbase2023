@@ -1,6 +1,13 @@
 ﻿import React from 'react';
 import {observer, inject} from 'mobx-react';
-import {action, computed, runInAction, observable, extendObservable} from 'mobx'
+import {
+    action,
+    computed,
+    runInAction,
+    observable,
+    extendObservable,
+    makeObservable,
+} from 'mobx';
 import * as Xcomp from './observableComponents';
 import Criterion from './criterion'
 import Assessment61CriteriaC from './assessment61CriteriaC'
@@ -10,11 +17,10 @@ import ModalArtskart from '../artskart/ModalArtskart';
 import errorhandler from '../errorhandler';
 import ErrorList from '../errorList';
 import { getWaterAreas } from '../water/apiWaterArea';
-@inject("appState")
-@observer
-export default class Assessment61Invasjonspotensiale extends React.Component {
+
+class Assessment61Invasjonspotensiale extends React.Component {
     // code looks unused, but it makes the Artskart-module listen to changes
-    @computed get isDirty() {
+    get isDirty() {
         if (!this.props.appState.assessmentId) return false
         const a = JSON.stringify(this.props.appState.assessment)
         const b = this.props.appState.assessmentSavedVersionString
@@ -47,6 +53,11 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
 
     constructor(props) {
         super();
+
+        makeObservable(this, {
+            isDirty: computed
+        });
+
         extendObservable(this, {
             initialWaterAreas: null,
             selectedWaterArea: [],
@@ -571,3 +582,5 @@ export default class Assessment61Invasjonspotensiale extends React.Component {
         );
     }
 }
+
+export default inject("appState")(observer(Assessment61Invasjonspotensiale));

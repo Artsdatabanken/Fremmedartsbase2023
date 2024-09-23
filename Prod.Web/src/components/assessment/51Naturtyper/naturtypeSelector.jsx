@@ -5,8 +5,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import * as Xcomp from '../observableComponents';
 import { action } from 'mobx';
 import { find } from 'ol/array';
-@observer
-export default class NaturetypeSelector extends React.Component {
+
+class NaturetypeSelector extends React.Component {
     constructor(props) {
         console.log("nts: " + JSON.stringify(props.naturtyper, undefined))
         super(props)
@@ -103,3 +103,5 @@ export default class NaturetypeSelector extends React.Component {
         );
     }
 }
+
+export default observer(NaturetypeSelector);

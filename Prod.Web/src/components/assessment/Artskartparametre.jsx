@@ -3,8 +3,7 @@ import {observer} from 'mobx-react'
 import * as Xcomp from './observableComponents'
 import {Button, Modal} from 'react-bootstrap'
 
-@observer
-export default class Artskartparametre extends React.Component {
+class Artskartparametre extends React.Component {
     render() {
         const {utvalg, appState} = this.props
         return (
@@ -43,3 +42,5 @@ export default class Artskartparametre extends React.Component {
         )
     }
 }
+
+export default observer(Artskartparametre);

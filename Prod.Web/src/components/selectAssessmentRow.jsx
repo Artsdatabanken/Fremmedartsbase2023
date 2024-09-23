@@ -3,9 +3,7 @@ import { inject, observer } from 'mobx-react';
 import * as Xcomp from './observableComponents';
 import { beskrivTidSiden } from '../formatting'
 
-@inject('appState')
-@observer
-export default class selectAssessmentRow extends Component {
+class selectAssessmentRow extends Component {
     render() {
         const { assessment, rolle, labels, userId, appState} = this.props
         const isLocked = !!assessment.lockedForEditByUser
@@ -118,6 +116,8 @@ export default class selectAssessmentRow extends Component {
             .onUnlock(assessment)
     }
 }
+
+export default inject('appState')(observer(selectAssessmentRow));
 
 const Status = ({ isLocked, isLockedByMe, canEdit, isFinished, assessment, onLock, onUnlock, canUnlock, labels }) => {
     // console.log("------"+isLocked+ isLockedByMe+ canEdit+ isFinished +canUnlock )

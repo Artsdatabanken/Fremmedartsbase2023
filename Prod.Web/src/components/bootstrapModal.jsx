@@ -2,8 +2,7 @@ import React from 'react';
 import {observer} from 'mobx-react';
 import * as Xcomp from './observableComponents'
 
-@observer
-export default class BootstrapModal extends React.Component {
+class BootstrapModal extends React.Component {
     constructor(props) {
         super(props)
         this.onCancel = props.onCancel
@@ -51,3 +50,5 @@ export default class BootstrapModal extends React.Component {
         </div>
     }
 }
+
+export default observer(BootstrapModal);

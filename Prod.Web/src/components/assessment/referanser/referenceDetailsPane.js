@@ -3,8 +3,8 @@ import {observer} from 'mobx-react';
 import {extendObservable} from 'mobx';
 import * as Xcomp from '../observableComponents';
 import EditReference from './editReference'
-@observer
-export default class ReferenceDetailsPane extends React.Component {
+
+class ReferenceDetailsPane extends React.Component {
     constructor() {
         super()
         extendObservable(this, {
@@ -49,3 +49,5 @@ export default class ReferenceDetailsPane extends React.Component {
         );
     }
 }
+
+export default observer(ReferenceDetailsPane);

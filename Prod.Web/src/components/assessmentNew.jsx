@@ -5,7 +5,15 @@ import {loadData} from '../apiService'
 import config from '../config'
 
 // import LoadingHoc from './LoadingHoc'
-import {action, autorun, extendObservable, observable, toJS, computed} from "mobx"
+import {
+    action,
+    autorun,
+    extendObservable,
+    observable,
+    toJS,
+    computed,
+    makeObservable,
+} from "mobx";
 import createTaxonSearch from './createTaxonSearch'
 
 
@@ -29,14 +37,17 @@ const  newAssessment = observable({
 
 })
 
-@inject("appState")
-
-@observer
-export default class assessmentNew extends React.Component {
+class assessmentNew extends React.Component {
     //if this is false, the button name is "Add assessment", otherwise "Move assessment"
     
     constructor(props) {
         super(props)
+
+        makeObservable(this, {
+            onSetEkspertgruppe: action,
+            moveAssessment: computed
+        });
+
         const {evaluationContext} = props
         this.onNewAssessment = () => {
             const newItem = newAssessment;
@@ -63,7 +74,7 @@ export default class assessmentNew extends React.Component {
             props.onNewAssessment(clone)
         }
 
-       
+
         autorun(() => 
             newAssessment.Ekspertgruppe = this.props.appState.expertgroup
         )
@@ -89,7 +100,7 @@ export default class assessmentNew extends React.Component {
                 )
             }
         })
-    
+
         autorun(() => 
             console.log("assessmentNew vurdering exsisterer : "  +  newAssessment.assessmentExists)
         )
@@ -116,10 +127,10 @@ export default class assessmentNew extends React.Component {
 
 
 
-    @action onSetEkspertgruppe(e) {
+    onSetEkspertgruppe(e) {
         this.props.appState.ekspertgruppe = e.target.value
     }
-    @computed moveAssessment() {
+    moveAssessment() {
         console.log(newAssessment)
         return false;
     }
@@ -244,6 +255,8 @@ export default class assessmentNew extends React.Component {
         )
     }
 }
+
+export default inject("appState")(observer(assessmentNew));
 
 
 

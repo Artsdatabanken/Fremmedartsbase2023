@@ -4,9 +4,8 @@ import Tabs from '../tabs'
 import Assessment62Okologiskeffekt from './assessment62Okologiskeffekt'
 import Assessment61Invasjonspotensiale from './assessment61Invasjonspotensiale'
 import config from '../../config'
-@inject("appState")
-@observer
-export default class Assessment60Risikovurdering extends React.Component {
+
+class Assessment60Risikovurdering extends React.Component {
     render() {
         const {appState:{assessment, assessment:{riskAssessment}}, appState:{riskAssessmentTabs}, appState, } = this.props;
         const labels = appState.codeLabels
@@ -27,3 +26,5 @@ export default class Assessment60Risikovurdering extends React.Component {
         );
     }
 }
+
+export default inject("appState")(observer(Assessment60Risikovurdering));

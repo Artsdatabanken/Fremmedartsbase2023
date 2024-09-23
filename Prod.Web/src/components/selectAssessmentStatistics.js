@@ -3,10 +3,8 @@ import {inject, observer} from 'mobx-react';
 import * as Xcomp from './observableComponents'
 import {action} from "mobx"
 import config from '../config';
-@inject('appState')
 
-@observer
-export default class SelectAssessmentStatistics extends Component {
+class SelectAssessmentStatistics extends Component {
     render() {
         const {appState, assessmentsStatistics, appState:{assessment, koder}} = this.props
         const as = assessmentsStatistics
@@ -40,3 +38,5 @@ export default class SelectAssessmentStatistics extends Component {
         )
     }
 }
+
+export default inject('appState')(observer(SelectAssessmentStatistics));

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {action, observable, runInAction} from 'mobx';
+import { action, observable, runInAction, makeObservable } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import * as Xcomp from './observableComponents';
 import HelpIcon from '@material-ui/icons/Help';
@@ -8,22 +8,17 @@ import SelectAssessmentTable from './selectAssessmentTable';
 import { createConfigItem } from '@babel/core';
 import auth from './authService';
 import config from '../config';
-// import SelectAssessmentStatistics from './selectAssessmentStatistics';
-// import auth from './authService';
-// import config from '../config';
-// import catimg from '../cat.gif';
-//import catimg from 'url:../cat.gif';
-// const catimg = require('../cat.gif') 
 
-
-@inject('appState')
-@observer
-export default class SelectAssessment extends Component {
+class SelectAssessment extends Component {
    
     constructor(props) {
         super()
+
+        makeObservable(this, {
+            show: observable
+        });
     }
-    @observable show = false;
+    show = false;
 
     resetFilters = action((appState) => {
         appState.expertgroupCategoryCheckboxFilter = []
@@ -594,3 +589,5 @@ export default class SelectAssessment extends Component {
         )
     }
 }
+
+export default inject('appState')(observer(SelectAssessment));

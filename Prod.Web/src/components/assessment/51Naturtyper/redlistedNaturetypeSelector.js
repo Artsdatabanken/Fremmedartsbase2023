@@ -2,8 +2,7 @@
 import React from 'react';
 import {observer} from 'mobx-react';
 
-@observer
-export default class RedlistedNaturtypeSelector extends React.Component {
+class RedlistedNaturtypeSelector extends React.Component {
     constructor(props) {
         super(props)
     }
@@ -48,3 +47,5 @@ export default class RedlistedNaturtypeSelector extends React.Component {
         );
     }
 }
+
+export default observer(RedlistedNaturtypeSelector);

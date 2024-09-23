@@ -1,9 +1,8 @@
 import React from 'react';
 import {observer, inject} from 'mobx-react';
 import * as Xcomp from './observableComponents';
-@inject("appState")
-@observer
-export default class Assessment10Horisontskanning extends React.Component {
+
+class Assessment10Horisontskanning extends React.Component {
     constructor(props) {
         super(props)
         const {appState:{assessment}, appState} = this.props;
@@ -59,3 +58,5 @@ export default class Assessment10Horisontskanning extends React.Component {
         );
     }
 }
+
+export default inject("appState")(observer(Assessment10Horisontskanning));

@@ -44,9 +44,7 @@ function Diff(props) {
   }
 
 
-@inject('appState')
-@observer
-export default class AssessmentDiff extends Component {
+class AssessmentDiff extends Component {
     deleteAssessment = (id) => {
         // kun lov til å slette sine egne kommentarer
         // dette er id til kommentar - ikke assessmentid
@@ -98,3 +96,5 @@ export default class AssessmentDiff extends Component {
             {auth.isAdmin && <button className="btn btn-primary" style={{marginTop: '20px'}} onClick={() => { this.deleteAssessment(assessment.id)}}>Slett vurdering (NB! forsvinner fra ekspertgruppa)</button>}
         </div>
         )}}
+
+export default inject('appState')(observer(AssessmentDiff));

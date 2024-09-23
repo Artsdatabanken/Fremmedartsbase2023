@@ -3,12 +3,17 @@ import PropTypes from 'prop-types'
 import {observer} from 'mobx-react';
 import * as Xcomp from '../observableComponents';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import {action, computed, extendObservable, observable} from 'mobx';
+import { action, computed, extendObservable, observable, makeObservable } from 'mobx';
 import NewMigrationPathwayButton from './NewMigrationPathwayButton'
-@observer
-export default class NewMigrationPathwayGroup extends React.Component {
+
+class NewMigrationPathwayGroup extends React.Component {
     constructor(props) {
         super(props);
+
+        makeObservable(this, {
+            expanded: observable
+        });
+
         extendObservable(this, {
             expandPathways: false,
         })
@@ -20,7 +25,7 @@ export default class NewMigrationPathwayGroup extends React.Component {
         }
     }
 
-    @observable expanded = false;
+    expanded = false;
     expand() {
         console.log(JSON.stringify(this.context))
         if(this.context.readonly) return
@@ -70,6 +75,8 @@ export default class NewMigrationPathwayGroup extends React.Component {
 
 
 }
+
+export default observer(NewMigrationPathwayGroup);
 
 NewMigrationPathwayGroup.contextTypes = {
     readonly: PropTypes.bool

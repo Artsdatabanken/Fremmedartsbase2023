@@ -1,8 +1,7 @@
 import React from 'react';
 import {observer} from 'mobx-react';
 
-@observer
-export default class Tabs extends React.Component {
+class Tabs extends React.Component {
 
     render(){
         const tabData = this.props.tabData
@@ -34,3 +33,5 @@ export default class Tabs extends React.Component {
         );
     }
 }
+
+export default observer(Tabs);

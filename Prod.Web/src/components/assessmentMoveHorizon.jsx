@@ -2,7 +2,7 @@
 import React from 'react';
 import {observer} from 'mobx-react';
 import * as Xcomp from './observableComponents';
-import {action, autorun, extendObservable, observable, toJS} from "mobx"
+import { action, autorun, extendObservable, observable, toJS, makeObservable } from "mobx";
 import auth from './authService'
 //import catimg from '../cat.gif';
 import catimg from 'url:../cat.gif';
@@ -13,17 +13,21 @@ const  state = observable({
 })
 
 
-@observer
-export default class AssessmentMoveHorizon extends React.Component {
+class AssessmentMoveHorizon extends React.Component {
     constructor(props) {
         super(props)
+
+        makeObservable(this, {
+            onSetEkspertgruppe: action
+        });
+
         this.onMoveAssessmentHorizon = () => {
             const stateclone = toJS(state)
             props.onMoveAssessmentHorizon(stateclone)
         }
     }
 
-    @action onSetEkspertgruppe(e) {
+    onSetEkspertgruppe(e) {
         this.props.appState.ekspertgruppe = e.target.value
     }
 
@@ -72,6 +76,8 @@ export default class AssessmentMoveHorizon extends React.Component {
         )
     }
 }
+
+export default observer(AssessmentMoveHorizon);
 
 
 

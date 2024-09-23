@@ -2,8 +2,7 @@
 import {PropTypes} from 'prop-types';
 import {observer} from 'mobx-react';
 
-@observer
-export default class ObservablePassword extends React.Component {
+class ObservablePassword extends React.Component {
     constructor() {
         super()
     }
@@ -18,6 +17,8 @@ export default class ObservablePassword extends React.Component {
         )
 	}
 }
+
+export default observer(ObservablePassword);
 
 ObservablePassword.contextTypes = {
     readonly: PropTypes.bool

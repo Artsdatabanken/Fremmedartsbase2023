@@ -2,9 +2,8 @@
 import React from 'react';
 import {observer, inject} from 'mobx-react';
 import * as Xcomp from './observableComponents';
-@inject("appState")
-@observer
-export default class Assessment70Klimaeffekter extends React.Component {
+
+class Assessment70Klimaeffekter extends React.Component {
     render() {
 		const {appState:{assessment}, appState:{assessment:{riskAssessment}}, appState} = this.props;
 		const koder = appState.koder
@@ -41,3 +40,5 @@ export default class Assessment70Klimaeffekter extends React.Component {
         );
     }
 }
+
+export default inject("appState")(observer(Assessment70Klimaeffekter));

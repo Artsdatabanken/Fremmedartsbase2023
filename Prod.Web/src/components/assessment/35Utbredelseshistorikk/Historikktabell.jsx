@@ -3,8 +3,7 @@ import {observer} from 'mobx-react'
 import KollapsetSpredningsrad from './KollapsetSpredningsrad'
 import EkspandertSpredningsrad from './EkspandertSpredningsrad'
 
-@observer
-export default class HistorikkTabell extends React.Component {
+class HistorikkTabell extends React.Component {
     render() {
         const {historikk, appState, disabled} = this.props
         const labels = appState.codeLabels.DistributionHistory
@@ -51,3 +50,5 @@ export default class HistorikkTabell extends React.Component {
         return rows
     }
 }
+
+export default observer(HistorikkTabell);

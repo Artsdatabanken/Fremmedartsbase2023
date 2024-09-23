@@ -2,12 +2,7 @@ import React from 'react';
 // import ReactDOM from 'react-dom';
 import {observer, inject} from 'mobx-react';
 
-// import {observable, autorun} from 'mobx';
-// import * as Xcomp from '../observableComponents';
-
-@inject("appState")
-@observer
-export default class ArrivedCountryFrom extends React.Component {
+class ArrivedCountryFrom extends React.Component {
     constructor(props) {
         super(props) 
     }
@@ -107,3 +102,5 @@ export default class ArrivedCountryFrom extends React.Component {
             </ul>)
     }
 }
+
+export default inject("appState")(observer(ArrivedCountryFrom));

@@ -4,8 +4,7 @@ import * as Xcomp from '../observableComponents'
 import Fylkesliste from './Fylkesliste'
 import Spredningskart from './Spredningskart'
 
-@observer
-export default class UtbredelseIDag extends React.Component {
+class UtbredelseIDag extends React.Component {
     render() {
         const {vurdering, appState} = this.props
         const labels=appState.codeLabels.DistributionHistory
@@ -212,3 +211,5 @@ export default class UtbredelseIDag extends React.Component {
         )
     }
 }
+
+export default observer(UtbredelseIDag);

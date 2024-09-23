@@ -1,14 +1,27 @@
 import React from 'react';
 import {observer, inject} from 'mobx-react';
 import * as Xcomp from './observableComponents';
-import {action, autorun, computed, extendObservable, observable, toJS} from 'mobx';
+import {
+    action,
+    autorun,
+    computed,
+    extendObservable,
+    observable,
+    toJS,
+    makeObservable,
+} from 'mobx';
 import NewMigrationPathwaySelector from './40Spredningsveier/NewMigrationPathwaySelector'
 import MPTable from './40Spredningsveier/MigrationPathwayTable'
-@inject("appState")
-@observer
-export default class Assessment42Spredningsveier extends React.Component {
+
+class Assessment42Spredningsveier extends React.Component {
     constructor(props) {
         super(props);
+
+        makeObservable(this, {
+            saveMigrationPathway: action,
+            fjernSpredningsvei: action
+        });
+
         extendObservable(this, {
             visibleDefinitions: false,
         })
@@ -71,7 +84,7 @@ export default class Assessment42Spredningsveier extends React.Component {
         }
     }
    
-    @action saveMigrationPathway(vurdering, mp, name, migrationPathways) {
+    saveMigrationPathway(vurdering, mp, name, migrationPathways) {
         const mps = name == "Til innendørs- eller produksjonsareal" ? vurdering.importPathways : vurdering.assesmentVectors
         const compstr = (mp) => ""+mp.codeItem+mp.introductionSpread+mp.influenceFactor+mp.magnitude+mp.timeOfIncident
         const introSpread = name == "Videre spredning i natur" ? "spread" : "introduction"
@@ -123,7 +136,7 @@ export default class Assessment42Spredningsveier extends React.Component {
         }
     }
 
-    @action fjernSpredningsvei = (vurdering, value, name) => {
+    fjernSpredningsvei = (vurdering, value, name) => {
         const result = name == "Til innendørs- eller produksjonsareal" ?  vurdering.importPathways.remove(value) : vurdering.assesmentVectors.remove(value);
         // console.log("item removed : " + result)
     };
@@ -242,3 +255,5 @@ export default class Assessment42Spredningsveier extends React.Component {
         );
     }
 }
+
+export default inject("appState")(observer(Assessment42Spredningsveier));

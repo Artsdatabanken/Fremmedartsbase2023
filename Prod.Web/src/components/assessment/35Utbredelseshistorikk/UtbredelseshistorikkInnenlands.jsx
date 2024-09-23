@@ -5,9 +5,7 @@ import {Button} from 'react-bootstrap'
 import HistorikkTabell from './Historikktabell'
 import Filliste from './Filliste'
 
-@inject("appState")
-@observer
-export default class UtbredelseshistorikkInnenlands extends React.Component {
+class UtbredelseshistorikkInnenlands extends React.Component {
     render() {
         const {vurdering, appState} = this.props
         
@@ -35,6 +33,8 @@ export default class UtbredelseshistorikkInnenlands extends React.Component {
         )
     }
 }
+
+export default inject("appState")(observer(UtbredelseshistorikkInnenlands));
 UtbredelseshistorikkInnenlands.contextTypes = {
     readonly: PropTypes.bool
 }

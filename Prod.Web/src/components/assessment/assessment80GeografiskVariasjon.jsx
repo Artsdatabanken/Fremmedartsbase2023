@@ -2,9 +2,8 @@
 import React from 'react';
 import {observer, inject} from 'mobx-react';
 import * as Xcomp from './observableComponents';
-@inject("appState")
-@observer
-export default class Assessment80GeografiskVariasjon extends React.Component {
+
+class Assessment80GeografiskVariasjon extends React.Component {
 	render() {
 		const {appState:{assessment}, appState:{assessment:{riskAssessment}}, appState} = this.props;
         const labels = appState.codeLabels
@@ -64,3 +63,5 @@ export default class Assessment80GeografiskVariasjon extends React.Component {
         );
 	}
 }
+
+export default inject("appState")(observer(Assessment80GeografiskVariasjon));

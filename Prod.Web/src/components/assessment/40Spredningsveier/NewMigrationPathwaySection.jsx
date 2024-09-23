@@ -2,8 +2,7 @@ import React from 'react';
 import {observer} from 'mobx-react';
 import NewMigrationPathwayGroup from './NewMigrationPathwayGroup'
 
-@observer
-export default class NewMigrationPathwaySection extends React.Component {
+class NewMigrationPathwaySection extends React.Component {
     render() {
         const {migrationPathway, onSave, koder, hideIntroductionSpread, labels, vurdering, mainCodes} = this.props;
         return(
@@ -14,3 +13,5 @@ export default class NewMigrationPathwaySection extends React.Component {
             </div>
         )}
 }
+
+export default observer(NewMigrationPathwaySection);

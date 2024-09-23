@@ -1,18 +1,22 @@
 import React, {Component} from 'react'
 import { observer, inject } from 'mobx-react';
-import { toJS, observable, action, makeObservable, extendObservable } from 'mobx';
+import { toJS, observable, action, makeObservable, extendObservable, makeObservable } from 'mobx';
 import config from '../config'
 import FileUpload from "./FileUpload";
 import * as Xcomp from './observableComponents';
 import { deleteData, loadData, postData, putData } from '../apiService';
-@inject('appState')
-@observer
-export default class Documents extends Component {
-    @observable attachments = []
+
+class Documents extends Component {
+    attachments = [];
     baseUrl = config.apiUrl + "/api/Document/"
 
     constructor(props) {
         super()
+
+        makeObservable(this, {
+            attachments: observable
+        });
+
         makeObservable(this);
         this.assessmentId = props.appState.assessment.id
         this.getAttachments() // henter første gangen
@@ -115,3 +119,5 @@ export default class Documents extends Component {
         </div>)
     }
 }
+
+export default inject('appState')(observer(Documents));

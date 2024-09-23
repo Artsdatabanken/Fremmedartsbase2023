@@ -4,10 +4,8 @@ import {observer} from 'mobx-react';
 import {action, computed, extendObservable, observable} from 'mobx';
 import * as Xcomp from '../observableComponents';
 import BsModal from '../../bootstrapModal'
-// const labels = config.labels
 
-@observer
-export default class NewMigrationPathwayButton extends React.Component {
+class NewMigrationPathwayButton extends React.Component {
     constructor(props) {
         super()
 
@@ -93,3 +91,5 @@ export default class NewMigrationPathwayButton extends React.Component {
             </div>
         )}
 }
+
+export default observer(NewMigrationPathwayButton);

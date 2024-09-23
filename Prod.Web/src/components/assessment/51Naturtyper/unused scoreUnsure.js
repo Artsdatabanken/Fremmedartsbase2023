@@ -3,8 +3,7 @@ import {autorun, extendObservable, observable, toJS} from 'mobx';
 import {observer} from 'mobx-react';
 import * as Xcomp from '../observableComponents';
 
-@observer
-export default class ScoreUnsure extends React.Component {
+class ScoreUnsure extends React.Component {
     constructor(props) {
         super()
         const {appState, critScores, firstValue, secondValue} = props;
@@ -45,3 +44,5 @@ export default class ScoreUnsure extends React.Component {
         </div>
     }
 }
+
+export default observer(ScoreUnsure);

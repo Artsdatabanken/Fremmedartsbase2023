@@ -6,9 +6,7 @@ import UploadPicturesButton from './30Artsegenskaper/uploadPicturesButton'
 import OriginTable from './30Artsegenskaper/originTable'
 import ArrivedCountryFrom from './arrivedCountryFrom'
 
-@inject("appState")
-@observer
-export default class Assessment30Artsegenskaper extends React.Component {
+class Assessment30Artsegenskaper extends React.Component {
     constructor(props) {
         super(props)
     }
@@ -399,3 +397,5 @@ export default class Assessment30Artsegenskaper extends React.Component {
         );
 	}
 }
+
+export default inject("appState")(observer(Assessment30Artsegenskaper));

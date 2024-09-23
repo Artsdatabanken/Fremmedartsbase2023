@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {observer} from 'mobx-react'
-import {toJS, observable} from 'mobx'
+import { toJS, observable, makeObservable } from 'mobx';
 import Kart from './kart'
 import Artskartparametre from './Artskartparametre'
 import {Button, Modal} from 'react-bootstrap';
@@ -12,9 +12,8 @@ import config from '../../config'
 
 function loadDataFromUrl() {alert("loadDataFromUrl not implemented")}
 
-@observer
-export default class Artskart extends React.Component {
-    @observable visUtvalgsparametre = false
+class Artskart extends React.Component {
+    visUtvalgsparametre = false;
     kriterier = observable({
         taxonId: 0,
         scientificnameId: 0,
@@ -38,6 +37,11 @@ export default class Artskart extends React.Component {
 
     constructor(props) {
         super(props)
+
+        makeObservable(this, {
+            visUtvalgsparametre: observable
+        });
+
         this.update(props)
     }
 
@@ -191,6 +195,8 @@ export default class Artskart extends React.Component {
         })
     }
 }
+
+export default observer(Artskart);
 Artskart.contextTypes = {
     readonly: PropTypes.bool
 }

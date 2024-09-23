@@ -11,8 +11,7 @@ import ExpertGroupModel from './expertGroupModel'
 import {loadData,postData} from '../apiService';
 import config from '../config'
 
-@observer
-export default class ExpertGroupAdmin extends React.Component {
+class ExpertGroupAdmin extends React.Component {
     render() {
         const {appState} = this.props;
         const expertGroupModel = ExpertGroupModel
@@ -171,6 +170,8 @@ soknad: "Eg treng tilgang med ein gong" */}
             </fieldset>);
     }
 }
+
+export default observer(ExpertGroupAdmin);
 ExpertGroupAdmin.propTypes = {
     appState: PropTypes.object.isRequired
 }

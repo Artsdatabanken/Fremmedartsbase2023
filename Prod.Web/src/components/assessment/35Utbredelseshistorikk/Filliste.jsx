@@ -5,8 +5,7 @@ import ProgressBar from './ProgressBar'
 import * as Xcomp from '../observableComponents'
 import config from '../../../config'
 
-@observer
-export default class Filliste extends React.Component {
+class Filliste extends React.Component {
     constructor() {
         super()
         this.state = { selectedFilename: null }
@@ -176,3 +175,5 @@ export default class Filliste extends React.Component {
             .remove(x)
     }
 }
+
+export default observer(Filliste);

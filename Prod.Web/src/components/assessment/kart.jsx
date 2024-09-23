@@ -5,8 +5,8 @@ import * as L from 'leaflet'
 import '../../../node_modules/leaflet/dist/leaflet.css'
 import '../../../node_modules/leaflet-draw/dist/leaflet.draw.css'
 import config from '../../config'
-@observer
-export default class Kart extends React.Component {
+
+class Kart extends React.Component {
     constructor() {
         super()
         this.key = 1
@@ -111,3 +111,5 @@ export default class Kart extends React.Component {
         this.props.onEdit(selection)
     }
 }
+
+export default observer(Kart);

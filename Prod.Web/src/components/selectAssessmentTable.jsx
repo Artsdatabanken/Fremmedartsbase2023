@@ -5,9 +5,7 @@ import {action} from "mobx"
 import SelectAssessmentRow from './selectAssessmentRow'
 import auth from './authService'
 
-@inject('appState')
-@observer
-export default class SelectAssessmentTable extends Component {
+class SelectAssessmentTable extends Component {
     render() {
         const {assessmentList, rolle, appState} = this.props
         const labels = appState.codeLabels; 
@@ -93,3 +91,5 @@ export default class SelectAssessmentTable extends Component {
             
     // }
 }
+
+export default inject('appState')(observer(SelectAssessmentTable));

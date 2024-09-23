@@ -9,7 +9,7 @@ import ModalSimpleMap from "../artskart/ModalSimpleMap";
 import Fylkesforekomst from "../fylkesforekomst/Fylkesforekomst";
 import fylker from "../fylkesforekomst/fylker_2017";
 import Documents from "../documents";
-import { action, computed, extendObservable, runInAction } from "mobx";
+import { action, computed, extendObservable, runInAction, makeObservable } from "mobx";
 import SimpleMap from "../map/SimpleMap";
 import WaterArea from "../water/WaterArea";
 import { getWaterAreas } from "../water/apiWaterArea";
@@ -17,11 +17,10 @@ import mapOlFunc from "../map/MapOlFunctions";
 import errorhandler from "../errorhandler";
 import ErrorList from "../errorList";
 import { beskrivTidSiden } from "../../formatting";
-@inject("appState")
-@observer
-export default class Assessment52Utbredelse extends React.Component {
+
+class Assessment52Utbredelse extends React.Component {
   // code looks unused, but it makes the Artskart-module listen to changes
-  @computed get isDirty() {
+  get isDirty() {
     if (!this.props.appState.assessmentId) return false;
     const a = JSON.stringify(this.props.appState.assessment);
     const b = this.props.appState.assessmentSavedVersionString;
@@ -37,6 +36,11 @@ export default class Assessment52Utbredelse extends React.Component {
 
   constructor(props) {
     super();
+
+    makeObservable(this, {
+      isDirty: computed
+    });
+
     extendObservable(this, {
       initialWaterAreas: null,
       selectedWaterArea: [],
@@ -737,3 +741,5 @@ export default class Assessment52Utbredelse extends React.Component {
     );
   }
 }
+
+export default inject("appState")(observer(Assessment52Utbredelse));

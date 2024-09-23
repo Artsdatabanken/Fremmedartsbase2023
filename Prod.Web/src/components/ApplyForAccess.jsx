@@ -6,8 +6,8 @@ import * as Xcomp from './observableComponents'
 import { observer } from 'mobx-react'
 
 var ApplyForAccessStore = observable({reason: ''})
-@observer
-export default class ApplyForAccess extends React.Component {
+
+class ApplyForAccess extends React.Component {
     sendApplication(e) {
         e.preventDefault()
         auth.applyForAccess(ApplyForAccessStore.reason);
@@ -35,3 +35,5 @@ export default class ApplyForAccess extends React.Component {
         )
     }
 }
+
+export default observer(ApplyForAccess);

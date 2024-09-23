@@ -4,9 +4,8 @@ import auth from '../authService'
 import * as Xcomp from './observableComponents'
 //import config from '../../config';
 import { action } from 'mobx';
-@inject('appState')
-@observer
-export default class Assessment90Summary extends Component {
+
+class Assessment90Summary extends Component {
     setAssessmentComplete(appState) {
         // sjekker før ferdigstilling        
         if (appState.assessment.kategoriFraForrigeListe !== null && 
@@ -200,3 +199,5 @@ export default class Assessment90Summary extends Component {
                 </div>
             </div>
         )}}
+
+export default inject('appState')(observer(Assessment90Summary));

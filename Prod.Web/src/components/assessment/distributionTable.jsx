@@ -2,9 +2,8 @@ import React from 'react'
 import {observer, inject} from 'mobx-react'
 import * as Xcomp from './observableComponents'
 import errorhandler from '../errorhandler';
-@inject('appState')
-@observer
-export default class DistributionTable extends React.Component {
+
+class DistributionTable extends React.Component {
     render() {
     
     const {appState:{assessment}, appState, appState:{infoTabs}} = this.props
@@ -156,3 +155,5 @@ export default class DistributionTable extends React.Component {
     </table></>)
     }
 }
+
+export default inject('appState')(observer(DistributionTable));

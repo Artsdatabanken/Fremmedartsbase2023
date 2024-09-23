@@ -3,7 +3,7 @@ import React from 'react';
 import {observer} from 'mobx-react';
 import * as Xcomp from './observableComponents';
 // import LoadingHoc from './LoadingHoc'
-import {action, autorun, extendObservable, observable, toJS} from "mobx"
+import { action, autorun, extendObservable, observable, toJS, makeObservable } from "mobx";
 import createTaxonSearch from './createTaxonSearch'
 import auth from './authService'
 
@@ -28,10 +28,14 @@ const  newAssessment = observable({
 
 
 
-@observer
-export default class AssessmentMoveScientificName extends React.Component {
+class AssessmentMoveScientificName extends React.Component {
     constructor(props) {
         super(props)
+
+        makeObservable(this, {
+            onSetEkspertgruppe: action
+        });
+
         const {evaluationContext} = props
         this.onMoveAssessmentScientificName = () => {
             console.log("onMoveAssessmentScientificName run")
@@ -90,7 +94,7 @@ export default class AssessmentMoveScientificName extends React.Component {
         createTaxonSearch(newAssessment, evaluationContext)
     }
 
-    @action onSetEkspertgruppe(e) {
+    onSetEkspertgruppe(e) {
         this.props.appState.ekspertgruppe = e.target.value
     }
 
@@ -198,6 +202,8 @@ export default class AssessmentMoveScientificName extends React.Component {
         )
     }
 }
+
+export default observer(AssessmentMoveScientificName);
 
 
 

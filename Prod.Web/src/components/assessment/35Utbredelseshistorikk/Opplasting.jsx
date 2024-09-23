@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {observer} from 'mobx-react'
-@observer
-export default class Opplasting extends React.Component {
+
+class Opplasting extends React.Component {
     constructor(props) {
         super(props)
         this.status = this.props
@@ -54,6 +54,8 @@ export default class Opplasting extends React.Component {
         return {newUpload, reader}
     }
 }
+
+export default observer(Opplasting);
 
 Opplasting.contextTypes = {
     readonly: PropTypes.bool

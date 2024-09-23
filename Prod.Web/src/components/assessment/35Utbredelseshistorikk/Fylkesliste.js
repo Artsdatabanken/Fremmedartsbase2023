@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 import {observer} from 'mobx-react'
 import * as Xcomp from '../observableComponents'
 
-@observer
-export default class Fylkesliste extends React.Component {
+class Fylkesliste extends React.Component {
     render() {
         const style = {
             th: {},
@@ -42,6 +41,8 @@ export default class Fylkesliste extends React.Component {
         )
     }
 }
+
+export default observer(Fylkesliste);
 
 Fylkesliste.propTypes = {
     columns: PropTypes

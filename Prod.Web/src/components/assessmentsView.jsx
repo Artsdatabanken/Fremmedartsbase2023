@@ -1,18 +1,23 @@
 import React from 'react';
 import {observer} from 'mobx-react';
-import {action} from "mobx"
+import { action, makeObservable } from "mobx";
 import Tabs from './tabs'
 //import {user} from "./userSession"
 import AssessmentNew from './assessmentNew'
 import SelectAssessment from './selectAssessment'
 import AssessmentReport from './assessmentReport'
 import Statistics from './statistics'
-// import assessmentMinMaxProbable from './assessmentMinMaxProbable';
-// import {storeData} from '../stores/apiService';
 
-@observer
-export default class AssessmentsView extends React.Component {
-    @action onNewAssessment(taxinfo) {
+class AssessmentsView extends React.Component {
+    constructor(props) {
+        super(props);
+
+        makeObservable(this, {
+            onNewAssessment: action
+        });
+    }
+
+    onNewAssessment(taxinfo) {
         console.log("opprett ny vurdering: " + taxinfo.ScientificName + " " + taxinfo.ScientificNameId + " " + taxinfo.Ekspertgruppe)
         console.log("!!: " + JSON.stringify(taxinfo))
 
@@ -24,8 +29,8 @@ export default class AssessmentsView extends React.Component {
     }
 
 
-//    {appState.ekspertgruppe != null && ((appState.ekspertgruppeRolle && appState.ekspertgruppeRolle.Leder) || appState.isAdmin) ?
-//    {appState.ekspertgruppe != null && appState.ekspertgruppeRolle && (appState.ekspertgruppeRolle.userName === "helgesan" || appState.ekspertgruppeRolle.userName === "olgah") ?
+    //    {appState.ekspertgruppe != null && ((appState.ekspertgruppeRolle && appState.ekspertgruppeRolle.Leder) || appState.isAdmin) ?
+    //    {appState.ekspertgruppe != null && appState.ekspertgruppeRolle && (appState.ekspertgruppeRolle.userName === "helgesan" || appState.ekspertgruppeRolle.userName === "olgah") ?
 
 
     render() {
@@ -55,4 +60,6 @@ export default class AssessmentsView extends React.Component {
         )
     }
 }
+
+export default observer(AssessmentsView);
 

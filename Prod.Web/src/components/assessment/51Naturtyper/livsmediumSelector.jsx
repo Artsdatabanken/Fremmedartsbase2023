@@ -4,8 +4,8 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import * as Xcomp from '../observableComponents';
 import { action } from 'mobx';
-@observer
-export default class LivsmediumSelector extends React.Component {
+
+class LivsmediumSelector extends React.Component {
     constructor(props) {
         console.log("nts: " + JSON.stringify(props.naturtyper, undefined))
         super(props)
@@ -106,3 +106,5 @@ export default class LivsmediumSelector extends React.Component {
         );
     }
 }
+
+export default observer(LivsmediumSelector);

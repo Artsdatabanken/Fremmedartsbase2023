@@ -8,10 +8,8 @@ import SpeciesSpeciesTable from './52Okologiskeffekt/SpeciesSpeciesTable'
 import SpeciesNaturetypeTable from './52Okologiskeffekt/SpeciesNaturetypeTable'
 import HostParasiteTable from './52Okologiskeffekt/HostParasiteTable'
 import createTaxonSearch from '../createTaxonSearch'
-// const kodeTekst = (koder, verdi) => koder.filter(item => item.Value === verdi).map(item => item.Text)[0] || verdi 
-@inject("appState")
-@observer
-export default class Assessment62Okologiskeffekt extends React.Component {
+
+class Assessment62Okologiskeffekt extends React.Component {
     constructor(props) {
         super(props)
         const {appState:{assessment}, appState:{assessment:{riskAssessment}}, appState} = this.props;
@@ -377,6 +375,8 @@ export default class Assessment62Okologiskeffekt extends React.Component {
         );
     }
 }
+
+export default inject("appState")(observer(Assessment62Okologiskeffekt));
 
 
 

@@ -10,9 +10,7 @@ import createTaxonSearch, {createTaxonSearchState} from '../../createTaxonSearch
 
 const taxonSearchState = createTaxonSearchState("newNaturtypeTaxonSearch")
 
-@inject("appState")
-@observer
-export default class NewNaturetype extends React.Component {
+class NewNaturetype extends React.Component {
     constructor(props) {
         super()
         const {appState, addNaturtype, hideStateChange, assessment} = props;
@@ -107,3 +105,5 @@ export default class NewNaturetype extends React.Component {
         </div>
     }
 }
+
+export default inject("appState")(observer(NewNaturetype));

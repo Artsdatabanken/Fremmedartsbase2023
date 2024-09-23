@@ -1,9 +1,8 @@
 import React from 'react'
 import {observer, inject} from 'mobx-react'
 import * as Xcomp from '../observableComponents'
-@inject('appState')
-@observer
-export default class Utbredelseshistorikk extends React.Component {
+
+class Utbredelseshistorikk extends React.Component {
     render() {
         const {appState:{assessment}, vurdering, appState} = this.props
         //const labels = appState.kodeLabels.DistributionHistory
@@ -105,3 +104,5 @@ export default class Utbredelseshistorikk extends React.Component {
         )
     }
 }
+
+export default inject('appState')(observer(Utbredelseshistorikk));

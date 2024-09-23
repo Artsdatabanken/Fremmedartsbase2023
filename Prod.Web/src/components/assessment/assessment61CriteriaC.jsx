@@ -3,9 +3,7 @@ import {observer, inject} from 'mobx-react';
 import * as Xcomp from './observableComponents';
 import Criterion from './criterion'
 
-@inject("appState")
-@observer
-export default class Assessment61CriteriaC extends React.Component {
+class Assessment61CriteriaC extends React.Component {
     constructor(props) {
         super();
     }
@@ -23,3 +21,5 @@ export default class Assessment61CriteriaC extends React.Component {
         );
     }
 }
+
+export default inject("appState")(observer(Assessment61CriteriaC));

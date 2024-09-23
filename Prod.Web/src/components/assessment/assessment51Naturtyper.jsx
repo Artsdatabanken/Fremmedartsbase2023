@@ -11,9 +11,7 @@ import OriginTable from './30Artsegenskaper/originTable'
 import errorhandler from '../errorhandler';
 import ErrorList from '../errorList';
 
-@inject("appState")
-@observer
-export default class Assessment51Naturtyper extends React.Component {
+class Assessment51Naturtyper extends React.Component {
     constructor(props) {
         super(props)
         const {appState:{assessment}, appState} = this.props;
@@ -237,3 +235,5 @@ export default class Assessment51Naturtyper extends React.Component {
         );
     }
 }
+
+export default inject("appState")(observer(Assessment51Naturtyper));

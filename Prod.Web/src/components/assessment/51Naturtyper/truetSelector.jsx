@@ -7,8 +7,7 @@ import * as Xcomp from '../observableComponents';
 import { action } from 'mobx';
 
 
-@observer
-export default class TruetSelector extends React.Component {
+class TruetSelector extends React.Component {
     constructor(props) {
         console.log("nts: " + JSON.stringify(props.naturtyper, undefined))
         super(props)
@@ -74,3 +73,5 @@ export default class TruetSelector extends React.Component {
         );
     }
 }
+
+export default observer(TruetSelector);

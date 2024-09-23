@@ -5,8 +5,7 @@ import {observer} from 'mobx-react';
 import {action, extendObservable} from "mobx"
 import {loadData} from '../apiService';
 
-@observer
-export default class Statistics extends React.Component {
+class Statistics extends React.Component {
     constructor() {
         super()
         extendObservable(this, {
@@ -108,4 +107,6 @@ export default class Statistics extends React.Component {
         )
     }
 }
+
+export default observer(Statistics);
 

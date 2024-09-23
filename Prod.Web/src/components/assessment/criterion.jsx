@@ -2,10 +2,8 @@
 import PropTypes from 'prop-types'
 import {observer, inject} from 'mobx-react';
 import {runInAction} from 'mobx';
-// import * as Xcomp from './observableComponents';
-@inject("appState")
-@observer
-export default class Criterion extends React.Component {
+
+class Criterion extends React.Component {
     constructor(props) {
         super(props)
     }
@@ -105,6 +103,8 @@ export default class Criterion extends React.Component {
         );
 	}
 }
+
+export default inject("appState")(observer(Criterion));
 Criterion.propTypes = {
     criterion: PropTypes.object,
 }
