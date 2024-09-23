@@ -34,7 +34,7 @@ const SimpleMap = ({
     selectedArea,
     waterFeatures,
     selectAll,
-    static,
+    staticMap,
     mapIndex,
     waterIsChanged
 }) => {
@@ -73,7 +73,7 @@ const SimpleMap = ({
             if (elements.length === 1) {
                 overlay.setElement(elements[0]);
             } else {
-                overlay.setElement(mapOlFunc.createPopupElement(static, mapIndex));
+                overlay.setElement(mapOlFunc.createPopupElement(staticMap, mapIndex));
             }
         }
 
@@ -99,7 +99,7 @@ const SimpleMap = ({
                             // Show name with faded font if feature is disabled
                             let waterClassname = f.get('disabled') === true ? ' class=\'ol-popup-feature-disabled\'' : '';
                             content.innerHTML = `<p${waterClassname}>${f.get(waterFieldName)}</p>`;
-                            const coordinate = static ? [55000, 7900000] : e.coordinate;
+                            const coordinate = staticMap ? [55000, 7900000] : e.coordinate;
                             overlay.getElement().style.opacity = 1;
                             overlay.setPosition(coordinate);
                             // closer.style.display = 'none';
@@ -189,9 +189,9 @@ const SimpleMap = ({
         // Popup
         let overlayOptions = {
             id: `overlay_${mapIndex}`,
-            element: mapOlFunc.createPopupElement(static, mapIndex),
+            element: mapOlFunc.createPopupElement(staticMap, mapIndex),
         };
-        // if (!static) {
+        // if (!staticMap) {
         //     overlayOptions.autoPan = {
         //         animation: {
         //             duration: 250,
@@ -215,11 +215,11 @@ const SimpleMap = ({
                 zoom: 0
             }),
             layers: [],
-            controls: defaultControls({attribution: false, zoom: !static})
+            controls: defaultControls({attribution: false, zoom: !staticMap})
         };
         let waterSelectedLayer;
 
-        if (static) {
+        if (staticMap) {
             options.interactions = new Collection();
         } else {
             options.layers.push(new TileLayer({
@@ -263,7 +263,7 @@ const SimpleMap = ({
                 zIndex: 1
             }));
         }
-        if (static) {
+        if (staticMap) {
             options.layers.push(mapOlFunc.createWaterLayer('Vatn', mapIndex, artskartWaterModel, waterFeatures, projection, '', selectedArea, () => {}));
         } else {
             options.layers.push(mapOlFunc.createWaterLayer('Vatn', mapIndex, artskartWaterModel, waterFeatures, projection, '', undefined, () => {}));
@@ -307,7 +307,7 @@ const SimpleMap = ({
 
         const vatnLayer = layers.filter((layer) => layer.get('name') === 'Vatn' ? true : false)[0];
         const vatnSource = vatnLayer ? vatnLayer.getSource() : undefined;
-        if (!static) {
+        if (!staticMap) {
             mapOlFunc.createWaterSelectedLayer('VatnSelected', projection).then(l => {
                 mapObject.addLayer(l);
                 waterSelectedLayer = l;
@@ -322,7 +322,7 @@ const SimpleMap = ({
             waterSelectedLayer = layers.filter(layer => layer.get('name') === 'VatnSelected')[0];
         }
 
-        if (!static) {
+        if (!staticMap) {
 
             const dragBox = new DragBox({condition: platformModifierKeyOnly});
             mapObject.addInteraction(dragBox);
@@ -354,7 +354,7 @@ const SimpleMap = ({
                     }
                     return false;
                 });
-                if (static) selectDeselectFeatures(features, true, undefined, onClick);
+                if (staticMap) selectDeselectFeatures(features, true, undefined, onClick);
                 else selectDeselectFeatures(features, true, onChange);
             });
         } else {
