@@ -1,7 +1,18 @@
 {
     "compilerOptions": {
+        "outDir": "./dist/",
+        "sourceMap": true,
+        "noImplicitAny": false,
+        "module": "es6",
+        "target": "es5",
+        "jsx": "react",
+        "allowJs": true,
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
         "experimentalDecorators": true,
-        "allowJs": true
+        "lib": ["ES2023.Array", "DOM"],
+        "resolveJsonModule": true
     },
-    "exclude": ["node_modules", "dist", ".parcel-cache"]
+    "exclude": ["node_modules", "dist"]
 }
