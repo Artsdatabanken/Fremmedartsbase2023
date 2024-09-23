@@ -41,7 +41,7 @@ export class NaturtypeRad extends React.Component {
     render() {
         const {naturtype, appState, deleteRow, labels, disabled, codes, toggleEdit, showNatureTypeArea, editMode, appState:{assessment}} = this.props;
         // const natureTypeCodes = require('./../../../Nin2_3.json')
-        const redListCodes = require('./../../../TrueteOgSjeldneNaturtyper2018.json')
+        const redListCodes = require('../../../TrueteOgSjeldneNaturtyper2018.json')
         // const riskAssessment = assessment.riskAssessment 
         const gLabels = labels.General
         const nt = naturtype

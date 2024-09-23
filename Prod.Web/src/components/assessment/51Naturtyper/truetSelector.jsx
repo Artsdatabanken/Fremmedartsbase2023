@@ -3,7 +3,7 @@ import React from 'react';
 import {observer} from 'mobx-react';
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import * as Xcomp from './../observableComponents';
+import * as Xcomp from '../observableComponents';
 import { action } from 'mobx';
 
 

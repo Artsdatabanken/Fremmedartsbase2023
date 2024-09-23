@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
 import { observer, inject } from 'mobx-react';
 import {autorun, action, extendObservable, observable, toJS} from 'mobx';
-import {deleteData, loadData, postData, putData} from './../../apiService';
+import {deleteData, loadData, postData, putData} from '../../apiService';
 import * as Xcomp from './observableComponents';
-import config from './../../config';
-import auth from './../authService'
+import config from '../../config';
+import auth from '../authService'
 
 export default inject('appState')(observer(class AssessmentReferences extends Component {
 

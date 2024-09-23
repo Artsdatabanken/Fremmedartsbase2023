@@ -4,8 +4,8 @@ import { toJS, observable, makeObservable } from 'mobx';
 import * as Xcomp from './observableComponents'
 import config from '../../config'
 import { action } from 'mobx';
-import { loadData, postData } from './../../apiService';
-import auth from './../authService'
+import { loadData, postData } from '../../apiService';
+import auth from '../authService'
 export default inject('appState')(observer(class AssessmentComments extends Component {
     baseUrl = config.apiUrl + "/api/AssessmentComments/"
     constructor(props) {

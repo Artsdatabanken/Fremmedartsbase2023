@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import * as RL from "react-leaflet";
 import * as L from "leaflet";
-// import { EditControl } from "react-leaflet-draw";
 import "leaflet/dist/leaflet.css";
 import "leaflet-draw/dist/leaflet.draw.css";
 

@@ -63,7 +63,7 @@ class NavItem extends React.Component {
                 <a href="#" role="button"
                     onClick={onClick}
                     disabled={!!disabled}
-                    href="#">
+                >
                     {children}
                 </a>
             </li>
@@ -198,7 +198,7 @@ export default class AppView extends React.Component {
                     ? <Login authModel={appState.authModel}/>
                     :
                     auth.hasAccess ?
-                     <AppViewMain appState={appState} appState={appState}/> 
+                     <AppViewMain appState={appState} /> 
                      : <ApplyForAccess applicationPending={auth.hasApplication} />
                 }
                 {/* <Footer labels={labels}/> */}
