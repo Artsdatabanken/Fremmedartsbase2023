@@ -111,8 +111,7 @@ function cleanHTML(input) {
 //////    return doc.body.innerHTML;
 //////}
 
-@observer
-export default class ObservableHtmlString extends React.Component {
+class ObservableHtmlString extends React.Component {
     constructor(props) {
         super(props)
 
@@ -152,6 +151,4 @@ export default class ObservableHtmlString extends React.Component {
     }
 }
 
-ObservableHtmlString.contextTypes = {
-    readonly: PropTypes.bool
-}
+export default (observer(ObservableHtmlString));

@@ -257,6 +257,3 @@ class assessmentNew extends React.Component {
 }
 
 export default inject("appState")(observer(assessmentNew));
-
-
-

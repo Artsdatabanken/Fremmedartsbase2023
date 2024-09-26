@@ -34,15 +34,14 @@ class HabitatTable extends React.Component {
                 basisOfAssessment: [],
                 interactionTypes: [],
             }, 
+            editMode: false
         })
         createTaxonSearch(this.taxon, props.appState.assessment.evaluationContext)
     }
-            
-    @observable editMode = false
 
-    @action toggleEdit = () => {
+    toggleEdit = action(() => {
         this.editMode = !this.editMode
-    }
+    })
     render() {
         const {naturetypes, labels, canRenderTable, appState, desc} = this.props;
         const ntLabels = labels.NatureTypes

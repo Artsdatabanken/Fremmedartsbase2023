@@ -16,9 +16,9 @@ class NaturtypeTable extends React.Component {
         this.editMode = false;
     }
 
-    @action toggleEdit = () => {
+    toggleEdit = action(() => {
         this.editMode = !this.editMode
-    }
+    })
     render() {
         const {naturetypes, labels, canRenderTable, appState, desc, codes, disabled} = this.props;
         const ntLabels = labels.NatureTypes
