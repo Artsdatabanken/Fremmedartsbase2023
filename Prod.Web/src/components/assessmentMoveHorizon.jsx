@@ -4,8 +4,8 @@ import {observer} from 'mobx-react';
 import * as Xcomp from './observableComponents';
 import { action, autorun, extendObservable, observable, toJS, makeObservable } from "mobx";
 import auth from './authService'
-//import catimg from '../cat.gif';
-import catimg from 'url:../cat.gif';
+import catimg from '../cat.gif';
+// import catimg from 'url:../cat.gif';
 // const catimg = require('../cat.gif') 
 
 const  state = observable({
