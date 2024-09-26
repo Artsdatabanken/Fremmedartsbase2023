@@ -3,21 +3,14 @@ import PropTypes from 'prop-types';
 import {action} from 'mobx'
 import { observer, inject } from 'mobx-react';
 
-import DevTool from 'mobx-react-devtools';
 import LoadingHoc from './LoadingHoc'
-
 import Assessment from './assessment/assessment';
 import AssessmentsView from './assessmentsView';
 import AssessmentNew from './assessmentNew'
 import AssessmentMove from './assessmentMove'
 import ExpertGroupAdmin from './expertgroupadmin';
-
-import Footer from './footer';
 import Login from './Login'
 import ApplyForAccess from './ApplyForAccess'
-//import events from './event-pubsub'
-// import logoimg from './../img/ADBLogo-70.png'
-
 import auth from './authService'
 
 @observer
@@ -71,10 +64,8 @@ class NavItem extends React.Component {
     }
 }
 
-@inject('appState')
 @LoadingHoc('isServicesReady')
-@observer
-export default class AppView extends React.Component {
+class AppView extends React.Component {
 
     render() {
 
@@ -212,3 +203,5 @@ export default class AppView extends React.Component {
         appState: PropTypes.object.isRequired
     }
 }
+
+export default inject("appState")(observer(AppView));

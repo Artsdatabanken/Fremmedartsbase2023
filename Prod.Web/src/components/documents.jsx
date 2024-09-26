@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
 import { observer, inject } from 'mobx-react';
-import { toJS, observable, action, makeObservable, extendObservable, makeObservable } from 'mobx';
+import { toJS, observable, action, makeObservable, extendObservable } from 'mobx';
 import config from '../config'
 import FileUpload from "./FileUpload";
 import * as Xcomp from './observableComponents';
-import { deleteData, loadData, postData, putData } from '../apiService';
+import { loadData } from '../apiService';
 
 class Documents extends Component {
     attachments = [];

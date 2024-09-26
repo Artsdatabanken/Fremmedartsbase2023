@@ -2,13 +2,12 @@
 import ReactDOM from 'react-dom';
 import {PropTypes} from 'prop-types';
 import {action, extendObservable} from 'mobx';
-import {observer} from 'mobx-react';
+import {Observer, observer} from 'mobx-react';
 import {UserContext} from './components'
 
-@observer
-export class ObservableMultiselectArrayCheckboxes extends React.Component {
-    render() {
-        const {observableValue, codes, className, disabled, hideUnchecked, facetFunction, facets, facet, totalCount} = this.props;
+
+export const ObservableMultiselectArrayCheckboxes = (props) => <Observer> {() => {
+        const {observableValue, codes, className, disabled, hideUnchecked, facetFunction, facets, facet, totalCount} = props;
         const [obj, prop] = observableValue;
         const context = UserContext.getContext()
         if(obj[prop] === undefined) {
@@ -39,59 +38,40 @@ export class ObservableMultiselectArrayCheckboxes extends React.Component {
                     </label>
                 </li>)}
             </ul>
-        )
-    }
+        )}
 }
+</Observer>
 
+export const ObservableMultiselectArrayDropdown = ({ observableValue, codes, labels, disabled }) => <Observer>{() => {
+    const [isOpen, setIsOpen] = useState(false);
 
+    const [obj, prop] = observableValue;
 
-@observer
-export class ObservableMultiselectArrayDropdown extends React.Component {
-    constructor() {
-        super()
-        extendObservable(this, {
-            open: false,
-        })
-        // autorun(() => {
-        //     console.log(`side: ${  this.side}`)
-        // })
+    const maxListableElements = 4
+    const noneSelectedLabel = labels && labels.noneSelected ? labels.noneSelected : "Ingen valgt"
+    const multipleSelectedLabel = labels && labels.multipleSelected ? labels.multipleSelected : "Flere valgt"
 
-    }
-
-    render() {
-        const {observableValue, codes, labels, heading, hideUnchecked, disabled} = this.props;
-        const [obj, prop] = observableValue;
-        const context = UserContext.getContext()
-        // console.log("------------" + JSON.stringify(labels))
-
-        const maxListableElements = 4
-        const noneSelectedLabel = labels && labels.noneSelected ? labels.noneSelected : heading ? heading : "Ingen valgt"
-        const multipleSelectedLabel = labels && labels.multipleSelected ? labels.multipleSelected : heading ? heading : "Flere valgt"
-
-        const names = codes.filter(code => obj[prop].indexOf(code.value) > -1).map(code => code.text)
-        const buttonText = names.length === 0 ? noneSelectedLabel : names.length > maxListableElements ? multipleSelectedLabel + " (" + names.length + ")" : names.join(', ') 
-        return(
-            <div className={"btn-group" + (this.open ? " open" : "")}>
-                <button type="button" className="multiselect btn btn-default" disabled={disabled} title={"Velg"} onClick={() => this.open = !this.open} >
-                    {(!hideUnchecked || names.length === 0 )? 
-                        <span className="multiselect-selected-text">{buttonText}</span> : <span className="multiselect-selected-text">{"Endre valg"}</span>} 
-                    <b className="caret"></b>
-                </button>
-                <div className="dropdown-menu">
-                    <div className="modal-backdrop" style={{zIndex: "1210", opacity: "0.00001"}} onClick={() => this.open = false }> </div>
-                    <div style={{position: "relative", zIndex: "1220" }}>
-                        <div style={{marginLeft: "5px", marginRight: "10px"}}>                        
-                            <ObservableMultiselectArrayCheckboxes observableValue={observableValue} codes={codes} />
-                        </div>
+    const names = codes.filter(code => obj[prop].indexOf(code.value) > -1).map(code => code.text)
+    const buttonText = names.length === 0 ? noneSelectedLabel : names.length > maxListableElements ? multipleSelectedLabel + " (" + names.length + ")" : names.join(', ')
+    return (
+        <div className={"btn-group" + (isOpen ? " open" : "")}>
+            <button type="button" className="multiselect btn btn-default" onClick={() => setIsOpen(!isOpen)} >
+                <span className="multiselect-selected-text">{buttonText}</span> <b className="caret"></b>
+            </button>
+            <div className="dropdown-menu">
+                <div className="modal-backdrop" style={{ zIndex: "1210", opacity: "0.00001" }} onClick={() => setIsOpen(false)}> </div>
+                <div style={{ position: "relative", zIndex: "1220" }}>
+                    <div style={{ paddingRight: "25px" }}>
+                        <ObservableMultiselectArrayCheckboxes observableValue={observableValue} codes={codes} disabled={disabled} />
                     </div>
                 </div>
             </div>
-        )
-    }
-}
+        </div>
+    )
+}}</Observer>
 
-@observer
-export default class ObservableMultiselectArray extends React.Component {
+
+class ObservableMultiselectArray extends React.Component {
     constructor(props) {
         super(props);
 //        this.prop = prop
@@ -130,3 +110,5 @@ ObservableMultiselectArray.contextTypes = {
 ObservableMultiselectArray.propTypes = {
     observableValue: PropTypes.array.isRequired
 }
+
+export default observer(ObservableMultiselectArray);

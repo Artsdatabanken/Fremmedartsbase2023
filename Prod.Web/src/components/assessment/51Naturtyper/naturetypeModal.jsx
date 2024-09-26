@@ -1,13 +1,14 @@
 import React from 'react';
-import {autorun, extendObservable, observable, action, toJS} from 'mobx';
-import {observer, inject} from 'mobx-react';
+import {autorun, extendObservable, action, toJS} from 'mobx';
+import {observer} from 'mobx-react';
 import * as Xcomp from '../observableComponents';
 import BsModal from '../../bootstrapModal'
 import { selectTaxonSearchState } from '../../createTaxonSearch'
+
+
 const kodeTekst = (koder, verdi) => koder.filter(item => item.Value === verdi).map(item => item.Text)[0] || verdi 
-@inject("appState")
-@observer
-export class StringEnum2 extends React.Component {
+
+class StringEnum2 extends React.Component {
     render() {
         const props = this.props
         const disabledTypeBool = typeof(props.observableDisabled) === "boolean"
@@ -21,8 +22,7 @@ export class StringEnum2 extends React.Component {
     }
 }
 
-@observer
-export default class NaturetypeModal extends React.Component {
+class NaturetypeModal extends React.Component {
     constructor(props) {
         super()
         const {appState, naturtype, onOk, showModal, taxon} = props;
@@ -202,3 +202,5 @@ export default class NaturetypeModal extends React.Component {
         </div>
     }
 }
+
+export default (observer(NaturetypeModal));

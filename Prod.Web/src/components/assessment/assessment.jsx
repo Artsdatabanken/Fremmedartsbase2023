@@ -18,7 +18,7 @@ import createTaxonSearch from '../createTaxonSearch'
 import ErrorBoundary from '../errorBoundary'
 import AssessmentDiff from '../assessmentDiff'
 
-class AssessmentRoot extends Component {
+class AssessmentRootBase extends Component {
     constructor(props) {
         super(props)
         extendObservable(this, {
@@ -133,11 +133,13 @@ class AssessmentRoot extends Component {
     }
 }
 
+const AssessmentRoot = inject('appState')(observer(AssessmentRootBase)) ;
+
 export default function Assessment(props) {
     const UserContext = props.appState.UserContext
     return (
         <UserContext.Provider>
-            <inject('appState')(observer(AssessmentRoot)) />
+            <AssessmentRoot/>
         </UserContext.Provider>
     );
 }

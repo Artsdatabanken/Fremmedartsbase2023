@@ -1,8 +1,10 @@
 ﻿import React from 'react';
 import {observer} from 'mobx-react';
-import {action, autorun, extendObservable, observable, useStrict} from 'mobx';
+import {autorun, extendObservable} from 'mobx';
 import * as Xcomp from '../observableComponents';
-@observer
+
+
+
 export class EditReferenceRow extends React.Component {
     render() {
         const {label, fieldName, reference} = this.props
@@ -14,7 +16,7 @@ export class EditReferenceRow extends React.Component {
         )
     }
 }
-@observer
+
 export class NoEditReferenceRow extends React.Component {
     render() {
         const {label, fieldName, reference} = this.props
@@ -26,8 +28,8 @@ export class NoEditReferenceRow extends React.Component {
         )
     }
 }
-@observer
-export default class EditReference extends React.Component {
+
+class EditReference extends React.Component {
     constructor({reference, referenceContext}) {
         super()
         extendObservable(this, {
@@ -39,9 +41,6 @@ export default class EditReference extends React.Component {
 
     render() {
         const {reference, referenceContext, refcodes} = this.props
-        // console.log("ee" + referenceContext.redigeringsType)
-        // const nbsp = "\u00a0"
-        // console.log("ref: " + JSON.stringify(reference))
         return (
             <div>
             { refcodes.map(group => 
@@ -58,3 +57,5 @@ export default class EditReference extends React.Component {
         )
     }
 }
+
+export default observer(EditReference);
