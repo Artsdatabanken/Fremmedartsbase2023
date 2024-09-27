@@ -1,3 +1,4 @@
+import React from 'react';
 import * as Xcomp from '../observableComponents';
 import {extendObservable, action} from 'mobx';
 import {observer, inject} from 'mobx-react';

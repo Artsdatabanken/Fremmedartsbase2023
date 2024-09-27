@@ -1,9 +1,8 @@
 // Source code modified from this project: https://github.com/sonyan/react-wysiwyg-editor
 'use strict';
-
-var React = require('react');
-var createReactClass = require('create-react-class');
-var PropTypes = require('prop-types');
+import React from 'react';
+import createReactClass from 'create-react-class';
+import PropTypes from 'prop-types';
 
 
 var HtmlEditor = createReactClass({

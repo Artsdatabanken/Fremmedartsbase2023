@@ -3,15 +3,12 @@ import {action} from 'mobx';
 import {observer} from 'mobx-react';
 import * as Xcomp from '../observableComponents';
 
-const redListCodes = require('./../../../TrueteOgSjeldneNaturtyper2018.json')
-
 // const kodeTekst = (koder, verdi) => koder.filter(item => item.Value === verdi).map(item => item.Text)[0] || verdi 
 
 const SpeciesNaturetypeTable = observer((props) => 
 {
     const labels = props.labels
     const disabled = props.disabled
-    const natureTypeCodes = require('./../../../Nin2_3.json')
     var naturetypeNames = []
     naturetypeNames.push({"Value": "", "Text": ""})
     // regular expression to check that the id does not contain only numbers

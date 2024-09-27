@@ -1,5 +1,6 @@
 import React from 'react';
 import {extendObservable, action} from 'mobx';
+import { observer} from 'mobx-react';
 import * as Xcomp from '../observableComponents';
 import NaturtypeModal from './naturetypeModal';
 import { selectTaxonSearchState } from '../../createTaxonSearch'
