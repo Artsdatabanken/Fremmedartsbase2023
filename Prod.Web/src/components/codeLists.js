@@ -1,6 +1,8 @@
 import {codes2labels} from '../utils'
-
-
+import codes from '../FA3CodesNB.json';
+import ninlm from '../nin-livsmedium.json';
+import togsnt from '../TrueteOgSjeldneNaturtyper2018.json';
+import nin2root from '../Nin2_3.json';
 
 function koder2migrationPathways(mp) {
     const r = {}
@@ -94,14 +96,10 @@ function transformnaturtyperNIN2(nin2codes) {
 
 function createCodeLists() {
     const r = {}
-    const codes = require('../FA3CodesNB.json')
     r.koder = codes.Children
     const clabels =  codes2labels(r.koder.labels[0].Children)
     r.codeLabels = clabels
 
-
-    // load livsmedium codes ----
-    const ninlm = require('../nin-livsmedium.json')
     const lm = transformlivsmedium(ninlm)
     // console.log("livsmedium2nt: " +  JSON.stringify(lm))
     const lmlabels = transformlivsmediumlabels(ninlm, {})
@@ -112,7 +110,6 @@ function createCodeLists() {
     // --------------------------
 
     // load truede naturtyper codes ----
-    const togsnt = require('../TrueteOgSjeldneNaturtyper2018.json')
     const nt = transformtrueteogsjeldnenaturtyper(togsnt)
     // console.log("trueteogsjeldnenaturtyper: " +  JSON.stringify(nt))
     const tsgrupper = nt.Children
@@ -124,10 +121,6 @@ function createCodeLists() {
 
     // --------------------------
 
-
-    // load NiN2 codes ----
-    const nin2root = require('../Nin2_3.json')
-    // console.log("nin2naturtyper: " +  JSON.stringify(nin2root))
     const nin2grupper = nin2root.Children
     r.naturtyperNIN2 = nin2grupper
 

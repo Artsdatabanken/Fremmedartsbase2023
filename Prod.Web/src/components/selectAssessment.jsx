@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import { action, observable, runInAction, makeObservable } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import * as Xcomp from './observableComponents';
-import HelpIcon from '@material-ui/icons/Help';
 import ExpertGroupModel from './expertGroupModel'
 import SelectAssessmentTable from './selectAssessmentTable';
 import { createConfigItem } from '@babel/core';
