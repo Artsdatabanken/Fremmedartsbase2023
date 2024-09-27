@@ -32,7 +32,6 @@ import { codeLists, isTrueteogsjeldnenaturtype } from "./codeLists";
 class ViewModel {
   constructor() {
     makeObservable(this, {
-      getStatisticsFor: computed,
       navigate: action,
       isServicesReady: computed,
       isLockedByMe: computed,
@@ -587,32 +586,6 @@ class ViewModel {
     // #######################################################################################################
   } // ########### end constructor ###########
   //    #######################################
-  getStatisticsFor(facets, facetname, facetitem) {
-    //const facets = this.assessmentsStatistics;
-    const facet = facets.find((element) => element.name == facetname);
-    if (facet) {
-      // found
-      var count = 0;
-      if (facetitem && facetitem.length > 1) {
-        var items = facetitem.split(",").forEach((harry) => {
-          var item = facet.facetsItems.find((element) => element.name == harry);
-          if (item) {
-            count += item.count;
-          }
-        });
-      } else {
-        var item = facet.facetsItems.find(
-          (element) => element.name == facetitem
-        );
-        if (item) {
-          count += item.count;
-        }
-      }
-
-      return count;
-    }
-    return 0;
-  }
 
   get UserContext() {
     return this.theUserContext;

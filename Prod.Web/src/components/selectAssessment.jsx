@@ -127,6 +127,33 @@ class SelectAssessment extends Component {
         return result
     }
 
+    getStatisticsFor(facets, facetname, facetitem) {
+        //const facets = this.assessmentsStatistics;
+        const facet = facets.find((element) => element.name == facetname);
+        if (facet) {
+          // found
+          var count = 0;
+          if (facetitem && facetitem.length > 1) {
+            var items = facetitem.split(",").forEach((harry) => {
+              var item = facet.facetsItems.find((element) => element.name == harry);
+              if (item) {
+                count += item.count;
+              }
+            });
+          } else {
+            var item = facet.facetsItems.find(
+              (element) => element.name == facetitem
+            );
+            if (item) {
+              count += item.count;
+            }
+          }
+    
+          return count;
+        }
+        return 0;
+      }
+
     render() {
         const {appState, appState:{assessment,roleincurrentgroup:rolle,codeLabels:labels,koder}} = this.props
         // const {appState, appState:{assessment,roleincurrentgroup:rolle,codeLabels:labels,koder:{Children:koder}}} = this.props
@@ -335,7 +362,7 @@ class SelectAssessment extends Component {
                             <Xcomp.MultiselectArray
                                 observableValue={[appState, 'workStatus']} 
                                 codes={appState.assessmentTypeFilter == "riskAssessment" ? koder.workStatus: koder.workStatusHS}
-                                facetFunction={appState.getStatisticsFor}
+                                facetFunction={getStatisticsFor}
                                 facets={appState.assessmentsStatistics}
                                 facet="Progress"
                                 totalCount={appState.expertgroupAssessmentTotalCount}
@@ -380,11 +407,11 @@ class SelectAssessment extends Component {
                 
                 <div className="nav_menu">
                         <div className="filters"><b>{labels.SelectAssessment.assessmentStatus}</b>   
-                                <Xcomp.Bool observableValue={[appState.horizonScanFilter, "hsNotStarted"]} label={koder.workStatusHS[0].text + "   (" + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','2') + ") " + (100*appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','2')/appState.expertgroupAssessmentTotalCount).toFixed() + "%"} />
-                                <Xcomp.Bool observableValue={[appState.horizonScanFilter, "hsFinished"]} label={koder.workStatus[2].text + " (" + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0') + ")   " + (100*appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0')/appState.expertgroupAssessmentTotalCount).toFixed() + "%"} />
+                                <Xcomp.Bool observableValue={[appState.horizonScanFilter, "hsNotStarted"]} label={koder.workStatusHS[0].text + "   (" + getStatisticsFor(appState.assessmentsStatistics,'Progress','2') + ") " + (100*getStatisticsFor(appState.assessmentsStatistics,'Progress','2')/appState.expertgroupAssessmentTotalCount).toFixed() + "%"} />
+                                <Xcomp.Bool observableValue={[appState.horizonScanFilter, "hsFinished"]} label={koder.workStatus[2].text + " (" + getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0') + ")   " + (100*getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0')/appState.expertgroupAssessmentTotalCount).toFixed() + "%"} />
                             <div className="subChoice">
-                                    <Xcomp.Bool observableValue={[appState.horizonScanFilter, "toAssessment"]} label={" (" + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1') + ") " + (appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0').toFixed() > 0 ? (100*appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1')/appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0')).toFixed() : "0") + labels.SelectAssessment.further} />
-                                    <Xcomp.Bool observableValue={[appState.horizonScanFilter, "notAssessed"]} label={" (" + appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','0') + ") " + (appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0').toFixed() > 0 ? (100*appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','0')/appState.getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0')).toFixed() : "0") + labels.SelectAssessment.notAssessed} />
+                                    <Xcomp.Bool observableValue={[appState.horizonScanFilter, "toAssessment"]} label={" (" + getStatisticsFor(appState.assessmentsStatistics,'Progress','1') + ") " + (getStatisticsFor(assessmentsStatistics,'Progress','1,0').toFixed() > 0 ? (100*getStatisticsFor(appState.assessmentsStatistics,'Progress','1')/getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0')).toFixed() : "0") + labels.SelectAssessment.further} />
+                                    <Xcomp.Bool observableValue={[appState.horizonScanFilter, "notAssessed"]} label={" (" + getStatisticsFor(appState.assessmentsStatistics,'Progress','0') + ") " + (getStatisticsFor(assessmentsStatistics,'Progress','1,0').toFixed() > 0 ? (100*getStatisticsFor(appState.assessmentsStatistics,'Progress','0')/getStatisticsFor(appState.assessmentsStatistics,'Progress','1,0')).toFixed() : "0") + labels.SelectAssessment.notAssessed} />
                             </div>
 
                         </div>
@@ -393,7 +420,7 @@ class SelectAssessment extends Component {
                         <Xcomp.MultiselectArray
                                 observableValue={[appState.horizonScanFilter, 'potentialDoorKnockers']} 
                                 codes={koder.potentialDoorKnockers}
-                                facetFunction={appState.getStatisticsFor}
+                                facetFunction={getStatisticsFor}
                                 facets={appState.assessmentsStatistics}
                                 facet="PotentialDoorKnocker"
                                 mode="check"/>
@@ -401,7 +428,7 @@ class SelectAssessment extends Component {
                         <Xcomp.MultiselectArray
                                 observableValue={[appState.horizonScanFilter, 'notAssessedDoorKnocker']} 
                                 codes={koder.notAssessedDoorKnocker}
-                                facetFunction={appState.getStatisticsFor}
+                                facetFunction={getStatisticsFor}
                                 facets={appState.assessmentsStatistics}
                                 facet="NotAssessedDoorKnocker"
                                 mode="check"/>
