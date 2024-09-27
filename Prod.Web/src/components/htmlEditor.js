@@ -365,4 +365,4 @@ HtmlEditor.contextTypes = {
     readonly: PropTypes.bool
 }
 
-module.exports = HtmlEditor
+export default HtmlEditor;

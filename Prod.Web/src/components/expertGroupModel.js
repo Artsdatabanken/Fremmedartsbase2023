@@ -1,4 +1,4 @@
-﻿import {extendObservable, autorun, computed, observable, toJSON, whyRun, runInAction} from 'mobx';
+﻿import {extendObservable, autorun, observable, runInAction} from 'mobx';
 import fetch from 'isomorphic-fetch'
 //import * as Utils from '../utils';
 import {loadData} from '../apiService';

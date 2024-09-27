@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
 import "ol/ol.css";
-import styles from "./MapOpenLayers.css"; // don't delete. it's used to move buttons to the right side
+// import styles from "./MapOpenLayers.css"; // don't delete. it's used to move buttons to the right side
+//Pretty sure the line above is a lie
 import MapContext from "./MapContext";
 import { intersect, multiPolygon as TurfMultiPolygon } from "@turf/turf";
 import { Feature, Map, Overlay, View } from "ol";

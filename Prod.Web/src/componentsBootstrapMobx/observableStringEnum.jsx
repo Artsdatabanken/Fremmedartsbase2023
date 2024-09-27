@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 import {object, PropTypes} from 'prop-types';
-import {action, runInAction, useStrict} from 'mobx';
+import {action, runInAction} from 'mobx';
 import {observer, Observer} from 'mobx-react';
 import {UserContext} from './components'
 

@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect, useLayoutEffect } from 'react';
 import 'ol/ol.css';
-import styles from './MapOpenLayers.css'; // don't delete. it's used to move buttons to the right side
+// import styles from './MapOpenLayers.css'; // don't delete. it's used to move buttons to the right side
+//Line above is a lie?
 import { Collection, Feature, Map, View, Overlay } from 'ol';
 import { Control, defaults as defaultControls } from 'ol/control';
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';

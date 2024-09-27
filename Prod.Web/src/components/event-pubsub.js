@@ -121,4 +121,4 @@ function init(scope) {
 
 //module.exports = init
 const singleton = init(); // "global" events, no scoping!
-module.exports = singleton
+export default singleton
