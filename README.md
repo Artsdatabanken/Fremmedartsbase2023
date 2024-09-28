@@ -87,4 +87,4 @@ docker run --name testfab2 -p 8888:3001 -e 'AuthAuthority=https://demo.identitys
 * [Test web](http://localhost:8888/index.html)
 
 # Forklaringer og Råd
-For forklaring til applikasjonens virkemåte se readme.md under Prod.web
+For forklaring til applikasjonens virkemåte se [readme.md under Prod.web](Prod.Web/readme.md)
