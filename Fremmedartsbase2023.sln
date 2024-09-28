@@ -11,10 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Prod.Domain", "Prod.Domain\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{06277FB9-B177-4A66-8816-6861EE099AC6}"
 	ProjectSection(SolutionItems) = preProject
-		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
 		LICENSE = LICENSE
 		.github\workflows\node.js.yml = .github\workflows\node.js.yml
-		ProjectStructure.md = ProjectStructure.md
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -26,7 +24,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nbic.Indexer", "Nbic.Indexe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Public.Domain", "Public.Domain\Public.Domain.csproj", "{FFA2FF34-34C2-492A-8FAF-38FFB416283E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prod.Infrastructure", "Prod.Infrastructure\Prod.Infrastructure.csproj", "{C9B8FAA6-A18D-44E7-A89C-54D979990713}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Prod.Infrastructure", "Prod.Infrastructure\Prod.Infrastructure.csproj", "{C9B8FAA6-A18D-44E7-A89C-54D979990713}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

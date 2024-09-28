@@ -17,12 +17,13 @@ namespace Prod.Tests
         [Test]
         public void MapOldFormatToNewIsOk()
         {
+            // the following methods contains mapperConfig.AssertConfigurationIsValid() - and thus ensures all fields are mapped
             Fab3Mapper.CreateMappingFromOldToNew();
             Assert.Pass();
         }
 
         [Test]
-        public void MapOldRealDocumentToNewIsOk()
+        public void MappingFromFab3ToFab4ModelIsOk()
         {
             var mapper = Fab3Mapper.CreateMappingFromOldToNew();
             var jsonSerializerOptions = new JsonSerializerOptions

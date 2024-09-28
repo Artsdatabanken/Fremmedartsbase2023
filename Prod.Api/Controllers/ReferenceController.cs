@@ -12,6 +12,9 @@ using Prod.Infrastructure.Services;
 
 namespace Prod.Api.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]

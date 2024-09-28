@@ -10,6 +10,9 @@
     using Microsoft.AspNetCore.Mvc;
     using Prod.Data.EFCore;
 
+    /// <summary>
+    /// Metode for å hente geojson kartfiler over vannområder og vannregioner som brukes i frontend til regionale vurderinger av fisk
+    /// </summary>
     [Route("api/[controller]")]
     [Authorize]
     public class StaticController : AuthorizeApiController

@@ -26,12 +26,38 @@ graph TD
 
 ```
 
-[Projektstruktur](ProjectStructure.md)
+# Projects
 
-Todo: 
+## Nbic.Indexer
+Wrapper that creates an file based Lucene.Net index with methods for adding documents, searching, counting and so on....
 
-* Azure kompatilbel config av database kopling og application insights
-* Automagisk Docker image - med klient og avhengigheter + sqllite - slik at 3'dje parter kan teste
+## Prod.Api
+
+Api backend for Alien species database
+
+[Prod.Api readme](Prod.Api/ReadMe.md)
+
+## Prod.Data.EFCore
+
+Data persistence layer for the Alien species database
+
+[Prod.Data.EFCore readme](Prod.Data.EFCore/Readme.md)
+
+## Prod.Domain
+
+Domain data model for solution
+
+## Prod.Web
+
+Frontend client nodejs/React SPA 
+
+
+
+## SwissKnife
+
+Swiss Army Knife command line tool - toolkit
+
+[SwissKnife readme](SwissKnife/Readme.md)
 
 ## Docker
 
