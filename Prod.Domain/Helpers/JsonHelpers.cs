@@ -1,14 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace Prod.Domain.Helpers
 {
+    /// <summary>
+    /// System.Text.Json helper methods to handle different issues with json coming from Frontend or issues with existing json stored in db
+    /// Placed in this project as its being used in attributes on Domain object 
+    /// </summary>
     public class JsonHelpers
     {
         /// <summary>

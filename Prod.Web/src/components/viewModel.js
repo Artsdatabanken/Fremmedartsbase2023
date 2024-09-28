@@ -362,11 +362,11 @@ class ViewModel {
       (assessmentId) => {
         console.log(
           "x: " +
-            this.assessmentId +
-            " " +
-            typeof this.assessmentId +
-            " " +
-            (this.assessment ? this.assessment.id : "nix")
+          this.assessmentId +
+          " " +
+          typeof this.assessmentId +
+          " " +
+          (this.assessment ? this.assessment.id : "nix")
         );
         if (assessmentId) {
           this.setCurrentAssessment(assessmentId);
@@ -809,8 +809,8 @@ class ViewModel {
       statusaction === "finish"
         ? "finished"
         : statusaction === "unfinish"
-        ? "inprogress"
-        : "";
+          ? "inprogress"
+          : "";
     let userId = statusaction === "unfinish" ? auth.userId : null;
     let now = Date.now().toString();
     transaction(() => {
@@ -1043,21 +1043,6 @@ class ViewModel {
 
   // ################# section API stuff ##################
   getUrl = config.getUrl;
-
-  @computed get AssessmentReportLink() {
-    if (!this.assessment) {
-      return null;
-    }
-    const docid = this.assessmentId;
-    const url = config.getUrl("artsrapport/assessmentview/") + docid;
-    // console.log("URL:" + url)
-    return url;
-  }
-
-  // addGetters(assessmentObject) {
-  //     console.log("addGetters")
-  //     console.log(JSON.stringify(Object.keys(assessmentObject)))
-  // }
 
   async saveCurrentAssessment() {
     events.trigger("saveAssessment", "savestart");
@@ -1340,11 +1325,11 @@ class ViewModel {
   @action createNewAssessment(taxinfo) {
     console.log(
       "opprett ny vurdering: " +
-        taxinfo.ScientificName +
-        " " +
-        taxinfo.ScientificNameId +
-        " " +
-        taxinfo.Ekspertgruppe
+      taxinfo.ScientificName +
+      " " +
+      taxinfo.ScientificNameId +
+      " " +
+      taxinfo.Ekspertgruppe
     );
     const url = config.getUrl("assessment/createnew");
     fetch(url, {
@@ -1373,11 +1358,11 @@ class ViewModel {
     const id = this.assessmentId;
     console.log(
       "flytt vurdering til nytt navn: " +
-        taxinfo.ScientificName +
-        " " +
-        taxinfo.ScientificNameId +
-        " " +
-        taxinfo.Ekspertgruppe
+      taxinfo.ScientificName +
+      " " +
+      taxinfo.ScientificNameId +
+      " " +
+      taxinfo.Ekspertgruppe
     );
     console.log(id + " - " + JSON.stringify(taxinfo));
     const url = config.getUrl("assessment/" + id + "/move");
@@ -1579,7 +1564,7 @@ class ViewModel {
       (error) =>
         alert(
           "Feil ved flytting mellom horisontskanning og risikovurdering:" +
-            error
+          error
         )
     );
   }
