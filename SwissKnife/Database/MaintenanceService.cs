@@ -141,7 +141,7 @@ namespace SwissKnife.Database
                         ? "scanned_fullAssessment"
                         : "scanned_noAssessment";
                     doc.HorizonDoScanning = horizonScanResult.Value != true;
-                    // todo fix potensielt vurderingsendringer her....
+
                     if (doc.HorizonScanResult == "scanned_fullAssessment")
                     {
                         if (doc.HorizonEstablismentPotential == "0")
@@ -484,7 +484,6 @@ namespace SwissKnife.Database
                     Comment = message,
                     AssessmentId = dbAssessmentId,
                     CommentDate = DateTime.Today,
-                    // todo: put in config - think sweeden
                     UserId = new Guid("00000000-0000-0000-0000-000000000001"),
                     Type = commentType
                 }; // siris id

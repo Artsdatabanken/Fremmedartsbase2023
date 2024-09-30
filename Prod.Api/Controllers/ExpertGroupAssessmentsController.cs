@@ -10,7 +10,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using CsvHelper;
 using CsvHelper.Configuration;
-using CsvHelper.TypeConversion;
 using IdentityModel.Client;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +26,9 @@ using Index = Nbic.Indexer.Index;
 
 namespace Prod.Api.Controllers
 {
+    /// <summary>
+    /// Methods related to lists of assessments
+    /// </summary>
     [Route("api/[controller]")]
     public class ExpertGroupAssessmentsController : AuthorizeApiController
     {
@@ -43,21 +45,12 @@ namespace Prod.Api.Controllers
             _index = index;
         }
 
-        //// GET api/assessment/5
-        //[HttpGet("{id}")]
-        //[Authorize]
-        //public async Task<ExpertgroupAssessments> Get(string id)
-        //{
-        //    var expertgroupid = id.Replace('_', '/');
-        //    var roleInGroup = await GetRoleInGroup(id);
-        //    var expertgroupAssessments = new ExpertgroupAssessments
-        //    {
-        //        Rolle = roleInGroup,
-        //        Assessments = await GetExpertGroupAssessments(expertgroupid,new IndexFilter(), roleInGroup.User.Id)
-        //    };
-        //    return expertgroupAssessments;
-
-        //}// GET api/assessment/5
+        /// <summary>
+        /// Get a list of assessments for an expertgroup
+        /// </summary>
+        /// <param name="id">Expertgroupid</param>
+        /// <param name="filter">Filter assessments</param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         [Authorize]
         public async Task<ExpertgroupAssessments> Get(string id, [FromQuery] IndexFilter filter)
@@ -77,7 +70,12 @@ namespace Prod.Api.Controllers
             return expertgroupAssessments;
         }
 
-
+        /// <summary>
+        /// Export of assessments for expertgroup
+        /// </summary>
+        /// <param name="type">"horizonScanning" or "full"</param>
+        /// <param name="id">expertgroup id</param>
+        /// <returns></returns>
         [HttpGet("export/{type}/{id}")]
         //[Authorize]
         public FileResult GetExport(string type, string id)
@@ -94,6 +92,11 @@ namespace Prod.Api.Controllers
             };
         }
 
+        /// <summary>
+        /// Export of almost all assessments (not "LC", "LCº", "NA", "NE")
+        /// </summary>
+        /// <param name="type">"horizonScanning" or "full"</param>
+        /// <returns></returns>
         [HttpGet("export/{type}/all")]
         [Authorize]
         public FileResult GetExport(string type)
@@ -110,6 +113,11 @@ namespace Prod.Api.Controllers
             };
         }
 
+        /// <summary>
+        /// Export of all assessments
+        /// </summary>
+        /// <param name="type">"horizonScanning" or "full"</param>
+        /// <returns></returns>
         [HttpGet("export/{type}/absoluteall")]
         //[Authorize]
         public FileResult GetExportAbsoluteAll(string type)
@@ -129,30 +137,19 @@ namespace Prod.Api.Controllers
         {
             var mem = new MemoryStream();
             var writer = new StreamWriter(mem, Encoding.Unicode);
-            //var csvConfiguration = new CsvConfiguration(new CultureInfo("nb-NO"));
             var config = new CsvConfiguration(CultureInfo.DefaultThreadCurrentCulture)
             {
                 Delimiter = "\t"
             };
-            //config.Delimiter = "\t";
-            //config.TypeConverterCache.RemoveConverter<string>(); 
-            //config.TypeConverterCache.AddConverter<string>(new CsvHelpers.CustomStringConverter());
-            //config.TypeConverterOptionsCache.GetOptions<string>().NullValues.Add(string.Empty);
-            //config.TypeConverterCache.AddConverter<string[]>(new CsvHelpers.CustomStringArrayConverter());
-            //config.TypeConverterCache.AddConverter<List<string>>(new CsvHelpers.CustomStringListConverter());
-            ////config.TypeConverterCache.AddConverter<List<Rodliste2019.Pavirkningsfaktor>>(new CsvHelpers.CustomPavirkningsfaktorListConverter());
-            ////config.TypeConverterCache.AddConverter<Rodliste2019.MinMaxProbable>(new CustomMinMaxProbableConverter());
-            ////config.TypeConverterCache.AddConverter<Rodliste2019.MinMaxProbableIntervall>(new CsvHelpers.CustomMinMaxProbableIntervallConverter());
-            //config. .RegisterClassMap<CsvHelpers.FremmedartToCsvMap>();
+            
+
             var csv = new CsvWriter(writer, config);
-            //csv.Context.RegisterClassMap<CsvHelpers.FremmedartToCsvMap>();
+            
+
             csv.Context.TypeConverterCache.RemoveConverter<string>();
             csv.Context.TypeConverterCache.AddConverter<string>(new CsvHelpers.CustomStringConverter());
             csv.Context.TypeConverterOptionsCache.GetOptions<string>().NullValues.Add(string.Empty);
-            //var options = new TypeConverterOptions { Formats = new[] { "o" } };
-            //csv.Context.TypeConverterOptionsCache.AddOptions<DateTime>(options);
-            //csv.Context.TypeConverterOptionsCache.AddOptions<DateTime?>(options);
-
+            
             var mapper = Helpers.ExportMapper.InitializeMapper();
             switch (hor)
             {
@@ -167,7 +164,6 @@ namespace Prod.Api.Controllers
             csv.Flush();
             writer.Flush();
 
-            //byte[] fileBytes = ... ;
             mem.Position = 0;
             return mem;
         }
@@ -243,7 +239,51 @@ namespace Prod.Api.Controllers
 
         private async Task<FilteredAssessments> GetExpertGroupAssessments(string expertgroupid, IndexFilter filter)
         {
-            var doReturn = new FilteredAssessments();
+            var filteredAssessments = new FilteredAssessments();
+            await CheckIfIndexIsUpToDate();
+
+            var query = IndexHelper.QueryGetDocumentQuery(expertgroupid, filter);
+
+            var result = _index
+                .SearchReference(query, filter.Page - 1, filter.PageSize, IndexHelper.Field_ScientificNameAsTerm)
+                .Select(IndexHelper.GetDocumentFromIndex)
+                .ToList();
+            var count = _index.SearchTotalCount(query);
+            var getAllQuery =
+                IndexHelper.QueryGetDocumentQuery(expertgroupid, new IndexFilter { HorizonScan = filter.HorizonScan });
+            var facets = _index.SearchFacetsReference(getAllQuery,
+                new[]
+                {
+                    IndexHelper.Facet_Author, IndexHelper.Facet_PotentialDoorKnocker,
+                    IndexHelper.Facet_NotAssessedDoorKnocker, IndexHelper.Facet_Progress
+                });
+            var totalCount = _index.SearchTotalCount(getAllQuery);
+
+            filteredAssessments.assessmentList = result;
+            filteredAssessments.FilterCount = count;
+            filteredAssessments.TotalCount = totalCount;
+            if (filteredAssessments.TotalCount > 0)
+                filteredAssessments.Facets = facets.Select(x => new Facet
+                {
+                    Name = x.Dim,
+                    FacetsItems = x.LabelValues.Select(y => new FacetItem { Name = y.Label, Count = (int)y.Value })
+                        .ToList()
+                }).ToList();
+            else
+                filteredAssessments.Facets = new List<Facet>
+                {
+                    new() { Name = "Author", FacetsItems = new List<FacetItem>() },
+                    new() { Name = "PotentialDoorKnocker", FacetsItems = new List<FacetItem>() },
+                    new() { Name = "NotAssessedDoorKnocker", FacetsItems = new List<FacetItem>() },
+                    new() { Name = "Progress", FacetsItems = new List<FacetItem>() }
+                };
+
+
+            return filteredAssessments;
+        }
+
+        private async Task CheckIfIndexIsUpToDate()
+        {
             // want to know if index is correct - has the right stuff
             var indexVersion = _index.GetIndexVersion();
 
@@ -279,79 +319,39 @@ namespace Prod.Api.Controllers
                 // må da hente nye endringer indeksere og lagre max dato
                 await IndexHelper.Index(indexVersion.DateTime, _dbContext, _index);
             }
-
-            //filter.Page = 0;
-            //filter.PageSize = 1000;
-            //filter.HorizonScan = true;
-            var query = IndexHelper.QueryGetDocumentQuery(expertgroupid, filter);
-
-            var result = _index
-                .SearchReference(query, filter.Page - 1, filter.PageSize, IndexHelper.Field_ScientificNameAsTerm)
-                .Select(IndexHelper.GetDocumentFromIndex)
-                .ToList();
-            var count = _index.SearchTotalCount(query);
-            var getAllQuery =
-                IndexHelper.QueryGetDocumentQuery(expertgroupid, new IndexFilter { HorizonScan = filter.HorizonScan });
-            var facets = _index.SearchFacetsReference(getAllQuery,
-                new[]
-                {
-                    IndexHelper.Facet_Author, IndexHelper.Facet_PotentialDoorKnocker,
-                    IndexHelper.Facet_NotAssessedDoorKnocker, IndexHelper.Facet_Progress
-                });
-            var totalCount = _index.SearchTotalCount(getAllQuery);
-
-            doReturn.assessmentList = result;
-            doReturn.FilterCount = count;
-            doReturn.TotalCount = totalCount;
-            if (doReturn.TotalCount > 0)
-                doReturn.Facets = facets.Select(x => new Facet
-                {
-                    Name = x.Dim,
-                    FacetsItems = x.LabelValues.Select(y => new FacetItem { Name = y.Label, Count = (int)y.Value })
-                        .ToList()
-                }).ToList();
-            else
-                doReturn.Facets = new List<Facet>
-                {
-                    new() { Name = "Author", FacetsItems = new List<FacetItem>() },
-                    new() { Name = "PotentialDoorKnocker", FacetsItems = new List<FacetItem>() },
-                    new() { Name = "NotAssessedDoorKnocker", FacetsItems = new List<FacetItem>() },
-                    new() { Name = "Progress", FacetsItems = new List<FacetItem>() }
-                };
-
-
-            return doReturn;
         }
 
         //[ServiceFilter(typeof(ClientIpCheckActionFilter))]
+        /// <summary>
+        /// Drop index contents
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("DropIndex")]
         public async Task DoDeleteIndexAsync()
         {
-            Response.StatusCode = 200;
-            Response.Headers.Add(HeaderNames.ContentType, "text/html");
-            var outputStream = Response.Body;
-            var uniencoding = new UnicodeEncoding();
             var task = Task.Run(() => { _index.ClearIndex(); });
-            while (true)
-            {
-                if (task.IsCompleted) break;
-                Thread.Sleep(1000);
-                await outputStream.WriteAsync(uniencoding.GetBytes("."), 0, uniencoding.GetBytes(".").Length);
-            }
-
-            await outputStream.WriteAsync(uniencoding.GetBytes("done!"), 0, uniencoding.GetBytes("done!").Length);
-            await outputStream.FlushAsync();
+            await SimpleProgressResponse(task);
         }
-
+        
         //[ServiceFilter(typeof(ClientIpCheckActionFilter))]
+        /// <summary>
+        /// Trigger a full reindex of all assessments
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("Reindex")]
         public async Task DoReindexAsync()
+        {
+
+            var task = Task.Run(() => { IndexHelper.ReIndex(_dbContext, _index); });
+            await SimpleProgressResponse(task);
+        }
+
+        private async Task SimpleProgressResponse(Task task)
         {
             Response.StatusCode = 200;
             Response.Headers.Add(HeaderNames.ContentType, "text/html");
             var outputStream = Response.Body;
             var uniencoding = new UnicodeEncoding();
-            var task = Task.Run(() => { IndexHelper.ReIndex(_dbContext, _index); });
             while (true)
             {
                 if (task.IsCompleted) break;
@@ -365,6 +365,9 @@ namespace Prod.Api.Controllers
 
         public class ExpertgroupAssessments
         {
+            /// <summary>
+            /// Accessrights of current user
+            /// </summary>
             public User.UserRoleInExpertGroup Rolle { get; set; }
             public List<AssessmentListItem> Assessments { get; set; }
             public List<Facet> Facets { get; set; }

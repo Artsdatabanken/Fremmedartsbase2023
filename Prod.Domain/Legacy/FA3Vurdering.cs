@@ -1152,7 +1152,6 @@ namespace Prod.Domain.Legacy
         }
     }
 
-    // todo: Move into Fremmedart2012  (conflict with propertyname)
     public class MigrationPathway // Vector
     {
         public string CodeItem { get; set; }
