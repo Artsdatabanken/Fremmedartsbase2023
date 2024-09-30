@@ -6,6 +6,10 @@ using SwissKnife.Database;
 
 namespace SwissKnife
 {
+    /// <summary>
+    /// Console application to run maintenance tasks
+    /// commandParser: https://github.com/natemcmaster/CommandLineUtils 
+    /// </summary>
     [Command(Name = "SwissKnife", Description = "Toolkit for Alien species db")]
     [Subcommand(typeof(OldDb), typeof(NewDb), typeof(Maintenance), typeof(CreateJSON))]
     internal class Program

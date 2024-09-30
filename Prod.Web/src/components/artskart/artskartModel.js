@@ -1,6 +1,7 @@
-import {extendObservable, observable, autorun, toJS} from 'mobx'
-import {loadData} from './apiService'
-import {extractFloat} from '../utils'
+import { extendObservable, observable, autorun, toJS } from 'mobx'
+import { loadData } from './apiService'
+import { extractFloat } from '../utils'
+import { codeLists } from "./codeLists";
 
 
 export class ArtskartModel {
@@ -43,30 +44,33 @@ export class ArtskartModel {
                     "features": []
                 },
                 mapurl: "",
-                loadProgress: 3
+                loadProgress: 3,
+                RegionalPresence: codeLists.countyListLand.map(item => {
+                    return { Navn: item.Navn, Tekst: item.Text, Id: item.Value, Known: false, Assumed: false }
+                })
             }
         })
 
-        // todo: Burde slippe å laste denne to ganger...
-        loadData('api/kode', data => {
-            // const grupper = data.Grupper
-            const grupper = data.Children
-            this.koder = grupper
-        })
+        // // todo: Burde slippe å laste denne to ganger...
+        // loadData('api/kode', data => {
+        //     // const grupper = data.Grupper
+        //     const grupper = data.Children
+        //     this.koder = grupper
+        // })
 
-        autorun(() => {
-            if (this.koder && this.koder.countyListLand) {
-                this.spredningshistorikkMal.RegionalPresence = this
-                    .koder
-                    .countyListLand
-                    .map(item => {
-                        return {Navn: item.Navn, Tekst: item.Text, Id: item.Value, Known: false, Assumed: false}
-                    })
-            }
-        })
+        // autorun(() => {
+        //     if (this.koder && this.koder.countyListLand) {
+        //         this.spredningshistorikkMal.RegionalPresence = this
+        //             .koder
+        //             .countyListLand
+        //             .map(item => {
+        //                 return {Navn: item.Navn, Tekst: item.Text, Id: item.Value, Known: false, Assumed: false}
+        //             })
+        //     }
+        // })
         autorun(() => {
             const h = this.expandedSpreadHistory;
-            if (h) 
+            if (h)
                 h.SpeciesCountCalculated = ArtskartModel.gangeDerTomMultiplierBetyr1(h.SpeciesCount, h.SpeciesCountDarkFigure)
         })
         autorun(() => {
@@ -93,31 +97,31 @@ export class ArtskartModel {
         const result = Math.round(extractFloat(a) * extractFloat(multi))
         return result ? result : ''
     }
-    
+
 
     // api/listhelper/66319/areadata?bbox=-600001,6250000,1350000,9350000&width=600&
     // h eight=800&fromYear=1950&toYear=2015&type=all&region=all
     // listhelper/66319/countylist?bbox=-600001,6250000,1350000,9350000&width=600&he
     // i ght=800&fromYear=1950&toYear=2015&type=all&region=all
     hentFulltFylkeNavn(kortnavn) {
-        if (!this.koder) 
+        if (!this.koder)
             return kortnavn
-        if (!this.koder.countyListLand) 
+        if (!this.koder.countyListLand)
             return kortnavn
         for (let i = 0; i < this.koder.countyListLand.length; i++) {
             const referenceId = this.koder.countyListLand[i].Value
-            if (referenceId === kortnavn) 
+            if (referenceId === kortnavn)
                 return this.koder.countyListLand[i].Text
         }
     }
     hentKortFylkeNavn(fylkenavn) {
-        if (!this.koder) 
+        if (!this.koder)
             return fylkenavn
-        if (!this.koder.countyListLand) 
+        if (!this.koder.countyListLand)
             return fylkenavn
         for (let i = 0; i < this.koder.countyListLand.length; i++) {
             const referenceId = this.koder.countyListLand[i].Text
-            if (referenceId === fylkenavn) 
+            if (referenceId === fylkenavn)
                 return this.koder.countyListLand[i].Value
         }
     }
@@ -127,7 +131,7 @@ export class ArtskartModel {
             .koder
             .countyListLand
             .map((r) => {
-                return {key: r.Value, title: r.Text}
+                return { key: r.Value, title: r.Text }
             })
     }
 
@@ -147,7 +151,7 @@ export class ArtskartModel {
         ny.Observations = this.emptyGeoJson
         ny.regionalPresenceKnown = this.enhanceRegionalPresence("")
         ny.regionalPresenceAssumed = this.enhanceRegionalPresence("")
-        if (!vurdering.SpreadHistory) 
+        if (!vurdering.SpreadHistory)
             vurdering.SpreadHistory = []
         vurdering
             .SpreadHistory
@@ -160,19 +164,19 @@ export class ArtskartModel {
             this.expandedSpreadHistory = {}
             return
         }
-        if (item.Observations === undefined) 
+        if (item.Observations === undefined)
             item.Observations = {
                 "type": "FeatureCollection",
                 "features": []
             }
-        if (item.visArtskart === undefined) 
+        if (item.visArtskart === undefined)
             item.visArtskart = false
         this.expandedSpreadHistory = item
     }
 
     mapRegionalPresenceFromArtskart(data) {
         const r = []
-        for (let i = 0; i < data.length; i++) 
+        for (let i = 0; i < data.length; i++)
             if (data[i].Status > 0) {
                 const kortnavn = this.hentKortFylkeNavn(data[i].NAVN)
                 r.push(kortnavn)
@@ -181,7 +185,7 @@ export class ArtskartModel {
     }
 
     enhanceRegionalPresence(regionalPresenceString) {
-        if (regionalPresenceString === null) 
+        if (regionalPresenceString === null)
             regionalPresenceString = ''
         const regionalPresence = regionalPresenceString
             .split(',')
@@ -212,7 +216,7 @@ export class ArtskartModel {
                 "type": "FeatureCollection",
                 "features": []
             }
-            if (!v.SelectionGeometry) 
+            if (!v.SelectionGeometry)
                 v.SelectionGeometry = ''
 
             v.regionalPresenceKnown = this.enhanceRegionalPresence(v.Regions)

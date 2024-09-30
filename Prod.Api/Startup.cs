@@ -68,6 +68,7 @@ namespace Prod.Api
             {
                 c.CustomSchemaIds(type => type.ToString());
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Prod.Api", Version = "v1" });
+                c.IncludeXmlComments(Assembly.GetExecutingAssembly(), true);
             });
 
             services.AddCors();

@@ -35,6 +35,9 @@
     "ExportOldDb": {
       "commandName": "Project",
       "commandLineArgs": "olddb dump --url http://localhost:8080 --db fab3 --fs fab3fs --outputfolder ../../../dumpsfab"
+    },
+    "RunNoTask": {
+      "commandName": "Project"
     }
   }
 }

@@ -2,6 +2,8 @@
 
 Tool for batchtasks, import, export and similar stuff.
 
+No secrets - all input via command line.
+
 dotnet run:
 
 ```

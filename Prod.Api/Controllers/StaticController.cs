@@ -12,9 +12,10 @@
 
     /// <summary>
     /// Metode for å hente geojson kartfiler over vannområder og vannregioner som brukes i frontend til regionale vurderinger av fisk
+    /// Fælgende alternative kartfiler kan hentes "WaterArea" og "WaterRegion"
     /// </summary>
     [Route("api/[controller]")]
-    [Authorize]
+    //[Authorize]
     public class StaticController : AuthorizeApiController
     {
         private string[] LegalNames = { "WaterArea", "WaterRegion" };
@@ -24,6 +25,11 @@
         }
 
         // GET api/static/WaterArea
+        /// <summary>
+        /// Get GeoJson format map file for either "WaterArea" or "WaterRegion"
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         [HttpGet("{name}")]
         [ResponseCache(Location = ResponseCacheLocation.Any, Duration = 3600)]
         public async Task<string> Get(string name)

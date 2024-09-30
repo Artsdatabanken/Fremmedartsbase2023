@@ -100,8 +100,7 @@ namespace Prod.Data.EFCore
             // Assessment
             modelBuilder.Entity<AssessmentHistory>(e =>
             {
-                // todo: fix table name
-                e.ToTable("AssessmentHistory");
+                e.ToTable("AssessmentHistory"); // should be removed to fix table name using convention - AssessmentHistories - but need migrations if fixing on existing database
                 e.HasKey(x => new {x.Id, x.HistoryAt});
                 e.Property(x => x.Id).ValueGeneratedNever();
                 e.HasIndex(x => x.HistoryAt);

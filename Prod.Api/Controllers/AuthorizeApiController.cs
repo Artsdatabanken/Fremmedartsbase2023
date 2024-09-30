@@ -26,8 +26,12 @@ namespace Prod.Api.Controllers
             _dbContext = dbContext;
         }
 
-        protected async 
-        Task<User> GetUser()
+        /// <summary>
+        /// Try get information about the autheticated user from identityserver via Token
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        protected async Task<User> GetUser()
         {
             var disco = await _discoveryCache.GetAsync();
             if (disco.IsError) throw new Exception(disco.Error);
@@ -61,6 +65,11 @@ namespace Prod.Api.Controllers
             return user;
         }
 
+        /// <summary>
+        /// Get users role in expertgroup
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         protected async Task<User.UserRoleInExpertGroup> GetRoleInGroup(string id)
         {
             var user = await GetUser();

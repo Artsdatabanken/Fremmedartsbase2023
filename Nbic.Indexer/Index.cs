@@ -243,7 +243,6 @@ namespace Nbic.Indexer
         public void Delete(Guid newGuid)
         {
             _writer.DeleteDocuments(new Term(Field_Id, newGuid.ToString()));
-            //_writer.Flush(triggerMerge: true, applyAllDeletes: true);
             _writer.Commit();
         }
 
@@ -255,9 +254,7 @@ namespace Nbic.Indexer
         public void ClearIndex()
         {
             _writer.DeleteAll();
-            //_writer.Flush(true,true);
             _writer.Commit();
-            // todo: fix _taxonomywriter - mayde dispose - then recreate
         }
 
         private string GetApplicationRoot()
