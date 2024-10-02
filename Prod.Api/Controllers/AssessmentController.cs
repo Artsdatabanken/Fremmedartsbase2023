@@ -5,10 +5,8 @@ using System.Threading.Tasks;
 using IdentityModel.Client;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Prod.Api.Helpers;
-using Prod.Api.Hubs;
 using Prod.Api.Services;
 using Prod.Data.EFCore;
 using Prod.Domain;
@@ -27,7 +25,6 @@ namespace Prod.Api.Controllers
     public class AssessmentController : AuthorizeApiController
     {
         private readonly ProdDbContext _dbContext;
-        private readonly IHubContext<MessageHub> _hubContext;
         private readonly Index _index;
         private readonly IReferenceService _referenceService;
 
@@ -38,19 +35,13 @@ namespace Prod.Api.Controllers
             { "critA", "critB", "critC", "critD", "critE", "critF", "critG", "critH", "critI", "furtherInfoAboutImport" };
 
         public AssessmentController(IDiscoveryCache discoveryCache, ProdDbContext dbContext,
-            IReferenceService referenceService, IHubContext<MessageHub> hubContext, Index index) : base(discoveryCache,
+            IReferenceService referenceService, Index index) : base(discoveryCache,
             dbContext)
         //public AssessmentController(IDiscoveryCache discoveryCache, ProdDbContext dbContext, IReferenceService referenceService) : base(discoveryCache, dbContext)
         {
             _dbContext = dbContext;
             _referenceService = referenceService;
-            _hubContext = hubContext;
             _index = index;
-        }
-
-        private Task SendMessage(string context, string message)
-        {
-            return _hubContext.Clients.All.SendAsync("ReceiveMessage", context, message);
         }
 
         /// <summary>
@@ -67,17 +58,7 @@ namespace Prod.Api.Controllers
             if (string.IsNullOrWhiteSpace(data)) return null;
 
             var doc = JsonSerializer.Deserialize<FA4>(data);
-            //if (doc.C2A2SannhetsverdiKode == null)
-            //{
-            //    doc.C2A2SannhetsverdiKode = "1";
-            //}
-            //if (doc.B2BeregnetAreal == null)
-            //{
-            //    doc.B2BeregnetAreal = "";
-            //}
-
-            await SendMessage("assessment", "open");
-
+           
             // Safeguard
             if (doc.Id != id && doc.Id != 0) throw new Exception("Id is corrupt (" + id + "/" + doc.Id + ")");
 
@@ -346,8 +327,6 @@ namespace Prod.Api.Controllers
             {
                 return Unauthorized(e.Message);
             }
-            
-            await SendMessage("assessment", "save");
             
             return Ok();
         }

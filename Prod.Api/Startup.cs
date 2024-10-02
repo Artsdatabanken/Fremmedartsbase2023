@@ -73,11 +73,6 @@ namespace Prod.Api
 
             services.AddCors();
 
-            services.AddSignalR(hubOptions =>
-            {
-                hubOptions.EnableDetailedErrors = true;
-                hubOptions.KeepAliveInterval = TimeSpan.FromMinutes(1);
-            });
             services.AddResponseCompression();
             services.AddHealthChecks()
                 .AddDbContextCheck<ProdDbContext>(); ;
@@ -139,12 +134,6 @@ namespace Prod.Api
                 endpoints.MapGet("/", async context =>
                 {
                     await context.Response.WriteAsync("These are not the droids you're looking for! Ver:" + Assembly.GetEntryAssembly().GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion);
-                });
-                endpoints.MapHub<Hubs.MessageHub>("/messageHub", options =>
-                {
-                    //options.Transports =
-                    //    //HttpTransportType.WebSockets;
-                    //    HttpTransportType.LongPolling;
                 });
             });
         }
