@@ -52,6 +52,9 @@ namespace Prod.Api.Models
     {
     }
 
+    /// <summary>
+    /// Filter on current assessments
+    /// </summary>
     public class Current
     {
         public string[] Category { get; set; } = Array.Empty<string>();
@@ -59,12 +62,19 @@ namespace Prod.Api.Models
         public string[] Status { get; set; } = Array.Empty<string>();
     }
 
+    /// <summary>
+    /// Previous assessment filter properties
+    /// </summary>
     public class History
     {
         public string[] Category { get; set; } = Array.Empty<string>();
         public string[] Criteria { get; set; } = Array.Empty<string>();
         public string[] Status { get; set; } = Array.Empty<string>();
     }
+
+    /// <summary>
+    /// horizon scanning filter properties
+    /// </summary>
     public class Horizon
     {
         public string[] NR2018 { get; set; } = Array.Empty<string>();

@@ -407,7 +407,6 @@ namespace Prod.Api.Helpers
                     indexFields.Add(new StringField(Field_2018Status, "effectWithoutEstablishment", Field.Store.NO));
                 }
 
-                // todo: krever ny migreringspatch
                 if (!string.IsNullOrWhiteSpace(ass2018.DecisiveCriteria))
                 {
                     foreach (var criteria in _criterias)
@@ -593,7 +592,7 @@ namespace Prod.Api.Helpers
             if (ass.AlienSpeciesCategory == "UncertainBefore1800") return false;
             if (ass.AlienSpeciesCategory == "RegionallyAlienEstablishedBefore1800") return false;
 
-            if (ass.AlienSpeciesCategory == "NotDefined") return false; // todo: This should probably also be "WillNotBeRiskAssessed" (?? check this)
+            if (ass.AlienSpeciesCategory == "NotDefined") return false;
             if (ass.AlienSpeciesCategory == "EffectWithoutReproduction") return true; //or should we return ass.AssessmentConclusion == "AssessedDoorknocker";
             if (ass.AlienSpeciesCategory == "AlienSpecie" ||
                 ass.AlienSpeciesCategory == "EcoEffectWithoutEstablishment")

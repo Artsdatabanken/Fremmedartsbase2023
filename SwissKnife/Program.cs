@@ -6,6 +6,10 @@ using SwissKnife.Database;
 
 namespace SwissKnife
 {
+    /// <summary>
+    /// Console application to run maintenance tasks
+    /// commandParser: https://github.com/natemcmaster/CommandLineUtils 
+    /// </summary>
     [Command(Name = "SwissKnife", Description = "Toolkit for Alien species db")]
     [Subcommand(typeof(OldDb), typeof(NewDb), typeof(Maintenance), typeof(CreateJSON))]
     internal class Program
@@ -108,10 +112,6 @@ namespace SwissKnife
             [Command("importhsdata", Description = "Import and create assessments from names with data from horisontscanning")]
             internal class ImportHSData : MaintananceBase
             {
-                //[Option("--speciesgroup", Description = "SpeciesGroup to put assessments in")]
-                //[Required]
-                //public string SpeciesGroup { get; }
-
                 [Option("--csvfile", Description = "CvsFile with path")]
                 [Required]
                 public string InputFolder { get; }
@@ -121,13 +121,9 @@ namespace SwissKnife
                 }
             }
 
-            [Command("importfiles", Description = "update generaiontime on assessments")]
+            [Command("importfiles", Description = "update ekspansjonsdata on assessments")]
             internal class ImportAttachementData : MaintananceBase
             {
-                //[Option("--speciesgroup", Description = "SpeciesGroup to put assessments in")]
-                //[Required]
-                //public string SpeciesGroup { get; }
-
                 [Option("--folder", Description = "CvsFile with path")]
                 [Required]
                 public string InputFolder { get; }
@@ -141,10 +137,6 @@ namespace SwissKnife
             [Command("importgenerationtime", Description = "update generaiontime on assessments")]
             internal class ImportGTData : MaintananceBase
             {
-                //[Option("--speciesgroup", Description = "SpeciesGroup to put assessments in")]
-                //[Required]
-                //public string SpeciesGroup { get; }
-
                 [Option("--csvfile", Description = "CvsFile with path")]
                 [Required]
                 public string InputFolder { get; }
@@ -293,11 +285,9 @@ namespace SwissKnife
             }
 
             internal class Trueteogsjeldnenaturtyper
-            //internal class TrueteOgSjeldneNaturtyper
             {
-                //[Option("--trueteogsjeldnenaturtyper", Description = "Generate JSON file for truete og sjeldne naturtyper 2018")]
                 [Option("--outputfilename", Description = "Generate JSON file for truete og sjeldne naturtyper 2018")]
-                //[Required]
+
                 public string outputfilename { get; }
                 private void OnExecute(IConsole console)
                 {
@@ -311,7 +301,6 @@ namespace SwissKnife
             internal class Nin2
             {
                 [Option("--outputfilename", Description = "Generate JSON file for NiN2")]
-                //[Required]
                 public string outputfilename { get; }
                 private void OnExecute(IConsole console)
                 {

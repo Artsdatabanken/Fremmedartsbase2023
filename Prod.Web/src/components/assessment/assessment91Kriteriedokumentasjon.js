@@ -1,6 +1,6 @@
 import config from '../../config';
 import React from 'react';
-import {observer, inject} from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import * as Xcomp from './observableComponents';
 import Risikomatrise from './risikomatrise';
 import Documents from '../documents'
@@ -142,7 +142,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                   {critlabels.ecology}:{" "}
                   {(kdi.limnic ? `${ltml("limnic")}` : "") +
                     (kdi.limnic &&
-                    (kdi.terrestrial || kdi.marine || kdi.brackishWater)
+                      (kdi.terrestrial || kdi.marine || kdi.brackishWater)
                       ? ", "
                       : "") +
                     (kdi.terrestrial ? `${ltml("terrestrial")}` : "") +
@@ -261,17 +261,10 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
             </fieldset>
           </div>
           <div>
-            {appState.language === "NB" || appState.language === "SV" ? (
-              <Xcomp.Button href={appState.AssessmentReportLink}>
-                {critlabels.showSummary}
-              </Xcomp.Button>
-            ) : null}
-          </div>
-          <div>
             {appState.assessment.evaluationStatus !== "finnished" &&
-            appState.ekspertgruppe !== null &&
-            appState.ekspertgruppeRolle &&
-            appState.ekspertgruppeRolle.admin ? (
+              appState.ekspertgruppe !== null &&
+              appState.ekspertgruppeRolle &&
+              appState.ekspertgruppeRolle.admin ? (
               <div>
                 {critlabels.assessmentUnderWork}
                 <p />
@@ -283,9 +276,9 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
               </div>
             ) : null}
             {appState.assessment.evaluationStatus === "finnished" &&
-            appState.ekspertgruppe !== null &&
-            appState.ekspertgruppeRolle &&
-            appState.ekspertgruppeRolle.admin ? (
+              appState.ekspertgruppe !== null &&
+              appState.ekspertgruppeRolle &&
+              appState.ekspertgruppeRolle.admin ? (
               <div>
                 {critlabels.assessmentComplete}
                 <p />
@@ -315,7 +308,7 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                 {" "}
                 {critlabels.cat2018}{" "}
                 {assessment.previousAssessments[0].mainCategory ==
-                "NotApplicable"
+                  "NotApplicable"
                   ? "NR"
                   : category2018(assessment.previousAssessments[0].riskLevel)}
               </p>
@@ -366,13 +359,13 @@ export default class Assessment91Kriteriedokumentasjon extends React.Component {
                 appState.roleincurrentgroup &&
                 appState.roleincurrentgroup.writeAccess == true) ||
                 auth.isAdmin) && (
-                <Xcomp.Button
-                  alwaysEnabled={true}
-                  onClick={() => this.resetAssessmentComplete(appState)}
-                >
-                  {critlabels.resetComplete}
-                </Xcomp.Button>
-              )}
+                  <Xcomp.Button
+                    alwaysEnabled={true}
+                    onClick={() => this.resetAssessmentComplete(appState)}
+                  >
+                    {critlabels.resetComplete}
+                  </Xcomp.Button>
+                )}
             </div>
           )}
         </div>

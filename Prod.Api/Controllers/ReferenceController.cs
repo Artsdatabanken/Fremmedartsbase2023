@@ -12,6 +12,9 @@ using Prod.Infrastructure.Services;
 
 namespace Prod.Api.Controllers
 {
+    /// <summary>
+    /// Proxy methods for ReferenceAPI - for administrering references. Proxy for: https://referenceapi.artsdatabanken.no/index.html
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
@@ -23,6 +26,11 @@ namespace Prod.Api.Controllers
             this._referenceService = referenceService;
         }
 
+        /// <summary>
+        /// Add a new reference
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Reference>> Post([FromBody] Reference value)
         {
@@ -43,6 +51,12 @@ namespace Prod.Api.Controllers
             return result;
         }
 
+        /// <summary>
+        /// Update existing reference - if allowed
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<ActionResult<Reference>> Put(Guid id, [FromBody] Reference value)
         {
@@ -67,6 +81,13 @@ namespace Prod.Api.Controllers
 
             return result;
         }
+
+        /// <summary>
+        /// Delete a reference if allowed
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="HttpRequestException"></exception>
         [HttpDelete("{id}")]
         public async Task<ActionResult<bool>> Delete(Guid id)
         {

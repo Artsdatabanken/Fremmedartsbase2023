@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
 using Prod.Api.Helpers;
 
 // ReSharper disable AsyncConverter.ConfigureAwaitHighlighting
@@ -16,8 +15,11 @@ namespace Prod.Api.Controllers
     using Microsoft.AspNetCore.Mvc;
 
     using Prod.Domain;
+
+    /// <summary>
+    /// Api to facilitate comments within an assessment
+    /// </summary>
     [Route("api/[controller]")]
-    
     public class AssessmentCommentsController: AuthorizeApiController
     {
         private readonly ProdDbContext _dbContext;

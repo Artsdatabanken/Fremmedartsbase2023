@@ -18,8 +18,13 @@ namespace Prod.Domain
         public User LockedForEditByUser { get; set; }
         public Guid? LockedForEditByUserId { get; set; }
         public DateTime LockedForEditAt { get; set; }
+
+        /// <summary>
+        /// Json serialized Fab4 assessment
+        /// </summary>
         public string Doc { get; set; }
         public bool IsDeleted { get; set; }
+
         public int ScientificNameId { get; set; }
 
         public List<AssessmentComment> Comments { get; set; }

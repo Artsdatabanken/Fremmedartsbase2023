@@ -374,7 +374,6 @@ namespace SwissKnife.Database
                 seen.Add(theMatchingAssessment.Key);
 
                 
-                // todo: overfør manglende morro
                 var exAssessment = JsonSerializer.Deserialize<FA4>(real.Doc, _jsonSerializerOptions);
                 var orgCopy = JsonSerializer.Deserialize<FA4>(real.Doc, _jsonSerializerOptions);
                 exAssessment.ExtensionData = null;
@@ -444,7 +443,6 @@ namespace SwissKnife.Database
                 //continue;
                 var real = _database.Assessments.Single(x => x.Id == item);
 
-                // todo: overfør manglende morro
                 var exAssessment = JsonSerializer.Deserialize<FA4>(real.Doc, _jsonSerializerOptions);
                 var orgCopy = JsonSerializer.Deserialize<FA4>(real.Doc, _jsonSerializerOptions);
 
@@ -528,7 +526,6 @@ namespace SwissKnife.Database
                 //continue;
                 var real = _database.Assessments.Single(x => x.Id == item);
 
-                // todo: overfør manglende morro
                 var exAssessment = JsonSerializer.Deserialize<FA4>(real.Doc, _jsonSerializerOptions);
                 var orgCopy = JsonSerializer.Deserialize<FA4>(real.Doc, _jsonSerializerOptions);
 

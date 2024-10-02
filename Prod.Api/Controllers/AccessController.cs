@@ -15,6 +15,9 @@ namespace Prod.Api.Controllers
     using Prod.Data.EFCore;
     using Prod.Domain;
 
+    /// <summary>
+    /// Api methods for handling user management
+    /// </summary>
     [Route("api/[controller]")]
     [Authorize]
     public class AccessController : AuthorizeApiController
@@ -32,6 +35,9 @@ namespace Prod.Api.Controllers
             public string Value { get; set; }
         }
 
+        /// <summary>
+        /// Return Information about authenticated user 
+        /// </summary>
         [HttpGet("Access")]
         public async Task<User> Get()
         {
@@ -40,6 +46,9 @@ namespace Prod.Api.Controllers
             return user;
         }
 
+        /// <summary>
+        /// Get full list of approved users
+        /// </summary>
         [HttpGet("users")]
         public async Task<SelectList[]> GetApprovedUsers()
         {
@@ -51,6 +60,10 @@ namespace Prod.Api.Controllers
             return apps.OrderBy(x=>x.Value).ToArray();
 
         }
+
+        /// <summary>
+        /// Post application for access database for authenticated user 
+        /// </summary>
         [HttpPost(("applications/apply"))]
         public async Task<User> Post([FromBody]string value)
         {
@@ -61,6 +74,9 @@ namespace Prod.Api.Controllers
             return user;
         }
 
+        /// <summary>
+        /// Get list of applications for access
+        /// </summary>
         [HttpGet("applications")]
         public async Task<User[]> GetApplications()
         {
@@ -71,6 +87,10 @@ namespace Prod.Api.Controllers
 
         }
 
+        /// <summary>
+        /// Approve user for access
+        /// </summary>
+        /// <param name="id">Guid user id</param>
         [HttpGet("applications/approve/{id}")]
         public async Task<bool> ApproveApplication(string id)
         {
@@ -87,6 +107,10 @@ namespace Prod.Api.Controllers
             return true;
         }
 
+        /// <summary>
+        /// Reject user application for access
+        /// </summary>
+        /// <param name="id">Guid user id</param>
         [HttpGet("applications/reject/{id}")]
         public async Task<bool> NotApproveApplication(string id)
         {
@@ -103,6 +127,11 @@ namespace Prod.Api.Controllers
             return true;
         }
 
+        /// <summary>
+        /// Add or update local user information
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         private async Task<User> StoreUserInfo(User user)
         {
             var dbUser = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == user.Id);

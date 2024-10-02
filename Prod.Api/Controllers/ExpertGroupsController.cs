@@ -12,6 +12,9 @@ using Prod.Domain;
 
 namespace Prod.Api.Controllers
 {
+    /// <summary>
+    /// Administer user memberships in expert groups
+    /// </summary>
     [Route("api/[controller]")]
     public class ExpertGroupsController : AuthorizeApiController
     {
@@ -22,6 +25,10 @@ namespace Prod.Api.Controllers
             _dbContext = dbContext;
         }
 
+        /// <summary>
+        /// Get list of expertgroups
+        /// </summary>
+        /// <returns></returns>
         [HttpGet()]
         public async Task<string[]> Get()
         {
@@ -31,15 +38,9 @@ namespace Prod.Api.Controllers
             return data != null && data.Length > 0 ? data : null;
         }
 
-        public class Access
-        {
-            public Guid Id { get; set; }
-            public string FullName { get; set; }
-            public bool Admin { get; set; }
-            public bool WriteAccess { get; set; }
-            //public bool Leser { get; set; }
-        }
-
+        /// <summary>
+        /// Get list of members for specific expertgroup
+        /// </summary>
         [Authorize]
         [HttpGet("members/{id}")]
         public async Task<Access[]> GetMembers(string id)
@@ -50,22 +51,17 @@ namespace Prod.Api.Controllers
                 .Select(x => new Access
                 {
                     Id = x.Id, FullName = x.FullName + " <" + x.Email + ">", Admin = x.UserRoleInExpertGroups.First(y => y.ExpertGroupName == id).Admin,
-                    WriteAccess = x.UserRoleInExpertGroups.First(y => y.ExpertGroupName == id).WriteAccess//,
-                    //Leser = x.UserRoleInExpertGroups.First(y => y.ExpertGroupName == id).Leser
+                    WriteAccess = x.UserRoleInExpertGroups.First(y => y.ExpertGroupName == id).WriteAccess
                 }).ToArrayAsync();
             return members.OrderBy(x=>x.FullName).ToArray();
-            //var data = _dataService.GetExpertGroups();
-            //return data != null && data.Length > 0 ? data : null;
         }
 
-        public class AddAccess
-        {
-            public string ExpertGroupName { get; set; }
-            public Guid Id { get; set; }
-            public bool Admin { get; set; }
-            public bool WriteAccess { get; set; }
-        }
-
+        /// <summary>
+        /// Add member access
+        /// </summary>
+        /// <param name="value">Access info</param>
+        /// <returns></returns>
+        /// <exception cref="HttpRequestException"></exception>
         [Authorize]
         [HttpPost("members")]
         public async Task<bool> AddMembers([FromBody] AddAccess value)
@@ -98,6 +94,13 @@ namespace Prod.Api.Controllers
             return true;
         }
 
+        /// <summary>
+        /// Drop member from expertgroup
+        /// </summary>
+        /// <param name="bid">Member GUID</param>
+        /// <param name="eid">Expertgroup ID</param>
+        /// <returns></returns>
+        /// <exception cref="HttpRequestException"></exception>
         [Authorize]
         [HttpDelete("members/{bid}/{eid}")]
         public async Task<bool> RemoveMembers(Guid bid, string eid)
@@ -123,6 +126,47 @@ namespace Prod.Api.Controllers
             await _dbContext.SaveChangesAsync();
 
             return true;
+        }
+
+        /// <summary>
+        /// User access
+        /// </summary>
+        public class Access
+        {
+            /// <summary>
+            /// User guid
+            /// </summary>
+            public Guid Id { get; set; }
+            /// <summary>
+            /// User name
+            /// </summary>
+            public string FullName { get; set; }
+            /// <summary>
+            /// Is Admin (leder) for group
+            /// </summary>
+            public bool Admin { get; set; }
+            /// <summary>
+            /// Have write access for group
+            /// </summary>
+            public bool WriteAccess { get; set; }
+        }
+
+        /// <summary>
+        /// Member access request info - if no Admin or Writeaccess - then Reader
+        /// </summary>
+        public class AddAccess
+        {
+            public string ExpertGroupName { get; set; }
+            public Guid Id { get; set; }
+            
+            /// <summary>
+            /// Is Admin (leder) for group
+            /// </summary>
+            public bool Admin { get; set; }
+            /// <summary>
+            /// Have write access for group
+            /// </summary>
+            public bool WriteAccess { get; set; }
         }
     }
 }

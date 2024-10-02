@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-
 using System.Linq;
 
 using System.Threading.Tasks;
@@ -9,14 +7,15 @@ using System.Web;
 
 using System.Net.Http;
 using System.Net.Http.Headers;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Prod.Domain;
 
 
 namespace SwissKnife.Database
 {
+    /// <summary>
+    /// Object matching Artskart TaxonInfo for json parsing
+    /// </summary>
     public class TaxonInfo
     {
         public int Id { get; set; } //taxonId

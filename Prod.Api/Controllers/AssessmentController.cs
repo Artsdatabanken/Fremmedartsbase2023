@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Linq;
-using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using IdentityModel.Client;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Prod.Api.Helpers;
-using Prod.Api.Hubs;
 using Prod.Api.Services;
 using Prod.Data.EFCore;
 using Prod.Domain;
@@ -20,35 +17,39 @@ using Index = Nbic.Indexer.Index;
 
 namespace Prod.Api.Controllers
 {
+    /// <summary>
+    /// Operations on assessments
+    /// </summary>
     [Route("api/[controller]")]
     [Authorize]
     public class AssessmentController : AuthorizeApiController
     {
         private readonly ProdDbContext _dbContext;
-        private readonly IHubContext<MessageHub> _hubContext;
         private readonly Index _index;
         private readonly IReferenceService _referenceService;
 
+        /// <summary>
+        /// known extra fields posted by frontend - that are not stored on assessment
+        /// </summary>
         private string[] _knownExtraFields = new[]
             { "critA", "critB", "critC", "critD", "critE", "critF", "critG", "critH", "critI", "furtherInfoAboutImport" };
 
         public AssessmentController(IDiscoveryCache discoveryCache, ProdDbContext dbContext,
-            IReferenceService referenceService, IHubContext<MessageHub> hubContext, Index index) : base(discoveryCache,
+            IReferenceService referenceService, Index index) : base(discoveryCache,
             dbContext)
         //public AssessmentController(IDiscoveryCache discoveryCache, ProdDbContext dbContext, IReferenceService referenceService) : base(discoveryCache, dbContext)
         {
             _dbContext = dbContext;
             _referenceService = referenceService;
-            _hubContext = hubContext;
             _index = index;
         }
 
-        private Task SendMessage(string context, string message)
-        {
-            return _hubContext.Clients.All.SendAsync("ReceiveMessage", context, message);
-        }
-
-        // GET api/assessment/5
+        /// <summary>
+        /// Get assessment
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         [HttpGet("{id}")]
         public async Task<FA4> Get(int id)
         {
@@ -57,17 +58,7 @@ namespace Prod.Api.Controllers
             if (string.IsNullOrWhiteSpace(data)) return null;
 
             var doc = JsonSerializer.Deserialize<FA4>(data);
-            //if (doc.C2A2SannhetsverdiKode == null)
-            //{
-            //    doc.C2A2SannhetsverdiKode = "1";
-            //}
-            //if (doc.B2BeregnetAreal == null)
-            //{
-            //    doc.B2BeregnetAreal = "";
-            //}
-
-            await SendMessage("assessment", "open");
-
+           
             // Safeguard
             if (doc.Id != id && doc.Id != 0) throw new Exception("Id is corrupt (" + id + "/" + doc.Id + ")");
 
@@ -83,6 +74,15 @@ namespace Prod.Api.Controllers
             return doc;
         }
 
+        /// <summary>
+        /// Check if an assessment exists for a scientificname in a specific expertgroup
+        /// </summary>
+        /// <remarks>
+        /// Used for checking if assessment exits before frontend suggests creating one
+        /// </remarks>
+        /// <param name="expertgroupname"></param>
+        /// <param name="scientificNameId"></param>
+        /// <returns></returns>
         [AllowAnonymous()]
         [HttpGet("ExistsByExpertgroupAndName/{expertgroupname}/{scientificNameId}")]
         public async Task<bool> ExistsByNames(string expertgroupname, int scientificNameId)
@@ -96,6 +96,11 @@ namespace Prod.Api.Controllers
             return result.Any();
         }
 
+        /// <summary>
+        /// Locks an assessment to a user
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}/lock")]
         public async Task<IActionResult> Lock(int id)
         {
@@ -131,6 +136,12 @@ namespace Prod.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Unlocks an assessment from a user
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+
         [HttpGet("{id}/unlock")]
         public async Task<IActionResult> UnLock(int id)
         {
@@ -163,6 +174,14 @@ namespace Prod.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Marks an assessment as finished/complete
+        /// </summary>
+        /// <remarks>
+        /// Will then not be available for furter edits
+        /// </remarks>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}/finish")]
         public async Task<IActionResult> Finish(int id)
         {
@@ -195,35 +214,12 @@ namespace Prod.Api.Controllers
 
             return Ok();
         }
-        //[HttpGet("{id}/delete")]
-        //public async Task<IActionResult> Delete(int id)
-        //{
-        //    var data = await _dbContext.Assessments.Where(x => x.Id == id).FirstOrDefaultAsync();// _dataService.GetAssessmentString(id);
-        //    if (string.IsNullOrWhiteSpace(data.Doc)) return null;
 
-        //    var doc = JsonConvert.DeserializeObject<Rodliste2019>(data.Doc);
-        //    var role = await base.GetRoleInGroup(doc.ExpertGroup);
-        //    var force = role.User.ErAdministrator;
-        //    try
-        //    {
-        //        if (force)
-        //        {
-        //            doc.Slettet = true;
-        //            await StoreAssessment(id, doc, role.User, false, true);
-        //            await _dbContext.SaveChangesAsync();
-        //        }
-        //        else
-        //        {
-        //            throw new Exception("IKKE SKRIVETILGANG TIL DENNE VURDERINGEN");
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return Unauthorized(e.Message);
-        //    }
-
-        //    return Ok();
-        //}
+        /// <summary>
+        /// Drop/deletes an assessment
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}/delete")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -267,6 +263,14 @@ namespace Prod.Api.Controllers
             return true;
         }
 
+        /// <summary>
+        /// Remove the finished/complete mark form an assessment
+        /// </summary>
+        /// <remarks>
+        /// Will then be available for furter edits
+        /// </remarks>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}/unfinish")]
         public async Task<IActionResult> Unfinish(int id)
         {
@@ -299,43 +303,17 @@ namespace Prod.Api.Controllers
 
             return Ok();
         }
-        //// POST api/assessment
-        //[HttpPost]
-        //public void Post([FromBody]string value)
-        //{
-        //}
 
-        //// PUT api/assessment/5
-        //[HttpPut("{id}")]
-        //public void Put____(int id, [FromBody]string value)
-        //{
-        //}
-
+        /// <summary>
+        /// Update an existing assessment
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
         [HttpPost("{id}")]
         public async Task<IActionResult> Post(string id, [FromBody] FA4 value)
         {
-            if (value.ExtensionData != null || value.RiskAssessment.ExtensionData != null)
-            {
-                if (this.Request.Host.Host == "localhost" || this.Request.Host.Host.Contains("test"))
-                {
-                    if (value.ExtensionData != null)
-                        foreach (var element in value.ExtensionData.Where(element =>
-                                     !_knownExtraFields.Contains(element.Key)))
-                        {
-                            throw new Exception("New nonmapped field on Fa4:" + element.Key);
-                        }
-
-                    if (value.RiskAssessment.ExtensionData != null)
-                        foreach (var element in value.RiskAssessment.ExtensionData.Where(element =>
-                                     !_knownExtraFields.Contains(element.Key)))
-                        {
-                            throw new Exception("New nonmapped field on Fa4.RiskAssessment:" + element.Key);
-                        }
-                }
-
-                value.ExtensionData = null;
-                value.RiskAssessment.ExtensionData = null;
-            }
+            ThrowErrorIfUnknownPropertiesOnModelIsPostedOnLocalhostAndTestServer(value);
 
             var role = await GetRoleInGroup(value.ExpertGroup);
             try
@@ -349,50 +327,21 @@ namespace Prod.Api.Controllers
             {
                 return Unauthorized(e.Message);
             }
-
-
-            await SendMessage("assessment", "save");
-
-
+            
             return Ok();
         }
-
-
+        
+        /// <summary>
+        /// Create a new blank assessment with initial parameters on model for a taxon and specific species group
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         [HttpPut("createnew")]
         public async Task<IActionResult> CreateNewAssessment([FromBody] Taxinfo value)
         {
             var now = DateTime.Now;
             var role = await GetRoleInGroup(value.Ekspertgruppe);
             var scientificNameId = value.ScientificNameId;
-            //var it = await _dbContext.Assessments
-            //    .Where(x => x.Expertgroup == value.Ekspertgruppe && x.ScientificNameId == scientificNameId)
-            //    .SingleOrDefaultAsync();
-            //if (it != null)
-            //{
-            //    var doc = JsonSerializer.Deserialize<FA4>(it.Doc);
-            //    if (value.potensiellDørstokkart == "potentialDoorknocker")
-            //    {
-            //        // til doorknocker
-            //        doc.HorizonDoScanning = true;
-            //        doc.HorizonScanningStatus = "notStarted";
-            //        doc.AlienSpeciesCategory = "DoorKnocker";
-            //    }
-            //    else
-            //    {
-            //        // fra horizon til ordinær
-            //        doc.HorizonDoScanning = false;
-            //        if (doc.AlienSpeciesCategory == "DoorKnocker") doc.AlienSpeciesCategory = "AlienSpecie";
-            //    }
-
-            //    doc.LastUpdatedAt = DateTime.Now;
-            //    it.Doc = JsonSerializer.Serialize(doc);
-            //    it.LastUpdatedAt = doc.LastUpdatedAt;
-            //    it.ChangedAt = DateTime.Now;
-            //    var timestamp = _dbContext.TimeStamp.Single();
-            //    timestamp.DateTimeUpdated = it.ChangedAt;
-            //    await _dbContext.SaveChangesAsync();
-            //    return Ok();
-            //}
 
             try
             {
@@ -429,8 +378,7 @@ namespace Prod.Api.Controllers
 
             return Ok();
         }
-
-
+        
         private async Task<FA4> moveAssessment(ProdDbContext dbContext, string expertgroup, User user,
             int scientificNameId, FA4 assessment, int assessmentId) // change taxonomic info
         {
@@ -498,6 +446,12 @@ namespace Prod.Api.Controllers
             return assessment;
         }
 
+        /// <summary>
+        /// Move an assessment with specific id to a new taxon
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost("{id}/move")]
         public async Task<IActionResult> MoveAssessment([FromBody] Taxinfo value, int id)
         {
@@ -532,7 +486,12 @@ namespace Prod.Api.Controllers
         }
 
 
-
+        /// <summary>
+        /// Move an assesment between horizontscanning and full assessment
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="doorknockerstate">"potentialDoorknocker" or "not/anything". If "potentialDoorknocker" then towards horizontscanning - whatever else back to full assessment</param>
+        /// <returns></returns>
         [HttpGet("{id}/movehorizon/{doorknockerstate}")]
         public async Task<IActionResult> MoveHorizon(int id, string doorknockerstate)
         {
@@ -592,7 +551,11 @@ namespace Prod.Api.Controllers
         }
 
 
-
+        /// <summary>
+        /// Clone an existing assessment into the testarter expertgroup
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}/copytotestarter")]
         public async Task<IActionResult> CopyToTestarter(int id)
         {
@@ -633,12 +596,6 @@ namespace Prod.Api.Controllers
 
             return Ok();
         }
-
-        //private async Task StoreAssessment(int id, FA4 doc, User user, bool notUpdateChangedBy, bool forceStore = false)
-        //{
-        //    //todo: implement. see below 
-        //}
-
 
         private async Task StoreAssessment(int id, FA4 doc, User user, bool notUpdateChangedBy, bool forceStore = false)
         {
@@ -775,8 +732,7 @@ namespace Prod.Api.Controllers
             rl.IsDeleted = false;
             rl.LastUpdatedAt = DateTime.Now;
             rl.LastUpdatedBy = user.FullName;
-            //rl.Vurderingsår = vurderingsår;
-            //rl.SistVurdertAr = vurderingsår;
+
             rl.EvaluationStatus = "created";
             if (DoorKnocker)
             {
@@ -784,8 +740,6 @@ namespace Prod.Api.Controllers
                 rl.HorizonScanningStatus = "notStarted";
             }
 
-            //rl.OverordnetKlassifiseringGruppeKode = "rodlisteVurdertArt";
-            //rl.RodlisteVurdertArt = "etablertBestandINorge";
             rl.EvaluatedScientificName = ti.ValidScientificName;
             rl.EvaluatedScientificNameId = ti.ValidScientificNameId;
             rl.EvaluatedScientificNameAuthor = ti.ValidScientificNameAuthorship;
@@ -794,51 +748,36 @@ namespace Prod.Api.Controllers
             //rl.TaxonRank = rank;
             rl.EvaluatedVernacularName = ti.PrefferedPopularname;
 
-            ////ekstra standardverdier
-            //rl.ImportInfo.VurderingsId2015 = string.Empty;
-            //rl.AndelNåværendeBestand = "-";
-            //rl.A1OpphørtOgReversibel = "-";
-            //rl.A2Forutgående10År = "-";
-            //rl.A3Kommende10År = "-";
-            //rl.A4Intervall10År = "-";
-            //rl.BA2FåLokaliteterProdukt = "";
-            //rl.B1BeregnetAreal = "";
-            //rl.B1UtbredelsesområdeKode = "-";
-            //rl.B2ForekomstarealKode = "-";
-            //rl.BA1KraftigFragmenteringKode = "-";
-            //rl.BA2FåLokaliteterKode = "-";
-            //rl.CVurdertpopulasjonsstørrelseProdukt = "";
-            //rl.C1PågåendePopulasjonsreduksjonKode = "-";
-            //rl.C2A1PågåendePopulasjonsreduksjonKode = "-";
-            //rl.D1FåReproduserendeIndividKode = "-";
-            //rl.D2MegetBegrensetForekomstarealKode = "-";
-            //rl.EKvantitativUtryddingsmodellKode = "-";
-
-            ////gudene vet om disse har betydning:
-            //rl.WktPolygon = "";
-            //rl.SistVurdertAr = 2021;
-            //rl.C2A2PågåendePopulasjonsreduksjonKode = "-";
-            //rl.C2BPågåendePopulasjonsreduksjonKode = "-";
-            //rl.CPopulasjonsstørrelseKode = "-";
-            //rl.B2ForekomstarealProdukt = "";
-            //rl.B1UtbredelsesområdeProdukt = "";
-            //rl.OppsummeringAKriterier = "";
-            //rl.OppsummeringBKriterier = "";
-            //rl.OppsummeringCKriterier = "";
-            //rl.OppsummeringDKriterier = "";
-            //rl.OppsummeringEKriterier = "";
-            //rl.B2BeregnetAreal = "";
-            //if (rl.Ekspertgruppe == "Leddormer") // special case - ville ha LC som standard
-            //{
-            //    rl.C2A2SannhetsverdiKode = "1";
-            //    rl.OverordnetKlassifiseringGruppeKode = "sikkerBestandLC";
-            //    rl.Kategori = "LC";
-            //}
-
-            //AddFylkeslister(rl);
-            //rl.NaturtypeHovedenhet = new List<string>();
-            //SetArtskartImportSettings(rl);
             return rl;
+        }
+
+        /// <summary>
+        /// Checks ExtensionData for fields not mapped - feature of system.text.json
+        /// </summary>
+        private void ThrowErrorIfUnknownPropertiesOnModelIsPostedOnLocalhostAndTestServer(FA4 value)
+        {
+            if (value.ExtensionData != null || value.RiskAssessment.ExtensionData != null)
+            {
+                if (this.Request.Host.Host == "localhost" || this.Request.Host.Host.Contains("test"))
+                {
+                    if (value.ExtensionData != null)
+                        foreach (var element in value.ExtensionData.Where(element =>
+                                     !_knownExtraFields.Contains(element.Key)))
+                        {
+                            throw new Exception("New nonmapped field on Fa4:" + element.Key);
+                        }
+
+                    if (value.RiskAssessment.ExtensionData != null)
+                        foreach (var element in value.RiskAssessment.ExtensionData.Where(element =>
+                                     !_knownExtraFields.Contains(element.Key)))
+                        {
+                            throw new Exception("New nonmapped field on Fa4.RiskAssessment:" + element.Key);
+                        }
+                }
+
+                value.ExtensionData = null;
+                value.RiskAssessment.ExtensionData = null;
+            }
         }
 
         public class Taxinfo
@@ -855,163 +794,5 @@ namespace Prod.Api.Controllers
             public string VernacularName { get; set; }
             public string potensiellDørstokkart { get; set; } //: "potentialDoorknocker"
         }
-
-        //private async Task<FA4> moveAssessment(ProdDbContext dbContext, string expertgroup, User user,
-        //    int scientificNameId, FA4 assessment, int assessmentId) // change taxonomic info
-        //{
-        //    if (string.IsNullOrWhiteSpace(expertgroup))
-        //    {
-        //        throw new ArgumentNullException("expertgroup");
-        //    }
-        //    if (user == null)
-        //    {
-        //        throw new ArgumentNullException("user");
-        //    }
-        //    var existingAssessment = await dbContext.Assessments.Where(x => x.ScientificNameId == scientificNameId && x.Expertgroup == expertgroup && x.IsDeleted == false).Select(x => x.Id).FirstOrDefaultAsync();
-        //    if (existingAssessment > 0 && existingAssessment != assessmentId)
-        //    {
-        //        throw new ArgumentException("supplied scientificNameId already exists in database");
-        //    }
-
-
-        //    var ts = new Prod.Api.Services.TaxonService();
-        //    var titask = ts.GetTaxonInfoAsync(scientificNameId);
-        //    var ti = titask.GetAwaiter().GetResult();
-        //    var (hierarcy, rank) = TaxonService.GetFullPathScientificName(ti);
-
-        //    if (scientificNameId != ti.ValidScientificNameId)
-        //    {
-        //        throw new ArgumentException("supplied scientificNameId is not ValidScientificNameId");
-        //    }
-
-        //    var oldTaxonInfo = new FA4.TaxonHistory()
-        //    {
-        //        date = DateTime.Now,
-        //        username = user.Brukernavn,
-        //        Ekspertgruppe = assessment.Ekspertgruppe,
-        //        TaxonId = assessment.TaxonId,
-        //        TaxonRank = assessment.TaxonRank,
-        //        VitenskapeligNavn = assessment.VurdertVitenskapeligNavn,
-        //        VitenskapeligNavnAutor = assessment.VurdertVitenskapeligNavnAutor,
-        //        VitenskapeligNavnHierarki = assessment.VurdertVitenskapeligNavnHierarki,
-        //        VitenskapeligNavnId = assessment.VurdertVitenskapeligNavnId
-        //    };
-
-        //    assessment.VurdertVitenskapeligNavn = ti.ValidScientificName;
-        //    assessment.VurdertVitenskapeligNavnId = ti.ValidScientificNameId;
-        //    assessment.VurdertVitenskapeligNavnAutor = ti.ValidScientificNameAuthorship;
-        //    assessment.VurdertVitenskapeligNavnHierarki = hierarcy;
-        //    assessment.LatinsknavnId = ti.ValidScientificNameId;
-        //    assessment.TaxonId = ti.TaxonId;
-        //    assessment.TaxonRank = rank;
-        //    assessment.PopularName = ti.PrefferedPopularname;
-
-        //    assessment.TaxonomicHistory.Add(oldTaxonInfo);
-
-        //    return assessment;
-        //}
-
-        //[HttpPost("{id}/move")]
-        //public async Task<IActionResult> MoveAssessment([FromBody] Taxinfo value, int id)
-        //{
-        //    var now = DateTime.Now;
-        //    var data = await _dbContext.Assessments.Where(x => x.Id == id).FirstOrDefaultAsync();
-        //    if (string.IsNullOrWhiteSpace(data.Doc)) return null;
-
-        //    var doc = JsonConvert.DeserializeObject<FA4>(data.Doc);
-        //    var role = await base.GetRoleInGroup(doc.ExpertGroup);
-        //    try
-        //    {
-        //        //if (role.WriteAccess && (doc.LockedForEditBy == role.User.Brukernavn) && (doc.Ekspertgruppe == value.ExpertGroup))
-        //        if (doc.Ekspertgruppe == value.ExpertGroup)
-        //        {
-        //            int scientificNameId = int.Parse(value.ScientificNameId);
-        //            var assessment = await moveAssessment(_dbContext, value.Ekspertgruppe, role.User, scientificNameId, doc, id);
-        //            await StoreAssessment(id, assessment, role.User, true, true);
-        //            // 5 lagre
-        //        }
-        //        else
-        //        {
-        //            throw new Exception("IKKE SKRIVETILGANG TIL DENNE VURDERINGEN");
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return Unauthorized(e.Message);
-        //    }
-        //    return Ok();
-        //}
-
-        //internal static void AddFylkeslister(FA4 assessment)
-        //{
-        //    var fylker =
-        //    new Dictionary<string, FA4.Fylkesforekomst>()
-        //    {
-        //        {"Trøndelag", new FA4.Fylkesforekomst() {Fylke = "Tø", State = 2}},
-        //        {"Nordland", new FA4.Fylkesforekomst() {Fylke = "No", State = 2}},
-        //        {"Finnmark", new FA4.Fylkesforekomst() {Fylke = "Fi", State = 2}},
-        //        {"Troms", new FA4.Fylkesforekomst() {Fylke = "Tr", State = 2}},
-        //        {"Hedmark", new FA4.Fylkesforekomst() {Fylke = "He", State = 2}},
-        //        {"Oppland", new FA4.Fylkesforekomst() {Fylke = "Op", State = 2}},
-        //        {"Møre og Romsdal", new FA4.Fylkesforekomst() {Fylke = "Mr", State = 2}},
-        //        {"Sogn og Fjordane", new FA4.Fylkesforekomst() {Fylke = "Sf", State = 2}},
-        //        {"Hordaland", new FA4.Fylkesforekomst() {Fylke = "Ho", State = 2}},
-        //        {"Buskerud", new FA4.Fylkesforekomst() {Fylke = "Bu", State = 2}},
-        //        {"Oslo og Akershus", new FA4.Fylkesforekomst() {Fylke = "OsA", State = 2}},
-        //        {"Østfold", new FA4.Fylkesforekomst() {Fylke = "Øs", State = 2}},
-        //        {"Vestfold", new FA4.Fylkesforekomst() {Fylke = "Ve", State = 2}},
-        //        {"Telemark", new FA4.Fylkesforekomst() {Fylke = "Te", State = 2}},
-        //        {"Aust-Agder", new FA4.Fylkesforekomst() {Fylke = "Aa", State = 2}},
-        //        {"Vest-Agder", new FA4.Fylkesforekomst() {Fylke = "Va", State = 2}},
-        //        {"Rogaland", new FA4.Fylkesforekomst() {Fylke = "Ro", State = 2}},
-        //        {"Nordsjøen", new FA4.Fylkesforekomst() {Fylke = "Ns", State = 2}},
-        //        {"Norskehavet", new FA4.Fylkesforekomst() {Fylke = "Nh", State = 2}},
-        //        {"asdfs", new FA4.Fylkesforekomst() {Fylke = "Gh", State = 2}},
-        //        {"Polhavet", new FA4.Fylkesforekomst() {Fylke = "Bn", State = 2}},
-        //        {"Barentshavet", new FA4.Fylkesforekomst() {Fylke = "Bs", State = 2}}
-        //    };
-
-        //    assessment.Fylkesforekomster = new List<FA4.Fylkesforekomst>();
-        //    foreach (var fylkesforekomst in fylker)
-        //    {
-        //        var valueFylke = fylkesforekomst.Value.Fylke;
-        //        assessment.Fylkesforekomster.Add(new FA4.Fylkesforekomst()
-        //        { Fylke = valueFylke, State = 2 });
-        //    }
-        //}
-
-        //private static void SetArtskartImportSettings(FA4 assessment)
-        //{
-        //    if (assessment.Ekspertgruppe.ToLowerInvariant().Contains("svalbard"))
-        //    {
-        //        assessment.ArtskartModel.IncludeNorge = false;
-        //        return;
-        //    }
-        //    if (assessment.Ekspertgruppe.ToLowerInvariant().Contains("norge"))
-        //    {
-        //        assessment.ArtskartModel.IncludeSvalbard = false;
-        //    }
-
-        //    if (assessment.Ekspertgruppe == "Amfibier, reptiler")
-        //    {
-        //        assessment.ArtskartModel.ObservationFromYear = 1960;
-        //    }
-        //    if (assessment.Ekspertgruppe == "Biller")
-        //    {
-        //        assessment.ArtskartModel.ObservationFromYear = 1970;
-        //    }
-        //    if (assessment.Ekspertgruppe == "Vepser")
-        //    {
-        //        assessment.ArtskartModel.ObservationFromYear = 1970;
-        //    }
-        //    if (assessment.Ekspertgruppe.StartsWith("Fugler"))
-        //    {
-        //        assessment.ArtskartModel.ObservationFromYear = 1901;
-        //    }
-        //    if (assessment.Ekspertgruppe.StartsWith("Pattedyr"))
-        //    {
-        //        assessment.ArtskartModel.ObservationFromYear = 1901;
-        //    }
-        //}
     }
 }
