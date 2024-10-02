@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { action } from 'mobx'
-import { Observer, observer } from 'mobx-react';
+import { Observer, observer, inject } from 'mobx-react';
 
-import LoadingHoc from './LoadingHoc'
 import Assessment from './assessment/assessment';
 import AssessmentsView from './assessmentsView';
 import AssessmentNew from './assessmentNew'
