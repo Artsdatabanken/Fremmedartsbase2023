@@ -19,6 +19,9 @@ using Index = Nbic.Indexer.Index;
 
 namespace Prod.Api.Controllers
 {
+    /// <summary>
+    /// Operations on assessments
+    /// </summary>
     [Route("api/[controller]")]
     [Authorize]
     public class AssessmentController : AuthorizeApiController
@@ -50,7 +53,12 @@ namespace Prod.Api.Controllers
             return _hubContext.Clients.All.SendAsync("ReceiveMessage", context, message);
         }
 
-        // GET api/assessment/5
+        /// <summary>
+        /// Get assessment
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         [HttpGet("{id}")]
         public async Task<FA4> Get(int id)
         {
@@ -85,6 +93,15 @@ namespace Prod.Api.Controllers
             return doc;
         }
 
+        /// <summary>
+        /// Check if an assessment exists for a scientificname in a specific expertgroup
+        /// </summary>
+        /// <remarks>
+        /// Used for checking if assessment exits before frontend suggests creating one
+        /// </remarks>
+        /// <param name="expertgroupname"></param>
+        /// <param name="scientificNameId"></param>
+        /// <returns></returns>
         [AllowAnonymous()]
         [HttpGet("ExistsByExpertgroupAndName/{expertgroupname}/{scientificNameId}")]
         public async Task<bool> ExistsByNames(string expertgroupname, int scientificNameId)
@@ -98,6 +115,11 @@ namespace Prod.Api.Controllers
             return result.Any();
         }
 
+        /// <summary>
+        /// Locks an assessment to a user
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}/lock")]
         public async Task<IActionResult> Lock(int id)
         {
@@ -133,6 +155,12 @@ namespace Prod.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Unlocks an assessment from a user
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+
         [HttpGet("{id}/unlock")]
         public async Task<IActionResult> UnLock(int id)
         {
@@ -165,6 +193,14 @@ namespace Prod.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Marks an assessment as finished/complete
+        /// </summary>
+        /// <remarks>
+        /// Will then not be available for furter edits
+        /// </remarks>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}/finish")]
         public async Task<IActionResult> Finish(int id)
         {
@@ -197,35 +233,12 @@ namespace Prod.Api.Controllers
 
             return Ok();
         }
-        //[HttpGet("{id}/delete")]
-        //public async Task<IActionResult> Delete(int id)
-        //{
-        //    var data = await _dbContext.Assessments.Where(x => x.Id == id).FirstOrDefaultAsync();// _dataService.GetAssessmentString(id);
-        //    if (string.IsNullOrWhiteSpace(data.Doc)) return null;
 
-        //    var doc = JsonConvert.DeserializeObject<Rodliste2019>(data.Doc);
-        //    var role = await base.GetRoleInGroup(doc.ExpertGroup);
-        //    var force = role.User.ErAdministrator;
-        //    try
-        //    {
-        //        if (force)
-        //        {
-        //            doc.Slettet = true;
-        //            await StoreAssessment(id, doc, role.User, false, true);
-        //            await _dbContext.SaveChangesAsync();
-        //        }
-        //        else
-        //        {
-        //            throw new Exception("IKKE SKRIVETILGANG TIL DENNE VURDERINGEN");
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return Unauthorized(e.Message);
-        //    }
-
-        //    return Ok();
-        //}
+        /// <summary>
+        /// Drop/deletes an assessment
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}/delete")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -269,6 +282,14 @@ namespace Prod.Api.Controllers
             return true;
         }
 
+        /// <summary>
+        /// Remove the finished/complete mark form an assessment
+        /// </summary>
+        /// <remarks>
+        /// Will then be available for furter edits
+        /// </remarks>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}/unfinish")]
         public async Task<IActionResult> Unfinish(int id)
         {
@@ -302,6 +323,12 @@ namespace Prod.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Update an existing assessment
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
         [HttpPost("{id}")]
         public async Task<IActionResult> Post(string id, [FromBody] FA4 value)
         {
@@ -325,41 +352,17 @@ namespace Prod.Api.Controllers
             return Ok();
         }
         
+        /// <summary>
+        /// Create a new blank assessment with initial parameters on model for a taxon and specific species group
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         [HttpPut("createnew")]
         public async Task<IActionResult> CreateNewAssessment([FromBody] Taxinfo value)
         {
             var now = DateTime.Now;
             var role = await GetRoleInGroup(value.Ekspertgruppe);
             var scientificNameId = value.ScientificNameId;
-            //var it = await _dbContext.Assessments
-            //    .Where(x => x.Expertgroup == value.Ekspertgruppe && x.ScientificNameId == scientificNameId)
-            //    .SingleOrDefaultAsync();
-            //if (it != null)
-            //{
-            //    var doc = JsonSerializer.Deserialize<FA4>(it.Doc);
-            //    if (value.potensiellDørstokkart == "potentialDoorknocker")
-            //    {
-            //        // til doorknocker
-            //        doc.HorizonDoScanning = true;
-            //        doc.HorizonScanningStatus = "notStarted";
-            //        doc.AlienSpeciesCategory = "DoorKnocker";
-            //    }
-            //    else
-            //    {
-            //        // fra horizon til ordinær
-            //        doc.HorizonDoScanning = false;
-            //        if (doc.AlienSpeciesCategory == "DoorKnocker") doc.AlienSpeciesCategory = "AlienSpecie";
-            //    }
-
-            //    doc.LastUpdatedAt = DateTime.Now;
-            //    it.Doc = JsonSerializer.Serialize(doc);
-            //    it.LastUpdatedAt = doc.LastUpdatedAt;
-            //    it.ChangedAt = DateTime.Now;
-            //    var timestamp = _dbContext.TimeStamp.Single();
-            //    timestamp.DateTimeUpdated = it.ChangedAt;
-            //    await _dbContext.SaveChangesAsync();
-            //    return Ok();
-            //}
 
             try
             {
@@ -464,6 +467,12 @@ namespace Prod.Api.Controllers
             return assessment;
         }
 
+        /// <summary>
+        /// Move an assessment with specific id to a new taxon
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost("{id}/move")]
         public async Task<IActionResult> MoveAssessment([FromBody] Taxinfo value, int id)
         {
@@ -498,7 +507,12 @@ namespace Prod.Api.Controllers
         }
 
 
-
+        /// <summary>
+        /// Move an assesment between horizontscanning and full assessment
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="doorknockerstate">"potentialDoorknocker" or "not/anything". If "potentialDoorknocker" then towards horizontscanning - whatever else back to full assessment</param>
+        /// <returns></returns>
         [HttpGet("{id}/movehorizon/{doorknockerstate}")]
         public async Task<IActionResult> MoveHorizon(int id, string doorknockerstate)
         {
@@ -558,7 +572,11 @@ namespace Prod.Api.Controllers
         }
 
 
-
+        /// <summary>
+        /// Clone an existing assessment into the testarter expertgroup
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}/copytotestarter")]
         public async Task<IActionResult> CopyToTestarter(int id)
         {
@@ -735,8 +753,7 @@ namespace Prod.Api.Controllers
             rl.IsDeleted = false;
             rl.LastUpdatedAt = DateTime.Now;
             rl.LastUpdatedBy = user.FullName;
-            //rl.Vurderingsår = vurderingsår;
-            //rl.SistVurdertAr = vurderingsår;
+
             rl.EvaluationStatus = "created";
             if (DoorKnocker)
             {
@@ -744,8 +761,6 @@ namespace Prod.Api.Controllers
                 rl.HorizonScanningStatus = "notStarted";
             }
 
-            //rl.OverordnetKlassifiseringGruppeKode = "rodlisteVurdertArt";
-            //rl.RodlisteVurdertArt = "etablertBestandINorge";
             rl.EvaluatedScientificName = ti.ValidScientificName;
             rl.EvaluatedScientificNameId = ti.ValidScientificNameId;
             rl.EvaluatedScientificNameAuthor = ti.ValidScientificNameAuthorship;
@@ -754,50 +769,6 @@ namespace Prod.Api.Controllers
             //rl.TaxonRank = rank;
             rl.EvaluatedVernacularName = ti.PrefferedPopularname;
 
-            ////ekstra standardverdier
-            //rl.ImportInfo.VurderingsId2015 = string.Empty;
-            //rl.AndelNåværendeBestand = "-";
-            //rl.A1OpphørtOgReversibel = "-";
-            //rl.A2Forutgående10År = "-";
-            //rl.A3Kommende10År = "-";
-            //rl.A4Intervall10År = "-";
-            //rl.BA2FåLokaliteterProdukt = "";
-            //rl.B1BeregnetAreal = "";
-            //rl.B1UtbredelsesområdeKode = "-";
-            //rl.B2ForekomstarealKode = "-";
-            //rl.BA1KraftigFragmenteringKode = "-";
-            //rl.BA2FåLokaliteterKode = "-";
-            //rl.CVurdertpopulasjonsstørrelseProdukt = "";
-            //rl.C1PågåendePopulasjonsreduksjonKode = "-";
-            //rl.C2A1PågåendePopulasjonsreduksjonKode = "-";
-            //rl.D1FåReproduserendeIndividKode = "-";
-            //rl.D2MegetBegrensetForekomstarealKode = "-";
-            //rl.EKvantitativUtryddingsmodellKode = "-";
-
-            ////gudene vet om disse har betydning:
-            //rl.WktPolygon = "";
-            //rl.SistVurdertAr = 2021;
-            //rl.C2A2PågåendePopulasjonsreduksjonKode = "-";
-            //rl.C2BPågåendePopulasjonsreduksjonKode = "-";
-            //rl.CPopulasjonsstørrelseKode = "-";
-            //rl.B2ForekomstarealProdukt = "";
-            //rl.B1UtbredelsesområdeProdukt = "";
-            //rl.OppsummeringAKriterier = "";
-            //rl.OppsummeringBKriterier = "";
-            //rl.OppsummeringCKriterier = "";
-            //rl.OppsummeringDKriterier = "";
-            //rl.OppsummeringEKriterier = "";
-            //rl.B2BeregnetAreal = "";
-            //if (rl.Ekspertgruppe == "Leddormer") // special case - ville ha LC som standard
-            //{
-            //    rl.C2A2SannhetsverdiKode = "1";
-            //    rl.OverordnetKlassifiseringGruppeKode = "sikkerBestandLC";
-            //    rl.Kategori = "LC";
-            //}
-
-            //AddFylkeslister(rl);
-            //rl.NaturtypeHovedenhet = new List<string>();
-            //SetArtskartImportSettings(rl);
             return rl;
         }
 

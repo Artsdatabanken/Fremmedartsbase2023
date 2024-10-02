@@ -12,30 +12,7 @@ using System.Xml.Linq;
 
 namespace Prod.Domain
 {
-    //public class VelgArtInfo
-    //{
-    //    public string TaxonId { get; set; }
-    //    public string VurderingsContext { get; set; }
-    //    public string Ekspertgruppe { get; set; }
-    //}
-    //public class NyVurderingsInfo
-    //{
-    //    //public string VurderingId { get; set; }
-    //    public string ScientificName { get; set; }
-    //    public int ScientificNameId { get; set; }
-    //    public int TaxonId { get; set; }
-    //    public string Author { get; set; }
-    //    //public string VernacularName { get; set; }
-    //    public string TaxonRank { get; set; }   // "Species" or "SupSpecies"
-    //    public string VurderingsContext { get; set; } // not set in the request, but used in the process of validate the creation of new vurdering // not needed becauso ekspertgruppe contains context - no need to validate
-    //    //public string VurderingsStatus { get; set; }
-    //    public string Ekspertgruppe { get; set; } // vurderingscontext is derived from Ekspertgruppe
-    //    public DateTime SistOppdatert { get; set; }
-    //    public string SistOppdatertAv { get; set; }
-    //    //public string Kategori { get; set; }
 
-    //    //public Guid[] References { get; set; }
-    //}
     public class TaxonHistory
     {
         public DateTime date { get; set; }
@@ -109,6 +86,9 @@ namespace Prod.Domain
             return newfa;
         }
 
+        /// <summary>
+        /// Lagrer json properties som ikke lar seg mappe til modellen - avslører om frontend har funnet på noe krøll
+        /// </summary>
         [JsonExtensionData]
         public Dictionary<string, JsonElement>? ExtensionData { get; set; }
 
@@ -1765,33 +1745,6 @@ public partial class FA4 // (3.2) Artsegenskaper
     // todo: Move into Fremmedart2012  (conflict with propertyname)
     public class SpreadHistory
     {
-        public SpreadHistory()
-        {
-/*            this.RegionalPresence = new List<RegionalPresenseWithAssumed>()
-                                               {
-                                                   new RegionalPresenseWithAssumed { Id = "Øs", Known = false, Assumed = false },
-                                                   new RegionalPresenseWithAssumed { Id = "OsA", Known = false, Assumed = false },
-                                                   new RegionalPresenseWithAssumed { Id = "He", Known = false, Assumed = false },
-                                                   new RegionalPresenseWithAssumed { Id = "Op", Known = false, Assumed = false },
-                                                   new RegionalPresenseWithAssumed { Id = "Bu", Known = false, Assumed = false },
-                                                   new RegionalPresenseWithAssumed { Id = "Ve", Known = false, Assumed = false },
-                                                   new RegionalPresenseWithAssumed { Id = "Te", Known = false, Assumed = false },
-                                                   new RegionalPresenseWithAssumed { Id = "Aa", Known = false, Assumed = false },
-                                                   new RegionalPresenseWithAssumed { Id = "Va", Known = false, Assumed = false },
-                                                   new RegionalPresenseWithAssumed { Id = "Ro", Known = false, Assumed = false },
-                                                   new RegionalPresenseWithAssumed { Id = "Ho", Known = true, Assumed = false },
-                                                   new RegionalPresenseWithAssumed { Id = "Sf", Known = false, Assumed = false },
-                                                   new RegionalPresenseWithAssumed { Id = "Mr", Known = false, Assumed = false },
-                                                   new RegionalPresenseWithAssumed { Id = "St", Known = false, Assumed = false },
-                                                   new RegionalPresenseWithAssumed { Id = "Nt", Known = false, Assumed = false },
-                                                   new RegionalPresenseWithAssumed { Id = "No", Known = false, Assumed = false },
-                                                   new RegionalPresenseWithAssumed { Id = "Tr", Known = false, Assumed = false },
-                                                   new RegionalPresenseWithAssumed { Id = "Fi", Known = false, Assumed = true },
-                                                   new RegionalPresenseWithAssumed { Id = "Sv", Known = false, Assumed = false },
-                                                   new RegionalPresenseWithAssumed { Id = "Jm", Known = false, Assumed = false },
-    };*/
-        }
-
         public Guid Id { get; set; }
         public string Location { get; set; }
         public string Comment { get; set; } //, SpeciesCount, ExistenceArea, ExistenceAreaCount, SpreadArea;
