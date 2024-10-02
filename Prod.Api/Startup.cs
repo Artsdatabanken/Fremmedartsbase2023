@@ -97,7 +97,7 @@ namespace Prod.Api
 
             app.UseCors(builder =>
                 //builder.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod()
-                builder.WithOrigins(new []{ "https://fab4api.test.artsdatabanken.no", "https://fab4api.artsdatabanken.no", "http://localhost:1234", "http://localhost:12345", "http://localhost:63660", "http://localhost:12237" }).AllowAnyHeader().AllowAnyMethod().AllowCredentials()
+                builder.WithOrigins(new []{ "https://fab4api.test.artsdatabanken.no", "https://fab4api.artsdatabanken.no", "http://localhost:5173" }).AllowAnyHeader().AllowAnyMethod().AllowCredentials()
             );
 
             app.UseStaticFiles();
