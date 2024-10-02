@@ -1,5 +1,4 @@
 function apiUrl (anchor) {
-    return 'https://fab4api.test.artsdatabanken.no/'
     //const relPath = '/lr/' + GIT_BRANCH + '_api/'
     switch (anchor) {
       case '#lokalapi':
@@ -10,13 +9,13 @@ function apiUrl (anchor) {
         //return relPath   // This does not currently work because api is not relative to ("under") app 
         if ((window.location.href).indexOf("test.") > -1) {return 'https://fab4api.test.artsdatabanken.no'}
         // return 'https://fab4api.test.artsdatabanken.no'
-        return  import.meta.env.NODE_ENV === 'development' ? 'http://localhost:25808' : 'https://fab4.artsdatabanken.no'
+        return  import.meta.env.DEV ? 'http://localhost:25808' : 'https://fab4.artsdatabanken.no'
     }
   }
   function referenceApiUrl (anchor) {
         //return relPath   // This does not currently work because api is not relative to ("under") app 
         if ((window.location.href).indexOf("test.") > -1) {return 'https://referenceapi.test.artsdatabanken.no/'}
-        return  import.meta.env.NODE_ENV === 'development' ? 'https://referenceapi.test.artsdatabanken.no/' : 'https://referenceapi.artsdatabanken.no/'
+        return  import.meta.env.DEV ? 'https://referenceapi.test.artsdatabanken.no/' : 'https://referenceapi.artsdatabanken.no/'
     }
 
   function mapApiUrl (anchor) {
