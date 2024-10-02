@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -21,17 +19,13 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.OpenApi.Models;
-using Prod.Api.Controllers;
 using Prod.Data.EFCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Prod.Api.Helpers;
 using Prod.Domain.Helpers;
 
 
 namespace Prod.Api
 {
-    using Microsoft.AspNetCore.Http.Connections;
     using Microsoft.Extensions.Configuration;
 
     using Prod.Api.Services;
@@ -52,6 +46,8 @@ namespace Prod.Api
             // The following line enables Application Insights telemetry collection.
             services.AddApplicationInsightsTelemetry();// "023396f1-285d-45cc-920c-eb957cdd6c01");
             StartupAddDependencies(services);
+
+            // help with handling existing json formatted string - from newtonsoft , changed types and so on...
             services.AddControllers().AddJsonOptions(x =>
             {
                 x.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
@@ -63,7 +59,6 @@ namespace Prod.Api
             }
                 ); //.AddNewtonsoftJson(); For å unngå camelcase - frem til klienten er camelcase.....
 
-            //services.AddMvc();
             services.AddSwaggerGen(c =>
             {
                 c.CustomSchemaIds(type => type.ToString());
@@ -102,7 +97,7 @@ namespace Prod.Api
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Prod.Api v1"));
 
             //app.UseHttpsRedirection();
-            // temp serve sandbox app
+            // Serve frontend
             var path = Path.Combine(env.ContentRootPath, "Frontend");
             if (Directory.Exists(path))
             {
@@ -128,7 +123,7 @@ namespace Prod.Api
             {
                 endpoints.MapHealthChecks("/hc", new HealthCheckOptions
                 {
-                    ResponseWriter = WriteResponse
+                    ResponseWriter = FormatWriteHCResponse
                 });
                 endpoints.MapControllers();
                 endpoints.MapGet("/", async context =>
@@ -150,17 +145,17 @@ namespace Prod.Api
             //}
 
             services.AddDbContext<ProdDbContext>(opt => opt.UseSqlServer(connectionString));
-            Index implementationInstance;
+            Index index;
             try
             {
-                implementationInstance = new Index();
+                index = new Index();
             }
             catch (Exception e)
             {
-                implementationInstance = new Index(false, true);
+                index = new Index(false, true);
                 throw;
             }
-            services.AddSingleton(implementationInstance);
+            services.AddSingleton(index);
             var options = new ReferenceServiceOptions()
             {
                 AuthAuthority = Configuration.GetValue("AuthAuthority", "https://demo.identityserver.io"),
@@ -200,32 +195,32 @@ namespace Prod.Api
                     //};
 
                     IdentityModelEventSource.ShowPII = true;
-                    identityServerAuthenticationOptions.Events = new JwtBearerEvents
-                    {
-                        OnMessageReceived = e =>
-                        {
-                            // _logger.LogTrace("JWT: message received");
-                            return Task.CompletedTask;
-                        },
-                        OnTokenValidated = e =>
-                        {
-                            // _logger.LogTrace("JWT: token validated");
-                            return Task.CompletedTask;
-                        },
-                        OnAuthenticationFailed = e =>
-                        {
-                            // _logger.LogTrace("JWT: authentication failed");
-                            return Task.CompletedTask;
-                        },
-                        OnChallenge = e =>
-                        {
-                            // _logger.LogTrace("JWT: challenge");
-                            return Task.CompletedTask;
-                        }
-                    };
+                    //identityServerAuthenticationOptions.Events = new JwtBearerEvents
+                    //{
+                    //    OnMessageReceived = e =>
+                    //    {
+                    //        // _logger.LogTrace("JWT: message received");
+                    //        return Task.CompletedTask;
+                    //    },
+                    //    OnTokenValidated = e =>
+                    //    {
+                    //        // _logger.LogTrace("JWT: token validated");
+                    //        return Task.CompletedTask;
+                    //    },
+                    //    OnAuthenticationFailed = e =>
+                    //    {
+                    //        // _logger.LogTrace("JWT: authentication failed");
+                    //        return Task.CompletedTask;
+                    //    },
+                    //    OnChallenge = e =>
+                    //    {
+                    //        // _logger.LogTrace("JWT: challenge");
+                    //        return Task.CompletedTask;
+                    //    }
+                    //};
                 });
         }
-        private static Task WriteResponse(HttpContext context, HealthReport healthReport)
+        private static Task FormatWriteHCResponse(HttpContext context, HealthReport healthReport)
         {
             context.Response.ContentType = "application/json; charset=utf-8";
 
