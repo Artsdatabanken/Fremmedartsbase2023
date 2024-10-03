@@ -58,7 +58,6 @@ else {
   } else {
     // Her er man kanskje inlogget ... prøv hent bruker
     auth.loadUser();
-    console.log("try automatic login")
   }
 
   window.onbeforeunload = (e) => {
