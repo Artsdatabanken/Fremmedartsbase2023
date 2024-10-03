@@ -1,38 +1,65 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using System.Text.Json;
 using Prod.Domain;
 
 namespace Prod.Infrastructure.Helpers
 {
+    /// <summary>
+    /// Helper method to download archive of data from Artskart based on criteria selected on assessment
+    /// </summary>
     public class ArtskartHelper
     {
         public static async Task<byte[]> GetZipDataFromArtskart(FA4 fab4)
         {
-            // hent datasett fra artskart
-            var date = DateTime.Parse((string)fab4.ArtskartSistOverført);
-            var kriterier = fab4.ArtskartModel;
+            var criteria = fab4.ArtskartModel;
 
-            var apibase = 
-                //"http://localhost:16784/api/listhelper/";
-                "https://artskart.artsdatabanken.no/PublicApi/api/listhelper/";
+            var apiBase = "https://artskart.artsdatabanken.no/PublicApi/api/listhelper/"; //"http://localhost:16784/api/listhelper/"; for testing on localhost artskart
+
+            var queryParameters = GenerateQueryParameters(fab4, criteria);
+            
+            // Parameters that may be to long for url
+            var postParameters = GeneratePostParameters(fab4);
+
+            var requestUri = apiBase + fab4.TaxonId + "/downloadObservations/?" + queryParameters;
+
+            using var client = new HttpClient();
+            var post = await client.PostAsync(requestUri, new StringContent(postParameters));
+
+            var zipFile = await post.Content.ReadAsByteArrayAsync();
+
+            return zipFile;
+        }
+
+        private static string GeneratePostParameters(FA4 fab4)
+        {
+            var parameters = "";
+            if (fab4.ArtskartWaterModel != null && fab4.ArtskartWaterModel.Areas != null)
+            {
+                var geoids = Enumerable.ToArray<string>(fab4.ArtskartWaterModel.Areas.Where(x => x.Selected == 1).Select(x => "\"" + x.GlobalId + "\""));
+                if (geoids.Length > 0)
+                {
+                    parameters = "["+ string.Join(",", geoids) +"]";
+                }
+            }
+
+            return parameters;
+        }
+
+        private static string GenerateQueryParameters(FA4 fab4, ArtskartModel criteria)
+        {
             var type = //"all";
-                kriterier.ExcludeObjects == false
+                criteria.ExcludeObjects == false
                     ? "all"
                     : "specimen";
             var region =
-                kriterier.IncludeNorge == kriterier.IncludeSvalbard
+                criteria.IncludeNorge == criteria.IncludeSvalbard
                     ? "all"
-                    : kriterier.IncludeNorge
+                    : criteria.IncludeNorge
                         ? "fastland"
                         : "svalbard";
             var excludeGbif =
-                kriterier.ExcludeGbif ? "&sourcedatabases[]=-40,-211" : "";
+                criteria.ExcludeGbif ? "&sourcedatabases[]=-40,-211" : "";
             var queryparams =
-                $"&fromYear={kriterier.ObservationFromYear}&toYear={kriterier.ObservationToYear}&type={type}&region={region}{excludeGbif}";
+                $"&fromYear={criteria.ObservationFromYear}&toYear={criteria.ObservationToYear}&type={type}&region={region}{excludeGbif}";
             queryparams += $"&scientificNameId={fab4.EvaluatedScientificNameId}";
 
             if (!string.IsNullOrWhiteSpace(fab4.ArtskartSelectionGeometry))
@@ -70,25 +97,7 @@ namespace Prod.Infrastructure.Helpers
             }
 
             queryparams += "&crs=EPSG:32633";
-
-            var urlen = apibase + fab4.TaxonId + "/downloadObservations/?" + queryparams;
-            var postparam = "";
-            if (fab4.ArtskartWaterModel != null && fab4.ArtskartWaterModel.Areas != null)
-            {
-                var geoids = Enumerable.ToArray<string>(fab4.ArtskartWaterModel.Areas.Where(x => x.Selected == 1).Select(x => "\"" + x.GlobalId + "\""));
-                if (geoids.Length > 0)
-                {
-                    postparam = "["+ string.Join(",", geoids) +"]";
-                }
-            }
-
-            
-            using var client = new HttpClient();
-            var post = await client.PostAsync(urlen, new StringContent(postparam));
-            var test = post.IsSuccessStatusCode;
-            var zipfile = await post.Content.ReadAsByteArrayAsync();
-            //var zipfile = await client.GetByteArrayAsync(urlen);
-            return zipfile;
+            return queryparams;
         }
     }
 }

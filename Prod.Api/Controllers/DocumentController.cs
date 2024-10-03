@@ -18,8 +18,10 @@ namespace Prod.Api.Controllers
 { 
     using Microsoft.AspNetCore.Http;
 
+    /// <summary>
+    /// For handling upload and download of attachments / documentation
+    /// </summary>
     [Route("api/[controller]")]
-    
     public class DocumentController : AuthorizeApiController
     {
         private readonly ProdDbContext _dbContext;
@@ -30,6 +32,11 @@ namespace Prod.Api.Controllers
         }
 
         //[Authorize]
+        /// <summary>
+        /// Get list of attachments for assessment
+        /// </summary>
+        /// <param name="assessmentId"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("{assessmentId}")]
         public Task<AttachmentView[]> GetFilesForAssessmentAsync(int assessmentId)
@@ -50,7 +57,13 @@ namespace Prod.Api.Controllers
         }
 
 
-
+        /// <summary>
+        /// Upload new attachments for an assessment
+        /// </summary>
+        /// <param name="files"></param>
+        /// <param name="assessmentId"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpPost]
         [Route("{assessmentId}")]
@@ -88,6 +101,12 @@ namespace Prod.Api.Controllers
             return Ok(new { count = files.Count, size });
         }
 
+        /// <summary>
+        /// Get single file/attachement
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         [HttpGet("getfile/{id}")]
         //[Authorize]
         public async Task<FileResult> Get(int id)
@@ -105,6 +124,11 @@ namespace Prod.Api.Controllers
                        };
         }
 
+        /// <summary>
+        /// Drop/delete an attachment
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("delete/{id}")]
         [Authorize]
         public async Task<bool> Delete(int id)

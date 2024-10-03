@@ -8,14 +8,9 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 using CsvHelper;
 using CsvHelper.Configuration;
 using Prod.Infrastructure.Helpers;
-using System.Collections;
-using System.ComponentModel.Design;
 using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 
@@ -24,16 +19,9 @@ namespace SwissKnife.Database
     internal static class MaintenanceService
     {
         private static Dictionary<int, TaxonInfo> _cacheTaxonInfos = new Dictionary<int, TaxonInfo>();
-
-        //private readonly SqlServerProdDbContext _database;
         private const string PotensiellTaksonomiskEndring = "Potensiell taksonomisk endring: ";
         private const string TaksonomiskEndring = "Automatisk endring av navn: ";
-
-        //public MaintenanceService(string connectionString)
-        //{
-        //    _database = new Prod.Data.EFCore.SqlServerProdDbContext(connectionString);
-        //}
-
+        
         internal static void RunTaxonomyWash(SqlServerProdDbContext _database, string speciesGroup = "",
             bool firstrun = false, bool autoUpdate = false, int id = 0)
         {
@@ -153,7 +141,7 @@ namespace SwissKnife.Database
                         ? "scanned_fullAssessment"
                         : "scanned_noAssessment";
                     doc.HorizonDoScanning = horizonScanResult.Value != true;
-                    // todo fix potensielt vurderingsendringer her....
+
                     if (doc.HorizonScanResult == "scanned_fullAssessment")
                     {
                         if (doc.HorizonEstablismentPotential == "0")
@@ -496,7 +484,6 @@ namespace SwissKnife.Database
                     Comment = message,
                     AssessmentId = dbAssessmentId,
                     CommentDate = DateTime.Today,
-                    // todo: put in config - think sweeden
                     UserId = new Guid("00000000-0000-0000-0000-000000000001"),
                     Type = commentType
                 }; // siris id

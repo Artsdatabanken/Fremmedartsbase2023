@@ -776,26 +776,7 @@ namespace SwissKnife.Database
 
                     .ForMember(dest => dest.StartYear, opt => opt.Ignore())
                     .ForMember(dest => dest.EndYear, opt => opt.Ignore())
-                    // todo: delete this section when domain is fixed
-                    //.ForMember(dest => dest.ScoreA, opt => opt.Ignore())
-                    //.ForMember(dest => dest.UnsureA, opt => opt.Ignore())
-                    //.ForMember(dest => dest.ScoreB, opt => opt.Ignore())
-                    //.ForMember(dest => dest.UnsureB, opt => opt.Ignore())
-                    //.ForMember(dest => dest.ScoreC, opt => opt.Ignore())
-                    //.ForMember(dest => dest.UnsureC, opt => opt.Ignore())
-                    //.ForMember(dest => dest.ScoreD, opt => opt.Ignore())
-                    //.ForMember(dest => dest.UnsureD, opt => opt.Ignore())
-                    //.ForMember(dest => dest.ScoreE, opt => opt.Ignore())
-                    //.ForMember(dest => dest.UnsureE, opt => opt.Ignore())
-                    //.ForMember(dest => dest.ScoreF, opt => opt.Ignore())
-                    //.ForMember(dest => dest.UnsureF, opt => opt.Ignore())
-                    //.ForMember(dest => dest.ScoreG, opt => opt.Ignore())
-                    //.ForMember(dest => dest.UnsureG, opt => opt.Ignore())
-                    //.ForMember(dest => dest.ScoreH, opt => opt.Ignore())
-                    //.ForMember(dest => dest.UnsureH, opt => opt.Ignore())
-                    //.ForMember(dest => dest.ScoreI, opt => opt.Ignore())
-                    //.ForMember(dest => dest.UnsureI, opt => opt.Ignore())
-                    // --------------------------------
+
                     .ForMember(dest => dest.PossibleLowerCategory, opt => opt.Ignore())
                     .ForMember(dest => dest.NatureAffectedAbroadF, opt => opt.Ignore())
                     .ForMember(dest => dest.NatureAffectedAbroadG, opt => opt.Ignore())

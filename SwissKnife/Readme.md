@@ -1,6 +1,9 @@
 ﻿# Fremmedartsbase SwissKnife
 
 Tool for batchtasks, import, export and similar stuff.
+See all functions below
+
+No secrets - all input via command line.
 
 dotnet run:
 
@@ -14,9 +17,37 @@ Options:
 
 Commands:
   createjson    Run tasks for creating static json data files
+	Commands:
+		nin2 - bruker kode-api og lager lokal json fil med naturtyper
+		trueteogsjeldnenaturtyper - csv fil til json format
+
   maintenance   Run tasks for maintaining database
+	Commands:
+		importfiles                update ekspansjonsdata on assessments
+		importgenerationtime       update generaiontime on assessments
+		
+		importhsdata               Import and create assessments from names with data from horisontscanning
+		importnames                Import and create assessments from names
+		
+		nighttasks                 nightly maintenance, basic night tasks check changed references, dowload missing artskart data ....
+		
+		patchhs                    Patch horizon scanned assessments based on - used for fixing assessments after production went live
+		patchmigration             Patch migrated assessments from original json dump - used for fixing assessments after production went live - lots of issues fixed
+		
+		taxonomywash               Check and update taxonomy on assessments - create comments to reflect result
+		taxonomywashdirect         Check and update taxonomy on assessments direct with history - do taxonomic wash - also splits - without creating comments
+		
+		transferacrossassessments  Transfer information from-to assessment - replicate most info from one assessment to spesific other and create link between
+		transferfromhs             transfer current result from horizontscan - all HS assessment with specific result move to full assessment
+		
   newDb         Interact with new sql database instance
+	Commands:
+		import - importerer til sql server og nytt format fra outputfiler generert av olddb
+		
   oldDb         Interact with old 2018 RavenDb instance
+	Commands:
+		dump    dump content from db to json files
+		info    show some statistics from db
 
 Run 'SwissKnife [command] -?|-h|--help' for more information about a command.
 ```

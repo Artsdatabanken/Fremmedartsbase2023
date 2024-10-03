@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Prod.Domain;
 
 namespace Prod.Api.Models
@@ -13,6 +10,10 @@ namespace Prod.Api.Models
         public int TotalCount { get; set; }
         public List<Facet> Facets { get; set; }
     }
+
+    /// <summary>
+    /// represent facets/counts of elements when filtering data
+    /// </summary>
     public class Facet
     {
         public string Name { get; set; }

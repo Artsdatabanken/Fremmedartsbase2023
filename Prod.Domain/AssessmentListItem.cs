@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Prod.Domain
 {
+    /// <summary>
+    /// An assesment list item - for presenting assessments in a list
+    /// </summary>
     public class AssessmentListItem
     {
         public string Id { get; set; }

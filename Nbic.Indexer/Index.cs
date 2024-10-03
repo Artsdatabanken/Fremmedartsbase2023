@@ -16,10 +16,16 @@ using Lucene.Net.Index;
 using Lucene.Net.Search;
 using Lucene.Net.Store;
 using Lucene.Net.Util;
-using Directory = Lucene.Net.Store.Directory;
 
 namespace Nbic.Indexer
 {
+    /// <summary>
+    /// Lucene Index Wrapper
+    /// </summary>
+    /// <remarks>
+    /// Creates a lucene filesystem based index
+    /// Documentation : https://lucenenet.apache.org/
+    /// </remarks>
     public class Index : IDisposable
     {
         private const string Field_Id = "Id";
@@ -124,6 +130,9 @@ namespace Nbic.Indexer
             if (_lockWasTaken) Monitor.Exit(_theLock);
         }
 
+        /// <summary>
+        /// Add or updates a lucene document
+        /// </summary>
         public void AddOrUpdate(Document doc)
         {
             //using (DirectoryTaxonomyWriter taxoWriter = new DirectoryTaxonomyWriter(_taxonomydir))
@@ -135,7 +144,9 @@ namespace Nbic.Indexer
             //}
         }
 
-
+        /// <summary>
+        /// Add or updates multiple lucene document
+        /// </summary>
         public void AddOrUpdate(IEnumerable<Document> refs)
         {
             //using (DirectoryTaxonomyWriter taxoWriter = new DirectoryTaxonomyWriter(_taxonomydir))
@@ -150,6 +161,11 @@ namespace Nbic.Indexer
                 _taxonomyWriter.Commit();
             //}
         }
+
+        /// <summary>
+        /// Delete documents from the index
+        /// </summary>
+        /// <param name="refs"></param>
         public void Delete(IEnumerable<int> refs)
         {
             //using (DirectoryTaxonomyWriter taxoWriter = new DirectoryTaxonomyWriter(_taxonomydir))
@@ -164,6 +180,9 @@ namespace Nbic.Indexer
             //}
         }
 
+        /// <summary>
+        /// Searches the index using a lucene query
+        /// </summary>
         public IEnumerable<Document> SearchReference(Query query, int offset, int limit, string sortField = "")
         {
             var searcher = new IndexSearcher(_writer.GetReader(true));
@@ -210,6 +229,9 @@ namespace Nbic.Indexer
             return results;
         }
 
+        /// <summary>
+        /// Get Total Document count from query
+        /// </summary>
         public int SearchTotalCount(Query query)
         {
             var searcher = new IndexSearcher(_writer.GetReader(true));
@@ -221,7 +243,6 @@ namespace Nbic.Indexer
         public void Delete(Guid newGuid)
         {
             _writer.DeleteDocuments(new Term(Field_Id, newGuid.ToString()));
-            //_writer.Flush(triggerMerge: true, applyAllDeletes: true);
             _writer.Commit();
         }
 
@@ -233,12 +254,10 @@ namespace Nbic.Indexer
         public void ClearIndex()
         {
             _writer.DeleteAll();
-            //_writer.Flush(true,true);
             _writer.Commit();
-            // todo: fix _taxonomywriter - mayde dispose - then recreate
         }
 
-        public string GetApplicationRoot()
+        private string GetApplicationRoot()
         {
             var exePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             var appPathMatcher = new Regex(@"(?<!fil)[A-Za-z]:\\+[\S\s]*?(?=\\+bin)");
@@ -270,8 +289,9 @@ namespace Nbic.Indexer
                 //CommentDateTime = d.GetField("CommentDate") != null ? DateTime.Parse(d.GetField("CommentDate").GetStringValue(), CultureInfo.InvariantCulture) : DateTime.MinValue
             };
         }
+
         /// <summary>
-        /// Method to store something i local index that can say something about version and date of index
+        /// Method to store document i local index that can say something about version and date of index
         /// </summary>
         public void SetIndexVersion(IndexVersion version)
         {
@@ -288,10 +308,12 @@ namespace Nbic.Indexer
         }
     }
 
+    /// <summary>
+    /// Object to store version of index and datetime of last change
+    /// </summary>
     public class IndexVersion   
     {
         public int Version { get; set; }
         public DateTime DateTime { get; set; }
-        //public DateTime CommentDateTime { get; set; }
     }
 }

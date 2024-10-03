@@ -4,15 +4,11 @@
     <TargetFramework>net6.0</TargetFramework>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <UserSecretsId>51e1a2be-0e91-4211-98e9-f32a362b922f</UserSecretsId>
-    <ApplicationInsightsResourceId>/subscriptions/1b2e1710-5766-4fa2-83ce-8c77c37d1190/resourcegroups/FAB4/providers/Microsoft.Insights/components/ProdApi</ApplicationInsightsResourceId>
+	  <ApplicationInsightsResourceId>/subscriptions/1b2e1710-5766-4fa2-83ce-8c77c37d1190/resourcegroups/FAB4/providers/Microsoft.Insights/components/ProdApi</ApplicationInsightsResourceId>
+	<GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Resources\Codes.json" />
-    <Content Remove="Resources\KodeGrupper.json" />
-    <Content Remove="Resources\Livsmedium.json" />
-    <Content Remove="Resources\MigrationPathwayCode.json" />
-    <Content Remove="Resources\RedlistedNaturetypeGroups.json" />
 	<Content Remove="Resources\WaterArea.geojson" />
 	<Content Remove="Resources\WaterRegion.geojson" />
   </ItemGroup>
@@ -25,7 +21,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.11" />
     <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="6.0.11" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.8.0" />
     <PackageReference Include="System.Text.Json" Version="7.0.0" />
   </ItemGroup>
 
@@ -34,7 +30,6 @@
     <ProjectReference Include="..\Prod.Data.EFCore\Prod.Data.EFCore.csproj" />
     <ProjectReference Include="..\Prod.Domain\Prod.Domain.csproj" />
     <ProjectReference Include="..\Prod.Infrastructure\Prod.Infrastructure.csproj" />
-    <ProjectReference Include="..\Public.Domain\Public.Domain.csproj" />
     <ProjectReference Include="..\SwissKnife\SwissKnife.csproj" />
   </ItemGroup>
 
@@ -43,11 +38,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Codes.json" />
-    <EmbeddedResource Include="Resources\KodeGrupper.json" />
-    <EmbeddedResource Include="Resources\Livsmedium.json" />
-    <EmbeddedResource Include="Resources\MigrationPathwayCode.json" />
-    <EmbeddedResource Include="Resources\RedlistedNaturetypeGroups.json" />
     <EmbeddedResource Include="Resources\WaterArea.geojson" />
     <EmbeddedResource Include="Resources\WaterRegion.geojson" />
   </ItemGroup>
