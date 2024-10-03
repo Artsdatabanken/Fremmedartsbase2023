@@ -35,7 +35,6 @@ if (import.meta.env.PROD) {
 // Håndtering av pålogging
 // #silentredirect er callback ved henting av ny token via refreshtokens - foregår i en iframe
 if ((window.location.href.indexOf("silentredirect") > 1)) {
-  console.log("Silent redirect hit...")
   // må instansiere en ny Usermanager - da den bare skal pinge opp til applikasjonen som åpnet iframe - dette skejr automagisk
   // hadde vi gjenbrukt samme auth.usermanager som i app eller instansiert med config - går det galt .....
   new UserManager().signinSilentCallback().catch((error) => this.handleError(error));

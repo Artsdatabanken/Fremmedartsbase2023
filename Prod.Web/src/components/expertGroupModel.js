@@ -43,9 +43,6 @@ class ExpertGroupModel {
                                     })
                                 }
                             })
-                        const url2 = "bruker/alle";
-                        // console.log("url ::: " + url2);
-                        // console.log("run bruker/alle");
                         loadData(config.getUrl("Access/users"),
                             data => {
                                 if (data) {
@@ -60,7 +57,6 @@ class ExpertGroupModel {
                                 }
                             })
                     } else {
-                    console.log("reset ekspertgrupper/alle 1");
                     runInAction(() => {
                     this.valgtekspertgruppe = null;
                         this.valgtekspert = null;
@@ -72,7 +68,6 @@ class ExpertGroupModel {
 
 
         autorun(() => {
-            //console.log("ekspertgruppe ::: " + this.ekspertgruppe)
             if (this.valgtekspertgruppe && auth.isAdmin) {
                 this.hentEkspertgruppeMedlemmer()
             }

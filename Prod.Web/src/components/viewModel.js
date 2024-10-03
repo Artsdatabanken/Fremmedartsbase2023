@@ -457,9 +457,6 @@ class ViewModel {
     );
     // ***************************************
 
-    autorun(() => {
-      console.log("har vurdering: " + this.harVurdering);
-    });
 
     // **** initialize tabs ****
     extendObservable(this, tabdefs(this));
@@ -537,16 +534,6 @@ class ViewModel {
         })();
       }
     });
-    autorun(() => {
-      console.log("isServicesReady: " + this.isServicesReady);
-      console.log("exp" + (this.expertgroups != null));
-    });
-    autorun(() => {
-      console.log("dirty: " + this.isDirty);
-    });
-    autorun(() => {
-      console.log("viewMode: " + this.viewMode);
-    });
 
     // #######################################################################################################
     // #######################################################################################################
@@ -592,7 +579,6 @@ class ViewModel {
   }
 
   initializeServices() {
-    console.log("start initializeServices");
     // this.loadKoder()
     // this.loadPåvirkningsfaktorer()
     this.loadExpertGroups();
@@ -659,7 +645,6 @@ class ViewModel {
 
   async loadCurrentExpertgroupAssessmentList() {
     const expertgroupId = this.expertgroup;
-    console.log("loadCurrentExpertgroupAssessmentList : " + expertgroupId);
 
     this.loadExpertgroupAssessmentList(expertgroupId);
   }
@@ -668,7 +653,6 @@ class ViewModel {
   // ################ Start section current assessment ##################
   async setCurrentAssessment(id) {
     window.scrollTo(0, 0);
-    console.log("setCurrentAssessment: " + id);
 
     const intid = Number(id);
     if (intid === this.assessmentId) return; // do not get or change assessment when unless id is different
@@ -1259,7 +1243,6 @@ class ViewModel {
     const authors = expertgroupAssessments.facets[0].facetsItems.map((author) =>
       fixCode(author)
     );
-    console.log("loded " + assessments.length + " assessments");
     runInAction(() => {
       this.expertgroupAssessmentList = assessments;
       this.roleincurrentgroup = role;
@@ -1417,11 +1400,9 @@ class ViewModel {
 
   async getExpertGroups() {
     const url = config.getUrl("expertgroups");
-    console.log("getExpertGroups: " + url);
 
     const response = await fetch(url);
     const json = await response.json();
-    console.log("getExpertGroups: " + JSON.stringify(json));
 
     return json;
   }
@@ -1432,7 +1413,6 @@ class ViewModel {
 
     const response = await fetch(url);
     const json = await response.json();
-    //console.log("getExpertGroupAssessmentList: " + JSON.stringify(json))
     return json;
   }
 

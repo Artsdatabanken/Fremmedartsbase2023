@@ -101,9 +101,7 @@ function createCodeLists() {
     r.codeLabels = clabels
 
     const lm = transformlivsmedium(ninlm)
-    // console.log("livsmedium2nt: " +  JSON.stringify(lm))
     const lmlabels = transformlivsmediumlabels(ninlm, {})
-    // console.log(JSON.stringify(lmlabels))
     const grupper = lm.Children
     r.livsmediumLabels = lmlabels
     r.livsmediumCodes = grupper
@@ -111,14 +109,11 @@ function createCodeLists() {
 
     // load truede naturtyper codes ----
     const nt = transformtrueteogsjeldnenaturtyper(togsnt)
-    // console.log("trueteogsjeldnenaturtyper: " +  JSON.stringify(nt))
     const tsgrupper = nt.Children
     r.trueteogsjeldneCodes = tsgrupper
 
 
     r.trueteogsjeldnenaturtypercodes = gettrueteogsjeldnenaturtypercodes(togsnt, [])
-    console.log("!!! gettrueteogsjeldnenaturtypercodes" + JSON.stringify(r.trueteogsjeldnenaturtypercodes))
-
     // --------------------------
 
     const nin2grupper = nin2root.Children
@@ -126,9 +121,6 @@ function createCodeLists() {
 
     const nin2codes = r.koder.naturtyperNIN2
     const nin2 = transformnaturtyperNIN2(nin2codes)
-    // console.log("nin2 transformed: " +  JSON.stringify(nin2))
-    // const nin2grupper = nin2.Children
-    // r.naturtyperNIN2 = nin2grupper
     // --------------------------
     r.nin2codes = nin2codes
     r.nin2 = nin2
