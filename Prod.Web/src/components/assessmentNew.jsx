@@ -45,7 +45,7 @@ class assessmentNew extends React.Component {
 
         makeObservable(this, {
             onSetEkspertgruppe: action,
-            moveAssessment: computed
+            moveAssessment: action
         });
 
         const {evaluationContext} = props
