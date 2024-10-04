@@ -410,27 +410,23 @@ export default function enhanceAssessment(json, appState) {
             copyProps(assra, objra, assessmentGetterFields)
         
             const json = JSON.stringify(obj, undefined, 2)
-            // console.log(JSON.stringify(Object.keys(obj)))
             return json
         }
     });
 
-    autorun(() => {
-        const asc = assessment.alienSpeciesCategory
-        console.log("¤¤¤ alienSpeciesCategory: " + asc)
-    
-    })
-    autorun(() => {
-        const ss = assessment.speciesStatus
-        console.log("¤¤¤ speciesStatus: '" + ss + "'")
-    
-    })
+    // autorun(() => {
+    //     const asc = assessment.alienSpeciesCategory
+    //     console.log("¤¤¤ alienSpeciesCategory: " + asc)
+    // })
+    // autorun(() => {
+    //     const ss = assessment.speciesStatus
+    //     console.log("¤¤¤ speciesStatus: '" + ss + "'")
+    // })
 
-    autorun(() => {
-        const ss = assessment.categoryHasChangedFromPreviousAssessment
-        console.log("¤!¤ categoryHasChangedFromPreviousAssessment: '" + ss + "'")
-    
-    })
+    // autorun(() => {
+    //     const ss = assessment.categoryHasChangedFromPreviousAssessment
+    //     console.log("¤!¤ categoryHasChangedFromPreviousAssessment: '" + ss + "'")
+    // })
 
     autorun(() => {
         if(assessment.speciesStatus) {

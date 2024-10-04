@@ -79,11 +79,9 @@
 
         const sweepingUncertaintyLevels = decisiveUncertainties.reduce((acc, uv) => acc.filter(n => n >= level || uv.indexOf(n) > -1), allUncertaintyLevels) 
         const result = {level: level, decisiveCriteria:decisiveCrits, uncertaintyLevels: sweepingUncertaintyLevels} // uncertaintyLevels }
-        console.log("invationpot uncertanylevels  " + sweepingUncertaintyLevels    )
         return result;
     },
     ecoeffect: (riskAssessment) => {
-        console.log("ecoeffect:::: ")
         const crits = riskAssessment.criteria.filter(c => c.akse === 1)
         const level = Math.max(...crits.map(crit => crit.value));
         const decisiveCrits = crits.filter(crit => crit.value === level)
@@ -98,7 +96,6 @@
         const uncertaintyLevels = [...new Set(alluncertentyLevels)].sort()
         const sweepingUncertaintyLevels = decisiveCrits.reduce((acc, crit) => acc.filter(n => n >= level || crit.uncertaintyValues.indexOf(n) > -1), uncertaintyLevels) 
         const result = {level: level, decisiveCriteria:decisiveCrits, uncertaintyLevels: sweepingUncertaintyLevels} // uncertaintyLevels }
-        console.log("ecoeffect uncertanylevels  " + sweepingUncertaintyLevels    )
         return result;
     },
     riskLevel: (invasjonspotensiale, ecoeffect) => {

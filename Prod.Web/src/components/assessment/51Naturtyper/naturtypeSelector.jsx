@@ -8,7 +8,6 @@ import { find } from 'ol/array';
 
 class NaturetypeSelector extends React.Component {
     constructor(props) {
-        console.log("nts: " + JSON.stringify(props.naturtyper, undefined))
         super(props)
         const ass = props.assessment
         this.setSelectedNT = action ((hovedtypegruppe, naturtypekode) => {

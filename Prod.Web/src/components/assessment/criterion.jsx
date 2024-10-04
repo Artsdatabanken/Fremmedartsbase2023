@@ -9,7 +9,6 @@ class Criterion extends React.Component {
     }
     render() {
         const {criterion, appState, mode, hideInfo, disabled} = this.props;
-        console.log("keys: " + JSON.stringify(Object.keys(criterion)))
         const assessment = appState.assessment
         const riskAssessment = assessment.riskAssessment
         const labels = appState.codeLabels

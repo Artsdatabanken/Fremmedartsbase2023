@@ -60,7 +60,6 @@ class NewNaturetype extends React.Component {
         // const doms = appState.dominansSkog
         // const koder = appState.koder
         const livsmedium = superheader === "Livsmedium"
-        console.log("lms" + lms)
         return <div className="natureType">
             <div>
                 <h4>{superheader}</h4>

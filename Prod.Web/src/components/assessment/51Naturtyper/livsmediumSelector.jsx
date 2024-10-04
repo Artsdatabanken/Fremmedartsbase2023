@@ -7,11 +7,9 @@ import { action } from 'mobx';
 
 class LivsmediumSelector extends React.Component {
     constructor(props) {
-        console.log("nts: " + JSON.stringify(props.naturtyper, undefined))
         super(props)
         const ass = props.assessment
         this.setSelectedNT = action ((naturtypekode) => {
-            console.log("Livsmedium kode: " + naturtypekode.Id)
             const nnt = props.nyNaturtype
             nnt.niNCode = naturtypekode.Id
             nnt.name = naturtypekode.Text
@@ -36,7 +34,6 @@ class LivsmediumSelector extends React.Component {
         })
     }
     truncCode(kode) {
-        console.log("trunc: '" + kode.Id + "'")
         return (kode.Id != undefined && kode.Id.length > 3 && kode.Id.startsWith("LI ")) 
             ? kode.Id.substring(3)
             : kode.Id

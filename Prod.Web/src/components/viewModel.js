@@ -363,22 +363,10 @@ class ViewModel {
     });
     //*************************************************
 
-    // autorun(() => {
-    //     console.log("selectedPåvirkningsfaktor: " + (this.selectedPåvirkningsfaktor ? this.selectedPåvirkningsfaktor.id : "None"))
-    // });
-
     // **** set assessment and assessmentId ****
     reaction(
       () => this.assessmentId,
       (assessmentId) => {
-        console.log(
-          "x: " +
-          this.assessmentId +
-          " " +
-          typeof this.assessmentId +
-          " " +
-          (this.assessment ? this.assessment.id : "nix")
-        );
         if (assessmentId) {
           this.setCurrentAssessment(assessmentId);
         } else {
@@ -401,9 +389,6 @@ class ViewModel {
     reaction(
       () => this.assessment,
       (assessment) => {
-        console.log(
-          assessment ? "ny assessment: " + assessment.id : "no assessment"
-        );
         if (assessment && this.isServicesReady) {
           // console.log("viewMode = 'assessment' - before:" + this.viewMode)
           this.viewMode = "assessment";
@@ -688,7 +673,6 @@ class ViewModel {
 
     if (json && json.id) {
       const id = Number(json.id);
-      console.log("type of id : " + typeof id);
       const jsonnew = JSON.parse(JSON.stringify(json));
       const assessment = enhanceAssessment(jsonnew, this);
       const assessmentStringCopy = assessment.toJSON;

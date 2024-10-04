@@ -285,7 +285,6 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 // : method === "c"  // no longer in use (??)
                 // ? "B2bX"
                 : "BmethodNotChosen"
-            console.log("##¤bmetod " + result + " doorKnocker: " + r.doorKnocker)
             return result
         },
         get introductionsLow() {
@@ -511,17 +510,17 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                     ? 0
                     : trunc(sqrt(r.AOOdarkfigureBest) * 2000 * (sqrt(ceil(r.AOO2 / 4)) - sqrt(ceil(r.AOO1 / 4))) / ((r.AOOyear2 - r.AOOyear1) * sqrt(pi)))
                 : trunc(20 * (sqrt(r.AOO50yrBest) - sqrt(r.AOOtotalBest)) / sqrt(pi))
-            console.log("##!expansionSpeedB2a data: " + JSON.stringify({
-                AOOfirstOccurenceLessThan10Years: r.AOOfirstOccurenceLessThan10Years,
-                AOOestimationPeriod10yrPossible: r.AOOestimationPeriod10yrPossible,
-                AOOyear1: r.AOOyear1,
-                AOOyear2: r.AOOyear2,
-                AOO1: r.AOO1,
-                AOO2: r.AOO2,
-                AOOdarkfigureBest: r.AOOdarkfigureBest,
-                AOO50yrBest: r.AOO50yrBest,
-                AOOtotalBest: r.AOOtotalBest
-            }))
+            // console.log("##!expansionSpeedB2a data: " + JSON.stringify({
+            //     AOOfirstOccurenceLessThan10Years: r.AOOfirstOccurenceLessThan10Years,
+            //     AOOestimationPeriod10yrPossible: r.AOOestimationPeriod10yrPossible,
+            //     AOOyear1: r.AOOyear1,
+            //     AOOyear2: r.AOOyear2,
+            //     AOO1: r.AOO1,
+            //     AOO2: r.AOO2,
+            //     AOOdarkfigureBest: r.AOOdarkfigureBest,
+            //     AOO50yrBest: r.AOO50yrBest,
+            //     AOOtotalBest: r.AOOtotalBest
+            // }))
             return result
         },
         get expansionSpeed() {
@@ -633,12 +632,6 @@ function enhanceRiskAssessmentInvasjonspotensiale(riskAssessment) {
                 : r.bscore === 3 ? "over 500 m/år"
                 : null
         }
-    })
-    autorun(() => {
-        console.log("MedianLifetime: " + r.medianLifetime + " | " + r.medianLifetimeInput )
-    })
-    autorun(() => {
-        console.log("ascore: " + r.ascore )
     })
 
     extendObservable(riskAssessment, {
@@ -1113,7 +1106,6 @@ function setUncertaintyValues(isFirstrun, crit, uvalues) {
         // e.g. the criteria must not have a default value that is updated from db after the first run!
 
         // console.log("#¤#uncertainty firstrun1 : " + crit.criteriaLetter )
-        console.log("#¤#uncertainty firstrun: " + crit.criteriaLetter + " : " + crit.value + " - " + JSON.stringify(crit.uncertaintyValues))
         if (crit.uncertaintyValues.indexOf(crit.value) <= -1 ) {
             // console.log("rectify uncertainties")
             // crit.uncertaintyValues.replace(uvalues)
@@ -1185,9 +1177,6 @@ function enhanceCriteriaAddUncertaintyRules(riskAssessment) {
             } else {
                 vd = [] //crit.value
             }
-            // if(crit.criteriaLetter=== "A") {
-                console.log("!!% " + crit.criteriaLetter + " crit value: " + crit.value + " uncentainty posible" + vd.toString())
-            // }
             runInAction(() => {
                 arrayConditionalReplace(crit.valueDisabled, vd)
                 if (vd.includes(crit.value) && crit.auto === true) {
