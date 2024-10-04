@@ -55,7 +55,6 @@ const NaturtypeTable = (props) => {
 
                         //const key = nt.NiNCode + nt.TimeHorizon + nt.ColonizedArea + nt.StateChange.join(';') + nt.AffectedArea
                         //const key = nt.NiNCode + nt.TimeHorizon + nt.ColonizedArea
-                        console.log("nt row: " + JSON.stringify(nt))
                         const key = nt.niNCode + nt.timeHorizon
                         return <NaturtypeRad key={key} naturtype={nt} deleteRow={deleteRow} codes={codes} appState={appState} labels={labels} showNatureTypeArea={noRedListTypes != undefined && noRedListTypes != true} toggleEdit={toggleEdit} editMode={editMode} disabled={disabled} />
                     }) :

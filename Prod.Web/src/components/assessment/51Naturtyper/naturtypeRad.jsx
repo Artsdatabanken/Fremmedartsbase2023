@@ -42,7 +42,6 @@ export class NaturtypeRad extends React.Component {
         // const riskAssessment = assessment.riskAssessment 
         const gLabels = labels.General
         const nt = naturtype
-        console.log(nt)
         // const ntlabel = nt.niNVariation
         const koder = codes
         // const dominanceForrest = nt.DominanceForrest
@@ -68,7 +67,6 @@ export class NaturtypeRad extends React.Component {
             }
             return area == 0 ? "" : area
         }
-        console.log("NT row: " + JSON.stringify(nt))
         return(
             <tr>
                 <td>{isNaN(nt.niNCode) ? nt.niNCode : ""}</td>

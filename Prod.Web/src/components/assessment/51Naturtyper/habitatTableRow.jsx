@@ -35,7 +35,6 @@ class HabitatTableRow extends React.Component {
         const gLabels = labels.General
         const nt = naturtype
         const disabled = appState.userContext.readonly
-        console.log(nt)
         const newTaxon = nt.taxon
         const koder = appState.koder
         const ntlabel = (nt.niNCode && nt.niNCode.length > 3 && nt.niNCode.startsWith("LI "))
