@@ -1,9 +1,6 @@
 // import config from '../../../config';
 import React from 'react';
-import {observer} from 'mobx-react';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import * as Xcomp from '../observableComponents';
+import { observer } from 'mobx-react';
 import { action } from 'mobx';
 
 
@@ -11,7 +8,7 @@ class TruetSelector extends React.Component {
     constructor(props) {
         super(props)
         const ass = props.assessment
-        this.setSelectedNT = action ((hovedtypegruppe, naturtypekode) => {
+        this.setSelectedNT = action((hovedtypegruppe, naturtypekode) => {
             console.log("Truet kode: " + naturtypekode.Id)
             const nnt = props.nyNaturtype
             //nnt.niNCode = naturtypekode.Id
@@ -20,7 +17,7 @@ class TruetSelector extends React.Component {
             nnt.niNCode = naturtypekode.Id
             nnt.name = naturtypekode.Text
             nnt.timeHorizon = (ass.isDoorKnocker && ass.speciesStatus == "A") ? "future" : null,
-            nnt.colonizedArea = null
+                nnt.colonizedArea = null
             nnt.stateChange.clear()
             nnt.affectedArea = null
             nnt.background.clear()
@@ -29,46 +26,48 @@ class TruetSelector extends React.Component {
 
     }
     render() {
-        const {naturtyper, setSelected} = this.props;
+        const { naturtyper, setSelected } = this.props;
 
         // console.log("SELECTOR: " + JSON.stringify(naturtyper, undefined, 2))
 
-        return(
+        return (
             <div>
-                
-                {naturtyper.map(hovedtypegruppe => 
+
+                {naturtyper.map(hovedtypegruppe =>
                     <div key={hovedtypegruppe.Id}>
                         <div
-                            className={"glyphicon glyphicon-chevron-down tree-view-arrow " }
-                            onClick={action(() => hovedtypegruppe.Collapsed = !hovedtypegruppe.Collapsed)} 
-                            > {hovedtypegruppe.Collapsed == false ? <ExpandMoreIcon/> : <NavigateNextIcon/>}
-                            
+                            className={"glyphicon glyphicon-chevron-down tree-view-arrow "}
+                            onClick={action(() => hovedtypegruppe.Collapsed = !hovedtypegruppe.Collapsed)}
+                        > {hovedtypegruppe.Collapsed == true ?
+                            <span className="material-symbols-outlined">keyboard_arrow_right</span> :
+                            <span className="material-symbols-outlined"> keyboard_arrow_down</span>}
+
                         </div>
                         <div className="tree-view-label">
                             <span className="hovedtypegruppe">
-                                <span className="naturtype-kode" style={{width: "300px"}}>{hovedtypegruppe.Value}</span>
+                                <span className="naturtype-kode" style={{ width: "300px" }}>{hovedtypegruppe.Value}</span>
                                 {/* <span>{hovedtypegruppe.Text}</span>} */}
                             </span>
                         </div>
                         {
-                        !hovedtypegruppe.Collapsed && hovedtypegruppe.Children ?
-                        <div className="tree-view-children">
-                            {hovedtypegruppe.Children.map(hovedtype =>
+                            !hovedtypegruppe.Collapsed && hovedtypegruppe.Children ?
+                                <div className="tree-view-children">
+                                    {hovedtypegruppe.Children.map(hovedtype =>
 
-                            <div key={hovedtype.Id} className="tree-view-label btn-flat" onClick={() => this.setSelectedNT(hovedtypegruppe, hovedtype)}>
-                                <div className="hovedtypegruppe">
-                                    <span className="naturtype-kode">{hovedtype.Text + " ("+hovedtype.Category.substring(0,2)+")"}</span>
-                                    {/*<span className="nt-code">{"'"+hovedtype.Value+"'"}</span>
+                                        <div key={hovedtype.Id} className="tree-view-label btn-flat" onClick={() => this.setSelectedNT(hovedtypegruppe, hovedtype)}>
+                                            <div className="hovedtypegruppe">
+                                                <span className="naturtype-kode">{hovedtype.Text + " (" + hovedtype.Category.substring(0, 2) + ")"}</span>
+                                                {/*<span className="nt-code">{"'"+hovedtype.Value+"'"}</span>
                                     <span className="nt-category"></span>*/}
-                                </div>
-                            </div>
-                            )}
-                        </div> :
-                        null 
+                                            </div>
+                                        </div>
+                                    )}
+                                </div> :
+                                null
                         }
                     </div>
                 )}
-            </div> 
+            </div>
         );
     }
 }

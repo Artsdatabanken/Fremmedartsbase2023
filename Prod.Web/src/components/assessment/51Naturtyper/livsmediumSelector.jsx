@@ -1,7 +1,5 @@
 import React from 'react';
 import {observer} from 'mobx-react';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import * as Xcomp from '../observableComponents';
 import { action } from 'mobx';
 
@@ -48,9 +46,9 @@ class LivsmediumSelector extends React.Component {
                             className={"glyphicon glyphicon-chevron-down tree-view-arrow " }
                             onClick={action(() => hovedtypegruppe.Collapsed = !hovedtypegruppe.Collapsed)} 
                         > 
-                            {hovedtypegruppe.Collapsed == false 
-                            ? <ExpandMoreIcon/> 
-                            : <NavigateNextIcon/>}
+                            {hovedtypegruppe.Collapsed == true 
+                            ? <span className="material-symbols-outlined">keyboard_arrow_right</span>
+                            : <span className="material-symbols-outlined"> keyboard_arrow_down</span>}
                         </div>
                         <div className="tree-view-label">
                             <span className="hovedtypegruppe">
@@ -69,9 +67,9 @@ class LivsmediumSelector extends React.Component {
                                         (hovedtype.Collapsed ? "tree-view-arrow-collapsed" : "")}
                                     onClick={() => hovedtype.Collapsed = !hovedtype.Collapsed}>
                                     {hovedtype.Children.length > 0 
-                                    ? hovedtype.Collapsed == false
-                                        ? <ExpandMoreIcon/> 
-                                        : <NavigateNextIcon/> 
+                                    ? hovedtype.Collapsed == true
+                                        ? <span className="material-symbols-outlined">keyboard_arrow_right</span> 
+                                        : <span className="material-symbols-outlined"> keyboard_arrow_down</span> 
                                     : <div style={{width: '24px'}}>
                                     </div>} {/* <-- to align all the choice buttons even though they don't have an arrow to expand */}
                                 </div>

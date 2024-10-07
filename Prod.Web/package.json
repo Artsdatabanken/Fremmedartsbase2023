@@ -4,8 +4,8 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "dev": "parcel index.html --port 12345",
-    "build": "parcel build index.html --no-scope-hoist",
+    "dev": "vite",
+    "build": "vite build",
     "test": "jest",
     "testWatch": "jest --watch",
     "npminstall": "npm install"
@@ -22,9 +22,6 @@
     ]
   },
   "dependencies": {
-    "@material-ui/core": "^4.11.3",
-    "@material-ui/icons": "^4.11.2",
-    "@material-ui/styles": "^4.11.3",
     "@microsoft/applicationinsights-web": "^2.7.3",
     "@microsoft/signalr": "^5.0.3",
     "@turf/turf": "^6.5.0",
@@ -55,7 +52,7 @@
     "path-browserify": "^1.0.1",
     "prop-types": "^15.7.2",
     "react-test-renderer": "^17.0.1",
-    "typescript": "^4.9.5",
+    "typescript": "^5.6.2",
     "util": "^0.12.4",
     "vite": "^5.4.6"
   }
