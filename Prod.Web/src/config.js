@@ -143,4 +143,5 @@ const config = {
     isRelease: isRelease(),
     isNotTest: isNotTest()
   }
+  
 export default config
