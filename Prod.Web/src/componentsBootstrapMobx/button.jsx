@@ -1,5 +1,5 @@
 import React from 'react';
-import {UserContext} from './components'
+import { UserContext } from './components'
 import auth from '../components/authService';
 
 // Button has no observable functionality, but is included in XComp lib for styling reasons
@@ -10,17 +10,17 @@ export default function Button(props) {
     // nb: bootstrap has (extra) disabled atribute for all collors
     // bootstrap sizes: lg, "", sm, xs
     const context = UserContext.getContext();
-    const {onClick, primary, style, lg, sm, xs, disabled, alwaysEnabled, ariaLabel, className, title, href} = props;
+    const { onClick, primary, style, lg, sm, xs, disabled, alwaysEnabled, ariaLabel, className, title, href } = props;
     const colorStyle = primary ? " btn-primary" :
-                        " btn-default"
+        " btn-default"
     const sizeStyle = lg ? " btn-lg" :
-                        sm ? " btn-sm" :
-                        xs ? " btn-xs" :
-                        ""
+        sm ? " btn-sm" :
+            xs ? " btn-xs" :
+                ""
     const classString = "btn" + colorStyle + sizeStyle + (className ? " " + className : "")
 
     const params = {}
-   // if ((context.readonly || disabled) && !alwaysEnabled && !auth.isAdmin) {
+    // if ((context.readonly || disabled) && !alwaysEnabled && !auth.isAdmin) {
     if ((context.readonly || disabled) && !alwaysEnabled) {
         params.disabled = true
     }
@@ -29,7 +29,7 @@ export default function Button(props) {
     }
 
     return (href
-    ? <a className={classString} {...params} title={title} href={href} target="blank">{ props.children }</a>
-    : <button className={classString} {...params} style={style} title={title} onClick={onClick}>{ props.children }</button> 
+        ? <a className={classString} {...params} title={title} href={href} target="blank">{props.children}</a>
+        : <button className={classString} {...params} style={style} title={title} onClick={onClick}>{props.children}</button>
     )
 }

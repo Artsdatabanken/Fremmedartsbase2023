@@ -1,5 +1,5 @@
 import React from 'react';
-import {observer} from 'mobx-react';
+import { observer } from 'mobx-react';
 import { action, makeObservable } from "mobx";
 import Tabs from './tabs'
 //import {user} from "./userSession"
@@ -22,7 +22,7 @@ class AssessmentsView extends React.Component {
         console.log("!!: " + JSON.stringify(taxinfo))
 
         // storeData("api/fab", taxinfo, (data) => {
-        //     if (data && data.message) 
+        //     if (data && data.message)
         //     alert(data.message)
         // }, 'post' )
 
@@ -34,28 +34,28 @@ class AssessmentsView extends React.Component {
 
 
     render() {
-        const {appState, appState:{selectAssessmentTabs}} = this.props
+        const { appState, appState: { selectAssessmentTabs } } = this.props
         // const {appState, viewModel} = this.props
         // const {selectAssessmentTabs} = viewModel
         // console.log("ekspertgruppeRolle " + JSON.stringify(appState.ekspertgruppeRolle))
         // console.log("rolle " + JSON.stringify(this.props.rolle))
         return (
             <div>
-            {appState.ekspertgruppe != null && ((appState.ekspertgruppeRolle && appState.ekspertgruppeRolle.Leder) || auth.isAdmin ) ?
-                <div>
--                <h1><i>{assessment.vurdertVitenskapeligNavn}</i></h1>
-                    <Tabs tabData={selectAssessmentTabs} />
-                    {selectAssessmentTabs.activeTab.id === 1
-                        ? <SelectAssessment {...this.props} /> 
-                        : selectAssessmentTabs.activeTab.id === 2 
-                        ? <AssessmentNew appState={appState} onNewAssessment={e => {this.onNewAssessment(e); selectAssessmentTabs.activeTab.id = 1}}/>
-                        : selectAssessmentTabs.activeTab.id === 3
-                        ? <Statistics {...this.props} />
-                        : <AssessmentReport {...this.props} />
-                    }
-                </div> :
-                <SelectAssessment {...this.props} />
-            }
+                {appState.ekspertgruppe != null && ((appState.ekspertgruppeRolle && appState.ekspertgruppeRolle.Leder) || auth.isAdmin) ?
+                    <div>
+                        -                <h1><i>{assessment.vurdertVitenskapeligNavn}</i></h1>
+                        <Tabs tabData={selectAssessmentTabs} />
+                        {selectAssessmentTabs.activeTab.id === 1
+                            ? <SelectAssessment {...this.props} />
+                            : selectAssessmentTabs.activeTab.id === 2
+                                ? <AssessmentNew appState={appState} onNewAssessment={e => { this.onNewAssessment(e); selectAssessmentTabs.activeTab.id = 1 }} />
+                                : selectAssessmentTabs.activeTab.id === 3
+                                    ? <Statistics {...this.props} />
+                                    : <AssessmentReport {...this.props} />
+                        }
+                    </div> :
+                    <SelectAssessment {...this.props} />
+                }
             </div>
         )
     }

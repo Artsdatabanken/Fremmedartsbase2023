@@ -3,7 +3,7 @@ import 'ol/ol.css';
 // import styles from './MapOpenLayers.css'; // don't delete. it's used to move buttons to the right side
 //Line above is a lie?
 import { Collection, Feature, Map, View, Overlay } from 'ol';
-import { Control, defaults as defaultControls } from 'ol/control';
+import { Control, defaults as defaultControls } from 'ol/control';
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
 import { Vector as VectorSource, WMTS as WmtsSource } from 'ol/source';
 import Proj4 from 'proj4';
@@ -17,12 +17,12 @@ import * as Xcomp from "../observableComponents";
 
 const mapBounds = {
     S: [
-      [73, 13],
-      [83, 23]
+        [73, 13],
+        [83, 23]
     ],
     N: [
-      [57, 4.3],
-      [71.5, 32.5]
+        [57, 4.3],
+        [71.5, 32.5]
     ]
 };
 
@@ -40,7 +40,7 @@ const SimpleMap = ({
     waterIsChanged
 }) => {
     const mapRef = useRef();
-	const [map, setMap] = useState(null);
+    const [map, setMap] = useState(null);
     const [pointerMoveTarget, setPointerMoveTarget] = useState(undefined);
     let mapObject;
     let mapCenter = [];
@@ -53,11 +53,11 @@ const SimpleMap = ({
             // console.log('transformCoordinate unchanged', fromEpsgCode, toEpsgCode);
             return coordinate;
         }
-    
+
         if (Array.isArray(coordinate) && typeof coordinate[0] !== 'number') {
-            if(typeof coordinate[0] === 'string') {
+            if (typeof coordinate[0] === 'string') {
                 for (let i = 0; i < coordinate.length; ++i) {
-                coordinate[i] = parseFloat(coordinate[i]);
+                    coordinate[i] = parseFloat(coordinate[i]);
                 }
             } else {
                 console.error('unknown coordinate', coordinate[0]);
@@ -89,7 +89,7 @@ const SimpleMap = ({
 
             const content = document.getElementsByClassName(`ol-popup-content ol-popup-content-${mapIndex}`)[0];
             content.innerHTML = '';
-    
+
             const vatn = [];
             mapObject.forEachFeatureAtPixel(e.pixel, (f) => {
                 const featureLayerName = f.get('_layerName');
@@ -143,7 +143,7 @@ const SimpleMap = ({
 
     useEffect(() => {
         if (map === null) return;
-        mapOlFunc.reDrawWaterLayer(map, mapIndex, artskartWaterModel, waterFeatures, selectedArea, () => {}, () => {}, () => {});
+        mapOlFunc.reDrawWaterLayer(map, mapIndex, artskartWaterModel, waterFeatures, selectedArea, () => { }, () => { }, () => { });
 
     }, [waterIsChanged]);
 
@@ -154,7 +154,7 @@ const SimpleMap = ({
         if (!vatnLayer) return;
         const layers = map.getLayers().getArray();
         const waterSelectedLayer = layers.filter(layer => layer.get('name') === 'VatnSelected')[0];
-        
+
         let features = [];
         waterSelectedLayer.getSource().clear();
         if (selectAll) {
@@ -173,7 +173,7 @@ const SimpleMap = ({
         // console.log('selectAll changed', selectAll, features);
     }, [selectAll]);
 
-	useEffect(() => {
+    useEffect(() => {
         if (Proj4.defs(`EPSG:${config.mapEpsgCode}`) === undefined) {
             Proj4.defs(`EPSG:${config.mapEpsgCode}`, config.mapEpsgDef);
         }
@@ -216,7 +216,7 @@ const SimpleMap = ({
                 zoom: 0
             }),
             layers: [],
-            controls: defaultControls({attribution: false, zoom: !staticMap})
+            controls: defaultControls({ attribution: false, zoom: !staticMap })
         };
         let waterSelectedLayer;
 
@@ -265,13 +265,13 @@ const SimpleMap = ({
             }));
         }
         if (staticMap) {
-            options.layers.push(mapOlFunc.createWaterLayer('Vatn', mapIndex, artskartWaterModel, waterFeatures, projection, '', selectedArea, () => {}));
+            options.layers.push(mapOlFunc.createWaterLayer('Vatn', mapIndex, artskartWaterModel, waterFeatures, projection, '', selectedArea, () => { }));
         } else {
-            options.layers.push(mapOlFunc.createWaterLayer('Vatn', mapIndex, artskartWaterModel, waterFeatures, projection, '', undefined, () => {}));
+            options.layers.push(mapOlFunc.createWaterLayer('Vatn', mapIndex, artskartWaterModel, waterFeatures, projection, '', undefined, () => { }));
         }
         options.layers.push(new VectorLayer({
             name: 'hoverLayer',
-            source: new VectorSource({wrapX: false, _text: false}),
+            source: new VectorSource({ wrapX: false, _text: false }),
             style: (feature, resolution) => mapOlFunc.hoverStyleFunction(feature, resolution, mapIndex),
             zIndex: 3
         }));
@@ -325,7 +325,7 @@ const SimpleMap = ({
 
         if (!staticMap) {
 
-            const dragBox = new DragBox({condition: platformModifierKeyOnly});
+            const dragBox = new DragBox({ condition: platformModifierKeyOnly });
             mapObject.addInteraction(dragBox);
 
             if (waterSelectedLayer && vatnSource && selectedArea) {
@@ -334,7 +334,7 @@ const SimpleMap = ({
 
             dragBox.on('boxend', (e) => {
                 if (!vatnSource) return;
-    
+
                 const features = [];
                 vatnSource.forEachFeatureIntersectingExtent(dragBox.getGeometry().getExtent(), (f) => {
                     features.push(f);
@@ -344,7 +344,7 @@ const SimpleMap = ({
 
             mapObject.on('click', (e) => {
                 if (!vatnSource) return;
-    
+
                 const features = [];
                 mapObject.forEachFeatureAtPixel(e.pixel, (f) => {
                     const featureLayerName = f.get('_layerName');
@@ -361,7 +361,7 @@ const SimpleMap = ({
         } else {
             mapObject.on('click', (e) => {
                 if (!vatnSource) return;
-    
+
                 const features = [];
                 mapObject.forEachFeatureAtPixel(e.pixel, (f) => {
                     const featureLayerName = f.get('_layerName');
@@ -397,7 +397,7 @@ const SimpleMap = ({
         // Fit extent
         mapObject.getView().fit(mapExtent);
 
-		return () => mapObject.setTarget(undefined);
+        return () => mapObject.setTarget(undefined);
     }, [isWaterArea, selectedArea]);
 
     return (
@@ -406,6 +406,6 @@ const SimpleMap = ({
                 <div ref={mapRef} className="ol-map"></div>
             </MapContext.Provider>
         </div>
-	)
+    )
 }
 export default SimpleMap;

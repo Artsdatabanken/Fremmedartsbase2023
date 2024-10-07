@@ -66,7 +66,7 @@ function cleanNode(node) {
 }
 
 function sanitizeHTML2(html) {
-    const domparser =  new DOMParser();
+    const domparser = new DOMParser();
     var doc = domparser.parseFromString(html, 'text/html');
     console.log("parser : " + !!domparser + "doc :" + !!doc);
     cleanNode(doc.body);

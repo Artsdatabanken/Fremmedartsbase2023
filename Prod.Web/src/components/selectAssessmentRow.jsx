@@ -5,13 +5,13 @@ import { beskrivTidSiden } from '../formatting'
 
 class selectAssessmentRow extends Component {
     render() {
-        const { assessment, rolle, labels, userId, appState} = this.props
+        const { assessment, rolle, labels, userId, appState } = this.props
         const isLocked = !!assessment.lockedForEditByUser
         const isSuperUser = rolle.admin
         const isLockedByMe = assessment.lockedForEditByUser === userId
 
         // console.log("###" + assessment.lockedForEditByUser + "#" +  rolle.userName)
-       
+
         // users with write access in groups "Fisker" and "Fugler" can unlock assessments - issue #202 FAB 3.0
         const canUnlock = isLocked && (isLockedByMe || isSuperUser || rolle.writeAccess)
 
@@ -41,7 +41,7 @@ class selectAssessmentRow extends Component {
             <tr
                 key={assessment.VurderingId}
                 onClick={() => this.props.onOpen(assessment)}>
-                {/*<td>{isLocked && <span className='glyphicon glyphicon-lock'/>}</td>     */}           
+                {/*<td>{isLocked && <span className='glyphicon glyphicon-lock'/>}</td>     */}
                 <td>
                     <span><i>{assessment.scientificName}</i> {assessment.scientificNameAuthor} {assessment.popularName}</span>
                 </td>
@@ -50,20 +50,20 @@ class selectAssessmentRow extends Component {
                 </td> */}
                 {/*<td>{assessment.horizonDoScanning ? "Ja" : "Nei"}</td>*/}
                 <td><span>{assessment.category2018}</span></td>
-                {appState.assessmentTypeFilter == "riskAssessment" && <td><span>{assessment.horizontScanResult == 1 ? "HS" : ""}</span></td>} 
+                {appState.assessmentTypeFilter == "riskAssessment" && <td><span>{assessment.horizontScanResult == 1 ? "HS" : ""}</span></td>}
                 {appState.assessmentTypeFilter == "riskAssessment" && <td><span>{assessment.category}</span></td>}
                 <td>
                     <span>{assessment.lastUpdatedAt.substring(0, 10) + " av " + assessment.lastUpdatedBy}</span>
                 </td>
-                {/*<td>{isLocked && <span className='glyphicon glyphicon-lock'/>}</td> 
-                <td>&nbsp;{isLocked && <span className='glyphicon glyphicon-lock'/>}</td>          
-                
-                <td>&nbsp;{isLocked && <span className='glyphicon glyphicon-lock'/>}</td>*/}   
-                <td style={{width: '15%'}}>
-                    <p>{labels.SelectAssessment.total} {totalComments}{ assessment.commentOpen > 0 ? (' Nyeste:' + assessment.commentDate) : ''}</p>
-                   {assessment.commentOpen > 0 ? <p style={{color: 'red'}}>{labels.SelectAssessment.notSeen} {assessment.commentOpen}</p> : <p>{labels.SelectAssessment.notSeen} {assessment.commentOpen}</p>}
-                </td> 
-                <td style={{color}}>
+                {/*<td>{isLocked && <span className='glyphicon glyphicon-lock'/>}</td>
+                <td>&nbsp;{isLocked && <span className='glyphicon glyphicon-lock'/>}</td>
+
+                <td>&nbsp;{isLocked && <span className='glyphicon glyphicon-lock'/>}</td>*/}
+                <td style={{ width: '15%' }}>
+                    <p>{labels.SelectAssessment.total} {totalComments}{assessment.commentOpen > 0 ? (' Nyeste:' + assessment.commentDate) : ''}</p>
+                    {assessment.commentOpen > 0 ? <p style={{ color: 'red' }}>{labels.SelectAssessment.notSeen} {assessment.commentOpen}</p> : <p>{labels.SelectAssessment.notSeen} {assessment.commentOpen}</p>}
+                </td>
+                <td style={{ color }}>
                     <Status onLock={(e) => this.handleLock(e, assessment)}
                         onUnlock={(e) => this.handleUnlock(e, assessment)}
                         canEdit={canEdit}
@@ -89,7 +89,7 @@ class selectAssessmentRow extends Component {
                 {/* <td>
                     // {isFinished
                     // ? <span style={{color:"red"}}>{labels.SelectAssessment.assessmentClosed}</span>
-                    // : 
+                    // :
                     // canUnlock
                     // ? <Xcomp.Button disabled={!rolle.leder} onClick={e => this.handleUnlock(e, assessment)}>{labels.SelectAssessment.releaseAssessment}</Xcomp.Button>
                     // : null}
@@ -122,12 +122,12 @@ export default inject('appState')(observer(selectAssessmentRow));
 const Status = ({ isLocked, isLockedByMe, canEdit, isFinished, assessment, onLock, onUnlock, canUnlock, labels }) => {
     // console.log("------"+isLocked+ isLockedByMe+ canEdit+ isFinished +canUnlock )
     return isFinished
-    ? <span style={{color:"red"}}>{labels.SelectAssessment.assessmentClosed}&nbsp;</span>
-    : isLocked
-    ? <><div>{labels.SelectAssessment.assessedBy}&nbsp;<b>{isLockedByMe ? "meg" : assessment.lockedForEditByUser}</b><br></br>
-    { canUnlock &&<Xcomp.Button onClick={(e) => onUnlock(e)}>{labels.SelectAssessment.releaseAssessment}</Xcomp.Button>} </div> </>
-    : canEdit
-    ? <Xcomp.Button onClick={(e) => onLock(e)}>{labels.SelectAssessment.startAssessment}</Xcomp.Button>
-    : <span>{labels.SelectAssessment.readOnly}</span>
+        ? <span style={{ color: "red" }}>{labels.SelectAssessment.assessmentClosed}&nbsp;</span>
+        : isLocked
+            ? <><div>{labels.SelectAssessment.assessedBy}&nbsp;<b>{isLockedByMe ? "meg" : assessment.lockedForEditByUser}</b><br></br>
+                {canUnlock && <Xcomp.Button onClick={(e) => onUnlock(e)}>{labels.SelectAssessment.releaseAssessment}</Xcomp.Button>} </div> </>
+            : canEdit
+                ? <Xcomp.Button onClick={(e) => onLock(e)}>{labels.SelectAssessment.startAssessment}</Xcomp.Button>
+                : <span>{labels.SelectAssessment.readOnly}</span>
 }
 

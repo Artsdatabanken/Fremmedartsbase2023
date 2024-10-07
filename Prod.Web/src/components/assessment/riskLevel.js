@@ -1,12 +1,12 @@
 ﻿const self = {
-    categoryText : ['NK','LO','PH','HI','SE'],
-    riskColors: ["#9ba963","#5ea4a1", "#185a6c", "#1b386f", "#5e3063" ],
-    riskLevelMatrise: [ 
+    categoryText: ['NK', 'LO', 'PH', 'HI', 'SE'],
+    riskColors: ["#9ba963", "#5ea4a1", "#185a6c", "#1b386f", "#5e3063"],
+    riskLevelMatrise: [
         // invasjonspotensiale -->
-        [2,3,4,4], //        A
-        [1,3,3,4], //        |
-        [1,1,1,3], //        |
-        [0,1,1,2]  // økologisk effekt
+        [2, 3, 4, 4], //        A
+        [1, 3, 3, 4], //        |
+        [1, 1, 1, 3], //        |
+        [0, 1, 1, 2]  // økologisk effekt
     ],
     invasjonspotensiale: (riskAssessment) => {
         // console.log("invasjonspotensiale:::: ")
@@ -20,13 +20,13 @@
         const a = critA.value;
         const b = critB.value;
         const c = critC.value;
-        const abAdjustment = [ 
-                // Crit B -->
-                [0,1,1,2], //  Crit A
-                [0,1,2,2], //    |
-                [1,2,2,3], //    |
-                [1,2,3,3], //    V
-            ]
+        const abAdjustment = [
+            // Crit B -->
+            [0, 1, 1, 2], //  Crit A
+            [0, 1, 2, 2], //    |
+            [1, 2, 2, 3], //    |
+            [1, 2, 3, 3], //    V
+        ]
         // console.log("RISKLEVEL A B" + JSON.stringify(a) + JSON.stringify(b))
         const adjustedAB = abAdjustment[a][b]
         // console.log("AdjustedAB: " + a + " "  + b + " " + adjustedAB + abAdjustment[0][0])
@@ -48,11 +48,11 @@
             const minUL_A = critA.uncertaintyValues.length === 0 ? a : Math.min(...critA.uncertaintyValues)
             const minUL_B = critB.uncertaintyValues.length === 0 ? b : Math.min(...critB.uncertaintyValues)
             const minUL_AB_adj = abAdjustment[minUL_A][minUL_B]
-            const minUL_AB = Math.max(minUL_AB_adj, adjustedAB - 1 )
+            const minUL_AB = Math.max(minUL_AB_adj, adjustedAB - 1)
             const maxUL_A = critA.uncertaintyValues.length === 0 ? a : Math.max(...critA.uncertaintyValues)
             const maxUL_B = critB.uncertaintyValues.length === 0 ? b : Math.max(...critB.uncertaintyValues)
             const maxUL_AB_adj = abAdjustment[maxUL_A][maxUL_B]
-            const maxUL_AB = Math.min(maxUL_AB_adj, adjustedAB + 1 )
+            const maxUL_AB = Math.min(maxUL_AB_adj, adjustedAB + 1)
 
 
             for (var i = minUL_AB; i <= maxUL_AB; i++) {
@@ -65,7 +65,7 @@
             decisiveCrits.push(critC)
         }
         const uncertaintiesC = c === level ? critC.uncertaintyValues : []
-        const allUncertaintyLevels = [...new Set([...uncertaintiesAB,...uncertaintiesC])].sort()
+        const allUncertaintyLevels = [...new Set([...uncertaintiesAB, ...uncertaintiesC])].sort()
         // console.log("ABC - " + JSON.stringify(allUncertaintyLevels))
         // console.log("ucl:" + JSON.stringify(uncertaintyLevels))
         const decisiveUncertainties = []
@@ -77,8 +77,8 @@
         }
         // console.log("ABC decisiveUncertainties - " + JSON.stringify(decisiveUncertainties))
 
-        const sweepingUncertaintyLevels = decisiveUncertainties.reduce((acc, uv) => acc.filter(n => n >= level || uv.indexOf(n) > -1), allUncertaintyLevels) 
-        const result = {level: level, decisiveCriteria:decisiveCrits, uncertaintyLevels: sweepingUncertaintyLevels} // uncertaintyLevels }
+        const sweepingUncertaintyLevels = decisiveUncertainties.reduce((acc, uv) => acc.filter(n => n >= level || uv.indexOf(n) > -1), allUncertaintyLevels)
+        const result = { level: level, decisiveCriteria: decisiveCrits, uncertaintyLevels: sweepingUncertaintyLevels } // uncertaintyLevels }
         return result;
     },
     ecoeffect: (riskAssessment) => {
@@ -92,10 +92,10 @@
         //console.log("descrits " + JSON.stringify(decisiveCrits.map(crit => crit.uncertaintyValues.slice()) )   )
         //console.log("" + JSON.stringify(crits))
 
-        const alluncertentyLevels = decisiveCrits.map(crit => crit.uncertaintyValues.slice()).reduce((a, b) => a.concat(b)) 
+        const alluncertentyLevels = decisiveCrits.map(crit => crit.uncertaintyValues.slice()).reduce((a, b) => a.concat(b))
         const uncertaintyLevels = [...new Set(alluncertentyLevels)].sort()
-        const sweepingUncertaintyLevels = decisiveCrits.reduce((acc, crit) => acc.filter(n => n >= level || crit.uncertaintyValues.indexOf(n) > -1), uncertaintyLevels) 
-        const result = {level: level, decisiveCriteria:decisiveCrits, uncertaintyLevels: sweepingUncertaintyLevels} // uncertaintyLevels }
+        const sweepingUncertaintyLevels = decisiveCrits.reduce((acc, crit) => acc.filter(n => n >= level || crit.uncertaintyValues.indexOf(n) > -1), uncertaintyLevels)
+        const result = { level: level, decisiveCriteria: decisiveCrits, uncertaintyLevels: sweepingUncertaintyLevels } // uncertaintyLevels }
         return result;
     },
     riskLevel: (invasjonspotensiale, ecoeffect) => {
@@ -107,8 +107,8 @@
         const invLetters2 = invasjonspotensiale.level === 0 ? "" : invLetters
         const ecoLetters = ecoeffect.decisiveCriteria.map(crit => crit.criteriaLetter).join("")
         const ecoLetters2 = ecoeffect.level === 0 ? "" : ecoLetters
-        const decisiveCriteriaLabel = "" + (invasjonspotensiale.level + 1) +  invLetters2 + "," + (ecoeffect.level + 1) + ecoLetters2
-        const result = {level: lev,   decisiveCriteriaLabel:decisiveCriteriaLabel}
+        const decisiveCriteriaLabel = "" + (invasjonspotensiale.level + 1) + invLetters2 + "," + (ecoeffect.level + 1) + ecoLetters2
+        const result = { level: lev, decisiveCriteriaLabel: decisiveCriteriaLabel }
         return result;
     },
     uncertaintyCategories_depricated: (riskLevel, invationpotentialUncertaintyLevels, ecoeffectUncertaintyLevels) => {
@@ -120,16 +120,15 @@
             for (let index = 0; index < ecoeffectUncertaintyLevels.length; index++) {
                 const ecoEl = ecoeffectUncertaintyLevels[index];
                 const newLocal = self.riskLevelMatrise[3 - ecoEl][invEl];
-                if (newLocal != riskLevel)
-                {
+                if (newLocal != riskLevel) {
                     usikkerhetskategorier.push(newLocal);
                 }
             }
         }
 
-        usikkerhetskategorier=[...new Set(usikkerhetskategorier)]
+        usikkerhetskategorier = [...new Set(usikkerhetskategorier)]
         // console.log(usikkerhetskategorier);
-        return usikkerhetskategorier.map(x=>self.categoryText[x]);
+        return usikkerhetskategorier.map(x => self.categoryText[x]);
         // console.log(usikkerhetskategorierText);
     },
     uncertaintyCategories: (riskLevel, invasjonspotensiale, ecoeffect) => {
@@ -138,22 +137,20 @@
         for (let index = 0; index < invasjonspotensiale.uncertaintyLevels.length; index++) {
             const invEl = invasjonspotensiale.uncertaintyLevels[index];
             const newLocal = self.riskLevelMatrise[3 - ecoeffect.level][invEl];
-            if (newLocal != riskLevel)
-            {
+            if (newLocal != riskLevel) {
                 usikkerhetskategorier.push(newLocal);
             }
         }
         for (let index = 0; index < ecoeffect.uncertaintyLevels.length; index++) {
             const ecoEl = ecoeffect.uncertaintyLevels[index];
             const newLocal = self.riskLevelMatrise[3 - ecoEl][invasjonspotensiale.level];
-            if (newLocal != riskLevel)
-            {
+            if (newLocal != riskLevel) {
                 usikkerhetskategorier.push(newLocal);
             }
         }
-        usikkerhetskategorier=[...new Set(usikkerhetskategorier)]
+        usikkerhetskategorier = [...new Set(usikkerhetskategorier)]
         // console.log(usikkerhetskategorier);
-        return usikkerhetskategorier.map(x=>self.categoryText[x]);
+        return usikkerhetskategorier.map(x => self.categoryText[x]);
         // console.log(usikkerhetskategorierText);
     }
 

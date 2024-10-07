@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import Loading from './Loading'
 
 const LoadingHoc = (propName) => (WrappedComponent) => {
@@ -6,8 +6,8 @@ const LoadingHoc = (propName) => (WrappedComponent) => {
         render() {
             // return this.isEmpty(this.props[propName])
             return !this.props[propName]
-                ? <Loading/>
-                : <WrappedComponent {...this.props}/>
+                ? <Loading />
+                : <WrappedComponent {...this.props} />
         }
 
         isEmpty(prop) {

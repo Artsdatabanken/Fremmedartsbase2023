@@ -1,6 +1,6 @@
 import React from 'react';
-import {extendObservable, observable, action} from 'mobx';
-import {observer} from 'mobx-react';
+import { extendObservable, observable, action } from 'mobx';
+import { observer } from 'mobx-react';
 
 import createTaxonSearch from '../../createTaxonSearch'
 import HabitatTableRow from './habitatTableRow';
@@ -9,7 +9,7 @@ import HabitatTableRow from './habitatTableRow';
 class HabitatTable extends React.Component {
     constructor(props) {
         super()
-        
+
         extendObservable(this, {
             taxon: {
                 id: "habitatTableTaxonSearch",
@@ -21,19 +21,19 @@ class HabitatTable extends React.Component {
                 taxonId: "",
                 taxonSearchString: "",
                 taxonSearchResult: [],
-                domesticOrAbroad : "",
-                redListCategory: "", 
-                keyStoneSpecie : false, 
-                effectLocalScale : false, 
-                effect : "Weak",
+                domesticOrAbroad: "",
+                redListCategory: "",
+                keyStoneSpecie: false,
+                effectLocalScale: false,
+                effect: "Weak",
                 scale: "Limited",
                 status: "NewAlien",
-                interactionType : "CompetitionSpace", 
-                longDistanceEffect : false, 
-                confirmedOrAssumed : false, 
+                interactionType: "CompetitionSpace",
+                longDistanceEffect: false,
+                confirmedOrAssumed: false,
                 basisOfAssessment: [],
                 interactionTypes: [],
-            }, 
+            },
             editMode: false
         })
         createTaxonSearch(this.taxon, props.appState.assessment.evaluationContext)
@@ -43,20 +43,20 @@ class HabitatTable extends React.Component {
         this.editMode = !this.editMode
     })
     render() {
-        const {naturetypes, labels, canRenderTable, appState, desc} = this.props;
+        const { naturetypes, labels, canRenderTable, appState, desc } = this.props;
         const ntLabels = labels.NatureTypes
         const assessment = appState.assessment
         // console.log("naturtyperader#: " + naturetypes.length)
-        return(
+        return (
             <div>
                 <p>{desc}</p>
                 <table className="table habitat">
-                    <colgroup>               
-                        <col  style={{width: "15%"}}/>
-                        <col  style={{width: "30%"}}/>
-                        <col  style={{width: "15%"}}/>
-                        <col  style={{width: "25%"}}/>
-                        <col  style={{width: "15%"}}/>
+                    <colgroup>
+                        <col style={{ width: "15%" }} />
+                        <col style={{ width: "30%" }} />
+                        <col style={{ width: "15%" }} />
+                        <col style={{ width: "25%" }} />
+                        <col style={{ width: "15%" }} />
                     </colgroup>
                     <thead>
                         <tr>
@@ -67,21 +67,22 @@ class HabitatTable extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {canRenderTable 
-                        ? naturetypes.map(nt => { 
-                            const deleteRow = () => naturetypes.remove(nt)
-                            const key = nt.niNCode + nt.timeHorizon + nt.colonizedArea + nt.affectedArea
-                            return <HabitatTableRow 
-                                key={key} 
-                                naturtype={nt} 
-                                taxon={this.taxon} 
-                                deleteRow={deleteRow} 
-                                appState={appState} 
-                                toggleEdit={this.toggleEdit} 
-                                editMode={this.editMode} 
-                                labels={labels} 
-                                assessment={assessment}/> }) 
-                        : null}
+                        {canRenderTable
+                            ? naturetypes.map(nt => {
+                                const deleteRow = () => naturetypes.remove(nt)
+                                const key = nt.niNCode + nt.timeHorizon + nt.colonizedArea + nt.affectedArea
+                                return <HabitatTableRow
+                                    key={key}
+                                    naturtype={nt}
+                                    taxon={this.taxon}
+                                    deleteRow={deleteRow}
+                                    appState={appState}
+                                    toggleEdit={this.toggleEdit}
+                                    editMode={this.editMode}
+                                    labels={labels}
+                                    assessment={assessment} />
+                            })
+                            : null}
                     </tbody>
                 </table>
             </div>

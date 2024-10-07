@@ -1,6 +1,6 @@
 ﻿import React from 'react';
-import {observer} from 'mobx-react';
-import {extendObservable} from 'mobx';
+import { observer } from 'mobx-react';
+import { extendObservable } from 'mobx';
 import * as Xcomp from '../observableComponents';
 import EditReference from './editReference'
 
@@ -12,7 +12,7 @@ class ReferenceDetailsPane extends React.Component {
         })
     }
     render() {
-        const {valgtReferanse, nyReferanse, lagreReferanse, slettReferanse, codes, labels} = this.props;
+        const { valgtReferanse, nyReferanse, lagreReferanse, slettReferanse, codes, labels } = this.props;
         // const nbsp = "\u00a0"
         const rLabels = labels.Reference
         return (
@@ -23,7 +23,7 @@ class ReferenceDetailsPane extends React.Component {
                         <Xcomp.StringEnum
                             observableValue={[this, 'redigeringsType']}
                             codes={codes.ReferenceType}
-                            disabled={!valgtReferanse.allowEdit}/>
+                            disabled={!valgtReferanse.allowEdit} />
                     </div>
                     <div className="col-md-3">
                         <Xcomp.Button onClick={lagreReferanse} disabled={!valgtReferanse.kanLagres}>
@@ -33,7 +33,7 @@ class ReferenceDetailsPane extends React.Component {
                     <div className="col-md-3">
                         <Xcomp.Button
                             onClick={nyReferanse}
-                            >{rLabels.referenceNew}</Xcomp.Button>
+                        >{rLabels.referenceNew}</Xcomp.Button>
                     </div>
                     <div className="col-md-3">
                         <Xcomp.Button
@@ -42,7 +42,7 @@ class ReferenceDetailsPane extends React.Component {
                     </div>
                 </div>
                 {valgtReferanse.id
-                    ? <EditReference reference={ valgtReferanse} referenceContext={this} refcodes={codes.ReferenceType}/>
+                    ? <EditReference reference={valgtReferanse} referenceContext={this} refcodes={codes.ReferenceType} />
                     : <h4>{rLabels.canNotEdit}</h4>
                 }
             </div>

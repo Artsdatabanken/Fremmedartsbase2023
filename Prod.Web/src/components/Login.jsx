@@ -1,5 +1,5 @@
 ﻿import React from 'react'
-import {observable} from 'mobx'
+import { observable } from 'mobx'
 import auth from './authService'
 
 import * as Xcomp from './observableComponents'
@@ -14,7 +14,7 @@ export default class Login extends React.Component {
     render() {
         return (
             <form role="form">
-                <Xcomp.Button onClick={(e) => this.login(e) }><span>Logg inn</span></Xcomp.Button>
+                <Xcomp.Button onClick={(e) => this.login(e)}><span>Logg inn</span></Xcomp.Button>
             </form>
         )
     }

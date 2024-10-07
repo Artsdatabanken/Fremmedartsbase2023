@@ -1,11 +1,11 @@
 import React from 'react'
-import {observer} from 'mobx-react'
+import { observer } from 'mobx-react'
 import KollapsetSpredningsrad from './KollapsetSpredningsrad'
 import EkspandertSpredningsrad from './EkspandertSpredningsrad'
 
 class HistorikkTabell extends React.Component {
     render() {
-        const {historikk, appState, disabled} = this.props
+        const { historikk, appState, disabled } = this.props
         const labels = appState.codeLabels.DistributionHistory
         const vurdering = appState.assessment
         const scientificNameId = vurdering.evaluatedScientificNameId
@@ -23,7 +23,7 @@ class HistorikkTabell extends React.Component {
                         <th>{labels.historyAreaOccupancy}<br />km&#178;</th>
                         <th>{labels.historyExtentOfOccurrence}<br />km&#178;</th>
                         <th>{labels.historyComment}</th>
-                        <th style={{textAlign: "center"}}>{labels.historyCounty}</th>
+                        <th style={{ textAlign: "center" }}>{labels.historyCounty}</th>
                         <th>&nbsp;</th>
                     </tr>
                 </thead>

@@ -1,4 +1,4 @@
-import {observer} from 'mobx-react';
+import { observer } from 'mobx-react';
 import React from 'react'
 import * as RL from 'react-leaflet'
 import * as L from 'leaflet'
@@ -34,14 +34,14 @@ class Kart extends React.Component {
             },
         }
         const style = this.props.style
-//                 <RL.TileLayer url='//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'/>
+        //                 <RL.TileLayer url='//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'/>
 
         return (
             <RL.Map zoom={5} minZoom={3}
-                    maxBounds={[[-90, -180], [90, 180]]}
-                    bounds={[[56, 4.3], [69, 31]]}
-                    animate
-        onresize={(e) => this.handleResize(e)}>
+                maxBounds={[[-90, -180], [90, 180]]}
+                bounds={[[56, 4.3], [69, 31]]}
+                animate
+                onresize={(e) => this.handleResize(e)}>
 
                 <RL.TileLayer url='//cartodb-basemaps-{s}.global.ssl.fastly.net/light_nolabels/{z}/{x}/{y}.png' />
                 <RL.WMSTileLayer
@@ -51,10 +51,10 @@ class Kart extends React.Component {
                     version="1.1"
                     attribution="" />
                 <RL.GeoJSON key={this.key++} data={(this.props.geojson)}
-                            pointToLayer={(f,l) => Kart.createMarker(f,l)}
-                            style={(featureData) => {
-                                return style[featureData.category]
-                            }}
+                    pointToLayer={(f, l) => Kart.createMarker(f, l)}
+                    style={(featureData) => {
+                        return style[featureData.category]
+                    }}
                 />
                 <RL.FeatureGroup>
                     {/* <EditControl
@@ -66,7 +66,7 @@ class Kart extends React.Component {
     }
 
     handleResize(e) {
-//        debugger
+        //        debugger
     }
 
     /*

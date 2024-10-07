@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {observer} from 'mobx-react'
+import { observer } from 'mobx-react'
 
 class Opplasting extends React.Component {
     constructor(props) {
@@ -15,7 +15,7 @@ class Opplasting extends React.Component {
         return (
             <div>
                 Last opp:
-                <input onChange={(e) => this.startOpplastinger(e)} type="file" multiple/>
+                <input onChange={(e) => this.startOpplastinger(e)} type="file" multiple />
             </div>
         )
     }
@@ -51,7 +51,7 @@ class Opplasting extends React.Component {
             alert("upload not implemented")
         })(file)
         reader.readAsBinaryString(file)
-        return {newUpload, reader}
+        return { newUpload, reader }
     }
 }
 

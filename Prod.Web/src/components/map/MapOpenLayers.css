@@ -2,12 +2,15 @@
     left: unset;
     right: .5em;
 }
+
 .ol-legend {
     top: 64px;
 }
-.ol-legend>button {
+
+.ol-legend > button {
     padding-bottom: 5px;
 }
+
 /* .ol-legend-button {
     background-position: center;
     background-repeat: no-repeat;
@@ -15,7 +18,7 @@
 .ol-popup {
     position: absolute;
     background-color: white;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
     padding: 5px;
     border-radius: 5px;
     border: 1px solid #cccccc;
@@ -24,10 +27,13 @@
     min-width: 98px;
     transition: opacity 100ms ease-out;
 }
+
 .ol-popup-static {
     left: -30px;
 }
-.ol-popup-anchor:after, .ol-popup:before {
+
+.ol-popup-anchor:after,
+.ol-popup:before {
     top: 100%;
     border: solid transparent;
     content: " ";
@@ -36,27 +42,32 @@
     position: absolute;
     pointer-events: none;
 }
+
 .ol-popup-anchor:after {
     border-top-color: white;
     border-width: 10px;
     left: 48px;
     margin-left: -10px;
 }
+
 .ol-popup-anchor:before {
     border-top-color: #cccccc;
     border-width: 11px;
     left: 48px;
     margin-left: -11px;
 }
+
 .ol-popup-closer {
     text-decoration: none;
     position: absolute;
     top: 2px;
     right: 8px;
 }
+
 .ol-popup-closer:after {
     content: "✖";
 }
+
 .ol-popup-content {
     text-align: center;
     white-space: nowrap;

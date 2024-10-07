@@ -1,6 +1,6 @@
 import enhanceCriteria from './enhanceCriteria'
 import fixFylker from './fixFylker'
-import { action, autorun, extendObservable, observable, reaction, toJS, runInAction} from 'mobx'
+import { action, autorun, extendObservable, observable, reaction, toJS, runInAction } from 'mobx'
 import errorhandler from '../errorhandler';
 import getErrorDefinitions from './errorDefinitions';
 import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils'
@@ -8,21 +8,21 @@ import { string } from 'prop-types'
 import { nothing } from 'ol/pixel'
 
 function deleteProps(obj, proparray) {
-    for(const prop of proparray) {
+    for (const prop of proparray) {
         delete obj[prop]
     }
 }
 function copyProps(fromobj, toobj, proparray) {
-    for(const prop of proparray) {
+    for (const prop of proparray) {
         toobj[prop] = fromobj[prop]
     }
 }
 
 //////////////////////////////////////////////////////////////
-// these arrays contains all propertynames of 
-// computed (mobx) values that replaces 
-// the domain properties on the assessment. 
-// 
+// these arrays contains all propertynames of
+// computed (mobx) values that replaces
+// the domain properties on the assessment.
+//
 // these properties needs to be deleted from the object
 // before the computed (mobx) getters are added to the object
 //
@@ -56,7 +56,7 @@ const riskAssessmentGetterFields = [
     "apossibleHigh",
     "ascore",
     "alow",
-    "ahigh", 
+    "ahigh",
     "medianLifetime",
     "lifetimeLowerQ",
     "lifetimeUpperQ",
@@ -85,8 +85,8 @@ const riskAssessmentGetterFields = [
 
 
 function nullToNaN(obj, proparray) {
-    for(const prop of proparray) {
-        if(obj[prop] === null) {
+    for (const prop of proparray) {
+        if (obj[prop] === null) {
             obj[prop] = NaN
         }
     }
@@ -98,7 +98,7 @@ function nullToNaN(obj, proparray) {
 // when persisting data.
 // to give more predictable behavior convert
 // these properties from null -> NaN
-// when initializing (enhance) the assessment 
+// when initializing (enhance) the assessment
 ////////////////////////////////////////////////
 const riskAssessmentNumberFields = [
     "occurrences1Low",
@@ -117,7 +117,7 @@ const riskAssessmentNumberFields = [
 
 ////////////////////////////////////////////////
 // Some fields are helperfields added to the
-// assessment for convenience, but does not have 
+// assessment for convenience, but does not have
 // fields in the domain model.
 // It is best to remove this fields before
 // saving the document to reduce confusion...
@@ -126,14 +126,14 @@ const assessmentHelperFields = [
     "statusChange",
 ]
 const riskAssessmentHelperFields = [
-    "critA", 
-    "critB", 
-    "critC", 
-    "critD", 
-    "critE", 
-    "critF", 
-    "critG", 
-    "critH", 
+    "critA",
+    "critB",
+    "critC",
+    "critD",
+    "critE",
+    "critF",
+    "critG",
+    "critH",
     "critI",
     "chosenSpreadMedanLifespan_Was_RedListCategoryLevel",
     //"furtherInfoAboutImport" // no longer in use
@@ -143,17 +143,17 @@ const riskAssessmentHelperFields = [
 function getCategoryText(val, pathways) {
     var text = ""
     if (pathways != undefined) {
-        pathways.map (pathway => pathway.children.map(higherLevel => { 
+        pathways.map(pathway => pathway.children.map(higherLevel => {
             higherLevel.children.map(lowerLevel => {
-                if (lowerLevel.value === val) { 
+                if (lowerLevel.value === val) {
                     text = higherLevel.name + " - " + lowerLevel.name + ": "
                 }
-            })     
+            })
         }))
     }
     return text
 }
-function removeBreaks (text) {
+function removeBreaks(text) {
     var br = new RegExp('<br>', 'ig');
     text = text.replace(br, '');
     return text
@@ -164,7 +164,7 @@ function generateFurtherInfoText(migrationPathways, appState) {
         for (var i = 0; i < migrationPathways.length; i++) {
             if (migrationPathways[i].elaborateInformation != "") {
                 var categoryText = getCategoryText(migrationPathways[i].codeItem, appState.spredningsveier.children)
-                elaborateInformation += categoryText + removeBreaks(migrationPathways[i].elaborateInformation) + "." //+ "<br>"                       
+                elaborateInformation += categoryText + removeBreaks(migrationPathways[i].elaborateInformation) + "." //+ "<br>"
             }
         }
     }
@@ -179,13 +179,13 @@ export default function enhanceAssessment(json, appState) {
     deleteProps(jsonra, riskAssessmentGetterFields)
     // * * *
     // ***** Fix invalid values ***********************
-    if(jsonra.AOOfirstOccurenceLessThan10Years === null) {
+    if (jsonra.AOOfirstOccurenceLessThan10Years === null) {
         jsonra.AOOfirstOccurenceLessThan10Years = "yes"
     }
-    if(jsonra.chosenSpreadYearlyIncrease === "c") {
+    if (jsonra.chosenSpreadYearlyIncrease === "c") {
         jsonra.chosenSpreadYearlyIncrease = "a"
     }
-    if(jsonra.riskLevelCode === "NK") {
+    if (jsonra.riskLevelCode === "NK") {
         jsonra.possibleLowerCategory = "no"
     }
     // *****
@@ -238,17 +238,17 @@ export default function enhanceAssessment(json, appState) {
         },
 
         get spreadIndoorFurtherInfoGeneratedText() {
-            const migrationPathways  = assessment.importPathways
+            const migrationPathways = assessment.importPathways
             const result = generateFurtherInfoText(migrationPathways, appState)
             return result
         },
         get spreadIntroductionFurtherInfoGeneratedText() {
-            const migrationPathways  = assessment.assesmentVectors.filter(vector => vector.introductionSpread == "introduction")
+            const migrationPathways = assessment.assesmentVectors.filter(vector => vector.introductionSpread == "introduction")
             const result = generateFurtherInfoText(migrationPathways, appState)
             return result
         },
         get spreadFurtherSpreadFurtherInfoGeneratedText() {
-            const migrationPathways  = assessment.assesmentVectors.filter(vector => vector.introductionSpread == "spread")
+            const migrationPathways = assessment.assesmentVectors.filter(vector => vector.introductionSpread == "spread")
             const result = generateFurtherInfoText(migrationPathways, appState)
             return result
         },
@@ -262,79 +262,79 @@ export default function enhanceAssessment(json, appState) {
         get category() {
             const result =
                 assessment.assessmentConclusion === "WillNotBeRiskAssessed"
-                ? "NR"
-                : assessment.riskAssessment.riskLevelCode
+                    ? "NR"
+                    : assessment.riskAssessment.riskLevelCode
             return result
         },
         get criteria() {
             const result =
                 assessment.assessmentConclusion === "WillNotBeRiskAssessed"
-                ? ""
-                : assessment.riskAssessment.decisiveCriteria
+                    ? ""
+                    : assessment.riskAssessment.decisiveCriteria
             return result
         },
 
         get assessmentConclusion() {
-            const result = 
-                !assessment.isAlienSpecies 
-                ? "WillNotBeRiskAssessed"
-                : assessment.misIdentified
-                ? "WillNotBeRiskAssessed"
-                : assessment.allSubTaxaAssessedSeparately
-                ? "WillNotBeRiskAssessed"
-                : assessment.isHybridWithoutOwnRiskAssessment
-                ? "WillNotBeRiskAssessed"
-                : assessment.higherOrLowerLevel 
-                ? "WillNotBeRiskAssessed"
-                : assessment.alienSpeciesCategory == "UncertainBefore1800"
-                ? "WillNotBeRiskAssessed"
-                : assessment.alienSpeciesCategory == "RegionallyAlienEstablishedBefore1800"
-                ? "WillNotBeRiskAssessed"
-                : assessment.alienSpeciesCategory == "NotDefined"
-                ? "NotDecided"           // todo: This should probably also be "WillNotBeRiskAssessed" (?? check this)
-                : assessment.alienSpeciesCategory == "DoorKnocker"
-                ? "AssessedDoorknocker" 
-                : assessment.alienSpeciesCategory == "AlienSpecie"
-                ? "AssessedSelfReproducing"
-                : assessment.alienSpeciesCategory == "RegionallyAlien"
-                ? "AssessedSelfReproducing"
-                : assessment.alienSpeciesCategory == "EffectWithoutReproduction"
-                ? "AssessedDoorknocker"
+            const result =
+                !assessment.isAlienSpecies
+                    ? "WillNotBeRiskAssessed"
+                    : assessment.misIdentified
+                        ? "WillNotBeRiskAssessed"
+                        : assessment.allSubTaxaAssessedSeparately
+                            ? "WillNotBeRiskAssessed"
+                            : assessment.isHybridWithoutOwnRiskAssessment
+                                ? "WillNotBeRiskAssessed"
+                                : assessment.higherOrLowerLevel
+                                    ? "WillNotBeRiskAssessed"
+                                    : assessment.alienSpeciesCategory == "UncertainBefore1800"
+                                        ? "WillNotBeRiskAssessed"
+                                        : assessment.alienSpeciesCategory == "RegionallyAlienEstablishedBefore1800"
+                                            ? "WillNotBeRiskAssessed"
+                                            : assessment.alienSpeciesCategory == "NotDefined"
+                                                ? "NotDecided"           // todo: This should probably also be "WillNotBeRiskAssessed" (?? check this)
+                                                : assessment.alienSpeciesCategory == "DoorKnocker"
+                                                    ? "AssessedDoorknocker"
+                                                    : assessment.alienSpeciesCategory == "AlienSpecie"
+                                                        ? "AssessedSelfReproducing"
+                                                        : assessment.alienSpeciesCategory == "RegionallyAlien"
+                                                            ? "AssessedSelfReproducing"
+                                                            : assessment.alienSpeciesCategory == "EffectWithoutReproduction"
+                                                                ? "AssessedDoorknocker"
 
-                : "WillNotBeRiskAssessed"
+                                                                : "WillNotBeRiskAssessed"
             return result
         },
         get doFullAssessment() {
-            return assessment.assessmentConclusion !== "NotDecided" && assessment.assessmentConclusion !== "WillNotBeRiskAssessed" 
+            return assessment.assessmentConclusion !== "NotDecided" && assessment.assessmentConclusion !== "WillNotBeRiskAssessed"
         },
         get alienSpeciesCategory() {
-            const result = 
+            const result =
                 assessment.horizonDoScanning && !(assessment.horizonEstablismentPotential == "2" || assessment.horizonEcologicalEffect == "yesAfterGone" || (assessment.horizonEstablismentPotential == "1" && assessment.horizonEcologicalEffect == "yesWhilePresent"))
-                ? "HorizonScannedButNotRiskAssessed"
-                : assessment.misIdentified
-                ? "MisIdentified"
-                : assessment.allSubTaxaAssessedSeparately
-                ? "AllSubTaxaAssessedSeparately"
-                : assessment.isHybridWithoutOwnRiskAssessment
-                ? "HybridWithoutOwnRiskAssessment"
-                : ! assessment.isAlienSpecies
-                ? "NotAlienSpecie"
-                : assessment.higherOrLowerLevel
-                ? "TaxonEvaluatedAtAnotherLevel"
-                : assessment.alienSpecieUncertainIfEstablishedBefore1800 && assessment.isRegionallyAlien
-                ? "RegionallyAlienEstablishedBefore1800" 
-                : assessment.alienSpecieUncertainIfEstablishedBefore1800
-                ? "UncertainBefore1800"
-                : !assessment.speciesStatus
-                ? "NotDefined"
-                : ((assessment.assumedReproducing50Years !== null && !assessment.assumedReproducing50Years) || (riskAssessment.occurrences1Best === 0 && assessment.horizonEcologicalEffect == "yesAfterGone"))
-                    && (assessment.speciesStatus.startsWith("B1") || assessment.speciesStatus.startsWith("B2") || assessment.speciesStatus.startsWith("C0") || assessment.speciesStatus.startsWith("C1"))
-                ? "EffectWithoutReproduction"
-                : assessment.isRegionallyAlien
-                ? "RegionallyAlien"
-                : assessment.speciesStatus.startsWith("C2") || assessment.speciesStatus.startsWith("C3")
-                ? "AlienSpecie"
-                : "DoorKnocker"
+                    ? "HorizonScannedButNotRiskAssessed"
+                    : assessment.misIdentified
+                        ? "MisIdentified"
+                        : assessment.allSubTaxaAssessedSeparately
+                            ? "AllSubTaxaAssessedSeparately"
+                            : assessment.isHybridWithoutOwnRiskAssessment
+                                ? "HybridWithoutOwnRiskAssessment"
+                                : !assessment.isAlienSpecies
+                                    ? "NotAlienSpecie"
+                                    : assessment.higherOrLowerLevel
+                                        ? "TaxonEvaluatedAtAnotherLevel"
+                                        : assessment.alienSpecieUncertainIfEstablishedBefore1800 && assessment.isRegionallyAlien
+                                            ? "RegionallyAlienEstablishedBefore1800"
+                                            : assessment.alienSpecieUncertainIfEstablishedBefore1800
+                                                ? "UncertainBefore1800"
+                                                : !assessment.speciesStatus
+                                                    ? "NotDefined"
+                                                    : ((assessment.assumedReproducing50Years !== null && !assessment.assumedReproducing50Years) || (riskAssessment.occurrences1Best === 0 && assessment.horizonEcologicalEffect == "yesAfterGone"))
+                                                        && (assessment.speciesStatus.startsWith("B1") || assessment.speciesStatus.startsWith("B2") || assessment.speciesStatus.startsWith("C0") || assessment.speciesStatus.startsWith("C1"))
+                                                        ? "EffectWithoutReproduction"
+                                                        : assessment.isRegionallyAlien
+                                                            ? "RegionallyAlien"
+                                                            : assessment.speciesStatus.startsWith("C2") || assessment.speciesStatus.startsWith("C3")
+                                                                ? "AlienSpecie"
+                                                                : "DoorKnocker"
             return result
         },
         get isDoorKnocker() {
@@ -344,20 +344,20 @@ export default function enhanceAssessment(json, appState) {
         get categoryHasChangedFromPreviousAssessment() {
             const result =
                 (
-                    (assessment.assessmentConclusion != "NotDecided" 
-                        && assessment.assessmentConclusion != "WillNotBeRiskAssessed" 
-                        && assessment.riskAssessment.riskLevelCode != null 
-                        && assessment.previousAssessments.length != 0 //Attempt to fix warning "Attempt to read an array index (0) that is out of bounds (0)". Warning shows for species that was not assessed in 2018 ("previousAssessments": []). 
-                        && assessment.previousAssessments[0] != null 
+                    (assessment.assessmentConclusion != "NotDecided"
+                        && assessment.assessmentConclusion != "WillNotBeRiskAssessed"
+                        && assessment.riskAssessment.riskLevelCode != null
+                        && assessment.previousAssessments.length != 0 //Attempt to fix warning "Attempt to read an array index (0) that is out of bounds (0)". Warning shows for species that was not assessed in 2018 ("previousAssessments": []).
+                        && assessment.previousAssessments[0] != null
                         && (assessment.previousAssessments[0].riskLevel !== assessment.riskAssessment.riskLevel
                             || assessment.previousAssessments[0].mainCategory == "NotApplicable")
-                    ) 
+                    )
                     || (
-                        assessment.assessmentConclusion == "WillNotBeRiskAssessed" 
-                        && assessment.riskAssessment.riskLevelCode != null 
-                        && assessment.previousAssessments.length != 0 
+                        assessment.assessmentConclusion == "WillNotBeRiskAssessed"
+                        && assessment.riskAssessment.riskLevelCode != null
+                        && assessment.previousAssessments.length != 0
                         && assessment.previousAssessments[0] != null
-                        && assessment.previousAssessments[0].mainCategory != "NotApplicable" 
+                        && assessment.previousAssessments[0].mainCategory != "NotApplicable"
                     )
                 )
 
@@ -369,24 +369,24 @@ export default function enhanceAssessment(json, appState) {
 
 
 
-    
+
         get horizonDoAssessment() {
             const result =
-                !this.horizonEstablismentPotential || !this.horizonEcologicalEffect 
-                ? false 
-                : this.horizonEstablismentPotential == "2" 
-                  || (this.horizonEstablismentPotential == "1" && this.horizonEcologicalEffect != "no") 
-                  || (this.horizonEstablismentPotential == "0" && this.horizonEcologicalEffect == "yesAfterGone")
+                !this.horizonEstablismentPotential || !this.horizonEcologicalEffect
+                    ? false
+                    : this.horizonEstablismentPotential == "2"
+                    || (this.horizonEstablismentPotential == "1" && this.horizonEcologicalEffect != "no")
+                    || (this.horizonEstablismentPotential == "0" && this.horizonEcologicalEffect == "yesAfterGone")
             return result
         },
-    
-    
+
+
         get horizonScanned() {
             return (this.horizonEstablismentPotential == 2
                 || (this.horizonEstablismentPotential == 1 && this.horizonEcologicalEffect != "no")
                 || (this.horizonEstablismentPotential == 0 && this.horizonEcologicalEffect == "yesAfterGone"))
         },
-    
+
         get doDoorKnockerAssessment() { // skalVurderes() {
             // todo. denne er nå knyttet til horisontskanning. Burde kanskje vært generell og hentet verdi fra: assessment.assessmentConclusion
             return this.isDoorKnocker && this.skalVurderes ? true : false
@@ -408,7 +408,7 @@ export default function enhanceAssessment(json, appState) {
             deleteProps(objra, riskAssessmentHelperFields)
             copyProps(assessment, obj, assessmentGetterFields)
             copyProps(assra, objra, assessmentGetterFields)
-        
+
             const json = JSON.stringify(obj, undefined, 2)
             return json
         }
@@ -429,13 +429,13 @@ export default function enhanceAssessment(json, appState) {
     // })
 
     autorun(() => {
-        if(assessment.speciesStatus) {
+        if (assessment.speciesStatus) {
             reaction(
                 () => assessment.speciesStatus,
                 (speciesStatus, previousSpeciesStatus) => {
                     if (speciesStatus === "C3" && previousSpeciesStatus !== "C3") {
                         // console.log("¤¤¤ reset speciesEstablishmentCategory")
-                        if(!assessment.speciesEstablishmentCategory) {
+                        if (!assessment.speciesEstablishmentCategory) {
                             runInAction(() => assessment.speciesEstablishmentCategory = "C3")
                         }
                     }
@@ -449,8 +449,8 @@ export default function enhanceAssessment(json, appState) {
         () => assessment.alienSpeciesCategory,
         (alienSpeciesCategory, previousAlienSpeciesCategory) => {
             const change =
-            (alienSpeciesCategory === "AlienSpecie" && (previousAlienSpeciesCategory === "DoorKnocker" || previousAlienSpeciesCategory === "EffectWithoutReproduction" )) ||
-            ((alienSpeciesCategory === "DoorKnocker" || alienSpeciesCategory === "EffectWithoutReproduction") && previousAlienSpeciesCategory === "AlienSpecie") 
+                (alienSpeciesCategory === "AlienSpecie" && (previousAlienSpeciesCategory === "DoorKnocker" || previousAlienSpeciesCategory === "EffectWithoutReproduction")) ||
+                ((alienSpeciesCategory === "DoorKnocker" || alienSpeciesCategory === "EffectWithoutReproduction") && previousAlienSpeciesCategory === "AlienSpecie")
             // console.log("##¤statuschange: " + change + " " + alienSpeciesCategory + " " + previousAlienSpeciesCategory)
             if (assessment.speciesStatus != null) {
                 action(() => {

@@ -1,9 +1,9 @@
-import {observable} from 'mobx';
+import { observable } from 'mobx';
 const errorhandler = observable({
     _errobjs: [],
     _warnobjs: [],
     _infoobjs: [],
-    _allids:{},
+    _allids: {},
     get hasErrors() {
         return Object.keys(this.errors).filter(key => this.errors[key] !== null).length > 0
     },
@@ -16,18 +16,18 @@ const errorhandler = observable({
     addErrors(errorobjectarray) {
         // **** errorobjectarray format ****
         // [ {
-        //     id: "id1", 
+        //     id: "id1",
         //     get cond() {return obj.prop1 === 0},
         //     msg: "error message 1"
         // },
         // {
-        //     id: "id2", 
+        //     id: "id2",
         //     get cond() {return obj.prop1 > obj.prop2},
         //     type: "error"
         //     msg: "error message 2"
         // },
         // {
-        //     id: "id3", 
+        //     id: "id3",
         //     get cond() {return obj.prop5 > obj.prop2},
         //     type: "warning"
         //     msg: "warning message 1"
@@ -36,15 +36,15 @@ const errorhandler = observable({
         // ...
         // ]
         // **********************************
-        for(const errobj of errorobjectarray) {
-            if(errobj.type === undefined) {
+        for (const errobj of errorobjectarray) {
+            if (errobj.type === undefined) {
                 errobj.type = "error"
-            } 
-            if(errobj.type === "error" ) {
+            }
+            if (errobj.type === "error") {
                 this._errobjs.push(errobj)
-            } else if(errobj.type === "warning" ) {
+            } else if (errobj.type === "warning") {
                 this._warnobjs.push(errobj)
-            } else if(errobj.type === "info" ) {
+            } else if (errobj.type === "info") {
                 this._infoobjs.push(errobj)
             }
             this._allids[errobj.id] = errobj
@@ -52,8 +52,8 @@ const errorhandler = observable({
     },
     get errors() {
         const result = {}
-        for(const errobj of this._errobjs) {
-            if(errobj.cond) {
+        for (const errobj of this._errobjs) {
+            if (errobj.cond) {
                 result[errobj.id] = errobj.msg
             } else {
                 result[errobj.id] = null
@@ -63,8 +63,8 @@ const errorhandler = observable({
     },
     get warnings() {
         const result = {}
-        for(const warnobj of this._warnobjs) {
-            if(warnobj.cond) {
+        for (const warnobj of this._warnobjs) {
+            if (warnobj.cond) {
                 result[warnobj.id] = warnobj.msg
             } else {
                 result[warnobj.id] = null
@@ -75,8 +75,8 @@ const errorhandler = observable({
 
     get infos() {
         const result = {}
-        for(const infoobj of this._infoobjs) {
-            if(infoobj.cond) {
+        for (const infoobj of this._infoobjs) {
+            if (infoobj.cond) {
                 result[infoobj.id] = infoobj.msg
             } else {
                 result[infoobj.id] = null
@@ -101,7 +101,7 @@ const errorhandler = observable({
     //     }
     // }
 })
-errorhandler.resolveid = function(id) {
+errorhandler.resolveid = function (id) {
     const allids = errorhandler._allids
     return id in allids ? allids[id].cond : false
 }

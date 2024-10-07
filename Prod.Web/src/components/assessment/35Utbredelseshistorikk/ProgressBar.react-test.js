@@ -13,5 +13,5 @@ test('Progress bar 0%', () => {
 })
 
 test('Progress bar 100%', () => {
-	assert(<ProgressBar percent={100} />)
+    assert(<ProgressBar percent={100} />)
 })

@@ -2,7 +2,7 @@
 //import {session, user} from "./components/userSession"
 import auth from './components/authService'
 import config from './config';
-import {flow, toJS} from 'mobx'
+import { flow, toJS } from 'mobx'
 
 
 export function checkStatus(response) {
@@ -26,7 +26,7 @@ export function checkStatus(response) {
 
 async function parseJSON(response) {
     const text = await response.text()
-    if(text.length <=0) return {} // assesment/lock method returns empty
+    if (text.length <= 0) return {} // assesment/lock method returns empty
     return JSON.parse(text)
 }
 
@@ -36,27 +36,27 @@ function handleApiError(error, url) {
 
 export function loadData(resourceId, callback, errorCallback) {
     // if(resourceId === "bruker/alle") {
-        // console.log(resourceId)
-        // console.trace()
+    // console.log(resourceId)
+    // console.trace()
     // }
     const url = resourceId.startsWith('/') || resourceId.startsWith('http')
         ? resourceId
         : config.apiUrl + resourceId
-        // console.log("# " + config.apiUrl )
-        // console.log(url)
-        fetch(url, {
-            method: 'get',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + auth.getAuthToken
-            }
-        })
+    // console.log("# " + config.apiUrl )
+    // console.log(url)
+    fetch(url, {
+        method: 'get',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + auth.getAuthToken
+        }
+    })
         .then(response => checkStatus(response))
         .then(response => parseJSON(response))
         .then(data => {
             // console.log('request success', data || data === false  ? data : " No data ");
-            callback(data);            
+            callback(data);
 
         })
         .catch((e) => {
@@ -70,26 +70,26 @@ export function loadData(resourceId, callback, errorCallback) {
 
 export function postData(resourceId, data, callback, errorCallback) {
     // if(resourceId === "bruker/alle") {
-        // console.log(resourceId)
-        // console.trace()
+    // console.log(resourceId)
+    // console.trace()
     // }
     const url = resourceId.startsWith('/') || resourceId.startsWith('http')
         ? resourceId
         : config.apiUrl + resourceId
     fetch(url, {
-            method: 'post',
-            body: JSON.stringify(data), // data can be `string` or {object}! (cant get it to work with {object}...)
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + auth.getAuthToken
-            }
-        })
+        method: 'post',
+        body: JSON.stringify(data), // data can be `string` or {object}! (cant get it to work with {object}...)
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + auth.getAuthToken
+        }
+    })
         .then(response => checkStatus(response))
         .then(response => parseJSON(response))
         .then(data => {
             console.log('request success', data ? data : " No data ");
-            callback(data);            
+            callback(data);
 
         })
         .catch((e) => {
@@ -103,26 +103,26 @@ export function postData(resourceId, data, callback, errorCallback) {
 
 export function putData(resourceId, data, callback, errorCallback) {
     // if(resourceId === "bruker/alle") {
-        // console.log(resourceId)
-        // console.trace()
+    // console.log(resourceId)
+    // console.trace()
     // }
     const url = resourceId.startsWith('/') || resourceId.startsWith('http')
         ? resourceId
         : config.apiUrl + resourceId
     fetch(url, {
-            method: 'put',
-            body: JSON.stringify(data), // data can be `string` or {object}! (cant get it to work with {object}...)
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + auth.getAuthToken
-            }
-        })
+        method: 'put',
+        body: JSON.stringify(data), // data can be `string` or {object}! (cant get it to work with {object}...)
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + auth.getAuthToken
+        }
+    })
         .then(response => checkStatus(response))
         .then(response => parseJSON(response))
         .then(data => {
             console.log('request success', data ? data : " No data ");
-            callback(data);            
+            callback(data);
 
         })
         .catch((e) => {
@@ -158,8 +158,8 @@ export function putData(resourceId, data, callback, errorCallback) {
 
 export function loadDataFromUrl(url, callback) {
     // const [obj,prop] = observableValue;
-    
-    flow(function * () {
+
+    flow(function* () {
         try {
             const data = yield fetch(url, {
                 method: 'get',
@@ -185,7 +185,7 @@ export function storeData(resourceId, data, callback, verb) {
         ? resourceId
         : config.apiUrl + resourceId
     console.log(url)
-    let errorCallback = () => {}
+    let errorCallback = () => { }
     if (typeof resourceId === 'object') {
         data = resourceId.data
         callback = resourceId.callback
@@ -224,8 +224,8 @@ export function storeData(resourceId, data, callback, verb) {
             'Content-Type': 'application/json',
             'Authorization': auth.getAuthToken //()
         },
-            body: jsondata // JSON.stringify(data)
-        })
+        body: jsondata // JSON.stringify(data)
+    })
         .then(checkStatus)
         .then(parseJSON)
         .then(cbdata => {
@@ -240,7 +240,7 @@ export function storeData(resourceId, data, callback, verb) {
             errorCallback()
             handleApiError(e, url)
         })
-        console.log(url);
+    console.log(url);
 }
 
 export function deleteData(resourceId, data, callback) {
@@ -258,13 +258,13 @@ export function deleteData(resourceId, data, callback) {
         },
         body: JSON.stringify(data)
     }).then(checkStatus)
-    //.then(parseJSON)
+        //.then(parseJSON)
         .then(data => {
-        console.log('request success ', data.id || data.Id || "");
-        if (callback) {
-            callback(data)
-        }
-    }).catch(handleApiError, url)
+            console.log('request success ', data.id || data.Id || "");
+            if (callback) {
+                callback(data)
+            }
+        }).catch(handleApiError, url)
 }
 
 export function upload(upload, onComplete) {
@@ -305,8 +305,7 @@ export function getArtskartUrl(
     kriterier,
     artskartModel,
     showWaterAreas,
-    geojson = {features:[]})
-  {
+    geojson = { features: [] }) {
     // const apibase = "http://localhost:16784/api/listhelper/";
     // const apibase = "https://test.artsdatabanken.no/artskartpublicapi/api/listhelper/";
     const apibase = "https://artskart.artsdatabanken.no/PublicApi/api/listhelper/";
@@ -321,12 +320,12 @@ export function getArtskartUrl(
     const includeNorge = !artskartModel.includeNorge ? false : artskartModel.includeNorge;
     const includeSvalbard = !artskartModel.includeSvalbard ? false : artskartModel.includeSvalbard;
     const region =
-      includeNorge === includeSvalbard
-        ? "all"
-        : includeNorge
-            ? "fastland"
-            : "svalbard";
-    const excludeGbif = artskartModel.excludeGbif ? "&sourcedatabases[]=-40,-211" : "";   
+        includeNorge === includeSvalbard
+            ? "all"
+            : includeNorge
+                ? "fastland"
+                : "svalbard";
+    const excludeGbif = artskartModel.excludeGbif ? "&sourcedatabases[]=-40,-211" : "";
     let queryparams = `fromYear=${artskartModel.observationFromYear}&toYear=${artskartModel.observationToYear}`;
     // let queryparams = `fromYear=${kriterier.AOOyear1}&toYear=${kriterier.AOOyear2}`;
     // queryparams += `&fromMonth=${kriterier.fromMonth}`;
@@ -338,17 +337,16 @@ export function getArtskartUrl(
     queryparams += `&crs=EPSG:${config.mapEpsgCode}`;
     // console.log('getArtskartUrl', queryparams);
     if (selectionGeometry)
-      queryparams += `&geojsonPolygon=${
-        JSON.parse(selectionGeometry).geometry.coordinates
-      }`;
-  
+        queryparams += `&geojsonPolygon=${JSON.parse(selectionGeometry).geometry.coordinates
+            }`;
+
     const points2String = source =>
-      geojson.features
-        .filter(p => p.source === source)
-        .map(p => p.geometry.coordinates)
-        .map(p => p[0] + "," + p[1])
-        .join(",");
-  
+        geojson.features
+            .filter(p => p.source === source)
+            .map(p => p.geometry.coordinates)
+            .map(p => p[0] + "," + p[1])
+            .join(",");
+
     const add = points2String("add");
     if (add) queryparams += "&addPoints=" + add;
     const remove = points2String("remove");

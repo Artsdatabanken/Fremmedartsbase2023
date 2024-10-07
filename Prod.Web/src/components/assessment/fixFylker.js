@@ -21,7 +21,7 @@ export default function fixFylker(assessment) {
             }
         });
     }
-    
+
     // add missing fylker
     const missingFylker = [];
     fylkeNames.forEach((name) => {
@@ -29,7 +29,7 @@ export default function fixFylker(assessment) {
         if (!fylke) missingFylker.push(name);
     });
     missingFylker.forEach((name) => {
-        assessment.fylkesforekomster.push({fylke: name, state: 2});
+        assessment.fylkesforekomster.push({ fylke: name, state: 2 });
     })
     // assessment.fylkesforekomster.forEach((f) => console.log("Fylke", f.fylke, f.state));
 }

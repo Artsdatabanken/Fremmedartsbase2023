@@ -1,13 +1,13 @@
-import {padNumbers} from '../../utils'
+import { padNumbers } from '../../utils'
 
-// const padNumbers = (str, numlen) => 
+// const padNumbers = (str, numlen) =>
 //     str.replace(/\d+/g, match =>
 //         "0".repeat(numlen - match.length) + match
 //     )
 
 
 export function getNAItems(kodeliste) {
-    const na = kodeliste.filter(item => item.Kode.Id.startsWith("NA ") )
+    const na = kodeliste.filter(item => item.Kode.Id.startsWith("NA "))
     return na
 }
 
@@ -18,7 +18,7 @@ export function createNaLabelList(naItems) {
         const k2 = k.substr(3)
         acc[k2] = item.Navn
         return acc
-    } , {})
+    }, {})
     return result
 }
 
@@ -31,8 +31,8 @@ export function createNaTree(naItems) {
         // console.log("k2'" + k2 + "'")
         acc[k2] = item
         return acc
-    } , {}) 
-    const sortfunc = (a,b) => a.sortid > b.sortid ? 1 : -1
+    }, {})
+    const sortfunc = (a, b) => a.sortid > b.sortid ? 1 : -1
     const getKEnheter = kode => kode.Kartleggingsenheter[5000]
     const getGrunnTyper = kode => kode.UnderordnetKoder
     const subtypeFuncs = {
@@ -44,27 +44,28 @@ export function createNaTree(naItems) {
         M: getGrunnTyper,
         L: getGrunnTyper,
     }
-    const getNT = htKode => 
-        na[htKode].UnderordnetKoder.map(item => 
-                item.Id.substr(3)
-            ).map(id => { 
-                const kod = na[id] 
-                let children 
-                try {
-                    children = subtypeFuncs[htKode](kod).map(item => 
-                        item.Id.substr(3)
-                    ).map(id => { 
-                        const kod = na[id] 
-                        return {id: id, sortid: padNumbers(id, 2), name: kod.Navn}
-                    
-                    })}
-                catch (e) {
-                    children = [] // catch should not happen if code lists are ok
-                    console.log("grunntype for " + id + " error: " + e.message)
-                    // appInsights.trackException(e)
-                }
+    const getNT = htKode =>
+        na[htKode].UnderordnetKoder.map(item =>
+            item.Id.substr(3)
+        ).map(id => {
+            const kod = na[id]
+            let children
+            try {
+                children = subtypeFuncs[htKode](kod).map(item =>
+                    item.Id.substr(3)
+                ).map(id => {
+                    const kod = na[id]
+                    return { id: id, sortid: padNumbers(id, 2), name: kod.Navn }
 
-            return {id: id, sortid: padNumbers(id, 2), name: kod.Navn, children: children.sort(sortfunc), collapsed: true }
+                })
+            }
+            catch (e) {
+                children = [] // catch should not happen if code lists are ok
+                console.log("grunntype for " + id + " error: " + e.message)
+                // appInsights.trackException(e)
+            }
+
+            return { id: id, sortid: padNumbers(id, 2), name: kod.Navn, children: children.sort(sortfunc), collapsed: true }
         }).sort(sortfunc)
 
     const keys = Object.keys(subtypeFuncs)
@@ -73,7 +74,7 @@ export function createNaTree(naItems) {
         const htgr = na[key]
         // console.log("-key-" + key)
         const nts = getNT(key)
-        return {id: key, name: htgr.Navn, children: nts, collapsed: true }
+        return { id: key, name: htgr.Navn, children: nts, collapsed: true }
     })
     return result
 }
@@ -82,6 +83,6 @@ export default function transformNaturtypeKoder(naItems) {
     const items = getNAItems(naItems)
     const labels = createNaLabelList(items)
     const naturtypetree = createNaTree(items)
-    const result = {naturtypetree: naturtypetree, labels: labels}
+    const result = { naturtypetree: naturtypetree, labels: labels }
     return result
 }

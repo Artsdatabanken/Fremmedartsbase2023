@@ -1,5 +1,5 @@
 import riskLevel from './riskLevel'
-import createRiskAssessment, {getCriterion} from './riskLevel.test-data'
+import createRiskAssessment, { getCriterion } from './riskLevel.test-data'
 
 // describe('riskLevel', () => {
 //   test('C criterion influences invasjonspotensiale level', () => {

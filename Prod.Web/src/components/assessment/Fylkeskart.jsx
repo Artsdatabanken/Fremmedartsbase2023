@@ -24,7 +24,7 @@ export default class Fylkeskart extends React.Component {
     static getBoundaryForCountry(language) {
         const boundary = boundaries[language]
         if (!boundary)
-            throw new Error('Finner ikke grenser for språk "'+language+'".')
+            throw new Error('Finner ikke grenser for språk "' + language + '".')
         return boundary
     }
     render() {
@@ -49,11 +49,11 @@ export default class Fylkeskart extends React.Component {
                     style={style}
                     readonly={readOnly}
                     disabled={disabled}
-                    onMouseLeave={(e) => this.setState({hoveringOver: null})}
-                    onMouseOver={(e)=> !readOnly && this.setState({hoveringOver: kode})}
-                    onMouseDown={(e)=> !readOnly && this.props.onMouseDown(e, kode)}
-                    onMouseUp={(e)=> !readOnly && this.props.onMouseUp(e, kode)}
-                    />
+                    onMouseLeave={(e) => this.setState({ hoveringOver: null })}
+                    onMouseOver={(e) => !readOnly && this.setState({ hoveringOver: kode })}
+                    onMouseDown={(e) => !readOnly && this.props.onMouseDown(e, kode)}
+                    onMouseUp={(e) => !readOnly && this.props.onMouseUp(e, kode)}
+                />
             })
         return (
             <svg
@@ -61,28 +61,27 @@ export default class Fylkeskart extends React.Component {
                 y="0px"
                 width={this.props.width}
                 height={this.props.height}
-                viewBox= {boundary.viewbox}
+                viewBox={boundary.viewbox}
             >
-            <g>{fylker}</g>
+                <g>{fylker}</g>
             </svg>
         )
     }
 }
 
 const Region = ({
-        kode, title, boundaryPath, style, readonly, disabled, onMouseDown,
-        onMouseUp, onMouseOver, onMouseLeave}) =>
-    {
+    kode, title, boundaryPath, style, readonly, disabled, onMouseDown,
+    onMouseUp, onMouseOver, onMouseLeave }) => {
     return <g
         key={kode}
         stroke={style.stroke}
         fill={style.fill}
         style={{ cursor: readonly || disabled ? "arrow" : "hand" }}
-        onMouseDown={ onMouseDown }
-        onMouseUp={onMouseUp }
-        onMouseOver={ onMouseOver }
-        onMouseLeave={ onMouseLeave }
-        >
+        onMouseDown={onMouseDown}
+        onMouseUp={onMouseUp}
+        onMouseOver={onMouseOver}
+        onMouseLeave={onMouseLeave}
+    >
         {boundaryPath}
         <title>{title}</title>
     </g>

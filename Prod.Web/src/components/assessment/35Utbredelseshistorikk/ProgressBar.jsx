@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 
 
 const ProgressBar = ({
-        prefixCls, strokeWidth, trailWidth, strokeColor,
-        trailColor, strokeLinecap, percent, style, className,
-    }) => {
+    prefixCls, strokeWidth, trailWidth, strokeColor,
+    trailColor, strokeLinecap, percent, style, className,
+}) => {
 
     const pathStyle = {
         strokeDasharray: '100px, 100px',
@@ -30,7 +30,7 @@ const ProgressBar = ({
                 strokeLinecap={strokeLinecap}
                 stroke={trailColor}
                 strokeWidth={trailWidth || strokeWidth}
-                fillOpacity="0"/>
+                fillOpacity="0" />
             <path
                 className={`${prefixCls}-line-path`}
                 d={pathString}
@@ -38,7 +38,7 @@ const ProgressBar = ({
                 stroke={strokeColor}
                 strokeWidth={strokeWidth}
                 fillOpacity="0"
-                style={pathStyle}/>
+                style={pathStyle} />
         </svg>
     )
 }

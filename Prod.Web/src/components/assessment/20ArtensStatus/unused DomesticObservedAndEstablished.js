@@ -2,7 +2,7 @@ import React from 'react';
 import config from '../../../config';
 import * as Xcomp from '../observableComponents';
 
-const ObservedAndEstablishedRow = (props) => 
+const ObservedAndEstablishedRow = (props) =>
     <tr>
         <td>{props.label}</td>
         <td><Xcomp.String observableValue={[props.item.observedInCountry, 'time']} /></td>
@@ -22,16 +22,16 @@ const DomesticObservedAndEstablished = (props) => {
     const pw = "14%"
     return <table className="formtable" >
         <colgroup>
-            <col style={{width: lw}} />
-            <col style={{width: yw}} />
-            <col style={{width: pw}} />
-            <col style={{width: yw}} />
-            <col style={{width: pw}} />
-            <col style={{width: yw}} />
-            <col style={{width: pw}} />
-            <col style={{width: yw}} />
-            <col style={{width: pw}} />
-            {props.showIndividualCount ? <col style={{width: lw}} /> : null}
+            <col style={{ width: lw }} />
+            <col style={{ width: yw }} />
+            <col style={{ width: pw }} />
+            <col style={{ width: yw }} />
+            <col style={{ width: pw }} />
+            <col style={{ width: yw }} />
+            <col style={{ width: pw }} />
+            <col style={{ width: yw }} />
+            <col style={{ width: pw }} />
+            {props.showIndividualCount ? <col style={{ width: lw }} /> : null}
         </colgroup>
         <thead>
             <tr>
@@ -51,14 +51,15 @@ const DomesticObservedAndEstablished = (props) => {
                 <th>{props.labels.place}</th>
                 <th>{props.labels.year}</th>
                 <th>{props.labels.place}</th>
-                {props.showIndividualCount ? <th>{props.labels.individualCount}</th> : null }
+                {props.showIndividualCount ? <th>{props.labels.individualCount}</th> : null}
             </tr>
         </thead>
         <tbody>
-            <ObservedAndEstablishedRow label={props.labels.indoor} item={props.observedAndEstablishedStatusInNorway.indoor} koder={props.koder}  showIndividualCount={props.showIndividualCount}/>
-            <ObservedAndEstablishedRow label={props.labels.outdoor} item={props.observedAndEstablishedStatusInNorway.productionArea} koder={props.koder}  showIndividualCount={props.showIndividualCount}/>
-            <ObservedAndEstablishedRow label={props.labels.domesticNature} item={props.observedAndEstablishedStatusInNorway.norwegianNature} koder={props.koder} showIndividualCount={props.showIndividualCount}/>
+            <ObservedAndEstablishedRow label={props.labels.indoor} item={props.observedAndEstablishedStatusInNorway.indoor} koder={props.koder} showIndividualCount={props.showIndividualCount} />
+            <ObservedAndEstablishedRow label={props.labels.outdoor} item={props.observedAndEstablishedStatusInNorway.productionArea} koder={props.koder} showIndividualCount={props.showIndividualCount} />
+            <ObservedAndEstablishedRow label={props.labels.domesticNature} item={props.observedAndEstablishedStatusInNorway.norwegianNature} koder={props.koder} showIndividualCount={props.showIndividualCount} />
         </tbody>
-    </table>}
+    </table>
+}
 
 export default DomesticObservedAndEstablished

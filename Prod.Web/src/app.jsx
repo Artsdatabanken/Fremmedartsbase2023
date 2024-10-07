@@ -7,22 +7,22 @@ import Loading from './components/Loading'
 import AppView from './components/appView'
 
 const mainView = ({ appState, appState: { assessment, isServicesReady }, appState: { router } }) => (
-  <div className="page_padding">
-    <div className="header_background">
-      <div className="header_padding" style={{ display: 'flex' }}>
-        <img src="//artsdatabanken.no/Files/7809" className="top_image" crossOrigin="anonymous" />
-        {(assessment && assessment.evaluatedVernacularName) ? <h1 className="header_title" style={{ width: '90%' }}>Fremmede arter 2023{assessment && ": " + assessment.evaluatedScientificName + ", " + assessment.evaluatedVernacularName + ". Kategori: " + assessment.category}</h1> :
-          <h1 className="header_title" style={{ width: '90%' }}>Fremmede arter 2023{assessment && ": " + assessment.evaluatedScientificName + ". Kategori: " + assessment.category}</h1>}
+    <div className="page_padding">
+        <div className="header_background">
+            <div className="header_padding" style={{ display: 'flex' }}>
+                <img src="//artsdatabanken.no/Files/7809" className="top_image" crossOrigin="anonymous" />
+                {(assessment && assessment.evaluatedVernacularName) ? <h1 className="header_title" style={{ width: '90%' }}>Fremmede arter 2023{assessment && ": " + assessment.evaluatedScientificName + ", " + assessment.evaluatedVernacularName + ". Kategori: " + assessment.category}</h1> :
+                    <h1 className="header_title" style={{ width: '90%' }}>Fremmede arter 2023{assessment && ": " + assessment.evaluatedScientificName + ". Kategori: " + assessment.category}</h1>}
 
-        {assessment && assessment.evaluationStatus !== 'finished' && <Xcomp.Button primary onClick={() => {
-          console.log("Save assessment")
-          appState.saveCurrentAssessment();
-        }}>Lagre</Xcomp.Button>}
-      </div>
-    </div>
-    {/* {isServicesReady ? <SelectAssessment /> : null }
+                {assessment && assessment.evaluationStatus !== 'finished' && <Xcomp.Button primary onClick={() => {
+                    console.log("Save assessment")
+                    appState.saveCurrentAssessment();
+                }}>Lagre</Xcomp.Button>}
+            </div>
+        </div>
+        {/* {isServicesReady ? <SelectAssessment /> : null }
     {(assessment && isServicesReady) ? <Assessment /> : null } */}
-    {isServicesReady ? <AppView/> : <Loading/>}
-  </div>)
+        {isServicesReady ? <AppView /> : <Loading />}
+    </div>)
 
 export default inject('appState')(observer(mainView));

@@ -1,5 +1,5 @@
 ﻿import React from 'react';
-import {observer, inject} from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import * as Xcomp from './observableComponents';
 import Criterion from './criterion'
 
@@ -9,14 +9,14 @@ class Assessment61CriteriaC extends React.Component {
     }
 
     render() {
-        const {appState:{assessment:{riskAssessment}}, appState, } = this.props;
+        const { appState: { assessment: { riskAssessment } }, appState, } = this.props;
         const critC = riskAssessment.critC
 
         return (
             <fieldset className="well">
                 <h4>{critC.heading}</h4>
                 <p>{critC.info}</p>
-                <Criterion criterion={critC} mode="noheading" disabled={true} appState={appState}/>
+                <Criterion criterion={critC} mode="noheading" disabled={true} appState={appState} />
             </fieldset>
         );
     }

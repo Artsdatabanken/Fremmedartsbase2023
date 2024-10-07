@@ -11,7 +11,7 @@ class Filliste extends React.Component {
         this.state = { selectedFilename: null }
     }
     render() {
-        const {vurdering, labels} = this.props
+        const { vurdering, labels } = this.props
         // const labels = appState.kodeLabels.DistributionHistory
         const docs = Filliste.isEmpty(this.props.Files) && Filliste.isEmpty(this.props.activeUploads)
             ? (
@@ -90,7 +90,7 @@ class Filliste extends React.Component {
                 <td onClick={() => { this.rediger(x) }}>
                     {selectedFilename === x.Filename
                         ? <Xcomp.HtmlString observableValue={[x, 'Description']} />
-                        : <div><i className="fa fa-pencil"/>
+                        : <div><i className="fa fa-pencil" />
                             &nbsp;<span dangerouslySetInnerHTML={{ __html: x.Description }} /></div>
                     }
                 </td>

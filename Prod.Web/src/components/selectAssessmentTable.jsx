@@ -1,14 +1,14 @@
-import React, {Component} from 'react'
-import {inject, observer} from 'mobx-react';
+import React, { Component } from 'react'
+import { inject, observer } from 'mobx-react';
 //import * as Xcomp from './observableComponents';
-import {action} from "mobx"
+import { action } from "mobx"
 import SelectAssessmentRow from './selectAssessmentRow'
 import auth from './authService'
 
 class SelectAssessmentTable extends Component {
     render() {
-        const {assessmentList, rolle, appState} = this.props
-        const labels = appState.codeLabels; 
+        const { assessmentList, rolle, appState } = this.props
+        const labels = appState.codeLabels;
         const userId = auth.userId
 
         //console.log("ROLLE" + JSON.stringify(rolle))
@@ -29,7 +29,7 @@ class SelectAssessmentTable extends Component {
                 {appState.loadingExpertGroup === true && <div className="loader"></div>}
                 <table className="table table-striped vurderinger">
                     <thead>
-                        <tr>                            
+                        <tr>
                             <th>{labels.SelectAssessment.species}</th>
                             {/* <th>{labels.SelectAssessment.popularName}</th> */}
                             {/*<th>{labels.SelectAssessment.horizonscanning}</th>*/}
@@ -38,7 +38,7 @@ class SelectAssessmentTable extends Component {
                             {appState.assessmentTypeFilter == "riskAssessment" && <th>{labels.SelectAssessment.cat2023}</th>}
                             {/*<th>{labels.SelectAssessment.duration}</th>*/}
                             <th>{labels.SelectAssessment.lastSaved}</th>
-                            
+
                             <th>{labels.SelectAssessment.comment}</th>
                             <th>{labels.SelectAssessment.status}</th>
                             {/* <th>&nbsp;</th>
@@ -47,28 +47,28 @@ class SelectAssessmentTable extends Component {
                             <th>&nbsp;</th>*/}
                         </tr>
                     </thead>
-                    <tbody>                        
+                    <tbody>
                         {assessmentList.
-                        
-                        
-                        // filter(ega => {
-                        //     return filter === "" || ega
-                        //         .ScientificName
-                        //         .toLowerCase()
-                        //         .indexOf(filter) > -1 || (ega.VernacularName && ega.VernacularName.toLowerCase().indexOf(filter) > -1)
-                        // }).
-                        
-                        map(ega => <SelectAssessmentRow
-                            key={ega.id} 
-                            userId={userId}
-                            assessment={ega}
-                            updatedAt={ega.lastUpdatedAt}
-                            updatedBy={ega.lastUpdatedBy}
-                            labels={labels}
-                            rolle={rolle}
-                            onOpen={v => appState.open(v)}
-                            onLock={action(v => appState.lockFraHode(v))}
-                            onUnlock={action(v => appState.unlockFraHode(v))}/>)}
+
+
+                            // filter(ega => {
+                            //     return filter === "" || ega
+                            //         .ScientificName
+                            //         .toLowerCase()
+                            //         .indexOf(filter) > -1 || (ega.VernacularName && ega.VernacularName.toLowerCase().indexOf(filter) > -1)
+                            // }).
+
+                            map(ega => <SelectAssessmentRow
+                                key={ega.id}
+                                userId={userId}
+                                assessment={ega}
+                                updatedAt={ega.lastUpdatedAt}
+                                updatedBy={ega.lastUpdatedBy}
+                                labels={labels}
+                                rolle={rolle}
+                                onOpen={v => appState.open(v)}
+                                onLock={action(v => appState.lockFraHode(v))}
+                                onUnlock={action(v => appState.unlockFraHode(v))} />)}
                     </tbody>
                 </table>
             </div>
@@ -88,7 +88,7 @@ class SelectAssessmentTable extends Component {
     //         .props
     //         .appState
     //         .loadCurrentExpertgroupAssessmentList()
-            
+
     // }
 }
 

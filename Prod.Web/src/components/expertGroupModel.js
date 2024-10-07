@@ -1,7 +1,7 @@
-﻿import {extendObservable, autorun, observable, runInAction} from 'mobx';
+﻿import { extendObservable, autorun, observable, runInAction } from 'mobx';
 import fetch from 'isomorphic-fetch'
 //import * as Utils from '../utils';
-import {loadData} from '../apiService';
+import { loadData } from '../apiService';
 // import {user} from "./userSession"
 import auth from './authService'
 import config from '../config'
@@ -12,58 +12,59 @@ import config from '../config'
 class ExpertGroupModel {
     constructor() {
         extendObservable(this,
-        {
-            alleekspertgrupper: [],
-            valgtekspertgruppe: null,
-            eksperterforvalgtgruppe: [],
-            alleeksperter: [],
-            valgtekspert: null,
-            valgtekspertsrolleivalgtekspertgruppe: {
-                leder: false,
-                skriver: false
-                // leser: false
-            },
-            tilgangsoknader: [],
-        });
+            {
+                alleekspertgrupper: [],
+                valgtekspertgruppe: null,
+                eksperterforvalgtgruppe: [],
+                alleeksperter: [],
+                valgtekspert: null,
+                valgtekspertsrolleivalgtekspertgruppe: {
+                    leder: false,
+                    skriver: false
+                    // leser: false
+                },
+                tilgangsoknader: [],
+            });
 
         autorun(() => {
-                    if (auth.isAdmin) { // actual check
+            if (auth.isAdmin) { // actual check
 
-                        this.GetAccessApplications();
+                this.GetAccessApplications();
 
-                        loadData(config.getUrl("ExpertGroups"),
-                            data => {
-                                if (data) {
-                                    const res = data.map(s => {return {value:s, text:s}}) // todo: remove this line when server data is correct
-                                    const expertgroups = observable.array(res) 
-                                    runInAction(() => {
-                                        this.alleekspertgrupper = expertgroups
-                                        this.valgtekspertgruppe = expertgroups[0].value
+                loadData(config.getUrl("ExpertGroups"),
+                    data => {
+                        if (data) {
+                            const res = data.map(s => { return { value: s, text: s } }) // todo: remove this line when server data is correct
+                            const expertgroups = observable.array(res)
+                            runInAction(() => {
+                                this.alleekspertgrupper = expertgroups
+                                this.valgtekspertgruppe = expertgroups[0].value
 
-                                    })
-                                }
                             })
-                        loadData(config.getUrl("Access/users"),
-                            data => {
-                                if (data) {
-                                    const res = data.map(s => {return {value:s.id, text:s.value}}) // todo: remove this line when server data is correct
-                                    const expertgroups = observable.array(res) 
-                                    runInAction(() => {
-                                        this.alleeksperter = expertgroups;
-                                        this.valgtekspert = expertgroups[0].value
-                                    })
-                                    // this.alleeksperter = data;
-                                    // this.valgtekspert = data[0].GUID;
-                                }
+                        }
+                    })
+                loadData(config.getUrl("Access/users"),
+                    data => {
+                        if (data) {
+                            const res = data.map(s => { return { value: s.id, text: s.value } }) // todo: remove this line when server data is correct
+                            const expertgroups = observable.array(res)
+                            runInAction(() => {
+                                this.alleeksperter = expertgroups;
+                                this.valgtekspert = expertgroups[0].value
                             })
-                    } else {
-                    runInAction(() => {
+                            // this.alleeksperter = data;
+                            // this.valgtekspert = data[0].GUID;
+                        }
+                    })
+            } else {
+                runInAction(() => {
                     this.valgtekspertgruppe = null;
-                        this.valgtekspert = null;
-                        this.alleekspertgrupper = [];
-                        this.alleeksperter = [];
-                    })}
+                    this.valgtekspert = null;
+                    this.alleekspertgrupper = [];
+                    this.alleeksperter = [];
+                })
             }
+        }
         );
 
 
@@ -83,10 +84,11 @@ class ExpertGroupModel {
     }
 
     hentEkspertgruppeMedlemmer() {
-                const url = config.getUrl("ExpertGroups/members/"+ this.valgtekspertgruppe);
-                loadData(url, data =>
-                    runInAction(() => {
-                    this.eksperterforvalgtgruppe.replace(data)}))
+        const url = config.getUrl("ExpertGroups/members/" + this.valgtekspertgruppe);
+        loadData(url, data =>
+            runInAction(() => {
+                this.eksperterforvalgtgruppe.replace(data)
+            }))
     }
 }
 

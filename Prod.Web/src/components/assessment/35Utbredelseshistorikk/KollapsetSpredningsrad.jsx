@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {observer} from 'mobx-react'
-import {toJS} from "mobx"
+import { observer } from 'mobx-react'
+import { toJS } from "mobx"
 import Spredningskart from './Spredningskart'
 
 class KollapsetSpredningsrad extends React.Component {
@@ -21,7 +21,7 @@ class KollapsetSpredningsrad extends React.Component {
             };
         const e = this.props.detaljer
         let regionalPresence = e.RegionalPresence;
-        if (regionalPresence == null) 
+        if (regionalPresence == null)
             regionalPresence = []
         const appState = this.props.appState;
         const classNames = `${expanded
@@ -37,7 +37,7 @@ class KollapsetSpredningsrad extends React.Component {
             cursor: "pointer",
             height: "80px"
         }
-        if (expanded) 
+        if (expanded)
             rowStyle.boxShadow = "rgba(0, 0, 0, 0.0470588) 6px 6px 4px 0px"
         return (
             <tr
@@ -45,18 +45,18 @@ class KollapsetSpredningsrad extends React.Component {
                 style={rowStyle}
                 key={e.id}
                 onClick={() => {
-                KollapsetSpredningsrad.redigerSpreadhistory(appState, e)
-            }}>
+                    KollapsetSpredningsrad.redigerSpreadhistory(appState, e)
+                }}>
                 <td style={style}>
                     <span
                         className={`glyphicon glyphicon-chevron-${expanded
-                        ? "down"
-                        : "right"}`}/>
+                            ? "down"
+                            : "right"}`} />
                 </td>
-                <td style={e.observationFromYear.toString().length === 0 ? {backgroundColor: "#F00" } :  style}>
+                <td style={e.observationFromYear.toString().length === 0 ? { backgroundColor: "#F00" } : style}>
                     <span>{e.observationFromYear}</span>
                 </td>
-                <td style={e.observationYear.toString().length === 0 ? {backgroundColor: "#F00" } :  style}>
+                <td style={e.observationYear.toString().length === 0 ? { backgroundColor: "#F00" } : style}>
                     <span>{e.obbservationYear}</span>
                 </td>
                 <td style={style}>
@@ -74,13 +74,13 @@ class KollapsetSpredningsrad extends React.Component {
                 <td style={style}>
                     <span>{e.Comment}</span>
                 </td>
-                <td style={{position: "relative"}}>
+                <td style={{ position: "relative" }}>
                     {this.props.appState.evaluationContext.map == 'norge'
                         ? <Spredningskart
-                                readonly
-                                height="77px"
-                                width="60px"
-                                states={[
+                            readonly
+                            height="77px"
+                            width="60px"
+                            states={[
                                 {
                                     key: 'none',
                                     title: 'ingen'
@@ -94,7 +94,7 @@ class KollapsetSpredningsrad extends React.Component {
                                     values: e.regionalPresenceAssumed
                                 }
                             ]}
-                                countyListLand={this.props.appState.artskartModel.koder.countyListLand}/>
+                            countyListLand={this.props.appState.artskartModel.koder.countyListLand} />
                         : <span>{e.Regions}</span>}
                 </td>
                 <td style={style}>
@@ -103,21 +103,21 @@ class KollapsetSpredningsrad extends React.Component {
                         disabled={this.context.readonly}
                         className="glyphicon glyphicon-trash"
                         onClick={() => {
-                        KollapsetSpredningsrad.fjernSpreadhistory(appState.vurdering, e)
-                    }}/>
+                            KollapsetSpredningsrad.fjernSpreadhistory(appState.vurdering, e)
+                        }} />
                 </td>
             </tr>
         )
     }
 
     static produkt(a, b) {
-        if (!a) 
+        if (!a)
             return ''
-        if (!b) 
+        if (!b)
             b = 1
         return (
             <div>
-                <b>{a * b}</b><br/>({a}&nbsp;*&nbsp;{b})</div>
+                <b>{a * b}</b><br />({a}&nbsp;*&nbsp;{b})</div>
         )
     }
 

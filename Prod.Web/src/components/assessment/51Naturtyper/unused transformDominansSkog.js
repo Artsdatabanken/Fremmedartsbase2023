@@ -1,7 +1,7 @@
 import config from '../../../config';
-import {padNumbers} from '../../utils'
+import { padNumbers } from '../../utils'
 
-// const padNumbers = (str, numlen) => 
+// const padNumbers = (str, numlen) =>
 //     str.replace(/\d+/g, match =>
 //         "0".repeat(numlen - match.length) + match
 //     )
@@ -16,9 +16,9 @@ export function createDominansSkogTree(kodeliste) {
         const names = name.split(';').map(item => item.trim())
         const text = code + " " + names[0] + (names.length > 1 ? " (" + names[1] + ")" : "")
         // console.log("code" + code + " " + name)
-        return {value: code, sortid: sortid, text: text, name: names}
-    }) 
-    const sortfunc = (a,b) => a.sortid > b.sortid ? 1 : -1
+        return { value: code, sortid: sortid, text: text, name: names }
+    })
+    const sortfunc = (a, b) => a.sortid > b.sortid ? 1 : -1
     const result = sk.sort(sortfunc)
     //result.unshift({value: null, sortid: "", text: "", name: [""]}) // add empty selection
     return result
@@ -29,15 +29,16 @@ export function createDominansSkogLabelList(items) {
         const k = item.value
         acc[k] = item.name
         return acc
-    } , {})
+    }, {})
     return result
 }
 export function createDominansSkogKoder(items) {
-    const result = items.map(item => { 
+    const result = items.map(item => {
         return {
             Value: item.value,
             Text: item.text
-        }})
+        }
+    })
     return result
 }
 

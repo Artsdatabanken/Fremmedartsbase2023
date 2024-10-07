@@ -11,68 +11,68 @@ class AuthenticationStore {
     // @observable manager = null;
     user = null;
     access = null;
-constructor() {
-    makeObservable(this, {
-        user: observable,
-        access: observable,
-        isLoggedIn: computed,
-        userName: computed,
-        userId: computed,
-        hasAccess: computed,
-        isAdmin: computed,
-        hasApplication: computed,
-        getAuthToken: computed,
-        isInRole: action,
-        login: action,
-        completeLogin: action,
-        logout: action,
-        completeLogout: action,
-        handleError: action
-    });
-
-    Log.logger = console;
-    Log.level = Log.INFO;
-    this.manager = new UserManager(config.authconfig);
-    this
-        .manager
-        .events
-        .addAccessTokenExpiring(function () {
-            Log.warn("token expiring...");
-            window.appInsights.trackEvent({ name: 'token expiring'})
+    constructor() {
+        makeObservable(this, {
+            user: observable,
+            access: observable,
+            isLoggedIn: computed,
+            userName: computed,
+            userId: computed,
+            hasAccess: computed,
+            isAdmin: computed,
+            hasApplication: computed,
+            getAuthToken: computed,
+            isInRole: action,
+            login: action,
+            completeLogin: action,
+            logout: action,
+            completeLogout: action,
+            handleError: action
         });
-    this.manager.events.addSilentRenewError(() => {
-        Log.warn("renew token failed...");
-        window.appInsights.trackException({exception: new Error('renew token failed')});//.trackEvent({ name: 'renew token failed'})
-    });
-    this.manager.events.addAccessTokenExpired(() => {
-        Log.warn("token expired...");
-        window.appInsights.trackException({exception: new Error('token expired')});//trackEvent({ name: 'token expired'})
-    });
-    this
-        .manager
-        .events
-        .addUserLoaded(e => {
-            Log.info("user loaded...");
-            action(() => {
-                Log.info("old token " + (this.user ? this.user.access_token: "no token"))
-                this.user = e
-                Log.info("new token..." + e.access_token);
-                if (window.appInsights) {
-                    var validatedId = e.profile.sub;
-                    window.appInsights.setAuthenticatedUserContext(validatedId);
-                    window.appInsights.trackPageView();
-                    window.appInsights.trackEvent({
-                        name:"SetAuthenticatedUserContext", 
-                        properties: { UserContextString: validatedId }
-                    })
-                }
-                // window.appInsights.trackEvent({ name: 'new token loaded'})
-            })()
-        })
-    // window.setTimeout(
-    //     () => {this.manager.signinSilent()}      
-    // , 10000);
-}
+
+        Log.logger = console;
+        Log.level = Log.INFO;
+        this.manager = new UserManager(config.authconfig);
+        this
+            .manager
+            .events
+            .addAccessTokenExpiring(function () {
+                Log.warn("token expiring...");
+                window.appInsights.trackEvent({ name: 'token expiring' })
+            });
+        this.manager.events.addSilentRenewError(() => {
+            Log.warn("renew token failed...");
+            window.appInsights.trackException({ exception: new Error('renew token failed') });//.trackEvent({ name: 'renew token failed'})
+        });
+        this.manager.events.addAccessTokenExpired(() => {
+            Log.warn("token expired...");
+            window.appInsights.trackException({ exception: new Error('token expired') });//trackEvent({ name: 'token expired'})
+        });
+        this
+            .manager
+            .events
+            .addUserLoaded(e => {
+                Log.info("user loaded...");
+                action(() => {
+                    Log.info("old token " + (this.user ? this.user.access_token : "no token"))
+                    this.user = e
+                    Log.info("new token..." + e.access_token);
+                    if (window.appInsights) {
+                        var validatedId = e.profile.sub;
+                        window.appInsights.setAuthenticatedUserContext(validatedId);
+                        window.appInsights.trackPageView();
+                        window.appInsights.trackEvent({
+                            name: "SetAuthenticatedUserContext",
+                            properties: { UserContextString: validatedId }
+                        })
+                    }
+                    // window.appInsights.trackEvent({ name: 'new token loaded'})
+                })()
+            })
+        // window.setTimeout(
+        //     () => {this.manager.signinSilent()}
+        // , 10000);
+    }
 
     get isLoggedIn() {
         //        return true
@@ -113,22 +113,22 @@ constructor() {
     async getJsonRequest(url) {
 
         const response = await fetch(url, {
-                method: 'GET',
-                // mode: 'no-cors',
-                headers: new Headers({
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + this.getAuthToken
-                })
-            }).then((response1) => {
-                if (response1.status >= 400 && response1.status < 600) {
-                    throw new Error("Bad response from server");
-                }
-                return response1.json();
-            }).then((response2) => {
-
-                return response2;
+            method: 'GET',
+            // mode: 'no-cors',
+            headers: new Headers({
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + this.getAuthToken
             })
+        }).then((response1) => {
+            if (response1.status >= 400 && response1.status < 600) {
+                throw new Error("Bad response from server");
+            }
+            return response1.json();
+        }).then((response2) => {
+
+            return response2;
+        })
             .catch((error) => {
                 console.log(error)
             });
@@ -139,23 +139,23 @@ constructor() {
     async sendJsonRequest(url, data) {
 
         const response = await fetch(url, {
-                method: 'POST',
-                body: JSON.stringify(data), // data can be `string` or {object}! (cant get it to work with {object}...)
-                // mode: 'no-cors',
-                headers: new Headers({
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + this.getAuthToken
-                })
-            }).then((response1) => {
-                if (response1.status >= 400 && response1.status < 600) {
-                    throw new Error("Bad response from server");
-                }
-                return response1.json();
-            }).then((response2) => {
-
-                return response2;
+            method: 'POST',
+            body: JSON.stringify(data), // data can be `string` or {object}! (cant get it to work with {object}...)
+            // mode: 'no-cors',
+            headers: new Headers({
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + this.getAuthToken
             })
+        }).then((response1) => {
+            if (response1.status >= 400 && response1.status < 600) {
+                throw new Error("Bad response from server");
+            }
+            return response1.json();
+        }).then((response2) => {
+
+            return response2;
+        })
             .catch((error) => {
                 console.log(error)
             });
@@ -200,19 +200,18 @@ constructor() {
                 (user) => {
                     action(() => {
                         Log.info("Manuell load user...")
-                        if(user)
-                        {
-                        this.user = user
-                        if (window.appInsights) {
-                            var validatedId = user.profile.sub;
-                            window.appInsights.setAuthenticatedUserContext(validatedId);
-                            window.appInsights.trackPageView();
-                            window.appInsights.trackEvent({
-                                name:"SetAuthenticatedUserContext", 
-                                properties: { UserContextString: validatedId }
-                            })
-                        }
-                        this.loadAccessRights()
+                        if (user) {
+                            this.user = user
+                            if (window.appInsights) {
+                                var validatedId = user.profile.sub;
+                                window.appInsights.setAuthenticatedUserContext(validatedId);
+                                window.appInsights.trackPageView();
+                                window.appInsights.trackEvent({
+                                    name: "SetAuthenticatedUserContext",
+                                    properties: { UserContextString: validatedId }
+                                })
+                            }
+                            this.loadAccessRights()
                         }
                     })()
                 }

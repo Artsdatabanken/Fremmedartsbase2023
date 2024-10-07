@@ -1,9 +1,9 @@
 ﻿import React from 'react';
-import {PropTypes} from 'prop-types';
-import {action} from 'mobx';
-import {observer} from 'mobx-react';
+import { PropTypes } from 'prop-types';
+import { action } from 'mobx';
+import { observer } from 'mobx-react';
 import HtmlEditor from '../components/htmlEditor';
-import {UserContext} from './components'
+import { UserContext } from './components'
 
 // removes MS Office generated guff
 function cleanHTML(input) {
@@ -40,8 +40,8 @@ function cleanHTML(input) {
 
 //////var config = {
 //////    ALLOWED_TAGS: ['p', 'span', 'a', 'b', 'i', 'strong', '#text'], // only <P> and text nodes
-//////    ALLOWED_ATTR: ['img', 'href'], 
-//////    FORBID_ATTR: ['style'], 
+//////    ALLOWED_ATTR: ['img', 'href'],
+//////    FORBID_ATTR: ['style'],
 //////    FORBID_TAGS: ['style']
 //////    //KEEP_CONTENT: false
 //////};
@@ -133,19 +133,19 @@ class ObservableHtmlString extends React.Component {
     }
     render() {
         const context = UserContext.getContext()
-        const {observableValue, label, disabled, editable, className, placeholder} = this.props;        
+        const { observableValue, label, disabled, editable, className, placeholder } = this.props;
         const readonly = !!context.readonly
         const [obj, prop] = observableValue;
         const hasLabel = !!label;
         return (<div className={className}>
             {hasLabel && <label htmlFor={prop}>{label}</label>}
-            <HtmlEditor 
-                        disabled={(readonly || disabled) && !editable }
-                        style={this.style}
-                        content={obj[prop] || ""}
-                        onChange={action(e =>  obj[prop] = e.target.value)} 
-                        placeholder={placeholder}
-                        onPasteTransformer={this.pasteTransform}/>
+            <HtmlEditor
+                disabled={(readonly || disabled) && !editable}
+                style={this.style}
+                content={obj[prop] || ""}
+                onChange={action(e => obj[prop] = e.target.value)}
+                placeholder={placeholder}
+                onPasteTransformer={this.pasteTransform} />
         </div>
         )
     }

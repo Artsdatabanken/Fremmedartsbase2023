@@ -1,7 +1,7 @@
 // import config from '../../../config';
 import React from 'react';
-import {observer} from 'mobx-react';
-import {extendObservable} from 'mobx';
+import { observer } from 'mobx-react';
+import { extendObservable } from 'mobx';
 import * as Xcomp from '../observableComponents';
 import BsModal from '../../bootstrapModal'
 // const labels = config.labels
@@ -18,10 +18,10 @@ const lisenskoder = [
 
 export default class UploadPicturesButton extends React.Component {
     render() {
-        const {scientificName} = this.props;
+        const { scientificName } = this.props;
         const crlf = "%0D%0A"
         const body = "Fyll inn" + crlf + crlf + "fotograf:" + crlf + crlf + "institusjon:" + crlf + crlf + "funnsted:" + crlf + crlf + "annen informasjon (se retningslinjer):" + crlf + crlf + "lisens:" + crlf + crlf + "Vi anbefaler CC BY 4.0, alternativt CC BY-SA 4.0, se http://beta.artsdatabanken." +
-                "no/Article/Article/134105"
+            "no/Article/Article/134105"
 
         const mailadress = "tove.rimestad@artsdatabanken.no"
         return (

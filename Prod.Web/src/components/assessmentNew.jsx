@@ -1,7 +1,7 @@
 import React from 'react';
-import {observer, inject} from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import * as Xcomp from './observableComponents';
-import {loadData} from '../apiService'
+import { loadData } from '../apiService'
 import config from '../config'
 
 // import LoadingHoc from './LoadingHoc'
@@ -18,7 +18,7 @@ import createTaxonSearch from './createTaxonSearch'
 
 
 
-const  newAssessment = observable({
+const newAssessment = observable({
     id: "newAssessmentTaxonSearch",
     ScientificName: "",
     ScientificNameId: "",
@@ -26,20 +26,20 @@ const  newAssessment = observable({
     VernacularName: "",
     TaxonRank: "",
     TaxonId: "",
-    RedListCategory: "", 
+    RedListCategory: "",
     Ekspertgruppe: "",
     taxonSearchString: "",
     potensiellDørstokkart: "",
     taxonSearchResult: [],
     // taxonSearchWaitingForResult: false - should not be observable
-    
+
     assessmentExists: false
 
 })
 
 class assessmentNew extends React.Component {
     //if this is false, the button name is "Add assessment", otherwise "Move assessment"
-    
+
     constructor(props) {
         super(props)
 
@@ -48,7 +48,7 @@ class assessmentNew extends React.Component {
             moveAssessment: action
         });
 
-        const {evaluationContext} = props
+        const { evaluationContext } = props
         this.onNewAssessment = () => {
             const newItem = newAssessment;
             const clone = toJS(newItem);
@@ -64,7 +64,7 @@ class assessmentNew extends React.Component {
                 newItem.VernacularName = ""
                 newItem.TaxonRank = ""
                 newItem.TaxonId = ""
-                newItem.RedListCategory = "" 
+                newItem.RedListCategory = ""
                 // newItem.Ekspertgruppe = props.ekspertgruppe
                 newItem.taxonSearchString = ""
                 newItem.potensiellDørstokkart = ""
@@ -75,42 +75,42 @@ class assessmentNew extends React.Component {
         }
 
 
-        autorun(() => 
+        autorun(() =>
             newAssessment.Ekspertgruppe = this.props.appState.expertgroup
         )
 
 
-        autorun(() => 
-            console.log("api sciname : "  +            newAssessment.ScientificName)
-           
+        autorun(() =>
+            console.log("api sciname : " + newAssessment.ScientificName)
+
         )
         autorun(() => {
-            const expgroup =  this.props.appState.expertgroup
+            const expgroup = this.props.appState.expertgroup
             const sciid = newAssessment.ScientificNameId
-            if(expgroup && sciid) {
+            if (expgroup && sciid) {
                 this.props.checkForExistingAssessment(expgroup, sciid).then(exists => {
                     // console.log("¤¤¤¤¤¤¤¤ exsisterer -- " + exists)
                     action(() => {
                         newAssessment.assessmentExists = exists
                     })()
                 },
-                err => {
-                    console.log("vurdering exsisterer error ")
-                }
+                    err => {
+                        console.log("vurdering exsisterer error ")
+                    }
                 )
             }
         })
 
-        autorun(() => 
-            console.log("assessmentNew vurdering exsisterer : "  +  newAssessment.assessmentExists)
+        autorun(() =>
+            console.log("assessmentNew vurdering exsisterer : " + newAssessment.assessmentExists)
         )
 
         createTaxonSearch(newAssessment, evaluationContext)
     }
 
     // assessmentExists(
-    //     expertgroup, 
-    //     scientificNameId, 
+    //     expertgroup,
+    //     scientificNameId,
     //     ) {
     //     const url = "assessment/ExistsByExpertgroupAndName/" + expertgroup + "/" + scientificNameId
     //     if (expertgroup  && scientificNameId) {
@@ -135,13 +135,13 @@ class assessmentNew extends React.Component {
         return false;
     }
 
-   
+
 
     render(props) {
         if (window.appInsights) {
-            window.appInsights.trackPageView({name: 'NewAssessment'});
+            window.appInsights.trackPageView({ name: 'NewAssessment' });
         }
-        const {appState, checkForExistingAssessment} = this.props
+        const { appState, checkForExistingAssessment } = this.props
         const labels = appState.codeLabels
         const codes = appState.koder
         const rolle = appState.roleincurrentgroup
@@ -149,7 +149,7 @@ class assessmentNew extends React.Component {
         //var url = "http://localhost:25808/api/Assessment/ExistsByExpertgroupAndName/" + appState.expertgroup + "/" + newAssessment.ScientificNameId
         //console.log(url)
         //this.getExisting(appState.expertgroup, newAssessment.ScientificNameId)
-        
+
         return (
             <div>
                 <fieldset className="well">
@@ -160,68 +160,70 @@ class assessmentNew extends React.Component {
                             <br></br>
                             <h3>{labels.SelectAssessment.expertgroup}</h3>
                             <Xcomp.StringEnum
-                                    observableValue={[appState, 'expertgroup']}
-                                    codes={appState.expertgroups} />
+                                observableValue={[appState, 'expertgroup']}
+                                codes={appState.expertgroups} />
                         </div>
                     </div>
-                    <div className="row" style={{marginTop: '30px'}}>
+                    <div className="row" style={{ marginTop: '30px' }}>
                         <div className="col-md-6">
-                            <div style={{position: 'relative'}}>
+                            <div style={{ position: 'relative' }}>
                                 {newAssessment.ScientificName.length > 0 ?
-                                <div 
-                                    className="speciesNewItem"
-                                    onClick={action(() => {
-                                        newAssessment.TaxonId = "";
-                                        newAssessment.TaxonRank = "";
-                                        newAssessment.ScientificName = "";
-                                        newAssessment.ScientificNameId = "";
-                                        newAssessment.ScientificNameAuthor = "";
-                                        newAssessment.VernacularName = "";
-                                        newAssessment.RedListCategory = "";
-                                        newAssessment.potensiellDørstokkart = "";
-                                        newAssessment.taxonSearchResult.replace([]); 
-                                        newAssessment.taxonSearchString = "" }) 
-                                    }
-                                >
-                                    <div className={"rlCategory " + newAssessment.RedListCategory}>{newAssessment.RedListCategory}</div>
-                                    <div className="vernacularName">{newAssessment.VernacularName}</div>
-                                    <div className="scientificName">{newAssessment.ScientificName}</div>
-                                    <div className="author">{newAssessment.ScientificNameAuthor && newAssessment.ScientificNameAuthor.startsWith('(') ? newAssessment.ScientificNameAuthor : '(' + newAssessment.ScientificNameAuthor + ')'}</div>
-                                    <span style={{cursor: 'pointer', fontWeight: 'bold', marginLeft:'20px'}}>X</span>
-                                </div> :
-                                <Xcomp.String observableValue={[newAssessment, 'taxonSearchString']} placeholder={labels.General.searchSpecies} />}
+                                    <div
+                                        className="speciesNewItem"
+                                        onClick={action(() => {
+                                            newAssessment.TaxonId = "";
+                                            newAssessment.TaxonRank = "";
+                                            newAssessment.ScientificName = "";
+                                            newAssessment.ScientificNameId = "";
+                                            newAssessment.ScientificNameAuthor = "";
+                                            newAssessment.VernacularName = "";
+                                            newAssessment.RedListCategory = "";
+                                            newAssessment.potensiellDørstokkart = "";
+                                            newAssessment.taxonSearchResult.replace([]);
+                                            newAssessment.taxonSearchString = ""
+                                        })
+                                        }
+                                    >
+                                        <div className={"rlCategory " + newAssessment.RedListCategory}>{newAssessment.RedListCategory}</div>
+                                        <div className="vernacularName">{newAssessment.VernacularName}</div>
+                                        <div className="scientificName">{newAssessment.ScientificName}</div>
+                                        <div className="author">{newAssessment.ScientificNameAuthor && newAssessment.ScientificNameAuthor.startsWith('(') ? newAssessment.ScientificNameAuthor : '(' + newAssessment.ScientificNameAuthor + ')'}</div>
+                                        <span style={{ cursor: 'pointer', fontWeight: 'bold', marginLeft: '20px' }}>X</span>
+                                    </div> :
+                                    <Xcomp.String observableValue={[newAssessment, 'taxonSearchString']} placeholder={labels.General.searchSpecies} />}
                                 {newAssessment.taxonSearchResult.length > 0 ?
-                                <div className="speciesSearchList" style={{position: 'absolute', top: "36px", left:"-10px", backgroundColor: "#fcfcfc" }}>
-                                    <ul className="panel list-unstyled">
-                                    {newAssessment.taxonSearchResult.map(item =>
-                                        <li onClick={action(e => {
-                                            console.log(JSON.stringify(item))
+                                    <div className="speciesSearchList" style={{ position: 'absolute', top: "36px", left: "-10px", backgroundColor: "#fcfcfc" }}>
+                                        <ul className="panel list-unstyled">
+                                            {newAssessment.taxonSearchResult.map(item =>
+                                                <li onClick={action(e => {
+                                                    console.log(JSON.stringify(item))
 
-                                            newAssessment.TaxonId = item.taxonId;
-                                            newAssessment.TaxonRank = item.taxonRank;
-                                            newAssessment.ScientificName = item.scientificName;
-                                            newAssessment.ScientificNameId = item.scientificNameId;
-                                            newAssessment.ScientificNameAuthor = item.author;
-                                            newAssessment.VernacularName = item.popularName;
+                                                    newAssessment.TaxonId = item.taxonId;
+                                                    newAssessment.TaxonRank = item.taxonRank;
+                                                    newAssessment.ScientificName = item.scientificName;
+                                                    newAssessment.ScientificNameId = item.scientificNameId;
+                                                    newAssessment.ScientificNameAuthor = item.author;
+                                                    newAssessment.VernacularName = item.popularName;
 
-                                            newAssessment.RedListCategory = item.rlCategory;
-                                            //newAssessment.potensiellDørstokkart = item.potensiellDørstokkart;
-                                            newAssessment.taxonSearchResult.replace([]); 
-                                            newAssessment.taxonSearchString = "" })} 
-                                            key={item.scientificName}
-                                        >
-                                            <div className="speciesSearchItem">
-                                                <div className={"rlCategory " + item.rlCategory}>{item.rlCategory}</div>
-                                                {item.popularName ? <span className="vernacularName">{item.popularName + " "}</span> : null }
-                                                <span className="scientificName">{item.scientificName}</span>
-                                                <span className="author">{item.author && item.author.startsWith('(') ? item.author : '(' + item.author + ')'}</span>
-                                            </div>
-                                        </li>
-                                    )}
-                                    </ul>
-                                </div> :
-                                null}
-                               {/* {newAssessment.taxonSearchWaitingForResult ?
+                                                    newAssessment.RedListCategory = item.rlCategory;
+                                                    //newAssessment.potensiellDørstokkart = item.potensiellDørstokkart;
+                                                    newAssessment.taxonSearchResult.replace([]);
+                                                    newAssessment.taxonSearchString = ""
+                                                })}
+                                                    key={item.scientificName}
+                                                >
+                                                    <div className="speciesSearchItem">
+                                                        <div className={"rlCategory " + item.rlCategory}>{item.rlCategory}</div>
+                                                        {item.popularName ? <span className="vernacularName">{item.popularName + " "}</span> : null}
+                                                        <span className="scientificName">{item.scientificName}</span>
+                                                        <span className="author">{item.author && item.author.startsWith('(') ? item.author : '(' + item.author + ')'}</span>
+                                                    </div>
+                                                </li>
+                                            )}
+                                        </ul>
+                                    </div> :
+                                    null}
+                                {/* {newAssessment.taxonSearchWaitingForResult ?
                                 <div  style={{zIndex: 10000, position: 'absolute', top: "40px", left:"35px"}}>
                                     <div  className={"three-bounce"}>
                                         <div className="bounce1" />
@@ -232,24 +234,24 @@ class assessmentNew extends React.Component {
                                null} */}
                             </div>
                         </div>
-                        
-                        
+
+
                     </div>
-                    <div className="row">                            
-                            <div className="col-md-6">
-                            <Xcomp.StringEnum observableValue={[newAssessment, "potensiellDørstokkart"]} mode="radio" codes={codes.SpeciesStatus}/>
-                               {/* <Xcomp.Bool observableValue={[newAssessment, "potensiellDørstokkart"]} label={labels.SpeciesStatus.potentialDoorknocker} />
+                    <div className="row">
+                        <div className="col-md-6">
+                            <Xcomp.StringEnum observableValue={[newAssessment, "potensiellDørstokkart"]} mode="radio" codes={codes.SpeciesStatus} />
+                            {/* <Xcomp.Bool observableValue={[newAssessment, "potensiellDørstokkart"]} label={labels.SpeciesStatus.potentialDoorknocker} />
                                 <Xcomp.Bool observableValue={[newAssessment, "øvrigeArter"]} label={labels.SpeciesStatus.otherSpecies} /> */}
-                            </div>
                         </div>
-                        <div className="col-md-6" style={{display: 'flex'}}>
-                            <div>{labels.SelectAssessment.NBWritingAccess}</div>
-                            
-                            <Xcomp.Button primary onClick={this.onNewAssessment} disabled={!rolle.writeAccess || (!newAssessment.ScientificName || newAssessment.assessmentExists)}>{this.moveAssessment() ? labels.SelectAssessment.moveAssessment : labels.SelectAssessment.createAssessment}</Xcomp.Button>
-                            {newAssessment.ScientificName.length > 0 ? 
-                                !rolle.writeAccess ?  <div style={{color: 'red'}}>{labels.SelectAssessment.accessDenied}</div> :
-                                (newAssessment.assessmentExists && newAssessment.potensiellDørstokkart != "") ? <div style={{color: 'red'}}>{labels.SelectAssessment.alreadyOnTheList}</div>: null: null}
-                        </div>
+                    </div>
+                    <div className="col-md-6" style={{ display: 'flex' }}>
+                        <div>{labels.SelectAssessment.NBWritingAccess}</div>
+
+                        <Xcomp.Button primary onClick={this.onNewAssessment} disabled={!rolle.writeAccess || (!newAssessment.ScientificName || newAssessment.assessmentExists)}>{this.moveAssessment() ? labels.SelectAssessment.moveAssessment : labels.SelectAssessment.createAssessment}</Xcomp.Button>
+                        {newAssessment.ScientificName.length > 0 ?
+                            !rolle.writeAccess ? <div style={{ color: 'red' }}>{labels.SelectAssessment.accessDenied}</div> :
+                                (newAssessment.assessmentExists && newAssessment.potensiellDørstokkart != "") ? <div style={{ color: 'red' }}>{labels.SelectAssessment.alreadyOnTheList}</div> : null : null}
+                    </div>
                 </fieldset>
             </div>
         )

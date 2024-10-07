@@ -14,8 +14,8 @@ function unsub(type, handler) {
         var params = Array.prototype.slice.call(arguments, 1);
         for (
             var keys = Object.keys(this._events_),
-                count = keys.length,
-                i = 0;
+            count = keys.length,
+            i = 0;
             i < count;
             i++
         ) {
@@ -38,7 +38,7 @@ function unsub(type, handler) {
     }
 
     for (var i = 0,
-            count = this._events_[type].length;
+        count = this._events_[type].length;
         i < count;
         i++
     ) {
@@ -61,11 +61,11 @@ function pub(type) {
         return;
 
     for (var i = 0,
-            events = this._events_[type],
-            count = events.length,
-            args = Array.prototype.slice.call(arguments, 1) ;
-    i < count;
-    i++) {
+        events = this._events_[type],
+        count = events.length,
+        args = Array.prototype.slice.call(arguments, 1);
+        i < count;
+        i++) {
         events[i].apply(this, args);
     }
 }

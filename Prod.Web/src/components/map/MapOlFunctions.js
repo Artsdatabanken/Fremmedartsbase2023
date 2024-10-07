@@ -111,7 +111,7 @@ const createGradient = async () => {
 };
 
 const createWaterIntersectionStyle = async () => {
-    
+
     const fillColor = await createGradient();
     const fill = new Fill({
         color: fillColor
@@ -414,12 +414,12 @@ const createButton = (options) => {
 const wmtsTileGrid = (numZoomLevels, matrixSet, projection, startLevel) => {
     let resolutions = new Array(numZoomLevels);
     let matrixIds = new Array(numZoomLevels);
-    
+
     // console.log('wmtsTileGrid()', numZoomLevels, matrixSet, projection);
     let projectionExtent = projection.getExtent();
 
     let size = getWidth(projectionExtent) / 256;
-    
+
     startLevel = startLevel ? startLevel : 0;
     for (let z = startLevel; z < (numZoomLevels + startLevel); ++z) {
         resolutions[z] = size / Math.pow(2, z);

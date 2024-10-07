@@ -28,12 +28,12 @@ export function routeMatcher(uri, route) {
 
         // change parameterized path to regexp
         const regExpUri = route
-        //                             :parameter?
-                            .replace(/\/:[^\/]+\?/g, '(?:\/([^\/]+))?')
-        //                             :parameter
-                            .replace(/:[^\/]+/g, '([^\/]+)')
-        //                             escape all /
-                            .replace('/', '\\/');
+            //                             :parameter?
+            .replace(/\/:[^\/]+\?/g, '(?:\/([^\/]+))?')
+            //                             :parameter
+            .replace(/:[^\/]+/g, '([^\/]+)')
+            //                             escape all /
+            .replace('/', '\\/');
 
         // checks if uri match
         const routeMatch = uri.match(new RegExp(`^${regExpUri}$`));
@@ -65,7 +65,7 @@ export function routeMatcher(uri, route) {
 export function router(url, routes) {
     // routes are in the shape:
     // [["routedescritpon", function], ...]
-    // - the function can be and do anything. It recieves the parameters from route as input. 
+    // - the function can be and do anything. It recieves the parameters from route as input.
     // e.g.:
     // const routes = [
     //     ["items/:id", params => "item id:" + params.id ],
@@ -74,7 +74,7 @@ export function router(url, routes) {
     const found = routes.find((routeing) => {
         const route = routeing[0]
         const match = routeMatcher(url, route)
-        return match !== null 
+        return match !== null
     })
     if (found) {
         const route = found[0]

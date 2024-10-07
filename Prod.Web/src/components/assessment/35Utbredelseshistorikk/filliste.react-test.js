@@ -20,7 +20,7 @@ test('Filliste med fil', () => {
         Files={[txtFil]}
         selectedFile={{}}
         activeUploads={[]}
-        baseDirectory='datasett'/>)
+        baseDirectory='datasett' />)
     const tree = component.toJSON()
     expect(tree).toMatchSnapshot()
 })
@@ -31,13 +31,13 @@ test('Filliste med valgt fil', () => {
         Files={[pdfFil, txtFil]}
         selectedFile={txtFil}
         activeUploads={[]}
-        baseDirectory='datasett'/>)
+        baseDirectory='datasett' />)
     const tree = component.toJSON()
     expect(tree).toMatchSnapshot()
 })
 
 test('Opplasting', () => {
-    const component = renderer.create(<Filliste labels={{}} Files={[txtFil]} selectedFile={{}} activeUploads={[pdfFil]}/>)
+    const component = renderer.create(<Filliste labels={{}} Files={[txtFil]} selectedFile={{}} activeUploads={[pdfFil]} />)
     let tree = component.toJSON()
     expect(tree).toMatchSnapshot()
 
@@ -47,7 +47,7 @@ test('Opplasting', () => {
 
 test('Tom filliste', () => {
     const component = renderer.create(<Filliste
-        labels={{}} Files={[]} activeUploads={[]}/>)
+        labels={{}} Files={[]} activeUploads={[]} />)
     const tree = component.toJSON()
     expect(tree).toMatchSnapshot()
 })

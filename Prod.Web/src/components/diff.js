@@ -1,14 +1,14 @@
 export default function diff(text1, text2) {
-    
+
     //console.log(text1,text2);
     let table = '';
     let acc = [];
 
-    function make_result(x, y, type, text){
+    function make_result(x, y, type, text) {
         let result = { lineNumber1: y, lineNumber2: x, type: type, text: text };
         acc.push(result);
     }
-   
+
     function get_diff(make_row, matrix, a1, a2, x, y) {
         if (x > 0 && y > 0 && a1[y - 1] === a2[x - 1]) {
             get_diff(make_row, matrix, a1, a2, x - 1, y - 1);

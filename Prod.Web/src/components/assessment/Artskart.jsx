@@ -1,16 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {observer} from 'mobx-react'
+import { observer } from 'mobx-react'
 import { toJS, observable, makeObservable } from 'mobx';
 import Kart from './kart'
 import Artskartparametre from './Artskartparametre'
-import {Button, Modal} from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 // import {loadDataFromUrl} from '../stores/apiService'
 import Loading from './Loading'
 import config from '../../config'
 
 
-function loadDataFromUrl() {alert("loadDataFromUrl not implemented")}
+function loadDataFromUrl() { alert("loadDataFromUrl not implemented") }
 
 class Artskart extends React.Component {
     visUtvalgsparametre = false;
@@ -110,14 +110,14 @@ class Artskart extends React.Component {
                             geojson={toJS(this.resultat.observations)}
                             onEdit={(e) => this.oppdaterPolygon(e)}
                             style={mapStyle} /> {isLoading && <div
-                            style={{
-                            position: "absolute",
-                            top: '50%',
-                            left: '50%',
-                            width: '80%'
-                        }}>
-                            <Loading />
-                        </div>}
+                                style={{
+                                    position: "absolute",
+                                    top: '50%',
+                                    left: '50%',
+                                    width: '80%'
+                                }}>
+                                <Loading />
+                            </div>}
 
                         {this.visUtvalgsparametre && <Artskartparametre
                             utvalg={props.utvalgsparametre}
@@ -151,10 +151,10 @@ class Artskart extends React.Component {
             : (kriterier.includeObjects
                 ? 'specimen'
                 : 'observations')}&region=${kriterier.includeNorge == kriterier.includeSvalbard
-                ? 'all'
-                : (kriterier.includeNorge
-                    ? 'fastland'
-                    : 'svalbard')}`
+                    ? 'all'
+                    : (kriterier.includeNorge
+                        ? 'fastland'
+                        : 'svalbard')}`
         queryparams = `${queryparams}&scientificNameId=${kriterier.scientificnameId}`
         if (kriterier.selectionGeometry)
             queryparams = `${queryparams}&geojsonPolygon=${JSON.parse(kriterier.selectionGeometry).geometry.coordinates}`

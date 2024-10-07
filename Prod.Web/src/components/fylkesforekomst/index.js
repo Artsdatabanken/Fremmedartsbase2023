@@ -1,3 +1,3 @@
 import Fylkesforekomst from './Fylkesforekomst'
 
-export {Fylkesforekomst}
+export { Fylkesforekomst }
