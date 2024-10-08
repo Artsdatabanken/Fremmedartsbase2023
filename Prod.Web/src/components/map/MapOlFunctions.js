@@ -423,7 +423,7 @@ const wmtsTileGrid = (numZoomLevels, matrixSet, projection, startLevel) => {
     startLevel = startLevel ? startLevel : 0;
     for (let z = startLevel; z < (numZoomLevels + startLevel); ++z) {
         resolutions[z] = size / Math.pow(2, z);
-        matrixIds[z] = matrixSet + ':' + z;
+        matrixIds[z] = z;
     }
 
     let wmtsTileGrid = new WMTSTileGrid({

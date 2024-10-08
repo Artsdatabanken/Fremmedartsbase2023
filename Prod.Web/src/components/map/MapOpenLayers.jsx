@@ -11,8 +11,9 @@ import { Tile as TileLayer, Vector as VectorLayer } from "ol/layer";
 import { Point, Polygon } from "ol/geom";
 import { GeoJSON as GeoJSONFormat } from "ol/format";
 import Proj4 from "proj4";
+import {register} from 'ol/proj/proj4.js';
 import { addProjection, Projection } from "ol/proj";
-import { Vector as VectorSource, WMTS as WmtsSource } from "ol/source";
+import { Vector as VectorSource, WMTS as WmtsSource, OSM } from "ol/source";
 import mapOlFunc from "./MapOlFunctions";
 import config from "../../config";
 
@@ -368,6 +369,7 @@ const MapOpenLayers = ({
 
         if (Proj4.defs(`EPSG:${config.mapEpsgCode}`) === undefined) {
             Proj4.defs(`EPSG:${config.mapEpsgCode}`, config.mapEpsgDef);
+            register(Proj4);
         }
         const projection = new Projection({
             code: `EPSG:${config.mapEpsgCode}`,
@@ -415,58 +417,91 @@ const MapOpenLayers = ({
                 zoom: 0, // mapZoom
             }),
             layers: [
+                // new TileLayer({
+                //     name: "Europakart",
+                //     opacity: 1,
+                //     extent: mapOlFunc.extent,
+                //     source: new WmtsSource({
+                //         url:
+                //             "//gatekeeper3.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts?gkt=" +
+                //             token,
+                //         // layer: 'europa',
+                //         layer: "europa_forenklet",
+                //         attributions: "Kartverket",
+                //         matrixSet: `EPSG:${config.mapEpsgCode}`,
+                //         format: "image/png",
+                //         projection: projection,
+                //         tileGrid: mapOlFunc.wmtsTileGrid(
+                //             mapOlFunc.numZoomLevels,
+                //             `EPSG:${config.mapEpsgCode}`,
+                //             projection
+                //         ),
+                //         style: "default",
+                //         wrapX: true,
+                //         crossOrigin: "anonymous",
+                //     }),
+                //     visible: true,
+                //     zIndex: 0,
+                // }),
                 new TileLayer({
-                    name: "Europakart",
-                    opacity: 1,
-                    extent: mapOlFunc.extent,
-                    source: new WmtsSource({
-                        url:
-                            "//gatekeeper3.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts?gkt=" +
-                            token,
-                        // layer: 'europa',
-                        layer: "europa_forenklet",
-                        attributions: "Kartverket",
-                        matrixSet: `EPSG:${config.mapEpsgCode}`,
-                        format: "image/png",
+                    name: 'Europakart',
+                    source: new OSM({
+                        attributions: 'All maps &copy; <a href="//www.openstreetmap.org/">OpenStreetMap</a>',
+                        url: '//{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                         projection: projection,
-                        tileGrid: mapOlFunc.wmtsTileGrid(
-                            mapOlFunc.numZoomLevels,
-                            `EPSG:${config.mapEpsgCode}`,
-                            projection
-                        ),
-                        style: "default",
-                        wrapX: true,
-                        crossOrigin: "anonymous",
                     }),
-                    visible: true,
-                    zIndex: 0,
-                }),
-                new TileLayer({
-                    name: "Norges grunnkart",
-                    opacity: 1,
-                    extent: mapOlFunc.extent,
-                    source: new WmtsSource({
-                        url:
-                            "//gatekeeper3.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts?gkt=" +
-                            token,
-                        // layer: 'europa',
-                        layer: "norges_grunnkart",
-                        attributions: "Kartverket",
-                        matrixSet: `EPSG:${config.mapEpsgCode}`,
-                        format: "image/png",
-                        projection: projection,
-                        tileGrid: mapOlFunc.wmtsTileGrid(
-                            mapOlFunc.numZoomLevels,
-                            `EPSG:${config.mapEpsgCode}`,
-                            projection
-                        ),
-                        style: "default",
-                        wrapX: true,
-                        crossOrigin: "anonymous",
-                    }),
-                    visible: true,
                     zIndex: 1,
                 }),
+                // new TileLayer({
+                //     name: "Norges grunnkart",
+                //     opacity: 1,
+                //     extent: mapOlFunc.extent,
+                //     source: new WmtsSource({
+                //         url:
+                //             "//gatekeeper3.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts?gkt=" +
+                //             token,
+                //         // layer: 'europa',
+                //         layer: "norges_grunnkart",
+                //         attributions: "Kartverket",
+                //         matrixSet: `EPSG:${config.mapEpsgCode}`,
+                //         format: "image/png",
+                //         projection: projection,
+                //         tileGrid: mapOlFunc.wmtsTileGrid(
+                //             mapOlFunc.numZoomLevels,
+                //             `EPSG:${config.mapEpsgCode}`,
+                //             projection
+                //         ),
+                //         style: "default",
+                //         wrapX: true,
+                //         crossOrigin: "anonymous",
+                //     }),
+                //     visible: true,
+                //     zIndex: 1,
+                // }),
+                new TileLayer({
+                    name: 'Norges grunnkart',
+                    opacity: 1,
+                    extent: mapOlFunc.extent,
+                    source: new WmtsSource({
+                        // url: "//gatekeeper3.geonorge.no/BaatGatekeeper/gk/gk.cache_wmts?gkt=" + token,
+                        url: '//cache.kartverket.no/v1/wmts?',
+                        // layer: 'europa',
+                        // layer: 'norges_grunnkart',
+                        layer: 'topograatone',
+                        attributions: 'Kartverket',
+                        // matrixSet: `EPSG:${config.mapEpsgCode}`,
+                        matrixSet: 'utm33n',
+                        format: 'image/png',
+                        projection: projection,
+                        // tileGrid: mapOlFunc.wmtsTileGrid(mapOlFunc.numZoomLevels, `EPSG:${config.mapEpsgCode}`, projection),
+                        tileGrid: mapOlFunc.wmtsTileGrid(mapOlFunc.numZoomLevels, `8`, projection),
+                        style: 'default',
+                        wrapX: true,
+                        crossOrigin: 'anonymous'
+                    }),
+                    visible: true,
+                    zIndex: 2
+                })
             ],
             controls: defaultControls({ attribution: false }).extend(mapControls),
             overlays: [
@@ -726,13 +761,13 @@ const MapOpenLayers = ({
     useEffect(drawUtbredelse, [geojson]);
 
     return (
-        <div>
+        <div style={{ height: "100%" }}>
             <div>{visibleLegend && <span>{"tegnforklaring"}</span>}</div>
             <MapContext.Provider value={{ map }}>
                 <div
                     ref={mapRef}
                     className="ol-map"
-                    style={{ cursor: "crosshair" }}
+                    style={{ cursor: "crosshair", height: "100%" }}
                 ></div>
             </MapContext.Provider>
         </div>
