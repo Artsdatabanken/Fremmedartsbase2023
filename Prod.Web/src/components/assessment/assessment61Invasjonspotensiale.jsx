@@ -21,26 +21,26 @@ import { getWaterAreas } from '../water/apiWaterArea';
 class Assessment61Invasjonspotensiale extends React.Component {
     // code looks unused, but it makes the Artskart-module listen to changes
     get isDirty() {
-        if (!this.props.appState.assessmentId) return false
-        const a = JSON.stringify(this.props.appState.assessment)
-        const b = this.props.appState.assessmentSavedVersionString
+        if (!this.assessmentId) return false
+        const a = JSON.stringify(this.assessment)
+        const b = this.assessmentSavedVersionString
         const c = {
-            observationFromYear: this.props.appState.assessment.artskartModel.observationFromYear,
-            observationToYear: this.props.appState.assessment.riskAssessment.AOOyear1,
-            includeNorge: this.props.appState.assessment.artskartModel.includeNorge,
-            excludeObjects: this.props.appState.assessment.artskartModel.excludeObjects,
-            excludeGbif: this.props.appState.assessment.artskartModel.excludeGbif,
+            observationFromYear: this.observationFromYear,
+            observationToYear: this.AOOyear1,
+            includeNorge: this.includeNorge,
+            excludeObjects: this.excludeObjects,
+            excludeGbif: this.excludeGbif,
         }
         // todo: (!!) appState.virtualArtskartModel0 is not defined anywhere. So it is not observable!! This might be the reason that the "isDirty" trick used to refresh artskart data!!!!
-        const d = JSON.stringify(this.props.appState.virtualArtskartModel0);
+        const d = JSON.stringify(this.virtualArtskartModel0);
         const e = {
-            observationFromYear: this.props.appState.assessment.artskartModel.observationFromYear,
-            observationToYear: this.props.appState.assessment.riskAssessment.AOOyear2,
-            includeNorge: this.props.appState.assessment.artskartModel.includeNorge,
-            excludeObjects: this.props.appState.assessment.artskartModel.excludeObjects,
-            excludeGbif: this.props.appState.assessment.artskartModel.excludeGbif,
+            observationFromYear: this.observationFromYear,
+            observationToYear: this.AOOyear2,
+            includeNorge: this.includeNorge,
+            excludeObjects: this.excludeObjects,
+            excludeGbif: this.excludeGbif,
         }
-        const f = JSON.stringify(this.props.appState.virtualArtskartModel);
+        const f = JSON.stringify(this.virtualArtskartModel);
         return a != b || c != d || e != f;
     }
 
@@ -60,8 +60,24 @@ class Assessment61Invasjonspotensiale extends React.Component {
         extendObservable(this, {
             initialWaterAreas: null,
             selectedWaterArea: [],
-            waterIsChanged: 0
+            waterIsChanged: 0,
+            assessmentId: props.appState.assessmentId,
+            assessment: props.appState.assessment,
+            assessmentSavedVersionString: props.appState.assessmentSavedVersionString,
+            observationFromYear: props.appState.assessment.artskartModel.observationFromYear,
+            AOOyear1: props.appState.assessment.riskAssessment.AOOyear1,
+            includeNorge: props.appState.assessment.artskartModel.includeNorge,
+            excludeObjects: props.appState.assessment.artskartModel.excludeObjects,
+            excludeGbif: props.appState.assessment.artskartModel.excludeGbif,
+            virtualArtskartModel0: props.appState.virtualArtskartModel0,
+            observationFromYear: props.appState.assessment.artskartModel.observationFromYear,
+            AOOyear2: props.appState.assessment.riskAssessment.AOOyear2,
+            includeNorge: props.appState.assessment.artskartModel.includeNorge,
+            excludeObjects: props.appState.assessment.artskartModel.excludeObjects,
+            excludeGbif: props.appState.assessment.artskartModel.excludeGbif,
+            virtualArtskartModel: props.appState.virtualArtskartModel
         });
+
         if (props && props.appState && props.appState.assessment) {
             const assessment = props.appState.assessment;
             if (this.GetIsRegionalAssessment(assessment)) {
