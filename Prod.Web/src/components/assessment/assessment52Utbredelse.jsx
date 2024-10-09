@@ -19,13 +19,7 @@ import ErrorList from "../errorList";
 import { beskrivTidSiden } from "../../formatting";
 
 class Assessment52Utbredelse extends React.Component {
-    // code looks unused, but it makes the Artskart-module listen to changes
-    get isDirty() {
-        if (!this.props.appState.assessmentId) return false;
-        const a = JSON.stringify(this.props.appState.assessment);
-        const b = this.props.appState.assessmentSavedVersionString;
-        return a != b;
-    }
+
     GetIsRegionalAssessment = (assessment) => {
         return (
             assessment.isAlienSpecies &&
@@ -45,7 +39,11 @@ class Assessment52Utbredelse extends React.Component {
             initialWaterAreas: null,
             selectedWaterArea: [],
             waterIsChanged: 0,
+            assessmentId: props.appState.assessmentId,
+            assessment: props.appState.assessment,
+            assessmentSavedVersionString: props.appState.assessmentSavedVersionString
         });
+
         if (props && props.appState && props.appState.assessment) {
             const assessment = props.appState.assessment;
             if (this.GetIsRegionalAssessment(assessment)) {
@@ -81,6 +79,14 @@ class Assessment52Utbredelse extends React.Component {
                 }
             }
         }
+    }
+
+    // code looks unused, but it makes the Artskart-module listen to changes
+    get isDirty() {
+        if (!this.assessmentId) return false;
+        const a = JSON.stringify(this.assessment);
+        const b = this.assessmentSavedVersionString;
+        return a != b;
     }
 
     reCreateartskartWaterModelArea = ({ ass, initialWaterAreas }) => {
