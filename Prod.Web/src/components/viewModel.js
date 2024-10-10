@@ -11,7 +11,6 @@ import {
 } from "mobx";
 import { router } from "./routeMatcher";
 import events from "./event-pubsub";
-import * as signalR from "@microsoft/signalr";
 import config from "../config";
 import auth from "./authService";
 import createContext from "./createContext";
@@ -42,13 +41,13 @@ class ViewModel {
             isDirty: computed
         });
 
-        const options = {
-            skipNegotiation: true,
-            transport: signalR.HttpTransportType.WebSockets,
-            logMessageContent: true,
-            logger: signalR.LogLevel.Trace,
-            //accessTokenFactory: () => this.props.accessToken,  // todo: <---- check this
-        };
+        // const options = {
+        //     skipNegotiation: true,
+        //     transport: signalR.HttpTransportType.WebSockets,
+        //     logMessageContent: true,
+        //     logger: signalR.LogLevel.Trace,
+        //     //accessTokenFactory: () => this.props.accessToken,  // todo: <---- check this
+        // };
 
         // utkommenterer SignalR foreløpig for å unngå støy i consollog
 

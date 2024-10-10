@@ -23,7 +23,6 @@
     },
     "dependencies": {
         "@microsoft/applicationinsights-web": "^2.7.3",
-        "@microsoft/signalr": "^5.0.3",
         "@turf/turf": "^6.5.0",
         "babel-polyfill": "^6.26.0",
         "create-react-class": "^15.7.0",
