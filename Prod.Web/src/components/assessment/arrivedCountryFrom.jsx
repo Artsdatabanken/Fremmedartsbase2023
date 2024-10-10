@@ -1,5 +1,4 @@
 import React from 'react';
-// import ReactDOM from 'react-dom';
 import { observer, inject } from 'mobx-react';
 
 class ArrivedCountryFrom extends React.Component {

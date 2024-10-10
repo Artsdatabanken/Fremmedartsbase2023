@@ -3,7 +3,6 @@ import MapOpenLayers from "../map/MapOpenLayers";
 import Loading from "../Loading";
 import useArtskart from "./useArtskart";
 import * as Xcomp from "../observableComponents";
-import artskartModel from "../fylkesforekomst/a";
 
 const RedigerbartKart = ({
     artskartModel,

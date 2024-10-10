@@ -1,12 +1,11 @@
 import React from 'react';
-import { autorun, extendObservable, observable, toJS, action, runInAction } from 'mobx';
+import { extendObservable, runInAction } from 'mobx';
 import { observer, inject } from 'mobx-react';
 import NaturtypeSelector from './naturtypeSelector';
 import LivsmediumSelector from './livsmediumSelector';
 import TruetSelector from './truetSelector';
 import NaturtypeModal from './naturetypeModal';
 import createTaxonSearch, { createTaxonSearchState } from '../../createTaxonSearch'
-// import * as Xcomp from '../observableComponents';
 
 const taxonSearchState = createTaxonSearchState("newNaturtypeTaxonSearch")
 

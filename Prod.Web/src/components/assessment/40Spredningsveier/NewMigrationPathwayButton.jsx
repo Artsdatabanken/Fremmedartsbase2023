@@ -1,7 +1,7 @@
 // import config from '../../../config';
 import React from 'react';
 import { observer } from 'mobx-react';
-import { action, computed, extendObservable, observable } from 'mobx';
+import { action, extendObservable } from 'mobx';
 import * as Xcomp from '../observableComponents';
 import BsModal from '../../bootstrapModal'
 

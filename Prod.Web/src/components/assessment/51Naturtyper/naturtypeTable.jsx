@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { observable, action, makeObservable } from 'mobx';
+import { action } from 'mobx';
 import { observer } from 'mobx-react';
 import NaturtypeRad from './naturtypeRad';
 
 
-// const kodeTekst = (koder, verdi) => koder.filter(item => item.Value === verdi).map(item => item.Text)[0] || verdi 
+// const kodeTekst = (koder, verdi) => koder.filter(item => item.Value === verdi).map(item => item.Text)[0] || verdi
 
 const NaturtypeTable = (props) => {
     const { naturetypes, labels, canRenderTable, appState, desc, codes, disabled } = props;

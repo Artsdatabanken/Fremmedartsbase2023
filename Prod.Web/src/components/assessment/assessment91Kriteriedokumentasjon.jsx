@@ -14,7 +14,6 @@ class Assessment91Kriteriedokumentasjon extends React.Component {
         super(props);
     }
     setAssessmentComplete(appState) {
-        // console.log("#&% setAssessmentComplete")
         var isdirty = appState.isDirty;
         if (isdirty) {
             window.alert(

@@ -1,6 +1,5 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-import KollapsetSpredningsrad from './KollapsetSpredningsrad'
 import EkspandertSpredningsrad from './EkspandertSpredningsrad'
 
 class HistorikkTabell extends React.Component {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { extendObservable, observable, action } from 'mobx';
+import { extendObservable, action } from 'mobx';
 import { observer } from 'mobx-react';
 
 import createTaxonSearch from '../../createTaxonSearch'

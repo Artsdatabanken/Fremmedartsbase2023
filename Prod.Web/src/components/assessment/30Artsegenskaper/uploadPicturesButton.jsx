@@ -1,10 +1,4 @@
-// import config from '../../../config';
 import React from 'react';
-import { observer } from 'mobx-react';
-import { extendObservable } from 'mobx';
-import * as Xcomp from '../observableComponents';
-import BsModal from '../../bootstrapModal'
-// const labels = config.labels
 
 const lisenskoder = [
     {

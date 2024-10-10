@@ -1,6 +1,5 @@
 import React from 'react';
 import { UserContext } from './components'
-import auth from '../components/authService';
 
 // Button has no observable functionality, but is included in XComp lib for styling reasons
 

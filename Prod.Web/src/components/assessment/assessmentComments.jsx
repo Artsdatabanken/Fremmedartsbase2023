@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react';
-import { toJS, observable, makeObservable } from 'mobx';
+import { observable, makeObservable } from 'mobx';
 import * as Xcomp from './observableComponents'
 import config from '../../config'
 import { action } from 'mobx';

@@ -3,9 +3,6 @@ import fixFylker from './fixFylker'
 import { action, autorun, extendObservable, observable, reaction, toJS, runInAction } from 'mobx'
 import errorhandler from '../errorhandler';
 import getErrorDefinitions from './errorDefinitions';
-import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils'
-import { string } from 'prop-types'
-import { nothing } from 'ol/pixel'
 
 function deleteProps(obj, proparray) {
     for (const prop of proparray) {

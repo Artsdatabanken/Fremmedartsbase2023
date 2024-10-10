@@ -1,4 +1,4 @@
-﻿import { action, autorun, extendObservable, observable, reaction, runInAction, trace } from 'mobx';
+﻿import { action, autorun, extendObservable, observable, reaction, runInAction } from 'mobx';
 import RiskLevel from './riskLevel';
 import { arrayConditionalReplace, extractFloat } from '../../utils'
 

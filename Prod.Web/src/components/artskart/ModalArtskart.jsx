@@ -1,7 +1,6 @@
 import React, { useRef, useState } from "react";
 import * as Xcomp from "../observableComponents";
 import Artskart from "./Artskart";
-// import useEscapeKey from "./useEscapeKey";
 
 const ModalArtskart = ({
     labels,

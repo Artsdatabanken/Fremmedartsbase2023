@@ -1,7 +1,6 @@
 ﻿import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
 import { PropTypes } from 'prop-types';
-import { action, extendObservable } from 'mobx';
+import { action } from 'mobx';
 import { Observer, observer } from 'mobx-react';
 import { UserContext } from './components'
 

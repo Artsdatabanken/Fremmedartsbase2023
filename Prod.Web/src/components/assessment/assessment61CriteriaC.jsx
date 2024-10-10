@@ -1,6 +1,5 @@
 ﻿import React from 'react';
 import { observer, inject } from 'mobx-react';
-import * as Xcomp from './observableComponents';
 import Criterion from './criterion'
 
 class Assessment61CriteriaC extends React.Component {

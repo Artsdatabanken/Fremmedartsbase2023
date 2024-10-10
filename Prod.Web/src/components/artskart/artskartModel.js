@@ -1,5 +1,4 @@
 import { extendObservable, observable, autorun, toJS } from "mobx";
-import { loadData } from "./apiService";
 import { extractFloat } from "../utils";
 import { codeLists } from "./codeLists";
 

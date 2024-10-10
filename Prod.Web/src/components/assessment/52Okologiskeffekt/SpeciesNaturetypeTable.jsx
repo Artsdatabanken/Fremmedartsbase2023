@@ -1,5 +1,4 @@
 import React from 'react';
-import { action } from 'mobx';
 import { observer } from 'mobx-react';
 import * as Xcomp from '../observableComponents';
 
