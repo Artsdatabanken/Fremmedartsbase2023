@@ -3,18 +3,14 @@
 import "babel-polyfill";
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { action, configure, observable } from 'mobx';
+import { createRoot } from 'react-dom/client';
 import { Provider } from 'mobx-react';
 import App from './src/app';
 import viewModel from './src/components/viewModel'
-import ExpertGroupModel from './src/components/expertGroupModel'
-// import router from './src/components/mobxRouter'
-import { Log, User, UserManager } from 'oidc-client';
+import { UserManager } from 'oidc-client';
 import auth from './src/components/authService'
 import { ApplicationInsights } from '@microsoft/applicationinsights-web'
-// configure({
-//   enforceActions: 'observed'
-// });
+
 
 if (import.meta.env.PROD) {
     window.appInsights = new ApplicationInsights({
@@ -89,19 +85,13 @@ else {
         document.write(string);
         document.close();
     } else {
-
-
         const appState = viewModel
-
-        // action(() => {
-        //   appState.router = router
-        // })()
-
-
-        ReactDOM.render(
+        const container = document.getElementById('root');
+        const root = createRoot(container); // createRoot(container!) if you use TypeScript
+        root.render(
             <Provider appState={appState}>
                 <App />
-            </Provider>,
-            document.getElementById('root'));
+            </Provider>
+        );
     }
 }
