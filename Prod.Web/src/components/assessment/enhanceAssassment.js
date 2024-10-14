@@ -132,8 +132,7 @@ const riskAssessmentHelperFields = [
     "critG",
     "critH",
     "critI",
-    "chosenSpreadMedanLifespan_Was_RedListCategoryLevel",
-    //"furtherInfoAboutImport" // no longer in use
+    "chosenSpreadMedanLifespan_Was_RedListCategoryLevel"
 ]
 
 

@@ -255,61 +255,6 @@ class ViewModel {
         Object.assign(this, codeLists);
         this.isTrueteogsjeldnenaturtype = isTrueteogsjeldnenaturtype;
 
-        // // // const codes = require('../FA3CodesNB.json')
-        // // // this.koder = codes.Children
-        // // // const clabels =  codes2labels(this.koder.labels[0].Children)
-        // // // this.codeLabels = clabels
-
-        // // // // load livsmedium codes ----
-        // // // const ninlm = require('../nin-livsmedium.json')
-        // // // const lm = this.transformlivsmedium(ninlm)
-        // // // // console.log("livsmedium2nt: " +  JSON.stringify(lm))
-        // // // const lmlabels = this.transformlivsmediumlabels(ninlm, {})
-        // // // // console.log(JSON.stringify(lmlabels))
-        // // // const grupper = lm.Children
-        // // // this.livsmediumLabels = lmlabels
-        // // // this.livsmediumCodes = grupper
-        // // // // --------------------------
-
-        // // // // load truede naturtyper codes ----
-        // // // const togsnt = require('../TrueteOgSjeldneNaturtyper2018.json')
-        // // // const nt = this.transformtrueteogsjeldnenaturtyper(togsnt)
-        // // // // console.log("trueteogsjeldnenaturtyper: " +  JSON.stringify(nt))
-        // // // const tsgrupper = nt.Children
-        // // // this.trueteogsjeldneCodes = tsgrupper
-
-        // // // this.trueteogsjeldnenaturtypercodes = []
-        // // // this.gettrueteogsjeldnenaturtypercodes(togsnt)
-        // // // console.log("!!! gettrueteogsjeldnenaturtypercodes" + JSON.stringify(this.trueteogsjeldnenaturtypercodes))
-
-        // // // // --------------------------
-
-        // // // // load NiN2 codes ----
-        // // // const nin2root = require('../Nin2_3.json')
-        // // // // console.log("nin2naturtyper: " +  JSON.stringify(nin2root))
-        // // // const nin2grupper = nin2root.Children
-        // // // this.naturtyperNIN2 = nin2grupper
-
-        // // // const nin2codes = this.koder.naturtyperNIN2
-        // // // const nin2 = this.transformnaturtyperNIN2(nin2codes)
-        // // // // console.log("nin2 transformed: " +  JSON.stringify(nin2))
-        // // // // const nin2grupper = nin2.Children
-        // // // // this.naturtyperNIN2 = nin2grupper
-        // // // // --------------------------
-        // // // this.nin2codes = nin2codes
-
-        // // // // console.log("labels keys: " + JSON.stringify(Object.keys(clabels)))
-        // // // // console.log("codes keys: " + JSON.stringify(Object.keys(codes.Children)))
-        // // // // console.log("codes json: " + JSON.stringify(codes))
-        // // // // console.log("----------------------------------------------+++")
-        // // // // console.log(JSON.stringify(clabels))
-
-        // // // //-----------------------------------------------------
-
-        // // // const mp = this.koder.migrationPathways[0]
-        // // // this.spredningsveier = this.koder2migrationPathways(mp)
-        // // // //-----------------------------------------------------
-
         this.theUserContext = createContext(this.userContext);
 
         //***** pubsub event handlers *****
@@ -383,7 +328,6 @@ class ViewModel {
             () => this.assessment,
             (assessment) => {
                 if (assessment && this.isServicesReady) {
-                    // console.log("viewMode = 'assessment' - before:" + this.viewMode)
                     this.viewMode = "assessment";
                 }
             }
@@ -468,7 +412,6 @@ class ViewModel {
 
             this._evaluationStatus =
                 !this.assessment || this.assessment.evaluationStatus;
-            // ******************************************************************************
             runInAction(() => {
                 const lockedUserId = !this.assessment
                     ? null
@@ -512,12 +455,7 @@ class ViewModel {
             }
         });
 
-        // #######################################################################################################
-        // #######################################################################################################
         // ##################################  assessment reactions  #############################################
-        // #######################################################################################################
-        // #######################################################################################################
-
         // autorun(() => {
         //     if(this.assessment && this.assessment.speciesStatus == "C3") {
         //         runInAction(() => this.assessment.speciesEstablishmentCategory = "C3")
@@ -538,16 +476,6 @@ class ViewModel {
         //         )
         //     }
         // })
-        // autorun(() => {
-        //     if(this.assessmentTabs && this.assessmentTabs.activeTab ) {
-        //         console.log("current assessmentTab: " + this.assessmentTabs.activeTab.id )
-        //     }
-        // });
-        // autorun(() => {
-        //     console.log("skal vurderes: " + this.skalVurderes)
-        // });
-        // #######################################################################################################
-        // #######################################################################################################
     } // ########### end constructor ###########
     //    #######################################
 
@@ -597,13 +525,6 @@ class ViewModel {
     get harVurdering() {
         return !!this.assessment;
     }
-
-    // @computed get unresolvedComments() {
-    //     const comments = this.assessmentComments
-    //     const unresolvedComments = comments.filter(comment => !comment.resolved)
-    //     const count = unresolvedComments.count
-    //     return count
-    // }
 
     // ################ Start section expert groups ##################
     async loadExpertGroups() {
@@ -658,7 +579,6 @@ class ViewModel {
 
     updateCurrentAssessment(json) {
         // that is: open new assessment (and replace current) with data from server
-        // console.log("updateCurrentAssessment: " + JSON.stringify(json))
         const codegroups = this.koder;
         if (!codegroups) {
             throw "Codes not loaded"; // Fail fast
@@ -693,28 +613,8 @@ class ViewModel {
 
     open(assessmentInfo) {
         // used by the selectAssessmentTable
-        // console.log("########################" + JSON.stringify(assessmentInfo))
-        // console.log("########################" + assessmentInfo.id)
         this.setCurrentAssessment(assessmentInfo.id);
-        //this.assessmentTypeFilter == "horizonScanning" ?  this.assessmentTabs.activeTab.id = 0 :  this.assessmentTabs.activeTab.id = 1
     }
-
-    // assessmentExists(
-    //     expertgroup,
-    //     scientificNameId,
-    //     ) {
-    //     const url = "assessment/ExistsByExpertgroupAndName/" + expertgroup + "/" + scientificNameId
-    //     if (expertgroup  && scientificNameId) {
-    //         loadData(
-    //             config.getUrl(url),
-    //             (data) => {
-    //                 if (data) {
-    //                     console.log("----" + JSON.stringify(data, undefined, 2))
-    //                 } else {console.warn("----= nothing")}
-    //             }
-    //         )
-    //     }
-    // }
 
     checkForExistingAssessment = (expertgroup, scientificNameId) => {
         return new Promise((resolve, reject) => {
@@ -728,7 +628,6 @@ class ViewModel {
             }
             loadData(config.getUrl(url), (data) => {
                 if (typeof data === "boolean") {
-                    // console.log("----" + JSON.stringify(data, undefined, 2))
                     resolve(data);
                 } else {
                     reject("ExistsByExpertgroupAndName - no data");
@@ -736,19 +635,6 @@ class ViewModel {
             });
         });
     };
-
-    // checkForExistingAssessment = (sciName, assessmentId) => {
-    //     //this.expertgroupAssessmentList.map(ega => console.log( ega.scientificName))
-    //     const result = this.expertgroupAssessmentList.some(ega => this.findSciName(ega.scientificName) == sciName && ega.id != assessmentId)
-    //     //console.log("sciname:", sciName, result)
-    //     return result
-    // }
-
-    // findSciName = (name) => {
-    //     const dividedName = name.split(" ")
-    //     const result = dividedName[0] + " " + dividedName[1]
-    //     return result
-    // }
 
     finishassessment(statusaction, assessment) {
         let status =
@@ -775,7 +661,6 @@ class ViewModel {
     }
 
     setAssessmentComplete(statusaction) {
-        // console.log("#%% ferdigstill")
         if (!this.roleincurrentgroup.writeAccess) {
             alert("setAssessmentComplete: 'Not allowed'");
             return;
@@ -785,207 +670,13 @@ class ViewModel {
             return;
         }
         if (statusaction === "finish" && errorhandler.hasErrors) {
-            // console.log("#%% kanikke")
             alert("Kan ikke ferdigstille. Vurderingen er ikke korrekt!");
             return;
         }
 
-        // const status = statusaction === "finish" ? "finished" : "inprogress"  // ???
-        // this.assessment.evaluationStatus = status
-
         this.finishCurrentAssessment(statusaction);
     }
     // ################ end section current assessment ##################
-
-    // // // koder2migrationPathways(mp) {
-    // // //     const r = {}
-    // // //     r.name = mp.Text
-    // // //     // console.log(r.name)
-    // // //     r.value = mp.Value
-    // // //     if(mp.Children) {
-    // // //         r.children = []
-    // // //         const mpckey = Object.keys(mp.Children)[0]
-    // // //         const mpc = mp.Children[mpckey]
-    // // //         for ( var i = 0; i < mpc.length; ++i )
-    // // //         {
-    // // //             r.children.push(this.koder2migrationPathways(mpc[i]));
-    // // //         }
-    // // //     }
-    // // //     return r
-    // // // }
-
-    // // // transformlivsmedium(mp) {
-    // // //     const r = {}
-    // // //     r.Id = mp.Id
-    // // //     r.Value = mp.Id
-    // // //     // console.log(r.name)
-    // // //     r.Text = mp.navn
-    // // //     r.Collapsed = true
-    // // //     r.Children = []
-    // // //     if(mp.children) {
-    // // //         for ( var i = 0; i < mp.children.length; ++i )
-    // // //         {
-    // // //             r.Children.push(this.transformlivsmedium(mp.children[i]));
-    // // //         }
-    // // //     }
-    // // //     return r
-    // // // }
-
-    // // // transformlivsmediumlabels(mp, acc) {
-    // // //     acc[mp.Id] = mp.navn
-    // // //     if(mp.children) {
-    // // //         for ( var i = 0; i < mp.children.length; ++i )
-    // // //         {
-    // // //             this.transformlivsmediumlabels(mp.children[i], acc)
-    // // //         }
-    // // //     }
-    // // //     return acc
-    // // // }
-
-    // // // transformtrueteogsjeldnenaturtyper(nt) {
-    // // //     return nt
-    // // // }
-
-    // // // gettrueteogsjeldnenaturtypercodes(nt) {
-    // // //     this.trueteogsjeldnenaturtypercodes.push("NA " + nt.Value)
-    // // //     if(nt.Children) {
-    // // //         for ( var i = 0; i < nt.Children.length; ++i )
-    // // //         {
-    // // //             this.gettrueteogsjeldnenaturtypercodes(nt.Children[i])
-    // // //         }
-    // // //     }
-    // // //     // console.log("!!! trueteogsjeldnenaturtypercodes: " + JSON.stringify(this.trueteogsjeldnenaturtypercodes))
-    // // // }
-
-    // // // // isTrueteogsjeldnenaturtype = (ntcode) => {
-    // // // //     const r = {}
-    // // // //     r.Id = [ntcode.niNCode]
-    // // // //     if(ntcode.length > 1) {
-    // // // //         for(var i = 1; i < ntcode.length; ++i)
-    // // // //         {
-    // // // //             r.Id.push(ntcode[i].niNCode)
-    // // // //         }
-    // // // //     }
-    // // // //     // console.log("!!! r.Id: " + JSON.stringify(r.Id))
-    // // // //     return this.trueteogsjeldnenaturtypercodes.some(element => r.Id.includes(element))
-    // // // // }
-
-    // // // isTrueteogsjeldnenaturtype = (ntcode) => {
-    // // //     return this.trueteogsjeldnenaturtypercodes.includes(ntcode)
-    // // // }
-
-    // // // transformnaturtyperNIN2(nin2codes) {
-    // // //     const r = {}
-    // // //     r.Id = nin2codes.Id
-    // // //     r.Value = nin2codes.Id
-    // // //     r.Text = nin2codes.Text
-    // // //     r.Collapsed = true
-    // // //     if(nin2codes.Redlisted) {
-    // // //         r.Redlisted = nin2codes.Redlisted
-    // // //     }
-    // // //     r.Children = []
-    // // //     if(nin2codes.Children) {
-    // // //         for ( var i = 0; i < nin2codes.Children.length; ++i )
-    // // //         {
-    // // //             r.Children.push(this.transformnaturtyperNIN2(nin2codes.Children[i]));
-    // // //         }
-    // // //     }
-    // // //     // console.log("!!! r.Id: " + JSON.stringify(r.Id))
-    // // //     return r
-    // // // }
-
-    // ################# start section unused code!! ##################
-
-    // @action forceSyncWithCodes(assessment, codegroups) {
-    //     this.criteriaWithCodes.map(tupple =>
-    //         {
-    //             const prop = tupple[0]
-    //             const codekey = tupple[1]
-    //             const codes = codegroups[codekey]
-    //             if(codes == null) {
-    //                 console.warn("forceSyncWithCodes: no codes for " + codekey)
-    //             }
-    //             console.log("-" + prop + "¤" + assessment[prop])
-    //             if (assessment[prop] === []) {
-    //                 console.log("*****")
-    //             }
-    //             const existingCode = codes.find(code => code.value === assessment[prop])
-    //             if (existingCode === undefined ) {
-    //                 assessment[prop] = codes[0].value
-    //             }
-    //         }
-    //     )
-    // }
-
-    // async loadPåvirkningsfaktorer() {
-    //     const json = await this.getPåvirkningsfaktorer()
-    //     const pvf = observable.object(json)
-    //     runInAction(() => this.påvirkningsfaktorer = pvf)
-    // }
-
-    // @computed get canAddSelectedPåvirkningsfaktor() {
-    //     var sp = this.selectedPåvirkningsfaktor
-    //     var validsp = (sp.id === "11." || sp.id === "0.") ?  // ukjent og ingen trussel
-    //         // sp.tidspunkt === "-" &&
-    //         // sp.omfang === "-" &&
-    //         // sp.alvorlighetsgrad === "-"
-    //         true :
-    //         // sp.forkortelse &&
-    //         sp.beskrivelse &&
-    //         sp.tidspunkt != "-" &&
-    //         sp.omfang != "-" &&
-    //         sp.alvorlighetsgrad != "-"
-    //     return validsp
-    // }
-
-    // @action clearSelectedPåvirkningsfaktor() {
-    //     transaction(() => {
-    //         const sp = this.selectedPåvirkningsfaktor
-    //         sp.id = null
-    //         sp.forkortelse = null
-    //         sp.overordnetTittel = null
-    //         sp.beskrivelse = null
-    //         sp.tidspunkt = null
-    //         sp.omfang = null
-    //         sp.alvorlighetsgrad = null
-    //         sp.comment = null
-    //     })
-    // }
-
-    // @action addSelectedPåvirkningsfaktor() {
-    //     const påv = toJS(this.selectedPåvirkningsfaktor)
-    //     const existing = this.assessment.påvirkningsfaktorer.find(item =>
-    //         item.id == påv.id)
-    //     if(existing) {
-    //         // console.log("existing:" + JSON.stringify(existing))
-    //         this.assessment.påvirkningsfaktorer.remove(existing)
-    //     }
-    //     this.assessment.påvirkningsfaktorer.push(påv)
-    //     this.clearSelectedPåvirkningsfaktor()
-    // }
-
-    // @action removeSelectedPåvirkningsfaktor(påv) {
-    //     //const påv = this.selectedPåvirkningsfaktor
-    //     this.assessment.påvirkningsfaktorer.remove(påv)
-    //     console.log("Removed " + påv.beskrivelse)
-    // }
-
-    // @action editPåvirkningsfaktor(påv) {
-    //     console.log("Edit " + JSON.stringify(påv))
-
-    //     transaction(() => {
-    //         const sp = this.selectedPåvirkningsfaktor
-    //         sp.id = påv.id
-    //         sp.forkortelse = påv.forkortelse
-    //         sp.overordnetTittel = påv.overordnetTittel
-    //         sp.beskrivelse = påv.beskrivelse
-    //         sp.tidspunkt = påv.tidspunkt
-    //         sp.omfang = påv.omfang
-    //         sp.alvorlighetsgrad = påv.alvorlighetsgrad
-    //         sp.comment = påv.comment
-    //     })
-    // }
-    // ################# end section unused code!! ##################
 
     // ################# section API stuff ##################
     getUrl = config.getUrl;
@@ -996,31 +687,22 @@ class ViewModel {
         }
         const docid = this.assessmentId;
         const url = config.getUrl("artsrapport/assessmentview/") + docid;
-        // console.log("URL:" + url)
         return url;
     }
 
-    // addGetters(assessmentObject) {
-    //     console.log("addGetters")
-    //     console.log(JSON.stringify(Object.keys(assessmentObject)))
-    // }
 
     async saveCurrentAssessment() {
         events.trigger("saveAssessment", "savestart");
-        // const data = toJS(this.assessment)
-        // const json = JSON.stringify(data)
         const json = this.assessment.toJSON;
 
         const currentdata = JSON.parse(json);
         const data = JSON.parse(json);
         const datastring = JSON.stringify(data);
-        // this.addGetters(data)
         console.log("Y:" + json.length);
         const id = data.id;
         const url = config.getUrl("assessment/") + id;
         fetch(url, {
             method: "POST",
-            // mode: 'no-cors',
             body: datastring, // data can be `string` or {object}! (cant get it to work with {object}...)
             headers: {
                 Accept: "application/json",
@@ -1028,8 +710,6 @@ class ViewModel {
                 Authorization: "Bearer " + auth.getAuthToken,
             },
         })
-            //   .then(res => res.json())
-            //   .then(response => console.log('Success:', JSON.stringify(response)))
             .then((response) => checkStatus(response))
             .then(() => this.updateAssessmentSavedVersion(currentdata))
             .then(() => events.trigger("saveAssessment", "savesuccess"))
@@ -1038,18 +718,6 @@ class ViewModel {
                 console.error("Error:", error);
             });
     }
-
-    // @action getAssessmentsForFilter() {
-    //     const påv = toJS(this.selectedPåvirkningsfaktor)
-    //     const existing = this.assessment.påvirkningsfaktorer.find(item =>
-    //         item.id == påv.id)
-    //     if(existing) {
-    //         // console.log("existing:" + JSON.stringify(existing))
-    //         this.assessment.påvirkningsfaktorer.remove(existing)
-    //     }
-    //     this.assessment.påvirkningsfaktorer.push(påv)
-    //     // this.clearSelectedPåvirkningsfaktor()
-    // }
 
     async loadExpertgroupAssessmentList(expertgroupId) {
         runInAction(() => (this.loadingExpertGroup = true));
@@ -1092,7 +760,6 @@ class ViewModel {
                 filters = filters + "&Horizon.NotAssessed=true";
 
             if (this.responsible.length > 0) {
-                //console.log(this.responsible)
                 filters =
                     filters + this.responsible.map((x) => "&Responsible=" + x).join();
             }
@@ -1180,12 +847,10 @@ class ViewModel {
                 }
 
                 if (this.responsible.length > 0) {
-                    //console.log(this.responsible)
                     filters =
                         filters + this.responsible.map((x) => "&Responsible=" + x).join();
                 }
                 if (this.otherComments.length > 0) {
-                    //console.log(this.responsible)
                     filters = filters + "&Comments.UserId=" + auth.userId;
                     filters =
                         filters +
@@ -1201,16 +866,10 @@ class ViewModel {
             config.getUrl("expertgroupassessments/") + id + "?page=1" + filters;
         const expertgroupAssessments = await auth.getJsonRequest(url);
 
-        //console.log("------" + JSON.stringify(expertgroupAssessments))
-
         const role = expertgroupAssessments.rolle;
-
-        // role.skriver = true
-        // role.leser = true
 
         const assessments = observable.array(expertgroupAssessments.assessments);
         const fixCode = function (author) {
-            //var parts = author.split(";");
             return {
                 text: author.name + " (" + author.count + ")",
                 value: author.name,
@@ -1247,14 +906,10 @@ class ViewModel {
         });
     }
 
-    //getAssessment = flow(function * (assessmentId) {
     async getAssessment(assessmentId) {
         const url = config.getUrl("assessment/") + assessmentId;
-        //console.log("assessmentId: " + assessmentId)
-        // try {
         const response = await fetch(url, {
             method: "GET",
-            // mode: 'no-cors',
             headers: new Headers({
                 Accept: "application/json",
                 "Content-Type": "application/json",
@@ -1269,7 +924,6 @@ class ViewModel {
             })
             .then((returnedResponse) => {
                 // Your response to manipulate
-                //    const json = await returnedResponse.json()
                 return returnedResponse;
             })
             .catch((error) => {
@@ -1294,7 +948,6 @@ class ViewModel {
         const url = config.getUrl("assessment/createnew");
         fetch(url, {
             method: "PUT",
-            // mode: 'no-cors',
             body: JSON.stringify(taxinfo),
             headers: {
                 Accept: "application/json",
@@ -1306,8 +959,6 @@ class ViewModel {
             .then(() => events.trigger("saveAssessment", "savesuccess"))
             .then(() => this.loadCurrentExpertgroupAssessmentList())
             .then(() => (this.viewMode = "choosespecie"))
-
-            //   .then((responsdata) => {if (responsdata && responsdata.message) alert(responsdata.message)})
             .catch((error) => {
                 events.trigger("saveAssessment", "savefailure");
                 console.error("Error:", error);
@@ -1328,7 +979,6 @@ class ViewModel {
         const url = config.getUrl("assessment/" + id + "/move");
         fetch(url, {
             method: "POST",
-            // mode: 'no-cors',
             body: JSON.stringify(taxinfo),
             headers: {
                 Accept: "application/json",
@@ -1340,7 +990,6 @@ class ViewModel {
             .then(() => events.trigger("saveAssessment", "savesuccess"))
             .then(() => this.loadCurrentExpertgroupAssessmentList())
             .then(() => action(() => (this.viewMode = "choosespecie"))())
-            //   .then((responsdata) => {if (responsdata && responsdata.message) alert(responsdata.message)})
             .catch((error) => {
                 events.trigger("saveAssessment", "savefailure");
                 console.error("Error:", error);
@@ -1352,8 +1001,6 @@ class ViewModel {
             config.getUrl("assessment/" + v.id + "/lock"),
             (data) => {
                 // Now open the locked
-                // const id = Number(v.id)
-
                 //todo: there is something fishy going on here. The v.id must be string for this thing to work???!!
                 // so something must be wrong. this.assessmentId is Number!
 
@@ -1436,63 +1083,12 @@ class ViewModel {
 
     get isDirty() {
         if (!this.assessmentId || !this.assessment) return false;
-        // const a = JSON.stringify(this.assessment)
         const a = this.assessment.toJSON;
         const b = this.assessmentSavedVersionString;
         return a != b;
     }
 
-    // ######################################################################################################################################
-    // ######################################################################################################################################
-    // ######################################    Move this code to enhance assessment    ####################################################
-    // ######################################################################################################################################
-    // ######################################################################################################################################
-
-    // // // @computed get canEdit() {
-    // // //     return true
-    // // //     // if (!auth.hasAccess) return false;
-    // // //     // if (appState.viewMode === "choosespecie") return false;
-    // // //     // return isLockedByMe() && !isFinished();
-    // // // };
-
-    // @computed get horizonDoAssessment() {
-    //     if (!this.assessment) return false;
-    //     const result =
-    //         !this.assessment.horizonEstablismentPotential || !this.assessment.horizonEcologicalEffect ?
-    //         false :
-    //         this.assessment.horizonEstablismentPotential == "2"
-    //         || (this.assessment.horizonEstablismentPotential == "1" && this.assessment.horizonEcologicalEffect != "no")
-    //         || (this.assessment.horizonEstablismentPotential == "0" && this.assessment.horizonEcologicalEffect == "yesAfterGone")
-    //     return result
-    // }
-
-    // @computed get horizonDoScanning() {
-    //     return !this.harVurdering ? false : this.assessment.horizonDoScanning
-    // }
-
-    // @computed get horizonScanned() {
-    //     return !this.harVurdering ? false : (this.assessment.horizonEstablismentPotential == 2
-    //                                         || (this.assessment.horizonEstablismentPotential == 1 && this.assessment.horizonEcologicalEffect != "no")
-    //                                         || (this.assessment.horizonEstablismentPotential == 0 && this.assessment.horizonEcologicalEffect == "yesAfterGone"))
-    // }
-
-    // @computed get skalVurderes() {
-    //     // todo. denne er nå knyttet til horisontskanning. Burde kanskje vært generell og hentet verdi fra: assessment.assessmentConclusion
-    //     return !this.harVurdering ? false : this.assessment.isDoorKnocker && this.assessment.skalVurderes ? true : false
-    // }
-    // @computed get doFullAssessment() {
-    //     return !this.harVurdering ? false : this.assessment.doFullAssessment
-    // }
-
-    // ######################################################################################################################################
-    // ######################################################################################################################################
-    // ######################################################################################################################################
-
-    // ######################################################################################################################################
-    // ######################################################################################################################################
     // ###############  This code is for FAB assessment and is put her for for UI desitions (!?)  ###########################################
-    // ######################################################################################################################################
-    // ######################################################################################################################################
     moveAssessmentHorizon = (riskhorizon) => {
         const doorknockerstate = riskhorizon.potensiellDørstokkart;
         const id = this.assessmentId;
@@ -1525,9 +1121,6 @@ class ViewModel {
                 )
         );
     }
-    // ######################################################################################################################################
-    // ######################################################################################################################################
-    // ######################################################################################################################################
 }
 
 export default new ViewModel();

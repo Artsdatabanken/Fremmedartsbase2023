@@ -69,11 +69,7 @@ class Assessment61Invasjonspotensiale extends React.Component {
             excludeObjects: props.appState.assessment.artskartModel.excludeObjects,
             excludeGbif: props.appState.assessment.artskartModel.excludeGbif,
             virtualArtskartModel0: props.appState.virtualArtskartModel0,
-            observationFromYear: props.appState.assessment.artskartModel.observationFromYear,
             AOOyear2: props.appState.assessment.riskAssessment.AOOyear2,
-            includeNorge: props.appState.assessment.artskartModel.includeNorge,
-            excludeObjects: props.appState.assessment.artskartModel.excludeObjects,
-            excludeGbif: props.appState.assessment.artskartModel.excludeGbif,
             virtualArtskartModel: props.appState.virtualArtskartModel
         });
 

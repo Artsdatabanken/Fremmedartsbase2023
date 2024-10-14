@@ -340,7 +340,6 @@ class Assessment91Kriteriedokumentasjon extends React.Component {
                         </div>
                     </fieldset>
 
-                    <Xcomp.Button>{critlabels.showAssessmentSummary}</Xcomp.Button>
                     {assessment.evaluationStatus != "finished" ? (
                         <div>
                             <p>{critlabels.assessmentUnderWork}</p>
