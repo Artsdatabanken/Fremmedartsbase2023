@@ -1,10 +1,11 @@
 {
-    "name": "rl2019assessment",
+    "name": "fremmedartsbase",
     "version": "1.0.0",
     "description": "",
     "type": "module",
     "scripts": {
-        "dev": "vite",
+        "dev": "vite --port 1234",
+        "local": "vite --mode localdevelopment",
         "build": "vite build",
         "buildtest": "vite build --mode staging",
         "test": "jest",

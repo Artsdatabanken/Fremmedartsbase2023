@@ -25,7 +25,7 @@ const homeuri = window.location.protocol + "//" + window.location.host
 const authconfig =
 {
     authority: import.meta.env.VITE_AUTHORITY_URL,
-    client_id: "fab4",
+    client_id: import.meta.env.VITE_AUTHORITY_CLIENT_ID,
     redirect_uri: homeuri + "/#signin-oidc",
     silent_redirect_uri: homeuri + "/#silentredirect",
     popup_redirect_uri: homeuri + "/#silentredirect",
