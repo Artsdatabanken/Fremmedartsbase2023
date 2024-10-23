@@ -1,19 +1,19 @@
 import React, { useRef, useState, useEffect, useLayoutEffect } from 'react';
 import 'ol/ol.css';
-// import styles from './MapOpenLayers.css'; // don't delete. it's used to move buttons to the right side
+//import styles from './MapOpenLayers.css'; // don't delete. it's used to move buttons to the right side
 //Line above is a lie?
-import { Collection, Feature, Map, View, Overlay } from 'ol';
-import { Control, defaults as defaultControls } from 'ol/control';
+import { Collection, Map, View, Overlay } from 'ol';
+import { defaults as defaultControls } from 'ol/control';
 import { Tile as TileLayer, Vector as VectorLayer } from 'ol/layer';
-import { Vector as VectorSource, WMTS as WmtsSource } from 'ol/source';
+import { Vector as VectorSource, WMTS as WmtsSource, OSM } from 'ol/source';
 import Proj4 from 'proj4';
+import {register} from 'ol/proj/proj4.js';
 import { addProjection, Projection } from 'ol/proj';
-import { DragBox, Select } from 'ol/interaction';
+import { DragBox } from 'ol/interaction';
 import { platformModifierKeyOnly } from 'ol/events/condition';
 import MapContext from "./MapContext";
 import mapOlFunc from './MapOlFunctions';
 import config from '../../config';
-import * as Xcomp from "../observableComponents";
 
 const mapBounds = {
     S: [
@@ -46,11 +46,9 @@ const SimpleMap = ({
     let mapCenter = [];
     let featureOver;
     const waterFieldName = isWaterArea ? 'vannomraadenavn' : 'vannregionnavn';
-    // console.log('vatn?', isWaterArea, waterFieldName);
 
     const transformCoordinate = (fromEpsgCode, toEpsgCode, coordinate) => {
         if (fromEpsgCode === toEpsgCode) {
-            // console.log('transformCoordinate unchanged', fromEpsgCode, toEpsgCode);
             return coordinate;
         }
 
@@ -93,7 +91,6 @@ const SimpleMap = ({
             const vatn = [];
             mapObject.forEachFeatureAtPixel(e.pixel, (f) => {
                 const featureLayerName = f.get('_layerName');
-                // console.log('feature', featureLayerName, f);
                 if (featureLayerName && featureLayerName === 'Vatn') {
                     if (!e.dragging) {
                         if (content) {
@@ -118,7 +115,6 @@ const SimpleMap = ({
                 // closer.blur();
             }
 
-            // console.log('pointermove', waterFieldName, vatn);
             const hoverSource = hoverLayer.getSource();
             if (vatn && vatn.length > 0) {
                 const name = vatn[0].get(waterFieldName);
@@ -170,16 +166,16 @@ const SimpleMap = ({
             });
         }
 
-        // console.log('selectAll changed', selectAll, features);
     }, [selectAll]);
 
     useEffect(() => {
         if (Proj4.defs(`EPSG:${config.mapEpsgCode}`) === undefined) {
             Proj4.defs(`EPSG:${config.mapEpsgCode}`, config.mapEpsgDef);
+            register(Proj4);
         }
         const projection = new Projection({
             code: `EPSG:${config.mapEpsgCode}`,
-            extent: mapOlFunc.extent,
+            extent: mapOlFunc.fullExtent,
             units: 'm'
         });
         addProjection(projection);
@@ -213,6 +209,7 @@ const SimpleMap = ({
                 center: mapCenter,
                 projection: `EPSG:${config.mapEpsgCode}`,
                 maxZoom: mapOlFunc.numZoomLevels,
+                extent: mapOlFunc.fullExtent,
                 zoom: 0
             }),
             layers: [],
@@ -225,43 +222,30 @@ const SimpleMap = ({
         } else {
             options.layers.push(new TileLayer({
                 name: 'Europakart',
-                opacity: 1,
-                extent: mapOlFunc.extent,
-                source: new WmtsSource({
-                    url: '//opencache.statkart.no/gatekeeper/gk/gk.open_wmts?',
-                    // layer: 'europa',
-                    layer: 'europa_forenklet',
-                    attributions: 'Kartverket',
-                    matrixSet: `EPSG:${config.mapEpsgCode}`,
-                    format: 'image/png',
-                    projection: projection,
-                    tileGrid: mapOlFunc.wmtsTileGrid(mapOlFunc.numZoomLevels, `EPSG:${config.mapEpsgCode}`, projection),
-                    style: 'default',
-                    wrapX: true,
-                    crossOrigin: 'anonymous'
+                source: new OSM({
+                    attributions: 'All maps &copy; <a href="//www.openstreetmap.org/">OpenStreetMap</a>',
+                    url: '//{a-c}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    projection: projection
                 }),
-                visible: true,
-                zIndex: 0
+                zIndex: 1,
             }));
             options.layers.push(new TileLayer({
                 name: 'Norges grunnkart',
                 opacity: 1,
-                extent: mapOlFunc.extent,
                 source: new WmtsSource({
-                    url: '//opencache.statkart.no/gatekeeper/gk/gk.open_wmts?',
-                    // layer: 'europa',
-                    layer: 'norges_grunnkart',
+                    url: '//cache.kartverket.no/v1/wmts?',
+                    layer: 'topograatone',
                     attributions: 'Kartverket',
-                    matrixSet: `EPSG:${config.mapEpsgCode}`,
+                    matrixSet: 'utm33n',
                     format: 'image/png',
                     projection: projection,
-                    tileGrid: mapOlFunc.wmtsTileGrid(mapOlFunc.numZoomLevels, `EPSG:${config.mapEpsgCode}`, projection),
+                    tileGrid: mapOlFunc.wmtsTileGrid(mapOlFunc.numZoomLevels, `8`, projection),
                     style: 'default',
                     wrapX: true,
                     crossOrigin: 'anonymous'
                 }),
                 visible: true,
-                zIndex: 1
+                zIndex: 2
             }));
         }
         if (staticMap) {
@@ -401,9 +385,9 @@ const SimpleMap = ({
     }, [isWaterArea, selectedArea]);
 
     return (
-        <div>
+        <div style={{ height: "100%", width: "100%" }}>
             <MapContext.Provider value={{ map }}>
-                <div ref={mapRef} className="ol-map"></div>
+                <div ref={mapRef} className="ol-map" style={{ height: "100%" }}></div>
             </MapContext.Provider>
         </div>
     )

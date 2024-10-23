@@ -30,7 +30,8 @@ const colors = {
     'VHA5': '',
     'VHA6': '',
 };
-const extent = [-2500000.0, 3500000.0, 3045984.0, 9045984.0];
+const kartverketExtent = [-2500000.0, 3800000.0, 3045984.0, 9045984.0];
+const fullExtent = [-2500000.0, 3800000.0, 3045984.0, 9500000.0];
 const vectorFeatures = {};
 
 const setColors = () => {
@@ -268,7 +269,7 @@ const createWaterLayer = (name, mapIndex, artskartWaterModel, waterFeatures, pro
     }
 
     const source = new VectorSource({
-        extent: extent,
+        extent: fullExtent,
         projection: projection,
         format: new GeoJSONFormat({
             dataProjection: projection,
@@ -348,7 +349,7 @@ const createWaterSelectedLayer = async (name, projection) => {
     const style = await createWaterIntersectionStyle();
 
     const source = new VectorSource({
-        extent: extent,
+        extent: fullExtent,
         projection: projection,
         format: new GeoJSONFormat({
             dataProjection: projection,
@@ -389,7 +390,7 @@ const reDrawWaterLayer = (mapObject, mapIndex, artskartWaterModel, waterFeatures
 
     const projection = new Projection({
         code: `EPSG:${config.mapEpsgCode}`,
-        extent: extent,
+        extent: fullExtent,
         units: 'm'
     });
 
@@ -415,10 +416,7 @@ const wmtsTileGrid = (numZoomLevels, matrixSet, projection, startLevel) => {
     let resolutions = new Array(numZoomLevels);
     let matrixIds = new Array(numZoomLevels);
 
-    // console.log('wmtsTileGrid()', numZoomLevels, matrixSet, projection);
-    let projectionExtent = projection.getExtent();
-
-    let size = getWidth(projectionExtent) / 256;
+    let size = getWidth(kartverketExtent) / 256;
 
     startLevel = startLevel ? startLevel : 0;
     for (let z = startLevel; z < (numZoomLevels + startLevel); ++z) {
@@ -427,7 +425,7 @@ const wmtsTileGrid = (numZoomLevels, matrixSet, projection, startLevel) => {
     }
 
     let wmtsTileGrid = new WMTSTileGrid({
-        origin: getTopLeft(projectionExtent),
+        origin: getTopLeft(kartverketExtent),
         resolutions: resolutions,
         matrixIds: matrixIds
     });
@@ -451,7 +449,8 @@ const mapOlFunc = {
     createStyle: createStyle,
     createWaterLayer: createWaterLayer,
     createWaterSelectedLayer: createWaterSelectedLayer,
-    extent: extent,
+    fullExtent: fullExtent,
+    kartverketExtent: kartverketExtent,
     hoverStyleFunction: hoverStyleFunction,
     numZoomLevels: numZoomLevels,
     reDrawWaterLayer: reDrawWaterLayer,
