@@ -11,10 +11,6 @@ import Statistics from './statistics'
 class AssessmentsView extends React.Component {
     constructor(props) {
         super(props);
-
-        makeObservable(this, {
-            onNewAssessment: action
-        });
     }
 
     render() {
